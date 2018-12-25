@@ -1,0 +1,50 @@
+{
+    "name": "Subject",
+    "fields": [
+        {
+            "fieldName": "commonSub",
+            "fieldType": "Common",
+            "fieldValues": "MATHS,PHYSICS,CHEMISTRY,DBMS",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "electiveSub",
+            "fieldType": "Elective",
+            "fieldValues": "JAVA,C",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "periods",
+            "otherEntityName": "periods",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "student",
+            "otherEntityName": "student",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "teacher",
+            "otherEntityName": "teacher",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181224075922",
+    "entityTableName": "subject",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

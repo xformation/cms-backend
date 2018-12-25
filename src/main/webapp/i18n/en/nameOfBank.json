@@ -1,0 +1,11 @@
+{
+    "cmsApp": {
+        "NameOfBank" : {
+            "null": "",
+            "HDFC": "HDFC",
+            "SBI": "SBI",
+            "ICICI": "ICICI",
+            "ANDHRABANK": "ANDHRABANK"
+        }
+    }
+}

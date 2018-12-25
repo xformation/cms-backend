@@ -1,0 +1,9 @@
+{
+    "cmsApp": {
+        "Elective" : {
+            "null": "",
+            "JAVA": "JAVA",
+            "C": "C"
+        }
+    }
+}

@@ -1,0 +1,164 @@
+entity StudentYear{
+sYear SYear required
+}
+
+enum SYear{
+I,II,III,IV
+}
+
+entity Section{
+section ClassSection required
+}
+
+enum ClassSection{
+A,B
+}
+
+enum Sem{
+	SEMI,SEMII
+}
+
+entity Semester{
+	sem Sem required
+}
+
+enum Status{
+	ACTIVE,DEACTIVE
+}
+
+entity StudentAttendance{
+	attendanceDate LocalDate required
+	sName String required
+	status Status required
+	comments String required
+}
+
+entity Periods{
+periods ClassPeriods required
+}
+
+enum ClassPeriods{
+ONE,TWO,THREE,FOUR,FIVE
+}
+
+entity Subject{
+commonSub Common required,
+electiveSub Elective required
+}
+
+enum Common{
+MATHS,PHYSICS,CHEMISTRY,DBMS
+}
+
+enum Elective{
+JAVA,C
+}
+
+entity Teacher{
+tName String required
+}
+
+entity Student{
+sName String required,
+attendance Boolean required,
+electiveSub Elective required
+}
+
+entity CollegeBranches{
+branchName String required,
+description String required,
+collegeHead String required
+}
+
+entity Departments{
+name String required,
+description String required,
+deptHead String required
+}
+
+entity Location{
+name String required,
+address String required,
+appliesTo String required
+}
+
+entity College {
+	shortName String required,
+	logo Long required,
+	backgroundImage Long required,
+	instructionInformation String required
+}
+
+enum NameOfBank{
+HDFC, SBI, ICICI, ANDHRABANK
+}
+
+enum TypeOfCollege{
+PRIVATE, PUBLIC
+}
+
+entity LegalEntity{
+logo Long required
+legalNameOfTheCollege  String  required
+typeOfCollege TypeOfCollege required
+dateOfIncorporation LocalDate required
+registeredOfficeAddress String  required
+collegeIdentificationNumber String  required
+pan String  required
+tan String  required
+tanCircleNumber String  required
+citTdsLocation String  required
+formSignatory String  required
+pfNumber String  required
+registrationDate LocalDate required
+esiNumber Long required
+ptRegistrationDate LocalDate required
+ptSignatory String  required
+ptNumber Long required
+}
+
+
+entity AuthorizedSignatory{
+signatoryName String  required
+signatoryFatherName String  required
+signatoryDesignation String  required
+address String  required
+email String  required
+panCardNumber String  required
+}
+
+entity BankAccounts{
+nameOfBank NameOfBank  required
+accountNumber Long required
+typeOfAccount String  required
+ifsCode String  required
+branch String  required
+corporateId Integer required
+}
+
+
+relationship ManyToOne{
+Section{studentyear} to StudentYear,
+Periods{section} to Section,
+Subject{periods} to Periods,
+Student{teacher} to Teacher,
+Subject{student} to Student,
+Subject{teacher} to Teacher,
+LegalEntity{authorizedSignatory} to AuthorizedSignatory
+StudentAttendance{studentYear} to StudentYear
+StudentAttendance{departments} to Departments
+StudentAttendance{subject} to Subject
+StudentAttendance{semester} to Semester
+StudentAttendance{section} to Section
+StudentAttendance{periods} to Periods
+StudentAttendance{student} to Student
+}
+
+relationship OneToOne{
+Teacher{periods} to Periods{teacher}
+}
+dto * with mapstruct
+service all with serviceImpl
+
+
+

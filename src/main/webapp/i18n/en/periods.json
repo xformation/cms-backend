@@ -1,0 +1,25 @@
+
+{
+    "cmsApp": {
+        "periods" : {
+            "home": {
+                "title": "Periods",
+                "createLabel": "Create a new Periods",
+                "createOrEditLabel": "Create or edit a Periods",
+                "search": "Search for Periods"
+            },
+            "created": "A new Periods is created with identifier {{ param }}",
+            "updated": "A Periods is updated with identifier {{ param }}",
+            "deleted": "A Periods is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Periods {{ id }}?"
+            },
+            "detail": {
+                "title": "Periods"
+            },
+            "periods": "Periods",
+            "section": "Section",
+            "teacher": "Teacher"
+        }
+    }
+}

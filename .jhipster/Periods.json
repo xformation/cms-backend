@@ -1,0 +1,37 @@
+{
+    "name": "Periods",
+    "fields": [
+        {
+            "fieldName": "periods",
+            "fieldType": "ClassPeriods",
+            "fieldValues": "ONE,TWO,THREE,FOUR,FIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "section",
+            "otherEntityName": "section",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "teacher",
+            "otherEntityName": "teacher",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "periods"
+        }
+    ],
+    "changelogDate": "20181224075921",
+    "entityTableName": "periods",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

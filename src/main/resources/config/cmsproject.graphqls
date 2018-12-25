@@ -1,0 +1,93 @@
+scalar Date
+
+type Query {
+  institute(id: Int!): Institute!
+  institutes: [Institute!]!
+  student(id: Long!): Student!
+  students: [Student!]!
+}
+
+type Student {
+    id: Long!
+    sName: String!
+    attendance: Boolean!
+    electiveSub: String!
+    teacher: Teacher!
+}
+
+type Institute  {
+  id: Int!
+  name: String!
+  code: String!
+  year: Long!
+}
+
+
+type Teacher{
+    id: Long!
+    tName: String!
+    periods: Periods!
+}
+
+enum ClassPeriods {
+    ONE
+    TWO
+    THREE
+    FOUR
+    FIVE
+}
+
+type Periods{
+    id: Long!
+    section: String!
+    teacher: Teacher!
+    periods: ClassPeriods!
+}
+
+
+type Mutation {
+   addStudent(input: AddStudentInput!): AddStudentPayload!
+   addInstitute(input: AddInstituteInput!): AddInstitutePayload!
+   updateInstitute(input: UpdateInstituteInput!): UpdateInstitutePayload!
+   removeInstitute(input: RemoveInstituteInput!): RemoveInstitutePayload!
+}
+
+input AddStudentInput {
+         sName: String!
+         attendance: Boolean!
+         electiveSub: String!
+         teacherId: Long!
+}
+
+type AddStudentPayload {
+  student: Student!
+}
+
+input AddInstituteInput {
+  name: String
+  code: String
+  year: Long
+}
+
+type AddInstitutePayload {
+  institute: Institute!
+}
+
+input UpdateInstituteInput {
+  instituteId: Int!
+  name: String
+  code: String
+  year: Long
+
+}
+
+type UpdateInstitutePayload {
+  institute: Institute!
+}
+
+input RemoveInstituteInput {
+  instituteId: Int!
+}
+type RemoveInstitutePayload {
+ institutes: [Institute!]!
+}
