@@ -5,6 +5,8 @@ type Query {
   institutes: [Institute!]!
   student(id: Long!): Student!
   students: [Student!]!
+  college(id: Long!): College!
+  colleges: [College!]!
 }
 
 type Student {
@@ -29,6 +31,14 @@ type Teacher{
     periods: Periods!
 }
 
+type College{
+    id: Long!
+    shortName: String!
+    logo: Long!
+    backgroundImage: Long!
+    instructionInformation: String!
+}
+
 enum ClassPeriods {
     ONE
     TWO
@@ -50,6 +60,9 @@ type Mutation {
    addInstitute(input: AddInstituteInput!): AddInstitutePayload!
    updateInstitute(input: UpdateInstituteInput!): UpdateInstitutePayload!
    removeInstitute(input: RemoveInstituteInput!): RemoveInstitutePayload!
+   addCollege(input: AddCollegeInput!): AddCollegePayload!
+   updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
+   removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
 }
 
 input AddStudentInput {
@@ -86,8 +99,39 @@ type UpdateInstitutePayload {
 }
 
 input RemoveInstituteInput {
-  instituteId: Int!
+  instituteId: Long!
 }
 type RemoveInstitutePayload {
  institutes: [Institute!]!
+}
+
+input AddCollegeInput {
+    shortName: String
+    logo: Long
+    backgroundImage: Long
+    instructionInformation: String
+}
+
+type AddCollegePayload {
+    college: College!
+}
+
+input UpdateCollegeInput {
+    collegeId: Long!
+    shortName: String
+    logo: Long
+    backgroundImage: Long
+    instructionInformation: String
+
+}
+
+type UpdateCollegePayload {
+    college: College!
+}
+
+input RemoveCollegeInput {
+    collegeId: Long!
+}
+type RemoveCollegePayload {
+    colleges: [College!]!
 }

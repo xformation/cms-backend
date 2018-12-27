@@ -18,8 +18,10 @@ package com.synectiks.cms.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
 
+import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.model.Institute;
+import com.synectiks.cms.repository.CollegeRepository;
 import com.synectiks.cms.repository.InstituteRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import org.springframework.stereotype.Component;
@@ -36,9 +38,11 @@ public class Query implements GraphQLQueryResolver {
 
     private final StudentRepository studentRepository;
     private final InstituteRepository instituteRepository;
-    public Query( StudentRepository studentRepository, InstituteRepository instituteRepository ) {
+    public final CollegeRepository collegeRepository;
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
+        this.collegeRepository=collegeRepository;
     }
 
     public Student student(long id)
@@ -57,6 +61,16 @@ public class Query implements GraphQLQueryResolver {
 
     public Institute institute(int id) {
         return instituteRepository.findById(id);
+    }
+
+    public College college(long id)
+    {
+        return collegeRepository.getOne(id);
+    }
+
+    public List<College> colleges()
+    {
+        return Lists.newArrayList(collegeRepository.findAll());
     }
 
 

@@ -2,11 +2,14 @@ package com.synectiks.cms.graphql.resolvers;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
+import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.graphql.types.College.*;
 import com.synectiks.cms.graphql.types.Institute.*;
 import com.synectiks.cms.graphql.types.Student.AddStudentInput;
 import com.synectiks.cms.graphql.types.Student.AddStudentPayload;
 import com.synectiks.cms.model.Institute;
+import com.synectiks.cms.repository.CollegeRepository;
 import com.synectiks.cms.repository.InstituteRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import org.slf4j.Logger;
@@ -19,10 +22,12 @@ public class Mutation implements GraphQLMutationResolver {
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
     private final InstituteRepository instituteRepository;
     private final StudentRepository studentRepository;
+    private final CollegeRepository collegeRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
+        this.collegeRepository = collegeRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -70,5 +75,47 @@ public class Mutation implements GraphQLMutationResolver {
         instituteRepository.delete(institute);
 
         return new RemoveInstitutePayload(Lists.newArrayList(instituteRepository.findAll()));
+    }
+
+    public AddCollegePayload addCollege(AddCollegeInput addCollegeInput) {
+        final College college = new College();
+        college.setShortName(addCollegeInput.getShortName());
+        college.setLogo(addCollegeInput.getLogo());
+        college.setBackgroundImage(addCollegeInput.getBackgroundImage());
+        college.setInstructionInformation(addCollegeInput.getInstructionInformation());
+
+        collegeRepository.save(college);
+
+        return new AddCollegePayload(college);
+    }
+
+    public UpdateCollegePayload updateCollege(UpdateCollegeInput updateCollegeInput) {
+        College college = collegeRepository.getOne(updateCollegeInput.getCollegeId());
+        if (updateCollegeInput.getShortName() != null) {
+            college.setShortName(updateCollegeInput.getShortName());
+        }
+
+        if (updateCollegeInput.getLogo() != null) {
+            college.setLogo(updateCollegeInput.getLogo());
+        }
+
+        if (updateCollegeInput.getBackgroundImage() != null) {
+            college.setBackgroundImage(updateCollegeInput.getBackgroundImage());
+        }
+
+        if (updateCollegeInput.getInstructionInformation() != null) {
+            college.setInstructionInformation(updateCollegeInput.getInstructionInformation());
+        }
+
+        collegeRepository.save(college);
+
+        return new UpdateCollegePayload(college);
+    }
+
+    public RemoveCollegePayload removeCollege(RemoveCollegeInput removeCollegeInput) {
+        College college = collegeRepository.getOne(removeCollegeInput.getCollegeId());
+        collegeRepository.delete(college);
+
+        return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
     }
 }
