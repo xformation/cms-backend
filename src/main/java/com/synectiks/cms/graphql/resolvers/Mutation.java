@@ -90,7 +90,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public UpdateCollegePayload updateCollege(UpdateCollegeInput updateCollegeInput) {
-        College college = collegeRepository.getOne(updateCollegeInput.getCollegeId());
+        College college = collegeRepository.findById(updateCollegeInput.getId()).get();
         if (updateCollegeInput.getShortName() != null) {
             college.setShortName(updateCollegeInput.getShortName());
         }

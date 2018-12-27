@@ -117,7 +117,7 @@ type AddCollegePayload {
 }
 
 input UpdateCollegeInput {
-    collegeId: Long!
+    id: Long!
     shortName: String
     logo: Long
     backgroundImage: Long
