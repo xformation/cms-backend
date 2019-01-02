@@ -90,7 +90,11 @@ server:
 #
 # Full reference is available at: https://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
+graphql:
+    datetime:
+        scalars:
+            localDate:
+                scalarName: LocalDate
 jhipster:
     http:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)

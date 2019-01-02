@@ -1,4 +1,4 @@
-scalar Date
+scalar LocalDate
 
 type Query {
   institute(id: Int!): Institute!
@@ -21,7 +21,11 @@ type Query {
   subjects: [Subject!]!
   teacher(id: Long!): Teacher!
   teachers: [Teacher!]!
-
+  legalEntity(id : Int!): LegalEntity!
+  legalEntities: [LegalEntity!]!
+  authorizedSignatory(id: Int!): AuthorizedSignatory!
+  authorizedSignatories:[AuthorizedSignatory!]!
+    now: LocalDate
 }
 
 type Student {
@@ -115,6 +119,11 @@ enum ClassPeriods {
     FIVE
 }
 
+enum TypeOfCollege{
+    PRIVATE
+    PUBLIC
+}
+
 type Periods{
     id: Long!
     section: Section!
@@ -129,6 +138,39 @@ type Subject {
  student: Student!
  teacher: Teacher!
 }
+
+type LegalEntity{
+    id: Long!
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:LocalDate!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    registrationDate:LocalDate!
+    esiNumber:Long!
+    ptRegistrationDate:LocalDate!
+    ptSignatory:String!
+    ptNumber:Long!
+    authorizedSignatory:AuthorizedSignatory!
+}
+
+type AuthorizedSignatory {
+    id: Long!
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+}
+
 
 
 type Mutation {
@@ -162,6 +204,13 @@ type Mutation {
    addTeacher(input: AddTeacherInput!): AddTeacherPayload!
    updateTeacher(input: UpdateTeacherInput!): UpdateTeacherPayload!
    removeTeacher(input: RemoveTeacherInput!): RemoveTeacherPayload!
+    addLegalEntity(input: AddLegalEntityInput!): AddLegalEntityPayload!
+    updateLegalEntity(input: UpdateLegalEntityInput!): UpdateLegalEntityPayload!
+    removeLegalEntity(input: RemoveLegalEntityInput!): RemoveLegalEntityPayload!
+    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
+    updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
+    removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
+    plusDay(input: LocalDate!): LocalDate!
 }
 
 input AddStudentInput {
@@ -439,5 +488,95 @@ type RemoveTeacherPayload {
     teachers: [Teacher!]!
 }
 
+input AddLegalEntityInput {
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:LocalDate!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    registrationDate:LocalDate!
+    esiNumber:Long!
+    ptRegistrationDate:LocalDate!
+    ptSignatory:String!
+    ptNumber:Long!
+    authorizedSignatoryId:Long!
+}
 
+type AddLegalEntityPayload {
+    legalEntity: LegalEntity!
+}
+
+input UpdateLegalEntityInput {
+    id:Long!
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:LocalDate!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    registrationDate:LocalDate!
+    esiNumber:Long!
+    ptRegistrationDate:LocalDate!
+    ptSignatory:String!
+    ptNumber:Long!
+
+}
+
+type UpdateLegalEntityPayload {
+    legalEntity: LegalEntity!
+}
+
+input RemoveLegalEntityInput {
+    legalEntityId: Long!
+}
+type RemoveLegalEntityPayload {
+    legalEntities: [LegalEntity!]!
+}
+
+input AddAuthorizedSignatoryInput {
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+}
+
+type AddAuthorizedSignatoryPayload {
+    authorizedSignatory: AuthorizedSignatory!
+}
+
+input UpdateAuthorizedSignatoryInput {
+    id: Long!
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+}
+
+type UpdateAuthorizedSignatoryPayload {
+    authorizedSignatory: AuthorizedSignatory!
+}
+
+input RemoveAuthorizedSignatoryInput {
+   authorizedSignatoryId: Long!
+}
+type RemoveAuthorizedSignatoryPayload {
+    authorizedSignatories: [ AuthorizedSignatory!]!
+}
 

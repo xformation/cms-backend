@@ -23,6 +23,7 @@ import com.synectiks.cms.model.Institute;
 import com.synectiks.cms.repository.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -43,10 +44,12 @@ public class Query implements GraphQLQueryResolver {
     private final SectionRepository sectionRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
+    private final LegalEntityRepository legalEntityRepository;
+    private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
 
 
 
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository) {
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
@@ -57,6 +60,12 @@ public class Query implements GraphQLQueryResolver {
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
+        this.legalEntityRepository = legalEntityRepository;
+        this.authorizedSignatoryRepository = authorizedSignatoryRepository;
+    }
+
+    public LocalDate getNow() {
+        return LocalDate.now();
     }
 
     public Student student(long id)
@@ -157,6 +166,24 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(teacherRepository.findAll());
     }
 
+    public LegalEntity legalEntity(long id)
+    {
+        return legalEntityRepository.getOne(id);
+    }
 
+    public List<LegalEntity> legalEntities()
+    {
+        return Lists.newArrayList(legalEntityRepository.findAll());
+    }
+
+    public AuthorizedSignatory authorizedSignatory(long id)
+    {
+        return authorizedSignatoryRepository.getOne(id);
+    }
+
+    public List<AuthorizedSignatory> authorizedSignatories()
+    {
+        return Lists.newArrayList(authorizedSignatoryRepository.findAll());
+    }
 
 }
