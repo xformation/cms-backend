@@ -11,12 +11,10 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "periods",
             "otherEntityName": "periods",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "teacher"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20181224075923",

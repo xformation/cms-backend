@@ -10,30 +10,32 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ISection } from 'app/shared/model/section.model';
 import { getEntities as getSections } from 'app/entities/section/section.reducer';
-import { ITeacher } from 'app/shared/model/teacher.model';
-import { getEntities as getTeachers } from 'app/entities/teacher/teacher.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './periods.reducer';
 import { IPeriods } from 'app/shared/model/periods.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IPeriodsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IPeriodsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IPeriodsUpdateState {
   isNew: boolean;
-  sectionid: any;
-  teacherid: any;
+  sectionId: string;
 }
 
 export class PeriodsUpdate extends React.Component<IPeriodsUpdateProps, IPeriodsUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      sectionId: 0,
-      teacherId: 0,
+      sectionId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -44,7 +46,6 @@ export class PeriodsUpdate extends React.Component<IPeriodsUpdateProps, IPeriods
     }
 
     this.props.getSections();
-    this.props.getTeachers();
   }
 
   saveEntity = (event, errors, values) => {
@@ -60,7 +61,6 @@ export class PeriodsUpdate extends React.Component<IPeriodsUpdateProps, IPeriods
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -68,25 +68,8 @@ export class PeriodsUpdate extends React.Component<IPeriodsUpdateProps, IPeriods
     this.props.history.push('/entity/periods');
   };
 
-  sectionUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        sectionId: -1
-      });
-    } else {
-      for (const i in this.props.sections) {
-        if (id === this.props.sections[i].id.toString()) {
-          this.setState({
-            sectionId: this.props.sections[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
-    const { periodsEntity, sections, teachers, loading, updating } = this.props;
+    const { periodsEntity, sections, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -144,7 +127,7 @@ export class PeriodsUpdate extends React.Component<IPeriodsUpdateProps, IPeriods
                   <Label for="section.id">
                     <Translate contentKey="cmsApp.periods.section">Section</Translate>
                   </Label>
-                  <AvInput id="periods-section" type="select" className="form-control" name="sectionId" onChange={this.sectionUpdate}>
+                  <AvInput id="periods-section" type="select" className="form-control" name="sectionId">
                     <option value="" key="0" />
                     {sections
                       ? sections.map(otherEntity => (
@@ -177,15 +160,14 @@ export class PeriodsUpdate extends React.Component<IPeriodsUpdateProps, IPeriods
 
 const mapStateToProps = (storeState: IRootState) => ({
   sections: storeState.section.entities,
-  teachers: storeState.teacher.entities,
   periodsEntity: storeState.periods.entity,
   loading: storeState.periods.loading,
-  updating: storeState.periods.updating
+  updating: storeState.periods.updating,
+  updateSuccess: storeState.periods.updateSuccess
 });
 
 const mapDispatchToProps = {
   getSections,
-  getTeachers,
   getEntity,
   updateEntity,
   createEntity,

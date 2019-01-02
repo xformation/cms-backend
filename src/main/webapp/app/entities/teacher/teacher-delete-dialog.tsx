@@ -9,7 +9,7 @@ import { ITeacher } from 'app/shared/model/teacher.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './teacher.reducer';
 
-export interface ITeacherDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ITeacherDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TeacherDeleteDialog extends React.Component<ITeacherDeleteDialogProps> {
   componentDidMount() {
@@ -33,7 +33,7 @@ export class TeacherDeleteDialog extends React.Component<ITeacherDeleteDialogPro
         <ModalHeader toggle={this.handleClose}>
           <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
         </ModalHeader>
-        <ModalBody>
+        <ModalBody id="cmsApp.teacher.delete.question">
           <Translate contentKey="cmsApp.teacher.delete.question" interpolate={{ id: teacherEntity.id }}>
             Are you sure you want to delete this Teacher?
           </Translate>
@@ -43,7 +43,7 @@ export class TeacherDeleteDialog extends React.Component<ITeacherDeleteDialogPro
             <FontAwesomeIcon icon="ban" />&nbsp;
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-teacher" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp;
             <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>

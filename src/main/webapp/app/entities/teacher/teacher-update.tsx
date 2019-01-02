@@ -14,22 +14,28 @@ import { getEntity, updateEntity, createEntity, reset } from './teacher.reducer'
 import { ITeacher } from 'app/shared/model/teacher.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ITeacherUpdateState {
   isNew: boolean;
-  periodsId: any;
+  periodsId: string;
 }
 
 export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacherUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      periodsId: 0,
+      periodsId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/teacher');
-  };
-
-  periodsUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        periodsId: -1
-      });
-    } else {
-      for (const i in this.props.periods) {
-        if (id === this.props.periods[i].id.toString()) {
-          this.setState({
-            periodsId: this.props.periods[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -124,7 +112,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   <Label for="periods.id">
                     <Translate contentKey="cmsApp.teacher.periods">Periods</Translate>
                   </Label>
-                  <AvInput id="teacher-periods" type="select" className="form-control" name="periodsId" onChange={this.periodsUpdate}>
+                  <AvInput id="teacher-periods" type="select" className="form-control" name="periodsId">
                     <option value="" key="0" />
                     {periods
                       ? periods.map(otherEntity => (
@@ -159,7 +147,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   periods: storeState.periods.entities,
   teacherEntity: storeState.teacher.entity,
   loading: storeState.teacher.loading,
-  updating: storeState.teacher.updating
+  updating: storeState.teacher.updating,
+  updateSuccess: storeState.teacher.updateSuccess
 });
 
 const mapDispatchToProps = {

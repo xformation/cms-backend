@@ -24,12 +24,6 @@ public interface PeriodsService {
      * @return the list of entities
      */
     List<PeriodsDTO> findAll();
-    /**
-     * Get all the PeriodsDTO where Teacher is null.
-     *
-     * @return the list of entities
-     */
-    List<PeriodsDTO> findAllWhereTeacherIsNull();
 
 
     /**

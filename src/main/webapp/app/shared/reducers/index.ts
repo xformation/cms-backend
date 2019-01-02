@@ -72,6 +72,18 @@ import authorizedSignatory, {
 import bankAccounts, {
   BankAccountsState
 } from 'app/entities/bank-accounts/bank-accounts.reducer';
+// prettier-ignore
+import periods, {
+  PeriodsState
+} from 'app/entities/periods/periods.reducer';
+// prettier-ignore
+import teacher, {
+  TeacherState
+} from 'app/entities/teacher/teacher.reducer';
+// prettier-ignore
+import teacher, {
+  TeacherState
+} from 'app/entities/teacher/teacher.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

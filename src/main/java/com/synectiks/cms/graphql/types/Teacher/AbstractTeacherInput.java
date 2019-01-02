@@ -7,7 +7,6 @@ import java.util.Objects;
 public class AbstractTeacherInput {
     private Long id;
     private String tName;
-    private Periods periods;
 
     public Long getId() {
         return id;
@@ -21,32 +20,22 @@ public class AbstractTeacherInput {
         return tName;
     }
 
+    public void settName(String tName) {
+        this.tName = tName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractTeacherInput)) return false;
         AbstractTeacherInput that = (AbstractTeacherInput) o;
         return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(gettName(), that.gettName()) &&
-            Objects.equals(getPeriods(), that.getPeriods());
+            Objects.equals(gettName(), that.gettName());
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getId(), gettName(), getPeriods());
-    }
-
-    public void settName(String tName) {
-        this.tName = tName;
-    }
-
-    public Periods getPeriods() {
-        return periods;
-    }
-
-    public void setPeriods(Periods periods) {
-        this.periods = periods;
+        return Objects.hash(getId(), gettName());
     }
 
     @Override
@@ -54,7 +43,6 @@ public class AbstractTeacherInput {
         return "AbstractTeacherInput{" +
             "id=" + id +
             ", tName='" + tName + '\'' +
-            ", periods=" + periods +
             '}';
     }
 }

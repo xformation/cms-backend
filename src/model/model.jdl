@@ -140,6 +140,7 @@ corporateId Integer required
 relationship ManyToOne{
 Section{studentyear} to StudentYear,
 Periods{section} to Section,
+Teacher{periods} to Periods,
 Subject{periods} to Periods,
 Student{teacher} to Teacher,
 Subject{student} to Student,
@@ -154,9 +155,7 @@ StudentAttendance{periods} to Periods
 StudentAttendance{student} to Student
 }
 
-relationship OneToOne{
-Teacher{periods} to Periods{teacher}
-}
+
 dto * with mapstruct
 service all with serviceImpl
 

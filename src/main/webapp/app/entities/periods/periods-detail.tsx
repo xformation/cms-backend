@@ -12,7 +12,7 @@ import { IPeriods } from 'app/shared/model/periods.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IPeriodsDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IPeriodsDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class PeriodsDetail extends React.Component<IPeriodsDetailProps> {
   componentDidMount() {

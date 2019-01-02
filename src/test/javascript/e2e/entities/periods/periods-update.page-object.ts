@@ -11,45 +11,45 @@ export default class PeriodsUpdatePage {
     return this.pageTitle;
   }
 
-  setPeriodsSelect(periods) {
-    this.periodsSelect.sendKeys(periods);
+  async setPeriodsSelect(periods) {
+    await this.periodsSelect.sendKeys(periods);
   }
 
-  getPeriodsSelect() {
+  async getPeriodsSelect() {
     return this.periodsSelect.element(by.css('option:checked')).getText();
   }
 
-  periodsSelectLastOption() {
-    this.periodsSelect
+  async periodsSelectLastOption() {
+    await this.periodsSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  sectionSelectLastOption() {
-    this.sectionSelect
+  async sectionSelectLastOption() {
+    await this.sectionSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  sectionSelectOption(option) {
-    this.sectionSelect.sendKeys(option);
+  async sectionSelectOption(option) {
+    await this.sectionSelect.sendKeys(option);
   }
 
   getSectionSelect() {
     return this.sectionSelect;
   }
 
-  getSectionSelectedOption() {
+  async getSectionSelectedOption() {
     return this.sectionSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

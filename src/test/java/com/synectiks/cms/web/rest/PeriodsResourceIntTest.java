@@ -53,10 +53,8 @@ public class PeriodsResourceIntTest {
     @Autowired
     private PeriodsRepository periodsRepository;
 
-
     @Autowired
     private PeriodsMapper periodsMapper;
-    
 
     @Autowired
     private PeriodsService periodsService;
@@ -191,7 +189,6 @@ public class PeriodsResourceIntTest {
             .andExpect(jsonPath("$.[*].periods").value(hasItem(DEFAULT_PERIODS.toString())));
     }
     
-
     @Test
     @Transactional
     public void getPeriods() throws Exception {
@@ -205,6 +202,7 @@ public class PeriodsResourceIntTest {
             .andExpect(jsonPath("$.id").value(periods.getId().intValue()))
             .andExpect(jsonPath("$.periods").value(DEFAULT_PERIODS.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingPeriods() throws Exception {
@@ -252,7 +250,7 @@ public class PeriodsResourceIntTest {
         // Create the Periods
         PeriodsDTO periodsDTO = periodsMapper.toDto(periods);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restPeriodsMockMvc.perform(put("/api/periods")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(periodsDTO)))

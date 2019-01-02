@@ -1,13 +1,13 @@
 package com.synectiks.cms.graphql.types.Student;
 
 public class RemoveStudentInput {
-    private int studentId;
+    private Long studentId;
 
-    public int getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
 }

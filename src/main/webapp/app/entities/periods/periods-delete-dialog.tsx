@@ -9,7 +9,7 @@ import { IPeriods } from 'app/shared/model/periods.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './periods.reducer';
 
-export interface IPeriodsDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IPeriodsDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class PeriodsDeleteDialog extends React.Component<IPeriodsDeleteDialogProps> {
   componentDidMount() {
@@ -33,7 +33,7 @@ export class PeriodsDeleteDialog extends React.Component<IPeriodsDeleteDialogPro
         <ModalHeader toggle={this.handleClose}>
           <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
         </ModalHeader>
-        <ModalBody>
+        <ModalBody id="cmsApp.periods.delete.question">
           <Translate contentKey="cmsApp.periods.delete.question" interpolate={{ id: periodsEntity.id }}>
             Are you sure you want to delete this Periods?
           </Translate>
@@ -43,7 +43,7 @@ export class PeriodsDeleteDialog extends React.Component<IPeriodsDeleteDialogPro
             <FontAwesomeIcon icon="ban" />&nbsp;
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-periods" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp;
             <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>

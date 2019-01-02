@@ -16,13 +16,6 @@
             "relationshipName": "section",
             "otherEntityName": "section",
             "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "teacher",
-            "otherEntityName": "teacher",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "periods"
         }
     ],
     "changelogDate": "20181224075921",

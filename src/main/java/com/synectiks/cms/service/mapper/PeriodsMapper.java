@@ -15,7 +15,6 @@ public interface PeriodsMapper extends EntityMapper<PeriodsDTO, Periods> {
     PeriodsDTO toDto(Periods periods);
 
     @Mapping(source = "sectionId", target = "section")
-    @Mapping(target = "teacher", ignore = true)
     Periods toEntity(PeriodsDTO periodsDTO);
 
     default Periods fromId(Long id) {

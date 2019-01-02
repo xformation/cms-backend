@@ -10,7 +10,6 @@ public class AbstractStudentInput {
     private String sName;
     private Boolean attendance;
     private Elective electiveSub;
-    private Teacher teacher;
 
     public Long getId() {
         return id;
@@ -44,14 +43,6 @@ public class AbstractStudentInput {
         this.electiveSub = electiveSub;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,14 +51,12 @@ public class AbstractStudentInput {
         return Objects.equals(getId(), that.getId()) &&
             Objects.equals(getsName(), that.getsName()) &&
             Objects.equals(getAttendance(), that.getAttendance()) &&
-            getElectiveSub() == that.getElectiveSub() &&
-            Objects.equals(getTeacher(), that.getTeacher());
+            getElectiveSub() == that.getElectiveSub();
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getId(), getsName(), getAttendance(), getElectiveSub(), getTeacher());
+        return Objects.hash(getId(), getsName(), getAttendance(), getElectiveSub());
     }
 
     @Override
@@ -77,7 +66,6 @@ public class AbstractStudentInput {
             ", sName='" + sName + '\'' +
             ", attendance=" + attendance +
             ", electiveSub=" + electiveSub +
-            ", teacher=" + teacher +
             '}';
     }
 }

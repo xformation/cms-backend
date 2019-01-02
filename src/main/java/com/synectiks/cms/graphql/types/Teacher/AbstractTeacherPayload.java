@@ -1,5 +1,16 @@
 package com.synectiks.cms.graphql.types.Teacher;
 
-public class AbstractTeacherPayload {
+import com.synectiks.cms.domain.Teacher;
 
+public class AbstractTeacherPayload {
+   private final Teacher teacher;
+
+
+    public AbstractTeacherPayload(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
 }

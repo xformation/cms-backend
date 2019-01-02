@@ -11,39 +11,39 @@ export default class TeacherUpdatePage {
     return this.pageTitle;
   }
 
-  setTNameInput(tName) {
-    this.tNameInput.sendKeys(tName);
+  async setTNameInput(tName) {
+    await this.tNameInput.sendKeys(tName);
   }
 
-  getTNameInput() {
+  async getTNameInput() {
     return this.tNameInput.getAttribute('value');
   }
 
-  periodsSelectLastOption() {
-    this.periodsSelect
+  async periodsSelectLastOption() {
+    await this.periodsSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  periodsSelectOption(option) {
-    this.periodsSelect.sendKeys(option);
+  async periodsSelectOption(option) {
+    await this.periodsSelect.sendKeys(option);
   }
 
   getPeriodsSelect() {
     return this.periodsSelect;
   }
 
-  getPeriodsSelectedOption() {
+  async getPeriodsSelectedOption() {
     return this.periodsSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

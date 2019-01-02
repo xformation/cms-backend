@@ -7,14 +7,58 @@ type Query {
   students: [Student!]!
   college(id: Long!): College!
   colleges: [College!]!
+  collegeBranch(id: Long!): CollegeBranches!
+  collegeBranches: [CollegeBranches!]!
+  studentYear(id: Long!): StudentYear!
+  studentYears: [StudentYear!]!
+  semester(id: Long!): Semester!
+  semesters: [Semester!]!
+  period(id: Long!): Periods!
+  periods: [Periods!]!
+  section(id: Long!): Section!
+  sections: [Section!]!
+  subject(id: Long!): Subject!
+  subjects: [Subject!]!
+  teacher(id: Long!): Teacher!
+  teachers: [Teacher!]!
+
 }
 
 type Student {
     id: Long!
     sName: String!
     attendance: Boolean!
-    electiveSub: String!
+    electiveSub: Elective!
     teacher: Teacher!
+}
+
+type CollegeBranches{
+    id: Long!
+    branchName: String!
+    description: String!
+    collegeHead: String!
+}
+
+type StudentYear {
+    id: Long!
+    sYear: SYear!
+}
+
+type Semester {
+    id: Long!
+    sem: Sem!
+}
+
+enum SYear {
+    I
+    II
+    III
+    IV
+}
+
+enum Sem {
+    SEMI
+    SEMII
 }
 
 type Institute  {
@@ -39,6 +83,30 @@ type College{
     instructionInformation: String!
 }
 
+type Section{
+    id: Long!
+    section: ClassSection!
+    studentyear: StudentYear!
+}
+
+enum ClassSection {
+    A
+    B
+}
+
+enum Common {
+    MATHS
+    PHYSICS
+    CHEMISTRY
+    DBMS
+}
+
+enum Elective {
+    JAVA
+    C
+}
+
+
 enum ClassPeriods {
     ONE
     TWO
@@ -49,20 +117,51 @@ enum ClassPeriods {
 
 type Periods{
     id: Long!
-    section: String!
-    teacher: Teacher!
+    section: Section!
     periods: ClassPeriods!
+}
+
+type Subject {
+ id: Long!
+ commonSub: Common!
+ electiveSub: Elective!
+ periods: Periods!
+ student: Student!
+ teacher: Teacher!
 }
 
 
 type Mutation {
    addStudent(input: AddStudentInput!): AddStudentPayload!
+   updateStudent(input: UpdateStudentInput!): UpdateStudentPayload!
+   removeStudent(input: RemoveStudentInput!): RemoveStudentPayload!
    addInstitute(input: AddInstituteInput!): AddInstitutePayload!
    updateInstitute(input: UpdateInstituteInput!): UpdateInstitutePayload!
    removeInstitute(input: RemoveInstituteInput!): RemoveInstitutePayload!
    addCollege(input: AddCollegeInput!): AddCollegePayload!
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
+   addCollegeBranches(input: AddCollegeBranchesInput!): AddCollegeBranchesPayload!
+   updateCollegeBranches(input: UpdateCollegeBranchesInput!): UpdateCollegeBranchesPayload!
+   removeCollegeBranches(input: RemoveCollegeBranchesInput!): RemoveCollegeBranchesPayload!
+   addStudentYear(input: AddStudentYearInput!): AddStudentYearPayload!
+   updateStudentYear(input: UpdateStudentYearInput!): UpdateStudentYearPayload!
+   removeStudentYear(input: RemoveStudentYearInput!): RemoveStudentYearPayload!
+   addSemester(input: AddSemesterInput!): AddSemesterPayload!
+   updateSemester(input: UpdateSemesterInput!): UpdateSemesterPayload!
+   removeSemester(input: RemoveSemesterInput!): RemoveSemesterPayload!
+   addPeriods(input: AddPeriodsInput!): AddPeriodsPayload!
+   updatePeriods(input: UpdatePeriodsInput!): UpdatePeriodsPayload!
+   removePeriods(input: RemovePeriodsInput!): RemovePeriodsPayload!
+   addSection(input: AddSectionInput!): AddSectionPayload!
+   updateSection(input: UpdateSectionInput!): UpdateSectionPayload!
+   removeSection(input: RemoveSectionInput!): RemoveSectionPayload!
+   addSubject(input: AddSubjectInput!): AddSubjectPayload!
+   updateSubject(input: UpdateSubjectInput!): UpdateSubjectPayload!
+   removeSubject(input: RemoveSubjectInput!): RemoveSubjectPayload!
+   addTeacher(input: AddTeacherInput!): AddTeacherPayload!
+   updateTeacher(input: UpdateTeacherInput!): UpdateTeacherPayload!
+   removeTeacher(input: RemoveTeacherInput!): RemoveTeacherPayload!
 }
 
 input AddStudentInput {
@@ -74,6 +173,24 @@ input AddStudentInput {
 
 type AddStudentPayload {
   student: Student!
+}
+
+input UpdateStudentInput {
+           id:Long!
+           sName: String!
+           attendance: Boolean!
+           electiveSub: String!
+}
+
+type UpdateStudentPayload {
+   student: Student!
+}
+
+input RemoveStudentInput {
+  studentId: Long!
+}
+type RemoveStudentPayload {
+ students: [Student!]!
 }
 
 input AddInstituteInput {
@@ -135,3 +252,192 @@ input RemoveCollegeInput {
 type RemoveCollegePayload {
     colleges: [College!]!
 }
+
+input AddCollegeBranchesInput {
+          branchName: String!
+          description: String!
+          collegeHead: String!
+}
+
+type AddCollegeBranchesPayload {
+    collegeBranches: CollegeBranches!
+}
+
+input UpdateCollegeBranchesInput {
+           id: Long!
+           branchName: String!
+           description: String!
+           collegeHead: String!
+
+}
+
+type UpdateCollegeBranchesPayload {
+    collegeBranches: CollegeBranches!
+}
+
+input RemoveCollegeBranchesInput {
+    collegeBranchesId: Long!
+}
+type RemoveCollegeBranchesPayload {
+    collegeBranches: [CollegeBranches!]!
+}
+
+input AddStudentYearInput {
+        sYear: SYear
+}
+
+type AddStudentYearPayload {
+    studentYear: StudentYear!
+}
+
+input UpdateStudentYearInput {
+    id: Long!
+    sYear: SYear!
+
+}
+
+type UpdateStudentYearPayload {
+    studentYear: StudentYear!
+}
+
+input RemoveStudentYearInput {
+    studentYearId: Long!
+}
+type RemoveStudentYearPayload {
+    studentYears: [StudentYear!]!
+}
+
+input AddSemesterInput {
+        sem: Sem
+}
+
+type AddSemesterPayload {
+    semester: Semester!
+}
+
+input UpdateSemesterInput {
+    id: Long!
+   sem: Sem!
+
+}
+
+type UpdateSemesterPayload {
+    semester: Semester!
+}
+
+input RemoveSemesterInput {
+    semesterId: Long!
+}
+type RemoveSemesterPayload {
+    semesters: [Semester!]!
+}
+
+input AddPeriodsInput {
+          sectionId: Long!
+          periods: ClassPeriods!
+}
+
+type AddPeriodsPayload {
+    periods: Periods!
+}
+
+input UpdatePeriodsInput {
+           id: Long!
+           periods: ClassPeriods!
+
+}
+
+type UpdatePeriodsPayload {
+    periods: Periods!
+}
+
+input RemovePeriodsInput {
+    periodsId: Long!
+}
+type RemovePeriodsPayload {
+    periods: [Periods!]!
+}
+
+input AddSectionInput {
+           section: ClassSection!
+           studentYearId: Long!
+}
+
+type AddSectionPayload {
+    section: Section!
+}
+
+input UpdateSectionInput {
+          id: Long!
+          section: ClassSection!
+}
+
+type UpdateSectionPayload {
+    section: Section!
+}
+
+input RemoveSectionInput {
+    sectionId: Long!
+}
+type RemoveSectionPayload {
+    sections: [Section!]!
+}
+
+
+input AddSubjectInput {
+       commonSub: Common!
+       electiveSub: Elective!
+       periodsId: Long!
+       studentId: Long!
+       teacherId: Long!
+}
+
+type AddSubjectPayload {
+    subject: Subject!
+}
+
+input UpdateSubjectInput {
+       id: Long!
+       commonSub: Common!
+       electiveSub: Elective!
+
+}
+
+type UpdateSubjectPayload {
+    subject: Subject!
+}
+
+input RemoveSubjectInput {
+    subjectId: Long!
+}
+type RemoveSubjectPayload {
+    subjects: [Subject!]!
+}
+
+input AddTeacherInput {
+          tName: String!
+          periodsId: Long!
+}
+
+type AddTeacherPayload {
+    teacher: Teacher!
+}
+
+input UpdateTeacherInput {
+         id: Long!
+          tName: String!
+}
+
+type UpdateTeacherPayload {
+    teacher: Teacher!
+}
+
+input RemoveTeacherInput {
+    teacherId: Long!
+}
+type RemoveTeacherPayload {
+    teachers: [Teacher!]!
+}
+
+
+

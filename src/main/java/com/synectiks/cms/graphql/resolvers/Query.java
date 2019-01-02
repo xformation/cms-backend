@@ -18,12 +18,9 @@ package com.synectiks.cms.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
 
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.*;
 import com.synectiks.cms.model.Institute;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.InstituteRepository;
-import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,10 +36,27 @@ public class Query implements GraphQLQueryResolver {
     private final StudentRepository studentRepository;
     private final InstituteRepository instituteRepository;
     public final CollegeRepository collegeRepository;
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository) {
+    private final CollegeBranchesRepository collegeBranchesRepository;
+    private final StudentYearRepository studentYearRepository;
+    private final SemesterRepository semesterRepository;
+    private final PeriodsRepository periodsRepository;
+    private final SectionRepository sectionRepository;
+    private final SubjectRepository subjectRepository;
+    private final TeacherRepository teacherRepository;
+
+
+
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
+        this.collegeBranchesRepository = collegeBranchesRepository;
+        this.studentYearRepository = studentYearRepository;
+        this.semesterRepository = semesterRepository;
+        this.periodsRepository = periodsRepository;
+        this.sectionRepository = sectionRepository;
+        this.subjectRepository = subjectRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     public Student student(long id)
@@ -72,6 +86,77 @@ public class Query implements GraphQLQueryResolver {
     {
         return Lists.newArrayList(collegeRepository.findAll());
     }
+
+    public CollegeBranches collegeBranch(long id)
+    {
+        return collegeBranchesRepository.getOne(id);
+    }
+
+    public List<CollegeBranches> collegeBranches()
+    {
+        return Lists.newArrayList(collegeBranchesRepository.findAll());
+    }
+
+    public StudentYear studentYear(long id)
+    {
+        return studentYearRepository.getOne(id);
+    }
+
+    public List<StudentYear> studentYears()
+    {
+        return Lists.newArrayList(studentYearRepository.findAll());
+    }
+
+    public Semester semester(long id)
+    {
+        return semesterRepository.getOne(id);
+    }
+
+    public List<Semester> semesters()
+    {
+        return Lists.newArrayList(semesterRepository.findAll());
+    }
+
+    public Periods period(long id)
+    {
+        return periodsRepository.getOne(id);
+    }
+
+    public List<Periods> periods()
+    {
+        return Lists.newArrayList(periodsRepository.findAll());
+    }
+
+    public Section section(long id)
+    {
+        return sectionRepository.getOne(id);
+    }
+
+    public List<Section> sections()
+    {
+        return Lists.newArrayList(sectionRepository.findAll());
+    }
+
+    public Subject subject(long id)
+    {
+        return subjectRepository.getOne(id);
+    }
+
+    public List<Subject> subjects()
+    {
+        return Lists.newArrayList(subjectRepository.findAll());
+    }
+
+    public Teacher teacher(long id)
+    {
+        return teacherRepository.getOne(id);
+    }
+
+    public List<Teacher> teachers()
+    {
+        return Lists.newArrayList(teacherRepository.findAll());
+    }
+
 
 
 }

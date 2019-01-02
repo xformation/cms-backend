@@ -83,16 +83,11 @@ public class PeriodsResource {
     /**
      * GET  /periods : get all the periods.
      *
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of periods in body
      */
     @GetMapping("/periods")
     @Timed
-    public List<PeriodsDTO> getAllPeriods(@RequestParam(required = false) String filter) {
-        if ("teacher-is-null".equals(filter)) {
-            log.debug("REST request to get all Periodss where teacher is null");
-            return periodsService.findAllWhereTeacherIsNull();
-        }
+    public List<PeriodsDTO> getAllPeriods() {
         log.debug("REST request to get all Periods");
         return periodsService.findAll();
     }

@@ -52,10 +52,8 @@ public class TeacherResourceIntTest {
     @Autowired
     private TeacherRepository teacherRepository;
 
-
     @Autowired
     private TeacherMapper teacherMapper;
-    
 
     @Autowired
     private TeacherService teacherService;
@@ -190,7 +188,6 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].tName").value(hasItem(DEFAULT_T_NAME.toString())));
     }
     
-
     @Test
     @Transactional
     public void getTeacher() throws Exception {
@@ -204,6 +201,7 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.id").value(teacher.getId().intValue()))
             .andExpect(jsonPath("$.tName").value(DEFAULT_T_NAME.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingTeacher() throws Exception {
@@ -251,7 +249,7 @@ public class TeacherResourceIntTest {
         // Create the Teacher
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTeacherMockMvc.perform(put("/api/teachers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
@@ -298,7 +296,7 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teacher.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tName").value(hasItem(DEFAULT_T_NAME.toString())));
+            .andExpect(jsonPath("$.[*].tName").value(hasItem(DEFAULT_T_NAME)));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -30,8 +31,8 @@ public class Teacher implements Serializable {
     @Column(name = "t_name", nullable = false)
     private String tName;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("")
     private Periods periods;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

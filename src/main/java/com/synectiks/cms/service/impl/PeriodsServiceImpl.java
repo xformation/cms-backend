@@ -50,6 +50,7 @@ public class PeriodsServiceImpl implements PeriodsService {
     @Override
     public PeriodsDTO save(PeriodsDTO periodsDTO) {
         log.debug("Request to save Periods : {}", periodsDTO);
+
         Periods periods = periodsMapper.toEntity(periodsDTO);
         periods = periodsRepository.save(periods);
         PeriodsDTO result = periodsMapper.toDto(periods);
@@ -71,21 +72,6 @@ public class PeriodsServiceImpl implements PeriodsService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
-
-    /**
-     *  get all the periods where Teacher is null.
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true) 
-    public List<PeriodsDTO> findAllWhereTeacherIsNull() {
-        log.debug("Request to get all periods where Teacher is null");
-        return StreamSupport
-            .stream(periodsRepository.findAll().spliterator(), false)
-            .filter(periods -> periods.getTeacher() == null)
-            .map(periodsMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
 
     /**
      * Get one periods by id.
