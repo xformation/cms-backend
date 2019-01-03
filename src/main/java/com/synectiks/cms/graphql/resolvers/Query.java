@@ -64,10 +64,6 @@ public class Query implements GraphQLQueryResolver {
         this.authorizedSignatoryRepository = authorizedSignatoryRepository;
     }
 
-    public LocalDate getNow() {
-        return LocalDate.now();
-    }
-
     public Student student(long id)
     {
         return studentRepository.getOne(id);

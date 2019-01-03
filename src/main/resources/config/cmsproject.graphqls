@@ -1,4 +1,4 @@
-scalar LocalDate
+scalar Date
 
 type Query {
   institute(id: Int!): Institute!
@@ -25,7 +25,6 @@ type Query {
   legalEntities: [LegalEntity!]!
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
-    now: LocalDate
 }
 
 type Student {
@@ -144,7 +143,7 @@ type LegalEntity{
     logo: Long!
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
-    dateOfIncorporation:LocalDate!
+    dateOfIncorporation:Date!
     registeredOfficeAddress:String!
     collegeIdentificationNumber:String!
     pan:String!
@@ -153,9 +152,9 @@ type LegalEntity{
     citTdsLocation:String!
     formSignatory:String!
     pfNumber:String!
-    registrationDate:LocalDate!
+    registrationDate:Date!
     esiNumber:Long!
-    ptRegistrationDate:LocalDate!
+    ptRegistrationDate:Date!
     ptSignatory:String!
     ptNumber:Long!
     authorizedSignatory:AuthorizedSignatory!
@@ -210,7 +209,6 @@ type Mutation {
     addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
     updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
     removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
-    plusDay(input: LocalDate!): LocalDate!
 }
 
 input AddStudentInput {
@@ -492,7 +490,7 @@ input AddLegalEntityInput {
     logo: Long!
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
-    dateOfIncorporation:LocalDate!
+    dateOfIncorporation:Date!
     registeredOfficeAddress:String!
     collegeIdentificationNumber:String!
     pan:String!
@@ -501,9 +499,9 @@ input AddLegalEntityInput {
     citTdsLocation:String!
     formSignatory:String!
     pfNumber:String!
-    registrationDate:LocalDate!
+    registrationDate:Date!
     esiNumber:Long!
-    ptRegistrationDate:LocalDate!
+    ptRegistrationDate:Date!
     ptSignatory:String!
     ptNumber:Long!
     authorizedSignatoryId:Long!
@@ -518,7 +516,7 @@ input UpdateLegalEntityInput {
     logo: Long!
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
-    dateOfIncorporation:LocalDate!
+    dateOfIncorporation:Date!
     registeredOfficeAddress:String!
     collegeIdentificationNumber:String!
     pan:String!
@@ -527,9 +525,9 @@ input UpdateLegalEntityInput {
     citTdsLocation:String!
     formSignatory:String!
     pfNumber:String!
-    registrationDate:LocalDate!
+    registrationDate:Date!
     esiNumber:Long!
-    ptRegistrationDate:LocalDate!
+    ptRegistrationDate:Date!
     ptSignatory:String!
     ptNumber:Long!
 

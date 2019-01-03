@@ -27,9 +27,7 @@ import java.time.LocalDate;
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
-    public LocalDate plusDay(LocalDate input) {
-        return input.plusDays(1);
-    }
+
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
     private final InstituteRepository instituteRepository;
     private final StudentRepository studentRepository;

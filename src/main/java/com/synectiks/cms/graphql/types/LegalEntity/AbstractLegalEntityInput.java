@@ -4,6 +4,7 @@ import com.synectiks.cms.domain.AuthorizedSignatory;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 public class AbstractLegalEntityInput {
@@ -11,7 +12,7 @@ public class AbstractLegalEntityInput {
     private Long logo;
     private String legalNameOfTheCollege;
     private TypeOfCollege typeOfCollege;
-    private LocalDate dateOfIncorporation;
+    private Date dateOfIncorporation;
     private String registeredOfficeAddress;
     private String collegeIdentificationNumber;
     private String pan;
@@ -20,9 +21,9 @@ public class AbstractLegalEntityInput {
     private String citTdsLocation;
     private String formSignatory;
     private String pfNumber;
-    private LocalDate registrationDate;
+    private Date registrationDate;
     private Long esiNumber;
-    private LocalDate ptRegistrationDate;
+    private Date ptRegistrationDate;
     private String ptSignatory;
     private Long ptNumber;
 
@@ -58,11 +59,11 @@ public class AbstractLegalEntityInput {
         this.typeOfCollege = typeOfCollege;
     }
 
-    public LocalDate getDateOfIncorporation() {
+    public Date getDateOfIncorporation() {
         return dateOfIncorporation;
     }
 
-    public void setDateOfIncorporation(LocalDate dateOfIncorporation) {
+    public void setDateOfIncorporation(Date dateOfIncorporation) {
         this.dateOfIncorporation = dateOfIncorporation;
     }
 
@@ -130,11 +131,11 @@ public class AbstractLegalEntityInput {
         this.pfNumber = pfNumber;
     }
 
-    public LocalDate getRegistrationDate() {
+    public Date getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
+    public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
     }
 
@@ -146,11 +147,11 @@ public class AbstractLegalEntityInput {
         this.esiNumber = esiNumber;
     }
 
-    public LocalDate getPtRegistrationDate() {
+    public Date getPtRegistrationDate() {
         return ptRegistrationDate;
     }
 
-    public void setPtRegistrationDate(LocalDate ptRegistrationDate) {
+    public void setPtRegistrationDate(Date ptRegistrationDate) {
         this.ptRegistrationDate = ptRegistrationDate;
     }
 
@@ -168,37 +169,6 @@ public class AbstractLegalEntityInput {
 
     public void setPtNumber(Long ptNumber) {
         this.ptNumber = ptNumber;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractLegalEntityInput that = (AbstractLegalEntityInput) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(logo, that.logo) &&
-            Objects.equals(legalNameOfTheCollege, that.legalNameOfTheCollege) &&
-            typeOfCollege == that.typeOfCollege &&
-            Objects.equals(dateOfIncorporation, that.dateOfIncorporation) &&
-            Objects.equals(registeredOfficeAddress, that.registeredOfficeAddress) &&
-            Objects.equals(collegeIdentificationNumber, that.collegeIdentificationNumber) &&
-            Objects.equals(pan, that.pan) &&
-            Objects.equals(tan, that.tan) &&
-            Objects.equals(tanCircleNumber, that.tanCircleNumber) &&
-            Objects.equals(citTdsLocation, that.citTdsLocation) &&
-            Objects.equals(formSignatory, that.formSignatory) &&
-            Objects.equals(pfNumber, that.pfNumber) &&
-            Objects.equals(registrationDate, that.registrationDate) &&
-            Objects.equals(esiNumber, that.esiNumber) &&
-            Objects.equals(ptRegistrationDate, that.ptRegistrationDate) &&
-            Objects.equals(ptSignatory, that.ptSignatory) &&
-            Objects.equals(ptNumber, that.ptNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, logo, legalNameOfTheCollege, typeOfCollege, dateOfIncorporation, registeredOfficeAddress, collegeIdentificationNumber, pan, tan, tanCircleNumber, citTdsLocation, formSignatory, pfNumber, registrationDate, esiNumber, ptRegistrationDate, ptSignatory, ptNumber);
     }
 
     @Override

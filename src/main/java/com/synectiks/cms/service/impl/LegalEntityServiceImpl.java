@@ -53,7 +53,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
         LegalEntity legalEntity = legalEntityMapper.toEntity(legalEntityDTO);
         legalEntity = legalEntityRepository.save(legalEntity);
         LegalEntityDTO result = legalEntityMapper.toDto(legalEntity);
-        legalEntitySearchRepository.save(legalEntity);
+        //legalEntitySearchRepository.save(legalEntity);
         return result;
     }
 
