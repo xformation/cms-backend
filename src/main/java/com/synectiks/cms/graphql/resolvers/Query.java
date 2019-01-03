@@ -23,7 +23,6 @@ import com.synectiks.cms.model.Institute;
 import com.synectiks.cms.repository.*;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -46,10 +45,13 @@ public class Query implements GraphQLQueryResolver {
     private final TeacherRepository teacherRepository;
     private final LegalEntityRepository legalEntityRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
+    private final BankAccountsRepository bankAccountsRepository;
+    private final DepartmentsRepository departmentsRepository;
+    private final LocationRepository locationRepository;
+    private final StudentAttendanceRepository studentAttendanceRepository;
 
 
-
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository) {
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
@@ -62,6 +64,10 @@ public class Query implements GraphQLQueryResolver {
         this.teacherRepository = teacherRepository;
         this.legalEntityRepository = legalEntityRepository;
         this.authorizedSignatoryRepository = authorizedSignatoryRepository;
+        this.bankAccountsRepository = bankAccountsRepository;
+        this.departmentsRepository = departmentsRepository;
+        this.locationRepository = locationRepository;
+        this.studentAttendanceRepository = studentAttendanceRepository;
     }
 
     public Student student(long id)
@@ -182,4 +188,43 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(authorizedSignatoryRepository.findAll());
     }
 
+    public BankAccounts bankAccount(long id)
+    {
+        return bankAccountsRepository.getOne(id);
+    }
+
+    public List<BankAccounts> bankAccounts()
+    {
+        return Lists.newArrayList(bankAccountsRepository.findAll());
+    }
+
+    public Departments department(long id)
+    {
+        return departmentsRepository.getOne(id);
+    }
+
+    public List<Departments> departments()
+    {
+        return Lists.newArrayList(departmentsRepository.findAll());
+    }
+
+    public Location location(long id)
+    {
+        return locationRepository.getOne(id);
+    }
+
+    public List<Location> locations()
+    {
+        return Lists.newArrayList(locationRepository.findAll());
+    }
+
+    public StudentAttendance studentAttendance(long id)
+    {
+        return studentAttendanceRepository.getOne(id);
+    }
+
+    public List<StudentAttendance> studentAttendances()
+    {
+        return Lists.newArrayList(studentAttendanceRepository.findAll());
+    }
 }

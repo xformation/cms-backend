@@ -10,6 +10,7 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Status;
@@ -32,7 +33,7 @@ public class StudentAttendance implements Serializable {
 
     @NotNull
     @Column(name = "attendance_date", nullable = false)
-    private LocalDate attendanceDate;
+    private Date attendanceDate;
 
     @NotNull
     @Column(name = "s_name", nullable = false)
@@ -84,16 +85,11 @@ public class StudentAttendance implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getAttendanceDate() {
+    public Date getAttendanceDate() {
         return attendanceDate;
     }
 
-    public StudentAttendance attendanceDate(LocalDate attendanceDate) {
-        this.attendanceDate = attendanceDate;
-        return this;
-    }
-
-    public void setAttendanceDate(LocalDate attendanceDate) {
+    public void setAttendanceDate(Date attendanceDate) {
         this.attendanceDate = attendanceDate;
     }
 

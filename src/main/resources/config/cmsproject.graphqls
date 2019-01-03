@@ -25,6 +25,14 @@ type Query {
   legalEntities: [LegalEntity!]!
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
+  department(id: Long!): Departments!
+  departments: [Departments!]!
+  location(id: Long!): Location!
+  locations: [Location!]!
+  bankAccount(id: Long!): BankAccounts!
+  bankAccounts: [BankAccounts!]!
+  studentAttendance(id: Long!): StudentAttendance!
+  studentAttendances: [StudentAttendance!]!
 }
 
 type Student {
@@ -90,6 +98,26 @@ type Section{
     id: Long!
     section: ClassSection!
     studentyear: StudentYear!
+}
+
+type StudentAttendance {
+    id: Long!
+    attendanceDate: Date!
+    sName: String!
+    status: Status!
+    comments: String!
+    studentYear: StudentYear!
+    departments: Departments!
+    subject: Subject!
+    semester: Semester!
+    section: Section!
+    periods: Periods!
+    student: Student!
+}
+
+enum Status {
+    ACTIVE
+    DEACTIVE
 }
 
 enum ClassSection {
@@ -170,7 +198,36 @@ type AuthorizedSignatory {
     panCardNumber: String!
 }
 
+type BankAccounts {
+    id: Long!
+    nameOfBank: NameOfBank!
+    accountNumber: Long!
+    typeOfAccount: String!
+    ifsCode: String!
+    branch: String!
+    corporateId: Int!
+}
 
+type Location{
+    id: Long!
+    name: String!
+    address: String!
+    appliesTo: String!
+}
+
+type Departments{
+    id: Long!
+    name: String!
+    description: String!
+    deptHead: String!
+}
+
+enum NameOfBank {
+    HDFC
+    SBI
+    ICICI
+    ANDHRABANK
+}
 
 type Mutation {
    addStudent(input: AddStudentInput!): AddStudentPayload!
@@ -179,6 +236,15 @@ type Mutation {
    addInstitute(input: AddInstituteInput!): AddInstitutePayload!
    updateInstitute(input: UpdateInstituteInput!): UpdateInstitutePayload!
    removeInstitute(input: RemoveInstituteInput!): RemoveInstitutePayload!
+   addDepartments(input: AddDepartmentsInput!): AddDepartmentsPayload!
+   updateDepartments(input: UpdateDepartmentsInput!): UpdateDepartmentsPayload!
+   removeDepartments(input: RemoveDepartmentsInput!): RemoveDepartmentsPayload!
+   addLocation(input: AddLocationInput!): AddLocationPayload!
+   updateLocation(input: UpdateLocationInput!): UpdateLocationPayload!
+   removeLocation(input: RemoveLocationInput!): RemoveLocationPayload!
+   addBankAccounts(input: AddBankAccountsInput!): AddBankAccountsPayload!
+   updateBankAccounts(input: UpdateBankAccountsInput!): UpdateBankAccountsPayload!
+   removeBankAccounts(input: RemoveBankAccountsInput!): RemoveBankAccountsPayload!
    addCollege(input: AddCollegeInput!): AddCollegePayload!
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
@@ -209,6 +275,9 @@ type Mutation {
     addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
     updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
     removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
+    addStudentAttendance(input: AddStudentAttendanceInput!): AddStudentAttendancePayload!
+    updateStudentAttendance(input: UpdateStudentAttendanceInput!): UpdateStudentAttendancePayload!
+    removeStudentAttendance(input: RemoveStudentAttendanceInput!): RemoveStudentAttendancePayload!
 }
 
 input AddStudentInput {
@@ -578,3 +647,134 @@ type RemoveAuthorizedSignatoryPayload {
     authorizedSignatories: [ AuthorizedSignatory!]!
 }
 
+input AddBankAccountsInput {
+       nameOfBank: NameOfBank!
+       accountNumber: Long!
+       typeOfAccount: String!
+       ifsCode: String!
+       branch: String!
+       corporateId: Int!
+}
+
+type AddBankAccountsPayload {
+    bankAccounts: BankAccounts!
+}
+
+input UpdateBankAccountsInput {
+       id: Long!
+       nameOfBank: NameOfBank!
+       accountNumber: Long!
+       typeOfAccount: String!
+       ifsCode: String!
+       branch: String!
+       corporateId: Int!
+
+}
+
+type UpdateBankAccountsPayload {
+    bankAccounts: BankAccounts!
+}
+
+input RemoveBankAccountsInput {
+    bankAccountsId: Long!
+}
+
+type RemoveBankAccountsPayload {
+    bankAccounts: [BankAccounts!]!
+}
+
+input AddDepartmentsInput {
+          name: String!
+          description: String!
+          deptHead: String!
+}
+
+type AddDepartmentsPayload {
+    departments: Departments!
+}
+
+input UpdateDepartmentsInput {
+           id: Long!
+           name: String!
+           description: String!
+           deptHead: String!
+
+}
+
+type UpdateDepartmentsPayload {
+    departments: Departments!
+}
+
+input RemoveDepartmentsInput {
+    departmentsId: Long!
+}
+type RemoveDepartmentsPayload {
+    departments: [Departments!]!
+}
+
+input AddLocationInput {
+          name: String!
+          address: String!
+          appliesTo: String!
+}
+
+type AddLocationPayload {
+    location: Location!
+}
+
+input UpdateLocationInput {
+          id: Long!
+           name: String!
+           address: String!
+           appliesTo: String!
+
+}
+
+type UpdateLocationPayload {
+    location: Location!
+}
+
+input RemoveLocationInput {
+    locationId: Long!
+}
+type RemoveLocationPayload {
+    locations: [Location!]!
+}
+
+input AddStudentAttendanceInput {
+          attendanceDate: Date!
+          sName: String!
+          status: Status!
+          comments: String!
+          studentYearId:  Long!
+          departmentsId:  Long!
+          subjectId:  Long!
+          semesterId:  Long!
+          sectionId:  Long!
+          periodsId:  Long!
+          studentId:  Long!
+}
+
+type AddStudentAttendancePayload {
+
+    studentAttendance: StudentAttendance!
+}
+
+input UpdateStudentAttendanceInput {
+           id: Long!
+           attendanceDate: Date!
+           sName: String!
+           status: Status!
+           comments: String!
+}
+
+type UpdateStudentAttendancePayload {
+    studentAttendance: StudentAttendance!
+}
+
+input RemoveStudentAttendanceInput {
+   studentAttendanceId: Long!
+}
+type RemoveStudentAttendancePayload {
+    studentAttendances: [StudentAttendance!]!
+}
