@@ -20,6 +20,7 @@
     <include file="config/liquibase/changelog/20181224075929_added_entity_LegalEntity.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181224075930_added_entity_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181224075931_added_entity_BankAccounts.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190103113743_added_entity_AcademicDepartment.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20181224075918_added_entity_constraints_Section.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181224075920_added_entity_constraints_StudentAttendance.xml" relativeToChangelogFile="false"/>

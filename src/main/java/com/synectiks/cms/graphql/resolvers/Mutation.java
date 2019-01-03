@@ -4,6 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.Semester;
+import com.synectiks.cms.graphql.types.AcademicDepartment.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
 import com.synectiks.cms.graphql.types.BankAccounts.*;
 import com.synectiks.cms.graphql.types.College.*;
@@ -47,8 +48,9 @@ public class Mutation implements GraphQLMutationResolver {
     private final DepartmentsRepository departmentsRepository;
     private final LocationRepository locationRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
+    private final AcademicDepartmentRepository academicDepartmentRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
@@ -65,6 +67,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.departmentsRepository = departmentsRepository;
         this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
+        this.academicDepartmentRepository = academicDepartmentRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -685,5 +688,38 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntityRepository.delete(legalEntity);
         return new RemoveLegalEntityPayload(Lists.newArrayList(legalEntityRepository.findAll()));
     }
+
+    public AddAcademicDepartmentPayload addAcademicDepartment(AddAcademicDepartmentInput addAcademicDepartmentInput) {
+        final AcademicDepartment academicDepartment = new AcademicDepartment();
+        academicDepartment.setDepartmentName(addAcademicDepartmentInput.getDepartmentName());
+        academicDepartment.setUniversity(addAcademicDepartmentInput.getUniversity());
+
+        academicDepartmentRepository.save(academicDepartment);
+
+        return new AddAcademicDepartmentPayload(academicDepartment);
+    }
+
+    public UpdateAcademicDepartmentPayload updateAcademicDepartment(UpdateAcademicDepartmentInput updateAcademicDepartmentInput) {
+        AcademicDepartment academicDepartment = academicDepartmentRepository.findById(updateAcademicDepartmentInput.getId()).get();
+        if (updateAcademicDepartmentInput.getDepartmentName() != null) {
+            academicDepartment.setDepartmentName(updateAcademicDepartmentInput.getDepartmentName());
+        }
+
+        if (updateAcademicDepartmentInput.getUniversity() != null) {
+            academicDepartment.setUniversity(updateAcademicDepartmentInput.getUniversity());
+        }
+
+        academicDepartmentRepository.save(academicDepartment);
+
+        return new UpdateAcademicDepartmentPayload(academicDepartment);
+    }
+
+    public RemoveAcademicDepartmentPayload removeAcademicDepartment(RemoveAcademicDepartmentInput removeAcademicDepartmentInput) {
+        AcademicDepartment academicDepartment = academicDepartmentRepository.getOne(removeAcademicDepartmentInput.getAcademicDepartmentId());
+        academicDepartmentRepository.delete(academicDepartment);
+
+        return new RemoveAcademicDepartmentPayload(Lists.newArrayList(academicDepartmentRepository.findAll()));
+    }
+
 
 }

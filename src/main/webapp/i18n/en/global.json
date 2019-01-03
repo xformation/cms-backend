@@ -23,6 +23,7 @@
         "legalEntity": "Legal Entity",
         "authorizedSignatory": "Authorized Signatory",
         "bankAccounts": "Bank Accounts",
+        "academicDepartment": "Academic Department",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

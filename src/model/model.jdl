@@ -32,6 +32,11 @@ entity StudentAttendance{
 	comments String required
 }
 
+entity AcademicDepartment{
+	departmentName String required
+	university String required
+}
+
 entity Periods{
 periods ClassPeriods required
 }

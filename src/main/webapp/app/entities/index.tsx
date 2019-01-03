@@ -19,6 +19,7 @@ import College from './college';
 import LegalEntity from './legal-entity';
 import AuthorizedSignatory from './authorized-signatory';
 import BankAccounts from './bank-accounts';
+import AcademicDepartment from './academic-department';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -40,6 +41,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/legal-entity`} component={LegalEntity} />
       <ErrorBoundaryRoute path={`${match.url}/authorized-signatory`} component={AuthorizedSignatory} />
       <ErrorBoundaryRoute path={`${match.url}/bank-accounts`} component={BankAccounts} />
+      <ErrorBoundaryRoute path={`${match.url}/academic-department`} component={AcademicDepartment} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

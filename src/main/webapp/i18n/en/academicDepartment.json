@@ -1,0 +1,23 @@
+{
+  "cmsApp": {
+    "academicDepartment": {
+      "home": {
+        "title": "Academic Departments",
+        "createLabel": "Create a new Academic Department",
+        "createOrEditLabel": "Create or edit a Academic Department",
+        "search": "Search for Academic Department"
+      },
+      "created": "A new Academic Department is created with identifier {{ param }}",
+      "updated": "A Academic Department is updated with identifier {{ param }}",
+      "deleted": "A Academic Department is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Academic Department {{ id }}?"
+      },
+      "detail": {
+        "title": "Academic Department"
+      },
+      "departmentName": "Department Name",
+      "university": "University"
+    }
+  }
+}

@@ -33,6 +33,8 @@ type Query {
   bankAccounts: [BankAccounts!]!
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
+    academicDepartment(id: Int!): AcademicDepartment!
+    academicDepartments:[AcademicDepartment!]!
 }
 
 type Student {
@@ -92,6 +94,12 @@ type College{
     logo: Long!
     backgroundImage: Long!
     instructionInformation: String!
+}
+
+type AcademicDepartment{
+    id: Long!
+    departmentName: String!
+    university: String!
 }
 
 type Section{
@@ -277,6 +285,36 @@ type Mutation {
     addStudentAttendance(input: AddStudentAttendanceInput!): AddStudentAttendancePayload!
     updateStudentAttendance(input: UpdateStudentAttendanceInput!): UpdateStudentAttendancePayload!
     removeStudentAttendance(input: RemoveStudentAttendanceInput!): RemoveStudentAttendancePayload!
+    addAcademicDepartment(input: AddAcademicDepartmentInput!): AddAcademicDepartmentPayload!
+    updateAcademicDepartment(input: UpdateAcademicDepartmentInput!): UpdateAcademicDepartmentPayload!
+    removeAcademicDepartment(input: RemoveAcademicDepartmentInput!): RemoveAcademicDepartmentPayload!
+}
+
+input AddAcademicDepartmentInput {
+    departmentName: String!
+    university: String!
+}
+
+type AddAcademicDepartmentPayload{
+    academicDepartment: AcademicDepartment!
+}
+
+input UpdateAcademicDepartmentInput {
+    id:Long!
+    departmentName: String!
+    university: String!
+}
+
+type UpdateAcademicDepartmentPayload{
+    academicDepartment: AcademicDepartment!
+}
+
+input RemoveAcademicDepartmentInput{
+    academicDepartmentId: Long!
+}
+
+type RemoveAcademicDepartmentPayload{
+    academicDepartments: [AcademicDepartment!]!
 }
 
 input AddStudentInput {

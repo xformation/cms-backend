@@ -35,7 +35,7 @@ public class Query implements GraphQLQueryResolver {
 
     private final StudentRepository studentRepository;
     private final InstituteRepository instituteRepository;
-    public final CollegeRepository collegeRepository;
+    private final CollegeRepository collegeRepository;
     private final CollegeBranchesRepository collegeBranchesRepository;
     private final StudentYearRepository studentYearRepository;
     private final SemesterRepository semesterRepository;
@@ -49,9 +49,10 @@ public class Query implements GraphQLQueryResolver {
     private final DepartmentsRepository departmentsRepository;
     private final LocationRepository locationRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
+    private final AcademicDepartmentRepository academicDepartmentRepository;
 
 
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository) {
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
@@ -68,6 +69,7 @@ public class Query implements GraphQLQueryResolver {
         this.departmentsRepository = departmentsRepository;
         this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
+        this.academicDepartmentRepository = academicDepartmentRepository;
     }
 
     public Student student(long id)
@@ -226,5 +228,15 @@ public class Query implements GraphQLQueryResolver {
     public List<StudentAttendance> studentAttendances()
     {
         return Lists.newArrayList(studentAttendanceRepository.findAll());
+    }
+
+    public AcademicDepartment academicDepartment(long id)
+    {
+        return academicDepartmentRepository.getOne(id);
+    }
+
+    public List<AcademicDepartment> academicDepartments()
+    {
+        return Lists.newArrayList(academicDepartmentRepository.findAll());
     }
 }
