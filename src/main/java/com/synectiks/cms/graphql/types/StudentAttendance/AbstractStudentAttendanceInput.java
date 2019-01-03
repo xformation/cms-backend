@@ -9,7 +9,6 @@ import java.util.Objects;
 public class AbstractStudentAttendanceInput {
     private Long id;
     private Date attendanceDate;
-    private String sName;
     private Status status;
     private String comments;
 
@@ -27,14 +26,6 @@ public class AbstractStudentAttendanceInput {
 
     public void setAttendanceDate(Date attendanceDate) {
         this.attendanceDate = attendanceDate;
-    }
-
-    public String getsName() {
-        return sName;
-    }
-
-    public void setsName(String sName) {
-        this.sName = sName;
     }
 
     public Status getStatus() {
@@ -60,14 +51,13 @@ public class AbstractStudentAttendanceInput {
         AbstractStudentAttendanceInput that = (AbstractStudentAttendanceInput) o;
         return Objects.equals(getId(), that.getId()) &&
             Objects.equals(getAttendanceDate(), that.getAttendanceDate()) &&
-            Objects.equals(getsName(), that.getsName()) &&
             getStatus() == that.getStatus() &&
             Objects.equals(getComments(), that.getComments());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getAttendanceDate(), getsName(), getStatus(), getComments());
+        return Objects.hash(getId(), getAttendanceDate(), getStatus(), getComments());
     }
 
     @Override
@@ -75,7 +65,6 @@ public class AbstractStudentAttendanceInput {
         return "AbstractStudentAttendanceInput{" +
             "id=" + id +
             ", attendanceDate=" + attendanceDate +
-            ", sName='" + sName + '\'' +
             ", status=" + status +
             ", comments='" + comments + '\'' +
             '}';

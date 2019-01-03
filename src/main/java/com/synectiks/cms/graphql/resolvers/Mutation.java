@@ -480,7 +480,6 @@ public class Mutation implements GraphQLMutationResolver {
 
         final StudentAttendance studentAttendance = new StudentAttendance();
         studentAttendance.setAttendanceDate(addStudentAttendanceInput.getAttendanceDate());
-        studentAttendance.setsName(addStudentAttendanceInput.getsName());
         studentAttendance.setStatus(addStudentAttendanceInput.getStatus());
         studentAttendance.setComments(addStudentAttendanceInput.getComments());
         studentAttendance.setStudentYear(studentYear);
@@ -500,9 +499,7 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentAttendanceInput.getAttendanceDate() != null) {
             studentAttendance.setAttendanceDate(updateStudentAttendanceInput.getAttendanceDate());
         }
-        if (updateStudentAttendanceInput.getsName() != null) {
-            studentAttendance.setsName(updateStudentAttendanceInput.getsName());
-        }
+
         if (updateStudentAttendanceInput.getStatus() != null) {
             studentAttendance.setStatus(updateStudentAttendanceInput.getStatus());
         }

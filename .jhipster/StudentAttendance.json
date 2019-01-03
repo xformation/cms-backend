@@ -9,16 +9,9 @@
             ]
         },
         {
-            "fieldName": "sName",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "status",
             "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValues": "PRESENT,ABSENT",
             "fieldValidateRules": [
                 "required"
             ]

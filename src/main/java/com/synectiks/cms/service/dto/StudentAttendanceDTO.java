@@ -17,9 +17,6 @@ public class StudentAttendanceDTO implements Serializable {
     private LocalDate attendanceDate;
 
     @NotNull
-    private String sName;
-
-    @NotNull
     private Status status;
 
     @NotNull
@@ -53,14 +50,6 @@ public class StudentAttendanceDTO implements Serializable {
 
     public void setAttendanceDate(LocalDate attendanceDate) {
         this.attendanceDate = attendanceDate;
-    }
-
-    public String getsName() {
-        return sName;
-    }
-
-    public void setsName(String sName) {
-        this.sName = sName;
     }
 
     public Status getStatus() {
@@ -161,7 +150,6 @@ public class StudentAttendanceDTO implements Serializable {
         return "StudentAttendanceDTO{" +
             "id=" + getId() +
             ", attendanceDate='" + getAttendanceDate() + "'" +
-            ", sName='" + getsName() + "'" +
             ", status='" + getStatus() + "'" +
             ", comments='" + getComments() + "'" +
             ", studentYear=" + getStudentYearId() +

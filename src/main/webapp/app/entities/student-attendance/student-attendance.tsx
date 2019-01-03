@@ -88,9 +88,6 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                   <Translate contentKey="cmsApp.studentAttendance.attendanceDate">Attendance Date</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.studentAttendance.sName">S Name</Translate>
-                </th>
-                <th>
                   <Translate contentKey="cmsApp.studentAttendance.status">Status</Translate>
                 </th>
                 <th>
@@ -131,14 +128,13 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                   <td>
                     <TextFormat type="date" value={studentAttendance.attendanceDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>{studentAttendance.sName}</td>
                   <td>
                     <Translate contentKey={`cmsApp.Status.${studentAttendance.status}`} />
                   </td>
                   <td>{studentAttendance.comments}</td>
                   <td>
                     {studentAttendance.studentYearId ? (
-                      <Link to={`studentYear/${studentAttendance.studentYearId}`}>{studentAttendance.studentYearId}</Link>
+                      <Link to={`student-year/${studentAttendance.studentYearId}`}>{studentAttendance.studentYearId}</Link>
                     ) : (
                       ''
                     )}

@@ -26,34 +26,40 @@ import { getEntity, updateEntity, createEntity, reset } from './student-attendan
 import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IStudentAttendanceUpdateState {
   isNew: boolean;
-  studentYearid: any;
-  departmentsid: any;
-  subjectid: any;
-  semesterid: any;
-  sectionid: any;
-  periodsid: any;
-  studentid: any;
+  studentYearId: string;
+  departmentsId: string;
+  subjectId: string;
+  semesterId: string;
+  sectionId: string;
+  periodsId: string;
+  studentId: string;
 }
 
 export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceUpdateProps, IStudentAttendanceUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentYearId: 0,
-      departmentsId: 0,
-      subjectId: 0,
-      semesterId: 0,
-      sectionId: 0,
-      periodsId: 0,
-      studentId: 0,
+      studentYearId: '0',
+      departmentsId: '0',
+      subjectId: '0',
+      semesterId: '0',
+      sectionId: '0',
+      periodsId: '0',
+      studentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -85,131 +91,11 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/student-attendance');
-  };
-
-  studentYearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentYearId: -1
-      });
-    } else {
-      for (const i in this.props.studentYears) {
-        if (id === this.props.studentYears[i].id.toString()) {
-          this.setState({
-            studentYearId: this.props.studentYears[i].id
-          });
-        }
-      }
-    }
-  };
-
-  departmentsUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentsId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentsId: this.props.departments[i].id
-          });
-        }
-      }
-    }
-  };
-
-  subjectUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        subjectId: -1
-      });
-    } else {
-      for (const i in this.props.subjects) {
-        if (id === this.props.subjects[i].id.toString()) {
-          this.setState({
-            subjectId: this.props.subjects[i].id
-          });
-        }
-      }
-    }
-  };
-
-  semesterUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        semesterId: -1
-      });
-    } else {
-      for (const i in this.props.semesters) {
-        if (id === this.props.semesters[i].id.toString()) {
-          this.setState({
-            semesterId: this.props.semesters[i].id
-          });
-        }
-      }
-    }
-  };
-
-  sectionUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        sectionId: -1
-      });
-    } else {
-      for (const i in this.props.sections) {
-        if (id === this.props.sections[i].id.toString()) {
-          this.setState({
-            sectionId: this.props.sections[i].id
-          });
-        }
-      }
-    }
-  };
-
-  periodsUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        periodsId: -1
-      });
-    } else {
-      for (const i in this.props.periods) {
-        if (id === this.props.periods[i].id.toString()) {
-          this.setState({
-            periodsId: this.props.periods[i].id
-          });
-        }
-      }
-    }
-  };
-
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -265,19 +151,6 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="sNameLabel" for="sName">
-                    <Translate contentKey="cmsApp.studentAttendance.sName">S Name</Translate>
-                  </Label>
-                  <AvField
-                    id="student-attendance-sName"
-                    type="text"
-                    name="sName"
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
                   <Label id="statusLabel">
                     <Translate contentKey="cmsApp.studentAttendance.status">Status</Translate>
                   </Label>
@@ -286,13 +159,13 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                     type="select"
                     className="form-control"
                     name="status"
-                    value={(!isNew && studentAttendanceEntity.status) || 'ACTIVE'}
+                    value={(!isNew && studentAttendanceEntity.status) || 'PRESENT'}
                   >
-                    <option value="ACTIVE">
-                      <Translate contentKey="cmsApp.Status.ACTIVE" />
+                    <option value="PRESENT">
+                      <Translate contentKey="cmsApp.Status.PRESENT" />
                     </option>
-                    <option value="DEACTIVE">
-                      <Translate contentKey="cmsApp.Status.DEACTIVE" />
+                    <option value="ABSENT">
+                      <Translate contentKey="cmsApp.Status.ABSENT" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -313,13 +186,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="studentYear.id">
                     <Translate contentKey="cmsApp.studentAttendance.studentYear">Student Year</Translate>
                   </Label>
-                  <AvInput
-                    id="student-attendance-studentYear"
-                    type="select"
-                    className="form-control"
-                    name="studentYearId"
-                    onChange={this.studentYearUpdate}
-                  >
+                  <AvInput id="student-attendance-studentYear" type="select" className="form-control" name="studentYearId">
                     <option value="" key="0" />
                     {studentYears
                       ? studentYears.map(otherEntity => (
@@ -334,13 +201,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="departments.id">
                     <Translate contentKey="cmsApp.studentAttendance.departments">Departments</Translate>
                   </Label>
-                  <AvInput
-                    id="student-attendance-departments"
-                    type="select"
-                    className="form-control"
-                    name="departmentsId"
-                    onChange={this.departmentsUpdate}
-                  >
+                  <AvInput id="student-attendance-departments" type="select" className="form-control" name="departmentsId">
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
@@ -355,13 +216,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="subject.id">
                     <Translate contentKey="cmsApp.studentAttendance.subject">Subject</Translate>
                   </Label>
-                  <AvInput
-                    id="student-attendance-subject"
-                    type="select"
-                    className="form-control"
-                    name="subjectId"
-                    onChange={this.subjectUpdate}
-                  >
+                  <AvInput id="student-attendance-subject" type="select" className="form-control" name="subjectId">
                     <option value="" key="0" />
                     {subjects
                       ? subjects.map(otherEntity => (
@@ -376,13 +231,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="semester.id">
                     <Translate contentKey="cmsApp.studentAttendance.semester">Semester</Translate>
                   </Label>
-                  <AvInput
-                    id="student-attendance-semester"
-                    type="select"
-                    className="form-control"
-                    name="semesterId"
-                    onChange={this.semesterUpdate}
-                  >
+                  <AvInput id="student-attendance-semester" type="select" className="form-control" name="semesterId">
                     <option value="" key="0" />
                     {semesters
                       ? semesters.map(otherEntity => (
@@ -397,13 +246,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="section.id">
                     <Translate contentKey="cmsApp.studentAttendance.section">Section</Translate>
                   </Label>
-                  <AvInput
-                    id="student-attendance-section"
-                    type="select"
-                    className="form-control"
-                    name="sectionId"
-                    onChange={this.sectionUpdate}
-                  >
+                  <AvInput id="student-attendance-section" type="select" className="form-control" name="sectionId">
                     <option value="" key="0" />
                     {sections
                       ? sections.map(otherEntity => (
@@ -418,13 +261,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="periods.id">
                     <Translate contentKey="cmsApp.studentAttendance.periods">Periods</Translate>
                   </Label>
-                  <AvInput
-                    id="student-attendance-periods"
-                    type="select"
-                    className="form-control"
-                    name="periodsId"
-                    onChange={this.periodsUpdate}
-                  >
+                  <AvInput id="student-attendance-periods" type="select" className="form-control" name="periodsId">
                     <option value="" key="0" />
                     {periods
                       ? periods.map(otherEntity => (
@@ -439,13 +276,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="student.id">
                     <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
                   </Label>
-                  <AvInput
-                    id="student-attendance-student"
-                    type="select"
-                    className="form-control"
-                    name="studentId"
-                    onChange={this.studentUpdate}
-                  >
+                  <AvInput id="student-attendance-student" type="select" className="form-control" name="studentId">
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -486,7 +317,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   students: storeState.student.entities,
   studentAttendanceEntity: storeState.studentAttendance.entity,
   loading: storeState.studentAttendance.loading,
-  updating: storeState.studentAttendance.updating
+  updating: storeState.studentAttendance.updating,
+  updateSuccess: storeState.studentAttendance.updateSuccess
 });
 
 const mapDispatchToProps = {

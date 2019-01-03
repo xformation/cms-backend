@@ -12,7 +12,7 @@ import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IStudentAttendanceDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IStudentAttendanceDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class StudentAttendanceDetail extends React.Component<IStudentAttendanceDetailProps> {
   componentDidMount() {
@@ -36,12 +36,6 @@ export class StudentAttendanceDetail extends React.Component<IStudentAttendanceD
             <dd>
               <TextFormat value={studentAttendanceEntity.attendanceDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
-            <dt>
-              <span id="sName">
-                <Translate contentKey="cmsApp.studentAttendance.sName">S Name</Translate>
-              </span>
-            </dt>
-            <dd>{studentAttendanceEntity.sName}</dd>
             <dt>
               <span id="status">
                 <Translate contentKey="cmsApp.studentAttendance.status">Status</Translate>

@@ -23,12 +23,11 @@ entity Semester{
 }
 
 enum Status{
-	ACTIVE,DEACTIVE
+	PRESENT,ABSENT
 }
 
 entity StudentAttendance{
 	attendanceDate LocalDate required
-	sName String required
 	status Status required
 	comments String required
 }

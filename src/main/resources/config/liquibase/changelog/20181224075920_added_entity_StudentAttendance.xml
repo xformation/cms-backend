@@ -25,10 +25,6 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="s_name" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
             <column name="status" type="varchar(255)">
                 <constraints nullable="false" />
             </column>

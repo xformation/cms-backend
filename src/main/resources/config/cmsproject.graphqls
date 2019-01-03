@@ -103,7 +103,6 @@ type Section{
 type StudentAttendance {
     id: Long!
     attendanceDate: Date!
-    sName: String!
     status: Status!
     comments: String!
     studentYear: StudentYear!
@@ -116,8 +115,8 @@ type StudentAttendance {
 }
 
 enum Status {
-    ACTIVE
-    DEACTIVE
+    PRESENT
+    ABSENT
 }
 
 enum ClassSection {
@@ -743,7 +742,6 @@ type RemoveLocationPayload {
 
 input AddStudentAttendanceInput {
           attendanceDate: Date!
-          sName: String!
           status: Status!
           comments: String!
           studentYearId:  Long!
@@ -763,7 +761,6 @@ type AddStudentAttendancePayload {
 input UpdateStudentAttendanceInput {
            id: Long!
            attendanceDate: Date!
-           sName: String!
            status: Status!
            comments: String!
 }
