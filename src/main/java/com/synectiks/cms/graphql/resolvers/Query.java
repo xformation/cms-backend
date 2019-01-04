@@ -50,9 +50,10 @@ public class Query implements GraphQLQueryResolver {
     private final LocationRepository locationRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
     private final AcademicDepartmentRepository academicDepartmentRepository;
+    private final AcademicSubjectRepository academicSubjectRepository;
 
 
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository) {
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
@@ -70,6 +71,7 @@ public class Query implements GraphQLQueryResolver {
         this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
         this.academicDepartmentRepository = academicDepartmentRepository;
+        this.academicSubjectRepository = academicSubjectRepository;
     }
 
     public Student student(long id)
@@ -238,5 +240,15 @@ public class Query implements GraphQLQueryResolver {
     public List<AcademicDepartment> academicDepartments()
     {
         return Lists.newArrayList(academicDepartmentRepository.findAll());
+    }
+
+    public AcademicSubject academicSubject(long id)
+    {
+        return academicSubjectRepository.getOne(id);
+    }
+
+    public List<AcademicSubject> academicSubjects()
+    {
+        return Lists.newArrayList(academicSubjectRepository.findAll());
     }
 }

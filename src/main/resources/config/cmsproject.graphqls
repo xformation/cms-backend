@@ -33,8 +33,10 @@ type Query {
   bankAccounts: [BankAccounts!]!
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
-    academicDepartment(id: Int!): AcademicDepartment!
+    academicDepartment(id: Long!): AcademicDepartment!
     academicDepartments:[AcademicDepartment!]!
+    academicSubject(id: Long!): AcademicSubject!
+    academicSubjects: [AcademicSubject!]!
 }
 
 type Student {
@@ -55,6 +57,13 @@ type CollegeBranches{
 type StudentYear {
     id: Long!
     sYear: SYear!
+}
+
+type AcademicSubject{
+    id: Long!
+    subjectName: String!
+    electiveSub: Boolean!
+    academicDepartment: AcademicDepartment!
 }
 
 type Semester {
@@ -288,6 +297,9 @@ type Mutation {
     addAcademicDepartment(input: AddAcademicDepartmentInput!): AddAcademicDepartmentPayload!
     updateAcademicDepartment(input: UpdateAcademicDepartmentInput!): UpdateAcademicDepartmentPayload!
     removeAcademicDepartment(input: RemoveAcademicDepartmentInput!): RemoveAcademicDepartmentPayload!
+    addAcademicSubject(input: AddAcademicSubjectInput!): AddAcademicSubjectPayload!
+    updateAcademicSubject(input: UpdateAcademicSubjectInput!): UpdateAcademicSubjectPayload!
+    removeAcademicSubject(input: RemoveAcademicSubjectInput!): RemoveAcademicSubjectPayload!
 }
 
 input AddAcademicDepartmentInput {
@@ -295,8 +307,18 @@ input AddAcademicDepartmentInput {
     university: String!
 }
 
+input AddAcademicSubjectInput{
+    subjectName: String!
+    electiveSub: Boolean!
+    academicDepartmentId: Long!
+}
+
 type AddAcademicDepartmentPayload{
     academicDepartment: AcademicDepartment!
+}
+
+type AddAcademicSubjectPayload{
+    academicSubject: AcademicSubject!
 }
 
 input UpdateAcademicDepartmentInput {
@@ -305,16 +327,33 @@ input UpdateAcademicDepartmentInput {
     university: String!
 }
 
+input UpdateAcademicSubjectInput{
+    id: Long!
+    subjectName: String!
+    electiveSub: Boolean!
+}
+
 type UpdateAcademicDepartmentPayload{
     academicDepartment: AcademicDepartment!
+}
+
+type UpdateAcademicSubjectPayload{
+    academicSubject: AcademicSubject!
 }
 
 input RemoveAcademicDepartmentInput{
     academicDepartmentId: Long!
 }
 
+input RemoveAcademicSubjectInput{
+    academicSubjectId: Long!
+}
 type RemoveAcademicDepartmentPayload{
     academicDepartments: [AcademicDepartment!]!
+}
+
+type RemoveAcademicSubjectPayload{
+    academicSubjects: [AcademicSubject!]!
 }
 
 input AddStudentInput {

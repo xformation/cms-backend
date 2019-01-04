@@ -24,6 +24,7 @@
         "authorizedSignatory": "Authorized Signatory",
         "bankAccounts": "Bank Accounts",
         "academicDepartment": "Academic Department",
+        "academicSubject": "Academic Subject",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

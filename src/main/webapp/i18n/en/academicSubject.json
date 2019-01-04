@@ -1,0 +1,24 @@
+{
+  "cmsApp": {
+    "academicSubject": {
+      "home": {
+        "title": "Academic Subjects",
+        "createLabel": "Create a new Academic Subject",
+        "createOrEditLabel": "Create or edit a Academic Subject",
+        "search": "Search for Academic Subject"
+      },
+      "created": "A new Academic Subject is created with identifier {{ param }}",
+      "updated": "A Academic Subject is updated with identifier {{ param }}",
+      "deleted": "A Academic Subject is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Academic Subject {{ id }}?"
+      },
+      "detail": {
+        "title": "Academic Subject"
+      },
+      "subjectName": "Subject Name",
+      "electiveSub": "Elective Sub",
+      "academicDepartment": "Academic Department"
+    }
+  }
+}

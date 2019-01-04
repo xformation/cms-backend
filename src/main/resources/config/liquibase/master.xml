@@ -21,6 +21,7 @@
     <include file="config/liquibase/changelog/20181224075930_added_entity_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181224075931_added_entity_BankAccounts.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190103113743_added_entity_AcademicDepartment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190104054616_added_entity_AcademicSubject.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20181224075918_added_entity_constraints_Section.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181224075920_added_entity_constraints_StudentAttendance.xml" relativeToChangelogFile="false"/>
@@ -29,5 +30,6 @@
     <include file="config/liquibase/changelog/20181224075923_added_entity_constraints_Teacher.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181224075924_added_entity_constraints_Student.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181224075929_added_entity_constraints_LegalEntity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190104054616_added_entity_constraints_AcademicSubject.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

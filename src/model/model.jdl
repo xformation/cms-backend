@@ -32,6 +32,14 @@ entity StudentAttendance{
 	comments String required
 }
 
+
+entity AcademicSubject{
+	subjectName String required
+	electiveSub Boolean required
+}
+
+
+	
 entity AcademicDepartment{
 	departmentName String required
 	university String required
@@ -157,6 +165,7 @@ StudentAttendance{semester} to Semester
 StudentAttendance{section} to Section
 StudentAttendance{periods} to Periods
 StudentAttendance{student} to Student
+AcademicSubject{academicDepartment} to AcademicDepartment
 }
 
 

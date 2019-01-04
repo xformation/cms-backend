@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.Semester;
 import com.synectiks.cms.graphql.types.AcademicDepartment.*;
+import com.synectiks.cms.graphql.types.AcademicSubject.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
 import com.synectiks.cms.graphql.types.BankAccounts.*;
 import com.synectiks.cms.graphql.types.College.*;
@@ -49,8 +50,9 @@ public class Mutation implements GraphQLMutationResolver {
     private final LocationRepository locationRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
     private final AcademicDepartmentRepository academicDepartmentRepository;
+    private final AcademicSubjectRepository academicSubjectRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
@@ -68,6 +70,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
         this.academicDepartmentRepository = academicDepartmentRepository;
+        this.academicSubjectRepository = academicSubjectRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -78,7 +81,7 @@ public class Mutation implements GraphQLMutationResolver {
         student.setElectiveSub(addStudentInput.getElectiveSub());
         student.setTeacher(teacher);
         studentRepository.save(student);
-       return new AddStudentPayload(student);
+        return new AddStudentPayload(student);
     }
 
     public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) {
@@ -99,7 +102,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveStudentPayload removeStudent(RemoveStudentInput removeStudentInput) {
-        Student student  = studentRepository.findById(removeStudentInput.getStudentId()).get();
+        Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
         studentRepository.delete(student);
         return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
     }
@@ -181,7 +184,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveBankAccountsPayload removeBankAccounts(RemoveBankAccountsInput removeBankAccountsInput) {
-        BankAccounts bankAccounts  = bankAccountsRepository.findById(removeBankAccountsInput.getBankAccountsId()).get();
+        BankAccounts bankAccounts = bankAccountsRepository.findById(removeBankAccountsInput.getBankAccountsId()).get();
         bankAccountsRepository.delete(bankAccounts);
         return new RemoveBankAccountsPayload(Lists.newArrayList(bankAccountsRepository.findAll()));
     }
@@ -215,7 +218,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveDepartmentsPayload removeDepartments(RemoveDepartmentsInput removeDepartmentsInput) {
-        Departments departments  = departmentsRepository.findById(removeDepartmentsInput.getDepartmentsId()).get();
+        Departments departments = departmentsRepository.findById(removeDepartmentsInput.getDepartmentsId()).get();
         departmentsRepository.delete(departments);
         return new RemoveDepartmentsPayload(Lists.newArrayList(departmentsRepository.findAll()));
     }
@@ -249,7 +252,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveLocationPayload removeLocation(RemoveLocationInput removeLocationInput) {
-        Location location  = locationRepository.findById(removeLocationInput.getLocationId()).get();
+        Location location = locationRepository.findById(removeLocationInput.getLocationId()).get();
         locationRepository.delete(location);
         return new RemoveLocationPayload(Lists.newArrayList(locationRepository.findAll()));
     }
@@ -274,7 +277,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveSemesterPayload removeSemester(RemoveSemesterInput removeSemesterInput) {
-        Semester semester  = semesterRepository.findById(removeSemesterInput.getSemesterId()).get();
+        Semester semester = semesterRepository.findById(removeSemesterInput.getSemesterId()).get();
         semesterRepository.delete(semester);
         return new RemoveSemesterPayload(Lists.newArrayList(semesterRepository.findAll()));
     }
@@ -377,7 +380,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveCollegeBranchesPayload removeCollegeBranches(RemoveCollegeBranchesInput removeCollegeBranchesInput) {
-        CollegeBranches collegeBranches  = collegeBranchesRepository.findById(removeCollegeBranchesInput.getCollegeBranchesId()).get();
+        CollegeBranches collegeBranches = collegeBranchesRepository.findById(removeCollegeBranchesInput.getCollegeBranchesId()).get();
         collegeBranchesRepository.delete(collegeBranches);
         return new RemoveCollegeBranchesPayload(Lists.newArrayList(collegeBranchesRepository.findAll()));
     }
@@ -404,7 +407,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemovePeriodsPayload removePeriods(RemovePeriodsInput removePeriodsInput) {
-        Periods periods  = periodsRepository.findById(removePeriodsInput.getPeriodsId()).get();
+        Periods periods = periodsRepository.findById(removePeriodsInput.getPeriodsId()).get();
         periodsRepository.delete(periods);
         return new RemovePeriodsPayload(Lists.newArrayList(periodsRepository.findAll()));
     }
@@ -430,7 +433,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveSectionPayload removeSection(RemoveSectionInput removeSectionInput) {
-        Section section  = sectionRepository.findById(removeSectionInput.getSectionId()).get();
+        Section section = sectionRepository.findById(removeSectionInput.getSectionId()).get();
         sectionRepository.delete(section);
         return new RemoveSectionPayload(Lists.newArrayList(sectionRepository.findAll()));
     }
@@ -467,12 +470,12 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveSubjectPayload removeSubject(RemoveSubjectInput removeSubjectInput) {
-        Subject subject  = subjectRepository.findById(removeSubjectInput.getSubjectId()).get();
+        Subject subject = subjectRepository.findById(removeSubjectInput.getSubjectId()).get();
         subjectRepository.delete(subject);
         return new RemoveSubjectPayload(Lists.newArrayList(subjectRepository.findAll()));
     }
 
-    public AddStudentAttendancePayload addStudentAttendance(AddStudentAttendanceInput addStudentAttendanceInput)  {
+    public AddStudentAttendancePayload addStudentAttendance(AddStudentAttendanceInput addStudentAttendanceInput) {
         final StudentYear studentYear = studentYearRepository.findById(addStudentAttendanceInput.getStudentYearId()).get();
         final Periods periods = periodsRepository.findById(addStudentAttendanceInput.getPeriodsId()).get();
         final Student student = studentRepository.findById(addStudentAttendanceInput.getStudentId()).get();
@@ -516,7 +519,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveStudentAttendancePayload removeStudentAttendance(RemoveStudentAttendanceInput removeStudentAttendanceInput) {
-        StudentAttendance studentAttendance  = studentAttendanceRepository.findById(removeStudentAttendanceInput.getStudentAttendanceId()).get();
+        StudentAttendance studentAttendance = studentAttendanceRepository.findById(removeStudentAttendanceInput.getStudentAttendanceId()).get();
         studentAttendanceRepository.delete(studentAttendance);
         return new RemoveStudentAttendancePayload(Lists.newArrayList(studentAttendanceRepository.findAll()));
     }
@@ -544,7 +547,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveTeacherPayload removeTeacher(RemoveTeacherInput removeTeacherInput) {
-        Teacher teacher  = teacherRepository.findById(removeTeacherInput.getTeacherId()).get();
+        Teacher teacher = teacherRepository.findById(removeTeacherInput.getTeacherId()).get();
         teacherRepository.delete(teacher);
         return new RemoveTeacherPayload(Lists.newArrayList(teacherRepository.findAll()));
     }
@@ -592,7 +595,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveAuthorizedSignatoryPayload removeAuthorizedSignatory(RemoveAuthorizedSignatoryInput removeAuthorizedSignatoryInput) {
-        AuthorizedSignatory authorizedSignatory  = authorizedSignatoryRepository.findById(removeAuthorizedSignatoryInput.getAuthorizedSignatoryId()).get();
+        AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(removeAuthorizedSignatoryInput.getAuthorizedSignatoryId()).get();
         authorizedSignatoryRepository.delete(authorizedSignatory);
         return new RemoveAuthorizedSignatoryPayload(Lists.newArrayList(authorizedSignatoryRepository.findAll()));
     }
@@ -684,7 +687,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveLegalEntityPayload removeLegalEntity(RemoveLegalEntityInput removeLegalEntityInput) {
-        LegalEntity legalEntity  = legalEntityRepository.findById(removeLegalEntityInput.getLegalEntityId()).get();
+        LegalEntity legalEntity = legalEntityRepository.findById(removeLegalEntityInput.getLegalEntityId()).get();
         legalEntityRepository.delete(legalEntity);
         return new RemoveLegalEntityPayload(Lists.newArrayList(legalEntityRepository.findAll()));
     }
@@ -721,5 +724,36 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveAcademicDepartmentPayload(Lists.newArrayList(academicDepartmentRepository.findAll()));
     }
 
+    public AddAcademicSubjectPayload addAcademicSubject(AddAcademicSubjectInput addAcademicSubjectInput) {
+        final AcademicDepartment academicDepartment = academicDepartmentRepository.findById(addAcademicSubjectInput.getAcademicDepartmentId()).get();
+        final AcademicSubject academicSubject = new AcademicSubject();
+        academicSubject.setSubjectName(addAcademicSubjectInput.getSubjectName());
+        academicSubject.setElectiveSub(addAcademicSubjectInput.getElectiveSub());
+        academicSubject.setAcademicDepartment(academicDepartment);
+        academicSubjectRepository.save(academicSubject);
 
-}
+        return new AddAcademicSubjectPayload(academicSubject);
+    }
+
+    public UpdateAcademicSubjectPayload updateAcademicSubject(UpdateAcademicSubjectInput updateAcademicSubjectInput) {
+        AcademicSubject academicSubject = academicSubjectRepository.findById(updateAcademicSubjectInput.getId()).get();
+        if (updateAcademicSubjectInput.getSubjectName() != null) {
+            academicSubject.setSubjectName(updateAcademicSubjectInput.getSubjectName());
+        }
+            if (updateAcademicSubjectInput.getElectiveSub() != null) {
+                academicSubject.setElectiveSub(updateAcademicSubjectInput.getElectiveSub());
+            }
+            academicSubjectRepository.save(academicSubject);
+
+            return new UpdateAcademicSubjectPayload(academicSubject);
+        }
+
+        public RemoveAcademicSubjectPayload removeAcademicSubject(RemoveAcademicSubjectInput removeAcademicSubjectInput) {
+            AcademicSubject academicSubject = academicSubjectRepository.findById(removeAcademicSubjectInput.getAcademicSubjectId()).get();
+            academicSubjectRepository.delete(academicSubject);
+            return new RemoveAcademicSubjectPayload(Lists.newArrayList(academicSubjectRepository.findAll()));
+        }
+    }
+
+
+

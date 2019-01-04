@@ -92,6 +92,10 @@ import studentAttendance, {
 import academicDepartment, {
   AcademicDepartmentState
 } from 'app/entities/academic-department/academic-department.reducer';
+// prettier-ignore
+import academicSubject, {
+  AcademicSubjectState
+} from 'app/entities/academic-subject/academic-subject.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -121,6 +125,7 @@ export interface IRootState {
   readonly authorizedSignatory: AuthorizedSignatoryState;
   readonly bankAccounts: BankAccountsState;
   readonly academicDepartment: AcademicDepartmentState;
+  readonly academicSubject: AcademicSubjectState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -152,6 +157,7 @@ const rootReducer = combineReducers<IRootState>({
   authorizedSignatory,
   bankAccounts,
   academicDepartment,
+  academicSubject,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });
