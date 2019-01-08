@@ -3,7 +3,9 @@
     "Status": {
       "null": "",
       "PRESENT": "PRESENT",
-      "ABSENT": "ABSENT"
+      "ABSENT": "ABSENT",
+      "ACTIVE": "ACTIVE",
+      "DEACTIVE": "DEACTIVE"
     }
   }
 }

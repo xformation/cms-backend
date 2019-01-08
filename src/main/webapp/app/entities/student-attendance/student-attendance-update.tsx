@@ -167,6 +167,12 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                     <option value="ABSENT">
                       <Translate contentKey="cmsApp.Status.ABSENT" />
                     </option>
+                    <option value="ACTIVE">
+                      <Translate contentKey="cmsApp.Status.ACTIVE" />
+                    </option>
+                    <option value="DEACTIVE">
+                      <Translate contentKey="cmsApp.Status.DEACTIVE" />
+                    </option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>

@@ -11,7 +11,7 @@
         {
             "fieldName": "status",
             "fieldType": "Status",
-            "fieldValues": "PRESENT,ABSENT",
+            "fieldValues": "PRESENT,ABSENT,ACTIVE,DEACTIVE",
             "fieldValidateRules": [
                 "required"
             ]

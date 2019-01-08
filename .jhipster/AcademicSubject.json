@@ -24,7 +24,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190104054616",
+    "changelogDate": "20190108101219",
     "entityTableName": "academic_subject",
     "dto": "mapstruct",
     "pagination": "no",

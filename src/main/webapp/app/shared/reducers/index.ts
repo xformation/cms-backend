@@ -96,6 +96,42 @@ import academicDepartment, {
 import academicSubject, {
   AcademicSubjectState
 } from 'app/entities/academic-subject/academic-subject.reducer';
+// prettier-ignore
+import academicYear, {
+  AcademicYearState
+} from 'app/entities/academic-year/academic-year.reducer';
+// prettier-ignore
+import holiday, {
+  HolidayState
+} from 'app/entities/holiday/holiday.reducer';
+// prettier-ignore
+import term, {
+  TermState
+} from 'app/entities/term/term.reducer';
+// prettier-ignore
+import studentAttendance, {
+  StudentAttendanceState
+} from 'app/entities/student-attendance/student-attendance.reducer';
+// prettier-ignore
+import holiday, {
+  HolidayState
+} from 'app/entities/holiday/holiday.reducer';
+// prettier-ignore
+import term, {
+  TermState
+} from 'app/entities/term/term.reducer';
+// prettier-ignore
+import studentAttendance, {
+  StudentAttendanceState
+} from 'app/entities/student-attendance/student-attendance.reducer';
+// prettier-ignore
+import holiday, {
+  HolidayState
+} from 'app/entities/holiday/holiday.reducer';
+// prettier-ignore
+import term, {
+  TermState
+} from 'app/entities/term/term.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -126,6 +162,9 @@ export interface IRootState {
   readonly bankAccounts: BankAccountsState;
   readonly academicDepartment: AcademicDepartmentState;
   readonly academicSubject: AcademicSubjectState;
+  readonly academicYear: AcademicYearState;
+  readonly holiday: HolidayState;
+  readonly term: TermState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -158,6 +197,9 @@ const rootReducer = combineReducers<IRootState>({
   bankAccounts,
   academicDepartment,
   academicSubject,
+  academicYear,
+  holiday,
+  term,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

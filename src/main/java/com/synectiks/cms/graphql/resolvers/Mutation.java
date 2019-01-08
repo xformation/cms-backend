@@ -6,11 +6,13 @@ import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.Semester;
 import com.synectiks.cms.graphql.types.AcademicDepartment.*;
 import com.synectiks.cms.graphql.types.AcademicSubject.*;
+import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
 import com.synectiks.cms.graphql.types.BankAccounts.*;
 import com.synectiks.cms.graphql.types.College.*;
 import com.synectiks.cms.graphql.types.CollegeBranches.*;
 import com.synectiks.cms.graphql.types.Departments.*;
+import com.synectiks.cms.graphql.types.Holiday.*;
 import com.synectiks.cms.graphql.types.Institute.*;
 import com.synectiks.cms.graphql.types.LegalEntity.*;
 import com.synectiks.cms.graphql.types.Location.*;
@@ -22,6 +24,7 @@ import com.synectiks.cms.graphql.types.StudentAttendance.*;
 import com.synectiks.cms.graphql.types.StudentYear.*;
 import com.synectiks.cms.graphql.types.Subject.*;
 import com.synectiks.cms.graphql.types.Teacher.*;
+import com.synectiks.cms.graphql.types.Term.*;
 import com.synectiks.cms.model.Institute;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
@@ -51,8 +54,11 @@ public class Mutation implements GraphQLMutationResolver {
     private final StudentAttendanceRepository studentAttendanceRepository;
     private final AcademicDepartmentRepository academicDepartmentRepository;
     private final AcademicSubjectRepository academicSubjectRepository;
+    private final AcademicYearRepository academicYearRepository;
+    private final HolidayRepository holidayRepository;
+    private final TermRepository termRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
@@ -71,6 +77,9 @@ public class Mutation implements GraphQLMutationResolver {
         this.studentAttendanceRepository = studentAttendanceRepository;
         this.academicDepartmentRepository = academicDepartmentRepository;
         this.academicSubjectRepository = academicSubjectRepository;
+        this.academicYearRepository = academicYearRepository;
+        this.holidayRepository = holidayRepository;
+        this.termRepository = termRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -740,20 +749,138 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicSubjectInput.getSubjectName() != null) {
             academicSubject.setSubjectName(updateAcademicSubjectInput.getSubjectName());
         }
-            if (updateAcademicSubjectInput.getElectiveSub() != null) {
-                academicSubject.setElectiveSub(updateAcademicSubjectInput.getElectiveSub());
-            }
-            academicSubjectRepository.save(academicSubject);
-
-            return new UpdateAcademicSubjectPayload(academicSubject);
+        if (updateAcademicSubjectInput.getElectiveSub() != null) {
+            academicSubject.setElectiveSub(updateAcademicSubjectInput.getElectiveSub());
         }
+        academicSubjectRepository.save(academicSubject);
 
-        public RemoveAcademicSubjectPayload removeAcademicSubject(RemoveAcademicSubjectInput removeAcademicSubjectInput) {
-            AcademicSubject academicSubject = academicSubjectRepository.findById(removeAcademicSubjectInput.getAcademicSubjectId()).get();
-            academicSubjectRepository.delete(academicSubject);
-            return new RemoveAcademicSubjectPayload(Lists.newArrayList(academicSubjectRepository.findAll()));
-        }
+        return new UpdateAcademicSubjectPayload(academicSubject);
     }
+
+    public RemoveAcademicSubjectPayload removeAcademicSubject(RemoveAcademicSubjectInput removeAcademicSubjectInput) {
+        AcademicSubject academicSubject = academicSubjectRepository.findById(removeAcademicSubjectInput.getAcademicSubjectId()).get();
+        academicSubjectRepository.delete(academicSubject);
+        return new RemoveAcademicSubjectPayload(Lists.newArrayList(academicSubjectRepository.findAll()));
+    }
+
+    public AddAcademicYearPayload addAcademicYear(AddAcademicYearInput addAcademicYearInput) {
+        final Holiday holiday = holidayRepository.findById(addAcademicYearInput.getHolidayId()).get();
+        final Term term = termRepository.findById(addAcademicYearInput.getTermId()).get();
+        final AcademicYear academicYear = new AcademicYear();
+        academicYear.setYear(addAcademicYearInput.getYear());
+        academicYear.setStartDate(addAcademicYearInput.getStartDate());
+        academicYear.setEndDate(addAcademicYearInput.getEndDate());
+        academicYear.setHoliday(holiday);
+        academicYear.setTerm(term);
+        academicYearRepository.save(academicYear);
+        return new AddAcademicYearPayload(academicYear);
+    }
+
+
+    public UpdateAcademicYearPayload updateAcademicYear(UpdateAcademicYearInput updateAcademicYearInput) {
+        AcademicYear academicYear = academicYearRepository.findById(updateAcademicYearInput.getId()).get();
+        if (updateAcademicYearInput.getYear() != null) {
+            academicYear.setYear(updateAcademicYearInput.getYear());
+        }
+        if (updateAcademicYearInput.getStartDate() != null) {
+            academicYear.setStartDate(updateAcademicYearInput.getStartDate());
+        }
+
+        if (updateAcademicYearInput.getEndDate() != null) {
+            academicYear.setEndDate(updateAcademicYearInput.getEndDate());
+        }
+        academicYearRepository.save(academicYear);
+
+        return new UpdateAcademicYearPayload(academicYear);
+    }
+
+    public RemoveAcademicYearPayload removeAcademicYear(RemoveAcademicYearInput removeAcademicYearInput) {
+        AcademicYear academicYear = academicYearRepository.findById(removeAcademicYearInput.getAcademicYearId()).get();
+        academicYearRepository.delete(academicYear);
+        return new RemoveAcademicYearPayload(Lists.newArrayList(academicYearRepository.findAll()));
+    }
+
+    public AddHolidayPayload addHoliday(AddHolidayInput addHolidayInput) {
+        final Holiday holiday = new Holiday();
+        holiday.setSrNo(addHolidayInput.getSrNo());
+        holiday.setsHoliday(addHolidayInput.getsHoliday());
+        holiday.setaDate(addHolidayInput.getaDate());
+        holiday.setStatus(addHolidayInput.getStatus());
+        holidayRepository.save(holiday);
+
+        return new AddHolidayPayload(holiday);
+    }
+
+    public UpdateHolidayPayload updateHoliday(UpdateHolidayInput updateHolidayInput) {
+        Holiday holiday = holidayRepository.findById(updateHolidayInput.getId()).get();
+        if (updateHolidayInput.getSrNo() != null) {
+            holiday.setSrNo(updateHolidayInput.getSrNo());
+        }
+        if (updateHolidayInput.getsHoliday() != null) {
+            holiday.setsHoliday(updateHolidayInput.getsHoliday());
+        }
+        if (updateHolidayInput.getaDate() != null) {
+            holiday.setaDate(updateHolidayInput.getaDate());
+        }
+
+        if (updateHolidayInput.getStatus() != null) {
+            holiday.setStatus(updateHolidayInput.getStatus());
+        }
+
+        holidayRepository.save(holiday);
+
+        return new UpdateHolidayPayload(holiday);
+    }
+
+    public RemoveHolidayPayload removeHoliday(RemoveHolidayInput removeHolidayInput) {
+        Holiday holiday = holidayRepository.findById(removeHolidayInput.getHolidayId()).get();
+        holidayRepository.delete(holiday);
+        return new RemoveHolidayPayload(Lists.newArrayList(holidayRepository.findAll()));
+    }
+
+    public AddTermPayload addTerm(AddTermInput addTermInput) {
+        final Term term = new Term();
+        term.setSrNo(addTermInput.getSrNo());
+        term.setaTerms(addTermInput.getaTerms());
+        term.setStartDate(addTermInput.getStartDate());
+        term.setEndDate(addTermInput.getEndDate());
+        term.setStatus(addTermInput.getStatus());
+        termRepository.save(term);
+
+        return new AddTermPayload(term);
+    }
+
+    public UpdateTermPayload updateTerm(UpdateTermInput updateTermInput) {
+        Term term = termRepository.findById(updateTermInput.getId()).get();
+        if (updateTermInput.getSrNo() != null) {
+            term.setSrNo(updateTermInput.getSrNo());
+        }
+        if (updateTermInput.getaTerms() != null) {
+            term.setaTerms(updateTermInput.getaTerms());
+        }
+        if (updateTermInput.getStartDate() != null) {
+            term.setStartDate(updateTermInput.getStartDate());
+        }
+
+        if (updateTermInput.getEndDate() != null) {
+            term.setEndDate(updateTermInput.getEndDate());
+        }
+
+        if (updateTermInput.getStatus() != null){
+            term.setStatus(updateTermInput.getStatus());
+        }
+
+        termRepository.save(term);
+
+        return new UpdateTermPayload(term);
+    }
+
+    public RemoveTermPayload removeTerm(RemoveTermInput removeTermInput) {
+        Term term = termRepository.findById(removeTermInput.getTermId()).get();
+        termRepository.delete(term);
+        return new RemoveTermPayload(Lists.newArrayList(termRepository.findAll()));
+    }
+}
 
 
 

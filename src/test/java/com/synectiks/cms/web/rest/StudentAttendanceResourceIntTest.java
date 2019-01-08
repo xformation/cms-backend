@@ -1,25 +1,14 @@
 package com.synectiks.cms.web.rest;
 
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.synectiks.cms.CmsApp;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
+import com.synectiks.cms.service.StudentAttendanceService;
+import com.synectiks.cms.service.dto.StudentAttendanceDTO;
+import com.synectiks.cms.service.mapper.StudentAttendanceMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,15 +24,23 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.StudentAttendance;
+import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
-import com.synectiks.cms.service.StudentAttendanceService;
-import com.synectiks.cms.service.dto.StudentAttendanceDTO;
-import com.synectiks.cms.service.mapper.StudentAttendanceMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the StudentAttendanceResource REST controller.
  *
@@ -56,11 +53,8 @@ public class StudentAttendanceResourceIntTest {
     private static final Date DEFAULT_ATTENDANCE_DATE = new Date();
     private static final Date UPDATED_ATTENDANCE_DATE = new Date();
 
-    private static final String DEFAULT_S_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_S_NAME = "BBBBBBBBBB";
-
-    private static final Status DEFAULT_STATUS = Status.ACTIVE;
-    private static final Status UPDATED_STATUS = Status.DEACTIVE;
+    private static final Status DEFAULT_STATUS = Status.PRESENT;
+    private static final Status UPDATED_STATUS = Status.ABSENT;
 
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
@@ -68,10 +62,8 @@ public class StudentAttendanceResourceIntTest {
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
 
-
     @Autowired
     private StudentAttendanceMapper studentAttendanceMapper;
-
 
     @Autowired
     private StudentAttendanceService studentAttendanceService;
@@ -147,7 +139,6 @@ public class StudentAttendanceResourceIntTest {
         assertThat(studentAttendanceList).hasSize(databaseSizeBeforeCreate + 1);
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
         assertThat(testStudentAttendance.getAttendanceDate()).isEqualTo(DEFAULT_ATTENDANCE_DATE);
-//        assertThat(testStudentAttendance.getsName()).isEqualTo(DEFAULT_S_NAME);
         assertThat(testStudentAttendance.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(DEFAULT_COMMENTS);
 
@@ -184,25 +175,6 @@ public class StudentAttendanceResourceIntTest {
         int databaseSizeBeforeTest = studentAttendanceRepository.findAll().size();
         // set the field null
         studentAttendance.setAttendanceDate(null);
-
-        // Create the StudentAttendance, which fails.
-        StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
-
-        restStudentAttendanceMockMvc.perform(post("/api/student-attendances")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
-        assertThat(studentAttendanceList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checksNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentAttendanceRepository.findAll().size();
-        // set the field null
-//        studentAttendance.setsName(null);
 
         // Create the StudentAttendance, which fails.
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
@@ -266,12 +238,10 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
             .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())))
-            .andExpect(jsonPath("$.[*].sName").value(hasItem(DEFAULT_S_NAME.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
-
-
+    
     @Test
     @Transactional
     public void getStudentAttendance() throws Exception {
@@ -284,10 +254,10 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(studentAttendance.getId().intValue()))
             .andExpect(jsonPath("$.attendanceDate").value(DEFAULT_ATTENDANCE_DATE.toString()))
-            .andExpect(jsonPath("$.sName").value(DEFAULT_S_NAME.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingStudentAttendance() throws Exception {
@@ -308,9 +278,8 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance updatedStudentAttendance = studentAttendanceRepository.findById(studentAttendance.getId()).get();
         // Disconnect from session so that the updates on updatedStudentAttendance are not directly saved in db
         em.detach(updatedStudentAttendance);
-//        updatedStudentAttendance
+       /* updatedStudentAttendance*/
         updatedStudentAttendance.setAttendanceDate(UPDATED_ATTENDANCE_DATE);
-//        updatedStudentAttendance.sName(UPDATED_S_NAME);
         updatedStudentAttendance.status(UPDATED_STATUS);
         updatedStudentAttendance.comments(UPDATED_COMMENTS);
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(updatedStudentAttendance);
@@ -325,7 +294,6 @@ public class StudentAttendanceResourceIntTest {
         assertThat(studentAttendanceList).hasSize(databaseSizeBeforeUpdate);
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
         assertThat(testStudentAttendance.getAttendanceDate()).isEqualTo(UPDATED_ATTENDANCE_DATE);
-//        assertThat(testStudentAttendance.getsName()).isEqualTo(UPDATED_S_NAME);
         assertThat(testStudentAttendance.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(UPDATED_COMMENTS);
 
@@ -341,7 +309,7 @@ public class StudentAttendanceResourceIntTest {
         // Create the StudentAttendance
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))
@@ -389,9 +357,8 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
             .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())))
-            .andExpect(jsonPath("$.[*].sName").value(hasItem(DEFAULT_S_NAME.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)));
     }
 
     @Test

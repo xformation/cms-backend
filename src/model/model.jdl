@@ -23,7 +23,7 @@ entity Semester{
 }
 
 enum Status{
-	PRESENT,ABSENT
+	PRESENT,ABSENT,ACTIVE,DEACTIVE
 }
 
 entity StudentAttendance{
@@ -39,7 +39,7 @@ entity AcademicSubject{
 }
 
 
-	
+
 entity AcademicDepartment{
 	departmentName String required
 	university String required
@@ -148,6 +148,26 @@ branch String  required
 corporateId Integer required
 }
 
+entity AcademicYear{
+	year Long required
+	startDate LocalDate required
+	endDate   LocalDate required
+}
+
+entity Holiday{
+	srNo Integer required
+	sHoliday String required
+	aDate LocalDate required
+	status Status required
+}
+
+entity Term{
+	srNo Integer required
+	aTerms String required
+	startDate LocalDate required
+	endDate   LocalDate required
+	status Status required
+}
 
 relationship ManyToOne{
 Section{studentyear} to StudentYear,
@@ -166,6 +186,8 @@ StudentAttendance{section} to Section
 StudentAttendance{periods} to Periods
 StudentAttendance{student} to Student
 AcademicSubject{academicDepartment} to AcademicDepartment
+AcademicYear{holiday}to Holiday
+AcademicYear{term}to Term
 }
 
 

@@ -21,6 +21,9 @@ import AuthorizedSignatory from './authorized-signatory';
 import BankAccounts from './bank-accounts';
 import AcademicDepartment from './academic-department';
 import AcademicSubject from './academic-subject';
+import AcademicYear from './academic-year';
+import Holiday from './holiday';
+import Term from './term';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -44,6 +47,9 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/bank-accounts`} component={BankAccounts} />
       <ErrorBoundaryRoute path={`${match.url}/academic-department`} component={AcademicDepartment} />
       <ErrorBoundaryRoute path={`${match.url}/academic-subject`} component={AcademicSubject} />
+      <ErrorBoundaryRoute path={`${match.url}/academic-year`} component={AcademicYear} />
+      <ErrorBoundaryRoute path={`${match.url}/holiday`} component={Holiday} />
+      <ErrorBoundaryRoute path={`${match.url}/term`} component={Term} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

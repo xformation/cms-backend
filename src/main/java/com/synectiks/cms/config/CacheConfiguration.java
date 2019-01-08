@@ -55,6 +55,9 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.BankAccounts.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.AcademicDepartment.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.AcademicSubject.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.AcademicYear.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.Holiday.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.Term.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

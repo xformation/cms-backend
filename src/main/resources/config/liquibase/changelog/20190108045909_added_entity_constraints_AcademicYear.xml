@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AcademicYear.
+    -->
+    <changeSet id="20190108045909-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="holiday_id"
+                                 baseTableName="academic_year"
+                                 constraintName="fk_academic_year_holiday_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="holiday"/>
+
+        <addForeignKeyConstraint baseColumnNames="term_id"
+                                 baseTableName="academic_year"
+                                 constraintName="fk_academic_year_term_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="term"/>
+
+    </changeSet>
+</databaseChangeLog>

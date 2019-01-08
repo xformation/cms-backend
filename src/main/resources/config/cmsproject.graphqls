@@ -37,6 +37,12 @@ type Query {
     academicDepartments:[AcademicDepartment!]!
     academicSubject(id: Long!): AcademicSubject!
     academicSubjects: [AcademicSubject!]!
+    academicYear(id: Long!): AcademicYear!
+    academicYears: [AcademicYear!]!
+    holiday(id: Long!): Holiday!
+    holidays: [Holiday!]!
+    term (id: Long!): Term!
+    terms: [Term!]!
 }
 
 type Student {
@@ -129,11 +135,14 @@ type StudentAttendance {
     section: Section!
     periods: Periods!
     student: Student!
+
 }
 
 enum Status {
     PRESENT
     ABSENT
+    ACTIVE
+    DEACTIVE
 }
 
 enum ClassSection {
@@ -238,6 +247,32 @@ type Departments{
     deptHead: String!
 }
 
+type Holiday{
+    id: Long!
+    srNo: Int!
+    sHoliday: String!
+    aDate: Date!
+    status: Status!
+}
+
+type Term{
+    id: Long!
+    srNo: Int!
+    aTerms: String!
+    startDate: Date!
+    endDate: Date!
+    status: Status!
+}
+
+type AcademicYear{
+    id: Long!
+    year: Long!
+    startDate: Date!
+    endDate: Date!
+    holiday: Holiday!
+    term: Term!
+}
+
 enum NameOfBank {
     HDFC
     SBI
@@ -300,6 +335,15 @@ type Mutation {
     addAcademicSubject(input: AddAcademicSubjectInput!): AddAcademicSubjectPayload!
     updateAcademicSubject(input: UpdateAcademicSubjectInput!): UpdateAcademicSubjectPayload!
     removeAcademicSubject(input: RemoveAcademicSubjectInput!): RemoveAcademicSubjectPayload!
+    addAcademicYear(input: AddAcademicYearInput!): AddAcademicYearPayload!
+    updateAcademicYear(input: UpdateAcademicYearInput!): UpdateAcademicYearPayload!
+    removeAcademicYear(input: RemoveAcademicYearInput!): RemoveAcademicYearPayload!
+    addHoliday(input: AddHolidayInput!): AddHolidayPayload!
+    updateHoliday(input: UpdateHolidayInput!): UpdateHolidayPayload!
+    removeHoliday(input: RemoveHolidayInput!): RemoveHolidayPayload!
+    addTerm(input: AddTermInput!): AddTermPayload!
+    updateTerm(input: UpdateTermInput!): UpdateTermPayload!
+    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
 }
 
 input AddAcademicDepartmentInput {
@@ -851,4 +895,96 @@ input RemoveStudentAttendanceInput {
 }
 type RemoveStudentAttendancePayload {
     studentAttendances: [StudentAttendance!]!
+}
+
+input AddAcademicYearInput {
+    year: Long!
+    startDate: Date!
+    endDate: Date!
+    holidayId: Long!
+    termId: Long!
+}
+
+type AddAcademicYearPayload {
+    academicYear: AcademicYear!
+}
+
+input UpdateAcademicYearInput {
+    id:Long!
+    year: Long!
+    startDate: Date!
+    endDate: Date!
+}
+
+type UpdateAcademicYearPayload {
+    academicYear: AcademicYear!
+}
+
+input RemoveAcademicYearInput {
+    academicYearId: Long!
+}
+type RemoveAcademicYearPayload {
+    academicYears: [AcademicYear!]!
+}
+
+input AddHolidayInput {
+    srNo: Int!
+    sHoliday: String!
+    aDate: Date!
+    status: Status!
+}
+
+type AddHolidayPayload {
+    holiday: Holiday!
+}
+
+input UpdateHolidayInput {
+    id:Long!
+    srNo: Int!
+    sHoliday: String!
+    aDate: Date!
+    status: Status!
+}
+
+type UpdateHolidayPayload {
+    holiday: Holiday!
+}
+
+input RemoveHolidayInput {
+    holidayId: Long!
+}
+type RemoveHolidayPayload {
+    holidays: [Holiday!]!
+}
+
+input AddTermInput {
+    srNo: Int!
+    aTerms: String!
+    startDate: Date!
+    endDate: Date!
+    status: Status!
+}
+
+type AddTermPayload {
+    term: Term!
+}
+
+input UpdateTermInput {
+    id:Long!
+    srNo: Int!
+    aTerms: String!
+    startDate: Date!
+    endDate: Date!
+    status: Status!
+}
+
+type UpdateTermPayload {
+    term: Term!
+}
+
+input RemoveTermInput {
+    termId: Long!
+}
+type RemoveTermPayload {
+    terms: [Term!]!
 }

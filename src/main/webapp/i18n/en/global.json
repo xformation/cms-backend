@@ -25,6 +25,9 @@
         "bankAccounts": "Bank Accounts",
         "academicDepartment": "Academic Department",
         "academicSubject": "Academic Subject",
+        "academicYear": "Academic Year",
+        "holiday": "Holiday",
+        "term": "Term",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

@@ -2,7 +2,9 @@ import { Moment } from 'moment';
 
 export const enum Status {
   PRESENT = 'PRESENT',
-  ABSENT = 'ABSENT'
+  ABSENT = 'ABSENT',
+  ACTIVE = 'ACTIVE',
+  DEACTIVE = 'DEACTIVE'
 }
 
 export interface IStudentAttendance {
