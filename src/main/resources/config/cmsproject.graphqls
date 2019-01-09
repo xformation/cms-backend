@@ -47,7 +47,7 @@ type Query {
 
 type Student {
     id: Long!
-    sName: String!
+    studentName: String!
     attendance: Boolean!
     electiveSub: Elective!
     teacher: Teacher!
@@ -62,14 +62,14 @@ type CollegeBranches{
 
 type StudentYear {
     id: Long!
-    sYear: SYear!
+    YearDesc: SYear!
 }
 
 type AcademicSubject{
     id: Long!
     subjectName: String!
     electiveSub: Boolean!
-    academicDepartment: AcademicDepartment!
+    department:Departments!
 }
 
 type Semester {
@@ -99,7 +99,7 @@ type Institute  {
 
 type Teacher{
     id: Long!
-    tName: String!
+    teacherName: String!
     periods: Periods!
 }
 
@@ -128,12 +128,6 @@ type StudentAttendance {
     attendanceDate: Date!
     status: Status!
     comments: String!
-    studentYear: StudentYear!
-    departments: Departments!
-    subject: Subject!
-    semester: Semester!
-    section: Section!
-    periods: Periods!
     student: Student!
 
 }
@@ -210,7 +204,6 @@ type LegalEntity{
     ptRegistrationDate:Date!
     ptSignatory:String!
     ptNumber:Long!
-    authorizedSignatory:AuthorizedSignatory!
 }
 
 type AuthorizedSignatory {
@@ -221,6 +214,7 @@ type AuthorizedSignatory {
     address: String!
     email: String!
     panCardNumber: String!
+    legalEntity: LegalEntity!
 }
 
 type BankAccounts {
@@ -249,19 +243,19 @@ type Departments{
 
 type Holiday{
     id: Long!
-    srNo: Int!
-    sHoliday: String!
-    aDate: Date!
+    holidayDesc: String!
+    holidayDate: Date!
     status: Status!
+    academicYear: AcademicYear!
 }
 
 type Term{
     id: Long!
-    srNo: Int!
-    aTerms: String!
+    termsDesc: String!
     startDate: Date!
     endDate: Date!
     status: Status!
+    academicYear: AcademicYear!
 }
 
 type AcademicYear{
@@ -269,8 +263,6 @@ type AcademicYear{
     year: Long!
     startDate: Date!
     endDate: Date!
-    holiday: Holiday!
-    term: Term!
 }
 
 enum NameOfBank {
@@ -351,18 +343,8 @@ input AddAcademicDepartmentInput {
     university: String!
 }
 
-input AddAcademicSubjectInput{
-    subjectName: String!
-    electiveSub: Boolean!
-    academicDepartmentId: Long!
-}
-
 type AddAcademicDepartmentPayload{
     academicDepartment: AcademicDepartment!
-}
-
-type AddAcademicSubjectPayload{
-    academicSubject: AcademicSubject!
 }
 
 input UpdateAcademicDepartmentInput {
@@ -371,40 +353,55 @@ input UpdateAcademicDepartmentInput {
     university: String!
 }
 
-input UpdateAcademicSubjectInput{
-    id: Long!
-    subjectName: String!
-    electiveSub: Boolean!
-}
-
 type UpdateAcademicDepartmentPayload{
     academicDepartment: AcademicDepartment!
-}
-
-type UpdateAcademicSubjectPayload{
-    academicSubject: AcademicSubject!
 }
 
 input RemoveAcademicDepartmentInput{
     academicDepartmentId: Long!
 }
 
-input RemoveAcademicSubjectInput{
-    academicSubjectId: Long!
-}
 type RemoveAcademicDepartmentPayload{
     academicDepartments: [AcademicDepartment!]!
 }
+
+input AddAcademicSubjectInput{
+    id: Long!
+    subjectName: String!
+    electiveSub: Boolean!
+    departmentsId:Long!
+}
+
+type AddAcademicSubjectPayload{
+    academicSubject: AcademicSubject!
+}
+
+input UpdateAcademicSubjectInput{
+    id: Long!
+    subjectName: String!
+    electiveSub: Boolean!
+}
+
+
+
+type UpdateAcademicSubjectPayload{
+    academicSubject: AcademicSubject!
+}
+
+input RemoveAcademicSubjectInput{
+    academicSubjectId: Long!
+}
+
 
 type RemoveAcademicSubjectPayload{
     academicSubjects: [AcademicSubject!]!
 }
 
 input AddStudentInput {
-         sName: String!
-         attendance: Boolean!
-         electiveSub: String!
-         teacherId: Long!
+    studentName: String!
+    attendance: Boolean!
+    electiveSub: Elective!
+    teacherId: Long!
 }
 
 type AddStudentPayload {
@@ -412,10 +409,10 @@ type AddStudentPayload {
 }
 
 input UpdateStudentInput {
-           id:Long!
-           sName: String!
-           attendance: Boolean!
-           electiveSub: String!
+    id: Long!
+    studentName: String!
+    attendance: Boolean!
+    electiveSub: Elective!
 }
 
 type UpdateStudentPayload {
@@ -519,7 +516,7 @@ type RemoveCollegeBranchesPayload {
 }
 
 input AddStudentYearInput {
-        sYear: SYear
+    YearDesc: SYear!
 }
 
 type AddStudentYearPayload {
@@ -528,7 +525,7 @@ type AddStudentYearPayload {
 
 input UpdateStudentYearInput {
     id: Long!
-    sYear: SYear!
+    YearDesc: SYear!
 
 }
 
@@ -651,8 +648,8 @@ type RemoveSubjectPayload {
 }
 
 input AddTeacherInput {
-          tName: String!
-          periodsId: Long!
+    teacherName: String!
+    periodsId: Long!
 }
 
 type AddTeacherPayload {
@@ -660,8 +657,9 @@ type AddTeacherPayload {
 }
 
 input UpdateTeacherInput {
-         id: Long!
-          tName: String!
+    id: Long!
+    teacherName: String!
+
 }
 
 type UpdateTeacherPayload {
@@ -693,7 +691,6 @@ input AddLegalEntityInput {
     ptRegistrationDate:Date!
     ptSignatory:String!
     ptNumber:Long!
-    authorizedSignatoryId:Long!
 }
 
 type AddLegalEntityPayload {
@@ -701,7 +698,7 @@ type AddLegalEntityPayload {
 }
 
 input UpdateLegalEntityInput {
-    id:Long!
+    id: Long!
     logo: Long!
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
@@ -740,6 +737,7 @@ input AddAuthorizedSignatoryInput {
     address: String!
     email: String!
     panCardNumber: String!
+    legalEntityId: Long!
 }
 
 type AddAuthorizedSignatoryPayload {
@@ -862,16 +860,11 @@ type RemoveLocationPayload {
 }
 
 input AddStudentAttendanceInput {
-          attendanceDate: Date!
-          status: Status!
-          comments: String!
-          studentYearId:  Long!
-          departmentsId:  Long!
-          subjectId:  Long!
-          semesterId:  Long!
-          sectionId:  Long!
-          periodsId:  Long!
-          studentId:  Long!
+    id: Long!
+    attendanceDate: Date!
+    status: Status!
+    comments: String!
+    studentId:  Long!
 }
 
 type AddStudentAttendancePayload {
@@ -901,8 +894,6 @@ input AddAcademicYearInput {
     year: Long!
     startDate: Date!
     endDate: Date!
-    holidayId: Long!
-    termId: Long!
 }
 
 type AddAcademicYearPayload {
@@ -928,10 +919,10 @@ type RemoveAcademicYearPayload {
 }
 
 input AddHolidayInput {
-    srNo: Int!
-    sHoliday: String!
-    aDate: Date!
+    holidayDesc: String!
+    holidayDate: Date!
     status: Status!
+    academicYearId: Long!
 }
 
 type AddHolidayPayload {
@@ -939,10 +930,9 @@ type AddHolidayPayload {
 }
 
 input UpdateHolidayInput {
-    id:Long!
-    srNo: Int!
-    sHoliday: String!
-    aDate: Date!
+    id: Long!
+    holidayDesc: String!
+    holidayDate: Date!
     status: Status!
 }
 
@@ -958,11 +948,11 @@ type RemoveHolidayPayload {
 }
 
 input AddTermInput {
-    srNo: Int!
-    aTerms: String!
+    termsDesc: String!
     startDate: Date!
     endDate: Date!
     status: Status!
+    academicYearId: Long!
 }
 
 type AddTermPayload {
@@ -970,9 +960,8 @@ type AddTermPayload {
 }
 
 input UpdateTermInput {
-    id:Long!
-    srNo: Int!
-    aTerms: String!
+    id: Long!
+    termsDesc: String!
     startDate: Date!
     endDate: Date!
     status: Status!

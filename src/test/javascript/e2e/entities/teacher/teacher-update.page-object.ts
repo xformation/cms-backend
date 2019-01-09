@@ -4,46 +4,46 @@ export default class TeacherUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.teacher.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  tNameInput: ElementFinder = element(by.css('input#teacher-tName'));
+  teacherNameInput: ElementFinder = element(by.css('input#teacher-teacherName'));
   periodsSelect: ElementFinder = element(by.css('select#teacher-periods'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  async setTNameInput(tName) {
-    await this.tNameInput.sendKeys(tName);
+  setTeacherNameInput(teacherName) {
+    this.teacherNameInput.sendKeys(teacherName);
   }
 
-  async getTNameInput() {
-    return this.tNameInput.getAttribute('value');
+  getTeacherNameInput() {
+    return this.teacherNameInput.getAttribute('value');
   }
 
-  async periodsSelectLastOption() {
-    await this.periodsSelect
+  periodsSelectLastOption() {
+    this.periodsSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async periodsSelectOption(option) {
-    await this.periodsSelect.sendKeys(option);
+  periodsSelectOption(option) {
+    this.periodsSelect.sendKeys(option);
   }
 
   getPeriodsSelect() {
     return this.periodsSelect;
   }
 
-  async getPeriodsSelectedOption() {
+  getPeriodsSelectedOption() {
     return this.periodsSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

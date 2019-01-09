@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,21 +32,21 @@ public class Holiday implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "sr_no", nullable = false)
-    private Integer srNo;
+    @Column(name = "holiday_desc", nullable = false)
+    private String holidayDesc;
 
     @NotNull
-    @Column(name = "s_holiday", nullable = false)
-    private String sHoliday;
-
-    @NotNull
-    @Column(name = "a_date", nullable = false)
-    private Date aDate;
+    @Column(name = "holiday_date", nullable = false)
+    private Date holidayDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private AcademicYear academicYear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -56,38 +57,25 @@ public class Holiday implements Serializable {
         this.id = id;
     }
 
-    public Integer getSrNo() {
-        return srNo;
+    public String getHolidayDesc() {
+        return holidayDesc;
     }
 
-    public Holiday srNo(Integer srNo) {
-        this.srNo = srNo;
+    public Holiday holidayDesc(String holidayDesc) {
+        this.holidayDesc = holidayDesc;
         return this;
     }
 
-    public void setSrNo(Integer srNo) {
-        this.srNo = srNo;
+    public void setHolidayDesc(String holidayDesc) {
+        this.holidayDesc = holidayDesc;
     }
 
-    public String getsHoliday() {
-        return sHoliday;
+    public Date getHolidayDate() {
+        return holidayDate;
     }
 
-    public Holiday sHoliday(String sHoliday) {
-        this.sHoliday = sHoliday;
-        return this;
-    }
-
-    public void setsHoliday(String sHoliday) {
-        this.sHoliday = sHoliday;
-    }
-
-    public Date getaDate() {
-        return aDate;
-    }
-
-    public void setaDate(Date aDate) {
-        this.aDate = aDate;
+    public void setHolidayDate(Date holidayDate) {
+        this.holidayDate = holidayDate;
     }
 
     public Status getStatus() {
@@ -101,6 +89,19 @@ public class Holiday implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public AcademicYear getAcademicYear() {
+        return academicYear;
+    }
+
+    public Holiday academicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
+        return this;
+    }
+
+    public void setAcademicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -128,9 +129,8 @@ public class Holiday implements Serializable {
     public String toString() {
         return "Holiday{" +
             "id=" + getId() +
-            ", srNo=" + getSrNo() +
-            ", sHoliday='" + getsHoliday() + "'" +
-            ", aDate='" + getaDate() + "'" +
+            ", holidayDesc='" + getHolidayDesc() + "'" +
+            ", holidayDate='" + getHolidayDate() + "'" +
             ", status='" + getStatus() + "'" +
             "}";
     }

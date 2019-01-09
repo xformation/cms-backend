@@ -9,11 +9,11 @@ export const enum Status {
 
 export interface ITerm {
   id?: number;
-  srNo?: number;
-  aTerms?: string;
+  termsDesc?: string;
   startDate?: Moment;
   endDate?: Moment;
   status?: Status;
+  academicYearId?: number;
 }
 
 export const defaultValue: Readonly<ITerm> = {};

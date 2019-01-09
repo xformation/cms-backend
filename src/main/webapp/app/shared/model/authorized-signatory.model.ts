@@ -6,6 +6,7 @@ export interface IAuthorizedSignatory {
   address?: string;
   email?: string;
   panCardNumber?: string;
+  legalEntityId?: number;
 }
 
 export const defaultValue: Readonly<IAuthorizedSignatory> = {};

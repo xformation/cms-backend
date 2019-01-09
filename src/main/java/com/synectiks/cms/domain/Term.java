@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,12 +32,8 @@ public class Term implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "sr_no", nullable = false)
-    private Integer srNo;
-
-    @NotNull
-    @Column(name = "a_terms", nullable = false)
-    private String aTerms;
+    @Column(name = "terms_desc", nullable = false)
+    private String termsDesc;
 
     @NotNull
     @Column(name = "start_date", nullable = false)
@@ -51,6 +48,10 @@ public class Term implements Serializable {
     @Column(name = "status", nullable = false)
     private Status status;
 
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private AcademicYear academicYear;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -60,32 +61,18 @@ public class Term implements Serializable {
         this.id = id;
     }
 
-    public Integer getSrNo() {
-        return srNo;
+    public String getTermsDesc() {
+        return termsDesc;
     }
 
-    public Term srNo(Integer srNo) {
-        this.srNo = srNo;
+    public Term termsDesc(String termsDesc) {
+        this.termsDesc = termsDesc;
         return this;
     }
 
-    public void setSrNo(Integer srNo) {
-        this.srNo = srNo;
+    public void setTermsDesc(String termsDesc) {
+        this.termsDesc = termsDesc;
     }
-
-    public String getaTerms() {
-        return aTerms;
-    }
-
-    public Term aTerms(String aTerms) {
-        this.aTerms = aTerms;
-        return this;
-    }
-
-    public void setaTerms(String aTerms) {
-        this.aTerms = aTerms;
-    }
-
 
     public Date getStartDate() {
         return startDate;
@@ -115,6 +102,19 @@ public class Term implements Serializable {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public AcademicYear getAcademicYear() {
+        return academicYear;
+    }
+
+    public Term academicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
+        return this;
+    }
+
+    public void setAcademicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -141,8 +141,7 @@ public class Term implements Serializable {
     public String toString() {
         return "Term{" +
             "id=" + getId() +
-            ", srNo=" + getSrNo() +
-            ", aTerms='" + getaTerms() + "'" +
+            ", termsDesc='" + getTermsDesc() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", status='" + getStatus() + "'" +

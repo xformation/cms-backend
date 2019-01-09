@@ -8,13 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity AcademicSubject and its DTO AcademicSubjectDTO.
  */
-@Mapper(componentModel = "spring", uses = {AcademicDepartmentMapper.class})
+@Mapper(componentModel = "spring", uses = {DepartmentsMapper.class})
 public interface AcademicSubjectMapper extends EntityMapper<AcademicSubjectDTO, AcademicSubject> {
 
-    @Mapping(source = "academicDepartment.id", target = "academicDepartmentId")
+    @Mapping(source = "department.id", target = "departmentId")
     AcademicSubjectDTO toDto(AcademicSubject academicSubject);
 
-    @Mapping(source = "academicDepartmentId", target = "academicDepartment")
+    @Mapping(source = "departmentId", target = "department")
     AcademicSubject toEntity(AcademicSubjectDTO academicSubjectDTO);
 
     default AcademicSubject fromId(Long id) {

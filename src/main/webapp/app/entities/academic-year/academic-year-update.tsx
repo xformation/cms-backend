@@ -8,10 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IHoliday } from 'app/shared/model/holiday.model';
-import { getEntities as getHolidays } from 'app/entities/holiday/holiday.reducer';
-import { ITerm } from 'app/shared/model/term.model';
-import { getEntities as getTerms } from 'app/entities/term/term.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './academic-year.reducer';
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
 // tslint:disable-next-line:no-unused-variable
@@ -22,16 +18,12 @@ export interface IAcademicYearUpdateProps extends StateProps, DispatchProps, Rou
 
 export interface IAcademicYearUpdateState {
   isNew: boolean;
-  holidayId: number;
-  termId: number;
 }
 
 export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps, IAcademicYearUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      holidayId: 0,
-      termId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -42,9 +34,6 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getHolidays();
-    this.props.getTerms();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +58,7 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
   };
 
   render() {
-    const { academicYearEntity, holidays, terms, loading, updating } = this.props;
+    const { academicYearEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -138,36 +127,6 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                     }}
                   />
                 </AvGroup>
-                <AvGroup>
-                  <Label for="holiday.id">
-                    <Translate contentKey="cmsApp.academicYear.holiday">Holiday</Translate>
-                  </Label>
-                  <AvInput id="academic-year-holiday" type="select" className="form-control" name="holidayId">
-                    <option value="" key="0" />
-                    {holidays
-                      ? holidays.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="term.id">
-                    <Translate contentKey="cmsApp.academicYear.term">Term</Translate>
-                  </Label>
-                  <AvInput id="academic-year-term" type="select" className="form-control" name="termId">
-                    <option value="" key="0" />
-                    {terms
-                      ? terms.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/academic-year" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -189,16 +148,12 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  holidays: storeState.holiday.entities,
-  terms: storeState.term.entities,
   academicYearEntity: storeState.academicYear.entity,
   loading: storeState.academicYear.loading,
   updating: storeState.academicYear.updating
 });
 
 const mapDispatchToProps = {
-  getHolidays,
-  getTerms,
   getEntity,
   updateEntity,
   createEntity,

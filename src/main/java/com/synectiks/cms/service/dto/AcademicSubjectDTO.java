@@ -17,7 +17,7 @@ public class AcademicSubjectDTO implements Serializable {
     @NotNull
     private Boolean electiveSub;
 
-    private Long academicDepartmentId;
+    private Long departmentId;
 
     public Long getId() {
         return id;
@@ -43,12 +43,12 @@ public class AcademicSubjectDTO implements Serializable {
         this.electiveSub = electiveSub;
     }
 
-    public Long getAcademicDepartmentId() {
-        return academicDepartmentId;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setAcademicDepartmentId(Long academicDepartmentId) {
-        this.academicDepartmentId = academicDepartmentId;
+    public void setDepartmentId(Long departmentsId) {
+        this.departmentId = departmentsId;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class AcademicSubjectDTO implements Serializable {
             "id=" + getId() +
             ", subjectName='" + getSubjectName() + "'" +
             ", electiveSub='" + isElectiveSub() + "'" +
-            ", academicDepartment=" + getAcademicDepartmentId() +
+            ", department=" + getDepartmentId() +
             "}";
     }
 }

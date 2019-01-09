@@ -4,22 +4,22 @@ export default class StudentYearUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.studentYear.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  sYearSelect: ElementFinder = element(by.css('select#student-year-sYear'));
+  yearDescSelect: ElementFinder = element(by.css('select#student-year-yearDesc'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  setSYearSelect(sYear) {
-    this.sYearSelect.sendKeys(sYear);
+  setYearDescSelect(yearDesc) {
+    this.yearDescSelect.sendKeys(yearDesc);
   }
 
-  getSYearSelect() {
-    return this.sYearSelect.element(by.css('option:checked')).getText();
+  getYearDescSelect() {
+    return this.yearDescSelect.element(by.css('option:checked')).getText();
   }
 
-  sYearSelectLastOption() {
-    this.sYearSelect
+  yearDescSelectLastOption() {
+    this.yearDescSelect
       .all(by.tagName('option'))
       .last()
       .click();

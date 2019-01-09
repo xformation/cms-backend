@@ -6,48 +6,48 @@ export default class AcademicSubjectUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   subjectNameInput: ElementFinder = element(by.css('input#academic-subject-subjectName'));
   electiveSubInput: ElementFinder = element(by.css('input#academic-subject-electiveSub'));
-  academicDepartmentSelect: ElementFinder = element(by.css('select#academic-subject-academicDepartment'));
+  departmentSelect: ElementFinder = element(by.css('select#academic-subject-department'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  async setSubjectNameInput(subjectName) {
-    await this.subjectNameInput.sendKeys(subjectName);
+  setSubjectNameInput(subjectName) {
+    this.subjectNameInput.sendKeys(subjectName);
   }
 
-  async getSubjectNameInput() {
+  getSubjectNameInput() {
     return this.subjectNameInput.getAttribute('value');
   }
 
   getElectiveSubInput() {
     return this.electiveSubInput;
   }
-  async academicDepartmentSelectLastOption() {
-    await this.academicDepartmentSelect
+  departmentSelectLastOption() {
+    this.departmentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async academicDepartmentSelectOption(option) {
-    await this.academicDepartmentSelect.sendKeys(option);
+  departmentSelectOption(option) {
+    this.departmentSelect.sendKeys(option);
   }
 
-  getAcademicDepartmentSelect() {
-    return this.academicDepartmentSelect;
+  getDepartmentSelect() {
+    return this.departmentSelect;
   }
 
-  async getAcademicDepartmentSelectedOption() {
-    return this.academicDepartmentSelect.element(by.css('option:checked')).getText();
+  getDepartmentSelectedOption() {
+    return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

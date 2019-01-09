@@ -33,30 +33,6 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="student_year_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="departments_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="subject_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="semester_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="section_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="periods_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="student_id" type="bigint">
                 <constraints nullable="true" />
             </column>

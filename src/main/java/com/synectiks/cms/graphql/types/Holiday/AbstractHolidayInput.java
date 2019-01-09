@@ -7,9 +7,8 @@ import java.util.Objects;
 
 public class AbstractHolidayInput {
     private Long id;
-    private Integer srNo;
-    private String sHoliday;
-    private Date aDate;
+    private String holidayDesc;
+    private Date holidayDate;
     private Status status;
 
     public Long getId() {
@@ -20,28 +19,20 @@ public class AbstractHolidayInput {
         this.id = id;
     }
 
-    public Integer getSrNo() {
-        return srNo;
+    public String getHolidayDesc() {
+        return holidayDesc;
     }
 
-    public void setSrNo(Integer srNo) {
-        this.srNo = srNo;
+    public void setHolidayDesc(String holidayDesc) {
+        this.holidayDesc = holidayDesc;
     }
 
-    public String getsHoliday() {
-        return sHoliday;
+    public Date getHolidayDate() {
+        return holidayDate;
     }
 
-    public void setsHoliday(String sHoliday) {
-        this.sHoliday = sHoliday;
-    }
-
-    public Date getaDate() {
-        return aDate;
-    }
-
-    public void setaDate(Date aDate) {
-        this.aDate = aDate;
+    public void setHolidayDate(Date holidayDate) {
+        this.holidayDate = holidayDate;
     }
 
     public Status getStatus() {
@@ -58,24 +49,22 @@ public class AbstractHolidayInput {
         if (o == null || getClass() != o.getClass()) return false;
         AbstractHolidayInput that = (AbstractHolidayInput) o;
         return Objects.equals(id, that.id) &&
-            Objects.equals(srNo, that.srNo) &&
-            Objects.equals(sHoliday, that.sHoliday) &&
-            Objects.equals(aDate, that.aDate) &&
+            Objects.equals(holidayDesc, that.holidayDesc) &&
+            Objects.equals(holidayDate, that.holidayDate) &&
             status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, srNo, sHoliday, aDate, status);
+        return Objects.hash(id, holidayDesc, holidayDate, status);
     }
 
     @Override
     public String toString() {
         return "AbstractHolidayInput{" +
             "id=" + id +
-            ", srNo=" + srNo +
-            ", sHoliday='" + sHoliday + '\'' +
-            ", aDate=" + aDate +
+            ", holidayDesc='" + holidayDesc + '\'' +
+            ", holidayDate=" + holidayDate +
             ", status=" + status +
             '}';
     }

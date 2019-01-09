@@ -8,30 +8,28 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IAcademicYear } from 'app/shared/model/academic-year.model';
+import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './holiday.reducer';
 import { IHoliday } from 'app/shared/model/holiday.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IHolidayUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IHolidayUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IHolidayUpdateState {
   isNew: boolean;
+  academicYearId: number;
 }
 
 export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHolidayUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      academicYearId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -40,6 +38,8 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getAcademicYears();
   }
 
   saveEntity = (event, errors, values) => {
@@ -55,6 +55,7 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
@@ -63,7 +64,7 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
   };
 
   render() {
-    const { holidayEntity, loading, updating } = this.props;
+    const { holidayEntity, academicYears, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -90,42 +91,27 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="srNoLabel" for="srNo">
-                    <Translate contentKey="cmsApp.holiday.srNo">Sr No</Translate>
+                  <Label id="holidayDescLabel" for="holidayDesc">
+                    <Translate contentKey="cmsApp.holiday.holidayDesc">Holiday Desc</Translate>
                   </Label>
                   <AvField
-                    id="holiday-srNo"
-                    type="string"
-                    className="form-control"
-                    name="srNo"
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="sHolidayLabel" for="sHoliday">
-                    <Translate contentKey="cmsApp.holiday.sHoliday">S Holiday</Translate>
-                  </Label>
-                  <AvField
-                    id="holiday-sHoliday"
+                    id="holiday-holidayDesc"
                     type="text"
-                    name="sHoliday"
+                    name="holidayDesc"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="aDateLabel" for="aDate">
-                    <Translate contentKey="cmsApp.holiday.aDate">A Date</Translate>
+                  <Label id="holidayDateLabel" for="holidayDate">
+                    <Translate contentKey="cmsApp.holiday.holidayDate">Holiday Date</Translate>
                   </Label>
                   <AvField
-                    id="holiday-aDate"
+                    id="holiday-holidayDate"
                     type="date"
                     className="form-control"
-                    name="aDate"
+                    name="holidayDate"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
@@ -156,6 +142,21 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
                     </option>
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="academicYear.id">
+                    <Translate contentKey="cmsApp.holiday.academicYear">Academic Year</Translate>
+                  </Label>
+                  <AvInput id="holiday-academicYear" type="select" className="form-control" name="academicYearId">
+                    <option value="" key="0" />
+                    {academicYears
+                      ? academicYears.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/holiday" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -177,13 +178,14 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  academicYears: storeState.academicYear.entities,
   holidayEntity: storeState.holiday.entity,
   loading: storeState.holiday.loading,
-  updating: storeState.holiday.updating,
-  updateSuccess: storeState.holiday.updateSuccess
+  updating: storeState.holiday.updating
 });
 
 const mapDispatchToProps = {
+  getAcademicYears,
   getEntity,
   updateEntity,
   createEntity,

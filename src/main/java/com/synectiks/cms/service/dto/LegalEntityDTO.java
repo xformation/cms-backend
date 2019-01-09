@@ -64,8 +64,6 @@ public class LegalEntityDTO implements Serializable {
     @NotNull
     private Long ptNumber;
 
-    private Long authorizedSignatoryId;
-
     public Long getId() {
         return id;
     }
@@ -210,14 +208,6 @@ public class LegalEntityDTO implements Serializable {
         this.ptNumber = ptNumber;
     }
 
-    public Long getAuthorizedSignatoryId() {
-        return authorizedSignatoryId;
-    }
-
-    public void setAuthorizedSignatoryId(Long authorizedSignatoryId) {
-        this.authorizedSignatoryId = authorizedSignatoryId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -260,7 +250,6 @@ public class LegalEntityDTO implements Serializable {
             ", ptRegistrationDate='" + getPtRegistrationDate() + "'" +
             ", ptSignatory='" + getPtSignatory() + "'" +
             ", ptNumber=" + getPtNumber() +
-            ", authorizedSignatory=" + getAuthorizedSignatoryId() +
             "}";
     }
 }

@@ -12,7 +12,7 @@ import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ILegalEntityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ILegalEntityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> {
   componentDidMount() {
@@ -136,10 +136,6 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
               </span>
             </dt>
             <dd>{legalEntityEntity.ptNumber}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.legalEntity.authorizedSignatory">Authorized Signatory</Translate>
-            </dt>
-            <dd>{legalEntityEntity.authorizedSignatoryId ? legalEntityEntity.authorizedSignatoryId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/legal-entity" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

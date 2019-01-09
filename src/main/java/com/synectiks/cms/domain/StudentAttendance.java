@@ -46,30 +46,6 @@ public class StudentAttendance implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private StudentYear studentYear;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Departments departments;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Subject subject;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Semester semester;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Section section;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Periods periods;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private Student student;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -113,84 +89,6 @@ public class StudentAttendance implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public StudentYear getStudentYear() {
-        return studentYear;
-    }
-
-    public StudentAttendance studentYear(StudentYear studentYear) {
-        this.studentYear = studentYear;
-        return this;
-    }
-
-    public void setStudentYear(StudentYear studentYear) {
-        this.studentYear = studentYear;
-    }
-
-    public Departments getDepartments() {
-        return departments;
-    }
-
-    public StudentAttendance departments(Departments departments) {
-        this.departments = departments;
-        return this;
-    }
-
-    public void setDepartments(Departments departments) {
-        this.departments = departments;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public StudentAttendance subject(Subject subject) {
-        this.subject = subject;
-        return this;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public StudentAttendance semester(Semester semester) {
-        this.semester = semester;
-        return this;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
-    }
-
-    public Section getSection() {
-        return section;
-    }
-
-    public StudentAttendance section(Section section) {
-        this.section = section;
-        return this;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
-    }
-
-    public Periods getPeriods() {
-        return periods;
-    }
-
-    public StudentAttendance periods(Periods periods) {
-        this.periods = periods;
-        return this;
-    }
-
-    public void setPeriods(Periods periods) {
-        this.periods = periods;
     }
 
     public Student getStudent() {

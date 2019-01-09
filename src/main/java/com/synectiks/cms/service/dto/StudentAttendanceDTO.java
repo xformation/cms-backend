@@ -22,18 +22,6 @@ public class StudentAttendanceDTO implements Serializable {
     @NotNull
     private String comments;
 
-    private Long studentYearId;
-
-    private Long departmentsId;
-
-    private Long subjectId;
-
-    private Long semesterId;
-
-    private Long sectionId;
-
-    private Long periodsId;
-
     private Long studentId;
 
     public Long getId() {
@@ -66,54 +54,6 @@ public class StudentAttendanceDTO implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public Long getStudentYearId() {
-        return studentYearId;
-    }
-
-    public void setStudentYearId(Long studentYearId) {
-        this.studentYearId = studentYearId;
-    }
-
-    public Long getDepartmentsId() {
-        return departmentsId;
-    }
-
-    public void setDepartmentsId(Long departmentsId) {
-        this.departmentsId = departmentsId;
-    }
-
-    public Long getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Long subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public Long getSemesterId() {
-        return semesterId;
-    }
-
-    public void setSemesterId(Long semesterId) {
-        this.semesterId = semesterId;
-    }
-
-    public Long getSectionId() {
-        return sectionId;
-    }
-
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
-    }
-
-    public Long getPeriodsId() {
-        return periodsId;
-    }
-
-    public void setPeriodsId(Long periodsId) {
-        this.periodsId = periodsId;
     }
 
     public Long getStudentId() {
@@ -152,12 +92,6 @@ public class StudentAttendanceDTO implements Serializable {
             ", attendanceDate='" + getAttendanceDate() + "'" +
             ", status='" + getStatus() + "'" +
             ", comments='" + getComments() + "'" +
-            ", studentYear=" + getStudentYearId() +
-            ", departments=" + getDepartmentsId() +
-            ", subject=" + getSubjectId() +
-            ", semester=" + getSemesterId() +
-            ", section=" + getSectionId() +
-            ", periods=" + getPeriodsId() +
             ", student=" + getStudentId() +
             "}";
     }

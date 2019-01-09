@@ -85,7 +85,7 @@ public class Mutation implements GraphQLMutationResolver {
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
         final Teacher teacher = teacherRepository.findById(addStudentInput.getTeacherId()).get();
         final Student student = new Student();
-        student.setsName(addStudentInput.getsName());
+        student.setStudentName(addStudentInput.getStudentName());
         student.setAttendance(addStudentInput.getAttendance());
         student.setElectiveSub(addStudentInput.getElectiveSub());
         student.setTeacher(teacher);
@@ -95,8 +95,8 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) {
         Student student = studentRepository.findById(updateStudentInput.getId()).get();
-        if (updateStudentInput.getsName() != null) {
-            student.setsName(updateStudentInput.getsName());
+        if (updateStudentInput.getStudentName() != null) {
+            student.setStudentName(updateStudentInput.getStudentName());
         }
         if (updateStudentInput.getAttendance() != null) {
             student.setAttendance(updateStudentInput.getAttendance());
@@ -130,7 +130,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddStudentYearPayload addStudentYear(AddStudentYearInput addStudentYearInput) {
         final StudentYear studentYear = new StudentYear();
-        studentYear.setsYear(addStudentYearInput.getsYear());
+        studentYear.setYearDesc(addStudentYearInput.getYearDes());
         studentYearRepository.save(studentYear);
 
         return new AddStudentYearPayload(studentYear);
@@ -138,8 +138,8 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateStudentYearPayload updateStudentYear(UpdateStudentYearInput updateStudentYearInput) {
         StudentYear studentYear = studentYearRepository.findById(updateStudentYearInput.getId()).get();
-        if (updateStudentYearInput.getsYear() != null) {
-            studentYear.setsYear(updateStudentYearInput.getsYear());
+        if (updateStudentYearInput.getYearDes() != null) {
+            studentYear.setYearDesc(updateStudentYearInput.getYearDes());
         }
 
         studentYearRepository.save(studentYear);
@@ -485,24 +485,11 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddStudentAttendancePayload addStudentAttendance(AddStudentAttendanceInput addStudentAttendanceInput) {
-        final StudentYear studentYear = studentYearRepository.findById(addStudentAttendanceInput.getStudentYearId()).get();
-        final Periods periods = periodsRepository.findById(addStudentAttendanceInput.getPeriodsId()).get();
         final Student student = studentRepository.findById(addStudentAttendanceInput.getStudentId()).get();
-        final Subject subject = subjectRepository.findById(addStudentAttendanceInput.getSubjectId()).get();
-        final Semester semester = semesterRepository.findById(addStudentAttendanceInput.getSemesterId()).get();
-        final Departments departments = departmentsRepository.findById(addStudentAttendanceInput.getDepartmentsId()).get();
-        final Section section = sectionRepository.findById(addStudentAttendanceInput.getSectionId()).get();
-
         final StudentAttendance studentAttendance = new StudentAttendance();
         studentAttendance.setAttendanceDate(addStudentAttendanceInput.getAttendanceDate());
         studentAttendance.setStatus(addStudentAttendanceInput.getStatus());
         studentAttendance.setComments(addStudentAttendanceInput.getComments());
-        studentAttendance.setStudentYear(studentYear);
-        studentAttendance.setDepartments(departments);
-        studentAttendance.setSubject(subject);
-        studentAttendance.setSemester(semester);
-        studentAttendance.setSection(section);
-        studentAttendance.setPeriods(periods);
         studentAttendance.setStudent(student);
         studentAttendanceRepository.save(studentAttendance);
 
@@ -537,7 +524,7 @@ public class Mutation implements GraphQLMutationResolver {
     public AddTeacherPayload addTeacher(AddTeacherInput addTeacherInput) {
         final Periods periods = periodsRepository.findById(addTeacherInput.getPeriodsId()).get();
         final Teacher teacher = new Teacher();
-        teacher.settName(addTeacherInput.gettName());
+        teacher.setTeacherName(addTeacherInput.getTeacherName());
         teacher.setPeriods(periods);
 
         teacherRepository.save(teacher);
@@ -547,8 +534,8 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateTeacherPayload updateTeacher(UpdateTeacherInput updateTeacherInput) {
         Teacher teacher = teacherRepository.findById(updateTeacherInput.getId()).get();
-        if (updateTeacherInput.gettName() != null) {
-            teacher.settName(updateTeacherInput.gettName());
+        if (updateTeacherInput.getTeacherName() != null) {
+            teacher.setTeacherName(updateTeacherInput.getTeacherName());
         }
         teacherRepository.save(teacher);
 
@@ -562,6 +549,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddAuthorizedSignatoryPayload addAuthorizedSignatory(AddAuthorizedSignatoryInput addAuthorizedSignatoryInput) {
+        final LegalEntity legalEntity = legalEntityRepository.findById(addAuthorizedSignatoryInput.getLegalEntityId()).get();
         final AuthorizedSignatory authorizedSignatory = new AuthorizedSignatory();
         authorizedSignatory.setSignatoryName(addAuthorizedSignatoryInput.getSignatoryName());
         authorizedSignatory.setSignatoryFatherName(addAuthorizedSignatoryInput.getSignatoryFatherName());
@@ -569,6 +557,7 @@ public class Mutation implements GraphQLMutationResolver {
         authorizedSignatory.setAddress(addAuthorizedSignatoryInput.getAddress());
         authorizedSignatory.setEmail(addAuthorizedSignatoryInput.getEmail());
         authorizedSignatory.setPanCardNumber(addAuthorizedSignatoryInput.getPanCardNumber());
+        authorizedSignatory.setLegalEntity(legalEntity);
         authorizedSignatoryRepository.save(authorizedSignatory);
 
         return new AddAuthorizedSignatoryPayload(authorizedSignatory);
@@ -610,7 +599,6 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddLegalEntityPayload addLegalEntity(AddLegalEntityInput addLegalEntityInput) {
-        final AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(addLegalEntityInput.getAuthorizedSignatoryId()).get();
         final LegalEntity legalEntity = new LegalEntity();
         legalEntity.setLogo(addLegalEntityInput.getLogo());
         legalEntity.setLegalNameOfTheCollege(addLegalEntityInput.getLegalNameOfTheCollege());
@@ -629,7 +617,6 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setPtRegistrationDate(addLegalEntityInput.getPtRegistrationDate());
         legalEntity.setPtSignatory(addLegalEntityInput.getPtSignatory());
         legalEntity.setPtNumber(addLegalEntityInput.getPtNumber());
-        legalEntity.setAuthorizedSignatory(authorizedSignatory);
 
         legalEntityRepository.save(legalEntity);
 
@@ -734,11 +721,11 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddAcademicSubjectPayload addAcademicSubject(AddAcademicSubjectInput addAcademicSubjectInput) {
-        final AcademicDepartment academicDepartment = academicDepartmentRepository.findById(addAcademicSubjectInput.getAcademicDepartmentId()).get();
+        final Departments departments = departmentsRepository.findById(addAcademicSubjectInput.getDepartmentsId()).get();
         final AcademicSubject academicSubject = new AcademicSubject();
         academicSubject.setSubjectName(addAcademicSubjectInput.getSubjectName());
         academicSubject.setElectiveSub(addAcademicSubjectInput.getElectiveSub());
-        academicSubject.setAcademicDepartment(academicDepartment);
+        academicSubject.setDepartment(departments);
         academicSubjectRepository.save(academicSubject);
 
         return new AddAcademicSubjectPayload(academicSubject);
@@ -764,14 +751,10 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddAcademicYearPayload addAcademicYear(AddAcademicYearInput addAcademicYearInput) {
-        final Holiday holiday = holidayRepository.findById(addAcademicYearInput.getHolidayId()).get();
-        final Term term = termRepository.findById(addAcademicYearInput.getTermId()).get();
         final AcademicYear academicYear = new AcademicYear();
         academicYear.setYear(addAcademicYearInput.getYear());
         academicYear.setStartDate(addAcademicYearInput.getStartDate());
         academicYear.setEndDate(addAcademicYearInput.getEndDate());
-        academicYear.setHoliday(holiday);
-        academicYear.setTerm(term);
         academicYearRepository.save(academicYear);
         return new AddAcademicYearPayload(academicYear);
     }
@@ -801,11 +784,12 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddHolidayPayload addHoliday(AddHolidayInput addHolidayInput) {
+        final AcademicYear academicYear = academicYearRepository.findById(addHolidayInput.getAcademicYearId()).get();
         final Holiday holiday = new Holiday();
-        holiday.setSrNo(addHolidayInput.getSrNo());
-        holiday.setsHoliday(addHolidayInput.getsHoliday());
-        holiday.setaDate(addHolidayInput.getaDate());
+        holiday.setHolidayDesc(addHolidayInput.getHolidayDesc());
+        holiday.setHolidayDate(addHolidayInput.getHolidayDate());
         holiday.setStatus(addHolidayInput.getStatus());
+        holiday.setAcademicYear(academicYear);
         holidayRepository.save(holiday);
 
         return new AddHolidayPayload(holiday);
@@ -813,14 +797,11 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateHolidayPayload updateHoliday(UpdateHolidayInput updateHolidayInput) {
         Holiday holiday = holidayRepository.findById(updateHolidayInput.getId()).get();
-        if (updateHolidayInput.getSrNo() != null) {
-            holiday.setSrNo(updateHolidayInput.getSrNo());
+        if (updateHolidayInput.getHolidayDesc() != null) {
+            holiday.setHolidayDesc(updateHolidayInput.getHolidayDesc());
         }
-        if (updateHolidayInput.getsHoliday() != null) {
-            holiday.setsHoliday(updateHolidayInput.getsHoliday());
-        }
-        if (updateHolidayInput.getaDate() != null) {
-            holiday.setaDate(updateHolidayInput.getaDate());
+        if (updateHolidayInput.getHolidayDate() != null) {
+            holiday.setHolidayDate(updateHolidayInput.getHolidayDate());
         }
 
         if (updateHolidayInput.getStatus() != null) {
@@ -839,12 +820,13 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddTermPayload addTerm(AddTermInput addTermInput) {
+        final AcademicYear academicYear = academicYearRepository.findById(addTermInput.getAcademicYearId()).get();
         final Term term = new Term();
-        term.setSrNo(addTermInput.getSrNo());
-        term.setaTerms(addTermInput.getaTerms());
+        term.setTermsDesc(addTermInput.getTermsDesc());
         term.setStartDate(addTermInput.getStartDate());
         term.setEndDate(addTermInput.getEndDate());
         term.setStatus(addTermInput.getStatus());
+        term.setAcademicYear(academicYear);
         termRepository.save(term);
 
         return new AddTermPayload(term);
@@ -852,11 +834,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateTermPayload updateTerm(UpdateTermInput updateTermInput) {
         Term term = termRepository.findById(updateTermInput.getId()).get();
-        if (updateTermInput.getSrNo() != null) {
-            term.setSrNo(updateTermInput.getSrNo());
-        }
-        if (updateTermInput.getaTerms() != null) {
-            term.setaTerms(updateTermInput.getaTerms());
+
+        if (updateTermInput.getTermsDesc() != null) {
+            term.setTermsDesc(updateTermInput.getTermsDesc());
         }
         if (updateTermInput.getStartDate() != null) {
             term.setStartDate(updateTermInput.getStartDate());

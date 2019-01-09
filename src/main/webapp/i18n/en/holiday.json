@@ -1,25 +1,26 @@
+
 {
-  "cmsApp": {
-    "holiday": {
-      "home": {
-        "title": "Holidays",
-        "createLabel": "Create a new Holiday",
-        "createOrEditLabel": "Create or edit a Holiday",
-        "search": "Search for Holiday"
-      },
-      "created": "A new Holiday is created with identifier {{ param }}",
-      "updated": "A Holiday is updated with identifier {{ param }}",
-      "deleted": "A Holiday is deleted with identifier {{ param }}",
-      "delete": {
-        "question": "Are you sure you want to delete Holiday {{ id }}?"
-      },
-      "detail": {
-        "title": "Holiday"
-      },
-      "srNo": "Sr No",
-      "sHoliday": "S Holiday",
-      "aDate": "A Date",
-      "status": "Status"
+    "cmsApp": {
+        "holiday" : {
+            "home": {
+                "title": "Holidays",
+                "createLabel": "Create a new Holiday",
+                "createOrEditLabel": "Create or edit a Holiday",
+                "search": "Search for Holiday"
+            },
+            "created": "A new Holiday is created with identifier {{ param }}",
+            "updated": "A Holiday is updated with identifier {{ param }}",
+            "deleted": "A Holiday is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Holiday {{ id }}?"
+            },
+            "detail": {
+                "title": "Holiday"
+            },
+            "holidayDesc": "Holiday Desc",
+            "holidayDate": "Holiday Date",
+            "status": "Status",
+            "academicYear": "Academic Year"
+        }
     }
-  }
 }

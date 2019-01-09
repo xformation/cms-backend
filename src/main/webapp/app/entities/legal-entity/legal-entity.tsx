@@ -135,9 +135,6 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                 <th>
                   <Translate contentKey="cmsApp.legalEntity.ptNumber">Pt Number</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.authorizedSignatory">Authorized Signatory</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -174,13 +171,6 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                   </td>
                   <td>{legalEntity.ptSignatory}</td>
                   <td>{legalEntity.ptNumber}</td>
-                  <td>
-                    {legalEntity.authorizedSignatoryId ? (
-                      <Link to={`authorizedSignatory/${legalEntity.authorizedSignatoryId}`}>{legalEntity.authorizedSignatoryId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${legalEntity.id}`} color="info" size="sm">

@@ -14,13 +14,13 @@ import { getEntity, updateEntity, createEntity, reset } from './student.reducer'
 import { IStudent } from 'app/shared/model/student.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IStudentUpdateState {
   isNew: boolean;
-  teacherid: any;
+  teacherId: number;
 }
 
 export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudentUpdateState> {
@@ -63,23 +63,6 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
     this.props.history.push('/entity/student');
   };
 
-  teacherUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        teacherId: -1
-      });
-    } else {
-      for (const i in this.props.teachers) {
-        if (id === this.props.teachers[i].id.toString()) {
-          this.setState({
-            teacherId: this.props.teachers[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
     const { studentEntity, teachers, loading, updating } = this.props;
     const { isNew } = this.state;
@@ -108,13 +91,13 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="sNameLabel" for="sName">
-                    <Translate contentKey="cmsApp.student.sName">S Name</Translate>
+                  <Label id="studentNameLabel" for="studentName">
+                    <Translate contentKey="cmsApp.student.studentName">Student Name</Translate>
                   </Label>
                   <AvField
-                    id="student-sName"
+                    id="student-studentName"
                     type="text"
-                    name="sName"
+                    name="studentName"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
@@ -149,7 +132,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   <Label for="teacher.id">
                     <Translate contentKey="cmsApp.student.teacher">Teacher</Translate>
                   </Label>
-                  <AvInput id="student-teacher" type="select" className="form-control" name="teacherId" onChange={this.teacherUpdate}>
+                  <AvInput id="student-teacher" type="select" className="form-control" name="teacherId">
                     <option value="" key="0" />
                     {teachers
                       ? teachers.map(otherEntity => (

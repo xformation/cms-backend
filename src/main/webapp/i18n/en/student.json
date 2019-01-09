@@ -17,7 +17,7 @@
             "detail": {
                 "title": "Student"
             },
-            "sName": "S Name",
+            "studentName": "Student Name",
             "attendance": "Attendance",
             "electiveSub": "Elective Sub",
             "teacher": "Teacher"

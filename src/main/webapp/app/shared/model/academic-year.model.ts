@@ -5,8 +5,6 @@ export interface IAcademicYear {
   year?: number;
   startDate?: Moment;
   endDate?: Moment;
-  holidayId?: number;
-  termId?: number;
 }
 
 export const defaultValue: Readonly<IAcademicYear> = {};

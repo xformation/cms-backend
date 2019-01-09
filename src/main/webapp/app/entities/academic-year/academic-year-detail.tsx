@@ -50,14 +50,6 @@ export class AcademicYearDetail extends React.Component<IAcademicYearDetailProps
             <dd>
               <TextFormat value={academicYearEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
-            <dt>
-              <Translate contentKey="cmsApp.academicYear.holiday">Holiday</Translate>
-            </dt>
-            <dd>{academicYearEntity.holidayId ? academicYearEntity.holidayId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.academicYear.term">Term</Translate>
-            </dt>
-            <dd>{academicYearEntity.termId ? academicYearEntity.termId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/academic-year" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

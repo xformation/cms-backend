@@ -22,7 +22,8 @@
             "signatoryDesignation": "Signatory Designation",
             "address": "Address",
             "email": "Email",
-            "panCardNumber": "Pan Card Number"
+            "panCardNumber": "Pan Card Number",
+            "legalEntity": "Legal Entity"
         }
     }
 }

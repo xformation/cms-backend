@@ -8,34 +8,28 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IAcademicDepartment } from 'app/shared/model/academic-department.model';
-import { getEntities as getAcademicDepartments } from 'app/entities/academic-department/academic-department.reducer';
+import { IDepartments } from 'app/shared/model/departments.model';
+import { getEntities as getDepartments } from 'app/entities/departments/departments.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './academic-subject.reducer';
 import { IAcademicSubject } from 'app/shared/model/academic-subject.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IAcademicSubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAcademicSubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IAcademicSubjectUpdateState {
   isNew: boolean;
-  academicDepartmentId: string;
+  departmentId: number;
 }
 
 export class AcademicSubjectUpdate extends React.Component<IAcademicSubjectUpdateProps, IAcademicSubjectUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      academicDepartmentId: '0',
+      departmentId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -45,7 +39,7 @@ export class AcademicSubjectUpdate extends React.Component<IAcademicSubjectUpdat
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getAcademicDepartments();
+    this.props.getDepartments();
   }
 
   saveEntity = (event, errors, values) => {
@@ -61,6 +55,7 @@ export class AcademicSubjectUpdate extends React.Component<IAcademicSubjectUpdat
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
@@ -69,7 +64,7 @@ export class AcademicSubjectUpdate extends React.Component<IAcademicSubjectUpdat
   };
 
   render() {
-    const { academicSubjectEntity, academicDepartments, loading, updating } = this.props;
+    const { academicSubjectEntity, departments, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -115,13 +110,13 @@ export class AcademicSubjectUpdate extends React.Component<IAcademicSubjectUpdat
                   </Label>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="academicDepartment.id">
-                    <Translate contentKey="cmsApp.academicSubject.academicDepartment">Academic Department</Translate>
+                  <Label for="department.id">
+                    <Translate contentKey="cmsApp.academicSubject.department">Department</Translate>
                   </Label>
-                  <AvInput id="academic-subject-academicDepartment" type="select" className="form-control" name="academicDepartmentId">
+                  <AvInput id="academic-subject-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
-                    {academicDepartments
-                      ? academicDepartments.map(otherEntity => (
+                    {departments
+                      ? departments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -150,15 +145,14 @@ export class AcademicSubjectUpdate extends React.Component<IAcademicSubjectUpdat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  academicDepartments: storeState.academicDepartment.entities,
+  departments: storeState.departments.entities,
   academicSubjectEntity: storeState.academicSubject.entity,
   loading: storeState.academicSubject.loading,
-  updating: storeState.academicSubject.updating,
-  updateSuccess: storeState.academicSubject.updateSuccess
+  updating: storeState.academicSubject.updating
 });
 
 const mapDispatchToProps = {
-  getAcademicDepartments,
+  getDepartments,
   getEntity,
   updateEntity,
   createEntity,

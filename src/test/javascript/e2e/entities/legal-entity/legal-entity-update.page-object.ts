@@ -21,7 +21,6 @@ export default class LegalEntityUpdatePage {
   ptRegistrationDateInput: ElementFinder = element(by.css('input#legal-entity-ptRegistrationDate'));
   ptSignatoryInput: ElementFinder = element(by.css('input#legal-entity-ptSignatory'));
   ptNumberInput: ElementFinder = element(by.css('input#legal-entity-ptNumber'));
-  authorizedSignatorySelect: ElementFinder = element(by.css('select#legal-entity-authorizedSignatory'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -167,25 +166,6 @@ export default class LegalEntityUpdatePage {
 
   getPtNumberInput() {
     return this.ptNumberInput.getAttribute('value');
-  }
-
-  authorizedSignatorySelectLastOption() {
-    this.authorizedSignatorySelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  authorizedSignatorySelectOption(option) {
-    this.authorizedSignatorySelect.sendKeys(option);
-  }
-
-  getAuthorizedSignatorySelect() {
-    return this.authorizedSignatorySelect;
-  }
-
-  getAuthorizedSignatorySelectedOption() {
-    return this.authorizedSignatorySelect.element(by.css('option:checked')).getText();
   }
 
   save() {

@@ -12,7 +12,7 @@ import { IAcademicSubject } from 'app/shared/model/academic-subject.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IAcademicSubjectDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAcademicSubjectDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AcademicSubjectDetail extends React.Component<IAcademicSubjectDetailProps> {
   componentDidMount() {
@@ -41,9 +41,9 @@ export class AcademicSubjectDetail extends React.Component<IAcademicSubjectDetai
             </dt>
             <dd>{academicSubjectEntity.electiveSub ? 'true' : 'false'}</dd>
             <dt>
-              <Translate contentKey="cmsApp.academicSubject.academicDepartment">Academic Department</Translate>
+              <Translate contentKey="cmsApp.academicSubject.department">Department</Translate>
             </dt>
-            <dd>{academicSubjectEntity.academicDepartmentId ? academicSubjectEntity.academicDepartmentId : ''}</dd>
+            <dd>{academicSubjectEntity.departmentId ? academicSubjectEntity.departmentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/academic-subject" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -30,8 +30,8 @@ public class StudentYear implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "s_year", nullable = false)
-    private SYear sYear;
+    @Column(name = "year_desc", nullable = false)
+    private SYear yearDesc;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -42,17 +42,17 @@ public class StudentYear implements Serializable {
         this.id = id;
     }
 
-    public SYear getsYear() {
-        return sYear;
+    public SYear getYearDesc() {
+        return yearDesc;
     }
 
-    public StudentYear sYear(SYear sYear) {
-        this.sYear = sYear;
+    public StudentYear yearDesc(SYear yearDesc) {
+        this.yearDesc = yearDesc;
         return this;
     }
 
-    public void setsYear(SYear sYear) {
-        this.sYear = sYear;
+    public void setYearDesc(SYear yearDesc) {
+        this.yearDesc = yearDesc;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -80,7 +80,7 @@ public class StudentYear implements Serializable {
     public String toString() {
         return "StudentYear{" +
             "id=" + getId() +
-            ", sYear='" + getsYear() + "'" +
+            ", yearDesc='" + getYearDesc() + "'" +
             "}";
     }
 }

@@ -85,10 +85,7 @@ export class Term extends React.Component<ITermProps, ITermState> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.term.srNo">Sr No</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.term.aTerms">A Terms</Translate>
+                  <Translate contentKey="cmsApp.term.termsDesc">Terms Desc</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.term.startDate">Start Date</Translate>
@@ -98,6 +95,9 @@ export class Term extends React.Component<ITermProps, ITermState> {
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.term.status">Status</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cmsApp.term.academicYear">Academic Year</Translate>
                 </th>
                 <th />
               </tr>
@@ -110,8 +110,7 @@ export class Term extends React.Component<ITermProps, ITermState> {
                       {term.id}
                     </Button>
                   </td>
-                  <td>{term.srNo}</td>
-                  <td>{term.aTerms}</td>
+                  <td>{term.termsDesc}</td>
                   <td>
                     <TextFormat type="date" value={term.startDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
@@ -121,6 +120,7 @@ export class Term extends React.Component<ITermProps, ITermState> {
                   <td>
                     <Translate contentKey={`cmsApp.Status.${term.status}`} />
                   </td>
+                  <td>{term.academicYearId ? <Link to={`academic-year/${term.academicYearId}`}>{term.academicYearId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${term.id}`} color="info" size="sm">

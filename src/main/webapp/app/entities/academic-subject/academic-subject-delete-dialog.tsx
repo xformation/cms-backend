@@ -9,7 +9,7 @@ import { IAcademicSubject } from 'app/shared/model/academic-subject.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './academic-subject.reducer';
 
-export interface IAcademicSubjectDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAcademicSubjectDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AcademicSubjectDeleteDialog extends React.Component<IAcademicSubjectDeleteDialogProps> {
   componentDidMount() {
@@ -33,7 +33,7 @@ export class AcademicSubjectDeleteDialog extends React.Component<IAcademicSubjec
         <ModalHeader toggle={this.handleClose}>
           <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
         </ModalHeader>
-        <ModalBody id="cmsApp.academicSubject.delete.question">
+        <ModalBody>
           <Translate contentKey="cmsApp.academicSubject.delete.question" interpolate={{ id: academicSubjectEntity.id }}>
             Are you sure you want to delete this AcademicSubject?
           </Translate>
@@ -43,7 +43,7 @@ export class AcademicSubjectDeleteDialog extends React.Component<IAcademicSubjec
             <FontAwesomeIcon icon="ban" />&nbsp;
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
-          <Button id="jhi-confirm-delete-academicSubject" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp;
             <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>

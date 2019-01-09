@@ -13,7 +13,7 @@ public class StudentYearDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private SYear sYear;
+    private SYear yearDesc;
 
     public Long getId() {
         return id;
@@ -23,12 +23,12 @@ public class StudentYearDTO implements Serializable {
         this.id = id;
     }
 
-    public SYear getsYear() {
-        return sYear;
+    public SYear getYearDesc() {
+        return yearDesc;
     }
 
-    public void setsYear(SYear sYear) {
-        this.sYear = sYear;
+    public void setYearDesc(SYear yearDesc) {
+        this.yearDesc = yearDesc;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class StudentYearDTO implements Serializable {
     public String toString() {
         return "StudentYearDTO{" +
             "id=" + getId() +
-            ", sYear='" + getsYear() + "'" +
+            ", yearDesc='" + getYearDesc() + "'" +
             "}";
     }
 }

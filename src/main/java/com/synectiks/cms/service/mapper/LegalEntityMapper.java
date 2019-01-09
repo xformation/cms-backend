@@ -8,14 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity LegalEntity and its DTO LegalEntityDTO.
  */
-@Mapper(componentModel = "spring", uses = {AuthorizedSignatoryMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface LegalEntityMapper extends EntityMapper<LegalEntityDTO, LegalEntity> {
 
-    @Mapping(source = "authorizedSignatory.id", target = "authorizedSignatoryId")
-    LegalEntityDTO toDto(LegalEntity legalEntity);
 
-    @Mapping(source = "authorizedSignatoryId", target = "authorizedSignatory")
-    LegalEntity toEntity(LegalEntityDTO legalEntityDTO);
 
     default LegalEntity fromId(Long id) {
         if (id == null) {

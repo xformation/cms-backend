@@ -14,16 +14,15 @@ public class HolidayDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Integer srNo;
+    private String holidayDesc;
 
     @NotNull
-    private String sHoliday;
-
-    @NotNull
-    private LocalDate aDate;
+    private LocalDate holidayDate;
 
     @NotNull
     private Status status;
+
+    private Long academicYearId;
 
     public Long getId() {
         return id;
@@ -33,28 +32,20 @@ public class HolidayDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getSrNo() {
-        return srNo;
+    public String getHolidayDesc() {
+        return holidayDesc;
     }
 
-    public void setSrNo(Integer srNo) {
-        this.srNo = srNo;
+    public void setHolidayDesc(String holidayDesc) {
+        this.holidayDesc = holidayDesc;
     }
 
-    public String getsHoliday() {
-        return sHoliday;
+    public LocalDate getHolidayDate() {
+        return holidayDate;
     }
 
-    public void setsHoliday(String sHoliday) {
-        this.sHoliday = sHoliday;
-    }
-
-    public LocalDate getaDate() {
-        return aDate;
-    }
-
-    public void setaDate(LocalDate aDate) {
-        this.aDate = aDate;
+    public void setHolidayDate(LocalDate holidayDate) {
+        this.holidayDate = holidayDate;
     }
 
     public Status getStatus() {
@@ -63,6 +54,14 @@ public class HolidayDTO implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
     }
 
     @Override
@@ -90,10 +89,10 @@ public class HolidayDTO implements Serializable {
     public String toString() {
         return "HolidayDTO{" +
             "id=" + getId() +
-            ", srNo=" + getSrNo() +
-            ", sHoliday='" + getsHoliday() + "'" +
-            ", aDate='" + getaDate() + "'" +
+            ", holidayDesc='" + getHolidayDesc() + "'" +
+            ", holidayDate='" + getHolidayDate() + "'" +
             ", status='" + getStatus() + "'" +
+            ", academicYear=" + getAcademicYearId() +
             "}";
     }
 }

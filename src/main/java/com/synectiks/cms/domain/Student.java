@@ -30,8 +30,8 @@ public class Student implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "s_name", nullable = false)
-    private String sName;
+    @Column(name = "student_name", nullable = false)
+    private String studentName;
 
     @NotNull
     @Column(name = "attendance", nullable = false)
@@ -55,17 +55,17 @@ public class Student implements Serializable {
         this.id = id;
     }
 
-    public String getsName() {
-        return sName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public Student sName(String sName) {
-        this.sName = sName;
+    public Student studentName(String studentName) {
+        this.studentName = studentName;
         return this;
     }
 
-    public void setsName(String sName) {
-        this.sName = sName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public Boolean isAttendance() {
@@ -132,7 +132,7 @@ public class Student implements Serializable {
     public String toString() {
         return "Student{" +
             "id=" + getId() +
-            ", sName='" + getsName() + "'" +
+            ", studentName='" + getStudentName() + "'" +
             ", attendance='" + isAttendance() + "'" +
             ", electiveSub='" + getElectiveSub() + "'" +
             "}";

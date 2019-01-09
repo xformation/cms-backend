@@ -9,7 +9,7 @@ import { IStudentYear } from 'app/shared/model/student-year.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './student-year.reducer';
 
-export interface IStudentYearDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IStudentYearDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class StudentYearDeleteDialog extends React.Component<IStudentYearDeleteDialogProps> {
   componentDidMount() {

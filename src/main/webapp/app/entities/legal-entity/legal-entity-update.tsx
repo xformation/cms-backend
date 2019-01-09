@@ -8,26 +8,22 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.model';
-import { getEntities as getAuthorizedSignatories } from 'app/entities/authorized-signatory/authorized-signatory.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './legal-entity.reducer';
 import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ILegalEntityUpdateState {
   isNew: boolean;
-  authorizedSignatoryid: any;
 }
 
 export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, ILegalEntityUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      authorizedSignatoryId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -38,8 +34,6 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getAuthorizedSignatories();
   }
 
   saveEntity = (event, errors, values) => {
@@ -63,25 +57,8 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
     this.props.history.push('/entity/legal-entity');
   };
 
-  authorizedSignatoryUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        authorizedSignatoryId: -1
-      });
-    } else {
-      for (const i in this.props.authorizedSignatories) {
-        if (id === this.props.authorizedSignatories[i].id.toString()) {
-          this.setState({
-            authorizedSignatoryId: this.props.authorizedSignatories[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
-    const { legalEntityEntity, authorizedSignatories, loading, updating } = this.props;
+    const { legalEntityEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -343,27 +320,6 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     }}
                   />
                 </AvGroup>
-                <AvGroup>
-                  <Label for="authorizedSignatory.id">
-                    <Translate contentKey="cmsApp.legalEntity.authorizedSignatory">Authorized Signatory</Translate>
-                  </Label>
-                  <AvInput
-                    id="legal-entity-authorizedSignatory"
-                    type="select"
-                    className="form-control"
-                    name="authorizedSignatoryId"
-                    onChange={this.authorizedSignatoryUpdate}
-                  >
-                    <option value="" key="0" />
-                    {authorizedSignatories
-                      ? authorizedSignatories.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/legal-entity" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -385,14 +341,12 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  authorizedSignatories: storeState.authorizedSignatory.entities,
   legalEntityEntity: storeState.legalEntity.entity,
   loading: storeState.legalEntity.loading,
   updating: storeState.legalEntity.updating
 });
 
 const mapDispatchToProps = {
-  getAuthorizedSignatories,
   getEntity,
   updateEntity,
   createEntity,

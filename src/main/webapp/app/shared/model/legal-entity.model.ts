@@ -24,7 +24,6 @@ export interface ILegalEntity {
   ptRegistrationDate?: Moment;
   ptSignatory?: string;
   ptNumber?: number;
-  authorizedSignatoryId?: number;
 }
 
 export const defaultValue: Readonly<ILegalEntity> = {};

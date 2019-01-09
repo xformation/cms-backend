@@ -85,16 +85,16 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.holiday.srNo">Sr No</Translate>
+                  <Translate contentKey="cmsApp.holiday.holidayDesc">Holiday Desc</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.holiday.sHoliday">S Holiday</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.holiday.aDate">A Date</Translate>
+                  <Translate contentKey="cmsApp.holiday.holidayDate">Holiday Date</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.holiday.status">Status</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cmsApp.holiday.academicYear">Academic Year</Translate>
                 </th>
                 <th />
               </tr>
@@ -107,13 +107,15 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
                       {holiday.id}
                     </Button>
                   </td>
-                  <td>{holiday.srNo}</td>
-                  <td>{holiday.sHoliday}</td>
+                  <td>{holiday.holidayDesc}</td>
                   <td>
-                    <TextFormat type="date" value={holiday.aDate} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={holiday.holidayDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
                     <Translate contentKey={`cmsApp.Status.${holiday.status}`} />
+                  </td>
+                  <td>
+                    {holiday.academicYearId ? <Link to={`academic-year/${holiday.academicYearId}`}>{holiday.academicYearId}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

@@ -8,30 +8,28 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IAcademicYear } from 'app/shared/model/academic-year.model';
+import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './term.reducer';
 import { ITerm } from 'app/shared/model/term.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ITermUpdateState {
   isNew: boolean;
+  academicYearId: number;
 }
 
 export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      academicYearId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -40,6 +38,8 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getAcademicYears();
   }
 
   saveEntity = (event, errors, values) => {
@@ -55,6 +55,7 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
@@ -63,7 +64,7 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
   };
 
   render() {
-    const { termEntity, loading, updating } = this.props;
+    const { termEntity, academicYears, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -90,28 +91,13 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="srNoLabel" for="srNo">
-                    <Translate contentKey="cmsApp.term.srNo">Sr No</Translate>
+                  <Label id="termsDescLabel" for="termsDesc">
+                    <Translate contentKey="cmsApp.term.termsDesc">Terms Desc</Translate>
                   </Label>
                   <AvField
-                    id="term-srNo"
-                    type="string"
-                    className="form-control"
-                    name="srNo"
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="aTermsLabel" for="aTerms">
-                    <Translate contentKey="cmsApp.term.aTerms">A Terms</Translate>
-                  </Label>
-                  <AvField
-                    id="term-aTerms"
+                    id="term-termsDesc"
                     type="text"
-                    name="aTerms"
+                    name="termsDesc"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
@@ -170,6 +156,21 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                     </option>
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="academicYear.id">
+                    <Translate contentKey="cmsApp.term.academicYear">Academic Year</Translate>
+                  </Label>
+                  <AvInput id="term-academicYear" type="select" className="form-control" name="academicYearId">
+                    <option value="" key="0" />
+                    {academicYears
+                      ? academicYears.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/term" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -191,13 +192,14 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  academicYears: storeState.academicYear.entities,
   termEntity: storeState.term.entity,
   loading: storeState.term.loading,
-  updating: storeState.term.updating,
-  updateSuccess: storeState.term.updateSuccess
+  updating: storeState.term.updating
 });
 
 const mapDispatchToProps = {
+  getAcademicYears,
   getEntity,
   updateEntity,
   createEntity,

@@ -1,11 +1,11 @@
 {
-  "cmsApp": {
-    "Status": {
-      "null": "",
-      "PRESENT": "PRESENT",
-      "ABSENT": "ABSENT",
-      "ACTIVE": "ACTIVE",
-      "DEACTIVE": "DEACTIVE"
+    "cmsApp": {
+        "Status" : {
+            "null": "",
+            "PRESENT": "PRESENT",
+            "ABSENT": "ABSENT",
+            "ACTIVE": "ACTIVE",
+            "DEACTIVE": "DEACTIVE"
+        }
     }
-  }
 }

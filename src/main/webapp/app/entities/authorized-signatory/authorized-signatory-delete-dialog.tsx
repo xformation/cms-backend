@@ -9,7 +9,7 @@ import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.mode
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './authorized-signatory.reducer';
 
-export interface IAuthorizedSignatoryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IAuthorizedSignatoryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AuthorizedSignatoryDeleteDialog extends React.Component<IAuthorizedSignatoryDeleteDialogProps> {
   componentDidMount() {

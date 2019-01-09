@@ -98,6 +98,42 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/term">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;<Translate contentKey="global.menu.entities.term" />
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/student-year">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.studentYear" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/student-attendance">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.studentAttendance" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/academic-subject">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.academicSubject" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/teacher">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.teacher" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/student">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.student" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/legal-entity">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.legalEntity" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/authorized-signatory">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.authorizedSignatory" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/academic-year">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.academicYear" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/holiday">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.holiday" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/term">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.term" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/holiday">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.holiday" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/term">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.term" />
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

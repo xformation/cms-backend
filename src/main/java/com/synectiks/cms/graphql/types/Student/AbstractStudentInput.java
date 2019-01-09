@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class AbstractStudentInput {
     private Long id;
-    private String sName;
+    private String studentName;
     private Boolean attendance;
     private Elective electiveSub;
 
@@ -19,12 +19,12 @@ public class AbstractStudentInput {
         this.id = id;
     }
 
-    public String getsName() {
-        return sName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setsName(String sName) {
-        this.sName = sName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public Boolean getAttendance() {
@@ -46,24 +46,24 @@ public class AbstractStudentInput {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractStudentInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractStudentInput that = (AbstractStudentInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getsName(), that.getsName()) &&
-            Objects.equals(getAttendance(), that.getAttendance()) &&
-            getElectiveSub() == that.getElectiveSub();
+        return Objects.equals(id, that.id) &&
+            Objects.equals(studentName, that.studentName) &&
+            Objects.equals(attendance, that.attendance) &&
+            electiveSub == that.electiveSub;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getsName(), getAttendance(), getElectiveSub());
+        return Objects.hash(id, studentName, attendance, electiveSub);
     }
 
     @Override
     public String toString() {
         return "AbstractStudentInput{" +
             "id=" + id +
-            ", sName='" + sName + '\'' +
+            ", studentName='" + studentName + '\'' +
             ", attendance=" + attendance +
             ", electiveSub=" + electiveSub +
             '}';

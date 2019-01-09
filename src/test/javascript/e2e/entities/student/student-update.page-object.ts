@@ -4,7 +4,7 @@ export default class StudentUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.student.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  sNameInput: ElementFinder = element(by.css('input#student-sName'));
+  studentNameInput: ElementFinder = element(by.css('input#student-studentName'));
   attendanceInput: ElementFinder = element(by.css('input#student-attendance'));
   electiveSubSelect: ElementFinder = element(by.css('select#student-electiveSub'));
   teacherSelect: ElementFinder = element(by.css('select#student-teacher'));
@@ -13,12 +13,12 @@ export default class StudentUpdatePage {
     return this.pageTitle;
   }
 
-  setSNameInput(sName) {
-    this.sNameInput.sendKeys(sName);
+  setStudentNameInput(studentName) {
+    this.studentNameInput.sendKeys(studentName);
   }
 
-  getSNameInput() {
-    return this.sNameInput.getAttribute('value');
+  getStudentNameInput() {
+    return this.studentNameInput.getAttribute('value');
   }
 
   getAttendanceInput() {

@@ -12,7 +12,7 @@ import { IHoliday } from 'app/shared/model/holiday.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IHolidayDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IHolidayDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class HolidayDetail extends React.Component<IHolidayDetailProps> {
   componentDidMount() {
@@ -29,24 +29,18 @@ export class HolidayDetail extends React.Component<IHolidayDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="srNo">
-                <Translate contentKey="cmsApp.holiday.srNo">Sr No</Translate>
+              <span id="holidayDesc">
+                <Translate contentKey="cmsApp.holiday.holidayDesc">Holiday Desc</Translate>
               </span>
             </dt>
-            <dd>{holidayEntity.srNo}</dd>
+            <dd>{holidayEntity.holidayDesc}</dd>
             <dt>
-              <span id="sHoliday">
-                <Translate contentKey="cmsApp.holiday.sHoliday">S Holiday</Translate>
-              </span>
-            </dt>
-            <dd>{holidayEntity.sHoliday}</dd>
-            <dt>
-              <span id="aDate">
-                <Translate contentKey="cmsApp.holiday.aDate">A Date</Translate>
+              <span id="holidayDate">
+                <Translate contentKey="cmsApp.holiday.holidayDate">Holiday Date</Translate>
               </span>
             </dt>
             <dd>
-              <TextFormat value={holidayEntity.aDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={holidayEntity.holidayDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="status">
@@ -54,6 +48,10 @@ export class HolidayDetail extends React.Component<IHolidayDetailProps> {
               </span>
             </dt>
             <dd>{holidayEntity.status}</dd>
+            <dt>
+              <Translate contentKey="cmsApp.holiday.academicYear">Academic Year</Translate>
+            </dt>
+            <dd>{holidayEntity.academicYearId ? holidayEntity.academicYearId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/holiday" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

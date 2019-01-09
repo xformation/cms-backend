@@ -31,7 +31,7 @@ describe('StudentYear e2e test', () => {
   });
 
   it('should create and save StudentYears', async () => {
-    studentYearUpdatePage.sYearSelectLastOption();
+    studentYearUpdatePage.yearDescSelectLastOption();
     await studentYearUpdatePage.save();
     expect(await studentYearUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

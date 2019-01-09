@@ -5,7 +5,7 @@ export const enum Elective {
 
 export interface IStudent {
   id?: number;
-  sName?: string;
+  studentName?: string;
   attendance?: boolean;
   electiveSub?: Elective;
   teacherId?: number;

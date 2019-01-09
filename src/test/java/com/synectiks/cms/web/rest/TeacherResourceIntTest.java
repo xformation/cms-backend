@@ -46,14 +46,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CmsApp.class)
 public class TeacherResourceIntTest {
 
-    private static final String DEFAULT_T_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_T_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_TEACHER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_TEACHER_NAME = "BBBBBBBBBB";
 
     @Autowired
     private TeacherRepository teacherRepository;
 
+
     @Autowired
     private TeacherMapper teacherMapper;
+    
 
     @Autowired
     private TeacherService teacherService;
@@ -101,7 +103,7 @@ public class TeacherResourceIntTest {
      */
     public static Teacher createEntity(EntityManager em) {
         Teacher teacher = new Teacher()
-            .tName(DEFAULT_T_NAME);
+            .teacherName(DEFAULT_TEACHER_NAME);
         return teacher;
     }
 
@@ -126,7 +128,7 @@ public class TeacherResourceIntTest {
         List<Teacher> teacherList = teacherRepository.findAll();
         assertThat(teacherList).hasSize(databaseSizeBeforeCreate + 1);
         Teacher testTeacher = teacherList.get(teacherList.size() - 1);
-        assertThat(testTeacher.gettName()).isEqualTo(DEFAULT_T_NAME);
+        assertThat(testTeacher.getTeacherName()).isEqualTo(DEFAULT_TEACHER_NAME);
 
         // Validate the Teacher in Elasticsearch
         verify(mockTeacherSearchRepository, times(1)).save(testTeacher);
@@ -157,10 +159,10 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
-    public void checktNameIsRequired() throws Exception {
+    public void checkTeacherNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
-        teacher.settName(null);
+        teacher.setTeacherName(null);
 
         // Create the Teacher, which fails.
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
@@ -185,9 +187,10 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teacher.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tName").value(hasItem(DEFAULT_T_NAME.toString())));
+            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME.toString())));
     }
     
+
     @Test
     @Transactional
     public void getTeacher() throws Exception {
@@ -199,9 +202,8 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(teacher.getId().intValue()))
-            .andExpect(jsonPath("$.tName").value(DEFAULT_T_NAME.toString()));
+            .andExpect(jsonPath("$.teacherName").value(DEFAULT_TEACHER_NAME.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingTeacher() throws Exception {
@@ -223,7 +225,7 @@ public class TeacherResourceIntTest {
         // Disconnect from session so that the updates on updatedTeacher are not directly saved in db
         em.detach(updatedTeacher);
         updatedTeacher
-            .tName(UPDATED_T_NAME);
+            .teacherName(UPDATED_TEACHER_NAME);
         TeacherDTO teacherDTO = teacherMapper.toDto(updatedTeacher);
 
         restTeacherMockMvc.perform(put("/api/teachers")
@@ -235,7 +237,7 @@ public class TeacherResourceIntTest {
         List<Teacher> teacherList = teacherRepository.findAll();
         assertThat(teacherList).hasSize(databaseSizeBeforeUpdate);
         Teacher testTeacher = teacherList.get(teacherList.size() - 1);
-        assertThat(testTeacher.gettName()).isEqualTo(UPDATED_T_NAME);
+        assertThat(testTeacher.getTeacherName()).isEqualTo(UPDATED_TEACHER_NAME);
 
         // Validate the Teacher in Elasticsearch
         verify(mockTeacherSearchRepository, times(1)).save(testTeacher);
@@ -249,7 +251,7 @@ public class TeacherResourceIntTest {
         // Create the Teacher
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restTeacherMockMvc.perform(put("/api/teachers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
@@ -296,7 +298,7 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teacher.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tName").value(hasItem(DEFAULT_T_NAME)));
+            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME.toString())));
     }
 
     @Test

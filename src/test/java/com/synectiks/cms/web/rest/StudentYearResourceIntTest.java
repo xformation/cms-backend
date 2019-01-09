@@ -47,8 +47,8 @@ import com.synectiks.cms.domain.enumeration.SYear;
 @SpringBootTest(classes = CmsApp.class)
 public class StudentYearResourceIntTest {
 
-    private static final SYear DEFAULT_S_YEAR = SYear.I;
-    private static final SYear UPDATED_S_YEAR = SYear.II;
+    private static final SYear DEFAULT_YEAR_DESC = SYear.I;
+    private static final SYear UPDATED_YEAR_DESC = SYear.II;
 
     @Autowired
     private StudentYearRepository studentYearRepository;
@@ -104,7 +104,7 @@ public class StudentYearResourceIntTest {
      */
     public static StudentYear createEntity(EntityManager em) {
         StudentYear studentYear = new StudentYear()
-            .sYear(DEFAULT_S_YEAR);
+            .yearDesc(DEFAULT_YEAR_DESC);
         return studentYear;
     }
 
@@ -129,7 +129,7 @@ public class StudentYearResourceIntTest {
         List<StudentYear> studentYearList = studentYearRepository.findAll();
         assertThat(studentYearList).hasSize(databaseSizeBeforeCreate + 1);
         StudentYear testStudentYear = studentYearList.get(studentYearList.size() - 1);
-        assertThat(testStudentYear.getsYear()).isEqualTo(DEFAULT_S_YEAR);
+        assertThat(testStudentYear.getYearDesc()).isEqualTo(DEFAULT_YEAR_DESC);
 
         // Validate the StudentYear in Elasticsearch
         verify(mockStudentYearSearchRepository, times(1)).save(testStudentYear);
@@ -160,10 +160,10 @@ public class StudentYearResourceIntTest {
 
     @Test
     @Transactional
-    public void checksYearIsRequired() throws Exception {
+    public void checkYearDescIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentYearRepository.findAll().size();
         // set the field null
-        studentYear.setsYear(null);
+        studentYear.setYearDesc(null);
 
         // Create the StudentYear, which fails.
         StudentYearDTO studentYearDTO = studentYearMapper.toDto(studentYear);
@@ -188,7 +188,7 @@ public class StudentYearResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentYear.getId().intValue())))
-            .andExpect(jsonPath("$.[*].sYear").value(hasItem(DEFAULT_S_YEAR.toString())));
+            .andExpect(jsonPath("$.[*].yearDesc").value(hasItem(DEFAULT_YEAR_DESC.toString())));
     }
     
 
@@ -203,7 +203,7 @@ public class StudentYearResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(studentYear.getId().intValue()))
-            .andExpect(jsonPath("$.sYear").value(DEFAULT_S_YEAR.toString()));
+            .andExpect(jsonPath("$.yearDesc").value(DEFAULT_YEAR_DESC.toString()));
     }
     @Test
     @Transactional
@@ -226,7 +226,7 @@ public class StudentYearResourceIntTest {
         // Disconnect from session so that the updates on updatedStudentYear are not directly saved in db
         em.detach(updatedStudentYear);
         updatedStudentYear
-            .sYear(UPDATED_S_YEAR);
+            .yearDesc(UPDATED_YEAR_DESC);
         StudentYearDTO studentYearDTO = studentYearMapper.toDto(updatedStudentYear);
 
         restStudentYearMockMvc.perform(put("/api/student-years")
@@ -238,7 +238,7 @@ public class StudentYearResourceIntTest {
         List<StudentYear> studentYearList = studentYearRepository.findAll();
         assertThat(studentYearList).hasSize(databaseSizeBeforeUpdate);
         StudentYear testStudentYear = studentYearList.get(studentYearList.size() - 1);
-        assertThat(testStudentYear.getsYear()).isEqualTo(UPDATED_S_YEAR);
+        assertThat(testStudentYear.getYearDesc()).isEqualTo(UPDATED_YEAR_DESC);
 
         // Validate the StudentYear in Elasticsearch
         verify(mockStudentYearSearchRepository, times(1)).save(testStudentYear);
@@ -252,7 +252,7 @@ public class StudentYearResourceIntTest {
         // Create the StudentYear
         StudentYearDTO studentYearDTO = studentYearMapper.toDto(studentYear);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restStudentYearMockMvc.perform(put("/api/student-years")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentYearDTO)))
@@ -299,7 +299,7 @@ public class StudentYearResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentYear.getId().intValue())))
-            .andExpect(jsonPath("$.[*].sYear").value(hasItem(DEFAULT_S_YEAR.toString())));
+            .andExpect(jsonPath("$.[*].yearDesc").value(hasItem(DEFAULT_YEAR_DESC.toString())));
     }
 
     @Test

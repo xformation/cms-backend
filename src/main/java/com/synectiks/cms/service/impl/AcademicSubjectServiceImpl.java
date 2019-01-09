@@ -50,7 +50,6 @@ public class AcademicSubjectServiceImpl implements AcademicSubjectService {
     @Override
     public AcademicSubjectDTO save(AcademicSubjectDTO academicSubjectDTO) {
         log.debug("Request to save AcademicSubject : {}", academicSubjectDTO);
-
         AcademicSubject academicSubject = academicSubjectMapper.toEntity(academicSubjectDTO);
         academicSubject = academicSubjectRepository.save(academicSubject);
         AcademicSubjectDTO result = academicSubjectMapper.toDto(academicSubject);

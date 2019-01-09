@@ -50,11 +50,8 @@ import com.synectiks.cms.domain.enumeration.Status;
 @SpringBootTest(classes = CmsApp.class)
 public class TermResourceIntTest {
 
-    private static final Integer DEFAULT_SR_NO = 1;
-    private static final Integer UPDATED_SR_NO = 2;
-
-    private static final String DEFAULT_A_TERMS = "AAAAAAAAAA";
-    private static final String UPDATED_A_TERMS = "BBBBBBBBBB";
+    private static final String DEFAULT_TERMS_DESC = "AAAAAAAAAA";
+    private static final String UPDATED_TERMS_DESC = "BBBBBBBBBB";
 
     private static final Date DEFAULT_START_DATE = new Date();
     private static final Date UPDATED_START_DATE = new Date();
@@ -68,8 +65,10 @@ public class TermResourceIntTest {
     @Autowired
     private TermRepository termRepository;
 
+
     @Autowired
     private TermMapper termMapper;
+    
 
     @Autowired
     private TermService termService;
@@ -117,11 +116,10 @@ public class TermResourceIntTest {
      */
     public static Term createEntity(EntityManager em) {
         Term term = new Term();
-        term.srNo(DEFAULT_SR_NO);
-        term.aTerms(DEFAULT_A_TERMS);
-        term.setStartDate(DEFAULT_START_DATE);
-        term.setEndDate(DEFAULT_END_DATE);
-        term.status(DEFAULT_STATUS);
+            term.termsDesc(DEFAULT_TERMS_DESC);
+            term.setStartDate(DEFAULT_START_DATE);
+            term.setEndDate(DEFAULT_END_DATE);
+            term.status(DEFAULT_STATUS);
         return term;
     }
 
@@ -146,8 +144,7 @@ public class TermResourceIntTest {
         List<Term> termList = termRepository.findAll();
         assertThat(termList).hasSize(databaseSizeBeforeCreate + 1);
         Term testTerm = termList.get(termList.size() - 1);
-        assertThat(testTerm.getSrNo()).isEqualTo(DEFAULT_SR_NO);
-        assertThat(testTerm.getaTerms()).isEqualTo(DEFAULT_A_TERMS);
+        assertThat(testTerm.getTermsDesc()).isEqualTo(DEFAULT_TERMS_DESC);
         assertThat(testTerm.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testTerm.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testTerm.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -181,29 +178,10 @@ public class TermResourceIntTest {
 
     @Test
     @Transactional
-    public void checkSrNoIsRequired() throws Exception {
+    public void checkTermsDescIsRequired() throws Exception {
         int databaseSizeBeforeTest = termRepository.findAll().size();
         // set the field null
-        term.setSrNo(null);
-
-        // Create the Term, which fails.
-        TermDTO termDTO = termMapper.toDto(term);
-
-        restTermMockMvc.perform(post("/api/terms")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(termDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Term> termList = termRepository.findAll();
-        assertThat(termList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkaTermsIsRequired() throws Exception {
-        int databaseSizeBeforeTest = termRepository.findAll().size();
-        // set the field null
-        term.setaTerms(null);
+        term.setTermsDesc(null);
 
         // Create the Term, which fails.
         TermDTO termDTO = termMapper.toDto(term);
@@ -285,13 +263,13 @@ public class TermResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(term.getId().intValue())))
-            .andExpect(jsonPath("$.[*].srNo").value(hasItem(DEFAULT_SR_NO)))
-            .andExpect(jsonPath("$.[*].aTerms").value(hasItem(DEFAULT_A_TERMS.toString())))
+            .andExpect(jsonPath("$.[*].termsDesc").value(hasItem(DEFAULT_TERMS_DESC.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getTerm() throws Exception {
@@ -303,13 +281,11 @@ public class TermResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(term.getId().intValue()))
-            .andExpect(jsonPath("$.srNo").value(DEFAULT_SR_NO))
-            .andExpect(jsonPath("$.aTerms").value(DEFAULT_A_TERMS.toString()))
+            .andExpect(jsonPath("$.termsDesc").value(DEFAULT_TERMS_DESC.toString()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingTerm() throws Exception {
@@ -331,11 +307,10 @@ public class TermResourceIntTest {
         // Disconnect from session so that the updates on updatedTerm are not directly saved in db
         em.detach(updatedTerm);
         //updatedTerm
-        term.srNo(UPDATED_SR_NO);
-        term.aTerms(UPDATED_A_TERMS);
-        term.setStartDate(UPDATED_START_DATE);
-        term.setEndDate(UPDATED_END_DATE);
-        term.status(UPDATED_STATUS);
+        updatedTerm.termsDesc(UPDATED_TERMS_DESC);
+        updatedTerm.setStartDate(UPDATED_START_DATE);
+        updatedTerm.setEndDate(UPDATED_END_DATE);
+        updatedTerm.status(UPDATED_STATUS);
         TermDTO termDTO = termMapper.toDto(updatedTerm);
 
         restTermMockMvc.perform(put("/api/terms")
@@ -347,8 +322,7 @@ public class TermResourceIntTest {
         List<Term> termList = termRepository.findAll();
         assertThat(termList).hasSize(databaseSizeBeforeUpdate);
         Term testTerm = termList.get(termList.size() - 1);
-        assertThat(testTerm.getSrNo()).isEqualTo(UPDATED_SR_NO);
-        assertThat(testTerm.getaTerms()).isEqualTo(UPDATED_A_TERMS);
+        assertThat(testTerm.getTermsDesc()).isEqualTo(UPDATED_TERMS_DESC);
         assertThat(testTerm.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testTerm.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testTerm.getStatus()).isEqualTo(UPDATED_STATUS);
@@ -365,7 +339,7 @@ public class TermResourceIntTest {
         // Create the Term
         TermDTO termDTO = termMapper.toDto(term);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restTermMockMvc.perform(put("/api/terms")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(termDTO)))
@@ -412,8 +386,7 @@ public class TermResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(term.getId().intValue())))
-            .andExpect(jsonPath("$.[*].srNo").value(hasItem(DEFAULT_SR_NO)))
-            .andExpect(jsonPath("$.[*].aTerms").value(hasItem(DEFAULT_A_TERMS)))
+            .andExpect(jsonPath("$.[*].termsDesc").value(hasItem(DEFAULT_TERMS_DESC.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));

@@ -64,7 +64,6 @@ describe('LegalEntity e2e test', () => {
     expect(await legalEntityUpdatePage.getPtSignatoryInput()).to.match(/ptSignatory/);
     legalEntityUpdatePage.setPtNumberInput('5');
     expect(await legalEntityUpdatePage.getPtNumberInput()).to.eq('5');
-    legalEntityUpdatePage.authorizedSignatorySelectLastOption();
     await legalEntityUpdatePage.save();
     expect(await legalEntityUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

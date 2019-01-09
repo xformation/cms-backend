@@ -33,8 +33,7 @@
             "esiNumber": "Esi Number",
             "ptRegistrationDate": "Pt Registration Date",
             "ptSignatory": "Pt Signatory",
-            "ptNumber": "Pt Number",
-            "authorizedSignatory": "Authorized Signatory"
+            "ptNumber": "Pt Number"
         }
     }
 }

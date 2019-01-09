@@ -12,7 +12,7 @@ import { ITerm } from 'app/shared/model/term.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ITermDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ITermDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class TermDetail extends React.Component<ITermDetailProps> {
   componentDidMount() {
@@ -29,17 +29,11 @@ export class TermDetail extends React.Component<ITermDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="srNo">
-                <Translate contentKey="cmsApp.term.srNo">Sr No</Translate>
+              <span id="termsDesc">
+                <Translate contentKey="cmsApp.term.termsDesc">Terms Desc</Translate>
               </span>
             </dt>
-            <dd>{termEntity.srNo}</dd>
-            <dt>
-              <span id="aTerms">
-                <Translate contentKey="cmsApp.term.aTerms">A Terms</Translate>
-              </span>
-            </dt>
-            <dd>{termEntity.aTerms}</dd>
+            <dd>{termEntity.termsDesc}</dd>
             <dt>
               <span id="startDate">
                 <Translate contentKey="cmsApp.term.startDate">Start Date</Translate>
@@ -62,6 +56,10 @@ export class TermDetail extends React.Component<ITermDetailProps> {
               </span>
             </dt>
             <dd>{termEntity.status}</dd>
+            <dt>
+              <Translate contentKey="cmsApp.term.academicYear">Academic Year</Translate>
+            </dt>
+            <dd>{termEntity.academicYearId ? termEntity.academicYearId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/term" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

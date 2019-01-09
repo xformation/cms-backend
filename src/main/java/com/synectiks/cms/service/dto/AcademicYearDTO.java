@@ -21,10 +21,6 @@ public class AcademicYearDTO implements Serializable {
     @NotNull
     private LocalDate endDate;
 
-    private Long holidayId;
-
-    private Long termId;
-
     public Long getId() {
         return id;
     }
@@ -57,22 +53,6 @@ public class AcademicYearDTO implements Serializable {
         this.endDate = endDate;
     }
 
-    public Long getHolidayId() {
-        return holidayId;
-    }
-
-    public void setHolidayId(Long holidayId) {
-        this.holidayId = holidayId;
-    }
-
-    public Long getTermId() {
-        return termId;
-    }
-
-    public void setTermId(Long termId) {
-        this.termId = termId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -101,8 +81,6 @@ public class AcademicYearDTO implements Serializable {
             ", year=" + getYear() +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", holiday=" + getHolidayId() +
-            ", term=" + getTermId() +
             "}";
     }
 }

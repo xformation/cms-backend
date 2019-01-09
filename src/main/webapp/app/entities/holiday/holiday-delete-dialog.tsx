@@ -9,7 +9,7 @@ import { IHoliday } from 'app/shared/model/holiday.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './holiday.reducer';
 
-export interface IHolidayDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IHolidayDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class HolidayDeleteDialog extends React.Component<IHolidayDeleteDialogProps> {
   componentDidMount() {
@@ -33,7 +33,7 @@ export class HolidayDeleteDialog extends React.Component<IHolidayDeleteDialogPro
         <ModalHeader toggle={this.handleClose}>
           <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
         </ModalHeader>
-        <ModalBody id="cmsApp.holiday.delete.question">
+        <ModalBody>
           <Translate contentKey="cmsApp.holiday.delete.question" interpolate={{ id: holidayEntity.id }}>
             Are you sure you want to delete this Holiday?
           </Translate>
@@ -43,7 +43,7 @@ export class HolidayDeleteDialog extends React.Component<IHolidayDeleteDialogPro
             <FontAwesomeIcon icon="ban" />&nbsp;
             <Translate contentKey="entity.action.cancel">Cancel</Translate>
           </Button>
-          <Button id="jhi-confirm-delete-holiday" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp;
             <Translate contentKey="entity.action.delete">Delete</Translate>
           </Button>

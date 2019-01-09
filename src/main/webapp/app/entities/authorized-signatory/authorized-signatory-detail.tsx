@@ -12,7 +12,7 @@ import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.mode
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IAuthorizedSignatoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IAuthorizedSignatoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AuthorizedSignatoryDetail extends React.Component<IAuthorizedSignatoryDetailProps> {
   componentDidMount() {
@@ -66,6 +66,10 @@ export class AuthorizedSignatoryDetail extends React.Component<IAuthorizedSignat
               </span>
             </dt>
             <dd>{authorizedSignatoryEntity.panCardNumber}</dd>
+            <dt>
+              <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
+            </dt>
+            <dd>{authorizedSignatoryEntity.legalEntityId ? authorizedSignatoryEntity.legalEntityId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/authorized-signatory" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

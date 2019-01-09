@@ -13,7 +13,7 @@ public class StudentDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String sName;
+    private String studentName;
 
     @NotNull
     private Boolean attendance;
@@ -31,12 +31,12 @@ public class StudentDTO implements Serializable {
         this.id = id;
     }
 
-    public String getsName() {
-        return sName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setsName(String sName) {
-        this.sName = sName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public Boolean isAttendance() {
@@ -88,7 +88,7 @@ public class StudentDTO implements Serializable {
     public String toString() {
         return "StudentDTO{" +
             "id=" + getId() +
-            ", sName='" + getsName() + "'" +
+            ", studentName='" + getStudentName() + "'" +
             ", attendance='" + isAttendance() + "'" +
             ", electiveSub='" + getElectiveSub() + "'" +
             ", teacher=" + getTeacherId() +

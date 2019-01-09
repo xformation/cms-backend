@@ -1,5 +1,5 @@
 entity StudentYear{
-sYear SYear required
+YearDesc SYear required
 }
 
 enum SYear{
@@ -67,11 +67,11 @@ JAVA,C
 }
 
 entity Teacher{
-tName String required
+teacherName String required
 }
 
 entity Student{
-sName String required,
+studentName String required,
 attendance Boolean required,
 electiveSub Elective required
 }
@@ -155,15 +155,13 @@ entity AcademicYear{
 }
 
 entity Holiday{
-	srNo Integer required
-	sHoliday String required
-	aDate LocalDate required
+	holidayDesc String required
+	holidayDate LocalDate required
 	status Status required
 }
 
 entity Term{
-	srNo Integer required
-	aTerms String required
+	TermsDesc String required
 	startDate LocalDate required
 	endDate   LocalDate required
 	status Status required
@@ -177,17 +175,11 @@ Subject{periods} to Periods,
 Student{teacher} to Teacher,
 Subject{student} to Student,
 Subject{teacher} to Teacher,
-LegalEntity{authorizedSignatory} to AuthorizedSignatory
-StudentAttendance{studentYear} to StudentYear
-StudentAttendance{departments} to Departments
-StudentAttendance{subject} to Subject
-StudentAttendance{semester} to Semester
-StudentAttendance{section} to Section
-StudentAttendance{periods} to Periods
+AuthorizedSignatory{legalEntity} to LegalEntity
 StudentAttendance{student} to Student
-AcademicSubject{academicDepartment} to AcademicDepartment
-AcademicYear{holiday}to Holiday
-AcademicYear{term}to Term
+AcademicSubject{department} to Departments
+Holiday{academicYear} to AcademicYear
+Term{academicYear} to AcademicYear
 }
 
 

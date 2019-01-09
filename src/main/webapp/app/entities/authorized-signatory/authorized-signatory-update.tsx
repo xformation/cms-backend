@@ -8,22 +8,26 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { ILegalEntity } from 'app/shared/model/legal-entity.model';
+import { getEntities as getLegalEntities } from 'app/entities/legal-entity/legal-entity.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './authorized-signatory.reducer';
 import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IAuthorizedSignatoryUpdateState {
   isNew: boolean;
+  legalEntityId: number;
 }
 
 export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignatoryUpdateProps, IAuthorizedSignatoryUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      legalEntityId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -34,6 +38,8 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getLegalEntities();
   }
 
   saveEntity = (event, errors, values) => {
@@ -58,7 +64,7 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
   };
 
   render() {
-    const { authorizedSignatoryEntity, loading, updating } = this.props;
+    const { authorizedSignatoryEntity, legalEntities, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -162,6 +168,21 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                     }}
                   />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="legalEntity.id">
+                    <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
+                  </Label>
+                  <AvInput id="authorized-signatory-legalEntity" type="select" className="form-control" name="legalEntityId">
+                    <option value="" key="0" />
+                    {legalEntities
+                      ? legalEntities.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/authorized-signatory" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -183,12 +204,14 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  legalEntities: storeState.legalEntity.entities,
   authorizedSignatoryEntity: storeState.authorizedSignatory.entity,
   loading: storeState.authorizedSignatory.loading,
   updating: storeState.authorizedSignatory.updating
 });
 
 const mapDispatchToProps = {
+  getLegalEntities,
   getEntity,
   updateEntity,
   createEntity,

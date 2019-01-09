@@ -16,26 +16,20 @@ import { ITeacher } from 'app/shared/model/teacher.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ITeacherUpdateState {
   isNew: boolean;
-  periodsId: string;
+  periodsId: number;
 }
 
 export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacherUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      periodsId: '0',
+      periodsId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -61,6 +55,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
@@ -96,13 +91,13 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="tNameLabel" for="tName">
-                    <Translate contentKey="cmsApp.teacher.tName">T Name</Translate>
+                  <Label id="teacherNameLabel" for="teacherName">
+                    <Translate contentKey="cmsApp.teacher.teacherName">Teacher Name</Translate>
                   </Label>
                   <AvField
-                    id="teacher-tName"
+                    id="teacher-teacherName"
                     type="text"
-                    name="tName"
+                    name="teacherName"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
@@ -147,8 +142,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   periods: storeState.periods.entities,
   teacherEntity: storeState.teacher.entity,
   loading: storeState.teacher.loading,
-  updating: storeState.teacher.updating,
-  updateSuccess: storeState.teacher.updateSuccess
+  updating: storeState.teacher.updating
 });
 
 const mapDispatchToProps = {

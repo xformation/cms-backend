@@ -37,7 +37,7 @@ public class AcademicSubject implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private AcademicDepartment academicDepartment;
+    private Departments department;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -74,17 +74,17 @@ public class AcademicSubject implements Serializable {
         this.electiveSub = electiveSub;
     }
 
-    public AcademicDepartment getAcademicDepartment() {
-        return academicDepartment;
+    public Departments getDepartment() {
+        return department;
     }
 
-    public AcademicSubject academicDepartment(AcademicDepartment academicDepartment) {
-        this.academicDepartment = academicDepartment;
+    public AcademicSubject department(Departments departments) {
+        this.department = departments;
         return this;
     }
 
-    public void setAcademicDepartment(AcademicDepartment academicDepartment) {
-        this.academicDepartment = academicDepartment;
+    public void setDepartment(Departments departments) {
+        this.department = departments;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

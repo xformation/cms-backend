@@ -47,8 +47,8 @@ import com.synectiks.cms.domain.enumeration.Elective;
 @SpringBootTest(classes = CmsApp.class)
 public class StudentResourceIntTest {
 
-    private static final String DEFAULT_S_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_S_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_STUDENT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_STUDENT_NAME = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_ATTENDANCE = false;
     private static final Boolean UPDATED_ATTENDANCE = true;
@@ -110,7 +110,7 @@ public class StudentResourceIntTest {
      */
     public static Student createEntity(EntityManager em) {
         Student student = new Student()
-            .sName(DEFAULT_S_NAME)
+            .studentName(DEFAULT_STUDENT_NAME)
             .attendance(DEFAULT_ATTENDANCE)
             .electiveSub(DEFAULT_ELECTIVE_SUB);
         return student;
@@ -137,7 +137,7 @@ public class StudentResourceIntTest {
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeCreate + 1);
         Student testStudent = studentList.get(studentList.size() - 1);
-        assertThat(testStudent.getsName()).isEqualTo(DEFAULT_S_NAME);
+        assertThat(testStudent.getStudentName()).isEqualTo(DEFAULT_STUDENT_NAME);
         assertThat(testStudent.isAttendance()).isEqualTo(DEFAULT_ATTENDANCE);
         assertThat(testStudent.getElectiveSub()).isEqualTo(DEFAULT_ELECTIVE_SUB);
 
@@ -170,10 +170,10 @@ public class StudentResourceIntTest {
 
     @Test
     @Transactional
-    public void checksNameIsRequired() throws Exception {
+    public void checkStudentNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
         // set the field null
-        student.setsName(null);
+        student.setStudentName(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -236,7 +236,7 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].sName").value(hasItem(DEFAULT_S_NAME.toString())))
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
             .andExpect(jsonPath("$.[*].attendance").value(hasItem(DEFAULT_ATTENDANCE.booleanValue())))
             .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.toString())));
     }
@@ -253,7 +253,7 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(student.getId().intValue()))
-            .andExpect(jsonPath("$.sName").value(DEFAULT_S_NAME.toString()))
+            .andExpect(jsonPath("$.studentName").value(DEFAULT_STUDENT_NAME.toString()))
             .andExpect(jsonPath("$.attendance").value(DEFAULT_ATTENDANCE.booleanValue()))
             .andExpect(jsonPath("$.electiveSub").value(DEFAULT_ELECTIVE_SUB.toString()));
     }
@@ -278,7 +278,7 @@ public class StudentResourceIntTest {
         // Disconnect from session so that the updates on updatedStudent are not directly saved in db
         em.detach(updatedStudent);
         updatedStudent
-            .sName(UPDATED_S_NAME)
+            .studentName(UPDATED_STUDENT_NAME)
             .attendance(UPDATED_ATTENDANCE)
             .electiveSub(UPDATED_ELECTIVE_SUB);
         StudentDTO studentDTO = studentMapper.toDto(updatedStudent);
@@ -292,7 +292,7 @@ public class StudentResourceIntTest {
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeUpdate);
         Student testStudent = studentList.get(studentList.size() - 1);
-        assertThat(testStudent.getsName()).isEqualTo(UPDATED_S_NAME);
+        assertThat(testStudent.getStudentName()).isEqualTo(UPDATED_STUDENT_NAME);
         assertThat(testStudent.isAttendance()).isEqualTo(UPDATED_ATTENDANCE);
         assertThat(testStudent.getElectiveSub()).isEqualTo(UPDATED_ELECTIVE_SUB);
 
@@ -308,7 +308,7 @@ public class StudentResourceIntTest {
         // Create the Student
         StudentDTO studentDTO = studentMapper.toDto(student);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restStudentMockMvc.perform(put("/api/students")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
@@ -355,7 +355,7 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].sName").value(hasItem(DEFAULT_S_NAME.toString())))
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
             .andExpect(jsonPath("$.[*].attendance").value(hasItem(DEFAULT_ATTENDANCE.booleanValue())))
             .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.toString())));
     }

@@ -85,7 +85,7 @@ export class StudentYear extends React.Component<IStudentYearProps, IStudentYear
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.studentYear.sYear">S Year</Translate>
+                  <Translate contentKey="cmsApp.studentYear.yearDesc">Year Desc</Translate>
                 </th>
                 <th />
               </tr>
@@ -99,7 +99,7 @@ export class StudentYear extends React.Component<IStudentYearProps, IStudentYear
                     </Button>
                   </td>
                   <td>
-                    <Translate contentKey={`cmsApp.SYear.${studentYear.sYear}`} />
+                    <Translate contentKey={`cmsApp.SYear.${studentYear.yearDesc}`} />
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

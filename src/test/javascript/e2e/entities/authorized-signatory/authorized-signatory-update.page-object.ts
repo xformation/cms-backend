@@ -10,6 +10,7 @@ export default class AuthorizedSignatoryUpdatePage {
   addressInput: ElementFinder = element(by.css('input#authorized-signatory-address'));
   emailInput: ElementFinder = element(by.css('input#authorized-signatory-email'));
   panCardNumberInput: ElementFinder = element(by.css('input#authorized-signatory-panCardNumber'));
+  legalEntitySelect: ElementFinder = element(by.css('select#authorized-signatory-legalEntity'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -61,6 +62,25 @@ export default class AuthorizedSignatoryUpdatePage {
 
   getPanCardNumberInput() {
     return this.panCardNumberInput.getAttribute('value');
+  }
+
+  legalEntitySelectLastOption() {
+    this.legalEntitySelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  legalEntitySelectOption(option) {
+    this.legalEntitySelect.sendKeys(option);
+  }
+
+  getLegalEntitySelect() {
+    return this.legalEntitySelect;
+  }
+
+  getLegalEntitySelectedOption() {
+    return this.legalEntitySelect.element(by.css('option:checked')).getText();
   }
 
   save() {

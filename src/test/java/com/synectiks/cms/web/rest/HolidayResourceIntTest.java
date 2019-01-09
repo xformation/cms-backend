@@ -50,14 +50,11 @@ import com.synectiks.cms.domain.enumeration.Status;
 @SpringBootTest(classes = CmsApp.class)
 public class HolidayResourceIntTest {
 
-    private static final Integer DEFAULT_SR_NO = 1;
-    private static final Integer UPDATED_SR_NO = 2;
+    private static final String DEFAULT_HOLIDAY_DESC = "AAAAAAAAAA";
+    private static final String UPDATED_HOLIDAY_DESC = "BBBBBBBBBB";
 
-    private static final String DEFAULT_S_HOLIDAY = "AAAAAAAAAA";
-    private static final String UPDATED_S_HOLIDAY = "BBBBBBBBBB";
-
-    private static final Date DEFAULT_A_DATE = new Date();
-    private static final Date UPDATED_A_DATE = new Date();
+    private static final Date DEFAULT_HOLIDAY_DATE = new Date();
+    private static final Date UPDATED_HOLIDAY_DATE =new Date() ;
 
     private static final Status DEFAULT_STATUS = Status.PRESENT;
     private static final Status UPDATED_STATUS = Status.ABSENT;
@@ -65,8 +62,10 @@ public class HolidayResourceIntTest {
     @Autowired
     private HolidayRepository holidayRepository;
 
+
     @Autowired
     private HolidayMapper holidayMapper;
+    
 
     @Autowired
     private HolidayService holidayService;
@@ -114,10 +113,9 @@ public class HolidayResourceIntTest {
      */
     public static Holiday createEntity(EntityManager em) {
         Holiday holiday = new Holiday();
-        holiday.srNo(DEFAULT_SR_NO);
-        holiday.sHoliday(DEFAULT_S_HOLIDAY);
-        holiday.setaDate(DEFAULT_A_DATE);
-        holiday.status(DEFAULT_STATUS);
+            holiday.holidayDesc(DEFAULT_HOLIDAY_DESC);
+           holiday.setHolidayDate(DEFAULT_HOLIDAY_DATE);
+            holiday.status(DEFAULT_STATUS);
         return holiday;
     }
 
@@ -142,9 +140,8 @@ public class HolidayResourceIntTest {
         List<Holiday> holidayList = holidayRepository.findAll();
         assertThat(holidayList).hasSize(databaseSizeBeforeCreate + 1);
         Holiday testHoliday = holidayList.get(holidayList.size() - 1);
-        assertThat(testHoliday.getSrNo()).isEqualTo(DEFAULT_SR_NO);
-        assertThat(testHoliday.getsHoliday()).isEqualTo(DEFAULT_S_HOLIDAY);
-        assertThat(testHoliday.getaDate()).isEqualTo(DEFAULT_A_DATE);
+        assertThat(testHoliday.getHolidayDesc()).isEqualTo(DEFAULT_HOLIDAY_DESC);
+        assertThat(testHoliday.getHolidayDate()).isEqualTo(DEFAULT_HOLIDAY_DATE);
         assertThat(testHoliday.getStatus()).isEqualTo(DEFAULT_STATUS);
 
         // Validate the Holiday in Elasticsearch
@@ -176,10 +173,10 @@ public class HolidayResourceIntTest {
 
     @Test
     @Transactional
-    public void checkSrNoIsRequired() throws Exception {
+    public void checkHolidayDescIsRequired() throws Exception {
         int databaseSizeBeforeTest = holidayRepository.findAll().size();
         // set the field null
-        holiday.setSrNo(null);
+        holiday.setHolidayDesc(null);
 
         // Create the Holiday, which fails.
         HolidayDTO holidayDTO = holidayMapper.toDto(holiday);
@@ -195,29 +192,10 @@ public class HolidayResourceIntTest {
 
     @Test
     @Transactional
-    public void checksHolidayIsRequired() throws Exception {
+    public void checkHolidayDateIsRequired() throws Exception {
         int databaseSizeBeforeTest = holidayRepository.findAll().size();
         // set the field null
-        holiday.setsHoliday(null);
-
-        // Create the Holiday, which fails.
-        HolidayDTO holidayDTO = holidayMapper.toDto(holiday);
-
-        restHolidayMockMvc.perform(post("/api/holidays")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(holidayDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Holiday> holidayList = holidayRepository.findAll();
-        assertThat(holidayList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkaDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = holidayRepository.findAll().size();
-        // set the field null
-        holiday.setaDate(null);
+        holiday.setHolidayDate(null);
 
         // Create the Holiday, which fails.
         HolidayDTO holidayDTO = holidayMapper.toDto(holiday);
@@ -261,12 +239,12 @@ public class HolidayResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(holiday.getId().intValue())))
-            .andExpect(jsonPath("$.[*].srNo").value(hasItem(DEFAULT_SR_NO)))
-            .andExpect(jsonPath("$.[*].sHoliday").value(hasItem(DEFAULT_S_HOLIDAY.toString())))
-            .andExpect(jsonPath("$.[*].aDate").value(hasItem(DEFAULT_A_DATE.toString())))
+            .andExpect(jsonPath("$.[*].holidayDesc").value(hasItem(DEFAULT_HOLIDAY_DESC.toString())))
+            .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getHoliday() throws Exception {
@@ -278,12 +256,10 @@ public class HolidayResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(holiday.getId().intValue()))
-            .andExpect(jsonPath("$.srNo").value(DEFAULT_SR_NO))
-            .andExpect(jsonPath("$.sHoliday").value(DEFAULT_S_HOLIDAY.toString()))
-            .andExpect(jsonPath("$.aDate").value(DEFAULT_A_DATE.toString()))
+            .andExpect(jsonPath("$.holidayDesc").value(DEFAULT_HOLIDAY_DESC.toString()))
+            .andExpect(jsonPath("$.holidayDate").value(DEFAULT_HOLIDAY_DATE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingHoliday() throws Exception {
@@ -305,10 +281,9 @@ public class HolidayResourceIntTest {
         // Disconnect from session so that the updates on updatedHoliday are not directly saved in db
         em.detach(updatedHoliday);
         //updatedHoliday
-        holiday.srNo(UPDATED_SR_NO);
-        holiday.sHoliday(UPDATED_S_HOLIDAY);
-        holiday.setaDate(UPDATED_A_DATE);
-        holiday.status(UPDATED_STATUS);
+        updatedHoliday.holidayDesc(UPDATED_HOLIDAY_DESC);
+        updatedHoliday.setHolidayDate(UPDATED_HOLIDAY_DATE);
+        updatedHoliday.status(UPDATED_STATUS);
         HolidayDTO holidayDTO = holidayMapper.toDto(updatedHoliday);
 
         restHolidayMockMvc.perform(put("/api/holidays")
@@ -320,9 +295,8 @@ public class HolidayResourceIntTest {
         List<Holiday> holidayList = holidayRepository.findAll();
         assertThat(holidayList).hasSize(databaseSizeBeforeUpdate);
         Holiday testHoliday = holidayList.get(holidayList.size() - 1);
-        assertThat(testHoliday.getSrNo()).isEqualTo(UPDATED_SR_NO);
-        assertThat(testHoliday.getsHoliday()).isEqualTo(UPDATED_S_HOLIDAY);
-        assertThat(testHoliday.getaDate()).isEqualTo(UPDATED_A_DATE);
+        assertThat(testHoliday.getHolidayDesc()).isEqualTo(UPDATED_HOLIDAY_DESC);
+        assertThat(testHoliday.getHolidayDate()).isEqualTo(UPDATED_HOLIDAY_DATE);
         assertThat(testHoliday.getStatus()).isEqualTo(UPDATED_STATUS);
 
         // Validate the Holiday in Elasticsearch
@@ -337,7 +311,7 @@ public class HolidayResourceIntTest {
         // Create the Holiday
         HolidayDTO holidayDTO = holidayMapper.toDto(holiday);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restHolidayMockMvc.perform(put("/api/holidays")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(holidayDTO)))
@@ -384,9 +358,8 @@ public class HolidayResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(holiday.getId().intValue())))
-            .andExpect(jsonPath("$.[*].srNo").value(hasItem(DEFAULT_SR_NO)))
-            .andExpect(jsonPath("$.[*].sHoliday").value(hasItem(DEFAULT_S_HOLIDAY)))
-            .andExpect(jsonPath("$.[*].aDate").value(hasItem(DEFAULT_A_DATE.toString())))
+            .andExpect(jsonPath("$.[*].holidayDesc").value(hasItem(DEFAULT_HOLIDAY_DESC.toString())))
+            .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 

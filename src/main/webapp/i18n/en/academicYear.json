@@ -19,9 +19,7 @@
             },
             "year": "Year",
             "startDate": "Start Date",
-            "endDate": "End Date",
-            "holiday": "Holiday",
-            "term": "Term"
+            "endDate": "End Date"
         }
     }
 }

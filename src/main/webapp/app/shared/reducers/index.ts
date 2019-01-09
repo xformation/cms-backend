@@ -132,6 +132,54 @@ import holiday, {
 import term, {
   TermState
 } from 'app/entities/term/term.reducer';
+// prettier-ignore
+import studentYear, {
+  StudentYearState
+} from 'app/entities/student-year/student-year.reducer';
+// prettier-ignore
+import studentAttendance, {
+  StudentAttendanceState
+} from 'app/entities/student-attendance/student-attendance.reducer';
+// prettier-ignore
+import academicSubject, {
+  AcademicSubjectState
+} from 'app/entities/academic-subject/academic-subject.reducer';
+// prettier-ignore
+import teacher, {
+  TeacherState
+} from 'app/entities/teacher/teacher.reducer';
+// prettier-ignore
+import student, {
+  StudentState
+} from 'app/entities/student/student.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import authorizedSignatory, {
+  AuthorizedSignatoryState
+} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
+// prettier-ignore
+import academicYear, {
+  AcademicYearState
+} from 'app/entities/academic-year/academic-year.reducer';
+// prettier-ignore
+import holiday, {
+  HolidayState
+} from 'app/entities/holiday/holiday.reducer';
+// prettier-ignore
+import term, {
+  TermState
+} from 'app/entities/term/term.reducer';
+// prettier-ignore
+import holiday, {
+  HolidayState
+} from 'app/entities/holiday/holiday.reducer';
+// prettier-ignore
+import term, {
+  TermState
+} from 'app/entities/term/term.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

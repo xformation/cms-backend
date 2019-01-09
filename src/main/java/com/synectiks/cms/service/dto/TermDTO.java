@@ -14,10 +14,7 @@ public class TermDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Integer srNo;
-
-    @NotNull
-    private String aTerms;
+    private String termsDesc;
 
     @NotNull
     private LocalDate startDate;
@@ -28,6 +25,8 @@ public class TermDTO implements Serializable {
     @NotNull
     private Status status;
 
+    private Long academicYearId;
+
     public Long getId() {
         return id;
     }
@@ -36,20 +35,12 @@ public class TermDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getSrNo() {
-        return srNo;
+    public String getTermsDesc() {
+        return termsDesc;
     }
 
-    public void setSrNo(Integer srNo) {
-        this.srNo = srNo;
-    }
-
-    public String getaTerms() {
-        return aTerms;
-    }
-
-    public void setaTerms(String aTerms) {
-        this.aTerms = aTerms;
+    public void setTermsDesc(String termsDesc) {
+        this.termsDesc = termsDesc;
     }
 
     public LocalDate getStartDate() {
@@ -74,6 +65,14 @@ public class TermDTO implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
     }
 
     @Override
@@ -101,11 +100,11 @@ public class TermDTO implements Serializable {
     public String toString() {
         return "TermDTO{" +
             "id=" + getId() +
-            ", srNo=" + getSrNo() +
-            ", aTerms='" + getaTerms() + "'" +
+            ", termsDesc='" + getTermsDesc() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", status='" + getStatus() + "'" +
+            ", academicYear=" + getAcademicYearId() +
             "}";
     }
 }

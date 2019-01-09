@@ -1,6 +1,6 @@
 export interface ITeacher {
   id?: number;
-  tName?: string;
+  teacherName?: string;
   periodsId?: number;
 }
 

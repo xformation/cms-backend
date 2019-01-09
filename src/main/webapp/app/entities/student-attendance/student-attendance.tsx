@@ -94,24 +94,6 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                   <Translate contentKey="cmsApp.studentAttendance.comments">Comments</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.studentAttendance.studentYear">Student Year</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.departments">Departments</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.subject">Subject</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.semester">Semester</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.section">Section</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.periods">Periods</Translate>
-                </th>
-                <th>
                   <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
                 </th>
                 <th />
@@ -132,48 +114,6 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                     <Translate contentKey={`cmsApp.Status.${studentAttendance.status}`} />
                   </td>
                   <td>{studentAttendance.comments}</td>
-                  <td>
-                    {studentAttendance.studentYearId ? (
-                      <Link to={`student-year/${studentAttendance.studentYearId}`}>{studentAttendance.studentYearId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {studentAttendance.departmentsId ? (
-                      <Link to={`departments/${studentAttendance.departmentsId}`}>{studentAttendance.departmentsId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {studentAttendance.subjectId ? (
-                      <Link to={`subject/${studentAttendance.subjectId}`}>{studentAttendance.subjectId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {studentAttendance.semesterId ? (
-                      <Link to={`semester/${studentAttendance.semesterId}`}>{studentAttendance.semesterId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {studentAttendance.sectionId ? (
-                      <Link to={`section/${studentAttendance.sectionId}`}>{studentAttendance.sectionId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {studentAttendance.periodsId ? (
-                      <Link to={`periods/${studentAttendance.periodsId}`}>{studentAttendance.periodsId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td>
                     {studentAttendance.studentId ? (
                       <Link to={`student/${studentAttendance.studentId}`}>{studentAttendance.studentId}</Link>

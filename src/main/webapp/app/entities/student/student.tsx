@@ -85,7 +85,7 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.student.sName">S Name</Translate>
+                  <Translate contentKey="cmsApp.student.studentName">Student Name</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.student.attendance">Attendance</Translate>
@@ -107,7 +107,7 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                       {student.id}
                     </Button>
                   </td>
-                  <td>{student.sName}</td>
+                  <td>{student.studentName}</td>
                   <td>{student.attendance ? 'true' : 'false'}</td>
                   <td>
                     <Translate contentKey={`cmsApp.Elective.${student.electiveSub}`} />

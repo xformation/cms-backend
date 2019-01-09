@@ -91,7 +91,7 @@ export class AcademicSubject extends React.Component<IAcademicSubjectProps, IAca
                   <Translate contentKey="cmsApp.academicSubject.electiveSub">Elective Sub</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.academicSubject.academicDepartment">Academic Department</Translate>
+                  <Translate contentKey="cmsApp.academicSubject.department">Department</Translate>
                 </th>
                 <th />
               </tr>
@@ -107,8 +107,8 @@ export class AcademicSubject extends React.Component<IAcademicSubjectProps, IAca
                   <td>{academicSubject.subjectName}</td>
                   <td>{academicSubject.electiveSub ? 'true' : 'false'}</td>
                   <td>
-                    {academicSubject.academicDepartmentId ? (
-                      <Link to={`academic-department/${academicSubject.academicDepartmentId}`}>{academicSubject.academicDepartmentId}</Link>
+                    {academicSubject.departmentId ? (
+                      <Link to={`departments/${academicSubject.departmentId}`}>{academicSubject.departmentId}</Link>
                     ) : (
                       ''
                     )}

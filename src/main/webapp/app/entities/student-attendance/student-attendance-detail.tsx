@@ -12,7 +12,7 @@ import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IStudentAttendanceDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IStudentAttendanceDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class StudentAttendanceDetail extends React.Component<IStudentAttendanceDetailProps> {
   componentDidMount() {
@@ -48,30 +48,6 @@ export class StudentAttendanceDetail extends React.Component<IStudentAttendanceD
               </span>
             </dt>
             <dd>{studentAttendanceEntity.comments}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentAttendance.studentYear">Student Year</Translate>
-            </dt>
-            <dd>{studentAttendanceEntity.studentYearId ? studentAttendanceEntity.studentYearId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentAttendance.departments">Departments</Translate>
-            </dt>
-            <dd>{studentAttendanceEntity.departmentsId ? studentAttendanceEntity.departmentsId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentAttendance.subject">Subject</Translate>
-            </dt>
-            <dd>{studentAttendanceEntity.subjectId ? studentAttendanceEntity.subjectId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentAttendance.semester">Semester</Translate>
-            </dt>
-            <dd>{studentAttendanceEntity.semesterId ? studentAttendanceEntity.semesterId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentAttendance.section">Section</Translate>
-            </dt>
-            <dd>{studentAttendanceEntity.sectionId ? studentAttendanceEntity.sectionId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentAttendance.periods">Periods</Translate>
-            </dt>
-            <dd>{studentAttendanceEntity.periodsId ? studentAttendanceEntity.periodsId : ''}</dd>
             <dt>
               <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
             </dt>

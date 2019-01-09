@@ -7,7 +7,7 @@ export const enum SYear {
 
 export interface IStudentYear {
   id?: number;
-  sYear?: SYear;
+  yearDesc?: SYear;
 }
 
 export const defaultValue: Readonly<IStudentYear> = {};

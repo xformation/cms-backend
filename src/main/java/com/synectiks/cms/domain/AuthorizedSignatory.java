@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -49,6 +50,10 @@ public class AuthorizedSignatory implements Serializable {
     @NotNull
     @Column(name = "pan_card_number", nullable = false)
     private String panCardNumber;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private LegalEntity legalEntity;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -135,6 +140,19 @@ public class AuthorizedSignatory implements Serializable {
 
     public void setPanCardNumber(String panCardNumber) {
         this.panCardNumber = panCardNumber;
+    }
+
+    public LegalEntity getLegalEntity() {
+        return legalEntity;
+    }
+
+    public AuthorizedSignatory legalEntity(LegalEntity legalEntity) {
+        this.legalEntity = legalEntity;
+        return this;
+    }
+
+    public void setLegalEntity(LegalEntity legalEntity) {
+        this.legalEntity = legalEntity;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

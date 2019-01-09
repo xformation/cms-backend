@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,6 +8,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -99,10 +99,6 @@ public class LegalEntity implements Serializable {
     @Column(name = "pt_number", nullable = false)
     private Long ptNumber;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private AuthorizedSignatory authorizedSignatory;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -151,6 +147,13 @@ public class LegalEntity implements Serializable {
         this.typeOfCollege = typeOfCollege;
     }
 
+    public Date getDateOfIncorporation() {
+        return dateOfIncorporation;
+    }
+
+    public void setDateOfIncorporation(Date dateOfIncorporation) {
+        this.dateOfIncorporation = dateOfIncorporation;
+    }
 
     public String getRegisteredOfficeAddress() {
         return registeredOfficeAddress;
@@ -257,6 +260,7 @@ public class LegalEntity implements Serializable {
     }
 
 
+
     public Long getEsiNumber() {
         return esiNumber;
     }
@@ -270,6 +274,21 @@ public class LegalEntity implements Serializable {
         this.esiNumber = esiNumber;
     }
 
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Date getPtRegistrationDate() {
+        return ptRegistrationDate;
+    }
+
+    public void setPtRegistrationDate(Date ptRegistrationDate) {
+        this.ptRegistrationDate = ptRegistrationDate;
+    }
 
     public String getPtSignatory() {
         return ptSignatory;
@@ -293,45 +312,8 @@ public class LegalEntity implements Serializable {
         return this;
     }
 
-    public Date getDateOfIncorporation() {
-        return dateOfIncorporation;
-    }
-
-    public void setDateOfIncorporation(Date dateOfIncorporation) {
-        this.dateOfIncorporation = dateOfIncorporation;
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public Date getPtRegistrationDate() {
-        return ptRegistrationDate;
-    }
-
-    public void setPtRegistrationDate(Date ptRegistrationDate) {
-        this.ptRegistrationDate = ptRegistrationDate;
-    }
-
     public void setPtNumber(Long ptNumber) {
         this.ptNumber = ptNumber;
-    }
-
-    public AuthorizedSignatory getAuthorizedSignatory() {
-        return authorizedSignatory;
-    }
-
-    public LegalEntity authorizedSignatory(AuthorizedSignatory authorizedSignatory) {
-        this.authorizedSignatory = authorizedSignatory;
-        return this;
-    }
-
-    public void setAuthorizedSignatory(AuthorizedSignatory authorizedSignatory) {
-        this.authorizedSignatory = authorizedSignatory;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

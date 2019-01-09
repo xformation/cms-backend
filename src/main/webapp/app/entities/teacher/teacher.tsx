@@ -85,7 +85,7 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.teacher.tName">T Name</Translate>
+                  <Translate contentKey="cmsApp.teacher.teacherName">Teacher Name</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.teacher.periods">Periods</Translate>
@@ -101,7 +101,7 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                       {teacher.id}
                     </Button>
                   </td>
-                  <td>{teacher.tName}</td>
+                  <td>{teacher.teacherName}</td>
                   <td>{teacher.periodsId ? <Link to={`periods/${teacher.periodsId}`}>{teacher.periodsId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

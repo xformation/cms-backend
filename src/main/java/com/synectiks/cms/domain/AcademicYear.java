@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,6 +8,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -40,14 +40,6 @@ public class AcademicYear implements Serializable {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Holiday holiday;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Term term;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -74,11 +66,6 @@ public class AcademicYear implements Serializable {
         return startDate;
     }
 
-    public AcademicYear startDate(Date startDate) {
-        this.startDate = startDate;
-        return this;
-    }
-
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -87,40 +74,10 @@ public class AcademicYear implements Serializable {
         return endDate;
     }
 
-    public AcademicYear endDate(Date endDate) {
-        this.endDate = endDate;
-        return this;
-    }
-
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    public Holiday getHoliday() {
-        return holiday;
-    }
-
-    public AcademicYear holiday(Holiday holiday) {
-        this.holiday = holiday;
-        return this;
-    }
-
-    public void setHoliday(Holiday holiday) {
-        this.holiday = holiday;
-    }
-
-    public Term getTerm() {
-        return term;
-    }
-
-    public AcademicYear term(Term term) {
-        this.term = term;
-        return this;
-    }
-
-    public void setTerm(Term term) {
-        this.term = term;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

@@ -2,20 +2,20 @@ package com.synectiks.cms.graphql.types.AcademicSubject;
 
 public class AddAcademicSubjectInput extends AbstractAcademicSubjectInput {
 
-    private Long academicDepartmentId;
+    private Long departmentsId;
 
-    public Long getAcademicDepartmentId() {
-        return academicDepartmentId;
+    public Long getDepartmentsId() {
+        return departmentsId;
     }
 
-    public void setAcademicDepartmentId(Long academicDepartmentId) {
-        this.academicDepartmentId = academicDepartmentId;
+    public void setDepartmentsId(Long departmentsId) {
+        this.departmentsId = departmentsId;
     }
 
     @Override
     public String toString() {
         return "AddAcademicSubjectInput{" +
-            "academicDepartmentId=" + academicDepartmentId +
-            '}' + super.toString();
+            "departmentsId=" + departmentsId +
+            '}'+ super.toString();
     }
 }

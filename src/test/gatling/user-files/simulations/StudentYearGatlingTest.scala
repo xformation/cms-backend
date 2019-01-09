@@ -68,7 +68,7 @@ class StudentYearGatlingTest extends Simulation {
             .exec(http("Create new studentYear")
             .post("/api/student-years")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "sYear":null}""")).asJSON
+            .body(StringBody("""{"id":null, "yearDesc":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_studentYear_url"))).exitHereIfFailed
             .pause(10)

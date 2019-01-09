@@ -62,8 +62,10 @@ public class StudentAttendanceResourceIntTest {
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
 
+
     @Autowired
     private StudentAttendanceMapper studentAttendanceMapper;
+    
 
     @Autowired
     private StudentAttendanceService studentAttendanceService;
@@ -242,6 +244,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getStudentAttendance() throws Exception {
@@ -257,7 +260,6 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingStudentAttendance() throws Exception {
@@ -278,7 +280,7 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance updatedStudentAttendance = studentAttendanceRepository.findById(studentAttendance.getId()).get();
         // Disconnect from session so that the updates on updatedStudentAttendance are not directly saved in db
         em.detach(updatedStudentAttendance);
-       /* updatedStudentAttendance*/
+        //updatedStudentAttendance
         updatedStudentAttendance.setAttendanceDate(UPDATED_ATTENDANCE_DATE);
         updatedStudentAttendance.status(UPDATED_STATUS);
         updatedStudentAttendance.comments(UPDATED_COMMENTS);
@@ -309,7 +311,7 @@ public class StudentAttendanceResourceIntTest {
         // Create the StudentAttendance
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))
@@ -358,7 +360,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
             .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
 
     @Test

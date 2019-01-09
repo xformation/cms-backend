@@ -17,7 +17,7 @@
             "detail": {
                 "title": "Student Year"
             },
-            "sYear": "S Year"
+            "yearDesc": "Year Desc"
         }
     }
 }

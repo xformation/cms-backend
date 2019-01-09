@@ -12,9 +12,9 @@ import { getEntity, updateEntity, createEntity, reset } from './student-year.red
 import { IStudentYear } from 'app/shared/model/student-year.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IStudentYearUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IStudentYearUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IStudentYearUpdateState {
   isNew: boolean;
@@ -85,15 +85,15 @@ export class StudentYearUpdate extends React.Component<IStudentYearUpdateProps, 
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="sYearLabel">
-                    <Translate contentKey="cmsApp.studentYear.sYear">S Year</Translate>
+                  <Label id="yearDescLabel">
+                    <Translate contentKey="cmsApp.studentYear.yearDesc">Year Desc</Translate>
                   </Label>
                   <AvInput
-                    id="student-year-sYear"
+                    id="student-year-yearDesc"
                     type="select"
                     className="form-control"
-                    name="sYear"
-                    value={(!isNew && studentYearEntity.sYear) || 'I'}
+                    name="yearDesc"
+                    value={(!isNew && studentYearEntity.yearDesc) || 'I'}
                   >
                     <option value="I">
                       <Translate contentKey="cmsApp.SYear.I" />

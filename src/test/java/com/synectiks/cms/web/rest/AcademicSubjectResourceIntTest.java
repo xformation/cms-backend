@@ -55,8 +55,10 @@ public class AcademicSubjectResourceIntTest {
     @Autowired
     private AcademicSubjectRepository academicSubjectRepository;
 
+
     @Autowired
     private AcademicSubjectMapper academicSubjectMapper;
+    
 
     @Autowired
     private AcademicSubjectService academicSubjectService;
@@ -213,6 +215,7 @@ public class AcademicSubjectResourceIntTest {
             .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.booleanValue())));
     }
     
+
     @Test
     @Transactional
     public void getAcademicSubject() throws Exception {
@@ -227,7 +230,6 @@ public class AcademicSubjectResourceIntTest {
             .andExpect(jsonPath("$.subjectName").value(DEFAULT_SUBJECT_NAME.toString()))
             .andExpect(jsonPath("$.electiveSub").value(DEFAULT_ELECTIVE_SUB.booleanValue()));
     }
-
     @Test
     @Transactional
     public void getNonExistingAcademicSubject() throws Exception {
@@ -277,7 +279,7 @@ public class AcademicSubjectResourceIntTest {
         // Create the AcademicSubject
         AcademicSubjectDTO academicSubjectDTO = academicSubjectMapper.toDto(academicSubject);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restAcademicSubjectMockMvc.perform(put("/api/academic-subjects")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(academicSubjectDTO)))
@@ -324,7 +326,7 @@ public class AcademicSubjectResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(academicSubject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].subjectName").value(hasItem(DEFAULT_SUBJECT_NAME)))
+            .andExpect(jsonPath("$.[*].subjectName").value(hasItem(DEFAULT_SUBJECT_NAME.toString())))
             .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.booleanValue())));
     }
 

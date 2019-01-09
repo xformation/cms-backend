@@ -12,7 +12,7 @@ import { ITeacher } from 'app/shared/model/teacher.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ITeacherDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ITeacherDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class TeacherDetail extends React.Component<ITeacherDetailProps> {
   componentDidMount() {
@@ -29,11 +29,11 @@ export class TeacherDetail extends React.Component<ITeacherDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="tName">
-                <Translate contentKey="cmsApp.teacher.tName">T Name</Translate>
+              <span id="teacherName">
+                <Translate contentKey="cmsApp.teacher.teacherName">Teacher Name</Translate>
               </span>
             </dt>
-            <dd>{teacherEntity.tName}</dd>
+            <dd>{teacherEntity.teacherName}</dd>
             <dt>
               <Translate contentKey="cmsApp.teacher.periods">Periods</Translate>
             </dt>

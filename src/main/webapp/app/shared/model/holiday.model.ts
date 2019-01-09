@@ -9,10 +9,10 @@ export const enum Status {
 
 export interface IHoliday {
   id?: number;
-  srNo?: number;
-  sHoliday?: string;
-  aDate?: Moment;
+  holidayDesc?: string;
+  holidayDate?: Moment;
   status?: Status;
+  academicYearId?: number;
 }
 
 export const defaultValue: Readonly<IHoliday> = {};

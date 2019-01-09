@@ -37,8 +37,6 @@ describe('AcademicYear e2e test', () => {
     expect(await academicYearUpdatePage.getStartDateInput()).to.eq('2001-01-01');
     academicYearUpdatePage.setEndDateInput('01-01-2001');
     expect(await academicYearUpdatePage.getEndDateInput()).to.eq('2001-01-01');
-    academicYearUpdatePage.holidaySelectLastOption();
-    academicYearUpdatePage.termSelectLastOption();
     await academicYearUpdatePage.save();
     expect(await academicYearUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

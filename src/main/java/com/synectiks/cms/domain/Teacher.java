@@ -28,8 +28,8 @@ public class Teacher implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "t_name", nullable = false)
-    private String tName;
+    @Column(name = "teacher_name", nullable = false)
+    private String teacherName;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -44,17 +44,17 @@ public class Teacher implements Serializable {
         this.id = id;
     }
 
-    public String gettName() {
-        return tName;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public Teacher tName(String tName) {
-        this.tName = tName;
+    public Teacher teacherName(String teacherName) {
+        this.teacherName = teacherName;
         return this;
     }
 
-    public void settName(String tName) {
-        this.tName = tName;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public Periods getPeriods() {
@@ -95,7 +95,7 @@ public class Teacher implements Serializable {
     public String toString() {
         return "Teacher{" +
             "id=" + getId() +
-            ", tName='" + gettName() + "'" +
+            ", teacherName='" + getTeacherName() + "'" +
             "}";
     }
 }

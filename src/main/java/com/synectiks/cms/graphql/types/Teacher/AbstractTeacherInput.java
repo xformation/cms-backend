@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class AbstractTeacherInput {
     private Long id;
-    private String tName;
+    private String teacherName;
 
     public Long getId() {
         return id;
@@ -16,33 +16,33 @@ public class AbstractTeacherInput {
         this.id = id;
     }
 
-    public String gettName() {
-        return tName;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void settName(String tName) {
-        this.tName = tName;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractTeacherInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractTeacherInput that = (AbstractTeacherInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(gettName(), that.gettName());
+        return Objects.equals(id, that.id) &&
+            Objects.equals(teacherName, that.teacherName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), gettName());
+        return Objects.hash(id, teacherName);
     }
 
     @Override
     public String toString() {
         return "AbstractTeacherInput{" +
             "id=" + id +
-            ", tName='" + tName + '\'' +
+            ", teacherName='" + teacherName + '\'' +
             '}';
     }
 }

@@ -4,59 +4,70 @@ export default class HolidayUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.holiday.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  srNoInput: ElementFinder = element(by.css('input#holiday-srNo'));
-  sHolidayInput: ElementFinder = element(by.css('input#holiday-sHoliday'));
-  aDateInput: ElementFinder = element(by.css('input#holiday-aDate'));
+  holidayDescInput: ElementFinder = element(by.css('input#holiday-holidayDesc'));
+  holidayDateInput: ElementFinder = element(by.css('input#holiday-holidayDate'));
   statusSelect: ElementFinder = element(by.css('select#holiday-status'));
+  academicYearSelect: ElementFinder = element(by.css('select#holiday-academicYear'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  async setSrNoInput(srNo) {
-    await this.srNoInput.sendKeys(srNo);
+  setHolidayDescInput(holidayDesc) {
+    this.holidayDescInput.sendKeys(holidayDesc);
   }
 
-  async getSrNoInput() {
-    return this.srNoInput.getAttribute('value');
+  getHolidayDescInput() {
+    return this.holidayDescInput.getAttribute('value');
   }
 
-  async setSHolidayInput(sHoliday) {
-    await this.sHolidayInput.sendKeys(sHoliday);
+  setHolidayDateInput(holidayDate) {
+    this.holidayDateInput.sendKeys(holidayDate);
   }
 
-  async getSHolidayInput() {
-    return this.sHolidayInput.getAttribute('value');
+  getHolidayDateInput() {
+    return this.holidayDateInput.getAttribute('value');
   }
 
-  async setADateInput(aDate) {
-    await this.aDateInput.sendKeys(aDate);
+  setStatusSelect(status) {
+    this.statusSelect.sendKeys(status);
   }
 
-  async getADateInput() {
-    return this.aDateInput.getAttribute('value');
-  }
-
-  async setStatusSelect(status) {
-    await this.statusSelect.sendKeys(status);
-  }
-
-  async getStatusSelect() {
+  getStatusSelect() {
     return this.statusSelect.element(by.css('option:checked')).getText();
   }
 
-  async statusSelectLastOption() {
-    await this.statusSelect
+  statusSelectLastOption() {
+    this.statusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async save() {
-    await this.saveButton.click();
+  academicYearSelectLastOption() {
+    this.academicYearSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  academicYearSelectOption(option) {
+    this.academicYearSelect.sendKeys(option);
+  }
+
+  getAcademicYearSelect() {
+    return this.academicYearSelect;
+  }
+
+  getAcademicYearSelectedOption() {
+    return this.academicYearSelect.element(by.css('option:checked')).getText();
+  }
+
+  save() {
+    return this.saveButton.click();
+  }
+
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

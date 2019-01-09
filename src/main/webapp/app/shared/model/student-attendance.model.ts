@@ -12,12 +12,6 @@ export interface IStudentAttendance {
   attendanceDate?: Moment;
   status?: Status;
   comments?: string;
-  studentYearId?: number;
-  departmentsId?: number;
-  subjectId?: number;
-  semesterId?: number;
-  sectionId?: number;
-  periodsId?: number;
   studentId?: number;
 }
 

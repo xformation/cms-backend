@@ -8,16 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity AcademicYear and its DTO AcademicYearDTO.
  */
-@Mapper(componentModel = "spring", uses = {HolidayMapper.class, TermMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface AcademicYearMapper extends EntityMapper<AcademicYearDTO, AcademicYear> {
 
-    @Mapping(source = "holiday.id", target = "holidayId")
-    @Mapping(source = "term.id", target = "termId")
-    AcademicYearDTO toDto(AcademicYear academicYear);
 
-    @Mapping(source = "holidayId", target = "holiday")
-    @Mapping(source = "termId", target = "term")
-    AcademicYear toEntity(AcademicYearDTO academicYearDTO);
 
     default AcademicYear fromId(Long id) {
         if (id == null) {
