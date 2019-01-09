@@ -19,6 +19,7 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.Holiday.AddHolidayPayload;
 import com.synectiks.cms.model.Institute;
 import com.synectiks.cms.repository.*;
 import org.springframework.stereotype.Component;
@@ -275,8 +276,9 @@ public class Query implements GraphQLQueryResolver {
 
     public Holiday holiday(long id)
     {
-        return holidayRepository.getOne(id);
+        return holidayRepository.findById(id).get();
     }
+
 
     public List<Term> terms()
     {
@@ -285,6 +287,6 @@ public class Query implements GraphQLQueryResolver {
 
     public Term term(long id)
     {
-        return termRepository.getOne(id);
+        return termRepository.findById(id).get();
     }
 }
