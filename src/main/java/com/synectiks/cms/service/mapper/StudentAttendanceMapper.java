@@ -8,13 +8,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity StudentAttendance and its DTO StudentAttendanceDTO.
  */
-@Mapper(componentModel = "spring", uses = {StudentMapper.class})
+@Mapper(componentModel = "spring", uses = {StudentMapper.class, LectureMapper.class})
 public interface StudentAttendanceMapper extends EntityMapper<StudentAttendanceDTO, StudentAttendance> {
 
     @Mapping(source = "student.id", target = "studentId")
+    @Mapping(source = "lecture.id", target = "lectureId")
     StudentAttendanceDTO toDto(StudentAttendance studentAttendance);
 
     @Mapping(source = "studentId", target = "student")
+    @Mapping(source = "lectureId", target = "lecture")
     StudentAttendance toEntity(StudentAttendanceDTO studentAttendanceDTO);
 
     default StudentAttendance fromId(Long id) {

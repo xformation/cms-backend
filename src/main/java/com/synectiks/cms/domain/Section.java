@@ -11,7 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.ClassSection;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
 
 /**
  * A Section.
@@ -32,11 +32,11 @@ public class Section implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "section", nullable = false)
-    private ClassSection section;
+    private SectionEnum section;
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private StudentYear studentyear;
+    private Batch batch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -47,30 +47,30 @@ public class Section implements Serializable {
         this.id = id;
     }
 
-    public ClassSection getSection() {
+    public SectionEnum getSection() {
         return section;
     }
 
-    public Section section(ClassSection section) {
+    public Section section(SectionEnum section) {
         this.section = section;
         return this;
     }
 
-    public void setSection(ClassSection section) {
+    public void setSection(SectionEnum section) {
         this.section = section;
     }
 
-    public StudentYear getStudentyear() {
-        return studentyear;
+    public Batch getBatch() {
+        return batch;
     }
 
-    public Section studentyear(StudentYear studentYear) {
-        this.studentyear = studentYear;
+    public Section batch(Batch batch) {
+        this.batch = batch;
         return this;
     }
 
-    public void setStudentyear(StudentYear studentYear) {
-        this.studentyear = studentYear;
+    public void setBatch(Batch batch) {
+        this.batch = batch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

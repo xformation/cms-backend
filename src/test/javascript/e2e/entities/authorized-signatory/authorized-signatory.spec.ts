@@ -45,7 +45,7 @@ describe('AuthorizedSignatory e2e test', () => {
     expect(await authorizedSignatoryUpdatePage.getEmailInput()).to.match(/email/);
     authorizedSignatoryUpdatePage.setPanCardNumberInput('panCardNumber');
     expect(await authorizedSignatoryUpdatePage.getPanCardNumberInput()).to.match(/panCardNumber/);
-    authorizedSignatoryUpdatePage.legalEntitySelectLastOption();
+    authorizedSignatoryUpdatePage.legalentitySelectLastOption();
     await authorizedSignatoryUpdatePage.save();
     expect(await authorizedSignatoryUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

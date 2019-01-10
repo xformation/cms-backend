@@ -87,9 +87,6 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                 <th>
                   <Translate contentKey="cmsApp.teacher.teacherName">Teacher Name</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="cmsApp.teacher.periods">Periods</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -102,7 +99,6 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                     </Button>
                   </td>
                   <td>{teacher.teacherName}</td>
-                  <td>{teacher.periodsId ? <Link to={`periods/${teacher.periodsId}`}>{teacher.periodsId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${teacher.id}`} color="info" size="sm">

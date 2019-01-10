@@ -3,8 +3,8 @@
     "fields": [
         {
             "fieldName": "section",
-            "fieldType": "ClassSection",
-            "fieldValues": "A,B",
+            "fieldType": "SectionEnum",
+            "fieldValues": "A,B,C,D",
             "fieldValidateRules": [
                 "required"
             ]
@@ -13,12 +13,12 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "studentyear",
-            "otherEntityName": "studentYear",
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20181224075918",
+    "changelogDate": "20190110134451",
     "entityTableName": "section",
     "dto": "mapstruct",
     "pagination": "no",

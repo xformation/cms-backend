@@ -1,0 +1,11 @@
+{
+    "cmsApp": {
+        "CommonSubEnum" : {
+            "null": "",
+            "MATHS": "MATHS",
+            "PHYSICS": "PHYSICS",
+            "CHEMISTRY": "CHEMISTRY",
+            "DBMS": "DBMS"
+        }
+    }
+}

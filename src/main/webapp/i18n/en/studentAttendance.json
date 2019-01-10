@@ -17,10 +17,10 @@
             "detail": {
                 "title": "Student Attendance"
             },
-            "attendanceDate": "Attendance Date",
-            "status": "Status",
+            "attendanceStatus": "Attendance Status",
             "comments": "Comments",
-            "student": "Student"
+            "student": "Student",
+            "lecture": "Lecture"
         }
     }
 }

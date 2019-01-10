@@ -53,7 +53,7 @@ public class AuthorizedSignatory implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private LegalEntity legalEntity;
+    private LegalEntity legalentity;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -142,17 +142,17 @@ public class AuthorizedSignatory implements Serializable {
         this.panCardNumber = panCardNumber;
     }
 
-    public LegalEntity getLegalEntity() {
-        return legalEntity;
+    public LegalEntity getLegalentity() {
+        return legalentity;
     }
 
-    public AuthorizedSignatory legalEntity(LegalEntity legalEntity) {
-        this.legalEntity = legalEntity;
+    public AuthorizedSignatory legalentity(LegalEntity legalEntity) {
+        this.legalentity = legalEntity;
         return this;
     }
 
-    public void setLegalEntity(LegalEntity legalEntity) {
-        this.legalEntity = legalEntity;
+    public void setLegalentity(LegalEntity legalEntity) {
+        this.legalentity = legalEntity;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

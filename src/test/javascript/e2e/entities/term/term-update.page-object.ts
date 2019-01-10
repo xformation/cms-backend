@@ -7,8 +7,8 @@ export default class TermUpdatePage {
   termsDescInput: ElementFinder = element(by.css('input#term-termsDesc'));
   startDateInput: ElementFinder = element(by.css('input#term-startDate'));
   endDateInput: ElementFinder = element(by.css('input#term-endDate'));
-  statusSelect: ElementFinder = element(by.css('select#term-status'));
-  academicYearSelect: ElementFinder = element(by.css('select#term-academicYear'));
+  termStatusSelect: ElementFinder = element(by.css('select#term-termStatus'));
+  academicyearSelect: ElementFinder = element(by.css('select#term-academicyear'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -38,37 +38,37 @@ export default class TermUpdatePage {
     return this.endDateInput.getAttribute('value');
   }
 
-  setStatusSelect(status) {
-    this.statusSelect.sendKeys(status);
+  setTermStatusSelect(termStatus) {
+    this.termStatusSelect.sendKeys(termStatus);
   }
 
-  getStatusSelect() {
-    return this.statusSelect.element(by.css('option:checked')).getText();
+  getTermStatusSelect() {
+    return this.termStatusSelect.element(by.css('option:checked')).getText();
   }
 
-  statusSelectLastOption() {
-    this.statusSelect
+  termStatusSelectLastOption() {
+    this.termStatusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  academicYearSelectLastOption() {
-    this.academicYearSelect
+  academicyearSelectLastOption() {
+    this.academicyearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  academicYearSelectOption(option) {
-    this.academicYearSelect.sendKeys(option);
+  academicyearSelectOption(option) {
+    this.academicyearSelect.sendKeys(option);
   }
 
-  getAcademicYearSelect() {
-    return this.academicYearSelect;
+  getAcademicyearSelect() {
+    return this.academicyearSelect;
   }
 
-  getAcademicYearSelectedOption() {
-    return this.academicYearSelect.element(by.css('option:checked')).getText();
+  getAcademicyearSelectedOption() {
+    return this.academicyearSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

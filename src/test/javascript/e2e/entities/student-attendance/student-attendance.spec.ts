@@ -31,12 +31,11 @@ describe('StudentAttendance e2e test', () => {
   });
 
   it('should create and save StudentAttendances', async () => {
-    studentAttendanceUpdatePage.setAttendanceDateInput('01-01-2001');
-    expect(await studentAttendanceUpdatePage.getAttendanceDateInput()).to.eq('2001-01-01');
-    studentAttendanceUpdatePage.statusSelectLastOption();
+    studentAttendanceUpdatePage.attendanceStatusSelectLastOption();
     studentAttendanceUpdatePage.setCommentsInput('comments');
     expect(await studentAttendanceUpdatePage.getCommentsInput()).to.match(/comments/);
     studentAttendanceUpdatePage.studentSelectLastOption();
+    studentAttendanceUpdatePage.lectureSelectLastOption();
     await studentAttendanceUpdatePage.save();
     expect(await studentAttendanceUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

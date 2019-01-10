@@ -91,10 +91,10 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
                   <Translate contentKey="cmsApp.holiday.holidayDate">Holiday Date</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.holiday.status">Status</Translate>
+                  <Translate contentKey="cmsApp.holiday.holidayStatus">Holiday Status</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.holiday.academicYear">Academic Year</Translate>
+                  <Translate contentKey="cmsApp.holiday.academicyear">Academicyear</Translate>
                 </th>
                 <th />
               </tr>
@@ -112,10 +112,10 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
                     <TextFormat type="date" value={holiday.holidayDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
-                    <Translate contentKey={`cmsApp.Status.${holiday.status}`} />
+                    <Translate contentKey={`cmsApp.Status.${holiday.holidayStatus}`} />
                   </td>
                   <td>
-                    {holiday.academicYearId ? <Link to={`academic-year/${holiday.academicYearId}`}>{holiday.academicYearId}</Link> : ''}
+                    {holiday.academicyearId ? <Link to={`academicYear/${holiday.academicyearId}`}>{holiday.academicyearId}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

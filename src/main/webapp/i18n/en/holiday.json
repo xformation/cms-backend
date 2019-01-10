@@ -19,8 +19,8 @@
             },
             "holidayDesc": "Holiday Desc",
             "holidayDate": "Holiday Date",
-            "status": "Status",
-            "academicYear": "Academic Year"
+            "holidayStatus": "Holiday Status",
+            "academicyear": "Academicyear"
         }
     }
 }

@@ -88,7 +88,7 @@ export class Section extends React.Component<ISectionProps, ISectionState> {
                   <Translate contentKey="cmsApp.section.section">Section</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.section.studentyear">Studentyear</Translate>
+                  <Translate contentKey="cmsApp.section.batch">Batch</Translate>
                 </th>
                 <th />
               </tr>
@@ -102,9 +102,9 @@ export class Section extends React.Component<ISectionProps, ISectionState> {
                     </Button>
                   </td>
                   <td>
-                    <Translate contentKey={`cmsApp.ClassSection.${section.section}`} />
+                    <Translate contentKey={`cmsApp.SectionEnum.${section.section}`} />
                   </td>
-                  <td>{section.studentyearId ? <Link to={`studentYear/${section.studentyearId}`}>{section.studentyearId}</Link> : ''}</td>
+                  <td>{section.batchId ? <Link to={`batch/${section.batchId}`}>{section.batchId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${section.id}`} color="info" size="sm">

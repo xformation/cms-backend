@@ -24,6 +24,13 @@ import AcademicSubject from './academic-subject';
 import AcademicYear from './academic-year';
 import Holiday from './holiday';
 import Term from './term';
+import Branch from './branch';
+import Department from './department';
+import Batch from './batch';
+import Teach from './teach';
+import CourseOffer from './course-offer';
+import AttendanceMaster from './attendance-master';
+import Lecture from './lecture';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -50,6 +57,13 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/academic-year`} component={AcademicYear} />
       <ErrorBoundaryRoute path={`${match.url}/holiday`} component={Holiday} />
       <ErrorBoundaryRoute path={`${match.url}/term`} component={Term} />
+      <ErrorBoundaryRoute path={`${match.url}/branch`} component={Branch} />
+      <ErrorBoundaryRoute path={`${match.url}/department`} component={Department} />
+      <ErrorBoundaryRoute path={`${match.url}/batch`} component={Batch} />
+      <ErrorBoundaryRoute path={`${match.url}/teach`} component={Teach} />
+      <ErrorBoundaryRoute path={`${match.url}/course-offer`} component={CourseOffer} />
+      <ErrorBoundaryRoute path={`${match.url}/attendance-master`} component={AttendanceMaster} />
+      <ErrorBoundaryRoute path={`${match.url}/lecture`} component={Lecture} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

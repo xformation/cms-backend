@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -85,16 +85,16 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.studentAttendance.attendanceDate">Attendance Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.status">Status</Translate>
+                  <Translate contentKey="cmsApp.studentAttendance.attendanceStatus">Attendance Status</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.studentAttendance.comments">Comments</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cmsApp.studentAttendance.lecture">Lecture</Translate>
                 </th>
                 <th />
               </tr>
@@ -108,15 +108,19 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                     </Button>
                   </td>
                   <td>
-                    <TextFormat type="date" value={studentAttendance.attendanceDate} format={APP_LOCAL_DATE_FORMAT} />
-                  </td>
-                  <td>
-                    <Translate contentKey={`cmsApp.Status.${studentAttendance.status}`} />
+                    <Translate contentKey={`cmsApp.AttendanceStatusEnum.${studentAttendance.attendanceStatus}`} />
                   </td>
                   <td>{studentAttendance.comments}</td>
                   <td>
                     {studentAttendance.studentId ? (
                       <Link to={`student/${studentAttendance.studentId}`}>{studentAttendance.studentId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {studentAttendance.lectureId ? (
+                      <Link to={`lecture/${studentAttendance.lectureId}`}>{studentAttendance.lectureId}</Link>
                     ) : (
                       ''
                     )}

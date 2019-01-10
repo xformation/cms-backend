@@ -9,11 +9,9 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 
 /**
  * A StudentAttendance.
@@ -32,13 +30,9 @@ public class StudentAttendance implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "attendance_date", nullable = false)
-    private Date attendanceDate;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "attendance_status", nullable = false)
+    private AttendanceStatusEnum attendanceStatus;
 
     @NotNull
     @Column(name = "comments", nullable = false)
@@ -47,6 +41,10 @@ public class StudentAttendance implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("")
     private Student student;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Lecture lecture;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -57,25 +55,17 @@ public class StudentAttendance implements Serializable {
         this.id = id;
     }
 
-    public Date getAttendanceDate() {
-        return attendanceDate;
+    public AttendanceStatusEnum getAttendanceStatus() {
+        return attendanceStatus;
     }
 
-    public void setAttendanceDate(Date attendanceDate) {
-        this.attendanceDate = attendanceDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public StudentAttendance status(Status status) {
-        this.status = status;
+    public StudentAttendance attendanceStatus(AttendanceStatusEnum attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
         return this;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setAttendanceStatus(AttendanceStatusEnum attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
     }
 
     public String getComments() {
@@ -103,6 +93,19 @@ public class StudentAttendance implements Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
+
+    public Lecture getLecture() {
+        return lecture;
+    }
+
+    public StudentAttendance lecture(Lecture lecture) {
+        this.lecture = lecture;
+        return this;
+    }
+
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -129,8 +132,7 @@ public class StudentAttendance implements Serializable {
     public String toString() {
         return "StudentAttendance{" +
             "id=" + getId() +
-            ", attendanceDate='" + getAttendanceDate() + "'" +
-            ", status='" + getStatus() + "'" +
+            ", attendanceStatus='" + getAttendanceStatus() + "'" +
             ", comments='" + getComments() + "'" +
             "}";
     }

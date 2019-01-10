@@ -25,10 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -40,7 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 /**
  * Test class for the StudentAttendanceResource REST controller.
  *
@@ -50,11 +47,8 @@ import com.synectiks.cms.domain.enumeration.Status;
 @SpringBootTest(classes = CmsApp.class)
 public class StudentAttendanceResourceIntTest {
 
-    private static final Date DEFAULT_ATTENDANCE_DATE = new Date();
-    private static final Date UPDATED_ATTENDANCE_DATE = new Date();
-
-    private static final Status DEFAULT_STATUS = Status.PRESENT;
-    private static final Status UPDATED_STATUS = Status.ABSENT;
+    private static final AttendanceStatusEnum DEFAULT_ATTENDANCE_STATUS = AttendanceStatusEnum.PRESENT;
+    private static final AttendanceStatusEnum UPDATED_ATTENDANCE_STATUS = AttendanceStatusEnum.ABSENT;
 
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
@@ -112,10 +106,9 @@ public class StudentAttendanceResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static StudentAttendance createEntity(EntityManager em) {
-        StudentAttendance studentAttendance = new StudentAttendance();
-        studentAttendance.setAttendanceDate(DEFAULT_ATTENDANCE_DATE);
-        studentAttendance.status(DEFAULT_STATUS);
-        studentAttendance.comments(DEFAULT_COMMENTS);
+        StudentAttendance studentAttendance = new StudentAttendance()
+            .attendanceStatus(DEFAULT_ATTENDANCE_STATUS)
+            .comments(DEFAULT_COMMENTS);
         return studentAttendance;
     }
 
@@ -140,8 +133,7 @@ public class StudentAttendanceResourceIntTest {
         List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
         assertThat(studentAttendanceList).hasSize(databaseSizeBeforeCreate + 1);
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
-        assertThat(testStudentAttendance.getAttendanceDate()).isEqualTo(DEFAULT_ATTENDANCE_DATE);
-        assertThat(testStudentAttendance.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testStudentAttendance.getAttendanceStatus()).isEqualTo(DEFAULT_ATTENDANCE_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(DEFAULT_COMMENTS);
 
         // Validate the StudentAttendance in Elasticsearch
@@ -173,29 +165,10 @@ public class StudentAttendanceResourceIntTest {
 
     @Test
     @Transactional
-    public void checkAttendanceDateIsRequired() throws Exception {
+    public void checkAttendanceStatusIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentAttendanceRepository.findAll().size();
         // set the field null
-        studentAttendance.setAttendanceDate(null);
-
-        // Create the StudentAttendance, which fails.
-        StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
-
-        restStudentAttendanceMockMvc.perform(post("/api/student-attendances")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
-        assertThat(studentAttendanceList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentAttendanceRepository.findAll().size();
-        // set the field null
-        studentAttendance.setStatus(null);
+        studentAttendance.setAttendanceStatus(null);
 
         // Create the StudentAttendance, which fails.
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
@@ -239,8 +212,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
-            .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
     
@@ -256,8 +228,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(studentAttendance.getId().intValue()))
-            .andExpect(jsonPath("$.attendanceDate").value(DEFAULT_ATTENDANCE_DATE.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.attendanceStatus").value(DEFAULT_ATTENDANCE_STATUS.toString()))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
     }
     @Test
@@ -280,10 +251,9 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance updatedStudentAttendance = studentAttendanceRepository.findById(studentAttendance.getId()).get();
         // Disconnect from session so that the updates on updatedStudentAttendance are not directly saved in db
         em.detach(updatedStudentAttendance);
-        //updatedStudentAttendance
-        updatedStudentAttendance.setAttendanceDate(UPDATED_ATTENDANCE_DATE);
-        updatedStudentAttendance.status(UPDATED_STATUS);
-        updatedStudentAttendance.comments(UPDATED_COMMENTS);
+        updatedStudentAttendance
+            .attendanceStatus(UPDATED_ATTENDANCE_STATUS)
+            .comments(UPDATED_COMMENTS);
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(updatedStudentAttendance);
 
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")
@@ -295,8 +265,7 @@ public class StudentAttendanceResourceIntTest {
         List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
         assertThat(studentAttendanceList).hasSize(databaseSizeBeforeUpdate);
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
-        assertThat(testStudentAttendance.getAttendanceDate()).isEqualTo(UPDATED_ATTENDANCE_DATE);
-        assertThat(testStudentAttendance.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testStudentAttendance.getAttendanceStatus()).isEqualTo(UPDATED_ATTENDANCE_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(UPDATED_COMMENTS);
 
         // Validate the StudentAttendance in Elasticsearch
@@ -311,7 +280,7 @@ public class StudentAttendanceResourceIntTest {
         // Create the StudentAttendance
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))
@@ -358,8 +327,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
-            .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
 

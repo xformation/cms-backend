@@ -14,7 +14,7 @@ import { ICollege } from 'app/shared/model/college.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ICollegeUpdateState {
   isNew: boolean;

@@ -21,6 +21,9 @@ public class AcademicYearDTO implements Serializable {
     @NotNull
     private LocalDate endDate;
 
+    @NotNull
+    private String desc;
+
     public Long getId() {
         return id;
     }
@@ -53,6 +56,14 @@ public class AcademicYearDTO implements Serializable {
         this.endDate = endDate;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,6 +92,7 @@ public class AcademicYearDTO implements Serializable {
             ", year=" + getYear() +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", desc='" + getDesc() + "'" +
             "}";
     }
 }

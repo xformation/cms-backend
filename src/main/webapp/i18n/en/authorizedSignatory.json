@@ -23,7 +23,7 @@
             "address": "Address",
             "email": "Email",
             "panCardNumber": "Pan Card Number",
-            "legalEntity": "Legal Entity"
+            "legalentity": "Legalentity"
         }
     }
 }

@@ -1,18 +1,14 @@
-import { Moment } from 'moment';
-
-export const enum Status {
+export const enum AttendanceStatusEnum {
   PRESENT = 'PRESENT',
-  ABSENT = 'ABSENT',
-  ACTIVE = 'ACTIVE',
-  DEACTIVE = 'DEACTIVE'
+  ABSENT = 'ABSENT'
 }
 
 export interface IStudentAttendance {
   id?: number;
-  attendanceDate?: Moment;
-  status?: Status;
+  attendanceStatus?: AttendanceStatusEnum;
   comments?: string;
   studentId?: number;
+  lectureId?: number;
 }
 
 export const defaultValue: Readonly<IStudentAttendance> = {};

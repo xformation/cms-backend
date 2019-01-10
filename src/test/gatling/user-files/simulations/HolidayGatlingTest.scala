@@ -68,7 +68,7 @@ class HolidayGatlingTest extends Simulation {
             .exec(http("Create new holiday")
             .post("/api/holidays")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "holidayDesc":"SAMPLE_TEXT", "holidayDate":"2020-01-01T00:00:00.000Z", "status":null}""")).asJSON
+            .body(StringBody("""{"id":null, "holidayDesc":"SAMPLE_TEXT", "holidayDate":"2020-01-01T00:00:00.000Z", "holidayStatus":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_holiday_url"))).exitHereIfFailed
             .pause(10)

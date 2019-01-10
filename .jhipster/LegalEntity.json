@@ -122,15 +122,8 @@
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "authorizedSignatory",
-            "otherEntityName": "authorizedSignatory",
-            "otherEntityField": "id"
-        }
-    ],
-    "changelogDate": "20181224075929",
+    "relationships": [],
+    "changelogDate": "20190110134503",
     "entityTableName": "legal_entity",
     "dto": "mapstruct",
     "pagination": "no",

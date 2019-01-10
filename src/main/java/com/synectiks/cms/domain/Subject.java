@@ -11,9 +11,9 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.Common;
+import com.synectiks.cms.domain.enumeration.CommonSubEnum;
 
-import com.synectiks.cms.domain.enumeration.Elective;
+import com.synectiks.cms.domain.enumeration.ElectiveEnum;
 
 /**
  * A Subject.
@@ -34,16 +34,16 @@ public class Subject implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "common_sub", nullable = false)
-    private Common commonSub;
+    private CommonSubEnum commonSub;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "elective_sub", nullable = false)
-    private Elective electiveSub;
+    private ElectiveEnum electiveSub;
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private Periods periods;
+    private Department department;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -62,43 +62,43 @@ public class Subject implements Serializable {
         this.id = id;
     }
 
-    public Common getCommonSub() {
+    public CommonSubEnum getCommonSub() {
         return commonSub;
     }
 
-    public Subject commonSub(Common commonSub) {
+    public Subject commonSub(CommonSubEnum commonSub) {
         this.commonSub = commonSub;
         return this;
     }
 
-    public void setCommonSub(Common commonSub) {
+    public void setCommonSub(CommonSubEnum commonSub) {
         this.commonSub = commonSub;
     }
 
-    public Elective getElectiveSub() {
+    public ElectiveEnum getElectiveSub() {
         return electiveSub;
     }
 
-    public Subject electiveSub(Elective electiveSub) {
+    public Subject electiveSub(ElectiveEnum electiveSub) {
         this.electiveSub = electiveSub;
         return this;
     }
 
-    public void setElectiveSub(Elective electiveSub) {
+    public void setElectiveSub(ElectiveEnum electiveSub) {
         this.electiveSub = electiveSub;
     }
 
-    public Periods getPeriods() {
-        return periods;
+    public Department getDepartment() {
+        return department;
     }
 
-    public Subject periods(Periods periods) {
-        this.periods = periods;
+    public Subject department(Department department) {
+        this.department = department;
         return this;
     }
 
-    public void setPeriods(Periods periods) {
-        this.periods = periods;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Student getStudent() {

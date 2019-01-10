@@ -34,10 +34,6 @@ export class TeacherDetail extends React.Component<ITeacherDetailProps> {
               </span>
             </dt>
             <dd>{teacherEntity.teacherName}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.teacher.periods">Periods</Translate>
-            </dt>
-            <dd>{teacherEntity.periodsId ? teacherEntity.periodsId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/teacher" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

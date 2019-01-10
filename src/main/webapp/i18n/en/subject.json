@@ -19,7 +19,7 @@
             },
             "commonSub": "Common Sub",
             "electiveSub": "Elective Sub",
-            "periods": "Periods",
+            "department": "Department",
             "student": "Student",
             "teacher": "Teacher"
         }

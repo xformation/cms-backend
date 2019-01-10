@@ -10,17 +10,20 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IStudent } from 'app/shared/model/student.model';
 import { getEntities as getStudents } from 'app/entities/student/student.reducer';
+import { ILecture } from 'app/shared/model/lecture.model';
+import { getEntities as getLectures } from 'app/entities/lecture/lecture.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './student-attendance.reducer';
 import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IStudentAttendanceUpdateState {
   isNew: boolean;
   studentId: number;
+  lectureId: number;
 }
 
 export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceUpdateProps, IStudentAttendanceUpdateState> {
@@ -28,6 +31,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
     super(props);
     this.state = {
       studentId: 0,
+      lectureId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -40,6 +44,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
     }
 
     this.props.getStudents();
+    this.props.getLectures();
   }
 
   saveEntity = (event, errors, values) => {
@@ -63,8 +68,42 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
     this.props.history.push('/entity/student-attendance');
   };
 
+  studentUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        studentId: -1
+      });
+    } else {
+      for (const i in this.props.students) {
+        if (id === this.props.students[i].id.toString()) {
+          this.setState({
+            studentId: this.props.students[i].id
+          });
+        }
+      }
+    }
+  };
+
+  lectureUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        lectureId: -1
+      });
+    } else {
+      for (const i in this.props.lectures) {
+        if (id === this.props.lectures[i].id.toString()) {
+          this.setState({
+            lectureId: this.props.lectures[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
-    const { studentAttendanceEntity, students, loading, updating } = this.props;
+    const { studentAttendanceEntity, students, lectures, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -91,41 +130,21 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="attendanceDateLabel" for="attendanceDate">
-                    <Translate contentKey="cmsApp.studentAttendance.attendanceDate">Attendance Date</Translate>
-                  </Label>
-                  <AvField
-                    id="student-attendance-attendanceDate"
-                    type="date"
-                    className="form-control"
-                    name="attendanceDate"
-                    validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="statusLabel">
-                    <Translate contentKey="cmsApp.studentAttendance.status">Status</Translate>
+                  <Label id="attendanceStatusLabel">
+                    <Translate contentKey="cmsApp.studentAttendance.attendanceStatus">Attendance Status</Translate>
                   </Label>
                   <AvInput
-                    id="student-attendance-status"
+                    id="student-attendance-attendanceStatus"
                     type="select"
                     className="form-control"
-                    name="status"
-                    value={(!isNew && studentAttendanceEntity.status) || 'PRESENT'}
+                    name="attendanceStatus"
+                    value={(!isNew && studentAttendanceEntity.attendanceStatus) || 'PRESENT'}
                   >
                     <option value="PRESENT">
-                      <Translate contentKey="cmsApp.Status.PRESENT" />
+                      <Translate contentKey="cmsApp.AttendanceStatusEnum.PRESENT" />
                     </option>
                     <option value="ABSENT">
-                      <Translate contentKey="cmsApp.Status.ABSENT" />
-                    </option>
-                    <option value="ACTIVE">
-                      <Translate contentKey="cmsApp.Status.ACTIVE" />
-                    </option>
-                    <option value="DEACTIVE">
-                      <Translate contentKey="cmsApp.Status.DEACTIVE" />
+                      <Translate contentKey="cmsApp.AttendanceStatusEnum.ABSENT" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -146,10 +165,37 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   <Label for="student.id">
                     <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
                   </Label>
-                  <AvInput id="student-attendance-student" type="select" className="form-control" name="studentId">
+                  <AvInput
+                    id="student-attendance-student"
+                    type="select"
+                    className="form-control"
+                    name="studentId"
+                    onChange={this.studentUpdate}
+                  >
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="lecture.id">
+                    <Translate contentKey="cmsApp.studentAttendance.lecture">Lecture</Translate>
+                  </Label>
+                  <AvInput
+                    id="student-attendance-lecture"
+                    type="select"
+                    className="form-control"
+                    name="lectureId"
+                    onChange={this.lectureUpdate}
+                  >
+                    <option value="" key="0" />
+                    {lectures
+                      ? lectures.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -179,6 +225,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
 
 const mapStateToProps = (storeState: IRootState) => ({
   students: storeState.student.entities,
+  lectures: storeState.lecture.entities,
   studentAttendanceEntity: storeState.studentAttendance.entity,
   loading: storeState.studentAttendance.loading,
   updating: storeState.studentAttendance.updating
@@ -186,6 +233,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getStudents,
+  getLectures,
   getEntity,
   updateEntity,
   createEntity,

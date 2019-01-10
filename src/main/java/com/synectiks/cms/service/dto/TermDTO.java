@@ -23,9 +23,9 @@ public class TermDTO implements Serializable {
     private LocalDate endDate;
 
     @NotNull
-    private Status status;
+    private Status termStatus;
 
-    private Long academicYearId;
+    private Long academicyearId;
 
     public Long getId() {
         return id;
@@ -59,20 +59,20 @@ public class TermDTO implements Serializable {
         this.endDate = endDate;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status getTermStatus() {
+        return termStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setTermStatus(Status termStatus) {
+        this.termStatus = termStatus;
     }
 
-    public Long getAcademicYearId() {
-        return academicYearId;
+    public Long getAcademicyearId() {
+        return academicyearId;
     }
 
-    public void setAcademicYearId(Long academicYearId) {
-        this.academicYearId = academicYearId;
+    public void setAcademicyearId(Long academicYearId) {
+        this.academicyearId = academicYearId;
     }
 
     @Override
@@ -103,8 +103,8 @@ public class TermDTO implements Serializable {
             ", termsDesc='" + getTermsDesc() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", academicYear=" + getAcademicYearId() +
+            ", termStatus='" + getTermStatus() + "'" +
+            ", academicyear=" + getAcademicyearId() +
             "}";
     }
 }

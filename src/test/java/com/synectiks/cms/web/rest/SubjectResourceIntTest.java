@@ -37,8 +37,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Common;
-import com.synectiks.cms.domain.enumeration.Elective;
+import com.synectiks.cms.domain.enumeration.CommonSubEnum;
+import com.synectiks.cms.domain.enumeration.ElectiveEnum;
 /**
  * Test class for the SubjectResource REST controller.
  *
@@ -48,11 +48,11 @@ import com.synectiks.cms.domain.enumeration.Elective;
 @SpringBootTest(classes = CmsApp.class)
 public class SubjectResourceIntTest {
 
-    private static final Common DEFAULT_COMMON_SUB = Common.MATHS;
-    private static final Common UPDATED_COMMON_SUB = Common.PHYSICS;
+    private static final CommonSubEnum DEFAULT_COMMON_SUB = CommonSubEnum.MATHS;
+    private static final CommonSubEnum UPDATED_COMMON_SUB = CommonSubEnum.PHYSICS;
 
-    private static final Elective DEFAULT_ELECTIVE_SUB = Elective.JAVA;
-    private static final Elective UPDATED_ELECTIVE_SUB = Elective.C;
+    private static final ElectiveEnum DEFAULT_ELECTIVE_SUB = ElectiveEnum.JAVA;
+    private static final ElectiveEnum UPDATED_ELECTIVE_SUB = ElectiveEnum.C;
 
     @Autowired
     private SubjectRepository subjectRepository;

@@ -9,7 +9,7 @@ import { ILocation } from 'app/shared/model/location.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './location.reducer';
 
-export interface ILocationDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ILocationDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class LocationDeleteDialog extends React.Component<ILocationDeleteDialogProps> {
   componentDidMount() {

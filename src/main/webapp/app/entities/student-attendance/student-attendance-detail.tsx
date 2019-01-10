@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { Translate, ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -29,19 +29,11 @@ export class StudentAttendanceDetail extends React.Component<IStudentAttendanceD
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="attendanceDate">
-                <Translate contentKey="cmsApp.studentAttendance.attendanceDate">Attendance Date</Translate>
+              <span id="attendanceStatus">
+                <Translate contentKey="cmsApp.studentAttendance.attendanceStatus">Attendance Status</Translate>
               </span>
             </dt>
-            <dd>
-              <TextFormat value={studentAttendanceEntity.attendanceDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            </dd>
-            <dt>
-              <span id="status">
-                <Translate contentKey="cmsApp.studentAttendance.status">Status</Translate>
-              </span>
-            </dt>
-            <dd>{studentAttendanceEntity.status}</dd>
+            <dd>{studentAttendanceEntity.attendanceStatus}</dd>
             <dt>
               <span id="comments">
                 <Translate contentKey="cmsApp.studentAttendance.comments">Comments</Translate>
@@ -52,6 +44,10 @@ export class StudentAttendanceDetail extends React.Component<IStudentAttendanceD
               <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
             </dt>
             <dd>{studentAttendanceEntity.studentId ? studentAttendanceEntity.studentId : ''}</dd>
+            <dt>
+              <Translate contentKey="cmsApp.studentAttendance.lecture">Lecture</Translate>
+            </dt>
+            <dd>{studentAttendanceEntity.lectureId ? studentAttendanceEntity.lectureId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/student-attendance" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

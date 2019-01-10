@@ -2,14 +2,7 @@
     "name": "Term",
     "fields": [
         {
-            "fieldName": "srNo",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "aTerms",
+            "fieldName": "termsDesc",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
@@ -30,16 +23,23 @@
             ]
         },
         {
-            "fieldName": "status",
+            "fieldName": "termStatus",
             "fieldType": "Status",
-            "fieldValues": "PRESENT,ABSENT,ACTIVE,DEACTIVE",
+            "fieldValues": "ACTIVE,DEACTIVE",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "relationships": [],
-    "changelogDate": "20190108101234",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "academicyear",
+            "otherEntityName": "academicYear",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190110134452",
     "entityTableName": "term",
     "dto": "mapstruct",
     "pagination": "no",

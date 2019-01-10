@@ -10,7 +10,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Status;
@@ -37,16 +36,16 @@ public class Holiday implements Serializable {
 
     @NotNull
     @Column(name = "holiday_date", nullable = false)
-    private Date holidayDate;
+    private LocalDate holidayDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "holiday_status", nullable = false)
+    private Status holidayStatus;
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private AcademicYear academicYear;
+    private AcademicYear academicyear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -70,38 +69,43 @@ public class Holiday implements Serializable {
         this.holidayDesc = holidayDesc;
     }
 
-    public Date getHolidayDate() {
+    public LocalDate getHolidayDate() {
         return holidayDate;
     }
 
-    public void setHolidayDate(Date holidayDate) {
+    public Holiday holidayDate(LocalDate holidayDate) {
+        this.holidayDate = holidayDate;
+        return this;
+    }
+
+    public void setHolidayDate(LocalDate holidayDate) {
         this.holidayDate = holidayDate;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status getHolidayStatus() {
+        return holidayStatus;
     }
 
-    public Holiday status(Status status) {
-        this.status = status;
+    public Holiday holidayStatus(Status holidayStatus) {
+        this.holidayStatus = holidayStatus;
         return this;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setHolidayStatus(Status holidayStatus) {
+        this.holidayStatus = holidayStatus;
     }
 
-    public AcademicYear getAcademicYear() {
-        return academicYear;
+    public AcademicYear getAcademicyear() {
+        return academicyear;
     }
 
-    public Holiday academicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public Holiday academicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
         return this;
     }
 
-    public void setAcademicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public void setAcademicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -131,7 +135,7 @@ public class Holiday implements Serializable {
             "id=" + getId() +
             ", holidayDesc='" + getHolidayDesc() + "'" +
             ", holidayDate='" + getHolidayDate() + "'" +
-            ", status='" + getStatus() + "'" +
+            ", holidayStatus='" + getHolidayStatus() + "'" +
             "}";
     }
 }

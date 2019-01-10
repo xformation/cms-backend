@@ -6,8 +6,8 @@ export default class HolidayUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   holidayDescInput: ElementFinder = element(by.css('input#holiday-holidayDesc'));
   holidayDateInput: ElementFinder = element(by.css('input#holiday-holidayDate'));
-  statusSelect: ElementFinder = element(by.css('select#holiday-status'));
-  academicYearSelect: ElementFinder = element(by.css('select#holiday-academicYear'));
+  holidayStatusSelect: ElementFinder = element(by.css('select#holiday-holidayStatus'));
+  academicyearSelect: ElementFinder = element(by.css('select#holiday-academicyear'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -29,37 +29,37 @@ export default class HolidayUpdatePage {
     return this.holidayDateInput.getAttribute('value');
   }
 
-  setStatusSelect(status) {
-    this.statusSelect.sendKeys(status);
+  setHolidayStatusSelect(holidayStatus) {
+    this.holidayStatusSelect.sendKeys(holidayStatus);
   }
 
-  getStatusSelect() {
-    return this.statusSelect.element(by.css('option:checked')).getText();
+  getHolidayStatusSelect() {
+    return this.holidayStatusSelect.element(by.css('option:checked')).getText();
   }
 
-  statusSelectLastOption() {
-    this.statusSelect
+  holidayStatusSelectLastOption() {
+    this.holidayStatusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  academicYearSelectLastOption() {
-    this.academicYearSelect
+  academicyearSelectLastOption() {
+    this.academicyearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  academicYearSelectOption(option) {
-    this.academicYearSelect.sendKeys(option);
+  academicyearSelectOption(option) {
+    this.academicyearSelect.sendKeys(option);
   }
 
-  getAcademicYearSelect() {
-    return this.academicYearSelect;
+  getAcademicyearSelect() {
+    return this.academicyearSelect;
   }
 
-  getAcademicYearSelectedOption() {
-    return this.academicYearSelect.element(by.css('option:checked')).getText();
+  getAcademicyearSelectedOption() {
+    return this.academicyearSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

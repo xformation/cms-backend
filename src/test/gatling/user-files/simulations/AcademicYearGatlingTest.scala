@@ -68,7 +68,7 @@ class AcademicYearGatlingTest extends Simulation {
             .exec(http("Create new academicYear")
             .post("/api/academic-years")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "year":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "year":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "desc":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_academicYear_url"))).exitHereIfFailed
             .pause(10)

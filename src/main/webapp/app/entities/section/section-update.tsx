@@ -8,26 +8,26 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IStudentYear } from 'app/shared/model/student-year.model';
-import { getEntities as getStudentYears } from 'app/entities/student-year/student-year.reducer';
+import { IBatch } from 'app/shared/model/batch.model';
+import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './section.reducer';
 import { ISection } from 'app/shared/model/section.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ISectionUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ISectionUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ISectionUpdateState {
   isNew: boolean;
-  studentyearid: any;
+  batchId: number;
 }
 
 export class SectionUpdate extends React.Component<ISectionUpdateProps, ISectionUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentyearId: 0,
+      batchId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -39,7 +39,7 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getStudentYears();
+    this.props.getBatches();
   }
 
   saveEntity = (event, errors, values) => {
@@ -63,17 +63,17 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
     this.props.history.push('/entity/section');
   };
 
-  studentyearUpdate = element => {
+  batchUpdate = element => {
     const id = element.target.value.toString();
     if (id === '') {
       this.setState({
-        studentyearId: -1
+        batchId: -1
       });
     } else {
-      for (const i in this.props.studentYears) {
-        if (id === this.props.studentYears[i].id.toString()) {
+      for (const i in this.props.batches) {
+        if (id === this.props.batches[i].id.toString()) {
           this.setState({
-            studentyearId: this.props.studentYears[i].id
+            batchId: this.props.batches[i].id
           });
         }
       }
@@ -81,7 +81,7 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
   };
 
   render() {
-    const { sectionEntity, studentYears, loading, updating } = this.props;
+    const { sectionEntity, batches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -119,27 +119,27 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
                     value={(!isNew && sectionEntity.section) || 'A'}
                   >
                     <option value="A">
-                      <Translate contentKey="cmsApp.ClassSection.A" />
+                      <Translate contentKey="cmsApp.SectionEnum.A" />
                     </option>
                     <option value="B">
-                      <Translate contentKey="cmsApp.ClassSection.B" />
+                      <Translate contentKey="cmsApp.SectionEnum.B" />
+                    </option>
+                    <option value="C">
+                      <Translate contentKey="cmsApp.SectionEnum.C" />
+                    </option>
+                    <option value="D">
+                      <Translate contentKey="cmsApp.SectionEnum.D" />
                     </option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="studentyear.id">
-                    <Translate contentKey="cmsApp.section.studentyear">Studentyear</Translate>
+                  <Label for="batch.id">
+                    <Translate contentKey="cmsApp.section.batch">Batch</Translate>
                   </Label>
-                  <AvInput
-                    id="section-studentyear"
-                    type="select"
-                    className="form-control"
-                    name="studentyearId"
-                    onChange={this.studentyearUpdate}
-                  >
+                  <AvInput id="section-batch" type="select" className="form-control" name="batchId" onChange={this.batchUpdate}>
                     <option value="" key="0" />
-                    {studentYears
-                      ? studentYears.map(otherEntity => (
+                    {batches
+                      ? batches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -168,14 +168,14 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  studentYears: storeState.studentYear.entities,
+  batches: storeState.batch.entities,
   sectionEntity: storeState.section.entity,
   loading: storeState.section.loading,
   updating: storeState.section.updating
 });
 
 const mapDispatchToProps = {
-  getStudentYears,
+  getBatches,
   getEntity,
   updateEntity,
   createEntity,

@@ -2,37 +2,37 @@
     "name": "Holiday",
     "fields": [
         {
-            "fieldName": "srNo",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "sHoliday",
+            "fieldName": "holidayDesc",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "aDate",
+            "fieldName": "holidayDate",
             "fieldType": "LocalDate",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "status",
+            "fieldName": "holidayStatus",
             "fieldType": "Status",
-            "fieldValues": "PRESENT,ABSENT,ACTIVE,DEACTIVE",
+            "fieldValues": "ACTIVE,DEACTIVE",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "relationships": [],
-    "changelogDate": "20190108101233",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "academicyear",
+            "otherEntityName": "academicYear",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190110134456",
     "entityTableName": "holiday",
     "dto": "mapstruct",
     "pagination": "no",

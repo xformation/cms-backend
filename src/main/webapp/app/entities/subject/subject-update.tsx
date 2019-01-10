@@ -8,8 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IPeriods } from 'app/shared/model/periods.model';
-import { getEntities as getPeriods } from 'app/entities/periods/periods.reducer';
+import { IDepartment } from 'app/shared/model/department.model';
+import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { IStudent } from 'app/shared/model/student.model';
 import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { ITeacher } from 'app/shared/model/teacher.model';
@@ -20,20 +20,20 @@ import { ISubject } from 'app/shared/model/subject.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ISubjectUpdateState {
   isNew: boolean;
-  periodsid: any;
-  studentid: any;
-  teacherid: any;
+  departmentId: number;
+  studentId: number;
+  teacherId: number;
 }
 
 export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubjectUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      periodsId: 0,
+      departmentId: 0,
       studentId: 0,
       teacherId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -47,7 +47,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getPeriods();
+    this.props.getDepartments();
     this.props.getStudents();
     this.props.getTeachers();
   }
@@ -73,17 +73,17 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
     this.props.history.push('/entity/subject');
   };
 
-  periodsUpdate = element => {
+  departmentUpdate = element => {
     const id = element.target.value.toString();
     if (id === '') {
       this.setState({
-        periodsId: -1
+        departmentId: -1
       });
     } else {
-      for (const i in this.props.periods) {
-        if (id === this.props.periods[i].id.toString()) {
+      for (const i in this.props.departments) {
+        if (id === this.props.departments[i].id.toString()) {
           this.setState({
-            periodsId: this.props.periods[i].id
+            departmentId: this.props.departments[i].id
           });
         }
       }
@@ -125,7 +125,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
   };
 
   render() {
-    const { subjectEntity, periods, students, teachers, loading, updating } = this.props;
+    const { subjectEntity, departments, students, teachers, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -163,16 +163,16 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                     value={(!isNew && subjectEntity.commonSub) || 'MATHS'}
                   >
                     <option value="MATHS">
-                      <Translate contentKey="cmsApp.Common.MATHS" />
+                      <Translate contentKey="cmsApp.CommonSubEnum.MATHS" />
                     </option>
                     <option value="PHYSICS">
-                      <Translate contentKey="cmsApp.Common.PHYSICS" />
+                      <Translate contentKey="cmsApp.CommonSubEnum.PHYSICS" />
                     </option>
                     <option value="CHEMISTRY">
-                      <Translate contentKey="cmsApp.Common.CHEMISTRY" />
+                      <Translate contentKey="cmsApp.CommonSubEnum.CHEMISTRY" />
                     </option>
                     <option value="DBMS">
-                      <Translate contentKey="cmsApp.Common.DBMS" />
+                      <Translate contentKey="cmsApp.CommonSubEnum.DBMS" />
                     </option>
                   </AvInput>
                 </AvGroup>
@@ -188,21 +188,27 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                     value={(!isNew && subjectEntity.electiveSub) || 'JAVA'}
                   >
                     <option value="JAVA">
-                      <Translate contentKey="cmsApp.Elective.JAVA" />
+                      <Translate contentKey="cmsApp.ElectiveEnum.JAVA" />
                     </option>
                     <option value="C">
-                      <Translate contentKey="cmsApp.Elective.C" />
+                      <Translate contentKey="cmsApp.ElectiveEnum.C" />
                     </option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="periods.id">
-                    <Translate contentKey="cmsApp.subject.periods">Periods</Translate>
+                  <Label for="department.id">
+                    <Translate contentKey="cmsApp.subject.department">Department</Translate>
                   </Label>
-                  <AvInput id="subject-periods" type="select" className="form-control" name="periodsId" onChange={this.periodsUpdate}>
+                  <AvInput
+                    id="subject-department"
+                    type="select"
+                    className="form-control"
+                    name="departmentId"
+                    onChange={this.departmentUpdate}
+                  >
                     <option value="" key="0" />
-                    {periods
-                      ? periods.map(otherEntity => (
+                    {departments
+                      ? departments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -261,7 +267,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  periods: storeState.periods.entities,
+  departments: storeState.department.entities,
   students: storeState.student.entities,
   teachers: storeState.teacher.entities,
   subjectEntity: storeState.subject.entity,
@@ -270,7 +276,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getPeriods,
+  getDepartments,
   getStudents,
   getTeachers,
   getEntity,

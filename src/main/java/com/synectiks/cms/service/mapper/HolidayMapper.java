@@ -11,10 +11,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {AcademicYearMapper.class})
 public interface HolidayMapper extends EntityMapper<HolidayDTO, Holiday> {
 
-    @Mapping(source = "academicYear.id", target = "academicYearId")
+    @Mapping(source = "academicyear.id", target = "academicyearId")
     HolidayDTO toDto(Holiday holiday);
 
-    @Mapping(source = "academicYearId", target = "academicYear")
+    @Mapping(source = "academicyearId", target = "academicyear")
     Holiday toEntity(HolidayDTO holidayDTO);
 
     default Holiday fromId(Long id) {

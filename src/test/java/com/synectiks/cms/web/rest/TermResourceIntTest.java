@@ -28,7 +28,6 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -53,14 +52,14 @@ public class TermResourceIntTest {
     private static final String DEFAULT_TERMS_DESC = "AAAAAAAAAA";
     private static final String UPDATED_TERMS_DESC = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_START_DATE = new Date();
-    private static final Date UPDATED_START_DATE = new Date();
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_END_DATE = new Date();
-    private static final Date UPDATED_END_DATE = new Date();
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Status DEFAULT_STATUS = Status.PRESENT;
-    private static final Status UPDATED_STATUS = Status.ABSENT;
+    private static final Status DEFAULT_TERM_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_TERM_STATUS = Status.DEACTIVE;
 
     @Autowired
     private TermRepository termRepository;
@@ -115,11 +114,11 @@ public class TermResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Term createEntity(EntityManager em) {
-        Term term = new Term();
-            term.termsDesc(DEFAULT_TERMS_DESC);
-            term.setStartDate(DEFAULT_START_DATE);
-            term.setEndDate(DEFAULT_END_DATE);
-            term.status(DEFAULT_STATUS);
+        Term term = new Term()
+            .termsDesc(DEFAULT_TERMS_DESC)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE)
+            .termStatus(DEFAULT_TERM_STATUS);
         return term;
     }
 
@@ -147,7 +146,7 @@ public class TermResourceIntTest {
         assertThat(testTerm.getTermsDesc()).isEqualTo(DEFAULT_TERMS_DESC);
         assertThat(testTerm.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testTerm.getEndDate()).isEqualTo(DEFAULT_END_DATE);
-        assertThat(testTerm.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testTerm.getTermStatus()).isEqualTo(DEFAULT_TERM_STATUS);
 
         // Validate the Term in Elasticsearch
         verify(mockTermSearchRepository, times(1)).save(testTerm);
@@ -235,10 +234,10 @@ public class TermResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStatusIsRequired() throws Exception {
+    public void checkTermStatusIsRequired() throws Exception {
         int databaseSizeBeforeTest = termRepository.findAll().size();
         // set the field null
-        term.setStatus(null);
+        term.setTermStatus(null);
 
         // Create the Term, which fails.
         TermDTO termDTO = termMapper.toDto(term);
@@ -266,7 +265,7 @@ public class TermResourceIntTest {
             .andExpect(jsonPath("$.[*].termsDesc").value(hasItem(DEFAULT_TERMS_DESC.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].termStatus").value(hasItem(DEFAULT_TERM_STATUS.toString())));
     }
     
 
@@ -284,7 +283,7 @@ public class TermResourceIntTest {
             .andExpect(jsonPath("$.termsDesc").value(DEFAULT_TERMS_DESC.toString()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.termStatus").value(DEFAULT_TERM_STATUS.toString()));
     }
     @Test
     @Transactional
@@ -306,11 +305,11 @@ public class TermResourceIntTest {
         Term updatedTerm = termRepository.findById(term.getId()).get();
         // Disconnect from session so that the updates on updatedTerm are not directly saved in db
         em.detach(updatedTerm);
-        //updatedTerm
-        updatedTerm.termsDesc(UPDATED_TERMS_DESC);
-        updatedTerm.setStartDate(UPDATED_START_DATE);
-        updatedTerm.setEndDate(UPDATED_END_DATE);
-        updatedTerm.status(UPDATED_STATUS);
+        updatedTerm
+            .termsDesc(UPDATED_TERMS_DESC)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE)
+            .termStatus(UPDATED_TERM_STATUS);
         TermDTO termDTO = termMapper.toDto(updatedTerm);
 
         restTermMockMvc.perform(put("/api/terms")
@@ -325,7 +324,7 @@ public class TermResourceIntTest {
         assertThat(testTerm.getTermsDesc()).isEqualTo(UPDATED_TERMS_DESC);
         assertThat(testTerm.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testTerm.getEndDate()).isEqualTo(UPDATED_END_DATE);
-        assertThat(testTerm.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testTerm.getTermStatus()).isEqualTo(UPDATED_TERM_STATUS);
 
         // Validate the Term in Elasticsearch
         verify(mockTermSearchRepository, times(1)).save(testTerm);
@@ -339,7 +338,7 @@ public class TermResourceIntTest {
         // Create the Term
         TermDTO termDTO = termMapper.toDto(term);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restTermMockMvc.perform(put("/api/terms")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(termDTO)))
@@ -389,7 +388,7 @@ public class TermResourceIntTest {
             .andExpect(jsonPath("$.[*].termsDesc").value(hasItem(DEFAULT_TERMS_DESC.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].termStatus").value(hasItem(DEFAULT_TERM_STATUS.toString())));
     }
 
     @Test

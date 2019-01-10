@@ -2,23 +2,8 @@
     "name": "Student",
     "fields": [
         {
-            "fieldName": "sName",
+            "fieldName": "studentName",
             "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "attendance",
-            "fieldType": "Boolean",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "electiveSub",
-            "fieldType": "Elective",
-            "fieldValues": "JAVA,C",
             "fieldValidateRules": [
                 "required"
             ]
@@ -26,13 +11,45 @@
     ],
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "department",
+            "otherEntityName": "department",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "student"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "student"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "section",
+            "otherEntityName": "section",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "student"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "branch",
+            "otherEntityName": "branch",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "student"
+        },
+        {
             "relationshipType": "many-to-one",
-            "relationshipName": "teacher",
-            "otherEntityName": "teacher",
+            "relationshipName": "department",
+            "otherEntityName": "department",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20181224075924",
+    "changelogDate": "20190110134453",
     "entityTableName": "student",
     "dto": "mapstruct",
     "pagination": "no",

@@ -33,7 +33,6 @@ describe('Teacher e2e test', () => {
   it('should create and save Teachers', async () => {
     teacherUpdatePage.setTeacherNameInput('teacherName');
     expect(await teacherUpdatePage.getTeacherNameInput()).to.match(/teacherName/);
-    teacherUpdatePage.periodsSelectLastOption();
     await teacherUpdatePage.save();
     expect(await teacherUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

@@ -35,8 +35,8 @@ describe('Holiday e2e test', () => {
     expect(await holidayUpdatePage.getHolidayDescInput()).to.match(/holidayDesc/);
     holidayUpdatePage.setHolidayDateInput('01-01-2001');
     expect(await holidayUpdatePage.getHolidayDateInput()).to.eq('2001-01-01');
-    holidayUpdatePage.statusSelectLastOption();
-    holidayUpdatePage.academicYearSelectLastOption();
+    holidayUpdatePage.holidayStatusSelectLastOption();
+    holidayUpdatePage.academicyearSelectLastOption();
     await holidayUpdatePage.save();
     expect(await holidayUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

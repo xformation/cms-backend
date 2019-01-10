@@ -1,0 +1,9 @@
+{
+    "cmsApp": {
+        "AttendanceStatusEnum" : {
+            "null": "",
+            "PRESENT": "PRESENT",
+            "ABSENT": "ABSENT"
+        }
+    }
+}

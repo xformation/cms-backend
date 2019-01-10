@@ -1,10 +1,9 @@
 package com.synectiks.cms.service.dto;
 
-import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 
 /**
  * A DTO for the StudentAttendance entity.
@@ -14,15 +13,14 @@ public class StudentAttendanceDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private LocalDate attendanceDate;
-
-    @NotNull
-    private Status status;
+    private AttendanceStatusEnum attendanceStatus;
 
     @NotNull
     private String comments;
 
     private Long studentId;
+
+    private Long lectureId;
 
     public Long getId() {
         return id;
@@ -32,20 +30,12 @@ public class StudentAttendanceDTO implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getAttendanceDate() {
-        return attendanceDate;
+    public AttendanceStatusEnum getAttendanceStatus() {
+        return attendanceStatus;
     }
 
-    public void setAttendanceDate(LocalDate attendanceDate) {
-        this.attendanceDate = attendanceDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setAttendanceStatus(AttendanceStatusEnum attendanceStatus) {
+        this.attendanceStatus = attendanceStatus;
     }
 
     public String getComments() {
@@ -62,6 +52,14 @@ public class StudentAttendanceDTO implements Serializable {
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
+    }
+
+    public Long getLectureId() {
+        return lectureId;
+    }
+
+    public void setLectureId(Long lectureId) {
+        this.lectureId = lectureId;
     }
 
     @Override
@@ -89,10 +87,10 @@ public class StudentAttendanceDTO implements Serializable {
     public String toString() {
         return "StudentAttendanceDTO{" +
             "id=" + getId() +
-            ", attendanceDate='" + getAttendanceDate() + "'" +
-            ", status='" + getStatus() + "'" +
+            ", attendanceStatus='" + getAttendanceStatus() + "'" +
             ", comments='" + getComments() + "'" +
             ", student=" + getStudentId() +
+            ", lecture=" + getLectureId() +
             "}";
     }
 }

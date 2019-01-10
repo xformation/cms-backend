@@ -37,7 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.ClassSection;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
 /**
  * Test class for the SectionResource REST controller.
  *
@@ -47,8 +47,8 @@ import com.synectiks.cms.domain.enumeration.ClassSection;
 @SpringBootTest(classes = CmsApp.class)
 public class SectionResourceIntTest {
 
-    private static final ClassSection DEFAULT_SECTION = ClassSection.A;
-    private static final ClassSection UPDATED_SECTION = ClassSection.B;
+    private static final SectionEnum DEFAULT_SECTION = SectionEnum.A;
+    private static final SectionEnum UPDATED_SECTION = SectionEnum.B;
 
     @Autowired
     private SectionRepository sectionRepository;

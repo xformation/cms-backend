@@ -2,22 +2,15 @@
     "name": "Teacher",
     "fields": [
         {
-            "fieldName": "tName",
+            "fieldName": "teacherName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "periods",
-            "otherEntityName": "periods",
-            "otherEntityField": "id"
-        }
-    ],
-    "changelogDate": "20181224075923",
+    "relationships": [],
+    "changelogDate": "20190110134454",
     "entityTableName": "teacher",
     "dto": "mapstruct",
     "pagination": "no",

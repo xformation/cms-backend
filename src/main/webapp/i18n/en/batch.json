@@ -1,0 +1,24 @@
+
+{
+    "cmsApp": {
+        "batch" : {
+            "home": {
+                "title": "Batches",
+                "createLabel": "Create a new Batch",
+                "createOrEditLabel": "Create or edit a Batch",
+                "search": "Search for Batch"
+            },
+            "created": "A new Batch is created with identifier {{ param }}",
+            "updated": "A Batch is updated with identifier {{ param }}",
+            "deleted": "A Batch is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Batch {{ id }}?"
+            },
+            "detail": {
+                "title": "Batch"
+            },
+            "batch": "Batch",
+            "department": "Department"
+        }
+    }
+}

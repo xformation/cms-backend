@@ -5,7 +5,6 @@ export default class TeacherUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   teacherNameInput: ElementFinder = element(by.css('input#teacher-teacherName'));
-  periodsSelect: ElementFinder = element(by.css('select#teacher-periods'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -17,25 +16,6 @@ export default class TeacherUpdatePage {
 
   getTeacherNameInput() {
     return this.teacherNameInput.getAttribute('value');
-  }
-
-  periodsSelectLastOption() {
-    this.periodsSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  periodsSelectOption(option) {
-    this.periodsSelect.sendKeys(option);
-  }
-
-  getPeriodsSelect() {
-    return this.periodsSelect;
-  }
-
-  getPeriodsSelectedOption() {
-    return this.periodsSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

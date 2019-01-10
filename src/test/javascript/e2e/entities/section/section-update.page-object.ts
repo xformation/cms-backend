@@ -5,7 +5,7 @@ export default class SectionUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   sectionSelect: ElementFinder = element(by.css('select#section-section'));
-  studentyearSelect: ElementFinder = element(by.css('select#section-studentyear'));
+  batchSelect: ElementFinder = element(by.css('select#section-batch'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -25,23 +25,23 @@ export default class SectionUpdatePage {
       .last()
       .click();
   }
-  studentyearSelectLastOption() {
-    this.studentyearSelect
+  batchSelectLastOption() {
+    this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  studentyearSelectOption(option) {
-    this.studentyearSelect.sendKeys(option);
+  batchSelectOption(option) {
+    this.batchSelect.sendKeys(option);
   }
 
-  getStudentyearSelect() {
-    return this.studentyearSelect;
+  getBatchSelect() {
+    return this.batchSelect;
   }
 
-  getStudentyearSelectedOption() {
-    return this.studentyearSelect.element(by.css('option:checked')).getText();
+  getBatchSelectedOption() {
+    return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

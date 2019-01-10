@@ -28,6 +28,13 @@
         "academicYear": "Academic Year",
         "holiday": "Holiday",
         "term": "Term",
+        "branch": "Branch",
+        "department": "Department",
+        "batch": "Batch",
+        "teach": "Teach",
+        "courseOffer": "Course Offer",
+        "attendanceMaster": "Attendance Master",
+        "lecture": "Lecture",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

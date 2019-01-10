@@ -17,8 +17,7 @@
             "detail": {
                 "title": "Teacher"
             },
-            "teacherName": "Teacher Name",
-            "periods": "Periods"
+            "teacherName": "Teacher Name"
         }
     }
 }

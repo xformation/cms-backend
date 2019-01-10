@@ -9,7 +9,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -34,11 +33,15 @@ public class AcademicYear implements Serializable {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
+
+    @NotNull
+    @Column(name = "jhi_desc", nullable = false)
+    private String desc;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -62,22 +65,44 @@ public class AcademicYear implements Serializable {
         this.year = year;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public AcademicYear startDate(LocalDate startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public AcademicYear endDate(LocalDate endDate) {
+        this.endDate = endDate;
+        return this;
+    }
+
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public AcademicYear desc(String desc) {
+        this.desc = desc;
+        return this;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -107,6 +132,7 @@ public class AcademicYear implements Serializable {
             ", year=" + getYear() +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", desc='" + getDesc() + "'" +
             "}";
     }
 }

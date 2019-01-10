@@ -1,105 +1,120 @@
-entity StudentYear{
-YearDesc SYear required
+entity College {
+	shortName String required
+	logo Long required
+	backgroundImage Long required
+	instructionInformation String required
+}
+entity Branch{
+branchName String required
+description String required
+collegeHead String required
+}
+entity Department{
+name String required
+description String required
+deptHead String required
 }
 
-enum SYear{
-I,II,III,IV
+entity Batch{
+batch BatchEnum required
 }
 
-entity Section{
-section ClassSection required
-}
-
-enum ClassSection{
-A,B
-}
-
-enum Sem{
-	SEMI,SEMII
-}
-
-entity Semester{
-	sem Sem required
-}
-
-enum Status{
-	PRESENT,ABSENT,ACTIVE,DEACTIVE
-}
-
-entity StudentAttendance{
-	attendanceDate LocalDate required
-	status Status required
-	comments String required
-}
-
-
-entity AcademicSubject{
-	subjectName String required
-	electiveSub Boolean required
-}
-
-
-
-entity AcademicDepartment{
-	departmentName String required
-	university String required
-}
-
-entity Periods{
-periods ClassPeriods required
-}
-
-enum ClassPeriods{
-ONE,TWO,THREE,FOUR,FIVE
+enum BatchEnum{
+FIRSTYEAR,SECONDYEAR,THIRDYEAR,FOURTHYEAR
 }
 
 entity Subject{
-commonSub Common required,
-electiveSub Elective required
+commonSub CommonSubEnum required
+electiveSub ElectiveEnum required
 }
 
-enum Common{
+enum CommonSubEnum{
 MATHS,PHYSICS,CHEMISTRY,DBMS
 }
 
-enum Elective{
+enum ElectiveEnum{
 JAVA,C
+}
+
+entity Section{
+section SectionEnum required
+}
+
+enum SectionEnum{
+A,B,C,D
+}
+
+entity Term{
+	termsDesc String required
+	startDate LocalDate required
+	endDate   LocalDate required
+	termStatus Status required
+}
+
+enum Status {
+ACTIVE,DEACTIVE
+}
+entity Student{
+studentName String required
 }
 
 entity Teacher{
 teacherName String required
 }
 
-entity Student{
-studentName String required,
-attendance Boolean required,
-electiveSub Elective required
+entity AcademicYear{
+	year Long required
+	startDate LocalDate required
+	endDate   LocalDate required
+	desc      String   required
 }
 
-entity CollegeBranches{
-branchName String required,
-description String required,
-collegeHead String required
+entity Holiday{
+	holidayDesc String required
+	holidayDate LocalDate required
+	holidayStatus Status required
 }
 
-entity Departments{
-name String required,
-description String required,
-deptHead String required
+entity Teach{
+	desc String
+}
+
+entity CourseOffer{
+	desc String
+}
+
+entity AttendanceMaster{
+	desc String
+}
+
+entity Lecture{
+    lecDate   LocalDate required
+    lastUpdatedOn   LocalDate required
+    lastUpdatedBy   String required
+    lecStatus LecStatusEnum required
+	desc String
+}
+
+enum LecStatusEnum{
+	ACTIVE,DEACTIVE,CANCELLED
+}
+
+
+entity StudentAttendance{
+	attendanceStatus AttendanceStatusEnum required
+	comments String required
+}
+
+enum AttendanceStatusEnum{
+PRESENT,ABSENT
 }
 
 entity Location{
-name String required,
-address String required,
+name String required
+address String required
 appliesTo String required
 }
 
-entity College {
-	shortName String required,
-	logo Long required,
-	backgroundImage Long required,
-	instructionInformation String required
-}
 
 enum NameOfBank{
 HDFC, SBI, ICICI, ANDHRABANK
@@ -129,7 +144,6 @@ ptSignatory String  required
 ptNumber Long required
 }
 
-
 entity AuthorizedSignatory{
 signatoryName String  required
 signatoryFatherName String  required
@@ -148,43 +162,40 @@ branch String  required
 corporateId Integer required
 }
 
-entity AcademicYear{
-	year Long required
-	startDate LocalDate required
-	endDate   LocalDate required
-}
-
-entity Holiday{
-	holidayDesc String required
-	holidayDate LocalDate required
-	status Status required
-}
-
-entity Term{
-	TermsDesc String required
-	startDate LocalDate required
-	endDate   LocalDate required
-	status Status required
-}
-
-relationship ManyToOne{
-Section{studentyear} to StudentYear,
-Periods{section} to Section,
-Teacher{periods} to Periods,
-Subject{periods} to Periods,
-Student{teacher} to Teacher,
+relationship ManyToOne {
+Branch{college} to College,
+Department{college} to College,
+Department{academicyear} to AcademicYear,
+Subject{department} to Department,
+Batch{department}  to Department,
+Section{batch} to Batch,
+Student{department} to Department,
+Holiday{academicyear} to AcademicYear,
 Subject{student} to Student,
 Subject{teacher} to Teacher,
-AuthorizedSignatory{legalEntity} to LegalEntity
-StudentAttendance{student} to Student
-AcademicSubject{department} to Departments
-Holiday{academicYear} to AcademicYear
-Term{academicYear} to AcademicYear
+AuthorizedSignatory{legalentity} to LegalEntity,
+Lecture{attendancemaster} to AttendanceMaster,
+StudentAttendance{student} to Student,
+Term{academicyear} to AcademicYear,
+StudentAttendance{student} to Student,
+StudentAttendance{lecture} to Lecture
 }
 
+relationship OneToOne{
+    Student{department} to Department,
+    Student{batch} to Batch,
+    Student{section} to Section,
+    Student{branch} to Branch,
+    Branch{college} to College,
+    Teach{teacher} to Teacher,
+    Teach{subject} to Subject,
+    CourseOffer{college} to College,
+    CourseOffer{department} to Department,
+    CourseOffer{subject} to Subject,
+    AttendanceMaster{teach} to Teach,
+    AttendanceMaster{section} to Section,
+    AttendanceMaster{academicyear} to AcademicYear
+}
 
 dto * with mapstruct
 service all with serviceImpl
-
-
-

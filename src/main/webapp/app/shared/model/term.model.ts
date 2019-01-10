@@ -1,8 +1,6 @@
 import { Moment } from 'moment';
 
 export const enum Status {
-  PRESENT = 'PRESENT',
-  ABSENT = 'ABSENT',
   ACTIVE = 'ACTIVE',
   DEACTIVE = 'DEACTIVE'
 }
@@ -12,8 +10,8 @@ export interface ITerm {
   termsDesc?: string;
   startDate?: Moment;
   endDate?: Moment;
-  status?: Status;
-  academicYearId?: number;
+  termStatus?: Status;
+  academicyearId?: number;
 }
 
 export const defaultValue: Readonly<ITerm> = {};

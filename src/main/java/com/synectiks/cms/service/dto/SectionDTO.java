@@ -3,7 +3,7 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.ClassSection;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
 
 /**
  * A DTO for the Section entity.
@@ -13,9 +13,9 @@ public class SectionDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private ClassSection section;
+    private SectionEnum section;
 
-    private Long studentyearId;
+    private Long batchId;
 
     public Long getId() {
         return id;
@@ -25,20 +25,20 @@ public class SectionDTO implements Serializable {
         this.id = id;
     }
 
-    public ClassSection getSection() {
+    public SectionEnum getSection() {
         return section;
     }
 
-    public void setSection(ClassSection section) {
+    public void setSection(SectionEnum section) {
         this.section = section;
     }
 
-    public Long getStudentyearId() {
-        return studentyearId;
+    public Long getBatchId() {
+        return batchId;
     }
 
-    public void setStudentyearId(Long studentYearId) {
-        this.studentyearId = studentYearId;
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SectionDTO implements Serializable {
         return "SectionDTO{" +
             "id=" + getId() +
             ", section='" + getSection() + "'" +
-            ", studentyear=" + getStudentyearId() +
+            ", batch=" + getBatchId() +
             "}";
     }
 }

@@ -1,0 +1,26 @@
+
+{
+    "cmsApp": {
+        "attendanceMaster" : {
+            "home": {
+                "title": "Attendance Masters",
+                "createLabel": "Create a new Attendance Master",
+                "createOrEditLabel": "Create or edit a Attendance Master",
+                "search": "Search for Attendance Master"
+            },
+            "created": "A new Attendance Master is created with identifier {{ param }}",
+            "updated": "A Attendance Master is updated with identifier {{ param }}",
+            "deleted": "A Attendance Master is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Attendance Master {{ id }}?"
+            },
+            "detail": {
+                "title": "Attendance Master"
+            },
+            "desc": "Desc",
+            "teach": "Teach",
+            "section": "Section",
+            "academicyear": "Academicyear"
+        }
+    }
+}

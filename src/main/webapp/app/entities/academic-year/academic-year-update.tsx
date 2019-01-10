@@ -12,7 +12,7 @@ import { getEntity, updateEntity, createEntity, reset } from './academic-year.re
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IAcademicYearUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -122,6 +122,19 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                     type="date"
                     className="form-control"
                     name="endDate"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="descLabel" for="desc">
+                    <Translate contentKey="cmsApp.academicYear.desc">Desc</Translate>
+                  </Label>
+                  <AvField
+                    id="academic-year-desc"
+                    type="text"
+                    name="desc"
                     validate={{
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}

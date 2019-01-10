@@ -11,8 +11,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.Elective;
-
 /**
  * A Student.
  */
@@ -33,18 +31,25 @@ public class Student implements Serializable {
     @Column(name = "student_name", nullable = false)
     private String studentName;
 
-    @NotNull
-    @Column(name = "attendance", nullable = false)
-    private Boolean attendance;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Department department;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "elective_sub", nullable = false)
-    private Elective electiveSub;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Batch batch;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Section section;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Branch branch;
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private Teacher teacher;
+    private Department department;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -68,43 +73,69 @@ public class Student implements Serializable {
         this.studentName = studentName;
     }
 
-    public Boolean isAttendance() {
-        return attendance;
+    public Department getDepartment() {
+        return department;
     }
 
-    public Student attendance(Boolean attendance) {
-        this.attendance = attendance;
+    public Student department(Department department) {
+        this.department = department;
         return this;
     }
 
-    public void setAttendance(Boolean attendance) {
-        this.attendance = attendance;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
-    public Elective getElectiveSub() {
-        return electiveSub;
+    public Batch getBatch() {
+        return batch;
     }
 
-    public Student electiveSub(Elective electiveSub) {
-        this.electiveSub = electiveSub;
+    public Student batch(Batch batch) {
+        this.batch = batch;
         return this;
     }
 
-    public void setElectiveSub(Elective electiveSub) {
-        this.electiveSub = electiveSub;
+    public void setBatch(Batch batch) {
+        this.batch = batch;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Section getSection() {
+        return section;
     }
 
-    public Student teacher(Teacher teacher) {
-        this.teacher = teacher;
+    public Student section(Section section) {
+        this.section = section;
         return this;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Student branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public Student department(Department department) {
+        this.department = department;
+        return this;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -133,8 +164,6 @@ public class Student implements Serializable {
         return "Student{" +
             "id=" + getId() +
             ", studentName='" + getStudentName() + "'" +
-            ", attendance='" + isAttendance() + "'" +
-            ", electiveSub='" + getElectiveSub() + "'" +
             "}";
     }
 }

@@ -19,7 +19,8 @@
             },
             "year": "Year",
             "startDate": "Start Date",
-            "endDate": "End Date"
+            "endDate": "End Date",
+            "desc": "Desc"
         }
     }
 }

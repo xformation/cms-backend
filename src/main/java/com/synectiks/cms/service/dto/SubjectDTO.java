@@ -3,8 +3,8 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Common;
-import com.synectiks.cms.domain.enumeration.Elective;
+import com.synectiks.cms.domain.enumeration.CommonSubEnum;
+import com.synectiks.cms.domain.enumeration.ElectiveEnum;
 
 /**
  * A DTO for the Subject entity.
@@ -14,12 +14,12 @@ public class SubjectDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Common commonSub;
+    private CommonSubEnum commonSub;
 
     @NotNull
-    private Elective electiveSub;
+    private ElectiveEnum electiveSub;
 
-    private Long periodsId;
+    private Long departmentId;
 
     private Long studentId;
 
@@ -33,28 +33,28 @@ public class SubjectDTO implements Serializable {
         this.id = id;
     }
 
-    public Common getCommonSub() {
+    public CommonSubEnum getCommonSub() {
         return commonSub;
     }
 
-    public void setCommonSub(Common commonSub) {
+    public void setCommonSub(CommonSubEnum commonSub) {
         this.commonSub = commonSub;
     }
 
-    public Elective getElectiveSub() {
+    public ElectiveEnum getElectiveSub() {
         return electiveSub;
     }
 
-    public void setElectiveSub(Elective electiveSub) {
+    public void setElectiveSub(ElectiveEnum electiveSub) {
         this.electiveSub = electiveSub;
     }
 
-    public Long getPeriodsId() {
-        return periodsId;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setPeriodsId(Long periodsId) {
-        this.periodsId = periodsId;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public Long getStudentId() {
@@ -100,7 +100,7 @@ public class SubjectDTO implements Serializable {
             "id=" + getId() +
             ", commonSub='" + getCommonSub() + "'" +
             ", electiveSub='" + getElectiveSub() + "'" +
-            ", periods=" + getPeriodsId() +
+            ", department=" + getDepartmentId() +
             ", student=" + getStudentId() +
             ", teacher=" + getTeacherId() +
             "}";

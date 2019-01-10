@@ -37,8 +37,8 @@ describe('Term e2e test', () => {
     expect(await termUpdatePage.getStartDateInput()).to.eq('2001-01-01');
     termUpdatePage.setEndDateInput('01-01-2001');
     expect(await termUpdatePage.getEndDateInput()).to.eq('2001-01-01');
-    termUpdatePage.statusSelectLastOption();
-    termUpdatePage.academicYearSelectLastOption();
+    termUpdatePage.termStatusSelectLastOption();
+    termUpdatePage.academicyearSelectLastOption();
     await termUpdatePage.save();
     expect(await termUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

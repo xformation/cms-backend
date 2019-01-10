@@ -51,15 +51,15 @@ export class TermDetail extends React.Component<ITermDetailProps> {
               <TextFormat value={termEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="status">
-                <Translate contentKey="cmsApp.term.status">Status</Translate>
+              <span id="termStatus">
+                <Translate contentKey="cmsApp.term.termStatus">Term Status</Translate>
               </span>
             </dt>
-            <dd>{termEntity.status}</dd>
+            <dd>{termEntity.termStatus}</dd>
             <dt>
-              <Translate contentKey="cmsApp.term.academicYear">Academic Year</Translate>
+              <Translate contentKey="cmsApp.term.academicyear">Academicyear</Translate>
             </dt>
-            <dd>{termEntity.academicYearId ? termEntity.academicYearId : ''}</dd>
+            <dd>{termEntity.academicyearId ? termEntity.academicyearId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/term" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

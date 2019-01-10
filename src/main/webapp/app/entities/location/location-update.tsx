@@ -14,7 +14,7 @@ import { ILocation } from 'app/shared/model/location.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ILocationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ILocationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ILocationUpdateState {
   isNew: boolean;

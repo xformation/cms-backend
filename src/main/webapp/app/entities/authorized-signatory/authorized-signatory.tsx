@@ -103,7 +103,7 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                   <Translate contentKey="cmsApp.authorizedSignatory.panCardNumber">Pan Card Number</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
+                  <Translate contentKey="cmsApp.authorizedSignatory.legalentity">Legalentity</Translate>
                 </th>
                 <th />
               </tr>
@@ -123,8 +123,8 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                   <td>{authorizedSignatory.email}</td>
                   <td>{authorizedSignatory.panCardNumber}</td>
                   <td>
-                    {authorizedSignatory.legalEntityId ? (
-                      <Link to={`legal-entity/${authorizedSignatory.legalEntityId}`}>{authorizedSignatory.legalEntityId}</Link>
+                    {authorizedSignatory.legalentityId ? (
+                      <Link to={`legalEntity/${authorizedSignatory.legalentityId}`}>{authorizedSignatory.legalentityId}</Link>
                     ) : (
                       ''
                     )}

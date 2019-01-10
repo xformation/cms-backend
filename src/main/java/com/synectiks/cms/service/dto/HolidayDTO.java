@@ -20,9 +20,9 @@ public class HolidayDTO implements Serializable {
     private LocalDate holidayDate;
 
     @NotNull
-    private Status status;
+    private Status holidayStatus;
 
-    private Long academicYearId;
+    private Long academicyearId;
 
     public Long getId() {
         return id;
@@ -48,20 +48,20 @@ public class HolidayDTO implements Serializable {
         this.holidayDate = holidayDate;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status getHolidayStatus() {
+        return holidayStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setHolidayStatus(Status holidayStatus) {
+        this.holidayStatus = holidayStatus;
     }
 
-    public Long getAcademicYearId() {
-        return academicYearId;
+    public Long getAcademicyearId() {
+        return academicyearId;
     }
 
-    public void setAcademicYearId(Long academicYearId) {
-        this.academicYearId = academicYearId;
+    public void setAcademicyearId(Long academicYearId) {
+        this.academicyearId = academicYearId;
     }
 
     @Override
@@ -91,8 +91,8 @@ public class HolidayDTO implements Serializable {
             "id=" + getId() +
             ", holidayDesc='" + getHolidayDesc() + "'" +
             ", holidayDate='" + getHolidayDate() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", academicYear=" + getAcademicYearId() +
+            ", holidayStatus='" + getHolidayStatus() + "'" +
+            ", academicyear=" + getAcademicyearId() +
             "}";
     }
 }

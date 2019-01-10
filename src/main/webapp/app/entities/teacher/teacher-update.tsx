@@ -8,26 +8,22 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IPeriods } from 'app/shared/model/periods.model';
-import { getEntities as getPeriods } from 'app/entities/periods/periods.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './teacher.reducer';
 import { ITeacher } from 'app/shared/model/teacher.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ITeacherUpdateState {
   isNew: boolean;
-  periodsId: number;
 }
 
 export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacherUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      periodsId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -38,8 +34,6 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getPeriods();
   }
 
   saveEntity = (event, errors, values) => {
@@ -64,7 +58,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
   };
 
   render() {
-    const { teacherEntity, periods, loading, updating } = this.props;
+    const { teacherEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -103,21 +97,6 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                     }}
                   />
                 </AvGroup>
-                <AvGroup>
-                  <Label for="periods.id">
-                    <Translate contentKey="cmsApp.teacher.periods">Periods</Translate>
-                  </Label>
-                  <AvInput id="teacher-periods" type="select" className="form-control" name="periodsId">
-                    <option value="" key="0" />
-                    {periods
-                      ? periods.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/teacher" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -139,14 +118,12 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  periods: storeState.periods.entities,
   teacherEntity: storeState.teacher.entity,
   loading: storeState.teacher.loading,
   updating: storeState.teacher.updating
 });
 
 const mapDispatchToProps = {
-  getPeriods,
   getEntity,
   updateEntity,
   createEntity,

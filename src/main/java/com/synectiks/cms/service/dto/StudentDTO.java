@@ -3,7 +3,6 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Elective;
 
 /**
  * A DTO for the Student entity.
@@ -15,13 +14,15 @@ public class StudentDTO implements Serializable {
     @NotNull
     private String studentName;
 
-    @NotNull
-    private Boolean attendance;
+    private Long departmentId;
 
-    @NotNull
-    private Elective electiveSub;
+    private Long batchId;
 
-    private Long teacherId;
+    private Long sectionId;
+
+    private Long branchId;
+
+    private Long departmentId;
 
     public Long getId() {
         return id;
@@ -39,28 +40,44 @@ public class StudentDTO implements Serializable {
         this.studentName = studentName;
     }
 
-    public Boolean isAttendance() {
-        return attendance;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setAttendance(Boolean attendance) {
-        this.attendance = attendance;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
-    public Elective getElectiveSub() {
-        return electiveSub;
+    public Long getBatchId() {
+        return batchId;
     }
 
-    public void setElectiveSub(Elective electiveSub) {
-        this.electiveSub = electiveSub;
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 
-    public Long getTeacherId() {
-        return teacherId;
+    public Long getSectionId() {
+        return sectionId;
     }
 
-    public void setTeacherId(Long teacherId) {
-        this.teacherId = teacherId;
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -89,9 +106,11 @@ public class StudentDTO implements Serializable {
         return "StudentDTO{" +
             "id=" + getId() +
             ", studentName='" + getStudentName() + "'" +
-            ", attendance='" + isAttendance() + "'" +
-            ", electiveSub='" + getElectiveSub() + "'" +
-            ", teacher=" + getTeacherId() +
+            ", department=" + getDepartmentId() +
+            ", batch=" + getBatchId() +
+            ", section=" + getSectionId() +
+            ", branch=" + getBranchId() +
+            ", department=" + getDepartmentId() +
             "}";
     }
 }

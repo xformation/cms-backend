@@ -33,7 +33,7 @@ describe('Subject e2e test', () => {
   it('should create and save Subjects', async () => {
     subjectUpdatePage.commonSubSelectLastOption();
     subjectUpdatePage.electiveSubSelectLastOption();
-    subjectUpdatePage.periodsSelectLastOption();
+    subjectUpdatePage.departmentSelectLastOption();
     subjectUpdatePage.studentSelectLastOption();
     subjectUpdatePage.teacherSelectLastOption();
     await subjectUpdatePage.save();

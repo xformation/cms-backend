@@ -35,21 +35,25 @@ export class StudentDetail extends React.Component<IStudentDetailProps> {
             </dt>
             <dd>{studentEntity.studentName}</dd>
             <dt>
-              <span id="attendance">
-                <Translate contentKey="cmsApp.student.attendance">Attendance</Translate>
-              </span>
+              <Translate contentKey="cmsApp.student.department">Department</Translate>
             </dt>
-            <dd>{studentEntity.attendance ? 'true' : 'false'}</dd>
+            <dd>{studentEntity.departmentId ? studentEntity.departmentId : ''}</dd>
             <dt>
-              <span id="electiveSub">
-                <Translate contentKey="cmsApp.student.electiveSub">Elective Sub</Translate>
-              </span>
+              <Translate contentKey="cmsApp.student.batch">Batch</Translate>
             </dt>
-            <dd>{studentEntity.electiveSub}</dd>
+            <dd>{studentEntity.batchId ? studentEntity.batchId : ''}</dd>
             <dt>
-              <Translate contentKey="cmsApp.student.teacher">Teacher</Translate>
+              <Translate contentKey="cmsApp.student.section">Section</Translate>
             </dt>
-            <dd>{studentEntity.teacherId ? studentEntity.teacherId : ''}</dd>
+            <dd>{studentEntity.sectionId ? studentEntity.sectionId : ''}</dd>
+            <dt>
+              <Translate contentKey="cmsApp.student.branch">Branch</Translate>
+            </dt>
+            <dd>{studentEntity.branchId ? studentEntity.branchId : ''}</dd>
+            <dt>
+              <Translate contentKey="cmsApp.student.department">Department</Translate>
+            </dt>
+            <dd>{studentEntity.departmentId ? studentEntity.departmentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/student" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

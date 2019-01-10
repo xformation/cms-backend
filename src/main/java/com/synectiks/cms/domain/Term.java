@@ -10,7 +10,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Status;
@@ -37,20 +36,20 @@ public class Term implements Serializable {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "term_status", nullable = false)
+    private Status termStatus;
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private AcademicYear academicYear;
+    private AcademicYear academicyear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -74,46 +73,56 @@ public class Term implements Serializable {
         this.termsDesc = termsDesc;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public Term startDate(LocalDate startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public Term endDate(LocalDate endDate) {
+        this.endDate = endDate;
+        return this;
+    }
+
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public Status getStatus() {
-        return status;
+    public Status getTermStatus() {
+        return termStatus;
     }
 
-    public Term status(Status status) {
-        this.status = status;
+    public Term termStatus(Status termStatus) {
+        this.termStatus = termStatus;
         return this;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setTermStatus(Status termStatus) {
+        this.termStatus = termStatus;
     }
 
-    public AcademicYear getAcademicYear() {
-        return academicYear;
+    public AcademicYear getAcademicyear() {
+        return academicyear;
     }
 
-    public Term academicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public Term academicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
         return this;
     }
 
-    public void setAcademicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public void setAcademicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -144,7 +153,7 @@ public class Term implements Serializable {
             ", termsDesc='" + getTermsDesc() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", status='" + getStatus() + "'" +
+            ", termStatus='" + getTermStatus() + "'" +
             "}";
     }
 }

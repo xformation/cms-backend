@@ -20,8 +20,8 @@
             "termsDesc": "Terms Desc",
             "startDate": "Start Date",
             "endDate": "End Date",
-            "status": "Status",
-            "academicYear": "Academic Year"
+            "termStatus": "Term Status",
+            "academicyear": "Academicyear"
         }
     }
 }

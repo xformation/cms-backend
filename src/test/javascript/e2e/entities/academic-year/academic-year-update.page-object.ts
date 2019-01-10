@@ -7,6 +7,7 @@ export default class AcademicYearUpdatePage {
   yearInput: ElementFinder = element(by.css('input#academic-year-year'));
   startDateInput: ElementFinder = element(by.css('input#academic-year-startDate'));
   endDateInput: ElementFinder = element(by.css('input#academic-year-endDate'));
+  descInput: ElementFinder = element(by.css('input#academic-year-desc'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -34,6 +35,14 @@ export default class AcademicYearUpdatePage {
 
   getEndDateInput() {
     return this.endDateInput.getAttribute('value');
+  }
+
+  setDescInput(desc) {
+    this.descInput.sendKeys(desc);
+  }
+
+  getDescInput() {
+    return this.descInput.getAttribute('value');
   }
 
   save() {

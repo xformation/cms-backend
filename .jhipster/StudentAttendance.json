@@ -2,16 +2,9 @@
     "name": "StudentAttendance",
     "fields": [
         {
-            "fieldName": "attendanceDate",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "status",
-            "fieldType": "Status",
-            "fieldValues": "PRESENT,ABSENT,ACTIVE,DEACTIVE",
+            "fieldName": "attendanceStatus",
+            "fieldType": "AttendanceStatusEnum",
+            "fieldValues": "PRESENT,ABSENT",
             "fieldValidateRules": [
                 "required"
             ]
@@ -27,48 +20,18 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "studentYear",
-            "otherEntityName": "studentYear",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "departments",
-            "otherEntityName": "departments",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "subject",
-            "otherEntityName": "subject",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "semester",
-            "otherEntityName": "semester",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "section",
-            "otherEntityName": "section",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "periods",
-            "otherEntityName": "periods",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "lecture",
+            "otherEntityName": "lecture",
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20181224075920",
+    "changelogDate": "20190110134501",
     "entityTableName": "student_attendance",
     "dto": "mapstruct",
     "pagination": "no",

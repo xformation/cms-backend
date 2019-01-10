@@ -33,16 +33,11 @@ describe('Student e2e test', () => {
   it('should create and save Students', async () => {
     studentUpdatePage.setStudentNameInput('studentName');
     expect(await studentUpdatePage.getStudentNameInput()).to.match(/studentName/);
-    const selectedAttendance = await studentUpdatePage.getAttendanceInput().isSelected();
-    if (selectedAttendance) {
-      studentUpdatePage.getAttendanceInput().click();
-      expect(await studentUpdatePage.getAttendanceInput().isSelected()).to.be.false;
-    } else {
-      studentUpdatePage.getAttendanceInput().click();
-      expect(await studentUpdatePage.getAttendanceInput().isSelected()).to.be.true;
-    }
-    studentUpdatePage.electiveSubSelectLastOption();
-    studentUpdatePage.teacherSelectLastOption();
+    studentUpdatePage.departmentSelectLastOption();
+    studentUpdatePage.batchSelectLastOption();
+    studentUpdatePage.sectionSelectLastOption();
+    studentUpdatePage.branchSelectLastOption();
+    studentUpdatePage.departmentSelectLastOption();
     await studentUpdatePage.save();
     expect(await studentUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

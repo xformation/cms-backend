@@ -18,9 +18,11 @@
                 "title": "Student"
             },
             "studentName": "Student Name",
-            "attendance": "Attendance",
-            "electiveSub": "Elective Sub",
-            "teacher": "Teacher"
+            "department": "Department",
+            "batch": "Batch",
+            "section": "Section",
+            "branch": "Branch",
+            "department": "Department"
         }
     }
 }

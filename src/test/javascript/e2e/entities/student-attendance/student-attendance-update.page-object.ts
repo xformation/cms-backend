@@ -4,33 +4,25 @@ export default class StudentAttendanceUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.studentAttendance.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  attendanceDateInput: ElementFinder = element(by.css('input#student-attendance-attendanceDate'));
-  statusSelect: ElementFinder = element(by.css('select#student-attendance-status'));
+  attendanceStatusSelect: ElementFinder = element(by.css('select#student-attendance-attendanceStatus'));
   commentsInput: ElementFinder = element(by.css('input#student-attendance-comments'));
   studentSelect: ElementFinder = element(by.css('select#student-attendance-student'));
+  lectureSelect: ElementFinder = element(by.css('select#student-attendance-lecture'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  setAttendanceDateInput(attendanceDate) {
-    this.attendanceDateInput.sendKeys(attendanceDate);
+  setAttendanceStatusSelect(attendanceStatus) {
+    this.attendanceStatusSelect.sendKeys(attendanceStatus);
   }
 
-  getAttendanceDateInput() {
-    return this.attendanceDateInput.getAttribute('value');
+  getAttendanceStatusSelect() {
+    return this.attendanceStatusSelect.element(by.css('option:checked')).getText();
   }
 
-  setStatusSelect(status) {
-    this.statusSelect.sendKeys(status);
-  }
-
-  getStatusSelect() {
-    return this.statusSelect.element(by.css('option:checked')).getText();
-  }
-
-  statusSelectLastOption() {
-    this.statusSelect
+  attendanceStatusSelectLastOption() {
+    this.attendanceStatusSelect
       .all(by.tagName('option'))
       .last()
       .click();
@@ -60,6 +52,25 @@ export default class StudentAttendanceUpdatePage {
 
   getStudentSelectedOption() {
     return this.studentSelect.element(by.css('option:checked')).getText();
+  }
+
+  lectureSelectLastOption() {
+    this.lectureSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  lectureSelectOption(option) {
+    this.lectureSelect.sendKeys(option);
+  }
+
+  getLectureSelect() {
+    return this.lectureSelect;
+  }
+
+  getLectureSelectedOption() {
+    return this.lectureSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

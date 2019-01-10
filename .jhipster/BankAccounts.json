@@ -46,7 +46,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20181224075931",
+    "changelogDate": "20190110134505",
     "entityTableName": "bank_accounts",
     "dto": "mapstruct",
     "pagination": "no",

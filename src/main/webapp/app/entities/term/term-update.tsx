@@ -14,20 +14,20 @@ import { getEntity, updateEntity, createEntity, reset } from './term.reducer';
 import { ITerm } from 'app/shared/model/term.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ITermUpdateState {
   isNew: boolean;
-  academicYearId: number;
+  academicyearId: number;
 }
 
 export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      academicYearId: 0,
+      academicyearId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -61,6 +61,23 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
 
   handleClose = () => {
     this.props.history.push('/entity/term');
+  };
+
+  academicyearUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        academicyearId: -1
+      });
+    } else {
+      for (const i in this.props.academicYears) {
+        if (id === this.props.academicYears[i].id.toString()) {
+          this.setState({
+            academicyearId: this.props.academicYears[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -132,22 +149,16 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="statusLabel">
-                    <Translate contentKey="cmsApp.term.status">Status</Translate>
+                  <Label id="termStatusLabel">
+                    <Translate contentKey="cmsApp.term.termStatus">Term Status</Translate>
                   </Label>
                   <AvInput
-                    id="term-status"
+                    id="term-termStatus"
                     type="select"
                     className="form-control"
-                    name="status"
-                    value={(!isNew && termEntity.status) || 'PRESENT'}
+                    name="termStatus"
+                    value={(!isNew && termEntity.termStatus) || 'ACTIVE'}
                   >
-                    <option value="PRESENT">
-                      <Translate contentKey="cmsApp.Status.PRESENT" />
-                    </option>
-                    <option value="ABSENT">
-                      <Translate contentKey="cmsApp.Status.ABSENT" />
-                    </option>
                     <option value="ACTIVE">
                       <Translate contentKey="cmsApp.Status.ACTIVE" />
                     </option>
@@ -157,10 +168,16 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="academicYear.id">
-                    <Translate contentKey="cmsApp.term.academicYear">Academic Year</Translate>
+                  <Label for="academicyear.id">
+                    <Translate contentKey="cmsApp.term.academicyear">Academicyear</Translate>
                   </Label>
-                  <AvInput id="term-academicYear" type="select" className="form-control" name="academicYearId">
+                  <AvInput
+                    id="term-academicyear"
+                    type="select"
+                    className="form-control"
+                    name="academicyearId"
+                    onChange={this.academicyearUpdate}
+                  >
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (

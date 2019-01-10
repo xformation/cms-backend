@@ -1,12 +1,14 @@
-export const enum ClassSection {
+export const enum SectionEnum {
   A = 'A',
-  B = 'B'
+  B = 'B',
+  C = 'C',
+  D = 'D'
 }
 
 export interface ISection {
   id?: number;
-  section?: ClassSection;
-  studentyearId?: number;
+  section?: SectionEnum;
+  batchId?: number;
 }
 
 export const defaultValue: Readonly<ISection> = {};

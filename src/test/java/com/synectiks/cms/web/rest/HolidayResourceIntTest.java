@@ -28,7 +28,6 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -53,11 +52,11 @@ public class HolidayResourceIntTest {
     private static final String DEFAULT_HOLIDAY_DESC = "AAAAAAAAAA";
     private static final String UPDATED_HOLIDAY_DESC = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_HOLIDAY_DATE = new Date();
-    private static final Date UPDATED_HOLIDAY_DATE =new Date() ;
+    private static final LocalDate DEFAULT_HOLIDAY_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_HOLIDAY_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Status DEFAULT_STATUS = Status.PRESENT;
-    private static final Status UPDATED_STATUS = Status.ABSENT;
+    private static final Status DEFAULT_HOLIDAY_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_HOLIDAY_STATUS = Status.DEACTIVE;
 
     @Autowired
     private HolidayRepository holidayRepository;
@@ -112,10 +111,10 @@ public class HolidayResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Holiday createEntity(EntityManager em) {
-        Holiday holiday = new Holiday();
-            holiday.holidayDesc(DEFAULT_HOLIDAY_DESC);
-           holiday.setHolidayDate(DEFAULT_HOLIDAY_DATE);
-            holiday.status(DEFAULT_STATUS);
+        Holiday holiday = new Holiday()
+            .holidayDesc(DEFAULT_HOLIDAY_DESC)
+            .holidayDate(DEFAULT_HOLIDAY_DATE)
+            .holidayStatus(DEFAULT_HOLIDAY_STATUS);
         return holiday;
     }
 
@@ -142,7 +141,7 @@ public class HolidayResourceIntTest {
         Holiday testHoliday = holidayList.get(holidayList.size() - 1);
         assertThat(testHoliday.getHolidayDesc()).isEqualTo(DEFAULT_HOLIDAY_DESC);
         assertThat(testHoliday.getHolidayDate()).isEqualTo(DEFAULT_HOLIDAY_DATE);
-        assertThat(testHoliday.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testHoliday.getHolidayStatus()).isEqualTo(DEFAULT_HOLIDAY_STATUS);
 
         // Validate the Holiday in Elasticsearch
         verify(mockHolidaySearchRepository, times(1)).save(testHoliday);
@@ -211,10 +210,10 @@ public class HolidayResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStatusIsRequired() throws Exception {
+    public void checkHolidayStatusIsRequired() throws Exception {
         int databaseSizeBeforeTest = holidayRepository.findAll().size();
         // set the field null
-        holiday.setStatus(null);
+        holiday.setHolidayStatus(null);
 
         // Create the Holiday, which fails.
         HolidayDTO holidayDTO = holidayMapper.toDto(holiday);
@@ -241,7 +240,7 @@ public class HolidayResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(holiday.getId().intValue())))
             .andExpect(jsonPath("$.[*].holidayDesc").value(hasItem(DEFAULT_HOLIDAY_DESC.toString())))
             .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].holidayStatus").value(hasItem(DEFAULT_HOLIDAY_STATUS.toString())));
     }
     
 
@@ -258,7 +257,7 @@ public class HolidayResourceIntTest {
             .andExpect(jsonPath("$.id").value(holiday.getId().intValue()))
             .andExpect(jsonPath("$.holidayDesc").value(DEFAULT_HOLIDAY_DESC.toString()))
             .andExpect(jsonPath("$.holidayDate").value(DEFAULT_HOLIDAY_DATE.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.holidayStatus").value(DEFAULT_HOLIDAY_STATUS.toString()));
     }
     @Test
     @Transactional
@@ -280,10 +279,10 @@ public class HolidayResourceIntTest {
         Holiday updatedHoliday = holidayRepository.findById(holiday.getId()).get();
         // Disconnect from session so that the updates on updatedHoliday are not directly saved in db
         em.detach(updatedHoliday);
-        //updatedHoliday
-        updatedHoliday.holidayDesc(UPDATED_HOLIDAY_DESC);
-        updatedHoliday.setHolidayDate(UPDATED_HOLIDAY_DATE);
-        updatedHoliday.status(UPDATED_STATUS);
+        updatedHoliday
+            .holidayDesc(UPDATED_HOLIDAY_DESC)
+            .holidayDate(UPDATED_HOLIDAY_DATE)
+            .holidayStatus(UPDATED_HOLIDAY_STATUS);
         HolidayDTO holidayDTO = holidayMapper.toDto(updatedHoliday);
 
         restHolidayMockMvc.perform(put("/api/holidays")
@@ -297,7 +296,7 @@ public class HolidayResourceIntTest {
         Holiday testHoliday = holidayList.get(holidayList.size() - 1);
         assertThat(testHoliday.getHolidayDesc()).isEqualTo(UPDATED_HOLIDAY_DESC);
         assertThat(testHoliday.getHolidayDate()).isEqualTo(UPDATED_HOLIDAY_DATE);
-        assertThat(testHoliday.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testHoliday.getHolidayStatus()).isEqualTo(UPDATED_HOLIDAY_STATUS);
 
         // Validate the Holiday in Elasticsearch
         verify(mockHolidaySearchRepository, times(1)).save(testHoliday);
@@ -311,7 +310,7 @@ public class HolidayResourceIntTest {
         // Create the Holiday
         HolidayDTO holidayDTO = holidayMapper.toDto(holiday);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restHolidayMockMvc.perform(put("/api/holidays")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(holidayDTO)))
@@ -360,7 +359,7 @@ public class HolidayResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(holiday.getId().intValue())))
             .andExpect(jsonPath("$.[*].holidayDesc").value(hasItem(DEFAULT_HOLIDAY_DESC.toString())))
             .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].holidayStatus").value(hasItem(DEFAULT_HOLIDAY_STATUS.toString())));
     }
 
     @Test

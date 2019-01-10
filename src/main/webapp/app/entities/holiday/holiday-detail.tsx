@@ -43,15 +43,15 @@ export class HolidayDetail extends React.Component<IHolidayDetailProps> {
               <TextFormat value={holidayEntity.holidayDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="status">
-                <Translate contentKey="cmsApp.holiday.status">Status</Translate>
+              <span id="holidayStatus">
+                <Translate contentKey="cmsApp.holiday.holidayStatus">Holiday Status</Translate>
               </span>
             </dt>
-            <dd>{holidayEntity.status}</dd>
+            <dd>{holidayEntity.holidayStatus}</dd>
             <dt>
-              <Translate contentKey="cmsApp.holiday.academicYear">Academic Year</Translate>
+              <Translate contentKey="cmsApp.holiday.academicyear">Academicyear</Translate>
             </dt>
-            <dd>{holidayEntity.academicYearId ? holidayEntity.academicYearId : ''}</dd>
+            <dd>{holidayEntity.academicyearId ? holidayEntity.academicyearId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/holiday" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

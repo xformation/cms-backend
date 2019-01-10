@@ -14,20 +14,20 @@ import { getEntity, updateEntity, createEntity, reset } from './authorized-signa
 import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IAuthorizedSignatoryUpdateState {
   isNew: boolean;
-  legalEntityId: number;
+  legalentityId: number;
 }
 
 export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignatoryUpdateProps, IAuthorizedSignatoryUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      legalEntityId: 0,
+      legalentityId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -61,6 +61,23 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
 
   handleClose = () => {
     this.props.history.push('/entity/authorized-signatory');
+  };
+
+  legalentityUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        legalentityId: -1
+      });
+    } else {
+      for (const i in this.props.legalEntities) {
+        if (id === this.props.legalEntities[i].id.toString()) {
+          this.setState({
+            legalentityId: this.props.legalEntities[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -169,10 +186,16 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="legalEntity.id">
-                    <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
+                  <Label for="legalentity.id">
+                    <Translate contentKey="cmsApp.authorizedSignatory.legalentity">Legalentity</Translate>
                   </Label>
-                  <AvInput id="authorized-signatory-legalEntity" type="select" className="form-control" name="legalEntityId">
+                  <AvInput
+                    id="authorized-signatory-legalentity"
+                    type="select"
+                    className="form-control"
+                    name="legalentityId"
+                    onChange={this.legalentityUpdate}
+                  >
                     <option value="" key="0" />
                     {legalEntities
                       ? legalEntities.map(otherEntity => (

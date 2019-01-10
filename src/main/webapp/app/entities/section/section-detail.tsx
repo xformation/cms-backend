@@ -12,7 +12,7 @@ import { ISection } from 'app/shared/model/section.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ISectionDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ISectionDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class SectionDetail extends React.Component<ISectionDetailProps> {
   componentDidMount() {
@@ -35,9 +35,9 @@ export class SectionDetail extends React.Component<ISectionDetailProps> {
             </dt>
             <dd>{sectionEntity.section}</dd>
             <dt>
-              <Translate contentKey="cmsApp.section.studentyear">Studentyear</Translate>
+              <Translate contentKey="cmsApp.section.batch">Batch</Translate>
             </dt>
-            <dd>{sectionEntity.studentyearId ? sectionEntity.studentyearId : ''}</dd>
+            <dd>{sectionEntity.batchId ? sectionEntity.batchId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/section" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

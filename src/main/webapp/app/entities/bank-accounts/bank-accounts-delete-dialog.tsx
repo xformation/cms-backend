@@ -9,7 +9,7 @@ import { IBankAccounts } from 'app/shared/model/bank-accounts.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './bank-accounts.reducer';
 
-export interface IBankAccountsDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface IBankAccountsDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class BankAccountsDeleteDialog extends React.Component<IBankAccountsDeleteDialogProps> {
   componentDidMount() {

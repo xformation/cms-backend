@@ -58,6 +58,13 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.AcademicYear.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.Holiday.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.Term.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.Branch.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.Department.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.Batch.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.Teach.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.CourseOffer.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.AttendanceMaster.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.Lecture.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

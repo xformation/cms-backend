@@ -8,13 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Section and its DTO SectionDTO.
  */
-@Mapper(componentModel = "spring", uses = {StudentYearMapper.class})
+@Mapper(componentModel = "spring", uses = {BatchMapper.class})
 public interface SectionMapper extends EntityMapper<SectionDTO, Section> {
 
-    @Mapping(source = "studentyear.id", target = "studentyearId")
+    @Mapping(source = "batch.id", target = "batchId")
     SectionDTO toDto(Section section);
 
-    @Mapping(source = "studentyearId", target = "studentyear")
+    @Mapping(source = "batchId", target = "batch")
     Section toEntity(SectionDTO sectionDTO);
 
     default Section fromId(Long id) {

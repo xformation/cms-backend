@@ -6,7 +6,7 @@ export default class SubjectUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   commonSubSelect: ElementFinder = element(by.css('select#subject-commonSub'));
   electiveSubSelect: ElementFinder = element(by.css('select#subject-electiveSub'));
-  periodsSelect: ElementFinder = element(by.css('select#subject-periods'));
+  departmentSelect: ElementFinder = element(by.css('select#subject-department'));
   studentSelect: ElementFinder = element(by.css('select#subject-student'));
   teacherSelect: ElementFinder = element(by.css('select#subject-teacher'));
 
@@ -42,23 +42,23 @@ export default class SubjectUpdatePage {
       .last()
       .click();
   }
-  periodsSelectLastOption() {
-    this.periodsSelect
+  departmentSelectLastOption() {
+    this.departmentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  periodsSelectOption(option) {
-    this.periodsSelect.sendKeys(option);
+  departmentSelectOption(option) {
+    this.departmentSelect.sendKeys(option);
   }
 
-  getPeriodsSelect() {
-    return this.periodsSelect;
+  getDepartmentSelect() {
+    return this.departmentSelect;
   }
 
-  getPeriodsSelectedOption() {
-    return this.periodsSelect.element(by.css('option:checked')).getText();
+  getDepartmentSelectedOption() {
+    return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
   studentSelectLastOption() {

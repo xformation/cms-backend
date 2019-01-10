@@ -3,7 +3,7 @@
     "fields": [
         {
             "fieldName": "commonSub",
-            "fieldType": "Common",
+            "fieldType": "CommonSubEnum",
             "fieldValues": "MATHS,PHYSICS,CHEMISTRY,DBMS",
             "fieldValidateRules": [
                 "required"
@@ -11,7 +11,7 @@
         },
         {
             "fieldName": "electiveSub",
-            "fieldType": "Elective",
+            "fieldType": "ElectiveEnum",
             "fieldValues": "JAVA,C",
             "fieldValidateRules": [
                 "required"
@@ -21,8 +21,8 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "periods",
-            "otherEntityName": "periods",
+            "relationshipName": "department",
+            "otherEntityName": "department",
             "otherEntityField": "id"
         },
         {
@@ -38,7 +38,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20181224075922",
+    "changelogDate": "20190110134450",
     "entityTableName": "subject",
     "dto": "mapstruct",
     "pagination": "no",

@@ -1,8 +1,6 @@
 import { Moment } from 'moment';
 
 export const enum Status {
-  PRESENT = 'PRESENT',
-  ABSENT = 'ABSENT',
   ACTIVE = 'ACTIVE',
   DEACTIVE = 'DEACTIVE'
 }
@@ -11,8 +9,8 @@ export interface IHoliday {
   id?: number;
   holidayDesc?: string;
   holidayDate?: Moment;
-  status?: Status;
-  academicYearId?: number;
+  holidayStatus?: Status;
+  academicyearId?: number;
 }
 
 export const defaultValue: Readonly<IHoliday> = {};

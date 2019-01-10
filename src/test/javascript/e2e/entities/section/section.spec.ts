@@ -32,7 +32,7 @@ describe('Section e2e test', () => {
 
   it('should create and save Sections', async () => {
     sectionUpdatePage.sectionSelectLastOption();
-    sectionUpdatePage.studentyearSelectLastOption();
+    sectionUpdatePage.batchSelectLastOption();
     await sectionUpdatePage.save();
     expect(await sectionUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

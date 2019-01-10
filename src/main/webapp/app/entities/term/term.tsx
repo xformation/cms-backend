@@ -94,10 +94,10 @@ export class Term extends React.Component<ITermProps, ITermState> {
                   <Translate contentKey="cmsApp.term.endDate">End Date</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.term.status">Status</Translate>
+                  <Translate contentKey="cmsApp.term.termStatus">Term Status</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.term.academicYear">Academic Year</Translate>
+                  <Translate contentKey="cmsApp.term.academicyear">Academicyear</Translate>
                 </th>
                 <th />
               </tr>
@@ -118,9 +118,9 @@ export class Term extends React.Component<ITermProps, ITermState> {
                     <TextFormat type="date" value={term.endDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
-                    <Translate contentKey={`cmsApp.Status.${term.status}`} />
+                    <Translate contentKey={`cmsApp.Status.${term.termStatus}`} />
                   </td>
-                  <td>{term.academicYearId ? <Link to={`academic-year/${term.academicYearId}`}>{term.academicYearId}</Link> : ''}</td>
+                  <td>{term.academicyearId ? <Link to={`academicYear/${term.academicyearId}`}>{term.academicyearId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${term.id}`} color="info" size="sm">

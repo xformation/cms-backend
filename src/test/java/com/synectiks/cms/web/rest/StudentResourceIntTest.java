@@ -37,7 +37,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Elective;
 /**
  * Test class for the StudentResource REST controller.
  *
@@ -49,12 +48,6 @@ public class StudentResourceIntTest {
 
     private static final String DEFAULT_STUDENT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_STUDENT_NAME = "BBBBBBBBBB";
-
-    private static final Boolean DEFAULT_ATTENDANCE = false;
-    private static final Boolean UPDATED_ATTENDANCE = true;
-
-    private static final Elective DEFAULT_ELECTIVE_SUB = Elective.JAVA;
-    private static final Elective UPDATED_ELECTIVE_SUB = Elective.C;
 
     @Autowired
     private StudentRepository studentRepository;
@@ -110,9 +103,7 @@ public class StudentResourceIntTest {
      */
     public static Student createEntity(EntityManager em) {
         Student student = new Student()
-            .studentName(DEFAULT_STUDENT_NAME)
-            .attendance(DEFAULT_ATTENDANCE)
-            .electiveSub(DEFAULT_ELECTIVE_SUB);
+            .studentName(DEFAULT_STUDENT_NAME);
         return student;
     }
 
@@ -138,8 +129,6 @@ public class StudentResourceIntTest {
         assertThat(studentList).hasSize(databaseSizeBeforeCreate + 1);
         Student testStudent = studentList.get(studentList.size() - 1);
         assertThat(testStudent.getStudentName()).isEqualTo(DEFAULT_STUDENT_NAME);
-        assertThat(testStudent.isAttendance()).isEqualTo(DEFAULT_ATTENDANCE);
-        assertThat(testStudent.getElectiveSub()).isEqualTo(DEFAULT_ELECTIVE_SUB);
 
         // Validate the Student in Elasticsearch
         verify(mockStudentSearchRepository, times(1)).save(testStudent);
@@ -189,44 +178,6 @@ public class StudentResourceIntTest {
 
     @Test
     @Transactional
-    public void checkAttendanceIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setAttendance(null);
-
-        // Create the Student, which fails.
-        StudentDTO studentDTO = studentMapper.toDto(student);
-
-        restStudentMockMvc.perform(post("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkElectiveSubIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setElectiveSub(null);
-
-        // Create the Student, which fails.
-        StudentDTO studentDTO = studentMapper.toDto(student);
-
-        restStudentMockMvc.perform(post("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllStudents() throws Exception {
         // Initialize the database
         studentRepository.saveAndFlush(student);
@@ -236,9 +187,7 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].attendance").value(hasItem(DEFAULT_ATTENDANCE.booleanValue())))
-            .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.toString())));
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())));
     }
     
 
@@ -253,9 +202,7 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(student.getId().intValue()))
-            .andExpect(jsonPath("$.studentName").value(DEFAULT_STUDENT_NAME.toString()))
-            .andExpect(jsonPath("$.attendance").value(DEFAULT_ATTENDANCE.booleanValue()))
-            .andExpect(jsonPath("$.electiveSub").value(DEFAULT_ELECTIVE_SUB.toString()));
+            .andExpect(jsonPath("$.studentName").value(DEFAULT_STUDENT_NAME.toString()));
     }
     @Test
     @Transactional
@@ -278,9 +225,7 @@ public class StudentResourceIntTest {
         // Disconnect from session so that the updates on updatedStudent are not directly saved in db
         em.detach(updatedStudent);
         updatedStudent
-            .studentName(UPDATED_STUDENT_NAME)
-            .attendance(UPDATED_ATTENDANCE)
-            .electiveSub(UPDATED_ELECTIVE_SUB);
+            .studentName(UPDATED_STUDENT_NAME);
         StudentDTO studentDTO = studentMapper.toDto(updatedStudent);
 
         restStudentMockMvc.perform(put("/api/students")
@@ -293,8 +238,6 @@ public class StudentResourceIntTest {
         assertThat(studentList).hasSize(databaseSizeBeforeUpdate);
         Student testStudent = studentList.get(studentList.size() - 1);
         assertThat(testStudent.getStudentName()).isEqualTo(UPDATED_STUDENT_NAME);
-        assertThat(testStudent.isAttendance()).isEqualTo(UPDATED_ATTENDANCE);
-        assertThat(testStudent.getElectiveSub()).isEqualTo(UPDATED_ELECTIVE_SUB);
 
         // Validate the Student in Elasticsearch
         verify(mockStudentSearchRepository, times(1)).save(testStudent);
@@ -308,7 +251,7 @@ public class StudentResourceIntTest {
         // Create the Student
         StudentDTO studentDTO = studentMapper.toDto(student);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restStudentMockMvc.perform(put("/api/students")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
@@ -355,9 +298,7 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].attendance").value(hasItem(DEFAULT_ATTENDANCE.booleanValue())))
-            .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.toString())));
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())));
     }
 
     @Test

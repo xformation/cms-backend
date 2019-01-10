@@ -68,7 +68,7 @@ class StudentAttendanceGatlingTest extends Simulation {
             .exec(http("Create new studentAttendance")
             .post("/api/student-attendances")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "attendanceDate":"2020-01-01T00:00:00.000Z", "status":null, "comments":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "attendanceStatus":null, "comments":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_studentAttendance_url"))).exitHereIfFailed
             .pause(10)

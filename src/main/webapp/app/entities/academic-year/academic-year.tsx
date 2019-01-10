@@ -93,6 +93,9 @@ export class AcademicYear extends React.Component<IAcademicYearProps, IAcademicY
                 <th>
                   <Translate contentKey="cmsApp.academicYear.endDate">End Date</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="cmsApp.academicYear.desc">Desc</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -111,6 +114,7 @@ export class AcademicYear extends React.Component<IAcademicYearProps, IAcademicY
                   <td>
                     <TextFormat type="date" value={academicYear.endDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
+                  <td>{academicYear.desc}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${academicYear.id}`} color="info" size="sm">

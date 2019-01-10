@@ -91,7 +91,7 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
                   <Translate contentKey="cmsApp.subject.electiveSub">Elective Sub</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.subject.periods">Periods</Translate>
+                  <Translate contentKey="cmsApp.subject.department">Department</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.subject.student">Student</Translate>
@@ -111,12 +111,12 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
                     </Button>
                   </td>
                   <td>
-                    <Translate contentKey={`cmsApp.Common.${subject.commonSub}`} />
+                    <Translate contentKey={`cmsApp.CommonSubEnum.${subject.commonSub}`} />
                   </td>
                   <td>
-                    <Translate contentKey={`cmsApp.Elective.${subject.electiveSub}`} />
+                    <Translate contentKey={`cmsApp.ElectiveEnum.${subject.electiveSub}`} />
                   </td>
-                  <td>{subject.periodsId ? <Link to={`periods/${subject.periodsId}`}>{subject.periodsId}</Link> : ''}</td>
+                  <td>{subject.departmentId ? <Link to={`department/${subject.departmentId}`}>{subject.departmentId}</Link> : ''}</td>
                   <td>{subject.studentId ? <Link to={`student/${subject.studentId}`}>{subject.studentId}</Link> : ''}</td>
                   <td>{subject.teacherId ? <Link to={`teacher/${subject.teacherId}`}>{subject.teacherId}</Link> : ''}</td>
                   <td className="text-right">

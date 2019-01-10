@@ -29,7 +29,7 @@ public class AuthorizedSignatoryDTO implements Serializable {
     @NotNull
     private String panCardNumber;
 
-    private Long legalEntityId;
+    private Long legalentityId;
 
     public Long getId() {
         return id;
@@ -87,12 +87,12 @@ public class AuthorizedSignatoryDTO implements Serializable {
         this.panCardNumber = panCardNumber;
     }
 
-    public Long getLegalEntityId() {
-        return legalEntityId;
+    public Long getLegalentityId() {
+        return legalentityId;
     }
 
-    public void setLegalEntityId(Long legalEntityId) {
-        this.legalEntityId = legalEntityId;
+    public void setLegalentityId(Long legalEntityId) {
+        this.legalentityId = legalEntityId;
     }
 
     @Override
@@ -126,7 +126,7 @@ public class AuthorizedSignatoryDTO implements Serializable {
             ", address='" + getAddress() + "'" +
             ", email='" + getEmail() + "'" +
             ", panCardNumber='" + getPanCardNumber() + "'" +
-            ", legalEntity=" + getLegalEntityId() +
+            ", legalentity=" + getLegalentityId() +
             "}";
     }
 }

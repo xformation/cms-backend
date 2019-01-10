@@ -9,7 +9,7 @@ import { ISubject } from 'app/shared/model/subject.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './subject.reducer';
 
-export interface ISubjectDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ISubjectDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class SubjectDeleteDialog extends React.Component<ISubjectDeleteDialogProps> {
   componentDidMount() {

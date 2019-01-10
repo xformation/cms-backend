@@ -9,7 +9,7 @@ import { ISection } from 'app/shared/model/section.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './section.reducer';
 
-export interface ISectionDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: any }> {}
+export interface ISectionDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class SectionDeleteDialog extends React.Component<ISectionDeleteDialogProps> {
   componentDidMount() {
