@@ -83,7 +83,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Student student(long id)
     {
-        return studentRepository.getOne(id);
+        return studentRepository.findById(id).get();
     }
 
     public List<Student> students()
@@ -101,7 +101,7 @@ public class Query implements GraphQLQueryResolver {
 
     public College college(long id)
     {
-        return collegeRepository.getOne(id);
+        return collegeRepository.findById(id).get();
     }
 
     public List<College> colleges()
@@ -111,7 +111,7 @@ public class Query implements GraphQLQueryResolver {
 
     public CollegeBranches collegeBranch(long id)
     {
-        return collegeBranchesRepository.getOne(id);
+        return collegeBranchesRepository.findById(id).get();
     }
 
     public List<CollegeBranches> collegeBranches()
@@ -121,7 +121,7 @@ public class Query implements GraphQLQueryResolver {
 
     public StudentYear studentYear(long id)
     {
-        return studentYearRepository.getOne(id);
+        return studentYearRepository.findById(id).get();
     }
 
     public List<StudentYear> studentYears()
@@ -131,7 +131,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Semester semester(long id)
     {
-        return semesterRepository.getOne(id);
+        return semesterRepository.findById(id).get();
     }
 
     public List<Semester> semesters()
@@ -141,7 +141,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Periods period(long id)
     {
-        return periodsRepository.getOne(id);
+        return periodsRepository.findById(id).get();
     }
 
     public List<Periods> periods()
@@ -151,7 +151,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Section section(long id)
     {
-        return sectionRepository.getOne(id);
+        return sectionRepository.findById(id).get();
     }
 
     public List<Section> sections()
@@ -161,7 +161,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Subject subject(long id)
     {
-        return subjectRepository.getOne(id);
+        return subjectRepository.findById(id).get();
     }
 
     public List<Subject> subjects()
@@ -171,7 +171,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Teacher teacher(long id)
     {
-        return teacherRepository.getOne(id);
+        return teacherRepository.findById(id).get();
     }
 
     public List<Teacher> teachers()
@@ -181,7 +181,7 @@ public class Query implements GraphQLQueryResolver {
 
     public LegalEntity legalEntity(long id)
     {
-        return legalEntityRepository.getOne(id);
+        return legalEntityRepository.findById(id).get();
     }
 
     public List<LegalEntity> legalEntities()
@@ -191,7 +191,7 @@ public class Query implements GraphQLQueryResolver {
 
     public AuthorizedSignatory authorizedSignatory(long id)
     {
-        return authorizedSignatoryRepository.getOne(id);
+        return authorizedSignatoryRepository.findById(id).get();
     }
 
     public List<AuthorizedSignatory> authorizedSignatories()
@@ -201,7 +201,7 @@ public class Query implements GraphQLQueryResolver {
 
     public BankAccounts bankAccount(long id)
     {
-        return bankAccountsRepository.getOne(id);
+        return bankAccountsRepository.findById(id).get();
     }
 
     public List<BankAccounts> bankAccounts()
@@ -211,7 +211,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Departments department(long id)
     {
-        return departmentsRepository.getOne(id);
+        return departmentsRepository.findById(id).get();
     }
 
     public List<Departments> departments()
@@ -221,7 +221,7 @@ public class Query implements GraphQLQueryResolver {
 
     public Location location(long id)
     {
-        return locationRepository.getOne(id);
+        return locationRepository.findById(id).get();
     }
 
     public List<Location> locations()
@@ -231,7 +231,7 @@ public class Query implements GraphQLQueryResolver {
 
     public StudentAttendance studentAttendance(long id)
     {
-        return studentAttendanceRepository.getOne(id);
+        return studentAttendanceRepository.findById(id).get();
     }
 
     public List<StudentAttendance> studentAttendances()
@@ -241,7 +241,7 @@ public class Query implements GraphQLQueryResolver {
 
     public AcademicDepartment academicDepartment(long id)
     {
-        return academicDepartmentRepository.getOne(id);
+        return academicDepartmentRepository.findById(id).get();
     }
 
     public List<AcademicDepartment> academicDepartments()
@@ -251,7 +251,7 @@ public class Query implements GraphQLQueryResolver {
 
     public AcademicSubject academicSubject(long id)
     {
-        return academicSubjectRepository.getOne(id);
+        return academicSubjectRepository.findById(id).get();
     }
 
     public List<AcademicSubject> academicSubjects()
@@ -266,7 +266,7 @@ public class Query implements GraphQLQueryResolver {
 
     public AcademicYear academicYear(long id)
     {
-        return academicYearRepository.getOne(id);
+        return academicYearRepository.findById(id).get();
     }
 
     public List<Holiday> holidays()

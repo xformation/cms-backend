@@ -130,7 +130,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddStudentYearPayload addStudentYear(AddStudentYearInput addStudentYearInput) {
         final StudentYear studentYear = new StudentYear();
-        studentYear.setYearDesc(addStudentYearInput.getYearDes());
+        studentYear.setYearDesc(addStudentYearInput.getYearDesc());
         studentYearRepository.save(studentYear);
 
         return new AddStudentYearPayload(studentYear);
@@ -138,8 +138,8 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateStudentYearPayload updateStudentYear(UpdateStudentYearInput updateStudentYearInput) {
         StudentYear studentYear = studentYearRepository.findById(updateStudentYearInput.getId()).get();
-        if (updateStudentYearInput.getYearDes() != null) {
-            studentYear.setYearDesc(updateStudentYearInput.getYearDes());
+        if (updateStudentYearInput.getYearDesc() != null) {
+            studentYear.setYearDesc(updateStudentYearInput.getYearDesc());
         }
 
         studentYearRepository.save(studentYear);

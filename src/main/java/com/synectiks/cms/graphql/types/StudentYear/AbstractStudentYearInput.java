@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class AbstractStudentYearInput {
     private Long id;
-    private SYear yearDes;
+    private SYear yearDesc;
 
     public Long getId() {
         return id;
@@ -16,12 +16,12 @@ public class AbstractStudentYearInput {
         this.id = id;
     }
 
-    public SYear getYearDes() {
-        return yearDes;
+    public SYear getYearDesc() {
+        return yearDesc;
     }
 
-    public void setYearDes(SYear yearDes) {
-        this.yearDes = yearDes;
+    public void setYearDesc(SYear yearDesc) {
+        this.yearDesc = yearDesc;
     }
 
     @Override
@@ -30,19 +30,19 @@ public class AbstractStudentYearInput {
         if (o == null || getClass() != o.getClass()) return false;
         AbstractStudentYearInput that = (AbstractStudentYearInput) o;
         return Objects.equals(id, that.id) &&
-            yearDes == that.yearDes;
+            yearDesc == that.yearDesc;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, yearDes);
+        return Objects.hash(id, yearDesc);
     }
 
     @Override
     public String toString() {
         return "AbstractStudentYearInput{" +
             "id=" + id +
-            ", yearDes=" + yearDes +
+            ", yearDesc=" + yearDesc +
             '}';
     }
 }

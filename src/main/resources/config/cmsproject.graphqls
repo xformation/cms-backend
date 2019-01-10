@@ -62,7 +62,7 @@ type CollegeBranches{
 
 type StudentYear {
     id: Long!
-    YearDesc: SYear!
+    yearDesc: SYear!
 }
 
 type AcademicSubject{
@@ -516,7 +516,7 @@ type RemoveCollegeBranchesPayload {
 }
 
 input AddStudentYearInput {
-    YearDesc: SYear!
+    yearDesc: SYear!
 }
 
 type AddStudentYearPayload {
@@ -525,7 +525,7 @@ type AddStudentYearPayload {
 
 input UpdateStudentYearInput {
     id: Long!
-    YearDesc: SYear!
+    yearDesc: SYear!
 
 }
 
