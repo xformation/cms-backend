@@ -3,7 +3,6 @@ package com.synectiks.cms.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.Semester;
 
 
 import com.synectiks.cms.graphql.types.AcademicYear.*;
