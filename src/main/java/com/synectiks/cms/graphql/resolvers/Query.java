@@ -40,7 +40,6 @@ public class Query implements GraphQLQueryResolver {
     private final BranchRepository branchRepository;
     private final StudentYearRepository studentYearRepository;
     private final SemesterRepository semesterRepository;
-    private final PeriodsRepository periodsRepository;
     private final SectionRepository sectionRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
@@ -55,14 +54,13 @@ public class Query implements GraphQLQueryResolver {
     private final TermRepository termRepository;
 
 
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
         this.branchRepository = branchRepository;
         this.studentYearRepository = studentYearRepository;
         this.semesterRepository = semesterRepository;
-        this.periodsRepository = periodsRepository;
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
@@ -133,16 +131,6 @@ public class Query implements GraphQLQueryResolver {
     public List<Semester> semesters()
     {
         return Lists.newArrayList(semesterRepository.findAll());
-    }
-
-    public Periods period(long id)
-    {
-        return periodsRepository.findById(id).get();
-    }
-
-    public List<Periods> periods()
-    {
-        return Lists.newArrayList(periodsRepository.findAll());
     }
 
     public Section section(long id)
