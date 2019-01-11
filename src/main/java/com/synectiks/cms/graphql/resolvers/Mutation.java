@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.Semester;
 
-import com.synectiks.cms.graphql.types.AcademicSubject.*;
+
 import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
 import com.synectiks.cms.graphql.types.BankAccounts.*;
@@ -16,7 +16,7 @@ import com.synectiks.cms.graphql.types.Holiday.*;
 import com.synectiks.cms.graphql.types.Institute.*;
 import com.synectiks.cms.graphql.types.LegalEntity.*;
 import com.synectiks.cms.graphql.types.Location.*;
-import com.synectiks.cms.graphql.types.Periods.*;
+
 import com.synectiks.cms.graphql.types.Section.*;
 import com.synectiks.cms.graphql.types.Semester.*;
 import com.synectiks.cms.graphql.types.Student.*;
@@ -42,7 +42,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final StudentYearRepository studentYearRepository;
     private final SemesterRepository semesterRepository;
     private final BranchRepository branchRepository;
-    private final PeriodsRepository periodsRepository;
+    
     private final SectionRepository sectionRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
@@ -56,14 +56,13 @@ public class Mutation implements GraphQLMutationResolver {
     private final HolidayRepository holidayRepository;
     private final TermRepository termRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
         this.studentYearRepository = studentYearRepository;
         this.semesterRepository = semesterRepository;
         this.branchRepository = branchRepository;
-        this.periodsRepository = periodsRepository;
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
@@ -396,32 +395,11 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public AddPeriodsPayload addPeriods(AddPeriodsInput addPeriodsInput) {
-        final Section section = sectionRepository.findById(addPeriodsInput.getSectionId()).get();
-        final Periods periods = new Periods();
-        periods.setPeriods(addPeriodsInput.getPeriods());
-        periods.setSection(section);
-        periodsRepository.save(periods);
+    
 
-        return new AddPeriodsPayload(periods);
-    }
+    
 
-    public UpdatePeriodsPayload updatePeriods(UpdatePeriodsInput updatePeriodsInput) {
-        Periods periods = periodsRepository.findById(updatePeriodsInput.getId()).get();
-        if (updatePeriodsInput.getPeriods() != null) {
-            periods.setPeriods(updatePeriodsInput.getPeriods());
-        }
-
-        periodsRepository.save(periods);
-
-        return new UpdatePeriodsPayload(periods);
-    }
-
-    public RemovePeriodsPayload removePeriods(RemovePeriodsInput removePeriodsInput) {
-        Periods periods = periodsRepository.findById(removePeriodsInput.getPeriodsId()).get();
-        periodsRepository.delete(periods);
-        return new RemovePeriodsPayload(Lists.newArrayList(periodsRepository.findAll()));
-    }
+    
 
     public AddSectionPayload addSection(AddSectionInput addSectionInput) {
         final StudentYear studentYear = studentYearRepository.findById(addSectionInput.getStudentYearId()).get();
