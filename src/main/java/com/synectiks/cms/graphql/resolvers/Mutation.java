@@ -778,6 +778,11 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicYearInput.getEndDate() != null) {
             academicYear.setEndDate(updateAcademicYearInput.getEndDate());
         }
+        
+        if (updateAcademicYearInput.getDesc() != null) {
+            academicYear.setDesc(updateAcademicYearInput.getDesc());
+        }
+        
         academicYearRepository.save(academicYear);
 
         return new UpdateAcademicYearPayload(academicYear);

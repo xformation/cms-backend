@@ -7,7 +7,8 @@ public class AbstractAcademicYearInput {
     private Long year;
     private Date startDate;
     private Date endDate;
-
+    private String desc;
+    
     public Long getId() {
         return id;
     }
@@ -49,4 +50,12 @@ public class AbstractAcademicYearInput {
             ", endDate=" + endDate +
             '}';
     }
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 }
