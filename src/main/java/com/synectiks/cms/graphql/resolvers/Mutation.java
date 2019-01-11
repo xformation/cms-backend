@@ -10,7 +10,7 @@ import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
 import com.synectiks.cms.graphql.types.BankAccounts.*;
 import com.synectiks.cms.graphql.types.College.*;
-import com.synectiks.cms.graphql.types.CollegeBranches.*;
+import com.synectiks.cms.graphql.types.Branch.*;
 import com.synectiks.cms.graphql.types.Departments.*;
 import com.synectiks.cms.graphql.types.Holiday.*;
 import com.synectiks.cms.graphql.types.Institute.*;
@@ -41,7 +41,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final CollegeRepository collegeRepository;
     private final StudentYearRepository studentYearRepository;
     private final SemesterRepository semesterRepository;
-    private final CollegeBranchesRepository collegeBranchesRepository;
+    private final BranchRepository branchRepository;
     private final PeriodsRepository periodsRepository;
     private final SectionRepository sectionRepository;
     private final SubjectRepository subjectRepository;
@@ -58,13 +58,13 @@ public class Mutation implements GraphQLMutationResolver {
     private final HolidayRepository holidayRepository;
     private final TermRepository termRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
         this.studentYearRepository = studentYearRepository;
         this.semesterRepository = semesterRepository;
-        this.collegeBranchesRepository = collegeBranchesRepository;
+        this.branchRepository = branchRepository;
         this.periodsRepository = periodsRepository;
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
@@ -360,39 +360,45 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
     }
 
-    public AddCollegeBranchesPayload addCollegeBranches(AddCollegeBranchesInput addCollegeBranchesInput) {
-        final CollegeBranches collegeBranches = new CollegeBranches();
-        collegeBranches.setBranchName(addCollegeBranchesInput.getBranchName());
-        collegeBranches.setDescription(addCollegeBranchesInput.getDescription());
-        collegeBranches.setCollegeHead(addCollegeBranchesInput.getCollegeHead());
-        collegeBranchesRepository.save(collegeBranches);
+    public AddBranchPayload addBranch(AddBranchInput addBranchInput) {
+    	College college = collegeRepository.findById(addBranchInput.getCollegeId()).get();
+        final Branch branch = new Branch();
+        branch.setBranchName(addBranchInput.getBranchName());
+        branch.setDescription(addBranchInput.getDescription());
+        branch.setCollegeHead(addBranchInput.getCollegeHead());
+        branch.setCollege(college);
+        branchRepository.save(branch);
 
-        return new AddCollegeBranchesPayload(collegeBranches);
+        return new AddBranchPayload(branch);
     }
 
-    public UpdateCollegeBranchesPayload updateCollegeBranches(UpdateCollegeBranchesInput updateCollegeBranchesInput) {
-        CollegeBranches collegeBranches = collegeBranchesRepository.findById(updateCollegeBranchesInput.getId()).get();
-        if (updateCollegeBranchesInput.getBranchName() != null) {
-            collegeBranches.setBranchName(updateCollegeBranchesInput.getBranchName());
+    public UpdateBranchPayload updateBranch(UpdateBranchInput updateBranchInput) {
+        Branch branch = branchRepository.findById(updateBranchInput.getId()).get();
+        if (updateBranchInput.getBranchName() != null) {
+            branch.setBranchName(updateBranchInput.getBranchName());
         }
 
-        if (updateCollegeBranchesInput.getDescription() != null) {
-            collegeBranches.setDescription(updateCollegeBranchesInput.getDescription());
+        if (updateBranchInput.getDescription() != null) {
+            branch.setDescription(updateBranchInput.getDescription());
         }
 
-        if (updateCollegeBranchesInput.getCollegeHead() != null) {
-            collegeBranches.setCollegeHead(updateCollegeBranchesInput.getCollegeHead());
+        if (updateBranchInput.getCollegeHead() != null) {
+            branch.setCollegeHead(updateBranchInput.getCollegeHead());
         }
-        collegeBranchesRepository.save(collegeBranches);
-
-        return new UpdateCollegeBranchesPayload(collegeBranches);
+        if(updateBranchInput.getCollegeId() != null) {
+        	College college = collegeRepository.findById(updateBranchInput.getCollegeId()).get();
+        	branch.setCollege(college);
+        }
+        branchRepository.save(branch);
+        return new UpdateBranchPayload(branch);
     }
 
-    public RemoveCollegeBranchesPayload removeCollegeBranches(RemoveCollegeBranchesInput removeCollegeBranchesInput) {
-        CollegeBranches collegeBranches = collegeBranchesRepository.findById(removeCollegeBranchesInput.getCollegeBranchesId()).get();
-        collegeBranchesRepository.delete(collegeBranches);
-        return new RemoveCollegeBranchesPayload(Lists.newArrayList(collegeBranchesRepository.findAll()));
+    public RemoveBranchPayload removeBranch(RemoveBranchInput removeBranchsInput) {
+        Branch branch = branchRepository.findById(removeBranchsInput.getBranchId()).get();
+        branchRepository.delete(branch);
+        return new RemoveBranchPayload(Lists.newArrayList(branchRepository.findAll()));
     }
+
 
     public AddPeriodsPayload addPeriods(AddPeriodsInput addPeriodsInput) {
         final Section section = sectionRepository.findById(addPeriodsInput.getSectionId()).get();

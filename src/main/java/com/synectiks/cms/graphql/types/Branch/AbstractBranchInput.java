@@ -1,8 +1,8 @@
-package com.synectiks.cms.graphql.types.CollegeBranches;
+package com.synectiks.cms.graphql.types.Branch;
 
 import java.util.Objects;
 
-public class AbstractCollegeBranchesInput {
+public class AbstractBranchInput {
     private Long id;
     private String branchName;
     private String description;
@@ -43,8 +43,8 @@ public class AbstractCollegeBranchesInput {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractCollegeBranchesInput)) return false;
-        AbstractCollegeBranchesInput that = (AbstractCollegeBranchesInput) o;
+        if (!(o instanceof AbstractBranchInput)) return false;
+        AbstractBranchInput that = (AbstractBranchInput) o;
         return Objects.equals(getId(), that.getId()) &&
             Objects.equals(getBranchName(), that.getBranchName()) &&
             Objects.equals(getDescription(), that.getDescription()) &&

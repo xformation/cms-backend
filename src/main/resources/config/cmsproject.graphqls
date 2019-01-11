@@ -1,0 +1,86 @@
+scalar Date
+
+type Query {
+  college(id: Long!): College!
+  colleges: [College!]!
+  branch(id: Long!): Branch!
+  branches: [Branch!]!
+}
+
+type College{
+    id: Long!
+    shortName: String!
+    logo: Long!
+    backgroundImage: Long!
+    instructionInformation: String!
+}
+type Branch{
+    id: Long!
+    branchName: String!
+    description: String!
+    collegeHead: String!
+}
+type Mutation {
+   addCollege(input: AddCollegeInput!): AddCollegePayload!
+   updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
+   removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
+   
+   addBranch(input: AddBranchInput!): AddBranchPayload!
+   updateBranch(input: UpdateBranchInput!): UpdateBranchPayload!
+   removeBranch(input: RemoveBranchInput!): RemoveBranchPayload!
+   
+}
+
+input AddCollegeInput {
+    shortName: String
+    logo: Long
+    backgroundImage: Long
+    instructionInformation: String
+}
+type AddCollegePayload {
+    college: College!
+}
+input UpdateCollegeInput {
+    id: Long!
+    shortName: String
+    logo: Long
+    backgroundImage: Long
+    instructionInformation: String
+}
+type UpdateCollegePayload {
+    college: College!
+}
+input RemoveCollegeInput {
+    collegeId: Long!
+}
+type RemoveCollegePayload {
+    colleges: [College!]!
+}
+
+
+input AddBranchInput {
+    branchName: String!
+    description: String!
+    collegeHead: String!
+    collegeId: Long!
+}
+type AddBranchPayload {
+    branch: Branch!
+}
+input UpdateBranchInput {
+    id: Long!
+    branchName: String!
+    description: String!
+    collegeHead: String!
+    collegeId: Long!
+}
+type UpdateBranchPayload {
+    branch: Branch!
+}
+input RemoveBranchInput {
+    branchId: Long!
+}
+type RemoveBranchPayload {
+    Branch: [Branch!]!
+}
+
