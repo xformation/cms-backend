@@ -25,9 +25,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,11 +52,11 @@ public class TermResourceIntTest {
     private static final String DEFAULT_TERMS_DESC = "AAAAAAAAAA";
     private static final String UPDATED_TERMS_DESC = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_START_DATE = new Date();
+    private static final Date UPDATED_START_DATE = new Date();
 
-    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_END_DATE = new Date();
+    private static final Date UPDATED_END_DATE = new Date();
 
     private static final Status DEFAULT_TERM_STATUS = Status.ACTIVE;
     private static final Status UPDATED_TERM_STATUS = Status.DEACTIVE;
@@ -114,11 +114,11 @@ public class TermResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Term createEntity(EntityManager em) {
-        Term term = new Term()
-            .termsDesc(DEFAULT_TERMS_DESC)
-            .startDate(DEFAULT_START_DATE)
-            .endDate(DEFAULT_END_DATE)
-            .termStatus(DEFAULT_TERM_STATUS);
+        Term term = new Term();
+        term.termsDesc(DEFAULT_TERMS_DESC);
+        term.setStartDate(DEFAULT_START_DATE);
+        term.setEndDate(DEFAULT_END_DATE);
+        term.termStatus(DEFAULT_TERM_STATUS);
         return term;
     }
 
@@ -305,11 +305,11 @@ public class TermResourceIntTest {
         Term updatedTerm = termRepository.findById(term.getId()).get();
         // Disconnect from session so that the updates on updatedTerm are not directly saved in db
         em.detach(updatedTerm);
-        updatedTerm
-            .termsDesc(UPDATED_TERMS_DESC)
-            .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE)
-            .termStatus(UPDATED_TERM_STATUS);
+        //updatedTerm
+        updatedTerm.termsDesc(UPDATED_TERMS_DESC);
+        updatedTerm.setStartDate(UPDATED_START_DATE);
+        updatedTerm.setEndDate(UPDATED_END_DATE);
+        updatedTerm.termStatus(UPDATED_TERM_STATUS);
         TermDTO termDTO = termMapper.toDto(updatedTerm);
 
         restTermMockMvc.perform(put("/api/terms")
