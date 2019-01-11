@@ -14,7 +14,7 @@ import { getEntity, updateEntity, createEntity, reset } from './batch.reducer';
 import { IBatch } from 'app/shared/model/batch.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IBatchUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -61,23 +61,6 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
 
   handleClose = () => {
     this.props.history.push('/entity/batch');
-  };
-
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -136,13 +119,7 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
                   <Label for="department.id">
                     <Translate contentKey="cmsApp.batch.department">Department</Translate>
                   </Label>
-                  <AvInput
-                    id="batch-department"
-                    type="select"
-                    className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
-                  >
+                  <AvInput id="batch-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (

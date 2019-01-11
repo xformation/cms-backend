@@ -96,6 +96,38 @@ import bankAccounts, {
 import testEntity, {
   TestEntityState
 } from 'app/entities/test-entity/test-entity.reducer';
+// prettier-ignore
+import branch, {
+  BranchState
+} from 'app/entities/branch/branch.reducer';
+// prettier-ignore
+import department, {
+  DepartmentState
+} from 'app/entities/department/department.reducer';
+// prettier-ignore
+import batch, {
+  BatchState
+} from 'app/entities/batch/batch.reducer';
+// prettier-ignore
+import teach, {
+  TeachState
+} from 'app/entities/teach/teach.reducer';
+// prettier-ignore
+import courseOffer, {
+  CourseOfferState
+} from 'app/entities/course-offer/course-offer.reducer';
+// prettier-ignore
+import attendanceMaster, {
+  AttendanceMasterState
+} from 'app/entities/attendance-master/attendance-master.reducer';
+// prettier-ignore
+import lecture, {
+  LectureState
+} from 'app/entities/lecture/lecture.reducer';
+// prettier-ignore
+import authorizedSignatory, {
+  AuthorizedSignatoryState
+} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

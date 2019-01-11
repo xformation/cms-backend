@@ -91,7 +91,6 @@ public class BranchDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", collegeHead='" + getCollegeHead() + "'" +
             ", college=" + getCollegeId() +
-            ", college=" + getCollegeId() +
             "}";
     }
 }

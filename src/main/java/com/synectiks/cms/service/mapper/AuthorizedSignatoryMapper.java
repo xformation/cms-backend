@@ -11,10 +11,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {LegalEntityMapper.class})
 public interface AuthorizedSignatoryMapper extends EntityMapper<AuthorizedSignatoryDTO, AuthorizedSignatory> {
 
-    @Mapping(source = "legalentity.id", target = "legalentityId")
+    @Mapping(source = "legalEntity.id", target = "legalEntityId")
     AuthorizedSignatoryDTO toDto(AuthorizedSignatory authorizedSignatory);
 
-    @Mapping(source = "legalentityId", target = "legalentity")
+    @Mapping(source = "legalEntityId", target = "legalEntity")
     AuthorizedSignatory toEntity(AuthorizedSignatoryDTO authorizedSignatoryDTO);
 
     default AuthorizedSignatory fromId(Long id) {

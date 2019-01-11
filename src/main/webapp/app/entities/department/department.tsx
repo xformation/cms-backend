@@ -120,7 +120,7 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
                   <td>{department.collegeId ? <Link to={`college/${department.collegeId}`}>{department.collegeId}</Link> : ''}</td>
                   <td>
                     {department.academicyearId ? (
-                      <Link to={`academicYear/${department.academicyearId}`}>{department.academicyearId}</Link>
+                      <Link to={`academic-year/${department.academicyearId}`}>{department.academicyearId}</Link>
                     ) : (
                       ''
                     )}

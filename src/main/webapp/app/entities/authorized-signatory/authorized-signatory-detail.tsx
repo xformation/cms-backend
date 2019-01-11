@@ -67,9 +67,9 @@ export class AuthorizedSignatoryDetail extends React.Component<IAuthorizedSignat
             </dt>
             <dd>{authorizedSignatoryEntity.panCardNumber}</dd>
             <dt>
-              <Translate contentKey="cmsApp.authorizedSignatory.legalentity">Legalentity</Translate>
+              <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
             </dt>
-            <dd>{authorizedSignatoryEntity.legalentityId ? authorizedSignatoryEntity.legalentityId : ''}</dd>
+            <dd>{authorizedSignatoryEntity.legalEntityId ? authorizedSignatoryEntity.legalEntityId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/authorized-signatory" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

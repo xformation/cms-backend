@@ -103,7 +103,6 @@ public class Branch implements Serializable {
     public void setCollege(College college) {
         this.college = college;
     }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

@@ -391,7 +391,7 @@ public class AuthorizedSignatoryResourceIntTest {
         // Create the AuthorizedSignatory
         AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restAuthorizedSignatoryMockMvc.perform(put("/api/authorized-signatories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(authorizedSignatoryDTO)))

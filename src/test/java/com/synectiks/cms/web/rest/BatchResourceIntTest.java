@@ -252,7 +252,7 @@ public class BatchResourceIntTest {
         // Create the Batch
         BatchDTO batchDTO = batchMapper.toDto(batch);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restBatchMockMvc.perform(put("/api/batches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(batchDTO)))

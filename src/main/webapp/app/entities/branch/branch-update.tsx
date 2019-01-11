@@ -14,7 +14,7 @@ import { getEntity, updateEntity, createEntity, reset } from './branch.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IBranchUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -61,23 +61,6 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
 
   handleClose = () => {
     this.props.history.push('/entity/branch');
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -150,7 +133,7 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                   <Label for="college.id">
                     <Translate contentKey="cmsApp.branch.college">College</Translate>
                   </Label>
-                  <AvInput id="branch-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="branch-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (

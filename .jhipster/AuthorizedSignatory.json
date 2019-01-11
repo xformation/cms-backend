@@ -47,7 +47,7 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "legalentity",
+            "relationshipName": "legalEntity",
             "otherEntityName": "legalEntity",
             "otherEntityField": "id"
         }

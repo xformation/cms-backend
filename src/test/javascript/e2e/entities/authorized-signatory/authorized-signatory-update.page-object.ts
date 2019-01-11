@@ -10,7 +10,7 @@ export default class AuthorizedSignatoryUpdatePage {
   addressInput: ElementFinder = element(by.css('input#authorized-signatory-address'));
   emailInput: ElementFinder = element(by.css('input#authorized-signatory-email'));
   panCardNumberInput: ElementFinder = element(by.css('input#authorized-signatory-panCardNumber'));
-  legalentitySelect: ElementFinder = element(by.css('select#authorized-signatory-legalentity'));
+  legalEntitySelect: ElementFinder = element(by.css('select#authorized-signatory-legalEntity'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -64,23 +64,23 @@ export default class AuthorizedSignatoryUpdatePage {
     return this.panCardNumberInput.getAttribute('value');
   }
 
-  legalentitySelectLastOption() {
-    this.legalentitySelect
+  legalEntitySelectLastOption() {
+    this.legalEntitySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  legalentitySelectOption(option) {
-    this.legalentitySelect.sendKeys(option);
+  legalEntitySelectOption(option) {
+    this.legalEntitySelect.sendKeys(option);
   }
 
-  getLegalentitySelect() {
-    return this.legalentitySelect;
+  getLegalEntitySelect() {
+    return this.legalEntitySelect;
   }
 
-  getLegalentitySelectedOption() {
-    return this.legalentitySelect.element(by.css('option:checked')).getText();
+  getLegalEntitySelectedOption() {
+    return this.legalEntitySelect.element(by.css('option:checked')).getText();
   }
 
   save() {

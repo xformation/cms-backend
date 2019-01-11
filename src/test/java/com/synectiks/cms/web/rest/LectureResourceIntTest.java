@@ -347,7 +347,7 @@ public class LectureResourceIntTest {
         // Create the Lecture
         LectureDTO lectureDTO = lectureMapper.toDto(lecture);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restLectureMockMvc.perform(put("/api/lectures")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lectureDTO)))

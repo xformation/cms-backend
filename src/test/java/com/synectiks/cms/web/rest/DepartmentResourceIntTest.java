@@ -307,7 +307,7 @@ public class DepartmentResourceIntTest {
         // Create the Department
         DepartmentDTO departmentDTO = departmentMapper.toDto(department);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restDepartmentMockMvc.perform(put("/api/departments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(departmentDTO)))

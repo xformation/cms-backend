@@ -16,7 +16,7 @@ import { getEntity, updateEntity, createEntity, reset } from './teach.reducer';
 import { ITeach } from 'app/shared/model/teach.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITeachUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -68,40 +68,6 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
     this.props.history.push('/entity/teach');
   };
 
-  teacherUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        teacherId: -1
-      });
-    } else {
-      for (const i in this.props.teachers) {
-        if (id === this.props.teachers[i].id.toString()) {
-          this.setState({
-            teacherId: this.props.teachers[i].id
-          });
-        }
-      }
-    }
-  };
-
-  subjectUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        subjectId: -1
-      });
-    } else {
-      for (const i in this.props.subjects) {
-        if (id === this.props.subjects[i].id.toString()) {
-          this.setState({
-            subjectId: this.props.subjects[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
     const { teachEntity, teachers, subjects, loading, updating } = this.props;
     const { isNew } = this.state;
@@ -139,7 +105,7 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
                   <Label for="teacher.id">
                     <Translate contentKey="cmsApp.teach.teacher">Teacher</Translate>
                   </Label>
-                  <AvInput id="teach-teacher" type="select" className="form-control" name="teacherId" onChange={this.teacherUpdate}>
+                  <AvInput id="teach-teacher" type="select" className="form-control" name="teacherId">
                     <option value="" key="0" />
                     {teachers
                       ? teachers.map(otherEntity => (
@@ -154,7 +120,7 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
                   <Label for="subject.id">
                     <Translate contentKey="cmsApp.teach.subject">Subject</Translate>
                   </Label>
-                  <AvInput id="teach-subject" type="select" className="form-control" name="subjectId" onChange={this.subjectUpdate}>
+                  <AvInput id="teach-subject" type="select" className="form-control" name="subjectId">
                     <option value="" key="0" />
                     {subjects
                       ? subjects.map(otherEntity => (

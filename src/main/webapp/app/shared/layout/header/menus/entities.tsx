@@ -71,6 +71,30 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/test-entity">
       <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.testEntity" />
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/branch">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.branch" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/department">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.department" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/batch">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.batch" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/teach">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.teach" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/course-offer">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.courseOffer" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/attendance-master">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.attendanceMaster" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/lecture">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.lecture" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/authorized-signatory">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.authorizedSignatory" />
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

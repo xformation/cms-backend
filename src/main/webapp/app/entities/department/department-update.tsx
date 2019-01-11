@@ -18,7 +18,7 @@ import { getEntity, updateEntity, createEntity, reset } from './department.reduc
 import { IDepartment } from 'app/shared/model/department.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IDepartmentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -71,57 +71,6 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
 
   handleClose = () => {
     this.props.history.push('/entity/department');
-  };
-
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
-  };
-
-  academicyearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        academicyearId: -1
-      });
-    } else {
-      for (const i in this.props.academicYears) {
-        if (id === this.props.academicYears[i].id.toString()) {
-          this.setState({
-            academicyearId: this.props.academicYears[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -194,7 +143,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                   <Label for="student.id">
                     <Translate contentKey="cmsApp.department.student">Student</Translate>
                   </Label>
-                  <AvInput id="department-student" type="select" className="form-control" name="studentId" onChange={this.studentUpdate}>
+                  <AvInput id="department-student" type="select" className="form-control" name="studentId">
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -209,7 +158,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                   <Label for="college.id">
                     <Translate contentKey="cmsApp.department.college">College</Translate>
                   </Label>
-                  <AvInput id="department-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="department-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -224,13 +173,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                   <Label for="academicyear.id">
                     <Translate contentKey="cmsApp.department.academicyear">Academicyear</Translate>
                   </Label>
-                  <AvInput
-                    id="department-academicyear"
-                    type="select"
-                    className="form-control"
-                    name="academicyearId"
-                    onChange={this.academicyearUpdate}
-                  >
+                  <AvInput id="department-academicyear" type="select" className="form-control" name="academicyearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
