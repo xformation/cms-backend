@@ -39,6 +39,7 @@ describe('College e2e test', () => {
     expect(await collegeUpdatePage.getBackgroundImageInput()).to.eq('5');
     collegeUpdatePage.setInstructionInformationInput('instructionInformation');
     expect(await collegeUpdatePage.getInstructionInformationInput()).to.match(/instructionInformation/);
+    collegeUpdatePage.branchSelectLastOption();
     await collegeUpdatePage.save();
     expect(await collegeUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

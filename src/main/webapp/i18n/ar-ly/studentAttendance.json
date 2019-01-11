@@ -1,0 +1,26 @@
+
+{
+    "cmsApp": {
+        "studentAttendance" : {
+            "home": {
+                "title": "Student Attendances",
+                "createLabel": "Create a new Student Attendance",
+                "createOrEditLabel": "Create or edit a Student Attendance",
+                "search": "Search for Student Attendance"
+            },
+            "created": "A new Student Attendance is created with identifier {{ param }}",
+            "updated": "A Student Attendance is updated with identifier {{ param }}",
+            "deleted": "A Student Attendance is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Student Attendance {{ id }}?"
+            },
+            "detail": {
+                "title": "Student Attendance"
+            },
+            "attendanceStatus": "Attendance Status",
+            "comments": "Comments",
+            "student": "Student",
+            "lecture": "Lecture"
+        }
+    }
+}

@@ -1,12 +1,14 @@
 import './header.css';
 
 import React from 'react';
-import { Translate } from 'react-jhipster';
+import { Translate, Storage } from 'react-jhipster';
 import { Navbar, Nav, NavbarToggler, NavbarBrand, Collapse } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { NavLink as Link } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
+
+import { isRTL } from 'app/config/translation';
 
 import { Home, Brand } from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from './menus';
@@ -29,9 +31,13 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   state: IHeaderState = {
     menuOpen: false
   };
+  componentDidMount() {
+    document.querySelector('html').setAttribute('dir', isRTL(Storage.local.get('locale')) ? 'rtl' : 'ltr');
+  }
 
   handleLocaleChange = event => {
     this.props.onLocaleChange(event.target.value);
+    document.querySelector('html').setAttribute('dir', isRTL(event.target.value) ? 'rtl' : 'ltr');
   };
 
   renderDevRibbon = () =>

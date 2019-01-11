@@ -39,10 +39,6 @@ public class Branch implements Serializable {
     @Column(name = "college_head", nullable = false)
     private String collegeHead;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private College college;
-
     @ManyToOne
     @JsonIgnoreProperties("")
     private College college;
@@ -93,19 +89,6 @@ public class Branch implements Serializable {
 
     public void setCollegeHead(String collegeHead) {
         this.collegeHead = collegeHead;
-    }
-
-    public College getCollege() {
-        return college;
-    }
-
-    public Branch college(College college) {
-        this.college = college;
-        return this;
-    }
-
-    public void setCollege(College college) {
-        this.college = college;
     }
 
     public College getCollege() {

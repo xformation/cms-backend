@@ -38,7 +38,6 @@ describe('Branch e2e test', () => {
     branchUpdatePage.setCollegeHeadInput('collegeHead');
     expect(await branchUpdatePage.getCollegeHeadInput()).to.match(/collegeHead/);
     branchUpdatePage.collegeSelectLastOption();
-    branchUpdatePage.collegeSelectLastOption();
     await branchUpdatePage.save();
     expect(await branchUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

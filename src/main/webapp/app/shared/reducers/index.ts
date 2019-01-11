@@ -13,174 +13,6 @@ import password, { PasswordState } from 'app/modules/account/password/password.r
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
-import studentYear, {
-  StudentYearState
-} from 'app/entities/student-year/student-year.reducer';
-// prettier-ignore
-import section, {
-  SectionState
-} from 'app/entities/section/section.reducer';
-// prettier-ignore
-import semester, {
-  SemesterState
-} from 'app/entities/semester/semester.reducer';
-// prettier-ignore
-import studentAttendance, {
-  StudentAttendanceState
-} from 'app/entities/student-attendance/student-attendance.reducer';
-// prettier-ignore
-import periods, {
-  PeriodsState
-} from 'app/entities/periods/periods.reducer';
-// prettier-ignore
-import subject, {
-  SubjectState
-} from 'app/entities/subject/subject.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import student, {
-  StudentState
-} from 'app/entities/student/student.reducer';
-// prettier-ignore
-import collegeBranches, {
-  CollegeBranchesState
-} from 'app/entities/college-branches/college-branches.reducer';
-// prettier-ignore
-import departments, {
-  DepartmentsState
-} from 'app/entities/departments/departments.reducer';
-// prettier-ignore
-import location, {
-  LocationState
-} from 'app/entities/location/location.reducer';
-// prettier-ignore
-import college, {
-  CollegeState
-} from 'app/entities/college/college.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
-import authorizedSignatory, {
-  AuthorizedSignatoryState
-} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
-// prettier-ignore
-import bankAccounts, {
-  BankAccountsState
-} from 'app/entities/bank-accounts/bank-accounts.reducer';
-// prettier-ignore
-import periods, {
-  PeriodsState
-} from 'app/entities/periods/periods.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import studentAttendance, {
-  StudentAttendanceState
-} from 'app/entities/student-attendance/student-attendance.reducer';
-// prettier-ignore
-import academicDepartment, {
-  AcademicDepartmentState
-} from 'app/entities/academic-department/academic-department.reducer';
-// prettier-ignore
-import academicSubject, {
-  AcademicSubjectState
-} from 'app/entities/academic-subject/academic-subject.reducer';
-// prettier-ignore
-import academicYear, {
-  AcademicYearState
-} from 'app/entities/academic-year/academic-year.reducer';
-// prettier-ignore
-import holiday, {
-  HolidayState
-} from 'app/entities/holiday/holiday.reducer';
-// prettier-ignore
-import term, {
-  TermState
-} from 'app/entities/term/term.reducer';
-// prettier-ignore
-import studentAttendance, {
-  StudentAttendanceState
-} from 'app/entities/student-attendance/student-attendance.reducer';
-// prettier-ignore
-import holiday, {
-  HolidayState
-} from 'app/entities/holiday/holiday.reducer';
-// prettier-ignore
-import term, {
-  TermState
-} from 'app/entities/term/term.reducer';
-// prettier-ignore
-import studentAttendance, {
-  StudentAttendanceState
-} from 'app/entities/student-attendance/student-attendance.reducer';
-// prettier-ignore
-import holiday, {
-  HolidayState
-} from 'app/entities/holiday/holiday.reducer';
-// prettier-ignore
-import term, {
-  TermState
-} from 'app/entities/term/term.reducer';
-// prettier-ignore
-import studentYear, {
-  StudentYearState
-} from 'app/entities/student-year/student-year.reducer';
-// prettier-ignore
-import studentAttendance, {
-  StudentAttendanceState
-} from 'app/entities/student-attendance/student-attendance.reducer';
-// prettier-ignore
-import academicSubject, {
-  AcademicSubjectState
-} from 'app/entities/academic-subject/academic-subject.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import student, {
-  StudentState
-} from 'app/entities/student/student.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
-import authorizedSignatory, {
-  AuthorizedSignatoryState
-} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
-// prettier-ignore
-import academicYear, {
-  AcademicYearState
-} from 'app/entities/academic-year/academic-year.reducer';
-// prettier-ignore
-import holiday, {
-  HolidayState
-} from 'app/entities/holiday/holiday.reducer';
-// prettier-ignore
-import term, {
-  TermState
-} from 'app/entities/term/term.reducer';
-// prettier-ignore
-import holiday, {
-  HolidayState
-} from 'app/entities/holiday/holiday.reducer';
-// prettier-ignore
-import term, {
-  TermState
-} from 'app/entities/term/term.reducer';
-// prettier-ignore
 import college, {
   CollegeState
 } from 'app/entities/college/college.reducer';
@@ -260,6 +92,10 @@ import authorizedSignatory, {
 import bankAccounts, {
   BankAccountsState
 } from 'app/entities/bank-accounts/bank-accounts.reducer';
+// prettier-ignore
+import testEntity, {
+  TestEntityState
+} from 'app/entities/test-entity/test-entity.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -273,33 +109,27 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
-  readonly studentYear: StudentYearState;
-  readonly section: SectionState;
-  readonly semester: SemesterState;
-  readonly studentAttendance: StudentAttendanceState;
-  readonly periods: PeriodsState;
-  readonly subject: SubjectState;
-  readonly teacher: TeacherState;
-  readonly student: StudentState;
-  readonly collegeBranches: CollegeBranchesState;
-  readonly departments: DepartmentsState;
-  readonly location: LocationState;
   readonly college: CollegeState;
-  readonly legalEntity: LegalEntityState;
-  readonly authorizedSignatory: AuthorizedSignatoryState;
-  readonly bankAccounts: BankAccountsState;
-  readonly academicDepartment: AcademicDepartmentState;
-  readonly academicSubject: AcademicSubjectState;
-  readonly academicYear: AcademicYearState;
-  readonly holiday: HolidayState;
-  readonly term: TermState;
   readonly branch: BranchState;
   readonly department: DepartmentState;
   readonly batch: BatchState;
+  readonly subject: SubjectState;
+  readonly section: SectionState;
+  readonly term: TermState;
+  readonly student: StudentState;
+  readonly teacher: TeacherState;
+  readonly academicYear: AcademicYearState;
+  readonly holiday: HolidayState;
   readonly teach: TeachState;
   readonly courseOffer: CourseOfferState;
   readonly attendanceMaster: AttendanceMasterState;
   readonly lecture: LectureState;
+  readonly studentAttendance: StudentAttendanceState;
+  readonly location: LocationState;
+  readonly legalEntity: LegalEntityState;
+  readonly authorizedSignatory: AuthorizedSignatoryState;
+  readonly bankAccounts: BankAccountsState;
+  readonly testEntity: TestEntityState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -315,33 +145,27 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   settings,
-  studentYear,
-  section,
-  semester,
-  studentAttendance,
-  periods,
-  subject,
-  teacher,
-  student,
-  collegeBranches,
-  departments,
-  location,
   college,
-  legalEntity,
-  authorizedSignatory,
-  bankAccounts,
-  academicDepartment,
-  academicSubject,
-  academicYear,
-  holiday,
-  term,
   branch,
   department,
   batch,
+  subject,
+  section,
+  term,
+  student,
+  teacher,
+  academicYear,
+  holiday,
   teach,
   courseOffer,
   attendanceMaster,
   lecture,
+  studentAttendance,
+  location,
+  legalEntity,
+  authorizedSignatory,
+  bankAccounts,
+  testEntity,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

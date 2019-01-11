@@ -1,0 +1,23 @@
+
+{
+    "cmsApp": {
+        "testEntity" : {
+            "home": {
+                "title": "Test Entities",
+                "createLabel": "Create a new Test Entity",
+                "createOrEditLabel": "Create or edit a Test Entity",
+                "search": "Search for Test Entity"
+            },
+            "created": "A new Test Entity is created with identifier {{ param }}",
+            "updated": "A Test Entity is updated with identifier {{ param }}",
+            "deleted": "A Test Entity is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Test Entity {{ id }}?"
+            },
+            "detail": {
+                "title": "Test Entity"
+            },
+            "studentName": "Student Name"
+        }
+    }
+}

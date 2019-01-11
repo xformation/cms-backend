@@ -1,0 +1,11 @@
+{
+    "cmsApp": {
+        "BatchEnum" : {
+            "null": "",
+            "FIRSTYEAR": "FIRSTYEAR",
+            "SECONDYEAR": "SECONDYEAR",
+            "THIRDYEAR": "THIRDYEAR",
+            "FOURTHYEAR": "FOURTHYEAR"
+        }
+    }
+}

@@ -22,8 +22,6 @@ public class BranchDTO implements Serializable {
 
     private Long collegeId;
 
-    private Long collegeId;
-
     public Long getId() {
         return id;
     }
@@ -64,14 +62,6 @@ public class BranchDTO implements Serializable {
         this.collegeId = collegeId;
     }
 
-    public Long getCollegeId() {
-        return collegeId;
-    }
-
-    public void setCollegeId(Long collegeId) {
-        this.collegeId = collegeId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -100,7 +90,6 @@ public class BranchDTO implements Serializable {
             ", branchName='" + getBranchName() + "'" +
             ", description='" + getDescription() + "'" +
             ", collegeHead='" + getCollegeHead() + "'" +
-            ", college=" + getCollegeId() +
             ", college=" + getCollegeId() +
             "}";
     }

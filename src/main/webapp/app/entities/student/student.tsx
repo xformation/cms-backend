@@ -88,9 +88,6 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                   <Translate contentKey="cmsApp.student.studentName">Student Name</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.student.department">Department</Translate>
-                </th>
-                <th>
                   <Translate contentKey="cmsApp.student.batch">Batch</Translate>
                 </th>
                 <th>
@@ -114,7 +111,6 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                     </Button>
                   </td>
                   <td>{student.studentName}</td>
-                  <td>{student.departmentId ? <Link to={`department/${student.departmentId}`}>{student.departmentId}</Link> : ''}</td>
                   <td>{student.batchId ? <Link to={`batch/${student.batchId}`}>{student.batchId}</Link> : ''}</td>
                   <td>{student.sectionId ? <Link to={`section/${student.sectionId}`}>{student.sectionId}</Link> : ''}</td>
                   <td>{student.branchId ? <Link to={`branch/${student.branchId}`}>{student.branchId}</Link> : ''}</td>

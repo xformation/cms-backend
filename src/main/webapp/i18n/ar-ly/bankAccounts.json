@@ -1,0 +1,28 @@
+
+{
+    "cmsApp": {
+        "bankAccounts" : {
+            "home": {
+                "title": "Bank Accounts",
+                "createLabel": "Create a new Bank Accounts",
+                "createOrEditLabel": "Create or edit a Bank Accounts",
+                "search": "Search for Bank Accounts"
+            },
+            "created": "A new Bank Accounts is created with identifier {{ param }}",
+            "updated": "A Bank Accounts is updated with identifier {{ param }}",
+            "deleted": "A Bank Accounts is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Bank Accounts {{ id }}?"
+            },
+            "detail": {
+                "title": "Bank Accounts"
+            },
+            "nameOfBank": "Name Of Bank",
+            "accountNumber": "Account Number",
+            "typeOfAccount": "Type Of Account",
+            "ifsCode": "Ifs Code",
+            "branch": "Branch",
+            "corporateId": "Corporate Id"
+        }
+    }
+}

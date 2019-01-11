@@ -10,7 +10,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190110134454",
+    "changelogDate": "20190111072049",
     "entityTableName": "teacher",
     "dto": "mapstruct",
     "pagination": "no",

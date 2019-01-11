@@ -1,8 +1,8 @@
 entity College {
-	shortName String required
-	logo Long required
-	backgroundImage Long required
-	instructionInformation String required
+shortName String required
+logo Long required
+backgroundImage Long required
+instructionInformation String required
 }
 entity Branch{
 branchName String required
@@ -45,10 +45,10 @@ A,B,C,D
 }
 
 entity Term{
-	termsDesc String required
-	startDate LocalDate required
-	endDate   LocalDate required
-	termStatus Status required
+termsDesc String required
+startDate LocalDate required
+endDate LocalDate required
+termStatus Status required
 }
 
 enum Status {
@@ -63,46 +63,45 @@ teacherName String required
 }
 
 entity AcademicYear{
-	year Long required
-	startDate LocalDate required
-	endDate   LocalDate required
-	desc      String   required
+year Long required
+startDate LocalDate required
+endDate LocalDate required
+desc String required
 }
 
 entity Holiday{
-	holidayDesc String required
-	holidayDate LocalDate required
-	holidayStatus Status required
+holidayDesc String required
+holidayDate LocalDate required
+holidayStatus Status required
 }
 
 entity Teach{
-	desc String
+desc String
 }
 
 entity CourseOffer{
-	desc String
+desc String
 }
 
 entity AttendanceMaster{
-	desc String
+desc String
 }
 
 entity Lecture{
-    lecDate   LocalDate required
-    lastUpdatedOn   LocalDate required
-    lastUpdatedBy   String required
-    lecStatus LecStatusEnum required
-	desc String
+lecDate LocalDate required
+lastUpdatedOn LocalDate required
+lastUpdatedBy String required
+lecStatus LecStatusEnum required
+desc String
 }
 
 enum LecStatusEnum{
-	ACTIVE,DEACTIVE,CANCELLED
+ACTIVE,DEACTIVE,CANCELLED
 }
 
-
 entity StudentAttendance{
-	attendanceStatus AttendanceStatusEnum required
-	comments String required
+attendanceStatus AttendanceStatusEnum required
+comments String required
 }
 
 enum AttendanceStatusEnum{
@@ -115,7 +114,6 @@ address String required
 appliesTo String required
 }
 
-
 enum NameOfBank{
 HDFC, SBI, ICICI, ANDHRABANK
 }
@@ -126,39 +124,39 @@ PRIVATE, PUBLIC
 
 entity LegalEntity{
 logo Long required
-legalNameOfTheCollege  String  required
+legalNameOfTheCollege String required
 typeOfCollege TypeOfCollege required
 dateOfIncorporation LocalDate required
-registeredOfficeAddress String  required
-collegeIdentificationNumber String  required
-pan String  required
-tan String  required
-tanCircleNumber String  required
-citTdsLocation String  required
-formSignatory String  required
-pfNumber String  required
+registeredOfficeAddress String required
+collegeIdentificationNumber String required
+pan String required
+tan String required
+tanCircleNumber String required
+citTdsLocation String required
+formSignatory String required
+pfNumber String required
 registrationDate LocalDate required
 esiNumber Long required
 ptRegistrationDate LocalDate required
-ptSignatory String  required
+ptSignatory String required
 ptNumber Long required
 }
 
 entity AuthorizedSignatory{
-signatoryName String  required
-signatoryFatherName String  required
-signatoryDesignation String  required
-address String  required
-email String  required
-panCardNumber String  required
+signatoryName String required
+signatoryFatherName String required
+signatoryDesignation String required
+address String required
+email String required
+panCardNumber String required
 }
 
 entity BankAccounts{
-nameOfBank NameOfBank  required
+nameOfBank NameOfBank required
 accountNumber Long required
-typeOfAccount String  required
-ifsCode String  required
-branch String  required
+typeOfAccount String required
+ifsCode String required
+branch String required
 corporateId Integer required
 }
 
@@ -167,7 +165,7 @@ Branch{college} to College,
 Department{college} to College,
 Department{academicyear} to AcademicYear,
 Subject{department} to Department,
-Batch{department}  to Department,
+Batch{department} to Department,
 Section{batch} to Batch,
 Student{department} to Department,
 Holiday{academicyear} to AcademicYear,
@@ -182,19 +180,19 @@ StudentAttendance{lecture} to Lecture
 }
 
 relationship OneToOne{
-    Student{department} to Department,
-    Student{batch} to Batch,
-    Student{section} to Section,
-    Student{branch} to Branch,
-    Branch{college} to College,
-    Teach{teacher} to Teacher,
-    Teach{subject} to Subject,
-    CourseOffer{college} to College,
-    CourseOffer{department} to Department,
-    CourseOffer{subject} to Subject,
-    AttendanceMaster{teach} to Teach,
-    AttendanceMaster{section} to Section,
-    AttendanceMaster{academicyear} to AcademicYear
+Department{student} to Student,
+Student{batch} to Batch,
+Student{section} to Section,
+Student{branch} to Branch,
+College{branch} to Branch,
+Teach{teacher} to Teacher,
+Teach{subject} to Subject,
+CourseOffer{college} to College,
+CourseOffer{department} to Department,
+CourseOffer{subject} to Subject,
+AttendanceMaster{teach} to Teach,
+AttendanceMaster{section} to Section,
+AttendanceMaster{academicyear} to AcademicYear
 }
 
 dto * with mapstruct

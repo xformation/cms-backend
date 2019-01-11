@@ -1,0 +1,9 @@
+{
+    "cmsApp": {
+        "TypeOfCollege" : {
+            "null": "",
+            "PRIVATE": "PRIVATE",
+            "PUBLIC": "PUBLIC"
+        }
+    }
+}

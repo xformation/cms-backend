@@ -8,14 +8,14 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IDepartment } from 'app/shared/model/department.model';
-import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { IBatch } from 'app/shared/model/batch.model';
 import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { ISection } from 'app/shared/model/section.model';
 import { getEntities as getSections } from 'app/entities/section/section.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
+import { IDepartment } from 'app/shared/model/department.model';
+import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './student.reducer';
 import { IStudent } from 'app/shared/model/student.model';
 // tslint:disable-next-line:no-unused-variable
@@ -26,22 +26,20 @@ export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface IStudentUpdateState {
   isNew: boolean;
-  departmentId: number;
-  departmentId: number;
   batchId: number;
   sectionId: number;
   branchId: number;
+  departmentId: number;
 }
 
 export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudentUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      departmentId: 0,
-      departmentId: 0,
       batchId: 0,
       sectionId: 0,
       branchId: 0,
+      departmentId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -53,10 +51,10 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getDepartments();
     this.props.getBatches();
     this.props.getSections();
     this.props.getBranches();
+    this.props.getDepartments();
   }
 
   saveEntity = (event, errors, values) => {
@@ -78,23 +76,6 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
 
   handleClose = () => {
     this.props.history.push('/entity/student');
-  };
-
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
   };
 
   batchUpdate = element => {
@@ -166,7 +147,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
   };
 
   render() {
-    const { studentEntity, departments, batches, sections, branches, loading, updating } = this.props;
+    const { studentEntity, batches, sections, branches, departments, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -204,27 +185,6 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
-                </AvGroup>
-                <AvGroup>
-                  <Label for="department.id">
-                    <Translate contentKey="cmsApp.student.department">Department</Translate>
-                  </Label>
-                  <AvInput
-                    id="student-department"
-                    type="select"
-                    className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
-                  >
-                    <option value="" key="0" />
-                    {departments
-                      ? departments.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">
@@ -313,20 +273,20 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  departments: storeState.department.entities,
   batches: storeState.batch.entities,
   sections: storeState.section.entities,
   branches: storeState.branch.entities,
+  departments: storeState.department.entities,
   studentEntity: storeState.student.entity,
   loading: storeState.student.loading,
   updating: storeState.student.updating
 });
 
 const mapDispatchToProps = {
-  getDepartments,
   getBatches,
   getSections,
   getBranches,
+  getDepartments,
   getEntity,
   updateEntity,
   createEntity,

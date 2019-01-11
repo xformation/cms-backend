@@ -94,6 +94,9 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
                   <Translate contentKey="cmsApp.department.deptHead">Dept Head</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="cmsApp.department.student">Student</Translate>
+                </th>
+                <th>
                   <Translate contentKey="cmsApp.department.college">College</Translate>
                 </th>
                 <th>
@@ -113,6 +116,7 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
                   <td>{department.name}</td>
                   <td>{department.description}</td>
                   <td>{department.deptHead}</td>
+                  <td>{department.studentId ? <Link to={`student/${department.studentId}`}>{department.studentId}</Link> : ''}</td>
                   <td>{department.collegeId ? <Link to={`college/${department.collegeId}`}>{department.collegeId}</Link> : ''}</td>
                   <td>
                     {department.academicyearId ? (

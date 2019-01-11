@@ -22,7 +22,7 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "0703a0be9a8e728776af1e75f9c10e3a5edbd937",
+    "jwtSecretKey": "da4bdce01eb320692e6c35b405c905fe2ed1739c",
     "clientFramework": "react",
     "useSass": false,
     "clientPackageManager": "yarn",
@@ -32,11 +32,11 @@
       "protractor"
     ],
     "jhiPrefix": "jhi",
-    "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "en",
     "languages": [
-      "en"
+      "en",
+      "ar-ly"
     ]
   }
 }

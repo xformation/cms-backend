@@ -1,0 +1,10 @@
+{
+    "cmsApp": {
+        "LecStatusEnum" : {
+            "null": "",
+            "ACTIVE": "ACTIVE",
+            "DEACTIVE": "DEACTIVE",
+            "CANCELLED": "CANCELLED"
+        }
+    }
+}

@@ -8,6 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './college.reducer';
 import { ICollege } from 'app/shared/model/college.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +20,14 @@ export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface ICollegeUpdateState {
   isNew: boolean;
+  branchId: number;
 }
 
 export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollegeUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      branchId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -34,6 +38,8 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getBranches();
   }
 
   saveEntity = (event, errors, values) => {
@@ -57,8 +63,25 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
     this.props.history.push('/entity/college');
   };
 
+  branchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        branchId: -1
+      });
+    } else {
+      for (const i in this.props.branches) {
+        if (id === this.props.branches[i].id.toString()) {
+          this.setState({
+            branchId: this.props.branches[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
-    const { collegeEntity, loading, updating } = this.props;
+    const { collegeEntity, branches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -140,6 +163,21 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
                     }}
                   />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="branch.id">
+                    <Translate contentKey="cmsApp.college.branch">Branch</Translate>
+                  </Label>
+                  <AvInput id="college-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
+                    <option value="" key="0" />
+                    {branches
+                      ? branches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/college" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -161,12 +199,14 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  branches: storeState.branch.entities,
   collegeEntity: storeState.college.entity,
   loading: storeState.college.loading,
   updating: storeState.college.updating
 });
 
 const mapDispatchToProps = {
+  getBranches,
   getEntity,
   updateEntity,
   createEntity,

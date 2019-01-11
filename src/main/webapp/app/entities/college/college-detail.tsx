@@ -52,6 +52,10 @@ export class CollegeDetail extends React.Component<ICollegeDetailProps> {
               </span>
             </dt>
             <dd>{collegeEntity.instructionInformation}</dd>
+            <dt>
+              <Translate contentKey="cmsApp.college.branch">Branch</Translate>
+            </dt>
+            <dd>{collegeEntity.branchId ? collegeEntity.branchId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/college" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

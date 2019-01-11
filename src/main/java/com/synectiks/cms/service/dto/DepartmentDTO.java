@@ -20,6 +20,8 @@ public class DepartmentDTO implements Serializable {
     @NotNull
     private String deptHead;
 
+    private Long studentId;
+
     private Long collegeId;
 
     private Long academicyearId;
@@ -54,6 +56,14 @@ public class DepartmentDTO implements Serializable {
 
     public void setDeptHead(String deptHead) {
         this.deptHead = deptHead;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public Long getCollegeId() {
@@ -100,6 +110,7 @@ public class DepartmentDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", deptHead='" + getDeptHead() + "'" +
+            ", student=" + getStudentId() +
             ", college=" + getCollegeId() +
             ", academicyear=" + getAcademicyearId() +
             "}";

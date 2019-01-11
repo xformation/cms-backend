@@ -96,9 +96,6 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
                 <th>
                   <Translate contentKey="cmsApp.branch.college">College</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="cmsApp.branch.college">College</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -113,7 +110,6 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
                   <td>{branch.branchName}</td>
                   <td>{branch.description}</td>
                   <td>{branch.collegeHead}</td>
-                  <td>{branch.collegeId ? <Link to={`college/${branch.collegeId}`}>{branch.collegeId}</Link> : ''}</td>
                   <td>{branch.collegeId ? <Link to={`college/${branch.collegeId}`}>{branch.collegeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

@@ -12,14 +12,6 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "department",
-            "otherEntityName": "department",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "student"
-        },
-        {
-            "relationshipType": "one-to-one",
             "relationshipName": "batch",
             "otherEntityName": "batch",
             "otherEntityField": "id",
@@ -49,7 +41,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190110134453",
+    "changelogDate": "20190111072048",
     "entityTableName": "student",
     "dto": "mapstruct",
     "pagination": "no",

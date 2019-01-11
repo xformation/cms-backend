@@ -14,8 +14,6 @@ public class StudentDTO implements Serializable {
     @NotNull
     private String studentName;
 
-    private Long departmentId;
-
     private Long batchId;
 
     private Long sectionId;
@@ -38,14 +36,6 @@ public class StudentDTO implements Serializable {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
     }
 
     public Long getBatchId() {
@@ -106,7 +96,6 @@ public class StudentDTO implements Serializable {
         return "StudentDTO{" +
             "id=" + getId() +
             ", studentName='" + getStudentName() + "'" +
-            ", department=" + getDepartmentId() +
             ", batch=" + getBatchId() +
             ", section=" + getSectionId() +
             ", branch=" + getBranchId() +

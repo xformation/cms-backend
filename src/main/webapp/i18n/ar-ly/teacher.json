@@ -1,0 +1,23 @@
+
+{
+    "cmsApp": {
+        "teacher" : {
+            "home": {
+                "title": "Teachers",
+                "createLabel": "Create a new Teacher",
+                "createOrEditLabel": "Create or edit a Teacher",
+                "search": "Search for Teacher"
+            },
+            "created": "A new Teacher is created with identifier {{ param }}",
+            "updated": "A Teacher is updated with identifier {{ param }}",
+            "deleted": "A Teacher is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Teacher {{ id }}?"
+            },
+            "detail": {
+                "title": "Teacher"
+            },
+            "teacherName": "Teacher Name"
+        }
+    }
+}

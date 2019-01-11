@@ -33,7 +33,6 @@ describe('Student e2e test', () => {
   it('should create and save Students', async () => {
     studentUpdatePage.setStudentNameInput('studentName');
     expect(await studentUpdatePage.getStudentNameInput()).to.match(/studentName/);
-    studentUpdatePage.departmentSelectLastOption();
     studentUpdatePage.batchSelectLastOption();
     studentUpdatePage.sectionSelectLastOption();
     studentUpdatePage.branchSelectLastOption();

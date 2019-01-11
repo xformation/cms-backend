@@ -12,10 +12,8 @@ import org.mapstruct.*;
 public interface BranchMapper extends EntityMapper<BranchDTO, Branch> {
 
     @Mapping(source = "college.id", target = "collegeId")
-    @Mapping(source = "college.id", target = "collegeId")
     BranchDTO toDto(Branch branch);
 
-    @Mapping(source = "collegeId", target = "college")
     @Mapping(source = "collegeId", target = "college")
     Branch toEntity(BranchDTO branchDTO);
 

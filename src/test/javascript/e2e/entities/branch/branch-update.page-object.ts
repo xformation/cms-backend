@@ -8,7 +8,6 @@ export default class BranchUpdatePage {
   descriptionInput: ElementFinder = element(by.css('input#branch-description'));
   collegeHeadInput: ElementFinder = element(by.css('input#branch-collegeHead'));
   collegeSelect: ElementFinder = element(by.css('select#branch-college'));
-  collegeSelect: ElementFinder = element(by.css('select#branch-college'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -36,25 +35,6 @@ export default class BranchUpdatePage {
 
   getCollegeHeadInput() {
     return this.collegeHeadInput.getAttribute('value');
-  }
-
-  collegeSelectLastOption() {
-    this.collegeSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
-  }
-
-  getCollegeSelect() {
-    return this.collegeSelect;
-  }
-
-  getCollegeSelectedOption() {
-    return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
   collegeSelectLastOption() {

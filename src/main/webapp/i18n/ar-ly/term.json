@@ -1,0 +1,27 @@
+
+{
+    "cmsApp": {
+        "term" : {
+            "home": {
+                "title": "Terms",
+                "createLabel": "Create a new Term",
+                "createOrEditLabel": "Create or edit a Term",
+                "search": "Search for Term"
+            },
+            "created": "A new Term is created with identifier {{ param }}",
+            "updated": "A Term is updated with identifier {{ param }}",
+            "deleted": "A Term is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Term {{ id }}?"
+            },
+            "detail": {
+                "title": "Term"
+            },
+            "termsDesc": "Terms Desc",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "termStatus": "Term Status",
+            "academicyear": "Academicyear"
+        }
+    }
+}

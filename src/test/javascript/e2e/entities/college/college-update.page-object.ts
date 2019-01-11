@@ -8,6 +8,7 @@ export default class CollegeUpdatePage {
   logoInput: ElementFinder = element(by.css('input#college-logo'));
   backgroundImageInput: ElementFinder = element(by.css('input#college-backgroundImage'));
   instructionInformationInput: ElementFinder = element(by.css('input#college-instructionInformation'));
+  branchSelect: ElementFinder = element(by.css('select#college-branch'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -43,6 +44,25 @@ export default class CollegeUpdatePage {
 
   getInstructionInformationInput() {
     return this.instructionInformationInput.getAttribute('value');
+  }
+
+  branchSelectLastOption() {
+    this.branchSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
+  }
+
+  getBranchSelect() {
+    return this.branchSelect;
+  }
+
+  getBranchSelectedOption() {
+    return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

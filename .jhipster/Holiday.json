@@ -32,7 +32,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190110134456",
+    "changelogDate": "20190111072051",
     "entityTableName": "holiday",
     "dto": "mapstruct",
     "pagination": "no",

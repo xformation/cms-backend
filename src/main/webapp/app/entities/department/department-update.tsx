@@ -8,6 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IStudent } from 'app/shared/model/student.model';
+import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { ICollege } from 'app/shared/model/college.model';
 import { getEntities as getColleges } from 'app/entities/college/college.reducer';
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
@@ -22,6 +24,7 @@ export interface IDepartmentUpdateProps extends StateProps, DispatchProps, Route
 
 export interface IDepartmentUpdateState {
   isNew: boolean;
+  studentId: number;
   collegeId: number;
   academicyearId: number;
 }
@@ -30,6 +33,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
   constructor(props) {
     super(props);
     this.state = {
+      studentId: 0,
       collegeId: 0,
       academicyearId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -43,6 +47,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getStudents();
     this.props.getColleges();
     this.props.getAcademicYears();
   }
@@ -66,6 +71,23 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
 
   handleClose = () => {
     this.props.history.push('/entity/department');
+  };
+
+  studentUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        studentId: -1
+      });
+    } else {
+      for (const i in this.props.students) {
+        if (id === this.props.students[i].id.toString()) {
+          this.setState({
+            studentId: this.props.students[i].id
+          });
+        }
+      }
+    }
   };
 
   collegeUpdate = element => {
@@ -103,7 +125,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
   };
 
   render() {
-    const { departmentEntity, colleges, academicYears, loading, updating } = this.props;
+    const { departmentEntity, students, colleges, academicYears, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -169,6 +191,21 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label for="student.id">
+                    <Translate contentKey="cmsApp.department.student">Student</Translate>
+                  </Label>
+                  <AvInput id="department-student" type="select" className="form-control" name="studentId" onChange={this.studentUpdate}>
+                    <option value="" key="0" />
+                    {students
+                      ? students.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label for="college.id">
                     <Translate contentKey="cmsApp.department.college">College</Translate>
                   </Label>
@@ -225,6 +262,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  students: storeState.student.entities,
   colleges: storeState.college.entities,
   academicYears: storeState.academicYear.entities,
   departmentEntity: storeState.department.entity,
@@ -233,6 +271,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getStudents,
   getColleges,
   getAcademicYears,
   getEntity,

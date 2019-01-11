@@ -47,6 +47,10 @@ export class DepartmentDetail extends React.Component<IDepartmentDetailProps> {
             </dt>
             <dd>{departmentEntity.deptHead}</dd>
             <dt>
+              <Translate contentKey="cmsApp.department.student">Student</Translate>
+            </dt>
+            <dd>{departmentEntity.studentId ? departmentEntity.studentId : ''}</dd>
+            <dt>
               <Translate contentKey="cmsApp.department.college">College</Translate>
             </dt>
             <dd>{departmentEntity.collegeId ? departmentEntity.collegeId : ''}</dd>

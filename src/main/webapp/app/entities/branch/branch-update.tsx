@@ -21,14 +21,12 @@ export interface IBranchUpdateProps extends StateProps, DispatchProps, RouteComp
 export interface IBranchUpdateState {
   isNew: boolean;
   collegeId: number;
-  collegeId: number;
 }
 
 export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      collegeId: 0,
       collegeId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -63,23 +61,6 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
 
   handleClose = () => {
     this.props.history.push('/entity/branch');
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
   };
 
   collegeUpdate = element => {
@@ -164,21 +145,6 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                       required: { value: true, errorMessage: translate('entity.validation.required') }
                     }}
                   />
-                </AvGroup>
-                <AvGroup>
-                  <Label for="college.id">
-                    <Translate contentKey="cmsApp.branch.college">College</Translate>
-                  </Label>
-                  <AvInput id="branch-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
-                    <option value="" key="0" />
-                    {colleges
-                      ? colleges.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">

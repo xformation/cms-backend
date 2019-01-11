@@ -50,10 +50,6 @@ export class BranchDetail extends React.Component<IBranchDetailProps> {
               <Translate contentKey="cmsApp.branch.college">College</Translate>
             </dt>
             <dd>{branchEntity.collegeId ? branchEntity.collegeId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.branch.college">College</Translate>
-            </dt>
-            <dd>{branchEntity.collegeId ? branchEntity.collegeId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/branch" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

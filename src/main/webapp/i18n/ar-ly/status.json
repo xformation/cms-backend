@@ -1,0 +1,9 @@
+{
+    "cmsApp": {
+        "Status" : {
+            "null": "",
+            "ACTIVE": "ACTIVE",
+            "DEACTIVE": "DEACTIVE"
+        }
+    }
+}

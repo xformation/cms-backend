@@ -23,6 +23,8 @@ public class CollegeDTO implements Serializable {
     @NotNull
     private String instructionInformation;
 
+    private Long branchId;
+
     public Long getId() {
         return id;
     }
@@ -63,6 +65,14 @@ public class CollegeDTO implements Serializable {
         this.instructionInformation = instructionInformation;
     }
 
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -92,6 +102,7 @@ public class CollegeDTO implements Serializable {
             ", logo=" + getLogo() +
             ", backgroundImage=" + getBackgroundImage() +
             ", instructionInformation='" + getInstructionInformation() + "'" +
+            ", branch=" + getBranchId() +
             "}";
     }
 }

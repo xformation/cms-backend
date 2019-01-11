@@ -39,6 +39,10 @@ public class Department implements Serializable {
     @Column(name = "dept_head", nullable = false)
     private String deptHead;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Student student;
+
     @ManyToOne
     @JsonIgnoreProperties("")
     private College college;
@@ -93,6 +97,19 @@ public class Department implements Serializable {
 
     public void setDeptHead(String deptHead) {
         this.deptHead = deptHead;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public Department student(Student student) {
+        this.student = student;
+        return this;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public College getCollege() {
