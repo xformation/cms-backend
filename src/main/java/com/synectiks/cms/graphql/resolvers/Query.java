@@ -50,14 +50,12 @@ public class Query implements GraphQLQueryResolver {
     private final DepartmentsRepository departmentsRepository;
     private final LocationRepository locationRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
-    private final AcademicDepartmentRepository academicDepartmentRepository;
-    private final AcademicSubjectRepository academicSubjectRepository;
     private final AcademicYearRepository academicYearRepository;
     private final HolidayRepository holidayRepository;
     private final TermRepository termRepository;
 
 
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
@@ -74,8 +72,6 @@ public class Query implements GraphQLQueryResolver {
         this.departmentsRepository = departmentsRepository;
         this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
-        this.academicDepartmentRepository = academicDepartmentRepository;
-        this.academicSubjectRepository = academicSubjectRepository;
         this.academicYearRepository = academicYearRepository;
         this.holidayRepository = holidayRepository;
         this.termRepository = termRepository;
@@ -237,26 +233,6 @@ public class Query implements GraphQLQueryResolver {
     public List<StudentAttendance> studentAttendances()
     {
         return Lists.newArrayList(studentAttendanceRepository.findAll());
-    }
-
-    public AcademicDepartment academicDepartment(long id)
-    {
-        return academicDepartmentRepository.findById(id).get();
-    }
-
-    public List<AcademicDepartment> academicDepartments()
-    {
-        return Lists.newArrayList(academicDepartmentRepository.findAll());
-    }
-
-    public AcademicSubject academicSubject(long id)
-    {
-        return academicSubjectRepository.findById(id).get();
-    }
-
-    public List<AcademicSubject> academicSubjects()
-    {
-        return Lists.newArrayList(academicSubjectRepository.findAll());
     }
 
     public List<AcademicYear> academicYears()

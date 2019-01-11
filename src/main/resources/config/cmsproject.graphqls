@@ -5,6 +5,8 @@ type Query {
   colleges: [College!]!
   branch(id: Long!): Branch!
   branches: [Branch!]!
+  academicYear(id: Long!): AcademicYear!
+  academicYears: [AcademicYear!]!
 }
 
 type College{
@@ -29,6 +31,9 @@ type Mutation {
    updateBranch(input: UpdateBranchInput!): UpdateBranchPayload!
    removeBranch(input: RemoveBranchInput!): RemoveBranchPayload!
    
+   addAcademicYear(input: AddAcademicYearInput!): AddAcademicYearPayload!
+   updateAcademicYear(input: UpdateAcademicYearInput!): UpdateAcademicYearPayload!
+   removeAcademicYear(input: RemoveAcademicYearInput!): RemoveAcademicYearPayload!
 }
 
 input AddCollegeInput {
@@ -84,3 +89,40 @@ type RemoveBranchPayload {
     Branch: [Branch!]!
 }
 
+type AcademicYear{
+    id: Long!
+    year: Long!
+    startDate: Date!
+    endDate: Date!
+    desc: String!
+}
+
+input AddAcademicYearInput {
+    year: Long!
+    startDate: Date!
+    endDate: Date!
+    desc: String!
+}
+
+type AddAcademicYearPayload {
+    academicYear: AcademicYear!
+}
+
+input UpdateAcademicYearInput {
+    id:Long!
+    year: Long
+    startDate: Date
+    endDate: Date
+    desc: String
+}
+
+type UpdateAcademicYearPayload {
+    academicYear: AcademicYear!
+}
+
+input RemoveAcademicYearInput {
+    academicYearId: Long!
+}
+type RemoveAcademicYearPayload {
+    academicYears: [AcademicYear!]!
+}

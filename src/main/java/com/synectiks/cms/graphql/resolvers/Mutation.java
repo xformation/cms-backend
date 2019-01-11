@@ -4,7 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.Semester;
-import com.synectiks.cms.graphql.types.AcademicDepartment.*;
+
 import com.synectiks.cms.graphql.types.AcademicSubject.*;
 import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
@@ -52,13 +52,11 @@ public class Mutation implements GraphQLMutationResolver {
     private final DepartmentsRepository departmentsRepository;
     private final LocationRepository locationRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
-    private final AcademicDepartmentRepository academicDepartmentRepository;
-    private final AcademicSubjectRepository academicSubjectRepository;
     private final AcademicYearRepository academicYearRepository;
     private final HolidayRepository holidayRepository;
     private final TermRepository termRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
@@ -75,8 +73,6 @@ public class Mutation implements GraphQLMutationResolver {
         this.departmentsRepository = departmentsRepository;
         this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
-        this.academicDepartmentRepository = academicDepartmentRepository;
-        this.academicSubjectRepository = academicSubjectRepository;
         this.academicYearRepository = academicYearRepository;
         this.holidayRepository = holidayRepository;
         this.termRepository = termRepository;
@@ -694,73 +690,12 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveLegalEntityPayload(Lists.newArrayList(legalEntityRepository.findAll()));
     }
 
-    public AddAcademicDepartmentPayload addAcademicDepartment(AddAcademicDepartmentInput addAcademicDepartmentInput) {
-        final AcademicDepartment academicDepartment = new AcademicDepartment();
-        academicDepartment.setDepartmentName(addAcademicDepartmentInput.getDepartmentName());
-        academicDepartment.setUniversity(addAcademicDepartmentInput.getUniversity());
-
-        academicDepartmentRepository.save(academicDepartment);
-
-        return new AddAcademicDepartmentPayload(academicDepartment);
-    }
-
-    public UpdateAcademicDepartmentPayload updateAcademicDepartment(UpdateAcademicDepartmentInput updateAcademicDepartmentInput) {
-        AcademicDepartment academicDepartment = academicDepartmentRepository.findById(updateAcademicDepartmentInput.getId()).get();
-        if (updateAcademicDepartmentInput.getDepartmentName() != null) {
-            academicDepartment.setDepartmentName(updateAcademicDepartmentInput.getDepartmentName());
-        }
-
-        if (updateAcademicDepartmentInput.getUniversity() != null) {
-            academicDepartment.setUniversity(updateAcademicDepartmentInput.getUniversity());
-        }
-
-        academicDepartmentRepository.save(academicDepartment);
-
-        return new UpdateAcademicDepartmentPayload(academicDepartment);
-    }
-
-    public RemoveAcademicDepartmentPayload removeAcademicDepartment(RemoveAcademicDepartmentInput removeAcademicDepartmentInput) {
-        AcademicDepartment academicDepartment = academicDepartmentRepository.getOne(removeAcademicDepartmentInput.getAcademicDepartmentId());
-        academicDepartmentRepository.delete(academicDepartment);
-
-        return new RemoveAcademicDepartmentPayload(Lists.newArrayList(academicDepartmentRepository.findAll()));
-    }
-
-    public AddAcademicSubjectPayload addAcademicSubject(AddAcademicSubjectInput addAcademicSubjectInput) {
-        final Departments departments = departmentsRepository.findById(addAcademicSubjectInput.getDepartmentsId()).get();
-        final AcademicSubject academicSubject = new AcademicSubject();
-        academicSubject.setSubjectName(addAcademicSubjectInput.getSubjectName());
-        academicSubject.setElectiveSub(addAcademicSubjectInput.getElectiveSub());
-        academicSubject.setDepartment(departments);
-        academicSubjectRepository.save(academicSubject);
-
-        return new AddAcademicSubjectPayload(academicSubject);
-    }
-
-    public UpdateAcademicSubjectPayload updateAcademicSubject(UpdateAcademicSubjectInput updateAcademicSubjectInput) {
-        AcademicSubject academicSubject = academicSubjectRepository.findById(updateAcademicSubjectInput.getId()).get();
-        if (updateAcademicSubjectInput.getSubjectName() != null) {
-            academicSubject.setSubjectName(updateAcademicSubjectInput.getSubjectName());
-        }
-        if (updateAcademicSubjectInput.getElectiveSub() != null) {
-            academicSubject.setElectiveSub(updateAcademicSubjectInput.getElectiveSub());
-        }
-        academicSubjectRepository.save(academicSubject);
-
-        return new UpdateAcademicSubjectPayload(academicSubject);
-    }
-
-    public RemoveAcademicSubjectPayload removeAcademicSubject(RemoveAcademicSubjectInput removeAcademicSubjectInput) {
-        AcademicSubject academicSubject = academicSubjectRepository.findById(removeAcademicSubjectInput.getAcademicSubjectId()).get();
-        academicSubjectRepository.delete(academicSubject);
-        return new RemoveAcademicSubjectPayload(Lists.newArrayList(academicSubjectRepository.findAll()));
-    }
-
     public AddAcademicYearPayload addAcademicYear(AddAcademicYearInput addAcademicYearInput) {
         final AcademicYear academicYear = new AcademicYear();
         academicYear.setYear(addAcademicYearInput.getYear());
         academicYear.setStartDate(addAcademicYearInput.getStartDate());
         academicYear.setEndDate(addAcademicYearInput.getEndDate());
+        academicYear.setDesc(addAcademicYearInput.getDesc());
         academicYearRepository.save(academicYear);
         return new AddAcademicYearPayload(academicYear);
     }
