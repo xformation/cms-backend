@@ -14,7 +14,7 @@ import { getEntity, updateEntity, createEntity, reset } from './term.reducer';
 import { ITerm } from 'app/shared/model/term.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -61,23 +61,6 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
 
   handleClose = () => {
     this.props.history.push('/entity/term');
-  };
-
-  academicyearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        academicyearId: -1
-      });
-    } else {
-      for (const i in this.props.academicYears) {
-        if (id === this.props.academicYears[i].id.toString()) {
-          this.setState({
-            academicyearId: this.props.academicYears[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -171,13 +154,7 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                   <Label for="academicyear.id">
                     <Translate contentKey="cmsApp.term.academicyear">Academicyear</Translate>
                   </Label>
-                  <AvInput
-                    id="term-academicyear"
-                    type="select"
-                    className="form-control"
-                    name="academicyearId"
-                    onChange={this.academicyearUpdate}
-                  >
+                  <AvInput id="term-academicyear" type="select" className="form-control" name="academicyearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (

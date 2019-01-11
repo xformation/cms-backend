@@ -20,8 +20,7 @@
             "shortName": "Short Name",
             "logo": "Logo",
             "backgroundImage": "Background Image",
-            "instructionInformation": "Instruction Information",
-            "branch": "Branch"
+            "instructionInformation": "Instruction Information"
         }
     }
 }

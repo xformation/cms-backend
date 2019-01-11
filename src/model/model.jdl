@@ -171,7 +171,7 @@ Student{department} to Department,
 Holiday{academicyear} to AcademicYear,
 Subject{student} to Student,
 Subject{teacher} to Teacher,
-AuthorizedSignatory{legalentity} to LegalEntity,
+AuthorizedSignatory{legalEntity} to LegalEntity,
 Lecture{attendancemaster} to AttendanceMaster,
 StudentAttendance{student} to Student,
 Term{academicyear} to AcademicYear,
@@ -180,11 +180,9 @@ StudentAttendance{lecture} to Lecture
 }
 
 relationship OneToOne{
-Department{student} to Student,
 Student{batch} to Batch,
 Student{section} to Section,
 Student{branch} to Branch,
-College{branch} to Branch,
 Teach{teacher} to Teacher,
 Teach{subject} to Subject,
 CourseOffer{college} to College,

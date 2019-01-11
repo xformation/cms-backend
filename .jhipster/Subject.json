@@ -38,7 +38,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190111072045",
+    "changelogDate": "20190111122606",
     "entityTableName": "subject",
     "dto": "mapstruct",
     "pagination": "no",

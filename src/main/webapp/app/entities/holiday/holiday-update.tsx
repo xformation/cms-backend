@@ -14,7 +14,7 @@ import { getEntity, updateEntity, createEntity, reset } from './holiday.reducer'
 import { IHoliday } from 'app/shared/model/holiday.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IHolidayUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -61,23 +61,6 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
 
   handleClose = () => {
     this.props.history.push('/entity/holiday');
-  };
-
-  academicyearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        academicyearId: -1
-      });
-    } else {
-      for (const i in this.props.academicYears) {
-        if (id === this.props.academicYears[i].id.toString()) {
-          this.setState({
-            academicyearId: this.props.academicYears[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -157,13 +140,7 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
                   <Label for="academicyear.id">
                     <Translate contentKey="cmsApp.holiday.academicyear">Academicyear</Translate>
                   </Label>
-                  <AvInput
-                    id="holiday-academicyear"
-                    type="select"
-                    className="form-control"
-                    name="academicyearId"
-                    onChange={this.academicyearUpdate}
-                  >
+                  <AvInput id="holiday-academicyear" type="select" className="form-control" name="academicyearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (

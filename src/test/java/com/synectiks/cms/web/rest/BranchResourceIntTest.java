@@ -307,7 +307,7 @@ public class BranchResourceIntTest {
         // Create the Branch
         BranchDTO branchDTO = branchMapper.toDto(branch);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restBranchMockMvc.perform(put("/api/branches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(branchDTO)))

@@ -7,7 +7,6 @@ export default class DepartmentUpdatePage {
   nameInput: ElementFinder = element(by.css('input#department-name'));
   descriptionInput: ElementFinder = element(by.css('input#department-description'));
   deptHeadInput: ElementFinder = element(by.css('input#department-deptHead'));
-  studentSelect: ElementFinder = element(by.css('select#department-student'));
   collegeSelect: ElementFinder = element(by.css('select#department-college'));
   academicyearSelect: ElementFinder = element(by.css('select#department-academicyear'));
 
@@ -37,25 +36,6 @@ export default class DepartmentUpdatePage {
 
   getDeptHeadInput() {
     return this.deptHeadInput.getAttribute('value');
-  }
-
-  studentSelectLastOption() {
-    this.studentSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  studentSelectOption(option) {
-    this.studentSelect.sendKeys(option);
-  }
-
-  getStudentSelect() {
-    return this.studentSelect;
-  }
-
-  getStudentSelectedOption() {
-    return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
   collegeSelectLastOption() {

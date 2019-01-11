@@ -337,7 +337,7 @@ public class AcademicYearResourceIntTest {
         // Create the AcademicYear
         AcademicYearDTO academicYearDTO = academicYearMapper.toDto(academicYear);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restAcademicYearMockMvc.perform(put("/api/academic-years")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(academicYearDTO)))

@@ -42,10 +42,6 @@ public class College implements Serializable {
     @Column(name = "instruction_information", nullable = false)
     private String instructionInformation;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Branch branch;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -105,19 +101,6 @@ public class College implements Serializable {
 
     public void setInstructionInformation(String instructionInformation) {
         this.instructionInformation = instructionInformation;
-    }
-
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public College branch(Branch branch) {
-        this.branch = branch;
-        return this;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

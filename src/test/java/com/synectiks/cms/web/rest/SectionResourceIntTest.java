@@ -252,7 +252,7 @@ public class SectionResourceIntTest {
         // Create the Section
         SectionDTO sectionDTO = sectionMapper.toDto(section);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restSectionMockMvc.perform(put("/api/sections")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(sectionDTO)))

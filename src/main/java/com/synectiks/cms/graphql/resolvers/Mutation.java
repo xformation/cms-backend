@@ -3,45 +3,40 @@ package com.synectiks.cms.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.Semester;
-import com.synectiks.cms.graphql.types.AcademicDepartment.*;
-import com.synectiks.cms.graphql.types.AcademicSubject.*;
-import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
+<<<<<<< HEAD
+=======
 import com.synectiks.cms.graphql.types.BankAccounts.*;
 import com.synectiks.cms.graphql.types.College.*;
-import com.synectiks.cms.graphql.types.CollegeBranches.*;
+import com.synectiks.cms.graphql.types.Branch.*;
 import com.synectiks.cms.graphql.types.Departments.*;
 import com.synectiks.cms.graphql.types.Holiday.*;
 import com.synectiks.cms.graphql.types.Institute.*;
+>>>>>>> c8d5b007289a6c93fd618448714fb1032fc459ba
 import com.synectiks.cms.graphql.types.LegalEntity.*;
 import com.synectiks.cms.graphql.types.Location.*;
-import com.synectiks.cms.graphql.types.Periods.*;
-import com.synectiks.cms.graphql.types.Section.*;
-import com.synectiks.cms.graphql.types.Semester.*;
-import com.synectiks.cms.graphql.types.Student.*;
-import com.synectiks.cms.graphql.types.StudentAttendance.*;
-import com.synectiks.cms.graphql.types.StudentYear.*;
-import com.synectiks.cms.graphql.types.Subject.*;
-import com.synectiks.cms.graphql.types.Teacher.*;
-import com.synectiks.cms.graphql.types.Term.*;
-import com.synectiks.cms.model.Institute;
 import com.synectiks.cms.repository.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
 
+<<<<<<< HEAD
+    private final LocationRepository locationRepository;
+    private final LegalEntityRepository legalEntityRepository;
+    private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
+
+    public Mutation(LocationRepository locationRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository) {
+        this.locationRepository = locationRepository;
+=======
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
     private final InstituteRepository instituteRepository;
     private final StudentRepository studentRepository;
     private final CollegeRepository collegeRepository;
     private final StudentYearRepository studentYearRepository;
     private final SemesterRepository semesterRepository;
-    private final CollegeBranchesRepository collegeBranchesRepository;
+    private final BranchRepository branchRepository;
     private final PeriodsRepository periodsRepository;
     private final SectionRepository sectionRepository;
     private final SubjectRepository subjectRepository;
@@ -58,179 +53,22 @@ public class Mutation implements GraphQLMutationResolver {
     private final HolidayRepository holidayRepository;
     private final TermRepository termRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, CollegeBranchesRepository collegeBranchesRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
         this.studentYearRepository = studentYearRepository;
         this.semesterRepository = semesterRepository;
-        this.collegeBranchesRepository = collegeBranchesRepository;
+        this.branchRepository = branchRepository;
         this.periodsRepository = periodsRepository;
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
+>>>>>>> c8d5b007289a6c93fd618448714fb1032fc459ba
         this.legalEntityRepository = legalEntityRepository;
         this.authorizedSignatoryRepository = authorizedSignatoryRepository;
-        this.bankAccountsRepository = bankAccountsRepository;
-        this.departmentsRepository = departmentsRepository;
-        this.locationRepository = locationRepository;
-        this.studentAttendanceRepository = studentAttendanceRepository;
-        this.academicDepartmentRepository = academicDepartmentRepository;
-        this.academicSubjectRepository = academicSubjectRepository;
-        this.academicYearRepository = academicYearRepository;
-        this.holidayRepository = holidayRepository;
-        this.termRepository = termRepository;
     }
 
-    public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
-        final Teacher teacher = teacherRepository.findById(addStudentInput.getTeacherId()).get();
-        final Student student = new Student();
-        student.setStudentName(addStudentInput.getStudentName());
-        student.setAttendance(addStudentInput.getAttendance());
-        student.setElectiveSub(addStudentInput.getElectiveSub());
-        student.setTeacher(teacher);
-        studentRepository.save(student);
-        return new AddStudentPayload(student);
-    }
-
-    public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) {
-        Student student = studentRepository.findById(updateStudentInput.getId()).get();
-        if (updateStudentInput.getStudentName() != null) {
-            student.setStudentName(updateStudentInput.getStudentName());
-        }
-        if (updateStudentInput.getAttendance() != null) {
-            student.setAttendance(updateStudentInput.getAttendance());
-        }
-
-        if (updateStudentInput.getElectiveSub() != null) {
-            student.setElectiveSub(updateStudentInput.getElectiveSub());
-        }
-        studentRepository.save(student);
-
-        return new UpdateStudentPayload(student);
-    }
-
-    public RemoveStudentPayload removeStudent(RemoveStudentInput removeStudentInput) {
-        Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
-        studentRepository.delete(student);
-        return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
-    }
-
-
-    public AddInstitutePayload addInstitute(AddInstituteInput addInstituteInput) {
-        final Institute institute = new Institute();
-        institute.setCode(addInstituteInput.getCode());
-        institute.setName(addInstituteInput.getName());
-        institute.setYear(addInstituteInput.getYear());
-
-        instituteRepository.save(institute);
-
-        return new AddInstitutePayload(institute);
-    }
-
-    public AddStudentYearPayload addStudentYear(AddStudentYearInput addStudentYearInput) {
-        final StudentYear studentYear = new StudentYear();
-        studentYear.setYearDesc(addStudentYearInput.getYearDesc());
-        studentYearRepository.save(studentYear);
-
-        return new AddStudentYearPayload(studentYear);
-    }
-
-    public UpdateStudentYearPayload updateStudentYear(UpdateStudentYearInput updateStudentYearInput) {
-        StudentYear studentYear = studentYearRepository.findById(updateStudentYearInput.getId()).get();
-        if (updateStudentYearInput.getYearDesc() != null) {
-            studentYear.setYearDesc(updateStudentYearInput.getYearDesc());
-        }
-
-        studentYearRepository.save(studentYear);
-
-        return new UpdateStudentYearPayload(studentYear);
-    }
-
-    public RemoveStudentYearPayload removeStudentYear(RemoveStudentYearInput removeStudentYearInput) {
-        StudentYear studentYear = studentYearRepository.findById(removeStudentYearInput.getStudentYearId()).get();
-        studentYearRepository.delete(studentYear);
-
-        return new RemoveStudentYearPayload(Lists.newArrayList(studentYearRepository.findAll()));
-    }
-
-    public AddBankAccountsPayload addBankAccounts(AddBankAccountsInput addBankAccountsInput) {
-        final BankAccounts bankAccounts = new BankAccounts();
-        bankAccounts.setNameOfBank(addBankAccountsInput.getNameOfBank());
-        bankAccounts.setAccountNumber(addBankAccountsInput.getAccountNumber());
-        bankAccounts.setTypeOfAccount(addBankAccountsInput.getTypeOfAccount());
-        bankAccounts.setIfsCode(addBankAccountsInput.getIfsCode());
-        bankAccounts.setBranch(addBankAccountsInput.getBranch());
-        bankAccounts.setCorporateId(addBankAccountsInput.getCorporateId());
-        bankAccountsRepository.save(bankAccounts);
-
-        return new AddBankAccountsPayload(bankAccounts);
-    }
-
-    public UpdateBankAccountsPayload updateBankAccounts(UpdateBankAccountsInput updateBankAccountsInput) {
-        BankAccounts bankAccounts = bankAccountsRepository.findById(updateBankAccountsInput.getId()).get();
-        if (updateBankAccountsInput.getNameOfBank() != null) {
-            bankAccounts.setNameOfBank(updateBankAccountsInput.getNameOfBank());
-        }
-        if (updateBankAccountsInput.getAccountNumber() != null) {
-            bankAccounts.setAccountNumber(updateBankAccountsInput.getAccountNumber());
-        }
-        if (updateBankAccountsInput.getTypeOfAccount() != null) {
-            bankAccounts.setTypeOfAccount(updateBankAccountsInput.getTypeOfAccount());
-        }
-        if (updateBankAccountsInput.getIfsCode() != null) {
-            bankAccounts.setIfsCode(updateBankAccountsInput.getIfsCode());
-        }
-        if (updateBankAccountsInput.getBranch() != null) {
-            bankAccounts.setBranch(updateBankAccountsInput.getBranch());
-        }
-        if (updateBankAccountsInput.getCorporateId() != null) {
-            bankAccounts.setCorporateId(updateBankAccountsInput.getCorporateId());
-        }
-        bankAccountsRepository.save(bankAccounts);
-
-        return new UpdateBankAccountsPayload(bankAccounts);
-    }
-
-    public RemoveBankAccountsPayload removeBankAccounts(RemoveBankAccountsInput removeBankAccountsInput) {
-        BankAccounts bankAccounts = bankAccountsRepository.findById(removeBankAccountsInput.getBankAccountsId()).get();
-        bankAccountsRepository.delete(bankAccounts);
-        return new RemoveBankAccountsPayload(Lists.newArrayList(bankAccountsRepository.findAll()));
-    }
-
-    public AddDepartmentsPayload addDepartments(AddDepartmentsInput addDepartmentsInput) {
-        final Departments departments = new Departments();
-        departments.setName(addDepartmentsInput.getName());
-        departments.setDescription(addDepartmentsInput.getDescription());
-        departments.setDeptHead(addDepartmentsInput.getDeptHead());
-        departmentsRepository.save(departments);
-
-        return new AddDepartmentsPayload(departments);
-    }
-
-    public UpdateDepartmentsPayload updateDepartments(UpdateDepartmentsInput updateDepartmentsInput) {
-        Departments departments = departmentsRepository.findById(updateDepartmentsInput.getId()).get();
-        if (updateDepartmentsInput.getName() != null) {
-            departments.setName(updateDepartmentsInput.getName());
-        }
-
-        if (updateDepartmentsInput.getDescription() != null) {
-            departments.setDescription(updateDepartmentsInput.getDescription());
-        }
-
-        if (updateDepartmentsInput.getDeptHead() != null) {
-            departments.setDeptHead(updateDepartmentsInput.getDeptHead());
-        }
-        departmentsRepository.save(departments);
-
-        return new UpdateDepartmentsPayload(departments);
-    }
-
-    public RemoveDepartmentsPayload removeDepartments(RemoveDepartmentsInput removeDepartmentsInput) {
-        Departments departments = departmentsRepository.findById(removeDepartmentsInput.getDepartmentsId()).get();
-        departmentsRepository.delete(departments);
-        return new RemoveDepartmentsPayload(Lists.newArrayList(departmentsRepository.findAll()));
-    }
 
     public AddLocationPayload addLocation(AddLocationInput addLocationInput) {
         final Location location = new Location();
@@ -266,6 +104,8 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveLocationPayload(Lists.newArrayList(locationRepository.findAll()));
     }
 
+<<<<<<< HEAD
+=======
     public AddSemesterPayload addSemester(AddSemesterInput addSemesterInput) {
         final Semester semester = new Semester();
         semester.setSem(addSemesterInput.getSem());
@@ -360,39 +200,45 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
     }
 
-    public AddCollegeBranchesPayload addCollegeBranches(AddCollegeBranchesInput addCollegeBranchesInput) {
-        final CollegeBranches collegeBranches = new CollegeBranches();
-        collegeBranches.setBranchName(addCollegeBranchesInput.getBranchName());
-        collegeBranches.setDescription(addCollegeBranchesInput.getDescription());
-        collegeBranches.setCollegeHead(addCollegeBranchesInput.getCollegeHead());
-        collegeBranchesRepository.save(collegeBranches);
+    public AddBranchPayload addBranch(AddBranchInput addBranchInput) {
+    	College college = collegeRepository.findById(addBranchInput.getCollegeId()).get();
+        final Branch branch = new Branch();
+        branch.setBranchName(addBranchInput.getBranchName());
+        branch.setDescription(addBranchInput.getDescription());
+        branch.setCollegeHead(addBranchInput.getCollegeHead());
+        branch.setCollege(college);
+        branchRepository.save(branch);
 
-        return new AddCollegeBranchesPayload(collegeBranches);
+        return new AddBranchPayload(branch);
     }
 
-    public UpdateCollegeBranchesPayload updateCollegeBranches(UpdateCollegeBranchesInput updateCollegeBranchesInput) {
-        CollegeBranches collegeBranches = collegeBranchesRepository.findById(updateCollegeBranchesInput.getId()).get();
-        if (updateCollegeBranchesInput.getBranchName() != null) {
-            collegeBranches.setBranchName(updateCollegeBranchesInput.getBranchName());
+    public UpdateBranchPayload updateBranch(UpdateBranchInput updateBranchInput) {
+        Branch branch = branchRepository.findById(updateBranchInput.getId()).get();
+        if (updateBranchInput.getBranchName() != null) {
+            branch.setBranchName(updateBranchInput.getBranchName());
         }
 
-        if (updateCollegeBranchesInput.getDescription() != null) {
-            collegeBranches.setDescription(updateCollegeBranchesInput.getDescription());
+        if (updateBranchInput.getDescription() != null) {
+            branch.setDescription(updateBranchInput.getDescription());
         }
 
-        if (updateCollegeBranchesInput.getCollegeHead() != null) {
-            collegeBranches.setCollegeHead(updateCollegeBranchesInput.getCollegeHead());
+        if (updateBranchInput.getCollegeHead() != null) {
+            branch.setCollegeHead(updateBranchInput.getCollegeHead());
         }
-        collegeBranchesRepository.save(collegeBranches);
-
-        return new UpdateCollegeBranchesPayload(collegeBranches);
+        if(updateBranchInput.getCollegeId() != null) {
+        	College college = collegeRepository.findById(updateBranchInput.getCollegeId()).get();
+        	branch.setCollege(college);
+        }
+        branchRepository.save(branch);
+        return new UpdateBranchPayload(branch);
     }
 
-    public RemoveCollegeBranchesPayload removeCollegeBranches(RemoveCollegeBranchesInput removeCollegeBranchesInput) {
-        CollegeBranches collegeBranches = collegeBranchesRepository.findById(removeCollegeBranchesInput.getCollegeBranchesId()).get();
-        collegeBranchesRepository.delete(collegeBranches);
-        return new RemoveCollegeBranchesPayload(Lists.newArrayList(collegeBranchesRepository.findAll()));
+    public RemoveBranchPayload removeBranch(RemoveBranchInput removeBranchsInput) {
+        Branch branch = branchRepository.findById(removeBranchsInput.getBranchId()).get();
+        branchRepository.delete(branch);
+        return new RemoveBranchPayload(Lists.newArrayList(branchRepository.findAll()));
     }
+
 
     public AddPeriodsPayload addPeriods(AddPeriodsInput addPeriodsInput) {
         final Section section = sectionRepository.findById(addPeriodsInput.getSectionId()).get();
@@ -598,6 +444,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveAuthorizedSignatoryPayload(Lists.newArrayList(authorizedSignatoryRepository.findAll()));
     }
 
+>>>>>>> c8d5b007289a6c93fd618448714fb1032fc459ba
     public AddLegalEntityPayload addLegalEntity(AddLegalEntityInput addLegalEntityInput) {
         final LegalEntity legalEntity = new LegalEntity();
         legalEntity.setLogo(addLegalEntityInput.getLogo());
@@ -688,177 +535,54 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveLegalEntityPayload(Lists.newArrayList(legalEntityRepository.findAll()));
     }
 
-    public AddAcademicDepartmentPayload addAcademicDepartment(AddAcademicDepartmentInput addAcademicDepartmentInput) {
-        final AcademicDepartment academicDepartment = new AcademicDepartment();
-        academicDepartment.setDepartmentName(addAcademicDepartmentInput.getDepartmentName());
-        academicDepartment.setUniversity(addAcademicDepartmentInput.getUniversity());
+    public AddAuthorizedSignatoryPayload addAuthorizedSignatory(AddAuthorizedSignatoryInput addAuthorizedSignatoryInput) {
+        final LegalEntity legalEntity = legalEntityRepository.findById(addAuthorizedSignatoryInput.getLegalEntityId()).get();
+        final AuthorizedSignatory authorizedSignatory = new AuthorizedSignatory();
+        authorizedSignatory.setSignatoryName(addAuthorizedSignatoryInput.getSignatoryName());
+        authorizedSignatory.setSignatoryFatherName(addAuthorizedSignatoryInput.getSignatoryFatherName());
+        authorizedSignatory.setSignatoryDesignation(addAuthorizedSignatoryInput.getSignatoryDesignation());
+        authorizedSignatory.setAddress(addAuthorizedSignatoryInput.getAddress());
+        authorizedSignatory.setEmail(addAuthorizedSignatoryInput.getEmail());
+        authorizedSignatory.setPanCardNumber(addAuthorizedSignatoryInput.getPanCardNumber());
+        authorizedSignatory.setLegalEntity(legalEntity);
+        authorizedSignatoryRepository.save(authorizedSignatory);
 
-        academicDepartmentRepository.save(academicDepartment);
-
-        return new AddAcademicDepartmentPayload(academicDepartment);
+        return new AddAuthorizedSignatoryPayload(authorizedSignatory);
     }
 
-    public UpdateAcademicDepartmentPayload updateAcademicDepartment(UpdateAcademicDepartmentInput updateAcademicDepartmentInput) {
-        AcademicDepartment academicDepartment = academicDepartmentRepository.findById(updateAcademicDepartmentInput.getId()).get();
-        if (updateAcademicDepartmentInput.getDepartmentName() != null) {
-            academicDepartment.setDepartmentName(updateAcademicDepartmentInput.getDepartmentName());
+    public UpdateAuthorizedSignatoryPayload updateAuthorizedSignatory(UpdateAuthorizedSignatoryInput updateAuthorizedSignatoryInput) {
+        AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(updateAuthorizedSignatoryInput.getId()).get();
+        if (updateAuthorizedSignatoryInput.getSignatoryName() != null) {
+            authorizedSignatory.setSignatoryName(updateAuthorizedSignatoryInput.getSignatoryName());
+        }
+        if (updateAuthorizedSignatoryInput.getSignatoryFatherName() != null) {
+            authorizedSignatory.setSignatoryFatherName(updateAuthorizedSignatoryInput.getSignatoryFatherName());
+        }
+        if (updateAuthorizedSignatoryInput.getSignatoryDesignation() != null) {
+            authorizedSignatory.setSignatoryDesignation(updateAuthorizedSignatoryInput.getSignatoryDesignation());
         }
 
-        if (updateAcademicDepartmentInput.getUniversity() != null) {
-            academicDepartment.setUniversity(updateAcademicDepartmentInput.getUniversity());
+        if (updateAuthorizedSignatoryInput.getAddress() != null) {
+            authorizedSignatory.setAddress(updateAuthorizedSignatoryInput.getAddress());
         }
 
-        academicDepartmentRepository.save(academicDepartment);
+        if (updateAuthorizedSignatoryInput.getEmail() != null) {
+            authorizedSignatory.setEmail(updateAuthorizedSignatoryInput.getEmail());
+        }
 
-        return new UpdateAcademicDepartmentPayload(academicDepartment);
+        if (updateAuthorizedSignatoryInput.getPanCardNumber() != null) {
+            authorizedSignatory.setPanCardNumber(updateAuthorizedSignatoryInput.getPanCardNumber());
+        }
+
+        authorizedSignatoryRepository.save(authorizedSignatory);
+
+        return new UpdateAuthorizedSignatoryPayload(authorizedSignatory);
     }
 
-    public RemoveAcademicDepartmentPayload removeAcademicDepartment(RemoveAcademicDepartmentInput removeAcademicDepartmentInput) {
-        AcademicDepartment academicDepartment = academicDepartmentRepository.getOne(removeAcademicDepartmentInput.getAcademicDepartmentId());
-        academicDepartmentRepository.delete(academicDepartment);
-
-        return new RemoveAcademicDepartmentPayload(Lists.newArrayList(academicDepartmentRepository.findAll()));
-    }
-
-    public AddAcademicSubjectPayload addAcademicSubject(AddAcademicSubjectInput addAcademicSubjectInput) {
-        final Departments departments = departmentsRepository.findById(addAcademicSubjectInput.getDepartmentsId()).get();
-        final AcademicSubject academicSubject = new AcademicSubject();
-        academicSubject.setSubjectName(addAcademicSubjectInput.getSubjectName());
-        academicSubject.setElectiveSub(addAcademicSubjectInput.getElectiveSub());
-        academicSubject.setDepartment(departments);
-        academicSubjectRepository.save(academicSubject);
-
-        return new AddAcademicSubjectPayload(academicSubject);
-    }
-
-    public UpdateAcademicSubjectPayload updateAcademicSubject(UpdateAcademicSubjectInput updateAcademicSubjectInput) {
-        AcademicSubject academicSubject = academicSubjectRepository.findById(updateAcademicSubjectInput.getId()).get();
-        if (updateAcademicSubjectInput.getSubjectName() != null) {
-            academicSubject.setSubjectName(updateAcademicSubjectInput.getSubjectName());
-        }
-        if (updateAcademicSubjectInput.getElectiveSub() != null) {
-            academicSubject.setElectiveSub(updateAcademicSubjectInput.getElectiveSub());
-        }
-        academicSubjectRepository.save(academicSubject);
-
-        return new UpdateAcademicSubjectPayload(academicSubject);
-    }
-
-    public RemoveAcademicSubjectPayload removeAcademicSubject(RemoveAcademicSubjectInput removeAcademicSubjectInput) {
-        AcademicSubject academicSubject = academicSubjectRepository.findById(removeAcademicSubjectInput.getAcademicSubjectId()).get();
-        academicSubjectRepository.delete(academicSubject);
-        return new RemoveAcademicSubjectPayload(Lists.newArrayList(academicSubjectRepository.findAll()));
-    }
-
-    public AddAcademicYearPayload addAcademicYear(AddAcademicYearInput addAcademicYearInput) {
-        final AcademicYear academicYear = new AcademicYear();
-        academicYear.setYear(addAcademicYearInput.getYear());
-        academicYear.setStartDate(addAcademicYearInput.getStartDate());
-        academicYear.setEndDate(addAcademicYearInput.getEndDate());
-        academicYearRepository.save(academicYear);
-        return new AddAcademicYearPayload(academicYear);
-    }
-
-
-    public UpdateAcademicYearPayload updateAcademicYear(UpdateAcademicYearInput updateAcademicYearInput) {
-        AcademicYear academicYear = academicYearRepository.findById(updateAcademicYearInput.getId()).get();
-        if (updateAcademicYearInput.getYear() != null) {
-            academicYear.setYear(updateAcademicYearInput.getYear());
-        }
-        if (updateAcademicYearInput.getStartDate() != null) {
-            academicYear.setStartDate(updateAcademicYearInput.getStartDate());
-        }
-
-        if (updateAcademicYearInput.getEndDate() != null) {
-            academicYear.setEndDate(updateAcademicYearInput.getEndDate());
-        }
-        academicYearRepository.save(academicYear);
-
-        return new UpdateAcademicYearPayload(academicYear);
-    }
-
-    public RemoveAcademicYearPayload removeAcademicYear(RemoveAcademicYearInput removeAcademicYearInput) {
-        AcademicYear academicYear = academicYearRepository.findById(removeAcademicYearInput.getAcademicYearId()).get();
-        academicYearRepository.delete(academicYear);
-        return new RemoveAcademicYearPayload(Lists.newArrayList(academicYearRepository.findAll()));
-    }
-
-    public AddHolidayPayload addHoliday(AddHolidayInput addHolidayInput) {
-        final AcademicYear academicYear = academicYearRepository.findById(addHolidayInput.getAcademicYearId()).get();
-        final Holiday holiday = new Holiday();
-        holiday.setHolidayDesc(addHolidayInput.getHolidayDesc());
-        holiday.setHolidayDate(addHolidayInput.getHolidayDate());
-        holiday.setStatus(addHolidayInput.getStatus());
-        holiday.setAcademicYear(academicYear);
-        holidayRepository.save(holiday);
-
-        return new AddHolidayPayload(holiday);
-    }
-
-    public UpdateHolidayPayload updateHoliday(UpdateHolidayInput updateHolidayInput) {
-        Holiday holiday = holidayRepository.findById(updateHolidayInput.getId()).get();
-        if (updateHolidayInput.getHolidayDesc() != null) {
-            holiday.setHolidayDesc(updateHolidayInput.getHolidayDesc());
-        }
-        if (updateHolidayInput.getHolidayDate() != null) {
-            holiday.setHolidayDate(updateHolidayInput.getHolidayDate());
-        }
-
-        if (updateHolidayInput.getStatus() != null) {
-            holiday.setStatus(updateHolidayInput.getStatus());
-        }
-
-        holidayRepository.save(holiday);
-
-        return new UpdateHolidayPayload(holiday);
-    }
-
-    public RemoveHolidayPayload removeHoliday(RemoveHolidayInput removeHolidayInput) {
-        Holiday holiday = holidayRepository.findById(removeHolidayInput.getHolidayId()).get();
-        holidayRepository.delete(holiday);
-        return new RemoveHolidayPayload(Lists.newArrayList(holidayRepository.findAll()));
-    }
-
-    public AddTermPayload addTerm(AddTermInput addTermInput) {
-        final AcademicYear academicYear = academicYearRepository.findById(addTermInput.getAcademicYearId()).get();
-        final Term term = new Term();
-        term.setTermsDesc(addTermInput.getTermsDesc());
-        term.setStartDate(addTermInput.getStartDate());
-        term.setEndDate(addTermInput.getEndDate());
-        term.setStatus(addTermInput.getStatus());
-        term.setAcademicYear(academicYear);
-        termRepository.save(term);
-
-        return new AddTermPayload(term);
-    }
-
-    public UpdateTermPayload updateTerm(UpdateTermInput updateTermInput) {
-        Term term = termRepository.findById(updateTermInput.getId()).get();
-
-        if (updateTermInput.getTermsDesc() != null) {
-            term.setTermsDesc(updateTermInput.getTermsDesc());
-        }
-        if (updateTermInput.getStartDate() != null) {
-            term.setStartDate(updateTermInput.getStartDate());
-        }
-
-        if (updateTermInput.getEndDate() != null) {
-            term.setEndDate(updateTermInput.getEndDate());
-        }
-
-        if (updateTermInput.getStatus() != null){
-            term.setStatus(updateTermInput.getStatus());
-        }
-
-        termRepository.save(term);
-
-        return new UpdateTermPayload(term);
-    }
-
-    public RemoveTermPayload removeTerm(RemoveTermInput removeTermInput) {
-        Term term = termRepository.findById(removeTermInput.getTermId()).get();
-        termRepository.delete(term);
-        return new RemoveTermPayload(Lists.newArrayList(termRepository.findAll()));
+    public RemoveAuthorizedSignatoryPayload removeAuthorizedSignatory(RemoveAuthorizedSignatoryInput removeAuthorizedSignatoryInput) {
+        AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(removeAuthorizedSignatoryInput.getAuthorizedSignatoryId()).get();
+        authorizedSignatoryRepository.delete(authorizedSignatory);
+        return new RemoveAuthorizedSignatoryPayload(Lists.newArrayList(authorizedSignatoryRepository.findAll()));
     }
 }
 

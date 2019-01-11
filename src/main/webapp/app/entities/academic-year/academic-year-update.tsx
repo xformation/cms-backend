@@ -12,7 +12,7 @@ import { getEntity, updateEntity, createEntity, reset } from './academic-year.re
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAcademicYearUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 

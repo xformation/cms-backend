@@ -32,7 +32,7 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/cms
+        url: jdbc:postgresql://localhost:5432/cmsDB
         username: postgres
         password: postgres
     jpa:

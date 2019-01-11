@@ -120,7 +120,7 @@ export class Term extends React.Component<ITermProps, ITermState> {
                   <td>
                     <Translate contentKey={`cmsApp.Status.${term.termStatus}`} />
                   </td>
-                  <td>{term.academicyearId ? <Link to={`academicYear/${term.academicyearId}`}>{term.academicyearId}</Link> : ''}</td>
+                  <td>{term.academicyearId ? <Link to={`academic-year/${term.academicyearId}`}>{term.academicyearId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${term.id}`} color="info" size="sm">

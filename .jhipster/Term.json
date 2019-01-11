@@ -39,7 +39,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190111072047",
+    "changelogDate": "20190111122608",
     "entityTableName": "term",
     "dto": "mapstruct",
     "pagination": "no",

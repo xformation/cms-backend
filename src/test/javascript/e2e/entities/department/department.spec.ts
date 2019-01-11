@@ -37,7 +37,6 @@ describe('Department e2e test', () => {
     expect(await departmentUpdatePage.getDescriptionInput()).to.match(/description/);
     departmentUpdatePage.setDeptHeadInput('deptHead');
     expect(await departmentUpdatePage.getDeptHeadInput()).to.match(/deptHead/);
-    departmentUpdatePage.studentSelectLastOption();
     departmentUpdatePage.collegeSelectLastOption();
     departmentUpdatePage.academicyearSelectLastOption();
     await departmentUpdatePage.save();

@@ -31,7 +31,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190111072050",
+    "changelogDate": "20190111122611",
     "entityTableName": "academic_year",
     "dto": "mapstruct",
     "pagination": "no",

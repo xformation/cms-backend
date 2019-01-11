@@ -8,8 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IStudent } from 'app/shared/model/student.model';
-import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { ICollege } from 'app/shared/model/college.model';
 import { getEntities as getColleges } from 'app/entities/college/college.reducer';
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
@@ -18,13 +16,12 @@ import { getEntity, updateEntity, createEntity, reset } from './department.reduc
 import { IDepartment } from 'app/shared/model/department.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IDepartmentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IDepartmentUpdateState {
   isNew: boolean;
-  studentId: number;
   collegeId: number;
   academicyearId: number;
 }
@@ -33,7 +30,6 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
   constructor(props) {
     super(props);
     this.state = {
-      studentId: 0,
       collegeId: 0,
       academicyearId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -47,7 +43,6 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getStudents();
     this.props.getColleges();
     this.props.getAcademicYears();
   }
@@ -73,59 +68,8 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
     this.props.history.push('/entity/department');
   };
 
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
-  };
-
-  academicyearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        academicyearId: -1
-      });
-    } else {
-      for (const i in this.props.academicYears) {
-        if (id === this.props.academicYears[i].id.toString()) {
-          this.setState({
-            academicyearId: this.props.academicYears[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
-    const { departmentEntity, students, colleges, academicYears, loading, updating } = this.props;
+    const { departmentEntity, colleges, academicYears, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -191,25 +135,10 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="student.id">
-                    <Translate contentKey="cmsApp.department.student">Student</Translate>
-                  </Label>
-                  <AvInput id="department-student" type="select" className="form-control" name="studentId" onChange={this.studentUpdate}>
-                    <option value="" key="0" />
-                    {students
-                      ? students.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="college.id">
                     <Translate contentKey="cmsApp.department.college">College</Translate>
                   </Label>
-                  <AvInput id="department-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="department-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -224,13 +153,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                   <Label for="academicyear.id">
                     <Translate contentKey="cmsApp.department.academicyear">Academicyear</Translate>
                   </Label>
-                  <AvInput
-                    id="department-academicyear"
-                    type="select"
-                    className="form-control"
-                    name="academicyearId"
-                    onChange={this.academicyearUpdate}
-                  >
+                  <AvInput id="department-academicyear" type="select" className="form-control" name="academicyearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
@@ -262,7 +185,6 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  students: storeState.student.entities,
   colleges: storeState.college.entities,
   academicYears: storeState.academicYear.entities,
   departmentEntity: storeState.department.entity,
@@ -271,7 +193,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getStudents,
   getColleges,
   getAcademicYears,
   getEntity,

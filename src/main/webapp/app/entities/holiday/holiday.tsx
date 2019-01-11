@@ -115,7 +115,7 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
                     <Translate contentKey={`cmsApp.Status.${holiday.holidayStatus}`} />
                   </td>
                   <td>
-                    {holiday.academicyearId ? <Link to={`academicYear/${holiday.academicyearId}`}>{holiday.academicyearId}</Link> : ''}
+                    {holiday.academicyearId ? <Link to={`academic-year/${holiday.academicyearId}`}>{holiday.academicyearId}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

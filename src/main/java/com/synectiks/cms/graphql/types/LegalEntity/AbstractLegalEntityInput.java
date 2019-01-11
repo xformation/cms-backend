@@ -1,11 +1,8 @@
 package com.synectiks.cms.graphql.types.LegalEntity;
 
-import com.synectiks.cms.domain.AuthorizedSignatory;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Objects;
 
 public class AbstractLegalEntityInput {
     private Long id;

@@ -251,7 +251,7 @@ public class TeacherResourceIntTest {
         // Create the Teacher
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restTeacherMockMvc.perform(put("/api/teachers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))

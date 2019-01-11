@@ -30,17 +30,8 @@
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "branch",
-            "otherEntityName": "branch",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "college"
-        }
-    ],
-    "changelogDate": "20190111072041",
+    "relationships": [],
+    "changelogDate": "20190111122602",
     "entityTableName": "college",
     "dto": "mapstruct",
     "pagination": "no",

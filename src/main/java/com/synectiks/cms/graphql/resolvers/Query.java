@@ -19,8 +19,6 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
 
 import com.synectiks.cms.domain.*;
-import com.synectiks.cms.graphql.types.Holiday.AddHolidayPayload;
-import com.synectiks.cms.model.Institute;
 import com.synectiks.cms.repository.*;
 import org.springframework.stereotype.Component;
 
@@ -34,89 +32,57 @@ import java.util.List;
 @Component
 public class Query implements GraphQLQueryResolver {
 
+<<<<<<< HEAD
+
+    private final LocationRepository locationRepository;
+=======
     private final StudentRepository studentRepository;
     private final InstituteRepository instituteRepository;
     private final CollegeRepository collegeRepository;
-    private final CollegeBranchesRepository collegeBranchesRepository;
+    private final BranchRepository branchRepository;
     private final StudentYearRepository studentYearRepository;
     private final SemesterRepository semesterRepository;
     private final PeriodsRepository periodsRepository;
     private final SectionRepository sectionRepository;
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
+>>>>>>> c8d5b007289a6c93fd618448714fb1032fc459ba
     private final LegalEntityRepository legalEntityRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
-    private final BankAccountsRepository bankAccountsRepository;
-    private final DepartmentsRepository departmentsRepository;
-    private final LocationRepository locationRepository;
-    private final StudentAttendanceRepository studentAttendanceRepository;
-    private final AcademicDepartmentRepository academicDepartmentRepository;
-    private final AcademicSubjectRepository academicSubjectRepository;
-    private final AcademicYearRepository academicYearRepository;
-    private final HolidayRepository holidayRepository;
-    private final TermRepository termRepository;
 
-
-    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, CollegeBranchesRepository collegeBranchesRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+<<<<<<< HEAD
+    public Query(LocationRepository locationRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository) {
+        this.locationRepository = locationRepository;
+=======
+    public Query(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, PeriodsRepository periodsRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentsRepository departmentsRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicDepartmentRepository academicDepartmentRepository, AcademicSubjectRepository academicSubjectRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
         this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
-        this.collegeBranchesRepository = collegeBranchesRepository;
+        this.branchRepository = branchRepository;
         this.studentYearRepository = studentYearRepository;
         this.semesterRepository = semesterRepository;
         this.periodsRepository = periodsRepository;
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
+>>>>>>> c8d5b007289a6c93fd618448714fb1032fc459ba
         this.legalEntityRepository = legalEntityRepository;
         this.authorizedSignatoryRepository = authorizedSignatoryRepository;
-        this.bankAccountsRepository = bankAccountsRepository;
-        this.departmentsRepository = departmentsRepository;
-        this.locationRepository = locationRepository;
-        this.studentAttendanceRepository = studentAttendanceRepository;
-        this.academicDepartmentRepository = academicDepartmentRepository;
-        this.academicSubjectRepository = academicSubjectRepository;
-        this.academicYearRepository = academicYearRepository;
-        this.holidayRepository = holidayRepository;
-        this.termRepository = termRepository;
     }
 
-    public Student student(long id)
+
+<<<<<<< HEAD
+
+    public Location location(long id)
+=======
+    public Branch branch(long id)
     {
-        return studentRepository.findById(id).get();
+        return branchRepository.findById(id).get();
     }
 
-    public List<Student> students()
+    public List<Branch> branches()
     {
-        return Lists.newArrayList(studentRepository.findAll());
-    }
-
-    public List<Institute> institutes() {
-        return Lists.newArrayList(instituteRepository.findAll());
-    }
-
-    public Institute institute(int id) {
-        return instituteRepository.findById(id);
-    }
-
-    public College college(long id)
-    {
-        return collegeRepository.findById(id).get();
-    }
-
-    public List<College> colleges()
-    {
-        return Lists.newArrayList(collegeRepository.findAll());
-    }
-
-    public CollegeBranches collegeBranch(long id)
-    {
-        return collegeBranchesRepository.findById(id).get();
-    }
-
-    public List<CollegeBranches> collegeBranches()
-    {
-        return Lists.newArrayList(collegeBranchesRepository.findAll());
+        return Lists.newArrayList(branchRepository.findAll());
     }
 
     public StudentYear studentYear(long id)
@@ -160,24 +126,17 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public Subject subject(long id)
+>>>>>>> c8d5b007289a6c93fd618448714fb1032fc459ba
     {
-        return subjectRepository.findById(id).get();
+        return locationRepository.findById(id).get();
     }
 
-    public List<Subject> subjects()
+    public List<Location> locations()
     {
-        return Lists.newArrayList(subjectRepository.findAll());
+        return Lists.newArrayList(locationRepository.findAll());
     }
 
-    public Teacher teacher(long id)
-    {
-        return teacherRepository.findById(id).get();
-    }
 
-    public List<Teacher> teachers()
-    {
-        return Lists.newArrayList(teacherRepository.findAll());
-    }
 
     public LegalEntity legalEntity(long id)
     {
@@ -189,6 +148,7 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(legalEntityRepository.findAll());
     }
 
+
     public AuthorizedSignatory authorizedSignatory(long id)
     {
         return authorizedSignatoryRepository.findById(id).get();
@@ -199,94 +159,4 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(authorizedSignatoryRepository.findAll());
     }
 
-    public BankAccounts bankAccount(long id)
-    {
-        return bankAccountsRepository.findById(id).get();
-    }
-
-    public List<BankAccounts> bankAccounts()
-    {
-        return Lists.newArrayList(bankAccountsRepository.findAll());
-    }
-
-    public Departments department(long id)
-    {
-        return departmentsRepository.findById(id).get();
-    }
-
-    public List<Departments> departments()
-    {
-        return Lists.newArrayList(departmentsRepository.findAll());
-    }
-
-    public Location location(long id)
-    {
-        return locationRepository.findById(id).get();
-    }
-
-    public List<Location> locations()
-    {
-        return Lists.newArrayList(locationRepository.findAll());
-    }
-
-    public StudentAttendance studentAttendance(long id)
-    {
-        return studentAttendanceRepository.findById(id).get();
-    }
-
-    public List<StudentAttendance> studentAttendances()
-    {
-        return Lists.newArrayList(studentAttendanceRepository.findAll());
-    }
-
-    public AcademicDepartment academicDepartment(long id)
-    {
-        return academicDepartmentRepository.findById(id).get();
-    }
-
-    public List<AcademicDepartment> academicDepartments()
-    {
-        return Lists.newArrayList(academicDepartmentRepository.findAll());
-    }
-
-    public AcademicSubject academicSubject(long id)
-    {
-        return academicSubjectRepository.findById(id).get();
-    }
-
-    public List<AcademicSubject> academicSubjects()
-    {
-        return Lists.newArrayList(academicSubjectRepository.findAll());
-    }
-
-    public List<AcademicYear> academicYears()
-    {
-        return Lists.newArrayList(academicYearRepository.findAll());
-    }
-
-    public AcademicYear academicYear(long id)
-    {
-        return academicYearRepository.findById(id).get();
-    }
-
-    public List<Holiday> holidays()
-    {
-        return Lists.newArrayList(holidayRepository.findAll());
-    }
-
-    public Holiday holiday(long id)
-    {
-        return holidayRepository.findById(id).get();
-    }
-
-
-    public List<Term> terms()
-    {
-        return Lists.newArrayList(termRepository.findAll());
-    }
-
-    public Term term(long id)
-    {
-        return termRepository.findById(id).get();
-    }
 }

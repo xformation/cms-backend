@@ -307,7 +307,7 @@ public class LocationResourceIntTest {
         // Create the Location
         LocationDTO locationDTO = locationMapper.toDto(location);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restLocationMockMvc.perform(put("/api/locations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(locationDTO)))
