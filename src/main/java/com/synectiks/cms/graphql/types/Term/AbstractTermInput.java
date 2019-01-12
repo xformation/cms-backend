@@ -10,7 +10,7 @@ public class AbstractTermInput {
     private String termsDesc;
     private Date startDate;
     private Date endDate;
-    private Status status;
+    private Status termStatus;
 
     public Long getId() {
         return id;
@@ -44,14 +44,7 @@ public class AbstractTermInput {
         this.endDate = endDate;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
+   
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,12 +54,12 @@ public class AbstractTermInput {
             Objects.equals(termsDesc, that.termsDesc) &&
             Objects.equals(startDate, that.startDate) &&
             Objects.equals(endDate, that.endDate) &&
-            status == that.status;
+            termStatus == that.termStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, termsDesc, startDate, endDate, status);
+        return Objects.hash(id, termsDesc, startDate, endDate, termStatus);
     }
 
     @Override
@@ -76,7 +69,15 @@ public class AbstractTermInput {
             ", termsDesc='" + termsDesc + '\'' +
             ", startDate=" + startDate +
             ", endDate=" + endDate +
-            ", status=" + status +
+            ", termStatus=" + termStatus +
             '}';
     }
+
+	public Status getTermStatus() {
+		return termStatus;
+	}
+
+	public void setTermStatus(Status termStatus) {
+		this.termStatus = termStatus;
+	}
 }

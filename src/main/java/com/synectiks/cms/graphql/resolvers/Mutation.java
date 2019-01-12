@@ -3,7 +3,6 @@ package com.synectiks.cms.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.Semester;
 
 
 import com.synectiks.cms.graphql.types.AcademicYear.*;
@@ -36,7 +35,7 @@ import org.springframework.stereotype.Component;
 public class Mutation implements GraphQLMutationResolver {
 
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
-    private final InstituteRepository instituteRepository;
+//    private final InstituteRepository instituteRepository;
     private final StudentRepository studentRepository;
     private final CollegeRepository collegeRepository;
     private final StudentYearRepository studentYearRepository;
@@ -56,9 +55,9 @@ public class Mutation implements GraphQLMutationResolver {
     private final HolidayRepository holidayRepository;
     private final TermRepository termRepository;
 
-    public Mutation(StudentRepository studentRepository, InstituteRepository instituteRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Mutation(StudentRepository studentRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.studentRepository = studentRepository;
-        this.instituteRepository = instituteRepository;
+//        this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
         this.studentYearRepository = studentYearRepository;
         this.semesterRepository = semesterRepository;
@@ -112,16 +111,16 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public AddInstitutePayload addInstitute(AddInstituteInput addInstituteInput) {
-        final Institute institute = new Institute();
-        institute.setCode(addInstituteInput.getCode());
-        institute.setName(addInstituteInput.getName());
-        institute.setYear(addInstituteInput.getYear());
-
-        instituteRepository.save(institute);
-
-        return new AddInstitutePayload(institute);
-    }
+//    public AddInstitutePayload addInstitute(AddInstituteInput addInstituteInput) {
+//        final Institute institute = new Institute();
+//        institute.setCode(addInstituteInput.getCode());
+//        institute.setName(addInstituteInput.getName());
+//        institute.setYear(addInstituteInput.getYear());
+//
+//        instituteRepository.save(institute);
+//
+//        return new AddInstitutePayload(institute);
+//    }
 
     public AddStudentYearPayload addStudentYear(AddStudentYearInput addStudentYearInput) {
         final StudentYear studentYear = new StudentYear();
@@ -287,31 +286,31 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public UpdateInstitutePayload updateInstitute(UpdateInstituteInput updateInstituteInput) {
-        Institute institute = instituteRepository.findById(updateInstituteInput.getInstituteId());
-        if (updateInstituteInput.getCode() != null) {
-            institute.setCode(updateInstituteInput.getCode());
-        }
+//    public UpdateInstitutePayload updateInstitute(UpdateInstituteInput updateInstituteInput) {
+//        Institute institute = instituteRepository.findById(updateInstituteInput.getInstituteId());
+//        if (updateInstituteInput.getCode() != null) {
+//            institute.setCode(updateInstituteInput.getCode());
+//        }
+//
+//        if (updateInstituteInput.getName() != null) {
+//            institute.setName(updateInstituteInput.getName());
+//        }
+//
+//        if (updateInstituteInput.getYear() != null) {
+//            institute.setYear(updateInstituteInput.getYear());
+//        }
+//
+//        instituteRepository.save(institute);
+//
+//        return new UpdateInstitutePayload(institute);
+//    }
 
-        if (updateInstituteInput.getName() != null) {
-            institute.setName(updateInstituteInput.getName());
-        }
-
-        if (updateInstituteInput.getYear() != null) {
-            institute.setYear(updateInstituteInput.getYear());
-        }
-
-        instituteRepository.save(institute);
-
-        return new UpdateInstitutePayload(institute);
-    }
-
-    public RemoveInstitutePayload removeInstitute(RemoveInstituteInput removeInstituteInput) {
-        Institute institute = instituteRepository.findById(removeInstituteInput.getInstituteId());
-        instituteRepository.delete(institute);
-
-        return new RemoveInstitutePayload(Lists.newArrayList(instituteRepository.findAll()));
-    }
+//    public RemoveInstitutePayload removeInstitute(RemoveInstituteInput removeInstituteInput) {
+//        Institute institute = instituteRepository.findById(removeInstituteInput.getInstituteId());
+//        instituteRepository.delete(institute);
+//
+//        return new RemoveInstitutePayload(Lists.newArrayList(instituteRepository.findAll()));
+//    }
 
     public AddCollegePayload addCollege(AddCollegeInput addCollegeInput) {
         final College college = new College();
@@ -712,8 +711,8 @@ public class Mutation implements GraphQLMutationResolver {
         final Holiday holiday = new Holiday();
         holiday.setHolidayDesc(addHolidayInput.getHolidayDesc());
         holiday.setHolidayDate(addHolidayInput.getHolidayDate());
-        holiday.setStatus(addHolidayInput.getStatus());
-        holiday.setAcademicYear(academicYear);
+        holiday.setHolidayStatus(addHolidayInput.getHolidayStatus());
+        holiday.setAcademicyear(academicYear);
         holidayRepository.save(holiday);
 
         return new AddHolidayPayload(holiday);
@@ -728,8 +727,8 @@ public class Mutation implements GraphQLMutationResolver {
             holiday.setHolidayDate(updateHolidayInput.getHolidayDate());
         }
 
-        if (updateHolidayInput.getStatus() != null) {
-            holiday.setStatus(updateHolidayInput.getStatus());
+        if (updateHolidayInput.getHolidayStatus() != null) {
+            holiday.setHolidayStatus(updateHolidayInput.getHolidayStatus());
         }
 
         holidayRepository.save(holiday);
@@ -749,8 +748,8 @@ public class Mutation implements GraphQLMutationResolver {
         term.setTermsDesc(addTermInput.getTermsDesc());
         term.setStartDate(addTermInput.getStartDate());
         term.setEndDate(addTermInput.getEndDate());
-        term.setStatus(addTermInput.getStatus());
-        term.setAcademicYear(academicYear);
+        term.setTermStatus(addTermInput.getTermStatus());
+        term.setAcademicyear(academicYear);
         termRepository.save(term);
 
         return new AddTermPayload(term);
@@ -770,8 +769,8 @@ public class Mutation implements GraphQLMutationResolver {
             term.setEndDate(updateTermInput.getEndDate());
         }
 
-        if (updateTermInput.getStatus() != null){
-            term.setStatus(updateTermInput.getStatus());
+        if (updateTermInput.getTermStatus() != null){
+            term.setTermStatus(updateTermInput.getTermStatus());
         }
 
         termRepository.save(term);

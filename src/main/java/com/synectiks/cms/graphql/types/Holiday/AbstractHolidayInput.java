@@ -9,7 +9,7 @@ public class AbstractHolidayInput {
     private Long id;
     private String holidayDesc;
     private Date holidayDate;
-    private Status status;
+    private Status holidayStatus;
 
     public Long getId() {
         return id;
@@ -35,14 +35,6 @@ public class AbstractHolidayInput {
         this.holidayDate = holidayDate;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,12 +43,12 @@ public class AbstractHolidayInput {
         return Objects.equals(id, that.id) &&
             Objects.equals(holidayDesc, that.holidayDesc) &&
             Objects.equals(holidayDate, that.holidayDate) &&
-            status == that.status;
+            holidayStatus == that.holidayStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, holidayDesc, holidayDate, status);
+        return Objects.hash(id, holidayDesc, holidayDate, holidayStatus);
     }
 
     @Override
@@ -65,7 +57,15 @@ public class AbstractHolidayInput {
             "id=" + id +
             ", holidayDesc='" + holidayDesc + '\'' +
             ", holidayDate=" + holidayDate +
-            ", status=" + status +
+            ", holidayStatus=" + holidayStatus +
             '}';
     }
+
+	public Status getHolidayStatus() {
+		return holidayStatus;
+	}
+
+	public void setHolidayStatus(Status holidayStatus) {
+		this.holidayStatus = holidayStatus;
+	}
 }
