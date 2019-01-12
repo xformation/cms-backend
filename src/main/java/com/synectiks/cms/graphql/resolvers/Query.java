@@ -15,16 +15,52 @@
  */
 package com.synectiks.cms.graphql.resolvers;
 
-import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.google.common.collect.Lists;
+import java.util.List;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.graphql.types.Holiday.AddHolidayPayload;
-import com.synectiks.cms.model.Institute;
-import com.synectiks.cms.repository.*;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+import com.google.common.collect.Lists;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.CourseOffer;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.CourseOfferRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
 
 /**
  * Resolver for PetClinic Queries
@@ -34,33 +70,41 @@ import java.util.List;
 @Component
 public class Query implements GraphQLQueryResolver {
 
+	
+	private final AcademicYearRepository academicYearRepository;
+	private final AttendanceMasterRepository attendanceMasterRepository;
+	private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
+	private final BankAccountsRepository bankAccountsRepository;
+	private final BatchRepository batchRepository;
+	private final BranchRepository branchRepository;
+	private final CollegeRepository collegeRepository;
+	private final CourseOfferRepository courseOfferRepository;
+	private final DepartmentRepository departmentRepository;
+	private final HolidayRepository holidayRepository;
+	private final LectureRepository lectureRepository;
+//  private final InstituteRepository instituteRepository;
+	private final LegalEntityRepository legalEntityRepository;
+	private final LocationRepository locationRepository;
+	private final SectionRepository sectionRepository;
+//    private final SemesterRepository semesterRepository;
     private final StudentRepository studentRepository;
-//    private final InstituteRepository instituteRepository;
-    private final CollegeRepository collegeRepository;
-    private final BranchRepository branchRepository;
-    private final StudentYearRepository studentYearRepository;
-    private final SemesterRepository semesterRepository;
-    private final SectionRepository sectionRepository;
-    private final SubjectRepository subjectRepository;
-    private final TeacherRepository teacherRepository;
-    private final LegalEntityRepository legalEntityRepository;
-    private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
-    private final BankAccountsRepository bankAccountsRepository;
-    private final DepartmentRepository departmentRepository;
-    private final LocationRepository locationRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
-    private final AcademicYearRepository academicYearRepository;
-    private final HolidayRepository holidayRepository;
+//    private final StudentYearRepository studentYearRepository;
+    private final SubjectRepository subjectRepository;
+    private final TeachRepository teachRepository;
+    private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
 
 
-    public Query(StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
-        this.studentRepository = studentRepository;
+    public Query(LectureRepository lectureRepository,AttendanceMasterRepository attendanceMasterRepository,CourseOfferRepository courseOfferRepository,TeachRepository teachRepository,BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+        this.batchRepository = batchRepository;
+    	this.studentRepository = studentRepository;
 //        this.instituteRepository=instituteRepository;
         this.collegeRepository=collegeRepository;
+        this.courseOfferRepository= courseOfferRepository;
         this.branchRepository = branchRepository;
-        this.studentYearRepository = studentYearRepository;
-        this.semesterRepository = semesterRepository;
+//        this.studentYearRepository = studentYearRepository;
+//        this.semesterRepository = semesterRepository;
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
         this.teacherRepository = teacherRepository;
@@ -73,6 +117,9 @@ public class Query implements GraphQLQueryResolver {
         this.academicYearRepository = academicYearRepository;
         this.holidayRepository = holidayRepository;
         this.termRepository = termRepository;
+        this.teachRepository =  teachRepository;
+        this.attendanceMasterRepository = attendanceMasterRepository;
+        this.lectureRepository= lectureRepository;
     }
 
     public Student student(long id)
@@ -113,7 +160,17 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(branchRepository.findAll());
     }
 
-    public StudentYear studentYear(long id)
+    public Batch batch(long id)
+    {
+        return batchRepository.findById(id).get();
+    }
+
+    public List<Batch> batches()
+    {
+        return Lists.newArrayList(batchRepository.findAll());
+    }
+    
+    /*public StudentYear studentYear(long id)
     {
         return studentYearRepository.findById(id).get();
     }
@@ -121,7 +178,7 @@ public class Query implements GraphQLQueryResolver {
     public List<StudentYear> studentYears()
     {
         return Lists.newArrayList(studentYearRepository.findAll());
-    }
+    }*/
 
    /* public Semester semester(long id)
     {
@@ -252,5 +309,37 @@ public class Query implements GraphQLQueryResolver {
     public Term term(long id)
     {
         return termRepository.findById(id).get();
+    }
+    
+    public Teach teach(long id){
+        return teachRepository.findById(id).get();
+    }
+
+    public List<Teach> teaches(){
+        return Lists.newArrayList(teachRepository.findAll());
+    }
+    
+    public CourseOffer courseOffer(long id){
+        return courseOfferRepository.findById(id).get();
+    }
+
+    public List<CourseOffer> courseOffers(){
+        return Lists.newArrayList(courseOfferRepository.findAll());
+    }
+    
+    public AttendanceMaster attendanceMaster(long id){
+        return attendanceMasterRepository.findById(id).get();
+    }
+
+    public List<AttendanceMaster> attendanceMasters(){
+        return Lists.newArrayList(attendanceMasterRepository.findAll());
+    }
+    
+    public Lecture lecture(long id){
+        return lectureRepository.findById(id).get();
+    }
+
+    public List<Lecture> lectures(){
+        return Lists.newArrayList(lectureRepository.findAll());
     }
 }

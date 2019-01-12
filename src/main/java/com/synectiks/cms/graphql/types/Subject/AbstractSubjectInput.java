@@ -1,17 +1,12 @@
 package com.synectiks.cms.graphql.types.Subject;
 
-import com.synectiks.cms.domain.Periods;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.enumeration.Common;
-import com.synectiks.cms.domain.enumeration.Elective;
-
-import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.CommonSubEnum;
+import com.synectiks.cms.domain.enumeration.ElectiveEnum;
 
 public class AbstractSubjectInput {
     private Long id;
-    private Common commonSub;
-    private Elective electiveSub;
+    private CommonSubEnum commonSub;
+    private ElectiveEnum electiveSub;
 
     public Long getId() {
         return id;
@@ -21,44 +16,58 @@ public class AbstractSubjectInput {
         this.id = id;
     }
 
-    public Common getCommonSub() {
-        return commonSub;
-    }
+	public CommonSubEnum getCommonSub() {
+		return commonSub;
+	}
 
-    public void setCommonSub(Common commonSub) {
-        this.commonSub = commonSub;
-    }
+	public void setCommonSub(CommonSubEnum commonSub) {
+		this.commonSub = commonSub;
+	}
 
-    public Elective getElectiveSub() {
-        return electiveSub;
-    }
+	public ElectiveEnum getElectiveSub() {
+		return electiveSub;
+	}
 
-    public void setElectiveSub(Elective electiveSub) {
-        this.electiveSub = electiveSub;
-    }
+	public void setElectiveSub(ElectiveEnum electiveSub) {
+		this.electiveSub = electiveSub;
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((commonSub == null) ? 0 : commonSub.hashCode());
+		result = prime * result + ((electiveSub == null) ? 0 : electiveSub.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AbstractSubjectInput)) return false;
-        AbstractSubjectInput that = (AbstractSubjectInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            getCommonSub() == that.getCommonSub() &&
-            getElectiveSub() == that.getElectiveSub();
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractSubjectInput other = (AbstractSubjectInput) obj;
+		if (commonSub != other.commonSub)
+			return false;
+		if (electiveSub != other.electiveSub)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getCommonSub(), getElectiveSub());
-    }
+	@Override
+	public String toString() {
+		return "AbstractSubjectInput [id=" + id + ", commonSub=" + commonSub + ", electiveSub=" + electiveSub + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "AbstractSubjectInput{" +
-            "id=" + id +
-            ", commonSub=" + commonSub +
-            ", electiveSub=" + electiveSub +
-            '}';
-    }
+    
+    
 }

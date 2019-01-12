@@ -1,7 +1,5 @@
 package com.synectiks.cms.graphql.types.Teacher;
 
-import com.synectiks.cms.domain.Periods;
-
 import java.util.Objects;
 
 public class AbstractTeacherInput {

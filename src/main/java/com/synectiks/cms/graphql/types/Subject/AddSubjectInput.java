@@ -3,7 +3,7 @@ package com.synectiks.cms.graphql.types.Subject;
 public class AddSubjectInput extends AbstractSubjectInput {
     private Long studentId;
     private Long teacherId;
-    private Long periodsId;
+    private Long departmentId;
 
     public Long getStudentId() {
         return studentId;
@@ -21,20 +21,19 @@ public class AddSubjectInput extends AbstractSubjectInput {
         this.teacherId = teacherId;
     }
 
-    public Long getPeriodsId() {
-        return periodsId;
-    }
+	public Long getDepartmentId() {
+		return departmentId;
+	}
 
-    public void setPeriodsId(Long periodsId) {
-        this.periodsId = periodsId;
-    }
+	public void setDepartmentId(Long departmentId) {
+		this.departmentId = departmentId;
+	}
 
-    @Override
-    public String toString() {
-        return "AddSubjectInput{" +
-            "studentId=" + studentId +
-            ", teacherId=" + teacherId +
-            ", periodsId=" + periodsId +
-            '}'+ super.toString();
-    }
+	@Override
+	public String toString() {
+		return "AddSubjectInput [studentId=" + studentId + ", teacherId=" + teacherId + ", departmentId=" + departmentId
+				+ "]";
+	}
+
+    
 }

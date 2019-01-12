@@ -1,5 +1,6 @@
 package com.synectiks.cms.graphql.types.StudentAttendance;
 
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.domain.enumeration.Status;
 
 import java.time.LocalDate;
@@ -8,8 +9,7 @@ import java.util.Objects;
 
 public class AbstractStudentAttendanceInput {
     private Long id;
-    private Date attendanceDate;
-    private Status status;
+    private AttendanceStatusEnum attendanceStatus;
     private String comments;
 
     public Long getId() {
@@ -20,21 +20,6 @@ public class AbstractStudentAttendanceInput {
         this.id = id;
     }
 
-    public Date getAttendanceDate() {
-        return attendanceDate;
-    }
-
-    public void setAttendanceDate(Date attendanceDate) {
-        this.attendanceDate = attendanceDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
     public String getComments() {
         return comments;
@@ -44,29 +29,53 @@ public class AbstractStudentAttendanceInput {
         this.comments = comments;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AbstractStudentAttendanceInput)) return false;
-        AbstractStudentAttendanceInput that = (AbstractStudentAttendanceInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getAttendanceDate(), that.getAttendanceDate()) &&
-            getStatus() == that.getStatus() &&
-            Objects.equals(getComments(), that.getComments());
-    }
+	public AttendanceStatusEnum getAttendanceStatus() {
+		return attendanceStatus;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getAttendanceDate(), getStatus(), getComments());
-    }
+	public void setAttendanceStatus(AttendanceStatusEnum attendanceStatus) {
+		this.attendanceStatus = attendanceStatus;
+	}
 
-    @Override
-    public String toString() {
-        return "AbstractStudentAttendanceInput{" +
-            "id=" + id +
-            ", attendanceDate=" + attendanceDate +
-            ", status=" + status +
-            ", comments='" + comments + '\'' +
-            '}';
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((attendanceStatus == null) ? 0 : attendanceStatus.hashCode());
+		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractStudentAttendanceInput other = (AbstractStudentAttendanceInput) obj;
+		if (attendanceStatus != other.attendanceStatus)
+			return false;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AbstractStudentAttendanceInput [id=" + id + ", attendanceStatus=" + attendanceStatus + ", comments="
+				+ comments + "]";
+	}
+
+    
 }

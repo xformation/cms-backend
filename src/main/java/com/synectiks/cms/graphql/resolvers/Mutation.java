@@ -1,66 +1,211 @@
 package com.synectiks.cms.graphql.resolvers;
 
-import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.google.common.collect.Lists;
-import com.synectiks.cms.domain.*;
-
-
-import com.synectiks.cms.graphql.types.AcademicYear.*;
-import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
-import com.synectiks.cms.graphql.types.BankAccounts.*;
-import com.synectiks.cms.graphql.types.College.*;
-import com.synectiks.cms.graphql.types.Department.*;
-import com.synectiks.cms.graphql.types.Branch.*;
-import com.synectiks.cms.graphql.types.Holiday.*;
-import com.synectiks.cms.graphql.types.Institute.*;
-import com.synectiks.cms.graphql.types.LegalEntity.*;
-import com.synectiks.cms.graphql.types.Location.*;
-
-import com.synectiks.cms.graphql.types.Section.*;
-import com.synectiks.cms.graphql.types.Semester.*;
-import com.synectiks.cms.graphql.types.Student.*;
-import com.synectiks.cms.graphql.types.StudentAttendance.*;
-import com.synectiks.cms.graphql.types.StudentYear.*;
-import com.synectiks.cms.graphql.types.Subject.*;
-import com.synectiks.cms.graphql.types.Teacher.*;
-import com.synectiks.cms.graphql.types.Term.*;
-import com.synectiks.cms.model.Institute;
-import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import com.google.common.collect.Lists;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.CourseOffer;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearInput;
+import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearPayload;
+import com.synectiks.cms.graphql.types.AcademicYear.RemoveAcademicYearInput;
+import com.synectiks.cms.graphql.types.AcademicYear.RemoveAcademicYearPayload;
+import com.synectiks.cms.graphql.types.AcademicYear.UpdateAcademicYearInput;
+import com.synectiks.cms.graphql.types.AcademicYear.UpdateAcademicYearPayload;
+import com.synectiks.cms.graphql.types.AttendanceMaster.AddAttendanceMasterInput;
+import com.synectiks.cms.graphql.types.AttendanceMaster.AddAttendanceMasterPayload;
+import com.synectiks.cms.graphql.types.AttendanceMaster.RemoveAttendanceMasterInput;
+import com.synectiks.cms.graphql.types.AttendanceMaster.RemoveAttendanceMasterPayload;
+import com.synectiks.cms.graphql.types.AttendanceMaster.UpdateAttendanceMasterInput;
+import com.synectiks.cms.graphql.types.AttendanceMaster.UpdateAttendanceMasterPayload;
+import com.synectiks.cms.graphql.types.AuthorizedSignatory.AddAuthorizedSignatoryInput;
+import com.synectiks.cms.graphql.types.AuthorizedSignatory.AddAuthorizedSignatoryPayload;
+import com.synectiks.cms.graphql.types.AuthorizedSignatory.RemoveAuthorizedSignatoryInput;
+import com.synectiks.cms.graphql.types.AuthorizedSignatory.RemoveAuthorizedSignatoryPayload;
+import com.synectiks.cms.graphql.types.AuthorizedSignatory.UpdateAuthorizedSignatoryInput;
+import com.synectiks.cms.graphql.types.AuthorizedSignatory.UpdateAuthorizedSignatoryPayload;
+import com.synectiks.cms.graphql.types.BankAccounts.AddBankAccountsInput;
+import com.synectiks.cms.graphql.types.BankAccounts.AddBankAccountsPayload;
+import com.synectiks.cms.graphql.types.BankAccounts.RemoveBankAccountsInput;
+import com.synectiks.cms.graphql.types.BankAccounts.RemoveBankAccountsPayload;
+import com.synectiks.cms.graphql.types.BankAccounts.UpdateBankAccountsInput;
+import com.synectiks.cms.graphql.types.BankAccounts.UpdateBankAccountsPayload;
+import com.synectiks.cms.graphql.types.Batch.AddBatchInput;
+import com.synectiks.cms.graphql.types.Batch.AddBatchPayload;
+import com.synectiks.cms.graphql.types.Batch.RemoveBatchInput;
+import com.synectiks.cms.graphql.types.Batch.RemoveBatchPayload;
+import com.synectiks.cms.graphql.types.Batch.UpdateBatchInput;
+import com.synectiks.cms.graphql.types.Batch.UpdateBatchPayload;
+import com.synectiks.cms.graphql.types.Branch.AddBranchInput;
+import com.synectiks.cms.graphql.types.Branch.AddBranchPayload;
+import com.synectiks.cms.graphql.types.Branch.RemoveBranchInput;
+import com.synectiks.cms.graphql.types.Branch.RemoveBranchPayload;
+import com.synectiks.cms.graphql.types.Branch.UpdateBranchInput;
+import com.synectiks.cms.graphql.types.Branch.UpdateBranchPayload;
+import com.synectiks.cms.graphql.types.College.AddCollegeInput;
+import com.synectiks.cms.graphql.types.College.AddCollegePayload;
+import com.synectiks.cms.graphql.types.College.RemoveCollegeInput;
+import com.synectiks.cms.graphql.types.College.RemoveCollegePayload;
+import com.synectiks.cms.graphql.types.College.UpdateCollegeInput;
+import com.synectiks.cms.graphql.types.College.UpdateCollegePayload;
+import com.synectiks.cms.graphql.types.CourseOffer.AddCourseOfferInput;
+import com.synectiks.cms.graphql.types.CourseOffer.AddCourseOfferPayload;
+import com.synectiks.cms.graphql.types.CourseOffer.RemoveCourseOfferInput;
+import com.synectiks.cms.graphql.types.CourseOffer.RemoveCourseOfferPayload;
+import com.synectiks.cms.graphql.types.CourseOffer.UpdateCourseOfferInput;
+import com.synectiks.cms.graphql.types.CourseOffer.UpdateCourseOfferPayload;
+import com.synectiks.cms.graphql.types.Department.AddDepartmentInput;
+import com.synectiks.cms.graphql.types.Department.AddDepartmentPayload;
+import com.synectiks.cms.graphql.types.Department.RemoveDepartmentInput;
+import com.synectiks.cms.graphql.types.Department.RemoveDepartmentPayload;
+import com.synectiks.cms.graphql.types.Department.UpdateDepartmentInput;
+import com.synectiks.cms.graphql.types.Department.UpdateDepartmentPayload;
+import com.synectiks.cms.graphql.types.Holiday.AddHolidayInput;
+import com.synectiks.cms.graphql.types.Holiday.AddHolidayPayload;
+import com.synectiks.cms.graphql.types.Holiday.RemoveHolidayInput;
+import com.synectiks.cms.graphql.types.Holiday.RemoveHolidayPayload;
+import com.synectiks.cms.graphql.types.Holiday.UpdateHolidayInput;
+import com.synectiks.cms.graphql.types.Holiday.UpdateHolidayPayload;
+import com.synectiks.cms.graphql.types.Lecture.AddLectureInput;
+import com.synectiks.cms.graphql.types.Lecture.AddLecturePayload;
+import com.synectiks.cms.graphql.types.Lecture.RemoveLectureInput;
+import com.synectiks.cms.graphql.types.Lecture.RemoveLecturePayload;
+import com.synectiks.cms.graphql.types.Lecture.UpdateLectureInput;
+import com.synectiks.cms.graphql.types.Lecture.UpdateLecturePayload;
+import com.synectiks.cms.graphql.types.LegalEntity.AddLegalEntityInput;
+import com.synectiks.cms.graphql.types.LegalEntity.AddLegalEntityPayload;
+import com.synectiks.cms.graphql.types.LegalEntity.RemoveLegalEntityInput;
+import com.synectiks.cms.graphql.types.LegalEntity.RemoveLegalEntityPayload;
+import com.synectiks.cms.graphql.types.LegalEntity.UpdateLegalEntityInput;
+import com.synectiks.cms.graphql.types.LegalEntity.UpdateLegalEntityPayload;
+import com.synectiks.cms.graphql.types.Location.AddLocationInput;
+import com.synectiks.cms.graphql.types.Location.AddLocationPayload;
+import com.synectiks.cms.graphql.types.Location.RemoveLocationInput;
+import com.synectiks.cms.graphql.types.Location.RemoveLocationPayload;
+import com.synectiks.cms.graphql.types.Location.UpdateLocationInput;
+import com.synectiks.cms.graphql.types.Location.UpdateLocationPayload;
+import com.synectiks.cms.graphql.types.Section.AddSectionInput;
+import com.synectiks.cms.graphql.types.Section.AddSectionPayload;
+import com.synectiks.cms.graphql.types.Section.RemoveSectionInput;
+import com.synectiks.cms.graphql.types.Section.RemoveSectionPayload;
+import com.synectiks.cms.graphql.types.Section.UpdateSectionInput;
+import com.synectiks.cms.graphql.types.Section.UpdateSectionPayload;
+import com.synectiks.cms.graphql.types.Student.AddStudentInput;
+import com.synectiks.cms.graphql.types.Student.AddStudentPayload;
+import com.synectiks.cms.graphql.types.Student.RemoveStudentInput;
+import com.synectiks.cms.graphql.types.Student.RemoveStudentPayload;
+import com.synectiks.cms.graphql.types.Student.UpdateStudentInput;
+import com.synectiks.cms.graphql.types.Student.UpdateStudentPayload;
+import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendanceInput;
+import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendancePayload;
+import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendanceInput;
+import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendancePayload;
+import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendanceInput;
+import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendancePayload;
+import com.synectiks.cms.graphql.types.Subject.AddSubjectInput;
+import com.synectiks.cms.graphql.types.Subject.AddSubjectPayload;
+import com.synectiks.cms.graphql.types.Subject.RemoveSubjectInput;
+import com.synectiks.cms.graphql.types.Subject.RemoveSubjectPayload;
+import com.synectiks.cms.graphql.types.Subject.UpdateSubjectInput;
+import com.synectiks.cms.graphql.types.Subject.UpdateSubjectPayload;
+import com.synectiks.cms.graphql.types.Teach.AddTeachInput;
+import com.synectiks.cms.graphql.types.Teach.AddTeachPayload;
+import com.synectiks.cms.graphql.types.Teach.RemoveTeachInput;
+import com.synectiks.cms.graphql.types.Teach.RemoveTeachPayload;
+import com.synectiks.cms.graphql.types.Teach.UpdateTeachInput;
+import com.synectiks.cms.graphql.types.Teach.UpdateTeachPayload;
+import com.synectiks.cms.graphql.types.Teacher.AddTeacherInput;
+import com.synectiks.cms.graphql.types.Teacher.AddTeacherPayload;
+import com.synectiks.cms.graphql.types.Teacher.RemoveTeacherInput;
+import com.synectiks.cms.graphql.types.Teacher.RemoveTeacherPayload;
+import com.synectiks.cms.graphql.types.Teacher.UpdateTeacherInput;
+import com.synectiks.cms.graphql.types.Teacher.UpdateTeacherPayload;
+import com.synectiks.cms.graphql.types.Term.AddTermInput;
+import com.synectiks.cms.graphql.types.Term.AddTermPayload;
+import com.synectiks.cms.graphql.types.Term.RemoveTermInput;
+import com.synectiks.cms.graphql.types.Term.RemoveTermPayload;
+import com.synectiks.cms.graphql.types.Term.UpdateTermInput;
+import com.synectiks.cms.graphql.types.Term.UpdateTermPayload;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.CourseOfferRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
 
 
 @Component
 public class Mutation implements GraphQLMutationResolver {
 
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
-//    private final InstituteRepository instituteRepository;
-    private final StudentRepository studentRepository;
-    private final CollegeRepository collegeRepository;
-    private final StudentYearRepository studentYearRepository;
-    private final SemesterRepository semesterRepository;
-    private final BranchRepository branchRepository;
     
-    private final SectionRepository sectionRepository;
-    private final SubjectRepository subjectRepository;
-    private final TeacherRepository teacherRepository;
-    private final LegalEntityRepository legalEntityRepository;
+    private final AcademicYearRepository academicYearRepository;
+    private final AttendanceMasterRepository attendanceMasterRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
     private final BankAccountsRepository bankAccountsRepository;
+    private final BatchRepository batchRepository;
+    private final BranchRepository branchRepository;
+    private final CollegeRepository collegeRepository;
+    private final CourseOfferRepository courseOfferRepository;
     private final DepartmentRepository departmentRepository;
-    private final LocationRepository locationRepository;
-    private final StudentAttendanceRepository studentAttendanceRepository;
-    private final AcademicYearRepository academicYearRepository;
     private final HolidayRepository holidayRepository;
+    private final LectureRepository lectureRepository;
+    
+    //    private final InstituteRepository instituteRepository;
+    private final LegalEntityRepository legalEntityRepository;
+    private final LocationRepository locationRepository;
+    private final SectionRepository sectionRepository;
+//  private final SemesterRepository semesterRepository;
+    private final StudentRepository studentRepository;
+    private final StudentAttendanceRepository studentAttendanceRepository;
+//    private final StudentYearRepository studentYearRepository;
+    private final SubjectRepository subjectRepository;
+    private final TeachRepository teachRepository;
+    private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
-
-    public Mutation(StudentRepository studentRepository, CollegeRepository collegeRepository, StudentYearRepository studentYearRepository, SemesterRepository semesterRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
-        this.studentRepository = studentRepository;
+    
+    public Mutation(LectureRepository lectureRepository,AttendanceMasterRepository attendanceMasterRepository,CourseOfferRepository courseOfferRepository,TeachRepository teachRepository,BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+        this.batchRepository = batchRepository;
+    	this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
         this.collegeRepository = collegeRepository;
-        this.studentYearRepository = studentYearRepository;
-        this.semesterRepository = semesterRepository;
+        this.courseOfferRepository= courseOfferRepository;
+//        this.studentYearRepository = studentYearRepository;
+//        this.semesterRepository = semesterRepository;
         this.branchRepository = branchRepository;
         this.sectionRepository = sectionRepository;
         this.subjectRepository = subjectRepository;
@@ -74,15 +219,21 @@ public class Mutation implements GraphQLMutationResolver {
         this.academicYearRepository = academicYearRepository;
         this.holidayRepository = holidayRepository;
         this.termRepository = termRepository;
+        this.teachRepository = teachRepository;
+        this.attendanceMasterRepository=attendanceMasterRepository;
+        this.lectureRepository = lectureRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
-        final Teacher teacher = teacherRepository.findById(addStudentInput.getTeacherId()).get();
+        final Section section = sectionRepository.findById(addStudentInput.getSection().getId()).get();
+        final Branch branch = branchRepository.findById(addStudentInput.getBranch().getId()).get();
+        final Department department = departmentRepository.findById(addStudentInput.getDepartment().getId()).get();
         final Student student = new Student();
         student.setStudentName(addStudentInput.getStudentName());
-        student.setAttendance(addStudentInput.getAttendance());
-        student.setElectiveSub(addStudentInput.getElectiveSub());
-        student.setTeacher(teacher);
+        student.setBatch(addStudentInput.getBatch());
+        student.setSection(section);
+        student.setBranch(branch);
+        student.setDepartment(department);
         studentRepository.save(student);
         return new AddStudentPayload(student);
     }
@@ -92,12 +243,17 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getStudentName() != null) {
             student.setStudentName(updateStudentInput.getStudentName());
         }
-        if (updateStudentInput.getAttendance() != null) {
-            student.setAttendance(updateStudentInput.getAttendance());
+        if (updateStudentInput.getBatch() != null) {
+            student.setBatch(updateStudentInput.getBatch());
         }
-
-        if (updateStudentInput.getElectiveSub() != null) {
-            student.setElectiveSub(updateStudentInput.getElectiveSub());
+        if (updateStudentInput.getSection() != null) {
+            student.setSection(updateStudentInput.getSection());
+        }
+        if (updateStudentInput.getBranch() != null) {
+            student.setBranch(updateStudentInput.getBranch());
+        }
+        if (updateStudentInput.getDepartment() != null) {
+            student.setDepartment(updateStudentInput.getDepartment());
         }
         studentRepository.save(student);
 
@@ -122,7 +278,7 @@ public class Mutation implements GraphQLMutationResolver {
 //        return new AddInstitutePayload(institute);
 //    }
 
-    public AddStudentYearPayload addStudentYear(AddStudentYearInput addStudentYearInput) {
+    /*public AddStudentYearPayload addStudentYear(AddStudentYearInput addStudentYearInput) {
         final StudentYear studentYear = new StudentYear();
         studentYear.setYearDesc(addStudentYearInput.getYearDesc());
         studentYearRepository.save(studentYear);
@@ -146,7 +302,7 @@ public class Mutation implements GraphQLMutationResolver {
         studentYearRepository.delete(studentYear);
 
         return new RemoveStudentYearPayload(Lists.newArrayList(studentYearRepository.findAll()));
-    }
+    }*/
 
     public AddBankAccountsPayload addBankAccounts(AddBankAccountsInput addBankAccountsInput) {
         final BankAccounts bankAccounts = new BankAccounts();
@@ -260,7 +416,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveLocationPayload(Lists.newArrayList(locationRepository.findAll()));
     }
 
-    public AddSemesterPayload addSemester(AddSemesterInput addSemesterInput) {
+    /*public AddSemesterPayload addSemester(AddSemesterInput addSemesterInput) {
         final Semester semester = new Semester();
         semester.setSem(addSemesterInput.getSem());
         semesterRepository.save(semester);
@@ -284,7 +440,7 @@ public class Mutation implements GraphQLMutationResolver {
         semesterRepository.delete(semester);
         return new RemoveSemesterPayload(Lists.newArrayList(semesterRepository.findAll()));
     }
-
+*/
 
 //    public UpdateInstitutePayload updateInstitute(UpdateInstituteInput updateInstituteInput) {
 //        Institute institute = instituteRepository.findById(updateInstituteInput.getInstituteId());
@@ -393,20 +549,40 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveBranchPayload(Lists.newArrayList(branchRepository.findAll()));
     }
 
+    public AddBatchPayload addBatch(AddBatchInput addBatchInput) {
+    	Department department = departmentRepository.findById(addBatchInput.getDepartmentId()).get();
+        final Batch batch = new Batch();
+        batch.setBatch(addBatchInput.getBatch());
+        batch.setDepartment(department);
+        batchRepository.save(batch);
+        return new AddBatchPayload(batch);
+    }
 
+    public UpdateBatchPayload updateBatch(UpdateBatchInput updateBatchInput) {
+    	Batch batch = batchRepository.findById(updateBatchInput.getId()).get();
+        if (updateBatchInput.getBatch() != null) {
+        	batch.setBatch(updateBatchInput.getBatch());
+        }
+        if(updateBatchInput.getDepartmentId() != null) {
+        	Department department = departmentRepository.findById(updateBatchInput.getDepartmentId()).get();
+        	batch.setDepartment(department);
+        }
+        batchRepository.save(batch);
+        return new UpdateBatchPayload(batch);
+    }
+
+    public RemoveBatchPayload removeBatch(RemoveBatchInput removeBatchInput) {
+    	Batch batch = batchRepository.findById(removeBatchInput.getBatchId()).get();
+    	batchRepository.delete(batch);
+        return new RemoveBatchPayload(Lists.newArrayList(batchRepository.findAll()));
+    }
     
-
-    
-
-    
-
     public AddSectionPayload addSection(AddSectionInput addSectionInput) {
-        final StudentYear studentYear = studentYearRepository.findById(addSectionInput.getStudentYearId()).get();
+        final Batch batch = batchRepository.findById(addSectionInput.getBatch().getId()).get();
         final Section section = new Section();
         section.setSection(addSectionInput.getSection());
-        section.setStudentyear(studentYear);
+        section.setBatch(batch);
         sectionRepository.save(section);
-
         return new AddSectionPayload(section);
     }
 
@@ -414,6 +590,9 @@ public class Mutation implements GraphQLMutationResolver {
         Section section = sectionRepository.findById(updateSectionInput.getId()).get();
         if (updateSectionInput.getSection() != null) {
             section.setSection(updateSectionInput.getSection());
+        }
+        if(updateSectionInput.getBatch() != null) {
+        	section.setBatch(updateSectionInput.getBatch());
         }
         sectionRepository.save(section);
 
@@ -427,14 +606,14 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddSubjectPayload addSubject(AddSubjectInput addSubjectInput) {
-        final Periods periods = periodsRepository.findById(addSubjectInput.getPeriodsId()).get();
-        final Teacher teacher = teacherRepository.findById(addSubjectInput.getTeacherId()).get();
-        final Student student = studentRepository.findById(addSubjectInput.getStudentId()).get();
-
-        final Subject subject = new Subject();
+    	final Department department = departmentRepository.findById(addSubjectInput.getDepartmentId()).get();
+    	final Student student = studentRepository.findById(addSubjectInput.getStudentId()).get();
+    	final Teacher teacher = teacherRepository.findById(addSubjectInput.getTeacherId()).get();
+        
+    	final Subject subject = new Subject();
         subject.setCommonSub(addSubjectInput.getCommonSub());
         subject.setElectiveSub(addSubjectInput.getElectiveSub());
-        subject.setPeriods(periods);
+        subject.setDepartment(department);
         subject.setStudent(student);
         subject.setTeacher(teacher);
 
@@ -451,7 +630,18 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateSubjectInput.getElectiveSub() != null) {
             subject.setElectiveSub(updateSubjectInput.getElectiveSub());
         }
-
+        if (updateSubjectInput.getDepartmentId() != null) {
+        	final Department department = departmentRepository.findById(updateSubjectInput.getDepartmentId()).get();
+            subject.setDepartment(department);
+        }
+        if(updateSubjectInput.getStudentId() != null) {
+        	final Student student = studentRepository.findById(updateSubjectInput.getStudentId()).get();
+        	subject.setStudent(student);
+        }
+        if(updateSubjectInput.getTeacherId() != null) {
+        	final Teacher teacher = teacherRepository.findById(updateSubjectInput.getTeacherId()).get();
+        	subject.setTeacher(teacher);
+        }
         subjectRepository.save(subject);
 
         return new UpdateSubjectPayload(subject);
@@ -465,29 +655,34 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddStudentAttendancePayload addStudentAttendance(AddStudentAttendanceInput addStudentAttendanceInput) {
         final Student student = studentRepository.findById(addStudentAttendanceInput.getStudentId()).get();
+        final Lecture lecture = lectureRepository.findById(addStudentAttendanceInput.getLectureId()).get();
         final StudentAttendance studentAttendance = new StudentAttendance();
-        studentAttendance.setAttendanceDate(addStudentAttendanceInput.getAttendanceDate());
-        studentAttendance.setStatus(addStudentAttendanceInput.getStatus());
+        studentAttendance.setAttendanceStatus(addStudentAttendanceInput.getAttendanceStatus());
         studentAttendance.setComments(addStudentAttendanceInput.getComments());
         studentAttendance.setStudent(student);
+        studentAttendance.setLecture(lecture);
         studentAttendanceRepository.save(studentAttendance);
-
         return new AddStudentAttendancePayload(studentAttendance);
     }
 
     public UpdateStudentAttendancePayload updateStudentAttendance(UpdateStudentAttendanceInput updateStudentAttendanceInput) {
         StudentAttendance studentAttendance = studentAttendanceRepository.findById(updateStudentAttendanceInput.getId()).get();
-        if (updateStudentAttendanceInput.getAttendanceDate() != null) {
-            studentAttendance.setAttendanceDate(updateStudentAttendanceInput.getAttendanceDate());
-        }
+        
 
-        if (updateStudentAttendanceInput.getStatus() != null) {
-            studentAttendance.setStatus(updateStudentAttendanceInput.getStatus());
+        if (updateStudentAttendanceInput.getAttendanceStatus() != null) {
+            studentAttendance.setAttendanceStatus(updateStudentAttendanceInput.getAttendanceStatus());
         }
         if (updateStudentAttendanceInput.getComments() != null) {
             studentAttendance.setComments(updateStudentAttendanceInput.getComments());
         }
-
+        if(updateStudentAttendanceInput.getStudentId() != null) {
+        	final Student student = studentRepository.findById(updateStudentAttendanceInput.getStudentId()).get();
+        	studentAttendance.setStudent(student);
+        }
+        if(updateStudentAttendanceInput.getLectureId() != null) {
+        	final Lecture lecture = lectureRepository.findById(updateStudentAttendanceInput.getLectureId()).get();
+        	studentAttendance.setLecture(lecture);
+        }
         studentAttendanceRepository.save(studentAttendance);
 
         return new UpdateStudentAttendancePayload(studentAttendance);
@@ -501,10 +696,8 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public AddTeacherPayload addTeacher(AddTeacherInput addTeacherInput) {
-        final Periods periods = periodsRepository.findById(addTeacherInput.getPeriodsId()).get();
         final Teacher teacher = new Teacher();
         teacher.setTeacherName(addTeacherInput.getTeacherName());
-        teacher.setPeriods(periods);
 
         teacherRepository.save(teacher);
 
@@ -782,6 +975,165 @@ public class Mutation implements GraphQLMutationResolver {
         Term term = termRepository.findById(removeTermInput.getTermId()).get();
         termRepository.delete(term);
         return new RemoveTermPayload(Lists.newArrayList(termRepository.findAll()));
+    }
+    
+    public AddTeachPayload addTeach(AddTeachInput addTeachInput) {
+        final Teacher teacher = teacherRepository.findById(addTeachInput.getTeacher().getId()).get();
+        final Subject subject = subjectRepository.findById(addTeachInput.getSubject().getId()).get();
+        final Teach teach = new Teach();
+        teach.setDesc(addTeachInput.getDesc());
+        teach.setTeacher(teacher);
+        teach.setSubject(subject);
+        teachRepository.save(teach);
+        return new AddTeachPayload(teach);
+    }
+
+    public UpdateTeachPayload updateTeach(UpdateTeachInput updateTeachInput) {
+        Teach teach = teachRepository.findById(updateTeachInput.getId()).get();
+
+        if (updateTeachInput.getDesc() != null) {
+        	teach.setDesc(updateTeachInput.getDesc());
+        }
+        if (updateTeachInput.getTeacher() != null) {
+        	teach.setTeacher(updateTeachInput.getTeacher());
+        }
+
+        if (updateTeachInput.getSubject() != null) {
+        	teach.setSubject(updateTeachInput.getSubject());
+        }
+
+        teachRepository.save(teach);
+
+        return new UpdateTeachPayload(teach);
+    }
+
+    public RemoveTeachPayload removeTeach(RemoveTeachInput removeTeachInput) {
+        Teach teach = teachRepository.findById(removeTeachInput.getTeachId()).get();
+        teachRepository.delete(teach);
+        return new RemoveTeachPayload(Lists.newArrayList(teachRepository.findAll()));
+    }
+    
+    public AddCourseOfferPayload addCourseOffer(AddCourseOfferInput addCourseOfferInput) {
+        final College college = collegeRepository.findById(addCourseOfferInput.getCollege().getId()).get();
+        final Department department = departmentRepository.findById(addCourseOfferInput.getDepartment().getId()).get();
+        final Subject subject = subjectRepository.findById(addCourseOfferInput.getSubject().getId()).get();
+        final CourseOffer courseOffer = new CourseOffer();
+        courseOffer.setDesc(addCourseOfferInput.getDesc());
+        courseOffer.setCollege(college);
+        courseOffer.setDepartment(department);
+        courseOffer.setSubject(subject);
+        courseOfferRepository.save(courseOffer);
+        return new AddCourseOfferPayload(courseOffer);
+    }
+
+    public UpdateCourseOfferPayload updateCourseOffer(UpdateCourseOfferInput updateCourseOfferInput) {
+    	CourseOffer courseOffer = courseOfferRepository.findById(updateCourseOfferInput.getId()).get();
+
+        if (updateCourseOfferInput.getDesc() != null) {
+        	courseOffer.setDesc(updateCourseOfferInput.getDesc());
+        }
+        if (updateCourseOfferInput.getCollege() != null) {
+        	courseOffer.setCollege(updateCourseOfferInput.getCollege());
+        }
+        if (updateCourseOfferInput.getDepartment() != null) {
+        	courseOffer.setDepartment(updateCourseOfferInput.getDepartment());
+        }
+        if (updateCourseOfferInput.getSubject() != null) {
+        	courseOffer.setSubject(updateCourseOfferInput.getSubject());
+        }
+        courseOfferRepository.save(courseOffer);
+        return new UpdateCourseOfferPayload(courseOffer);
+    }
+
+    public RemoveCourseOfferPayload removeCourseOffer(RemoveCourseOfferInput removeCourseOfferInput) {
+    	CourseOffer courseOffer = courseOfferRepository.findById(removeCourseOfferInput.getCourseOfferId()).get();
+    	courseOfferRepository.delete(courseOffer);
+        return new RemoveCourseOfferPayload(Lists.newArrayList(courseOfferRepository.findAll()));
+    }
+    
+    public AddAttendanceMasterPayload addAttendanceMaster(AddAttendanceMasterInput addAttendanceMasterInput) {
+        final Teach teach = teachRepository.findById(addAttendanceMasterInput.getTeach().getId()).get();
+        final Section section = sectionRepository.findById(addAttendanceMasterInput.getSection().getId()).get();
+        final AcademicYear academicYear = academicYearRepository.findById(addAttendanceMasterInput.getAcademicYear().getId()).get();
+        final AttendanceMaster attendanceMaster = new AttendanceMaster();
+        
+        attendanceMaster.setDesc(addAttendanceMasterInput.getDesc());
+        attendanceMaster.setTeach(teach);
+        attendanceMaster.setSection(section);
+        attendanceMaster.setAcademicyear(academicYear);
+        attendanceMasterRepository.save(attendanceMaster);
+        return new AddAttendanceMasterPayload(attendanceMaster);
+    }
+
+    public UpdateAttendanceMasterPayload updateAttendanceMaster(UpdateAttendanceMasterInput updateAttendanceMasterInput) {
+    	AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(updateAttendanceMasterInput.getId()).get();
+
+        if (updateAttendanceMasterInput.getDesc() != null) {
+        	attendanceMaster.setDesc(updateAttendanceMasterInput.getDesc());
+        }
+        if (updateAttendanceMasterInput.getTeach() != null) {
+        	attendanceMaster.setTeach(updateAttendanceMasterInput.getTeach());
+        }
+        if (updateAttendanceMasterInput.getSection() != null) {
+        	attendanceMaster.setSection(updateAttendanceMasterInput.getSection());
+        }
+        
+        if (updateAttendanceMasterInput.getAcademicYear() != null) {
+        	attendanceMaster.setAcademicyear(updateAttendanceMasterInput.getAcademicYear());
+        }
+        attendanceMasterRepository.save(attendanceMaster);
+        return new UpdateAttendanceMasterPayload(attendanceMaster);
+    }
+
+    public RemoveAttendanceMasterPayload removeAttendanceMaster(RemoveAttendanceMasterInput removeAttendanceMasterInput) {
+    	AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(removeAttendanceMasterInput.getAttendanceMasterId()).get();
+    	attendanceMasterRepository.delete(attendanceMaster);
+        return new RemoveAttendanceMasterPayload(Lists.newArrayList(attendanceMasterRepository.findAll()));
+    }
+    
+    
+    public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
+        final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendancemaster().getId()).get();
+        final Lecture lecture = new Lecture();
+        lecture.setLecDate(addLectureInput.getLecDate());
+        lecture.setLastUpdatedOn(addLectureInput.getLastUpdatedOn());
+        lecture.setLastUpdatedBy(addLectureInput.getLastUpdatedBy());
+        lecture.setLecStatus(addLectureInput.getLecStatus());
+        lecture.setDesc(addLectureInput.getDesc());
+        lecture.setAttendancemaster(attendanceMaster);
+        lectureRepository.save(lecture);
+        return new AddLecturePayload(lecture);
+    }
+
+    public UpdateLecturePayload updateLecture(UpdateLectureInput updateLectureInput) {
+    	Lecture lecture = lectureRepository.findById(updateLectureInput.getId()).get();
+
+    	if(updateLectureInput.getLecDate() != null) {
+    		lecture.setLecDate(updateLectureInput.getLecDate());
+    	}
+    	if(updateLectureInput.getLastUpdatedOn() != null) {
+    		lecture.setLastUpdatedOn(updateLectureInput.getLastUpdatedOn());
+    	}
+    	if(updateLectureInput.getLastUpdatedBy() != null) {
+    		lecture.setLastUpdatedBy(updateLectureInput.getLastUpdatedBy());
+    	}
+    	if(updateLectureInput.getLecStatus() != null) {
+    		lecture.setLecStatus(updateLectureInput.getLecStatus());
+    	}
+        if (updateLectureInput.getDesc() != null) {
+        	lecture.setDesc(updateLectureInput.getDesc());
+        }
+        if (updateLectureInput.getAttendancemaster() != null) {
+        	lecture.setAttendancemaster(updateLectureInput.getAttendancemaster());
+        }
+        lectureRepository.save(lecture);
+        return new UpdateLecturePayload(lecture);
+    }
+
+    public RemoveLecturePayload removeLecture(RemoveLectureInput removeLectureInput) {
+    	Lecture lecture = lectureRepository.findById(removeLectureInput.getLectureId()).get();
+    	lectureRepository.delete(lecture);
+        return new RemoveLecturePayload(Lists.newArrayList(lectureRepository.findAll()));
     }
 }
 

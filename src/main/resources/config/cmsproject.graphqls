@@ -59,10 +59,24 @@ type Query {
   colleges: [College!]!
   branch(id: Long!): Branch!
   branches: [Branch!]!
+  batch(id: Long!): Batch!
+  batches: [Batch!]!
   academicYear(id: Long!): AcademicYear!
   academicYears: [AcademicYear!]!
   department(id: Long!): Department!
   departments: [Department!]!
+  
+  teach(id: Long!): Teach!
+  teaches: [Teach!]!
+  
+  courseOffer(id: Long!): CourseOffer!
+  courseOffers: [CourseOffer!]!
+  
+  attendanceMaster(id: Long!): AttendanceMaster!
+  attendanceMasters: [AttendanceMaster!]!
+  
+  lecture(id: Long!): Lecture!
+  lectures: [Lecture!]!
 }
 
 type College{
@@ -77,7 +91,44 @@ type Branch{
     branchName: String!
     description: String!
     collegeHead: String!
+    college: College!
 }
+type Batch{
+	id: Long!
+    batch: String!
+    department: Department!
+}
+type Teach{
+	id: Long!
+    desc: String!
+    teacher: Teacher!
+    subject: Subject!
+}
+type CourseOffer{
+	id: Long!
+    desc: String!
+    college: College!
+    department: Department!
+    subject: Subject!
+}
+type AttendanceMaster{
+	id: Long!
+    desc: String!
+    teach: Teach!
+    section: Section!
+    academicyear: AcademicYear!
+}
+type Lecture{
+	id: Long!
+	lecDate: Date!
+	lastUpdatedOn: Date!
+	lastUpdatedBy: String!
+	lecStatus: String!
+	desc: String!
+	attendancemaster: AttendanceMaster!
+}
+
+
 type Mutation {
    addCollege(input: AddCollegeInput!): AddCollegePayload!
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
@@ -87,6 +138,10 @@ type Mutation {
    updateBranch(input: UpdateBranchInput!): UpdateBranchPayload!
    removeBranch(input: RemoveBranchInput!): RemoveBranchPayload!
    
+   addBatch(input: AddBatchInput!): AddBatchPayload!
+   updateBatch(input: UpdateBatchInput!): UpdateBatchPayload!
+   removeBatch(input: RemoveBatchInput!): RemoveBatchPayload!
+   
    addAcademicYear(input: AddAcademicYearInput!): AddAcademicYearPayload!
    updateAcademicYear(input: UpdateAcademicYearInput!): UpdateAcademicYearPayload!
    removeAcademicYear(input: RemoveAcademicYearInput!): RemoveAcademicYearPayload!
@@ -94,6 +149,23 @@ type Mutation {
    addDepartment(input: AddDepartmentInput!): AddDepartmentPayload!
    updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentPayload!
    removeDepartment(input: RemoveDepartmentInput!): RemoveDepartmentPayload!
+   
+   addTeach(input: AddTeachInput!): AddTeachPayload!
+   updateTeach(input: UpdateTeachInput!): UpdateTeachPayload!
+   removeTeach(input: RemoveTeachInput!): RemoveTeachPayload!
+   
+   addCourseOffer(input: AddCourseOfferInput!): AddCourseOfferPayload!
+   updateCourseOffer(input: UpdateCourseOfferInput!): UpdateCourseOfferPayload!
+   removeCourseOffer(input: RemoveCourseOfferInput!): RemoveCourseOfferPayload!
+   
+   addAttendanceMaster(input: AddAttendanceMasterInput!): AddAttendanceMasterPayload!
+   updateAttendanceMaster(input: UpdateAttendanceMasterInput!): UpdateAttendanceMasterPayload!
+   removeAttendanceMaster(input: RemoveAttendanceMasterInput!): RemoveAttendanceMasterload!
+   
+   addLecture(input: AddLectureInput!): AddLecturePayload!
+   updateLecture(input: UpdateLectureInput!): UpdateLecturePayload!
+   removeLecture(input: RemoveLectureInput!): RemoveLecturePayload!
+   
 }
 
 input AddCollegeInput {
@@ -149,6 +221,29 @@ type RemoveBranchPayload {
     Branch: [Branch!]!
 }
 
+input AddBatchInput {
+    id: Long!
+    batch: String!
+    departmentId: Long!
+}
+type AddBatchPayload {
+    batch: Batch!
+}
+input UpdateBatchInput {
+    id: Long!
+    batch: String!
+    departmentId: Long!
+}
+type UpdateBatchPayload {
+    batch: Batch!
+}
+input RemoveBatchInput {
+    batchId: Long!
+}
+type RemoveBatchPayload {
+    batch: [Batch!]!
+}
+
 type AcademicYear{
     id: Long!
     year: Long!
@@ -167,10 +262,10 @@ type AddAcademicYearPayload {
 }
 input UpdateAcademicYearInput {
     id:Long!
-    year: Long
-    startDate: Date
-    endDate: Date
-    desc: String
+    year: Long!
+    startDate: Date!
+    endDate: Date!
+    desc: String!
 }
 type UpdateAcademicYearPayload {
     academicYear: AcademicYear!
@@ -198,9 +293,9 @@ type AddDepartmentPayload {
 }
 input UpdateDepartmentInput {
     id: Long!
-    name: String
-    description: String
-    deptHead: String
+    name: String!
+    description: String!
+    deptHead: String!
 }
 type UpdateDepartmentPayload {
     department: Department!
@@ -210,4 +305,116 @@ input RemoveDepartmentInput {
 }
 type RemoveDepartmentPayload {
     department: [Department!]!
+}
+
+
+type AddTeachInput{
+	id: Long!
+    desc: String!
+    teacher: Teacher!
+    subject: Subject!
+}
+type AddTeachPayload {
+    teach: Teach!
+}
+input UpdateTeachInput {
+    id: Long!
+    desc: String!
+    teacher: Teacher!
+    subject: Subject!
+}
+type UpdateTeachPayload {
+    teach: Teach!
+}
+input RemoveTeachInput {
+    teachId: Long!
+}
+type RemoveTeachPayload {
+    teach: [Teach!]!
+}
+
+
+type AddCourseOfferInput{
+	id: Long!
+    desc: String!
+    college: College!
+    department: Department!
+    subject: Subject!
+}
+type AddCourseOfferPayload {
+    courseOffer: CourseOffer!
+}
+input UpdateCourseOfferInput {
+    id: Long!
+    desc: String!
+    college: College!
+    department: Department!
+    subject: Subject!
+}
+type UpdateCourseOfferPayload {
+    courseOffer: CourseOffer!
+}
+input RemoveCourseOfferInput {
+    courseOfferId: Long!
+}
+type RemoveCourseOfferPayload {
+    courseOffer: [CourseOffer!]!
+}
+
+type AddAttendanceMasterInput{
+	id: Long!
+    desc: String!
+    teach: Teach!
+    section: Section!
+    academicYear: AcademicYear!
+}
+type AddAttendanceMasterPayload {
+    attendanceMaster: AttendanceMaster!
+}
+input UpdateAttendanceMasterInput {
+    id: Long!
+    desc: String!
+    teach: Teach!
+    section: Section!
+    academicYear: AcademicYear!
+}
+type UpdateAttendanceMasterPayload {
+    attendanceMaster: AttendanceMaster!
+}
+input RemoveAttendanceMasterInput {
+    attendanceMasterId: Long!
+}
+type RemoveAttendanceMasterPayload {
+    attendanceMaster: [AttendanceMaster!]!
+}
+
+type AddLectureInput{
+	id: Long!
+	lecDate: Date!
+	lastUpdatedOn: Date!
+	lastUpdatedBy: String!
+	lecStatus: String!
+	desc: String!
+	attendancemaster: AttendanceMaster!
+}
+type AddLecturePayload {
+    lecture: Lecture!
+}
+input UpdateLectureInput {
+    id: Long!
+	lecDate: Date!
+	lastUpdatedOn: Date!
+	lastUpdatedBy: String!
+	lecStatus: String!
+	desc: String!
+	attendancemaster: AttendanceMaster!
+}
+type UpdateLecturePayload {
+    lecture: Lecture!
+}
+input RemoveLectureInput {
+    lectureId: Long!
+}
+type RemoveLecturePayload {
+    lecture: [Lecture!]!
 }
