@@ -1,5 +1,59 @@
 scalar Date
 
+enum Status {
+    ACTIVE
+    DEACTIVE
+}
+
+enum LecStatusEnum{
+	ACTIVE
+    DEACTIVE
+    CANCELLED
+}
+
+enum AttendanceStatusEnum{
+	PRESENT
+    ABSENT
+}
+
+enum SectionEnum {
+    A
+    B
+    C
+    D
+}
+
+enum CommonSubEnum {
+    MATHS
+    PHYSICS
+    CHEMISTRY
+    DBMS
+}
+
+enum ElectiveEnum {
+    JAVA
+    C
+}
+
+enum TypeOfCollege{
+    PRIVATE
+    PUBLIC
+}
+
+enum NameOfBank {
+    HDFC
+    SBI
+    ICICI
+    ANDHRABANK
+}
+
+enum BatchEnum{
+	FIRSTYEAR
+    SECONDYEAR
+    THIRDYEAR
+    FOURTHYEAR
+}
+
 type Query {
   college(id: Long!): College!
   colleges: [College!]!
