@@ -1,8 +1,8 @@
-package com.synectiks.cms.graphql.types.Departments;
+package com.synectiks.cms.graphql.types.Department;
 
 import java.util.Objects;
 
-public class AbstractDepartmentsInput {
+public class AbstractDepartmentInput {
     private Long id;
     private String name;
     private String description;
@@ -43,8 +43,8 @@ public class AbstractDepartmentsInput {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractDepartmentsInput)) return false;
-        AbstractDepartmentsInput that = (AbstractDepartmentsInput) o;
+        if (!(o instanceof AbstractDepartmentInput)) return false;
+        AbstractDepartmentInput that = (AbstractDepartmentInput) o;
         return Objects.equals(getId(), that.getId()) &&
             Objects.equals(getName(), that.getName()) &&
             Objects.equals(getDescription(), that.getDescription()) &&

@@ -7,6 +7,8 @@ type Query {
   branches: [Branch!]!
   academicYear(id: Long!): AcademicYear!
   academicYears: [AcademicYear!]!
+  department(id: Long!): Department!
+  departments: [Department!]!
 }
 
 type College{
@@ -34,6 +36,10 @@ type Mutation {
    addAcademicYear(input: AddAcademicYearInput!): AddAcademicYearPayload!
    updateAcademicYear(input: UpdateAcademicYearInput!): UpdateAcademicYearPayload!
    removeAcademicYear(input: RemoveAcademicYearInput!): RemoveAcademicYearPayload!
+   
+   addDepartment(input: AddDepartmentInput!): AddDepartmentPayload!
+   updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentPayload!
+   removeDepartment(input: RemoveDepartmentInput!): RemoveDepartmentPayload!
 }
 
 input AddCollegeInput {
@@ -96,18 +102,15 @@ type AcademicYear{
     endDate: Date!
     desc: String!
 }
-
 input AddAcademicYearInput {
     year: Long!
     startDate: Date!
     endDate: Date!
     desc: String!
 }
-
 type AddAcademicYearPayload {
     academicYear: AcademicYear!
 }
-
 input UpdateAcademicYearInput {
     id:Long!
     year: Long
@@ -115,14 +118,42 @@ input UpdateAcademicYearInput {
     endDate: Date
     desc: String
 }
-
 type UpdateAcademicYearPayload {
     academicYear: AcademicYear!
 }
-
 input RemoveAcademicYearInput {
     academicYearId: Long!
 }
 type RemoveAcademicYearPayload {
     academicYears: [AcademicYear!]!
+}
+
+type Department{
+    id: Long!
+    name: String!
+    description: String!
+    deptHead: String!
+}
+input AddDepartmentInput {
+	name: String!
+	description: String!
+	deptHead: String!
+}
+type AddDepartmentPayload {
+    department: Department!
+}
+input UpdateDepartmentInput {
+    id: Long!
+    name: String
+    description: String
+    deptHead: String
+}
+type UpdateDepartmentPayload {
+    department: Department!
+}
+input RemoveDepartmentInput {
+    departmentId: Long!
+}
+type RemoveDepartmentPayload {
+    department: [Department!]!
 }
