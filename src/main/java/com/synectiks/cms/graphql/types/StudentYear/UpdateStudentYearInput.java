@@ -1,4 +1,4 @@
-package com.synectiks.cms.graphql.types.StudentYear;
-
-public class UpdateStudentYearInput extends AbstractStudentYearInput {
-}
+//package com.synectiks.cms.graphql.types.StudentYear;
+//
+//public class UpdateStudentYearInput extends AbstractStudentYearInput {
+//}
