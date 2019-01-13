@@ -2,20 +2,20 @@ package com.synectiks.cms.graphql.types.Section;
 
 public class AddSectionInput extends AbstractSectionInput {
 
-    private Long studentYearId;
+    private Long batchId;
 
-    public Long getStudentYearId() {
-        return studentYearId;
-    }
+	public Long getBatchId() {
+		return batchId;
+	}
 
-    public void setStudentYearId(Long studentYearId) {
-        this.studentYearId = studentYearId;
-    }
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
+	}
 
-    @Override
-    public String toString() {
-        return "AddSectionInput{" +
-            "studentYearId=" + studentYearId +
-            '}'+ super.toString();
-    }
+	@Override
+	public String toString() {
+		return "AddSectionInput [batchId=" + batchId + "]";
+	}
+
+    
 }

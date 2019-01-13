@@ -1,13 +1,9 @@
 package com.synectiks.cms.graphql.types.Teach;
 
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teacher;
-
 public class AbstractTeachInput {
 	private Long id;
     private String desc;
-    private Teacher teacher;
-    private Subject subject;
+    
 	public Long getId() {
 		return id;
 	}
@@ -20,23 +16,40 @@ public class AbstractTeachInput {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public Teacher getTeacher() {
-		return teacher;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((desc == null) ? 0 : desc.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
-	}
-	public Subject getSubject() {
-		return subject;
-	}
-	public void setSubject(Subject subject) {
-		this.subject = subject;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractTeachInput other = (AbstractTeachInput) obj;
+		if (desc == null) {
+			if (other.desc != null)
+				return false;
+		} else if (!desc.equals(other.desc))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	@Override
 	public String toString() {
-		return "AbstractTeachInput [id=" + id + ", desc=" + desc + ", teacher=" + teacher + ", subject=" + subject
-				+ "]";
+		return "AbstractTeachInput [id=" + id + ", desc=" + desc + "]";
 	}
+	
 
 
 
