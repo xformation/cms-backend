@@ -173,7 +173,6 @@ Subject{student} to Student,
 Subject{teacher} to Teacher,
 AuthorizedSignatory{legalEntity} to LegalEntity,
 Lecture{attendancemaster} to AttendanceMaster,
-StudentAttendance{student} to Student,
 Term{academicyear} to AcademicYear,
 StudentAttendance{student} to Student,
 StudentAttendance{lecture} to Lecture
