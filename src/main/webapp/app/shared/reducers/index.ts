@@ -128,6 +128,10 @@ import lecture, {
 import authorizedSignatory, {
   AuthorizedSignatoryState
 } from 'app/entities/authorized-signatory/authorized-signatory.reducer';
+// prettier-ignore
+import college, {
+  CollegeState
+} from 'app/entities/college/college.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

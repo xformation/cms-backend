@@ -4,7 +4,6 @@ export interface ICollege {
   logo?: number;
   backgroundImage?: number;
   instructionInformation?: string;
-  branchId?: number;
 }
 
 export const defaultValue: Readonly<ICollege> = {};

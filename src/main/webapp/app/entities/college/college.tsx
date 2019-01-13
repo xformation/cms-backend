@@ -96,9 +96,6 @@ export class College extends React.Component<ICollegeProps, ICollegeState> {
                 <th>
                   <Translate contentKey="cmsApp.college.instructionInformation">Instruction Information</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="cmsApp.college.branch">Branch</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -114,7 +111,6 @@ export class College extends React.Component<ICollegeProps, ICollegeState> {
                   <td>{college.logo}</td>
                   <td>{college.backgroundImage}</td>
                   <td>{college.instructionInformation}</td>
-                  <td>{college.branchId ? <Link to={`branch/${college.branchId}`}>{college.branchId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${college.id}`} color="info" size="sm">
