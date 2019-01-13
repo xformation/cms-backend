@@ -227,14 +227,14 @@ public class Mutation implements GraphQLMutationResolver {
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
         final Section section = sectionRepository.findById(addStudentInput.getSectionId()).get();
         final Branch branch = branchRepository.findById(addStudentInput.getBranchId()).get();
-        final Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
+//        final Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
         final Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
         final Student student = new Student();
         student.setStudentName(addStudentInput.getStudentName());
         student.setBatch(batch);
         student.setSection(section);
         student.setBranch(branch);
-        student.setDepartment(department);
+//        student.setDepartment(department);
         studentRepository.save(student);
         return new AddStudentPayload(student);
     }
@@ -256,10 +256,10 @@ public class Mutation implements GraphQLMutationResolver {
         	final Branch branch = branchRepository.findById(updateStudentInput.getBranchId()).get();
             student.setBranch(branch);
         }
-        if (updateStudentInput.getDepartmentId() != null) {
-        	final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
-            student.setDepartment(department);
-        }
+//        if (updateStudentInput.getDepartmentId() != null) {
+//        	final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
+//            student.setDepartment(department);
+//        }
         studentRepository.save(student);
 
         return new UpdateStudentPayload(student);

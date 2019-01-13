@@ -20,8 +20,6 @@ public class StudentDTO implements Serializable {
 
     private Long branchId;
 
-    private Long departmentId;
-
     public Long getId() {
         return id;
     }
@@ -62,14 +60,6 @@ public class StudentDTO implements Serializable {
         this.branchId = branchId;
     }
 
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -99,7 +89,6 @@ public class StudentDTO implements Serializable {
             ", batch=" + getBatchId() +
             ", section=" + getSectionId() +
             ", branch=" + getBranchId() +
-            ", department=" + getDepartmentId() +
             "}";
     }
 }

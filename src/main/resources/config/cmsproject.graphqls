@@ -225,8 +225,7 @@ type Student {
     studentName: String!
     batch: Batch!
     section: Section!
-    branch: Branch!
-    department: Department!  
+    branch: Branch!  
 }
 type StudentAttendance {
     id: Long!
@@ -788,7 +787,6 @@ input AddStudentInput {
    batchId: Long!
    sectionId: Long!
    branchId: Long!
-   departmentId: Long!
 }
 type AddStudentPayload {
    student: Student!
@@ -799,7 +797,6 @@ input UpdateStudentInput {
    batchId: Long
    sectionId: Long
    branchId: Long
-   departmentId: Long
 }
 type UpdateStudentPayload {
    student: Student!
