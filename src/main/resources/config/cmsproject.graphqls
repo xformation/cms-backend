@@ -57,12 +57,16 @@ enum BatchEnum{
 type Query {
   college(id: Long!): College!
   colleges: [College!]!
+    
   branch(id: Long!): Branch!
   branches: [Branch!]!
+
   batch(id: Long!): Batch!
   batches: [Batch!]!
+
   academicYear(id: Long!): AcademicYear!
   academicYears: [AcademicYear!]!
+
   department(id: Long!): Department!
   departments: [Department!]!
   
@@ -86,6 +90,7 @@ type College{
     backgroundImage: Long!
     instructionInformation: String!
 }
+
 type Branch{
     id: Long!
     branchName: String!
@@ -93,17 +98,20 @@ type Branch{
     collegeHead: String!
     college: College!
 }
+
 type Batch{
 	id: Long!
     batch: String!
     department: Department!
 }
+
 type Teach{
 	id: Long!
     desc: String!
     teacher: Teacher!
     subject: Subject!
 }
+
 type CourseOffer{
 	id: Long!
     desc: String!
@@ -111,6 +119,7 @@ type CourseOffer{
     department: Department!
     subject: Subject!
 }
+
 type AttendanceMaster{
 	id: Long!
     desc: String!
@@ -118,6 +127,7 @@ type AttendanceMaster{
     section: Section!
     academicyear: AcademicYear!
 }
+
 type Lecture{
 	id: Long!
 	lecDate: Date!
@@ -176,6 +186,7 @@ type Mutation {
 
 }
 
+
 input AddCollegeInput {
     shortName: String
     logo: Long
@@ -201,6 +212,8 @@ input RemoveCollegeInput {
 type RemoveCollegePayload {
     colleges: [College!]!
 }
+
+
 
 
 input AddBranchInput {
@@ -229,6 +242,10 @@ type RemoveBranchPayload {
     Branch: [Branch!]!
 }
 
+
+
+
+
 input AddBatchInput {
     id: Long!
     batch: String!
@@ -251,6 +268,10 @@ input RemoveBatchInput {
 type RemoveBatchPayload {
     batch: [Batch!]!
 }
+
+
+
+
 
 type AcademicYear{
     id: Long!
@@ -284,6 +305,10 @@ input RemoveAcademicYearInput {
 type RemoveAcademicYearPayload {
     academicYears: [AcademicYear!]!
 }
+
+
+
+
 
 type Department{
     id: Long!
@@ -320,6 +345,8 @@ input RemoveDepartmentInput {
 type RemoveDepartmentPayload {
     department: [Department!]!
 }
+
+
 
 
 type Subject{
@@ -361,6 +388,8 @@ type RemoveSubjectPayload {
 }
 
 
+
+
 type AddTeachInput{
 	id: Long!
     desc: String!
@@ -385,6 +414,8 @@ input RemoveTeachInput {
 type RemoveTeachPayload {
     teach: [Teach!]!
 }
+
+
 
 
 
@@ -418,6 +449,8 @@ type RemoveCourseOfferPayload {
 
 
 
+
+
 type AddAttendanceMasterInput{
 	id: Long!
     desc: String!
@@ -444,6 +477,10 @@ input RemoveAttendanceMasterInput {
 type RemoveAttendanceMasterPayload {
     attendanceMaster: [AttendanceMaster!]!
 }
+
+
+
+
 
 type AddLectureInput{
 	id: Long!
@@ -475,6 +512,10 @@ input RemoveLectureInput {
 type RemoveLecturePayload {
     lecture: [Lecture!]!
 }
+
+
+
+
 
 type AuthorizedSignatory{
     id: Long!
@@ -521,6 +562,9 @@ input RemoveAuthorizedSignatoryInput {
 type RemoveAuthorizedSignatoryPayload {
     authorizedSignatories: [ AuthorizedSignatory!]!
 }
+
+
+
 
 type LegalEntity{
     id: Long!
