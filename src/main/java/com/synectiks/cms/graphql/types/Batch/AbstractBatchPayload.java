@@ -9,9 +9,7 @@ public class AbstractBatchPayload {
         this.batch = batch;
     }
 
-	public Batch getBatch() {
-		return batch;
-	}
-
-    
+    public Batch getBatch() {
+        return batch;
+    }
 }
