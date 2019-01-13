@@ -113,6 +113,8 @@ type Query {
   
   term (id: Long!): Term!
   terms: [Term!]!
+  
+  getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 }
 
 type AuthorizedSignatory {
@@ -254,6 +256,26 @@ type Term{
     termStatus: Status!
     academicyear: AcademicYear!
 }
+type DailyAttendanceVo {
+	studentId: String
+	studentName: String
+	currentDateStatus: String
+	previousOneDayStatus: String
+	previousTwoDayStatus: String
+	previousThreeDayStatus: String
+	comments: String
+}
+input StudentAttendanceFilter {
+	branchId: String!
+	departmentId: String!
+	batchId: String!
+	sectionId: String!
+	subjectId: String!
+	attendanceDate: String!
+	studentId: String
+	studentName: String
+}
+
 
 type Mutation {
    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!

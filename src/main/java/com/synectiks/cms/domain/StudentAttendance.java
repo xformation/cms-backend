@@ -1,16 +1,26 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 
 /**
@@ -37,6 +47,10 @@ public class StudentAttendance implements Serializable {
     @NotNull
     @Column(name = "comments", nullable = false)
     private String comments;
+
+    @NotNull
+    @Column(name = "attendance_date", nullable = false)
+    private Date attendanceDate;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -79,6 +93,19 @@ public class StudentAttendance implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Date getAttendanceDate() {
+        return attendanceDate;
+    }
+
+    public StudentAttendance attendanceDate(Date attendanceDate) {
+        this.attendanceDate = attendanceDate;
+        return this;
+    }
+
+    public void setAttendanceDate(Date attendanceDate) {
+        this.attendanceDate = attendanceDate;
     }
 
     public Student getStudent() {
@@ -134,6 +161,7 @@ public class StudentAttendance implements Serializable {
             "id=" + getId() +
             ", attendanceStatus='" + getAttendanceStatus() + "'" +
             ", comments='" + getComments() + "'" +
+            ", attendanceDate='" + getAttendanceDate() + "'" +
             "}";
     }
 }

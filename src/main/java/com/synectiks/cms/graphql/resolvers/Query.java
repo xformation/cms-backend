@@ -17,6 +17,7 @@ package com.synectiks.cms.graphql.resolvers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
@@ -41,6 +42,9 @@ import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
+import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
+import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
@@ -95,7 +99,9 @@ public class Query implements GraphQLQueryResolver {
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
 
-
+    @Autowired
+    private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
+    
     public Query(LectureRepository lectureRepository,AttendanceMasterRepository attendanceMasterRepository,CourseOfferRepository courseOfferRepository,TeachRepository teachRepository,BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
@@ -341,5 +347,9 @@ public class Query implements GraphQLQueryResolver {
 
     public List<Lecture> lectures(){
         return Lists.newArrayList(lectureRepository.findAll());
+    }
+    
+    public List<DailyAttendanceVo> getDailyStudentAttendance(StudentAttendanceFilterInput filter) {
+    	return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
 }
