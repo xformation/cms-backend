@@ -1,15 +1,11 @@
 package com.synectiks.cms.graphql.types.AttendanceMaster;
 
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Teach;
-
 public class AbstractAttendanceMasterInput {
 	private Long id;
     private String desc;
-    private Teach teach;
-    private Section section;
-    private AcademicYear academicYear;
+//    private Teach teach;
+//    private Section section;
+//    private AcademicYear academicYear;
     
 	public Long getId() {
 		return id;
@@ -23,7 +19,7 @@ public class AbstractAttendanceMasterInput {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public Teach getTeach() {
+	/*public Teach getTeach() {
 		return teach;
 	}
 	public void setTeach(Teach teach) {
@@ -40,12 +36,12 @@ public class AbstractAttendanceMasterInput {
 	}
 	public void setAcademicYear(AcademicYear academicYear) {
 		this.academicYear = academicYear;
-	}
+	}*/
 	@Override
 	public String toString() {
-		return "AbstractAttendanceMasterInput [id=" + id + ", desc=" + desc + ", teach=" + teach + ", section="
-				+ section + ", academicYear=" + academicYear + "]";
+		return "AbstractAttendanceMasterInput [id=" + id + ", desc=" + desc + "]";
 	}
+	
 	
 
 

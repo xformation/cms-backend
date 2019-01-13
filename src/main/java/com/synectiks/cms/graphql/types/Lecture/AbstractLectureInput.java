@@ -12,7 +12,7 @@ public class AbstractLectureInput {
     private String lastUpdatedBy;
     private LecStatusEnum lecStatus;
     private String desc;
-    private AttendanceMaster attendancemaster;
+//    private AttendanceMaster attendancemaster;
 	public Long getId() {
 		return id;
 	}
@@ -49,10 +49,10 @@ public class AbstractLectureInput {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public AttendanceMaster getAttendancemaster() {
+	/*public AttendanceMaster getAttendancemaster() {
 		return attendancemaster;
 	}
 	public void setAttendancemaster(AttendanceMaster attendancemaster) {
 		this.attendancemaster = attendancemaster;
-	}
+	}*/
 }

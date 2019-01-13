@@ -55,18 +55,23 @@ enum BatchEnum{
 }
 
 type Query {
+  authorizedSignatory(id: Int!): AuthorizedSignatory!
+  authorizedSignatories:[AuthorizedSignatory!]!
+  
+  bankAccount(id: Long!): BankAccounts!
+  bankAccounts: [BankAccounts!]!
+  
   college(id: Long!): College!
   colleges: [College!]!
-    
+  
   branch(id: Long!): Branch!
   branches: [Branch!]!
-
+  
   batch(id: Long!): Batch!
   batches: [Batch!]!
-
+  
   academicYear(id: Long!): AcademicYear!
   academicYears: [AcademicYear!]!
-
   department(id: Long!): Department!
   departments: [Department!]!
   
@@ -81,8 +86,33 @@ type Query {
   
   lecture(id: Long!): Lecture!
   lectures: [Lecture!]!
+  
+  holiday(id: Long!): Holiday!
+  holidays: [Holiday!]!
+  
+  legalEntity(id : Long!): LegalEntity!
+  legalEntities: [LegalEntity!]!
 }
 
+type AuthorizedSignatory {
+    id: Long!
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+    legalEntity: LegalEntity!
+}
+type BankAccounts {
+    id: Long!
+    nameOfBank: NameOfBank!
+    accountNumber: Long!
+    typeOfAccount: String!
+    ifsCode: String!
+    branch: String!
+    corporateId: Int!
+}
 type College{
     id: Long!
     shortName: String!
@@ -90,7 +120,6 @@ type College{
     backgroundImage: Long!
     instructionInformation: String!
 }
-
 type Branch{
     id: Long!
     branchName: String!
@@ -98,20 +127,17 @@ type Branch{
     collegeHead: String!
     college: College!
 }
-
 type Batch{
 	id: Long!
     batch: String!
     department: Department!
 }
-
 type Teach{
 	id: Long!
     desc: String!
     teacher: Teacher!
     subject: Subject!
 }
-
 type CourseOffer{
 	id: Long!
     desc: String!
@@ -119,7 +145,6 @@ type CourseOffer{
     department: Department!
     subject: Subject!
 }
-
 type AttendanceMaster{
 	id: Long!
     desc: String!
@@ -127,7 +152,6 @@ type AttendanceMaster{
     section: Section!
     academicyear: AcademicYear!
 }
-
 type Lecture{
 	id: Long!
 	lecDate: Date!
@@ -137,9 +161,44 @@ type Lecture{
 	desc: String!
 	attendancemaster: AttendanceMaster!
 }
+type Holiday{
+    id: Long!
+    holidayDesc: String!
+    holidayDate: Date!
+    status: Status!
+    academicYear: AcademicYear!
+}
+type LegalEntity{
+    id: Long!
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:Date!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    registrationDate:Date!
+    esiNumber:Long!
+    ptRegistrationDate:Date!
+    ptSignatory:String!
+    ptNumber:Long!
+}
 
 
 type Mutation {
+   addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
+   updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
+   removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
+   
+   addBankAccounts(input: AddBankAccountsInput!): AddBankAccountsPayload!
+   updateBankAccounts(input: UpdateBankAccountsInput!): UpdateBankAccountsPayload!
+   removeBankAccounts(input: RemoveBankAccountsInput!): RemoveBankAccountsPayload!
+   
    addCollege(input: AddCollegeInput!): AddCollegePayload!
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
@@ -175,17 +234,77 @@ type Mutation {
    addLecture(input: AddLectureInput!): AddLecturePayload!
    updateLecture(input: UpdateLectureInput!): UpdateLecturePayload!
    removeLecture(input: RemoveLectureInput!): RemoveLecturePayload!
-
-    addLegalEntity(input: AddLegalEntityInput!): AddLegalEntityPayload!
-    updateLegalEntity(input: UpdateLegalEntityInput!): UpdateLegalEntityPayload!
-    removeLegalEntity(input: RemoveLegalEntityInput!): RemoveLegalEntityPayload!
-
-    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
-    updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
-    removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
-
+   
+   addHoliday(input: AddHolidayInput!): AddHolidayPayload!
+   updateHoliday(input: UpdateHolidayInput!): UpdateHolidayPayload!
+   removeHoliday(input: RemoveHolidayInput!): RemoveHolidayPayload!
+   
+   addLegalEntity(input: AddLegalEntityInput!): AddLegalEntityPayload!
+   updateLegalEntity(input: UpdateLegalEntityInput!): UpdateLegalEntityPayload!
+   removeLegalEntity(input: RemoveLegalEntityInput!): RemoveLegalEntityPayload!
 }
 
+input AddAuthorizedSignatoryInput {
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+    legalEntityId: Long!
+}
+type AddAuthorizedSignatoryPayload {
+    authorizedSignatory: AuthorizedSignatory!
+}
+input UpdateAuthorizedSignatoryInput {
+    id: Long!
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+    legalEntityId: Long!
+}
+type UpdateAuthorizedSignatoryPayload {
+    authorizedSignatory: AuthorizedSignatory!
+}
+input RemoveAuthorizedSignatoryInput {
+   authorizedSignatoryId: Long!
+}
+type RemoveAuthorizedSignatoryPayload {
+    authorizedSignatories: [ AuthorizedSignatory!]!
+}
+
+input AddBankAccountsInput {
+   nameOfBank: NameOfBank!
+   accountNumber: Long!
+   typeOfAccount: String!
+   ifsCode: String!
+   branch: String!
+   corporateId: Int!
+}
+type AddBankAccountsPayload {
+    bankAccounts: BankAccounts!
+}
+input UpdateBankAccountsInput {
+   id: Long!
+   nameOfBank: NameOfBank!
+   accountNumber: Long!
+   typeOfAccount: String!
+   ifsCode: String!
+   branch: String!
+   corporateId: Int!
+}
+type UpdateBankAccountsPayload {
+    bankAccounts: BankAccounts!
+}
+input RemoveBankAccountsInput {
+    bankAccountsId: Long!
+}
+type RemoveBankAccountsPayload {
+    bankAccounts: [BankAccounts!]!
+}
 
 input AddCollegeInput {
     shortName: String
@@ -214,8 +333,6 @@ type RemoveCollegePayload {
 }
 
 
-
-
 input AddBranchInput {
     branchName: String!
     description: String!
@@ -242,10 +359,6 @@ type RemoveBranchPayload {
     Branch: [Branch!]!
 }
 
-
-
-
-
 input AddBatchInput {
     id: Long!
     batch: String!
@@ -269,10 +382,6 @@ type RemoveBatchPayload {
     batch: [Batch!]!
 }
 
-
-
-
-
 type AcademicYear{
     id: Long!
     year: Long!
@@ -291,10 +400,10 @@ type AddAcademicYearPayload {
 }
 input UpdateAcademicYearInput {
     id:Long!
-    year: Long!
-    startDate: Date!
-    endDate: Date!
-    desc: String!
+    year: Long
+    startDate: Date
+    endDate: Date
+    desc: String
 }
 type UpdateAcademicYearPayload {
     academicYear: AcademicYear!
@@ -306,35 +415,34 @@ type RemoveAcademicYearPayload {
     academicYears: [AcademicYear!]!
 }
 
-
-
-
-
 type Department{
     id: Long!
     name: String!
     description: String!
     deptHead: String!
+    student: Student!
+    college: College!
+    academicyear: AcademicYear!
 }
 input AddDepartmentInput {
 	name: String!
 	description: String!
 	deptHead: String!
-    studentId: Long!
+	studentId: Long!
     collegeId: Long!
-    academicYearId: Long!
+    academicyearId: Long!
 }
 type AddDepartmentPayload {
     department: Department!
 }
 input UpdateDepartmentInput {
     id: Long!
-    name: String!
-    description: String!
-    deptHead: String!
-    studentId: Long!
-    collegeId: Long!
-    academicYearId: Long!
+    name: String
+    description: String
+    deptHead: String
+    studentId: Long
+    collegeId: Long
+    academicyearId: Long
 }
 type UpdateDepartmentPayload {
     department: Department!
@@ -345,49 +453,6 @@ input RemoveDepartmentInput {
 type RemoveDepartmentPayload {
     department: [Department!]!
 }
-
-
-
-
-type Subject{
-    id: Long!
-    commonSub: CommonSubEnum!
-    electiveSub: ElectiveEnum!
-}
-
-input AddSubjectInput {
-    commonSub: CommonSubEnum!
-    electiveSub: ElectiveEnum!
-    studentId: Long!
-    teacherId: Long!
-    departmentId: Long!
-}
-
-type AddSubjectPayload {
-    subject: Subject!
-}
-
-input UpdateSubjectInput {
-    id: Long!
-    commonSub: CommonSubEnum!
-    electiveSub: ElectiveEnum!
-    studentId: Long!
-    teacherId: Long!
-    departmentId: Long!
-}
-
-type UpdateSubjectPayload {
-    subject: Subject!
-}
-
-input RemoveSubjectInput {
-    subjectId: Long!
-}
-type RemoveSubjectPayload {
-    subjects: [Subject!]!
-}
-
-
 
 
 type AddTeachInput{
@@ -415,17 +480,12 @@ type RemoveTeachPayload {
     teach: [Teach!]!
 }
 
-
-
-
-
 type AddCourseOfferInput{
 	id: Long!
     desc: String!
     collegeId: Long!
     departmentId: Long!
     subjectId: Long!
-
 }
 type AddCourseOfferPayload {
     courseOffer: CourseOffer!
@@ -447,26 +507,22 @@ type RemoveCourseOfferPayload {
     courseOffer: [CourseOffer!]!
 }
 
-
-
-
-
 type AddAttendanceMasterInput{
 	id: Long!
     desc: String!
-    teach: Teach!
-    section: Section!
-    academicYear: AcademicYear!
+    teachId: Long!
+    sectionId: Long!
+    academicYearId: Long!
 }
 type AddAttendanceMasterPayload {
     attendanceMaster: AttendanceMaster!
 }
 input UpdateAttendanceMasterInput {
     id: Long!
-    desc: String!
-    teach: Teach!
-    section: Section!
-    academicYear: AcademicYear!
+    desc: String
+    teachId: Long
+    sectionId: Long
+    academicYearId: Long
 }
 type UpdateAttendanceMasterPayload {
     attendanceMaster: AttendanceMaster!
@@ -478,10 +534,6 @@ type RemoveAttendanceMasterPayload {
     attendanceMaster: [AttendanceMaster!]!
 }
 
-
-
-
-
 type AddLectureInput{
 	id: Long!
 	lecDate: Date!
@@ -489,7 +541,7 @@ type AddLectureInput{
 	lastUpdatedBy: String!
 	lecStatus: String!
 	desc: String!
-	attendancemaster: AttendanceMaster!
+	attendanceMasterId: Long!
 }
 type AddLecturePayload {
     lecture: Lecture!
@@ -501,7 +553,7 @@ input UpdateLectureInput {
 	lastUpdatedBy: String!
 	lecStatus: String!
 	desc: String!
-	attendancemaster: AttendanceMaster!
+	attendanceMasterId: Long!
 }
 type UpdateLecturePayload {
     lecture: Lecture!
@@ -513,78 +565,30 @@ type RemoveLecturePayload {
     lecture: [Lecture!]!
 }
 
-
-
-
-
-type AuthorizedSignatory{
+input AddHolidayInput {
+    holidayDesc: String!
+    holidayDate: Date!
+    status: Status!
+    academicYearId: Long!
+}
+type AddHolidayPayload {
+    holiday: Holiday!
+}
+input UpdateHolidayInput {
     id: Long!
-    signatoryName: String!
-    signatoryFatherName: String!
-    signatoryDesignation: String!
-    address: String!
-    email: String!
-    panCardNumber: String!
+    holidayDesc: String
+    holidayDate: Date
+    status: Status
+    academicYearId: Long
 }
-
-input AddAuthorizedSignatoryInput {
-    signatoryName: String!
-    signatoryFatherName: String!
-    signatoryDesignation: String!
-    address: String!
-    email: String!
-    panCardNumber: String!
-    legalEntityId: Long!
+type UpdateHolidayPayload {
+    holiday: Holiday!
 }
-
-type AddAuthorizedSignatoryPayload {
-    authorizedSignatory: AuthorizedSignatory!
+input RemoveHolidayInput {
+    holidayId: Long!
 }
-
-input UpdateAuthorizedSignatoryInput {
-    id: Long!
-    signatoryName: String!
-    signatoryFatherName: String!
-    signatoryDesignation: String!
-    address: String!
-    email: String!
-    panCardNumber: String!
-    legalEntityId: Long!
-}
-
-type UpdateAuthorizedSignatoryPayload {
-    authorizedSignatory: AuthorizedSignatory!
-}
-
-input RemoveAuthorizedSignatoryInput {
-    authorizedSignatoryId: Long!
-}
-type RemoveAuthorizedSignatoryPayload {
-    authorizedSignatories: [ AuthorizedSignatory!]!
-}
-
-
-
-
-type LegalEntity{
-    id: Long!
-    logo: Long!
-    legalNameOfTheCollege:String!
-    typeOfCollege: TypeOfCollege!
-    dateOfIncorporation:Date!
-    registeredOfficeAddress:String!
-    collegeIdentificationNumber:String!
-    pan:String!
-    tan:String!
-    tanCircleNumber:String!
-    citTdsLocation:String!
-    formSignatory:String!
-    pfNumber:String!
-    registrationDate:Date!
-    esiNumber:Long!
-    ptRegistrationDate:Date!
-    ptSignatory:String!
-    ptNumber:Long!
+type RemoveHolidayPayload {
+    holidays: [Holiday!]!
 }
 
 input AddLegalEntityInput {
@@ -610,7 +614,6 @@ input AddLegalEntityInput {
 type AddLegalEntityPayload {
     legalEntity: LegalEntity!
 }
-
 input UpdateLegalEntityInput {
     id: Long!
     logo: Long!
@@ -630,13 +633,10 @@ input UpdateLegalEntityInput {
     ptRegistrationDate:Date!
     ptSignatory:String!
     ptNumber:Long!
-
 }
-
 type UpdateLegalEntityPayload {
     legalEntity: LegalEntity!
 }
-
 input RemoveLegalEntityInput {
     legalEntityId: Long!
 }

@@ -10,11 +10,10 @@ public class AddBranchInput extends AbstractBranchInput {
 	public void setCollegeId(Long collegeId) {
 		this.collegeId = collegeId;
 	}
-
-    @Override
+	
+	@Override
     public String toString() {
-        return "AddBranchInput{" +
-            "collegeId=" + collegeId +
-            '}' + super.toString();
+        return "AddBranchesInput{}" + super.toString();
     }
+	
 }
