@@ -28,4 +28,14 @@ public class AddCourseOfferInput extends AbstractCourseOfferInput {
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
     }
+
+    @Override
+    public String toString() {
+        return "AddCourseOfferInput{" +
+            "collegeId=" + collegeId +
+            ", departmentId=" + departmentId +
+            ", subjectId=" + subjectId +
+            '}'+ super.toString();
+    }
+
 }
