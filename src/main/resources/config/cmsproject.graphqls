@@ -165,7 +165,15 @@ type Mutation {
    addLecture(input: AddLectureInput!): AddLecturePayload!
    updateLecture(input: UpdateLectureInput!): UpdateLecturePayload!
    removeLecture(input: RemoveLectureInput!): RemoveLecturePayload!
-   
+
+    addLegalEntity(input: AddLegalEntityInput!): AddLegalEntityPayload!
+    updateLegalEntity(input: UpdateLegalEntityInput!): UpdateLegalEntityPayload!
+    removeLegalEntity(input: RemoveLegalEntityInput!): RemoveLegalEntityPayload!
+
+    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
+    updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
+    removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
+
 }
 
 input AddCollegeInput {
@@ -287,6 +295,9 @@ input AddDepartmentInput {
 	name: String!
 	description: String!
 	deptHead: String!
+    studentId: Long!
+    collegeId: Long!
+    academicYearId: Long!
 }
 type AddDepartmentPayload {
     department: Department!
@@ -296,6 +307,9 @@ input UpdateDepartmentInput {
     name: String!
     description: String!
     deptHead: String!
+    studentId: Long!
+    collegeId: Long!
+    academicYearId: Long!
 }
 type UpdateDepartmentPayload {
     department: Department!
@@ -305,6 +319,45 @@ input RemoveDepartmentInput {
 }
 type RemoveDepartmentPayload {
     department: [Department!]!
+}
+
+
+type Subject{
+    id: Long!
+    commonSub: CommonSubEnum!
+    electiveSub: ElectiveEnum!
+}
+
+input AddSubjectInput {
+    commonSub: CommonSubEnum!
+    electiveSub: ElectiveEnum!
+    studentId: Long!
+    teacherId: Long!
+    departmentId: Long!
+}
+
+type AddSubjectPayload {
+    subject: Subject!
+}
+
+input UpdateSubjectInput {
+    id: Long!
+    commonSub: CommonSubEnum!
+    electiveSub: ElectiveEnum!
+    studentId: Long!
+    teacherId: Long!
+    departmentId: Long!
+}
+
+type UpdateSubjectPayload {
+    subject: Subject!
+}
+
+input RemoveSubjectInput {
+    subjectId: Long!
+}
+type RemoveSubjectPayload {
+    subjects: [Subject!]!
 }
 
 
@@ -334,12 +387,14 @@ type RemoveTeachPayload {
 }
 
 
+
 type AddCourseOfferInput{
 	id: Long!
     desc: String!
-    college: College!
-    department: Department!
-    subject: Subject!
+    collegeId: Long!
+    departmentId: Long!
+    subjectId: Long!
+
 }
 type AddCourseOfferPayload {
     courseOffer: CourseOffer!
@@ -347,9 +402,9 @@ type AddCourseOfferPayload {
 input UpdateCourseOfferInput {
     id: Long!
     desc: String!
-    college: College!
-    department: Department!
-    subject: Subject!
+    collegeId: Long!
+    departmentId: Long!
+    subjectId: Long!
 }
 type UpdateCourseOfferPayload {
     courseOffer: CourseOffer!
@@ -360,6 +415,8 @@ input RemoveCourseOfferInput {
 type RemoveCourseOfferPayload {
     courseOffer: [CourseOffer!]!
 }
+
+
 
 type AddAttendanceMasterInput{
 	id: Long!
@@ -417,4 +474,128 @@ input RemoveLectureInput {
 }
 type RemoveLecturePayload {
     lecture: [Lecture!]!
+}
+
+type AuthorizedSignatory{
+    id: Long!
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+}
+
+input AddAuthorizedSignatoryInput {
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+    legalEntityId: Long!
+}
+
+type AddAuthorizedSignatoryPayload {
+    authorizedSignatory: AuthorizedSignatory!
+}
+
+input UpdateAuthorizedSignatoryInput {
+    id: Long!
+    signatoryName: String!
+    signatoryFatherName: String!
+    signatoryDesignation: String!
+    address: String!
+    email: String!
+    panCardNumber: String!
+    legalEntityId: Long!
+}
+
+type UpdateAuthorizedSignatoryPayload {
+    authorizedSignatory: AuthorizedSignatory!
+}
+
+input RemoveAuthorizedSignatoryInput {
+    authorizedSignatoryId: Long!
+}
+type RemoveAuthorizedSignatoryPayload {
+    authorizedSignatories: [ AuthorizedSignatory!]!
+}
+
+type LegalEntity{
+    id: Long!
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:Date!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    registrationDate:Date!
+    esiNumber:Long!
+    ptRegistrationDate:Date!
+    ptSignatory:String!
+    ptNumber:Long!
+}
+
+input AddLegalEntityInput {
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:Date!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    registrationDate:Date!
+    esiNumber:Long!
+    ptRegistrationDate:Date!
+    ptSignatory:String!
+    ptNumber:Long!
+}
+
+type AddLegalEntityPayload {
+    legalEntity: LegalEntity!
+}
+
+input UpdateLegalEntityInput {
+    id: Long!
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:Date!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    registrationDate:Date!
+    esiNumber:Long!
+    ptRegistrationDate:Date!
+    ptSignatory:String!
+    ptNumber:Long!
+
+}
+
+type UpdateLegalEntityPayload {
+    legalEntity: LegalEntity!
+}
+
+input RemoveLegalEntityInput {
+    legalEntityId: Long!
+}
+type RemoveLegalEntityPayload {
+    legalEntities: [LegalEntity!]!
 }
