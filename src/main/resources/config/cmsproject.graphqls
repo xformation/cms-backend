@@ -265,7 +265,7 @@ type DailyAttendanceVo {
 	previousThreeDayStatus: String
 	comments: String
 }
-input StudentAttendanceFilter {
+input StudentAttendanceFilterInput {
 	branchId: String!
 	departmentId: String!
 	batchId: String!
