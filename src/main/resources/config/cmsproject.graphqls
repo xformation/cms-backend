@@ -188,7 +188,7 @@ type Holiday{
     id: Long!
     holidayDesc: String!
     holidayDate: Date!
-    status: Status!
+    holidayStatus: Status!
     academicYear: AcademicYear!
 }
 type LegalEntity{
