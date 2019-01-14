@@ -189,7 +189,7 @@ type Holiday{
     holidayDesc: String!
     holidayDate: Date!
     holidayStatus: Status!
-    academicYear: AcademicYear!
+    academicyear: AcademicYear!
 }
 type LegalEntity{
     id: Long!
@@ -233,8 +233,8 @@ type StudentAttendance {
     id: Long!
     attendanceStatus: AttendanceStatusEnum!
     comments: String!
-    studentId: Long!
-    lectureId: Long!
+    student: Long!
+    lecture: Long!
 }
 type Subject {
  	id: Long!
@@ -312,7 +312,7 @@ type Mutation {
    
    addAttendanceMaster(input: AddAttendanceMasterInput!): AddAttendanceMasterPayload!
    updateAttendanceMaster(input: UpdateAttendanceMasterInput!): UpdateAttendanceMasterPayload!
-   removeAttendanceMaster(input: RemoveAttendanceMasterInput!): RemoveAttendanceMasterload!
+   removeAttendanceMaster(input: RemoveAttendanceMasterInput!): RemoveAttendanceMasterPayload!
    
    addLecture(input: AddLectureInput!): AddLecturePayload!
    updateLecture(input: UpdateLectureInput!): UpdateLecturePayload!
@@ -391,6 +391,8 @@ type RemoveAuthorizedSignatoryPayload {
     authorizedSignatories: [ AuthorizedSignatory!]!
 }
 
+
+
 input AddBankAccountsInput {
    nameOfBank: NameOfBank!
    accountNumber: Long!
@@ -420,6 +422,8 @@ input RemoveBankAccountsInput {
 type RemoveBankAccountsPayload {
     bankAccounts: [BankAccounts!]!
 }
+
+
 
 input AddCollegeInput {
     shortName: String
@@ -474,6 +478,8 @@ type RemoveBranchPayload {
     branch: [Branch!]!
 }
 
+
+
 input AddBatchInput {
     id: Long!
     batch: String!
@@ -496,6 +502,8 @@ input RemoveBatchInput {
 type RemoveBatchPayload {
     batch: [Batch!]!
 }
+
+
 
 type AcademicYear{
     id: Long!
@@ -530,6 +538,8 @@ type RemoveAcademicYearPayload {
     academicYears: [AcademicYear!]!
 }
 
+
+
 type Department{
     id: Long!
     name: String!
@@ -540,10 +550,10 @@ type Department{
     academicyear: AcademicYear!
 }
 input AddDepartmentInput {
-	name: String!
-	description: String!
-	deptHead: String!
-	studentId: Long!
+    name: String!
+    description: String!
+    deptHead: String!
+    studentId: Long!
     collegeId: Long!
     academicyearId: Long!
 }
@@ -569,7 +579,9 @@ type RemoveDepartmentPayload {
     department: [Department!]!
 }
 
-type AddTeachInput{
+
+
+input AddTeachInput{
 	id: Long!
     desc: String!
     teacherId: Long!
@@ -594,8 +606,10 @@ type RemoveTeachPayload {
     teach: [Teach!]!
 }
 
-type AddCourseOfferInput{
-	id: Long!
+
+
+
+input AddCourseOfferInput{
     desc: String!
     collegeId: Long!
     departmentId: Long!
@@ -621,7 +635,9 @@ type RemoveCourseOfferPayload {
     courseOffer: [CourseOffer!]!
 }
 
-type AddAttendanceMasterInput{
+
+
+input AddAttendanceMasterInput{
 	id: Long!
     desc: String!
     teachId: Long!
@@ -648,7 +664,9 @@ type RemoveAttendanceMasterPayload {
     attendanceMaster: [AttendanceMaster!]!
 }
 
-type AddLectureInput{
+
+
+input AddLectureInput{
 	id: Long!
 	lecDate: Date!
 	lastUpdatedOn: Date!
@@ -679,6 +697,7 @@ type RemoveLecturePayload {
     lecture: [Lecture!]!
 }
 
+
 input AddHolidayInput {
     holidayDesc: String!
     holidayDate: Date!
@@ -704,6 +723,7 @@ input RemoveHolidayInput {
 type RemoveHolidayPayload {
     holidays: [Holiday!]!
 }
+
 
 input AddLegalEntityInput {
     logo: Long!
@@ -757,6 +777,8 @@ type RemoveLegalEntityPayload {
     legalEntities: [LegalEntity!]!
 }
 
+
+
 input AddLocationInput {
    name: String!
    address: String!
@@ -781,6 +803,8 @@ type RemoveLocationPayload {
    locations: [Location!]!
 }
 
+
+
 input AddSectionInput {
    id: Long!
    section: String!
@@ -803,6 +827,8 @@ input RemoveSectionInput {
 type RemoveSectionPayload {
    sections: [Section!]!
 }
+
+
 
 input AddStudentInput {
    studentName: String!
@@ -830,6 +856,8 @@ type RemoveStudentPayload {
    students: [Student!]!
 }
 
+
+
 input AddStudentAttendanceInput {
   id: Long!
   attendanceStatus: AttendanceStatusEnum!
@@ -856,6 +884,8 @@ input RemoveStudentAttendanceInput {
 type RemoveStudentAttendancePayload {
     studentAttendances: [StudentAttendance!]!
 }
+
+
 
 input AddSubjectInput {
    commonSub: CommonSubEnum!
@@ -885,6 +915,8 @@ type RemoveSubjectPayload {
    subjects: [Subject!]!
 }
 
+
+
 input AddTeacherInput {
    teacherName: String!
 }
@@ -904,6 +936,8 @@ input RemoveTeacherInput {
 type RemoveTeacherPayload {
     teachers: [Teacher!]!
 }
+
+
 
 input AddTermInput {
    termsDesc: String!
