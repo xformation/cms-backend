@@ -233,8 +233,8 @@ type StudentAttendance {
     id: Long!
     attendanceStatus: AttendanceStatusEnum!
     comments: String!
-    student: Long!
-    lecture: Long!
+    student: Student!
+    lecture: Lecture!
 }
 type Subject {
  	id: Long!
@@ -610,6 +610,7 @@ type RemoveTeachPayload {
 
 
 input AddCourseOfferInput{
+	id: Long!
     desc: String!
     collegeId: Long!
     departmentId: Long!
