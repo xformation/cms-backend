@@ -24,15 +24,23 @@
             <column name="student_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+
             <column name="department_id" type="bigint">
-                <constraints unique="true" nullable="true" />
-            </column>            <column name="batch_id" type="bigint">
-                <constraints unique="true" nullable="true" />
-            </column>            <column name="section_id" type="bigint">
-                <constraints unique="true" nullable="true" />
-            </column>            <column name="branch_id" type="bigint">
-                <constraints unique="true" nullable="true" />
+                <constraints nullable="false" />
             </column>
+
+            <column name="batch_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="section_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
