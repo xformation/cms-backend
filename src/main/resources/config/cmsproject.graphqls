@@ -152,7 +152,7 @@ type Branch{
 }
 type Batch{
 	id: Long!
-    batch: String!
+    batch: BatchEnum!
     department: Department!
 }
 type Teach{
@@ -180,7 +180,7 @@ type Lecture{
 	lecDate: Date!
 	lastUpdatedOn: Date!
 	lastUpdatedBy: String!
-	lecStatus: String!
+	lecStatus: LecStatusEnum!
 	desc: String!
 	attendancemaster: AttendanceMaster!
 }
@@ -227,7 +227,8 @@ type Student {
     studentName: String!
     batch: Batch!
     section: Section!
-    branch: Branch!  
+    branch: Branch!
+    department: Department!
 }
 type StudentAttendance {
     id: Long!
@@ -481,8 +482,7 @@ type RemoveBranchPayload {
 
 
 input AddBatchInput {
-    id: Long!
-    batch: String!
+    batch: BatchEnum!
     departmentId: Long!
 }
 type AddBatchPayload {
@@ -490,7 +490,7 @@ type AddBatchPayload {
 }
 input UpdateBatchInput {
     id: Long!
-    batch: String!
+    batch: BatchEnum!
     departmentId: Long!
 }
 type UpdateBatchPayload {
@@ -579,7 +579,6 @@ type RemoveDepartmentPayload {
 
 
 input AddTeachInput{
-	id: Long!
     desc: String!
     teacherId: Long!
     subjectId: Long!
@@ -607,7 +606,6 @@ type RemoveTeachPayload {
 
 
 input AddCourseOfferInput{
-	id: Long!
     desc: String!
     collegeId: Long!
     departmentId: Long!
@@ -636,7 +634,6 @@ type RemoveCourseOfferPayload {
 
 
 input AddAttendanceMasterInput{
-	id: Long!
     desc: String!
     teachId: Long!
     sectionId: Long!
@@ -665,11 +662,10 @@ type RemoveAttendanceMasterPayload {
 
 
 input AddLectureInput{
-	id: Long!
 	lecDate: Date!
 	lastUpdatedOn: Date!
 	lastUpdatedBy: String!
-	lecStatus: String!
+	lecStatus: LecStatusEnum!
 	desc: String!
 	attendanceMasterId: Long!
 }
@@ -681,7 +677,7 @@ input UpdateLectureInput {
 	lecDate: Date!
 	lastUpdatedOn: Date!
 	lastUpdatedBy: String!
-	lecStatus: String!
+	lecStatus: LecStatusEnum!
 	desc: String!
 	attendanceMasterId: Long!
 }
@@ -804,8 +800,7 @@ type RemoveLocationPayload {
 
 
 input AddSectionInput {
-   id: Long!
-   section: String!
+   section: SectionEnum!
    batchId: Long!
 }
 type AddSectionPayload {
@@ -813,7 +808,7 @@ type AddSectionPayload {
 }
 input UpdateSectionInput {
    id: Long!
-   section: String
+   section: SectionEnum
    batchId: Long
 }
 type UpdateSectionPayload {
@@ -833,6 +828,7 @@ input AddStudentInput {
    batchId: Long!
    sectionId: Long!
    branchId: Long!
+   departmentId: Long!
 }
 type AddStudentPayload {
    student: Student!
@@ -843,6 +839,7 @@ input UpdateStudentInput {
    batchId: Long
    sectionId: Long
    branchId: Long
+   departmentId: Long
 }
 type UpdateStudentPayload {
    student: Student!
@@ -857,7 +854,6 @@ type RemoveStudentPayload {
 
 
 input AddStudentAttendanceInput {
-  id: Long!
   attendanceStatus: AttendanceStatusEnum!
   comments: String!
   studentId: Long!

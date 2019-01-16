@@ -12,6 +12,7 @@ public class AbstractStudentAttendanceInput {
     private AttendanceStatusEnum attendanceStatus;
     private String comments;
 
+
     public Long getId() {
         return id;
     }
