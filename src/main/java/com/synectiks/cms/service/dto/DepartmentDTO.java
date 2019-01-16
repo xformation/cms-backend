@@ -22,7 +22,7 @@ public class DepartmentDTO implements Serializable {
 
     private Long studentId;
 
-    private Long collegeId;
+    private Long branchId;
 
     private Long academicyearId;
 
@@ -66,12 +66,12 @@ public class DepartmentDTO implements Serializable {
         this.studentId = studentId;
     }
 
-    public Long getCollegeId() {
-        return collegeId;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public void setCollegeId(Long collegeId) {
-        this.collegeId = collegeId;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
     public Long getAcademicyearId() {
@@ -111,7 +111,7 @@ public class DepartmentDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", deptHead='" + getDeptHead() + "'" +
             ", student=" + getStudentId() +
-            ", college=" + getCollegeId() +
+            ", branch=" + getBranchId() +
             ", academicyear=" + getAcademicyearId() +
             "}";
     }
