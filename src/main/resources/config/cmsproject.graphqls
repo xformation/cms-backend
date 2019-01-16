@@ -702,7 +702,7 @@ type RemoveLecturePayload {
 input AddHolidayInput {
     holidayDesc: String!
     holidayDate: Date!
-    status: Status!
+    holidayStatus: Status!
     academicYearId: Long!
 }
 type AddHolidayPayload {
@@ -712,7 +712,7 @@ input UpdateHolidayInput {
     id: Long!
     holidayDesc: String
     holidayDate: Date
-    status: Status
+    holidayStatus: Status
     academicYearId: Long
 }
 type UpdateHolidayPayload {
