@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Department.
     -->
-    <changeSet id="20190111072043-2" author="jhipster">
+    <changeSet id="20190116074829-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="student_id"
                                  baseTableName="department"
@@ -14,11 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="student"/>
 
-        <addForeignKeyConstraint baseColumnNames="college_id"
+        <addForeignKeyConstraint baseColumnNames="branch_id"
                                  baseTableName="department"
-                                 constraintName="fk_department_college_id"
+                                 constraintName="fk_department_branch_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="college"/>
+                                 referencedTableName="branch"/>
 
         <addForeignKeyConstraint baseColumnNames="academicyear_id"
                                  baseTableName="department"

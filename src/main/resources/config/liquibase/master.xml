@@ -7,7 +7,7 @@
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072041_added_entity_College.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072042_added_entity_Branch.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190111072043_added_entity_Department.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190116074829_added_entity_Department.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072044_added_entity_Batch.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072045_added_entity_Subject.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072046_added_entity_Section.xml" relativeToChangelogFile="false"/>
@@ -29,7 +29,7 @@
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     
     <include file="config/liquibase/changelog/20190111072042_added_entity_constraints_Branch.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190111072043_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20190116074829_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072044_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072045_added_entity_constraints_Subject.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190111072046_added_entity_constraints_Section.xml" relativeToChangelogFile="false"/>
