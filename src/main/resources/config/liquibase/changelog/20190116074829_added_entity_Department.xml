@@ -32,9 +32,7 @@
             <column name="dept_head" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="student_id" type="bigint">
-                <constraints unique="true" nullable="true" />
-            </column>
+
             <column name="branch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
