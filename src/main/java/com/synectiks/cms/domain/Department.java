@@ -45,7 +45,7 @@ public class Department implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private College college;
+    private Branch branch;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -112,17 +112,17 @@ public class Department implements Serializable {
         this.student = student;
     }
 
-    public College getCollege() {
-        return college;
+    public Branch getBranch() {
+        return branch;
     }
 
-    public Department college(College college) {
-        this.college = college;
+    public Department branch(Branch branch) {
+        this.branch = branch;
         return this;
     }
 
-    public void setCollege(College college) {
-        this.college = college;
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 
     public AcademicYear getAcademicyear() {

@@ -2,19 +2,13 @@ package com.synectiks.cms.graphql.types.Department;
 
 public class AddDepartmentInput extends AbstractDepartmentInput {
 	private Long studentId;
-    private Long collegeId;
     private Long academicyearId;
+    private Long branchId;
 	public Long getStudentId() {
 		return studentId;
 	}
 	public void setStudentId(Long studentId) {
 		this.studentId = studentId;
-	}
-	public Long getCollegeId() {
-		return collegeId;
-	}
-	public void setCollegeId(Long collegeId) {
-		this.collegeId = collegeId;
 	}
 	public Long getAcademicyearId() {
 		return academicyearId;
@@ -22,12 +16,18 @@ public class AddDepartmentInput extends AbstractDepartmentInput {
 	public void setAcademicyearId(Long academicyearId) {
 		this.academicyearId = academicyearId;
 	}
+	public Long getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(Long branchId) {
+		this.branchId = branchId;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((academicyearId == null) ? 0 : academicyearId.hashCode());
-		result = prime * result + ((collegeId == null) ? 0 : collegeId.hashCode());
+		result = prime * result + ((branchId == null) ? 0 : branchId.hashCode());
 		result = prime * result + ((studentId == null) ? 0 : studentId.hashCode());
 		return result;
 	}
@@ -45,10 +45,10 @@ public class AddDepartmentInput extends AbstractDepartmentInput {
 				return false;
 		} else if (!academicyearId.equals(other.academicyearId))
 			return false;
-		if (collegeId == null) {
-			if (other.collegeId != null)
+		if (branchId == null) {
+			if (other.branchId != null)
 				return false;
-		} else if (!collegeId.equals(other.collegeId))
+		} else if (!branchId.equals(other.branchId))
 			return false;
 		if (studentId == null) {
 			if (other.studentId != null)
@@ -59,7 +59,8 @@ public class AddDepartmentInput extends AbstractDepartmentInput {
 	}
 	@Override
 	public String toString() {
-		return "AddDepartmentInput [studentId=" + studentId + ", collegeId=" + collegeId + ", academicyearId="
-				+ academicyearId + "]";
+		return "AddDepartmentInput [studentId=" + studentId + ", academicyearId=" + academicyearId + ", branchId="
+				+ branchId + "]";
 	}
+	
 }

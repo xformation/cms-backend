@@ -163,7 +163,7 @@ corporateId Integer required
 
 relationship ManyToOne {
 Branch{college} to College,
-Department{college} to College,
+Department{branch} to Branch,
 Department{academicyear} to AcademicYear,
 Subject{department} to Department,
 Batch{department} to Department,

@@ -355,14 +355,14 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddDepartmentPayload addDepartment(AddDepartmentInput addDepartmentsInput) {
     	Student student = studentRepository.findById(addDepartmentsInput.getStudentId()).get();
-    	College college = collegeRepository.findById(addDepartmentsInput.getCollegeId()).get();
     	AcademicYear academicYear = academicYearRepository.findById(addDepartmentsInput.getAcademicyearId()).get();
+    	Branch branch = branchRepository.findById(addDepartmentsInput.getBranchId()).get();
         final Department departments = new Department();
         departments.setName(addDepartmentsInput.getName());
         departments.setDescription(addDepartmentsInput.getDescription());
         departments.setDeptHead(addDepartmentsInput.getDeptHead());
         departments.setStudent(student);
-        departments.setCollege(college);
+        departments.setBranch(branch);
         departments.setAcademicyear(academicYear);
         departmentRepository.save(departments);
 
@@ -384,9 +384,9 @@ public class Mutation implements GraphQLMutationResolver {
         	Student student = studentRepository.findById(updateDepartmentsInput.getStudentId()).get();
         	departments.setStudent(student);
         }
-        if(updateDepartmentsInput.getCollegeId() != null) {
-        	College college = collegeRepository.findById(updateDepartmentsInput.getCollegeId()).get();
-        	departments.setCollege(college);
+        if(updateDepartmentsInput.getBranchId() != null) {
+        	Branch branch = branchRepository.findById(updateDepartmentsInput.getBranchId()).get();
+        	departments.setBranch(branch);
         }
         if(updateDepartmentsInput.getAcademicyearId() != null) {
         	AcademicYear academicYear = academicYearRepository.findById(updateDepartmentsInput.getAcademicyearId()).get();
