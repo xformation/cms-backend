@@ -32,6 +32,10 @@ public class Student implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
+    private Department department;
+
+    @OneToOne
+    @JoinColumn(unique = true)
     private Batch batch;
 
     @OneToOne
@@ -62,6 +66,19 @@ public class Student implements Serializable {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public Student department(Department department) {
+        this.department = department;
+        return this;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Batch getBatch() {

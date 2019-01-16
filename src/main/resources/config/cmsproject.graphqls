@@ -545,7 +545,6 @@ type Department{
     name: String!
     description: String!
     deptHead: String!
-    student: Student!
     branch: Branch!
     academicyear: AcademicYear!
 }
@@ -553,7 +552,6 @@ input AddDepartmentInput {
     name: String!
     description: String!
     deptHead: String!
-    studentId: Long!
     branchId: Long!
     academicyearId: Long!
 }
@@ -565,7 +563,6 @@ input UpdateDepartmentInput {
     name: String
     description: String
     deptHead: String
-    studentId: Long
     branchId: Long
     academicyearId: Long
 }
