@@ -194,4 +194,4 @@ AttendanceMaster{academicyear} to AcademicYear
 }
 
 dto * with mapstruct
-service all with serviceImpl
+service all with serviceImpl 
