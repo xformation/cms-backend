@@ -11,6 +11,7 @@ public class AbstractStudentAttendanceInput {
     private Long id;
     private AttendanceStatusEnum attendanceStatus;
     private String comments;
+    private Date attendanceDate;
 
 
     public Long getId() {
@@ -38,7 +39,17 @@ public class AbstractStudentAttendanceInput {
 		this.attendanceStatus = attendanceStatus;
 	}
 
-	@Override
+    public Date getAttendanceDate() {
+        return attendanceDate;
+    }
+
+    public void setAttendanceDate(Date attendanceDate) {
+        this.attendanceDate = attendanceDate;
+    }
+
+
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -72,11 +83,13 @@ public class AbstractStudentAttendanceInput {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "AbstractStudentAttendanceInput [id=" + id + ", attendanceStatus=" + attendanceStatus + ", comments="
-				+ comments + "]";
-	}
-
-    
+    @Override
+    public String toString() {
+        return "AbstractStudentAttendanceInput{" +
+            "id=" + id +
+            ", attendanceStatus=" + attendanceStatus +
+            ", comments='" + comments + '\'' +
+            ", attendanceDate=" + attendanceDate +
+            '}';
+    }
 }
