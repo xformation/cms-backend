@@ -865,12 +865,12 @@ type AddStudentAttendancePayload {
   studentAttendance: StudentAttendance!
 }
 input UpdateStudentAttendanceInput {
-    id: Long!
+  id: Long!
     attendanceStatus: AttendanceStatusEnum!
     attendanceDate: Date!
     comments: String
-    studentId: Long
-    lectureId: Long
+  studentId: Long
+  lectureId: Long
 }
 type UpdateStudentAttendancePayload {
   studentAttendance: StudentAttendance!
