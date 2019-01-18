@@ -1,0 +1,80 @@
+
+QUERY:
+
+{
+  term(id:1151){
+    termsDesc
+    startDate
+    endDate
+    status
+    academicYear{
+      id
+    }
+  }
+}
+
+{
+  terms{
+    termsDesc
+    startDate
+    endDate
+    status
+    academicYear{
+      id
+    }
+  }
+}
+
+{
+  teacher(id:1501){
+    teacherName
+    periods{
+      id
+    }
+  }
+}
+
+{
+  teachers{
+    teacherName
+    periods{
+      id
+    }
+  }
+}
+
+
+{
+  subject(id:1601){
+    commonSub
+    electiveSub
+    periods{
+      id
+    }
+    student{
+      id
+    }
+    teacher{
+      id
+    }
+  }
+}
+
+
+{
+  subjects{
+    commonSub
+    electiveSub
+    periods{
+      id
+    }
+    student{
+      id
+    }
+    teacher{
+      id
+    }
+  }
+}
+
+

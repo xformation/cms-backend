@@ -1,0 +1,559 @@
+
+mutation addCollege($input: AddCollegeInput!) {
+addCollege(input: $input) {
+college{
+id
+shortName
+logo
+backgroundImage
+instructionInformation
+}
+}
+}
+
+{
+  "input": {
+    "shortName": "college",
+    "logo": 123,
+    "backgroundImage": 456,
+    "instructionInformation": "info"
+  }
+}
+
+mutation addBranch($input: AddBranchInput!) {
+addBranch(input: $input) {
+branch{
+id
+branchName
+description
+collegeHead
+college{
+  id
+}
+}
+}
+}
+
+{
+  "input": {
+    "branchName": "branch",
+    "description": "desc",
+    "collegeHead": "papu",
+    "collegeId": 951
+  }
+}
+
+
+mutation addAcademicYear($input: AddAcademicYearInput!){
+  	addAcademicYear(input: $input){
+    academicYear
+  {
+    id
+    year
+    startDate
+    endDate
+    desc
+  }
+ }
+}
+
+{
+  "input": {
+   "year": 2019,
+    "startDate": "2019-01-17",
+    "endDate": "2019-01-18",
+    "desc": "desc"
+  }
+}
+
+
+mutation addDepartment($input: AddDepartmentInput!){
+  	addDepartment(input: $input){
+    department
+  {
+    id
+    name
+    description
+    deptHead
+    branch
+    {
+      id
+    }
+    academicyear{
+      id
+    }
+  }
+ }
+}
+
+{
+  "input": {
+    "name": "cse",
+    "description": "computer science",
+    "deptHead": "jack",
+    "branchId": 1001,
+    "academicyearId": 1051
+  }
+}
+
+
+mutation addBatch($input: AddBatchInput!){
+  	addBatch(input: $input){
+    batch
+  {
+   id
+   batch
+   department{
+    id
+   }
+  }
+ }
+}
+
+{
+  "input": {
+    "batch": "FIRSTYEAR",
+    "departmentId": 1101
+  }
+}
+
+
+mutation addSection($input: AddSectionInput!){
+  	addSection(input: $input){
+    section
+  {
+   id
+   section
+   batch{
+    id
+   }
+  }
+ }
+}
+
+{
+  "input": {
+   "section": "A",
+    "batchId": 1151
+  }
+}
+
+
+
+mutation addStudent($input: AddStudentInput!){
+  	addStudent(input: $input){
+    student
+  {
+   id
+   studentName
+   batch
+    {
+      id
+    }
+    section{
+      id
+    }
+    branch{
+      id
+    }
+    department{
+      id
+    }
+  }
+ }
+}
+
+{
+  "input": {
+  "studentName": "lavanya",
+  "batchId": 1151,
+  "sectionId": 1201,
+  "branchId": 1001,
+  "departmentId": 1101
+  }
+}
+
+
+mutation addTeacher($input: AddTeacherInput!){
+  	addTeacher(input: $input){
+    teacher
+  {
+  id
+    teacherName
+  }
+ }
+}
+
+{
+  "input": {
+  "teacherName": "tom"
+  }
+}
+
+
+mutation addSubject($input: AddSubjectInput!){
+  	addSubject(input: $input){
+    subject
+  {
+   id
+   commonSub
+   electiveSub
+   department{
+    id
+   }
+   student{
+    id
+   }
+   teacher{
+    id
+   }
+  }
+ }
+}
+
+{
+  "input": {
+  "commonSub": "DBMS",
+  "electiveSub": "C",
+  "departmentId": 1101,
+  "studentId": 1251,
+  "teacherId": 1301
+  }
+}
+
+
+mutation addTeach($input: AddTeachInput!){
+  	addTeach(input: $input){
+    teach
+    {
+     id
+     desc
+     teacher{
+      id
+     }
+     subject{
+      id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+  "desc": "desc",
+  "teacherId": 1301,
+  "subjectId": 1351
+  }
+}
+
+
+mutation addAttendanceMaster($input: AddAttendanceMasterInput!){
+  	addAttendanceMaster(input: $input){
+    attendanceMaster
+    {
+      id
+      desc
+      teach{
+      id
+      }
+      section{
+        id
+      }
+      academicyear{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+  "desc": "desc",
+  "teachId": 1401,
+  "sectionId": 1201,
+  "academicYearId": 1051
+  }
+}
+
+
+mutation addLecture($input: AddLectureInput!){
+  	addLecture(input: $input){
+    lecture
+    {
+      id
+      desc
+      lecDate
+      lastUpdatedOn
+      lastUpdatedBy
+      lecStatus
+      attendancemaster{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+   "lecDate": "2019-01-17",
+   "lastUpdatedOn": "2019-01-16",
+   "lastUpdatedBy": "valli",
+    "lecStatus": "ACTIVE",
+    "desc": "desc",
+    "attendanceMasterId": 1451
+  }
+}
+
+mutation addStudentAttendance($input: AddStudentAttendanceInput!){
+  	addStudentAttendance(input: $input){
+    studentAttendance
+    {
+      id
+      attendanceStatus
+      attendanceDate
+      comments
+      student{
+        id
+      }
+       lecture{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+  "attendanceStatus": "PRESENT",
+  "comments": "good",
+  "attendanceDate": "2019-01-17",
+  "studentId": 1251,
+  "lectureId": 1501
+  }
+}
+
+
+mutation addTerm($input: AddTermInput!){
+  	addTerm(input: $input){
+    term
+    {
+      id
+      termsDesc
+      startDate
+      endDate
+      termStatus
+      academicyear{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+   "termsDesc": "desc",
+    "startDate": "2019-01-16",
+    "endDate": "2019-01-17",
+    "termStatus": "ACTIVE",
+    "academicYearId": 1051
+    } 
+ }
+ 
+ 
+mutation addHoliday($input: AddHolidayInput!){
+  	addHoliday(input: $input){
+    holiday
+    {
+      id
+      holidayDesc
+      holidayDate
+      holidayStatus
+      academicyear{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+   "holidayDesc": "pongal",
+   "holidayDate": "2019-01-15",
+   "holidayStatus": "ACTIVE",
+    "academicYearId": 1051 
+  }
+}
+
+
+mutation addLegalEntity($input:AddLegalEntityInput!){
+addLegalEntity(input:$input){
+legalEntity{
+id
+logo
+legalNameOfTheCollege
+typeOfCollege
+dateOfIncorporation
+registeredOfficeAddress
+collegeIdentificationNumber
+pan
+tan
+tanCircleNumber
+citTdsLocation
+formSignatory
+pfNumber
+registrationDate
+esiNumber
+ptRegistrationDate
+ptSignatory
+ptNumber
+}
+}
+}
+
+{
+
+  "input": {
+    "logo": 123,
+    "legalNameOfTheCollege": "clg",
+    "typeOfCollege": "PUBLIC",
+    "dateOfIncorporation": "2019-01-03",
+    "registeredOfficeAddress": "madhapur",
+    "collegeIdentificationNumber": "abc",
+    "pan": "ajsh33c",
+    "tan": "jikdi",
+    "tanCircleNumber": "1254",
+    "citTdsLocation": "fjkf",
+    "formSignatory": "valli",
+    "pfNumber": "jdhd",
+    "registrationDate": "2019-01-03",
+    "esiNumber": 123,
+    "ptRegistrationDate": "2019-01-03",
+    "ptSignatory": "kjjv",
+    "ptNumber": 123
+  }
+}
+
+mutation addAuthorizedSignatory($input:AddAuthorizedSignatoryInput!){
+addAuthorizedSignatory(input:$input){
+authorizedSignatory{
+id
+signatoryName
+signatoryFatherName
+signatoryDesignation
+address
+email
+panCardNumber
+  legalEntity{
+    id
+  }
+}
+}
+}
+
+{
+  "input": {
+"signatoryName": "valli",
+"signatoryFatherName": "rao",
+"signatoryDesignation": "employee",
+"address": "madhapur",
+"email": "valli@gmail.com",
+"panCardNumber": "hgsg72",
+ "legalEntityId": 1701
+}
+}
+
+mutation addLocation($input: AddLocationInput!) {
+addLocation(input: $input) {
+location{
+  id
+  name
+  address
+  appliesTo
+}
+}
+}
+
+{
+  "input": {
+    "name": "madhapur",
+    "address": "madhapur",
+    "appliesTo": "20employees"
+  }
+}
+
+mutation addBankAccounts($input: AddBankAccountsInput!) {
+addBankAccounts(input: $input) {
+bankAccounts{
+id
+ nameOfBank
+  accountNumber
+  typeOfAccount
+  ifsCode
+  branch
+  corporateId
+}
+}
+}
+
+{
+  "input": {
+    "nameOfBank": "HDFC",
+    "accountNumber": 7338093889389,
+    "typeOfAccount": "Savings",
+    "ifsCode": "AD09832",
+    "branch": "madhapur",
+    "corporateId": 123
+  }
+}
+
+mutation addCourseOffer($input: AddCourseOfferInput!) {
+addCourseOffer(input: $input) {
+courseOffer{
+ id
+ desc
+ college{
+  id
+ }
+ department{
+    id
+ }
+ subject{
+  id
+}
+}
+}
+}
+
+{
+  "input": {
+   "desc": "desc",
+    "collegeId": 951,
+    "departmentId": 1101,
+    "subjectId": 1351
+  }
+}
+
+query getDailyStudentAttendance($filter:StudentAttendanceFilterInput!){
+getDailyStudentAttendance(filter: $filter){
+studentId
+studentName
+currentDateStatus
+previousOneDayStatus
+previousTwoDayStatus
+previousThreeDayStatus
+comments
+}
+}
+
+{
+"filter": {
+"branchId": "1001",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1351",
+"attendanceDate": "2019-01-17",
+"studentId": "1252"
+
+}
+}
