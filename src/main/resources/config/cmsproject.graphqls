@@ -23,16 +23,9 @@ enum SectionEnum {
     D
 }
 
-enum CommonSubEnum {
-    MATHS
-    PHYSICS
-    CHEMISTRY
-    DBMS
-}
-
-enum ElectiveEnum {
-    JAVA
-    C
+enum SubTypeEnum {
+    COMMON
+    ELECTIVE
 }
 
 enum TypeOfCollege{
@@ -57,63 +50,63 @@ enum BatchEnum{
 type Query {
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
-  
+
   bankAccount(id: Long!): BankAccounts!
   bankAccounts: [BankAccounts!]!
-  
+
   college(id: Long!): College!
   colleges: [College!]!
-  
+
   branch(id: Long!): Branch!
   branches: [Branch!]!
-  
+
   batch(id: Long!): Batch!
   batches: [Batch!]!
-  
+
   academicYear(id: Long!): AcademicYear!
   academicYears: [AcademicYear!]!
   department(id: Long!): Department!
   departments: [Department!]!
-  
+
   courseOffer(id: Long!): CourseOffer!
   courseOffers: [CourseOffer!]!
-  
+
   attendanceMaster(id: Long!): AttendanceMaster!
   attendanceMasters: [AttendanceMaster!]!
-  
+
   lecture(id: Long!): Lecture!
   lectures: [Lecture!]!
-  
+
   holiday(id: Long!): Holiday!
   holidays: [Holiday!]!
-  
+
   legalEntity(id : Long!): LegalEntity!
   legalEntities: [LegalEntity!]!
-  
+
   location(id: Long!): Location!
   locations: [Location!]!
-  
+
   section(id: Long!): Section!
   sections: [Section!]!
-  
+
   student(id: Long!): Student!
   students: [Student!]!
-  
+
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
-  
+
   subject(id: Long!): Subject!
   subjects: [Subject!]!
-  
+
   teach(id: Long!): Teach!
   teaches: [Teach!]!
-  
+
   teacher(id: Long!): Teacher!
   teachers: [Teacher!]!
-  
+
   term (id: Long!): Term!
   terms: [Term!]!
-  
+
   getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 }
 
@@ -240,10 +233,10 @@ type StudentAttendance {
 }
 type Subject {
  	id: Long!
- 	commonSub: CommonSubEnum!
- 	electiveSub: ElectiveEnum!
+ 	subjectType: SubTypeEnum!
+ 	subjectCode: String!
+ 	subjectDesc: String!
  	department: Department!
- 	student: Student!
  	teacher: Teacher!
 }
 type Teacher{
@@ -283,79 +276,79 @@ type Mutation {
    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
    updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
    removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
-   
+
    addBankAccounts(input: AddBankAccountsInput!): AddBankAccountsPayload!
    updateBankAccounts(input: UpdateBankAccountsInput!): UpdateBankAccountsPayload!
    removeBankAccounts(input: RemoveBankAccountsInput!): RemoveBankAccountsPayload!
-   
+
    addCollege(input: AddCollegeInput!): AddCollegePayload!
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
-   
+
    addBranch(input: AddBranchInput!): AddBranchPayload!
    updateBranch(input: UpdateBranchInput!): UpdateBranchPayload!
    removeBranch(input: RemoveBranchInput!): RemoveBranchPayload!
-   
+
    addBatch(input: AddBatchInput!): AddBatchPayload!
    updateBatch(input: UpdateBatchInput!): UpdateBatchPayload!
    removeBatch(input: RemoveBatchInput!): RemoveBatchPayload!
-   
+
    addAcademicYear(input: AddAcademicYearInput!): AddAcademicYearPayload!
    updateAcademicYear(input: UpdateAcademicYearInput!): UpdateAcademicYearPayload!
    removeAcademicYear(input: RemoveAcademicYearInput!): RemoveAcademicYearPayload!
-   
+
    addDepartment(input: AddDepartmentInput!): AddDepartmentPayload!
    updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentPayload!
    removeDepartment(input: RemoveDepartmentInput!): RemoveDepartmentPayload!
-   
+
    addCourseOffer(input: AddCourseOfferInput!): AddCourseOfferPayload!
    updateCourseOffer(input: UpdateCourseOfferInput!): UpdateCourseOfferPayload!
    removeCourseOffer(input: RemoveCourseOfferInput!): RemoveCourseOfferPayload!
-   
+
    addAttendanceMaster(input: AddAttendanceMasterInput!): AddAttendanceMasterPayload!
    updateAttendanceMaster(input: UpdateAttendanceMasterInput!): UpdateAttendanceMasterPayload!
    removeAttendanceMaster(input: RemoveAttendanceMasterInput!): RemoveAttendanceMasterPayload!
-   
+
    addLecture(input: AddLectureInput!): AddLecturePayload!
    updateLecture(input: UpdateLectureInput!): UpdateLecturePayload!
    removeLecture(input: RemoveLectureInput!): RemoveLecturePayload!
-   
+
    addHoliday(input: AddHolidayInput!): AddHolidayPayload!
    updateHoliday(input: UpdateHolidayInput!): UpdateHolidayPayload!
    removeHoliday(input: RemoveHolidayInput!): RemoveHolidayPayload!
-   
+
    addLegalEntity(input: AddLegalEntityInput!): AddLegalEntityPayload!
    updateLegalEntity(input: UpdateLegalEntityInput!): UpdateLegalEntityPayload!
    removeLegalEntity(input: RemoveLegalEntityInput!): RemoveLegalEntityPayload!
-   
+
    addLocation(input: AddLocationInput!): AddLocationPayload!
    updateLocation(input: UpdateLocationInput!): UpdateLocationPayload!
    removeLocation(input: RemoveLocationInput!): RemoveLocationPayload!
-   
+
    addSection(input: AddSectionInput!): AddSectionPayload!
    updateSection(input: UpdateSectionInput!): UpdateSectionPayload!
    removeSection(input: RemoveSectionInput!): RemoveSectionPayload!
-   
+
    addStudent(input: AddStudentInput!): AddStudentPayload!
    updateStudent(input: UpdateStudentInput!): UpdateStudentPayload!
    removeStudent(input: RemoveStudentInput!): RemoveStudentPayload!
-   
+
    addStudentAttendance(input: AddStudentAttendanceInput!): AddStudentAttendancePayload!
    updateStudentAttendance(input: UpdateStudentAttendanceInput!): UpdateStudentAttendancePayload!
    removeStudentAttendance(input: RemoveStudentAttendanceInput!): RemoveStudentAttendancePayload!
-   
+
    addSubject(input: AddSubjectInput!): AddSubjectPayload!
    updateSubject(input: UpdateSubjectInput!): UpdateSubjectPayload!
    removeSubject(input: RemoveSubjectInput!): RemoveSubjectPayload!
-   
+
    addTeach(input: AddTeachInput!): AddTeachPayload!
    updateTeach(input: UpdateTeachInput!): UpdateTeachPayload!
    removeTeach(input: RemoveTeachInput!): RemoveTeachPayload!
-   
+
    addTeacher(input: AddTeacherInput!): AddTeacherPayload!
    updateTeacher(input: UpdateTeacherInput!): UpdateTeacherPayload!
    removeTeacher(input: RemoveTeacherInput!): RemoveTeacherPayload!
-   
+
    addTerm(input: AddTermInput!): AddTermPayload!
    updateTerm(input: UpdateTermInput!): UpdateTermPayload!
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
