@@ -878,10 +878,10 @@ type RemoveStudentAttendancePayload {
 
 
 input AddSubjectInput {
-   commonSub: CommonSubEnum!
-   electiveSub: ElectiveEnum!
+   subjectType: SubTypeEnum!
+   subjectCode: String!
+   subjectDesc: String!
    departmentId: Long!
-   studentId: Long!
    teacherId: Long!
 }
 type AddSubjectPayload {
@@ -889,10 +889,10 @@ type AddSubjectPayload {
 }
 input UpdateSubjectInput {
    id: Long!
-   commonSub: CommonSubEnum!
-   electiveSub: ElectiveEnum!
+   subjectType: SubTypeEnum!
+   subjectCode: String!
+   subjectDesc: String!
    departmentId: Long!
-   studentId: Long!
    teacherId: Long!
 }
 type UpdateSubjectPayload {
