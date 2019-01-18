@@ -85,16 +85,16 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.subject.commonSub">Common Sub</Translate>
+                  <Translate contentKey="cmsApp.subject.subjectCode">Subject Code</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.subject.electiveSub">Elective Sub</Translate>
+                  <Translate contentKey="cmsApp.subject.subjectType">Subject Type</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cmsApp.subject.subjectDesc">Subject Desc</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.subject.department">Department</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.subject.student">Student</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.subject.teacher">Teacher</Translate>
@@ -110,14 +110,12 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
                       {subject.id}
                     </Button>
                   </td>
+                  <td>{subject.subjectCode}</td>
                   <td>
-                    <Translate contentKey={`cmsApp.CommonSubEnum.${subject.commonSub}`} />
+                    <Translate contentKey={`cmsApp.SubTypeEnum.${subject.subjectType}`} />
                   </td>
-                  <td>
-                    <Translate contentKey={`cmsApp.ElectiveEnum.${subject.electiveSub}`} />
-                  </td>
+                  <td>{subject.subjectDesc}</td>
                   <td>{subject.departmentId ? <Link to={`department/${subject.departmentId}`}>{subject.departmentId}</Link> : ''}</td>
-                  <td>{subject.studentId ? <Link to={`student/${subject.studentId}`}>{subject.studentId}</Link> : ''}</td>
                   <td>{subject.teacherId ? <Link to={`teacher/${subject.teacherId}`}>{subject.teacherId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

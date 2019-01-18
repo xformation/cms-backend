@@ -25,8 +25,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -51,8 +52,8 @@ public class HolidayResourceIntTest {
     private static final String DEFAULT_HOLIDAY_DESC = "AAAAAAAAAA";
     private static final String UPDATED_HOLIDAY_DESC = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_HOLIDAY_DATE = new Date();
-    private static final Date UPDATED_HOLIDAY_DATE = new Date();
+    private static final LocalDate DEFAULT_HOLIDAY_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_HOLIDAY_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final Status DEFAULT_HOLIDAY_STATUS = Status.ACTIVE;
     private static final Status UPDATED_HOLIDAY_STATUS = Status.DEACTIVE;
@@ -110,10 +111,10 @@ public class HolidayResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Holiday createEntity(EntityManager em) {
-        Holiday holiday = new Holiday();
-        holiday.holidayDesc(DEFAULT_HOLIDAY_DESC);
-        holiday.setHolidayDate(DEFAULT_HOLIDAY_DATE);
-        holiday.holidayStatus(DEFAULT_HOLIDAY_STATUS);
+        Holiday holiday = new Holiday()
+            .holidayDesc(DEFAULT_HOLIDAY_DESC)
+            .holidayDate(DEFAULT_HOLIDAY_DATE)
+            .holidayStatus(DEFAULT_HOLIDAY_STATUS);
         return holiday;
     }
 
@@ -278,10 +279,10 @@ public class HolidayResourceIntTest {
         Holiday updatedHoliday = holidayRepository.findById(holiday.getId()).get();
         // Disconnect from session so that the updates on updatedHoliday are not directly saved in db
         em.detach(updatedHoliday);
-        //updatedHoliday
-        updatedHoliday.holidayDesc(UPDATED_HOLIDAY_DESC);
-        updatedHoliday.setHolidayDate(UPDATED_HOLIDAY_DATE);
-        updatedHoliday.holidayStatus(UPDATED_HOLIDAY_STATUS);
+        updatedHoliday
+            .holidayDesc(UPDATED_HOLIDAY_DESC)
+            .holidayDate(UPDATED_HOLIDAY_DATE)
+            .holidayStatus(UPDATED_HOLIDAY_STATUS);
         HolidayDTO holidayDTO = holidayMapper.toDto(updatedHoliday);
 
         restHolidayMockMvc.perform(put("/api/holidays")

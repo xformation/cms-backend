@@ -19,6 +19,7 @@
             },
             "attendanceStatus": "Attendance Status",
             "comments": "Comments",
+            "attendanceDate": "Attendance Date",
             "student": "Student",
             "lecture": "Lecture"
         }

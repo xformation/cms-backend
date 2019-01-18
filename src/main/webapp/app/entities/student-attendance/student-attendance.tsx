@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -91,6 +91,9 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                   <Translate contentKey="cmsApp.studentAttendance.comments">Comments</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="cmsApp.studentAttendance.attendanceDate">Attendance Date</Translate>
+                </th>
+                <th>
                   <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
                 </th>
                 <th>
@@ -111,6 +114,9 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                     <Translate contentKey={`cmsApp.AttendanceStatusEnum.${studentAttendance.attendanceStatus}`} />
                   </td>
                   <td>{studentAttendance.comments}</td>
+                  <td>
+                    <TextFormat type="date" value={studentAttendance.attendanceDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
                   <td>
                     {studentAttendance.studentId ? (
                       <Link to={`student/${studentAttendance.studentId}`}>{studentAttendance.studentId}</Link>

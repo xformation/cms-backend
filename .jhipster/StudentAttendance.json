@@ -15,6 +15,13 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "attendanceDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -31,7 +38,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190111072056",
+    "changelogDate": "20190118111709",
     "entityTableName": "student_attendance",
     "dto": "mapstruct",
     "pagination": "no",

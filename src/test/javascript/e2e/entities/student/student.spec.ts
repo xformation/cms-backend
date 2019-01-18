@@ -30,16 +30,16 @@ describe('Student e2e test', () => {
     expect(await studentUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.student.home.createOrEditLabel/);
   });
 
-  it('should create and save Students', async () => {
-    studentUpdatePage.setStudentNameInput('studentName');
-    expect(await studentUpdatePage.getStudentNameInput()).to.match(/studentName/);
-    studentUpdatePage.batchSelectLastOption();
-    studentUpdatePage.sectionSelectLastOption();
-    studentUpdatePage.branchSelectLastOption();
-    studentUpdatePage.departmentSelectLastOption();
-    await studentUpdatePage.save();
-    expect(await studentUpdatePage.getSaveButton().isPresent()).to.be.false;
-  });
+  /* it('should create and save Students', async () => {
+        studentUpdatePage.setStudentNameInput('studentName');
+        expect(await studentUpdatePage.getStudentNameInput()).to.match(/studentName/);
+        studentUpdatePage.departmentSelectLastOption();
+        studentUpdatePage.batchSelectLastOption();
+        studentUpdatePage.sectionSelectLastOption();
+        studentUpdatePage.branchSelectLastOption();
+        await studentUpdatePage.save();
+        expect(await studentUpdatePage.getSaveButton().isPresent()).to.be.false;
+    });*/
 
   after(() => {
     navBarPage.autoSignOut();

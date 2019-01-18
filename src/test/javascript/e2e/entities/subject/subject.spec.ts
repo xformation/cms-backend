@@ -31,10 +31,12 @@ describe('Subject e2e test', () => {
   });
 
   it('should create and save Subjects', async () => {
-    subjectUpdatePage.commonSubSelectLastOption();
-    subjectUpdatePage.electiveSubSelectLastOption();
+    subjectUpdatePage.setSubjectCodeInput('subjectCode');
+    expect(await subjectUpdatePage.getSubjectCodeInput()).to.match(/subjectCode/);
+    subjectUpdatePage.subjectTypeSelectLastOption();
+    subjectUpdatePage.setSubjectDescInput('subjectDesc');
+    expect(await subjectUpdatePage.getSubjectDescInput()).to.match(/subjectDesc/);
     subjectUpdatePage.departmentSelectLastOption();
-    subjectUpdatePage.studentSelectLastOption();
     subjectUpdatePage.teacherSelectLastOption();
     await subjectUpdatePage.save();
     expect(await subjectUpdatePage.getSaveButton().isPresent()).to.be.false;

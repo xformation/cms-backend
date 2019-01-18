@@ -162,6 +162,20 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="attendanceDateLabel" for="attendanceDate">
+                    <Translate contentKey="cmsApp.studentAttendance.attendanceDate">Attendance Date</Translate>
+                  </Label>
+                  <AvField
+                    id="student-attendance-attendanceDate"
+                    type="date"
+                    className="form-control"
+                    name="attendanceDate"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
                   <Label for="student.id">
                     <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
                   </Label>

@@ -335,7 +335,7 @@ public class CollegeResourceIntTest {
         // Create the College
         CollegeDTO collegeDTO = collegeMapper.toDto(college);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restCollegeMockMvc.perform(put("/api/colleges")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(collegeDTO)))

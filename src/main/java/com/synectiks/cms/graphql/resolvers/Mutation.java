@@ -172,7 +172,7 @@ import com.synectiks.cms.repository.TermRepository;
 public class Mutation implements GraphQLMutationResolver {
 
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
-    
+
     private final AcademicYearRepository academicYearRepository;
     private final AttendanceMasterRepository attendanceMasterRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
@@ -184,7 +184,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final DepartmentRepository departmentRepository;
     private final HolidayRepository holidayRepository;
     private final LectureRepository lectureRepository;
-    
+
     //    private final InstituteRepository instituteRepository;
     private final LegalEntityRepository legalEntityRepository;
     private final LocationRepository locationRepository;
@@ -197,7 +197,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final TeachRepository teachRepository;
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
-    
+
     public Mutation(LectureRepository lectureRepository,AttendanceMasterRepository attendanceMasterRepository,CourseOfferRepository courseOfferRepository,TeachRepository teachRepository,BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
@@ -597,7 +597,7 @@ public class Mutation implements GraphQLMutationResolver {
     	batchRepository.delete(batch);
         return new RemoveBatchPayload(Lists.newArrayList(batchRepository.findAll()));
     }
-    
+
     public AddSectionPayload addSection(AddSectionInput addSectionInput) {
         final Batch batch = batchRepository.findById(addSectionInput.getBatchId()).get();
         final Section section = new Section();
@@ -629,36 +629,32 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddSubjectPayload addSubject(AddSubjectInput addSubjectInput) {
     	final Department department = departmentRepository.findById(addSubjectInput.getDepartmentId()).get();
-    	final Student student = studentRepository.findById(addSubjectInput.getStudentId()).get();
     	final Teacher teacher = teacherRepository.findById(addSubjectInput.getTeacherId()).get();
-        
+
     	final Subject subject = new Subject();
-        subject.setCommonSub(addSubjectInput.getCommonSub());
-        subject.setElectiveSub(addSubjectInput.getElectiveSub());
         subject.setDepartment(department);
-        subject.setStudent(student);
         subject.setTeacher(teacher);
-
+        subject.setSubjectType(addSubjectInput.getSubjectType());
+        subject.setSubjectCode(addSubjectInput.getSubjectCode());
+        subject.setSubjectDesc(addSubjectInput.getSubjectDesc());
         subjectRepository.save(subject);
-
         return new AddSubjectPayload(subject);
     }
 
     public UpdateSubjectPayload updateSubject(UpdateSubjectInput updateSubjectInput) {
         Subject subject = subjectRepository.findById(updateSubjectInput.getId()).get();
-        if (updateSubjectInput.getCommonSub() != null) {
-            subject.setCommonSub(updateSubjectInput.getCommonSub());
+        if (updateSubjectInput.getSubjectCode() != null) {
+            subject.setSubjectCode(updateSubjectInput.getSubjectCode());
         }
-        if (updateSubjectInput.getElectiveSub() != null) {
-            subject.setElectiveSub(updateSubjectInput.getElectiveSub());
+        if (updateSubjectInput.getSubjectType() != null) {
+            subject.setSubjectType(updateSubjectInput.getSubjectType());
+        }
+        if (updateSubjectInput.getSubjectDesc() != null) {
+            subject.setSubjectDesc(updateSubjectInput.getSubjectDesc());
         }
         if (updateSubjectInput.getDepartmentId() != null) {
         	final Department department = departmentRepository.findById(updateSubjectInput.getDepartmentId()).get();
             subject.setDepartment(department);
-        }
-        if(updateSubjectInput.getStudentId() != null) {
-        	final Student student = studentRepository.findById(updateSubjectInput.getStudentId()).get();
-        	subject.setStudent(student);
         }
         if(updateSubjectInput.getTeacherId() != null) {
         	final Teacher teacher = teacherRepository.findById(updateSubjectInput.getTeacherId()).get();
@@ -690,7 +686,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateStudentAttendancePayload updateStudentAttendance(UpdateStudentAttendanceInput updateStudentAttendanceInput) {
         StudentAttendance studentAttendance = studentAttendanceRepository.findById(updateStudentAttendanceInput.getId()).get();
-        
+
 
         if (updateStudentAttendanceInput.getAttendanceStatus() != null) {
             studentAttendance.setAttendanceStatus(updateStudentAttendanceInput.getAttendanceStatus());
@@ -912,11 +908,11 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicYearInput.getEndDate() != null) {
             academicYear.setEndDate(updateAcademicYearInput.getEndDate());
         }
-        
+
         if (updateAcademicYearInput.getDesc() != null) {
             academicYear.setDesc(updateAcademicYearInput.getDesc());
         }
-        
+
         academicYearRepository.save(academicYear);
 
         return new UpdateAcademicYearPayload(academicYear);
@@ -1011,7 +1007,7 @@ public class Mutation implements GraphQLMutationResolver {
         termRepository.delete(term);
         return new RemoveTermPayload(Lists.newArrayList(termRepository.findAll()));
     }
-    
+
     public AddTeachPayload addTeach(AddTeachInput addTeachInput) {
         final Teacher teacher = teacherRepository.findById(addTeachInput.getTeacherId()).get();
         final Subject subject = subjectRepository.findById(addTeachInput.getSubjectId()).get();
@@ -1046,7 +1042,7 @@ public class Mutation implements GraphQLMutationResolver {
         teachRepository.delete(teach);
         return new RemoveTeachPayload(Lists.newArrayList(teachRepository.findAll()));
     }
-    
+
     public AddCourseOfferPayload addCourseOffer(AddCourseOfferInput addCourseOfferInput) {
         final College college = collegeRepository.findById(addCourseOfferInput.getCollegeId()).get();
         final Department department = departmentRepository.findById(addCourseOfferInput.getDepartmentId()).get();
@@ -1087,13 +1083,13 @@ public class Mutation implements GraphQLMutationResolver {
     	courseOfferRepository.delete(courseOffer);
         return new RemoveCourseOfferPayload(Lists.newArrayList(courseOfferRepository.findAll()));
     }
-    
+
     public AddAttendanceMasterPayload addAttendanceMaster(AddAttendanceMasterInput addAttendanceMasterInput) {
         final Teach teach = teachRepository.findById(addAttendanceMasterInput.getTeachId()).get();
         final Section section = sectionRepository.findById(addAttendanceMasterInput.getSectionId()).get();
         final AcademicYear academicYear = academicYearRepository.findById(addAttendanceMasterInput.getAcademicYearId()).get();
         final AttendanceMaster attendanceMaster = new AttendanceMaster();
-        
+
         attendanceMaster.setDesc(addAttendanceMasterInput.getDesc());
         attendanceMaster.setTeach(teach);
         attendanceMaster.setSection(section);
@@ -1104,7 +1100,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateAttendanceMasterPayload updateAttendanceMaster(UpdateAttendanceMasterInput updateAttendanceMasterInput) {
     	AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(updateAttendanceMasterInput.getId()).get();
-    	
+
         if (updateAttendanceMasterInput.getDesc() != null) {
         	attendanceMaster.setDesc(updateAttendanceMasterInput.getDesc());
         }
@@ -1129,8 +1125,8 @@ public class Mutation implements GraphQLMutationResolver {
     	attendanceMasterRepository.delete(attendanceMaster);
         return new RemoveAttendanceMasterPayload(Lists.newArrayList(attendanceMasterRepository.findAll()));
     }
-    
-    
+
+
     public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
         final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
         final Lecture lecture = new Lecture();

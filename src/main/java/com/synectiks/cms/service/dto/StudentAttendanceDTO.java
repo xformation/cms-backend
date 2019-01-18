@@ -1,5 +1,6 @@
 package com.synectiks.cms.service.dto;
 
+import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,6 +18,9 @@ public class StudentAttendanceDTO implements Serializable {
 
     @NotNull
     private String comments;
+
+    @NotNull
+    private LocalDate attendanceDate;
 
     private Long studentId;
 
@@ -44,6 +48,14 @@ public class StudentAttendanceDTO implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public LocalDate getAttendanceDate() {
+        return attendanceDate;
+    }
+
+    public void setAttendanceDate(LocalDate attendanceDate) {
+        this.attendanceDate = attendanceDate;
     }
 
     public Long getStudentId() {
@@ -89,6 +101,7 @@ public class StudentAttendanceDTO implements Serializable {
             "id=" + getId() +
             ", attendanceStatus='" + getAttendanceStatus() + "'" +
             ", comments='" + getComments() + "'" +
+            ", attendanceDate='" + getAttendanceDate() + "'" +
             ", student=" + getStudentId() +
             ", lecture=" + getLectureId() +
             "}";

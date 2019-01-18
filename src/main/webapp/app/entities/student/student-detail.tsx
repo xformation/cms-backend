@@ -35,6 +35,10 @@ export class StudentDetail extends React.Component<IStudentDetailProps> {
             </dt>
             <dd>{studentEntity.studentName}</dd>
             <dt>
+              <Translate contentKey="cmsApp.student.department">Department</Translate>
+            </dt>
+            <dd>{studentEntity.departmentId ? studentEntity.departmentId : ''}</dd>
+            <dt>
               <Translate contentKey="cmsApp.student.batch">Batch</Translate>
             </dt>
             <dd>{studentEntity.batchId ? studentEntity.batchId : ''}</dd>
@@ -46,10 +50,6 @@ export class StudentDetail extends React.Component<IStudentDetailProps> {
               <Translate contentKey="cmsApp.student.branch">Branch</Translate>
             </dt>
             <dd>{studentEntity.branchId ? studentEntity.branchId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.student.department">Department</Translate>
-            </dt>
-            <dd>{studentEntity.departmentId ? studentEntity.departmentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/student" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

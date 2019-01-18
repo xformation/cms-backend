@@ -14,7 +14,7 @@ import { getEntity, updateEntity, createEntity, reset } from './authorized-signa
 import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -61,6 +61,23 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
 
   handleClose = () => {
     this.props.history.push('/entity/authorized-signatory');
+  };
+
+  legalEntityUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        legalEntityId: -1
+      });
+    } else {
+      for (const i in this.props.legalEntities) {
+        if (id === this.props.legalEntities[i].id.toString()) {
+          this.setState({
+            legalEntityId: this.props.legalEntities[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -172,7 +189,13 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                   <Label for="legalEntity.id">
                     <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
                   </Label>
-                  <AvInput id="authorized-signatory-legalEntity" type="select" className="form-control" name="legalEntityId">
+                  <AvInput
+                    id="authorized-signatory-legalEntity"
+                    type="select"
+                    className="form-control"
+                    name="legalEntityId"
+                    onChange={this.legalEntityUpdate}
+                  >
                     <option value="" key="0" />
                     {legalEntities
                       ? legalEntities.map(otherEntity => (

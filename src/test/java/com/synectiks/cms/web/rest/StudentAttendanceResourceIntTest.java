@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,6 +54,9 @@ public class StudentAttendanceResourceIntTest {
 
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_ATTENDANCE_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_ATTENDANCE_DATE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
@@ -108,7 +113,8 @@ public class StudentAttendanceResourceIntTest {
     public static StudentAttendance createEntity(EntityManager em) {
         StudentAttendance studentAttendance = new StudentAttendance()
             .attendanceStatus(DEFAULT_ATTENDANCE_STATUS)
-            .comments(DEFAULT_COMMENTS);
+            .comments(DEFAULT_COMMENTS)
+            .attendanceDate(DEFAULT_ATTENDANCE_DATE);
         return studentAttendance;
     }
 
@@ -135,6 +141,7 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
         assertThat(testStudentAttendance.getAttendanceStatus()).isEqualTo(DEFAULT_ATTENDANCE_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(DEFAULT_COMMENTS);
+        assertThat(testStudentAttendance.getAttendanceDate()).isEqualTo(DEFAULT_ATTENDANCE_DATE);
 
         // Validate the StudentAttendance in Elasticsearch
         verify(mockStudentAttendanceSearchRepository, times(1)).save(testStudentAttendance);
@@ -203,6 +210,25 @@ public class StudentAttendanceResourceIntTest {
 
     @Test
     @Transactional
+    public void checkAttendanceDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentAttendanceRepository.findAll().size();
+        // set the field null
+        studentAttendance.setAttendanceDate(null);
+
+        // Create the StudentAttendance, which fails.
+        StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
+
+        restStudentAttendanceMockMvc.perform(post("/api/student-attendances")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
+        assertThat(studentAttendanceList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllStudentAttendances() throws Exception {
         // Initialize the database
         studentAttendanceRepository.saveAndFlush(studentAttendance);
@@ -213,7 +239,8 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
             .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
+            .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())));
     }
     
 
@@ -229,7 +256,8 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(studentAttendance.getId().intValue()))
             .andExpect(jsonPath("$.attendanceStatus").value(DEFAULT_ATTENDANCE_STATUS.toString()))
-            .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
+            .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()))
+            .andExpect(jsonPath("$.attendanceDate").value(DEFAULT_ATTENDANCE_DATE.toString()));
     }
     @Test
     @Transactional
@@ -253,7 +281,8 @@ public class StudentAttendanceResourceIntTest {
         em.detach(updatedStudentAttendance);
         updatedStudentAttendance
             .attendanceStatus(UPDATED_ATTENDANCE_STATUS)
-            .comments(UPDATED_COMMENTS);
+            .comments(UPDATED_COMMENTS)
+            .attendanceDate(UPDATED_ATTENDANCE_DATE);
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(updatedStudentAttendance);
 
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")
@@ -267,6 +296,7 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
         assertThat(testStudentAttendance.getAttendanceStatus()).isEqualTo(UPDATED_ATTENDANCE_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(UPDATED_COMMENTS);
+        assertThat(testStudentAttendance.getAttendanceDate()).isEqualTo(UPDATED_ATTENDANCE_DATE);
 
         // Validate the StudentAttendance in Elasticsearch
         verify(mockStudentAttendanceSearchRepository, times(1)).save(testStudentAttendance);
@@ -328,7 +358,8 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
             .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
+            .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())));
     }
 
     @Test

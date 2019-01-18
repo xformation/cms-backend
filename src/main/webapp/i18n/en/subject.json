@@ -17,10 +17,10 @@
             "detail": {
                 "title": "Subject"
             },
-            "commonSub": "Common Sub",
-            "electiveSub": "Elective Sub",
+            "subjectCode": "Subject Code",
+            "subjectType": "Subject Type",
+            "subjectDesc": "Subject Desc",
             "department": "Department",
-            "student": "Student",
             "teacher": "Teacher"
         }
     }

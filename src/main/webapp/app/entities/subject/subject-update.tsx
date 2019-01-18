@@ -10,8 +10,6 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IDepartment } from 'app/shared/model/department.model';
 import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
-import { IStudent } from 'app/shared/model/student.model';
-import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { ITeacher } from 'app/shared/model/teacher.model';
 import { getEntities as getTeachers } from 'app/entities/teacher/teacher.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './subject.reducer';
@@ -25,7 +23,6 @@ export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteCom
 export interface ISubjectUpdateState {
   isNew: boolean;
   departmentId: number;
-  studentId: number;
   teacherId: number;
 }
 
@@ -34,7 +31,6 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
     super(props);
     this.state = {
       departmentId: 0,
-      studentId: 0,
       teacherId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -48,7 +44,6 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
     }
 
     this.props.getDepartments();
-    this.props.getStudents();
     this.props.getTeachers();
   }
 
@@ -90,23 +85,6 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
     }
   };
 
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
-  };
-
   teacherUpdate = element => {
     const id = element.target.value.toString();
     if (id === '') {
@@ -125,7 +103,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
   };
 
   render() {
-    const { subjectEntity, departments, students, teachers, loading, updating } = this.props;
+    const { subjectEntity, departments, teachers, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -152,48 +130,49 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="commonSubLabel">
-                    <Translate contentKey="cmsApp.subject.commonSub">Common Sub</Translate>
+                  <Label id="subjectCodeLabel" for="subjectCode">
+                    <Translate contentKey="cmsApp.subject.subjectCode">Subject Code</Translate>
+                  </Label>
+                  <AvField
+                    id="subject-subjectCode"
+                    type="text"
+                    name="subjectCode"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="subjectTypeLabel">
+                    <Translate contentKey="cmsApp.subject.subjectType">Subject Type</Translate>
                   </Label>
                   <AvInput
-                    id="subject-commonSub"
+                    id="subject-subjectType"
                     type="select"
                     className="form-control"
-                    name="commonSub"
-                    value={(!isNew && subjectEntity.commonSub) || 'MATHS'}
+                    name="subjectType"
+                    value={(!isNew && subjectEntity.subjectType) || 'COMMON'}
                   >
-                    <option value="MATHS">
-                      <Translate contentKey="cmsApp.CommonSubEnum.MATHS" />
+                    <option value="COMMON">
+                      <Translate contentKey="cmsApp.SubTypeEnum.COMMON" />
                     </option>
-                    <option value="PHYSICS">
-                      <Translate contentKey="cmsApp.CommonSubEnum.PHYSICS" />
-                    </option>
-                    <option value="CHEMISTRY">
-                      <Translate contentKey="cmsApp.CommonSubEnum.CHEMISTRY" />
-                    </option>
-                    <option value="DBMS">
-                      <Translate contentKey="cmsApp.CommonSubEnum.DBMS" />
+                    <option value="ELECTIVE">
+                      <Translate contentKey="cmsApp.SubTypeEnum.ELECTIVE" />
                     </option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="electiveSubLabel">
-                    <Translate contentKey="cmsApp.subject.electiveSub">Elective Sub</Translate>
+                  <Label id="subjectDescLabel" for="subjectDesc">
+                    <Translate contentKey="cmsApp.subject.subjectDesc">Subject Desc</Translate>
                   </Label>
-                  <AvInput
-                    id="subject-electiveSub"
-                    type="select"
-                    className="form-control"
-                    name="electiveSub"
-                    value={(!isNew && subjectEntity.electiveSub) || 'JAVA'}
-                  >
-                    <option value="JAVA">
-                      <Translate contentKey="cmsApp.ElectiveEnum.JAVA" />
-                    </option>
-                    <option value="C">
-                      <Translate contentKey="cmsApp.ElectiveEnum.C" />
-                    </option>
-                  </AvInput>
+                  <AvField
+                    id="subject-subjectDesc"
+                    type="text"
+                    name="subjectDesc"
+                    validate={{
+                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">
@@ -209,21 +188,6 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="student.id">
-                    <Translate contentKey="cmsApp.subject.student">Student</Translate>
-                  </Label>
-                  <AvInput id="subject-student" type="select" className="form-control" name="studentId" onChange={this.studentUpdate}>
-                    <option value="" key="0" />
-                    {students
-                      ? students.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -268,7 +232,6 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
 
 const mapStateToProps = (storeState: IRootState) => ({
   departments: storeState.department.entities,
-  students: storeState.student.entities,
   teachers: storeState.teacher.entities,
   subjectEntity: storeState.subject.entity,
   loading: storeState.subject.loading,
@@ -277,7 +240,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getDepartments,
-  getStudents,
   getTeachers,
   getEntity,
   updateEntity,

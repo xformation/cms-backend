@@ -1,21 +1,14 @@
-export const enum CommonSubEnum {
-  MATHS = 'MATHS',
-  PHYSICS = 'PHYSICS',
-  CHEMISTRY = 'CHEMISTRY',
-  DBMS = 'DBMS'
-}
-
-export const enum ElectiveEnum {
-  JAVA = 'JAVA',
-  C = 'C'
+export const enum SubTypeEnum {
+  COMMON = 'COMMON',
+  ELECTIVE = 'ELECTIVE'
 }
 
 export interface ISubject {
   id?: number;
-  commonSub?: CommonSubEnum;
-  electiveSub?: ElectiveEnum;
+  subjectCode?: string;
+  subjectType?: SubTypeEnum;
+  subjectDesc?: string;
   departmentId?: number;
-  studentId?: number;
   teacherId?: number;
 }
 

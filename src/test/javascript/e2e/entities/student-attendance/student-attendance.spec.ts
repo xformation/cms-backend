@@ -34,6 +34,8 @@ describe('StudentAttendance e2e test', () => {
     studentAttendanceUpdatePage.attendanceStatusSelectLastOption();
     studentAttendanceUpdatePage.setCommentsInput('comments');
     expect(await studentAttendanceUpdatePage.getCommentsInput()).to.match(/comments/);
+    studentAttendanceUpdatePage.setAttendanceDateInput('01-01-2001');
+    expect(await studentAttendanceUpdatePage.getAttendanceDateInput()).to.eq('2001-01-01');
     studentAttendanceUpdatePage.studentSelectLastOption();
     studentAttendanceUpdatePage.lectureSelectLastOption();
     await studentAttendanceUpdatePage.save();

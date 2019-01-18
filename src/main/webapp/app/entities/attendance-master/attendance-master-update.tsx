@@ -18,7 +18,7 @@ import { getEntity, updateEntity, createEntity, reset } from './attendance-maste
 import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IAttendanceMasterUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -73,6 +73,57 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
     this.props.history.push('/entity/attendance-master');
   };
 
+  teachUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        teachId: -1
+      });
+    } else {
+      for (const i in this.props.teaches) {
+        if (id === this.props.teaches[i].id.toString()) {
+          this.setState({
+            teachId: this.props.teaches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  sectionUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        sectionId: -1
+      });
+    } else {
+      for (const i in this.props.sections) {
+        if (id === this.props.sections[i].id.toString()) {
+          this.setState({
+            sectionId: this.props.sections[i].id
+          });
+        }
+      }
+    }
+  };
+
+  academicyearUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        academicyearId: -1
+      });
+    } else {
+      for (const i in this.props.academicYears) {
+        if (id === this.props.academicYears[i].id.toString()) {
+          this.setState({
+            academicyearId: this.props.academicYears[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
     const { attendanceMasterEntity, teaches, sections, academicYears, loading, updating } = this.props;
     const { isNew } = this.state;
@@ -110,7 +161,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   <Label for="teach.id">
                     <Translate contentKey="cmsApp.attendanceMaster.teach">Teach</Translate>
                   </Label>
-                  <AvInput id="attendance-master-teach" type="select" className="form-control" name="teachId">
+                  <AvInput id="attendance-master-teach" type="select" className="form-control" name="teachId" onChange={this.teachUpdate}>
                     <option value="" key="0" />
                     {teaches
                       ? teaches.map(otherEntity => (
@@ -125,7 +176,13 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   <Label for="section.id">
                     <Translate contentKey="cmsApp.attendanceMaster.section">Section</Translate>
                   </Label>
-                  <AvInput id="attendance-master-section" type="select" className="form-control" name="sectionId">
+                  <AvInput
+                    id="attendance-master-section"
+                    type="select"
+                    className="form-control"
+                    name="sectionId"
+                    onChange={this.sectionUpdate}
+                  >
                     <option value="" key="0" />
                     {sections
                       ? sections.map(otherEntity => (
@@ -140,7 +197,13 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   <Label for="academicyear.id">
                     <Translate contentKey="cmsApp.attendanceMaster.academicyear">Academicyear</Translate>
                   </Label>
-                  <AvInput id="attendance-master-academicyear" type="select" className="form-control" name="academicyearId">
+                  <AvInput
+                    id="attendance-master-academicyear"
+                    type="select"
+                    className="form-control"
+                    name="academicyearId"
+                    onChange={this.academicyearUpdate}
+                  >
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (

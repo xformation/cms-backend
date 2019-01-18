@@ -18,7 +18,7 @@ import { getEntity, updateEntity, createEntity, reset } from './course-offer.red
 import { ICourseOffer } from 'app/shared/model/course-offer.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface ICourseOfferUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -73,6 +73,57 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
     this.props.history.push('/entity/course-offer');
   };
 
+  collegeUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        collegeId: -1
+      });
+    } else {
+      for (const i in this.props.colleges) {
+        if (id === this.props.colleges[i].id.toString()) {
+          this.setState({
+            collegeId: this.props.colleges[i].id
+          });
+        }
+      }
+    }
+  };
+
+  departmentUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        departmentId: -1
+      });
+    } else {
+      for (const i in this.props.departments) {
+        if (id === this.props.departments[i].id.toString()) {
+          this.setState({
+            departmentId: this.props.departments[i].id
+          });
+        }
+      }
+    }
+  };
+
+  subjectUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        subjectId: -1
+      });
+    } else {
+      for (const i in this.props.subjects) {
+        if (id === this.props.subjects[i].id.toString()) {
+          this.setState({
+            subjectId: this.props.subjects[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
     const { courseOfferEntity, colleges, departments, subjects, loading, updating } = this.props;
     const { isNew } = this.state;
@@ -110,7 +161,7 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
                   <Label for="college.id">
                     <Translate contentKey="cmsApp.courseOffer.college">College</Translate>
                   </Label>
-                  <AvInput id="course-offer-college" type="select" className="form-control" name="collegeId">
+                  <AvInput id="course-offer-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -125,7 +176,13 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
                   <Label for="department.id">
                     <Translate contentKey="cmsApp.courseOffer.department">Department</Translate>
                   </Label>
-                  <AvInput id="course-offer-department" type="select" className="form-control" name="departmentId">
+                  <AvInput
+                    id="course-offer-department"
+                    type="select"
+                    className="form-control"
+                    name="departmentId"
+                    onChange={this.departmentUpdate}
+                  >
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
@@ -140,7 +197,7 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
                   <Label for="subject.id">
                     <Translate contentKey="cmsApp.courseOffer.subject">Subject</Translate>
                   </Label>
-                  <AvInput id="course-offer-subject" type="select" className="form-control" name="subjectId">
+                  <AvInput id="course-offer-subject" type="select" className="form-control" name="subjectId" onChange={this.subjectUpdate}>
                     <option value="" key="0" />
                     {subjects
                       ? subjects.map(otherEntity => (

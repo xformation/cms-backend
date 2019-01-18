@@ -11,9 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.CommonSubEnum;
-
-import com.synectiks.cms.domain.enumeration.ElectiveEnum;
+import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 
 /**
  * A Subject.
@@ -32,22 +30,21 @@ public class Subject implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "common_sub", nullable = false)
-    private CommonSubEnum commonSub;
+    @Column(name = "subject_code", nullable = false)
+    private String subjectCode;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "elective_sub", nullable = false)
-    private ElectiveEnum electiveSub;
+    @Column(name = "subject_type", nullable = false)
+    private SubTypeEnum subjectType;
+
+    @NotNull
+    @Column(name = "subject_desc", nullable = false)
+    private String subjectDesc;
 
     @ManyToOne
     @JsonIgnoreProperties("")
     private Department department;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Student student;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -62,30 +59,43 @@ public class Subject implements Serializable {
         this.id = id;
     }
 
-    public CommonSubEnum getCommonSub() {
-        return commonSub;
+    public String getSubjectCode() {
+        return subjectCode;
     }
 
-    public Subject commonSub(CommonSubEnum commonSub) {
-        this.commonSub = commonSub;
+    public Subject subjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
         return this;
     }
 
-    public void setCommonSub(CommonSubEnum commonSub) {
-        this.commonSub = commonSub;
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
     }
 
-    public ElectiveEnum getElectiveSub() {
-        return electiveSub;
+    public SubTypeEnum getSubjectType() {
+        return subjectType;
     }
 
-    public Subject electiveSub(ElectiveEnum electiveSub) {
-        this.electiveSub = electiveSub;
+    public Subject subjectType(SubTypeEnum subjectType) {
+        this.subjectType = subjectType;
         return this;
     }
 
-    public void setElectiveSub(ElectiveEnum electiveSub) {
-        this.electiveSub = electiveSub;
+    public void setSubjectType(SubTypeEnum subjectType) {
+        this.subjectType = subjectType;
+    }
+
+    public String getSubjectDesc() {
+        return subjectDesc;
+    }
+
+    public Subject subjectDesc(String subjectDesc) {
+        this.subjectDesc = subjectDesc;
+        return this;
+    }
+
+    public void setSubjectDesc(String subjectDesc) {
+        this.subjectDesc = subjectDesc;
     }
 
     public Department getDepartment() {
@@ -99,19 +109,6 @@ public class Subject implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public Subject student(Student student) {
-        this.student = student;
-        return this;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
     }
 
     public Teacher getTeacher() {
@@ -152,8 +149,9 @@ public class Subject implements Serializable {
     public String toString() {
         return "Subject{" +
             "id=" + getId() +
-            ", commonSub='" + getCommonSub() + "'" +
-            ", electiveSub='" + getElectiveSub() + "'" +
+            ", subjectCode='" + getSubjectCode() + "'" +
+            ", subjectType='" + getSubjectType() + "'" +
+            ", subjectDesc='" + getSubjectDesc() + "'" +
             "}";
     }
 }

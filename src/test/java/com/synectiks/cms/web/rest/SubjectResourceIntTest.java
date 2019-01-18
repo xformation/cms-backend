@@ -37,8 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.CommonSubEnum;
-import com.synectiks.cms.domain.enumeration.ElectiveEnum;
+import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 /**
  * Test class for the SubjectResource REST controller.
  *
@@ -48,11 +47,14 @@ import com.synectiks.cms.domain.enumeration.ElectiveEnum;
 @SpringBootTest(classes = CmsApp.class)
 public class SubjectResourceIntTest {
 
-    private static final CommonSubEnum DEFAULT_COMMON_SUB = CommonSubEnum.MATHS;
-    private static final CommonSubEnum UPDATED_COMMON_SUB = CommonSubEnum.PHYSICS;
+    private static final String DEFAULT_SUBJECT_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_SUBJECT_CODE = "BBBBBBBBBB";
 
-    private static final ElectiveEnum DEFAULT_ELECTIVE_SUB = ElectiveEnum.JAVA;
-    private static final ElectiveEnum UPDATED_ELECTIVE_SUB = ElectiveEnum.C;
+    private static final SubTypeEnum DEFAULT_SUBJECT_TYPE = SubTypeEnum.COMMON;
+    private static final SubTypeEnum UPDATED_SUBJECT_TYPE = SubTypeEnum.ELECTIVE;
+
+    private static final String DEFAULT_SUBJECT_DESC = "AAAAAAAAAA";
+    private static final String UPDATED_SUBJECT_DESC = "BBBBBBBBBB";
 
     @Autowired
     private SubjectRepository subjectRepository;
@@ -108,8 +110,9 @@ public class SubjectResourceIntTest {
      */
     public static Subject createEntity(EntityManager em) {
         Subject subject = new Subject()
-            .commonSub(DEFAULT_COMMON_SUB)
-            .electiveSub(DEFAULT_ELECTIVE_SUB);
+            .subjectCode(DEFAULT_SUBJECT_CODE)
+            .subjectType(DEFAULT_SUBJECT_TYPE)
+            .subjectDesc(DEFAULT_SUBJECT_DESC);
         return subject;
     }
 
@@ -134,8 +137,9 @@ public class SubjectResourceIntTest {
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeCreate + 1);
         Subject testSubject = subjectList.get(subjectList.size() - 1);
-        assertThat(testSubject.getCommonSub()).isEqualTo(DEFAULT_COMMON_SUB);
-        assertThat(testSubject.getElectiveSub()).isEqualTo(DEFAULT_ELECTIVE_SUB);
+        assertThat(testSubject.getSubjectCode()).isEqualTo(DEFAULT_SUBJECT_CODE);
+        assertThat(testSubject.getSubjectType()).isEqualTo(DEFAULT_SUBJECT_TYPE);
+        assertThat(testSubject.getSubjectDesc()).isEqualTo(DEFAULT_SUBJECT_DESC);
 
         // Validate the Subject in Elasticsearch
         verify(mockSubjectSearchRepository, times(1)).save(testSubject);
@@ -166,10 +170,10 @@ public class SubjectResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCommonSubIsRequired() throws Exception {
+    public void checkSubjectCodeIsRequired() throws Exception {
         int databaseSizeBeforeTest = subjectRepository.findAll().size();
         // set the field null
-        subject.setCommonSub(null);
+        subject.setSubjectCode(null);
 
         // Create the Subject, which fails.
         SubjectDTO subjectDTO = subjectMapper.toDto(subject);
@@ -185,10 +189,29 @@ public class SubjectResourceIntTest {
 
     @Test
     @Transactional
-    public void checkElectiveSubIsRequired() throws Exception {
+    public void checkSubjectTypeIsRequired() throws Exception {
         int databaseSizeBeforeTest = subjectRepository.findAll().size();
         // set the field null
-        subject.setElectiveSub(null);
+        subject.setSubjectType(null);
+
+        // Create the Subject, which fails.
+        SubjectDTO subjectDTO = subjectMapper.toDto(subject);
+
+        restSubjectMockMvc.perform(post("/api/subjects")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(subjectDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Subject> subjectList = subjectRepository.findAll();
+        assertThat(subjectList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSubjectDescIsRequired() throws Exception {
+        int databaseSizeBeforeTest = subjectRepository.findAll().size();
+        // set the field null
+        subject.setSubjectDesc(null);
 
         // Create the Subject, which fails.
         SubjectDTO subjectDTO = subjectMapper.toDto(subject);
@@ -213,8 +236,9 @@ public class SubjectResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].commonSub").value(hasItem(DEFAULT_COMMON_SUB.toString())))
-            .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.toString())));
+            .andExpect(jsonPath("$.[*].subjectCode").value(hasItem(DEFAULT_SUBJECT_CODE.toString())))
+            .andExpect(jsonPath("$.[*].subjectType").value(hasItem(DEFAULT_SUBJECT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())));
     }
     
 
@@ -229,8 +253,9 @@ public class SubjectResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(subject.getId().intValue()))
-            .andExpect(jsonPath("$.commonSub").value(DEFAULT_COMMON_SUB.toString()))
-            .andExpect(jsonPath("$.electiveSub").value(DEFAULT_ELECTIVE_SUB.toString()));
+            .andExpect(jsonPath("$.subjectCode").value(DEFAULT_SUBJECT_CODE.toString()))
+            .andExpect(jsonPath("$.subjectType").value(DEFAULT_SUBJECT_TYPE.toString()))
+            .andExpect(jsonPath("$.subjectDesc").value(DEFAULT_SUBJECT_DESC.toString()));
     }
     @Test
     @Transactional
@@ -253,8 +278,9 @@ public class SubjectResourceIntTest {
         // Disconnect from session so that the updates on updatedSubject are not directly saved in db
         em.detach(updatedSubject);
         updatedSubject
-            .commonSub(UPDATED_COMMON_SUB)
-            .electiveSub(UPDATED_ELECTIVE_SUB);
+            .subjectCode(UPDATED_SUBJECT_CODE)
+            .subjectType(UPDATED_SUBJECT_TYPE)
+            .subjectDesc(UPDATED_SUBJECT_DESC);
         SubjectDTO subjectDTO = subjectMapper.toDto(updatedSubject);
 
         restSubjectMockMvc.perform(put("/api/subjects")
@@ -266,8 +292,9 @@ public class SubjectResourceIntTest {
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeUpdate);
         Subject testSubject = subjectList.get(subjectList.size() - 1);
-        assertThat(testSubject.getCommonSub()).isEqualTo(UPDATED_COMMON_SUB);
-        assertThat(testSubject.getElectiveSub()).isEqualTo(UPDATED_ELECTIVE_SUB);
+        assertThat(testSubject.getSubjectCode()).isEqualTo(UPDATED_SUBJECT_CODE);
+        assertThat(testSubject.getSubjectType()).isEqualTo(UPDATED_SUBJECT_TYPE);
+        assertThat(testSubject.getSubjectDesc()).isEqualTo(UPDATED_SUBJECT_DESC);
 
         // Validate the Subject in Elasticsearch
         verify(mockSubjectSearchRepository, times(1)).save(testSubject);
@@ -328,8 +355,9 @@ public class SubjectResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].commonSub").value(hasItem(DEFAULT_COMMON_SUB.toString())))
-            .andExpect(jsonPath("$.[*].electiveSub").value(hasItem(DEFAULT_ELECTIVE_SUB.toString())));
+            .andExpect(jsonPath("$.[*].subjectCode").value(hasItem(DEFAULT_SUBJECT_CODE.toString())))
+            .andExpect(jsonPath("$.[*].subjectType").value(hasItem(DEFAULT_SUBJECT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())));
     }
 
     @Test

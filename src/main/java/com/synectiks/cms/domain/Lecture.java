@@ -1,26 +1,17 @@
 package com.synectiks.cms.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import org.springframework.data.elasticsearch.annotations.Document;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
+
 import com.synectiks.cms.domain.enumeration.LecStatusEnum;
 
 /**
@@ -41,11 +32,11 @@ public class Lecture implements Serializable {
 
     @NotNull
     @Column(name = "lec_date", nullable = false)
-    private Date lecDate;
+    private LocalDate lecDate;
 
     @NotNull
     @Column(name = "last_updated_on", nullable = false)
-    private Date lastUpdatedOn;
+    private LocalDate lastUpdatedOn;
 
     @NotNull
     @Column(name = "last_updated_by", nullable = false)
@@ -72,29 +63,29 @@ public class Lecture implements Serializable {
         this.id = id;
     }
 
-    public Date getLecDate() {
+    public LocalDate getLecDate() {
         return lecDate;
     }
 
-    public Lecture lecDate(Date lecDate) {
+    public Lecture lecDate(LocalDate lecDate) {
         this.lecDate = lecDate;
         return this;
     }
 
-    public void setLecDate(Date lecDate) {
+    public void setLecDate(LocalDate lecDate) {
         this.lecDate = lecDate;
     }
 
-    public Date getLastUpdatedOn() {
+    public LocalDate getLastUpdatedOn() {
         return lastUpdatedOn;
     }
 
-    public Lecture lastUpdatedOn(Date lastUpdatedOn) {
+    public Lecture lastUpdatedOn(LocalDate lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
         return this;
     }
 
-    public void setLastUpdatedOn(Date lastUpdatedOn) {
+    public void setLastUpdatedOn(LocalDate lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
     }
 

@@ -1,23 +1,15 @@
 package com.synectiks.cms.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
 import org.springframework.data.elasticsearch.annotations.Document;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
@@ -52,7 +44,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "date_of_incorporation", nullable = false)
-    private Date dateOfIncorporation;
+    private LocalDate dateOfIncorporation;
 
     @NotNull
     @Column(name = "registered_office_address", nullable = false)
@@ -88,7 +80,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "registration_date", nullable = false)
-    private Date registrationDate;
+    private LocalDate registrationDate;
 
     @NotNull
     @Column(name = "esi_number", nullable = false)
@@ -96,7 +88,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "pt_registration_date", nullable = false)
-    private Date ptRegistrationDate;
+    private LocalDate ptRegistrationDate;
 
     @NotNull
     @Column(name = "pt_signatory", nullable = false)
@@ -154,16 +146,16 @@ public class LegalEntity implements Serializable {
         this.typeOfCollege = typeOfCollege;
     }
 
-    public Date getDateOfIncorporation() {
+    public LocalDate getDateOfIncorporation() {
         return dateOfIncorporation;
     }
 
-    public LegalEntity dateOfIncorporation(Date dateOfIncorporation) {
+    public LegalEntity dateOfIncorporation(LocalDate dateOfIncorporation) {
         this.dateOfIncorporation = dateOfIncorporation;
         return this;
     }
 
-    public void setDateOfIncorporation(Date dateOfIncorporation) {
+    public void setDateOfIncorporation(LocalDate dateOfIncorporation) {
         this.dateOfIncorporation = dateOfIncorporation;
     }
 
@@ -271,16 +263,16 @@ public class LegalEntity implements Serializable {
         this.pfNumber = pfNumber;
     }
 
-    public Date getRegistrationDate() {
+    public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    public LegalEntity registrationDate(Date registrationDate) {
+    public LegalEntity registrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
         return this;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
@@ -297,16 +289,16 @@ public class LegalEntity implements Serializable {
         this.esiNumber = esiNumber;
     }
 
-    public Date getPtRegistrationDate() {
+    public LocalDate getPtRegistrationDate() {
         return ptRegistrationDate;
     }
 
-    public LegalEntity ptRegistrationDate(Date ptRegistrationDate) {
+    public LegalEntity ptRegistrationDate(LocalDate ptRegistrationDate) {
         this.ptRegistrationDate = ptRegistrationDate;
         return this;
     }
 
-    public void setPtRegistrationDate(Date ptRegistrationDate) {
+    public void setPtRegistrationDate(LocalDate ptRegistrationDate) {
         this.ptRegistrationDate = ptRegistrationDate;
     }
 

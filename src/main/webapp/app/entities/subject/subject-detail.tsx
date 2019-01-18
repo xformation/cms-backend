@@ -29,25 +29,27 @@ export class SubjectDetail extends React.Component<ISubjectDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="commonSub">
-                <Translate contentKey="cmsApp.subject.commonSub">Common Sub</Translate>
+              <span id="subjectCode">
+                <Translate contentKey="cmsApp.subject.subjectCode">Subject Code</Translate>
               </span>
             </dt>
-            <dd>{subjectEntity.commonSub}</dd>
+            <dd>{subjectEntity.subjectCode}</dd>
             <dt>
-              <span id="electiveSub">
-                <Translate contentKey="cmsApp.subject.electiveSub">Elective Sub</Translate>
+              <span id="subjectType">
+                <Translate contentKey="cmsApp.subject.subjectType">Subject Type</Translate>
               </span>
             </dt>
-            <dd>{subjectEntity.electiveSub}</dd>
+            <dd>{subjectEntity.subjectType}</dd>
+            <dt>
+              <span id="subjectDesc">
+                <Translate contentKey="cmsApp.subject.subjectDesc">Subject Desc</Translate>
+              </span>
+            </dt>
+            <dd>{subjectEntity.subjectDesc}</dd>
             <dt>
               <Translate contentKey="cmsApp.subject.department">Department</Translate>
             </dt>
             <dd>{subjectEntity.departmentId ? subjectEntity.departmentId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.subject.student">Student</Translate>
-            </dt>
-            <dd>{subjectEntity.studentId ? subjectEntity.studentId : ''}</dd>
             <dt>
               <Translate contentKey="cmsApp.subject.teacher">Teacher</Translate>
             </dt>

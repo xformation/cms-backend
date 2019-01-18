@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Student. 
+ * A Student.
  */
 @Entity
 @Table(name = "student")

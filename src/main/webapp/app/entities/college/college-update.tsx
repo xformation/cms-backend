@@ -12,7 +12,7 @@ import { getEntity, updateEntity, createEntity, reset } from './college.reducer'
 import { ICollege } from 'app/shared/model/college.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 

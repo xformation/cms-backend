@@ -11,37 +11,35 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "batch",
-            "otherEntityName": "batch",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "student"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "section",
-            "otherEntityName": "section",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "student"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "branch",
-            "otherEntityName": "branch",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "student"
-        },
-        {
             "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
             "relationshipName": "department",
             "otherEntityName": "department",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "section",
+            "otherEntityName": "section",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "branch",
+            "otherEntityName": "branch",
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190111072048",
+    "changelogDate": "20190118111701",
     "entityTableName": "student",
     "dto": "mapstruct",
     "pagination": "no",

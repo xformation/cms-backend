@@ -3,6 +3,10 @@ package com.synectiks.cms.web.rest;
 import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.search.StudentSearchRepository;
 import com.synectiks.cms.service.StudentService;
@@ -104,6 +108,26 @@ public class StudentResourceIntTest {
     public static Student createEntity(EntityManager em) {
         Student student = new Student()
             .studentName(DEFAULT_STUDENT_NAME);
+        // Add required entity
+        Department department = DepartmentResourceIntTest.createEntity(em);
+        em.persist(department);
+        em.flush();
+        student.setDepartment(department);
+        // Add required entity
+        Batch batch = BatchResourceIntTest.createEntity(em);
+        em.persist(batch);
+        em.flush();
+        student.setBatch(batch);
+        // Add required entity
+        Section section = SectionResourceIntTest.createEntity(em);
+        em.persist(section);
+        em.flush();
+        student.setSection(section);
+        // Add required entity
+        Branch branch = BranchResourceIntTest.createEntity(em);
+        em.persist(branch);
+        em.flush();
+        student.setBranch(branch);
         return student;
     }
 

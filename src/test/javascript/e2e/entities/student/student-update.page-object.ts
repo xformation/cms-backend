@@ -5,10 +5,10 @@ export default class StudentUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   studentNameInput: ElementFinder = element(by.css('input#student-studentName'));
+  departmentSelect: ElementFinder = element(by.css('select#student-department'));
   batchSelect: ElementFinder = element(by.css('select#student-batch'));
   sectionSelect: ElementFinder = element(by.css('select#student-section'));
   branchSelect: ElementFinder = element(by.css('select#student-branch'));
-  departmentSelect: ElementFinder = element(by.css('select#student-department'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -20,6 +20,25 @@ export default class StudentUpdatePage {
 
   getStudentNameInput() {
     return this.studentNameInput.getAttribute('value');
+  }
+
+  departmentSelectLastOption() {
+    this.departmentSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  departmentSelectOption(option) {
+    this.departmentSelect.sendKeys(option);
+  }
+
+  getDepartmentSelect() {
+    return this.departmentSelect;
+  }
+
+  getDepartmentSelectedOption() {
+    return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
   batchSelectLastOption() {
@@ -77,25 +96,6 @@ export default class StudentUpdatePage {
 
   getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
-  }
-
-  departmentSelectLastOption() {
-    this.departmentSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  departmentSelectOption(option) {
-    this.departmentSelect.sendKeys(option);
-  }
-
-  getDepartmentSelect() {
-    return this.departmentSelect;
-  }
-
-  getDepartmentSelectedOption() {
-    return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

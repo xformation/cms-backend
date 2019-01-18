@@ -24,16 +24,13 @@ FIRSTYEAR,SECONDYEAR,THIRDYEAR,FOURTHYEAR
 }
 
 entity Subject{
-commonSub CommonSubEnum required
-electiveSub ElectiveEnum required
+subjectCode String required
+subjectType SubTypeEnum required
+subjectDesc  String required
 }
 
-enum CommonSubEnum{
-MATHS,PHYSICS,CHEMISTRY,DBMS
-}
-
-enum ElectiveEnum{
-JAVA,C
+enum SubTypeEnum{
+COMMON,ELECTIVE
 }
 
 entity Section{
@@ -105,6 +102,11 @@ comments String required
 attendanceDate LocalDate required
 }
 
+entity StudentSubject{
+comments String
+lastupdatedDate LocalDate required
+}
+
 enum AttendanceStatusEnum{
 PRESENT,ABSENT
 }
@@ -173,13 +175,14 @@ Subject{department} to Department,
 Batch{department} to Department,
 Section{batch} to Batch,
 Holiday{academicyear} to AcademicYear,
-Subject{student} to Student,
 Subject{teacher} to Teacher,
 AuthorizedSignatory{legalEntity} to LegalEntity,
 Lecture{attendancemaster} to AttendanceMaster,
 Term{academicyear} to AcademicYear,
 StudentAttendance{student} to Student,
-StudentAttendance{lecture} to Lecture
+StudentAttendance{lecture} to Lecture,
+StudentSubject{student} to Student,
+StudentSubject{subject} to Subject
 }
 
 relationship OneToOne{
@@ -194,4 +197,4 @@ AttendanceMaster{academicyear} to AcademicYear
 }
 
 dto * with mapstruct
-service all with serviceImpl 
+service all with serviceImpl

@@ -4,44 +4,46 @@ export default class SubjectUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.subject.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  commonSubSelect: ElementFinder = element(by.css('select#subject-commonSub'));
-  electiveSubSelect: ElementFinder = element(by.css('select#subject-electiveSub'));
+  subjectCodeInput: ElementFinder = element(by.css('input#subject-subjectCode'));
+  subjectTypeSelect: ElementFinder = element(by.css('select#subject-subjectType'));
+  subjectDescInput: ElementFinder = element(by.css('input#subject-subjectDesc'));
   departmentSelect: ElementFinder = element(by.css('select#subject-department'));
-  studentSelect: ElementFinder = element(by.css('select#subject-student'));
   teacherSelect: ElementFinder = element(by.css('select#subject-teacher'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  setCommonSubSelect(commonSub) {
-    this.commonSubSelect.sendKeys(commonSub);
+  setSubjectCodeInput(subjectCode) {
+    this.subjectCodeInput.sendKeys(subjectCode);
   }
 
-  getCommonSubSelect() {
-    return this.commonSubSelect.element(by.css('option:checked')).getText();
+  getSubjectCodeInput() {
+    return this.subjectCodeInput.getAttribute('value');
   }
 
-  commonSubSelectLastOption() {
-    this.commonSubSelect
+  setSubjectTypeSelect(subjectType) {
+    this.subjectTypeSelect.sendKeys(subjectType);
+  }
+
+  getSubjectTypeSelect() {
+    return this.subjectTypeSelect.element(by.css('option:checked')).getText();
+  }
+
+  subjectTypeSelectLastOption() {
+    this.subjectTypeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setElectiveSubSelect(electiveSub) {
-    this.electiveSubSelect.sendKeys(electiveSub);
+  setSubjectDescInput(subjectDesc) {
+    this.subjectDescInput.sendKeys(subjectDesc);
   }
 
-  getElectiveSubSelect() {
-    return this.electiveSubSelect.element(by.css('option:checked')).getText();
+  getSubjectDescInput() {
+    return this.subjectDescInput.getAttribute('value');
   }
 
-  electiveSubSelectLastOption() {
-    this.electiveSubSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
   departmentSelectLastOption() {
     this.departmentSelect
       .all(by.tagName('option'))
@@ -59,25 +61,6 @@ export default class SubjectUpdatePage {
 
   getDepartmentSelectedOption() {
     return this.departmentSelect.element(by.css('option:checked')).getText();
-  }
-
-  studentSelectLastOption() {
-    this.studentSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  studentSelectOption(option) {
-    this.studentSelect.sendKeys(option);
-  }
-
-  getStudentSelect() {
-    return this.studentSelect;
-  }
-
-  getStudentSelectedOption() {
-    return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
   teacherSelectLastOption() {

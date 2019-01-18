@@ -3,8 +3,7 @@ export interface IDepartment {
   name?: string;
   description?: string;
   deptHead?: string;
-  studentId?: number;
-  collegeId?: number;
+  branchId?: number;
   academicyearId?: number;
 }
 

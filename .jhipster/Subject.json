@@ -2,17 +2,23 @@
     "name": "Subject",
     "fields": [
         {
-            "fieldName": "commonSub",
-            "fieldType": "CommonSubEnum",
-            "fieldValues": "MATHS,PHYSICS,CHEMISTRY,DBMS",
+            "fieldName": "subjectCode",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "electiveSub",
-            "fieldType": "ElectiveEnum",
-            "fieldValues": "JAVA,C",
+            "fieldName": "subjectType",
+            "fieldType": "SubTypeEnum",
+            "fieldValues": "COMMON,ELECTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "subjectDesc",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
@@ -27,18 +33,12 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "student",
-            "otherEntityName": "student",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "teacher",
             "otherEntityName": "teacher",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190111072045",
+    "changelogDate": "20190118111658",
     "entityTableName": "subject",
     "dto": "mapstruct",
     "pagination": "no",

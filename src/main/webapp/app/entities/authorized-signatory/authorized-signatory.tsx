@@ -124,7 +124,7 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                   <td>{authorizedSignatory.panCardNumber}</td>
                   <td>
                     {authorizedSignatory.legalEntityId ? (
-                      <Link to={`legal-entity/${authorizedSignatory.legalEntityId}`}>{authorizedSignatory.legalEntityId}</Link>
+                      <Link to={`legalEntity/${authorizedSignatory.legalEntityId}`}>{authorizedSignatory.legalEntityId}</Link>
                     ) : (
                       ''
                     )}

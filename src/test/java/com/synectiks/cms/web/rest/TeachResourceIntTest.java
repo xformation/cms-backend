@@ -232,7 +232,7 @@ public class TeachResourceIntTest {
         // Create the Teach
         TeachDTO teachDTO = teachMapper.toDto(teach);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restTeachMockMvc.perform(put("/api/teaches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teachDTO)))

@@ -94,10 +94,7 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
                   <Translate contentKey="cmsApp.department.deptHead">Dept Head</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cmsApp.department.student">Student</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.department.college">College</Translate>
+                  <Translate contentKey="cmsApp.department.branch">Branch</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cmsApp.department.academicyear">Academicyear</Translate>
@@ -116,11 +113,10 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
                   <td>{department.name}</td>
                   <td>{department.description}</td>
                   <td>{department.deptHead}</td>
-                  <td>{department.studentId ? <Link to={`student/${department.studentId}`}>{department.studentId}</Link> : ''}</td>
-                  <td>{department.collegeId ? <Link to={`college/${department.collegeId}`}>{department.collegeId}</Link> : ''}</td>
+                  <td>{department.branchId ? <Link to={`branch/${department.branchId}`}>{department.branchId}</Link> : ''}</td>
                   <td>
                     {department.academicyearId ? (
-                      <Link to={`academic-year/${department.academicyearId}`}>{department.academicyearId}</Link>
+                      <Link to={`academicYear/${department.academicyearId}`}>{department.academicyearId}</Link>
                     ) : (
                       ''
                     )}

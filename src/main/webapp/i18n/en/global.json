@@ -28,6 +28,7 @@
                 "authorizedSignatory": "Authorized Signatory",
                 "bankAccounts": "Bank Accounts",
                 "testEntity": "Test Entity",
+                "studentSubject": "Student Subject",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -126,7 +126,7 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
                   <td>{lecture.desc}</td>
                   <td>
                     {lecture.attendancemasterId ? (
-                      <Link to={`attendance-master/${lecture.attendancemasterId}`}>{lecture.attendancemasterId}</Link>
+                      <Link to={`attendanceMaster/${lecture.attendancemasterId}`}>{lecture.attendancemasterId}</Link>
                     ) : (
                       ''
                     )}

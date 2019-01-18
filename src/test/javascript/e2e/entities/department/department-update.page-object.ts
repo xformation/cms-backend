@@ -7,8 +7,7 @@ export default class DepartmentUpdatePage {
   nameInput: ElementFinder = element(by.css('input#department-name'));
   descriptionInput: ElementFinder = element(by.css('input#department-description'));
   deptHeadInput: ElementFinder = element(by.css('input#department-deptHead'));
-  studentSelect: ElementFinder = element(by.css('select#department-student'));
-  collegeSelect: ElementFinder = element(by.css('select#department-college'));
+  branchSelect: ElementFinder = element(by.css('select#department-branch'));
   academicyearSelect: ElementFinder = element(by.css('select#department-academicyear'));
 
   getPageTitle() {
@@ -39,42 +38,23 @@ export default class DepartmentUpdatePage {
     return this.deptHeadInput.getAttribute('value');
   }
 
-  studentSelectLastOption() {
-    this.studentSelect
+  branchSelectLastOption() {
+    this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  studentSelectOption(option) {
-    this.studentSelect.sendKeys(option);
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
   }
 
-  getStudentSelect() {
-    return this.studentSelect;
+  getBranchSelect() {
+    return this.branchSelect;
   }
 
-  getStudentSelectedOption() {
-    return this.studentSelect.element(by.css('option:checked')).getText();
-  }
-
-  collegeSelectLastOption() {
-    this.collegeSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
-  }
-
-  getCollegeSelect() {
-    return this.collegeSelect;
-  }
-
-  getCollegeSelectedOption() {
-    return this.collegeSelect.element(by.css('option:checked')).getText();
+  getBranchSelectedOption() {
+    return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
   academicyearSelectLastOption() {

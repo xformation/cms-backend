@@ -232,7 +232,7 @@ public class CourseOfferResourceIntTest {
         // Create the CourseOffer
         CourseOfferDTO courseOfferDTO = courseOfferMapper.toDto(courseOffer);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restCourseOfferMockMvc.perform(put("/api/course-offers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(courseOfferDTO)))

@@ -25,8 +25,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -50,11 +51,11 @@ public class AcademicYearResourceIntTest {
     private static final Long DEFAULT_YEAR = 1L;
     private static final Long UPDATED_YEAR = 2L;
 
-    private static final Date DEFAULT_START_DATE = new Date();
-    private static final Date UPDATED_START_DATE = new Date();
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_END_DATE = new Date();
-    private static final Date UPDATED_END_DATE = new Date();
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_DESC = "AAAAAAAAAA";
     private static final String UPDATED_DESC = "BBBBBBBBBB";
@@ -112,11 +113,11 @@ public class AcademicYearResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static AcademicYear createEntity(EntityManager em) {
-        AcademicYear academicYear = new AcademicYear();
-        academicYear.year(DEFAULT_YEAR);
-        academicYear.setStartDate(DEFAULT_START_DATE);
-        academicYear.setEndDate(DEFAULT_END_DATE);
-        academicYear.desc(DEFAULT_DESC);
+        AcademicYear academicYear = new AcademicYear()
+            .year(DEFAULT_YEAR)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE)
+            .desc(DEFAULT_DESC);
         return academicYear;
     }
 
@@ -303,11 +304,11 @@ public class AcademicYearResourceIntTest {
         AcademicYear updatedAcademicYear = academicYearRepository.findById(academicYear.getId()).get();
         // Disconnect from session so that the updates on updatedAcademicYear are not directly saved in db
         em.detach(updatedAcademicYear);
-        //updatedAcademicYear
-        updatedAcademicYear.year(UPDATED_YEAR);
-        updatedAcademicYear.setStartDate(UPDATED_START_DATE);
-        updatedAcademicYear.setEndDate(UPDATED_END_DATE);
-        updatedAcademicYear.desc(UPDATED_DESC);
+        updatedAcademicYear
+            .year(UPDATED_YEAR)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE)
+            .desc(UPDATED_DESC);
         AcademicYearDTO academicYearDTO = academicYearMapper.toDto(updatedAcademicYear);
 
         restAcademicYearMockMvc.perform(put("/api/academic-years")

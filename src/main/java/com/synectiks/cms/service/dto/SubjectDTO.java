@@ -3,8 +3,7 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.CommonSubEnum;
-import com.synectiks.cms.domain.enumeration.ElectiveEnum;
+import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 
 /**
  * A DTO for the Subject entity.
@@ -14,14 +13,15 @@ public class SubjectDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private CommonSubEnum commonSub;
+    private String subjectCode;
 
     @NotNull
-    private ElectiveEnum electiveSub;
+    private SubTypeEnum subjectType;
+
+    @NotNull
+    private String subjectDesc;
 
     private Long departmentId;
-
-    private Long studentId;
 
     private Long teacherId;
 
@@ -33,20 +33,28 @@ public class SubjectDTO implements Serializable {
         this.id = id;
     }
 
-    public CommonSubEnum getCommonSub() {
-        return commonSub;
+    public String getSubjectCode() {
+        return subjectCode;
     }
 
-    public void setCommonSub(CommonSubEnum commonSub) {
-        this.commonSub = commonSub;
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
     }
 
-    public ElectiveEnum getElectiveSub() {
-        return electiveSub;
+    public SubTypeEnum getSubjectType() {
+        return subjectType;
     }
 
-    public void setElectiveSub(ElectiveEnum electiveSub) {
-        this.electiveSub = electiveSub;
+    public void setSubjectType(SubTypeEnum subjectType) {
+        this.subjectType = subjectType;
+    }
+
+    public String getSubjectDesc() {
+        return subjectDesc;
+    }
+
+    public void setSubjectDesc(String subjectDesc) {
+        this.subjectDesc = subjectDesc;
     }
 
     public Long getDepartmentId() {
@@ -55,14 +63,6 @@ public class SubjectDTO implements Serializable {
 
     public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
     }
 
     public Long getTeacherId() {
@@ -98,10 +98,10 @@ public class SubjectDTO implements Serializable {
     public String toString() {
         return "SubjectDTO{" +
             "id=" + getId() +
-            ", commonSub='" + getCommonSub() + "'" +
-            ", electiveSub='" + getElectiveSub() + "'" +
+            ", subjectCode='" + getSubjectCode() + "'" +
+            ", subjectType='" + getSubjectType() + "'" +
+            ", subjectDesc='" + getSubjectDesc() + "'" +
             ", department=" + getDepartmentId() +
-            ", student=" + getStudentId() +
             ", teacher=" + getTeacherId() +
             "}";
     }

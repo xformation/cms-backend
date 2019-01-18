@@ -20,8 +20,7 @@
             "name": "Name",
             "description": "Description",
             "deptHead": "Dept Head",
-            "student": "Student",
-            "college": "College",
+            "branch": "Branch",
             "academicyear": "Academicyear"
         }
     }
