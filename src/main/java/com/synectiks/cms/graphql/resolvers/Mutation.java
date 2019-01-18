@@ -1,31 +1,14 @@
 package com.synectiks.cms.graphql.resolvers;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.StudentSubject.*;
+import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.CourseOffer;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearInput;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearPayload;
 import com.synectiks.cms.graphql.types.AcademicYear.RemoveAcademicYearInput;
@@ -146,26 +129,6 @@ import com.synectiks.cms.graphql.types.Term.RemoveTermInput;
 import com.synectiks.cms.graphql.types.Term.RemoveTermPayload;
 import com.synectiks.cms.graphql.types.Term.UpdateTermInput;
 import com.synectiks.cms.graphql.types.Term.UpdateTermPayload;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.CourseOfferRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
 
 
 @Component
@@ -197,8 +160,9 @@ public class Mutation implements GraphQLMutationResolver {
     private final TeachRepository teachRepository;
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
+    private final StudentSubjectRepository studentSubjectRepository;
 
-    public Mutation(LectureRepository lectureRepository,AttendanceMasterRepository attendanceMasterRepository,CourseOfferRepository courseOfferRepository,TeachRepository teachRepository,BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, CourseOfferRepository courseOfferRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -222,6 +186,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.teachRepository = teachRepository;
         this.attendanceMasterRepository=attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
+        this.studentSubjectRepository = studentSubjectRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -269,6 +234,45 @@ public class Mutation implements GraphQLMutationResolver {
         Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
         studentRepository.delete(student);
         return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
+    }
+
+    public AddStudentSubjectPayload addStudentSubject(AddStudentSubjectInput addStudentSubjectInput) {
+        final Student student = studentRepository.findById(addStudentSubjectInput.getStudentId()).get();
+        final Subject subject = subjectRepository.findById(addStudentSubjectInput.getSubjectId()).get();
+        final StudentSubject studentSubject = new StudentSubject();
+        studentSubject.setComments(addStudentSubjectInput.getComments());
+        studentSubject.setLastupdatedDate(addStudentSubjectInput.getLastupdatedDate());
+        studentSubject.setStudent(student);
+        studentSubject.setSubject(subject);
+        studentSubjectRepository.save(studentSubject);
+        return new AddStudentSubjectPayload(studentSubject);
+    }
+
+    public UpdateStudentSubjectPayload updateStudentSubject(UpdatestudentSubjectInput updateStudentSubjectInput) {
+        StudentSubject studentSubject = studentSubjectRepository.findById(updateStudentSubjectInput.getId()).get();
+        if (updateStudentSubjectInput.getComments() != null) {
+            studentSubject.setComments(updateStudentSubjectInput.getComments());
+        }
+        if (updateStudentSubjectInput.getLastupdatedDate() != null) {
+            studentSubject.setLastupdatedDate(updateStudentSubjectInput.getLastupdatedDate());
+        }
+        if (updateStudentSubjectInput.getStudentId() != null) {
+            final Student student = studentRepository.findById(updateStudentSubjectInput.getStudentId()).get();
+            studentSubject.setStudent(student);
+        }
+        if (updateStudentSubjectInput.getSubjectId() != null) {
+            final Subject subject = subjectRepository.findById(updateStudentSubjectInput.getSubjectId()).get();
+            studentSubject.setSubject(subject);
+        }
+        studentSubjectRepository.save(studentSubject);
+
+        return new UpdateStudentSubjectPayload(studentSubject);
+    }
+
+    public RemoveStudentSubjectPayload removeStudentSubject(RemoveStudentSubjectInput removeStudentSubjectInput) {
+        StudentSubject studentSubject = studentSubjectRepository.findById(removeStudentSubjectInput.getStudentSubjectId()).get();
+        studentSubjectRepository.delete(studentSubject);
+        return new RemoveStudentSubjectPayload(Lists.newArrayList(studentSubjectRepository.findAll()));
     }
 
 
