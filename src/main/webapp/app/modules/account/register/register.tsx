@@ -1,5 +1,5 @@
 import React from 'react';
-import { Translate, translate } from 'react-jhipster';
+
 import { connect } from 'react-redux';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Row, Col, Alert, Button } from 'reactstrap';
@@ -8,7 +8,7 @@ import PasswordStrengthBar from 'app/shared/layout/password/password-strength-ba
 import { IRootState } from 'app/shared/reducers';
 import { handleRegister, reset } from './register.reducer';
 
-export interface IRegisterProps extends StateProps, DispatchProps {}
+export type IRegisterProps = DispatchProps;
 
 export interface IRegisterState {
   password: string;
@@ -24,7 +24,7 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
   }
 
   handleValidSubmit = (event, values) => {
-    this.props.handleRegister(values.username, values.email, values.firstPassword, this.props.currentLocale);
+    this.props.handleRegister(values.username, values.email, values.firstPassword);
     event.preventDefault();
   };
 
@@ -37,9 +37,7 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h1 id="register-title">
-              <Translate contentKey="register.title">Registration</Translate>
-            </h1>
+            <h1 id="register-title">Registration</h1>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -47,69 +45,63 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
             <AvForm id="register-form" onValidSubmit={this.handleValidSubmit}>
               <AvField
                 name="username"
-                label={translate('global.form.username')}
-                placeholder={translate('global.form.username.placeholder')}
+                label="Username"
+                placeholder="Your username"
                 validate={{
-                  required: { value: true, errorMessage: translate('register.messages.validate.login.required') },
-                  pattern: { value: '^[_.@A-Za-z0-9-]*$', errorMessage: translate('register.messages.validate.login.pattern') },
-                  minLength: { value: 1, errorMessage: translate('register.messages.validate.login.minlength') },
-                  maxLength: { value: 50, errorMessage: translate('register.messages.validate.login.maxlength') }
+                  required: { value: true, errorMessage: 'Your username is required.' },
+                  pattern: { value: '^[_.@A-Za-z0-9-]*$', errorMessage: 'Your username can only contain letters and digits.' },
+                  minLength: { value: 1, errorMessage: 'Your username is required to be at least 1 character.' },
+                  maxLength: { value: 50, errorMessage: 'Your username cannot be longer than 50 characters.' }
                 }}
               />
               <AvField
                 name="email"
-                label={translate('global.form.email')}
-                placeholder={translate('global.form.email.placeholder')}
+                label="Email"
+                placeholder="Your email"
                 type="email"
                 validate={{
-                  required: { value: true, errorMessage: translate('global.messages.validate.email.required') },
-                  minLength: { value: 5, errorMessage: translate('global.messages.validate.email.minlength') },
-                  maxLength: { value: 254, errorMessage: translate('global.messages.validate.email.maxlength') }
+                  required: { value: true, errorMessage: 'Your email is required.' },
+                  minLength: { value: 5, errorMessage: 'Your email is required to be at least 5 characters.' },
+                  maxLength: { value: 254, errorMessage: 'Your email cannot be longer than 50 characters.' }
                 }}
               />
               <AvField
                 name="firstPassword"
-                label={translate('global.form.newpassword')}
-                placeholder={translate('global.form.newpassword.placeholder')}
+                label="New password"
+                placeholder="New password"
                 type="password"
                 onChange={this.updatePassword}
                 validate={{
-                  required: { value: true, errorMessage: translate('global.messages.validate.newpassword.required') },
-                  minLength: { value: 4, errorMessage: translate('global.messages.validate.newpassword.minlength') },
-                  maxLength: { value: 50, errorMessage: translate('global.messages.validate.newpassword.maxlength') }
+                  required: { value: true, errorMessage: 'Your password is required.' },
+                  minLength: { value: 4, errorMessage: 'Your password is required to be at least 4 characters.' },
+                  maxLength: { value: 50, errorMessage: 'Your password cannot be longer than 50 characters.' }
                 }}
               />
               <PasswordStrengthBar password={this.state.password} />
               <AvField
                 name="secondPassword"
-                label={translate('global.form.confirmpassword')}
-                placeholder={translate('global.form.confirmpassword.placeholder')}
+                label="New password confirmation"
+                placeholder="Confirm the new password"
                 type="password"
                 validate={{
-                  required: { value: true, errorMessage: translate('global.messages.validate.confirmpassword.required') },
-                  minLength: { value: 4, errorMessage: translate('global.messages.validate.confirmpassword.minlength') },
-                  maxLength: { value: 50, errorMessage: translate('global.messages.validate.confirmpassword.maxlength') },
-                  match: { value: 'firstPassword', errorMessage: translate('global.messages.error.dontmatch') }
+                  required: { value: true, errorMessage: 'Your confirmation password is required.' },
+                  minLength: { value: 4, errorMessage: 'Your confirmation password is required to be at least 4 characters.' },
+                  maxLength: { value: 50, errorMessage: 'Your confirmation password cannot be longer than 50 characters.' },
+                  match: { value: 'firstPassword', errorMessage: 'The password and its confirmation do not match!' }
                 }}
               />
               <Button id="register-submit" color="primary" type="submit">
-                <Translate contentKey="register.form.button">Register</Translate>
+                Register
               </Button>
             </AvForm>
             <p>&nbsp;</p>
             <Alert color="warning">
+              <span>If you want to</span>
+              <a className="alert-link"> sign in</a>
               <span>
-                <Translate contentKey="global.messages.info.authenticated.prefix">If you want to </Translate>
-              </span>
-              <a className="alert-link">
-                <Translate contentKey="global.messages.info.authenticated.link"> sign in</Translate>
-              </a>
-              <span>
-                <Translate contentKey="global.messages.info.authenticated.suffix">
-                  , you can try the default accounts:
-                  <br />- Administrator (login="admin" and password="admin")
-                  <br />- User (login="user" and password="user").
-                </Translate>
+                , you can try the default accounts:
+                <br />- Administrator (login="admin" and password="admin")
+                <br />- User (login="user" and password="user").
               </span>
             </Alert>
           </Col>
@@ -119,15 +111,10 @@ export class RegisterPage extends React.Component<IRegisterProps, IRegisterState
   }
 }
 
-const mapStateToProps = ({ locale }: IRootState) => ({
-  currentLocale: locale.currentLocale
-});
-
 const mapDispatchToProps = { handleRegister, reset };
-type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(RegisterPage);

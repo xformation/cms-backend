@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ILecture } from 'app/shared/model/lecture.model';
@@ -30,22 +30,14 @@ export class LectureDeleteDialog extends React.Component<ILectureDeleteDialogPro
     const { lectureEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>
-          <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
-        </ModalHeader>
-        <ModalBody>
-          <Translate contentKey="cmsApp.lecture.delete.question" interpolate={{ id: lectureEntity.id }}>
-            Are you sure you want to delete this Lecture?
-          </Translate>
-        </ModalBody>
+        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
+        <ModalBody>Are you sure you want to delete this Lecture?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
-            <FontAwesomeIcon icon="ban" />&nbsp;
-            <Translate contentKey="entity.action.cancel">Cancel</Translate>
+            <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
           <Button color="danger" onClick={this.confirmDelete}>
-            <FontAwesomeIcon icon="trash" />&nbsp;
-            <Translate contentKey="entity.action.delete">Delete</Translate>
+            <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>
       </Modal>

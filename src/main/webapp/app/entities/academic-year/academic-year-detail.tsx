@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,49 +25,35 @@ export class AcademicYearDetail extends React.Component<IAcademicYearDetailProps
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.academicYear.detail.title">AcademicYear</Translate> [<b>{academicYearEntity.id}</b>]
+            AcademicYear [<b>{academicYearEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="year">
-                <Translate contentKey="cmsApp.academicYear.year">Year</Translate>
-              </span>
+              <span id="year">Year</span>
             </dt>
             <dd>{academicYearEntity.year}</dd>
             <dt>
-              <span id="startDate">
-                <Translate contentKey="cmsApp.academicYear.startDate">Start Date</Translate>
-              </span>
+              <span id="startDate">Start Date</span>
             </dt>
             <dd>
               <TextFormat value={academicYearEntity.startDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="endDate">
-                <Translate contentKey="cmsApp.academicYear.endDate">End Date</Translate>
-              </span>
+              <span id="endDate">End Date</span>
             </dt>
             <dd>
               <TextFormat value={academicYearEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="desc">
-                <Translate contentKey="cmsApp.academicYear.desc">Desc</Translate>
-              </span>
+              <span id="desc">Desc</span>
             </dt>
             <dd>{academicYearEntity.desc}</dd>
           </dl>
           <Button tag={Link} to="/entity/academic-year" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/academic-year/${academicYearEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

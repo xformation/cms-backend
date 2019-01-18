@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
     return (
       <div>
         <h2 id="department-heading">
-          <Translate contentKey="cmsApp.department.home.title">Departments</Translate>
+          Departments
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.department.home.createLabel">Create new Department</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Department
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.department.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,24 +74,12 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.department.name">Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.department.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.department.deptHead">Dept Head</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.department.branch">Branch</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.department.academicyear">Academicyear</Translate>
-                </th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Dept Head</th>
+                <th>Branch</th>
+                <th>Academicyear</th>
                 <th />
               </tr>
             </thead>
@@ -124,22 +105,13 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${department.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${department.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${department.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

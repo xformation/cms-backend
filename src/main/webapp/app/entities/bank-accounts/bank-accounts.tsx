@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
     return (
       <div>
         <h2 id="bank-accounts-heading">
-          <Translate contentKey="cmsApp.bankAccounts.home.title">Bank Accounts</Translate>
+          Bank Accounts
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.bankAccounts.home.createLabel">Create new Bank Accounts</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Bank Accounts
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.bankAccounts.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,27 +74,13 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.bankAccounts.nameOfBank">Name Of Bank</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.bankAccounts.accountNumber">Account Number</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.bankAccounts.typeOfAccount">Type Of Account</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.bankAccounts.ifsCode">Ifs Code</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.bankAccounts.branch">Branch</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.bankAccounts.corporateId">Corporate Id</Translate>
-                </th>
+                <th>ID</th>
+                <th>Name Of Bank</th>
+                <th>Account Number</th>
+                <th>Type Of Account</th>
+                <th>Ifs Code</th>
+                <th>Branch</th>
+                <th>Corporate Id</th>
                 <th />
               </tr>
             </thead>
@@ -113,9 +92,7 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
                       {bankAccounts.id}
                     </Button>
                   </td>
-                  <td>
-                    <Translate contentKey={`cmsApp.NameOfBank.${bankAccounts.nameOfBank}`} />
-                  </td>
+                  <td>{bankAccounts.nameOfBank}</td>
                   <td>{bankAccounts.accountNumber}</td>
                   <td>{bankAccounts.typeOfAccount}</td>
                   <td>{bankAccounts.ifsCode}</td>
@@ -124,22 +101,13 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${bankAccounts.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${bankAccounts.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${bankAccounts.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -88,9 +88,7 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.holiday.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.holiday.home.createOrEditLabel">Create or edit a Holiday</Translate>
-            </h2>
+            <h2 id="cmsApp.holiday.home.createOrEditLabel">Create or edit a Holiday</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -101,28 +99,26 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
               <AvForm model={isNew ? {} : holidayEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="holiday-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="holidayDescLabel" for="holidayDesc">
-                    <Translate contentKey="cmsApp.holiday.holidayDesc">Holiday Desc</Translate>
+                    Holiday Desc
                   </Label>
                   <AvField
                     id="holiday-holidayDesc"
                     type="text"
                     name="holidayDesc"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="holidayDateLabel" for="holidayDate">
-                    <Translate contentKey="cmsApp.holiday.holidayDate">Holiday Date</Translate>
+                    Holiday Date
                   </Label>
                   <AvField
                     id="holiday-holidayDate"
@@ -130,14 +126,12 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
                     className="form-control"
                     name="holidayDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="holidayStatusLabel">
-                    <Translate contentKey="cmsApp.holiday.holidayStatus">Holiday Status</Translate>
-                  </Label>
+                  <Label id="holidayStatusLabel">Holiday Status</Label>
                   <AvInput
                     id="holiday-holidayStatus"
                     type="select"
@@ -145,18 +139,12 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
                     name="holidayStatus"
                     value={(!isNew && holidayEntity.holidayStatus) || 'ACTIVE'}
                   >
-                    <option value="ACTIVE">
-                      <Translate contentKey="cmsApp.Status.ACTIVE" />
-                    </option>
-                    <option value="DEACTIVE">
-                      <Translate contentKey="cmsApp.Status.DEACTIVE" />
-                    </option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="academicyear.id">
-                    <Translate contentKey="cmsApp.holiday.academicyear">Academicyear</Translate>
-                  </Label>
+                  <Label for="academicyear.id">Academicyear</Label>
                   <AvInput
                     id="holiday-academicyear"
                     type="select"
@@ -176,14 +164,11 @@ export class HolidayUpdate extends React.Component<IHolidayUpdateProps, IHoliday
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/holiday" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

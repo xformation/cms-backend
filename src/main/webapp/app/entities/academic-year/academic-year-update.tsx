@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -65,9 +65,7 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.academicYear.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.academicYear.home.createOrEditLabel">Create or edit a AcademicYear</Translate>
-            </h2>
+            <h2 id="cmsApp.academicYear.home.createOrEditLabel">Create or edit a AcademicYear</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -78,15 +76,13 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
               <AvForm model={isNew ? {} : academicYearEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="academic-year-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="yearLabel" for="year">
-                    <Translate contentKey="cmsApp.academicYear.year">Year</Translate>
+                    Year
                   </Label>
                   <AvField
                     id="academic-year-year"
@@ -94,14 +90,14 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                     className="form-control"
                     name="year"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="startDateLabel" for="startDate">
-                    <Translate contentKey="cmsApp.academicYear.startDate">Start Date</Translate>
+                    Start Date
                   </Label>
                   <AvField
                     id="academic-year-startDate"
@@ -109,13 +105,13 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                     className="form-control"
                     name="startDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="endDateLabel" for="endDate">
-                    <Translate contentKey="cmsApp.academicYear.endDate">End Date</Translate>
+                    End Date
                   </Label>
                   <AvField
                     id="academic-year-endDate"
@@ -123,33 +119,30 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                     className="form-control"
                     name="endDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="descLabel" for="desc">
-                    <Translate contentKey="cmsApp.academicYear.desc">Desc</Translate>
+                    Desc
                   </Label>
                   <AvField
                     id="academic-year-desc"
                     type="text"
                     name="desc"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/academic-year" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

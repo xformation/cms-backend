@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -154,9 +154,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.student.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.student.home.createOrEditLabel">Create or edit a Student</Translate>
-            </h2>
+            <h2 id="cmsApp.student.home.createOrEditLabel">Create or edit a Student</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -167,29 +165,25 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
               <AvForm model={isNew ? {} : studentEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="student-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="studentNameLabel" for="studentName">
-                    <Translate contentKey="cmsApp.student.studentName">Student Name</Translate>
+                    Student Name
                   </Label>
                   <AvField
                     id="student-studentName"
                     type="text"
                     name="studentName"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="department.id">
-                    <Translate contentKey="cmsApp.student.department">Department</Translate>
-                  </Label>
+                  <Label for="department.id">Department</Label>
                   <AvInput
                     id="student-department"
                     type="select"
@@ -208,9 +202,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="batch.id">
-                    <Translate contentKey="cmsApp.student.batch">Batch</Translate>
-                  </Label>
+                  <Label for="batch.id">Batch</Label>
                   <AvInput
                     id="student-batch"
                     type="select"
@@ -229,9 +221,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="section.id">
-                    <Translate contentKey="cmsApp.student.section">Section</Translate>
-                  </Label>
+                  <Label for="section.id">Section</Label>
                   <AvInput
                     id="student-section"
                     type="select"
@@ -250,9 +240,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="branch.id">
-                    <Translate contentKey="cmsApp.student.branch">Branch</Translate>
-                  </Label>
+                  <Label for="branch.id">Branch</Label>
                   <AvInput
                     id="student-branch"
                     type="select"
@@ -272,14 +260,11 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/student" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Translate, translate } from 'react-jhipster';
+
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Alert, Row, Col } from 'reactstrap';
 import { AvForm, AvField, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Link } from 'react-router-dom';
@@ -24,24 +24,22 @@ class LoginModal extends React.Component<ILoginModalProps> {
       <Modal isOpen={this.props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
         <AvForm onSubmit={this.handleSubmit}>
           <ModalHeader id="login-title" toggle={handleClose}>
-            <Translate contentKey="login.title">Sign in</Translate>
+            Sign in
           </ModalHeader>
           <ModalBody>
             <Row>
               <Col md="12">
                 {loginError ? (
                   <Alert color="danger">
-                    <Translate contentKey="login.messages.error.authentication">
-                      <strong>Failed to sign in!</strong> Please check your credentials and try again.
-                    </Translate>
+                    <strong>Failed to sign in!</strong> Please check your credentials and try again.
                   </Alert>
                 ) : null}
               </Col>
               <Col md="12">
                 <AvField
                   name="username"
-                  label={translate('global.form.username')}
-                  placeholder={translate('global.form.username.placeholder')}
+                  label="Username"
+                  placeholder="Your username"
                   required
                   errorMessage="Username cannot be empty!"
                   autoFocus
@@ -49,39 +47,32 @@ class LoginModal extends React.Component<ILoginModalProps> {
                 <AvField
                   name="password"
                   type="password"
-                  label={translate('login.form.password')}
-                  placeholder={translate('login.form.password.placeholder')}
+                  label="Password"
+                  placeholder="Your password"
                   required
                   errorMessage="Password cannot be empty!"
                 />
                 <AvGroup check inline>
                   <Label className="form-check-label">
-                    <AvInput type="checkbox" name="rememberMe" /> <Translate contentKey="login.form.rememberme">Remember me</Translate>
+                    <AvInput type="checkbox" name="rememberMe" /> Remember me
                   </Label>
                 </AvGroup>
               </Col>
             </Row>
             <div className="mt-1">&nbsp;</div>
             <Alert color="warning">
-              <Link to="/reset/request">
-                <Translate contentKey="login.password.forgot">Did you forget your password?</Translate>
-              </Link>
+              <Link to="/reset/request">Did you forget your password?</Link>
             </Alert>
             <Alert color="warning">
-              <span>
-                <Translate contentKey="global.messages.info.register.noaccount">You don't have an account yet?</Translate>
-              </span>{' '}
-              <Link to="/register">
-                <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
-              </Link>
+              <span>You don't have an account yet?</span> <Link to="/register">Register a new account</Link>
             </Alert>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={handleClose} tabIndex="1">
-              <Translate contentKey="entity.action.cancel">Cancel</Translate>
+              Cancel
             </Button>{' '}
             <Button color="primary" type="submit">
-              <Translate contentKey="login.form.button">Sign in</Translate>
+              Sign in
             </Button>
           </ModalFooter>
         </AvForm>

@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
     return (
       <div>
         <h2 id="authorized-signatory-heading">
-          <Translate contentKey="cmsApp.authorizedSignatory.home.title">Authorized Signatories</Translate>
+          Authorized Signatories
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.authorizedSignatory.home.createLabel">Create new Authorized Signatory</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Authorized Signatory
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.authorizedSignatory.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,30 +74,14 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.signatoryName">Signatory Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.signatoryFatherName">Signatory Father Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.signatoryDesignation">Signatory Designation</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.address">Address</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.email">Email</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.panCardNumber">Pan Card Number</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
-                </th>
+                <th>ID</th>
+                <th>Signatory Name</th>
+                <th>Signatory Father Name</th>
+                <th>Signatory Designation</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Pan Card Number</th>
+                <th>Legal Entity</th>
                 <th />
               </tr>
             </thead>
@@ -132,22 +109,13 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${authorizedSignatory.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${authorizedSignatory.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${authorizedSignatory.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

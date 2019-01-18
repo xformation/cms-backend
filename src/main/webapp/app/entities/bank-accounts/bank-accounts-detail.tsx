@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,57 +25,39 @@ export class BankAccountsDetail extends React.Component<IBankAccountsDetailProps
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.bankAccounts.detail.title">BankAccounts</Translate> [<b>{bankAccountsEntity.id}</b>]
+            BankAccounts [<b>{bankAccountsEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="nameOfBank">
-                <Translate contentKey="cmsApp.bankAccounts.nameOfBank">Name Of Bank</Translate>
-              </span>
+              <span id="nameOfBank">Name Of Bank</span>
             </dt>
             <dd>{bankAccountsEntity.nameOfBank}</dd>
             <dt>
-              <span id="accountNumber">
-                <Translate contentKey="cmsApp.bankAccounts.accountNumber">Account Number</Translate>
-              </span>
+              <span id="accountNumber">Account Number</span>
             </dt>
             <dd>{bankAccountsEntity.accountNumber}</dd>
             <dt>
-              <span id="typeOfAccount">
-                <Translate contentKey="cmsApp.bankAccounts.typeOfAccount">Type Of Account</Translate>
-              </span>
+              <span id="typeOfAccount">Type Of Account</span>
             </dt>
             <dd>{bankAccountsEntity.typeOfAccount}</dd>
             <dt>
-              <span id="ifsCode">
-                <Translate contentKey="cmsApp.bankAccounts.ifsCode">Ifs Code</Translate>
-              </span>
+              <span id="ifsCode">Ifs Code</span>
             </dt>
             <dd>{bankAccountsEntity.ifsCode}</dd>
             <dt>
-              <span id="branch">
-                <Translate contentKey="cmsApp.bankAccounts.branch">Branch</Translate>
-              </span>
+              <span id="branch">Branch</span>
             </dt>
             <dd>{bankAccountsEntity.branch}</dd>
             <dt>
-              <span id="corporateId">
-                <Translate contentKey="cmsApp.bankAccounts.corporateId">Corporate Id</Translate>
-              </span>
+              <span id="corporateId">Corporate Id</span>
             </dt>
             <dd>{bankAccountsEntity.corporateId}</dd>
           </dl>
           <Button tag={Link} to="/entity/bank-accounts" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/bank-accounts/${bankAccountsEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

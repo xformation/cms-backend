@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -132,9 +132,7 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.courseOffer.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.courseOffer.home.createOrEditLabel">Create or edit a CourseOffer</Translate>
-            </h2>
+            <h2 id="cmsApp.courseOffer.home.createOrEditLabel">Create or edit a CourseOffer</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -145,22 +143,18 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
               <AvForm model={isNew ? {} : courseOfferEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="course-offer-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="descLabel" for="desc">
-                    <Translate contentKey="cmsApp.courseOffer.desc">Desc</Translate>
+                    Desc
                   </Label>
                   <AvField id="course-offer-desc" type="text" name="desc" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="college.id">
-                    <Translate contentKey="cmsApp.courseOffer.college">College</Translate>
-                  </Label>
+                  <Label for="college.id">College</Label>
                   <AvInput id="course-offer-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
                     <option value="" key="0" />
                     {colleges
@@ -173,9 +167,7 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="department.id">
-                    <Translate contentKey="cmsApp.courseOffer.department">Department</Translate>
-                  </Label>
+                  <Label for="department.id">Department</Label>
                   <AvInput
                     id="course-offer-department"
                     type="select"
@@ -194,9 +186,7 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="subject.id">
-                    <Translate contentKey="cmsApp.courseOffer.subject">Subject</Translate>
-                  </Label>
+                  <Label for="subject.id">Subject</Label>
                   <AvInput id="course-offer-subject" type="select" className="form-control" name="subjectId" onChange={this.subjectUpdate}>
                     <option value="" key="0" />
                     {subjects
@@ -210,14 +200,11 @@ export class CourseOfferUpdate extends React.Component<ICourseOfferUpdateProps, 
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/course-offer" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

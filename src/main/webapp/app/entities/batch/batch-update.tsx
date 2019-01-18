@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -88,9 +88,7 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.batch.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.batch.home.createOrEditLabel">Create or edit a Batch</Translate>
-            </h2>
+            <h2 id="cmsApp.batch.home.createOrEditLabel">Create or edit a Batch</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -101,16 +99,12 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
               <AvForm model={isNew ? {} : batchEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="batch-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="batchLabel">
-                    <Translate contentKey="cmsApp.batch.batch">Batch</Translate>
-                  </Label>
+                  <Label id="batchLabel">Batch</Label>
                   <AvInput
                     id="batch-batch"
                     type="select"
@@ -118,24 +112,14 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
                     name="batch"
                     value={(!isNew && batchEntity.batch) || 'FIRSTYEAR'}
                   >
-                    <option value="FIRSTYEAR">
-                      <Translate contentKey="cmsApp.BatchEnum.FIRSTYEAR" />
-                    </option>
-                    <option value="SECONDYEAR">
-                      <Translate contentKey="cmsApp.BatchEnum.SECONDYEAR" />
-                    </option>
-                    <option value="THIRDYEAR">
-                      <Translate contentKey="cmsApp.BatchEnum.THIRDYEAR" />
-                    </option>
-                    <option value="FOURTHYEAR">
-                      <Translate contentKey="cmsApp.BatchEnum.FOURTHYEAR" />
-                    </option>
+                    <option value="FIRSTYEAR">FIRSTYEAR</option>
+                    <option value="SECONDYEAR">SECONDYEAR</option>
+                    <option value="THIRDYEAR">THIRDYEAR</option>
+                    <option value="FOURTHYEAR">FOURTHYEAR</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="department.id">
-                    <Translate contentKey="cmsApp.batch.department">Department</Translate>
-                  </Label>
+                  <Label for="department.id">Department</Label>
                   <AvInput
                     id="batch-department"
                     type="select"
@@ -155,14 +139,11 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/batch" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

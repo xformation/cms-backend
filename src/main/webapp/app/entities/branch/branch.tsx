@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
     return (
       <div>
         <h2 id="branch-heading">
-          <Translate contentKey="cmsApp.branch.home.title">Branches</Translate>
+          Branches
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.branch.home.createLabel">Create new Branch</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Branch
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.branch.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,21 +74,11 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.branch.branchName">Branch Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.branch.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.branch.collegeHead">College Head</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.branch.college">College</Translate>
-                </th>
+                <th>ID</th>
+                <th>Branch Name</th>
+                <th>Description</th>
+                <th>College Head</th>
+                <th>College</th>
                 <th />
               </tr>
             </thead>
@@ -114,22 +97,13 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${branch.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${branch.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${branch.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

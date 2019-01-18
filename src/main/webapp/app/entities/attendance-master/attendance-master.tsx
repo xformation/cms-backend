@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
     return (
       <div>
         <h2 id="attendance-master-heading">
-          <Translate contentKey="cmsApp.attendanceMaster.home.title">Attendance Masters</Translate>
+          Attendance Masters
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.attendanceMaster.home.createLabel">Create new Attendance Master</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Attendance Master
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.attendanceMaster.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,21 +74,11 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.attendanceMaster.desc">Desc</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.attendanceMaster.teach">Teach</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.attendanceMaster.section">Section</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.attendanceMaster.academicyear">Academicyear</Translate>
-                </th>
+                <th>ID</th>
+                <th>Desc</th>
+                <th>Teach</th>
+                <th>Section</th>
+                <th>Academicyear</th>
                 <th />
               </tr>
             </thead>
@@ -128,22 +111,13 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${attendanceMaster.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${attendanceMaster.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${attendanceMaster.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

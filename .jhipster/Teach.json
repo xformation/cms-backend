@@ -1,0 +1,36 @@
+{
+    "name": "Teach",
+    "fields": [
+        {
+            "fieldName": "desc",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "teacher",
+            "otherEntityName": "teacher",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "teach"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "subject",
+            "otherEntityName": "subject",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "teach"
+        }
+    ],
+    "changelogDate": "20190118141521",
+    "entityTableName": "teach",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

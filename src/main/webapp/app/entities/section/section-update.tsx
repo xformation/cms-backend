@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -88,9 +88,7 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.section.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.section.home.createOrEditLabel">Create or edit a Section</Translate>
-            </h2>
+            <h2 id="cmsApp.section.home.createOrEditLabel">Create or edit a Section</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -101,16 +99,12 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
               <AvForm model={isNew ? {} : sectionEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="section-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="sectionLabel">
-                    <Translate contentKey="cmsApp.section.section">Section</Translate>
-                  </Label>
+                  <Label id="sectionLabel">Section</Label>
                   <AvInput
                     id="section-section"
                     type="select"
@@ -118,24 +112,14 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
                     name="section"
                     value={(!isNew && sectionEntity.section) || 'A'}
                   >
-                    <option value="A">
-                      <Translate contentKey="cmsApp.SectionEnum.A" />
-                    </option>
-                    <option value="B">
-                      <Translate contentKey="cmsApp.SectionEnum.B" />
-                    </option>
-                    <option value="C">
-                      <Translate contentKey="cmsApp.SectionEnum.C" />
-                    </option>
-                    <option value="D">
-                      <Translate contentKey="cmsApp.SectionEnum.D" />
-                    </option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="batch.id">
-                    <Translate contentKey="cmsApp.section.batch">Batch</Translate>
-                  </Label>
+                  <Label for="batch.id">Batch</Label>
                   <AvInput id="section-batch" type="select" className="form-control" name="batchId" onChange={this.batchUpdate}>
                     <option value="" key="0" />
                     {batches
@@ -149,14 +133,11 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/section" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

@@ -1,0 +1,55 @@
+{
+    "name": "Lecture",
+    "fields": [
+        {
+            "fieldName": "lecDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "lastUpdatedOn",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "lastUpdatedBy",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "lecStatus",
+            "fieldType": "LecStatusEnum",
+            "fieldValues": "ACTIVE,DEACTIVE,CANCELLED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "desc",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "attendancemaster",
+            "otherEntityName": "attendanceMaster",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190118141524",
+    "entityTableName": "lecture",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

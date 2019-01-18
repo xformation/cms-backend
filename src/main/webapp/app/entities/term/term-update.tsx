@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -88,9 +88,7 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.term.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.term.home.createOrEditLabel">Create or edit a Term</Translate>
-            </h2>
+            <h2 id="cmsApp.term.home.createOrEditLabel">Create or edit a Term</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -101,28 +99,26 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
               <AvForm model={isNew ? {} : termEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="term-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="termsDescLabel" for="termsDesc">
-                    <Translate contentKey="cmsApp.term.termsDesc">Terms Desc</Translate>
+                    Terms Desc
                   </Label>
                   <AvField
                     id="term-termsDesc"
                     type="text"
                     name="termsDesc"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="startDateLabel" for="startDate">
-                    <Translate contentKey="cmsApp.term.startDate">Start Date</Translate>
+                    Start Date
                   </Label>
                   <AvField
                     id="term-startDate"
@@ -130,13 +126,13 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                     className="form-control"
                     name="startDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="endDateLabel" for="endDate">
-                    <Translate contentKey="cmsApp.term.endDate">End Date</Translate>
+                    End Date
                   </Label>
                   <AvField
                     id="term-endDate"
@@ -144,14 +140,12 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                     className="form-control"
                     name="endDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="termStatusLabel">
-                    <Translate contentKey="cmsApp.term.termStatus">Term Status</Translate>
-                  </Label>
+                  <Label id="termStatusLabel">Term Status</Label>
                   <AvInput
                     id="term-termStatus"
                     type="select"
@@ -159,18 +153,12 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                     name="termStatus"
                     value={(!isNew && termEntity.termStatus) || 'ACTIVE'}
                   >
-                    <option value="ACTIVE">
-                      <Translate contentKey="cmsApp.Status.ACTIVE" />
-                    </option>
-                    <option value="DEACTIVE">
-                      <Translate contentKey="cmsApp.Status.DEACTIVE" />
-                    </option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="academicyear.id">
-                    <Translate contentKey="cmsApp.term.academicyear">Academicyear</Translate>
-                  </Label>
+                  <Label for="academicyear.id">Academicyear</Label>
                   <AvInput
                     id="term-academicyear"
                     type="select"
@@ -190,14 +178,11 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/term" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

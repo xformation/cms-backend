@@ -1,17 +1,15 @@
 import './header.css';
 
 import React from 'react';
-import { Translate, Storage } from 'react-jhipster';
+
 import { Navbar, Nav, NavbarToggler, NavbarBrand, Collapse } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { NavLink as Link } from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { isRTL } from 'app/config/translation';
-
 import { Home, Brand } from './header-components';
-import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from './menus';
+import { AdminMenu, EntitiesMenu, AccountMenu } from './menus';
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -19,8 +17,6 @@ export interface IHeaderProps {
   ribbonEnv: string;
   isInProduction: boolean;
   isSwaggerEnabled: boolean;
-  currentLocale: string;
-  onLocaleChange: Function;
 }
 
 export interface IHeaderState {
@@ -31,21 +27,11 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   state: IHeaderState = {
     menuOpen: false
   };
-  componentDidMount() {
-    document.querySelector('html').setAttribute('dir', isRTL(Storage.local.get('locale')) ? 'rtl' : 'ltr');
-  }
-
-  handleLocaleChange = event => {
-    this.props.onLocaleChange(event.target.value);
-    document.querySelector('html').setAttribute('dir', isRTL(event.target.value) ? 'rtl' : 'ltr');
-  };
 
   renderDevRibbon = () =>
     this.props.isInProduction === false ? (
       <div className="ribbon dev">
-        <a href="">
-          <Translate contentKey={`global.ribbon.${this.props.ribbonEnv}`} />
-        </a>
+        <a href="">Development</a>
       </div>
     ) : null;
 
@@ -54,7 +40,7 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
   };
 
   render() {
-    const { currentLocale, isAuthenticated, isAdmin, isSwaggerEnabled, isInProduction } = this.props;
+    const { isAuthenticated, isAdmin, isSwaggerEnabled, isInProduction } = this.props;
 
     /* jhipster-needle-add-element-to-menu - JHipster will add new menu items here */
 
@@ -70,7 +56,6 @@ export default class Header extends React.Component<IHeaderProps, IHeaderState> 
               <Home />
               {isAuthenticated && <EntitiesMenu />}
               {isAuthenticated && isAdmin && <AdminMenu showSwagger={isSwaggerEnabled} />}
-              <LocaleMenu currentLocale={currentLocale} onClick={this.handleLocaleChange} />
               <AccountMenu isAuthenticated={isAuthenticated} />
             </Nav>
           </Collapse>

@@ -1,9 +1,0 @@
-{
-    "cmsApp": {
-        "SubTypeEnum" : {
-            "null": "",
-            "COMMON": "COMMON",
-            "ELECTIVE": "ELECTIVE"
-        }
-    }
-}

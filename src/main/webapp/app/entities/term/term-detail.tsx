@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,53 +25,37 @@ export class TermDetail extends React.Component<ITermDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.term.detail.title">Term</Translate> [<b>{termEntity.id}</b>]
+            Term [<b>{termEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="termsDesc">
-                <Translate contentKey="cmsApp.term.termsDesc">Terms Desc</Translate>
-              </span>
+              <span id="termsDesc">Terms Desc</span>
             </dt>
             <dd>{termEntity.termsDesc}</dd>
             <dt>
-              <span id="startDate">
-                <Translate contentKey="cmsApp.term.startDate">Start Date</Translate>
-              </span>
+              <span id="startDate">Start Date</span>
             </dt>
             <dd>
               <TextFormat value={termEntity.startDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="endDate">
-                <Translate contentKey="cmsApp.term.endDate">End Date</Translate>
-              </span>
+              <span id="endDate">End Date</span>
             </dt>
             <dd>
               <TextFormat value={termEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="termStatus">
-                <Translate contentKey="cmsApp.term.termStatus">Term Status</Translate>
-              </span>
+              <span id="termStatus">Term Status</span>
             </dt>
             <dd>{termEntity.termStatus}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.term.academicyear">Academicyear</Translate>
-            </dt>
+            <dt>Academicyear</dt>
             <dd>{termEntity.academicyearId ? termEntity.academicyearId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/term" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/term/${termEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

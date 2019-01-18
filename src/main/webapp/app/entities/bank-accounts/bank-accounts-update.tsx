@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -65,9 +65,7 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.bankAccounts.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.bankAccounts.home.createOrEditLabel">Create or edit a BankAccounts</Translate>
-            </h2>
+            <h2 id="cmsApp.bankAccounts.home.createOrEditLabel">Create or edit a BankAccounts</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -78,16 +76,12 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
               <AvForm model={isNew ? {} : bankAccountsEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="bank-accounts-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="nameOfBankLabel">
-                    <Translate contentKey="cmsApp.bankAccounts.nameOfBank">Name Of Bank</Translate>
-                  </Label>
+                  <Label id="nameOfBankLabel">Name Of Bank</Label>
                   <AvInput
                     id="bank-accounts-nameOfBank"
                     type="select"
@@ -95,23 +89,15 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
                     name="nameOfBank"
                     value={(!isNew && bankAccountsEntity.nameOfBank) || 'HDFC'}
                   >
-                    <option value="HDFC">
-                      <Translate contentKey="cmsApp.NameOfBank.HDFC" />
-                    </option>
-                    <option value="SBI">
-                      <Translate contentKey="cmsApp.NameOfBank.SBI" />
-                    </option>
-                    <option value="ICICI">
-                      <Translate contentKey="cmsApp.NameOfBank.ICICI" />
-                    </option>
-                    <option value="ANDHRABANK">
-                      <Translate contentKey="cmsApp.NameOfBank.ANDHRABANK" />
-                    </option>
+                    <option value="HDFC">HDFC</option>
+                    <option value="SBI">SBI</option>
+                    <option value="ICICI">ICICI</option>
+                    <option value="ANDHRABANK">ANDHRABANK</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="accountNumberLabel" for="accountNumber">
-                    <Translate contentKey="cmsApp.bankAccounts.accountNumber">Account Number</Translate>
+                    Account Number
                   </Label>
                   <AvField
                     id="bank-accounts-accountNumber"
@@ -119,53 +105,53 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
                     className="form-control"
                     name="accountNumber"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="typeOfAccountLabel" for="typeOfAccount">
-                    <Translate contentKey="cmsApp.bankAccounts.typeOfAccount">Type Of Account</Translate>
+                    Type Of Account
                   </Label>
                   <AvField
                     id="bank-accounts-typeOfAccount"
                     type="text"
                     name="typeOfAccount"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="ifsCodeLabel" for="ifsCode">
-                    <Translate contentKey="cmsApp.bankAccounts.ifsCode">Ifs Code</Translate>
+                    Ifs Code
                   </Label>
                   <AvField
                     id="bank-accounts-ifsCode"
                     type="text"
                     name="ifsCode"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="branchLabel" for="branch">
-                    <Translate contentKey="cmsApp.bankAccounts.branch">Branch</Translate>
+                    Branch
                   </Label>
                   <AvField
                     id="bank-accounts-branch"
                     type="text"
                     name="branch"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="corporateIdLabel" for="corporateId">
-                    <Translate contentKey="cmsApp.bankAccounts.corporateId">Corporate Id</Translate>
+                    Corporate Id
                   </Label>
                   <AvField
                     id="bank-accounts-corporateId"
@@ -173,21 +159,18 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
                     className="form-control"
                     name="corporateId"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/bank-accounts" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

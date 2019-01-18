@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,27 +25,19 @@ export class TeacherDetail extends React.Component<ITeacherDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.teacher.detail.title">Teacher</Translate> [<b>{teacherEntity.id}</b>]
+            Teacher [<b>{teacherEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="teacherName">
-                <Translate contentKey="cmsApp.teacher.teacherName">Teacher Name</Translate>
-              </span>
+              <span id="teacherName">Teacher Name</span>
             </dt>
             <dd>{teacherEntity.teacherName}</dd>
           </dl>
           <Button tag={Link} to="/entity/teacher" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/teacher/${teacherEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

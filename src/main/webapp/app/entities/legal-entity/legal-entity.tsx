@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
     return (
       <div>
         <h2 id="legal-entity-heading">
-          <Translate contentKey="cmsApp.legalEntity.home.title">Legal Entities</Translate>
+          Legal Entities
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.legalEntity.home.createLabel">Create new Legal Entity</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Legal Entity
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.legalEntity.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,60 +74,24 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.logo">Logo</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.legalNameOfTheCollege">Legal Name Of The College</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.typeOfCollege">Type Of College</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.dateOfIncorporation">Date Of Incorporation</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.registeredOfficeAddress">Registered Office Address</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.collegeIdentificationNumber">College Identification Number</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.pan">Pan</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.tan">Tan</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.tanCircleNumber">Tan Circle Number</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.citTdsLocation">Cit Tds Location</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.formSignatory">Form Signatory</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.pfNumber">Pf Number</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.registrationDate">Registration Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.esiNumber">Esi Number</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.ptRegistrationDate">Pt Registration Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.ptSignatory">Pt Signatory</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.legalEntity.ptNumber">Pt Number</Translate>
-                </th>
+                <th>ID</th>
+                <th>Logo</th>
+                <th>Legal Name Of The College</th>
+                <th>Type Of College</th>
+                <th>Date Of Incorporation</th>
+                <th>Registered Office Address</th>
+                <th>College Identification Number</th>
+                <th>Pan</th>
+                <th>Tan</th>
+                <th>Tan Circle Number</th>
+                <th>Cit Tds Location</th>
+                <th>Form Signatory</th>
+                <th>Pf Number</th>
+                <th>Registration Date</th>
+                <th>Esi Number</th>
+                <th>Pt Registration Date</th>
+                <th>Pt Signatory</th>
+                <th>Pt Number</th>
                 <th />
               </tr>
             </thead>
@@ -148,9 +105,7 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                   </td>
                   <td>{legalEntity.logo}</td>
                   <td>{legalEntity.legalNameOfTheCollege}</td>
-                  <td>
-                    <Translate contentKey={`cmsApp.TypeOfCollege.${legalEntity.typeOfCollege}`} />
-                  </td>
+                  <td>{legalEntity.typeOfCollege}</td>
                   <td>
                     <TextFormat type="date" value={legalEntity.dateOfIncorporation} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
@@ -174,22 +129,13 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${legalEntity.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${legalEntity.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${legalEntity.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

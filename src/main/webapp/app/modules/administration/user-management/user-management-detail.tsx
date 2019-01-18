@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Badge } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT } from 'app/config/constants';
@@ -22,64 +22,34 @@ export class UserManagementDetail extends React.Component<IUserManagementDetailP
     return (
       <div>
         <h2>
-          <Translate contentKey="userManagement.detail.title">User</Translate> [<b>{user.login}</b>]
+          User [<b>{user.login}</b>]
         </h2>
         <Row size="md">
           <dl className="jh-entity-details">
-            <dt>
-              <Translate contentKey="userManagement.login">Login</Translate>
-            </dt>
+            <dt>Login</dt>
             <dd>
               <span>{user.login}</span>&nbsp;
-              {user.activated ? (
-                <Badge color="success">
-                  <Translate contentKey="userManagement.activated">Activated</Translate>
-                </Badge>
-              ) : (
-                <Badge color="danger">
-                  <Translate contentKey="userManagement.deactivated">Deactivated</Translate>
-                </Badge>
-              )}
+              {user.activated ? <Badge color="success">Activated</Badge> : <Badge color="danger">Deactivated</Badge>}
             </dd>
-            <dt>
-              <Translate contentKey="userManagement.firstName">First Name</Translate>
-            </dt>
+            <dt>First Name</dt>
             <dd>{user.firstName}</dd>
-            <dt>
-              <Translate contentKey="userManagement.lastName">Last Name</Translate>
-            </dt>
+            <dt>Last Name</dt>
             <dd>{user.lastName}</dd>
-            <dt>
-              <Translate contentKey="userManagement.email">Email</Translate>
-            </dt>
+            <dt>Email</dt>
             <dd>{user.email}</dd>
-            <dt>
-              <Translate contentKey="userManagement.langKey">Lang Key</Translate>
-            </dt>
-            <dd>{user.langKey}</dd>
-            <dt>
-              <Translate contentKey="userManagement.createdBy">Created By</Translate>
-            </dt>
+            <dt>Created By</dt>
             <dd>{user.createdBy}</dd>
-            <dt>
-              <Translate contentKey="userManagement.createdDate">Created Date</Translate>
-            </dt>
+            <dt>Created Date</dt>
             <dd>
               <TextFormat value={user.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
             </dd>
-            <dt>
-              <Translate contentKey="userManagement.lastModifiedBy">Last Modified By</Translate>
-            </dt>
+            <dt>Last Modified By</dt>
             <dd>{user.lastModifiedBy}</dd>
-            <dt>
-              <Translate contentKey="userManagement.lastModifiedDate">Last Modified Date</Translate>
-            </dt>
+            <dt>Last Modified Date</dt>
             <dd>
               <TextFormat value={user.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
             </dd>
-            <dt>
-              <Translate contentKey="userManagement.profiles">Profiles</Translate>
-            </dt>
+            <dt>Profiles</dt>
             <dd>
               <ul className="list-unstyled">
                 {user.authorities
@@ -94,10 +64,7 @@ export class UserManagementDetail extends React.Component<IUserManagementDetailP
           </dl>
         </Row>
         <Button tag={Link} to="/admin/user-management" replace color="info">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
+          <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
         </Button>
       </div>
     );

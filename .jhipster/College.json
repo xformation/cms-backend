@@ -31,7 +31,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190118111654",
+    "changelogDate": "20190118141510",
     "entityTableName": "college",
     "dto": "mapstruct",
     "pagination": "no",

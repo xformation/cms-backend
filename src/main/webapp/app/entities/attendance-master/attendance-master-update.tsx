@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -132,9 +132,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.attendanceMaster.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.attendanceMaster.home.createOrEditLabel">Create or edit a AttendanceMaster</Translate>
-            </h2>
+            <h2 id="cmsApp.attendanceMaster.home.createOrEditLabel">Create or edit a AttendanceMaster</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -145,22 +143,18 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
               <AvForm model={isNew ? {} : attendanceMasterEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="attendance-master-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="descLabel" for="desc">
-                    <Translate contentKey="cmsApp.attendanceMaster.desc">Desc</Translate>
+                    Desc
                   </Label>
                   <AvField id="attendance-master-desc" type="text" name="desc" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="teach.id">
-                    <Translate contentKey="cmsApp.attendanceMaster.teach">Teach</Translate>
-                  </Label>
+                  <Label for="teach.id">Teach</Label>
                   <AvInput id="attendance-master-teach" type="select" className="form-control" name="teachId" onChange={this.teachUpdate}>
                     <option value="" key="0" />
                     {teaches
@@ -173,9 +167,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="section.id">
-                    <Translate contentKey="cmsApp.attendanceMaster.section">Section</Translate>
-                  </Label>
+                  <Label for="section.id">Section</Label>
                   <AvInput
                     id="attendance-master-section"
                     type="select"
@@ -194,9 +186,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="academicyear.id">
-                    <Translate contentKey="cmsApp.attendanceMaster.academicyear">Academicyear</Translate>
-                  </Label>
+                  <Label for="academicyear.id">Academicyear</Label>
                   <AvInput
                     id="attendance-master-academicyear"
                     type="select"
@@ -216,14 +206,11 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/attendance-master" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

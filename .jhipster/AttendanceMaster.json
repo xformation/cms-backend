@@ -1,0 +1,44 @@
+{
+    "name": "AttendanceMaster",
+    "fields": [
+        {
+            "fieldName": "desc",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "teach",
+            "otherEntityName": "teach",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "attendanceMaster"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "section",
+            "otherEntityName": "section",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "attendanceMaster"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "academicyear",
+            "otherEntityName": "academicYear",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "attendanceMaster"
+        }
+    ],
+    "changelogDate": "20190118141523",
+    "entityTableName": "attendance_master",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

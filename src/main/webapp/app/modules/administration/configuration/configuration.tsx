@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Table, Input, Row, Col, Badge } from 'reactstrap';
-import { Translate } from 'react-jhipster';
 
 import { getConfigurations, getEnv } from '../administration.reducer';
 import { IRootState } from 'app/shared/reducers';
@@ -59,23 +58,14 @@ export class ConfigurationPage extends React.Component<IConfigurationPageProps, 
     const env = configuration && configuration.env ? configuration.env : {};
     return (
       <div>
-        <h2 className="configuration-page-heading">
-          <Translate contentKey="configuration.title">Configuration</Translate>
-        </h2>
-        <span>
-          <Translate contentKey="configuration.filter">Filter</Translate>
-        </span>{' '}
-        <Input type="search" value={filter} onChange={this.setFilter} name="search" id="search" />
+        <h2 className="configuration-page-heading">Configuration</h2>
+        <span>Filter</span> <Input type="search" value={filter} onChange={this.setFilter} name="search" id="search" />
         <label>Spring configuration</label>
         <Table className="table table-striped table-bordered table-responsive d-table">
           <thead>
             <tr>
-              <th onClick={this.reversePrefix}>
-                <Translate contentKey="configuration.table.prefix">Prefix</Translate>
-              </th>
-              <th onClick={this.reverseProperties}>
-                <Translate contentKey="configuration.table.properties">Properties</Translate>
-              </th>
+              <th onClick={this.reversePrefix}>Prefix</th>
+              <th onClick={this.reverseProperties}>Properties</th>
             </tr>
           </thead>
           <tbody>

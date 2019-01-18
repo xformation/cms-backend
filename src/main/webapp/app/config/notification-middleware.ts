@@ -1,9 +1,8 @@
-import { isPromise, translate } from 'react-jhipster';
+import { isPromise } from 'react-jhipster';
 import { toast } from 'react-toastify';
 
 const addErrorAlert = (message, key?, data?) => {
-  key = key ? key : message;
-  toast.error(translate(key, data));
+  toast.error(message);
 };
 export default () => next => action => {
   // If not a promise, continue on
@@ -23,17 +22,13 @@ export default () => next => action => {
       } else if (response && response.action && response.action.payload && response.action.payload.headers) {
         const headers = response.action.payload.headers;
         let alert: string = null;
-        let alertParams: string = null;
         Object.entries(headers).forEach(([k, v]: [string, string]) => {
           if (k.endsWith('app-alert')) {
             alert = v;
-          } else if (k.endsWith('app-params')) {
-            alertParams = v;
           }
         });
         if (alert) {
-          const alertParam = alertParams;
-          toast.success(translate(alert, { param: alertParam }));
+          toast.success(alert);
         }
       }
       return Promise.resolve(response);
@@ -64,7 +59,7 @@ export default () => next => action => {
                 }
               });
               if (errorHeader) {
-                const entityName = translate('global.menu.entities.' + entityKey);
+                const entityName = entityKey;
                 addErrorAlert(errorHeader, errorHeader, { entityName });
               } else if (data !== '' && data.fieldErrors) {
                 const fieldErrors = data.fieldErrors;
@@ -72,7 +67,7 @@ export default () => next => action => {
                   const fieldError = fieldErrors[i];
                   // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
                   const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-                  const fieldName = translate(`cmsApp.${fieldError.objectName}.${convertedField}`);
+                  const fieldName = convertedField.charAt(0).toUpperCase() + convertedField.slice(1);
                   addErrorAlert(`Error on field "${fieldName}"`, `error.${fieldError.message}`, { fieldName });
                 }
               } else if (data !== '' && data.message) {

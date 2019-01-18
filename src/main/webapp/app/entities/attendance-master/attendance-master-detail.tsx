@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,39 +25,25 @@ export class AttendanceMasterDetail extends React.Component<IAttendanceMasterDet
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.attendanceMaster.detail.title">AttendanceMaster</Translate> [<b>{attendanceMasterEntity.id}</b>]
+            AttendanceMaster [<b>{attendanceMasterEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="desc">
-                <Translate contentKey="cmsApp.attendanceMaster.desc">Desc</Translate>
-              </span>
+              <span id="desc">Desc</span>
             </dt>
             <dd>{attendanceMasterEntity.desc}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.attendanceMaster.teach">Teach</Translate>
-            </dt>
+            <dt>Teach</dt>
             <dd>{attendanceMasterEntity.teachId ? attendanceMasterEntity.teachId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.attendanceMaster.section">Section</Translate>
-            </dt>
+            <dt>Section</dt>
             <dd>{attendanceMasterEntity.sectionId ? attendanceMasterEntity.sectionId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.attendanceMaster.academicyear">Academicyear</Translate>
-            </dt>
+            <dt>Academicyear</dt>
             <dd>{attendanceMasterEntity.academicyearId ? attendanceMasterEntity.academicyearId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/attendance-master" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/attendance-master/${attendanceMasterEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

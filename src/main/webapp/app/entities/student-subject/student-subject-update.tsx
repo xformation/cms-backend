@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -110,9 +110,7 @@ export class StudentSubjectUpdate extends React.Component<IStudentSubjectUpdateP
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.studentSubject.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.studentSubject.home.createOrEditLabel">Create or edit a StudentSubject</Translate>
-            </h2>
+            <h2 id="cmsApp.studentSubject.home.createOrEditLabel">Create or edit a StudentSubject</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -123,21 +121,19 @@ export class StudentSubjectUpdate extends React.Component<IStudentSubjectUpdateP
               <AvForm model={isNew ? {} : studentSubjectEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="student-subject-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="commentsLabel" for="comments">
-                    <Translate contentKey="cmsApp.studentSubject.comments">Comments</Translate>
+                    Comments
                   </Label>
                   <AvField id="student-subject-comments" type="text" name="comments" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="lastupdatedDateLabel" for="lastupdatedDate">
-                    <Translate contentKey="cmsApp.studentSubject.lastupdatedDate">Lastupdated Date</Translate>
+                    Lastupdated Date
                   </Label>
                   <AvField
                     id="student-subject-lastupdatedDate"
@@ -145,14 +141,12 @@ export class StudentSubjectUpdate extends React.Component<IStudentSubjectUpdateP
                     className="form-control"
                     name="lastupdatedDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="student.id">
-                    <Translate contentKey="cmsApp.studentSubject.student">Student</Translate>
-                  </Label>
+                  <Label for="student.id">Student</Label>
                   <AvInput
                     id="student-subject-student"
                     type="select"
@@ -171,9 +165,7 @@ export class StudentSubjectUpdate extends React.Component<IStudentSubjectUpdateP
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="subject.id">
-                    <Translate contentKey="cmsApp.studentSubject.subject">Subject</Translate>
-                  </Label>
+                  <Label for="subject.id">Subject</Label>
                   <AvInput
                     id="student-subject-subject"
                     type="select"
@@ -193,14 +185,11 @@ export class StudentSubjectUpdate extends React.Component<IStudentSubjectUpdateP
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/student-subject" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

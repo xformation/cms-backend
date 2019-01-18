@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -110,9 +110,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.subject.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.subject.home.createOrEditLabel">Create or edit a Subject</Translate>
-            </h2>
+            <h2 id="cmsApp.subject.home.createOrEditLabel">Create or edit a Subject</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -123,29 +121,25 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
               <AvForm model={isNew ? {} : subjectEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="subject-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="subjectCodeLabel" for="subjectCode">
-                    <Translate contentKey="cmsApp.subject.subjectCode">Subject Code</Translate>
+                    Subject Code
                   </Label>
                   <AvField
                     id="subject-subjectCode"
                     type="text"
                     name="subjectCode"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="subjectTypeLabel">
-                    <Translate contentKey="cmsApp.subject.subjectType">Subject Type</Translate>
-                  </Label>
+                  <Label id="subjectTypeLabel">Subject Type</Label>
                   <AvInput
                     id="subject-subjectType"
                     type="select"
@@ -153,31 +147,25 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                     name="subjectType"
                     value={(!isNew && subjectEntity.subjectType) || 'COMMON'}
                   >
-                    <option value="COMMON">
-                      <Translate contentKey="cmsApp.SubTypeEnum.COMMON" />
-                    </option>
-                    <option value="ELECTIVE">
-                      <Translate contentKey="cmsApp.SubTypeEnum.ELECTIVE" />
-                    </option>
+                    <option value="COMMON">COMMON</option>
+                    <option value="ELECTIVE">ELECTIVE</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="subjectDescLabel" for="subjectDesc">
-                    <Translate contentKey="cmsApp.subject.subjectDesc">Subject Desc</Translate>
+                    Subject Desc
                   </Label>
                   <AvField
                     id="subject-subjectDesc"
                     type="text"
                     name="subjectDesc"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="department.id">
-                    <Translate contentKey="cmsApp.subject.department">Department</Translate>
-                  </Label>
+                  <Label for="department.id">Department</Label>
                   <AvInput
                     id="subject-department"
                     type="select"
@@ -196,9 +184,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="teacher.id">
-                    <Translate contentKey="cmsApp.subject.teacher">Teacher</Translate>
-                  </Label>
+                  <Label for="teacher.id">Teacher</Label>
                   <AvInput id="subject-teacher" type="select" className="form-control" name="teacherId" onChange={this.teacherUpdate}>
                     <option value="" key="0" />
                     {teachers
@@ -212,14 +198,11 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/subject" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

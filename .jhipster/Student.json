@@ -39,7 +39,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118111701",
+    "changelogDate": "20190118141517",
     "entityTableName": "student",
     "dto": "mapstruct",
     "pagination": "no",

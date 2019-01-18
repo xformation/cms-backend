@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class AcademicYear extends React.Component<IAcademicYearProps, IAcademicY
     return (
       <div>
         <h2 id="academic-year-heading">
-          <Translate contentKey="cmsApp.academicYear.home.title">Academic Years</Translate>
+          Academic Years
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.academicYear.home.createLabel">Create new Academic Year</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Academic Year
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class AcademicYear extends React.Component<IAcademicYearProps, IAcademicY
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.academicYear.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,21 +74,11 @@ export class AcademicYear extends React.Component<IAcademicYearProps, IAcademicY
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.academicYear.year">Year</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.academicYear.startDate">Start Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.academicYear.endDate">End Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.academicYear.desc">Desc</Translate>
-                </th>
+                <th>ID</th>
+                <th>Year</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Desc</th>
                 <th />
               </tr>
             </thead>
@@ -118,22 +101,13 @@ export class AcademicYear extends React.Component<IAcademicYearProps, IAcademicY
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${academicYear.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${academicYear.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${academicYear.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

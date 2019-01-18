@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,45 +25,31 @@ export class CollegeDetail extends React.Component<ICollegeDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.college.detail.title">College</Translate> [<b>{collegeEntity.id}</b>]
+            College [<b>{collegeEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="shortName">
-                <Translate contentKey="cmsApp.college.shortName">Short Name</Translate>
-              </span>
+              <span id="shortName">Short Name</span>
             </dt>
             <dd>{collegeEntity.shortName}</dd>
             <dt>
-              <span id="logo">
-                <Translate contentKey="cmsApp.college.logo">Logo</Translate>
-              </span>
+              <span id="logo">Logo</span>
             </dt>
             <dd>{collegeEntity.logo}</dd>
             <dt>
-              <span id="backgroundImage">
-                <Translate contentKey="cmsApp.college.backgroundImage">Background Image</Translate>
-              </span>
+              <span id="backgroundImage">Background Image</span>
             </dt>
             <dd>{collegeEntity.backgroundImage}</dd>
             <dt>
-              <span id="instructionInformation">
-                <Translate contentKey="cmsApp.college.instructionInformation">Instruction Information</Translate>
-              </span>
+              <span id="instructionInformation">Instruction Information</span>
             </dt>
             <dd>{collegeEntity.instructionInformation}</dd>
           </dl>
           <Button tag={Link} to="/entity/college" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/college/${collegeEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

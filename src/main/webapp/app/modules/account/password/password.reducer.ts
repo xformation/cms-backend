@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { translate } from 'react-jhipster';
 
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
@@ -57,8 +56,8 @@ export const savePassword = (currentPassword, newPassword) => ({
   type: ACTION_TYPES.UPDATE_PASSWORD,
   payload: axios.post(`${apiUrl}/change-password`, { currentPassword, newPassword }),
   meta: {
-    successMessage: translate('password.messages.success'),
-    errorMessage: translate('password.messages.error')
+    successMessage: '<strong>Password changed!</strong>',
+    errorMessage: '<strong>An error has occurred!</strong> The password could not be changed.'
   }
 });
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,31 +25,21 @@ export class SectionDetail extends React.Component<ISectionDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.section.detail.title">Section</Translate> [<b>{sectionEntity.id}</b>]
+            Section [<b>{sectionEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="section">
-                <Translate contentKey="cmsApp.section.section">Section</Translate>
-              </span>
+              <span id="section">Section</span>
             </dt>
             <dd>{sectionEntity.section}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.section.batch">Batch</Translate>
-            </dt>
+            <dt>Batch</dt>
             <dd>{sectionEntity.batchId ? sectionEntity.batchId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/section" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/section/${sectionEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

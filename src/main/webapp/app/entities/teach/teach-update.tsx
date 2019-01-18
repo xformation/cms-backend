@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -110,9 +110,7 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.teach.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.teach.home.createOrEditLabel">Create or edit a Teach</Translate>
-            </h2>
+            <h2 id="cmsApp.teach.home.createOrEditLabel">Create or edit a Teach</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -123,22 +121,18 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
               <AvForm model={isNew ? {} : teachEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="teach-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="descLabel" for="desc">
-                    <Translate contentKey="cmsApp.teach.desc">Desc</Translate>
+                    Desc
                   </Label>
                   <AvField id="teach-desc" type="text" name="desc" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="teacher.id">
-                    <Translate contentKey="cmsApp.teach.teacher">Teacher</Translate>
-                  </Label>
+                  <Label for="teacher.id">Teacher</Label>
                   <AvInput id="teach-teacher" type="select" className="form-control" name="teacherId" onChange={this.teacherUpdate}>
                     <option value="" key="0" />
                     {teachers
@@ -151,9 +145,7 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="subject.id">
-                    <Translate contentKey="cmsApp.teach.subject">Subject</Translate>
-                  </Label>
+                  <Label for="subject.id">Subject</Label>
                   <AvInput id="teach-subject" type="select" className="form-control" name="subjectId" onChange={this.subjectUpdate}>
                     <option value="" key="0" />
                     {subjects
@@ -167,14 +159,11 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/teach" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

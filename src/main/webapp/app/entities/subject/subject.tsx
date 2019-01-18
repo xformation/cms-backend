@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
     return (
       <div>
         <h2 id="subject-heading">
-          <Translate contentKey="cmsApp.subject.home.title">Subjects</Translate>
+          Subjects
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.subject.home.createLabel">Create new Subject</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Subject
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.subject.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,24 +74,12 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.subject.subjectCode">Subject Code</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.subject.subjectType">Subject Type</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.subject.subjectDesc">Subject Desc</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.subject.department">Department</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.subject.teacher">Teacher</Translate>
-                </th>
+                <th>ID</th>
+                <th>Subject Code</th>
+                <th>Subject Type</th>
+                <th>Subject Desc</th>
+                <th>Department</th>
+                <th>Teacher</th>
                 <th />
               </tr>
             </thead>
@@ -111,31 +92,20 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
                     </Button>
                   </td>
                   <td>{subject.subjectCode}</td>
-                  <td>
-                    <Translate contentKey={`cmsApp.SubTypeEnum.${subject.subjectType}`} />
-                  </td>
+                  <td>{subject.subjectType}</td>
                   <td>{subject.subjectDesc}</td>
                   <td>{subject.departmentId ? <Link to={`department/${subject.departmentId}`}>{subject.departmentId}</Link> : ''}</td>
                   <td>{subject.teacherId ? <Link to={`teacher/${subject.teacherId}`}>{subject.teacherId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${subject.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${subject.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${subject.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -110,9 +110,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.department.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.department.home.createOrEditLabel">Create or edit a Department</Translate>
-            </h2>
+            <h2 id="cmsApp.department.home.createOrEditLabel">Create or edit a Department</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -123,55 +121,51 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
               <AvForm model={isNew ? {} : departmentEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="department-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="nameLabel" for="name">
-                    <Translate contentKey="cmsApp.department.name">Name</Translate>
+                    Name
                   </Label>
                   <AvField
                     id="department-name"
                     type="text"
                     name="name"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="descriptionLabel" for="description">
-                    <Translate contentKey="cmsApp.department.description">Description</Translate>
+                    Description
                   </Label>
                   <AvField
                     id="department-description"
                     type="text"
                     name="description"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="deptHeadLabel" for="deptHead">
-                    <Translate contentKey="cmsApp.department.deptHead">Dept Head</Translate>
+                    Dept Head
                   </Label>
                   <AvField
                     id="department-deptHead"
                     type="text"
                     name="deptHead"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="branch.id">
-                    <Translate contentKey="cmsApp.department.branch">Branch</Translate>
-                  </Label>
+                  <Label for="branch.id">Branch</Label>
                   <AvInput id="department-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
                     <option value="" key="0" />
                     {branches
@@ -184,9 +178,7 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="academicyear.id">
-                    <Translate contentKey="cmsApp.department.academicyear">Academicyear</Translate>
-                  </Label>
+                  <Label for="academicyear.id">Academicyear</Label>
                   <AvInput
                     id="department-academicyear"
                     type="select"
@@ -206,14 +198,11 @@ export class DepartmentUpdate extends React.Component<IDepartmentUpdateProps, ID
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/department" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

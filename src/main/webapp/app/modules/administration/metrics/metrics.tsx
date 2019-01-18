@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Table, Progress, Col, Row, Button } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_WHOLE_NUMBER_FORMAT, APP_TWO_DIGITS_AFTER_POINT_NUMBER_FORMAT } from 'app/config/constants';
@@ -271,10 +271,7 @@ export class MetricsPage extends React.Component<IMetricsPageProps, IMetricsPage
         <h2 className="metrics-page-heading">Application Metrics</h2>
         <p>
           <Button onClick={this.getMetrics} color={isFetching ? 'btn btn-danger' : 'btn btn-primary'} disabled={isFetching}>
-            <FontAwesomeIcon icon="sync" />&nbsp;
-            <Translate component="span" contentKey="health.refresh.button">
-              Refresh
-            </Translate>
+            <FontAwesomeIcon icon="sync" />&nbsp; Refresh
           </Button>
         </p>
         <hr />

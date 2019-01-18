@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -88,9 +88,7 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.authorizedSignatory.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.authorizedSignatory.home.createOrEditLabel">Create or edit a AuthorizedSignatory</Translate>
-            </h2>
+            <h2 id="cmsApp.authorizedSignatory.home.createOrEditLabel">Create or edit a AuthorizedSignatory</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -101,94 +99,90 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
               <AvForm model={isNew ? {} : authorizedSignatoryEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="authorized-signatory-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="signatoryNameLabel" for="signatoryName">
-                    <Translate contentKey="cmsApp.authorizedSignatory.signatoryName">Signatory Name</Translate>
+                    Signatory Name
                   </Label>
                   <AvField
                     id="authorized-signatory-signatoryName"
                     type="text"
                     name="signatoryName"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="signatoryFatherNameLabel" for="signatoryFatherName">
-                    <Translate contentKey="cmsApp.authorizedSignatory.signatoryFatherName">Signatory Father Name</Translate>
+                    Signatory Father Name
                   </Label>
                   <AvField
                     id="authorized-signatory-signatoryFatherName"
                     type="text"
                     name="signatoryFatherName"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="signatoryDesignationLabel" for="signatoryDesignation">
-                    <Translate contentKey="cmsApp.authorizedSignatory.signatoryDesignation">Signatory Designation</Translate>
+                    Signatory Designation
                   </Label>
                   <AvField
                     id="authorized-signatory-signatoryDesignation"
                     type="text"
                     name="signatoryDesignation"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="addressLabel" for="address">
-                    <Translate contentKey="cmsApp.authorizedSignatory.address">Address</Translate>
+                    Address
                   </Label>
                   <AvField
                     id="authorized-signatory-address"
                     type="text"
                     name="address"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="emailLabel" for="email">
-                    <Translate contentKey="cmsApp.authorizedSignatory.email">Email</Translate>
+                    Email
                   </Label>
                   <AvField
                     id="authorized-signatory-email"
                     type="text"
                     name="email"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="panCardNumberLabel" for="panCardNumber">
-                    <Translate contentKey="cmsApp.authorizedSignatory.panCardNumber">Pan Card Number</Translate>
+                    Pan Card Number
                   </Label>
                   <AvField
                     id="authorized-signatory-panCardNumber"
                     type="text"
                     name="panCardNumber"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="legalEntity.id">
-                    <Translate contentKey="cmsApp.authorizedSignatory.legalEntity">Legal Entity</Translate>
-                  </Label>
+                  <Label for="legalEntity.id">Legal Entity</Label>
                   <AvInput
                     id="authorized-signatory-legalEntity"
                     type="select"
@@ -208,14 +202,11 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/authorized-signatory" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

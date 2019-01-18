@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,129 +25,89 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.legalEntity.detail.title">LegalEntity</Translate> [<b>{legalEntityEntity.id}</b>]
+            LegalEntity [<b>{legalEntityEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="logo">
-                <Translate contentKey="cmsApp.legalEntity.logo">Logo</Translate>
-              </span>
+              <span id="logo">Logo</span>
             </dt>
             <dd>{legalEntityEntity.logo}</dd>
             <dt>
-              <span id="legalNameOfTheCollege">
-                <Translate contentKey="cmsApp.legalEntity.legalNameOfTheCollege">Legal Name Of The College</Translate>
-              </span>
+              <span id="legalNameOfTheCollege">Legal Name Of The College</span>
             </dt>
             <dd>{legalEntityEntity.legalNameOfTheCollege}</dd>
             <dt>
-              <span id="typeOfCollege">
-                <Translate contentKey="cmsApp.legalEntity.typeOfCollege">Type Of College</Translate>
-              </span>
+              <span id="typeOfCollege">Type Of College</span>
             </dt>
             <dd>{legalEntityEntity.typeOfCollege}</dd>
             <dt>
-              <span id="dateOfIncorporation">
-                <Translate contentKey="cmsApp.legalEntity.dateOfIncorporation">Date Of Incorporation</Translate>
-              </span>
+              <span id="dateOfIncorporation">Date Of Incorporation</span>
             </dt>
             <dd>
               <TextFormat value={legalEntityEntity.dateOfIncorporation} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="registeredOfficeAddress">
-                <Translate contentKey="cmsApp.legalEntity.registeredOfficeAddress">Registered Office Address</Translate>
-              </span>
+              <span id="registeredOfficeAddress">Registered Office Address</span>
             </dt>
             <dd>{legalEntityEntity.registeredOfficeAddress}</dd>
             <dt>
-              <span id="collegeIdentificationNumber">
-                <Translate contentKey="cmsApp.legalEntity.collegeIdentificationNumber">College Identification Number</Translate>
-              </span>
+              <span id="collegeIdentificationNumber">College Identification Number</span>
             </dt>
             <dd>{legalEntityEntity.collegeIdentificationNumber}</dd>
             <dt>
-              <span id="pan">
-                <Translate contentKey="cmsApp.legalEntity.pan">Pan</Translate>
-              </span>
+              <span id="pan">Pan</span>
             </dt>
             <dd>{legalEntityEntity.pan}</dd>
             <dt>
-              <span id="tan">
-                <Translate contentKey="cmsApp.legalEntity.tan">Tan</Translate>
-              </span>
+              <span id="tan">Tan</span>
             </dt>
             <dd>{legalEntityEntity.tan}</dd>
             <dt>
-              <span id="tanCircleNumber">
-                <Translate contentKey="cmsApp.legalEntity.tanCircleNumber">Tan Circle Number</Translate>
-              </span>
+              <span id="tanCircleNumber">Tan Circle Number</span>
             </dt>
             <dd>{legalEntityEntity.tanCircleNumber}</dd>
             <dt>
-              <span id="citTdsLocation">
-                <Translate contentKey="cmsApp.legalEntity.citTdsLocation">Cit Tds Location</Translate>
-              </span>
+              <span id="citTdsLocation">Cit Tds Location</span>
             </dt>
             <dd>{legalEntityEntity.citTdsLocation}</dd>
             <dt>
-              <span id="formSignatory">
-                <Translate contentKey="cmsApp.legalEntity.formSignatory">Form Signatory</Translate>
-              </span>
+              <span id="formSignatory">Form Signatory</span>
             </dt>
             <dd>{legalEntityEntity.formSignatory}</dd>
             <dt>
-              <span id="pfNumber">
-                <Translate contentKey="cmsApp.legalEntity.pfNumber">Pf Number</Translate>
-              </span>
+              <span id="pfNumber">Pf Number</span>
             </dt>
             <dd>{legalEntityEntity.pfNumber}</dd>
             <dt>
-              <span id="registrationDate">
-                <Translate contentKey="cmsApp.legalEntity.registrationDate">Registration Date</Translate>
-              </span>
+              <span id="registrationDate">Registration Date</span>
             </dt>
             <dd>
               <TextFormat value={legalEntityEntity.registrationDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="esiNumber">
-                <Translate contentKey="cmsApp.legalEntity.esiNumber">Esi Number</Translate>
-              </span>
+              <span id="esiNumber">Esi Number</span>
             </dt>
             <dd>{legalEntityEntity.esiNumber}</dd>
             <dt>
-              <span id="ptRegistrationDate">
-                <Translate contentKey="cmsApp.legalEntity.ptRegistrationDate">Pt Registration Date</Translate>
-              </span>
+              <span id="ptRegistrationDate">Pt Registration Date</span>
             </dt>
             <dd>
               <TextFormat value={legalEntityEntity.ptRegistrationDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="ptSignatory">
-                <Translate contentKey="cmsApp.legalEntity.ptSignatory">Pt Signatory</Translate>
-              </span>
+              <span id="ptSignatory">Pt Signatory</span>
             </dt>
             <dd>{legalEntityEntity.ptSignatory}</dd>
             <dt>
-              <span id="ptNumber">
-                <Translate contentKey="cmsApp.legalEntity.ptNumber">Pt Number</Translate>
-              </span>
+              <span id="ptNumber">Pt Number</span>
             </dt>
             <dd>{legalEntityEntity.ptNumber}</dd>
           </dl>
           <Button tag={Link} to="/entity/legal-entity" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/legal-entity/${legalEntityEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

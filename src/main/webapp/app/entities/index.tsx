@@ -20,12 +20,11 @@ import CourseOffer from './course-offer';
 import AttendanceMaster from './attendance-master';
 import Lecture from './lecture';
 import StudentAttendance from './student-attendance';
+import StudentSubject from './student-subject';
 import Location from './location';
 import LegalEntity from './legal-entity';
 import AuthorizedSignatory from './authorized-signatory';
 import BankAccounts from './bank-accounts';
-import TestEntity from './test-entity';
-import StudentSubject from './student-subject';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -48,12 +47,11 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/attendance-master`} component={AttendanceMaster} />
       <ErrorBoundaryRoute path={`${match.url}/lecture`} component={Lecture} />
       <ErrorBoundaryRoute path={`${match.url}/student-attendance`} component={StudentAttendance} />
+      <ErrorBoundaryRoute path={`${match.url}/student-subject`} component={StudentSubject} />
       <ErrorBoundaryRoute path={`${match.url}/location`} component={Location} />
       <ErrorBoundaryRoute path={`${match.url}/legal-entity`} component={LegalEntity} />
       <ErrorBoundaryRoute path={`${match.url}/authorized-signatory`} component={AuthorizedSignatory} />
       <ErrorBoundaryRoute path={`${match.url}/bank-accounts`} component={BankAccounts} />
-      <ErrorBoundaryRoute path={`${match.url}/test-entity`} component={TestEntity} />
-      <ErrorBoundaryRoute path={`${match.url}/student-subject`} component={StudentSubject} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

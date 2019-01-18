@@ -1,8 +1,7 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.synectiks.cms",
-      "nativeLanguage": "en"
+      "packageName": "com.synectiks.cms"
     },
     "jhipsterVersion": "5.1.0",
     "applicationType": "monolith",
@@ -22,7 +21,7 @@
     "serviceDiscoveryType": false,
     "buildTool": "maven",
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "da4bdce01eb320692e6c35b405c905fe2ed1739c",
+    "jwtSecretKey": "9fd82f5243c8ef7b0425d88af0e1823eab56e0ff",
     "clientFramework": "react",
     "useSass": false,
     "clientPackageManager": "yarn",
@@ -32,11 +31,6 @@
       "protractor"
     ],
     "jhiPrefix": "jhi",
-    "enableTranslation": true,
-    "nativeLanguage": "en",
-    "languages": [
-      "en",
-      "ar-ly"
-    ]
+    "enableTranslation": false
   }
 }

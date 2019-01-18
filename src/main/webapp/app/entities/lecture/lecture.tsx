@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
     return (
       <div>
         <h2 id="lecture-heading">
-          <Translate contentKey="cmsApp.lecture.home.title">Lectures</Translate>
+          Lectures
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.lecture.home.createLabel">Create new Lecture</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Lecture
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.lecture.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,27 +74,13 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.lecture.lecDate">Lec Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.lecture.lastUpdatedOn">Last Updated On</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.lecture.lastUpdatedBy">Last Updated By</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.lecture.lecStatus">Lec Status</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.lecture.desc">Desc</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.lecture.attendancemaster">Attendancemaster</Translate>
-                </th>
+                <th>ID</th>
+                <th>Lec Date</th>
+                <th>Last Updated On</th>
+                <th>Last Updated By</th>
+                <th>Lec Status</th>
+                <th>Desc</th>
+                <th>Attendancemaster</th>
                 <th />
               </tr>
             </thead>
@@ -120,9 +99,7 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
                     <TextFormat type="date" value={lecture.lastUpdatedOn} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{lecture.lastUpdatedBy}</td>
-                  <td>
-                    <Translate contentKey={`cmsApp.LecStatusEnum.${lecture.lecStatus}`} />
-                  </td>
+                  <td>{lecture.lecStatus}</td>
                   <td>{lecture.desc}</td>
                   <td>
                     {lecture.attendancemasterId ? (
@@ -134,22 +111,13 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${lecture.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${lecture.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${lecture.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

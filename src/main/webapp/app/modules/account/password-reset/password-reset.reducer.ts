@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { translate } from 'react-jhipster';
 
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
@@ -57,8 +56,8 @@ export const handlePasswordResetInit = mail => ({
   // If the content-type isn't set that way, axios will try to encode the body and thus modify the data sent to the server.
   payload: axios.post(`${apiUrl}/init`, mail, { headers: { ['Content-Type']: 'text/plain' } }),
   meta: {
-    successMessage: translate('reset.request.messages.success'),
-    errorMessage: translate('reset.request.messages.notfound')
+    successMessage: 'Check your emails for details on how to reset your password.',
+    errorMessage: "<strong>Email address isn't registered!</strong> Please check and try again"
   }
 });
 
@@ -66,7 +65,7 @@ export const handlePasswordResetFinish = (key, newPassword) => ({
   type: ACTION_TYPES.RESET_PASSWORD_FINISH,
   payload: axios.post(`${apiUrl}/finish`, { key, newPassword }),
   meta: {
-    successMessage: translate('reset.finish.messages.success')
+    successMessage: '<strong>Your password has been reset.</strong> Please '
   }
 });
 

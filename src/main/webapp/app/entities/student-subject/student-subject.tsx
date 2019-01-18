@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class StudentSubject extends React.Component<IStudentSubjectProps, IStude
     return (
       <div>
         <h2 id="student-subject-heading">
-          <Translate contentKey="cmsApp.studentSubject.home.title">Student Subjects</Translate>
+          Student Subjects
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.studentSubject.home.createLabel">Create new Student Subject</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Student Subject
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class StudentSubject extends React.Component<IStudentSubjectProps, IStude
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.studentSubject.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,21 +74,11 @@ export class StudentSubject extends React.Component<IStudentSubjectProps, IStude
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentSubject.comments">Comments</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentSubject.lastupdatedDate">Lastupdated Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentSubject.student">Student</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentSubject.subject">Subject</Translate>
-                </th>
+                <th>ID</th>
+                <th>Comments</th>
+                <th>Lastupdated Date</th>
+                <th>Student</th>
+                <th>Subject</th>
                 <th />
               </tr>
             </thead>
@@ -120,22 +103,13 @@ export class StudentSubject extends React.Component<IStudentSubjectProps, IStude
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${studentSubject.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${studentSubject.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${studentSubject.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

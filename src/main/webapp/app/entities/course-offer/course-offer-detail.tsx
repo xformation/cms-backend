@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,39 +25,25 @@ export class CourseOfferDetail extends React.Component<ICourseOfferDetailProps> 
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.courseOffer.detail.title">CourseOffer</Translate> [<b>{courseOfferEntity.id}</b>]
+            CourseOffer [<b>{courseOfferEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="desc">
-                <Translate contentKey="cmsApp.courseOffer.desc">Desc</Translate>
-              </span>
+              <span id="desc">Desc</span>
             </dt>
             <dd>{courseOfferEntity.desc}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.courseOffer.college">College</Translate>
-            </dt>
+            <dt>College</dt>
             <dd>{courseOfferEntity.collegeId ? courseOfferEntity.collegeId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.courseOffer.department">Department</Translate>
-            </dt>
+            <dt>Department</dt>
             <dd>{courseOfferEntity.departmentId ? courseOfferEntity.departmentId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.courseOffer.subject">Subject</Translate>
-            </dt>
+            <dt>Subject</dt>
             <dd>{courseOfferEntity.subjectId ? courseOfferEntity.subjectId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/course-offer" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/course-offer/${courseOfferEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,35 +25,23 @@ export class TeachDetail extends React.Component<ITeachDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.teach.detail.title">Teach</Translate> [<b>{teachEntity.id}</b>]
+            Teach [<b>{teachEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="desc">
-                <Translate contentKey="cmsApp.teach.desc">Desc</Translate>
-              </span>
+              <span id="desc">Desc</span>
             </dt>
             <dd>{teachEntity.desc}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.teach.teacher">Teacher</Translate>
-            </dt>
+            <dt>Teacher</dt>
             <dd>{teachEntity.teacherId ? teachEntity.teacherId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.teach.subject">Subject</Translate>
-            </dt>
+            <dt>Subject</dt>
             <dd>{teachEntity.subjectId ? teachEntity.subjectId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/teach" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/teach/${teachEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

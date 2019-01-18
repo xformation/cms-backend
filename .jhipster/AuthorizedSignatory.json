@@ -52,7 +52,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118111713",
+    "changelogDate": "20190118141529",
     "entityTableName": "authorized_signatory",
     "dto": "mapstruct",
     "pagination": "no",

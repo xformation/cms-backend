@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,43 +25,29 @@ export class StudentSubjectDetail extends React.Component<IStudentSubjectDetailP
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.studentSubject.detail.title">StudentSubject</Translate> [<b>{studentSubjectEntity.id}</b>]
+            StudentSubject [<b>{studentSubjectEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="comments">
-                <Translate contentKey="cmsApp.studentSubject.comments">Comments</Translate>
-              </span>
+              <span id="comments">Comments</span>
             </dt>
             <dd>{studentSubjectEntity.comments}</dd>
             <dt>
-              <span id="lastupdatedDate">
-                <Translate contentKey="cmsApp.studentSubject.lastupdatedDate">Lastupdated Date</Translate>
-              </span>
+              <span id="lastupdatedDate">Lastupdated Date</span>
             </dt>
             <dd>
               <TextFormat value={studentSubjectEntity.lastupdatedDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentSubject.student">Student</Translate>
-            </dt>
+            <dt>Student</dt>
             <dd>{studentSubjectEntity.studentId ? studentSubjectEntity.studentId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.studentSubject.subject">Subject</Translate>
-            </dt>
+            <dt>Subject</dt>
             <dd>{studentSubjectEntity.subjectId ? studentSubjectEntity.subjectId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/student-subject" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/student-subject/${studentSubjectEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

@@ -1,0 +1,30 @@
+{
+    "name": "Batch",
+    "fields": [
+        {
+            "fieldName": "batch",
+            "fieldType": "BatchEnum",
+            "fieldValues": "FIRSTYEAR,SECONDYEAR,THIRDYEAR,FOURTHYEAR",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "department",
+            "otherEntityName": "department",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190118141513",
+    "entityTableName": "batch",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

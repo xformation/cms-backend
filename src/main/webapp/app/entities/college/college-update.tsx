@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -65,9 +65,7 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.college.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.college.home.createOrEditLabel">Create or edit a College</Translate>
-            </h2>
+            <h2 id="cmsApp.college.home.createOrEditLabel">Create or edit a College</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -78,28 +76,26 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
               <AvForm model={isNew ? {} : collegeEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="college-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="shortNameLabel" for="shortName">
-                    <Translate contentKey="cmsApp.college.shortName">Short Name</Translate>
+                    Short Name
                   </Label>
                   <AvField
                     id="college-shortName"
                     type="text"
                     name="shortName"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="logoLabel" for="logo">
-                    <Translate contentKey="cmsApp.college.logo">Logo</Translate>
+                    Logo
                   </Label>
                   <AvField
                     id="college-logo"
@@ -107,14 +103,14 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
                     className="form-control"
                     name="logo"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="backgroundImageLabel" for="backgroundImage">
-                    <Translate contentKey="cmsApp.college.backgroundImage">Background Image</Translate>
+                    Background Image
                   </Label>
                   <AvField
                     id="college-backgroundImage"
@@ -122,34 +118,31 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
                     className="form-control"
                     name="backgroundImage"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="instructionInformationLabel" for="instructionInformation">
-                    <Translate contentKey="cmsApp.college.instructionInformation">Instruction Information</Translate>
+                    Instruction Information
                   </Label>
                   <AvField
                     id="college-instructionInformation"
                     type="text"
                     name="instructionInformation"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/college" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

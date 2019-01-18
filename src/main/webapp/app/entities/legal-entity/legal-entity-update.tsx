@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -65,9 +65,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.legalEntity.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.legalEntity.home.createOrEditLabel">Create or edit a LegalEntity</Translate>
-            </h2>
+            <h2 id="cmsApp.legalEntity.home.createOrEditLabel">Create or edit a LegalEntity</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -78,15 +76,13 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
               <AvForm model={isNew ? {} : legalEntityEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="legal-entity-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="logoLabel" for="logo">
-                    <Translate contentKey="cmsApp.legalEntity.logo">Logo</Translate>
+                    Logo
                   </Label>
                   <AvField
                     id="legal-entity-logo"
@@ -94,28 +90,26 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     className="form-control"
                     name="logo"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="legalNameOfTheCollegeLabel" for="legalNameOfTheCollege">
-                    <Translate contentKey="cmsApp.legalEntity.legalNameOfTheCollege">Legal Name Of The College</Translate>
+                    Legal Name Of The College
                   </Label>
                   <AvField
                     id="legal-entity-legalNameOfTheCollege"
                     type="text"
                     name="legalNameOfTheCollege"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="typeOfCollegeLabel">
-                    <Translate contentKey="cmsApp.legalEntity.typeOfCollege">Type Of College</Translate>
-                  </Label>
+                  <Label id="typeOfCollegeLabel">Type Of College</Label>
                   <AvInput
                     id="legal-entity-typeOfCollege"
                     type="select"
@@ -123,17 +117,13 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     name="typeOfCollege"
                     value={(!isNew && legalEntityEntity.typeOfCollege) || 'PRIVATE'}
                   >
-                    <option value="PRIVATE">
-                      <Translate contentKey="cmsApp.TypeOfCollege.PRIVATE" />
-                    </option>
-                    <option value="PUBLIC">
-                      <Translate contentKey="cmsApp.TypeOfCollege.PUBLIC" />
-                    </option>
+                    <option value="PRIVATE">PRIVATE</option>
+                    <option value="PUBLIC">PUBLIC</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="dateOfIncorporationLabel" for="dateOfIncorporation">
-                    <Translate contentKey="cmsApp.legalEntity.dateOfIncorporation">Date Of Incorporation</Translate>
+                    Date Of Incorporation
                   </Label>
                   <AvField
                     id="legal-entity-dateOfIncorporation"
@@ -141,117 +131,117 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     className="form-control"
                     name="dateOfIncorporation"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="registeredOfficeAddressLabel" for="registeredOfficeAddress">
-                    <Translate contentKey="cmsApp.legalEntity.registeredOfficeAddress">Registered Office Address</Translate>
+                    Registered Office Address
                   </Label>
                   <AvField
                     id="legal-entity-registeredOfficeAddress"
                     type="text"
                     name="registeredOfficeAddress"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="collegeIdentificationNumberLabel" for="collegeIdentificationNumber">
-                    <Translate contentKey="cmsApp.legalEntity.collegeIdentificationNumber">College Identification Number</Translate>
+                    College Identification Number
                   </Label>
                   <AvField
                     id="legal-entity-collegeIdentificationNumber"
                     type="text"
                     name="collegeIdentificationNumber"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="panLabel" for="pan">
-                    <Translate contentKey="cmsApp.legalEntity.pan">Pan</Translate>
+                    Pan
                   </Label>
                   <AvField
                     id="legal-entity-pan"
                     type="text"
                     name="pan"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="tanLabel" for="tan">
-                    <Translate contentKey="cmsApp.legalEntity.tan">Tan</Translate>
+                    Tan
                   </Label>
                   <AvField
                     id="legal-entity-tan"
                     type="text"
                     name="tan"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="tanCircleNumberLabel" for="tanCircleNumber">
-                    <Translate contentKey="cmsApp.legalEntity.tanCircleNumber">Tan Circle Number</Translate>
+                    Tan Circle Number
                   </Label>
                   <AvField
                     id="legal-entity-tanCircleNumber"
                     type="text"
                     name="tanCircleNumber"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="citTdsLocationLabel" for="citTdsLocation">
-                    <Translate contentKey="cmsApp.legalEntity.citTdsLocation">Cit Tds Location</Translate>
+                    Cit Tds Location
                   </Label>
                   <AvField
                     id="legal-entity-citTdsLocation"
                     type="text"
                     name="citTdsLocation"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="formSignatoryLabel" for="formSignatory">
-                    <Translate contentKey="cmsApp.legalEntity.formSignatory">Form Signatory</Translate>
+                    Form Signatory
                   </Label>
                   <AvField
                     id="legal-entity-formSignatory"
                     type="text"
                     name="formSignatory"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="pfNumberLabel" for="pfNumber">
-                    <Translate contentKey="cmsApp.legalEntity.pfNumber">Pf Number</Translate>
+                    Pf Number
                   </Label>
                   <AvField
                     id="legal-entity-pfNumber"
                     type="text"
                     name="pfNumber"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="registrationDateLabel" for="registrationDate">
-                    <Translate contentKey="cmsApp.legalEntity.registrationDate">Registration Date</Translate>
+                    Registration Date
                   </Label>
                   <AvField
                     id="legal-entity-registrationDate"
@@ -259,13 +249,13 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     className="form-control"
                     name="registrationDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="esiNumberLabel" for="esiNumber">
-                    <Translate contentKey="cmsApp.legalEntity.esiNumber">Esi Number</Translate>
+                    Esi Number
                   </Label>
                   <AvField
                     id="legal-entity-esiNumber"
@@ -273,14 +263,14 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     className="form-control"
                     name="esiNumber"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="ptRegistrationDateLabel" for="ptRegistrationDate">
-                    <Translate contentKey="cmsApp.legalEntity.ptRegistrationDate">Pt Registration Date</Translate>
+                    Pt Registration Date
                   </Label>
                   <AvField
                     id="legal-entity-ptRegistrationDate"
@@ -288,26 +278,26 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     className="form-control"
                     name="ptRegistrationDate"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="ptSignatoryLabel" for="ptSignatory">
-                    <Translate contentKey="cmsApp.legalEntity.ptSignatory">Pt Signatory</Translate>
+                    Pt Signatory
                   </Label>
                   <AvField
                     id="legal-entity-ptSignatory"
                     type="text"
                     name="ptSignatory"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="ptNumberLabel" for="ptNumber">
-                    <Translate contentKey="cmsApp.legalEntity.ptNumber">Pt Number</Translate>
+                    Pt Number
                   </Label>
                   <AvField
                     id="legal-entity-ptNumber"
@@ -315,21 +305,18 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     className="form-control"
                     name="ptNumber"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') },
-                      number: { value: true, errorMessage: translate('entity.validation.number') }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/legal-entity" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

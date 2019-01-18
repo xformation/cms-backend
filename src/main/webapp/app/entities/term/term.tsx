@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class Term extends React.Component<ITermProps, ITermState> {
     return (
       <div>
         <h2 id="term-heading">
-          <Translate contentKey="cmsApp.term.home.title">Terms</Translate>
+          Terms
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.term.home.createLabel">Create new Term</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Term
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class Term extends React.Component<ITermProps, ITermState> {
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.term.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,24 +74,12 @@ export class Term extends React.Component<ITermProps, ITermState> {
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.term.termsDesc">Terms Desc</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.term.startDate">Start Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.term.endDate">End Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.term.termStatus">Term Status</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.term.academicyear">Academicyear</Translate>
-                </th>
+                <th>ID</th>
+                <th>Terms Desc</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Term Status</th>
+                <th>Academicyear</th>
                 <th />
               </tr>
             </thead>
@@ -117,29 +98,18 @@ export class Term extends React.Component<ITermProps, ITermState> {
                   <td>
                     <TextFormat type="date" value={term.endDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>
-                    <Translate contentKey={`cmsApp.Status.${term.termStatus}`} />
-                  </td>
+                  <td>{term.termStatus}</td>
                   <td>{term.academicyearId ? <Link to={`academicYear/${term.academicyearId}`}>{term.academicyearId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${term.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${term.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${term.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

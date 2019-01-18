@@ -1,5 +1,4 @@
 import React from 'react';
-import { Translate } from 'react-jhipster';
 
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, NavItem, NavLink, NavbarBrand } from 'reactstrap';
 import { NavLink as Link } from 'react-router-dom';
@@ -28,9 +27,7 @@ export const BrandIcon = props => (
 export const Brand = props => (
   <NavbarBrand tag={Link} to="/" className="brand-logo">
     <BrandIcon />
-    <span className="brand-title">
-      <Translate contentKey="global.title">Cms</Translate>
-    </span>
+    <span className="brand-title">Cms</span>
     <span className="navbar-version">{appConfig.VERSION}</span>
   </NavbarBrand>
 );
@@ -39,9 +36,7 @@ export const Home = props => (
   <NavItem>
     <NavLink tag={Link} to="/" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home" />
-      <span>
-        <Translate contentKey="global.menu.home">Home</Translate>
-      </span>
+      <span>Home</span>
     </NavLink>
   </NavItem>
 );

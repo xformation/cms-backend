@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,47 +25,31 @@ export class SubjectDetail extends React.Component<ISubjectDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.subject.detail.title">Subject</Translate> [<b>{subjectEntity.id}</b>]
+            Subject [<b>{subjectEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="subjectCode">
-                <Translate contentKey="cmsApp.subject.subjectCode">Subject Code</Translate>
-              </span>
+              <span id="subjectCode">Subject Code</span>
             </dt>
             <dd>{subjectEntity.subjectCode}</dd>
             <dt>
-              <span id="subjectType">
-                <Translate contentKey="cmsApp.subject.subjectType">Subject Type</Translate>
-              </span>
+              <span id="subjectType">Subject Type</span>
             </dt>
             <dd>{subjectEntity.subjectType}</dd>
             <dt>
-              <span id="subjectDesc">
-                <Translate contentKey="cmsApp.subject.subjectDesc">Subject Desc</Translate>
-              </span>
+              <span id="subjectDesc">Subject Desc</span>
             </dt>
             <dd>{subjectEntity.subjectDesc}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.subject.department">Department</Translate>
-            </dt>
+            <dt>Department</dt>
             <dd>{subjectEntity.departmentId ? subjectEntity.departmentId : ''}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.subject.teacher">Teacher</Translate>
-            </dt>
+            <dt>Teacher</dt>
             <dd>{subjectEntity.teacherId ? subjectEntity.teacherId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/subject" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/subject/${subjectEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

@@ -1,9 +1,0 @@
-{
-    "cmsApp": {
-        "ElectiveEnum" : {
-            "null": "",
-            "JAVA": "JAVA",
-            "C": "C"
-        }
-    }
-}

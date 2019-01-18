@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -48,10 +48,9 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
     return (
       <div>
         <h2 id="student-attendance-heading">
-          <Translate contentKey="cmsApp.studentAttendance.home.title">Student Attendances</Translate>
+          Student Attendances
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
-            <Translate contentKey="cmsApp.studentAttendance.home.createLabel">Create new Student Attendance</Translate>
+            <FontAwesomeIcon icon="plus" />&nbsp; Create new Student Attendance
           </Link>
         </h2>
         <Row>
@@ -59,13 +58,7 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
             <AvForm onSubmit={this.search}>
               <AvGroup>
                 <InputGroup>
-                  <AvInput
-                    type="text"
-                    name="search"
-                    value={this.state.search}
-                    onChange={this.handleSearch}
-                    placeholder={translate('cmsApp.studentAttendance.home.search')}
-                  />
+                  <AvInput type="text" name="search" value={this.state.search} onChange={this.handleSearch} placeholder="Search" />
                   <Button className="input-group-addon">
                     <FontAwesomeIcon icon="search" />
                   </Button>
@@ -81,24 +74,12 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
           <Table responsive>
             <thead>
               <tr>
-                <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.attendanceStatus">Attendance Status</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.comments">Comments</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.attendanceDate">Attendance Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.student">Student</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cmsApp.studentAttendance.lecture">Lecture</Translate>
-                </th>
+                <th>ID</th>
+                <th>Attendance Status</th>
+                <th>Comments</th>
+                <th>Attendance Date</th>
+                <th>Student</th>
+                <th>Lecture</th>
                 <th />
               </tr>
             </thead>
@@ -110,9 +91,7 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                       {studentAttendance.id}
                     </Button>
                   </td>
-                  <td>
-                    <Translate contentKey={`cmsApp.AttendanceStatusEnum.${studentAttendance.attendanceStatus}`} />
-                  </td>
+                  <td>{studentAttendance.attendanceStatus}</td>
                   <td>{studentAttendance.comments}</td>
                   <td>
                     <TextFormat type="date" value={studentAttendance.attendanceDate} format={APP_LOCAL_DATE_FORMAT} />
@@ -134,22 +113,13 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${studentAttendance.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${studentAttendance.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${studentAttendance.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
                   </td>

@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
+import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
@@ -65,9 +65,7 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="cmsApp.location.home.createOrEditLabel">
-              <Translate contentKey="cmsApp.location.home.createOrEditLabel">Create or edit a Location</Translate>
-            </h2>
+            <h2 id="cmsApp.location.home.createOrEditLabel">Create or edit a Location</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -78,61 +76,56 @@ export class LocationUpdate extends React.Component<ILocationUpdateProps, ILocat
               <AvForm model={isNew ? {} : locationEntity} onSubmit={this.saveEntity}>
                 {!isNew ? (
                   <AvGroup>
-                    <Label for="id">
-                      <Translate contentKey="global.field.id">ID</Translate>
-                    </Label>
+                    <Label for="id">ID</Label>
                     <AvInput id="location-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
                 <AvGroup>
                   <Label id="nameLabel" for="name">
-                    <Translate contentKey="cmsApp.location.name">Name</Translate>
+                    Name
                   </Label>
                   <AvField
                     id="location-name"
                     type="text"
                     name="name"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="addressLabel" for="address">
-                    <Translate contentKey="cmsApp.location.address">Address</Translate>
+                    Address
                   </Label>
                   <AvField
                     id="location-address"
                     type="text"
                     name="address"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
                   <Label id="appliesToLabel" for="appliesTo">
-                    <Translate contentKey="cmsApp.location.appliesTo">Applies To</Translate>
+                    Applies To
                   </Label>
                   <AvField
                     id="location-appliesTo"
                     type="text"
                     name="appliesTo"
                     validate={{
-                      required: { value: true, errorMessage: translate('entity.validation.required') }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/location" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.back">Back</Translate>
-                  </span>
+                  <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
-                  <Translate contentKey="entity.action.save">Save</Translate>
+                  <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
             )}

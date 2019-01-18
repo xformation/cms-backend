@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,31 +25,21 @@ export class BatchDetail extends React.Component<IBatchDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.batch.detail.title">Batch</Translate> [<b>{batchEntity.id}</b>]
+            Batch [<b>{batchEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="batch">
-                <Translate contentKey="cmsApp.batch.batch">Batch</Translate>
-              </span>
+              <span id="batch">Batch</span>
             </dt>
             <dd>{batchEntity.batch}</dd>
-            <dt>
-              <Translate contentKey="cmsApp.batch.department">Department</Translate>
-            </dt>
+            <dt>Department</dt>
             <dd>{batchEntity.departmentId ? batchEntity.departmentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/batch" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/batch/${batchEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>

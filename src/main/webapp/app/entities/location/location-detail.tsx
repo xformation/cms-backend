@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -25,39 +25,27 @@ export class LocationDetail extends React.Component<ILocationDetailProps> {
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="cmsApp.location.detail.title">Location</Translate> [<b>{locationEntity.id}</b>]
+            Location [<b>{locationEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="name">
-                <Translate contentKey="cmsApp.location.name">Name</Translate>
-              </span>
+              <span id="name">Name</span>
             </dt>
             <dd>{locationEntity.name}</dd>
             <dt>
-              <span id="address">
-                <Translate contentKey="cmsApp.location.address">Address</Translate>
-              </span>
+              <span id="address">Address</span>
             </dt>
             <dd>{locationEntity.address}</dd>
             <dt>
-              <span id="appliesTo">
-                <Translate contentKey="cmsApp.location.appliesTo">Applies To</Translate>
-              </span>
+              <span id="appliesTo">Applies To</span>
             </dt>
             <dd>{locationEntity.appliesTo}</dd>
           </dl>
           <Button tag={Link} to="/entity/location" replace color="info">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.back">Back</Translate>
-            </span>
+            <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
           </Button>&nbsp;
           <Button tag={Link} to={`/entity/location/${locationEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
+            <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
           </Button>
         </Col>
       </Row>
