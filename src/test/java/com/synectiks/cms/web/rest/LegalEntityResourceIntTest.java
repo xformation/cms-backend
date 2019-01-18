@@ -25,9 +25,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -58,8 +58,8 @@ public class LegalEntityResourceIntTest {
     private static final TypeOfCollege DEFAULT_TYPE_OF_COLLEGE = TypeOfCollege.PRIVATE;
     private static final TypeOfCollege UPDATED_TYPE_OF_COLLEGE = TypeOfCollege.PUBLIC;
 
-    private static final LocalDate DEFAULT_DATE_OF_INCORPORATION = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE_OF_INCORPORATION = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_DATE_OF_INCORPORATION = new Date();
+    private static final Date UPDATED_DATE_OF_INCORPORATION = new Date();
 
     private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_REGISTERED_OFFICE_ADDRESS = "BBBBBBBBBB";
@@ -85,14 +85,14 @@ public class LegalEntityResourceIntTest {
     private static final String DEFAULT_PF_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PF_NUMBER = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_REGISTRATION_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_REGISTRATION_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_REGISTRATION_DATE =new Date();
+    private static final Date UPDATED_REGISTRATION_DATE = new Date();
 
     private static final Long DEFAULT_ESI_NUMBER = 1L;
     private static final Long UPDATED_ESI_NUMBER = 2L;
 
-    private static final LocalDate DEFAULT_PT_REGISTRATION_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_PT_REGISTRATION_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_PT_REGISTRATION_DATE = new Date();
+    private static final Date UPDATED_PT_REGISTRATION_DATE = new Date();
 
     private static final String DEFAULT_PT_SIGNATORY = "AAAAAAAAAA";
     private static final String UPDATED_PT_SIGNATORY = "BBBBBBBBBB";
@@ -106,7 +106,7 @@ public class LegalEntityResourceIntTest {
 
     @Autowired
     private LegalEntityMapper legalEntityMapper;
-    
+
 
     @Autowired
     private LegalEntityService legalEntityService;
@@ -153,24 +153,24 @@ public class LegalEntityResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static LegalEntity createEntity(EntityManager em) {
-        LegalEntity legalEntity = new LegalEntity()
-            .logo(DEFAULT_LOGO)
-            .legalNameOfTheCollege(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)
-            .typeOfCollege(DEFAULT_TYPE_OF_COLLEGE)
-            .dateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION)
-            .registeredOfficeAddress(DEFAULT_REGISTERED_OFFICE_ADDRESS)
-            .collegeIdentificationNumber(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER)
-            .pan(DEFAULT_PAN)
-            .tan(DEFAULT_TAN)
-            .tanCircleNumber(DEFAULT_TAN_CIRCLE_NUMBER)
-            .citTdsLocation(DEFAULT_CIT_TDS_LOCATION)
-            .formSignatory(DEFAULT_FORM_SIGNATORY)
-            .pfNumber(DEFAULT_PF_NUMBER)
-            .registrationDate(DEFAULT_REGISTRATION_DATE)
-            .esiNumber(DEFAULT_ESI_NUMBER)
-            .ptRegistrationDate(DEFAULT_PT_REGISTRATION_DATE)
-            .ptSignatory(DEFAULT_PT_SIGNATORY)
-            .ptNumber(DEFAULT_PT_NUMBER);
+        LegalEntity legalEntity = new LegalEntity();
+        legalEntity.logo(DEFAULT_LOGO);
+        legalEntity.legalNameOfTheCollege(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE);
+        legalEntity.typeOfCollege(DEFAULT_TYPE_OF_COLLEGE);
+        legalEntity.setDateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION);
+        legalEntity.registeredOfficeAddress(DEFAULT_REGISTERED_OFFICE_ADDRESS);
+        legalEntity.collegeIdentificationNumber(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER);
+        legalEntity.pan(DEFAULT_PAN);
+        legalEntity.tan(DEFAULT_TAN);
+        legalEntity.tanCircleNumber(DEFAULT_TAN_CIRCLE_NUMBER);
+        legalEntity.citTdsLocation(DEFAULT_CIT_TDS_LOCATION);
+        legalEntity.formSignatory(DEFAULT_FORM_SIGNATORY);
+        legalEntity.pfNumber(DEFAULT_PF_NUMBER);
+        legalEntity.setRegistrationDate(DEFAULT_REGISTRATION_DATE);
+        legalEntity.esiNumber(DEFAULT_ESI_NUMBER);
+        legalEntity.setPtRegistrationDate(DEFAULT_PT_REGISTRATION_DATE);
+        legalEntity.ptSignatory(DEFAULT_PT_SIGNATORY);
+        legalEntity.ptNumber(DEFAULT_PT_NUMBER);
         return legalEntity;
     }
 
@@ -592,7 +592,7 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.toString())))
             .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.intValue())));
     }
-    
+
 
     @Test
     @Transactional
@@ -643,24 +643,24 @@ public class LegalEntityResourceIntTest {
         LegalEntity updatedLegalEntity = legalEntityRepository.findById(legalEntity.getId()).get();
         // Disconnect from session so that the updates on updatedLegalEntity are not directly saved in db
         em.detach(updatedLegalEntity);
-        updatedLegalEntity
-            .logo(UPDATED_LOGO)
-            .legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE)
-            .typeOfCollege(UPDATED_TYPE_OF_COLLEGE)
-            .dateOfIncorporation(UPDATED_DATE_OF_INCORPORATION)
-            .registeredOfficeAddress(UPDATED_REGISTERED_OFFICE_ADDRESS)
-            .collegeIdentificationNumber(UPDATED_COLLEGE_IDENTIFICATION_NUMBER)
-            .pan(UPDATED_PAN)
-            .tan(UPDATED_TAN)
-            .tanCircleNumber(UPDATED_TAN_CIRCLE_NUMBER)
-            .citTdsLocation(UPDATED_CIT_TDS_LOCATION)
-            .formSignatory(UPDATED_FORM_SIGNATORY)
-            .pfNumber(UPDATED_PF_NUMBER)
-            .registrationDate(UPDATED_REGISTRATION_DATE)
-            .esiNumber(UPDATED_ESI_NUMBER)
-            .ptRegistrationDate(UPDATED_PT_REGISTRATION_DATE)
-            .ptSignatory(UPDATED_PT_SIGNATORY)
-            .ptNumber(UPDATED_PT_NUMBER);
+        //updatedLegalEntity
+        updatedLegalEntity.logo(UPDATED_LOGO);
+        updatedLegalEntity.legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE);
+        updatedLegalEntity.typeOfCollege(UPDATED_TYPE_OF_COLLEGE);
+        updatedLegalEntity.dateOfIncorporation(UPDATED_DATE_OF_INCORPORATION);
+        updatedLegalEntity.registeredOfficeAddress(UPDATED_REGISTERED_OFFICE_ADDRESS);
+        updatedLegalEntity.collegeIdentificationNumber(UPDATED_COLLEGE_IDENTIFICATION_NUMBER);
+        updatedLegalEntity.pan(UPDATED_PAN);
+        updatedLegalEntity.tan(UPDATED_TAN);
+        updatedLegalEntity.tanCircleNumber(UPDATED_TAN_CIRCLE_NUMBER);
+        updatedLegalEntity.citTdsLocation(UPDATED_CIT_TDS_LOCATION);
+        updatedLegalEntity.formSignatory(UPDATED_FORM_SIGNATORY);
+        updatedLegalEntity.pfNumber(UPDATED_PF_NUMBER);
+        updatedLegalEntity.registrationDate(UPDATED_REGISTRATION_DATE);
+        updatedLegalEntity.esiNumber(UPDATED_ESI_NUMBER);
+        updatedLegalEntity.ptRegistrationDate(UPDATED_PT_REGISTRATION_DATE);
+        updatedLegalEntity.ptSignatory(UPDATED_PT_SIGNATORY);
+        updatedLegalEntity.ptNumber(UPDATED_PT_NUMBER);
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(updatedLegalEntity);
 
         restLegalEntityMockMvc.perform(put("/api/legal-entities")

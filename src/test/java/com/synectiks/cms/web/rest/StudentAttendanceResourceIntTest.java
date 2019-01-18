@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -55,8 +56,8 @@ public class StudentAttendanceResourceIntTest {
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_ATTENDANCE_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_ATTENDANCE_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_ATTENDANCE_DATE = new Date();
+    private static final Date UPDATED_ATTENDANCE_DATE = new Date();
 
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
@@ -64,7 +65,7 @@ public class StudentAttendanceResourceIntTest {
 
     @Autowired
     private StudentAttendanceMapper studentAttendanceMapper;
-    
+
 
     @Autowired
     private StudentAttendanceService studentAttendanceService;
@@ -111,10 +112,10 @@ public class StudentAttendanceResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static StudentAttendance createEntity(EntityManager em) {
-        StudentAttendance studentAttendance = new StudentAttendance()
-            .attendanceStatus(DEFAULT_ATTENDANCE_STATUS)
-            .comments(DEFAULT_COMMENTS)
-            .attendanceDate(DEFAULT_ATTENDANCE_DATE);
+        StudentAttendance studentAttendance = new StudentAttendance();
+        studentAttendance.attendanceStatus(DEFAULT_ATTENDANCE_STATUS);
+        studentAttendance.comments(DEFAULT_COMMENTS);
+        studentAttendance.setAttendanceDate(DEFAULT_ATTENDANCE_DATE);
         return studentAttendance;
     }
 
@@ -242,7 +243,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].attendanceDate").value(hasItem(DEFAULT_ATTENDANCE_DATE.toString())));
     }
-    
+
 
     @Test
     @Transactional
@@ -279,10 +280,10 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance updatedStudentAttendance = studentAttendanceRepository.findById(studentAttendance.getId()).get();
         // Disconnect from session so that the updates on updatedStudentAttendance are not directly saved in db
         em.detach(updatedStudentAttendance);
-        updatedStudentAttendance
-            .attendanceStatus(UPDATED_ATTENDANCE_STATUS)
-            .comments(UPDATED_COMMENTS)
-            .attendanceDate(UPDATED_ATTENDANCE_DATE);
+        //updatedStudentAttendance
+        updatedStudentAttendance.attendanceStatus(UPDATED_ATTENDANCE_STATUS);
+        updatedStudentAttendance.comments(UPDATED_COMMENTS);
+        updatedStudentAttendance.setAttendanceDate(UPDATED_ATTENDANCE_DATE);
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(updatedStudentAttendance);
 
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")

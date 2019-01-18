@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -51,8 +52,8 @@ public class StudentSubjectResourceIntTest {
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_LASTUPDATED_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_LASTUPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_LASTUPDATED_DATE = new Date();
+    private static final Date UPDATED_LASTUPDATED_DATE = new Date();
 
     @Autowired
     private StudentSubjectRepository studentSubjectRepository;
@@ -60,7 +61,7 @@ public class StudentSubjectResourceIntTest {
 
     @Autowired
     private StudentSubjectMapper studentSubjectMapper;
-    
+
 
     @Autowired
     private StudentSubjectService studentSubjectService;
@@ -107,9 +108,9 @@ public class StudentSubjectResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static StudentSubject createEntity(EntityManager em) {
-        StudentSubject studentSubject = new StudentSubject()
-            .comments(DEFAULT_COMMENTS)
-            .lastupdatedDate(DEFAULT_LASTUPDATED_DATE);
+        StudentSubject studentSubject = new StudentSubject();
+        studentSubject.comments(DEFAULT_COMMENTS);
+        studentSubject.setLastupdatedDate(DEFAULT_LASTUPDATED_DATE);
         return studentSubject;
     }
 
@@ -197,7 +198,7 @@ public class StudentSubjectResourceIntTest {
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].lastupdatedDate").value(hasItem(DEFAULT_LASTUPDATED_DATE.toString())));
     }
-    
+
 
     @Test
     @Transactional
@@ -233,9 +234,9 @@ public class StudentSubjectResourceIntTest {
         StudentSubject updatedStudentSubject = studentSubjectRepository.findById(studentSubject.getId()).get();
         // Disconnect from session so that the updates on updatedStudentSubject are not directly saved in db
         em.detach(updatedStudentSubject);
-        updatedStudentSubject
-            .comments(UPDATED_COMMENTS)
-            .lastupdatedDate(UPDATED_LASTUPDATED_DATE);
+        //updatedStudentSubject
+        updatedStudentSubject.comments(UPDATED_COMMENTS);
+        updatedStudentSubject.setLastupdatedDate(UPDATED_LASTUPDATED_DATE);
         StudentSubjectDTO studentSubjectDTO = studentSubjectMapper.toDto(updatedStudentSubject);
 
         restStudentSubjectMockMvc.perform(put("/api/student-subjects")

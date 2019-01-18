@@ -10,6 +10,7 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.LecStatusEnum;
@@ -32,11 +33,11 @@ public class Lecture implements Serializable {
 
     @NotNull
     @Column(name = "lec_date", nullable = false)
-    private LocalDate lecDate;
+    private Date lecDate;
 
     @NotNull
     @Column(name = "last_updated_on", nullable = false)
-    private LocalDate lastUpdatedOn;
+    private Date lastUpdatedOn;
 
     @NotNull
     @Column(name = "last_updated_by", nullable = false)
@@ -63,29 +64,29 @@ public class Lecture implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getLecDate() {
+    public Date getLecDate() {
         return lecDate;
     }
 
-    public Lecture lecDate(LocalDate lecDate) {
+    public Lecture lecDate(Date lecDate) {
         this.lecDate = lecDate;
         return this;
     }
 
-    public void setLecDate(LocalDate lecDate) {
+    public void setLecDate(Date lecDate) {
         this.lecDate = lecDate;
     }
 
-    public LocalDate getLastUpdatedOn() {
+    public Date getLastUpdatedOn() {
         return lastUpdatedOn;
     }
 
-    public Lecture lastUpdatedOn(LocalDate lastUpdatedOn) {
+    public Lecture lastUpdatedOn(Date lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
         return this;
     }
 
-    public void setLastUpdatedOn(LocalDate lastUpdatedOn) {
+    public void setLastUpdatedOn(Date lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
     }
 

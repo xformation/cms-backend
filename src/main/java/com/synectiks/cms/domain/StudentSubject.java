@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -33,7 +33,7 @@ public class StudentSubject implements Serializable {
 
     @NotNull
     @Column(name = "lastupdated_date", nullable = false)
-    private LocalDate lastupdatedDate;
+    private Date lastupdatedDate;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -65,16 +65,16 @@ public class StudentSubject implements Serializable {
         this.comments = comments;
     }
 
-    public LocalDate getLastupdatedDate() {
+    public Date getLastupdatedDate() {
         return lastupdatedDate;
     }
 
-    public StudentSubject lastupdatedDate(LocalDate lastupdatedDate) {
+    public StudentSubject lastupdatedDate(Date lastupdatedDate) {
         this.lastupdatedDate = lastupdatedDate;
         return this;
     }
 
-    public void setLastupdatedDate(LocalDate lastupdatedDate) {
+    public void setLastupdatedDate(Date lastupdatedDate) {
         this.lastupdatedDate = lastupdatedDate;
     }
 
