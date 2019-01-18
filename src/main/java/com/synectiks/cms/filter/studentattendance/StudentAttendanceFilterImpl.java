@@ -27,8 +27,8 @@ public class StudentAttendanceFilterImpl  {
         "from student st  " +
         "left join student_attendance sa on st.id = sa.student_id  " +
         "inner join department dt on st.department_id = dt.id " +
-        "inner join lecture lc on lc.id = sa.lecture_id " +
-        "inner join subject sb on st.id = sb.student_id " +
+        "inner join student_subject ss on ss.student_id = st.id " + 
+        "inner join subject sb on ss.subject_id = sb.id " +
         "where st.branch_id = ? and dt.id = ? and st.batch_id = ? and st.section_id = ? and sb.id = ? ";
 
     public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) {
