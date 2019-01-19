@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -36,8 +37,8 @@ public class AttendanceMaster implements Serializable {
     @JoinColumn(unique = true)
     private Section section;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("")
     private AcademicYear academicyear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

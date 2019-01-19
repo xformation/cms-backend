@@ -103,7 +103,7 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
                   </td>
                   <td>
                     {attendanceMaster.academicyearId ? (
-                      <Link to={`academicYear/${attendanceMaster.academicyearId}`}>{attendanceMaster.academicyearId}</Link>
+                      <Link to={`academic-year/${attendanceMaster.academicyearId}`}>{attendanceMaster.academicyearId}</Link>
                     ) : (
                       ''
                     )}

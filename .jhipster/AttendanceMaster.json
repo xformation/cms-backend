@@ -24,15 +24,13 @@
             "otherEntityRelationshipName": "attendanceMaster"
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "academicyear",
             "otherEntityName": "academicYear",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "attendanceMaster"
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141523",
+    "changelogDate": "20190119171314",
     "entityTableName": "attendance_master",
     "dto": "mapstruct",
     "pagination": "no",

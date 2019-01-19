@@ -27,7 +27,7 @@ describe('AttendanceMaster e2e test', () => {
   it('should load create AttendanceMaster page', async () => {
     attendanceMasterComponentsPage.clickOnCreateButton();
     attendanceMasterUpdatePage = new AttendanceMasterUpdatePage();
-    expect(await attendanceMasterUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.attendanceMaster.home.createOrEditLabel/);
+    expect(await attendanceMasterUpdatePage.getPageTitle().getText()).to.match(/Create or edit a AttendanceMaster/);
   });
 
   it('should create and save AttendanceMasters', async () => {

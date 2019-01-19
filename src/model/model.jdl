@@ -182,7 +182,8 @@ Term{academicyear} to AcademicYear,
 StudentAttendance{student} to Student,
 StudentAttendance{lecture} to Lecture,
 StudentSubject{student} to Student,
-StudentSubject{subject} to Subject
+StudentSubject{subject} to Subject,
+AttendanceMaster{academicyear} to AcademicYear
 }
 
 relationship OneToOne{
@@ -193,7 +194,6 @@ CourseOffer{department} to Department,
 CourseOffer{subject} to Subject,
 AttendanceMaster{teach} to Teach,
 AttendanceMaster{section} to Section,
-AttendanceMaster{academicyear} to AcademicYear
 }
 
 dto * with mapstruct
