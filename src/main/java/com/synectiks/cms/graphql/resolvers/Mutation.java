@@ -1,14 +1,53 @@
 package com.synectiks.cms.graphql.resolvers;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.graphql.types.StudentSubject.*;
-import com.synectiks.cms.repository.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.CourseOffer;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.StudentSubject;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
+import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
+import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
+import com.synectiks.cms.filter.studentattendance.UpdateStudentAttendanceInputPayload;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearInput;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearPayload;
 import com.synectiks.cms.graphql.types.AcademicYear.RemoveAcademicYearInput;
@@ -105,6 +144,12 @@ import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendance
 import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendancePayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendanceInput;
 import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendancePayload;
+import com.synectiks.cms.graphql.types.StudentSubject.AddStudentSubjectInput;
+import com.synectiks.cms.graphql.types.StudentSubject.AddStudentSubjectPayload;
+import com.synectiks.cms.graphql.types.StudentSubject.RemoveStudentSubjectInput;
+import com.synectiks.cms.graphql.types.StudentSubject.RemoveStudentSubjectPayload;
+import com.synectiks.cms.graphql.types.StudentSubject.UpdateStudentSubjectPayload;
+import com.synectiks.cms.graphql.types.StudentSubject.UpdatestudentSubjectInput;
 import com.synectiks.cms.graphql.types.Subject.AddSubjectInput;
 import com.synectiks.cms.graphql.types.Subject.AddSubjectPayload;
 import com.synectiks.cms.graphql.types.Subject.RemoveSubjectInput;
@@ -129,6 +174,27 @@ import com.synectiks.cms.graphql.types.Term.RemoveTermInput;
 import com.synectiks.cms.graphql.types.Term.RemoveTermPayload;
 import com.synectiks.cms.graphql.types.Term.UpdateTermInput;
 import com.synectiks.cms.graphql.types.Term.UpdateTermPayload;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.CourseOfferRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.StudentSubjectRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
 
 
 @Component
@@ -162,6 +228,12 @@ public class Mutation implements GraphQLMutationResolver {
     private final TermRepository termRepository;
     private final StudentSubjectRepository studentSubjectRepository;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    @Autowired
+    private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
+    
     public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, CourseOfferRepository courseOfferRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
@@ -1175,6 +1247,67 @@ public class Mutation implements GraphQLMutationResolver {
     	lectureRepository.delete(lecture);
         return new RemoveLecturePayload(Lists.newArrayList(lectureRepository.findAll()));
     }
+    
+    @Transactional
+    public List<DailyAttendanceVo> updateStudenceAttendanceData (UpdateStudentAttendanceInputPayload updateStudentAttendanceInputPayload,
+    		StudentAttendanceFilterInput filter) throws JSONException, ParseException {
+    	String[] values = updateStudentAttendanceInputPayload.getValues();
+    	
+    	String sql = "update student_attendance set attendance_status= ? where attendance_date = date(?) and student_id = ? ";
+    	Query query1 = this.entityManager.createNativeQuery(sql);
+    	Query query2 = this.entityManager.createNativeQuery(sql);
+    	Query query3 = this.entityManager.createNativeQuery(sql);
+    	Query query4 = this.entityManager.createNativeQuery(sql);
+    	
+    	String sql2 = "update student_attendance set comments= ? where attendance_date = date(?) and student_id = ? ";
+    	Query query5 = this.entityManager.createNativeQuery(sql2);
+    	
+    	JSONObject jsonObj = null;
+    	for (String val : values) {
+    		val = val.replaceAll("\\{", "\\{\"").replaceAll("=", "\":\"").replaceAll(",", "\",\"").replaceAll(" ", "").replaceAll("\\}", "\"\\}");
+    		System.out.println("Array contents : "+val);
+			jsonObj = new JSONObject(val);
+			query1.setParameter(1, jsonObj.getString("currentDateStatus"));
+			query1.setParameter(2, jsonObj.getString("attendanceDate"));
+			query1.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
+			query1.executeUpdate();
+			
+			query5.setParameter(1, jsonObj.getString("comments"));
+			query5.setParameter(2, jsonObj.getString("attendanceDate"));
+			query5.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
+			query5.executeUpdate();
+			
+			query2.setParameter(1, jsonObj.getString("previousOneDayStatus"));
+			query2.setParameter(2, subtractDays(jsonObj.getString("attendanceDate"), 1));
+			query2.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
+			query2.executeUpdate();
+			
+			query3.setParameter(1, jsonObj.getString("previousOneDayStatus"));
+			query3.setParameter(2, subtractDays(jsonObj.getString("attendanceDate"), 2));
+			query3.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
+			query3.executeUpdate();
+			
+			query4.setParameter(1, jsonObj.getString("previousOneDayStatus"));
+			query4.setParameter(2, subtractDays(jsonObj.getString("attendanceDate"), 3));
+			query4.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
+			query4.executeUpdate();
+		}
+
+    	return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
+    }
+    
+    
+    public String subtractDays(String dt, int days) throws ParseException {
+    	String dtFormat = "yyyy-MM-dd";
+    	Date date=new SimpleDateFormat(dtFormat).parse(dt);
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, -days);
+		String newDt = new SimpleDateFormat(dtFormat).format(cal.getTime());
+		return newDt;
+	}
+    
+  
 }
 
 

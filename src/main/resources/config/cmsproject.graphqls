@@ -1,5 +1,6 @@
 scalar Date
 
+
 enum Status {
     ACTIVE
     DEACTIVE
@@ -270,6 +271,7 @@ type DailyAttendanceVo {
 	previousThreeDayStatus: String
 	comments: String
 }
+
 input StudentAttendanceFilterInput {
 	branchId: String!
 	departmentId: String!
@@ -366,7 +368,17 @@ type Mutation {
    addTerm(input: AddTermInput!): AddTermPayload!
    updateTerm(input: UpdateTermInput!): UpdateTermPayload!
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
+   
+   updateStudenceAttendanceData(input: UpdateStudentAttendanceInputPayload!, filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 }
+
+
+input UpdateStudentAttendanceInputPayload {
+	values: [String]!
+	
+}
+
+
 
 input AddAuthorizedSignatoryInput {
     signatoryName: String!
