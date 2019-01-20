@@ -376,7 +376,7 @@ type Mutation {
 input UpdateStudentAttendanceInputPayload {
 	values: [String]!
 	
-}
+} 
 
 
 
