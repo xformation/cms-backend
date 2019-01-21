@@ -230,7 +230,6 @@ type Student {
 type StudentAttendance {
     id: Long!
     attendanceStatus: AttendanceStatusEnum!
-    attendanceDate:Date!
     comments: String!
     student: Student!
     lecture: Lecture!
