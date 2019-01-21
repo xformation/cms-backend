@@ -6,10 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -195,6 +194,8 @@ import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.repository.TeacherRepository;
 import com.synectiks.cms.repository.TermRepository;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 
 @Component
@@ -1251,48 +1252,19 @@ public class Mutation implements GraphQLMutationResolver {
     @Transactional
     public List<DailyAttendanceVo> updateStudenceAttendanceData (UpdateStudentAttendanceInputPayload updateStudentAttendanceInputPayload,
     		StudentAttendanceFilterInput filter) throws JSONException, ParseException {
-    	String[] values = updateStudentAttendanceInputPayload.getValues();
-    	
-    	String sql = "update student_attendance set attendance_status= ? where attendance_date = date(?) and student_id = ? ";
+    	String values = updateStudentAttendanceInputPayload.getValues();
+    	System.out.println("Input contents : "+values);
+    	String sql = "update student_attendance set attendance_status= ? where attendance_date = date(?) and student_id = ? and lecture_id = ? ";
     	Query query1 = this.entityManager.createNativeQuery(sql);
-    	Query query2 = this.entityManager.createNativeQuery(sql);
-    	Query query3 = this.entityManager.createNativeQuery(sql);
-    	Query query4 = this.entityManager.createNativeQuery(sql);
-    	
-    	String sql2 = "update student_attendance set comments= ? where attendance_date = date(?) and student_id = ? ";
-    	Query query5 = this.entityManager.createNativeQuery(sql2);
-    	
-    	JSONObject jsonObj = null;
-    	for (String val : values) {
-    		val = val.replaceAll("\\{", "\\{\"").replaceAll("=", "\":\"").replaceAll(",", "\",\"").replaceAll(" ", "").replaceAll("\\}", "\"\\}");
-    		System.out.println("Array contents : "+val);
-			jsonObj = new JSONObject(val);
-			query1.setParameter(1, jsonObj.getString("currentDateStatus"));
-			query1.setParameter(2, jsonObj.getString("attendanceDate"));
-			query1.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
+    	StringTokenizer token = new StringTokenizer(values,",");
+    	while(token.hasMoreTokens()) {
+    		query1.setParameter(1, "ABSENT");
+			query1.setParameter(2, filter.getAttendanceDate());
+			query1.setParameter(3, Integer.parseInt(token.nextToken().trim()));
+			query1.setParameter(4, Integer.parseInt(filter.getLectureId()));
 			query1.executeUpdate();
-			
-			query5.setParameter(1, jsonObj.getString("comments"));
-			query5.setParameter(2, jsonObj.getString("attendanceDate"));
-			query5.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
-			query5.executeUpdate();
-			
-			query2.setParameter(1, jsonObj.getString("previousOneDayStatus"));
-			query2.setParameter(2, subtractDays(jsonObj.getString("attendanceDate"), 1));
-			query2.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
-			query2.executeUpdate();
-			
-			query3.setParameter(1, jsonObj.getString("previousOneDayStatus"));
-			query3.setParameter(2, subtractDays(jsonObj.getString("attendanceDate"), 2));
-			query3.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
-			query3.executeUpdate();
-			
-			query4.setParameter(1, jsonObj.getString("previousOneDayStatus"));
-			query4.setParameter(2, subtractDays(jsonObj.getString("attendanceDate"), 3));
-			query4.setParameter(3, Integer.parseInt(jsonObj.getString("studentId")));
-			query4.executeUpdate();
-		}
-
+    	}
+    	
     	return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
     

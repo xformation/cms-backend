@@ -281,6 +281,7 @@ input StudentAttendanceFilterInput {
 	attendanceDate: String!
 	studentId: String
 	studentName: String
+	lectureId: String!
 }
 
 
@@ -374,7 +375,7 @@ type Mutation {
 
 
 input UpdateStudentAttendanceInputPayload {
-	values: [String]!
+	values: String!
 	
 } 
 

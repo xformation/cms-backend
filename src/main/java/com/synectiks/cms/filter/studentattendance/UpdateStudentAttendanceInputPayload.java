@@ -2,13 +2,13 @@ package com.synectiks.cms.filter.studentattendance;
 
 public class UpdateStudentAttendanceInputPayload {
 
-	String values[];
+	String values;
 
-	public String[] getValues() {
+	public String getValues() {
 		return values;
 	}
 
-	public void setValues(String[] values) {
+	public void setValues(String values) {
 		this.values = values;
 	}
 	 
