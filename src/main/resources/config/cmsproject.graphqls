@@ -381,7 +381,7 @@ type QueryResult{
 input StudentAttendanceUpdateFilter {
 	studentIds: String!
 	lectureId: Long!
-}
+} 
 
 
 

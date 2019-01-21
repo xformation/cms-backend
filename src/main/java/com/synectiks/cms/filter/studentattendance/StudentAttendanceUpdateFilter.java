@@ -23,5 +23,5 @@ public class StudentAttendanceUpdateFilter {
 	public void setLectureId(long lectureId) {
 		this.lectureId = lectureId;
 	}
-        
+         
 }

@@ -15,5 +15,5 @@ public class QueryResult {
 	public void setStatusDesc(String statusDesc) {
 		this.statusDesc = statusDesc;
 	}
-	
+	 
 }
