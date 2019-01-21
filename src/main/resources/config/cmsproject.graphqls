@@ -370,14 +370,18 @@ type Mutation {
    updateTerm(input: UpdateTermInput!): UpdateTermPayload!
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
    
-   updateStudenceAttendanceData(input: UpdateStudentAttendanceInputPayload!, filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+   updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 }
 
+type QueryResult{
+	statusCode: Int!
+	statusDesc: String!
+}
 
-input UpdateStudentAttendanceInputPayload {
-	values: String!
-	
-} 
+input StudentAttendanceUpdateFilter {
+	studentIds: String!
+	lectureId: Long!
+}
 
 
 

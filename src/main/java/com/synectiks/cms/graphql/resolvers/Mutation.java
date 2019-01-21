@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
@@ -13,7 +12,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +33,7 @@ import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.LegalEntity;
 import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentAttendance;
@@ -43,10 +42,8 @@ import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
-import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
-import com.synectiks.cms.filter.studentattendance.UpdateStudentAttendanceInputPayload;
+import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearInput;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearPayload;
 import com.synectiks.cms.graphql.types.AcademicYear.RemoveAcademicYearInput;
@@ -194,8 +191,6 @@ import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.repository.TeacherRepository;
 import com.synectiks.cms.repository.TermRepository;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 
 @Component
@@ -1250,22 +1245,29 @@ public class Mutation implements GraphQLMutationResolver {
     }
     
     @Transactional
-    public List<DailyAttendanceVo> updateStudenceAttendanceData (UpdateStudentAttendanceInputPayload updateStudentAttendanceInputPayload,
-    		StudentAttendanceFilterInput filter) throws JSONException, ParseException {
-    	String values = updateStudentAttendanceInputPayload.getValues();
-    	System.out.println("Input contents : "+values);
-    	String sql = "update student_attendance set attendance_status= ? where attendance_date = date(?) and student_id = ? and lecture_id = ? ";
+    public QueryResult updateStudenceAttendanceData (StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
+    	System.out.println("Input contents : "+filter.getStudentIds());
+    	String sql = "update student_attendance set attendance_status= ? where student_id  = ?  and lecture_id = ? ";
     	Query query1 = this.entityManager.createNativeQuery(sql);
-    	StringTokenizer token = new StringTokenizer(values,",");
-    	while(token.hasMoreTokens()) {
-    		query1.setParameter(1, "ABSENT");
-			query1.setParameter(2, filter.getAttendanceDate());
-			query1.setParameter(3, Integer.parseInt(token.nextToken().trim()));
-			query1.setParameter(4, Integer.parseInt(filter.getLectureId()));
-			query1.executeUpdate();
+    	StringTokenizer token = new StringTokenizer(filter.getStudentIds(),",");
+    	QueryResult res = new QueryResult();
+    	res.setStatusCode(0);
+    	res.setStatusDesc("Records updated successfully.");
+    	try {
+    		while(token.hasMoreTokens()) {
+        		query1.setParameter(1, "ABSENT");
+    			query1.setParameter(2,  Integer.parseInt(token.nextToken()));
+    			query1.setParameter(3, filter.getLectureId());
+    			query1.executeUpdate();
+        	}
+    	}catch(Exception e) {
+    		logger.error("Exception. There is some error in updating the student attendance records. ",e);
+    		res.setStatusCode(1);
+        	res.setStatusDesc("There is some error in updating the student attendance records.");
     	}
     	
-    	return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
+    	return res;
+    	
     }
     
     
