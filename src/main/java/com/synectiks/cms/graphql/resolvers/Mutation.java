@@ -751,7 +751,7 @@ public class Mutation implements GraphQLMutationResolver {
         studentAttendance.setComments(addStudentAttendanceInput.getComments());
         studentAttendance.setStudent(student);
         studentAttendance.setLecture(lecture);
-        studentAttendance.setAttendanceDate(addStudentAttendanceInput.getAttendanceDate());
+//        studentAttendance.setAttendanceDate(addStudentAttendanceInput.getAttendanceDate());
         studentAttendanceRepository.save(studentAttendance);
         return new AddStudentAttendancePayload(studentAttendance);
     }
@@ -766,9 +766,9 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentAttendanceInput.getComments() != null) {
             studentAttendance.setComments(updateStudentAttendanceInput.getComments());
         }
-        if (updateStudentAttendanceInput.getAttendanceDate() != null) {
-            studentAttendance.setAttendanceDate(updateStudentAttendanceInput.getAttendanceDate());
-        }
+//        if (updateStudentAttendanceInput.getAttendanceDate() != null) {
+//            studentAttendance.setAttendanceDate(updateStudentAttendanceInput.getAttendanceDate());
+//        }
         if(updateStudentAttendanceInput.getStudentId() != null) {
         	final Student student = studentRepository.findById(updateStudentAttendanceInput.getStudentId()).get();
         	studentAttendance.setStudent(student);

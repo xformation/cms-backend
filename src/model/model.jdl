@@ -98,8 +98,7 @@ ACTIVE,DEACTIVE,CANCELLED
 
 entity StudentAttendance{
 attendanceStatus AttendanceStatusEnum required
-comments String required
-attendanceDate LocalDate required
+comments String
 }
 
 entity StudentSubject{
@@ -193,7 +192,7 @@ CourseOffer{college} to College,
 CourseOffer{department} to Department,
 CourseOffer{subject} to Subject,
 AttendanceMaster{teach} to Teach,
-AttendanceMaster{section} to Section,
+AttendanceMaster{section} to Section
 }
 
 dto * with mapstruct

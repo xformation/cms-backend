@@ -26,11 +26,7 @@
             </column>
 
             <column name="comments" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="attendance_date" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="student_id" type="bigint">

@@ -9,7 +9,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
@@ -35,13 +34,8 @@ public class StudentAttendance implements Serializable {
     @Column(name = "attendance_status", nullable = false)
     private AttendanceStatusEnum attendanceStatus;
 
-    @NotNull
-    @Column(name = "comments", nullable = false)
+    @Column(name = "comments")
     private String comments;
-
-    @NotNull
-    @Column(name = "attendance_date", nullable = false)
-    private Date attendanceDate;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -84,19 +78,6 @@ public class StudentAttendance implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    public Date getAttendanceDate() {
-        return attendanceDate;
-    }
-
-    public StudentAttendance attendanceDate(Date attendanceDate) {
-        this.attendanceDate = attendanceDate;
-        return this;
-    }
-
-    public void setAttendanceDate(Date attendanceDate) {
-        this.attendanceDate = attendanceDate;
     }
 
     public Student getStudent() {
@@ -152,7 +133,6 @@ public class StudentAttendance implements Serializable {
             "id=" + getId() +
             ", attendanceStatus='" + getAttendanceStatus() + "'" +
             ", comments='" + getComments() + "'" +
-            ", attendanceDate='" + getAttendanceDate() + "'" +
             "}";
     }
 }
