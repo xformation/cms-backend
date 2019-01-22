@@ -3,7 +3,7 @@ package com.synectiks.cms.graphql.types.AttendanceMaster;
 public class UpdateAttendanceMasterInput extends AbstractAttendanceMasterInput{
 	private Long teachId;
     private Long sectionId;
-    private Long academicYearId;
+    private Long batchId;
 	public Long getTeachId() {
 		return teachId;
 	}
@@ -16,17 +16,17 @@ public class UpdateAttendanceMasterInput extends AbstractAttendanceMasterInput{
 	public void setSectionId(Long sectionId) {
 		this.sectionId = sectionId;
 	}
-	public Long getAcademicYearId() {
-		return academicYearId;
+	public Long getBatchId() {
+		return batchId;
 	}
-	public void setAcademicYearId(Long academicYearId) {
-		this.academicYearId = academicYearId;
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((academicYearId == null) ? 0 : academicYearId.hashCode());
+		result = prime * result + ((batchId == null) ? 0 : batchId.hashCode());
 		result = prime * result + ((sectionId == null) ? 0 : sectionId.hashCode());
 		result = prime * result + ((teachId == null) ? 0 : teachId.hashCode());
 		return result;
@@ -40,10 +40,10 @@ public class UpdateAttendanceMasterInput extends AbstractAttendanceMasterInput{
 		if (getClass() != obj.getClass())
 			return false;
 		UpdateAttendanceMasterInput other = (UpdateAttendanceMasterInput) obj;
-		if (academicYearId == null) {
-			if (other.academicYearId != null)
+		if (batchId == null) {
+			if (other.batchId != null)
 				return false;
-		} else if (!academicYearId.equals(other.academicYearId))
+		} else if (!batchId.equals(other.batchId))
 			return false;
 		if (sectionId == null) {
 			if (other.sectionId != null)
@@ -59,7 +59,7 @@ public class UpdateAttendanceMasterInput extends AbstractAttendanceMasterInput{
 	}
 	@Override
 	public String toString() {
-		return "UpdateAttendanceMasterInput [teachId=" + teachId + ", sectionId=" + sectionId + ", academicYearId="
-				+ academicYearId + "]";
+		return "UpdateAttendanceMasterInput [teachId=" + teachId + ", sectionId=" + sectionId + ", batchId="
+				+ batchId + "]";
 	}
 }

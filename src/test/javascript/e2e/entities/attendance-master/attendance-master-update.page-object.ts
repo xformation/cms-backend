@@ -7,7 +7,7 @@ export default class AttendanceMasterUpdatePage {
   descInput: ElementFinder = element(by.css('input#attendance-master-desc'));
   teachSelect: ElementFinder = element(by.css('select#attendance-master-teach'));
   sectionSelect: ElementFinder = element(by.css('select#attendance-master-section'));
-  academicyearSelect: ElementFinder = element(by.css('select#attendance-master-academicyear'));
+  batchSelect: ElementFinder = element(by.css('select#attendance-master-batch'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -59,23 +59,23 @@ export default class AttendanceMasterUpdatePage {
     return this.sectionSelect.element(by.css('option:checked')).getText();
   }
 
-  academicyearSelectLastOption() {
-    this.academicyearSelect
+  batchSelectLastOption() {
+    this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  academicyearSelectOption(option) {
-    this.academicyearSelect.sendKeys(option);
+  batchSelectOption(option) {
+    this.batchSelect.sendKeys(option);
   }
 
-  getAcademicyearSelect() {
-    return this.academicyearSelect;
+  getBatchSelect() {
+    return this.batchSelect;
   }
 
-  getAcademicyearSelectedOption() {
-    return this.academicyearSelect.element(by.css('option:checked')).getText();
+  getBatchSelectedOption() {
+    return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

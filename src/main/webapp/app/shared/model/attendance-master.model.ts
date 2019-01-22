@@ -3,7 +3,7 @@ export interface IAttendanceMaster {
   desc?: string;
   teachId?: number;
   sectionId?: number;
-  academicyearId?: number;
+  batchId?: number;
 }
 
 export const defaultValue: Readonly<IAttendanceMaster> = {};

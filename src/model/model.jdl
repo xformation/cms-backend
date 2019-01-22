@@ -178,7 +178,7 @@ StudentAttendance{student} to Student,
 StudentAttendance{lecture} to Lecture,
 StudentSubject{student} to Student,
 StudentSubject{subject} to Subject,
-AttendanceMaster{academicyear} to AcademicYear,
+AttendanceMaster{batch} to Batch,
 Subject{batch} to Batch
 }
 

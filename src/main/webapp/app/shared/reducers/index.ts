@@ -115,6 +115,14 @@ import subject, {
 import studentAttendance, {
   StudentAttendanceState
 } from 'app/entities/student-attendance/student-attendance.reducer';
+// prettier-ignore
+import attendanceMaster, {
+  AttendanceMasterState
+} from 'app/entities/attendance-master/attendance-master.reducer';
+// prettier-ignore
+import attendanceMaster, {
+  AttendanceMasterState
+} from 'app/entities/attendance-master/attendance-master.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

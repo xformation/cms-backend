@@ -39,7 +39,7 @@ public class AttendanceMaster implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private AcademicYear academicyear;
+    private Batch batch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -89,17 +89,17 @@ public class AttendanceMaster implements Serializable {
         this.section = section;
     }
 
-    public AcademicYear getAcademicyear() {
-        return academicyear;
+    public Batch getBatch() {
+        return batch;
     }
 
-    public AttendanceMaster academicyear(AcademicYear academicYear) {
-        this.academicyear = academicYear;
+    public AttendanceMaster batch(Batch batch) {
+        this.batch = batch;
         return this;
     }
 
-    public void setAcademicyear(AcademicYear academicYear) {
-        this.academicyear = academicYear;
+    public void setBatch(Batch batch) {
+        this.batch = batch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

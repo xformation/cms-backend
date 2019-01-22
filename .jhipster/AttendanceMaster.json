@@ -25,12 +25,12 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicyear",
-            "otherEntityName": "academicYear",
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190119171314",
+    "changelogDate": "20190122105907",
     "entityTableName": "attendance_master",
     "dto": "mapstruct",
     "pagination": "no",

@@ -1107,13 +1107,13 @@ public class Mutation implements GraphQLMutationResolver {
     public AddAttendanceMasterPayload addAttendanceMaster(AddAttendanceMasterInput addAttendanceMasterInput) {
         final Teach teach = teachRepository.findById(addAttendanceMasterInput.getTeachId()).get();
         final Section section = sectionRepository.findById(addAttendanceMasterInput.getSectionId()).get();
-        final AcademicYear academicYear = academicYearRepository.findById(addAttendanceMasterInput.getAcademicYearId()).get();
+        final Batch batch = batchRepository.findById(addAttendanceMasterInput.getBatchId()).get();
         final AttendanceMaster attendanceMaster = new AttendanceMaster();
 
         attendanceMaster.setDesc(addAttendanceMasterInput.getDesc());
         attendanceMaster.setTeach(teach);
         attendanceMaster.setSection(section);
-        attendanceMaster.setAcademicyear(academicYear);
+        attendanceMaster.setBatch(batch);
         attendanceMasterRepository.save(attendanceMaster);
         return new AddAttendanceMasterPayload(attendanceMaster);
     }
@@ -1132,9 +1132,9 @@ public class Mutation implements GraphQLMutationResolver {
         	Section section = sectionRepository.findById(updateAttendanceMasterInput.getSectionId()).get();
         	attendanceMaster.setSection(section);
         }
-        if (updateAttendanceMasterInput.getAcademicYearId() != null) {
-        	AcademicYear academicYear = academicYearRepository.findById(updateAttendanceMasterInput.getAcademicYearId()).get();
-        	attendanceMaster.setAcademicyear(academicYear);
+        if (updateAttendanceMasterInput.getBatchId() != null) {
+        	Batch batch = batchRepository.findById(updateAttendanceMasterInput.getBatchId()).get();
+        	attendanceMaster.setBatch(batch);
         }
         attendanceMasterRepository.save(attendanceMaster);
         return new UpdateAttendanceMasterPayload(attendanceMaster);

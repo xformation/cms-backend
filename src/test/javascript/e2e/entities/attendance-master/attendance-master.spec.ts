@@ -35,7 +35,7 @@ describe('AttendanceMaster e2e test', () => {
     expect(await attendanceMasterUpdatePage.getDescInput()).to.match(/desc/);
     attendanceMasterUpdatePage.teachSelectLastOption();
     attendanceMasterUpdatePage.sectionSelectLastOption();
-    attendanceMasterUpdatePage.academicyearSelectLastOption();
+    attendanceMasterUpdatePage.batchSelectLastOption();
     await attendanceMasterUpdatePage.save();
     expect(await attendanceMasterUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

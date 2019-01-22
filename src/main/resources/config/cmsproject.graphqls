@@ -161,7 +161,7 @@ type AttendanceMaster{
     desc: String!
     teach: Teach!
     section: Section!
-    academicyear: AcademicYear!
+    batch: Batch!
 }
 type Lecture{
 	id: Long!
@@ -620,7 +620,7 @@ input AddAttendanceMasterInput{
     desc: String!
     teachId: Long!
     sectionId: Long!
-    academicYearId: Long!
+    batchId: Long!
 }
 type AddAttendanceMasterPayload {
     attendanceMaster: AttendanceMaster!
@@ -630,7 +630,7 @@ input UpdateAttendanceMasterInput {
     desc: String
     teachId: Long
     sectionId: Long
-    academicYearId: Long
+    batchId: Long
 }
 type UpdateAttendanceMasterPayload {
     attendanceMaster: AttendanceMaster!
