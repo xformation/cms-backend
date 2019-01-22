@@ -28,7 +28,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141525",
+    "changelogDate": "20190122101135",
     "entityTableName": "student_attendance",
     "dto": "mapstruct",
     "pagination": "no",

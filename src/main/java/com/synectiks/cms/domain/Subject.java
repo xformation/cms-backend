@@ -13,6 +13,8 @@ import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 
+import com.synectiks.cms.domain.enumeration.Status;
+
 /**
  * A Subject.
  */
@@ -42,13 +44,18 @@ public class Subject implements Serializable {
     @Column(name = "subject_desc", nullable = false)
     private String subjectDesc;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
+
     @ManyToOne
     @JsonIgnoreProperties("")
     private Department department;
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private Teacher teacher;
+    private Batch batch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -98,6 +105,19 @@ public class Subject implements Serializable {
         this.subjectDesc = subjectDesc;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public Subject status(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public Department getDepartment() {
         return department;
     }
@@ -111,17 +131,17 @@ public class Subject implements Serializable {
         this.department = department;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Batch getBatch() {
+        return batch;
     }
 
-    public Subject teacher(Teacher teacher) {
-        this.teacher = teacher;
+    public Subject batch(Batch batch) {
+        this.batch = batch;
         return this;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setBatch(Batch batch) {
+        this.batch = batch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -152,6 +172,7 @@ public class Subject implements Serializable {
             ", subjectCode='" + getSubjectCode() + "'" +
             ", subjectType='" + getSubjectType() + "'" +
             ", subjectDesc='" + getSubjectDesc() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

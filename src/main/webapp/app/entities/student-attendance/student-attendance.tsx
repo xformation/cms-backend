@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -77,7 +77,6 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                 <th>ID</th>
                 <th>Attendance Status</th>
                 <th>Comments</th>
-                <th>Attendance Date</th>
                 <th>Student</th>
                 <th>Lecture</th>
                 <th />
@@ -93,9 +92,6 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
                   </td>
                   <td>{studentAttendance.attendanceStatus}</td>
                   <td>{studentAttendance.comments}</td>
-                  <td>
-                    <TextFormat type="date" value={studentAttendance.attendanceDate} format={APP_LOCAL_DATE_FORMAT} />
-                  </td>
                   <td>
                     {studentAttendance.studentId ? (
                       <Link to={`student/${studentAttendance.studentId}`}>{studentAttendance.studentId}</Link>

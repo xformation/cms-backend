@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the Subject entity.
@@ -21,9 +22,12 @@ public class SubjectDTO implements Serializable {
     @NotNull
     private String subjectDesc;
 
+    @NotNull
+    private Status status;
+
     private Long departmentId;
 
-    private Long teacherId;
+    private Long batchId;
 
     public Long getId() {
         return id;
@@ -57,6 +61,14 @@ public class SubjectDTO implements Serializable {
         this.subjectDesc = subjectDesc;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public Long getDepartmentId() {
         return departmentId;
     }
@@ -65,12 +77,12 @@ public class SubjectDTO implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Long getTeacherId() {
-        return teacherId;
+    public Long getBatchId() {
+        return batchId;
     }
 
-    public void setTeacherId(Long teacherId) {
-        this.teacherId = teacherId;
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 
     @Override
@@ -101,8 +113,9 @@ public class SubjectDTO implements Serializable {
             ", subjectCode='" + getSubjectCode() + "'" +
             ", subjectType='" + getSubjectType() + "'" +
             ", subjectDesc='" + getSubjectDesc() + "'" +
+            ", status='" + getStatus() + "'" +
             ", department=" + getDepartmentId() +
-            ", teacher=" + getTeacherId() +
+            ", batch=" + getBatchId() +
             "}";
     }
 }

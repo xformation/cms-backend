@@ -7,8 +7,9 @@ export default class SubjectUpdatePage {
   subjectCodeInput: ElementFinder = element(by.css('input#subject-subjectCode'));
   subjectTypeSelect: ElementFinder = element(by.css('select#subject-subjectType'));
   subjectDescInput: ElementFinder = element(by.css('input#subject-subjectDesc'));
+  statusSelect: ElementFinder = element(by.css('select#subject-status'));
   departmentSelect: ElementFinder = element(by.css('select#subject-department'));
-  teacherSelect: ElementFinder = element(by.css('select#subject-teacher'));
+  batchSelect: ElementFinder = element(by.css('select#subject-batch'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -44,6 +45,20 @@ export default class SubjectUpdatePage {
     return this.subjectDescInput.getAttribute('value');
   }
 
+  setStatusSelect(status) {
+    this.statusSelect.sendKeys(status);
+  }
+
+  getStatusSelect() {
+    return this.statusSelect.element(by.css('option:checked')).getText();
+  }
+
+  statusSelectLastOption() {
+    this.statusSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   departmentSelectLastOption() {
     this.departmentSelect
       .all(by.tagName('option'))
@@ -63,23 +78,23 @@ export default class SubjectUpdatePage {
     return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
-  teacherSelectLastOption() {
-    this.teacherSelect
+  batchSelectLastOption() {
+    this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  teacherSelectOption(option) {
-    this.teacherSelect.sendKeys(option);
+  batchSelectOption(option) {
+    this.batchSelect.sendKeys(option);
   }
 
-  getTeacherSelect() {
-    return this.teacherSelect;
+  getBatchSelect() {
+    return this.batchSelect;
   }
 
-  getTeacherSelectedOption() {
-    return this.teacherSelect.element(by.css('option:checked')).getText();
+  getBatchSelectedOption() {
+    return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

@@ -14,26 +14,34 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity StudentAttendance.
+        Added the entity Subject.
     -->
-    <changeSet id="20190118141525-1" author="jhipster">
-        <createTable tableName="student_attendance">
+    <changeSet id="20190122100629-1" author="jhipster">
+        <createTable tableName="subject">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="attendance_status" type="varchar(255)">
+            <column name="subject_code" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="comments" type="varchar(255)">
+            <column name="subject_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="subject_desc" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="department_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="student_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="lecture_id" type="bigint">
+            <column name="batch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

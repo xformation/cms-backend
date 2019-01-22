@@ -27,6 +27,7 @@ entity Subject{
 subjectCode String required
 subjectType SubTypeEnum required
 subjectDesc  String required
+status Status required
 }
 
 enum SubTypeEnum{
@@ -73,10 +74,6 @@ holidayStatus Status required
 }
 
 entity Teach{
-desc String
-}
-
-entity CourseOffer{
 desc String
 }
 
@@ -174,7 +171,6 @@ Subject{department} to Department,
 Batch{department} to Department,
 Section{batch} to Batch,
 Holiday{academicyear} to AcademicYear,
-Subject{teacher} to Teacher,
 AuthorizedSignatory{legalEntity} to LegalEntity,
 Lecture{attendancemaster} to AttendanceMaster,
 Term{academicyear} to AcademicYear,
@@ -182,15 +178,13 @@ StudentAttendance{student} to Student,
 StudentAttendance{lecture} to Lecture,
 StudentSubject{student} to Student,
 StudentSubject{subject} to Subject,
-AttendanceMaster{academicyear} to AcademicYear
+AttendanceMaster{academicyear} to AcademicYear,
+Subject{batch} to Batch
 }
 
 relationship OneToOne{
 Teach{teacher} to Teacher,
 Teach{subject} to Subject,
-CourseOffer{college} to College,
-CourseOffer{department} to Department,
-CourseOffer{subject} to Subject,
 AttendanceMaster{teach} to Teach,
 AttendanceMaster{section} to Section
 }

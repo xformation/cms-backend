@@ -27,15 +27,13 @@ describe('StudentAttendance e2e test', () => {
   it('should load create StudentAttendance page', async () => {
     studentAttendanceComponentsPage.clickOnCreateButton();
     studentAttendanceUpdatePage = new StudentAttendanceUpdatePage();
-    expect(await studentAttendanceUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.studentAttendance.home.createOrEditLabel/);
+    expect(await studentAttendanceUpdatePage.getPageTitle().getText()).to.match(/Create or edit a StudentAttendance/);
   });
 
   it('should create and save StudentAttendances', async () => {
     studentAttendanceUpdatePage.attendanceStatusSelectLastOption();
     studentAttendanceUpdatePage.setCommentsInput('comments');
     expect(await studentAttendanceUpdatePage.getCommentsInput()).to.match(/comments/);
-    studentAttendanceUpdatePage.setAttendanceDateInput('01-01-2001');
-    expect(await studentAttendanceUpdatePage.getAttendanceDateInput()).to.eq('2001-01-01');
     studentAttendanceUpdatePage.studentSelectLastOption();
     studentAttendanceUpdatePage.lectureSelectLastOption();
     await studentAttendanceUpdatePage.save();

@@ -1,5 +1,6 @@
 package com.synectiks.cms.graphql.types.Subject;
 
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 
 import java.util.Objects;
@@ -9,6 +10,15 @@ public class AbstractSubjectInput {
     private String subjectCode;
     private SubTypeEnum subjectType;
     private String subjectDesc;
+    private Status status;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;
@@ -45,18 +55,18 @@ public class AbstractSubjectInput {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractSubjectInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractSubjectInput that = (AbstractSubjectInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getSubjectCode(), that.getSubjectCode()) &&
-            Objects.equals(getSubjectType(), that.getSubjectType()) &&
-            Objects.equals(getSubjectDesc(), that.getSubjectDesc());
+        return Objects.equals(id, that.id) &&
+            Objects.equals(subjectCode, that.subjectCode) &&
+            subjectType == that.subjectType &&
+            Objects.equals(subjectDesc, that.subjectDesc) &&
+            status == that.status;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getId(), getSubjectCode(), getSubjectType(), getSubjectDesc());
+        return Objects.hash(id, subjectCode, subjectType, subjectDesc, status);
     }
 
     @Override
@@ -64,8 +74,9 @@ public class AbstractSubjectInput {
         return "AbstractSubjectInput{" +
             "id=" + id +
             ", subjectCode='" + subjectCode + '\'' +
-            ", subjectType='" + subjectType + '\'' +
+            ", subjectType=" + subjectType +
             ", subjectDesc='" + subjectDesc + '\'' +
+            ", status=" + status +
             '}';
     }
 }

@@ -38,6 +38,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
+import com.synectiks.cms.domain.enumeration.Status;
 /**
  * Test class for the SubjectResource REST controller.
  *
@@ -55,6 +56,9 @@ public class SubjectResourceIntTest {
 
     private static final String DEFAULT_SUBJECT_DESC = "AAAAAAAAAA";
     private static final String UPDATED_SUBJECT_DESC = "BBBBBBBBBB";
+
+    private static final Status DEFAULT_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_STATUS = Status.DEACTIVE;
 
     @Autowired
     private SubjectRepository subjectRepository;
@@ -112,7 +116,8 @@ public class SubjectResourceIntTest {
         Subject subject = new Subject()
             .subjectCode(DEFAULT_SUBJECT_CODE)
             .subjectType(DEFAULT_SUBJECT_TYPE)
-            .subjectDesc(DEFAULT_SUBJECT_DESC);
+            .subjectDesc(DEFAULT_SUBJECT_DESC)
+            .status(DEFAULT_STATUS);
         return subject;
     }
 
@@ -140,6 +145,7 @@ public class SubjectResourceIntTest {
         assertThat(testSubject.getSubjectCode()).isEqualTo(DEFAULT_SUBJECT_CODE);
         assertThat(testSubject.getSubjectType()).isEqualTo(DEFAULT_SUBJECT_TYPE);
         assertThat(testSubject.getSubjectDesc()).isEqualTo(DEFAULT_SUBJECT_DESC);
+        assertThat(testSubject.getStatus()).isEqualTo(DEFAULT_STATUS);
 
         // Validate the Subject in Elasticsearch
         verify(mockSubjectSearchRepository, times(1)).save(testSubject);
@@ -227,6 +233,25 @@ public class SubjectResourceIntTest {
 
     @Test
     @Transactional
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = subjectRepository.findAll().size();
+        // set the field null
+        subject.setStatus(null);
+
+        // Create the Subject, which fails.
+        SubjectDTO subjectDTO = subjectMapper.toDto(subject);
+
+        restSubjectMockMvc.perform(post("/api/subjects")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(subjectDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Subject> subjectList = subjectRepository.findAll();
+        assertThat(subjectList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllSubjects() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
@@ -238,7 +263,8 @@ public class SubjectResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
             .andExpect(jsonPath("$.[*].subjectCode").value(hasItem(DEFAULT_SUBJECT_CODE.toString())))
             .andExpect(jsonPath("$.[*].subjectType").value(hasItem(DEFAULT_SUBJECT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
 
@@ -255,7 +281,8 @@ public class SubjectResourceIntTest {
             .andExpect(jsonPath("$.id").value(subject.getId().intValue()))
             .andExpect(jsonPath("$.subjectCode").value(DEFAULT_SUBJECT_CODE.toString()))
             .andExpect(jsonPath("$.subjectType").value(DEFAULT_SUBJECT_TYPE.toString()))
-            .andExpect(jsonPath("$.subjectDesc").value(DEFAULT_SUBJECT_DESC.toString()));
+            .andExpect(jsonPath("$.subjectDesc").value(DEFAULT_SUBJECT_DESC.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
     @Test
     @Transactional
@@ -280,7 +307,8 @@ public class SubjectResourceIntTest {
         updatedSubject
             .subjectCode(UPDATED_SUBJECT_CODE)
             .subjectType(UPDATED_SUBJECT_TYPE)
-            .subjectDesc(UPDATED_SUBJECT_DESC);
+            .subjectDesc(UPDATED_SUBJECT_DESC)
+            .status(UPDATED_STATUS);
         SubjectDTO subjectDTO = subjectMapper.toDto(updatedSubject);
 
         restSubjectMockMvc.perform(put("/api/subjects")
@@ -295,6 +323,7 @@ public class SubjectResourceIntTest {
         assertThat(testSubject.getSubjectCode()).isEqualTo(UPDATED_SUBJECT_CODE);
         assertThat(testSubject.getSubjectType()).isEqualTo(UPDATED_SUBJECT_TYPE);
         assertThat(testSubject.getSubjectDesc()).isEqualTo(UPDATED_SUBJECT_DESC);
+        assertThat(testSubject.getStatus()).isEqualTo(UPDATED_STATUS);
 
         // Validate the Subject in Elasticsearch
         verify(mockSubjectSearchRepository, times(1)).save(testSubject);
@@ -308,7 +337,7 @@ public class SubjectResourceIntTest {
         // Create the Subject
         SubjectDTO subjectDTO = subjectMapper.toDto(subject);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restSubjectMockMvc.perform(put("/api/subjects")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(subjectDTO)))
@@ -357,7 +386,8 @@ public class SubjectResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
             .andExpect(jsonPath("$.[*].subjectCode").value(hasItem(DEFAULT_SUBJECT_CODE.toString())))
             .andExpect(jsonPath("$.[*].subjectType").value(hasItem(DEFAULT_SUBJECT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test

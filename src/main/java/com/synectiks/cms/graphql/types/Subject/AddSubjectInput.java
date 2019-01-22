@@ -1,29 +1,29 @@
 package com.synectiks.cms.graphql.types.Subject;
 
 public class AddSubjectInput extends AbstractSubjectInput {
-    private Long teacherId;
     private Long departmentId;
+    private Long batchId;
 
-    public Long getTeacherId() {
-        return teacherId;
+    public Long getBatchId() {
+        return batchId;
     }
 
-    public void setTeacherId(Long teacherId) {
-        this.teacherId = teacherId;
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 
-	public Long getDepartmentId() {
-		return departmentId;
-	}
+    public Long getDepartmentId() {
+        return departmentId;
+    }
 
-	public void setDepartmentId(Long departmentId) {
-		this.departmentId = departmentId;
-	}
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
 
-	@Override
-	public String toString() {
-		return "AddSubjectInput [teacherId=" + teacherId + ", departmentId=" + departmentId
-				+ "]";
-	}
+    @Override
+    public String toString() {
+        return "AddSubjectInput [batchIdId=" + batchId + ", departmentId=" + departmentId
+            + "]";
+    }
 
 }

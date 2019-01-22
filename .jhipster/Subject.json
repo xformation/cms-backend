@@ -22,6 +22,14 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -33,12 +41,12 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "teacher",
-            "otherEntityName": "teacher",
+            "relationshipName": "batch",
+            "otherEntityName": "batch",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141514",
+    "changelogDate": "20190122100629",
     "entityTableName": "subject",
     "dto": "mapstruct",
     "pagination": "no",

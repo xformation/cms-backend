@@ -78,8 +78,9 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
                 <th>Subject Code</th>
                 <th>Subject Type</th>
                 <th>Subject Desc</th>
+                <th>Status</th>
                 <th>Department</th>
-                <th>Teacher</th>
+                <th>Batch</th>
                 <th />
               </tr>
             </thead>
@@ -94,8 +95,9 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
                   <td>{subject.subjectCode}</td>
                   <td>{subject.subjectType}</td>
                   <td>{subject.subjectDesc}</td>
+                  <td>{subject.status}</td>
                   <td>{subject.departmentId ? <Link to={`department/${subject.departmentId}`}>{subject.departmentId}</Link> : ''}</td>
-                  <td>{subject.teacherId ? <Link to={`teacher/${subject.teacherId}`}>{subject.teacherId}</Link> : ''}</td>
+                  <td>{subject.batchId ? <Link to={`batch/${subject.batchId}`}>{subject.batchId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${subject.id}`} color="info" size="sm">

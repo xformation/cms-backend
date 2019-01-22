@@ -10,20 +10,20 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IDepartment } from 'app/shared/model/department.model';
 import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
-import { ITeacher } from 'app/shared/model/teacher.model';
-import { getEntities as getTeachers } from 'app/entities/teacher/teacher.reducer';
+import { IBatch } from 'app/shared/model/batch.model';
+import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './subject.reducer';
 import { ISubject } from 'app/shared/model/subject.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ISubjectUpdateState {
   isNew: boolean;
   departmentId: number;
-  teacherId: number;
+  batchId: number;
 }
 
 export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubjectUpdateState> {
@@ -31,7 +31,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
     super(props);
     this.state = {
       departmentId: 0,
-      teacherId: 0,
+      batchId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -44,7 +44,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
     }
 
     this.props.getDepartments();
-    this.props.getTeachers();
+    this.props.getBatches();
   }
 
   saveEntity = (event, errors, values) => {
@@ -68,42 +68,8 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
     this.props.history.push('/entity/subject');
   };
 
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
-  };
-
-  teacherUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        teacherId: -1
-      });
-    } else {
-      for (const i in this.props.teachers) {
-        if (id === this.props.teachers[i].id.toString()) {
-          this.setState({
-            teacherId: this.props.teachers[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
-    const { subjectEntity, departments, teachers, loading, updating } = this.props;
+    const { subjectEntity, departments, batches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -165,14 +131,21 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="department.id">Department</Label>
+                  <Label id="statusLabel">Status</Label>
                   <AvInput
-                    id="subject-department"
+                    id="subject-status"
                     type="select"
                     className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
+                    name="status"
+                    value={(!isNew && subjectEntity.status) || 'ACTIVE'}
                   >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="department.id">Department</Label>
+                  <AvInput id="subject-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
@@ -184,11 +157,11 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="teacher.id">Teacher</Label>
-                  <AvInput id="subject-teacher" type="select" className="form-control" name="teacherId" onChange={this.teacherUpdate}>
+                  <Label for="batch.id">Batch</Label>
+                  <AvInput id="subject-batch" type="select" className="form-control" name="batchId">
                     <option value="" key="0" />
-                    {teachers
-                      ? teachers.map(otherEntity => (
+                    {batches
+                      ? batches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -215,7 +188,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
 
 const mapStateToProps = (storeState: IRootState) => ({
   departments: storeState.department.entities,
-  teachers: storeState.teacher.entities,
+  batches: storeState.batch.entities,
   subjectEntity: storeState.subject.entity,
   loading: storeState.subject.loading,
   updating: storeState.subject.updating
@@ -223,7 +196,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getDepartments,
-  getTeachers,
+  getBatches,
   getEntity,
   updateEntity,
   createEntity,

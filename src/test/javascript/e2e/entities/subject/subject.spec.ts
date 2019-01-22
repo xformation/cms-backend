@@ -27,7 +27,7 @@ describe('Subject e2e test', () => {
   it('should load create Subject page', async () => {
     subjectComponentsPage.clickOnCreateButton();
     subjectUpdatePage = new SubjectUpdatePage();
-    expect(await subjectUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.subject.home.createOrEditLabel/);
+    expect(await subjectUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Subject/);
   });
 
   it('should create and save Subjects', async () => {
@@ -36,8 +36,9 @@ describe('Subject e2e test', () => {
     subjectUpdatePage.subjectTypeSelectLastOption();
     subjectUpdatePage.setSubjectDescInput('subjectDesc');
     expect(await subjectUpdatePage.getSubjectDescInput()).to.match(/subjectDesc/);
+    subjectUpdatePage.statusSelectLastOption();
     subjectUpdatePage.departmentSelectLastOption();
-    subjectUpdatePage.teacherSelectLastOption();
+    subjectUpdatePage.batchSelectLastOption();
     await subjectUpdatePage.save();
     expect(await subjectUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

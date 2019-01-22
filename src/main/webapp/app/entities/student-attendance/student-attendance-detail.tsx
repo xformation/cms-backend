@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction, TextFormat } from 'react-jhipster';
+import { ICrudGetAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -36,12 +36,6 @@ export class StudentAttendanceDetail extends React.Component<IStudentAttendanceD
               <span id="comments">Comments</span>
             </dt>
             <dd>{studentAttendanceEntity.comments}</dd>
-            <dt>
-              <span id="attendanceDate">Attendance Date</span>
-            </dt>
-            <dd>
-              <TextFormat value={studentAttendanceEntity.attendanceDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
-            </dd>
             <dt>Student</dt>
             <dd>{studentAttendanceEntity.studentId ? studentAttendanceEntity.studentId : ''}</dd>
             <dt>Lecture</dt>

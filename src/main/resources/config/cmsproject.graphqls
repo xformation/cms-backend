@@ -69,9 +69,6 @@ type Query {
   department(id: Long!): Department!
   departments: [Department!]!
 
-  courseOffer(id: Long!): CourseOffer!
-  courseOffers: [CourseOffer!]!
-
   attendanceMaster(id: Long!): AttendanceMaster!
   attendanceMasters: [AttendanceMaster!]!
 
@@ -158,13 +155,7 @@ type Teach{
     teacher: Teacher!
     subject: Subject!
 }
-type CourseOffer{
-	id: Long!
-    desc: String!
-    college: College!
-    department: Department!
-    subject: Subject!
-}
+
 type AttendanceMaster{
 	id: Long!
     desc: String!
@@ -239,8 +230,9 @@ type Subject {
  	subjectType: SubTypeEnum!
  	subjectCode: String!
  	subjectDesc: String!
+    status: Status!
  	department: Department!
- 	teacher: Teacher!
+ 	batch: Batch!
 }
 type Teacher{
     id: Long!
@@ -312,10 +304,6 @@ type Mutation {
    addDepartment(input: AddDepartmentInput!): AddDepartmentPayload!
    updateDepartment(input: UpdateDepartmentInput!): UpdateDepartmentPayload!
    removeDepartment(input: RemoveDepartmentInput!): RemoveDepartmentPayload!
-
-   addCourseOffer(input: AddCourseOfferInput!): AddCourseOfferPayload!
-   updateCourseOffer(input: UpdateCourseOfferInput!): UpdateCourseOfferPayload!
-   removeCourseOffer(input: RemoveCourseOfferInput!): RemoveCourseOfferPayload!
 
    addAttendanceMaster(input: AddAttendanceMasterInput!): AddAttendanceMasterPayload!
    updateAttendanceMaster(input: UpdateAttendanceMasterInput!): UpdateAttendanceMasterPayload!
@@ -628,35 +616,6 @@ type RemoveTeachPayload {
 
 
 
-
-input AddCourseOfferInput{
-    desc: String!
-    collegeId: Long!
-    departmentId: Long!
-    subjectId: Long!
-}
-type AddCourseOfferPayload {
-    courseOffer: CourseOffer!
-}
-input UpdateCourseOfferInput {
-    id: Long!
-    desc: String!
-    collegeId: Long!
-    departmentId: Long!
-    subjectId: Long!
-}
-type UpdateCourseOfferPayload {
-    courseOffer: CourseOffer!
-}
-input RemoveCourseOfferInput {
-    courseOfferId: Long!
-}
-type RemoveCourseOfferPayload {
-    courseOffer: [CourseOffer!]!
-}
-
-
-
 input AddAttendanceMasterInput{
     desc: String!
     teachId: Long!
@@ -936,8 +895,9 @@ input AddSubjectInput {
    subjectType: SubTypeEnum!
    subjectCode: String!
    subjectDesc: String!
+   status: Status!
    departmentId: Long!
-   teacherId: Long!
+   batchId: Long!
 }
 type AddSubjectPayload {
     subject: Subject!
@@ -947,8 +907,9 @@ input UpdateSubjectInput {
    subjectType: SubTypeEnum!
    subjectCode: String!
    subjectDesc: String!
+   status: Status!
    departmentId: Long!
-   teacherId: Long!
+   batchId: Long!
 }
 type UpdateSubjectPayload {
    subject: Subject!

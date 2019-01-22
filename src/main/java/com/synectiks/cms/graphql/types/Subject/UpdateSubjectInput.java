@@ -1,13 +1,13 @@
 package com.synectiks.cms.graphql.types.Subject;
 
 public class UpdateSubjectInput extends AbstractSubjectInput {
-    private Long teacherId;
+    private Long batchId;
     private Long departmentId;
-	public Long getTeacherId() {
-		return teacherId;
+	public Long getBatchId() {
+		return batchId;
 	}
-	public void setTeacherId(Long teacherId) {
-		this.teacherId = teacherId;
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
 	}
 	public Long getDepartmentId() {
 		return departmentId;
@@ -17,7 +17,7 @@ public class UpdateSubjectInput extends AbstractSubjectInput {
 	}
 	@Override
 	public String toString() {
-		return "UpdateSubjectInput [teacherId=" + teacherId + ", departmentId="
+		return "UpdateSubjectInput [batchId=" + batchId + ", departmentId="
 				+ departmentId + "]";
 	}
 	@Override
@@ -25,7 +25,7 @@ public class UpdateSubjectInput extends AbstractSubjectInput {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((departmentId == null) ? 0 : departmentId.hashCode());
-		result = prime * result + ((teacherId == null) ? 0 : teacherId.hashCode());
+		result = prime * result + ((batchId == null) ? 0 : batchId.hashCode());
 		return result;
 	}
 	@Override
@@ -42,10 +42,10 @@ public class UpdateSubjectInput extends AbstractSubjectInput {
 				return false;
 		} else if (!departmentId.equals(other.departmentId))
 			return false;
-		if (teacherId == null) {
-			if (other.teacherId != null)
+		if (batchId == null) {
+			if (other.batchId != null)
 				return false;
-		} else if (!teacherId.equals(other.teacherId))
+		} else if (!batchId.equals(other.batchId))
 			return false;
 		return true;
 	}

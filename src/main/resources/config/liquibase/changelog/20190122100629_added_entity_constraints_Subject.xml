@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Subject.
     -->
-    <changeSet id="20190118141514-2" author="jhipster">
+    <changeSet id="20190122100629-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="department_id"
                                  baseTableName="subject"
@@ -14,11 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="department"/>
 
-        <addForeignKeyConstraint baseColumnNames="teacher_id"
+        <addForeignKeyConstraint baseColumnNames="batch_id"
                                  baseTableName="subject"
-                                 constraintName="fk_subject_teacher_id"
+                                 constraintName="fk_subject_batch_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="teacher"/>
+                                 referencedTableName="batch"/>
 
     </changeSet>
 </databaseChangeLog>

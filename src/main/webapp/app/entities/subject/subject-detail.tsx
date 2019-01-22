@@ -40,10 +40,14 @@ export class SubjectDetail extends React.Component<ISubjectDetailProps> {
               <span id="subjectDesc">Subject Desc</span>
             </dt>
             <dd>{subjectEntity.subjectDesc}</dd>
+            <dt>
+              <span id="status">Status</span>
+            </dt>
+            <dd>{subjectEntity.status}</dd>
             <dt>Department</dt>
             <dd>{subjectEntity.departmentId ? subjectEntity.departmentId : ''}</dd>
-            <dt>Teacher</dt>
-            <dd>{subjectEntity.teacherId ? subjectEntity.teacherId : ''}</dd>
+            <dt>Batch</dt>
+            <dd>{subjectEntity.batchId ? subjectEntity.batchId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/subject" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

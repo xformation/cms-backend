@@ -6,7 +6,6 @@ export default class StudentAttendanceUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   attendanceStatusSelect: ElementFinder = element(by.css('select#student-attendance-attendanceStatus'));
   commentsInput: ElementFinder = element(by.css('input#student-attendance-comments'));
-  attendanceDateInput: ElementFinder = element(by.css('input#student-attendance-attendanceDate'));
   studentSelect: ElementFinder = element(by.css('select#student-attendance-student'));
   lectureSelect: ElementFinder = element(by.css('select#student-attendance-lecture'));
 
@@ -34,14 +33,6 @@ export default class StudentAttendanceUpdatePage {
 
   getCommentsInput() {
     return this.commentsInput.getAttribute('value');
-  }
-
-  setAttendanceDateInput(attendanceDate) {
-    this.attendanceDateInput.sendKeys(attendanceDate);
-  }
-
-  getAttendanceDateInput() {
-    return this.attendanceDateInput.getAttribute('value');
   }
 
   studentSelectLastOption() {

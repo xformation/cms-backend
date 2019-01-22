@@ -3,13 +3,19 @@ export const enum SubTypeEnum {
   ELECTIVE = 'ELECTIVE'
 }
 
+export const enum Status {
+  ACTIVE = 'ACTIVE',
+  DEACTIVE = 'DEACTIVE'
+}
+
 export interface ISubject {
   id?: number;
   subjectCode?: string;
   subjectType?: SubTypeEnum;
   subjectDesc?: string;
+  status?: Status;
   departmentId?: number;
-  teacherId?: number;
+  batchId?: number;
 }
 
 export const defaultValue: Readonly<ISubject> = {};
