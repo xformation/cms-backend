@@ -6,14 +6,8 @@
     <!--
         Added the constraints for entity AttendanceMaster.
     -->
-    <changeSet id="20190124074604-2" author="jhipster">
+    <changeSet id="20190124093523-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="teach_id"
-                                 baseTableName="attendance_master"
-                                 constraintName="fk_attendance_master_teach_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="teach"/>
-
         <addForeignKeyConstraint baseColumnNames="batch_id"
                                  baseTableName="attendance_master"
                                  constraintName="fk_attendance_master_batch_id"
@@ -25,6 +19,12 @@
                                  constraintName="fk_attendance_master_section_id"
                                  referencedColumnNames="id"
                                  referencedTableName="section"/>
+
+        <addForeignKeyConstraint baseColumnNames="teach_id"
+                                 baseTableName="attendance_master"
+                                 constraintName="fk_attendance_master_teach_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="teach"/>
 
     </changeSet>
 </databaseChangeLog>

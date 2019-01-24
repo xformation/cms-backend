@@ -29,10 +29,6 @@ public class AttendanceMaster implements Serializable {
     @Column(name = "jhi_desc")
     private String desc;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Teach teach;
-
     @ManyToOne
     @JsonIgnoreProperties("")
     private Batch batch;
@@ -40,6 +36,10 @@ public class AttendanceMaster implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("")
     private Section section;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Teach teach;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -61,19 +61,6 @@ public class AttendanceMaster implements Serializable {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public Teach getTeach() {
-        return teach;
-    }
-
-    public AttendanceMaster teach(Teach teach) {
-        this.teach = teach;
-        return this;
-    }
-
-    public void setTeach(Teach teach) {
-        this.teach = teach;
     }
 
     public Batch getBatch() {
@@ -100,6 +87,19 @@ public class AttendanceMaster implements Serializable {
 
     public void setSection(Section section) {
         this.section = section;
+    }
+
+    public Teach getTeach() {
+        return teach;
+    }
+
+    public AttendanceMaster teach(Teach teach) {
+        this.teach = teach;
+        return this;
+    }
+
+    public void setTeach(Teach teach) {
+        this.teach = teach;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

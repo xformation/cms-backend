@@ -180,13 +180,13 @@ StudentSubject{student} to Student,
 StudentSubject{subject} to Subject,
 AttendanceMaster{batch} to Batch,
 Subject{batch} to Batch,
-AttendanceMaster{section} to Section
+AttendanceMaster{section} to Section,
+AttendanceMaster{teach} to Teach
 }
 
 relationship OneToOne{
 Teach{teacher} to Teacher,
-Teach{subject} to Subject,
-AttendanceMaster{teach} to Teach
+Teach{subject} to Subject
 }
 
 dto * with mapstruct

@@ -5,9 +5,9 @@ export default class AttendanceMasterUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   descInput: ElementFinder = element(by.css('input#attendance-master-desc'));
-  teachSelect: ElementFinder = element(by.css('select#attendance-master-teach'));
   batchSelect: ElementFinder = element(by.css('select#attendance-master-batch'));
   sectionSelect: ElementFinder = element(by.css('select#attendance-master-section'));
+  teachSelect: ElementFinder = element(by.css('select#attendance-master-teach'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -19,25 +19,6 @@ export default class AttendanceMasterUpdatePage {
 
   getDescInput() {
     return this.descInput.getAttribute('value');
-  }
-
-  teachSelectLastOption() {
-    this.teachSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  teachSelectOption(option) {
-    this.teachSelect.sendKeys(option);
-  }
-
-  getTeachSelect() {
-    return this.teachSelect;
-  }
-
-  getTeachSelectedOption() {
-    return this.teachSelect.element(by.css('option:checked')).getText();
   }
 
   batchSelectLastOption() {
@@ -76,6 +57,25 @@ export default class AttendanceMasterUpdatePage {
 
   getSectionSelectedOption() {
     return this.sectionSelect.element(by.css('option:checked')).getText();
+  }
+
+  teachSelectLastOption() {
+    this.teachSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  teachSelectOption(option) {
+    this.teachSelect.sendKeys(option);
+  }
+
+  getTeachSelect() {
+    return this.teachSelect;
+  }
+
+  getTeachSelectedOption() {
+    return this.teachSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

@@ -8,12 +8,12 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { ITeach } from 'app/shared/model/teach.model';
-import { getEntities as getTeaches } from 'app/entities/teach/teach.reducer';
 import { IBatch } from 'app/shared/model/batch.model';
 import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { ISection } from 'app/shared/model/section.model';
 import { getEntities as getSections } from 'app/entities/section/section.reducer';
+import { ITeach } from 'app/shared/model/teach.model';
+import { getEntities as getTeaches } from 'app/entities/teach/teach.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './attendance-master.reducer';
 import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 // tslint:disable-next-line:no-unused-variable
@@ -24,18 +24,18 @@ export interface IAttendanceMasterUpdateProps extends StateProps, DispatchProps,
 
 export interface IAttendanceMasterUpdateState {
   isNew: boolean;
-  teachId: number;
   batchId: number;
   sectionId: number;
+  teachId: number;
 }
 
 export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpdateProps, IAttendanceMasterUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      teachId: 0,
       batchId: 0,
       sectionId: 0,
+      teachId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -47,9 +47,9 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getTeaches();
     this.props.getBatches();
     this.props.getSections();
+    this.props.getTeaches();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +74,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
   };
 
   render() {
-    const { attendanceMasterEntity, teaches, batches, sections, loading, updating } = this.props;
+    const { attendanceMasterEntity, batches, sections, teaches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -103,19 +103,6 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   <AvField id="attendance-master-desc" type="text" name="desc" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="teach.id">Teach</Label>
-                  <AvInput id="attendance-master-teach" type="select" className="form-control" name="teachId">
-                    <option value="" key="0" />
-                    {teaches
-                      ? teaches.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="batch.id">Batch</Label>
                   <AvInput id="attendance-master-batch" type="select" className="form-control" name="batchId">
                     <option value="" key="0" />
@@ -141,6 +128,19 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="teach.id">Teach</Label>
+                  <AvInput id="attendance-master-teach" type="select" className="form-control" name="teachId">
+                    <option value="" key="0" />
+                    {teaches
+                      ? teaches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/attendance-master" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -159,18 +159,18 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  teaches: storeState.teach.entities,
   batches: storeState.batch.entities,
   sections: storeState.section.entities,
+  teaches: storeState.teach.entities,
   attendanceMasterEntity: storeState.attendanceMaster.entity,
   loading: storeState.attendanceMaster.loading,
   updating: storeState.attendanceMaster.updating
 });
 
 const mapDispatchToProps = {
-  getTeaches,
   getBatches,
   getSections,
+  getTeaches,
   getEntity,
   updateEntity,
   createEntity,

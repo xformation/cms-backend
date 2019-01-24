@@ -1,9 +1,9 @@
 export interface IAttendanceMaster {
   id?: number;
   desc?: string;
-  teachId?: number;
   batchId?: number;
   sectionId?: number;
+  teachId?: number;
 }
 
 export const defaultValue: Readonly<IAttendanceMaster> = {};

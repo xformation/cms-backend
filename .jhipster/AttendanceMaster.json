@@ -8,14 +8,6 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "teach",
-            "otherEntityName": "teach",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "attendanceMaster"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "batch",
             "otherEntityName": "batch",
@@ -26,9 +18,15 @@
             "relationshipName": "section",
             "otherEntityName": "section",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "teach",
+            "otherEntityName": "teach",
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190124074604",
+    "changelogDate": "20190124093523",
     "entityTableName": "attendance_master",
     "dto": "mapstruct",
     "pagination": "no",

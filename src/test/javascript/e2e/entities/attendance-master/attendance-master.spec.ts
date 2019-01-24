@@ -33,9 +33,9 @@ describe('AttendanceMaster e2e test', () => {
   it('should create and save AttendanceMasters', async () => {
     attendanceMasterUpdatePage.setDescInput('desc');
     expect(await attendanceMasterUpdatePage.getDescInput()).to.match(/desc/);
-    attendanceMasterUpdatePage.teachSelectLastOption();
     attendanceMasterUpdatePage.batchSelectLastOption();
     attendanceMasterUpdatePage.sectionSelectLastOption();
+    attendanceMasterUpdatePage.teachSelectLastOption();
     await attendanceMasterUpdatePage.save();
     expect(await attendanceMasterUpdatePage.getSaveButton().isPresent()).to.be.false;
   });
