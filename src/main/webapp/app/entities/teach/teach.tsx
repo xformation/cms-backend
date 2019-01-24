@@ -76,8 +76,8 @@ export class Teach extends React.Component<ITeachProps, ITeachState> {
               <tr>
                 <th>ID</th>
                 <th>Desc</th>
-                <th>Teacher</th>
                 <th>Subject</th>
+                <th>Teacher</th>
                 <th />
               </tr>
             </thead>
@@ -90,8 +90,8 @@ export class Teach extends React.Component<ITeachProps, ITeachState> {
                     </Button>
                   </td>
                   <td>{teach.desc}</td>
-                  <td>{teach.teacherId ? <Link to={`teacher/${teach.teacherId}`}>{teach.teacherId}</Link> : ''}</td>
                   <td>{teach.subjectId ? <Link to={`subject/${teach.subjectId}`}>{teach.subjectId}</Link> : ''}</td>
+                  <td>{teach.teacherId ? <Link to={`teacher/${teach.teacherId}`}>{teach.teacherId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${teach.id}`} color="info" size="sm">

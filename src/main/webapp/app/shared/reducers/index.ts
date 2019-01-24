@@ -147,6 +147,10 @@ import attendanceMaster, {
 import attendanceMaster, {
   AttendanceMasterState
 } from 'app/entities/attendance-master/attendance-master.reducer';
+// prettier-ignore
+import teach, {
+  TeachState
+} from 'app/entities/teach/teach.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

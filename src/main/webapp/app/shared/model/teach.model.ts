@@ -1,8 +1,8 @@
 export interface ITeach {
   id?: number;
   desc?: string;
-  teacherId?: number;
   subjectId?: number;
+  teacherId?: number;
 }
 
 export const defaultValue: Readonly<ITeach> = {};

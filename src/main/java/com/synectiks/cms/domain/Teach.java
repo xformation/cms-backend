@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,13 +29,13 @@ public class Teach implements Serializable {
     @Column(name = "jhi_desc")
     private String desc;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Teacher teacher;
-
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("")
     private Subject subject;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Teacher teacher;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -58,19 +59,6 @@ public class Teach implements Serializable {
         this.desc = desc;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public Teach teacher(Teacher teacher) {
-        this.teacher = teacher;
-        return this;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -82,6 +70,19 @@ public class Teach implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public Teach teacher(Teacher teacher) {
+        this.teacher = teacher;
+        return this;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

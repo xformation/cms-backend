@@ -12,9 +12,9 @@ public class TeachDTO implements Serializable {
 
     private String desc;
 
-    private Long teacherId;
-
     private Long subjectId;
+
+    private Long teacherId;
 
     public Long getId() {
         return id;
@@ -32,20 +32,20 @@ public class TeachDTO implements Serializable {
         this.desc = desc;
     }
 
-    public Long getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(Long teacherId) {
-        this.teacherId = teacherId;
-    }
-
     public Long getSubjectId() {
         return subjectId;
     }
 
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public Long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
     @Override
@@ -74,8 +74,8 @@ public class TeachDTO implements Serializable {
         return "TeachDTO{" +
             "id=" + getId() +
             ", desc='" + getDesc() + "'" +
-            ", teacher=" + getTeacherId() +
             ", subject=" + getSubjectId() +
+            ", teacher=" + getTeacherId() +
             "}";
     }
 }

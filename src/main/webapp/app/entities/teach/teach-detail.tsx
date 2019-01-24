@@ -32,10 +32,10 @@ export class TeachDetail extends React.Component<ITeachDetailProps> {
               <span id="desc">Desc</span>
             </dt>
             <dd>{teachEntity.desc}</dd>
-            <dt>Teacher</dt>
-            <dd>{teachEntity.teacherId ? teachEntity.teacherId : ''}</dd>
             <dt>Subject</dt>
             <dd>{teachEntity.subjectId ? teachEntity.subjectId : ''}</dd>
+            <dt>Teacher</dt>
+            <dd>{teachEntity.teacherId ? teachEntity.teacherId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/teach" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
