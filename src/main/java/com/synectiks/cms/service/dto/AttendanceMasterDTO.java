@@ -14,9 +14,9 @@ public class AttendanceMasterDTO implements Serializable {
 
     private Long teachId;
 
-    private Long sectionId;
-
     private Long batchId;
+
+    private Long sectionId;
 
     public Long getId() {
         return id;
@@ -42,20 +42,20 @@ public class AttendanceMasterDTO implements Serializable {
         this.teachId = teachId;
     }
 
-    public Long getSectionId() {
-        return sectionId;
-    }
-
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
-    }
-
     public Long getBatchId() {
         return batchId;
     }
 
     public void setBatchId(Long batchId) {
         this.batchId = batchId;
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
     }
 
     @Override
@@ -85,8 +85,8 @@ public class AttendanceMasterDTO implements Serializable {
             "id=" + getId() +
             ", desc='" + getDesc() + "'" +
             ", teach=" + getTeachId() +
-            ", section=" + getSectionId() +
             ", batch=" + getBatchId() +
+            ", section=" + getSectionId() +
             "}";
     }
 }

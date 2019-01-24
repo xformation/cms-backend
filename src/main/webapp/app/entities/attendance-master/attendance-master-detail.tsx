@@ -34,10 +34,10 @@ export class AttendanceMasterDetail extends React.Component<IAttendanceMasterDet
             <dd>{attendanceMasterEntity.desc}</dd>
             <dt>Teach</dt>
             <dd>{attendanceMasterEntity.teachId ? attendanceMasterEntity.teachId : ''}</dd>
-            <dt>Section</dt>
-            <dd>{attendanceMasterEntity.sectionId ? attendanceMasterEntity.sectionId : ''}</dd>
             <dt>Batch</dt>
             <dd>{attendanceMasterEntity.batchId ? attendanceMasterEntity.batchId : ''}</dd>
+            <dt>Section</dt>
+            <dd>{attendanceMasterEntity.sectionId ? attendanceMasterEntity.sectionId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/attendance-master" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

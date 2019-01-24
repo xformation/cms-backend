@@ -8,17 +8,17 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity AttendanceMaster and its DTO AttendanceMasterDTO.
  */
-@Mapper(componentModel = "spring", uses = {TeachMapper.class, SectionMapper.class, BatchMapper.class})
+@Mapper(componentModel = "spring", uses = {TeachMapper.class, BatchMapper.class, SectionMapper.class})
 public interface AttendanceMasterMapper extends EntityMapper<AttendanceMasterDTO, AttendanceMaster> {
 
     @Mapping(source = "teach.id", target = "teachId")
-    @Mapping(source = "section.id", target = "sectionId")
     @Mapping(source = "batch.id", target = "batchId")
+    @Mapping(source = "section.id", target = "sectionId")
     AttendanceMasterDTO toDto(AttendanceMaster attendanceMaster);
 
     @Mapping(source = "teachId", target = "teach")
-    @Mapping(source = "sectionId", target = "section")
     @Mapping(source = "batchId", target = "batch")
+    @Mapping(source = "sectionId", target = "section")
     AttendanceMaster toEntity(AttendanceMasterDTO attendanceMasterDTO);
 
     default AttendanceMaster fromId(Long id) {

@@ -10,10 +10,10 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ITeach } from 'app/shared/model/teach.model';
 import { getEntities as getTeaches } from 'app/entities/teach/teach.reducer';
-import { ISection } from 'app/shared/model/section.model';
-import { getEntities as getSections } from 'app/entities/section/section.reducer';
 import { IBatch } from 'app/shared/model/batch.model';
 import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
+import { ISection } from 'app/shared/model/section.model';
+import { getEntities as getSections } from 'app/entities/section/section.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './attendance-master.reducer';
 import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 // tslint:disable-next-line:no-unused-variable
@@ -25,8 +25,8 @@ export interface IAttendanceMasterUpdateProps extends StateProps, DispatchProps,
 export interface IAttendanceMasterUpdateState {
   isNew: boolean;
   teachId: number;
-  sectionId: number;
   batchId: number;
+  sectionId: number;
 }
 
 export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpdateProps, IAttendanceMasterUpdateState> {
@@ -34,8 +34,8 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
     super(props);
     this.state = {
       teachId: 0,
-      sectionId: 0,
       batchId: 0,
+      sectionId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -48,8 +48,8 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
     }
 
     this.props.getTeaches();
-    this.props.getSections();
     this.props.getBatches();
+    this.props.getSections();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +74,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
   };
 
   render() {
-    const { attendanceMasterEntity, teaches, sections, batches, loading, updating } = this.props;
+    const { attendanceMasterEntity, teaches, batches, sections, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -116,11 +116,11 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="section.id">Section</Label>
-                  <AvInput id="attendance-master-section" type="select" className="form-control" name="sectionId">
+                  <Label for="batch.id">Batch</Label>
+                  <AvInput id="attendance-master-batch" type="select" className="form-control" name="batchId">
                     <option value="" key="0" />
-                    {sections
-                      ? sections.map(otherEntity => (
+                    {batches
+                      ? batches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -129,11 +129,11 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="batch.id">Batch</Label>
-                  <AvInput id="attendance-master-batch" type="select" className="form-control" name="batchId">
+                  <Label for="section.id">Section</Label>
+                  <AvInput id="attendance-master-section" type="select" className="form-control" name="sectionId">
                     <option value="" key="0" />
-                    {batches
-                      ? batches.map(otherEntity => (
+                    {sections
+                      ? sections.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -160,8 +160,8 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
 
 const mapStateToProps = (storeState: IRootState) => ({
   teaches: storeState.teach.entities,
-  sections: storeState.section.entities,
   batches: storeState.batch.entities,
+  sections: storeState.section.entities,
   attendanceMasterEntity: storeState.attendanceMaster.entity,
   loading: storeState.attendanceMaster.loading,
   updating: storeState.attendanceMaster.updating
@@ -169,8 +169,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getTeaches,
-  getSections,
   getBatches,
+  getSections,
   getEntity,
   updateEntity,
   createEntity,

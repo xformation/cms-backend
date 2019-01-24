@@ -33,13 +33,13 @@ public class AttendanceMaster implements Serializable {
     @JoinColumn(unique = true)
     private Teach teach;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Section section;
-
     @ManyToOne
     @JsonIgnoreProperties("")
     private Batch batch;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Section section;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,19 +76,6 @@ public class AttendanceMaster implements Serializable {
         this.teach = teach;
     }
 
-    public Section getSection() {
-        return section;
-    }
-
-    public AttendanceMaster section(Section section) {
-        this.section = section;
-        return this;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
-    }
-
     public Batch getBatch() {
         return batch;
     }
@@ -100,6 +87,19 @@ public class AttendanceMaster implements Serializable {
 
     public void setBatch(Batch batch) {
         this.batch = batch;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public AttendanceMaster section(Section section) {
+        this.section = section;
+        return this;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -23,8 +23,8 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190118141530_added_entity_BankAccounts.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122100629_added_entity_Subject.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122101135_added_entity_StudentAttendance.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190122105907_added_entity_AttendanceMaster.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190123115124_added_entity_Lecture.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190124074604_added_entity_AttendanceMaster.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <include file="config/liquibase/changelog/20190118141511_added_entity_constraints_Branch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
@@ -38,7 +38,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190118141529_added_entity_constraints_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122100629_added_entity_constraints_Subject.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122101135_added_entity_constraints_StudentAttendance.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190122105907_added_entity_constraints_AttendanceMaster.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190123115124_added_entity_constraints_Lecture.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190124074604_added_entity_constraints_AttendanceMaster.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

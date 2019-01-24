@@ -77,8 +77,8 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
                 <th>ID</th>
                 <th>Desc</th>
                 <th>Teach</th>
-                <th>Section</th>
                 <th>Batch</th>
+                <th>Section</th>
                 <th />
               </tr>
             </thead>
@@ -95,14 +95,14 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
                     {attendanceMaster.teachId ? <Link to={`teach/${attendanceMaster.teachId}`}>{attendanceMaster.teachId}</Link> : ''}
                   </td>
                   <td>
+                    {attendanceMaster.batchId ? <Link to={`batch/${attendanceMaster.batchId}`}>{attendanceMaster.batchId}</Link> : ''}
+                  </td>
+                  <td>
                     {attendanceMaster.sectionId ? (
                       <Link to={`section/${attendanceMaster.sectionId}`}>{attendanceMaster.sectionId}</Link>
                     ) : (
                       ''
                     )}
-                  </td>
-                  <td>
-                    {attendanceMaster.batchId ? <Link to={`batch/${attendanceMaster.batchId}`}>{attendanceMaster.batchId}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

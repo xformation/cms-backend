@@ -16,21 +16,19 @@
             "otherEntityRelationshipName": "attendanceMaster"
         },
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "section",
-            "otherEntityName": "section",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "attendanceMaster"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "batch",
             "otherEntityName": "batch",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "section",
+            "otherEntityName": "section",
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190122105907",
+    "changelogDate": "20190124074604",
     "entityTableName": "attendance_master",
     "dto": "mapstruct",
     "pagination": "no",
