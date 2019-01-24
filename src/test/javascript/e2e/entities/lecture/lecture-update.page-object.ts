@@ -7,8 +7,8 @@ export default class LectureUpdatePage {
   lecDateInput: ElementFinder = element(by.css('input#lecture-lecDate'));
   lastUpdatedOnInput: ElementFinder = element(by.css('input#lecture-lastUpdatedOn'));
   lastUpdatedByInput: ElementFinder = element(by.css('input#lecture-lastUpdatedBy'));
-  lecStatusSelect: ElementFinder = element(by.css('select#lecture-lecStatus'));
-  descInput: ElementFinder = element(by.css('input#lecture-desc'));
+  startTimeInput: ElementFinder = element(by.css('input#lecture-startTime'));
+  endTimeInput: ElementFinder = element(by.css('input#lecture-endTime'));
   attendancemasterSelect: ElementFinder = element(by.css('select#lecture-attendancemaster'));
 
   getPageTitle() {
@@ -39,26 +39,20 @@ export default class LectureUpdatePage {
     return this.lastUpdatedByInput.getAttribute('value');
   }
 
-  setLecStatusSelect(lecStatus) {
-    this.lecStatusSelect.sendKeys(lecStatus);
+  setStartTimeInput(startTime) {
+    this.startTimeInput.sendKeys(startTime);
   }
 
-  getLecStatusSelect() {
-    return this.lecStatusSelect.element(by.css('option:checked')).getText();
+  getStartTimeInput() {
+    return this.startTimeInput.getAttribute('value');
   }
 
-  lecStatusSelectLastOption() {
-    this.lecStatusSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setDescInput(desc) {
-    this.descInput.sendKeys(desc);
+  setEndTimeInput(endTime) {
+    this.endTimeInput.sendKeys(endTime);
   }
 
-  getDescInput() {
-    return this.descInput.getAttribute('value');
+  getEndTimeInput() {
+    return this.endTimeInput.getAttribute('value');
   }
 
   attendancemasterSelectLastOption() {

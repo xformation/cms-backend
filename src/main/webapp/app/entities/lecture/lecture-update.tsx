@@ -14,7 +14,7 @@ import { getEntity, updateEntity, createEntity, reset } from './lecture.reducer'
 import { ILecture } from 'app/shared/model/lecture.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ILectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -61,23 +61,6 @@ export class LectureUpdate extends React.Component<ILectureUpdateProps, ILecture
 
   handleClose = () => {
     this.props.history.push('/entity/lecture');
-  };
-
-  attendancemasterUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        attendancemasterId: -1
-      });
-    } else {
-      for (const i in this.props.attendanceMasters) {
-        if (id === this.props.attendanceMasters[i].id.toString()) {
-          this.setState({
-            attendancemasterId: this.props.attendanceMasters[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -145,34 +128,34 @@ export class LectureUpdate extends React.Component<ILectureUpdateProps, ILecture
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="lecStatusLabel">Lec Status</Label>
-                  <AvInput
-                    id="lecture-lecStatus"
-                    type="select"
-                    className="form-control"
-                    name="lecStatus"
-                    value={(!isNew && lectureEntity.lecStatus) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                    <option value="CANCELLED">CANCELLED</option>
-                  </AvInput>
+                  <Label id="startTimeLabel" for="startTime">
+                    Start Time
+                  </Label>
+                  <AvField
+                    id="lecture-startTime"
+                    type="text"
+                    name="startTime"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="descLabel" for="desc">
-                    Desc
+                  <Label id="endTimeLabel" for="endTime">
+                    End Time
                   </Label>
-                  <AvField id="lecture-desc" type="text" name="desc" />
+                  <AvField
+                    id="lecture-endTime"
+                    type="text"
+                    name="endTime"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="attendancemaster.id">Attendancemaster</Label>
-                  <AvInput
-                    id="lecture-attendancemaster"
-                    type="select"
-                    className="form-control"
-                    name="attendancemasterId"
-                    onChange={this.attendancemasterUpdate}
-                  >
+                  <AvInput id="lecture-attendancemaster" type="select" className="form-control" name="attendancemasterId">
                     <option value="" key="0" />
                     {attendanceMasters
                       ? attendanceMasters.map(otherEntity => (

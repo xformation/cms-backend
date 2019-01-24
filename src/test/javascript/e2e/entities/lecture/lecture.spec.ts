@@ -27,7 +27,7 @@ describe('Lecture e2e test', () => {
   it('should load create Lecture page', async () => {
     lectureComponentsPage.clickOnCreateButton();
     lectureUpdatePage = new LectureUpdatePage();
-    expect(await lectureUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.lecture.home.createOrEditLabel/);
+    expect(await lectureUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Lecture/);
   });
 
   it('should create and save Lectures', async () => {
@@ -37,9 +37,10 @@ describe('Lecture e2e test', () => {
     expect(await lectureUpdatePage.getLastUpdatedOnInput()).to.eq('2001-01-01');
     lectureUpdatePage.setLastUpdatedByInput('lastUpdatedBy');
     expect(await lectureUpdatePage.getLastUpdatedByInput()).to.match(/lastUpdatedBy/);
-    lectureUpdatePage.lecStatusSelectLastOption();
-    lectureUpdatePage.setDescInput('desc');
-    expect(await lectureUpdatePage.getDescInput()).to.match(/desc/);
+    lectureUpdatePage.setStartTimeInput('startTime');
+    expect(await lectureUpdatePage.getStartTimeInput()).to.match(/startTime/);
+    lectureUpdatePage.setEndTimeInput('endTime');
+    expect(await lectureUpdatePage.getEndTimeInput()).to.match(/endTime/);
     lectureUpdatePage.attendancemasterSelectLastOption();
     await lectureUpdatePage.save();
     expect(await lectureUpdatePage.getSaveButton().isPresent()).to.be.false;

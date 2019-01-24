@@ -23,16 +23,18 @@
             ]
         },
         {
-            "fieldName": "lecStatus",
-            "fieldType": "LecStatusEnum",
-            "fieldValues": "ACTIVE,DEACTIVE,CANCELLED",
+            "fieldName": "startTime",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "desc",
-            "fieldType": "String"
+            "fieldName": "endTime",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -43,7 +45,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141524",
+    "changelogDate": "20190123115124",
     "entityTableName": "lecture",
     "dto": "mapstruct",
     "pagination": "no",

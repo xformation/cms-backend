@@ -166,10 +166,10 @@ type AttendanceMaster{
 type Lecture{
 	id: Long!
 	lecDate: Date!
-	lastUpdatedOn: Date!
-	lastUpdatedBy: String!
-	lecStatus: LecStatusEnum!
-	desc: String!
+    lastUpdatedBy: String!
+    lastUpdatedOn: Date!
+    startTime: String!
+	endTime: String!
 	attendancemaster: AttendanceMaster!
 }
 type Holiday{
@@ -645,11 +645,11 @@ type RemoveAttendanceMasterPayload {
 
 
 input AddLectureInput{
-	lecDate: Date!
-	lastUpdatedOn: Date!
-	lastUpdatedBy: String!
-	lecStatus: LecStatusEnum!
-	desc: String!
+    lecDate: Date!
+    lastUpdatedBy: String!
+    lastUpdatedOn: Date!
+    startTime: String!
+    endTime: String!
 	attendanceMasterId: Long!
 }
 type AddLecturePayload {
@@ -657,11 +657,11 @@ type AddLecturePayload {
 }
 input UpdateLectureInput {
     id: Long!
-	lecDate: Date!
-	lastUpdatedOn: Date!
-	lastUpdatedBy: String!
-	lecStatus: LecStatusEnum!
-	desc: String!
+    lecDate: Date!
+    lastUpdatedBy: String!
+    lastUpdatedOn: Date!
+    startTime: String!
+    endTime: String!
 	attendanceMasterId: Long!
 }
 type UpdateLecturePayload {

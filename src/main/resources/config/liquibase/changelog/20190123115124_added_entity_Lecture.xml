@@ -16,7 +16,7 @@
     <!--
         Added the entity Lecture.
     -->
-    <changeSet id="20190118141524-1" author="jhipster">
+    <changeSet id="20190123115124-1" author="jhipster">
         <createTable tableName="lecture">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -33,12 +33,12 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="lec_status" type="varchar(255)">
+            <column name="start_time" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="jhi_desc" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="end_time" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
 
             <column name="attendancemaster_id" type="bigint">

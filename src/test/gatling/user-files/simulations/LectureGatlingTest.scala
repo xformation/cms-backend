@@ -68,7 +68,7 @@ class LectureGatlingTest extends Simulation {
             .exec(http("Create new lecture")
             .post("/api/lectures")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "lecDate":"2020-01-01T00:00:00.000Z", "lastUpdatedOn":"2020-01-01T00:00:00.000Z", "lastUpdatedBy":"SAMPLE_TEXT", "lecStatus":null, "desc":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "lecDate":"2020-01-01T00:00:00.000Z", "lastUpdatedOn":"2020-01-01T00:00:00.000Z", "lastUpdatedBy":"SAMPLE_TEXT", "startTime":"SAMPLE_TEXT", "endTime":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_lecture_url"))).exitHereIfFailed
             .pause(10)

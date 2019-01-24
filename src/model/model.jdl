@@ -85,8 +85,8 @@ entity Lecture{
 lecDate LocalDate required
 lastUpdatedOn LocalDate required
 lastUpdatedBy String required
-lecStatus LecStatusEnum required
-desc String
+startTime String required
+endTime String required
 }
 
 enum LecStatusEnum{

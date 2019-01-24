@@ -78,8 +78,8 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
                 <th>Lec Date</th>
                 <th>Last Updated On</th>
                 <th>Last Updated By</th>
-                <th>Lec Status</th>
-                <th>Desc</th>
+                <th>Start Time</th>
+                <th>End Time</th>
                 <th>Attendancemaster</th>
                 <th />
               </tr>
@@ -99,11 +99,11 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
                     <TextFormat type="date" value={lecture.lastUpdatedOn} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{lecture.lastUpdatedBy}</td>
-                  <td>{lecture.lecStatus}</td>
-                  <td>{lecture.desc}</td>
+                  <td>{lecture.startTime}</td>
+                  <td>{lecture.endTime}</td>
                   <td>
                     {lecture.attendancemasterId ? (
-                      <Link to={`attendanceMaster/${lecture.attendancemasterId}`}>{lecture.attendancemasterId}</Link>
+                      <Link to={`attendance-master/${lecture.attendancemasterId}`}>{lecture.attendancemasterId}</Link>
                     ) : (
                       ''
                     )}

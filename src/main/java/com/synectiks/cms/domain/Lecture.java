@@ -13,8 +13,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.LecStatusEnum;
-
 /**
  * A Lecture.
  */
@@ -44,12 +42,12 @@ public class Lecture implements Serializable {
     private String lastUpdatedBy;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "lec_status", nullable = false)
-    private LecStatusEnum lecStatus;
+    @Column(name = "start_time", nullable = false)
+    private String startTime;
 
-    @Column(name = "jhi_desc")
-    private String desc;
+    @NotNull
+    @Column(name = "end_time", nullable = false)
+    private String endTime;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -68,22 +66,12 @@ public class Lecture implements Serializable {
         return lecDate;
     }
 
-    public Lecture lecDate(Date lecDate) {
-        this.lecDate = lecDate;
-        return this;
-    }
-
     public void setLecDate(Date lecDate) {
         this.lecDate = lecDate;
     }
 
     public Date getLastUpdatedOn() {
         return lastUpdatedOn;
-    }
-
-    public Lecture lastUpdatedOn(Date lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
-        return this;
     }
 
     public void setLastUpdatedOn(Date lastUpdatedOn) {
@@ -103,30 +91,30 @@ public class Lecture implements Serializable {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public LecStatusEnum getLecStatus() {
-        return lecStatus;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public Lecture lecStatus(LecStatusEnum lecStatus) {
-        this.lecStatus = lecStatus;
+    public Lecture startTime(String startTime) {
+        this.startTime = startTime;
         return this;
     }
 
-    public void setLecStatus(LecStatusEnum lecStatus) {
-        this.lecStatus = lecStatus;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public Lecture desc(String desc) {
-        this.desc = desc;
+    public Lecture endTime(String endTime) {
+        this.endTime = endTime;
         return this;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public AttendanceMaster getAttendancemaster() {
@@ -170,8 +158,8 @@ public class Lecture implements Serializable {
             ", lecDate='" + getLecDate() + "'" +
             ", lastUpdatedOn='" + getLastUpdatedOn() + "'" +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
-            ", lecStatus='" + getLecStatus() + "'" +
-            ", desc='" + getDesc() + "'" +
+            ", startTime='" + getStartTime() + "'" +
+            ", endTime='" + getEndTime() + "'" +
             "}";
     }
 }

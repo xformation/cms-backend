@@ -1153,8 +1153,8 @@ public class Mutation implements GraphQLMutationResolver {
         lecture.setLecDate(addLectureInput.getLecDate());
         lecture.setLastUpdatedOn(addLectureInput.getLastUpdatedOn());
         lecture.setLastUpdatedBy(addLectureInput.getLastUpdatedBy());
-        lecture.setLecStatus(addLectureInput.getLecStatus());
-        lecture.setDesc(addLectureInput.getDesc());
+        lecture.setStartTime(addLectureInput.getStartTime());
+        lecture.setEndTime(addLectureInput.getEndTime());
         lecture.setAttendancemaster(attendanceMaster);
         lectureRepository.save(lecture);
         return new AddLecturePayload(lecture);
@@ -1164,20 +1164,20 @@ public class Mutation implements GraphQLMutationResolver {
     	Lecture lecture = lectureRepository.findById(updateLectureInput.getId()).get();
 
     	if(updateLectureInput.getLecDate() != null) {
-    		lecture.setLecDate(updateLectureInput.getLecDate());
-    	}
-    	if(updateLectureInput.getLastUpdatedOn() != null) {
-    		lecture.setLastUpdatedOn(updateLectureInput.getLastUpdatedOn());
-    	}
-    	if(updateLectureInput.getLastUpdatedBy() != null) {
-    		lecture.setLastUpdatedBy(updateLectureInput.getLastUpdatedBy());
-    	}
-    	if(updateLectureInput.getLecStatus() != null) {
-    		lecture.setLecStatus(updateLectureInput.getLecStatus());
-    	}
-        if (updateLectureInput.getDesc() != null) {
-        	lecture.setDesc(updateLectureInput.getDesc());
+            lecture.setLecDate(updateLectureInput.getLecDate());
         }
+        if(updateLectureInput.getLastUpdatedBy() != null) {
+            lecture.setLastUpdatedBy(updateLectureInput.getLastUpdatedBy());
+        }
+        if(updateLectureInput.getLastUpdatedOn() != null) {
+            lecture.setLastUpdatedOn(updateLectureInput.getLastUpdatedOn());
+        }
+    	if(updateLectureInput.getStartTime() != null) {
+    		lecture.setStartTime(updateLectureInput.getStartTime());
+    	}
+    	if(updateLectureInput.getEndTime() != null) {
+    		lecture.setEndTime(updateLectureInput.getEndTime());
+    	}
         if (updateLectureInput.getAttendanceMasterId() != null) {
         	final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(updateLectureInput.getAttendanceMasterId()).get();
         	lecture.setAttendancemaster(attendanceMaster);

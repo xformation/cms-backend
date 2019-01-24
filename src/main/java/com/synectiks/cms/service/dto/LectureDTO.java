@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.LecStatusEnum;
 
 /**
  * A DTO for the Lecture entity.
@@ -23,9 +22,10 @@ public class LectureDTO implements Serializable {
     private String lastUpdatedBy;
 
     @NotNull
-    private LecStatusEnum lecStatus;
+    private String startTime;
 
-    private String desc;
+    @NotNull
+    private String endTime;
 
     private Long attendancemasterId;
 
@@ -61,20 +61,20 @@ public class LectureDTO implements Serializable {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public LecStatusEnum getLecStatus() {
-        return lecStatus;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setLecStatus(LecStatusEnum lecStatus) {
-        this.lecStatus = lecStatus;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public Long getAttendancemasterId() {
@@ -113,8 +113,8 @@ public class LectureDTO implements Serializable {
             ", lecDate='" + getLecDate() + "'" +
             ", lastUpdatedOn='" + getLastUpdatedOn() + "'" +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
-            ", lecStatus='" + getLecStatus() + "'" +
-            ", desc='" + getDesc() + "'" +
+            ", startTime='" + getStartTime() + "'" +
+            ", endTime='" + getEndTime() + "'" +
             ", attendancemaster=" + getAttendancemasterId() +
             "}";
     }

@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +38,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.LecStatusEnum;
 /**
  * Test class for the LectureResource REST controller.
  *
@@ -49,8 +47,8 @@ import com.synectiks.cms.domain.enumeration.LecStatusEnum;
 @SpringBootTest(classes = CmsApp.class)
 public class LectureResourceIntTest {
 
-    private static final Date DEFAULT_LEC_DATE = new Date();
-    private static final Date UPDATED_LEC_DATE = new Date();
+    private static final Date DEFAULT_LEC_DATE =new Date();
+    private static final Date UPDATED_LEC_DATE =new Date();
 
     private static final Date DEFAULT_LAST_UPDATED_ON = new Date();
     private static final Date UPDATED_LAST_UPDATED_ON = new Date();
@@ -58,11 +56,11 @@ public class LectureResourceIntTest {
     private static final String DEFAULT_LAST_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_LAST_UPDATED_BY = "BBBBBBBBBB";
 
-    private static final LecStatusEnum DEFAULT_LEC_STATUS = LecStatusEnum.ACTIVE;
-    private static final LecStatusEnum UPDATED_LEC_STATUS = LecStatusEnum.DEACTIVE;
+    private static final String DEFAULT_START_TIME = "AAAAAAAAAA";
+    private static final String UPDATED_START_TIME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DESC = "AAAAAAAAAA";
-    private static final String UPDATED_DESC = "BBBBBBBBBB";
+    private static final String DEFAULT_END_TIME = "AAAAAAAAAA";
+    private static final String UPDATED_END_TIME = "BBBBBBBBBB";
 
     @Autowired
     private LectureRepository lectureRepository;
@@ -70,7 +68,7 @@ public class LectureResourceIntTest {
 
     @Autowired
     private LectureMapper lectureMapper;
-
+    
 
     @Autowired
     private LectureService lectureService;
@@ -121,8 +119,8 @@ public class LectureResourceIntTest {
         lecture.setLecDate(DEFAULT_LEC_DATE);
         lecture.setLastUpdatedOn(DEFAULT_LAST_UPDATED_ON);
         lecture.lastUpdatedBy(DEFAULT_LAST_UPDATED_BY);
-        lecture.lecStatus(DEFAULT_LEC_STATUS);
-        lecture.desc(DEFAULT_DESC);
+        lecture.startTime(DEFAULT_START_TIME);
+        lecture.endTime(DEFAULT_END_TIME);
         return lecture;
     }
 
@@ -150,8 +148,8 @@ public class LectureResourceIntTest {
         assertThat(testLecture.getLecDate()).isEqualTo(DEFAULT_LEC_DATE);
         assertThat(testLecture.getLastUpdatedOn()).isEqualTo(DEFAULT_LAST_UPDATED_ON);
         assertThat(testLecture.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
-        assertThat(testLecture.getLecStatus()).isEqualTo(DEFAULT_LEC_STATUS);
-        assertThat(testLecture.getDesc()).isEqualTo(DEFAULT_DESC);
+        assertThat(testLecture.getStartTime()).isEqualTo(DEFAULT_START_TIME);
+        assertThat(testLecture.getEndTime()).isEqualTo(DEFAULT_END_TIME);
 
         // Validate the Lecture in Elasticsearch
         verify(mockLectureSearchRepository, times(1)).save(testLecture);
@@ -239,10 +237,29 @@ public class LectureResourceIntTest {
 
     @Test
     @Transactional
-    public void checkLecStatusIsRequired() throws Exception {
+    public void checkStartTimeIsRequired() throws Exception {
         int databaseSizeBeforeTest = lectureRepository.findAll().size();
         // set the field null
-        lecture.setLecStatus(null);
+        lecture.setStartTime(null);
+
+        // Create the Lecture, which fails.
+        LectureDTO lectureDTO = lectureMapper.toDto(lecture);
+
+        restLectureMockMvc.perform(post("/api/lectures")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(lectureDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Lecture> lectureList = lectureRepository.findAll();
+        assertThat(lectureList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEndTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = lectureRepository.findAll().size();
+        // set the field null
+        lecture.setEndTime(null);
 
         // Create the Lecture, which fails.
         LectureDTO lectureDTO = lectureMapper.toDto(lecture);
@@ -270,10 +287,10 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.[*].lecDate").value(hasItem(DEFAULT_LEC_DATE.toString())))
             .andExpect(jsonPath("$.[*].lastUpdatedOn").value(hasItem(DEFAULT_LAST_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY.toString())))
-            .andExpect(jsonPath("$.[*].lecStatus").value(hasItem(DEFAULT_LEC_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
-
+    
 
     @Test
     @Transactional
@@ -289,8 +306,8 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.lecDate").value(DEFAULT_LEC_DATE.toString()))
             .andExpect(jsonPath("$.lastUpdatedOn").value(DEFAULT_LAST_UPDATED_ON.toString()))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY.toString()))
-            .andExpect(jsonPath("$.lecStatus").value(DEFAULT_LEC_STATUS.toString()))
-            .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()));
+            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
     }
     @Test
     @Transactional
@@ -316,8 +333,8 @@ public class LectureResourceIntTest {
         updatedLecture.setLecDate(UPDATED_LEC_DATE);
         updatedLecture.setLastUpdatedOn(UPDATED_LAST_UPDATED_ON);
         updatedLecture.lastUpdatedBy(UPDATED_LAST_UPDATED_BY);
-        updatedLecture.lecStatus(UPDATED_LEC_STATUS);
-        updatedLecture.desc(UPDATED_DESC);
+        updatedLecture.startTime(UPDATED_START_TIME);
+        updatedLecture.endTime(UPDATED_END_TIME);
         LectureDTO lectureDTO = lectureMapper.toDto(updatedLecture);
 
         restLectureMockMvc.perform(put("/api/lectures")
@@ -332,8 +349,8 @@ public class LectureResourceIntTest {
         assertThat(testLecture.getLecDate()).isEqualTo(UPDATED_LEC_DATE);
         assertThat(testLecture.getLastUpdatedOn()).isEqualTo(UPDATED_LAST_UPDATED_ON);
         assertThat(testLecture.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
-        assertThat(testLecture.getLecStatus()).isEqualTo(UPDATED_LEC_STATUS);
-        assertThat(testLecture.getDesc()).isEqualTo(UPDATED_DESC);
+        assertThat(testLecture.getStartTime()).isEqualTo(UPDATED_START_TIME);
+        assertThat(testLecture.getEndTime()).isEqualTo(UPDATED_END_TIME);
 
         // Validate the Lecture in Elasticsearch
         verify(mockLectureSearchRepository, times(1)).save(testLecture);
@@ -347,7 +364,7 @@ public class LectureResourceIntTest {
         // Create the Lecture
         LectureDTO lectureDTO = lectureMapper.toDto(lecture);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restLectureMockMvc.perform(put("/api/lectures")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lectureDTO)))
@@ -397,8 +414,8 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.[*].lecDate").value(hasItem(DEFAULT_LEC_DATE.toString())))
             .andExpect(jsonPath("$.[*].lastUpdatedOn").value(hasItem(DEFAULT_LAST_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY.toString())))
-            .andExpect(jsonPath("$.[*].lecStatus").value(hasItem(DEFAULT_LEC_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
 
     @Test

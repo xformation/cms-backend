@@ -45,13 +45,13 @@ export class LectureDetail extends React.Component<ILectureDetailProps> {
             </dt>
             <dd>{lectureEntity.lastUpdatedBy}</dd>
             <dt>
-              <span id="lecStatus">Lec Status</span>
+              <span id="startTime">Start Time</span>
             </dt>
-            <dd>{lectureEntity.lecStatus}</dd>
+            <dd>{lectureEntity.startTime}</dd>
             <dt>
-              <span id="desc">Desc</span>
+              <span id="endTime">End Time</span>
             </dt>
-            <dd>{lectureEntity.desc}</dd>
+            <dd>{lectureEntity.endTime}</dd>
             <dt>Attendancemaster</dt>
             <dd>{lectureEntity.attendancemasterId ? lectureEntity.attendancemasterId : ''}</dd>
           </dl>
