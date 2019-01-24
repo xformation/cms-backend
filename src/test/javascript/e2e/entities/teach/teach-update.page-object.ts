@@ -5,8 +5,8 @@ export default class TeachUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   descInput: ElementFinder = element(by.css('input#teach-desc'));
-  teacherSelect: ElementFinder = element(by.css('select#teach-teacher'));
   subjectSelect: ElementFinder = element(by.css('select#teach-subject'));
+  teacherSelect: ElementFinder = element(by.css('select#teach-teacher'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -18,25 +18,6 @@ export default class TeachUpdatePage {
 
   getDescInput() {
     return this.descInput.getAttribute('value');
-  }
-
-  teacherSelectLastOption() {
-    this.teacherSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  teacherSelectOption(option) {
-    this.teacherSelect.sendKeys(option);
-  }
-
-  getTeacherSelect() {
-    return this.teacherSelect;
-  }
-
-  getTeacherSelectedOption() {
-    return this.teacherSelect.element(by.css('option:checked')).getText();
   }
 
   subjectSelectLastOption() {
@@ -56,6 +37,25 @@ export default class TeachUpdatePage {
 
   getSubjectSelectedOption() {
     return this.subjectSelect.element(by.css('option:checked')).getText();
+  }
+
+  teacherSelectLastOption() {
+    this.teacherSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  teacherSelectOption(option) {
+    this.teacherSelect.sendKeys(option);
+  }
+
+  getTeacherSelect() {
+    return this.teacherSelect;
+  }
+
+  getTeacherSelectedOption() {
+    return this.teacherSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

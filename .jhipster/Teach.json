@@ -8,23 +8,19 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "teacher",
-            "otherEntityName": "teacher",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "teach"
-        },
-        {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "subject",
             "otherEntityName": "subject",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "teach"
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "teacher",
+            "otherEntityName": "teacher",
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141521",
+    "changelogDate": "20190124103741",
     "entityTableName": "teach",
     "dto": "mapstruct",
     "pagination": "no",

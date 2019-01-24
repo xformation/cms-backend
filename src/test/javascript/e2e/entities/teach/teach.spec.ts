@@ -27,14 +27,14 @@ describe('Teach e2e test', () => {
   it('should load create Teach page', async () => {
     teachComponentsPage.clickOnCreateButton();
     teachUpdatePage = new TeachUpdatePage();
-    expect(await teachUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.teach.home.createOrEditLabel/);
+    expect(await teachUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Teach/);
   });
 
   it('should create and save Teaches', async () => {
     teachUpdatePage.setDescInput('desc');
     expect(await teachUpdatePage.getDescInput()).to.match(/desc/);
-    teachUpdatePage.teacherSelectLastOption();
     teachUpdatePage.subjectSelectLastOption();
+    teachUpdatePage.teacherSelectLastOption();
     await teachUpdatePage.save();
     expect(await teachUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

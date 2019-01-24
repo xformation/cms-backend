@@ -6,19 +6,19 @@
     <!--
         Added the constraints for entity Teach.
     -->
-    <changeSet id="20190118141521-2" author="jhipster">
+    <changeSet id="20190124103741-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="teacher_id"
-                                 baseTableName="teach"
-                                 constraintName="fk_teach_teacher_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="teacher"/>
-
         <addForeignKeyConstraint baseColumnNames="subject_id"
                                  baseTableName="teach"
                                  constraintName="fk_teach_subject_id"
                                  referencedColumnNames="id"
                                  referencedTableName="subject"/>
+
+        <addForeignKeyConstraint baseColumnNames="teacher_id"
+                                 baseTableName="teach"
+                                 constraintName="fk_teach_teacher_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="teacher"/>
 
     </changeSet>
 </databaseChangeLog>
