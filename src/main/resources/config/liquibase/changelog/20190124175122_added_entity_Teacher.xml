@@ -16,13 +16,19 @@
     <!--
         Added the entity Teacher.
     -->
-    <changeSet id="20190118141518-1" author="jhipster">
+    <changeSet id="20190124175122-1" author="jhipster">
         <createTable tableName="teacher">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="teacher_name" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+            <column name="branch_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_teacher_branch_id" />
+            </column>
+            <column name="department_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

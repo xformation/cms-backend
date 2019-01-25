@@ -237,6 +237,8 @@ type Subject {
 type Teacher{
     id: Long!
     teacherName: String!
+    branch: Branch!
+    department: Department!
 }
 type Term{
     id: Long!
@@ -925,6 +927,8 @@ type RemoveSubjectPayload {
 
 input AddTeacherInput {
    teacherName: String!
+   branchId: Long!
+   departmentId: Long!
 }
 type AddTeacherPayload {
     teacher: Teacher!
@@ -932,6 +936,8 @@ type AddTeacherPayload {
 input UpdateTeacherInput {
     id: Long!
     teacherName: String
+    branchId: Long!
+    departmentId: Long!
 }
 type UpdateTeacherPayload {
     teacher: Teacher!

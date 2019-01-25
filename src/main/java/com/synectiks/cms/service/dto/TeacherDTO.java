@@ -14,6 +14,10 @@ public class TeacherDTO implements Serializable {
     @NotNull
     private String teacherName;
 
+    private Long branchId;
+
+    private Long departmentId;
+
     public Long getId() {
         return id;
     }
@@ -28,6 +32,22 @@ public class TeacherDTO implements Serializable {
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -56,6 +76,8 @@ public class TeacherDTO implements Serializable {
         return "TeacherDTO{" +
             "id=" + getId() +
             ", teacherName='" + getTeacherName() + "'" +
+            ", branch=" + getBranchId() +
+            ", department=" + getDepartmentId() +
             "}";
     }
 }

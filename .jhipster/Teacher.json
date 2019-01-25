@@ -9,8 +9,23 @@
             ]
         }
     ],
-    "relationships": [],
-    "changelogDate": "20190118141518",
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "branch",
+            "otherEntityName": "branch",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "teacher"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "department",
+            "otherEntityName": "department",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190124175122",
     "entityTableName": "teacher",
     "dto": "mapstruct",
     "pagination": "no",

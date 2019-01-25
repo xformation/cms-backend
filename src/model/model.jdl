@@ -183,9 +183,13 @@ Subject{batch} to Batch,
 AttendanceMaster{section} to Section,
 AttendanceMaster{teach} to Teach,
 Teach{subject} to Subject,
-Teach{teacher} to Teacher
+Teach{teacher} to Teacher,
+Teacher {department} to Department
 }
 
+relationship OneToOne {
+Teacher{branch} to Branch
+}
 
 dto * with mapstruct
 service all with serviceImpl

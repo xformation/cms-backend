@@ -779,8 +779,12 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public AddTeacherPayload addTeacher(AddTeacherInput addTeacherInput) {
+        final Branch branch = branchRepository.findById(addTeacherInput.getBranchId()).get();
+        final Department department = departmentRepository.findById(addTeacherInput.getDepartmentId()).get();
         final Teacher teacher = new Teacher();
         teacher.setTeacherName(addTeacherInput.getTeacherName());
+        teacher.setBranch(branch);
+        teacher.setDepartment(department);
 
         teacherRepository.save(teacher);
 
@@ -791,6 +795,16 @@ public class Mutation implements GraphQLMutationResolver {
         Teacher teacher = teacherRepository.findById(updateTeacherInput.getId()).get();
         if (updateTeacherInput.getTeacherName() != null) {
             teacher.setTeacherName(updateTeacherInput.getTeacherName());
+        }
+
+        if(updateTeacherInput.getBranchId() != null) {
+            final Branch branch = branchRepository.findById(updateTeacherInput.getBranchId()).get();
+            teacher.setBranch(branch);
+        }
+
+        if(updateTeacherInput.getBranchId() != null) {
+            final Department department = departmentRepository.findById(updateTeacherInput.getDepartmentId()).get();
+            teacher.setDepartment(department);
         }
         teacherRepository.save(teacher);
 

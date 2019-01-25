@@ -17,6 +17,8 @@ package com.synectiks.cms.graphql.resolvers;
 
 import java.util.List;
 
+import com.synectiks.cms.AcademicSubject.AcademicSubjectAddInput;
+import com.synectiks.cms.AcademicSubject.AcademicSubjectVo;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -316,4 +318,5 @@ public class Query implements GraphQLQueryResolver {
     public List<DailyAttendanceVo> getDailyStudentAttendance(StudentAttendanceFilterInput filter) {
     	return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
+
 }

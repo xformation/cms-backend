@@ -27,12 +27,14 @@ describe('Teacher e2e test', () => {
   it('should load create Teacher page', async () => {
     teacherComponentsPage.clickOnCreateButton();
     teacherUpdatePage = new TeacherUpdatePage();
-    expect(await teacherUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.teacher.home.createOrEditLabel/);
+    expect(await teacherUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Teacher/);
   });
 
   it('should create and save Teachers', async () => {
     teacherUpdatePage.setTeacherNameInput('teacherName');
     expect(await teacherUpdatePage.getTeacherNameInput()).to.match(/teacherName/);
+    teacherUpdatePage.branchSelectLastOption();
+    teacherUpdatePage.departmentSelectLastOption();
     await teacherUpdatePage.save();
     expect(await teacherUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

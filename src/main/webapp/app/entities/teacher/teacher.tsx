@@ -76,6 +76,8 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
               <tr>
                 <th>ID</th>
                 <th>Teacher Name</th>
+                <th>Branch</th>
+                <th>Department</th>
                 <th />
               </tr>
             </thead>
@@ -88,6 +90,8 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                     </Button>
                   </td>
                   <td>{teacher.teacherName}</td>
+                  <td>{teacher.branchId ? <Link to={`branch/${teacher.branchId}`}>{teacher.branchId}</Link> : ''}</td>
+                  <td>{teacher.departmentId ? <Link to={`department/${teacher.departmentId}`}>{teacher.departmentId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${teacher.id}`} color="info" size="sm">

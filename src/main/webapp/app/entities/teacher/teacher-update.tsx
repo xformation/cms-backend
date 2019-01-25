@@ -8,22 +8,30 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
+import { IDepartment } from 'app/shared/model/department.model';
+import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './teacher.reducer';
 import { ITeacher } from 'app/shared/model/teacher.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ITeacherUpdateState {
   isNew: boolean;
+  branchId: number;
+  departmentId: number;
 }
 
 export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacherUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      branchId: 0,
+      departmentId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -34,6 +42,9 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getBranches();
+    this.props.getDepartments();
   }
 
   saveEntity = (event, errors, values) => {
@@ -58,7 +69,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
   };
 
   render() {
-    const { teacherEntity, loading, updating } = this.props;
+    const { teacherEntity, branches, departments, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -93,6 +104,32 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                     }}
                   />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="branch.id">Branch</Label>
+                  <AvInput id="teacher-branch" type="select" className="form-control" name="branchId">
+                    <option value="" key="0" />
+                    {branches
+                      ? branches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="department.id">Department</Label>
+                  <AvInput id="teacher-department" type="select" className="form-control" name="departmentId">
+                    <option value="" key="0" />
+                    {departments
+                      ? departments.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/teacher" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -111,12 +148,16 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  branches: storeState.branch.entities,
+  departments: storeState.department.entities,
   teacherEntity: storeState.teacher.entity,
   loading: storeState.teacher.loading,
   updating: storeState.teacher.updating
 });
 
 const mapDispatchToProps = {
+  getBranches,
+  getDepartments,
   getEntity,
   updateEntity,
   createEntity,
