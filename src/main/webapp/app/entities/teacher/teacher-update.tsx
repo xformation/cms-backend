@@ -8,10 +8,10 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IBranch } from 'app/shared/model/branch.model';
-import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { IDepartment } from 'app/shared/model/department.model';
 import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './teacher.reducer';
 import { ITeacher } from 'app/shared/model/teacher.model';
 // tslint:disable-next-line:no-unused-variable
@@ -22,16 +22,16 @@ export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface ITeacherUpdateState {
   isNew: boolean;
-  branchId: number;
   departmentId: number;
+  branchId: number;
 }
 
 export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacherUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      branchId: 0,
       departmentId: 0,
+      branchId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -43,8 +43,8 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getBranches();
     this.props.getDepartments();
+    this.props.getBranches();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +69,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
   };
 
   render() {
-    const { teacherEntity, branches, departments, loading, updating } = this.props;
+    const { teacherEntity, departments, branches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -105,11 +105,11 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="branch.id">Branch</Label>
-                  <AvInput id="teacher-branch" type="select" className="form-control" name="branchId">
+                  <Label for="department.id">Department</Label>
+                  <AvInput id="teacher-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
-                    {branches
-                      ? branches.map(otherEntity => (
+                    {departments
+                      ? departments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -118,11 +118,11 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="department.id">Department</Label>
-                  <AvInput id="teacher-department" type="select" className="form-control" name="departmentId">
+                  <Label for="branch.id">Branch</Label>
+                  <AvInput id="teacher-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
-                    {departments
-                      ? departments.map(otherEntity => (
+                    {branches
+                      ? branches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -148,16 +148,16 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  branches: storeState.branch.entities,
   departments: storeState.department.entities,
+  branches: storeState.branch.entities,
   teacherEntity: storeState.teacher.entity,
   loading: storeState.teacher.loading,
   updating: storeState.teacher.updating
 });
 
 const mapDispatchToProps = {
-  getBranches,
   getDepartments,
+  getBranches,
   getEntity,
   updateEntity,
   createEntity,

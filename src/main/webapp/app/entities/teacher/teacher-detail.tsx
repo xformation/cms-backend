@@ -32,10 +32,10 @@ export class TeacherDetail extends React.Component<ITeacherDetailProps> {
               <span id="teacherName">Teacher Name</span>
             </dt>
             <dd>{teacherEntity.teacherName}</dd>
-            <dt>Branch</dt>
-            <dd>{teacherEntity.branchId ? teacherEntity.branchId : ''}</dd>
             <dt>Department</dt>
             <dd>{teacherEntity.departmentId ? teacherEntity.departmentId : ''}</dd>
+            <dt>Branch</dt>
+            <dd>{teacherEntity.branchId ? teacherEntity.branchId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/teacher" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
