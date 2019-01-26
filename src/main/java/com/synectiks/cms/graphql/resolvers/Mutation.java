@@ -11,6 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.AcademicSubject.AcademicSubjectAddImpl;
+import com.synectiks.cms.AcademicSubject.AcademicSubjectInput;
+import com.synectiks.cms.AcademicSubject.AcademicSubjectUpdateImpl;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1207,41 +1210,91 @@ public class Mutation implements GraphQLMutationResolver {
     }
     
     @Transactional
-    public QueryResult updateStudenceAttendanceData (StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
-    	System.out.println("Input contents : "+filter.getStudentIds());
-    	String sql = "update student_attendance set attendance_status= ? where student_id  = ?  and lecture_id = ? ";
-    	Query query1 = this.entityManager.createNativeQuery(sql);
-    	StringTokenizer token = new StringTokenizer(filter.getStudentIds(),",");
-    	QueryResult res = new QueryResult();
-    	res.setStatusCode(0);
-    	res.setStatusDesc("Records updated successfully.");
-    	try {
-    		while(token.hasMoreTokens()) {
-        		query1.setParameter(1, "ABSENT");
-    			query1.setParameter(2,  Integer.parseInt(token.nextToken()));
-    			query1.setParameter(3, filter.getLectureId());
-    			query1.executeUpdate();
-        	}
-    	}catch(Exception e) {
-    		logger.error("Exception. There is some error in updating the student attendance records. ",e);
-    		res.setStatusCode(1);
-        	res.setStatusDesc("There is some error in updating the student attendance records.");
-    	}
-    	
-    	return res;
-    	
-    } 
-    
-    
+        public QueryResult updateStudenceAttendanceData (StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
+            System.out.println("Input contents : "+filter.getStudentIds());
+            String sql = "update student_attendance set attendance_status= ? where student_id  = ?  and lecture_id = ? ";
+            Query query1 = this.entityManager.createNativeQuery(sql);
+            StringTokenizer token = new StringTokenizer(filter.getStudentIds(),",");
+            QueryResult res = new QueryResult();
+            res.setStatusCode(0);
+            res.setStatusDesc("Records updated successfully.");
+            try {
+                while(token.hasMoreTokens()) {
+                    query1.setParameter(1, "ABSENT");
+                    query1.setParameter(2,  Integer.parseInt(token.nextToken()));
+                    query1.setParameter(3, filter.getLectureId());
+                    query1.executeUpdate();
+                }
+            }catch(Exception e) {
+                logger.error("Exception. There is some error in updating the student attendance records. ",e);
+                res.setStatusCode(1);
+                res.setStatusDesc("There is some error in updating the student attendance records.");
+            }
+
+            return res;
+
+        }
+
     public String subtractDays(String dt, int days) throws ParseException {
-    	String dtFormat = "yyyy-MM-dd";
-    	Date date=new SimpleDateFormat(dtFormat).parse(dt);
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(date);
-		cal.add(Calendar.DATE, -days);
-		String newDt = new SimpleDateFormat(dtFormat).format(cal.getTime());
-		return newDt;
-	}
+        String dtFormat = "yyyy-MM-dd";
+        Date date=new SimpleDateFormat(dtFormat).parse(dt);
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -days);
+        String newDt = new SimpleDateFormat(dtFormat).format(cal.getTime());
+        return newDt;
+    }
+
+    @Transactional
+    public QueryResult updateAcademicSubjectData ( AcademicSubjectInput academicSubjectInput) throws JSONException, ParseException {
+        System.out.println("Input contents : "+academicSubjectInput.getDepartmentId());
+        String sql = "update subject set subject_code= ?,subject_type=?,subject_desc= ?, status= ? where department_id= ? and batch_id= ?";
+        Query query1 = this.entityManager.createNativeQuery(sql);
+        StringTokenizer token = new StringTokenizer(academicSubjectInput.getDepartmentId(), " ");
+        QueryResult res = new QueryResult();
+            res.setStatusCode(0);
+            res.setStatusDesc("Records updated successfully.");
+            try {
+            while(token.hasMoreTokens()) {
+                query1.setParameter(1, "DEACTIVE");
+                query1.setParameter(2,  Integer.parseInt(token.nextToken()));
+                query1.setParameter(3,academicSubjectInput.getBatchId());
+                query1.executeUpdate();
+            }
+        }catch(Exception e) {
+            logger.error("Exception. There is some error in updating the subject records. ",e);
+            res.setStatusCode(1);
+            res.setStatusDesc("There is some error in updating the student subject records.");
+        }
+
+        return res;
+
+    }
+
+    @Transactional
+    public QueryResult addAcademicSubjectData (AcademicSubjectInput academicSubjectInput) throws JSONException, ParseException {
+        System.out.println("Input contents : "+academicSubjectInput.getDepartmentId());
+        String sql = "INSERT INTO subject( id, subject_code, subject_type, subject_desc, status, department_id, batch_id) VALUES (?,?,?,?,?,?) ";
+        Query query1 = this.entityManager.createNativeQuery(sql);
+        StringTokenizer token = new StringTokenizer(academicSubjectInput.getDepartmentId(), " ");
+        QueryResult res = new QueryResult();
+        res.setStatusCode(0);
+        res.setStatusDesc("Records updated successfully.");
+        try {
+            while(token.hasMoreTokens()) {
+                query1.setParameter(1, "DEACTIVE");
+                query1.setParameter(2,  Integer.parseInt(token.nextToken()));
+                query1.setParameter(3, academicSubjectInput.getBatchId());
+                query1.executeUpdate();
+            }
+        }catch(Exception e) {
+            logger.error("Exception. There is some error in adding the subject records. ",e);
+            res.setStatusCode(1);
+            res.setStatusDesc("There is some error in adding the student subject records.");
+        }
+
+        return res;
+    }
     
    
 }

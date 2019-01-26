@@ -109,6 +109,8 @@ type Query {
   terms: [Term!]!
 
   getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+
+  getAcademicSubject(academicSubjectInput: AcademicSubjectInput!): [AcademicSubjectVo!]!
 }
 
 type AuthorizedSignatory {
@@ -265,6 +267,8 @@ type DailyAttendanceVo {
 	comments: String
 }
 
+
+
 input StudentAttendanceFilterInput {
 	branchId: String!
 	departmentId: String!
@@ -275,6 +279,18 @@ input StudentAttendanceFilterInput {
 	studentId: String
 	studentName: String
 	lectureId: String!
+}
+
+type AcademicSubjectVo{
+    subjectCode: String!
+    subjectType: String!
+    subjectDesc: String!
+    status: String!
+}
+
+input AcademicSubjectInput {
+    departmentId: Long!
+    batchId: Long!
 }
 
 
@@ -360,6 +376,11 @@ type Mutation {
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
    
    updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
+
+    addAcademicSubjectData(input: AcademicSubjectInput!): QueryResult!
+    updateAcademicSubjectData(input: AcademicSubjectInput!): QueryResult!
+
+
 }
 
 type QueryResult{
@@ -446,6 +467,7 @@ input AddCollegeInput {
     backgroundImage: Long
     instructionInformation: String
 }
+
 type AddCollegePayload {
     college: College!
 }
