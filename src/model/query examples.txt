@@ -78,3 +78,23 @@ QUERY:
 }
 
 
+----- academic subject query -----
+query getAcademicSubjects($input:AcademicSubjectQueryPayload!){
+  getAcademicSubjects(input:$input){
+    id
+    subjectCode
+    subjectType
+    subjectDesc
+    status
+    departmentId
+    batchId
+    teacherId
+ } 
+}
+{
+  "input": {
+    "departmentId":1,
+    "branchId":1001,
+    "batchId":1
+  }
+}

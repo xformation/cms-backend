@@ -1,6 +1,6 @@
-package com.synectiks.cms.AcademicSubject;
+package com.synectiks.cms.filter.academicsubject;
 
-public class UpdateAcademicSubjectInputPayload {
+public class AcademicSubjectMutationPayload {
     String subjectData[];
 
     public String[] getSubjectData() {

@@ -15,20 +15,59 @@
  */
 package com.synectiks.cms.graphql.resolvers;
 
-import java.text.ParseException;
 import java.util.List;
 
-import com.synectiks.cms.AcademicSubject.*;
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.StudentSubject;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
+import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
+import com.synectiks.cms.filter.academicsubject.AcademicSubjectVo;
 import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.StudentSubjectRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
 
 /**
  * Resolver for PetClinic Queries
@@ -65,8 +104,9 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
+    
     @Autowired
-    private AcademicSubjectGetImpl academicSubjectGetImpl;
+    private AcademicSubjectProcessor academicSubjectProcessor;
 
     public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository) {
         this.batchRepository = batchRepository;
@@ -287,7 +327,7 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
 
-    public List<AcademicSubjectVo> getAcademicSubject(AcademicSubjectInput academicSubjectInput) {
-        return Lists.newArrayList(academicSubjectGetImpl.getAcademicSubject(academicSubjectInput));
+    public List<AcademicSubjectVo> getAcademicSubjects(AcademicSubjectQueryPayload academicSubjectQueryPayload) {
+        return Lists.newArrayList(this.academicSubjectProcessor.getAcademicSubjects(academicSubjectQueryPayload));
     }
 }

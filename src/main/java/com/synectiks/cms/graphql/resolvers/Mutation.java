@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.AcademicSubject.AcademicSubjectInput;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.AuthorizedSignatory;
@@ -42,6 +41,9 @@ import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
+import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
+import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
@@ -225,6 +227,9 @@ public class Mutation implements GraphQLMutationResolver {
     
     @Autowired
     private LectureScheduleProcessor lectureScheduleProcessor;
+    
+    @Autowired
+    private AcademicSubjectProcessor academicSubjectProcessor;
     
     public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository) {
         this.batchRepository = batchRepository;
@@ -1248,54 +1253,14 @@ public class Mutation implements GraphQLMutationResolver {
         return newDt;
     }
 
-    @Transactional
-    public QueryResult updateAcademicSubjectData ( AcademicSubjectInput academicSubjectInput) throws JSONException, ParseException {
-        System.out.println("Input contents : "+academicSubjectInput.getDepartmentId());
-        String sql = "update subject set subject_code= ?,subject_type=?,subject_desc= ?, status= ? where department_id= ? and batch_id= ?";
-        Query query1 = this.entityManager.createNativeQuery(sql);
-        StringTokenizer token = new StringTokenizer(academicSubjectInput.getDepartmentId(), " ");
-        QueryResult res = new QueryResult();
-            res.setStatusCode(0);
-            res.setStatusDesc("Records updated successfully.");
-            try {
-            while(token.hasMoreTokens()) {
-                query1.setParameter(1, "DEACTIVE");
-                query1.setParameter(2,  Integer.parseInt(token.nextToken()));
-                query1.setParameter(3,academicSubjectInput.getBatchId());
-                query1.executeUpdate();
-            }
-        }catch(Exception e) {
-            logger.error("Exception. There is some error in updating the subject records. ",e);
-            res.setStatusCode(1);
-            res.setStatusDesc("There is some error in updating the student subject records.");
-        }
-
+    
+    public QueryResult updateAcademicSubjects (AcademicSubjectMutationPayload academicSubjectMutationPayload) throws JSONException, ParseException {
+    	QueryResult res = this.academicSubjectProcessor.updateAcademicSubjects(academicSubjectMutationPayload);
         return res;
-
     }
 
-    @Transactional
-    public QueryResult addAcademicSubjectData (AcademicSubjectInput academicSubjectInput) throws JSONException, ParseException {
-        System.out.println("Input contents : "+academicSubjectInput.getDepartmentId());
-        String sql = "INSERT INTO subject( id, subject_code, subject_type, subject_desc, status, department_id, batch_id) VALUES (?,?,?,?,?,?) ";
-        Query query1 = this.entityManager.createNativeQuery(sql);
-        StringTokenizer token = new StringTokenizer(academicSubjectInput.getDepartmentId(), " ");
-        QueryResult res = new QueryResult();
-        res.setStatusCode(0);
-        res.setStatusDesc("Records updated successfully.");
-        try {
-            while(token.hasMoreTokens()) {
-                query1.setParameter(1, "DEACTIVE");
-                query1.setParameter(2,  Integer.parseInt(token.nextToken()));
-                query1.setParameter(3, academicSubjectInput.getBatchId());
-                query1.executeUpdate();
-            }
-        }catch(Exception e) {
-            logger.error("Exception. There is some error in adding the subject records. ",e);
-            res.setStatusCode(1);
-            res.setStatusDesc("There is some error in adding the student subject records.");
-        }
-
+    public QueryResult addAcademicSubjects (AcademicSubjectMutationPayload academicSubjectMutationPayload) throws JSONException, ParseException {
+    	QueryResult res = this.academicSubjectProcessor.addAcademicSubjects(academicSubjectMutationPayload);
         return res;
     }
     

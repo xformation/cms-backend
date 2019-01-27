@@ -110,8 +110,9 @@ type Query {
 
   getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 
-  getAcademicSubject(academicSubjectInput: AcademicSubjectInput!): [AcademicSubjectVo!]!
+  getAcademicSubjects(input: AcademicSubjectQueryPayload!): [AcademicSubjectVo!]!
 }
+
 
 type AuthorizedSignatory {
     id: Long!
@@ -286,13 +287,21 @@ type AcademicSubjectVo{
     subjectType: String!
     subjectDesc: String!
     status: String!
+    id: Int!
+	departmentId: Int!
+	batchId: Int!
+	teacherId: Int!
 }
 
-input AcademicSubjectInput {
-    departmentId: Long!
-    batchId: Long!
+input AcademicSubjectMutationPayload {
+    subjectData: [String!]!
 }
 
+input AcademicSubjectQueryPayload{
+	departmentId: Int!
+    batchId: Int!
+    branchId: Int!
+}
 
 type Mutation {
    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
@@ -377,11 +386,11 @@ type Mutation {
    
    updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 
-    addAcademicSubjectData(input: AcademicSubjectInput!): QueryResult!
-    updateAcademicSubjectData(input: AcademicSubjectInput!): QueryResult!
+   addAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
+   updateAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
 
-	addLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
-    updateLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
+   addLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
+   updateLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
 }
 
 input LectureScheduleInput {

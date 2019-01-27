@@ -613,3 +613,39 @@ mutation updateLectures($input:LectureScheduleInput!, $filter:LectureScheduleFil
     "departmentId": 1
   }
 }
+
+
+--------- academic subject and teach mutation add -------
+mutation addAcademicSubjects($input:AcademicSubjectMutationPayload!){
+  addAcademicSubjects(input:$input){
+     statusCode
+    statusDesc
+ } 
+}
+{
+  "input": {
+    "subjectData": [
+      {"subjectCode": "CPP","subjectType": "COMMON","subjectDesc": "CPP","status": "ACTIVE","departmentId": "1","batchId": "1", "teacherId": "16"},
+      {"subjectCode": "DS","subjectType": "COMMON","subjectDesc": "Data Structure","status": "ACTIVE","departmentId": "1","batchId": "1", "teacherId": "17"}
+    ]
+    
+  }
+}
+
+--------- academic subject and teach mutation update -------
+mutation updateAcademicSubjects($input:AcademicSubjectMutationPayload!){
+  updateAcademicSubjects(input:$input){
+     statusCode
+    statusDesc
+ } 
+}
+
+{
+  "input": {
+    "subjectData": [
+      {"subjectCode": "OSS S","subjectType": "ELE S","subjectDesc": "OPS ELES","status": "DRAFT","departmentId": "1","batchId": "1","teacherId": "18", "subjectId":"1", "teachId":"1"},
+      {"subjectCode": "SE S","subjectType": "ELEC","subjectDesc": "SES ELE","status": "DEACTIVE","departmentId": "1","batchId": "1","teacherId": "19", "subjectId":"2", "teachId":"2"}
+    ]
+    
+  }
+}
