@@ -557,3 +557,59 @@ comments
 
 }
 }
+
+
+
+
+------ lecture add ---------
+
+mutation addLectures($input:LectureScheduleInput!, $filter:LectureScheduleFilter!){
+  addLectures(input:$input, filter:$filter){
+    statusCode
+    statusDesc
+ } 
+}
+
+
+
+{
+  "input": {
+   "values": [
+		{ "WEEKDAY":"MONDAY", "startTime": "7:30:01Am", "endTime":"8:30:01Am", "subjectId":"2", "teacherId":"11", "batchId": "1", "sectionId": "2" },
+		{ "WEEKDAY":"MONDAY", "startTime": "8:30:01Am", "endTime":"9:30:01Am", "subjectId":"5", "teacherId":"14", "batchId": "1", "sectionId": "1" },
+		{ "WEEKDAY":"TUESDAY", "startTime": "7:30:01Am", "endTime":"8:30:01Am", "subjectId":"3", "teacherId":"12", "batchId": "1", "sectionId": "1" }
+	
+   ]
+  },
+  
+  "filter": {
+    "academicYear": 2019,
+    "sectionId": 2,
+    "batchId": 1,
+    "departmentId": 1
+  }
+}
+
+------ lecture update -------
+mutation updateLectures($input:LectureScheduleInput!, $filter:LectureScheduleFilter!){
+  updateLectures(input:$input, filter:$filter){
+    statusCode
+    statusDesc
+ } 
+}
+
+{
+  "input": {
+   "values": [
+		{ "WEEKDAY":"MONDAY", "startTime": "7:30:01Am", "endTime":"8:30:01Am", "subjectId":"2" }
+	
+   ]
+  },
+  
+  "filter": {
+    "academicYear": 2019,
+    "sectionId": 2,
+    "batchId": 1,
+    "departmentId": 1
+  }
+}
