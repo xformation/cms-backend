@@ -11,9 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.AcademicSubject.AcademicSubjectAddImpl;
-import com.synectiks.cms.AcademicSubject.AcademicSubjectInput;
-import com.synectiks.cms.AcademicSubject.AcademicSubjectUpdateImpl;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
+import com.synectiks.cms.AcademicSubject.AcademicSubjectInput;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.AuthorizedSignatory;
@@ -44,7 +42,9 @@ import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
+import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
+import com.synectiks.cms.filter.lecture.LectureScheduleInput;
+import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearInput;
 import com.synectiks.cms.graphql.types.AcademicYear.AddAcademicYearPayload;
@@ -220,8 +220,11 @@ public class Mutation implements GraphQLMutationResolver {
     @PersistenceContext
     private EntityManager entityManager;
     
+//    @Autowired
+//    private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
+    
     @Autowired
-    private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
+    private LectureScheduleProcessor lectureScheduleProcessor;
     
     public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository) {
         this.batchRepository = batchRepository;
@@ -1296,7 +1299,15 @@ public class Mutation implements GraphQLMutationResolver {
         return res;
     }
     
-   
+    public QueryResult addLectures(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) throws JSONException, ParseException {
+    	QueryResult res = lectureScheduleProcessor.addLectureSchedule(lectureScheduleInput, filter);
+    	return res;
+    }
+    
+    public QueryResult updateLectures(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) {
+    	QueryResult res = lectureScheduleProcessor.updateLectureSchedule(lectureScheduleInput, filter);
+    	return res;
+    }
 }
 
 

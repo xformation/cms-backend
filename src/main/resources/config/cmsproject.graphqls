@@ -380,7 +380,22 @@ type Mutation {
     addAcademicSubjectData(input: AcademicSubjectInput!): QueryResult!
     updateAcademicSubjectData(input: AcademicSubjectInput!): QueryResult!
 
+	addLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
+    updateLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
+}
 
+input LectureScheduleInput {
+	values: [String]!
+}
+
+input LectureScheduleFilter {
+	academicYear: Int
+	branchId: Int
+	departmentId: Int!
+	batchId: Int
+	semesterId: Int
+	sectionId: Int
+	status: String
 }
 
 type QueryResult{
