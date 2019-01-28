@@ -709,6 +709,7 @@ public class Mutation implements GraphQLMutationResolver {
         subject.setSubjectType(addSubjectInput.getSubjectType());
         subject.setSubjectCode(addSubjectInput.getSubjectCode());
         subject.setSubjectDesc(addSubjectInput.getSubjectDesc());
+        subject.setStatus(addSubjectInput.getStatus());
         subjectRepository.save(subject);
         return new AddSubjectPayload(subject);
     }
@@ -723,6 +724,9 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateSubjectInput.getSubjectDesc() != null) {
             subject.setSubjectDesc(updateSubjectInput.getSubjectDesc());
+        }
+        if (updateSubjectInput.getStatus() != null) {
+            subject.setStatus(updateSubjectInput.getStatus());
         }
         if (updateSubjectInput.getDepartmentId() != null) {
         	final Department department = departmentRepository.findById(updateSubjectInput.getDepartmentId()).get();
