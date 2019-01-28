@@ -73,6 +73,7 @@ enum RelationWithStudentEnum{
   FATHER,MOTHER,GUARDIAN
 }
 
+
 entity Student{
 studentName String required
 studentMiddleName String required
@@ -115,8 +116,51 @@ rollNo String required
 studentType String required
 }
 
+
+enum  StaffType{
+ TEACHING, NONTEACHING, GUEST
+}
+
 entity Teacher{
 teacherName String required
+teacherMiddleName String required
+teacherLastName String required
+fatherName String required
+fatherMiddleName String required
+fatherLastName String required
+motherName String required
+motherMiddleName String required
+motherLastName String required
+aadharNo Long required
+dateOfBirth LocalDate required
+placeOfBirth String required
+religion Religion required
+caste Caste required
+subCaste String required
+age Integer required
+sex Gender required
+bloodGroup Bloodgroup required
+addressLineOne String required
+addressLineTwo String required
+addressLineThree String required
+town String required
+state String required
+country String required
+pincode Long required
+teacherContactNumber Long required
+alternateContactNumber Long required
+teacherEmailAddress String required
+alternateEmailAddress String required
+relationWithStaff RelationWithStudentEnum required
+name String required
+middleName String required
+lastName String required
+contactNo Long required
+emailAddress String required
+uploadPhoto Long required
+employeeId Long required
+designation String required
+staffType StaffType required
 }
 
 entity AcademicYear{

@@ -14,22 +14,28 @@ import { getEntity, updateEntity, createEntity, reset } from './branch.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IBranchUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBranchUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IBranchUpdateState {
   isNew: boolean;
-  collegeId: number;
+  collegeId: string;
 }
 
 export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      collegeId: 0,
+      collegeId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/branch');
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -144,7 +132,7 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="branch-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="branch-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -176,7 +164,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   colleges: storeState.college.entities,
   branchEntity: storeState.branch.entity,
   loading: storeState.branch.loading,
-  updating: storeState.branch.updating
+  updating: storeState.branch.updating,
+  updateSuccess: storeState.branch.updateSuccess
 });
 
 const mapDispatchToProps = {

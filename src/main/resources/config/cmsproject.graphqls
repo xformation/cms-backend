@@ -309,11 +309,56 @@ type Subject {
  	department: Department!
  	batch: Batch!
 }
+
+enum StaffType {
+    TEACHING
+    NONTEACHING
+     GUEST
+}
+
 type Teacher{
-    id: Long!
-    teacherName: String!
-    branch: Branch!
-    department: Department!
+                 id: Long!
+                 teacherName: String!
+                 teacherMiddleName: String!
+                 teacherLastName: String!
+                 fatherName: String!
+                 fatherMiddleName: String!
+                 fatherLastName: String!
+                 motherName: String!
+                 motherMiddleName: String!
+                 motherLastName: String!
+                 aadharNo: Long!
+                 dateOfBirth: Date!
+                 placeOfBirth: String!
+                 religion: Religion!
+                 caste: Caste!
+                 subCaste: String!
+                 age: Long!
+                 sex: Gender!
+                 bloodGroup: Bloodgroup!
+                 addressLineOne: String!
+                 addressLineTwo: String!
+                 addressLineThree: String!
+                 town: String!
+                 state: String!
+                 country: String!
+                 pincode: Long!
+                 teacherContactNumber: Long!
+                 alternateContactNumber: Long!
+                 teacherEmailAddress: String!
+                 alternateEmailAddress: String!
+                 relationWithStaff: RelationWithStudentEnum!
+                 name: String!
+                 middleName: String!
+                 lastName: String!
+                 contactNo: Long!
+                 emailAddress: String!
+                 uploadPhoto: Long!
+                 employeeId: Long!
+                 designation: String!
+                 staffType: StaffType!
+                 branch: Branch!
+              department: Department!
 }
 type Term{
     id: Long!
@@ -1118,18 +1163,94 @@ type RemoveSubjectPayload {
 
 
 input AddTeacherInput {
-   teacherName: String!
-   branchId: Long!
-   departmentId: Long!
+                   teacherName: String!
+                   teacherMiddleName: String!
+                   teacherLastName: String!
+                   fatherName: String!
+                   fatherMiddleName: String!
+                   fatherLastName: String!
+                   motherName: String!
+                   motherMiddleName: String!
+                   motherLastName: String!
+                   aadharNo: Long!
+                   dateOfBirth: Date!
+                   placeOfBirth: String!
+                   religion: Religion!
+                   caste: Caste!
+                   subCaste: String!
+                   age: Long!
+                   sex: Gender!
+                   bloodGroup: Bloodgroup!
+                   addressLineOne: String!
+                   addressLineTwo: String!
+                   addressLineThree: String!
+                   town: String!
+                   state: String!
+                   country: String!
+                   pincode: Long!
+                   teacherContactNumber: Long!
+                   alternateContactNumber: Long!
+                   teacherEmailAddress: String!
+                   alternateEmailAddress: String!
+                   relationWithStaff: RelationWithStudentEnum!
+                   name: String!
+                   middleName: String!
+                   lastName: String!
+                   contactNo: Long!
+                   emailAddress: String!
+                   uploadPhoto: Long!
+                   employeeId: Long!
+                   designation: String!
+                   staffType: StaffType!
+                   branchId: Long!
+                  departmentId: Long!
 }
 type AddTeacherPayload {
     teacher: Teacher!
 }
 input UpdateTeacherInput {
-    id: Long!
-    teacherName: String
-    branchId: Long!
-    departmentId: Long!
+                    id: Long!
+                    teacherName: String!
+                    teacherMiddleName: String!
+                    teacherLastName: String!
+                    fatherName: String!
+                    fatherMiddleName: String!
+                    fatherLastName: String!
+                    motherName: String!
+                    motherMiddleName: String!
+                    motherLastName: String!
+                    aadharNo: Long!
+                    dateOfBirth: Date!
+                    placeOfBirth: String!
+                    religion: Religion!
+                    caste: Caste!
+                    subCaste: String!
+                    age: Long!
+                    sex: Gender!
+                    bloodGroup: Bloodgroup!
+                    addressLineOne: String!
+                    addressLineTwo: String!
+                    addressLineThree: String!
+                    town: String!
+                    state: String!
+                    country: String!
+                    pincode: Long!
+                    teacherContactNumber: Long!
+                    alternateContactNumber: Long!
+                    teacherEmailAddress: String!
+                    alternateEmailAddress: String!
+                    relationWithStaff: RelationWithStudentEnum!
+                    name: String!
+                    middleName: String!
+                    lastName: String!
+                    contactNo: Long!
+                    emailAddress: String!
+                    uploadPhoto: Long!
+                    employeeId: Long!
+                    designation: String!
+                    staffType: StaffType!
+                    branchId: Long!
+                    departmentId: Long!
 }
 type UpdateTeacherPayload {
     teacher: Teacher!

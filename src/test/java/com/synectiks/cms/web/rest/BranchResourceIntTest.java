@@ -58,10 +58,8 @@ public class BranchResourceIntTest {
     @Autowired
     private BranchRepository branchRepository;
 
-
     @Autowired
     private BranchMapper branchMapper;
-    
 
     @Autowired
     private BranchService branchService;
@@ -240,7 +238,6 @@ public class BranchResourceIntTest {
             .andExpect(jsonPath("$.[*].collegeHead").value(hasItem(DEFAULT_COLLEGE_HEAD.toString())));
     }
     
-
     @Test
     @Transactional
     public void getBranch() throws Exception {
@@ -256,6 +253,7 @@ public class BranchResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.collegeHead").value(DEFAULT_COLLEGE_HEAD.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingBranch() throws Exception {
@@ -307,7 +305,7 @@ public class BranchResourceIntTest {
         // Create the Branch
         BranchDTO branchDTO = branchMapper.toDto(branch);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBranchMockMvc.perform(put("/api/branches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
@@ -354,9 +352,9 @@ public class BranchResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(branch.getId().intValue())))
-            .andExpect(jsonPath("$.[*].branchName").value(hasItem(DEFAULT_BRANCH_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].collegeHead").value(hasItem(DEFAULT_COLLEGE_HEAD.toString())));
+            .andExpect(jsonPath("$.[*].branchName").value(hasItem(DEFAULT_BRANCH_NAME)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].collegeHead").value(hasItem(DEFAULT_COLLEGE_HEAD)));
     }
 
     @Test

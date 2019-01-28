@@ -949,6 +949,44 @@ public class Mutation implements GraphQLMutationResolver {
         final Department department = departmentRepository.findById(addTeacherInput.getDepartmentId()).get();
         final Teacher teacher = new Teacher();
         teacher.setTeacherName(addTeacherInput.getTeacherName());
+        teacher.setTeacherMiddleName(addTeacherInput.getTeacherMiddleName());
+        teacher.setTeacherLastName(addTeacherInput.getTeacherLastName());
+        teacher.setFatherName(addTeacherInput.getFatherName());
+        teacher.setFatherMiddleName(addTeacherInput.getFatherMiddleName());
+        teacher.setFatherLastName(addTeacherInput.getFatherLastName());
+        teacher.setMotherName(addTeacherInput.getMotherName());
+        teacher.setMotherMiddleName(addTeacherInput.getMotherMiddleName());
+        teacher.setMotherLastName(addTeacherInput.getMotherLastName());
+        teacher.setAadharNo(addTeacherInput.getAadharNo());
+        teacher.setDateOfBirth(addTeacherInput.getDateOfBirth());
+        teacher.setPlaceOfBirth(addTeacherInput.getPlaceOfBirth());
+        teacher.setReligion(addTeacherInput.getReligion());
+        teacher.setCaste(addTeacherInput.getCaste());
+        teacher.setSubCaste(addTeacherInput.getSubCaste());
+        teacher.setAge(addTeacherInput.getAge());
+        teacher.setSex(addTeacherInput.getSex());
+        teacher.setBloodGroup(addTeacherInput.getBloodGroup());
+        teacher.setAddressLineOne(addTeacherInput.getAddressLineOne());
+        teacher.setAddressLineTwo(addTeacherInput.getAddressLineTwo());
+        teacher.setAddressLineThree(addTeacherInput.getAddressLineThree());
+        teacher.setTown(addTeacherInput.getTown());
+        teacher.setState(addTeacherInput.getState());
+        teacher.setCountry(addTeacherInput.getCountry());
+        teacher.setPincode(addTeacherInput.getPincode());
+        teacher.setTeacherContactNumber(addTeacherInput.getTeacherContactNumber());
+        teacher.setAlternateContactNumber(addTeacherInput.getAlternateContactNumber());
+        teacher.setTeacherEmailAddress(addTeacherInput.getTeacherEmailAddress());
+        teacher.setAlternateEmailAddress(addTeacherInput.getAlternateEmailAddress());
+        teacher.setRelationWithStaff(addTeacherInput.getRelationWithStaff());
+        teacher.setName(addTeacherInput.getName());
+        teacher.setMiddleName(addTeacherInput.getMiddleName());
+        teacher.setLastName(addTeacherInput.getLastName());
+        teacher.setContactNo(addTeacherInput.getContactNo());
+        teacher.setEmailAddress(addTeacherInput.getEmailAddress());
+        teacher.setUploadPhoto(addTeacherInput.getUploadPhoto());
+        teacher.setEmployeeId(addTeacherInput.getEmployeeId());
+        teacher.setDesignation(addTeacherInput.getDesignation());
+        teacher.setStaffType(addTeacherInput.getStaffType());
         teacher.setBranch(branch);
         teacher.setDepartment(department);
 
@@ -961,6 +999,120 @@ public class Mutation implements GraphQLMutationResolver {
         Teacher teacher = teacherRepository.findById(updateTeacherInput.getId()).get();
         if (updateTeacherInput.getTeacherName() != null) {
             teacher.setTeacherName(updateTeacherInput.getTeacherName());
+        }
+        if (updateTeacherInput.getTeacherMiddleName() != null) {
+            teacher.setTeacherMiddleName(updateTeacherInput.getTeacherMiddleName());
+        }
+        if (updateTeacherInput.getTeacherLastName() != null) {
+            teacher.setTeacherLastName(updateTeacherInput.getTeacherLastName());
+        }
+        if (updateTeacherInput.getFatherName() != null) {
+            teacher.setFatherName(updateTeacherInput.getFatherName());
+        }
+        if (updateTeacherInput.getFatherMiddleName() != null) {
+            teacher.setFatherMiddleName(updateTeacherInput.getFatherMiddleName());
+        }
+        if (updateTeacherInput.getFatherLastName() != null) {
+            teacher.setFatherLastName(updateTeacherInput.getFatherLastName());
+        }
+        if (updateTeacherInput.getMotherName() != null) {
+            teacher.setMotherName(updateTeacherInput.getMotherName());
+        }
+        if (updateTeacherInput.getMotherMiddleName() != null) {
+            teacher.setMotherMiddleName(updateTeacherInput.getMotherMiddleName());
+        }
+        if (updateTeacherInput.getMotherLastName() != null) {
+            teacher.setMotherLastName(updateTeacherInput.getMotherLastName());
+        }
+        if (updateTeacherInput.getAadharNo() != null) {
+            teacher.setAadharNo(updateTeacherInput.getAadharNo());
+        }
+        if (updateTeacherInput.getDateOfBirth() != null) {
+            teacher.setDateOfBirth(updateTeacherInput.getDateOfBirth());
+        }
+        if (updateTeacherInput.getPlaceOfBirth() != null) {
+            teacher.setPlaceOfBirth(updateTeacherInput.getPlaceOfBirth());
+        }
+        if (updateTeacherInput.getReligion() != null) {
+            teacher.setReligion(updateTeacherInput.getReligion());
+        }
+        if (updateTeacherInput.getCaste() != null) {
+            teacher.setCaste(updateTeacherInput.getCaste());
+        }
+        if (updateTeacherInput.getSubCaste() != null) {
+            teacher.setSubCaste(updateTeacherInput.getSubCaste());
+        }
+        if (updateTeacherInput.getAge() != null) {
+            teacher.setAge(updateTeacherInput.getAge());
+        }
+        if (updateTeacherInput.getSex() != null) {
+            teacher.setSex(updateTeacherInput.getSex());
+        }
+        if (updateTeacherInput.getBloodGroup() != null) {
+            teacher.setBloodGroup(updateTeacherInput.getBloodGroup());
+        }
+        if (updateTeacherInput.getAddressLineOne() != null) {
+            teacher.setAddressLineOne(updateTeacherInput.getAddressLineOne());
+        }
+        if (updateTeacherInput.getAddressLineTwo() != null) {
+            teacher.setAddressLineTwo(updateTeacherInput.getAddressLineTwo());
+        }
+        if (updateTeacherInput.getAddressLineThree() != null) {
+            teacher.setAddressLineThree(updateTeacherInput.getAddressLineThree());
+        }
+        if (updateTeacherInput.getTown() != null) {
+            teacher.setTown(updateTeacherInput.getTown());
+        }
+        if (updateTeacherInput.getState() != null) {
+            teacher.setState(updateTeacherInput.getState());
+        }
+        if (updateTeacherInput.getCountry() != null) {
+            teacher.setCountry(updateTeacherInput.getCountry());
+        }
+        if (updateTeacherInput.getPincode() != null) {
+            teacher.setPincode(updateTeacherInput.getPincode());
+        }
+        if (updateTeacherInput.getTeacherContactNumber() != null) {
+            teacher.setTeacherContactNumber(updateTeacherInput.getTeacherContactNumber());
+        }
+        if (updateTeacherInput.getAlternateContactNumber() != null) {
+            teacher.setAlternateContactNumber(updateTeacherInput.getAlternateContactNumber());
+        }
+        if (updateTeacherInput.getTeacherEmailAddress() != null) {
+            teacher.setTeacherEmailAddress(updateTeacherInput.getTeacherEmailAddress());
+        }
+        if (updateTeacherInput.getAlternateEmailAddress() != null) {
+            teacher.setAlternateEmailAddress(updateTeacherInput.getAlternateEmailAddress());
+        }
+        if (updateTeacherInput.getRelationWithStaff() != null) {
+            teacher.setRelationWithStaff(updateTeacherInput.getRelationWithStaff());
+        }
+        if (updateTeacherInput.getName() != null) {
+            teacher.setName(updateTeacherInput.getName());
+        }
+        if (updateTeacherInput.getMiddleName() != null) {
+            teacher.setMiddleName(updateTeacherInput.getMiddleName());
+        }
+        if (updateTeacherInput.getLastName() != null) {
+            teacher.setLastName(updateTeacherInput.getLastName());
+        }
+        if (updateTeacherInput.getContactNo() != null) {
+            teacher.setContactNo(updateTeacherInput.getContactNo());
+        }
+        if (updateTeacherInput.getEmailAddress() != null) {
+            teacher.setEmailAddress(updateTeacherInput.getEmailAddress());
+        }
+        if (updateTeacherInput.getUploadPhoto() != null) {
+            teacher.setUploadPhoto(updateTeacherInput.getUploadPhoto());
+        }
+        if (updateTeacherInput.getEmployeeId() != null) {
+            teacher.setEmployeeId(updateTeacherInput.getEmployeeId());
+        }
+        if (updateTeacherInput.getDesignation() != null) {
+            teacher.setDesignation(updateTeacherInput.getDesignation());
+        }
+        if (updateTeacherInput.getStaffType() != null) {
+            teacher.setStaffType(updateTeacherInput.getStaffType());
         }
 
         if(updateTeacherInput.getBranchId() != null) {

@@ -12,7 +12,7 @@ import { ITeach } from 'app/shared/model/teach.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ITeachDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITeachDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TeachDetail extends React.Component<ITeachDetailProps> {
   componentDidMount() {

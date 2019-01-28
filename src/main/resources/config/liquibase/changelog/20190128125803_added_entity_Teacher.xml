@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity Teacher.
+    -->
+    <changeSet id="20190128125803-1" author="jhipster">
+        <createTable tableName="teacher">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="teacher_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="teacher_middle_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="teacher_last_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="father_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="father_middle_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="father_last_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="mother_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="mother_middle_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="mother_last_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="aadhar_no" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="date_of_birth" type="date">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="place_of_birth" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="religion" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="caste" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="sub_caste" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="age" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="sex" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="blood_group" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="address_line_one" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="address_line_two" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="address_line_three" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="town" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="state" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="country" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="pincode" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="teacher_contact_number" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="alternate_contact_number" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="teacher_email_address" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="alternate_email_address" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="relation_with_staff" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="middle_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="contact_no" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="email_address" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="upload_photo" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="employee_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="designation" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="staff_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="department_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

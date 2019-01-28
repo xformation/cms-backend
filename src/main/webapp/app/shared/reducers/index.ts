@@ -171,6 +171,30 @@ import student, {
 import student, {
   StudentState
 } from 'app/entities/student/student.reducer';
+// prettier-ignore
+import branch, {
+  BranchState
+} from 'app/entities/branch/branch.reducer';
+// prettier-ignore
+import teacher, {
+  TeacherState
+} from 'app/entities/teacher/teacher.reducer';
+// prettier-ignore
+import teach, {
+  TeachState
+} from 'app/entities/teach/teach.reducer';
+// prettier-ignore
+import branch, {
+  BranchState
+} from 'app/entities/branch/branch.reducer';
+// prettier-ignore
+import teacher, {
+  TeacherState
+} from 'app/entities/teacher/teacher.reducer';
+// prettier-ignore
+import teach, {
+  TeachState
+} from 'app/entities/teach/teach.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

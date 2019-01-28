@@ -52,10 +52,8 @@ public class TeachResourceIntTest {
     @Autowired
     private TeachRepository teachRepository;
 
-
     @Autowired
     private TeachMapper teachMapper;
-    
 
     @Autowired
     private TeachService teachService;
@@ -171,7 +169,6 @@ public class TeachResourceIntTest {
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
     
-
     @Test
     @Transactional
     public void getTeach() throws Exception {
@@ -185,6 +182,7 @@ public class TeachResourceIntTest {
             .andExpect(jsonPath("$.id").value(teach.getId().intValue()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingTeach() throws Exception {
@@ -232,7 +230,7 @@ public class TeachResourceIntTest {
         // Create the Teach
         TeachDTO teachDTO = teachMapper.toDto(teach);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTeachMockMvc.perform(put("/api/teaches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teachDTO)))
@@ -279,7 +277,7 @@ public class TeachResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teach.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC)));
     }
 
     @Test

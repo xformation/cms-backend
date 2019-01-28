@@ -25,7 +25,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,6 +40,12 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.domain.enumeration.Caste;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.StaffType;
 /**
  * Test class for the TeacherResource REST controller.
  *
@@ -49,13 +58,125 @@ public class TeacherResourceIntTest {
     private static final String DEFAULT_TEACHER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_TEACHER_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TEACHER_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_TEACHER_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TEACHER_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_TEACHER_LAST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FATHER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FATHER_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FATHER_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FATHER_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FATHER_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FATHER_LAST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MOTHER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_MOTHER_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MOTHER_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_MOTHER_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MOTHER_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_MOTHER_LAST_NAME = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_AADHAR_NO = 1L;
+    private static final Long UPDATED_AADHAR_NO = 2L;
+
+    private static final Date DEFAULT_DATE_OF_BIRTH = new Date();
+    private static final Date UPDATED_DATE_OF_BIRTH = new Date();
+
+    private static final String DEFAULT_PLACE_OF_BIRTH = "AAAAAAAAAA";
+    private static final String UPDATED_PLACE_OF_BIRTH = "BBBBBBBBBB";
+
+    private static final Religion DEFAULT_RELIGION = Religion.HINDU;
+    private static final Religion UPDATED_RELIGION = Religion.MUSLIM;
+
+    private static final Caste DEFAULT_CASTE = Caste.OC;
+    private static final Caste UPDATED_CASTE = Caste.BC;
+
+    private static final String DEFAULT_SUB_CASTE = "AAAAAAAAAA";
+    private static final String UPDATED_SUB_CASTE = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_AGE = 1;
+    private static final Integer UPDATED_AGE = 2;
+
+    private static final Gender DEFAULT_SEX = Gender.MALE;
+    private static final Gender UPDATED_SEX = Gender.FEMALE;
+
+    private static final Bloodgroup DEFAULT_BLOOD_GROUP = Bloodgroup.ABPOSITIVE;
+    private static final Bloodgroup UPDATED_BLOOD_GROUP = Bloodgroup.ABNEGATIVE;
+
+    private static final String DEFAULT_ADDRESS_LINE_ONE = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_LINE_ONE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_LINE_TWO = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_LINE_TWO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_LINE_THREE = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_LINE_THREE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TOWN = "AAAAAAAAAA";
+    private static final String UPDATED_TOWN = "BBBBBBBBBB";
+
+    private static final String DEFAULT_STATE = "AAAAAAAAAA";
+    private static final String UPDATED_STATE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_COUNTRY = "AAAAAAAAAA";
+    private static final String UPDATED_COUNTRY = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_PINCODE = 1L;
+    private static final Long UPDATED_PINCODE = 2L;
+
+    private static final Long DEFAULT_TEACHER_CONTACT_NUMBER = 1L;
+    private static final Long UPDATED_TEACHER_CONTACT_NUMBER = 2L;
+
+    private static final Long DEFAULT_ALTERNATE_CONTACT_NUMBER = 1L;
+    private static final Long UPDATED_ALTERNATE_CONTACT_NUMBER = 2L;
+
+    private static final String DEFAULT_TEACHER_EMAIL_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_TEACHER_EMAIL_ADDRESS = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ALTERNATE_EMAIL_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ALTERNATE_EMAIL_ADDRESS = "BBBBBBBBBB";
+
+    private static final RelationWithStudentEnum DEFAULT_RELATION_WITH_STAFF = RelationWithStudentEnum.FATHER;
+    private static final RelationWithStudentEnum UPDATED_RELATION_WITH_STAFF = RelationWithStudentEnum.MOTHER;
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_CONTACT_NO = 1L;
+    private static final Long UPDATED_CONTACT_NO = 2L;
+
+    private static final String DEFAULT_EMAIL_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL_ADDRESS = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_UPLOAD_PHOTO = 1L;
+    private static final Long UPDATED_UPLOAD_PHOTO = 2L;
+
+    private static final Long DEFAULT_EMPLOYEE_ID = 1L;
+    private static final Long UPDATED_EMPLOYEE_ID = 2L;
+
+    private static final String DEFAULT_DESIGNATION = "AAAAAAAAAA";
+    private static final String UPDATED_DESIGNATION = "BBBBBBBBBB";
+
+    private static final StaffType DEFAULT_STAFF_TYPE = StaffType.TEACHING;
+    private static final StaffType UPDATED_STAFF_TYPE = StaffType.NONTEACHING;
+
     @Autowired
     private TeacherRepository teacherRepository;
 
-
     @Autowired
     private TeacherMapper teacherMapper;
-    
 
     @Autowired
     private TeacherService teacherService;
@@ -102,8 +223,46 @@ public class TeacherResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Teacher createEntity(EntityManager em) {
-        Teacher teacher = new Teacher()
-            .teacherName(DEFAULT_TEACHER_NAME);
+        Teacher teacher = new Teacher();
+        teacher.teacherName(DEFAULT_TEACHER_NAME);
+        teacher.teacherMiddleName(DEFAULT_TEACHER_MIDDLE_NAME);
+        teacher.teacherLastName(DEFAULT_TEACHER_LAST_NAME);
+        teacher.fatherName(DEFAULT_FATHER_NAME);
+        teacher.fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME);
+        teacher.fatherLastName(DEFAULT_FATHER_LAST_NAME);
+        teacher.motherName(DEFAULT_MOTHER_NAME);
+        teacher.motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME);
+        teacher.motherLastName(DEFAULT_MOTHER_LAST_NAME);
+        teacher.aadharNo(DEFAULT_AADHAR_NO);
+        teacher.setDateOfBirth(DEFAULT_DATE_OF_BIRTH);
+        teacher.placeOfBirth(DEFAULT_PLACE_OF_BIRTH);
+        teacher.religion(DEFAULT_RELIGION);
+        teacher.caste(DEFAULT_CASTE);
+        teacher.subCaste(DEFAULT_SUB_CASTE);
+        teacher.age(DEFAULT_AGE);
+        teacher.sex(DEFAULT_SEX);
+        teacher.bloodGroup(DEFAULT_BLOOD_GROUP);
+        teacher.addressLineOne(DEFAULT_ADDRESS_LINE_ONE);
+        teacher.addressLineTwo(DEFAULT_ADDRESS_LINE_TWO);
+        teacher.addressLineThree(DEFAULT_ADDRESS_LINE_THREE);
+        teacher.town(DEFAULT_TOWN);
+        teacher.state(DEFAULT_STATE);
+        teacher.country(DEFAULT_COUNTRY);
+        teacher.pincode(DEFAULT_PINCODE);
+        teacher.teacherContactNumber(DEFAULT_TEACHER_CONTACT_NUMBER);
+        teacher.alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER);
+        teacher.teacherEmailAddress(DEFAULT_TEACHER_EMAIL_ADDRESS);
+        teacher.alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS);
+        teacher.relationWithStaff(DEFAULT_RELATION_WITH_STAFF);
+        teacher.name(DEFAULT_NAME);
+        teacher.middleName(DEFAULT_MIDDLE_NAME);
+        teacher.lastName(DEFAULT_LAST_NAME);
+        teacher.contactNo(DEFAULT_CONTACT_NO);
+        teacher.emailAddress(DEFAULT_EMAIL_ADDRESS);
+        teacher.uploadPhoto(DEFAULT_UPLOAD_PHOTO);
+        teacher.employeeId(DEFAULT_EMPLOYEE_ID);
+        teacher.designation(DEFAULT_DESIGNATION);
+        teacher.staffType(DEFAULT_STAFF_TYPE);
         return teacher;
     }
 
@@ -129,6 +288,44 @@ public class TeacherResourceIntTest {
         assertThat(teacherList).hasSize(databaseSizeBeforeCreate + 1);
         Teacher testTeacher = teacherList.get(teacherList.size() - 1);
         assertThat(testTeacher.getTeacherName()).isEqualTo(DEFAULT_TEACHER_NAME);
+        assertThat(testTeacher.getTeacherMiddleName()).isEqualTo(DEFAULT_TEACHER_MIDDLE_NAME);
+        assertThat(testTeacher.getTeacherLastName()).isEqualTo(DEFAULT_TEACHER_LAST_NAME);
+        assertThat(testTeacher.getFatherName()).isEqualTo(DEFAULT_FATHER_NAME);
+        assertThat(testTeacher.getFatherMiddleName()).isEqualTo(DEFAULT_FATHER_MIDDLE_NAME);
+        assertThat(testTeacher.getFatherLastName()).isEqualTo(DEFAULT_FATHER_LAST_NAME);
+        assertThat(testTeacher.getMotherName()).isEqualTo(DEFAULT_MOTHER_NAME);
+        assertThat(testTeacher.getMotherMiddleName()).isEqualTo(DEFAULT_MOTHER_MIDDLE_NAME);
+        assertThat(testTeacher.getMotherLastName()).isEqualTo(DEFAULT_MOTHER_LAST_NAME);
+        assertThat(testTeacher.getAadharNo()).isEqualTo(DEFAULT_AADHAR_NO);
+        assertThat(testTeacher.getDateOfBirth()).isEqualTo(DEFAULT_DATE_OF_BIRTH);
+        assertThat(testTeacher.getPlaceOfBirth()).isEqualTo(DEFAULT_PLACE_OF_BIRTH);
+        assertThat(testTeacher.getReligion()).isEqualTo(DEFAULT_RELIGION);
+        assertThat(testTeacher.getCaste()).isEqualTo(DEFAULT_CASTE);
+        assertThat(testTeacher.getSubCaste()).isEqualTo(DEFAULT_SUB_CASTE);
+        assertThat(testTeacher.getAge()).isEqualTo(DEFAULT_AGE);
+        assertThat(testTeacher.getSex()).isEqualTo(DEFAULT_SEX);
+        assertThat(testTeacher.getBloodGroup()).isEqualTo(DEFAULT_BLOOD_GROUP);
+        assertThat(testTeacher.getAddressLineOne()).isEqualTo(DEFAULT_ADDRESS_LINE_ONE);
+        assertThat(testTeacher.getAddressLineTwo()).isEqualTo(DEFAULT_ADDRESS_LINE_TWO);
+        assertThat(testTeacher.getAddressLineThree()).isEqualTo(DEFAULT_ADDRESS_LINE_THREE);
+        assertThat(testTeacher.getTown()).isEqualTo(DEFAULT_TOWN);
+        assertThat(testTeacher.getState()).isEqualTo(DEFAULT_STATE);
+        assertThat(testTeacher.getCountry()).isEqualTo(DEFAULT_COUNTRY);
+        assertThat(testTeacher.getPincode()).isEqualTo(DEFAULT_PINCODE);
+        assertThat(testTeacher.getTeacherContactNumber()).isEqualTo(DEFAULT_TEACHER_CONTACT_NUMBER);
+        assertThat(testTeacher.getAlternateContactNumber()).isEqualTo(DEFAULT_ALTERNATE_CONTACT_NUMBER);
+        assertThat(testTeacher.getTeacherEmailAddress()).isEqualTo(DEFAULT_TEACHER_EMAIL_ADDRESS);
+        assertThat(testTeacher.getAlternateEmailAddress()).isEqualTo(DEFAULT_ALTERNATE_EMAIL_ADDRESS);
+        assertThat(testTeacher.getRelationWithStaff()).isEqualTo(DEFAULT_RELATION_WITH_STAFF);
+        assertThat(testTeacher.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testTeacher.getMiddleName()).isEqualTo(DEFAULT_MIDDLE_NAME);
+        assertThat(testTeacher.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
+        assertThat(testTeacher.getContactNo()).isEqualTo(DEFAULT_CONTACT_NO);
+        assertThat(testTeacher.getEmailAddress()).isEqualTo(DEFAULT_EMAIL_ADDRESS);
+        assertThat(testTeacher.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
+        assertThat(testTeacher.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
+        assertThat(testTeacher.getDesignation()).isEqualTo(DEFAULT_DESIGNATION);
+        assertThat(testTeacher.getStaffType()).isEqualTo(DEFAULT_STAFF_TYPE);
 
         // Validate the Teacher in Elasticsearch
         verify(mockTeacherSearchRepository, times(1)).save(testTeacher);
@@ -178,6 +375,728 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
+    public void checkTeacherMiddleNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setTeacherMiddleName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTeacherLastNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setTeacherLastName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkFatherNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setFatherName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkFatherMiddleNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setFatherMiddleName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkFatherLastNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setFatherLastName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMotherNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setMotherName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMotherMiddleNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setMotherMiddleName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMotherLastNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setMotherLastName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAadharNoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setAadharNo(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDateOfBirthIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setDateOfBirth(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPlaceOfBirthIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setPlaceOfBirth(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkReligionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setReligion(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCasteIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setCaste(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSubCasteIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setSubCaste(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAgeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setAge(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSexIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setSex(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkBloodGroupIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setBloodGroup(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddressLineOneIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setAddressLineOne(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddressLineTwoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setAddressLineTwo(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddressLineThreeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setAddressLineThree(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTownIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setTown(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkStateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setState(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCountryIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setCountry(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkPincodeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setPincode(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTeacherContactNumberIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setTeacherContactNumber(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAlternateContactNumberIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setAlternateContactNumber(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTeacherEmailAddressIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setTeacherEmailAddress(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAlternateEmailAddressIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setAlternateEmailAddress(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRelationWithStaffIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setRelationWithStaff(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMiddleNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setMiddleName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkLastNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setLastName(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkContactNoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setContactNo(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEmailAddressIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setEmailAddress(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkUploadPhotoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setUploadPhoto(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEmployeeIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setEmployeeId(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDesignationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setDesignation(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkStaffTypeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setStaffType(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllTeachers() throws Exception {
         // Initialize the database
         teacherRepository.saveAndFlush(teacher);
@@ -187,10 +1106,47 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teacher.getId().intValue())))
-            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME.toString())));
+            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].teacherMiddleName").value(hasItem(DEFAULT_TEACHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].teacherLastName").value(hasItem(DEFAULT_TEACHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].aadharNo").value(hasItem(DEFAULT_AADHAR_NO.intValue())))
+            .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].religion").value(hasItem(DEFAULT_RELIGION.toString())))
+            .andExpect(jsonPath("$.[*].caste").value(hasItem(DEFAULT_CASTE.toString())))
+            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE.toString())))
+            .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
+            .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
+            .andExpect(jsonPath("$.[*].bloodGroup").value(hasItem(DEFAULT_BLOOD_GROUP.toString())))
+            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE.toString())))
+            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO.toString())))
+            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE.toString())))
+            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN.toString())))
+            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
+            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY.toString())))
+            .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.intValue())))
+            .andExpect(jsonPath("$.[*].teacherContactNumber").value(hasItem(DEFAULT_TEACHER_CONTACT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].teacherEmailAddress").value(hasItem(DEFAULT_TEACHER_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].relationWithStaff").value(hasItem(DEFAULT_RELATION_WITH_STAFF.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
+            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
+            .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
+            .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
     
-
     @Test
     @Transactional
     public void getTeacher() throws Exception {
@@ -202,8 +1158,47 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(teacher.getId().intValue()))
-            .andExpect(jsonPath("$.teacherName").value(DEFAULT_TEACHER_NAME.toString()));
+            .andExpect(jsonPath("$.teacherName").value(DEFAULT_TEACHER_NAME.toString()))
+            .andExpect(jsonPath("$.teacherMiddleName").value(DEFAULT_TEACHER_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.teacherLastName").value(DEFAULT_TEACHER_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.fatherName").value(DEFAULT_FATHER_NAME.toString()))
+            .andExpect(jsonPath("$.fatherMiddleName").value(DEFAULT_FATHER_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.fatherLastName").value(DEFAULT_FATHER_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.motherName").value(DEFAULT_MOTHER_NAME.toString()))
+            .andExpect(jsonPath("$.motherMiddleName").value(DEFAULT_MOTHER_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.motherLastName").value(DEFAULT_MOTHER_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.aadharNo").value(DEFAULT_AADHAR_NO.intValue()))
+            .andExpect(jsonPath("$.dateOfBirth").value(DEFAULT_DATE_OF_BIRTH.toString()))
+            .andExpect(jsonPath("$.placeOfBirth").value(DEFAULT_PLACE_OF_BIRTH.toString()))
+            .andExpect(jsonPath("$.religion").value(DEFAULT_RELIGION.toString()))
+            .andExpect(jsonPath("$.caste").value(DEFAULT_CASTE.toString()))
+            .andExpect(jsonPath("$.subCaste").value(DEFAULT_SUB_CASTE.toString()))
+            .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
+            .andExpect(jsonPath("$.sex").value(DEFAULT_SEX.toString()))
+            .andExpect(jsonPath("$.bloodGroup").value(DEFAULT_BLOOD_GROUP.toString()))
+            .andExpect(jsonPath("$.addressLineOne").value(DEFAULT_ADDRESS_LINE_ONE.toString()))
+            .andExpect(jsonPath("$.addressLineTwo").value(DEFAULT_ADDRESS_LINE_TWO.toString()))
+            .andExpect(jsonPath("$.addressLineThree").value(DEFAULT_ADDRESS_LINE_THREE.toString()))
+            .andExpect(jsonPath("$.town").value(DEFAULT_TOWN.toString()))
+            .andExpect(jsonPath("$.state").value(DEFAULT_STATE.toString()))
+            .andExpect(jsonPath("$.country").value(DEFAULT_COUNTRY.toString()))
+            .andExpect(jsonPath("$.pincode").value(DEFAULT_PINCODE.intValue()))
+            .andExpect(jsonPath("$.teacherContactNumber").value(DEFAULT_TEACHER_CONTACT_NUMBER.intValue()))
+            .andExpect(jsonPath("$.alternateContactNumber").value(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue()))
+            .andExpect(jsonPath("$.teacherEmailAddress").value(DEFAULT_TEACHER_EMAIL_ADDRESS.toString()))
+            .andExpect(jsonPath("$.alternateEmailAddress").value(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString()))
+            .andExpect(jsonPath("$.relationWithStaff").value(DEFAULT_RELATION_WITH_STAFF.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.middleName").value(DEFAULT_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.contactNo").value(DEFAULT_CONTACT_NO.intValue()))
+            .andExpect(jsonPath("$.emailAddress").value(DEFAULT_EMAIL_ADDRESS.toString()))
+            .andExpect(jsonPath("$.uploadPhoto").value(DEFAULT_UPLOAD_PHOTO.intValue()))
+            .andExpect(jsonPath("$.employeeId").value(DEFAULT_EMPLOYEE_ID.intValue()))
+            .andExpect(jsonPath("$.designation").value(DEFAULT_DESIGNATION.toString()))
+            .andExpect(jsonPath("$.staffType").value(DEFAULT_STAFF_TYPE.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingTeacher() throws Exception {
@@ -224,8 +1219,46 @@ public class TeacherResourceIntTest {
         Teacher updatedTeacher = teacherRepository.findById(teacher.getId()).get();
         // Disconnect from session so that the updates on updatedTeacher are not directly saved in db
         em.detach(updatedTeacher);
-        updatedTeacher
-            .teacherName(UPDATED_TEACHER_NAME);
+        //updatedTeacher
+        updatedTeacher.teacherName(UPDATED_TEACHER_NAME);
+        updatedTeacher.teacherMiddleName(UPDATED_TEACHER_MIDDLE_NAME);
+        updatedTeacher.teacherLastName(UPDATED_TEACHER_LAST_NAME);
+        updatedTeacher.fatherName(UPDATED_FATHER_NAME);
+        updatedTeacher.fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME);
+        updatedTeacher.fatherLastName(UPDATED_FATHER_LAST_NAME);
+        updatedTeacher.motherName(UPDATED_MOTHER_NAME);
+        updatedTeacher.motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME);
+        updatedTeacher.motherLastName(UPDATED_MOTHER_LAST_NAME);
+        updatedTeacher.aadharNo(UPDATED_AADHAR_NO);
+        updatedTeacher.setDateOfBirth(UPDATED_DATE_OF_BIRTH);
+        updatedTeacher.placeOfBirth(UPDATED_PLACE_OF_BIRTH);
+        updatedTeacher.religion(UPDATED_RELIGION);
+        updatedTeacher.caste(UPDATED_CASTE);
+        updatedTeacher.subCaste(UPDATED_SUB_CASTE);
+        updatedTeacher.age(UPDATED_AGE);
+        updatedTeacher.sex(UPDATED_SEX);
+        updatedTeacher.bloodGroup(UPDATED_BLOOD_GROUP);
+        updatedTeacher.addressLineOne(UPDATED_ADDRESS_LINE_ONE);
+        updatedTeacher.addressLineTwo(UPDATED_ADDRESS_LINE_TWO);
+        updatedTeacher.addressLineThree(UPDATED_ADDRESS_LINE_THREE);
+        updatedTeacher.town(UPDATED_TOWN);
+        updatedTeacher.state(UPDATED_STATE);
+        updatedTeacher.country(UPDATED_COUNTRY);
+        updatedTeacher.pincode(UPDATED_PINCODE);
+        updatedTeacher.teacherContactNumber(UPDATED_TEACHER_CONTACT_NUMBER);
+        updatedTeacher.alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER);
+        updatedTeacher.teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS);
+        updatedTeacher.alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS);
+        updatedTeacher.relationWithStaff(UPDATED_RELATION_WITH_STAFF);
+        updatedTeacher.name(UPDATED_NAME);
+        updatedTeacher.middleName(UPDATED_MIDDLE_NAME);
+        updatedTeacher.lastName(UPDATED_LAST_NAME);
+        updatedTeacher.contactNo(UPDATED_CONTACT_NO);
+        updatedTeacher.emailAddress(UPDATED_EMAIL_ADDRESS);
+        updatedTeacher.uploadPhoto(UPDATED_UPLOAD_PHOTO);
+        updatedTeacher.employeeId(UPDATED_EMPLOYEE_ID);
+        updatedTeacher.designation(UPDATED_DESIGNATION);
+        updatedTeacher.staffType(UPDATED_STAFF_TYPE);
         TeacherDTO teacherDTO = teacherMapper.toDto(updatedTeacher);
 
         restTeacherMockMvc.perform(put("/api/teachers")
@@ -238,6 +1271,44 @@ public class TeacherResourceIntTest {
         assertThat(teacherList).hasSize(databaseSizeBeforeUpdate);
         Teacher testTeacher = teacherList.get(teacherList.size() - 1);
         assertThat(testTeacher.getTeacherName()).isEqualTo(UPDATED_TEACHER_NAME);
+        assertThat(testTeacher.getTeacherMiddleName()).isEqualTo(UPDATED_TEACHER_MIDDLE_NAME);
+        assertThat(testTeacher.getTeacherLastName()).isEqualTo(UPDATED_TEACHER_LAST_NAME);
+        assertThat(testTeacher.getFatherName()).isEqualTo(UPDATED_FATHER_NAME);
+        assertThat(testTeacher.getFatherMiddleName()).isEqualTo(UPDATED_FATHER_MIDDLE_NAME);
+        assertThat(testTeacher.getFatherLastName()).isEqualTo(UPDATED_FATHER_LAST_NAME);
+        assertThat(testTeacher.getMotherName()).isEqualTo(UPDATED_MOTHER_NAME);
+        assertThat(testTeacher.getMotherMiddleName()).isEqualTo(UPDATED_MOTHER_MIDDLE_NAME);
+        assertThat(testTeacher.getMotherLastName()).isEqualTo(UPDATED_MOTHER_LAST_NAME);
+        assertThat(testTeacher.getAadharNo()).isEqualTo(UPDATED_AADHAR_NO);
+        assertThat(testTeacher.getDateOfBirth()).isEqualTo(UPDATED_DATE_OF_BIRTH);
+        assertThat(testTeacher.getPlaceOfBirth()).isEqualTo(UPDATED_PLACE_OF_BIRTH);
+        assertThat(testTeacher.getReligion()).isEqualTo(UPDATED_RELIGION);
+        assertThat(testTeacher.getCaste()).isEqualTo(UPDATED_CASTE);
+        assertThat(testTeacher.getSubCaste()).isEqualTo(UPDATED_SUB_CASTE);
+        assertThat(testTeacher.getAge()).isEqualTo(UPDATED_AGE);
+        assertThat(testTeacher.getSex()).isEqualTo(UPDATED_SEX);
+        assertThat(testTeacher.getBloodGroup()).isEqualTo(UPDATED_BLOOD_GROUP);
+        assertThat(testTeacher.getAddressLineOne()).isEqualTo(UPDATED_ADDRESS_LINE_ONE);
+        assertThat(testTeacher.getAddressLineTwo()).isEqualTo(UPDATED_ADDRESS_LINE_TWO);
+        assertThat(testTeacher.getAddressLineThree()).isEqualTo(UPDATED_ADDRESS_LINE_THREE);
+        assertThat(testTeacher.getTown()).isEqualTo(UPDATED_TOWN);
+        assertThat(testTeacher.getState()).isEqualTo(UPDATED_STATE);
+        assertThat(testTeacher.getCountry()).isEqualTo(UPDATED_COUNTRY);
+        assertThat(testTeacher.getPincode()).isEqualTo(UPDATED_PINCODE);
+        assertThat(testTeacher.getTeacherContactNumber()).isEqualTo(UPDATED_TEACHER_CONTACT_NUMBER);
+        assertThat(testTeacher.getAlternateContactNumber()).isEqualTo(UPDATED_ALTERNATE_CONTACT_NUMBER);
+        assertThat(testTeacher.getTeacherEmailAddress()).isEqualTo(UPDATED_TEACHER_EMAIL_ADDRESS);
+        assertThat(testTeacher.getAlternateEmailAddress()).isEqualTo(UPDATED_ALTERNATE_EMAIL_ADDRESS);
+        assertThat(testTeacher.getRelationWithStaff()).isEqualTo(UPDATED_RELATION_WITH_STAFF);
+        assertThat(testTeacher.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testTeacher.getMiddleName()).isEqualTo(UPDATED_MIDDLE_NAME);
+        assertThat(testTeacher.getLastName()).isEqualTo(UPDATED_LAST_NAME);
+        assertThat(testTeacher.getContactNo()).isEqualTo(UPDATED_CONTACT_NO);
+        assertThat(testTeacher.getEmailAddress()).isEqualTo(UPDATED_EMAIL_ADDRESS);
+        assertThat(testTeacher.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
+        assertThat(testTeacher.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
+        assertThat(testTeacher.getDesignation()).isEqualTo(UPDATED_DESIGNATION);
+        assertThat(testTeacher.getStaffType()).isEqualTo(UPDATED_STAFF_TYPE);
 
         // Validate the Teacher in Elasticsearch
         verify(mockTeacherSearchRepository, times(1)).save(testTeacher);
@@ -251,7 +1322,7 @@ public class TeacherResourceIntTest {
         // Create the Teacher
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTeacherMockMvc.perform(put("/api/teachers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
@@ -298,7 +1369,45 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teacher.getId().intValue())))
-            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME.toString())));
+            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME)))
+            .andExpect(jsonPath("$.[*].teacherMiddleName").value(hasItem(DEFAULT_TEACHER_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].teacherLastName").value(hasItem(DEFAULT_TEACHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME)))
+            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME)))
+            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].aadharNo").value(hasItem(DEFAULT_AADHAR_NO.intValue())))
+            .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH)))
+            .andExpect(jsonPath("$.[*].religion").value(hasItem(DEFAULT_RELIGION.toString())))
+            .andExpect(jsonPath("$.[*].caste").value(hasItem(DEFAULT_CASTE.toString())))
+            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE)))
+            .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
+            .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
+            .andExpect(jsonPath("$.[*].bloodGroup").value(hasItem(DEFAULT_BLOOD_GROUP.toString())))
+            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE)))
+            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO)))
+            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE)))
+            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN)))
+            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)))
+            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY)))
+            .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.intValue())))
+            .andExpect(jsonPath("$.[*].teacherContactNumber").value(hasItem(DEFAULT_TEACHER_CONTACT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].teacherEmailAddress").value(hasItem(DEFAULT_TEACHER_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].relationWithStaff").value(hasItem(DEFAULT_RELATION_WITH_STAFF.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
+            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
+            .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION)))
+            .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
 
     @Test

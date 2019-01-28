@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -76,6 +76,44 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
               <tr>
                 <th>ID</th>
                 <th>Teacher Name</th>
+                <th>Teacher Middle Name</th>
+                <th>Teacher Last Name</th>
+                <th>Father Name</th>
+                <th>Father Middle Name</th>
+                <th>Father Last Name</th>
+                <th>Mother Name</th>
+                <th>Mother Middle Name</th>
+                <th>Mother Last Name</th>
+                <th>Aadhar No</th>
+                <th>Date Of Birth</th>
+                <th>Place Of Birth</th>
+                <th>Religion</th>
+                <th>Caste</th>
+                <th>Sub Caste</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Blood Group</th>
+                <th>Address Line One</th>
+                <th>Address Line Two</th>
+                <th>Address Line Three</th>
+                <th>Town</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Pincode</th>
+                <th>Teacher Contact Number</th>
+                <th>Alternate Contact Number</th>
+                <th>Teacher Email Address</th>
+                <th>Alternate Email Address</th>
+                <th>Relation With Staff</th>
+                <th>Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Contact No</th>
+                <th>Email Address</th>
+                <th>Upload Photo</th>
+                <th>Employee Id</th>
+                <th>Designation</th>
+                <th>Staff Type</th>
                 <th>Department</th>
                 <th>Branch</th>
                 <th />
@@ -90,6 +128,46 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                     </Button>
                   </td>
                   <td>{teacher.teacherName}</td>
+                  <td>{teacher.teacherMiddleName}</td>
+                  <td>{teacher.teacherLastName}</td>
+                  <td>{teacher.fatherName}</td>
+                  <td>{teacher.fatherMiddleName}</td>
+                  <td>{teacher.fatherLastName}</td>
+                  <td>{teacher.motherName}</td>
+                  <td>{teacher.motherMiddleName}</td>
+                  <td>{teacher.motherLastName}</td>
+                  <td>{teacher.aadharNo}</td>
+                  <td>
+                    <TextFormat type="date" value={teacher.dateOfBirth} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>{teacher.placeOfBirth}</td>
+                  <td>{teacher.religion}</td>
+                  <td>{teacher.caste}</td>
+                  <td>{teacher.subCaste}</td>
+                  <td>{teacher.age}</td>
+                  <td>{teacher.sex}</td>
+                  <td>{teacher.bloodGroup}</td>
+                  <td>{teacher.addressLineOne}</td>
+                  <td>{teacher.addressLineTwo}</td>
+                  <td>{teacher.addressLineThree}</td>
+                  <td>{teacher.town}</td>
+                  <td>{teacher.state}</td>
+                  <td>{teacher.country}</td>
+                  <td>{teacher.pincode}</td>
+                  <td>{teacher.teacherContactNumber}</td>
+                  <td>{teacher.alternateContactNumber}</td>
+                  <td>{teacher.teacherEmailAddress}</td>
+                  <td>{teacher.alternateEmailAddress}</td>
+                  <td>{teacher.relationWithStaff}</td>
+                  <td>{teacher.name}</td>
+                  <td>{teacher.middleName}</td>
+                  <td>{teacher.lastName}</td>
+                  <td>{teacher.contactNo}</td>
+                  <td>{teacher.emailAddress}</td>
+                  <td>{teacher.uploadPhoto}</td>
+                  <td>{teacher.employeeId}</td>
+                  <td>{teacher.designation}</td>
+                  <td>{teacher.staffType}</td>
                   <td>{teacher.departmentId ? <Link to={`department/${teacher.departmentId}`}>{teacher.departmentId}</Link> : ''}</td>
                   <td>{teacher.branchId ? <Link to={`branch/${teacher.branchId}`}>{teacher.branchId}</Link> : ''}</td>
                   <td className="text-right">

@@ -13,55 +13,55 @@ export default class BranchUpdatePage {
     return this.pageTitle;
   }
 
-  setBranchNameInput(branchName) {
-    this.branchNameInput.sendKeys(branchName);
+  async setBranchNameInput(branchName) {
+    await this.branchNameInput.sendKeys(branchName);
   }
 
-  getBranchNameInput() {
+  async getBranchNameInput() {
     return this.branchNameInput.getAttribute('value');
   }
 
-  setDescriptionInput(description) {
-    this.descriptionInput.sendKeys(description);
+  async setDescriptionInput(description) {
+    await this.descriptionInput.sendKeys(description);
   }
 
-  getDescriptionInput() {
+  async getDescriptionInput() {
     return this.descriptionInput.getAttribute('value');
   }
 
-  setCollegeHeadInput(collegeHead) {
-    this.collegeHeadInput.sendKeys(collegeHead);
+  async setCollegeHeadInput(collegeHead) {
+    await this.collegeHeadInput.sendKeys(collegeHead);
   }
 
-  getCollegeHeadInput() {
+  async getCollegeHeadInput() {
     return this.collegeHeadInput.getAttribute('value');
   }
 
-  collegeSelectLastOption() {
-    this.collegeSelect
+  async collegeSelectLastOption() {
+    await this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  getCollegeSelectedOption() {
+  async getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {
