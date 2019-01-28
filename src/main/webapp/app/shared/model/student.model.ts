@@ -1,9 +1,36 @@
 import { Moment } from 'moment';
 
+export const enum Religion {
+  HINDU = 'HINDU',
+  MUSLIM = 'MUSLIM',
+  CHRISTIAN = 'CHRISTIAN'
+}
+
+export const enum Caste {
+  OC = 'OC',
+  BC = 'BC',
+  SC = 'SC',
+  ST = 'ST'
+}
+
 export const enum Gender {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   OTHER = 'OTHER'
+}
+
+export const enum Bloodgroup {
+  ABPOSITIVE = 'ABPOSITIVE',
+  ABNEGATIVE = 'ABNEGATIVE',
+  OPOSITIVE = 'OPOSITIVE',
+  BPOSITIVE = 'BPOSITIVE',
+  BNEGATIVE = 'BNEGATIVE'
+}
+
+export const enum RelationWithStudentEnum {
+  FATHER = 'FATHER',
+  MOTHER = 'MOTHER',
+  GUARDIAN = 'GUARDIAN'
 }
 
 export interface IStudent {
@@ -20,12 +47,12 @@ export interface IStudent {
   aadharNo?: number;
   dateOfBirth?: Moment;
   placeOfBirth?: string;
-  religion?: string;
-  caste?: string;
+  religion?: Religion;
+  caste?: Caste;
   subCaste?: string;
   age?: number;
   sex?: Gender;
-  bloodGroup?: string;
+  bloodGroup?: Bloodgroup;
   addressLineOne?: string;
   addressLineTwo?: string;
   addressLineThree?: string;
@@ -37,7 +64,7 @@ export interface IStudent {
   alternateContactNumber?: number;
   studentEmailAddress?: string;
   alternateEmailAddress?: string;
-  relationWithStudent?: string;
+  relationWithStudent?: RelationWithStudentEnum;
   name?: string;
   middleName?: string;
   lastName?: string;

@@ -4,7 +4,11 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 
 /**
  * A DTO for the Student entity.
@@ -50,10 +54,10 @@ public class StudentDTO implements Serializable {
     private String placeOfBirth;
 
     @NotNull
-    private String religion;
+    private Religion religion;
 
     @NotNull
-    private String caste;
+    private Caste caste;
 
     @NotNull
     private String subCaste;
@@ -65,7 +69,7 @@ public class StudentDTO implements Serializable {
     private Gender sex;
 
     @NotNull
-    private String bloodGroup;
+    private Bloodgroup bloodGroup;
 
     @NotNull
     private String addressLineOne;
@@ -101,7 +105,7 @@ public class StudentDTO implements Serializable {
     private String alternateEmailAddress;
 
     @NotNull
-    private String relationWithStudent;
+    private RelationWithStudentEnum relationWithStudent;
 
     @NotNull
     private String name;
@@ -242,19 +246,19 @@ public class StudentDTO implements Serializable {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public String getReligion() {
+    public Religion getReligion() {
         return religion;
     }
 
-    public void setReligion(String religion) {
+    public void setReligion(Religion religion) {
         this.religion = religion;
     }
 
-    public String getCaste() {
+    public Caste getCaste() {
         return caste;
     }
 
-    public void setCaste(String caste) {
+    public void setCaste(Caste caste) {
         this.caste = caste;
     }
 
@@ -282,11 +286,11 @@ public class StudentDTO implements Serializable {
         this.sex = sex;
     }
 
-    public String getBloodGroup() {
+    public Bloodgroup getBloodGroup() {
         return bloodGroup;
     }
 
-    public void setBloodGroup(String bloodGroup) {
+    public void setBloodGroup(Bloodgroup bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
 
@@ -378,11 +382,11 @@ public class StudentDTO implements Serializable {
         this.alternateEmailAddress = alternateEmailAddress;
     }
 
-    public String getRelationWithStudent() {
+    public RelationWithStudentEnum getRelationWithStudent() {
         return relationWithStudent;
     }
 
-    public void setRelationWithStudent(String relationWithStudent) {
+    public void setRelationWithStudent(RelationWithStudentEnum relationWithStudent) {
         this.relationWithStudent = relationWithStudent;
     }
 

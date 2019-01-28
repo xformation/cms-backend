@@ -1,10 +1,7 @@
 package com.synectiks.cms.graphql.types.Student;
 
-import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class AbstractStudentInput {
@@ -21,12 +18,12 @@ public class AbstractStudentInput {
     private Long aadharNo;
     private Date dateOfBirth;
     private String placeOfBirth;
-    private String religion;
-    private String caste;
+    private Religion religion;
+    private Caste caste;
     private String subCaste;
     private Integer age;
     private Gender sex;
-    private String bloodGroup;
+    private Bloodgroup bloodGroup;
     private String addressLineOne;
     private String addressLineTwo;
     private String addressLineThree;
@@ -38,7 +35,7 @@ public class AbstractStudentInput {
     private Long alternateContactNumber;
     private String studentEmailAddress;
     private String alternateEmailAddress;
-    private String relationWithStudent;
+    private RelationWithStudentEnum relationWithStudent;
     private String name;
     private String middleName;
     private String lastName;
@@ -153,19 +150,19 @@ public class AbstractStudentInput {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public String getReligion() {
+    public Religion getReligion() {
         return religion;
     }
 
-    public void setReligion(String religion) {
+    public void setReligion(Religion religion) {
         this.religion = religion;
     }
 
-    public String getCaste() {
+    public Caste getCaste() {
         return caste;
     }
 
-    public void setCaste(String caste) {
+    public void setCaste(Caste caste) {
         this.caste = caste;
     }
 
@@ -193,11 +190,11 @@ public class AbstractStudentInput {
         this.sex = sex;
     }
 
-    public String getBloodGroup() {
+    public Bloodgroup getBloodGroup() {
         return bloodGroup;
     }
 
-    public void setBloodGroup(String bloodGroup) {
+    public void setBloodGroup(Bloodgroup bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
 
@@ -289,11 +286,11 @@ public class AbstractStudentInput {
         this.alternateEmailAddress = alternateEmailAddress;
     }
 
-    public String getRelationWithStudent() {
+    public RelationWithStudentEnum getRelationWithStudent() {
         return relationWithStudent;
     }
 
-    public void setRelationWithStudent(String relationWithStudent) {
+    public void setRelationWithStudent(RelationWithStudentEnum relationWithStudent) {
         this.relationWithStudent = relationWithStudent;
     }
 

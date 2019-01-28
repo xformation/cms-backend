@@ -16,12 +16,12 @@ export default class StudentUpdatePage {
   aadharNoInput: ElementFinder = element(by.css('input#student-aadharNo'));
   dateOfBirthInput: ElementFinder = element(by.css('input#student-dateOfBirth'));
   placeOfBirthInput: ElementFinder = element(by.css('input#student-placeOfBirth'));
-  religionInput: ElementFinder = element(by.css('input#student-religion'));
-  casteInput: ElementFinder = element(by.css('input#student-caste'));
+  religionSelect: ElementFinder = element(by.css('select#student-religion'));
+  casteSelect: ElementFinder = element(by.css('select#student-caste'));
   subCasteInput: ElementFinder = element(by.css('input#student-subCaste'));
   ageInput: ElementFinder = element(by.css('input#student-age'));
   sexSelect: ElementFinder = element(by.css('select#student-sex'));
-  bloodGroupInput: ElementFinder = element(by.css('input#student-bloodGroup'));
+  bloodGroupSelect: ElementFinder = element(by.css('select#student-bloodGroup'));
   addressLineOneInput: ElementFinder = element(by.css('input#student-addressLineOne'));
   addressLineTwoInput: ElementFinder = element(by.css('input#student-addressLineTwo'));
   addressLineThreeInput: ElementFinder = element(by.css('input#student-addressLineThree'));
@@ -33,7 +33,7 @@ export default class StudentUpdatePage {
   alternateContactNumberInput: ElementFinder = element(by.css('input#student-alternateContactNumber'));
   studentEmailAddressInput: ElementFinder = element(by.css('input#student-studentEmailAddress'));
   alternateEmailAddressInput: ElementFinder = element(by.css('input#student-alternateEmailAddress'));
-  relationWithStudentInput: ElementFinder = element(by.css('input#student-relationWithStudent'));
+  relationWithStudentSelect: ElementFinder = element(by.css('select#student-relationWithStudent'));
   nameInput: ElementFinder = element(by.css('input#student-name'));
   middleNameInput: ElementFinder = element(by.css('input#student-middleName'));
   lastNameInput: ElementFinder = element(by.css('input#student-lastName'));
@@ -148,22 +148,34 @@ export default class StudentUpdatePage {
     return this.placeOfBirthInput.getAttribute('value');
   }
 
-  async setReligionInput(religion) {
-    await this.religionInput.sendKeys(religion);
+  async setReligionSelect(religion) {
+    await this.religionSelect.sendKeys(religion);
   }
 
-  async getReligionInput() {
-    return this.religionInput.getAttribute('value');
+  async getReligionSelect() {
+    return this.religionSelect.element(by.css('option:checked')).getText();
   }
 
-  async setCasteInput(caste) {
-    await this.casteInput.sendKeys(caste);
+  async religionSelectLastOption() {
+    await this.religionSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  async setCasteSelect(caste) {
+    await this.casteSelect.sendKeys(caste);
   }
 
-  async getCasteInput() {
-    return this.casteInput.getAttribute('value');
+  async getCasteSelect() {
+    return this.casteSelect.element(by.css('option:checked')).getText();
   }
 
+  async casteSelectLastOption() {
+    await this.casteSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setSubCasteInput(subCaste) {
     await this.subCasteInput.sendKeys(subCaste);
   }
@@ -194,14 +206,20 @@ export default class StudentUpdatePage {
       .last()
       .click();
   }
-  async setBloodGroupInput(bloodGroup) {
-    await this.bloodGroupInput.sendKeys(bloodGroup);
+  async setBloodGroupSelect(bloodGroup) {
+    await this.bloodGroupSelect.sendKeys(bloodGroup);
   }
 
-  async getBloodGroupInput() {
-    return this.bloodGroupInput.getAttribute('value');
+  async getBloodGroupSelect() {
+    return this.bloodGroupSelect.element(by.css('option:checked')).getText();
   }
 
+  async bloodGroupSelectLastOption() {
+    await this.bloodGroupSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setAddressLineOneInput(addressLineOne) {
     await this.addressLineOneInput.sendKeys(addressLineOne);
   }
@@ -290,14 +308,20 @@ export default class StudentUpdatePage {
     return this.alternateEmailAddressInput.getAttribute('value');
   }
 
-  async setRelationWithStudentInput(relationWithStudent) {
-    await this.relationWithStudentInput.sendKeys(relationWithStudent);
+  async setRelationWithStudentSelect(relationWithStudent) {
+    await this.relationWithStudentSelect.sendKeys(relationWithStudent);
   }
 
-  async getRelationWithStudentInput() {
-    return this.relationWithStudentInput.getAttribute('value');
+  async getRelationWithStudentSelect() {
+    return this.relationWithStudentSelect.element(by.css('option:checked')).getText();
   }
 
+  async relationWithStudentSelectLastOption() {
+    await this.relationWithStudentSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setNameInput(name) {
     await this.nameInput.sendKeys(name);
   }

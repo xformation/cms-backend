@@ -44,7 +44,11 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 /**
  * Test class for the StudentResource REST controller.
  *
@@ -90,11 +94,11 @@ public class StudentResourceIntTest {
     private static final String DEFAULT_PLACE_OF_BIRTH = "AAAAAAAAAA";
     private static final String UPDATED_PLACE_OF_BIRTH = "BBBBBBBBBB";
 
-    private static final String DEFAULT_RELIGION = "AAAAAAAAAA";
-    private static final String UPDATED_RELIGION = "BBBBBBBBBB";
+    private static final Religion DEFAULT_RELIGION = Religion.HINDU;
+    private static final Religion UPDATED_RELIGION = Religion.MUSLIM;
 
-    private static final String DEFAULT_CASTE = "AAAAAAAAAA";
-    private static final String UPDATED_CASTE = "BBBBBBBBBB";
+    private static final Caste DEFAULT_CASTE = Caste.OC;
+    private static final Caste UPDATED_CASTE = Caste.BC;
 
     private static final String DEFAULT_SUB_CASTE = "AAAAAAAAAA";
     private static final String UPDATED_SUB_CASTE = "BBBBBBBBBB";
@@ -105,8 +109,8 @@ public class StudentResourceIntTest {
     private static final Gender DEFAULT_SEX = Gender.MALE;
     private static final Gender UPDATED_SEX = Gender.FEMALE;
 
-    private static final String DEFAULT_BLOOD_GROUP = "AAAAAAAAAA";
-    private static final String UPDATED_BLOOD_GROUP = "BBBBBBBBBB";
+    private static final Bloodgroup DEFAULT_BLOOD_GROUP = Bloodgroup.ABPOSITIVE;
+    private static final Bloodgroup UPDATED_BLOOD_GROUP = Bloodgroup.ABNEGATIVE;
 
     private static final String DEFAULT_ADDRESS_LINE_ONE = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS_LINE_ONE = "BBBBBBBBBB";
@@ -141,8 +145,8 @@ public class StudentResourceIntTest {
     private static final String DEFAULT_ALTERNATE_EMAIL_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_ALTERNATE_EMAIL_ADDRESS = "BBBBBBBBBB";
 
-    private static final String DEFAULT_RELATION_WITH_STUDENT = "AAAAAAAAAA";
-    private static final String UPDATED_RELATION_WITH_STUDENT = "BBBBBBBBBB";
+    private static final RelationWithStudentEnum DEFAULT_RELATION_WITH_STUDENT = RelationWithStudentEnum.FATHER;
+    private static final RelationWithStudentEnum UPDATED_RELATION_WITH_STUDENT = RelationWithStudentEnum.MOTHER;
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
@@ -242,7 +246,7 @@ public class StudentResourceIntTest {
         student.sex(DEFAULT_SEX);
         student.bloodGroup(DEFAULT_BLOOD_GROUP);
         student.addressLineOne(DEFAULT_ADDRESS_LINE_ONE);
-        student.addressLineTwo(DEFAULT_ADDRESS_LINE_TWO) ;
+        student.addressLineTwo(DEFAULT_ADDRESS_LINE_TWO);
         student.addressLineThree(DEFAULT_ADDRESS_LINE_THREE);
         student.town(DEFAULT_TOWN);
         student.state(DEFAULT_STATE);
@@ -1400,12 +1404,12 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].aadharNo").value(hasItem(DEFAULT_AADHAR_NO.intValue())))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
             .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH)))
-            .andExpect(jsonPath("$.[*].religion").value(hasItem(DEFAULT_RELIGION)))
-            .andExpect(jsonPath("$.[*].caste").value(hasItem(DEFAULT_CASTE)))
+            .andExpect(jsonPath("$.[*].religion").value(hasItem(DEFAULT_RELIGION.toString())))
+            .andExpect(jsonPath("$.[*].caste").value(hasItem(DEFAULT_CASTE.toString())))
             .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE)))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
-            .andExpect(jsonPath("$.[*].bloodGroup").value(hasItem(DEFAULT_BLOOD_GROUP)))
+            .andExpect(jsonPath("$.[*].bloodGroup").value(hasItem(DEFAULT_BLOOD_GROUP.toString())))
             .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE)))
             .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO)))
             .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE)))
@@ -1417,7 +1421,7 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].studentEmailAddress").value(hasItem(DEFAULT_STUDENT_EMAIL_ADDRESS)))
             .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS)))
-            .andExpect(jsonPath("$.[*].relationWithStudent").value(hasItem(DEFAULT_RELATION_WITH_STUDENT)))
+            .andExpect(jsonPath("$.[*].relationWithStudent").value(hasItem(DEFAULT_RELATION_WITH_STUDENT.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))

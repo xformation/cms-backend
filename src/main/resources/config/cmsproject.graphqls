@@ -219,6 +219,34 @@ enum Gender {
     OTHER
 }
 
+enum Bloodgroup {
+    ABPOSITIVE
+    ABNEGATIVE
+    OPOSITIVE
+    BPOSITIVE
+    BNEGATIVE
+}
+
+enum Caste {
+    OC
+    BC
+    SC
+    ST
+}
+
+ enum RelationWithStudentEnum {
+    FATHER
+    MOTHER
+    GUARDIAN
+}
+
+enum Religion {
+    HINDU
+    MUSLIM
+    CHRISTIAN
+}
+
+
 type Student {
        id: Long!
        studentName: String!
@@ -233,12 +261,12 @@ type Student {
        aadharNo: Long!
        dateOfBirth: Date!
        placeOfBirth: String!
-       religion: String!
-       caste: String!
+       religion: Religion!
+       caste: Caste!
        subCaste: String!
        age: Long!
        sex: Gender!
-       bloodGroup: String!
+       bloodGroup: Bloodgroup!
        addressLineOne: String!
        addressLineTwo: String!
        addressLineThree: String!
@@ -250,7 +278,7 @@ type Student {
        alternateContactNumber: Long!
        studentEmailAddress: String!
        alternateEmailAddress: String!
-       relationWithStudent: String!
+       relationWithStudent: RelationWithStudentEnum!
        name: String!
        middleName: String!
        lastName: String!
@@ -899,49 +927,49 @@ type RemoveSectionPayload {
 
 
 input AddStudentInput {
-   studentName: String!
-   studentMiddleName: String!
-   studentLastName: String!
-   fatherName: String!
-   fatherMiddleName: String!
-   fatherLastName: String!
-   motherName: String!
-   motherMiddleName: String!
-   motherLastName: String!
-   aadharNo: Long!
-   dateOfBirth: Date!
-   placeOfBirth: String!
-   religion: String!
-   caste: String!
-   subCaste: String!
-   age: Long!
-   sex: Gender!
-   bloodGroup: String!
-   addressLineOne: String!
-   addressLineTwo: String!
-   addressLineThree: String!
-   town: String!
-   state: String!
-   country: String!
-   pincode: Long!
-   studentContactNumber: Long!
-   alternateContactNumber: Long!
-   studentEmailAddress: String!
-   alternateEmailAddress: String!
-   relationWithStudent: String!
-   name: String!
-   middleName: String!
-   lastName: String!
-   contactNo: Long!
-   emailAddress: String!
-   uploadPhoto: Long!
-   admissionNo: Long!
-   rollNo: String!
-   studentType: String!
-   batchId: Long!
-   sectionId: Long!
-   branchId: Long!
-   departmentId: Long!
+  studentName: String!
+         studentMiddleName: String!
+         studentLastName: String!
+         fatherName: String!
+         fatherMiddleName: String!
+         fatherLastName: String!
+         motherName: String!
+         motherMiddleName: String!
+         motherLastName: String!
+         aadharNo: Long!
+         dateOfBirth: Date!
+         placeOfBirth: String!
+         religion: Religion!
+         caste: Caste!
+         subCaste: String!
+         age: Long!
+         sex: Gender!
+         bloodGroup: Bloodgroup!
+         addressLineOne: String!
+         addressLineTwo: String!
+         addressLineThree: String!
+         town: String!
+         state: String!
+         country: String!
+         pincode: Long!
+         studentContactNumber: Long!
+         alternateContactNumber: Long!
+         studentEmailAddress: String!
+         alternateEmailAddress: String!
+         relationWithStudent: RelationWithStudentEnum!
+         name: String!
+         middleName: String!
+         lastName: String!
+         contactNo: Long!
+         emailAddress: String!
+         uploadPhoto: Long!
+         admissionNo: Long!
+         rollNo: String!
+         studentType: String!
+         batchId: Long!
+         sectionId: Long!
+         branchId: Long!
+         departmentId: Long!
 }
 type AddStudentPayload {
    student: Student!
@@ -949,48 +977,48 @@ type AddStudentPayload {
 input UpdateStudentInput {
       id: Long!
       studentName: String!
-      studentMiddleName: String!
-      studentLastName: String!
-      fatherName: String!
-      fatherMiddleName: String!
-      fatherLastName: String!
-      motherName: String!
-      motherMiddleName: String!
-      motherLastName: String!
-      aadharNo: Long!
-      dateOfBirth: Date!
-      placeOfBirth: String!
-      religion: String!
-      caste: String!
-      subCaste: String!
-      age: Long!
-      sex: Gender!
-      bloodGroup: String!
-      addressLineOne: String!
-      addressLineTwo: String!
-      addressLineThree: String!
-      town: String!
-      state: String!
-      country: String!
-      pincode: Long!
-      studentContactNumber: Long!
-      alternateContactNumber: Long!
-      studentEmailAddress: String!
-      alternateEmailAddress: String!
-      relationWithStudent: String!
-      name: String!
-      middleName: String!
-      lastName: String!
-      contactNo: Long!
-      emailAddress: String!
-      uploadPhoto: Long!
-      admissionNo: Long!
-      rollNo: String!
-      studentType: String!
-      batchId: Long
-      sectionId: Long
-      branchId: Long
-      departmentId: Long
+             studentMiddleName: String!
+             studentLastName: String!
+             fatherName: String!
+             fatherMiddleName: String!
+             fatherLastName: String!
+             motherName: String!
+             motherMiddleName: String!
+             motherLastName: String!
+             aadharNo: Long!
+             dateOfBirth: Date!
+             placeOfBirth: String!
+             religion: Religion!
+             caste: Caste!
+             subCaste: String!
+             age: Long!
+             sex: Gender!
+             bloodGroup: Bloodgroup!
+             addressLineOne: String!
+             addressLineTwo: String!
+             addressLineThree: String!
+             town: String!
+             state: String!
+             country: String!
+             pincode: Long!
+             studentContactNumber: Long!
+             alternateContactNumber: Long!
+             studentEmailAddress: String!
+             alternateEmailAddress: String!
+             relationWithStudent: RelationWithStudentEnum!
+             name: String!
+             middleName: String!
+             lastName: String!
+             contactNo: Long!
+             emailAddress: String!
+             uploadPhoto: Long!
+             admissionNo: Long!
+             rollNo: String!
+             studentType: String!
+             batchId: Long
+             sectionId: Long
+             branchId: Long
+             departmentId: Long
 }
 type UpdateStudentPayload {
    student: Student!

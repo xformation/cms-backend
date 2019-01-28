@@ -12,7 +12,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import com.synectiks.cms.domain.enumeration.Religion;
+
+import com.synectiks.cms.domain.enumeration.Caste;
+
 import com.synectiks.cms.domain.enumeration.Gender;
+
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 
 /**
  * A Student.
@@ -79,12 +87,14 @@ public class Student implements Serializable {
     private String placeOfBirth;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "religion", nullable = false)
-    private String religion;
+    private Religion religion;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "caste", nullable = false)
-    private String caste;
+    private Caste caste;
 
     @NotNull
     @Column(name = "sub_caste", nullable = false)
@@ -100,8 +110,9 @@ public class Student implements Serializable {
     private Gender sex;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "blood_group", nullable = false)
-    private String bloodGroup;
+    private Bloodgroup bloodGroup;
 
     @NotNull
     @Column(name = "address_line_one", nullable = false)
@@ -148,8 +159,9 @@ public class Student implements Serializable {
     private String alternateEmailAddress;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "relation_with_student", nullable = false)
-    private String relationWithStudent;
+    private RelationWithStudentEnum relationWithStudent;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -372,29 +384,29 @@ public class Student implements Serializable {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public String getReligion() {
+    public Religion getReligion() {
         return religion;
     }
 
-    public Student religion(String religion) {
+    public Student religion(Religion religion) {
         this.religion = religion;
         return this;
     }
 
-    public void setReligion(String religion) {
+    public void setReligion(Religion religion) {
         this.religion = religion;
     }
 
-    public String getCaste() {
+    public Caste getCaste() {
         return caste;
     }
 
-    public Student caste(String caste) {
+    public Student caste(Caste caste) {
         this.caste = caste;
         return this;
     }
 
-    public void setCaste(String caste) {
+    public void setCaste(Caste caste) {
         this.caste = caste;
     }
 
@@ -437,16 +449,16 @@ public class Student implements Serializable {
         this.sex = sex;
     }
 
-    public String getBloodGroup() {
+    public Bloodgroup getBloodGroup() {
         return bloodGroup;
     }
 
-    public Student bloodGroup(String bloodGroup) {
+    public Student bloodGroup(Bloodgroup bloodGroup) {
         this.bloodGroup = bloodGroup;
         return this;
     }
 
-    public void setBloodGroup(String bloodGroup) {
+    public void setBloodGroup(Bloodgroup bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
 
@@ -593,16 +605,16 @@ public class Student implements Serializable {
         this.alternateEmailAddress = alternateEmailAddress;
     }
 
-    public String getRelationWithStudent() {
+    public RelationWithStudentEnum getRelationWithStudent() {
         return relationWithStudent;
     }
 
-    public Student relationWithStudent(String relationWithStudent) {
+    public Student relationWithStudent(RelationWithStudentEnum relationWithStudent) {
         this.relationWithStudent = relationWithStudent;
         return this;
     }
 
-    public void setRelationWithStudent(String relationWithStudent) {
+    public void setRelationWithStudent(RelationWithStudentEnum relationWithStudent) {
         this.relationWithStudent = relationWithStudent;
     }
 

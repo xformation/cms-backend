@@ -266,30 +266,33 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="religionLabel" for="religion">
-                    Religion
-                  </Label>
-                  <AvField
+                  <Label id="religionLabel">Religion</Label>
+                  <AvInput
                     id="student-religion"
-                    type="text"
+                    type="select"
+                    className="form-control"
                     name="religion"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                    value={(!isNew && studentEntity.religion) || 'HINDU'}
+                  >
+                    <option value="HINDU">HINDU</option>
+                    <option value="MUSLIM">MUSLIM</option>
+                    <option value="CHRISTIAN">CHRISTIAN</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="casteLabel" for="caste">
-                    Caste
-                  </Label>
-                  <AvField
+                  <Label id="casteLabel">Caste</Label>
+                  <AvInput
                     id="student-caste"
-                    type="text"
+                    type="select"
+                    className="form-control"
                     name="caste"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                    value={(!isNew && studentEntity.caste) || 'OC'}
+                  >
+                    <option value="OC">OC</option>
+                    <option value="BC">BC</option>
+                    <option value="SC">SC</option>
+                    <option value="ST">ST</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="subCasteLabel" for="subCaste">
@@ -334,17 +337,20 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="bloodGroupLabel" for="bloodGroup">
-                    Blood Group
-                  </Label>
-                  <AvField
+                  <Label id="bloodGroupLabel">Blood Group</Label>
+                  <AvInput
                     id="student-bloodGroup"
-                    type="text"
+                    type="select"
+                    className="form-control"
                     name="bloodGroup"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                    value={(!isNew && studentEntity.bloodGroup) || 'ABPOSITIVE'}
+                  >
+                    <option value="ABPOSITIVE">ABPOSITIVE</option>
+                    <option value="ABNEGATIVE">ABNEGATIVE</option>
+                    <option value="OPOSITIVE">OPOSITIVE</option>
+                    <option value="BPOSITIVE">BPOSITIVE</option>
+                    <option value="BNEGATIVE">BNEGATIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="addressLineOneLabel" for="addressLineOne">
@@ -496,17 +502,18 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="relationWithStudentLabel" for="relationWithStudent">
-                    Relation With Student
-                  </Label>
-                  <AvField
+                  <Label id="relationWithStudentLabel">Relation With Student</Label>
+                  <AvInput
                     id="student-relationWithStudent"
-                    type="text"
+                    type="select"
+                    className="form-control"
                     name="relationWithStudent"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                    value={(!isNew && studentEntity.relationWithStudent) || 'FATHER'}
+                  >
+                    <option value="FATHER">FATHER</option>
+                    <option value="MOTHER">MOTHER</option>
+                    <option value="GUARDIAN">GUARDIAN</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="nameLabel" for="name">

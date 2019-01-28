@@ -43,7 +43,6 @@ import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
-import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;

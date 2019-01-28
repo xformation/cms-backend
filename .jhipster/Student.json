@@ -87,14 +87,16 @@
         },
         {
             "fieldName": "religion",
-            "fieldType": "String",
+            "fieldType": "Religion",
+            "fieldValues": "HINDU,MUSLIM,CHRISTIAN",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "caste",
-            "fieldType": "String",
+            "fieldType": "Caste",
+            "fieldValues": "OC,BC,SC,ST",
             "fieldValidateRules": [
                 "required"
             ]
@@ -123,7 +125,8 @@
         },
         {
             "fieldName": "bloodGroup",
-            "fieldType": "String",
+            "fieldType": "Bloodgroup",
+            "fieldValues": "ABPOSITIVE,ABNEGATIVE,OPOSITIVE,BPOSITIVE,BNEGATIVE",
             "fieldValidateRules": [
                 "required"
             ]
@@ -207,7 +210,8 @@
         },
         {
             "fieldName": "relationWithStudent",
-            "fieldType": "String",
+            "fieldType": "RelationWithStudentEnum",
+            "fieldValues": "FATHER,MOTHER,GUARDIAN",
             "fieldValidateRules": [
                 "required"
             ]

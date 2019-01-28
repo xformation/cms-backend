@@ -57,6 +57,22 @@ enum Gender {
     MALE, FEMALE, OTHER
 }
 
+enum Religion{
+   HINDU,MUSLIM,CHRISTIAN
+}
+
+enum Caste{
+  OC,BC,SC,ST
+}
+
+enum Bloodgroup{
+  ABPOSITIVE,ABNEGATIVE,OPOSITIVE,BPOSITIVE,BNEGATIVE
+}
+
+enum RelationWithStudentEnum{
+  FATHER,MOTHER,GUARDIAN
+}
+
 entity Student{
 studentName String required
 studentMiddleName String required
@@ -70,12 +86,12 @@ motherLastName String required
 aadharNo Long required
 dateOfBirth LocalDate required
 placeOfBirth String required
-religion String required
-caste String required
+religion Religion required
+caste Caste required
 subCaste String required
 age Integer required
 sex Gender required
-bloodGroup String required
+bloodGroup Bloodgroup required
 addressLineOne String required
 addressLineTwo String required
 addressLineThree String required
@@ -87,7 +103,7 @@ studentContactNumber Long required
 alternateContactNumber Long required
 studentEmailAddress String required
 alternateEmailAddress String required
-relationWithStudent String required
+relationWithStudent RelationWithStudentEnum required
 name String required
 middleName String required
 lastName String required
