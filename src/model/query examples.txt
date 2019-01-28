@@ -1,81 +1,554 @@
 
 QUERY:
 
+
+QUERY:
+
 {
-  term(id:1151){
-    termsDesc
+  college(id: 951){
+  shortName
+  logo
+  backgroundImage
+  instructionInformation
+  }
+}
+
+{
+  colleges{
+  id
+  shortName
+  logo
+  backgroundImage
+  instructionInformation
+  }
+}
+
+
+{
+  branch(id: 1001){
+   branchName
+   description
+   collegeHead
+   college{
+   id
+   }
+  }
+}
+
+{
+  branches{
+  id
+  branchName
+  description
+  collegeHead
+  college{
+     id
+   }
+  }
+}
+
+{
+  academicYear(id: 1051){
+    year
     startDate
     endDate
-    status
-    academicYear{
+    desc
+  }
+}
+
+{
+  academicYears{
+  id
+  year
+  startDate
+  endDate
+  desc
+  }
+}
+
+
+{
+  department(id: 1101){
+    name
+    description
+    deptHead
+    branch
+    {
+      id
+    }
+    academicyear{
       id
     }
   }
 }
 
 {
-  terms{
-    termsDesc
-    startDate
-    endDate
-    status
-    academicYear{
+  departments{
+    id
+    name
+    description
+    deptHead
+    branch
+    {
+      id
+    }
+    academicyear{
+      id
+    }
+  }
+}
+
+
+{
+  batch(id: 1151){
+   batch
+   department{
+    id
+   }
+  }
+}
+
+{
+  batches{
+   id
+   batch
+   department{
+    id
+   }
+  }
+}
+
+
+{
+  section(id: 1201){
+   section
+   batch{
+    id
+   }
+  }
+}
+
+{
+  sections{
+   id
+   section
+   batch{
+    id
+   }
+  }
+}
+
+
+{
+  student(id: 1251){
+   studentName
+   batch
+    {
+      id
+    }
+    section{
+      id
+    }
+    branch{
+      id
+    }
+    department{
       id
     }
   }
 }
 
 {
-  teacher(id:1501){
+  students{
+  id
+  studentName
+   batch
+    {
+      id
+    }
+    section{
+      id
+    }
+    branch{
+      id
+    }
+    department{
+      id
+    }
+  }
+}
+
+
+{
+  teacher(id: 1301){
     teacherName
-    periods{
-      id
+	branch{
+	id
     }
+    department{
+    id
+   }
   }
 }
 
 {
   teachers{
+    id
     teacherName
-    periods{
-      id
+	branch{
+	id
     }
+    department{
+    id
+   }
   }
 }
 
 
 {
-  subject(id:1601){
-    commonSub
-    electiveSub
-    periods{
-      id
-    }
-    student{
-      id
-    }
-    teacher{
-      id
-    }
+  subject(id: 1351){
+   subjectCode
+   subjectType
+   subjectDesc
+   status
+   department{
+    id
+   }
+   batch{
+   id
+  }
   }
 }
-
 
 {
   subjects{
-    commonSub
-    electiveSub
-    periods{
+   id
+   subjectCode
+   subjectType
+   subjectDesc
+   status
+   department{
+    id
+   }
+   batch{
+   id
+  }
+  }
+}
+
+
+{
+  teach(id: 1401){
+     desc
+     teacher{
       id
-    }
-    student{
+     }
+     subject{
       id
-    }
-    teacher{
-      id
+      }
     }
   }
 }
+
+{
+  teaches{
+     id
+     desc
+     teacher{
+      id
+     }
+     subject{
+      id
+      }
+    }
+  }
+}
+
+
+{
+  attendanceMaster(id: 1451){
+      desc
+      teach{
+      id
+      }
+      section{
+        id
+      }
+      batch{
+        id
+      }
+  }
+}
+
+{
+  attendanceMasters{
+      id
+      desc
+      teach{
+      id
+      }
+      section{
+        id
+      }
+      batch{
+        id
+      }
+  }
+}
+
+
+{
+  lecture(id: 1501){
+      lecDate
+      lastUpdatedOn
+      lastUpdatedBy
+      startTime
+	  endTime
+      attendancemaster{
+        id
+      }
+  }
+}
+
+{
+  lectures{
+      id
+      lecDate
+      lastUpdatedOn
+      lastUpdatedBy
+      startTime
+	  endTime
+      attendancemaster{
+        id
+      }
+  }
+}
+
+
+{
+  studentAttendance(id: 1551){
+      attendanceStatus
+      comments
+      student{
+        id
+      }
+       lecture{
+        id
+      }
+}
+
+{
+  studentAttendances{
+      id
+      attendanceStatus
+      comments
+      student{
+        id
+      }
+       lecture{
+        id
+      }
+  }
+}
+
+
+{
+  term(id: 1601){
+      termsDesc
+      startDate
+      endDate
+      termStatus
+      academicyear{
+        id
+      }
+  }
+}
+
+{
+  terms{
+      id
+      termsDesc
+      startDate
+      endDate
+      termStatus
+      academicyear{
+        id
+      }
+  }
+}
+
+
+{
+  holiday(id: 1651){
+      holidayDesc
+      holidayDate
+      holidayStatus
+      academicyear{
+        id
+      }
+  }
+}
+
+{
+  holidays{
+      id
+      holidayDesc
+      holidayDate
+      holidayStatus
+      academicyear{
+        id
+      }
+  }
+}
+
+
+{
+  legalEntity(id: 1701){
+   logo
+   legalNameOfTheCollege
+   typeOfCollege
+   dateOfIncorporation
+   registeredOfficeAddress
+   collegeIdentificationNumber
+   pan
+   tan
+   tanCircleNumber
+   citTdsLocation
+   formSignatory
+   pfNumber
+   registrationDate
+   esiNumber
+   ptRegistrationDate
+   ptSignatory
+   ptNumber
+  }
+}
+
+{
+  legalEntities{
+   id
+   logo
+   legalNameOfTheCollege
+   typeOfCollege
+   dateOfIncorporation
+   registeredOfficeAddress
+   collegeIdentificationNumber
+   pan
+   tan
+   tanCircleNumber
+   citTdsLocation
+   formSignatory
+   pfNumber
+   registrationDate
+   esiNumber
+   ptRegistrationDate
+   ptSignatory
+   ptNumber
+  }
+}
+
+
+{
+  authorizedSignatory(id: 1751){
+  signatoryName
+  signatoryFatherName
+  signatoryDesignation
+  address
+  email
+  panCardNumber
+  legalEntity{
+    id
+  }
+  }
+}
+
+{
+  authorizedSignatories{
+  id
+  signatoryName
+  signatoryFatherName
+  signatoryDesignation
+  address
+  email
+  panCardNumber
+  legalEntity{
+    id
+  }
+  }
+}
+
+
+{
+  location(id:1801){
+    name
+    address
+	appliesTo
+  }
+}
+
+{
+  locations{
+    id
+    name
+    address
+	appliesTo
+  }
+}
+
+{
+  bankAccount(id:1851){
+    nameOfBank
+    accountNumber
+    typeOfAccount
+    ifsCode
+    branch
+    corporateId
+  }
+}
+
+{
+  bankAccounts{
+    id
+    nameOfBank
+    accountNumber
+    typeOfAccount
+    ifsCode
+    branch
+    corporateId
+  }
+}
+
+
+{
+  studentSubject(id:1901){
+    comments
+    lastupdatedDate
+    student{
+    id
+   }
+    subject{
+    id
+}
+  }
+}
+
+
+{
+  studentSubjects{
+    id
+    comments
+    lastupdatedDate
+    student{
+    id
+   }
+   subject{
+   id
+}
+  }
+}
+
+
+
 
 
 ----- academic subject query -----

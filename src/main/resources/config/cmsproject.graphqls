@@ -912,7 +912,6 @@ type RemoveStudentSubjectPayload {
 input AddStudentAttendanceInput {
   attendanceStatus: AttendanceStatusEnum!
   comments: String!
-  attendanceDate: Date!
   studentId: Long!
   lectureId: Long!
 }
@@ -921,9 +920,8 @@ type AddStudentAttendancePayload {
 }
 input UpdateStudentAttendanceInput {
   id: Long!
-    attendanceStatus: AttendanceStatusEnum!
-    attendanceDate: Date!
-    comments: String
+  attendanceStatus: AttendanceStatusEnum!
+  comments: String
   studentId: Long
   lectureId: Long
 }

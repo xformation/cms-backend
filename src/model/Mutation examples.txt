@@ -1,4 +1,6 @@
 
+College:
+
 mutation addCollege($input: AddCollegeInput!) {
 addCollege(input: $input) {
 college{
@@ -14,6 +16,28 @@ instructionInformation
 {
   "input": {
     "shortName": "college",
+    "logo": 123,
+    "backgroundImage": 456,
+    "instructionInformation": "info"
+  }
+}
+
+mutation updateCollege($input: UpdateCollegeInput!) {
+updateCollege(input: $input) {
+college{
+id
+shortName
+logo
+backgroundImage
+instructionInformation
+}
+}
+}
+
+{
+  "input": {
+    "id": 951,
+    "shortName": "hyderabad college of engineering",
     "logo": 123,
     "backgroundImage": 456,
     "instructionInformation": "info"
@@ -43,6 +67,30 @@ college{
   }
 }
 
+mutation updateBranch($input: UpdateBranchInput!) {
+updateBranch(input: $input) {
+branch{
+id
+branchName
+description
+collegeHead
+college{
+  id
+}
+}
+}
+}
+
+{
+  "input": {
+    "id": 1001,
+    "branchName": "Hyderabad branch",
+    "description": "desc",
+    "collegeHead": "papu",
+    "collegeId": 951
+  }
+}
+
 
 mutation addAcademicYear($input: AddAcademicYearInput!){
   	addAcademicYear(input: $input){
@@ -62,6 +110,29 @@ mutation addAcademicYear($input: AddAcademicYearInput!){
    "year": 2019,
     "startDate": "2019-01-17",
     "endDate": "2019-01-18",
+    "desc": "desc"
+  }
+}
+
+mutation updateAcademicYear($input: UpdateAcademicYearInput!){
+  	updateAcademicYear(input: $input){
+    academicYear
+  {
+    id
+    year
+    startDate
+    endDate
+    desc
+  }
+ }
+}
+
+{
+  "input": {
+   "id": 1051,
+   "year": 2019,
+    "startDate": "2018-06-01",
+    "endDate": "2019-06-01",
     "desc": "desc"
   }
 }
@@ -96,6 +167,36 @@ mutation addDepartment($input: AddDepartmentInput!){
   }
 }
 
+mutation updateDepartment($input: UpdateDepartmentInput!){
+  	updateDepartment(input: $input){
+    department
+  {
+    id
+    name
+    description
+    deptHead
+    branch
+    {
+      id
+    }
+    academicyear{
+      id
+    }
+  }
+ }
+}
+
+{
+  "input": {
+    "id" : 1101,
+    "name": "computer science and engineering",
+    "description": "computer science",
+    "deptHead": "jack",
+    "branchId": 1001,
+    "academicyearId": 1051
+  }
+}
+
 
 mutation addBatch($input: AddBatchInput!){
   	addBatch(input: $input){
@@ -117,6 +218,27 @@ mutation addBatch($input: AddBatchInput!){
   }
 }
 
+mutation updateBatch($input: UpdateBatchInput!){
+  	updateBatch(input: $input){
+    batch
+  {
+   id
+   batch
+   department{
+    id
+   }
+  }
+ }
+}
+
+{
+  "input": {
+    "id": 1151,
+    "batch": "SECONDYEAR",
+    "departmentId": 1101
+  }
+}
+
 
 mutation addSection($input: AddSectionInput!){
   	addSection(input: $input){
@@ -134,6 +256,27 @@ mutation addSection($input: AddSectionInput!){
 {
   "input": {
    "section": "A",
+    "batchId": 1151
+  }
+}
+
+mutation updateSection($input: UpdateSectionInput!){
+  	updateSection(input: $input){
+    section
+  {
+   id
+   section
+   batch{
+    id
+   }
+  }
+ }
+}
+
+{
+  "input": {
+   "id" : 1201,
+   "section": "B",
     "batchId": 1151
   }
 }
@@ -173,20 +316,88 @@ mutation addStudent($input: AddStudentInput!){
   }
 }
 
-
-mutation addTeacher($input: AddTeacherInput!){
-  	addTeacher(input: $input){
-    teacher
+mutation updateStudent($input: UpdateStudentInput!){
+  	updateStudent(input: $input){
+    student
   {
-  id
-    teacherName
+   id
+   studentName
+   batch
+    {
+      id
+    }
+    section{
+      id
+    }
+    branch{
+      id
+    }
+    department{
+      id
+    }
   }
  }
 }
 
 {
   "input": {
-  "teacherName": "tom"
+  "id": 1251,
+  "studentName": "srivalli",
+  "batchId": 1151,
+  "sectionId": 1201,
+  "branchId": 1001,
+  "departmentId": 1101
+  }
+}
+
+
+
+mutation addTeacher($input: AddTeacherInput!){
+  	addTeacher(input: $input){
+    teacher
+  {
+    id
+    teacherName
+	branch{
+	id
+    }
+    department{
+    id
+   }
+}
+}
+}
+
+{
+  "input": {
+  "teacherName": "tom",
+  "branchId": 1001,
+  "departmentId":1101
+  }
+}
+
+mutation updateTeacher($input: UpdateTeacherInput!){
+  	updateTeacher(input: $input){
+    teacher
+   {
+    id
+    teacherName
+	branch{
+	id
+    }
+    department{
+    id
+   }
+}
+}
+}
+
+{
+  "input": {
+  "id": 1301,
+  "teacherName": "nick",
+  "branchId": 1001,
+  "departmentId":1101
   }
 }
 
@@ -196,28 +407,58 @@ mutation addSubject($input: AddSubjectInput!){
     subject
   {
    id
-   commonSub
-   electiveSub
+   subjectCode
+   subjectType
+   subjectDesc
+   status
    department{
     id
    }
-   student{
+   batch{
+   id
+  }
+ }
+}
+}
+
+{
+  "input": {
+  "subjectCode": "OS",
+  "subjectType": "COMMON",
+  "subjectDesc": "Operating System",
+  "status" : "ACTIVE",
+  "departmentId": 1101,
+  "batchId":1151
+  }
+}
+
+mutation updateSubject($input: UpdateSubjectInput!){
+  	updateSubject(input: $input){
+    subject
+  {
+   id
+   subjectCode
+   subjectType
+   subjectDesc
+   status
+   department{
     id
    }
-   teacher{
-    id
-   }
+   batch{
+   id
   }
  }
 }
 
 {
   "input": {
-  "commonSub": "DBMS",
-  "electiveSub": "C",
+  "id": 1351,
+  "subjectCode": "Operating System",
+  "subjectType": "COMMON",
+  "subjectDesc": "Operating System",
+  "status" : "ACTIVE",
   "departmentId": 1101,
-  "studentId": 1251,
-  "teacherId": 1301
+  "batchId":1151,
   }
 }
 
@@ -246,6 +487,31 @@ mutation addTeach($input: AddTeachInput!){
   }
 }
 
+mutation updateTeach($input: UpdateTeachInput!){
+  	updateTeach(input: $input){
+    teach
+    {
+     id
+     desc
+     teacher{
+      id
+     }
+     subject{
+      id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+  "id": 1401,
+  "desc": "description",
+  "teacherId": 1301,
+  "subjectId": 1351
+  }
+}
+
 
 mutation addAttendanceMaster($input: AddAttendanceMasterInput!){
   	addAttendanceMaster(input: $input){
@@ -259,7 +525,7 @@ mutation addAttendanceMaster($input: AddAttendanceMasterInput!){
       section{
         id
       }
-      academicyear{
+      batch{
         id
       }
     }
@@ -271,7 +537,36 @@ mutation addAttendanceMaster($input: AddAttendanceMasterInput!){
   "desc": "desc",
   "teachId": 1401,
   "sectionId": 1201,
-  "academicYearId": 1051
+  "batchId": 1151
+  }
+}
+
+mutation updateAttendanceMaster($input: UpdateAttendanceMasterInput!){
+  	updateAttendanceMaster(input: $input){
+    attendanceMaster
+    {
+      id
+      desc
+      teach{
+      id
+      }
+      section{
+        id
+      }
+      batch{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+  "id": 1451,
+  "desc": "description",
+  "teachId": 1401,
+  "sectionId": 1201,
+  "batchId": 1151
   }
 }
 
@@ -281,11 +576,11 @@ mutation addLecture($input: AddLectureInput!){
     lecture
     {
       id
-      desc
       lecDate
       lastUpdatedOn
       lastUpdatedBy
-      lecStatus
+      startTime
+	  endTime
       attendancemaster{
         id
       }
@@ -298,9 +593,38 @@ mutation addLecture($input: AddLectureInput!){
    "lecDate": "2019-01-17",
    "lastUpdatedOn": "2019-01-16",
    "lastUpdatedBy": "valli",
-    "lecStatus": "ACTIVE",
-    "desc": "desc",
-    "attendanceMasterId": 1451
+   "startTime": "7:20:00Am",
+   "endTime": "8:20:00Am",
+   "attendanceMasterId": 1451
+  }
+}
+
+mutation updateLecture($input: UpdateLectureInput!){
+  	updateLecture(input: $input){
+    lecture
+    {
+      id
+      lecDate
+      lastUpdatedOn
+      lastUpdatedBy
+      startTime
+	  endTime
+      attendancemaster{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+   "id":1501,
+   "lecDate": "2019-01-26",
+   "lastUpdatedOn": "2019-01-25",
+   "lastUpdatedBy": "valli",
+   "startTime": "7:20:00Am",
+   "endTime": "8:20:00Am",
+   "attendanceMasterId": 1451
   }
 }
 
@@ -310,7 +634,6 @@ mutation addStudentAttendance($input: AddStudentAttendanceInput!){
     {
       id
       attendanceStatus
-      attendanceDate
       comments
       student{
         id
@@ -326,7 +649,33 @@ mutation addStudentAttendance($input: AddStudentAttendanceInput!){
   "input": {
   "attendanceStatus": "PRESENT",
   "comments": "good",
-  "attendanceDate": "2019-01-17",
+  "studentId": 1251,
+  "lectureId": 1501
+  }
+}
+
+mutation updateStudentAttendance($input: UpdateStudentAttendanceInput!){
+  	updateStudentAttendance(input: $input){
+    studentAttendance
+    {
+      id
+      attendanceStatus
+      comments
+      student{
+        id
+      }
+       lecture{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+  "id": 1551,
+  "attendanceStatus": "ABSENT",
+  "comments": "good",
   "studentId": 1251,
   "lectureId": 1501
   }
@@ -356,10 +705,37 @@ mutation addTerm($input: AddTermInput!){
     "endDate": "2019-01-17",
     "termStatus": "ACTIVE",
     "academicYearId": 1051
-    } 
+    }
  }
- 
- 
+
+
+mutation updateTerm($input: UpdateTermInput!){
+  	updateTerm(input: $input){
+    term
+    {
+      id
+      termsDesc
+      startDate
+      endDate
+      termStatus
+      academicyear{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+    "id":1601,
+    "termsDesc": "desc",
+    "startDate": "2019-01-26",
+    "endDate": "2019-02-17",
+    "termStatus": "ACTIVE",
+    "academicYearId": 1051
+    }
+ }
+
 mutation addHoliday($input: AddHolidayInput!){
   	addHoliday(input: $input){
     holiday
@@ -380,9 +756,36 @@ mutation addHoliday($input: AddHolidayInput!){
    "holidayDesc": "pongal",
    "holidayDate": "2019-01-15",
    "holidayStatus": "ACTIVE",
-    "academicYearId": 1051 
+    "academicYearId": 1051
   }
 }
+
+mutation updateHoliday($input: UpdateHolidayInput!){
+  	updateHoliday(input: $input){
+    holiday
+    {
+      id
+      holidayDesc
+      holidayDate
+      holidayStatus
+      academicyear{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+   "id": 1651,
+   "holidayDesc": "pongal",
+   "holidayDate": "2019-01-15",
+   "holidayStatus": "ACTIVE",
+    "academicYearId": 1051
+  }
+}
+
+
 
 
 mutation addLegalEntity($input:AddLegalEntityInput!){
@@ -433,6 +836,56 @@ ptNumber
   }
 }
 
+mutation updateLegalEntity($input:UpdateLegalEntityInput!){
+updateLegalEntity(input:$input){
+legalEntity{
+id
+logo
+legalNameOfTheCollege
+typeOfCollege
+dateOfIncorporation
+registeredOfficeAddress
+collegeIdentificationNumber
+pan
+tan
+tanCircleNumber
+citTdsLocation
+formSignatory
+pfNumber
+registrationDate
+esiNumber
+ptRegistrationDate
+ptSignatory
+ptNumber
+}
+}
+}
+
+{
+
+  "input": {
+    "id": 1701,
+    "logo": 123,
+    "legalNameOfTheCollege": "college",
+    "typeOfCollege": "PUBLIC",
+    "dateOfIncorporation": "2019-01-26",
+    "registeredOfficeAddress": "madhapur",
+    "collegeIdentificationNumber": "abc",
+    "pan": "ajsh33c",
+    "tan": "jikdi",
+    "tanCircleNumber": "1254",
+    "citTdsLocation": "fjkf",
+    "formSignatory": "valli",
+    "pfNumber": "jdhd",
+    "registrationDate": "2019-01-03",
+    "esiNumber": 123,
+    "ptRegistrationDate": "2019-01-03",
+    "ptSignatory": "kjjv",
+    "ptNumber": 123
+  }
+}
+
+
 mutation addAuthorizedSignatory($input:AddAuthorizedSignatoryInput!){
 addAuthorizedSignatory(input:$input){
 authorizedSignatory{
@@ -462,6 +915,36 @@ panCardNumber
 }
 }
 
+mutation updateAuthorizedSignatory($input:UpdateAuthorizedSignatoryInput!){
+updateAuthorizedSignatory(input:$input){
+authorizedSignatory{
+id
+signatoryName
+signatoryFatherName
+signatoryDesignation
+address
+email
+panCardNumber
+  legalEntity{
+    id
+  }
+}
+}
+}
+
+{
+  "input": {
+  "id":1751,
+  "signatoryName": "srivalli",
+  "signatoryFatherName": "rao",
+  "signatoryDesignation": "employee",
+  "address": "madhapur",
+  "email": "valli@gmail.com",
+  "panCardNumber": "hgsg72",
+ "legalEntityId": 1701
+}
+}
+
 mutation addLocation($input: AddLocationInput!) {
 addLocation(input: $input) {
 location{
@@ -480,6 +963,26 @@ location{
     "appliesTo": "20employees"
   }
 }
+mutation updateLocation($input: UpdateLocationInput!) {
+updateLocation(input: $input) {
+location{
+  id
+  name
+  address
+  appliesTo
+}
+}
+}
+
+{
+  "input": {
+    "id": 1801,
+    "name": "panjagutta",
+    "address": "panjagutta",
+    "appliesTo": "20employees"
+  }
+}
+
 
 mutation addBankAccounts($input: AddBankAccountsInput!) {
 addBankAccounts(input: $input) {
@@ -506,19 +1009,42 @@ id
   }
 }
 
-mutation addCourseOffer($input: AddCourseOfferInput!) {
-addCourseOffer(input: $input) {
-courseOffer{
- id
- desc
- college{
-  id
- }
- department{
-    id
- }
- subject{
-  id
+mutation updateBankAccounts($input: UpdateBankAccountsInput!) {
+updateBankAccounts(input: $input) {
+bankAccounts{
+id
+ nameOfBank
+  accountNumber
+  typeOfAccount
+  ifsCode
+  branch
+  corporateId
+}
+}
+}
+
+{
+  "input": {
+    "id":1851,
+    "nameOfBank": "HDFC",
+    "accountNumber": 7338883889389,
+    "typeOfAccount": "Savings",
+    "ifsCode": "AD09832",
+    "branch": "madhapur",
+    "corporateId": 345
+  }
+}
+
+mutation addStudentSubject($input: AddStudentSubjectInput!) {
+addStudentSubject(input: $input) {
+studentSubject{
+   comments
+   lastupdatedDate
+   student{
+   id
+  }
+   subject{
+   id
 }
 }
 }
@@ -526,10 +1052,35 @@ courseOffer{
 
 {
   "input": {
-   "desc": "desc",
-    "collegeId": 951,
-    "departmentId": 1101,
-    "subjectId": 1351
+    "comments": "os",
+    "lastupdatedDate": "2019-01-26",
+	"studentId": 1251,
+	"subjectId": 1351
+  }
+}
+
+mutation updateStudentSubject($input: UpdateStudentSubjectInput!) {
+updateStudentSubject(input: $input) {
+studentSubject{
+   comments
+   lastupdatedDate
+   student{
+   id
+  }
+   subject{
+   id
+}
+}
+}
+}
+
+{
+  "input": {
+    "id": 1901
+    "comments": "Operating System",
+    "lastupdatedDate": "2019-01-26",
+	"studentId": 1251,
+	"subjectId": 1351
   }
 }
 
@@ -551,10 +1102,10 @@ comments
 "departmentId": "1101",
 "batchId": "1151",
 "sectionId": "1201",
-"subjectId": "1351",
-"attendanceDate": "2019-01-17",
-"studentId": "1252"
-
+"subjectId": "1401",
+"attendanceDate": "2019-01-26",
+"studentId": "1251",
+"lectureId": "1501"
 }
 }
 
