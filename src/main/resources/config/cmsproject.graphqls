@@ -213,13 +213,57 @@ type Section{
     section: SectionEnum!
     batch: Batch!
 }
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
+}
+
 type Student {
-    id: Long!
-    studentName: String!
-    batch: Batch!
-    section: Section!
-    branch: Branch!
-    department: Department!
+       id: Long!
+       studentName: String!
+       studentMiddleName: String!
+       studentLastName: String!
+       fatherName: String!
+       fatherMiddleName: String!
+       fatherLastName: String!
+       motherName: String!
+       motherMiddleName: String!
+       motherLastName: String!
+       aadharNo: Long!
+       dateOfBirth: Date!
+       placeOfBirth: String!
+       religion: String!
+       caste: String!
+       subCaste: String!
+       age: Long!
+       sex: Gender!
+       bloodGroup: String!
+       addressLineOne: String!
+       addressLineTwo: String!
+       addressLineThree: String!
+       town: String!
+       state: String!
+       country: String!
+       pincode: Long!
+       studentContactNumber: Long!
+       alternateContactNumber: Long!
+       studentEmailAddress: String!
+       alternateEmailAddress: String!
+       relationWithStudent: String!
+       name: String!
+       middleName: String!
+       lastName: String!
+       contactNo: Long!
+       emailAddress: String!
+       uploadPhoto: Long!
+       admissionNo: Long!
+       rollNo: String!
+       studentType: String!
+       batch: Batch!
+       section: Section!
+       branch: Branch!
+       department: Department!
 }
 type StudentAttendance {
     id: Long!
@@ -856,6 +900,44 @@ type RemoveSectionPayload {
 
 input AddStudentInput {
    studentName: String!
+   studentMiddleName: String!
+   studentLastName: String!
+   fatherName: String!
+   fatherMiddleName: String!
+   fatherLastName: String!
+   motherName: String!
+   motherMiddleName: String!
+   motherLastName: String!
+   aadharNo: Long!
+   dateOfBirth: Date!
+   placeOfBirth: String!
+   religion: String!
+   caste: String!
+   subCaste: String!
+   age: Long!
+   sex: Gender!
+   bloodGroup: String!
+   addressLineOne: String!
+   addressLineTwo: String!
+   addressLineThree: String!
+   town: String!
+   state: String!
+   country: String!
+   pincode: Long!
+   studentContactNumber: Long!
+   alternateContactNumber: Long!
+   studentEmailAddress: String!
+   alternateEmailAddress: String!
+   relationWithStudent: String!
+   name: String!
+   middleName: String!
+   lastName: String!
+   contactNo: Long!
+   emailAddress: String!
+   uploadPhoto: Long!
+   admissionNo: Long!
+   rollNo: String!
+   studentType: String!
    batchId: Long!
    sectionId: Long!
    branchId: Long!
@@ -865,12 +947,50 @@ type AddStudentPayload {
    student: Student!
 }
 input UpdateStudentInput {
-   id: Long!
-   studentName: String!
-   batchId: Long
-   sectionId: Long
-   branchId: Long
-   departmentId: Long
+      id: Long!
+      studentName: String!
+      studentMiddleName: String!
+      studentLastName: String!
+      fatherName: String!
+      fatherMiddleName: String!
+      fatherLastName: String!
+      motherName: String!
+      motherMiddleName: String!
+      motherLastName: String!
+      aadharNo: Long!
+      dateOfBirth: Date!
+      placeOfBirth: String!
+      religion: String!
+      caste: String!
+      subCaste: String!
+      age: Long!
+      sex: Gender!
+      bloodGroup: String!
+      addressLineOne: String!
+      addressLineTwo: String!
+      addressLineThree: String!
+      town: String!
+      state: String!
+      country: String!
+      pincode: Long!
+      studentContactNumber: Long!
+      alternateContactNumber: Long!
+      studentEmailAddress: String!
+      alternateEmailAddress: String!
+      relationWithStudent: String!
+      name: String!
+      middleName: String!
+      lastName: String!
+      contactNo: Long!
+      emailAddress: String!
+      uploadPhoto: Long!
+      admissionNo: Long!
+      rollNo: String!
+      studentType: String!
+      batchId: Long
+      sectionId: Long
+      branchId: Long
+      departmentId: Long
 }
 type UpdateStudentPayload {
    student: Student!

@@ -52,8 +52,51 @@ termStatus Status required
 enum Status {
 ACTIVE,DEACTIVE
 }
+
+enum Gender {
+    MALE, FEMALE, OTHER
+}
+
 entity Student{
 studentName String required
+studentMiddleName String required
+studentLastName String required
+fatherName String required
+fatherMiddleName String required
+fatherLastName String required
+motherName String required
+motherMiddleName String required
+motherLastName String required
+aadharNo Long required
+dateOfBirth LocalDate required
+placeOfBirth String required
+religion String required
+caste String required
+subCaste String required
+age Integer required
+sex Gender required
+bloodGroup String required
+addressLineOne String required
+addressLineTwo String required
+addressLineThree String required
+town String required
+state String required
+country String required
+pincode Long required
+studentContactNumber Long required
+alternateContactNumber Long required
+studentEmailAddress String required
+alternateEmailAddress String required
+relationWithStudent String required
+name String required
+middleName String required
+lastName String required
+contactNo Long required
+emailAddress String required
+uploadPhoto Long required
+admissionNo Long required
+rollNo String required
+studentType String required
 }
 
 entity Teacher{

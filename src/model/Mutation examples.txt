@@ -282,13 +282,50 @@ mutation updateSection($input: UpdateSectionInput!){
 }
 
 
-
 mutation addStudent($input: AddStudentInput!){
   	addStudent(input: $input){
     student
   {
    id
    studentName
+   studentMiddleName
+    studentLastName
+    fatherName
+    fatherMiddleName
+    fatherLastName
+    motherName
+    motherMiddleName
+    motherLastName
+    aadharNo
+    dateOfBirth
+    placeOfBirth
+    religion
+    caste
+    subCaste
+    age
+    sex
+    bloodGroup
+    addressLineOne
+    addressLineTwo
+    addressLineThree
+    town
+    state
+    country
+    pincode
+    studentContactNumber
+    alternateContactNumber
+     studentEmailAddress
+    alternateEmailAddress
+    relationWithStudent
+    name
+    middleName
+    lastName
+    contactNo
+    emailAddress
+    uploadPhoto
+    admissionNo
+    rollNo
+    studentType
    batch
     {
       id
@@ -308,11 +345,49 @@ mutation addStudent($input: AddStudentInput!){
 
 {
   "input": {
-  "studentName": "lavanya",
-  "batchId": 1151,
-  "sectionId": 1201,
-  "branchId": 1001,
-  "departmentId": 1101
+    "studentName": "lavanya",
+    "studentMiddleName": "venkata",
+    "studentLastName": "srivalli",
+    "fatherName": "venkat",
+    "fatherMiddleName": "rao",
+    "fatherLastName": "musini",
+    "motherName": "jyothi",
+    "motherMiddleName": "rao",
+    "motherLastName": "musini",
+    "aadharNo": 38019819883,
+    "dateOfBirth": "1995-12-31",
+    "placeOfBirth": "rjy",
+    "religion": "hindhu",
+    "caste": "BC",
+    "subCaste": "BCB",
+    "age": 19,
+    "sex": "FEMALE",
+    "bloodGroup": "AB+",
+    "addressLineOne": "DoorNo:42-3-2",
+    "addressLineTwo": "kothapeta",
+    "addressLineThree": "rjy",
+    "town": "rjy",
+    "state": "AP",
+    "country": "india",
+    "pincode": 533101,
+    "studentContactNumber": 91002617333,
+    "alternateContactNumber": 94749584985,
+    "studentEmailAddress": "srivalli@gmail.com",
+    "alternateEmailAddress": "lavanya@gmail.com",
+    "relationWithStudent": "father",
+    "name": "venkat",
+    "middleName": "rao",
+    "lastName": "musini",
+    "contactNo": 9491637830,
+    "emailAddress": "venkat@gmail.com",
+    "uploadPhoto": 123,
+    "admissionNo": 444334,
+    "rollNo": "13p31ao595",
+    "studentType": "free",
+    "batchId": 1151,
+    "sectionId": 1201,
+    "branchId": 1001,
+    "departmentId": 1101
   }
 }
 
@@ -322,6 +397,44 @@ mutation updateStudent($input: UpdateStudentInput!){
   {
    id
    studentName
+   studentMiddleName
+    studentLastName
+    fatherName
+    fatherMiddleName
+    fatherLastName
+    motherName
+    motherMiddleName
+    motherLastName
+    aadharNo
+    dateOfBirth
+    placeOfBirth
+    religion
+    caste
+    subCaste
+    age
+    sex
+    bloodGroup
+    addressLineOne
+    addressLineTwo
+    addressLineThree
+    town
+    state
+    country
+    pincode
+    studentContactNumber
+    alternateContactNumber
+     studentEmailAddress
+    alternateEmailAddress
+    relationWithStudent
+    name
+    middleName
+    lastName
+    contactNo
+    emailAddress
+    uploadPhoto
+    admissionNo
+    rollNo
+    studentType
    batch
     {
       id
@@ -341,16 +454,52 @@ mutation updateStudent($input: UpdateStudentInput!){
 
 {
   "input": {
-  "id": 1251,
-  "studentName": "srivalli",
-  "batchId": 1151,
-  "sectionId": 1201,
-  "branchId": 1001,
-  "departmentId": 1101
+    "id": 1301,
+    "studentName": "lavanya",
+    "studentMiddleName": "venkata",
+    "studentLastName": "srivalli",
+    "fatherName": "venkat",
+    "fatherMiddleName": "rao",
+    "fatherLastName": "musini",
+    "motherName": "jyothi",
+    "motherMiddleName": "rao",
+    "motherLastName": "musini",
+    "aadharNo": 38019887493,
+    "dateOfBirth": "1995-12-31",
+    "placeOfBirth": "rjy",
+    "religion": "hindhu",
+    "caste": "BC",
+    "subCaste": "BCB",
+    "age": 19,
+    "sex": "FEMALE",
+    "bloodGroup": "AB+",
+    "addressLineOne": "DoorNo:42-3-2",
+    "addressLineTwo": "kothapeta",
+    "addressLineThree": "rjy",
+    "town": "rjy",
+    "state": "AP",
+    "country": "india",
+    "pincode": 533101,
+    "studentContactNumber": 91002617333,
+    "alternateContactNumber": 94749584985,
+    "studentEmailAddress": "srivalli@gmail.com",
+    "alternateEmailAddress": "lavanya@gmail.com",
+    "relationWithStudent": "father",
+    "name": "venkat",
+    "middleName": "rao",
+    "lastName": "musini",
+    "contactNo": 9491637830,
+    "emailAddress": "venkat@gmail.com",
+    "uploadPhoto": 123,
+    "admissionNo": 444334,
+    "rollNo": "13p31ao595",
+    "studentType": "free",
+    "batchId": 1151,
+    "sectionId": 1201,
+    "branchId": 1001,
+    "departmentId": 1101
   }
 }
-
-
 
 mutation addTeacher($input: AddTeacherInput!){
   	addTeacher(input: $input){

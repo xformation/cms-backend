@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -76,6 +76,44 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
               <tr>
                 <th>ID</th>
                 <th>Student Name</th>
+                <th>Student Middle Name</th>
+                <th>Student Last Name</th>
+                <th>Father Name</th>
+                <th>Father Middle Name</th>
+                <th>Father Last Name</th>
+                <th>Mother Name</th>
+                <th>Mother Middle Name</th>
+                <th>Mother Last Name</th>
+                <th>Aadhar No</th>
+                <th>Date Of Birth</th>
+                <th>Place Of Birth</th>
+                <th>Religion</th>
+                <th>Caste</th>
+                <th>Sub Caste</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Blood Group</th>
+                <th>Address Line One</th>
+                <th>Address Line Two</th>
+                <th>Address Line Three</th>
+                <th>Town</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Pincode</th>
+                <th>Student Contact Number</th>
+                <th>Alternate Contact Number</th>
+                <th>Student Email Address</th>
+                <th>Alternate Email Address</th>
+                <th>Relation With Student</th>
+                <th>Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Contact No</th>
+                <th>Email Address</th>
+                <th>Upload Photo</th>
+                <th>Admission No</th>
+                <th>Roll No</th>
+                <th>Student Type</th>
                 <th>Department</th>
                 <th>Batch</th>
                 <th>Section</th>
@@ -92,6 +130,46 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                     </Button>
                   </td>
                   <td>{student.studentName}</td>
+                  <td>{student.studentMiddleName}</td>
+                  <td>{student.studentLastName}</td>
+                  <td>{student.fatherName}</td>
+                  <td>{student.fatherMiddleName}</td>
+                  <td>{student.fatherLastName}</td>
+                  <td>{student.motherName}</td>
+                  <td>{student.motherMiddleName}</td>
+                  <td>{student.motherLastName}</td>
+                  <td>{student.aadharNo}</td>
+                  <td>
+                    <TextFormat type="date" value={student.dateOfBirth} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>{student.placeOfBirth}</td>
+                  <td>{student.religion}</td>
+                  <td>{student.caste}</td>
+                  <td>{student.subCaste}</td>
+                  <td>{student.age}</td>
+                  <td>{student.sex}</td>
+                  <td>{student.bloodGroup}</td>
+                  <td>{student.addressLineOne}</td>
+                  <td>{student.addressLineTwo}</td>
+                  <td>{student.addressLineThree}</td>
+                  <td>{student.town}</td>
+                  <td>{student.state}</td>
+                  <td>{student.country}</td>
+                  <td>{student.pincode}</td>
+                  <td>{student.studentContactNumber}</td>
+                  <td>{student.alternateContactNumber}</td>
+                  <td>{student.studentEmailAddress}</td>
+                  <td>{student.alternateEmailAddress}</td>
+                  <td>{student.relationWithStudent}</td>
+                  <td>{student.name}</td>
+                  <td>{student.middleName}</td>
+                  <td>{student.lastName}</td>
+                  <td>{student.contactNo}</td>
+                  <td>{student.emailAddress}</td>
+                  <td>{student.uploadPhoto}</td>
+                  <td>{student.admissionNo}</td>
+                  <td>{student.rollNo}</td>
+                  <td>{student.studentType}</td>
                   <td>{student.departmentId ? <Link to={`department/${student.departmentId}`}>{student.departmentId}</Link> : ''}</td>
                   <td>{student.batchId ? <Link to={`batch/${student.batchId}`}>{student.batchId}</Link> : ''}</td>
                   <td>{student.sectionId ? <Link to={`section/${student.sectionId}`}>{student.sectionId}</Link> : ''}</td>

@@ -264,6 +264,44 @@ public class Mutation implements GraphQLMutationResolver {
         final Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
         final Student student = new Student();
         student.setStudentName(addStudentInput.getStudentName());
+        student.setStudentMiddleName(addStudentInput.getStudentMiddleName());
+        student.setStudentLastName(addStudentInput.getStudentLastName());
+        student.setFatherName(addStudentInput.getFatherName());
+        student.setFatherMiddleName(addStudentInput.getFatherMiddleName());
+        student.setFatherLastName(addStudentInput.getFatherLastName());
+        student.setMotherName(addStudentInput.getMotherName());
+        student.setMotherMiddleName(addStudentInput.getMotherMiddleName());
+        student.setMotherLastName(addStudentInput.getMotherLastName());
+        student.setAadharNo(addStudentInput.getAadharNo());
+        student.setDateOfBirth(addStudentInput.getDateOfBirth());
+        student.setPlaceOfBirth(addStudentInput.getPlaceOfBirth());
+        student.setReligion(addStudentInput.getReligion());
+        student.setCaste(addStudentInput.getCaste());
+        student.setSubCaste(addStudentInput.getSubCaste());
+        student.setAge(addStudentInput.getAge());
+        student.setSex(addStudentInput.getSex());
+        student.setBloodGroup(addStudentInput.getBloodGroup());
+        student.setAddressLineOne(addStudentInput.getAddressLineOne());
+        student.setAddressLineTwo(addStudentInput.getAddressLineTwo());
+        student.setAddressLineThree(addStudentInput.getAddressLineThree());
+        student.setTown(addStudentInput.getTown());
+        student.setState(addStudentInput.getState());
+        student.setCountry(addStudentInput.getCountry());
+        student.setPincode(addStudentInput.getPincode());
+        student.setStudentContactNumber(addStudentInput.getStudentContactNumber());
+        student.setAlternateContactNumber(addStudentInput.getAlternateContactNumber());
+        student.setStudentEmailAddress(addStudentInput.getStudentEmailAddress());
+        student.setAlternateEmailAddress(addStudentInput.getAlternateEmailAddress());
+        student.setRelationWithStudent(addStudentInput.getRelationWithStudent());
+        student.setName(addStudentInput.getName());
+        student.setMiddleName(addStudentInput.getMiddleName());
+        student.setLastName(addStudentInput.getLastName());
+        student.setContactNo(addStudentInput.getContactNo());
+        student.setEmailAddress(addStudentInput.getEmailAddress());
+        student.setUploadPhoto(addStudentInput.getUploadPhoto());
+        student.setAdmissionNo(addStudentInput.getAdmissionNo());
+        student.setRollNo(addStudentInput.getRollNo());
+        student.setStudentType(addStudentInput.getStudentType());
         student.setBatch(batch);
         student.setSection(section);
         student.setBranch(branch);
@@ -276,6 +314,120 @@ public class Mutation implements GraphQLMutationResolver {
         Student student = studentRepository.findById(updateStudentInput.getId()).get();
         if (updateStudentInput.getStudentName() != null) {
             student.setStudentName(updateStudentInput.getStudentName());
+        }
+        if (updateStudentInput.getStudentMiddleName() != null) {
+            student.setStudentMiddleName(updateStudentInput.getStudentMiddleName());
+        }
+        if (updateStudentInput.getStudentLastName() != null) {
+            student.setStudentLastName(updateStudentInput.getStudentLastName());
+        }
+        if (updateStudentInput.getFatherName() != null) {
+            student.setFatherName(updateStudentInput.getFatherName());
+        }
+        if (updateStudentInput.getFatherMiddleName() != null) {
+            student.setFatherMiddleName(updateStudentInput.getFatherMiddleName());
+        }
+        if (updateStudentInput.getFatherLastName() != null) {
+            student.setFatherLastName(updateStudentInput.getFatherLastName());
+        }
+        if (updateStudentInput.getMotherName() != null) {
+            student.setMotherName(updateStudentInput.getMotherName());
+        }
+        if (updateStudentInput.getMotherMiddleName() != null) {
+            student.setMotherMiddleName(updateStudentInput.getMotherMiddleName());
+        }
+        if (updateStudentInput.getMotherLastName() != null) {
+            student.setMotherLastName(updateStudentInput.getMotherLastName());
+        }
+        if (updateStudentInput.getAadharNo() != null) {
+            student.setAadharNo(updateStudentInput.getAadharNo());
+        }
+        if (updateStudentInput.getDateOfBirth() != null) {
+            student.setDateOfBirth(updateStudentInput.getDateOfBirth());
+        }
+        if (updateStudentInput.getPlaceOfBirth() != null) {
+            student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
+        }
+        if (updateStudentInput.getReligion() != null) {
+            student.setReligion(updateStudentInput.getReligion());
+        }
+        if (updateStudentInput.getCaste() != null) {
+            student.setCaste(updateStudentInput.getCaste());
+        }
+        if (updateStudentInput.getSubCaste() != null) {
+            student.setSubCaste(updateStudentInput.getSubCaste());
+        }
+        if (updateStudentInput.getAge() != null) {
+            student.setAge(updateStudentInput.getAge());
+        }
+        if (updateStudentInput.getSex() != null) {
+            student.setSex(updateStudentInput.getSex());
+        }
+        if (updateStudentInput.getBloodGroup() != null) {
+            student.setBloodGroup(updateStudentInput.getBloodGroup());
+        }
+        if (updateStudentInput.getAddressLineOne() != null) {
+            student.setAddressLineOne(updateStudentInput.getAddressLineOne());
+        }
+        if (updateStudentInput.getAddressLineTwo() != null) {
+            student.setAddressLineTwo(updateStudentInput.getAddressLineTwo());
+        }
+        if (updateStudentInput.getAddressLineThree() != null) {
+            student.setAddressLineThree(updateStudentInput.getAddressLineThree());
+        }
+        if (updateStudentInput.getTown() != null) {
+            student.setTown(updateStudentInput.getTown());
+        }
+        if (updateStudentInput.getState() != null) {
+            student.setState(updateStudentInput.getState());
+        }
+        if (updateStudentInput.getCountry() != null) {
+            student.setCountry(updateStudentInput.getCountry());
+        }
+        if (updateStudentInput.getPincode() != null) {
+            student.setPincode(updateStudentInput.getPincode());
+        }
+        if (updateStudentInput.getStudentContactNumber() != null) {
+            student.setStudentContactNumber(updateStudentInput.getStudentContactNumber());
+        }
+        if (updateStudentInput.getAlternateContactNumber() != null) {
+            student.setAlternateContactNumber(updateStudentInput.getAlternateContactNumber());
+        }
+        if (updateStudentInput.getStudentEmailAddress() != null) {
+            student.setStudentEmailAddress(updateStudentInput.getStudentEmailAddress());
+        }
+        if (updateStudentInput.getAlternateEmailAddress() != null) {
+            student.setAlternateEmailAddress(updateStudentInput.getAlternateEmailAddress());
+        }
+        if (updateStudentInput.getRelationWithStudent() != null) {
+            student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
+        }
+        if (updateStudentInput.getName() != null) {
+            student.setName(updateStudentInput.getName());
+        }
+        if (updateStudentInput.getMiddleName() != null) {
+            student.setMiddleName(updateStudentInput.getMiddleName());
+        }
+        if (updateStudentInput.getLastName() != null) {
+            student.setLastName(updateStudentInput.getLastName());
+        }
+        if (updateStudentInput.getContactNo() != null) {
+            student.setContactNo(updateStudentInput.getContactNo());
+        }
+        if (updateStudentInput.getEmailAddress() != null) {
+            student.setEmailAddress(updateStudentInput.getEmailAddress());
+        }
+        if (updateStudentInput.getUploadPhoto() != null) {
+            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
+        }
+        if (updateStudentInput.getAdmissionNo() != null) {
+            student.setAdmissionNo(updateStudentInput.getAdmissionNo());
+        }
+        if (updateStudentInput.getRollNo() != null) {
+            student.setRollNo(updateStudentInput.getRollNo());
+        }
+        if (updateStudentInput.getStudentType() != null) {
+            student.setStudentType(updateStudentInput.getStudentType());
         }
         if (updateStudentInput.getBatchId() != null) {
         	final Batch batch = batchRepository.findById(updateStudentInput.getBatchId()).get();

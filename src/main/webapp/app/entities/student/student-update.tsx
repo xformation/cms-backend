@@ -20,28 +20,34 @@ import { getEntity, updateEntity, createEntity, reset } from './student.reducer'
 import { IStudent } from 'app/shared/model/student.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IStudentUpdateState {
   isNew: boolean;
-  departmentId: number;
-  batchId: number;
-  sectionId: number;
-  branchId: number;
+  departmentId: string;
+  batchId: string;
+  sectionId: string;
+  branchId: string;
 }
 
 export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudentUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      departmentId: 0,
-      batchId: 0,
-      sectionId: 0,
-      branchId: 0,
+      departmentId: '0',
+      batchId: '0',
+      sectionId: '0',
+      branchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -70,80 +76,11 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/student');
-  };
-
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
-  };
-
-  batchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        batchId: -1
-      });
-    } else {
-      for (const i in this.props.batches) {
-        if (id === this.props.batches[i].id.toString()) {
-          this.setState({
-            batchId: this.props.batches[i].id
-          });
-        }
-      }
-    }
-  };
-
-  sectionUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        sectionId: -1
-      });
-    } else {
-      for (const i in this.props.sections) {
-        if (id === this.props.sections[i].id.toString()) {
-          this.setState({
-            sectionId: this.props.sections[i].id
-          });
-        }
-      }
-    }
-  };
-
-  branchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        branchId: -1
-      });
-    } else {
-      for (const i in this.props.branches) {
-        if (id === this.props.branches[i].id.toString()) {
-          this.setState({
-            branchId: this.props.branches[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -183,15 +120,520 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="department.id">Department</Label>
+                  <Label id="studentMiddleNameLabel" for="studentMiddleName">
+                    Student Middle Name
+                  </Label>
+                  <AvField
+                    id="student-studentMiddleName"
+                    type="text"
+                    name="studentMiddleName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="studentLastNameLabel" for="studentLastName">
+                    Student Last Name
+                  </Label>
+                  <AvField
+                    id="student-studentLastName"
+                    type="text"
+                    name="studentLastName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="fatherNameLabel" for="fatherName">
+                    Father Name
+                  </Label>
+                  <AvField
+                    id="student-fatherName"
+                    type="text"
+                    name="fatherName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="fatherMiddleNameLabel" for="fatherMiddleName">
+                    Father Middle Name
+                  </Label>
+                  <AvField
+                    id="student-fatherMiddleName"
+                    type="text"
+                    name="fatherMiddleName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="fatherLastNameLabel" for="fatherLastName">
+                    Father Last Name
+                  </Label>
+                  <AvField
+                    id="student-fatherLastName"
+                    type="text"
+                    name="fatherLastName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="motherNameLabel" for="motherName">
+                    Mother Name
+                  </Label>
+                  <AvField
+                    id="student-motherName"
+                    type="text"
+                    name="motherName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="motherMiddleNameLabel" for="motherMiddleName">
+                    Mother Middle Name
+                  </Label>
+                  <AvField
+                    id="student-motherMiddleName"
+                    type="text"
+                    name="motherMiddleName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="motherLastNameLabel" for="motherLastName">
+                    Mother Last Name
+                  </Label>
+                  <AvField
+                    id="student-motherLastName"
+                    type="text"
+                    name="motherLastName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="aadharNoLabel" for="aadharNo">
+                    Aadhar No
+                  </Label>
+                  <AvField
+                    id="student-aadharNo"
+                    type="string"
+                    className="form-control"
+                    name="aadharNo"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="dateOfBirthLabel" for="dateOfBirth">
+                    Date Of Birth
+                  </Label>
+                  <AvField
+                    id="student-dateOfBirth"
+                    type="date"
+                    className="form-control"
+                    name="dateOfBirth"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="placeOfBirthLabel" for="placeOfBirth">
+                    Place Of Birth
+                  </Label>
+                  <AvField
+                    id="student-placeOfBirth"
+                    type="text"
+                    name="placeOfBirth"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="religionLabel" for="religion">
+                    Religion
+                  </Label>
+                  <AvField
+                    id="student-religion"
+                    type="text"
+                    name="religion"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="casteLabel" for="caste">
+                    Caste
+                  </Label>
+                  <AvField
+                    id="student-caste"
+                    type="text"
+                    name="caste"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="subCasteLabel" for="subCaste">
+                    Sub Caste
+                  </Label>
+                  <AvField
+                    id="student-subCaste"
+                    type="text"
+                    name="subCaste"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="ageLabel" for="age">
+                    Age
+                  </Label>
+                  <AvField
+                    id="student-age"
+                    type="string"
+                    className="form-control"
+                    name="age"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="sexLabel">Sex</Label>
                   <AvInput
-                    id="student-department"
+                    id="student-sex"
                     type="select"
                     className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
-                    value={isNew && departments ? departments[0] && departments[0].id : ''}
+                    name="sex"
+                    value={(!isNew && studentEntity.sex) || 'MALE'}
                   >
+                    <option value="MALE">MALE</option>
+                    <option value="FEMALE">FEMALE</option>
+                    <option value="OTHER">OTHER</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="bloodGroupLabel" for="bloodGroup">
+                    Blood Group
+                  </Label>
+                  <AvField
+                    id="student-bloodGroup"
+                    type="text"
+                    name="bloodGroup"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="addressLineOneLabel" for="addressLineOne">
+                    Address Line One
+                  </Label>
+                  <AvField
+                    id="student-addressLineOne"
+                    type="text"
+                    name="addressLineOne"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="addressLineTwoLabel" for="addressLineTwo">
+                    Address Line Two
+                  </Label>
+                  <AvField
+                    id="student-addressLineTwo"
+                    type="text"
+                    name="addressLineTwo"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="addressLineThreeLabel" for="addressLineThree">
+                    Address Line Three
+                  </Label>
+                  <AvField
+                    id="student-addressLineThree"
+                    type="text"
+                    name="addressLineThree"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="townLabel" for="town">
+                    Town
+                  </Label>
+                  <AvField
+                    id="student-town"
+                    type="text"
+                    name="town"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="stateLabel" for="state">
+                    State
+                  </Label>
+                  <AvField
+                    id="student-state"
+                    type="text"
+                    name="state"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="countryLabel" for="country">
+                    Country
+                  </Label>
+                  <AvField
+                    id="student-country"
+                    type="text"
+                    name="country"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="pincodeLabel" for="pincode">
+                    Pincode
+                  </Label>
+                  <AvField
+                    id="student-pincode"
+                    type="string"
+                    className="form-control"
+                    name="pincode"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="studentContactNumberLabel" for="studentContactNumber">
+                    Student Contact Number
+                  </Label>
+                  <AvField
+                    id="student-studentContactNumber"
+                    type="string"
+                    className="form-control"
+                    name="studentContactNumber"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="alternateContactNumberLabel" for="alternateContactNumber">
+                    Alternate Contact Number
+                  </Label>
+                  <AvField
+                    id="student-alternateContactNumber"
+                    type="string"
+                    className="form-control"
+                    name="alternateContactNumber"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="studentEmailAddressLabel" for="studentEmailAddress">
+                    Student Email Address
+                  </Label>
+                  <AvField
+                    id="student-studentEmailAddress"
+                    type="text"
+                    name="studentEmailAddress"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="alternateEmailAddressLabel" for="alternateEmailAddress">
+                    Alternate Email Address
+                  </Label>
+                  <AvField
+                    id="student-alternateEmailAddress"
+                    type="text"
+                    name="alternateEmailAddress"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="relationWithStudentLabel" for="relationWithStudent">
+                    Relation With Student
+                  </Label>
+                  <AvField
+                    id="student-relationWithStudent"
+                    type="text"
+                    name="relationWithStudent"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="nameLabel" for="name">
+                    Name
+                  </Label>
+                  <AvField
+                    id="student-name"
+                    type="text"
+                    name="name"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="middleNameLabel" for="middleName">
+                    Middle Name
+                  </Label>
+                  <AvField
+                    id="student-middleName"
+                    type="text"
+                    name="middleName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="lastNameLabel" for="lastName">
+                    Last Name
+                  </Label>
+                  <AvField
+                    id="student-lastName"
+                    type="text"
+                    name="lastName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="contactNoLabel" for="contactNo">
+                    Contact No
+                  </Label>
+                  <AvField
+                    id="student-contactNo"
+                    type="string"
+                    className="form-control"
+                    name="contactNo"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="emailAddressLabel" for="emailAddress">
+                    Email Address
+                  </Label>
+                  <AvField
+                    id="student-emailAddress"
+                    type="text"
+                    name="emailAddress"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="uploadPhotoLabel" for="uploadPhoto">
+                    Upload Photo
+                  </Label>
+                  <AvField
+                    id="student-uploadPhoto"
+                    type="string"
+                    className="form-control"
+                    name="uploadPhoto"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="admissionNoLabel" for="admissionNo">
+                    Admission No
+                  </Label>
+                  <AvField
+                    id="student-admissionNo"
+                    type="string"
+                    className="form-control"
+                    name="admissionNo"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="rollNoLabel" for="rollNo">
+                    Roll No
+                  </Label>
+                  <AvField
+                    id="student-rollNo"
+                    type="text"
+                    name="rollNo"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="studentTypeLabel" for="studentType">
+                    Student Type
+                  </Label>
+                  <AvField
+                    id="student-studentType"
+                    type="text"
+                    name="studentType"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label for="department.id">Department</Label>
+                  <AvInput id="student-department" type="select" className="form-control" name="departmentId">
                     {departments
                       ? departments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -203,14 +645,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
-                  <AvInput
-                    id="student-batch"
-                    type="select"
-                    className="form-control"
-                    name="batchId"
-                    onChange={this.batchUpdate}
-                    value={isNew && batches ? batches[0] && batches[0].id : ''}
-                  >
+                  <AvInput id="student-batch" type="select" className="form-control" name="batchId">
                     {batches
                       ? batches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -222,14 +657,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <AvGroup>
                   <Label for="section.id">Section</Label>
-                  <AvInput
-                    id="student-section"
-                    type="select"
-                    className="form-control"
-                    name="sectionId"
-                    onChange={this.sectionUpdate}
-                    value={isNew && sections ? sections[0] && sections[0].id : ''}
-                  >
+                  <AvInput id="student-section" type="select" className="form-control" name="sectionId">
                     {sections
                       ? sections.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -241,14 +669,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput
-                    id="student-branch"
-                    type="select"
-                    className="form-control"
-                    name="branchId"
-                    onChange={this.branchUpdate}
-                    value={isNew && branches ? branches[0] && branches[0].id : ''}
-                  >
+                  <AvInput id="student-branch" type="select" className="form-control" name="branchId">
                     {branches
                       ? branches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -282,7 +703,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
   studentEntity: storeState.student.entity,
   loading: storeState.student.loading,
-  updating: storeState.student.updating
+  updating: storeState.student.updating,
+  updateSuccess: storeState.student.updateSuccess
 });
 
 const mapDispatchToProps = {
