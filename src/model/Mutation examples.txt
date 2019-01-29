@@ -46,7 +46,7 @@ instructionInformation
 
 mutation addBranch($input: AddBranchInput!) {
 addBranch(input: $input) {
-branch{
+branch{st
 id
 branchName
 description
@@ -139,23 +139,23 @@ mutation updateAcademicYear($input: UpdateAcademicYearInput!){
 
 
 mutation addDepartment($input: AddDepartmentInput!){
-  	addDepartment(input: $input){
-    department
-  {
-    id
-    name
-    description
-    deptHead
-    branch
-    {
-      id
-    }
-    academicyear{
-      id
-    }
+   	addDepartment(input: $input){
+     department
+   {
+     id
+     name
+     description
+     deptHead
+     branch
+     {
+       id
+     }
+     academicyear{
+       id
+     }
+   }
   }
  }
-}
 
 {
   "input": {
@@ -454,7 +454,7 @@ mutation updateStudent($input: UpdateStudentInput!){
 
 {
   "input": {
-    "id": 1301,
+    "id": 1251,
     "studentName": "lavanya",
     "studentMiddleName": "venkata",
     "studentLastName": "srivalli",
@@ -467,7 +467,7 @@ mutation updateStudent($input: UpdateStudentInput!){
     "aadharNo": 38019887493,
     "dateOfBirth": "1995-12-31",
     "placeOfBirth": "rjy",
-    "religion": "Hindu",
+    "religion": "HINDU",
     "caste": "BC",
     "subCaste": "BCB",
     "age": 19,
@@ -751,6 +751,7 @@ mutation updateSubject($input: UpdateSubjectInput!){
   }
  }
 }
+}
 
 {
   "input": {
@@ -760,7 +761,7 @@ mutation updateSubject($input: UpdateSubjectInput!){
   "subjectDesc": "Operating System",
   "status" : "ACTIVE",
   "departmentId": 1101,
-  "batchId":1151,
+  "batchId":1151
   }
 }
 
@@ -1378,7 +1379,7 @@ studentSubject{
 
 {
   "input": {
-    "id": 1901
+    "id": 1901,
     "comments": "Operating System",
     "lastupdatedDate": "2019-01-26",
 	"studentId": 1251,
