@@ -906,26 +906,104 @@ QUERY:
 
 {
   teacher(id: 1301){
-    teacherName
-	branch{
-	id
-    }
-    department{
-    id
-   }
+        teacherName
+        teacherMiddleName
+        teacherLastName
+        fatherName
+        fatherMiddleName
+        fatherLastName
+        motherName
+        motherMiddleName
+        motherLastName
+        aadharNo
+        dateOfBirth
+        placeOfBirth
+        religion
+        caste
+        subCaste
+        age
+        sex
+        bloodGroup
+        addressLineOne
+        addressLineTwo
+        addressLineThree
+        town
+        state
+        country
+        pincode
+        teacherContactNumber
+        alternateContactNumber
+         teacherEmailAddress
+        alternateEmailAddress
+        relationWithStaff
+        name
+        middleName
+        lastName
+        contactNo
+        emailAddress
+        uploadPhoto
+        designation
+        employeeId
+        staffType
+
+        branch{
+          id
+        }
+        department{
+          id
+        }
   }
 }
 
 {
   teachers{
-    id
-    teacherName
-	branch{
-	id
-    }
-    department{
-    id
-   }
+       id
+       teacherName
+       teacherMiddleName
+       teacherLastName
+       fatherName
+       fatherMiddleName
+       fatherLastName
+       motherName
+       motherMiddleName
+       motherLastName
+       aadharNo
+       dateOfBirth
+       placeOfBirth
+       religion
+       caste
+       subCaste
+       age
+       sex
+       bloodGroup
+       addressLineOne
+       addressLineTwo
+       addressLineThree
+       town
+       state
+       country
+       pincode
+       teacherContactNumber
+       alternateContactNumber
+        teacherEmailAddress
+       alternateEmailAddress
+       relationWithStaff
+       name
+       middleName
+       lastName
+       contactNo
+       emailAddress
+       uploadPhoto
+       designation
+       employeeId
+       staffType
+
+       branch{
+         id
+       }
+       department{
+         id
+       }
   }
 }
 

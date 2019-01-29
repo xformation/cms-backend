@@ -505,51 +505,204 @@ mutation addTeacher($input: AddTeacherInput!){
   	addTeacher(input: $input){
     teacher
   {
-    id
-    teacherName
-	branch{
-	id
+   id
+   teacherName
+   teacherMiddleName
+    teacherLastName
+    fatherName
+    fatherMiddleName
+    fatherLastName
+    motherName
+    motherMiddleName
+    motherLastName
+    aadharNo
+    dateOfBirth
+    placeOfBirth
+    religion
+    caste
+    subCaste
+    age
+    sex
+    bloodGroup
+    addressLineOne
+    addressLineTwo
+    addressLineThree
+    town
+    state
+    country
+    pincode
+    teacherContactNumber
+    alternateContactNumber
+     teacherEmailAddress
+    alternateEmailAddress
+    relationWithStaff
+    name
+    middleName
+    lastName
+    contactNo
+    emailAddress
+    uploadPhoto
+    designation
+    employeeId
+    staffType
+
+    branch{
+      id
     }
     department{
-    id
-   }
-}
-}
+      id
+    }
+  }
+ }
 }
 
 {
   "input": {
-  "teacherName": "tom",
-  "branchId": 1001,
-  "departmentId":1101
+    "teacherName": "phani",
+    "teacherMiddleName": "priya",
+    "teacherLastName": "yaragani",
+    "fatherName": "venkat",
+    "fatherMiddleName": "rao",
+    "fatherLastName": "musini",
+    "motherName": "jyothi",
+    "motherMiddleName": "rao",
+    "motherLastName": "musini",
+    "aadharNo": 389598984845,
+    "dateOfBirth": "1992-07-06",
+    "placeOfBirth": "rjy",
+    "religion": "HINDU",
+    "caste": "BC",
+    "subCaste": "BCB",
+    "age": 19,
+    "sex": "FEMALE",
+    "bloodGroup": "ABPOSITIVE",
+    "addressLineOne": "DoorNo:42-3-2",
+    "addressLineTwo": "kothapeta",
+    "addressLineThree": "rjy",
+    "town": "rjy",
+    "state": "AP",
+    "country": "india",
+    "pincode": 533101,
+    "teacherContactNumber": 91002617333,
+    "alternateContactNumber": 94749584985,
+    "teacherEmailAddress": "srivalli@gmail.com",
+    "alternateEmailAddress": "lavanya@gmail.com",
+    "relationWithStaff": "FATHER",
+    "name": "venkat",
+    "middleName": "rao",
+    "lastName": "musini",
+    "contactNo": 9491637830,
+    "emailAddress": "venkat@gmail.com",
+    "uploadPhoto": 123,
+    "designation": "vp",
+    "employeeId": 595,
+    "staffType": "TEACHING",
+    "branchId": 1001,
+    "departmentId": 1101
   }
 }
 
 mutation updateTeacher($input: UpdateTeacherInput!){
   	updateTeacher(input: $input){
     teacher
-   {
-    id
-    teacherName
-	branch{
-	id
+  {
+   id
+   teacherName
+   teacherMiddleName
+    teacherLastName
+    fatherName
+    fatherMiddleName
+    fatherLastName
+    motherName
+    motherMiddleName
+    motherLastName
+    aadharNo
+    dateOfBirth
+    placeOfBirth
+    religion
+    caste
+    subCaste
+    age
+    sex
+    bloodGroup
+    addressLineOne
+    addressLineTwo
+    addressLineThree
+    town
+    state
+    country
+    pincode
+    teacherContactNumber
+    alternateContactNumber
+     teacherEmailAddress
+    alternateEmailAddress
+    relationWithStaff
+    name
+    middleName
+    lastName
+    contactNo
+    emailAddress
+    uploadPhoto
+    designation
+    employeeId
+    staffType
+
+    branch{
+      id
     }
     department{
-    id
-   }
-}
-}
+      id
+    }
+  }
+ }
 }
 
 {
   "input": {
-  "id": 1301,
-  "teacherName": "nick",
-  "branchId": 1001,
-  "departmentId":1101
+    "id": 1301,
+    "teacherName": "lavanya",
+    "teacherMiddleName": "srivalli",
+    "teacherLastName": "musini",
+    "fatherName": "venkat",
+    "fatherMiddleName": "rao",
+    "fatherLastName": "musini",
+    "motherName": "jyothi",
+    "motherMiddleName": "rao",
+    "motherLastName": "musini",
+    "aadharNo": 389598984845,
+    "dateOfBirth": "1995-12-31",
+    "placeOfBirth": "rjy",
+    "religion": "HINDU",
+    "caste": "BC",
+    "subCaste": "BCB",
+    "age": 19,
+    "sex": "FEMALE",
+    "bloodGroup": "ABPOSITIVE",
+    "addressLineOne": "DoorNo:498405",
+    "addressLineTwo": "kothapeta",
+    "addressLineThree": "rjy",
+    "town": "rjy",
+    "state": "AP",
+    "country": "india",
+    "pincode": 533101,
+    "teacherContactNumber": 91002617333,
+    "alternateContactNumber": 94749584985,
+    "teacherEmailAddress": "srivalli@gmail.com",
+    "alternateEmailAddress": "lavanya@gmail.com",
+    "relationWithStaff": "FATHER",
+    "name": "venkat",
+    "middleName": "rao",
+    "lastName": "musini",
+    "contactNo": 9491637830,
+    "emailAddress": "venkat@gmail.com",
+    "uploadPhoto": 123,
+    "designation": "vp",
+    "employeeId": 595,
+    "staffType": "TEACHING",
+    "branchId": 1001,
+    "departmentId": 1101
   }
 }
-
 
 mutation addSubject($input: AddSubjectInput!){
   	addSubject(input: $input){
