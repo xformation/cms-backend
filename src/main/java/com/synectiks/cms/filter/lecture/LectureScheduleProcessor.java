@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +28,10 @@ import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.TermRepository;
 
 @Component
 public class LectureScheduleProcessor {
@@ -33,6 +40,15 @@ public class LectureScheduleProcessor {
 	
 	@PersistenceContext
     private EntityManager entityManager;
+	
+	@Autowired
+	private AcademicYearRepository academicYearRepository;
+	
+	@Autowired
+	private HolidayRepository holidayRepository;
+	
+	@Autowired
+	private TermRepository termRepository;
 	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -45,7 +61,7 @@ public class LectureScheduleProcessor {
     	try {
 
 //        	AcademicYear ay = getAcademicYearDates(filter.getAcademicYear());
-        	Term tr = getTerms(filter.getAcademicYear());
+        	Term tr = getTerm(filter.getAcademicYear());
         	List<LectureScheduleVo> lectureList = getLectureRecords(tr.getStartDate(), tr.getEndDate());
         	List<LectureScheduleVo> mondayList = filterDataOnDayOfweek(lectureList, Calendar.MONDAY);
         	List<LectureScheduleVo> tuesdayList = filterDataOnDayOfweek(lectureList, Calendar.TUESDAY);
@@ -255,7 +271,7 @@ public class LectureScheduleProcessor {
 	public QueryResult addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) throws JSONException, ParseException {
 		
 //		AcademicYear ay = getAcademicYearDates(filter.getAcademicYear());
-		Term tr = getTerms(filter.getAcademicYear());
+		Term tr = getTerm(filter.getAcademicYear());
 		System.out.println("Term data retrieved.");
 		List<Date> dateList = createDates(tr.getStartDate(), tr.getEndDate());
 		System.out.println("Date list created.");
@@ -403,52 +419,49 @@ public class LectureScheduleProcessor {
 		return "Application User";
 	}
 	
-	private AcademicYear getAcademicYearDates(int academicYear) {
-		String sql = "select start_date, end_date from academic_year where jhi_year = ?";
-		Query query = this.entityManager.createNativeQuery(sql);
-		query.setParameter(1, academicYear);
-		List<Object[]> ls = query.getResultList();
-		AcademicYear ay = null;
-		for (Object[] result : ls){
-			ay = new AcademicYear();
-			java.sql.Date dt = (java.sql.Date)result[0];
-			ay.setStartDate(new Date(dt.getTime()));
-			dt = (java.sql.Date)result[1];
-			ay.setEndDate(new Date(dt.getTime()));
-        }
-		return ay;
+	/*
+	 * private AcademicYear getAcademicYearDates(int academicYear) { String sql =
+	 * "select start_date, end_date from academic_year where jhi_year = ?"; Query
+	 * query = this.entityManager.createNativeQuery(sql); query.setParameter(1,
+	 * academicYear); List<Object[]> ls = query.getResultList(); AcademicYear ay =
+	 * null; for (Object[] result : ls){ ay = new AcademicYear(); java.sql.Date dt =
+	 * (java.sql.Date)result[0]; ay.setStartDate(new Date(dt.getTime())); dt =
+	 * (java.sql.Date)result[1]; ay.setEndDate(new Date(dt.getTime())); } return ay;
+	 * }
+	 */
+	
+	private Term getTerm(int academicYear) {
+		AcademicYear acd = findAcademicYear(Long.valueOf(academicYear));
+		Term tm = new Term();
+		tm.setTermStatus(Status.ACTIVE);
+		tm.setAcademicyear(acd);
+		Example<Term> example = Example.of(tm);
+		Optional<Term> term = this.termRepository.findOne(example);
+		if(term.isPresent()) {
+			return term.get();
+		}
+		return new Term();
+		
 	}
 	
-	private Term getTerms(int academicYear) {
-		String sql = "select start_date, end_date from term where term_status = 'ACTIVE' and academicyear_id = (select id from academic_year where jhi_year = ?)";
-		Query query = this.entityManager.createNativeQuery(sql);
-		query.setParameter(1, academicYear);
-		List<Object[]> ls = query.getResultList();
-		Term tm = null;
-		for (Object[] result : ls){
-			tm = new Term();
-			java.sql.Date dt = (java.sql.Date)result[0];
-			tm.setStartDate(new Date(dt.getTime()));
-			dt = (java.sql.Date)result[1];
-			tm.setEndDate(new Date(dt.getTime()));
-        }
-		return tm;
+	private AcademicYear findAcademicYear(long academicYear) {
+		AcademicYear ay = new AcademicYear();
+		ay.setYear(academicYear);
+		Example<AcademicYear> example = Example.of(ay);
+		Optional<AcademicYear> acd = this.academicYearRepository.findOne(example);
+		if(acd.isPresent()) {
+			return acd.get();
+		}
+		return new AcademicYear();
 	}
 	
 	private List<Holiday> getHolidayList(int academicYear) throws ParseException {
-		String sql = "select holiday_date from holiday where holiday_status = 'ACTIVE' and academicyear_id = (select id from academic_year where jhi_year = ?)";
-		Query query = this.entityManager.createNativeQuery(sql);
-		query.setParameter(1, academicYear);
-		List<Object[]> ls = query.getResultList();
-		Holiday hl = null;
-		List<Holiday> list = new ArrayList<Holiday>();
-		java.sql.Date dt = null;
-		for (Object[] result : ls){
-			hl = new Holiday();
-			dt = (java.sql.Date)result[0];
-			hl.setHolidayDate(new Date(dt.getTime()));
-			list.add(hl);
-		}
+		AcademicYear acd = findAcademicYear(Long.valueOf(academicYear));
+		Holiday hl = new Holiday();
+		hl.setHolidayStatus(Status.ACTIVE);
+		hl.setAcademicyear(acd);
+		Example<Holiday> example = Example.of(hl);
+		List<Holiday> list = this.holidayRepository.findAll(example);
 		return list;
 	}
 	
@@ -465,16 +478,12 @@ public class LectureScheduleProcessor {
 	}
 	
 	private void filterHolidays (List<Holiday> holidayList, List<Date> dateList) {
-		for (Iterator<Date> iterator = dateList.iterator(); iterator.hasNext();) {
-			Date date = iterator.next();
-			for(Iterator<Holiday> itrHoliday = holidayList.iterator(); itrHoliday.hasNext();) {
-				Holiday hl = itrHoliday.next();
-				if(date.compareTo(hl.getHolidayDate()) == 0) {
-					iterator.remove();
-				}
-				break;
-			}
+		List<Date> hlList = new ArrayList<>();
+		for(Iterator<Holiday> itrHoliday = holidayList.iterator(); itrHoliday.hasNext();) {
+			Holiday hl = itrHoliday.next();
+			hlList.add(hl.getHolidayDate());
 		}
+		dateList.removeAll(hlList);
 	}
 	
 	private void filterSundays(List<Date> dateList) {
