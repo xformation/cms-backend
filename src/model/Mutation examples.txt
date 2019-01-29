@@ -1429,9 +1429,36 @@ mutation addLectures($input:LectureScheduleInput!, $filter:LectureScheduleFilter
 {
   "input": {
    "values": [
-		{ "WEEKDAY":"MONDAY", "startTime": "7:30:01Am", "endTime":"8:30:01Am", "subjectId":"2", "teacherId":"11", "batchId": "1", "sectionId": "2" },
-		{ "WEEKDAY":"MONDAY", "startTime": "8:30:01Am", "endTime":"9:30:01Am", "subjectId":"5", "teacherId":"14", "batchId": "1", "sectionId": "1" },
-		{ "WEEKDAY":"TUESDAY", "startTime": "7:30:01Am", "endTime":"8:30:01Am", "subjectId":"3", "teacherId":"12", "batchId": "1", "sectionId": "1" }
+		{ "WEEKDAY":"MONDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"MONDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"MONDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"MONDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"MONDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
+    
+    { "WEEKDAY":"TUESDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"TUESDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"TUESDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"TUESDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"TUESDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
+    
+    { "WEEKDAY":"WEDNESDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"WEDNESDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"WEDNESDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"WEDNESDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"WEDNESDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
+    
+    { "WEEKDAY":"THURSDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"THURSDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"THURSDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"THURSDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"THURSDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
+    
+    { "WEEKDAY":"FRIDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"FRIDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
+		{ "WEEKDAY":"FRIDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"FRIDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
+    { "WEEKDAY":"FRIDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" }
+    
 	
    ]
   },
@@ -1440,7 +1467,8 @@ mutation addLectures($input:LectureScheduleInput!, $filter:LectureScheduleFilter
     "academicYear": 2019,
     "sectionId": 2,
     "batchId": 1,
-    "departmentId": 1
+    "departmentId": 1,
+    "termId": 1501
   }
 }
 

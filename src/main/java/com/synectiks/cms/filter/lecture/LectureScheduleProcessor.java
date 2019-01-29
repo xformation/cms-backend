@@ -60,8 +60,7 @@ public class LectureScheduleProcessor {
     	String values[] = lectureScheduleInput.getValues();
     	try {
 
-//        	AcademicYear ay = getAcademicYearDates(filter.getAcademicYear());
-        	Term tr = getTerm(filter.getAcademicYear());
+        	Term tr = getTermById(filter.getTermId());
         	List<LectureScheduleVo> lectureList = getLectureRecords(tr.getStartDate(), tr.getEndDate());
         	List<LectureScheduleVo> mondayList = filterDataOnDayOfweek(lectureList, Calendar.MONDAY);
         	List<LectureScheduleVo> tuesdayList = filterDataOnDayOfweek(lectureList, Calendar.TUESDAY);
@@ -271,9 +270,9 @@ public class LectureScheduleProcessor {
 	public QueryResult addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) throws JSONException, ParseException {
 		
 //		AcademicYear ay = getAcademicYearDates(filter.getAcademicYear());
-		Term tr = getTerm(filter.getAcademicYear());
+		Term tr = getTermById(filter.getTermId());
 		System.out.println("Term data retrieved.");
-		List<Date> dateList = createDates(tr.getStartDate(), tr.getEndDate());
+		List<Date> dateList = createDates(tr);
 		System.out.println("Date list created.");
 		List<Holiday> holidayList = getHolidayList(filter.getAcademicYear());
 		System.out.println("Holiday data retrieved.");
@@ -429,19 +428,26 @@ public class LectureScheduleProcessor {
 	 * (java.sql.Date)result[1]; ay.setEndDate(new Date(dt.getTime())); } return ay;
 	 * }
 	 */
-	
-	private Term getTerm(int academicYear) {
-		AcademicYear acd = findAcademicYear(Long.valueOf(academicYear));
+	private Term getTermById(int termId) {
 		Term tm = new Term();
 		tm.setTermStatus(Status.ACTIVE);
-		tm.setAcademicyear(acd);
+		tm.setId(Long.valueOf(termId));;
 		Example<Term> example = Example.of(tm);
 		Optional<Term> term = this.termRepository.findOne(example);
 		if(term.isPresent()) {
 			return term.get();
 		}
 		return new Term();
-		
+	}
+	
+	private List<Term> getTerms(int academicYear) {
+		AcademicYear acd = findAcademicYear(Long.valueOf(academicYear));
+		Term tm = new Term();
+		tm.setTermStatus(Status.ACTIVE);
+		tm.setAcademicyear(acd);
+		Example<Term> example = Example.of(tm);
+		List<Term> list = this.termRepository.findAll(example);
+		return list;
 	}
 	
 	private AcademicYear findAcademicYear(long academicYear) {
@@ -465,15 +471,18 @@ public class LectureScheduleProcessor {
 		return list;
 	}
 	
-	private List<Date> createDates(Date startDate, Date endDate) {
+	private List<Date> createDates(Term tr) {
 		List<Date> dateList = new ArrayList<Date>();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(startDate);
-		while(cal.getTime().compareTo(endDate) <1) {
-			Date dt = cal.getTime();
-			dateList.add(dt);
-			cal.add(Calendar.DATE, 1);
-		}
+//		for(Iterator<Term> itr = tr.iterator(); itr.hasNext();) {
+//			Term trm = itr.next();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(tr.getStartDate());
+			while(cal.getTime().compareTo(tr.getEndDate()) <1) {
+				Date dt = cal.getTime();
+				dateList.add(dt);
+				cal.add(Calendar.DATE, 1);
+			}
+//		}
 		return dateList;
 	}
 	

@@ -522,6 +522,7 @@ input LectureScheduleFilter {
 	semesterId: Int
 	sectionId: Int
 	status: String
+	termId: Int!
 }
 
 type QueryResult{

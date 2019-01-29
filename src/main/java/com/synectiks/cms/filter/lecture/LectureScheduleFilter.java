@@ -8,6 +8,7 @@ public class LectureScheduleFilter {
 	private int semesterId;
 	private int sectionId;
 	private String status;
+	private int termId;
 	
 	public int getAcademicYear() {
 		return academicYear;
@@ -63,6 +64,14 @@ public class LectureScheduleFilter {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getTermId() {
+		return termId;
+	}
+
+	public void setTermId(int termId) {
+		this.termId = termId;
 	}
 	
 	
