@@ -16,7 +16,7 @@
     <!--
         Added the entity LegalEntity.
     -->
-    <changeSet id="20190118141528-1" author="jhipster">
+    <changeSet id="20190130075305-1" author="jhipster">
         <createTable tableName="legal_entity">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -69,11 +69,43 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="registration_date" type="date">
+            <column name="pf_registration_date" type="date">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="pf_signatory" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="pf_signatory_designation" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="pf_signatory_father_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
             <column name="esi_number" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="esi_registration_date" type="date">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="esi_signatory" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="esi_signatory_designation" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="esi_signatory_father_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="pt_number" type="bigint">
                 <constraints nullable="false" />
             </column>
 
@@ -82,10 +114,6 @@
             </column>
 
             <column name="pt_signatory" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="pt_number" type="bigint">
                 <constraints nullable="false" />
             </column>
 

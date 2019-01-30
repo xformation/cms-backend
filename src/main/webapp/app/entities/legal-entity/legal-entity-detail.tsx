@@ -79,15 +79,49 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
             </dt>
             <dd>{legalEntityEntity.pfNumber}</dd>
             <dt>
-              <span id="registrationDate">Registration Date</span>
+              <span id="pfRegistrationDate">Pf Registration Date</span>
             </dt>
             <dd>
-              <TextFormat value={legalEntityEntity.registrationDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={legalEntityEntity.pfRegistrationDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
+            <dt>
+              <span id="pfSignatory">Pf Signatory</span>
+            </dt>
+            <dd>{legalEntityEntity.pfSignatory}</dd>
+            <dt>
+              <span id="pfSignatoryDesignation">Pf Signatory Designation</span>
+            </dt>
+            <dd>{legalEntityEntity.pfSignatoryDesignation}</dd>
+            <dt>
+              <span id="pfSignatoryFatherName">Pf Signatory Father Name</span>
+            </dt>
+            <dd>{legalEntityEntity.pfSignatoryFatherName}</dd>
             <dt>
               <span id="esiNumber">Esi Number</span>
             </dt>
             <dd>{legalEntityEntity.esiNumber}</dd>
+            <dt>
+              <span id="esiRegistrationDate">Esi Registration Date</span>
+            </dt>
+            <dd>
+              <TextFormat value={legalEntityEntity.esiRegistrationDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
+            <dt>
+              <span id="esiSignatory">Esi Signatory</span>
+            </dt>
+            <dd>{legalEntityEntity.esiSignatory}</dd>
+            <dt>
+              <span id="esiSignatoryDesignation">Esi Signatory Designation</span>
+            </dt>
+            <dd>{legalEntityEntity.esiSignatoryDesignation}</dd>
+            <dt>
+              <span id="esiSignatoryFatherName">Esi Signatory Father Name</span>
+            </dt>
+            <dd>{legalEntityEntity.esiSignatoryFatherName}</dd>
+            <dt>
+              <span id="ptNumber">Pt Number</span>
+            </dt>
+            <dd>{legalEntityEntity.ptNumber}</dd>
             <dt>
               <span id="ptRegistrationDate">Pt Registration Date</span>
             </dt>
@@ -98,10 +132,6 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
               <span id="ptSignatory">Pt Signatory</span>
             </dt>
             <dd>{legalEntityEntity.ptSignatory}</dd>
-            <dt>
-              <span id="ptNumber">Pt Number</span>
-            </dt>
-            <dd>{legalEntityEntity.ptNumber}</dd>
           </dl>
           <Button tag={Link} to="/entity/legal-entity" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

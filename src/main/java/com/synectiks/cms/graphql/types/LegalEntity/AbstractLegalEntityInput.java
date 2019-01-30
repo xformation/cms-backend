@@ -1,194 +1,266 @@
+
 package com.synectiks.cms.graphql.types.LegalEntity;
 
 import java.util.Date;
 
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
-public class AbstractLegalEntityInput {
-    private Long id;
-    private Long logo;
-    private String legalNameOfTheCollege;
-    private TypeOfCollege typeOfCollege;
-    private Date dateOfIncorporation;
-    private String registeredOfficeAddress;
-    private String collegeIdentificationNumber;
-    private String pan;
-    private String tan;
-    private String tanCircleNumber;
-    private String citTdsLocation;
-    private String formSignatory;
-    private String pfNumber;
-    private Date registrationDate;
-    private Long esiNumber;
-    private Date ptRegistrationDate;
-    private String ptSignatory;
-    private Long ptNumber;
+    public class AbstractLegalEntityInput {
 
-    public Long getId() {
-        return id;
-    }
+        private Long id;
+        private Long logo;
+        private String legalNameOfTheCollege;
+        private TypeOfCollege typeOfCollege;
+        private Date dateOfIncorporation;
+        private String registeredOfficeAddress;
+        private String collegeIdentificationNumber;
+        private String pan;
+        private String tan;
+        private String tanCircleNumber;
+        private String citTdsLocation;
+        private String formSignatory;
+        private String pfNumber;
+        private Date pfRegistrationDate;
+        private String pfSignatory;
+        private String pfSignatoryDesignation;
+        private String pfSignatoryFatherName;
+        private Long esiNumber;
+        private Date esiRegistrationDate;
+        private String esiSignatory;
+        private String esiSignatoryDesignation;
+        private String esiSignatoryFatherName;
+        private Long ptNumber;
+        private Date ptRegistrationDate;
+        private String ptSignatory;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+        public Long getId() {
+            return id;
+        }
 
-    public Long getLogo() {
-        return logo;
-    }
+        public void setId(Long id) {
+            this.id = id;
+        }
 
-    public void setLogo(Long logo) {
-        this.logo = logo;
-    }
+        public Long getLogo() {
+            return logo;
+        }
 
-    public String getLegalNameOfTheCollege() {
-        return legalNameOfTheCollege;
-    }
+        public void setLogo(Long logo) {
+            this.logo = logo;
+        }
 
-    public void setLegalNameOfTheCollege(String legalNameOfTheCollege) {
-        this.legalNameOfTheCollege = legalNameOfTheCollege;
-    }
+        public String getLegalNameOfTheCollege() {
+            return legalNameOfTheCollege;
+        }
 
-    public TypeOfCollege getTypeOfCollege() {
-        return typeOfCollege;
-    }
+        public void setLegalNameOfTheCollege(String legalNameOfTheCollege) {
+            this.legalNameOfTheCollege = legalNameOfTheCollege;
+        }
 
-    public void setTypeOfCollege(TypeOfCollege typeOfCollege) {
-        this.typeOfCollege = typeOfCollege;
-    }
+        public TypeOfCollege getTypeOfCollege() {
+            return typeOfCollege;
+        }
 
-    public Date getDateOfIncorporation() {
-        return dateOfIncorporation;
-    }
+        public void setTypeOfCollege(TypeOfCollege typeOfCollege) {
+            this.typeOfCollege = typeOfCollege;
+        }
 
-    public void setDateOfIncorporation(Date dateOfIncorporation) {
-        this.dateOfIncorporation = dateOfIncorporation;
-    }
+        public Date getDateOfIncorporation() {
+            return dateOfIncorporation;
+        }
 
-    public String getRegisteredOfficeAddress() {
-        return registeredOfficeAddress;
-    }
+        public void setDateOfIncorporation(Date dateOfIncorporation) {
+            this.dateOfIncorporation = dateOfIncorporation;
+        }
 
-    public void setRegisteredOfficeAddress(String registeredOfficeAddress) {
-        this.registeredOfficeAddress = registeredOfficeAddress;
-    }
+        public String getRegisteredOfficeAddress() {
+            return registeredOfficeAddress;
+        }
 
-    public String getCollegeIdentificationNumber() {
-        return collegeIdentificationNumber;
-    }
+        public void setRegisteredOfficeAddress(String registeredOfficeAddress) {
+            this.registeredOfficeAddress = registeredOfficeAddress;
+        }
 
-    public void setCollegeIdentificationNumber(String collegeIdentificationNumber) {
-        this.collegeIdentificationNumber = collegeIdentificationNumber;
-    }
+        public String getCollegeIdentificationNumber() {
+            return collegeIdentificationNumber;
+        }
 
-    public String getPan() {
-        return pan;
-    }
+        public void setCollegeIdentificationNumber(String collegeIdentificationNumber) {
+            this.collegeIdentificationNumber = collegeIdentificationNumber;
+        }
 
-    public void setPan(String pan) {
-        this.pan = pan;
-    }
+        public String getPan() {
+            return pan;
+        }
 
-    public String getTan() {
-        return tan;
-    }
+        public void setPan(String pan) {
+            this.pan = pan;
+        }
 
-    public void setTan(String tan) {
-        this.tan = tan;
-    }
+        public String getTan() {
+            return tan;
+        }
 
-    public String getTanCircleNumber() {
-        return tanCircleNumber;
-    }
+        public void setTan(String tan) {
+            this.tan = tan;
+        }
 
-    public void setTanCircleNumber(String tanCircleNumber) {
-        this.tanCircleNumber = tanCircleNumber;
-    }
+        public String getTanCircleNumber() {
+            return tanCircleNumber;
+        }
 
-    public String getCitTdsLocation() {
-        return citTdsLocation;
-    }
+        public void setTanCircleNumber(String tanCircleNumber) {
+            this.tanCircleNumber = tanCircleNumber;
+        }
 
-    public void setCitTdsLocation(String citTdsLocation) {
-        this.citTdsLocation = citTdsLocation;
-    }
+        public String getCitTdsLocation() {
+            return citTdsLocation;
+        }
 
-    public String getFormSignatory() {
-        return formSignatory;
-    }
+        public void setCitTdsLocation(String citTdsLocation) {
+            this.citTdsLocation = citTdsLocation;
+        }
 
-    public void setFormSignatory(String formSignatory) {
-        this.formSignatory = formSignatory;
-    }
+        public String getFormSignatory() {
+            return formSignatory;
+        }
 
-    public String getPfNumber() {
-        return pfNumber;
-    }
+        public void setFormSignatory(String formSignatory) {
+            this.formSignatory = formSignatory;
+        }
 
-    public void setPfNumber(String pfNumber) {
-        this.pfNumber = pfNumber;
-    }
+        public String getPfNumber() {
+            return pfNumber;
+        }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
+        public void setPfNumber(String pfNumber) {
+            this.pfNumber = pfNumber;
+        }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
-    }
+        public Date getPfRegistrationDate() {
+            return pfRegistrationDate;
+        }
 
-    public Long getEsiNumber() {
-        return esiNumber;
-    }
+        public void setPfRegistrationDate(Date pfRegistrationDate) {
+            this.pfRegistrationDate = pfRegistrationDate;
+        }
 
-    public void setEsiNumber(Long esiNumber) {
-        this.esiNumber = esiNumber;
-    }
+        public String getPfSignatory() {
+            return pfSignatory;
+        }
 
-    public Date getPtRegistrationDate() {
-        return ptRegistrationDate;
-    }
+        public void setPfSignatory(String pfSignatory) {
+            this.pfSignatory = pfSignatory;
+        }
 
-    public void setPtRegistrationDate(Date ptRegistrationDate) {
-        this.ptRegistrationDate = ptRegistrationDate;
-    }
+        public String getPfSignatoryDesignation() {
+            return pfSignatoryDesignation;
+        }
 
-    public String getPtSignatory() {
-        return ptSignatory;
-    }
+        public void setPfSignatoryDesignation(String pfSignatoryDesignation) {
+            this.pfSignatoryDesignation = pfSignatoryDesignation;
+        }
 
-    public void setPtSignatory(String ptSignatory) {
-        this.ptSignatory = ptSignatory;
-    }
+        public String getPfSignatoryFatherName() {
+            return pfSignatoryFatherName;
+        }
 
-    public Long getPtNumber() {
-        return ptNumber;
-    }
+        public void setPfSignatoryFatherName(String pfSignatoryFatherName) {
+            this.pfSignatoryFatherName = pfSignatoryFatherName;
+        }
 
-    public void setPtNumber(Long ptNumber) {
-        this.ptNumber = ptNumber;
-    }
+        public Long getEsiNumber() {
+            return esiNumber;
+        }
 
-    @Override
-    public String toString() {
-        return "AbstractLegalEntityInput{" +
-            "id=" + id +
-            ", logo=" + logo +
-            ", legalNameOfTheCollege='" + legalNameOfTheCollege + '\'' +
-            ", typeOfCollege=" + typeOfCollege +
-            ", dateOfIncorporation=" + dateOfIncorporation +
-            ", registeredOfficeAddress='" + registeredOfficeAddress + '\'' +
-            ", collegeIdentificationNumber='" + collegeIdentificationNumber + '\'' +
-            ", pan='" + pan + '\'' +
-            ", tan='" + tan + '\'' +
-            ", tanCircleNumber='" + tanCircleNumber + '\'' +
-            ", citTdsLocation='" + citTdsLocation + '\'' +
-            ", formSignatory='" + formSignatory + '\'' +
-            ", pfNumber='" + pfNumber + '\'' +
-            ", registrationDate=" + registrationDate +
-            ", esiNumber=" + esiNumber +
-            ", ptRegistrationDate=" + ptRegistrationDate +
-            ", ptSignatory='" + ptSignatory + '\'' +
-            ", ptNumber=" + ptNumber +
-            '}';
+        public void setEsiNumber(Long esiNumber) {
+            this.esiNumber = esiNumber;
+        }
+
+        public Date getEsiRegistrationDate() {
+            return esiRegistrationDate;
+        }
+
+        public void setEsiRegistrationDate(Date esiRegistrationDate) {
+            this.esiRegistrationDate = esiRegistrationDate;
+        }
+
+        public String getEsiSignatory() {
+            return esiSignatory;
+        }
+
+        public void setEsiSignatory(String esiSignatory) {
+            this.esiSignatory = esiSignatory;
+        }
+
+        public String getEsiSignatoryDesignation() {
+            return esiSignatoryDesignation;
+        }
+
+        public void setEsiSignatoryDesignation(String esiSignatoryDesignation) {
+            this.esiSignatoryDesignation = esiSignatoryDesignation;
+        }
+
+        public String getEsiSignatoryFatherName() {
+            return esiSignatoryFatherName;
+        }
+
+        public void setEsiSignatoryFatherName(String esiSignatoryFatherName) {
+            this.esiSignatoryFatherName = esiSignatoryFatherName;
+        }
+
+        public Long getPtNumber() {
+            return ptNumber;
+        }
+
+        public void setPtNumber(Long ptNumber) {
+            this.ptNumber = ptNumber;
+        }
+
+        public Date getPtRegistrationDate() {
+            return ptRegistrationDate;
+        }
+
+        public void setPtRegistrationDate(Date ptRegistrationDate) {
+            this.ptRegistrationDate = ptRegistrationDate;
+        }
+
+        public String getPtSignatory() {
+            return ptSignatory;
+        }
+
+        public void setPtSignatory(String ptSignatory) {
+            this.ptSignatory = ptSignatory;
+        }
+
+        @Override
+        public String toString() {
+            return "AbstractLegalEntityInput{" +
+                "id=" + id +
+                ", logo=" + logo +
+                ", legalNameOfTheCollege='" + legalNameOfTheCollege + '\'' +
+                ", typeOfCollege=" + typeOfCollege +
+                ", dateOfIncorporation=" + dateOfIncorporation +
+                ", registeredOfficeAddress='" + registeredOfficeAddress + '\'' +
+                ", collegeIdentificationNumber='" + collegeIdentificationNumber + '\'' +
+                ", pan='" + pan + '\'' +
+                ", tan='" + tan + '\'' +
+                ", tanCircleNumber='" + tanCircleNumber + '\'' +
+                ", citTdsLocation='" + citTdsLocation + '\'' +
+                ", formSignatory='" + formSignatory + '\'' +
+                ", pfNumber='" + pfNumber + '\'' +
+                ", pfRegistrationDate=" + pfRegistrationDate +
+                ", pfSignatory='" + pfSignatory + '\'' +
+                ", pfSignatoryDesignation='" + pfSignatoryDesignation + '\'' +
+                ", pfSignatoryFatherName='" + pfSignatoryFatherName + '\'' +
+                ", esiNumber=" + esiNumber +
+                ", esiRegistrationDate=" + esiRegistrationDate +
+                ", esiSignatory='" + esiSignatory + '\'' +
+                ", esiSignatoryDesignation='" + esiSignatoryDesignation + '\'' +
+                ", esiSignatoryFatherName='" + esiSignatoryFatherName + '\'' +
+                ", ptNumber=" + ptNumber +
+                ", ptRegistrationDate=" + ptRegistrationDate +
+                ", ptSignatory='" + ptSignatory + '\'' +
+                '}';
+        }
     }
-}

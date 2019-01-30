@@ -196,11 +196,18 @@ type LegalEntity{
     citTdsLocation:String!
     formSignatory:String!
     pfNumber:String!
-    registrationDate:Date!
+    pfRegistrationDate: Date!
+    pfSignatory: String!
+    pfSignatoryDesignation: String!
+    pfSignatoryFatherName: String!
     esiNumber:Long!
+    esiRegistrationDate: Date!
+    esiSignatory: String!
+    esiSignatoryDesignation: String!
+    esiSignatoryFatherName: String!
+    ptNumber:Long!
     ptRegistrationDate:Date!
     ptSignatory:String!
-    ptNumber:Long!
 }
 type Location{
     id: Long!
@@ -868,7 +875,7 @@ type RemoveHolidayPayload {
 }
 
 
-input AddLegalEntityInput {
+    input AddLegalEntityInput {
     logo: Long!
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
@@ -881,11 +888,18 @@ input AddLegalEntityInput {
     citTdsLocation:String!
     formSignatory:String!
     pfNumber:String!
-    registrationDate:Date!
+    pfRegistrationDate: Date!
+    pfSignatory: String!
+    pfSignatoryDesignation: String!
+    pfSignatoryFatherName: String!
     esiNumber:Long!
+    esiRegistrationDate: Date!
+    esiSignatory: String!
+    esiSignatoryDesignation: String!
+    esiSignatoryFatherName: String!
+    ptNumber:Long!
     ptRegistrationDate:Date!
     ptSignatory:String!
-    ptNumber:Long!
 }
 type AddLegalEntityPayload {
     legalEntity: LegalEntity!
@@ -904,11 +918,18 @@ input UpdateLegalEntityInput {
     citTdsLocation:String!
     formSignatory:String!
     pfNumber:String!
-    registrationDate:Date!
+    pfRegistrationDate: Date!
+    pfSignatory: String!
+    pfSignatoryDesignation: String!
+    pfSignatoryFatherName: String!
     esiNumber:Long!
+    esiRegistrationDate: Date!
+    esiSignatory: String!
+    esiSignatoryDesignation: String!
+    esiSignatoryFatherName: String!
+    ptNumber:Long!
     ptRegistrationDate:Date!
     ptSignatory:String!
-    ptNumber:Long!
 }
 type UpdateLegalEntityPayload {
     legalEntity: LegalEntity!

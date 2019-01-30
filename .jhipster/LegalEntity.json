@@ -87,14 +87,70 @@
             ]
         },
         {
-            "fieldName": "registrationDate",
+            "fieldName": "pfRegistrationDate",
             "fieldType": "LocalDate",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
+            "fieldName": "pfSignatory",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "pfSignatoryDesignation",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "pfSignatoryFatherName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "esiNumber",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "esiRegistrationDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "esiSignatory",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "esiSignatoryDesignation",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "esiSignatoryFatherName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ptNumber",
             "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
@@ -113,17 +169,10 @@
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldName": "ptNumber",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
         }
     ],
     "relationships": [],
-    "changelogDate": "20190118141528",
+    "changelogDate": "20190130075305",
     "entityTableName": "legal_entity",
     "dto": "mapstruct",
     "pagination": "no",

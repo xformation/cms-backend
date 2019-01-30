@@ -80,12 +80,44 @@ public class LegalEntity implements Serializable {
     private String pfNumber;
 
     @NotNull
-    @Column(name = "registration_date", nullable = false)
-    private Date registrationDate;
+    @Column(name = "pf_registration_date", nullable = false)
+    private Date pfRegistrationDate;
+
+    @NotNull
+    @Column(name = "pf_signatory", nullable = false)
+    private String pfSignatory;
+
+    @NotNull
+    @Column(name = "pf_signatory_designation", nullable = false)
+    private String pfSignatoryDesignation;
+
+    @NotNull
+    @Column(name = "pf_signatory_father_name", nullable = false)
+    private String pfSignatoryFatherName;
 
     @NotNull
     @Column(name = "esi_number", nullable = false)
     private Long esiNumber;
+
+    @NotNull
+    @Column(name = "esi_registration_date", nullable = false)
+    private Date esiRegistrationDate;
+
+    @NotNull
+    @Column(name = "esi_signatory", nullable = false)
+    private String esiSignatory;
+
+    @NotNull
+    @Column(name = "esi_signatory_designation", nullable = false)
+    private String esiSignatoryDesignation;
+
+    @NotNull
+    @Column(name = "esi_signatory_father_name", nullable = false)
+    private String esiSignatoryFatherName;
+
+    @NotNull
+    @Column(name = "pt_number", nullable = false)
+    private Long ptNumber;
 
     @NotNull
     @Column(name = "pt_registration_date", nullable = false)
@@ -94,10 +126,6 @@ public class LegalEntity implements Serializable {
     @NotNull
     @Column(name = "pt_signatory", nullable = false)
     private String ptSignatory;
-
-    @NotNull
-    @Column(name = "pt_number", nullable = false)
-    private Long ptNumber;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -264,17 +292,56 @@ public class LegalEntity implements Serializable {
         this.pfNumber = pfNumber;
     }
 
-    public Date getRegistrationDate() {
-        return registrationDate;
+    public Date getPfRegistrationDate() {
+        return pfRegistrationDate;
     }
 
-    public LegalEntity registrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
+    public LegalEntity pfRegistrationDate(Date pfRegistrationDate) {
+        this.pfRegistrationDate = pfRegistrationDate;
         return this;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setPfRegistrationDate(Date pfRegistrationDate) {
+        this.pfRegistrationDate = pfRegistrationDate;
+    }
+
+    public String getPfSignatory() {
+        return pfSignatory;
+    }
+
+    public LegalEntity pfSignatory(String pfSignatory) {
+        this.pfSignatory = pfSignatory;
+        return this;
+    }
+
+    public void setPfSignatory(String pfSignatory) {
+        this.pfSignatory = pfSignatory;
+    }
+
+    public String getPfSignatoryDesignation() {
+        return pfSignatoryDesignation;
+    }
+
+    public LegalEntity pfSignatoryDesignation(String pfSignatoryDesignation) {
+        this.pfSignatoryDesignation = pfSignatoryDesignation;
+        return this;
+    }
+
+    public void setPfSignatoryDesignation(String pfSignatoryDesignation) {
+        this.pfSignatoryDesignation = pfSignatoryDesignation;
+    }
+
+    public String getPfSignatoryFatherName() {
+        return pfSignatoryFatherName;
+    }
+
+    public LegalEntity pfSignatoryFatherName(String pfSignatoryFatherName) {
+        this.pfSignatoryFatherName = pfSignatoryFatherName;
+        return this;
+    }
+
+    public void setPfSignatoryFatherName(String pfSignatoryFatherName) {
+        this.pfSignatoryFatherName = pfSignatoryFatherName;
     }
 
     public Long getEsiNumber() {
@@ -288,6 +355,71 @@ public class LegalEntity implements Serializable {
 
     public void setEsiNumber(Long esiNumber) {
         this.esiNumber = esiNumber;
+    }
+
+    public Date getEsiRegistrationDate() {
+        return esiRegistrationDate;
+    }
+
+    public LegalEntity esiRegistrationDate(Date esiRegistrationDate) {
+        this.esiRegistrationDate = esiRegistrationDate;
+        return this;
+    }
+
+    public void setEsiRegistrationDate(Date esiRegistrationDate) {
+        this.esiRegistrationDate = esiRegistrationDate;
+    }
+
+    public String getEsiSignatory() {
+        return esiSignatory;
+    }
+
+    public LegalEntity esiSignatory(String esiSignatory) {
+        this.esiSignatory = esiSignatory;
+        return this;
+    }
+
+    public void setEsiSignatory(String esiSignatory) {
+        this.esiSignatory = esiSignatory;
+    }
+
+    public String getEsiSignatoryDesignation() {
+        return esiSignatoryDesignation;
+    }
+
+    public LegalEntity esiSignatoryDesignation(String esiSignatoryDesignation) {
+        this.esiSignatoryDesignation = esiSignatoryDesignation;
+        return this;
+    }
+
+    public void setEsiSignatoryDesignation(String esiSignatoryDesignation) {
+        this.esiSignatoryDesignation = esiSignatoryDesignation;
+    }
+
+    public String getEsiSignatoryFatherName() {
+        return esiSignatoryFatherName;
+    }
+
+    public LegalEntity esiSignatoryFatherName(String esiSignatoryFatherName) {
+        this.esiSignatoryFatherName = esiSignatoryFatherName;
+        return this;
+    }
+
+    public void setEsiSignatoryFatherName(String esiSignatoryFatherName) {
+        this.esiSignatoryFatherName = esiSignatoryFatherName;
+    }
+
+    public Long getPtNumber() {
+        return ptNumber;
+    }
+
+    public LegalEntity ptNumber(Long ptNumber) {
+        this.ptNumber = ptNumber;
+        return this;
+    }
+
+    public void setPtNumber(Long ptNumber) {
+        this.ptNumber = ptNumber;
     }
 
     public Date getPtRegistrationDate() {
@@ -314,19 +446,6 @@ public class LegalEntity implements Serializable {
 
     public void setPtSignatory(String ptSignatory) {
         this.ptSignatory = ptSignatory;
-    }
-
-    public Long getPtNumber() {
-        return ptNumber;
-    }
-
-    public LegalEntity ptNumber(Long ptNumber) {
-        this.ptNumber = ptNumber;
-        return this;
-    }
-
-    public void setPtNumber(Long ptNumber) {
-        this.ptNumber = ptNumber;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -366,11 +485,18 @@ public class LegalEntity implements Serializable {
             ", citTdsLocation='" + getCitTdsLocation() + "'" +
             ", formSignatory='" + getFormSignatory() + "'" +
             ", pfNumber='" + getPfNumber() + "'" +
-            ", registrationDate='" + getRegistrationDate() + "'" +
+            ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
+            ", pfSignatory='" + getPfSignatory() + "'" +
+            ", pfSignatoryDesignation='" + getPfSignatoryDesignation() + "'" +
+            ", pfSignatoryFatherName='" + getPfSignatoryFatherName() + "'" +
             ", esiNumber=" + getEsiNumber() +
+            ", esiRegistrationDate='" + getEsiRegistrationDate() + "'" +
+            ", esiSignatory='" + getEsiSignatory() + "'" +
+            ", esiSignatoryDesignation='" + getEsiSignatoryDesignation() + "'" +
+            ", esiSignatoryFatherName='" + getEsiSignatoryFatherName() + "'" +
+            ", ptNumber=" + getPtNumber() +
             ", ptRegistrationDate='" + getPtRegistrationDate() + "'" +
             ", ptSignatory='" + getPtSignatory() + "'" +
-            ", ptNumber=" + getPtNumber() +
             "}";
     }
 }

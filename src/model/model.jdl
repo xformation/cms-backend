@@ -237,8 +237,16 @@ tanCircleNumber String required
 citTdsLocation String required
 formSignatory String required
 pfNumber String required
-registrationDate LocalDate required
+pfRegistrationDate LocalDate required
+pfSignatory String required
+pfSignatoryDesignation String required
+pfSignatoryFatherName String required
 esiNumber Long required
+esiRegistrationDate LocalDate required
+esiSignatory String required
+esiSignatoryDesignation String required
+esiSignatoryFatherName String required
+ptNumber Long required
 ptRegistrationDate LocalDate required
 ptSignatory String required
 ptNumber Long required

@@ -195,6 +195,10 @@ import teacher, {
 import teach, {
   TeachState
 } from 'app/entities/teach/teach.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

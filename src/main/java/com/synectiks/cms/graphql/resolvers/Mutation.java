@@ -1202,11 +1202,19 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setCitTdsLocation(addLegalEntityInput.getCitTdsLocation());
         legalEntity.setFormSignatory(addLegalEntityInput.getFormSignatory());
         legalEntity.setPfNumber(addLegalEntityInput.getPfNumber());
-        legalEntity.setRegistrationDate(addLegalEntityInput.getRegistrationDate());
+        legalEntity.setPfRegistrationDate(addLegalEntityInput.getPfRegistrationDate());
+        legalEntity.setPfSignatory(addLegalEntityInput.getPfSignatory());
+        legalEntity.setPfSignatoryDesignation(addLegalEntityInput.getPfSignatoryDesignation());
+        legalEntity.setPfSignatoryFatherName(addLegalEntityInput.getPfSignatoryFatherName());
         legalEntity.setEsiNumber(addLegalEntityInput.getEsiNumber());
+        legalEntity.setEsiRegistrationDate(addLegalEntityInput.getEsiRegistrationDate());
+        legalEntity.setEsiSignatory(addLegalEntityInput.getEsiSignatory());
+        legalEntity.setEsiSignatoryDesignation(addLegalEntityInput.getEsiSignatoryDesignation());
+        legalEntity.setEsiSignatoryFatherName(addLegalEntityInput.getEsiSignatoryFatherName());
+        legalEntity.setPtNumber(addLegalEntityInput.getPtNumber());
         legalEntity.setPtRegistrationDate(addLegalEntityInput.getPtRegistrationDate());
         legalEntity.setPtSignatory(addLegalEntityInput.getPtSignatory());
-        legalEntity.setPtNumber(addLegalEntityInput.getPtNumber());
+
 
         legalEntityRepository.save(legalEntity);
 
@@ -1251,11 +1259,36 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateLegalEntityInput.getPfNumber() != null) {
             legalEntity.setPfNumber(updateLegalEntityInput.getPfNumber());
         }
-        if (updateLegalEntityInput.getRegistrationDate() != null) {
-            legalEntity.setRegistrationDate(updateLegalEntityInput.getRegistrationDate());
+        if (updateLegalEntityInput.getPfRegistrationDate() != null) {
+            legalEntity.setPfRegistrationDate(updateLegalEntityInput.getPfRegistrationDate());
+        }
+        if (updateLegalEntityInput.getPfSignatory() != null) {
+            legalEntity.setPfSignatory(updateLegalEntityInput.getPfSignatory());
+        }
+
+        if (updateLegalEntityInput.getPfSignatoryDesignation() != null) {
+            legalEntity.setPfSignatoryDesignation(updateLegalEntityInput.getPfSignatoryDesignation());
+        }
+
+        if (updateLegalEntityInput.getPfSignatoryFatherName() != null) {
+            legalEntity.setPfSignatoryFatherName(updateLegalEntityInput.getPfSignatoryFatherName());
         }
         if (updateLegalEntityInput.getEsiNumber() != null) {
             legalEntity.setEsiNumber(updateLegalEntityInput.getEsiNumber());
+        }
+        if (updateLegalEntityInput.getEsiRegistrationDate() != null) {
+            legalEntity.setEsiRegistrationDate(updateLegalEntityInput.getEsiRegistrationDate());
+        }
+        if (updateLegalEntityInput.getEsiSignatory() != null) {
+            legalEntity.setEsiSignatory(updateLegalEntityInput.getEsiSignatory());
+        }
+
+        if (updateLegalEntityInput.getEsiSignatoryDesignation() != null) {
+            legalEntity.setEsiSignatoryDesignation(updateLegalEntityInput.getEsiSignatoryDesignation());
+        }
+
+        if (updateLegalEntityInput.getEsiSignatoryFatherName() != null) {
+            legalEntity.setEsiSignatoryFatherName(updateLegalEntityInput.getEsiSignatoryFatherName());
         }
         if (updateLegalEntityInput.getPtRegistrationDate() != null) {
             legalEntity.setPtRegistrationDate(updateLegalEntityInput.getPtRegistrationDate());

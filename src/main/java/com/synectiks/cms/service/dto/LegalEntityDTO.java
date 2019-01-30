@@ -50,19 +50,40 @@ public class LegalEntityDTO implements Serializable {
     private String pfNumber;
 
     @NotNull
-    private LocalDate registrationDate;
+    private LocalDate pfRegistrationDate;
+
+    @NotNull
+    private String pfSignatory;
+
+    @NotNull
+    private String pfSignatoryDesignation;
+
+    @NotNull
+    private String pfSignatoryFatherName;
 
     @NotNull
     private Long esiNumber;
+
+    @NotNull
+    private LocalDate esiRegistrationDate;
+
+    @NotNull
+    private String esiSignatory;
+
+    @NotNull
+    private String esiSignatoryDesignation;
+
+    @NotNull
+    private String esiSignatoryFatherName;
+
+    @NotNull
+    private Long ptNumber;
 
     @NotNull
     private LocalDate ptRegistrationDate;
 
     @NotNull
     private String ptSignatory;
-
-    @NotNull
-    private Long ptNumber;
 
     public Long getId() {
         return id;
@@ -168,12 +189,36 @@ public class LegalEntityDTO implements Serializable {
         this.pfNumber = pfNumber;
     }
 
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
+    public LocalDate getPfRegistrationDate() {
+        return pfRegistrationDate;
     }
 
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
+    public void setPfRegistrationDate(LocalDate pfRegistrationDate) {
+        this.pfRegistrationDate = pfRegistrationDate;
+    }
+
+    public String getPfSignatory() {
+        return pfSignatory;
+    }
+
+    public void setPfSignatory(String pfSignatory) {
+        this.pfSignatory = pfSignatory;
+    }
+
+    public String getPfSignatoryDesignation() {
+        return pfSignatoryDesignation;
+    }
+
+    public void setPfSignatoryDesignation(String pfSignatoryDesignation) {
+        this.pfSignatoryDesignation = pfSignatoryDesignation;
+    }
+
+    public String getPfSignatoryFatherName() {
+        return pfSignatoryFatherName;
+    }
+
+    public void setPfSignatoryFatherName(String pfSignatoryFatherName) {
+        this.pfSignatoryFatherName = pfSignatoryFatherName;
     }
 
     public Long getEsiNumber() {
@@ -182,6 +227,46 @@ public class LegalEntityDTO implements Serializable {
 
     public void setEsiNumber(Long esiNumber) {
         this.esiNumber = esiNumber;
+    }
+
+    public LocalDate getEsiRegistrationDate() {
+        return esiRegistrationDate;
+    }
+
+    public void setEsiRegistrationDate(LocalDate esiRegistrationDate) {
+        this.esiRegistrationDate = esiRegistrationDate;
+    }
+
+    public String getEsiSignatory() {
+        return esiSignatory;
+    }
+
+    public void setEsiSignatory(String esiSignatory) {
+        this.esiSignatory = esiSignatory;
+    }
+
+    public String getEsiSignatoryDesignation() {
+        return esiSignatoryDesignation;
+    }
+
+    public void setEsiSignatoryDesignation(String esiSignatoryDesignation) {
+        this.esiSignatoryDesignation = esiSignatoryDesignation;
+    }
+
+    public String getEsiSignatoryFatherName() {
+        return esiSignatoryFatherName;
+    }
+
+    public void setEsiSignatoryFatherName(String esiSignatoryFatherName) {
+        this.esiSignatoryFatherName = esiSignatoryFatherName;
+    }
+
+    public Long getPtNumber() {
+        return ptNumber;
+    }
+
+    public void setPtNumber(Long ptNumber) {
+        this.ptNumber = ptNumber;
     }
 
     public LocalDate getPtRegistrationDate() {
@@ -198,14 +283,6 @@ public class LegalEntityDTO implements Serializable {
 
     public void setPtSignatory(String ptSignatory) {
         this.ptSignatory = ptSignatory;
-    }
-
-    public Long getPtNumber() {
-        return ptNumber;
-    }
-
-    public void setPtNumber(Long ptNumber) {
-        this.ptNumber = ptNumber;
     }
 
     @Override
@@ -245,11 +322,18 @@ public class LegalEntityDTO implements Serializable {
             ", citTdsLocation='" + getCitTdsLocation() + "'" +
             ", formSignatory='" + getFormSignatory() + "'" +
             ", pfNumber='" + getPfNumber() + "'" +
-            ", registrationDate='" + getRegistrationDate() + "'" +
+            ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
+            ", pfSignatory='" + getPfSignatory() + "'" +
+            ", pfSignatoryDesignation='" + getPfSignatoryDesignation() + "'" +
+            ", pfSignatoryFatherName='" + getPfSignatoryFatherName() + "'" +
             ", esiNumber=" + getEsiNumber() +
+            ", esiRegistrationDate='" + getEsiRegistrationDate() + "'" +
+            ", esiSignatory='" + getEsiSignatory() + "'" +
+            ", esiSignatoryDesignation='" + getEsiSignatoryDesignation() + "'" +
+            ", esiSignatoryFatherName='" + getEsiSignatoryFatherName() + "'" +
+            ", ptNumber=" + getPtNumber() +
             ", ptRegistrationDate='" + getPtRegistrationDate() + "'" +
             ", ptSignatory='" + getPtSignatory() + "'" +
-            ", ptNumber=" + getPtNumber() +
             "}";
     }
 }

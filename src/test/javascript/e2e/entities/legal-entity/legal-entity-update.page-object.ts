@@ -16,11 +16,18 @@ export default class LegalEntityUpdatePage {
   citTdsLocationInput: ElementFinder = element(by.css('input#legal-entity-citTdsLocation'));
   formSignatoryInput: ElementFinder = element(by.css('input#legal-entity-formSignatory'));
   pfNumberInput: ElementFinder = element(by.css('input#legal-entity-pfNumber'));
-  registrationDateInput: ElementFinder = element(by.css('input#legal-entity-registrationDate'));
+  pfRegistrationDateInput: ElementFinder = element(by.css('input#legal-entity-pfRegistrationDate'));
+  pfSignatoryInput: ElementFinder = element(by.css('input#legal-entity-pfSignatory'));
+  pfSignatoryDesignationInput: ElementFinder = element(by.css('input#legal-entity-pfSignatoryDesignation'));
+  pfSignatoryFatherNameInput: ElementFinder = element(by.css('input#legal-entity-pfSignatoryFatherName'));
   esiNumberInput: ElementFinder = element(by.css('input#legal-entity-esiNumber'));
+  esiRegistrationDateInput: ElementFinder = element(by.css('input#legal-entity-esiRegistrationDate'));
+  esiSignatoryInput: ElementFinder = element(by.css('input#legal-entity-esiSignatory'));
+  esiSignatoryDesignationInput: ElementFinder = element(by.css('input#legal-entity-esiSignatoryDesignation'));
+  esiSignatoryFatherNameInput: ElementFinder = element(by.css('input#legal-entity-esiSignatoryFatherName'));
+  ptNumberInput: ElementFinder = element(by.css('input#legal-entity-ptNumber'));
   ptRegistrationDateInput: ElementFinder = element(by.css('input#legal-entity-ptRegistrationDate'));
   ptSignatoryInput: ElementFinder = element(by.css('input#legal-entity-ptSignatory'));
-  ptNumberInput: ElementFinder = element(by.css('input#legal-entity-ptNumber'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -128,12 +135,36 @@ export default class LegalEntityUpdatePage {
     return this.pfNumberInput.getAttribute('value');
   }
 
-  setRegistrationDateInput(registrationDate) {
-    this.registrationDateInput.sendKeys(registrationDate);
+  setPfRegistrationDateInput(pfRegistrationDate) {
+    this.pfRegistrationDateInput.sendKeys(pfRegistrationDate);
   }
 
-  getRegistrationDateInput() {
-    return this.registrationDateInput.getAttribute('value');
+  getPfRegistrationDateInput() {
+    return this.pfRegistrationDateInput.getAttribute('value');
+  }
+
+  setPfSignatoryInput(pfSignatory) {
+    this.pfSignatoryInput.sendKeys(pfSignatory);
+  }
+
+  getPfSignatoryInput() {
+    return this.pfSignatoryInput.getAttribute('value');
+  }
+
+  setPfSignatoryDesignationInput(pfSignatoryDesignation) {
+    this.pfSignatoryDesignationInput.sendKeys(pfSignatoryDesignation);
+  }
+
+  getPfSignatoryDesignationInput() {
+    return this.pfSignatoryDesignationInput.getAttribute('value');
+  }
+
+  setPfSignatoryFatherNameInput(pfSignatoryFatherName) {
+    this.pfSignatoryFatherNameInput.sendKeys(pfSignatoryFatherName);
+  }
+
+  getPfSignatoryFatherNameInput() {
+    return this.pfSignatoryFatherNameInput.getAttribute('value');
   }
 
   setEsiNumberInput(esiNumber) {
@@ -142,6 +173,46 @@ export default class LegalEntityUpdatePage {
 
   getEsiNumberInput() {
     return this.esiNumberInput.getAttribute('value');
+  }
+
+  setEsiRegistrationDateInput(esiRegistrationDate) {
+    this.esiRegistrationDateInput.sendKeys(esiRegistrationDate);
+  }
+
+  getEsiRegistrationDateInput() {
+    return this.esiRegistrationDateInput.getAttribute('value');
+  }
+
+  setEsiSignatoryInput(esiSignatory) {
+    this.esiSignatoryInput.sendKeys(esiSignatory);
+  }
+
+  getEsiSignatoryInput() {
+    return this.esiSignatoryInput.getAttribute('value');
+  }
+
+  setEsiSignatoryDesignationInput(esiSignatoryDesignation) {
+    this.esiSignatoryDesignationInput.sendKeys(esiSignatoryDesignation);
+  }
+
+  getEsiSignatoryDesignationInput() {
+    return this.esiSignatoryDesignationInput.getAttribute('value');
+  }
+
+  setEsiSignatoryFatherNameInput(esiSignatoryFatherName) {
+    this.esiSignatoryFatherNameInput.sendKeys(esiSignatoryFatherName);
+  }
+
+  getEsiSignatoryFatherNameInput() {
+    return this.esiSignatoryFatherNameInput.getAttribute('value');
+  }
+
+  setPtNumberInput(ptNumber) {
+    this.ptNumberInput.sendKeys(ptNumber);
+  }
+
+  getPtNumberInput() {
+    return this.ptNumberInput.getAttribute('value');
   }
 
   setPtRegistrationDateInput(ptRegistrationDate) {
@@ -158,14 +229,6 @@ export default class LegalEntityUpdatePage {
 
   getPtSignatoryInput() {
     return this.ptSignatoryInput.getAttribute('value');
-  }
-
-  setPtNumberInput(ptNumber) {
-    this.ptNumberInput.sendKeys(ptNumber);
-  }
-
-  getPtNumberInput() {
-    return this.ptNumberInput.getAttribute('value');
   }
 
   save() {

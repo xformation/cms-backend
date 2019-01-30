@@ -19,11 +19,18 @@ export interface ILegalEntity {
   citTdsLocation?: string;
   formSignatory?: string;
   pfNumber?: string;
-  registrationDate?: Moment;
+  pfRegistrationDate?: Moment;
+  pfSignatory?: string;
+  pfSignatoryDesignation?: string;
+  pfSignatoryFatherName?: string;
   esiNumber?: number;
+  esiRegistrationDate?: Moment;
+  esiSignatory?: string;
+  esiSignatoryDesignation?: string;
+  esiSignatoryFatherName?: string;
+  ptNumber?: number;
   ptRegistrationDate?: Moment;
   ptSignatory?: string;
-  ptNumber?: number;
 }
 
 export const defaultValue: Readonly<ILegalEntity> = {};

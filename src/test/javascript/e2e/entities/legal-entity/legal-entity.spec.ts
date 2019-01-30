@@ -27,7 +27,7 @@ describe('LegalEntity e2e test', () => {
   it('should load create LegalEntity page', async () => {
     legalEntityComponentsPage.clickOnCreateButton();
     legalEntityUpdatePage = new LegalEntityUpdatePage();
-    expect(await legalEntityUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.legalEntity.home.createOrEditLabel/);
+    expect(await legalEntityUpdatePage.getPageTitle().getText()).to.match(/Create or edit a LegalEntity/);
   });
 
   it('should create and save LegalEntities', async () => {
@@ -54,16 +54,30 @@ describe('LegalEntity e2e test', () => {
     expect(await legalEntityUpdatePage.getFormSignatoryInput()).to.match(/formSignatory/);
     legalEntityUpdatePage.setPfNumberInput('pfNumber');
     expect(await legalEntityUpdatePage.getPfNumberInput()).to.match(/pfNumber/);
-    legalEntityUpdatePage.setRegistrationDateInput('01-01-2001');
-    expect(await legalEntityUpdatePage.getRegistrationDateInput()).to.eq('2001-01-01');
+    legalEntityUpdatePage.setPfRegistrationDateInput('01-01-2001');
+    expect(await legalEntityUpdatePage.getPfRegistrationDateInput()).to.eq('2001-01-01');
+    legalEntityUpdatePage.setPfSignatoryInput('pfSignatory');
+    expect(await legalEntityUpdatePage.getPfSignatoryInput()).to.match(/pfSignatory/);
+    legalEntityUpdatePage.setPfSignatoryDesignationInput('pfSignatoryDesignation');
+    expect(await legalEntityUpdatePage.getPfSignatoryDesignationInput()).to.match(/pfSignatoryDesignation/);
+    legalEntityUpdatePage.setPfSignatoryFatherNameInput('pfSignatoryFatherName');
+    expect(await legalEntityUpdatePage.getPfSignatoryFatherNameInput()).to.match(/pfSignatoryFatherName/);
     legalEntityUpdatePage.setEsiNumberInput('5');
     expect(await legalEntityUpdatePage.getEsiNumberInput()).to.eq('5');
+    legalEntityUpdatePage.setEsiRegistrationDateInput('01-01-2001');
+    expect(await legalEntityUpdatePage.getEsiRegistrationDateInput()).to.eq('2001-01-01');
+    legalEntityUpdatePage.setEsiSignatoryInput('esiSignatory');
+    expect(await legalEntityUpdatePage.getEsiSignatoryInput()).to.match(/esiSignatory/);
+    legalEntityUpdatePage.setEsiSignatoryDesignationInput('esiSignatoryDesignation');
+    expect(await legalEntityUpdatePage.getEsiSignatoryDesignationInput()).to.match(/esiSignatoryDesignation/);
+    legalEntityUpdatePage.setEsiSignatoryFatherNameInput('esiSignatoryFatherName');
+    expect(await legalEntityUpdatePage.getEsiSignatoryFatherNameInput()).to.match(/esiSignatoryFatherName/);
+    legalEntityUpdatePage.setPtNumberInput('5');
+    expect(await legalEntityUpdatePage.getPtNumberInput()).to.eq('5');
     legalEntityUpdatePage.setPtRegistrationDateInput('01-01-2001');
     expect(await legalEntityUpdatePage.getPtRegistrationDateInput()).to.eq('2001-01-01');
     legalEntityUpdatePage.setPtSignatoryInput('ptSignatory');
     expect(await legalEntityUpdatePage.getPtSignatoryInput()).to.match(/ptSignatory/);
-    legalEntityUpdatePage.setPtNumberInput('5');
-    expect(await legalEntityUpdatePage.getPtNumberInput()).to.eq('5');
     await legalEntityUpdatePage.save();
     expect(await legalEntityUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

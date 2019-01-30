@@ -12,7 +12,7 @@ import { getEntity, updateEntity, createEntity, reset } from './legal-entity.red
 import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -240,14 +240,53 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="registrationDateLabel" for="registrationDate">
-                    Registration Date
+                  <Label id="pfRegistrationDateLabel" for="pfRegistrationDate">
+                    Pf Registration Date
                   </Label>
                   <AvField
-                    id="legal-entity-registrationDate"
+                    id="legal-entity-pfRegistrationDate"
                     type="date"
                     className="form-control"
-                    name="registrationDate"
+                    name="pfRegistrationDate"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="pfSignatoryLabel" for="pfSignatory">
+                    Pf Signatory
+                  </Label>
+                  <AvField
+                    id="legal-entity-pfSignatory"
+                    type="text"
+                    name="pfSignatory"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="pfSignatoryDesignationLabel" for="pfSignatoryDesignation">
+                    Pf Signatory Designation
+                  </Label>
+                  <AvField
+                    id="legal-entity-pfSignatoryDesignation"
+                    type="text"
+                    name="pfSignatoryDesignation"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="pfSignatoryFatherNameLabel" for="pfSignatoryFatherName">
+                    Pf Signatory Father Name
+                  </Label>
+                  <AvField
+                    id="legal-entity-pfSignatoryFatherName"
+                    type="text"
+                    name="pfSignatoryFatherName"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -262,6 +301,74 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     type="number"
                     className="form-control"
                     name="esiNumber"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="esiRegistrationDateLabel" for="esiRegistrationDate">
+                    Esi Registration Date
+                  </Label>
+                  <AvField
+                    id="legal-entity-esiRegistrationDate"
+                    type="date"
+                    className="form-control"
+                    name="esiRegistrationDate"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="esiSignatoryLabel" for="esiSignatory">
+                    Esi Signatory
+                  </Label>
+                  <AvField
+                    id="legal-entity-esiSignatory"
+                    type="text"
+                    name="esiSignatory"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="esiSignatoryDesignationLabel" for="esiSignatoryDesignation">
+                    Esi Signatory Designation
+                  </Label>
+                  <AvField
+                    id="legal-entity-esiSignatoryDesignation"
+                    type="text"
+                    name="esiSignatoryDesignation"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="esiSignatoryFatherNameLabel" for="esiSignatoryFatherName">
+                    Esi Signatory Father Name
+                  </Label>
+                  <AvField
+                    id="legal-entity-esiSignatoryFatherName"
+                    type="text"
+                    name="esiSignatoryFatherName"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="ptNumberLabel" for="ptNumber">
+                    Pt Number
+                  </Label>
+                  <AvField
+                    id="legal-entity-ptNumber"
+                    type="number"
+                    className="form-control"
+                    name="ptNumber"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' },
                       number: { value: true, errorMessage: 'This field should be a number.' }
@@ -292,21 +399,6 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                     name="ptSignatory"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="ptNumberLabel" for="ptNumber">
-                    Pt Number
-                  </Label>
-                  <AvField
-                    id="legal-entity-ptNumber"
-                    type="number"
-                    className="form-control"
-                    name="ptNumber"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
                 </AvGroup>
