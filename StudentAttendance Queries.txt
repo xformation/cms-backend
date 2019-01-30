@@ -1,0 +1,186 @@
+Date:14/01/2019
+
+query getDailyStudentAttendance($filter:StudentAttendanceFilterInput!){
+getDailyStudentAttendance(filter: $filter){
+studentId
+studentName
+currentDateStatus
+previousOneDayStatus
+previousTwoDayStatus
+previousThreeDayStatus
+comments
+}
+}
+
+
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1351",
+"attendanceDate": "2019-01-14",
+"lectureId": "1600"
+}
+}
+
+--------------------------
+
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1353",
+"attendanceDate": "2019-01-15",
+"lectureId": "2100"
+}
+}
+-----------------------
+
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1354",
+"attendanceDate": "2019-01-16",
+"lectureId": "2550"
+}
+}
+----------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1351",
+"attendanceDate": "2019-01-17",
+"lectureId": "3000"
+}
+}
+-------------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1353",
+"attendanceDate": "2019-01-18",
+"lectureId": "3450"
+}
+}
+-----------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1352",
+"attendanceDate": "2019-01-19",
+"lectureId": "3900"
+}
+}
+---------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1351",
+"attendanceDate": "2019-01-21",
+"lectureId": "1650"
+}
+}
+--------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1353",
+"attendanceDate": "2019-01-22",
+"lectureId": "2150"
+}
+}
+--------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1354",
+"attendanceDate": "2019-01-23",
+"lectureId": "2600"
+}
+}
+---------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1351",
+"attendanceDate": "2019-01-24",
+"lectureId": "3050"
+}
+}
+--------------------------
+
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1353",
+"attendanceDate": "2019-01-25",
+"lectureId": "3500"
+}
+}
+-----------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1352",
+"attendanceDate": "2019-01-26",
+"lectureId": "3950"
+}
+}
+--------------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1351",
+"attendanceDate": "2019-01-28",
+"lectureId": "1700"
+}
+}
+------------------------
+{
+"filter": {
+"branchId": "1051",
+"departmentId": "1101",
+"batchId": "1151",
+"sectionId": "1201",
+"subjectId": "1353",
+"attendanceDate": "2019-01-29",
+"lectureId": "2200"
+}
+}
