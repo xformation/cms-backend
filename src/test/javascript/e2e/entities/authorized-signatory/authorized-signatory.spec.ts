@@ -27,9 +27,7 @@ describe('AuthorizedSignatory e2e test', () => {
   it('should load create AuthorizedSignatory page', async () => {
     authorizedSignatoryComponentsPage.clickOnCreateButton();
     authorizedSignatoryUpdatePage = new AuthorizedSignatoryUpdatePage();
-    expect(await authorizedSignatoryUpdatePage.getPageTitle().getAttribute('id')).to.match(
-      /cmsApp.authorizedSignatory.home.createOrEditLabel/
-    );
+    expect(await authorizedSignatoryUpdatePage.getPageTitle().getText()).to.match(/Create or edit a AuthorizedSignatory/);
   });
 
   it('should create and save AuthorizedSignatories', async () => {
@@ -45,6 +43,8 @@ describe('AuthorizedSignatory e2e test', () => {
     expect(await authorizedSignatoryUpdatePage.getEmailInput()).to.match(/email/);
     authorizedSignatoryUpdatePage.setPanCardNumberInput('panCardNumber');
     expect(await authorizedSignatoryUpdatePage.getPanCardNumberInput()).to.match(/panCardNumber/);
+    authorizedSignatoryUpdatePage.branchSelectLastOption();
+    authorizedSignatoryUpdatePage.collegeSelectLastOption();
     authorizedSignatoryUpdatePage.legalEntitySelectLastOption();
     await authorizedSignatoryUpdatePage.save();
     expect(await authorizedSignatoryUpdatePage.getSaveButton().isPresent()).to.be.false;

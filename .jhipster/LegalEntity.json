@@ -172,7 +172,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190130075305",
+    "changelogDate": "20190201062242",
     "entityTableName": "legal_entity",
     "dto": "mapstruct",
     "pagination": "no",

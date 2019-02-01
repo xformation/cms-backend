@@ -51,6 +51,14 @@ public class AuthorizedSignatory implements Serializable {
     @Column(name = "pan_card_number", nullable = false)
     private String panCardNumber;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Branch branch;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private College college;
+
     @ManyToOne
     @JsonIgnoreProperties("")
     private LegalEntity legalEntity;
@@ -140,6 +148,32 @@ public class AuthorizedSignatory implements Serializable {
 
     public void setPanCardNumber(String panCardNumber) {
         this.panCardNumber = panCardNumber;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public AuthorizedSignatory branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public College getCollege() {
+        return college;
+    }
+
+    public AuthorizedSignatory college(College college) {
+        this.college = college;
+        return this;
+    }
+
+    public void setCollege(College college) {
+        this.college = college;
     }
 
     public LegalEntity getLegalEntity() {

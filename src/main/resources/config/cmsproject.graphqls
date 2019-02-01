@@ -123,6 +123,8 @@ type AuthorizedSignatory {
     email: String!
     panCardNumber: String!
     legalEntity: LegalEntity!
+    branch: Branch!
+    college: College!
 }
 type BankAccounts {
     id: Long!
@@ -552,6 +554,8 @@ input AddAuthorizedSignatoryInput {
     email: String!
     panCardNumber: String!
     legalEntityId: Long!
+    branchId: Long!
+    collegeId: Long!
 }
 type AddAuthorizedSignatoryPayload {
     authorizedSignatory: AuthorizedSignatory!
@@ -565,6 +569,8 @@ input UpdateAuthorizedSignatoryInput {
     email: String!
     panCardNumber: String!
     legalEntityId: Long!
+    branchId: Long!
+    collegeId: Long!
 }
 type UpdateAuthorizedSignatoryPayload {
     authorizedSignatory: AuthorizedSignatory!

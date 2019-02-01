@@ -10,6 +10,8 @@ export default class AuthorizedSignatoryUpdatePage {
   addressInput: ElementFinder = element(by.css('input#authorized-signatory-address'));
   emailInput: ElementFinder = element(by.css('input#authorized-signatory-email'));
   panCardNumberInput: ElementFinder = element(by.css('input#authorized-signatory-panCardNumber'));
+  branchSelect: ElementFinder = element(by.css('select#authorized-signatory-branch'));
+  collegeSelect: ElementFinder = element(by.css('select#authorized-signatory-college'));
   legalEntitySelect: ElementFinder = element(by.css('select#authorized-signatory-legalEntity'));
 
   getPageTitle() {
@@ -62,6 +64,44 @@ export default class AuthorizedSignatoryUpdatePage {
 
   getPanCardNumberInput() {
     return this.panCardNumberInput.getAttribute('value');
+  }
+
+  branchSelectLastOption() {
+    this.branchSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
+  }
+
+  getBranchSelect() {
+    return this.branchSelect;
+  }
+
+  getBranchSelectedOption() {
+    return this.branchSelect.element(by.css('option:checked')).getText();
+  }
+
+  collegeSelectLastOption() {
+    this.collegeSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  collegeSelectOption(option) {
+    this.collegeSelect.sendKeys(option);
+  }
+
+  getCollegeSelect() {
+    return this.collegeSelect;
+  }
+
+  getCollegeSelectedOption() {
+    return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
   legalEntitySelectLastOption() {

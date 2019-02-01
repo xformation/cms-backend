@@ -101,7 +101,7 @@ public class LegalEntityResourceIntTest {
     private static final Long DEFAULT_ESI_NUMBER = 1L;
     private static final Long UPDATED_ESI_NUMBER = 2L;
 
-    private static final Date DEFAULT_ESI_REGISTRATION_DATE = new Date();
+    private static final Date DEFAULT_ESI_REGISTRATION_DATE =new Date();
     private static final Date UPDATED_ESI_REGISTRATION_DATE = new Date();
 
     private static final String DEFAULT_ESI_SIGNATORY = "AAAAAAAAAA";
@@ -179,7 +179,7 @@ public class LegalEntityResourceIntTest {
         legalEntity.logo(DEFAULT_LOGO);
         legalEntity.legalNameOfTheCollege(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE);
         legalEntity.typeOfCollege(DEFAULT_TYPE_OF_COLLEGE);
-        legalEntity.setDateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION);
+        legalEntity.dateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION);
         legalEntity.registeredOfficeAddress(DEFAULT_REGISTERED_OFFICE_ADDRESS);
         legalEntity.collegeIdentificationNumber(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER);
         legalEntity.pan(DEFAULT_PAN);
@@ -188,17 +188,17 @@ public class LegalEntityResourceIntTest {
         legalEntity.citTdsLocation(DEFAULT_CIT_TDS_LOCATION);
         legalEntity.formSignatory(DEFAULT_FORM_SIGNATORY);
         legalEntity.pfNumber(DEFAULT_PF_NUMBER);
-        legalEntity.setPfRegistrationDate(DEFAULT_PF_REGISTRATION_DATE);
+        legalEntity.pfRegistrationDate(DEFAULT_PF_REGISTRATION_DATE);
         legalEntity.pfSignatory(DEFAULT_PF_SIGNATORY);
         legalEntity.pfSignatoryDesignation(DEFAULT_PF_SIGNATORY_DESIGNATION);
         legalEntity.pfSignatoryFatherName(DEFAULT_PF_SIGNATORY_FATHER_NAME);
         legalEntity.esiNumber(DEFAULT_ESI_NUMBER);
-        legalEntity.setEsiRegistrationDate(DEFAULT_ESI_REGISTRATION_DATE);
+        legalEntity.esiRegistrationDate(DEFAULT_ESI_REGISTRATION_DATE);
         legalEntity.esiSignatory(DEFAULT_ESI_SIGNATORY);
         legalEntity.esiSignatoryDesignation(DEFAULT_ESI_SIGNATORY_DESIGNATION);
         legalEntity.esiSignatoryFatherName(DEFAULT_ESI_SIGNATORY_FATHER_NAME);
         legalEntity.ptNumber(DEFAULT_PT_NUMBER);
-        legalEntity.setPfRegistrationDate(DEFAULT_PT_REGISTRATION_DATE);
+        legalEntity.ptRegistrationDate(DEFAULT_PT_REGISTRATION_DATE);
         legalEntity.ptSignatory(DEFAULT_PT_SIGNATORY);
         return legalEntity;
     }
@@ -830,7 +830,7 @@ public class LegalEntityResourceIntTest {
         updatedLegalEntity.logo(UPDATED_LOGO);
         updatedLegalEntity.legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE);
         updatedLegalEntity.typeOfCollege(UPDATED_TYPE_OF_COLLEGE);
-        updatedLegalEntity.setDateOfIncorporation(UPDATED_DATE_OF_INCORPORATION);
+        updatedLegalEntity.dateOfIncorporation(UPDATED_DATE_OF_INCORPORATION);
         updatedLegalEntity.registeredOfficeAddress(UPDATED_REGISTERED_OFFICE_ADDRESS);
         updatedLegalEntity.collegeIdentificationNumber(UPDATED_COLLEGE_IDENTIFICATION_NUMBER);
         updatedLegalEntity.pan(UPDATED_PAN);
@@ -839,17 +839,17 @@ public class LegalEntityResourceIntTest {
         updatedLegalEntity.citTdsLocation(UPDATED_CIT_TDS_LOCATION);
         updatedLegalEntity.formSignatory(UPDATED_FORM_SIGNATORY);
         updatedLegalEntity.pfNumber(UPDATED_PF_NUMBER);
-        updatedLegalEntity.setPfRegistrationDate(UPDATED_PF_REGISTRATION_DATE);
+        updatedLegalEntity.pfRegistrationDate(UPDATED_PF_REGISTRATION_DATE);
         updatedLegalEntity.pfSignatory(UPDATED_PF_SIGNATORY);
         updatedLegalEntity.pfSignatoryDesignation(UPDATED_PF_SIGNATORY_DESIGNATION);
         updatedLegalEntity.pfSignatoryFatherName(UPDATED_PF_SIGNATORY_FATHER_NAME);
         updatedLegalEntity.esiNumber(UPDATED_ESI_NUMBER);
-        updatedLegalEntity.setEsiRegistrationDate(UPDATED_ESI_REGISTRATION_DATE);
+        updatedLegalEntity.esiRegistrationDate(UPDATED_ESI_REGISTRATION_DATE);
         updatedLegalEntity.esiSignatory(UPDATED_ESI_SIGNATORY);
         updatedLegalEntity.esiSignatoryDesignation(UPDATED_ESI_SIGNATORY_DESIGNATION);
         updatedLegalEntity.esiSignatoryFatherName(UPDATED_ESI_SIGNATORY_FATHER_NAME);
         updatedLegalEntity.ptNumber(UPDATED_PT_NUMBER);
-        updatedLegalEntity.setPtRegistrationDate(UPDATED_PT_REGISTRATION_DATE);
+        updatedLegalEntity.ptRegistrationDate(UPDATED_PT_REGISTRATION_DATE);
         updatedLegalEntity.ptSignatory(UPDATED_PT_SIGNATORY);
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(updatedLegalEntity);
 

@@ -81,6 +81,8 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                 <th>Address</th>
                 <th>Email</th>
                 <th>Pan Card Number</th>
+                <th>Branch</th>
+                <th>College</th>
                 <th>Legal Entity</th>
                 <th />
               </tr>
@@ -100,8 +102,22 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                   <td>{authorizedSignatory.email}</td>
                   <td>{authorizedSignatory.panCardNumber}</td>
                   <td>
+                    {authorizedSignatory.branchId ? (
+                      <Link to={`branch/${authorizedSignatory.branchId}`}>{authorizedSignatory.branchId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {authorizedSignatory.collegeId ? (
+                      <Link to={`college/${authorizedSignatory.collegeId}`}>{authorizedSignatory.collegeId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
                     {authorizedSignatory.legalEntityId ? (
-                      <Link to={`legalEntity/${authorizedSignatory.legalEntityId}`}>{authorizedSignatory.legalEntityId}</Link>
+                      <Link to={`legal-entity/${authorizedSignatory.legalEntityId}`}>{authorizedSignatory.legalEntityId}</Link>
                     ) : (
                       ''
                     )}

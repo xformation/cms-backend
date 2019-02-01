@@ -8,18 +8,24 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
+import { ICollege } from 'app/shared/model/college.model';
+import { getEntities as getColleges } from 'app/entities/college/college.reducer';
 import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 import { getEntities as getLegalEntities } from 'app/entities/legal-entity/legal-entity.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './authorized-signatory.reducer';
 import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IAuthorizedSignatoryUpdateState {
   isNew: boolean;
+  branchId: number;
+  collegeId: number;
   legalEntityId: number;
 }
 
@@ -27,6 +33,8 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
   constructor(props) {
     super(props);
     this.state = {
+      branchId: 0,
+      collegeId: 0,
       legalEntityId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -39,6 +47,8 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getBranches();
+    this.props.getColleges();
     this.props.getLegalEntities();
   }
 
@@ -63,25 +73,8 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
     this.props.history.push('/entity/authorized-signatory');
   };
 
-  legalEntityUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        legalEntityId: -1
-      });
-    } else {
-      for (const i in this.props.legalEntities) {
-        if (id === this.props.legalEntities[i].id.toString()) {
-          this.setState({
-            legalEntityId: this.props.legalEntities[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
-    const { authorizedSignatoryEntity, legalEntities, loading, updating } = this.props;
+    const { authorizedSignatoryEntity, branches, colleges, legalEntities, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -182,14 +175,34 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label for="branch.id">Branch</Label>
+                  <AvInput id="authorized-signatory-branch" type="select" className="form-control" name="branchId">
+                    <option value="" key="0" />
+                    {branches
+                      ? branches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="college.id">College</Label>
+                  <AvInput id="authorized-signatory-college" type="select" className="form-control" name="collegeId">
+                    <option value="" key="0" />
+                    {colleges
+                      ? colleges.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label for="legalEntity.id">Legal Entity</Label>
-                  <AvInput
-                    id="authorized-signatory-legalEntity"
-                    type="select"
-                    className="form-control"
-                    name="legalEntityId"
-                    onChange={this.legalEntityUpdate}
-                  >
+                  <AvInput id="authorized-signatory-legalEntity" type="select" className="form-control" name="legalEntityId">
                     <option value="" key="0" />
                     {legalEntities
                       ? legalEntities.map(otherEntity => (
@@ -218,6 +231,8 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  branches: storeState.branch.entities,
+  colleges: storeState.college.entities,
   legalEntities: storeState.legalEntity.entities,
   authorizedSignatoryEntity: storeState.authorizedSignatory.entity,
   loading: storeState.authorizedSignatory.loading,
@@ -225,6 +240,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getBranches,
+  getColleges,
   getLegalEntities,
   getEntity,
   updateEntity,

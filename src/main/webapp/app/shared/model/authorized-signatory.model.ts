@@ -6,6 +6,8 @@ export interface IAuthorizedSignatory {
   address?: string;
   email?: string;
   panCardNumber?: string;
+  branchId?: number;
+  collegeId?: number;
   legalEntityId?: number;
 }
 

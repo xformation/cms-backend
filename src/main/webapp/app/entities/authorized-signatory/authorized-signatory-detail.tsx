@@ -52,6 +52,10 @@ export class AuthorizedSignatoryDetail extends React.Component<IAuthorizedSignat
               <span id="panCardNumber">Pan Card Number</span>
             </dt>
             <dd>{authorizedSignatoryEntity.panCardNumber}</dd>
+            <dt>Branch</dt>
+            <dd>{authorizedSignatoryEntity.branchId ? authorizedSignatoryEntity.branchId : ''}</dd>
+            <dt>College</dt>
+            <dd>{authorizedSignatoryEntity.collegeId ? authorizedSignatoryEntity.collegeId : ''}</dd>
             <dt>Legal Entity</dt>
             <dd>{authorizedSignatoryEntity.legalEntityId ? authorizedSignatoryEntity.legalEntityId : ''}</dd>
           </dl>

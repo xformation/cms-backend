@@ -1137,6 +1137,8 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddAuthorizedSignatoryPayload addAuthorizedSignatory(AddAuthorizedSignatoryInput addAuthorizedSignatoryInput) {
         final LegalEntity legalEntity = legalEntityRepository.findById(addAuthorizedSignatoryInput.getLegalEntityId()).get();
+        final Branch branch = branchRepository.findById(addAuthorizedSignatoryInput.getBranchId()).get();
+        final College college = collegeRepository.findById(addAuthorizedSignatoryInput.getCollegeId()).get();
         final AuthorizedSignatory authorizedSignatory = new AuthorizedSignatory();
         authorizedSignatory.setSignatoryName(addAuthorizedSignatoryInput.getSignatoryName());
         authorizedSignatory.setSignatoryFatherName(addAuthorizedSignatoryInput.getSignatoryFatherName());
@@ -1145,6 +1147,8 @@ public class Mutation implements GraphQLMutationResolver {
         authorizedSignatory.setEmail(addAuthorizedSignatoryInput.getEmail());
         authorizedSignatory.setPanCardNumber(addAuthorizedSignatoryInput.getPanCardNumber());
         authorizedSignatory.setLegalEntity(legalEntity);
+        authorizedSignatory.setBranch(branch);
+        authorizedSignatory.setCollege(college);
         authorizedSignatoryRepository.save(authorizedSignatory);
 
         return new AddAuthorizedSignatoryPayload(authorizedSignatory);
@@ -1177,6 +1181,15 @@ public class Mutation implements GraphQLMutationResolver {
         	LegalEntity legalEntity = legalEntityRepository.findById(updateAuthorizedSignatoryInput.getLegalEntityId()).get();
         	authorizedSignatory.setLegalEntity(legalEntity);
         }
+        if(updateAuthorizedSignatoryInput.getBranchId() != null) {
+            Branch branch = branchRepository.findById(updateAuthorizedSignatoryInput.getBranchId()).get();
+            authorizedSignatory.setBranch(branch);
+        }
+        if(updateAuthorizedSignatoryInput.getCollegeId() != null) {
+            College college = collegeRepository.findById(updateAuthorizedSignatoryInput.getCollegeId()).get();
+            authorizedSignatory.setCollege(college);
+        }
+
         authorizedSignatoryRepository.save(authorizedSignatory);
 
         return new UpdateAuthorizedSignatoryPayload(authorizedSignatory);

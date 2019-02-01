@@ -199,6 +199,14 @@ import teach, {
 import legalEntity, {
   LegalEntityState
 } from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import authorizedSignatory, {
+  AuthorizedSignatoryState
+} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
