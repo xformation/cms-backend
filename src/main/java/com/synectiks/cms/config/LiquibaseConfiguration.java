@@ -37,7 +37,16 @@ public class LiquibaseConfiguration {
         // Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase to start asynchronously
         SpringLiquibase liquibase = new AsyncSpringLiquibase(taskExecutor, env);
         liquibase.setDataSource(dataSource);
-        liquibase.setChangeLog("classpath:config/liquibase/master.xml");
+        if("dev".equalsIgnoreCase(liquibaseProperties.getContexts())) {
+        	if("loadtestdata".equalsIgnoreCase(liquibaseProperties.getLabels())) {
+            	liquibase.setChangeLog("classpath:config/liquibase/cms_test_data/load_test_data.xml");
+            }else {
+            	liquibase.setChangeLog("classpath:config/liquibase/master.xml");
+            }
+        }else {
+        	liquibase.setChangeLog("classpath:config/liquibase/master.xml");
+        }
+        
         liquibase.setContexts(liquibaseProperties.getContexts());
         liquibase.setDefaultSchema(liquibaseProperties.getDefaultSchema());
         liquibase.setDropFirst(liquibaseProperties.isDropFirst());

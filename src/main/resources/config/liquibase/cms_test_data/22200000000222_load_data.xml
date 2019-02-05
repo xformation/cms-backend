@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="22200000000222" author="jhipster">
+    	<delete tableName="legal_entity">  </delete>
+    	<delete tableName="branch">  </delete>
+    	<delete tableName="holiday">  </delete>
+    	<delete tableName="term">  </delete>
+    	<delete tableName="academic_year">  </delete>
+    	<delete tableName="location">  </delete>
+    	<delete tableName="college">  </delete>
+    	<delete tableName="authorized_signatory">  </delete>
+    	<delete tableName="bank_accounts">  </delete>
+    	<delete tableName="department">  </delete>
+    	<delete tableName="batch">  </delete>
+    	<delete tableName="section">  </delete>
+    	<delete tableName="student">  </delete>
+    	<delete tableName="subject">  </delete>
+    	<delete tableName="teacher">  </delete>
+    	<delete tableName="teach">  </delete>
+    	<delete tableName="attendance_master">  </delete>
+    	<delete tableName="lecture">  </delete>
+    	<delete tableName="student_attendance">  </delete>
+    	
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/college.csv"
+                  separator=";"
+                  tableName="college"/>
+		
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/location.csv"
+                  separator=";"
+                  tableName="location"/> 
+
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/academic_year.csv"
+                  separator=";"
+                  tableName="academic_year"/> 
+                                                   
+		 <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/term.csv"
+                  separator=";"
+                  tableName="term"/>
+
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/holiday.csv"
+                  separator=";"
+                  tableName="holiday"/>                  
+         
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/branch.csv"
+                  separator=";"
+                  tableName="branch"/>
+		
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/legal_entity.csv"
+                  separator=";"
+                  tableName="legal_entity"/>
+		
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/authorized_signatory.csv"
+                  separator=";"
+                  tableName="authorized_signatory"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/bank_accounts.csv"
+                  separator=";"
+                  tableName="bank_accounts"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/department.csv"
+                  separator=";"
+                  tableName="department"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/batch.csv"
+                  separator=";"
+                  tableName="batch"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/section.csv"
+                  separator=";"
+                  tableName="section"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/student.csv"
+                  separator=";"
+                  tableName="student"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/subject.csv"
+                  separator=";"
+                  tableName="subject"/>                  
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/teacher.csv"
+                  separator=";"
+                  tableName="teacher"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/teach.csv"
+                  separator=";"
+                  tableName="teach"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/attendance_master.csv"
+                  separator=";"
+                  tableName="attendance_master"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/lecture.csv"
+                  separator=";"
+                  tableName="lecture"/>
+		<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/student_attendance.csv"
+                  separator=";"
+                  tableName="student_attendance"/>
+                                                             
+    </changeSet>
+</databaseChangeLog>

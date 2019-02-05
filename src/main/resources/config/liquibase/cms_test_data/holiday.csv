@@ -1,0 +1,11 @@
+id;holiday_desc;holiday_date;holiday_status;academicyear_id
+19300;New Year;2019-01-01;ACTIVE;1051
+19350;Christmas Day;2019-12-25;ACTIVE;1051
+19400;Guru Govind Singh Birthday;2019-01-13;ACTIVE;1051
+19450;Makar Sankranti;2019-01-14;ACTIVE;1051
+19500;Pongal;2019-01-15;ACTIVE;1051
+19550;Republic Day;2019-01-26;ACTIVE;1051
+19600;Basant Panchami;2019-02-10;ACTIVE;1051
+19650;Maha Shivaratri/Shivaratri;2019-03-04;ACTIVE;1051
+19700;Holi;2019-03-21;ACTIVE;1051
+19750;Diwali;2019-10-27;ACTIVE;1051

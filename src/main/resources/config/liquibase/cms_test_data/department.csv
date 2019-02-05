@@ -1,0 +1,5 @@
+id;name;description;dept_head;branch_id;academicyear_id
+1101;Department of Computer Science;Department of Computer Science;jack;1001;1051
+11200;Department of Civil Engineering;Department of Civil Engineering;Thomas;1001;1051
+11250;Department of Chemical Engineering;Department of Chemical Engineering;Ron;1001;1051
+11300;Department of Robotics;Department of Robotics;Marry;1001;1051
