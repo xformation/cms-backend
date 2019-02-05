@@ -12,7 +12,7 @@ import { IStudent } from 'app/shared/model/student.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IStudentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IStudentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class StudentDetail extends React.Component<IStudentDetailProps> {
   componentDidMount() {
@@ -170,6 +170,46 @@ export class StudentDetail extends React.Component<IStudentDetailProps> {
               <span id="emailAddress">Email Address</span>
             </dt>
             <dd>{studentEntity.emailAddress}</dd>
+            <dt>
+              <span id="transport">Transport</span>
+            </dt>
+            <dd>{studentEntity.transport}</dd>
+            <dt>
+              <span id="mess">Mess</span>
+            </dt>
+            <dd>{studentEntity.mess}</dd>
+            <dt>
+              <span id="gym">Gym</span>
+            </dt>
+            <dd>{studentEntity.gym}</dd>
+            <dt>
+              <span id="culturalClass">Cultural Class</span>
+            </dt>
+            <dd>{studentEntity.culturalClass}</dd>
+            <dt>
+              <span id="library">Library</span>
+            </dt>
+            <dd>{studentEntity.library}</dd>
+            <dt>
+              <span id="sports">Sports</span>
+            </dt>
+            <dd>{studentEntity.sports}</dd>
+            <dt>
+              <span id="swimming">Swimming</span>
+            </dt>
+            <dd>{studentEntity.swimming}</dd>
+            <dt>
+              <span id="extraClass">Extra Class</span>
+            </dt>
+            <dd>{studentEntity.extraClass}</dd>
+            <dt>
+              <span id="handicrafts">Handicrafts</span>
+            </dt>
+            <dd>{studentEntity.handicrafts}</dd>
+            <dt>
+              <span id="add">Add</span>
+            </dt>
+            <dd>{studentEntity.add}</dd>
             <dt>
               <span id="uploadPhoto">Upload Photo</span>
             </dt>

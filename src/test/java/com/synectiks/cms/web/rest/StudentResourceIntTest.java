@@ -29,8 +29,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +47,17 @@ import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 /**
  * Test class for the StudentResource REST controller.
  *
@@ -163,6 +172,36 @@ public class StudentResourceIntTest {
     private static final String DEFAULT_EMAIL_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL_ADDRESS = "BBBBBBBBBB";
 
+    private static final Status DEFAULT_TRANSPORT = Status.ACTIVE;
+    private static final Status UPDATED_TRANSPORT = Status.DEACTIVE;
+
+    private static final Status DEFAULT_MESS = Status.ACTIVE;
+    private static final Status UPDATED_MESS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_GYM = Status.ACTIVE;
+    private static final Status UPDATED_GYM = Status.DEACTIVE;
+
+    private static final Status DEFAULT_CULTURAL_CLASS = Status.ACTIVE;
+    private static final Status UPDATED_CULTURAL_CLASS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_LIBRARY = Status.ACTIVE;
+    private static final Status UPDATED_LIBRARY = Status.DEACTIVE;
+
+    private static final Status DEFAULT_SPORTS = Status.ACTIVE;
+    private static final Status UPDATED_SPORTS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_SWIMMING = Status.ACTIVE;
+    private static final Status UPDATED_SWIMMING = Status.DEACTIVE;
+
+    private static final Status DEFAULT_EXTRA_CLASS = Status.ACTIVE;
+    private static final Status UPDATED_EXTRA_CLASS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_HANDICRAFTS = Status.ACTIVE;
+    private static final Status UPDATED_HANDICRAFTS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_ADD = Status.ACTIVE;
+    private static final Status UPDATED_ADD = Status.DEACTIVE;
+
     private static final Long DEFAULT_UPLOAD_PHOTO = 1L;
     private static final Long UPDATED_UPLOAD_PHOTO = 2L;
 
@@ -172,14 +211,16 @@ public class StudentResourceIntTest {
     private static final String DEFAULT_ROLL_NO = "AAAAAAAAAA";
     private static final String UPDATED_ROLL_NO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_STUDENT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_STUDENT_TYPE = "BBBBBBBBBB";
+    private static final StudentTypeEnum DEFAULT_STUDENT_TYPE = StudentTypeEnum.REGULAR;
+    private static final StudentTypeEnum UPDATED_STUDENT_TYPE = StudentTypeEnum.STAFF_CONCESSION;
 
     @Autowired
     private StudentRepository studentRepository;
 
+
     @Autowired
     private StudentMapper studentMapper;
+    
 
     @Autowired
     private StudentService studentService;
@@ -262,6 +303,16 @@ public class StudentResourceIntTest {
         student.lastName(DEFAULT_LAST_NAME);
         student.contactNo(DEFAULT_CONTACT_NO);
         student.emailAddress(DEFAULT_EMAIL_ADDRESS);
+        student.transport(DEFAULT_TRANSPORT);
+        student.mess(DEFAULT_MESS);
+        student.gym(DEFAULT_GYM);
+        student.culturalClass(DEFAULT_CULTURAL_CLASS);
+        student.library(DEFAULT_LIBRARY);
+        student.sports(DEFAULT_SPORTS);
+        student.swimming(DEFAULT_SWIMMING);
+        student.extraClass(DEFAULT_EXTRA_CLASS);
+        student.handicrafts(DEFAULT_HANDICRAFTS);
+        student.add(DEFAULT_ADD);
         student.uploadPhoto(DEFAULT_UPLOAD_PHOTO);
         student.admissionNo(DEFAULT_ADMISSION_NO);
         student.rollNo(DEFAULT_ROLL_NO);
@@ -345,6 +396,16 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testStudent.getContactNo()).isEqualTo(DEFAULT_CONTACT_NO);
         assertThat(testStudent.getEmailAddress()).isEqualTo(DEFAULT_EMAIL_ADDRESS);
+        assertThat(testStudent.getTransport()).isEqualTo(DEFAULT_TRANSPORT);
+        assertThat(testStudent.getMess()).isEqualTo(DEFAULT_MESS);
+        assertThat(testStudent.getGym()).isEqualTo(DEFAULT_GYM);
+        assertThat(testStudent.getCulturalClass()).isEqualTo(DEFAULT_CULTURAL_CLASS);
+        assertThat(testStudent.getLibrary()).isEqualTo(DEFAULT_LIBRARY);
+        assertThat(testStudent.getSports()).isEqualTo(DEFAULT_SPORTS);
+        assertThat(testStudent.getSwimming()).isEqualTo(DEFAULT_SWIMMING);
+        assertThat(testStudent.getExtraClass()).isEqualTo(DEFAULT_EXTRA_CLASS);
+        assertThat(testStudent.getHandicrafts()).isEqualTo(DEFAULT_HANDICRAFTS);
+        assertThat(testStudent.getAdd()).isEqualTo(DEFAULT_ADD);
         assertThat(testStudent.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
         assertThat(testStudent.getAdmissionNo()).isEqualTo(DEFAULT_ADMISSION_NO);
         assertThat(testStudent.getRollNo()).isEqualTo(DEFAULT_ROLL_NO);
@@ -1044,6 +1105,196 @@ public class StudentResourceIntTest {
 
     @Test
     @Transactional
+    public void checkTransportIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setTransport(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkMessIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setMess(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkGymIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setGym(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCulturalClassIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setCulturalClass(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkLibraryIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setLibrary(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSportsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setSports(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSwimmingIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setSwimming(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkExtraClassIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setExtraClass(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkHandicraftsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setHandicrafts(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddIsRequired() throws Exception {
+        int databaseSizeBeforeTest = studentRepository.findAll().size();
+        // set the field null
+        student.setAdd(null);
+
+        // Create the Student, which fails.
+        StudentDTO studentDTO = studentMapper.toDto(student);
+
+        restStudentMockMvc.perform(post("/api/students")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Student> studentList = studentRepository.findAll();
+        assertThat(studentList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkUploadPhotoIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
         // set the field null
@@ -1164,12 +1415,23 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
             .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].transport").value(hasItem(DEFAULT_TRANSPORT.toString())))
+            .andExpect(jsonPath("$.[*].mess").value(hasItem(DEFAULT_MESS.toString())))
+            .andExpect(jsonPath("$.[*].gym").value(hasItem(DEFAULT_GYM.toString())))
+            .andExpect(jsonPath("$.[*].culturalClass").value(hasItem(DEFAULT_CULTURAL_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].library").value(hasItem(DEFAULT_LIBRARY.toString())))
+            .andExpect(jsonPath("$.[*].sports").value(hasItem(DEFAULT_SPORTS.toString())))
+            .andExpect(jsonPath("$.[*].swimming").value(hasItem(DEFAULT_SWIMMING.toString())))
+            .andExpect(jsonPath("$.[*].extraClass").value(hasItem(DEFAULT_EXTRA_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].handicrafts").value(hasItem(DEFAULT_HANDICRAFTS.toString())))
+            .andExpect(jsonPath("$.[*].add").value(hasItem(DEFAULT_ADD.toString())))
             .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
             .andExpect(jsonPath("$.[*].admissionNo").value(hasItem(DEFAULT_ADMISSION_NO.intValue())))
             .andExpect(jsonPath("$.[*].rollNo").value(hasItem(DEFAULT_ROLL_NO.toString())))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())));
     }
     
+
     @Test
     @Transactional
     public void getStudent() throws Exception {
@@ -1216,12 +1478,21 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
             .andExpect(jsonPath("$.contactNo").value(DEFAULT_CONTACT_NO.intValue()))
             .andExpect(jsonPath("$.emailAddress").value(DEFAULT_EMAIL_ADDRESS.toString()))
+            .andExpect(jsonPath("$.transport").value(DEFAULT_TRANSPORT.toString()))
+            .andExpect(jsonPath("$.mess").value(DEFAULT_MESS.toString()))
+            .andExpect(jsonPath("$.gym").value(DEFAULT_GYM.toString()))
+            .andExpect(jsonPath("$.culturalClass").value(DEFAULT_CULTURAL_CLASS.toString()))
+            .andExpect(jsonPath("$.library").value(DEFAULT_LIBRARY.toString()))
+            .andExpect(jsonPath("$.sports").value(DEFAULT_SPORTS.toString()))
+            .andExpect(jsonPath("$.swimming").value(DEFAULT_SWIMMING.toString()))
+            .andExpect(jsonPath("$.extraClass").value(DEFAULT_EXTRA_CLASS.toString()))
+            .andExpect(jsonPath("$.handicrafts").value(DEFAULT_HANDICRAFTS.toString()))
+            .andExpect(jsonPath("$.add").value(DEFAULT_ADD.toString()))
             .andExpect(jsonPath("$.uploadPhoto").value(DEFAULT_UPLOAD_PHOTO.intValue()))
             .andExpect(jsonPath("$.admissionNo").value(DEFAULT_ADMISSION_NO.intValue()))
             .andExpect(jsonPath("$.rollNo").value(DEFAULT_ROLL_NO.toString()))
             .andExpect(jsonPath("$.studentType").value(DEFAULT_STUDENT_TYPE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingStudent() throws Exception {
@@ -1278,6 +1549,16 @@ public class StudentResourceIntTest {
         updatedStudent.lastName(UPDATED_LAST_NAME);
         updatedStudent.contactNo(UPDATED_CONTACT_NO);
         updatedStudent.emailAddress(UPDATED_EMAIL_ADDRESS);
+        updatedStudent.transport(UPDATED_TRANSPORT);
+        updatedStudent.mess(UPDATED_MESS);
+        updatedStudent.gym(UPDATED_GYM);
+        updatedStudent.culturalClass(UPDATED_CULTURAL_CLASS);
+        updatedStudent.library(UPDATED_LIBRARY);
+        updatedStudent.sports(UPDATED_SPORTS);
+        updatedStudent.swimming(UPDATED_SWIMMING);
+        updatedStudent.extraClass(UPDATED_EXTRA_CLASS);
+        updatedStudent.handicrafts(UPDATED_HANDICRAFTS);
+        updatedStudent.add(UPDATED_ADD);
         updatedStudent.uploadPhoto(UPDATED_UPLOAD_PHOTO);
         updatedStudent.admissionNo(UPDATED_ADMISSION_NO);
         updatedStudent.rollNo(UPDATED_ROLL_NO);
@@ -1328,6 +1609,16 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testStudent.getContactNo()).isEqualTo(UPDATED_CONTACT_NO);
         assertThat(testStudent.getEmailAddress()).isEqualTo(UPDATED_EMAIL_ADDRESS);
+        assertThat(testStudent.getTransport()).isEqualTo(UPDATED_TRANSPORT);
+        assertThat(testStudent.getMess()).isEqualTo(UPDATED_MESS);
+        assertThat(testStudent.getGym()).isEqualTo(UPDATED_GYM);
+        assertThat(testStudent.getCulturalClass()).isEqualTo(UPDATED_CULTURAL_CLASS);
+        assertThat(testStudent.getLibrary()).isEqualTo(UPDATED_LIBRARY);
+        assertThat(testStudent.getSports()).isEqualTo(UPDATED_SPORTS);
+        assertThat(testStudent.getSwimming()).isEqualTo(UPDATED_SWIMMING);
+        assertThat(testStudent.getExtraClass()).isEqualTo(UPDATED_EXTRA_CLASS);
+        assertThat(testStudent.getHandicrafts()).isEqualTo(UPDATED_HANDICRAFTS);
+        assertThat(testStudent.getAdd()).isEqualTo(UPDATED_ADD);
         assertThat(testStudent.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
         assertThat(testStudent.getAdmissionNo()).isEqualTo(UPDATED_ADMISSION_NO);
         assertThat(testStudent.getRollNo()).isEqualTo(UPDATED_ROLL_NO);
@@ -1345,7 +1636,7 @@ public class StudentResourceIntTest {
         // Create the Student
         StudentDTO studentDTO = studentMapper.toDto(student);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
         restStudentMockMvc.perform(put("/api/students")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
@@ -1392,45 +1683,55 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME)))
-            .andExpect(jsonPath("$.[*].studentMiddleName").value(hasItem(DEFAULT_STUDENT_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].studentLastName").value(hasItem(DEFAULT_STUDENT_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME)))
-            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME)))
-            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].studentMiddleName").value(hasItem(DEFAULT_STUDENT_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].studentLastName").value(hasItem(DEFAULT_STUDENT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].aadharNo").value(hasItem(DEFAULT_AADHAR_NO.intValue())))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
-            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH)))
+            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH.toString())))
             .andExpect(jsonPath("$.[*].religion").value(hasItem(DEFAULT_RELIGION.toString())))
             .andExpect(jsonPath("$.[*].caste").value(hasItem(DEFAULT_CASTE.toString())))
-            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE)))
+            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE.toString())))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
             .andExpect(jsonPath("$.[*].bloodGroup").value(hasItem(DEFAULT_BLOOD_GROUP.toString())))
-            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE)))
-            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO)))
-            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE)))
-            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN)))
-            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)))
-            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY)))
+            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE.toString())))
+            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO.toString())))
+            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE.toString())))
+            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN.toString())))
+            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
+            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY.toString())))
             .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.intValue())))
             .andExpect(jsonPath("$.[*].studentContactNumber").value(hasItem(DEFAULT_STUDENT_CONTACT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].studentEmailAddress").value(hasItem(DEFAULT_STUDENT_EMAIL_ADDRESS)))
-            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].studentEmailAddress").value(hasItem(DEFAULT_STUDENT_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].relationWithStudent").value(hasItem(DEFAULT_RELATION_WITH_STUDENT.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
-            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].transport").value(hasItem(DEFAULT_TRANSPORT.toString())))
+            .andExpect(jsonPath("$.[*].mess").value(hasItem(DEFAULT_MESS.toString())))
+            .andExpect(jsonPath("$.[*].gym").value(hasItem(DEFAULT_GYM.toString())))
+            .andExpect(jsonPath("$.[*].culturalClass").value(hasItem(DEFAULT_CULTURAL_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].library").value(hasItem(DEFAULT_LIBRARY.toString())))
+            .andExpect(jsonPath("$.[*].sports").value(hasItem(DEFAULT_SPORTS.toString())))
+            .andExpect(jsonPath("$.[*].swimming").value(hasItem(DEFAULT_SWIMMING.toString())))
+            .andExpect(jsonPath("$.[*].extraClass").value(hasItem(DEFAULT_EXTRA_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].handicrafts").value(hasItem(DEFAULT_HANDICRAFTS.toString())))
+            .andExpect(jsonPath("$.[*].add").value(hasItem(DEFAULT_ADD.toString())))
             .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
             .andExpect(jsonPath("$.[*].admissionNo").value(hasItem(DEFAULT_ADMISSION_NO.intValue())))
-            .andExpect(jsonPath("$.[*].rollNo").value(hasItem(DEFAULT_ROLL_NO)))
-            .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE)));
+            .andExpect(jsonPath("$.[*].rollNo").value(hasItem(DEFAULT_ROLL_NO.toString())))
+            .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())));
     }
 
     @Test

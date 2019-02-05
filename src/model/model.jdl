@@ -73,6 +73,10 @@ enum RelationWithStudentEnum{
   FATHER,MOTHER,GUARDIAN
 }
 
+enum StudentTypeEnum{
+    REGULAR,STAFF_CONCESSION,BENEFITS,SCHOLARSHIP,OTHER_BENEFITS
+}
+
 
 entity Student{
 studentName String required
@@ -110,10 +114,20 @@ middleName String required
 lastName String required
 contactNo Long required
 emailAddress String required
+transport Status required
+mess Status required
+gym Status required
+culturalClass Status required
+library Status required
+sports Status required
+swimming Status required
+extraClass Status required
+handicrafts Status required
+add Status required
 uploadPhoto Long required
 admissionNo Long required
 rollNo String required
-studentType String required
+studentType StudentTypeEnum required
 }
 
 

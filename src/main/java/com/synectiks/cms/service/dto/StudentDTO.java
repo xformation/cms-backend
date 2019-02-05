@@ -9,6 +9,17 @@ import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 /**
  * A DTO for the Student entity.
@@ -123,6 +134,36 @@ public class StudentDTO implements Serializable {
     private String emailAddress;
 
     @NotNull
+    private Status transport;
+
+    @NotNull
+    private Status mess;
+
+    @NotNull
+    private Status gym;
+
+    @NotNull
+    private Status culturalClass;
+
+    @NotNull
+    private Status library;
+
+    @NotNull
+    private Status sports;
+
+    @NotNull
+    private Status swimming;
+
+    @NotNull
+    private Status extraClass;
+
+    @NotNull
+    private Status handicrafts;
+
+    @NotNull
+    private Status add;
+
+    @NotNull
     private Long uploadPhoto;
 
     @NotNull
@@ -132,7 +173,7 @@ public class StudentDTO implements Serializable {
     private String rollNo;
 
     @NotNull
-    private String studentType;
+    private StudentTypeEnum studentType;
 
     private Long departmentId;
 
@@ -430,6 +471,86 @@ public class StudentDTO implements Serializable {
         this.emailAddress = emailAddress;
     }
 
+    public Status getTransport() {
+        return transport;
+    }
+
+    public void setTransport(Status transport) {
+        this.transport = transport;
+    }
+
+    public Status getMess() {
+        return mess;
+    }
+
+    public void setMess(Status mess) {
+        this.mess = mess;
+    }
+
+    public Status getGym() {
+        return gym;
+    }
+
+    public void setGym(Status gym) {
+        this.gym = gym;
+    }
+
+    public Status getCulturalClass() {
+        return culturalClass;
+    }
+
+    public void setCulturalClass(Status culturalClass) {
+        this.culturalClass = culturalClass;
+    }
+
+    public Status getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Status library) {
+        this.library = library;
+    }
+
+    public Status getSports() {
+        return sports;
+    }
+
+    public void setSports(Status sports) {
+        this.sports = sports;
+    }
+
+    public Status getSwimming() {
+        return swimming;
+    }
+
+    public void setSwimming(Status swimming) {
+        this.swimming = swimming;
+    }
+
+    public Status getExtraClass() {
+        return extraClass;
+    }
+
+    public void setExtraClass(Status extraClass) {
+        this.extraClass = extraClass;
+    }
+
+    public Status getHandicrafts() {
+        return handicrafts;
+    }
+
+    public void setHandicrafts(Status handicrafts) {
+        this.handicrafts = handicrafts;
+    }
+
+    public Status getAdd() {
+        return add;
+    }
+
+    public void setAdd(Status add) {
+        this.add = add;
+    }
+
     public Long getUploadPhoto() {
         return uploadPhoto;
     }
@@ -454,11 +575,11 @@ public class StudentDTO implements Serializable {
         this.rollNo = rollNo;
     }
 
-    public String getStudentType() {
+    public StudentTypeEnum getStudentType() {
         return studentType;
     }
 
-    public void setStudentType(String studentType) {
+    public void setStudentType(StudentTypeEnum studentType) {
         this.studentType = studentType;
     }
 
@@ -554,6 +675,16 @@ public class StudentDTO implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", contactNo=" + getContactNo() +
             ", emailAddress='" + getEmailAddress() + "'" +
+            ", transport='" + getTransport() + "'" +
+            ", mess='" + getMess() + "'" +
+            ", gym='" + getGym() + "'" +
+            ", culturalClass='" + getCulturalClass() + "'" +
+            ", library='" + getLibrary() + "'" +
+            ", sports='" + getSports() + "'" +
+            ", swimming='" + getSwimming() + "'" +
+            ", extraClass='" + getExtraClass() + "'" +
+            ", handicrafts='" + getHandicrafts() + "'" +
+            ", add='" + getAdd() + "'" +
             ", uploadPhoto=" + getUploadPhoto() +
             ", admissionNo=" + getAdmissionNo() +
             ", rollNo='" + getRollNo() + "'" +

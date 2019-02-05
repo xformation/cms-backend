@@ -297,6 +297,16 @@ public class Mutation implements GraphQLMutationResolver {
         student.setLastName(addStudentInput.getLastName());
         student.setContactNo(addStudentInput.getContactNo());
         student.setEmailAddress(addStudentInput.getEmailAddress());
+        student.setTransport(addStudentInput.getTransport());
+        student.setMess(addStudentInput.getMess());
+        student.setGym(addStudentInput.getGym());
+        student.setCulturalClass(addStudentInput.getCulturalClass());
+        student.setLibrary(addStudentInput.getLibrary());
+        student.setSports(addStudentInput.getSports());
+        student.setSwimming(addStudentInput.getSwimming());
+        student.setExtraClass(addStudentInput.getExtraClass());
+        student.setHandicrafts(addStudentInput.getHandicrafts());
+        student.setAdd(addStudentInput.getAdd());
         student.setUploadPhoto(addStudentInput.getUploadPhoto());
         student.setAdmissionNo(addStudentInput.getAdmissionNo());
         student.setRollNo(addStudentInput.getRollNo());
@@ -415,6 +425,36 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateStudentInput.getEmailAddress() != null) {
             student.setEmailAddress(updateStudentInput.getEmailAddress());
+        }
+        if (updateStudentInput.getTransport() != null) {
+            student.setTransport(updateStudentInput.getTransport());
+        }
+        if (updateStudentInput.getMess() != null) {
+            student.setMess(updateStudentInput.getMess());
+        }
+        if (updateStudentInput.getGym() != null) {
+            student.setGym(updateStudentInput.getGym());
+        }
+        if (updateStudentInput.getCulturalClass() != null) {
+            student.setCulturalClass(updateStudentInput.getCulturalClass());
+        }
+        if (updateStudentInput.getLibrary() != null) {
+            student.setLibrary(updateStudentInput.getLibrary());
+        }
+        if (updateStudentInput.getSports() != null) {
+            student.setSports(updateStudentInput.getSports());
+        }
+        if (updateStudentInput.getSwimming() != null) {
+            student.setSwimming(updateStudentInput.getSwimming());
+        }
+        if (updateStudentInput.getExtraClass() != null) {
+            student.setExtraClass(updateStudentInput.getExtraClass());
+        }
+        if (updateStudentInput.getHandicrafts() != null) {
+            student.setHandicrafts(updateStudentInput.getHandicrafts());
+        }
+        if (updateStudentInput.getAdd() != null) {
+            student.setAdd(updateStudentInput.getAdd());
         }
         if (updateStudentInput.getUploadPhoto() != null) {
             student.setUploadPhoto(updateStudentInput.getUploadPhoto());

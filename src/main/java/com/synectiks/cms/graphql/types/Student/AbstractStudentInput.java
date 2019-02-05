@@ -41,10 +41,21 @@ public class AbstractStudentInput {
     private String lastName;
     private Long contactNo;
     private String emailAddress;
+    private Status transport;
+    private Status mess;
+    private Status gym;
+    private Status culturalClass;
+    private Status library;
+    private Status sports;
+    private Status swimming;
+    private Status extraClass;
+    private Status handicrafts;
+    private Status add;
     private Long uploadPhoto;
     private Long admissionNo;
     private String rollNo;
-    private String studentType;
+    private StudentTypeEnum studentType;
+
 
     public Long getId() {
         return id;
@@ -334,6 +345,86 @@ public class AbstractStudentInput {
         this.emailAddress = emailAddress;
     }
 
+    public Status getTransport() {
+        return transport;
+    }
+
+    public void setTransport(Status transport) {
+        this.transport = transport;
+    }
+
+    public Status getMess() {
+        return mess;
+    }
+
+    public void setMess(Status mess) {
+        this.mess = mess;
+    }
+
+    public Status getGym() {
+        return gym;
+    }
+
+    public void setGym(Status gym) {
+        this.gym = gym;
+    }
+
+    public Status getCulturalClass() {
+        return culturalClass;
+    }
+
+    public void setCulturalClass(Status culturalClass) {
+        this.culturalClass = culturalClass;
+    }
+
+    public Status getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Status library) {
+        this.library = library;
+    }
+
+    public Status getSports() {
+        return sports;
+    }
+
+    public void setSports(Status sports) {
+        this.sports = sports;
+    }
+
+    public Status getSwimming() {
+        return swimming;
+    }
+
+    public void setSwimming(Status swimming) {
+        this.swimming = swimming;
+    }
+
+    public Status getExtraClass() {
+        return extraClass;
+    }
+
+    public void setExtraClass(Status extraClass) {
+        this.extraClass = extraClass;
+    }
+
+    public Status getHandicrafts() {
+        return handicrafts;
+    }
+
+    public void setHandicrafts(Status handicrafts) {
+        this.handicrafts = handicrafts;
+    }
+
+    public Status getAdd() {
+        return add;
+    }
+
+    public void setAdd(Status add) {
+        this.add = add;
+    }
+
     public Long getUploadPhoto() {
         return uploadPhoto;
     }
@@ -358,11 +449,11 @@ public class AbstractStudentInput {
         this.rollNo = rollNo;
     }
 
-    public String getStudentType() {
+    public StudentTypeEnum getStudentType() {
         return studentType;
     }
 
-    public void setStudentType(String studentType) {
+    public void setStudentType(StudentTypeEnum studentType) {
         this.studentType = studentType;
     }
 
@@ -382,12 +473,12 @@ public class AbstractStudentInput {
             ", aadharNo=" + aadharNo +
             ", dateOfBirth=" + dateOfBirth +
             ", placeOfBirth='" + placeOfBirth + '\'' +
-            ", religion='" + religion + '\'' +
-            ", caste='" + caste + '\'' +
+            ", religion=" + religion +
+            ", caste=" + caste +
             ", subCaste='" + subCaste + '\'' +
             ", age=" + age +
             ", sex=" + sex +
-            ", bloodGroup='" + bloodGroup + '\'' +
+            ", bloodGroup=" + bloodGroup +
             ", addressLineOne='" + addressLineOne + '\'' +
             ", addressLineTwo='" + addressLineTwo + '\'' +
             ", addressLineThree='" + addressLineThree + '\'' +
@@ -399,16 +490,26 @@ public class AbstractStudentInput {
             ", alternateContactNumber=" + alternateContactNumber +
             ", studentEmailAddress='" + studentEmailAddress + '\'' +
             ", alternateEmailAddress='" + alternateEmailAddress + '\'' +
-            ", relationWithStudent='" + relationWithStudent + '\'' +
+            ", relationWithStudent=" + relationWithStudent +
             ", name='" + name + '\'' +
             ", middleName='" + middleName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", contactNo=" + contactNo +
             ", emailAddress='" + emailAddress + '\'' +
+            ", transport=" + transport +
+            ", mess=" + mess +
+            ", gym=" + gym +
+            ", culturalClass=" + culturalClass +
+            ", library=" + library +
+            ", sports=" + sports +
+            ", swimming=" + swimming +
+            ", extraClass=" + extraClass +
+            ", handicrafts=" + handicrafts +
+            ", add=" + add +
             ", uploadPhoto=" + uploadPhoto +
             ", admissionNo=" + admissionNo +
             ", rollNo='" + rollNo + '\'' +
-            ", studentType='" + studentType + '\'' +
+            ", studentType=" + studentType +
             '}';
     }
 }

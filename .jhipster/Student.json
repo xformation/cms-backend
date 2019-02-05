@@ -252,6 +252,86 @@
             ]
         },
         {
+            "fieldName": "transport",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "mess",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "gym",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "culturalClass",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "library",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sports",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "swimming",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "extraClass",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "handicrafts",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "add",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "uploadPhoto",
             "fieldType": "Long",
             "fieldValidateRules": [
@@ -274,7 +354,8 @@
         },
         {
             "fieldName": "studentType",
-            "fieldType": "String",
+            "fieldType": "StudentTypeEnum",
+            "fieldValues": "REGULAR,STAFF_CONCESSION,BENEFITS,SCHOLARSHIP,OTHER_BENEFITS",
             "fieldValidateRules": [
                 "required"
             ]
@@ -310,7 +391,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190128085232",
+    "changelogDate": "20190205082417",
     "entityTableName": "student",
     "dto": "mapstruct",
     "pagination": "no",

@@ -16,7 +16,7 @@
     <!--
         Added the entity Student.
     -->
-    <changeSet id="20190128085232-1" author="jhipster">
+    <changeSet id="20190205082417-1" author="jhipster">
         <createTable tableName="student">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -158,6 +158,46 @@
             </column>
 
             <column name="email_address" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="transport" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="mess" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="gym" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="cultural_class" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="jhi_library" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="sports" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="swimming" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="extra_class" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="handicrafts" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="jhi_add" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 

@@ -48,6 +48,14 @@ enum BatchEnum{
     FOURTHYEAR
 }
 
+enum StudentTypeEnum{
+    REGULAR
+    STAFF_CONCESSION
+    BENEFITS
+    SCHOLARSHIP
+    OTHER_BENEFITS
+}
+
 type Query {
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
@@ -1035,10 +1043,19 @@ input AddStudentInput {
          lastName: String!
          contactNo: Long!
          emailAddress: String!
+         transport: Status!
+         mess: Status!
+         culturalClass: Status!
+         library: Status!
+         sports: Status!
+         swimmming: Status!
+         extraClass: Status!
+         handicrafts: Status!
+         add: Status!
          uploadPhoto: Long!
          admissionNo: Long!
          rollNo: String!
-         studentType: String!
+         studentType: StudentTypeEnum !
          batchId: Long!
          sectionId: Long!
          branchId: Long!
@@ -1048,8 +1065,8 @@ type AddStudentPayload {
    student: Student!
 }
 input UpdateStudentInput {
-      id: Long!
-      studentName: String!
+             id: Long!
+             studentName: String!
              studentMiddleName: String!
              studentLastName: String!
              fatherName: String!
@@ -1084,6 +1101,15 @@ input UpdateStudentInput {
              lastName: String!
              contactNo: Long!
              emailAddress: String!
+             transport: Status!
+             mess: Status!
+             culturalClass: Status!
+             library: Status!
+             sports: Status!
+             swimmming: Status!
+             extraClass: Status!
+             handicrafts: Status!
+             add: Status!
              uploadPhoto: Long!
              admissionNo: Long!
              rollNo: String!

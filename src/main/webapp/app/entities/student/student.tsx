@@ -110,6 +110,16 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                 <th>Last Name</th>
                 <th>Contact No</th>
                 <th>Email Address</th>
+                <th>Transport</th>
+                <th>Mess</th>
+                <th>Gym</th>
+                <th>Cultural Class</th>
+                <th>Library</th>
+                <th>Sports</th>
+                <th>Swimming</th>
+                <th>Extra Class</th>
+                <th>Handicrafts</th>
+                <th>Add</th>
                 <th>Upload Photo</th>
                 <th>Admission No</th>
                 <th>Roll No</th>
@@ -166,6 +176,16 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                   <td>{student.lastName}</td>
                   <td>{student.contactNo}</td>
                   <td>{student.emailAddress}</td>
+                  <td>{student.transport}</td>
+                  <td>{student.mess}</td>
+                  <td>{student.gym}</td>
+                  <td>{student.culturalClass}</td>
+                  <td>{student.library}</td>
+                  <td>{student.sports}</td>
+                  <td>{student.swimming}</td>
+                  <td>{student.extraClass}</td>
+                  <td>{student.handicrafts}</td>
+                  <td>{student.add}</td>
                   <td>{student.uploadPhoto}</td>
                   <td>{student.admissionNo}</td>
                   <td>{student.rollNo}</td>

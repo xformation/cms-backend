@@ -33,6 +33,19 @@ export const enum RelationWithStudentEnum {
   GUARDIAN = 'GUARDIAN'
 }
 
+export const enum Status {
+  ACTIVE = 'ACTIVE',
+  DEACTIVE = 'DEACTIVE'
+}
+
+export const enum StudentTypeEnum {
+  REGULAR = 'REGULAR',
+  STAFF_CONCESSION = 'STAFF_CONCESSION',
+  BENEFITS = 'BENEFITS',
+  SCHOLARSHIP = 'SCHOLARSHIP',
+  OTHER_BENEFITS = 'OTHER_BENEFITS'
+}
+
 export interface IStudent {
   id?: number;
   studentName?: string;
@@ -70,10 +83,20 @@ export interface IStudent {
   lastName?: string;
   contactNo?: number;
   emailAddress?: string;
+  transport?: Status;
+  mess?: Status;
+  gym?: Status;
+  culturalClass?: Status;
+  library?: Status;
+  sports?: Status;
+  swimming?: Status;
+  extraClass?: Status;
+  handicrafts?: Status;
+  add?: Status;
   uploadPhoto?: number;
   admissionNo?: number;
   rollNo?: string;
-  studentType?: string;
+  studentType?: StudentTypeEnum;
   departmentId?: number;
   batchId?: number;
   sectionId?: number;

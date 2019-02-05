@@ -22,32 +22,26 @@ import { IStudent } from 'app/shared/model/student.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IStudentUpdateState {
   isNew: boolean;
-  departmentId: string;
-  batchId: string;
-  sectionId: string;
-  branchId: string;
+  departmentId: number;
+  batchId: number;
+  sectionId: number;
+  branchId: number;
 }
 
 export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudentUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      departmentId: '0',
-      batchId: '0',
-      sectionId: '0',
-      branchId: '0',
+      departmentId: 0,
+      batchId: 0,
+      sectionId: 0,
+      branchId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -76,6 +70,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
@@ -229,7 +224,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-aadharNo"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="aadharNo"
                     validate={{
@@ -313,7 +308,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-age"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="age"
                     validate={{
@@ -436,7 +431,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-pincode"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="pincode"
                     validate={{
@@ -451,7 +446,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-studentContactNumber"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="studentContactNumber"
                     validate={{
@@ -466,7 +461,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-alternateContactNumber"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="alternateContactNumber"
                     validate={{
@@ -560,7 +555,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-contactNo"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="contactNo"
                     validate={{
@@ -583,12 +578,142 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="transportLabel">Transport</Label>
+                  <AvInput
+                    id="student-transport"
+                    type="select"
+                    className="form-control"
+                    name="transport"
+                    value={(!isNew && studentEntity.transport) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="messLabel">Mess</Label>
+                  <AvInput
+                    id="student-mess"
+                    type="select"
+                    className="form-control"
+                    name="mess"
+                    value={(!isNew && studentEntity.mess) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="gymLabel">Gym</Label>
+                  <AvInput
+                    id="student-gym"
+                    type="select"
+                    className="form-control"
+                    name="gym"
+                    value={(!isNew && studentEntity.gym) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="culturalClassLabel">Cultural Class</Label>
+                  <AvInput
+                    id="student-culturalClass"
+                    type="select"
+                    className="form-control"
+                    name="culturalClass"
+                    value={(!isNew && studentEntity.culturalClass) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="libraryLabel">Library</Label>
+                  <AvInput
+                    id="student-library"
+                    type="select"
+                    className="form-control"
+                    name="library"
+                    value={(!isNew && studentEntity.library) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="sportsLabel">Sports</Label>
+                  <AvInput
+                    id="student-sports"
+                    type="select"
+                    className="form-control"
+                    name="sports"
+                    value={(!isNew && studentEntity.sports) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="swimmingLabel">Swimming</Label>
+                  <AvInput
+                    id="student-swimming"
+                    type="select"
+                    className="form-control"
+                    name="swimming"
+                    value={(!isNew && studentEntity.swimming) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="extraClassLabel">Extra Class</Label>
+                  <AvInput
+                    id="student-extraClass"
+                    type="select"
+                    className="form-control"
+                    name="extraClass"
+                    value={(!isNew && studentEntity.extraClass) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="handicraftsLabel">Handicrafts</Label>
+                  <AvInput
+                    id="student-handicrafts"
+                    type="select"
+                    className="form-control"
+                    name="handicrafts"
+                    value={(!isNew && studentEntity.handicrafts) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="addLabel">Add</Label>
+                  <AvInput
+                    id="student-add"
+                    type="select"
+                    className="form-control"
+                    name="add"
+                    value={(!isNew && studentEntity.add) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label id="uploadPhotoLabel" for="uploadPhoto">
                     Upload Photo
                   </Label>
                   <AvField
                     id="student-uploadPhoto"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="uploadPhoto"
                     validate={{
@@ -603,7 +728,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-admissionNo"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="admissionNo"
                     validate={{
@@ -626,17 +751,20 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="studentTypeLabel" for="studentType">
-                    Student Type
-                  </Label>
-                  <AvField
+                  <Label id="studentTypeLabel">Student Type</Label>
+                  <AvInput
                     id="student-studentType"
-                    type="text"
+                    type="select"
+                    className="form-control"
                     name="studentType"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                    value={(!isNew && studentEntity.studentType) || 'REGULAR'}
+                  >
+                    <option value="REGULAR">REGULAR</option>
+                    <option value="STAFF_CONCESSION">STAFF_CONCESSION</option>
+                    <option value="BENEFITS">BENEFITS</option>
+                    <option value="SCHOLARSHIP">SCHOLARSHIP</option>
+                    <option value="OTHER_BENEFITS">OTHER_BENEFITS</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">Department</Label>
@@ -710,8 +838,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
   studentEntity: storeState.student.entity,
   loading: storeState.student.loading,
-  updating: storeState.student.updating,
-  updateSuccess: storeState.student.updateSuccess
+  updating: storeState.student.updating
 });
 
 const mapDispatchToProps = {
