@@ -33,210 +33,210 @@ export default class LegalEntityUpdatePage {
     return this.pageTitle;
   }
 
-  setLogoInput(logo) {
-    this.logoInput.sendKeys(logo);
+  async setLogoInput(logo) {
+    await this.logoInput.sendKeys(logo);
   }
 
-  getLogoInput() {
+  async getLogoInput() {
     return this.logoInput.getAttribute('value');
   }
 
-  setLegalNameOfTheCollegeInput(legalNameOfTheCollege) {
-    this.legalNameOfTheCollegeInput.sendKeys(legalNameOfTheCollege);
+  async setLegalNameOfTheCollegeInput(legalNameOfTheCollege) {
+    await this.legalNameOfTheCollegeInput.sendKeys(legalNameOfTheCollege);
   }
 
-  getLegalNameOfTheCollegeInput() {
+  async getLegalNameOfTheCollegeInput() {
     return this.legalNameOfTheCollegeInput.getAttribute('value');
   }
 
-  setTypeOfCollegeSelect(typeOfCollege) {
-    this.typeOfCollegeSelect.sendKeys(typeOfCollege);
+  async setTypeOfCollegeSelect(typeOfCollege) {
+    await this.typeOfCollegeSelect.sendKeys(typeOfCollege);
   }
 
-  getTypeOfCollegeSelect() {
+  async getTypeOfCollegeSelect() {
     return this.typeOfCollegeSelect.element(by.css('option:checked')).getText();
   }
 
-  typeOfCollegeSelectLastOption() {
-    this.typeOfCollegeSelect
+  async typeOfCollegeSelectLastOption() {
+    await this.typeOfCollegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setDateOfIncorporationInput(dateOfIncorporation) {
-    this.dateOfIncorporationInput.sendKeys(dateOfIncorporation);
+  async setDateOfIncorporationInput(dateOfIncorporation) {
+    await this.dateOfIncorporationInput.sendKeys(dateOfIncorporation);
   }
 
-  getDateOfIncorporationInput() {
+  async getDateOfIncorporationInput() {
     return this.dateOfIncorporationInput.getAttribute('value');
   }
 
-  setRegisteredOfficeAddressInput(registeredOfficeAddress) {
-    this.registeredOfficeAddressInput.sendKeys(registeredOfficeAddress);
+  async setRegisteredOfficeAddressInput(registeredOfficeAddress) {
+    await this.registeredOfficeAddressInput.sendKeys(registeredOfficeAddress);
   }
 
-  getRegisteredOfficeAddressInput() {
+  async getRegisteredOfficeAddressInput() {
     return this.registeredOfficeAddressInput.getAttribute('value');
   }
 
-  setCollegeIdentificationNumberInput(collegeIdentificationNumber) {
-    this.collegeIdentificationNumberInput.sendKeys(collegeIdentificationNumber);
+  async setCollegeIdentificationNumberInput(collegeIdentificationNumber) {
+    await this.collegeIdentificationNumberInput.sendKeys(collegeIdentificationNumber);
   }
 
-  getCollegeIdentificationNumberInput() {
+  async getCollegeIdentificationNumberInput() {
     return this.collegeIdentificationNumberInput.getAttribute('value');
   }
 
-  setPanInput(pan) {
-    this.panInput.sendKeys(pan);
+  async setPanInput(pan) {
+    await this.panInput.sendKeys(pan);
   }
 
-  getPanInput() {
+  async getPanInput() {
     return this.panInput.getAttribute('value');
   }
 
-  setTanInput(tan) {
-    this.tanInput.sendKeys(tan);
+  async setTanInput(tan) {
+    await this.tanInput.sendKeys(tan);
   }
 
-  getTanInput() {
+  async getTanInput() {
     return this.tanInput.getAttribute('value');
   }
 
-  setTanCircleNumberInput(tanCircleNumber) {
-    this.tanCircleNumberInput.sendKeys(tanCircleNumber);
+  async setTanCircleNumberInput(tanCircleNumber) {
+    await this.tanCircleNumberInput.sendKeys(tanCircleNumber);
   }
 
-  getTanCircleNumberInput() {
+  async getTanCircleNumberInput() {
     return this.tanCircleNumberInput.getAttribute('value');
   }
 
-  setCitTdsLocationInput(citTdsLocation) {
-    this.citTdsLocationInput.sendKeys(citTdsLocation);
+  async setCitTdsLocationInput(citTdsLocation) {
+    await this.citTdsLocationInput.sendKeys(citTdsLocation);
   }
 
-  getCitTdsLocationInput() {
+  async getCitTdsLocationInput() {
     return this.citTdsLocationInput.getAttribute('value');
   }
 
-  setFormSignatoryInput(formSignatory) {
-    this.formSignatoryInput.sendKeys(formSignatory);
+  async setFormSignatoryInput(formSignatory) {
+    await this.formSignatoryInput.sendKeys(formSignatory);
   }
 
-  getFormSignatoryInput() {
+  async getFormSignatoryInput() {
     return this.formSignatoryInput.getAttribute('value');
   }
 
-  setPfNumberInput(pfNumber) {
-    this.pfNumberInput.sendKeys(pfNumber);
+  async setPfNumberInput(pfNumber) {
+    await this.pfNumberInput.sendKeys(pfNumber);
   }
 
-  getPfNumberInput() {
+  async getPfNumberInput() {
     return this.pfNumberInput.getAttribute('value');
   }
 
-  setPfRegistrationDateInput(pfRegistrationDate) {
-    this.pfRegistrationDateInput.sendKeys(pfRegistrationDate);
+  async setPfRegistrationDateInput(pfRegistrationDate) {
+    await this.pfRegistrationDateInput.sendKeys(pfRegistrationDate);
   }
 
-  getPfRegistrationDateInput() {
+  async getPfRegistrationDateInput() {
     return this.pfRegistrationDateInput.getAttribute('value');
   }
 
-  setPfSignatoryInput(pfSignatory) {
-    this.pfSignatoryInput.sendKeys(pfSignatory);
+  async setPfSignatoryInput(pfSignatory) {
+    await this.pfSignatoryInput.sendKeys(pfSignatory);
   }
 
-  getPfSignatoryInput() {
+  async getPfSignatoryInput() {
     return this.pfSignatoryInput.getAttribute('value');
   }
 
-  setPfSignatoryDesignationInput(pfSignatoryDesignation) {
-    this.pfSignatoryDesignationInput.sendKeys(pfSignatoryDesignation);
+  async setPfSignatoryDesignationInput(pfSignatoryDesignation) {
+    await this.pfSignatoryDesignationInput.sendKeys(pfSignatoryDesignation);
   }
 
-  getPfSignatoryDesignationInput() {
+  async getPfSignatoryDesignationInput() {
     return this.pfSignatoryDesignationInput.getAttribute('value');
   }
 
-  setPfSignatoryFatherNameInput(pfSignatoryFatherName) {
-    this.pfSignatoryFatherNameInput.sendKeys(pfSignatoryFatherName);
+  async setPfSignatoryFatherNameInput(pfSignatoryFatherName) {
+    await this.pfSignatoryFatherNameInput.sendKeys(pfSignatoryFatherName);
   }
 
-  getPfSignatoryFatherNameInput() {
+  async getPfSignatoryFatherNameInput() {
     return this.pfSignatoryFatherNameInput.getAttribute('value');
   }
 
-  setEsiNumberInput(esiNumber) {
-    this.esiNumberInput.sendKeys(esiNumber);
+  async setEsiNumberInput(esiNumber) {
+    await this.esiNumberInput.sendKeys(esiNumber);
   }
 
-  getEsiNumberInput() {
+  async getEsiNumberInput() {
     return this.esiNumberInput.getAttribute('value');
   }
 
-  setEsiRegistrationDateInput(esiRegistrationDate) {
-    this.esiRegistrationDateInput.sendKeys(esiRegistrationDate);
+  async setEsiRegistrationDateInput(esiRegistrationDate) {
+    await this.esiRegistrationDateInput.sendKeys(esiRegistrationDate);
   }
 
-  getEsiRegistrationDateInput() {
+  async getEsiRegistrationDateInput() {
     return this.esiRegistrationDateInput.getAttribute('value');
   }
 
-  setEsiSignatoryInput(esiSignatory) {
-    this.esiSignatoryInput.sendKeys(esiSignatory);
+  async setEsiSignatoryInput(esiSignatory) {
+    await this.esiSignatoryInput.sendKeys(esiSignatory);
   }
 
-  getEsiSignatoryInput() {
+  async getEsiSignatoryInput() {
     return this.esiSignatoryInput.getAttribute('value');
   }
 
-  setEsiSignatoryDesignationInput(esiSignatoryDesignation) {
-    this.esiSignatoryDesignationInput.sendKeys(esiSignatoryDesignation);
+  async setEsiSignatoryDesignationInput(esiSignatoryDesignation) {
+    await this.esiSignatoryDesignationInput.sendKeys(esiSignatoryDesignation);
   }
 
-  getEsiSignatoryDesignationInput() {
+  async getEsiSignatoryDesignationInput() {
     return this.esiSignatoryDesignationInput.getAttribute('value');
   }
 
-  setEsiSignatoryFatherNameInput(esiSignatoryFatherName) {
-    this.esiSignatoryFatherNameInput.sendKeys(esiSignatoryFatherName);
+  async setEsiSignatoryFatherNameInput(esiSignatoryFatherName) {
+    await this.esiSignatoryFatherNameInput.sendKeys(esiSignatoryFatherName);
   }
 
-  getEsiSignatoryFatherNameInput() {
+  async getEsiSignatoryFatherNameInput() {
     return this.esiSignatoryFatherNameInput.getAttribute('value');
   }
 
-  setPtNumberInput(ptNumber) {
-    this.ptNumberInput.sendKeys(ptNumber);
+  async setPtNumberInput(ptNumber) {
+    await this.ptNumberInput.sendKeys(ptNumber);
   }
 
-  getPtNumberInput() {
+  async getPtNumberInput() {
     return this.ptNumberInput.getAttribute('value');
   }
 
-  setPtRegistrationDateInput(ptRegistrationDate) {
-    this.ptRegistrationDateInput.sendKeys(ptRegistrationDate);
+  async setPtRegistrationDateInput(ptRegistrationDate) {
+    await this.ptRegistrationDateInput.sendKeys(ptRegistrationDate);
   }
 
-  getPtRegistrationDateInput() {
+  async getPtRegistrationDateInput() {
     return this.ptRegistrationDateInput.getAttribute('value');
   }
 
-  setPtSignatoryInput(ptSignatory) {
-    this.ptSignatoryInput.sendKeys(ptSignatory);
+  async setPtSignatoryInput(ptSignatory) {
+    await this.ptSignatoryInput.sendKeys(ptSignatory);
   }
 
-  getPtSignatoryInput() {
+  async getPtSignatoryInput() {
     return this.ptSignatoryInput.getAttribute('value');
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

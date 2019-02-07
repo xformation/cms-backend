@@ -8,17 +8,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity AuthorizedSignatory and its DTO AuthorizedSignatoryDTO.
  */
-@Mapper(componentModel = "spring", uses = {BranchMapper.class, CollegeMapper.class, LegalEntityMapper.class})
+@Mapper(componentModel = "spring", uses = {BranchMapper.class, CollegeMapper.class})
 public interface AuthorizedSignatoryMapper extends EntityMapper<AuthorizedSignatoryDTO, AuthorizedSignatory> {
 
     @Mapping(source = "branch.id", target = "branchId")
     @Mapping(source = "college.id", target = "collegeId")
-    @Mapping(source = "legalEntity.id", target = "legalEntityId")
     AuthorizedSignatoryDTO toDto(AuthorizedSignatory authorizedSignatory);
 
     @Mapping(source = "branchId", target = "branch")
     @Mapping(source = "collegeId", target = "college")
-    @Mapping(source = "legalEntityId", target = "legalEntity")
     AuthorizedSignatory toEntity(AuthorizedSignatoryDTO authorizedSignatoryDTO);
 
     default AuthorizedSignatory fromId(Long id) {

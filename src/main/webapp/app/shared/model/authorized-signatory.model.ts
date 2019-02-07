@@ -8,7 +8,6 @@ export interface IAuthorizedSignatory {
   panCardNumber?: string;
   branchId?: number;
   collegeId?: number;
-  legalEntityId?: number;
 }
 
 export const defaultValue: Readonly<IAuthorizedSignatory> = {};

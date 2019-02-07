@@ -12,32 +12,34 @@ import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { ICollege } from 'app/shared/model/college.model';
 import { getEntities as getColleges } from 'app/entities/college/college.reducer';
-import { ILegalEntity } from 'app/shared/model/legal-entity.model';
-import { getEntities as getLegalEntities } from 'app/entities/legal-entity/legal-entity.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './authorized-signatory.reducer';
 import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAuthorizedSignatoryUpdateState {
   isNew: boolean;
-  branchId: number;
-  collegeId: number;
-  legalEntityId: number;
+  branchId: string;
+  collegeId: string;
 }
 
 export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignatoryUpdateProps, IAuthorizedSignatoryUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      branchId: 0,
-      collegeId: 0,
-      legalEntityId: 0,
+      branchId: '0',
+      collegeId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -49,7 +51,6 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
 
     this.props.getBranches();
     this.props.getColleges();
-    this.props.getLegalEntities();
   }
 
   saveEntity = (event, errors, values) => {
@@ -65,7 +66,6 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -74,7 +74,7 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
   };
 
   render() {
-    const { authorizedSignatoryEntity, branches, colleges, legalEntities, loading, updating } = this.props;
+    const { authorizedSignatoryEntity, branches, colleges, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -200,19 +200,6 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                       : null}
                   </AvInput>
                 </AvGroup>
-                <AvGroup>
-                  <Label for="legalEntity.id">Legal Entity</Label>
-                  <AvInput id="authorized-signatory-legalEntity" type="select" className="form-control" name="legalEntityId">
-                    <option value="" key="0" />
-                    {legalEntities
-                      ? legalEntities.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/authorized-signatory" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -233,16 +220,15 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
 const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
   colleges: storeState.college.entities,
-  legalEntities: storeState.legalEntity.entities,
   authorizedSignatoryEntity: storeState.authorizedSignatory.entity,
   loading: storeState.authorizedSignatory.loading,
-  updating: storeState.authorizedSignatory.updating
+  updating: storeState.authorizedSignatory.updating,
+  updateSuccess: storeState.authorizedSignatory.updateSuccess
 });
 
 const mapDispatchToProps = {
   getBranches,
   getColleges,
-  getLegalEntities,
   getEntity,
   updateEntity,
   createEntity,

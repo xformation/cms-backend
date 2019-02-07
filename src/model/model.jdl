@@ -238,6 +238,11 @@ enum TypeOfCollege{
 PRIVATE, PUBLIC
 }
 
+
+entity SignatoryLink{
+	desc String
+}
+
 entity LegalEntity{
 logo Long required
 legalNameOfTheCollege String required
@@ -296,14 +301,12 @@ Subject{department} to Department,
 Batch{department} to Department,
 Section{batch} to Batch,
 Holiday{academicyear} to AcademicYear,
-AuthorizedSignatory{legalEntity} to LegalEntity,
 Lecture{attendancemaster} to AttendanceMaster,
 Term{academicyear} to AcademicYear,
 StudentAttendance{student} to Student,
 StudentAttendance{lecture} to Lecture,
 StudentSubject{student} to Student,
 StudentSubject{subject} to Subject,
-AuthorizedSignatory{legalEntity} to LegalEntity,
 AttendanceMaster{batch} to Batch,
 Subject{batch} to Batch,
 AttendanceMaster{section} to Section,
@@ -311,12 +314,15 @@ AttendanceMaster{teach} to Teach,
 Teach{subject} to Subject,
 Teach{teacher} to Teacher,
 Teacher {department} to Department,
-Teacher{branch} to Branch
+Teacher{branch} to Branch,
+SignatoryLink{authorizedSignatory} to AuthorizedSignatory,
+SignatoryLink{legalEntity} to LegalEntity
 }
 
 relationship OneToOne {
 AuthorizedSignatory{branch} to Branch,
 AuthorizedSignatory{college} to College
+
 }
 
 dto * with mapstruct

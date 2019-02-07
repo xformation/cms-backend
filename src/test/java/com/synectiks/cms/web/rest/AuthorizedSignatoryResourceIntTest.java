@@ -67,10 +67,8 @@ public class AuthorizedSignatoryResourceIntTest {
     @Autowired
     private AuthorizedSignatoryRepository authorizedSignatoryRepository;
 
-
     @Autowired
     private AuthorizedSignatoryMapper authorizedSignatoryMapper;
-    
 
     @Autowired
     private AuthorizedSignatoryService authorizedSignatoryService;
@@ -315,7 +313,6 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER.toString())));
     }
     
-
     @Test
     @Transactional
     public void getAuthorizedSignatory() throws Exception {
@@ -334,6 +331,7 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.panCardNumber").value(DEFAULT_PAN_CARD_NUMBER.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingAuthorizedSignatory() throws Exception {
@@ -391,7 +389,7 @@ public class AuthorizedSignatoryResourceIntTest {
         // Create the AuthorizedSignatory
         AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAuthorizedSignatoryMockMvc.perform(put("/api/authorized-signatories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(authorizedSignatoryDTO)))
@@ -438,12 +436,12 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(authorizedSignatory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].signatoryName").value(hasItem(DEFAULT_SIGNATORY_NAME.toString())))
-            .andExpect(jsonPath("$.[*].signatoryFatherName").value(hasItem(DEFAULT_SIGNATORY_FATHER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].signatoryDesignation").value(hasItem(DEFAULT_SIGNATORY_DESIGNATION.toString())))
-            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
-            .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER.toString())));
+            .andExpect(jsonPath("$.[*].signatoryName").value(hasItem(DEFAULT_SIGNATORY_NAME)))
+            .andExpect(jsonPath("$.[*].signatoryFatherName").value(hasItem(DEFAULT_SIGNATORY_FATHER_NAME)))
+            .andExpect(jsonPath("$.[*].signatoryDesignation").value(hasItem(DEFAULT_SIGNATORY_DESIGNATION)))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER)));
     }
 
     @Test

@@ -33,8 +33,6 @@ public class AuthorizedSignatoryDTO implements Serializable {
 
     private Long collegeId;
 
-    private Long legalEntityId;
-
     public Long getId() {
         return id;
     }
@@ -107,14 +105,6 @@ public class AuthorizedSignatoryDTO implements Serializable {
         this.collegeId = collegeId;
     }
 
-    public Long getLegalEntityId() {
-        return legalEntityId;
-    }
-
-    public void setLegalEntityId(Long legalEntityId) {
-        this.legalEntityId = legalEntityId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -148,7 +138,6 @@ public class AuthorizedSignatoryDTO implements Serializable {
             ", panCardNumber='" + getPanCardNumber() + "'" +
             ", branch=" + getBranchId() +
             ", college=" + getCollegeId() +
-            ", legalEntity=" + getLegalEntityId() +
             "}";
     }
 }

@@ -11,6 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.SignatoryLink.*;
+import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,27 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.StudentSubject;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
@@ -167,26 +149,6 @@ import com.synectiks.cms.graphql.types.Term.RemoveTermInput;
 import com.synectiks.cms.graphql.types.Term.RemoveTermPayload;
 import com.synectiks.cms.graphql.types.Term.UpdateTermInput;
 import com.synectiks.cms.graphql.types.Term.UpdateTermPayload;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.StudentSubjectRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
 
 
 @Component
@@ -217,6 +179,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
     private final StudentSubjectRepository studentSubjectRepository;
+    private final SignatoryLinkRepository signatoryLinkRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -230,7 +193,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
     
-    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository) {
+    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository, SignatoryLinkRepository signatoryLinkRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -254,6 +217,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.attendanceMasterRepository=attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
         this.studentSubjectRepository = studentSubjectRepository;
+        this.signatoryLinkRepository = signatoryLinkRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -1175,8 +1139,42 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveTeacherPayload(Lists.newArrayList(teacherRepository.findAll()));
     }
 
+    public AddSignatoryLinkPayload addSignatoryLink(AddSignatoryLinkInput addSignatoryLinkInput) {
+        final AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(addSignatoryLinkInput.getAuthorizedSignatoryId()).get();
+        final LegalEntity legalEntity = legalEntityRepository.findById(addSignatoryLinkInput.getLegalEntityId()).get();
+
+        final SignatoryLink signatoryLink = new SignatoryLink();
+        signatoryLink.setAuthorizedSignatory(authorizedSignatory);
+        signatoryLink.setLegalEntity(legalEntity);
+        signatoryLinkRepository.save(signatoryLink);
+        return new AddSignatoryLinkPayload(signatoryLink);
+    }
+
+    public UpdateSignatoryLinkPayload updateSignatoryLink(UpdateSignatoryLinkInput updateSignatoryLinkInput) {
+        SignatoryLink signatoryLink = signatoryLinkRepository.findById(updateSignatoryLinkInput.getId()).get();
+
+        if (updateSignatoryLinkInput.getDesc() != null) {
+            signatoryLink.setDesc(updateSignatoryLinkInput.getDesc());
+        }
+
+        if (updateSignatoryLinkInput.getAuthorizedSignatoryId() != null) {
+            final AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(updateSignatoryLinkInput.getAuthorizedSignatoryId()).get();
+            signatoryLink.setAuthorizedSignatory(authorizedSignatory);
+        }
+
+        signatoryLinkRepository.save(signatoryLink);
+
+        return new UpdateSignatoryLinkPayload(signatoryLink);
+    }
+
+    public RemoveSignatoryLinkPayload removeSignatoryLink(RemoveSignatoryLinkInput removeSignatoryLinkInput) {
+        SignatoryLink signatoryLink = signatoryLinkRepository.findById(removeSignatoryLinkInput.getSignatoryLinkId()).get();
+        signatoryLinkRepository.delete(signatoryLink);
+        return new RemoveSignatoryLinkPayload(Lists.newArrayList(signatoryLinkRepository.findAll()));
+    }
+
+
     public AddAuthorizedSignatoryPayload addAuthorizedSignatory(AddAuthorizedSignatoryInput addAuthorizedSignatoryInput) {
-        final LegalEntity legalEntity = legalEntityRepository.findById(addAuthorizedSignatoryInput.getLegalEntityId()).get();
         final Branch branch = branchRepository.findById(addAuthorizedSignatoryInput.getBranchId()).get();
         final College college = collegeRepository.findById(addAuthorizedSignatoryInput.getCollegeId()).get();
         final AuthorizedSignatory authorizedSignatory = new AuthorizedSignatory();
@@ -1186,7 +1184,6 @@ public class Mutation implements GraphQLMutationResolver {
         authorizedSignatory.setAddress(addAuthorizedSignatoryInput.getAddress());
         authorizedSignatory.setEmail(addAuthorizedSignatoryInput.getEmail());
         authorizedSignatory.setPanCardNumber(addAuthorizedSignatoryInput.getPanCardNumber());
-        authorizedSignatory.setLegalEntity(legalEntity);
         authorizedSignatory.setBranch(branch);
         authorizedSignatory.setCollege(college);
         authorizedSignatoryRepository.save(authorizedSignatory);
@@ -1216,10 +1213,6 @@ public class Mutation implements GraphQLMutationResolver {
 
         if (updateAuthorizedSignatoryInput.getPanCardNumber() != null) {
             authorizedSignatory.setPanCardNumber(updateAuthorizedSignatoryInput.getPanCardNumber());
-        }
-        if(updateAuthorizedSignatoryInput.getLegalEntityId() != null) {
-        	LegalEntity legalEntity = legalEntityRepository.findById(updateAuthorizedSignatoryInput.getLegalEntityId()).get();
-        	authorizedSignatory.setLegalEntity(legalEntity);
         }
         if(updateAuthorizedSignatoryInput.getBranchId() != null) {
             Branch branch = branchRepository.findById(updateAuthorizedSignatoryInput.getBranchId()).get();

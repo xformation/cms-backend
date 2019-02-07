@@ -60,15 +60,9 @@
             "otherEntityField": "id",
             "ownerSide": true,
             "otherEntityRelationshipName": "authorizedSignatory"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "legalEntity",
-            "otherEntityName": "legalEntity",
-            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190201062243",
+    "changelogDate": "20190207114425",
     "entityTableName": "authorized_signatory",
     "dto": "mapstruct",
     "pagination": "no",

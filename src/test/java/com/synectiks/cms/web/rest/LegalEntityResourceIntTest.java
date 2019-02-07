@@ -101,7 +101,7 @@ public class LegalEntityResourceIntTest {
     private static final Long DEFAULT_ESI_NUMBER = 1L;
     private static final Long UPDATED_ESI_NUMBER = 2L;
 
-    private static final Date DEFAULT_ESI_REGISTRATION_DATE =new Date();
+    private static final Date DEFAULT_ESI_REGISTRATION_DATE = new Date();
     private static final Date UPDATED_ESI_REGISTRATION_DATE = new Date();
 
     private static final String DEFAULT_ESI_SIGNATORY = "AAAAAAAAAA";
@@ -125,10 +125,8 @@ public class LegalEntityResourceIntTest {
     @Autowired
     private LegalEntityRepository legalEntityRepository;
 
-
     @Autowired
     private LegalEntityMapper legalEntityMapper;
-    
 
     @Autowired
     private LegalEntityService legalEntityService;
@@ -769,7 +767,6 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.toString())));
     }
     
-
     @Test
     @Transactional
     public void getLegalEntity() throws Exception {
@@ -806,6 +803,7 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.ptRegistrationDate").value(DEFAULT_PT_REGISTRATION_DATE.toString()))
             .andExpect(jsonPath("$.ptSignatory").value(DEFAULT_PT_SIGNATORY.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingLegalEntity() throws Exception {
@@ -830,7 +828,7 @@ public class LegalEntityResourceIntTest {
         updatedLegalEntity.logo(UPDATED_LOGO);
         updatedLegalEntity.legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE);
         updatedLegalEntity.typeOfCollege(UPDATED_TYPE_OF_COLLEGE);
-        updatedLegalEntity.dateOfIncorporation(UPDATED_DATE_OF_INCORPORATION);
+        updatedLegalEntity.setDateOfIncorporation(UPDATED_DATE_OF_INCORPORATION);
         updatedLegalEntity.registeredOfficeAddress(UPDATED_REGISTERED_OFFICE_ADDRESS);
         updatedLegalEntity.collegeIdentificationNumber(UPDATED_COLLEGE_IDENTIFICATION_NUMBER);
         updatedLegalEntity.pan(UPDATED_PAN);
@@ -839,17 +837,17 @@ public class LegalEntityResourceIntTest {
         updatedLegalEntity.citTdsLocation(UPDATED_CIT_TDS_LOCATION);
         updatedLegalEntity.formSignatory(UPDATED_FORM_SIGNATORY);
         updatedLegalEntity.pfNumber(UPDATED_PF_NUMBER);
-        updatedLegalEntity.pfRegistrationDate(UPDATED_PF_REGISTRATION_DATE);
+        updatedLegalEntity.setPfRegistrationDate(UPDATED_PF_REGISTRATION_DATE);
         updatedLegalEntity.pfSignatory(UPDATED_PF_SIGNATORY);
         updatedLegalEntity.pfSignatoryDesignation(UPDATED_PF_SIGNATORY_DESIGNATION);
         updatedLegalEntity.pfSignatoryFatherName(UPDATED_PF_SIGNATORY_FATHER_NAME);
         updatedLegalEntity.esiNumber(UPDATED_ESI_NUMBER);
-        updatedLegalEntity.esiRegistrationDate(UPDATED_ESI_REGISTRATION_DATE);
+        updatedLegalEntity.setEsiRegistrationDate(UPDATED_ESI_REGISTRATION_DATE);
         updatedLegalEntity.esiSignatory(UPDATED_ESI_SIGNATORY);
         updatedLegalEntity.esiSignatoryDesignation(UPDATED_ESI_SIGNATORY_DESIGNATION);
         updatedLegalEntity.esiSignatoryFatherName(UPDATED_ESI_SIGNATORY_FATHER_NAME);
         updatedLegalEntity.ptNumber(UPDATED_PT_NUMBER);
-        updatedLegalEntity.ptRegistrationDate(UPDATED_PT_REGISTRATION_DATE);
+        updatedLegalEntity.setPtRegistrationDate(UPDATED_PT_REGISTRATION_DATE);
         updatedLegalEntity.ptSignatory(UPDATED_PT_SIGNATORY);
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(updatedLegalEntity);
 
@@ -899,7 +897,7 @@ public class LegalEntityResourceIntTest {
         // Create the LegalEntity
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLegalEntityMockMvc.perform(put("/api/legal-entities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
@@ -947,29 +945,29 @@ public class LegalEntityResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(legalEntity.getId().intValue())))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
-            .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString())))
+            .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)))
             .andExpect(jsonPath("$.[*].typeOfCollege").value(hasItem(DEFAULT_TYPE_OF_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].dateOfIncorporation").value(hasItem(DEFAULT_DATE_OF_INCORPORATION.toString())))
-            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN.toString())))
-            .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN.toString())))
-            .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION.toString())))
-            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.toString())))
-            .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS)))
+            .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER)))
+            .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN)))
+            .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN)))
+            .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER)))
+            .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION)))
+            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY)))
+            .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER)))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.toString())))
-            .andExpect(jsonPath("$.[*].pfSignatoryDesignation").value(hasItem(DEFAULT_PF_SIGNATORY_DESIGNATION.toString())))
-            .andExpect(jsonPath("$.[*].pfSignatoryFatherName").value(hasItem(DEFAULT_PF_SIGNATORY_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY)))
+            .andExpect(jsonPath("$.[*].pfSignatoryDesignation").value(hasItem(DEFAULT_PF_SIGNATORY_DESIGNATION)))
+            .andExpect(jsonPath("$.[*].pfSignatoryFatherName").value(hasItem(DEFAULT_PF_SIGNATORY_FATHER_NAME)))
             .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].esiRegistrationDate").value(hasItem(DEFAULT_ESI_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY.toString())))
-            .andExpect(jsonPath("$.[*].esiSignatoryDesignation").value(hasItem(DEFAULT_ESI_SIGNATORY_DESIGNATION.toString())))
-            .andExpect(jsonPath("$.[*].esiSignatoryFatherName").value(hasItem(DEFAULT_ESI_SIGNATORY_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY)))
+            .andExpect(jsonPath("$.[*].esiSignatoryDesignation").value(hasItem(DEFAULT_ESI_SIGNATORY_DESIGNATION)))
+            .andExpect(jsonPath("$.[*].esiSignatoryFatherName").value(hasItem(DEFAULT_ESI_SIGNATORY_FATHER_NAME)))
             .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].ptRegistrationDate").value(hasItem(DEFAULT_PT_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.toString())));
+            .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY)));
     }
 
     @Test

@@ -14,7 +14,7 @@ import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ILegalEntityUpdateState {
   isNew: boolean;
@@ -26,6 +26,12 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
     this.state = {
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -49,7 +55,6 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -86,7 +91,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-logo"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="logo"
                     validate={{
@@ -298,7 +303,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-esiNumber"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="esiNumber"
                     validate={{
@@ -366,7 +371,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-ptNumber"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="ptNumber"
                     validate={{
@@ -422,7 +427,8 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
 const mapStateToProps = (storeState: IRootState) => ({
   legalEntityEntity: storeState.legalEntity.entity,
   loading: storeState.legalEntity.loading,
-  updating: storeState.legalEntity.updating
+  updating: storeState.legalEntity.updating,
+  updateSuccess: storeState.legalEntity.updateSuccess
 });
 
 const mapDispatchToProps = {

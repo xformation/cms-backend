@@ -57,6 +57,10 @@ enum StudentTypeEnum{
 }
 
 type Query {
+
+  signatoryLink(id: Int!): SignatoryLink!
+  signatoryLinks: [SignatoryLink!]!
+
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
 
@@ -74,6 +78,7 @@ type Query {
 
   academicYear(id: Long!): AcademicYear!
   academicYears: [AcademicYear!]!
+
   department(id: Long!): Department!
   departments: [Department!]!
 
@@ -121,6 +126,13 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 }
 
+type SignatoryLink{
+    id: Long!
+    desc: String!
+    authorizedSignatory: AuthorizedSignatory!
+    legalEntity: LegalEntity!
+
+}
 
 type AuthorizedSignatory {
     id: Long!
@@ -130,7 +142,6 @@ type AuthorizedSignatory {
     address: String!
     email: String!
     panCardNumber: String!
-    legalEntity: LegalEntity!
     branch: Branch!
     college: College!
 }
@@ -517,6 +528,10 @@ type Mutation {
    addTerm(input: AddTermInput!): AddTermPayload!
    updateTerm(input: UpdateTermInput!): UpdateTermPayload!
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
+
+   addSignatoryLink(input: AddSignatoryLinkInput!): AddSignatoryLinkPayload!
+   updateSignatoryLink(input: UpdateSignatoryInput!): UpdateSignatoryPayload!
+   removeSignatoryLink(input: RemoveSignatoryLink!): RemoveSignatoryPayload!
    
    updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 
@@ -561,7 +576,6 @@ input AddAuthorizedSignatoryInput {
     address: String!
     email: String!
     panCardNumber: String!
-    legalEntityId: Long!
     branchId: Long!
     collegeId: Long!
 }
@@ -576,7 +590,6 @@ input UpdateAuthorizedSignatoryInput {
     address: String!
     email: String!
     panCardNumber: String!
-    legalEntityId: Long!
     branchId: Long!
     collegeId: Long!
 }
@@ -953,6 +966,32 @@ input RemoveLegalEntityInput {
 }
 type RemoveLegalEntityPayload {
     legalEntities: [LegalEntity!]!
+}
+
+input AddSignatoryLinkInput {
+    desc: String!
+    authorizedSignatory: Long!
+    legalEntity: Long!
+
+}
+type AddSignatoryLinkPayload {
+    signatoryLink: SignatoryLink!
+}
+input UpdateSignatoryLinkInput {
+    id: Long!
+    desc: String!
+    authorizedSignatory: Long!
+    legalEntity: Long!
+
+}
+type UpdateSignatoryLinkPayload {
+    signatoryLink: SignatoryLink!
+}
+input RemoveSignatoryLinkInput {
+    signatoryLinkId: Long!
+}
+type RemoveSignatoryLinkPayload {
+    signatoryLinks: [ SignatoryLink!]!
 }
 
 

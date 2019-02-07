@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity SignatoryLink.
+    -->
+    <changeSet id="20190207114423-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="authorized_signatory_id"
+                                 baseTableName="signatory_link"
+                                 constraintName="fk_signatory_link_authorized_signatory_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="authorized_signatory"/>
+
+        <addForeignKeyConstraint baseColumnNames="legal_entity_id"
+                                 baseTableName="signatory_link"
+                                 constraintName="fk_signatory_link_legal_entity_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="legal_entity"/>
+
+    </changeSet>
+</databaseChangeLog>

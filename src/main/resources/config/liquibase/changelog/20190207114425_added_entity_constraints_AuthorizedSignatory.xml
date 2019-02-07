@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity AuthorizedSignatory.
     -->
-    <changeSet id="20190201062243-2" author="jhipster">
+    <changeSet id="20190207114425-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="branch_id"
                                  baseTableName="authorized_signatory"
@@ -19,12 +19,6 @@
                                  constraintName="fk_authorized_signatory_college_id"
                                  referencedColumnNames="id"
                                  referencedTableName="college"/>
-
-        <addForeignKeyConstraint baseColumnNames="legal_entity_id"
-                                 baseTableName="authorized_signatory"
-                                 constraintName="fk_authorized_signatory_legal_entity_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="legal_entity"/>
 
     </changeSet>
 </databaseChangeLog>

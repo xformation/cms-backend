@@ -211,6 +211,30 @@ import authorizedSignatory, {
 import student, {
   StudentState
 } from 'app/entities/student/student.reducer';
+// prettier-ignore
+import signatoryLink, {
+  SignatoryLinkState
+} from 'app/entities/signatory-link/signatory-link.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import authorizedSignatory, {
+  AuthorizedSignatoryState
+} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
+// prettier-ignore
+import signatoryLink, {
+  SignatoryLinkState
+} from 'app/entities/signatory-link/signatory-link.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import authorizedSignatory, {
+  AuthorizedSignatoryState
+} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -244,6 +268,7 @@ export interface IRootState {
   readonly legalEntity: LegalEntityState;
   readonly authorizedSignatory: AuthorizedSignatoryState;
   readonly bankAccounts: BankAccountsState;
+  readonly signatoryLink: SignatoryLinkState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -279,6 +304,7 @@ const rootReducer = combineReducers<IRootState>({
   legalEntity,
   authorizedSignatory,
   bankAccounts,
+  signatoryLink,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

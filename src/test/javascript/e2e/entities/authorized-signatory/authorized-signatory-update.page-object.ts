@@ -12,123 +12,103 @@ export default class AuthorizedSignatoryUpdatePage {
   panCardNumberInput: ElementFinder = element(by.css('input#authorized-signatory-panCardNumber'));
   branchSelect: ElementFinder = element(by.css('select#authorized-signatory-branch'));
   collegeSelect: ElementFinder = element(by.css('select#authorized-signatory-college'));
-  legalEntitySelect: ElementFinder = element(by.css('select#authorized-signatory-legalEntity'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  setSignatoryNameInput(signatoryName) {
-    this.signatoryNameInput.sendKeys(signatoryName);
+  async setSignatoryNameInput(signatoryName) {
+    await this.signatoryNameInput.sendKeys(signatoryName);
   }
 
-  getSignatoryNameInput() {
+  async getSignatoryNameInput() {
     return this.signatoryNameInput.getAttribute('value');
   }
 
-  setSignatoryFatherNameInput(signatoryFatherName) {
-    this.signatoryFatherNameInput.sendKeys(signatoryFatherName);
+  async setSignatoryFatherNameInput(signatoryFatherName) {
+    await this.signatoryFatherNameInput.sendKeys(signatoryFatherName);
   }
 
-  getSignatoryFatherNameInput() {
+  async getSignatoryFatherNameInput() {
     return this.signatoryFatherNameInput.getAttribute('value');
   }
 
-  setSignatoryDesignationInput(signatoryDesignation) {
-    this.signatoryDesignationInput.sendKeys(signatoryDesignation);
+  async setSignatoryDesignationInput(signatoryDesignation) {
+    await this.signatoryDesignationInput.sendKeys(signatoryDesignation);
   }
 
-  getSignatoryDesignationInput() {
+  async getSignatoryDesignationInput() {
     return this.signatoryDesignationInput.getAttribute('value');
   }
 
-  setAddressInput(address) {
-    this.addressInput.sendKeys(address);
+  async setAddressInput(address) {
+    await this.addressInput.sendKeys(address);
   }
 
-  getAddressInput() {
+  async getAddressInput() {
     return this.addressInput.getAttribute('value');
   }
 
-  setEmailInput(email) {
-    this.emailInput.sendKeys(email);
+  async setEmailInput(email) {
+    await this.emailInput.sendKeys(email);
   }
 
-  getEmailInput() {
+  async getEmailInput() {
     return this.emailInput.getAttribute('value');
   }
 
-  setPanCardNumberInput(panCardNumber) {
-    this.panCardNumberInput.sendKeys(panCardNumber);
+  async setPanCardNumberInput(panCardNumber) {
+    await this.panCardNumberInput.sendKeys(panCardNumber);
   }
 
-  getPanCardNumberInput() {
+  async getPanCardNumberInput() {
     return this.panCardNumberInput.getAttribute('value');
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  collegeSelectLastOption() {
-    this.collegeSelect
+  async collegeSelectLastOption() {
+    await this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  getCollegeSelectedOption() {
+  async getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  legalEntitySelectLastOption() {
-    this.legalEntitySelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  legalEntitySelectOption(option) {
-    this.legalEntitySelect.sendKeys(option);
-  }
-
-  getLegalEntitySelect() {
-    return this.legalEntitySelect;
-  }
-
-  getLegalEntitySelectedOption() {
-    return this.legalEntitySelect.element(by.css('option:checked')).getText();
-  }
-
-  save() {
-    return this.saveButton.click();
-  }
-
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {
