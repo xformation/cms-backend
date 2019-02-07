@@ -44,7 +44,6 @@ import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
-import com.synectiks.cms.filter.academicsubject.AcademicSubjectVo;
 import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
@@ -327,7 +326,7 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
 
-    public List<AcademicSubjectVo> getAcademicSubjects(AcademicSubjectQueryPayload academicSubjectQueryPayload) {
+    public List<Subject> getAcademicSubjects(AcademicSubjectQueryPayload academicSubjectQueryPayload) {
         return Lists.newArrayList(this.academicSubjectProcessor.getAcademicSubjects(academicSubjectQueryPayload));
     }
 }

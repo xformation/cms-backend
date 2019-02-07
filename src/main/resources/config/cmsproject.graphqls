@@ -118,7 +118,7 @@ type Query {
 
   getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 
-  getAcademicSubjects(input: AcademicSubjectQueryPayload!): [AcademicSubjectVo!]!
+  getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 }
 
 
