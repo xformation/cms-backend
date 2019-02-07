@@ -1,7 +1,9 @@
 package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,11 +27,12 @@ import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.service.dto.AcademicSubjectDTO;
 
 @Component
 public class AcademicSubjectService {
 
-private final static Logger logger = LoggerFactory.getLogger(Class.class);
+	private final static Logger logger = LoggerFactory.getLogger(Class.class);
 	
     @Autowired
 	private SubjectRepository subjectRepository;
@@ -162,5 +165,74 @@ private final static Logger logger = LoggerFactory.getLogger(Class.class);
 	}
     
 
+    public List<Subject> getAllSubjects(Map<String, String> dataMap) {
+		Subject subject = new Subject();
+		subject.setStatus(Status.ACTIVE);
+    	if(dataMap.containsKey("subCode")) {
+    		String subjectCode = dataMap.get("subCode");
+    		subject.setSubjectCode(subjectCode);
+    	}
+		if (dataMap.containsKey("deptId")) {
+			String deptId = dataMap.get("deptId");
+			Department dt = commonService.getDepartmentById(Long.parseLong(deptId));
+			logger.debug("Department retrieved by given department id : "+dt.toString());
+			subject.setDepartment(dt);
+		}
+		if (dataMap.containsKey("batchId")) {
+			String batchId = dataMap.get("batchId");
+			Batch bt = commonService.getBatchById(Long.parseLong(batchId));
+			logger.debug("Batch retrieved by given batch id : "+bt.toString());
+			subject.setBatch(bt);
+		}
+		Example<Subject> example = Example.of(subject);
+		List<Subject> list = this.subjectRepository.findAll(example);
+		logger.info("Total subject retrieved: "+list.size());
+		return list;
+	}
+    
+    
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+	public void createSubjects(List<AcademicSubjectDTO> list) {
+		for (Iterator<AcademicSubjectDTO> iterator = list.iterator(); iterator.hasNext();) {
+			AcademicSubjectDTO dto = iterator.next();
+			Subject sub = new Subject();
+			sub.setSubjectCode(dto.getSubjectCode());
+			if(dto.getSubjectType() == null) {
+				sub.setSubjectType(SubTypeEnum.COMMON);
+			}else {
+				sub.setSubjectType(dto.getSubjectType());
+			}
+			
+			if(dto.getSubjectDesc() != null) {
+				sub.setSubjectDesc(dto.getSubjectDesc());
+			}else {
+				sub.setSubjectDesc(dto.getSubjectCode());
+			}
+			
+			if(dto.getStatus() != null) {
+				sub.setStatus(dto.getStatus());
+			}else {
+				sub.setStatus(Status.ACTIVE);
+			}
+			
+			Department dt = commonService.getDepartmentById(dto.getDepartmentId());
+			sub.setDepartment(dt);
+			Batch bt =  commonService.getBatchById(dto.getBatchId());
+			sub.setBatch(bt);
+			
+			Subject newSub = this.subjectRepository.save(sub);
+			logger.info("Subject data saved.");
+			Teach teach = new Teach();
+			teach.setSubject(newSub);
+			Teacher teacher = commonService.getTeacherById(dto.getTeacherId());
+			teach.setTeacher(teacher);
+			teach.setDesc(dto.getSubjectCode());
+			this.teachRepository.save(teach);
+			logger.info("Teach data saved.");
+		}
+		logger.info("Subject and Teach records saved into database successfully.");
+		
+	}
     
 }
