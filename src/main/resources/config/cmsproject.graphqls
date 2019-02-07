@@ -530,8 +530,8 @@ type Mutation {
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
 
    addSignatoryLink(input: AddSignatoryLinkInput!): AddSignatoryLinkPayload!
-   updateSignatoryLink(input: UpdateSignatoryInput!): UpdateSignatoryPayload!
-   removeSignatoryLink(input: RemoveSignatoryLink!): RemoveSignatoryPayload!
+   updateSignatoryLink(input: UpdateSignatoryLinkInput!): UpdateSignatoryLinkPayload!
+   removeSignatoryLink(input: RemoveSignatoryLinkInput!): RemoveSignatoryLinkPayload!
    
    updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 
