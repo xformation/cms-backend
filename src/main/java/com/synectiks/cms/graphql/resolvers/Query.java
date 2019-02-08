@@ -61,7 +61,6 @@ public class Query implements GraphQLQueryResolver {
     private final TeachRepository teachRepository;
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
-    private final StudentSubjectRepository studentSubjectRepository;
     private final SignatoryLinkRepository signatoryLinkRepository;
 
     @Autowired
@@ -70,7 +69,7 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository, SignatoryLinkRepository signatoryLinkRepository) {
+    public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, SignatoryLinkRepository signatoryLinkRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository=instituteRepository;
@@ -93,7 +92,6 @@ public class Query implements GraphQLQueryResolver {
         this.teachRepository = teachRepository;
         this.attendanceMasterRepository = attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
-        this.studentSubjectRepository = studentSubjectRepository;
         this.signatoryLinkRepository = signatoryLinkRepository;
     }
 
@@ -105,13 +103,6 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(studentRepository.findAll());
     }
 
-    public StudentSubject studentSubject(long id) {
-        return studentSubjectRepository.findById(id).get();
-    }
-
-    public List<StudentSubject> studentSubjects() {
-        return Lists.newArrayList(studentSubjectRepository.findAll());
-    }
 
    /* public List<Institute> institutes() {
         return Lists.newArrayList(instituteRepository.findAll());

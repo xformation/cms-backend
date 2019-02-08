@@ -215,10 +215,6 @@ attendanceStatus AttendanceStatusEnum required
 comments String
 }
 
-entity StudentSubject{
-comments String
-lastupdatedDate LocalDate required
-}
 
 enum AttendanceStatusEnum{
 PRESENT,ABSENT
@@ -305,8 +301,6 @@ Lecture{attendancemaster} to AttendanceMaster,
 Term{academicyear} to AcademicYear,
 StudentAttendance{student} to Student,
 StudentAttendance{lecture} to Lecture,
-StudentSubject{student} to Student,
-StudentSubject{subject} to Subject,
 AttendanceMaster{batch} to Batch,
 Subject{batch} to Batch,
 AttendanceMaster{section} to Section,

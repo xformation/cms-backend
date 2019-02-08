@@ -103,9 +103,6 @@ type Query {
   student(id: Long!): Student!
   students: [Student!]!
 
-  studentSubject(id: Long!): StudentSubject!
-  studentSubjects: [StudentSubject!]!
-
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
 
@@ -396,13 +393,7 @@ type Term{
     termStatus: Status!
     academicyear: AcademicYear!
 }
-type StudentSubject{
-    id: Long!
-    comments: String!
-    lastupdatedDate: Date!
-    student: Student!
-    subject: Subject!
-}
+
 type DailyAttendanceVo {
 	studentId: String
 	studentName: String
@@ -504,10 +495,6 @@ type Mutation {
    addStudent(input: AddStudentInput!): AddStudentPayload!
    updateStudent(input: UpdateStudentInput!): UpdateStudentPayload!
    removeStudent(input: RemoveStudentInput!): RemoveStudentPayload!
-
-   addStudentSubject(input: AddStudentSubjectInput!): AddStudentSubjectPayload!
-   updateStudentSubject(input: UpdateStudentSubjectInput!): UpdateStudentSubjectPayload!
-   removeStudentSubject(input: RemoveStudentSubjectInput!): RemoveStudentSubjectPayload!
 
    addStudentAttendance(input: AddStudentAttendanceInput!): AddStudentAttendancePayload!
    updateStudentAttendance(input: UpdateStudentAttendanceInput!): UpdateStudentAttendancePayload!
@@ -1166,32 +1153,6 @@ input RemoveStudentInput {
 }
 type RemoveStudentPayload {
    students: [Student!]!
-}
-
-input AddStudentSubjectInput {
-   comments: String!
-   lastupdatedDate: Date!
-   studentId: Long!
-   subjectId: Long!
-}
-type AddStudentSubjectPayload {
-   studentSubject: StudentSubject!
-}
-input UpdateStudentSubjectInput {
-   id: Long!
-   comments: String!
-   lastupdatedDate: Date!
-   studentId: Long!
-   subjectId: Long!
-}
-type UpdateStudentSubjectPayload {
-   studentSubject: StudentSubject!
-}
-input RemoveStudentSubjectInput {
-   studentSubjectId: Long!
-}
-type RemoveStudentSubjectPayload {
-   studentSubjects: [StudentSubject!]!
 }
 
 

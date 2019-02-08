@@ -119,12 +119,6 @@ import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendance
 import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendancePayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendanceInput;
 import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendancePayload;
-import com.synectiks.cms.graphql.types.StudentSubject.AddStudentSubjectInput;
-import com.synectiks.cms.graphql.types.StudentSubject.AddStudentSubjectPayload;
-import com.synectiks.cms.graphql.types.StudentSubject.RemoveStudentSubjectInput;
-import com.synectiks.cms.graphql.types.StudentSubject.RemoveStudentSubjectPayload;
-import com.synectiks.cms.graphql.types.StudentSubject.UpdateStudentSubjectPayload;
-import com.synectiks.cms.graphql.types.StudentSubject.UpdatestudentSubjectInput;
 import com.synectiks.cms.graphql.types.Subject.AddSubjectInput;
 import com.synectiks.cms.graphql.types.Subject.AddSubjectPayload;
 import com.synectiks.cms.graphql.types.Subject.RemoveSubjectInput;
@@ -178,7 +172,6 @@ public class Mutation implements GraphQLMutationResolver {
     private final TeachRepository teachRepository;
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
-    private final StudentSubjectRepository studentSubjectRepository;
     private final SignatoryLinkRepository signatoryLinkRepository;
 
     @PersistenceContext
@@ -193,7 +186,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
     
-    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, StudentSubjectRepository studentSubjectRepository, SignatoryLinkRepository signatoryLinkRepository) {
+    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, SignatoryLinkRepository signatoryLinkRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -216,7 +209,6 @@ public class Mutation implements GraphQLMutationResolver {
         this.teachRepository = teachRepository;
         this.attendanceMasterRepository=attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
-        this.studentSubjectRepository = studentSubjectRepository;
         this.signatoryLinkRepository = signatoryLinkRepository;
     }
 
@@ -457,45 +449,6 @@ public class Mutation implements GraphQLMutationResolver {
         Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
         studentRepository.delete(student);
         return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
-    }
-
-    public AddStudentSubjectPayload addStudentSubject(AddStudentSubjectInput addStudentSubjectInput) {
-        final Student student = studentRepository.findById(addStudentSubjectInput.getStudentId()).get();
-        final Subject subject = subjectRepository.findById(addStudentSubjectInput.getSubjectId()).get();
-        final StudentSubject studentSubject = new StudentSubject();
-        studentSubject.setComments(addStudentSubjectInput.getComments());
-        studentSubject.setLastupdatedDate(addStudentSubjectInput.getLastupdatedDate());
-        studentSubject.setStudent(student);
-        studentSubject.setSubject(subject);
-        studentSubjectRepository.save(studentSubject);
-        return new AddStudentSubjectPayload(studentSubject);
-    }
-
-    public UpdateStudentSubjectPayload updateStudentSubject(UpdatestudentSubjectInput updateStudentSubjectInput) {
-        StudentSubject studentSubject = studentSubjectRepository.findById(updateStudentSubjectInput.getId()).get();
-        if (updateStudentSubjectInput.getComments() != null) {
-            studentSubject.setComments(updateStudentSubjectInput.getComments());
-        }
-        if (updateStudentSubjectInput.getLastupdatedDate() != null) {
-            studentSubject.setLastupdatedDate(updateStudentSubjectInput.getLastupdatedDate());
-        }
-        if (updateStudentSubjectInput.getStudentId() != null) {
-            final Student student = studentRepository.findById(updateStudentSubjectInput.getStudentId()).get();
-            studentSubject.setStudent(student);
-        }
-        if (updateStudentSubjectInput.getSubjectId() != null) {
-            final Subject subject = subjectRepository.findById(updateStudentSubjectInput.getSubjectId()).get();
-            studentSubject.setSubject(subject);
-        }
-        studentSubjectRepository.save(studentSubject);
-
-        return new UpdateStudentSubjectPayload(studentSubject);
-    }
-
-    public RemoveStudentSubjectPayload removeStudentSubject(RemoveStudentSubjectInput removeStudentSubjectInput) {
-        StudentSubject studentSubject = studentSubjectRepository.findById(removeStudentSubjectInput.getStudentSubjectId()).get();
-        studentSubjectRepository.delete(studentSubject);
-        return new RemoveStudentSubjectPayload(Lists.newArrayList(studentSubjectRepository.findAll()));
     }
 
 

@@ -11,7 +11,6 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190118141516_added_entity_Term.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141519_added_entity_AcademicYear.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141520_added_entity_Holiday.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190118141526_added_entity_StudentSubject.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141527_added_entity_Location.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141530_added_entity_BankAccounts.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122100629_added_entity_Subject.xml" relativeToChangelogFile="false"/>
@@ -32,7 +31,6 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190118141515_added_entity_constraints_Section.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141516_added_entity_constraints_Term.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141520_added_entity_constraints_Holiday.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190118141526_added_entity_constraints_StudentSubject.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122100629_added_entity_constraints_Subject.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122101135_added_entity_constraints_StudentAttendance.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190123115124_added_entity_constraints_Lecture.xml" relativeToChangelogFile="false"/>
