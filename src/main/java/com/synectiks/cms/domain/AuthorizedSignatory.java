@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -50,10 +51,12 @@ public class AuthorizedSignatory implements Serializable {
     @Column(name = "pan_card_number", nullable = false)
     private String panCardNumber;
 
-    @OneToOne    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("")
     private Branch branch;
 
-    @OneToOne    @JoinColumn(unique = true)
+    @ManyToOne
+    @JsonIgnoreProperties("")
     private College college;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

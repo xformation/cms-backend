@@ -61,10 +61,8 @@ public class CollegeResourceIntTest {
     @Autowired
     private CollegeRepository collegeRepository;
 
-
     @Autowired
     private CollegeMapper collegeMapper;
-    
 
     @Autowired
     private CollegeService collegeService;
@@ -265,7 +263,6 @@ public class CollegeResourceIntTest {
             .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())));
     }
     
-
     @Test
     @Transactional
     public void getCollege() throws Exception {
@@ -282,6 +279,7 @@ public class CollegeResourceIntTest {
             .andExpect(jsonPath("$.backgroundImage").value(DEFAULT_BACKGROUND_IMAGE.intValue()))
             .andExpect(jsonPath("$.instructionInformation").value(DEFAULT_INSTRUCTION_INFORMATION.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCollege() throws Exception {
@@ -335,7 +333,7 @@ public class CollegeResourceIntTest {
         // Create the College
         CollegeDTO collegeDTO = collegeMapper.toDto(college);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCollegeMockMvc.perform(put("/api/colleges")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(collegeDTO)))
@@ -382,10 +380,10 @@ public class CollegeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(college.getId().intValue())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
             .andExpect(jsonPath("$.[*].backgroundImage").value(hasItem(DEFAULT_BACKGROUND_IMAGE.intValue())))
-            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())));
+            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION)));
     }
 
     @Test

@@ -235,6 +235,18 @@ import legalEntity, {
 import authorizedSignatory, {
   AuthorizedSignatoryState
 } from 'app/entities/authorized-signatory/authorized-signatory.reducer';
+// prettier-ignore
+import college, {
+  CollegeState
+} from 'app/entities/college/college.reducer';
+// prettier-ignore
+import branch, {
+  BranchState
+} from 'app/entities/branch/branch.reducer';
+// prettier-ignore
+import authorizedSignatory, {
+  AuthorizedSignatoryState
+} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

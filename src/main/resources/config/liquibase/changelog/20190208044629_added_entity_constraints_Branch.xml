@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Branch.
     -->
-    <changeSet id="20190118141511-2" author="jhipster">
+    <changeSet id="20190208044629-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="college_id"
                                  baseTableName="branch"

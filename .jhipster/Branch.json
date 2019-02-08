@@ -31,7 +31,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141511",
+    "changelogDate": "20190208044629",
     "entityTableName": "branch",
     "dto": "mapstruct",
     "pagination": "no",

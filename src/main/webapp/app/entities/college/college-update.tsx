@@ -12,9 +12,9 @@ import { getEntity, updateEntity, createEntity, reset } from './college.reducer'
 import { ICollege } from 'app/shared/model/college.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICollegeUpdateState {
   isNew: boolean;
@@ -26,6 +26,12 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
     this.state = {
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -49,7 +55,6 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -99,7 +104,7 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
                   </Label>
                   <AvField
                     id="college-logo"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="logo"
                     validate={{
@@ -114,7 +119,7 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
                   </Label>
                   <AvField
                     id="college-backgroundImage"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="backgroundImage"
                     validate={{
@@ -156,7 +161,8 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
 const mapStateToProps = (storeState: IRootState) => ({
   collegeEntity: storeState.college.entity,
   loading: storeState.college.loading,
-  updating: storeState.college.updating
+  updating: storeState.college.updating,
+  updateSuccess: storeState.college.updateSuccess
 });
 
 const mapDispatchToProps = {

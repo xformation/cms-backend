@@ -50,6 +50,7 @@ public class CollegeServiceImpl implements CollegeService {
     @Override
     public CollegeDTO save(CollegeDTO collegeDTO) {
         log.debug("Request to save College : {}", collegeDTO);
+
         College college = collegeMapper.toEntity(collegeDTO);
         college = collegeRepository.save(college);
         CollegeDTO result = collegeMapper.toDto(college);

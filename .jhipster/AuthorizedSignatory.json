@@ -46,23 +46,19 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "authorizedSignatory"
+            "otherEntityField": "id"
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "college",
             "otherEntityName": "college",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "authorizedSignatory"
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190207114425",
+    "changelogDate": "20190208044647",
     "entityTableName": "authorized_signatory",
     "dto": "mapstruct",
     "pagination": "no",

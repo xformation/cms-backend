@@ -5,8 +5,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
 <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190118141510_added_entity_College.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190118141511_added_entity_Branch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141512_added_entity_Department.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141513_added_entity_Batch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141515_added_entity_Section.xml" relativeToChangelogFile="false"/>
@@ -25,9 +23,10 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190205082417_added_entity_Student.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190207114423_added_entity_SignatoryLink.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190207114424_added_entity_LegalEntity.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190207114425_added_entity_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190208044628_added_entity_College.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190208044629_added_entity_Branch.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190208044647_added_entity_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-<include file="config/liquibase/changelog/20190118141511_added_entity_constraints_Branch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141515_added_entity_constraints_Section.xml" relativeToChangelogFile="false"/>
@@ -42,6 +41,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190128125803_added_entity_constraints_Teacher.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190205082417_added_entity_constraints_Student.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190207114423_added_entity_constraints_SignatoryLink.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190207114425_added_entity_constraints_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190208044629_added_entity_constraints_Branch.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190208044647_added_entity_constraints_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

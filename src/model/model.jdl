@@ -316,13 +316,9 @@ Teach{teacher} to Teacher,
 Teacher {department} to Department,
 Teacher{branch} to Branch,
 SignatoryLink{authorizedSignatory} to AuthorizedSignatory,
-SignatoryLink{legalEntity} to LegalEntity
-}
-
-relationship OneToOne {
+SignatoryLink{legalEntity} to LegalEntity,
 AuthorizedSignatory{branch} to Branch,
 AuthorizedSignatory{college} to College
-
 }
 
 dto * with mapstruct

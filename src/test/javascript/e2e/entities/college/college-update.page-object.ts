@@ -13,44 +13,44 @@ export default class CollegeUpdatePage {
     return this.pageTitle;
   }
 
-  setShortNameInput(shortName) {
-    this.shortNameInput.sendKeys(shortName);
+  async setShortNameInput(shortName) {
+    await this.shortNameInput.sendKeys(shortName);
   }
 
-  getShortNameInput() {
+  async getShortNameInput() {
     return this.shortNameInput.getAttribute('value');
   }
 
-  setLogoInput(logo) {
-    this.logoInput.sendKeys(logo);
+  async setLogoInput(logo) {
+    await this.logoInput.sendKeys(logo);
   }
 
-  getLogoInput() {
+  async getLogoInput() {
     return this.logoInput.getAttribute('value');
   }
 
-  setBackgroundImageInput(backgroundImage) {
-    this.backgroundImageInput.sendKeys(backgroundImage);
+  async setBackgroundImageInput(backgroundImage) {
+    await this.backgroundImageInput.sendKeys(backgroundImage);
   }
 
-  getBackgroundImageInput() {
+  async getBackgroundImageInput() {
     return this.backgroundImageInput.getAttribute('value');
   }
 
-  setInstructionInformationInput(instructionInformation) {
-    this.instructionInformationInput.sendKeys(instructionInformation);
+  async setInstructionInformationInput(instructionInformation) {
+    await this.instructionInformationInput.sendKeys(instructionInformation);
   }
 
-  getInstructionInformationInput() {
+  async getInstructionInformationInput() {
     return this.instructionInformationInput.getAttribute('value');
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {
