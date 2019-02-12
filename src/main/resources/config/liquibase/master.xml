@@ -24,6 +24,10 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190208044628_added_entity_College.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190208044629_added_entity_Branch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190208044647_added_entity_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190212090011_added_entity_Country.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190212090012_added_entity_Currency.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190212090013_added_entity_State.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190212090014_added_entity_City.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>
@@ -41,5 +45,8 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190208044647_added_entity_constraints_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190207114424_added_entity_constraints_LegalEntity.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141530_added_entity_constraints_BankAccounts.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190212090012_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190212090013_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190212090014_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

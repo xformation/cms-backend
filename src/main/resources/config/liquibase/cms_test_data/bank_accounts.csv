@@ -1,2 +1,2 @@
-id;name_of_bank;account_number;type_of_account;ifs_code;branch;corporate_id
-1751;HDFC;7338093889389;Savings;AD09832;madhapur;123
+id;name_of_bank;account_number;type_of_account;ifsc_code;branch_address;corporate_id;branch_id;college_id
+1751;HDFC;7338093889389;Savings;AD09832;madhapur;123;1001;951

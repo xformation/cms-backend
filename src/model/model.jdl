@@ -278,6 +278,30 @@ branchAddress String required
 corporateId Integer required
 }
 
+entity Country{
+	CountryName String required
+	CountryCode String required
+	IsdCode String 
+}
+
+entity Currency{
+	CurrencyName String required
+	CurrencyCode String 
+	CurrencySymbol String
+}
+
+entity State{
+	StateName String required
+	DivisionType String required
+	StateCode String required
+}
+
+entity City{
+	CityName String required
+	CityCode String 
+	StdCode String
+}
+
 relationship ManyToOne {
 Student{department required} to Department ,
 Student{batch required} to Batch ,
@@ -309,6 +333,9 @@ BankAccounts{college} to College,
 LegalEntity{branch} to Branch,
 LegalEntity{college} to College,
 LegalEntity{location} to Location
+City{State} to State
+State{Country} to Country
+Currency{Country} to Country
 }
 
 dto * with mapstruct
