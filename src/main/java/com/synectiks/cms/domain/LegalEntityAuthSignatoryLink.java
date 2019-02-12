@@ -11,7 +11,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,13 +26,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 /**
- * A LegalEntity.
+ * A LegalEntityAuthSignatoryLink entity. This will display records of legal entity and authorized signatory
+ * tables.
  */
 @Entity
 @Table(name = "legal_entity")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "legalentity")
-public class LegalEntity implements Serializable {
+public class LegalEntityAuthSignatoryLink implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -132,7 +135,23 @@ public class LegalEntity implements Serializable {
     @JsonIgnoreProperties("")
     private Location location;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    
+    @OneToOne
+    @JoinColumn(name="form_signatory", insertable=false, updatable=false)
+    private AuthorizedSignatory authorizedFormSignatory;
+    
+    @OneToOne
+    @JoinColumn(name="pf_signatory", insertable=false, updatable=false)
+    private AuthorizedSignatory authorizedPfSignatory;
+    
+    @OneToOne
+    @JoinColumn(name="esi_signatory", insertable=false, updatable=false)
+    private AuthorizedSignatory authorizedEsiSignatory;
+    
+    @OneToOne
+    @JoinColumn(name="pt_signatory", insertable=false, updatable=false)
+    private AuthorizedSignatory authorizedPtSignatory;
+    
     public Long getId() {
         return id;
     }
@@ -145,7 +164,7 @@ public class LegalEntity implements Serializable {
         return logo;
     }
 
-    public LegalEntity logo(Long logo) {
+    public LegalEntityAuthSignatoryLink logo(Long logo) {
         this.logo = logo;
         return this;
     }
@@ -158,7 +177,7 @@ public class LegalEntity implements Serializable {
         return legalNameOfTheCollege;
     }
 
-    public LegalEntity legalNameOfTheCollege(String legalNameOfTheCollege) {
+    public LegalEntityAuthSignatoryLink legalNameOfTheCollege(String legalNameOfTheCollege) {
         this.legalNameOfTheCollege = legalNameOfTheCollege;
         return this;
     }
@@ -171,7 +190,7 @@ public class LegalEntity implements Serializable {
         return typeOfCollege;
     }
 
-    public LegalEntity typeOfCollege(TypeOfCollege typeOfCollege) {
+    public LegalEntityAuthSignatoryLink typeOfCollege(TypeOfCollege typeOfCollege) {
         this.typeOfCollege = typeOfCollege;
         return this;
     }
@@ -184,7 +203,7 @@ public class LegalEntity implements Serializable {
         return dateOfIncorporation;
     }
 
-    public LegalEntity dateOfIncorporation(Date dateOfIncorporation) {
+    public LegalEntityAuthSignatoryLink dateOfIncorporation(Date dateOfIncorporation) {
         this.dateOfIncorporation = dateOfIncorporation;
         return this;
     }
@@ -197,7 +216,7 @@ public class LegalEntity implements Serializable {
         return registeredOfficeAddress;
     }
 
-    public LegalEntity registeredOfficeAddress(String registeredOfficeAddress) {
+    public LegalEntityAuthSignatoryLink registeredOfficeAddress(String registeredOfficeAddress) {
         this.registeredOfficeAddress = registeredOfficeAddress;
         return this;
     }
@@ -210,7 +229,7 @@ public class LegalEntity implements Serializable {
         return collegeIdentificationNumber;
     }
 
-    public LegalEntity collegeIdentificationNumber(String collegeIdentificationNumber) {
+    public LegalEntityAuthSignatoryLink collegeIdentificationNumber(String collegeIdentificationNumber) {
         this.collegeIdentificationNumber = collegeIdentificationNumber;
         return this;
     }
@@ -223,7 +242,7 @@ public class LegalEntity implements Serializable {
         return pan;
     }
 
-    public LegalEntity pan(String pan) {
+    public LegalEntityAuthSignatoryLink pan(String pan) {
         this.pan = pan;
         return this;
     }
@@ -236,7 +255,7 @@ public class LegalEntity implements Serializable {
         return tan;
     }
 
-    public LegalEntity tan(String tan) {
+    public LegalEntityAuthSignatoryLink tan(String tan) {
         this.tan = tan;
         return this;
     }
@@ -249,7 +268,7 @@ public class LegalEntity implements Serializable {
         return tanCircleNumber;
     }
 
-    public LegalEntity tanCircleNumber(String tanCircleNumber) {
+    public LegalEntityAuthSignatoryLink tanCircleNumber(String tanCircleNumber) {
         this.tanCircleNumber = tanCircleNumber;
         return this;
     }
@@ -262,7 +281,7 @@ public class LegalEntity implements Serializable {
         return citTdsLocation;
     }
 
-    public LegalEntity citTdsLocation(String citTdsLocation) {
+    public LegalEntityAuthSignatoryLink citTdsLocation(String citTdsLocation) {
         this.citTdsLocation = citTdsLocation;
         return this;
     }
@@ -275,7 +294,7 @@ public class LegalEntity implements Serializable {
         return formSignatory;
     }
 
-    public LegalEntity formSignatory(Long formSignatory) {
+    public LegalEntityAuthSignatoryLink formSignatory(Long formSignatory) {
         this.formSignatory = formSignatory;
         return this;
     }
@@ -288,7 +307,7 @@ public class LegalEntity implements Serializable {
         return pfNumber;
     }
 
-    public LegalEntity pfNumber(String pfNumber) {
+    public LegalEntityAuthSignatoryLink pfNumber(String pfNumber) {
         this.pfNumber = pfNumber;
         return this;
     }
@@ -301,7 +320,7 @@ public class LegalEntity implements Serializable {
         return pfRegistrationDate;
     }
 
-    public LegalEntity pfRegistrationDate(Date pfRegistrationDate) {
+    public LegalEntityAuthSignatoryLink pfRegistrationDate(Date pfRegistrationDate) {
         this.pfRegistrationDate = pfRegistrationDate;
         return this;
     }
@@ -314,7 +333,7 @@ public class LegalEntity implements Serializable {
         return pfSignatory;
     }
 
-    public LegalEntity pfSignatory(Long pfSignatory) {
+    public LegalEntityAuthSignatoryLink pfSignatory(Long pfSignatory) {
         this.pfSignatory = pfSignatory;
         return this;
     }
@@ -327,7 +346,7 @@ public class LegalEntity implements Serializable {
         return esiNumber;
     }
 
-    public LegalEntity esiNumber(Long esiNumber) {
+    public LegalEntityAuthSignatoryLink esiNumber(Long esiNumber) {
         this.esiNumber = esiNumber;
         return this;
     }
@@ -340,7 +359,7 @@ public class LegalEntity implements Serializable {
         return esiRegistrationDate;
     }
 
-    public LegalEntity esiRegistrationDate(Date esiRegistrationDate) {
+    public LegalEntityAuthSignatoryLink esiRegistrationDate(Date esiRegistrationDate) {
         this.esiRegistrationDate = esiRegistrationDate;
         return this;
     }
@@ -353,7 +372,7 @@ public class LegalEntity implements Serializable {
         return esiSignatory;
     }
 
-    public LegalEntity esiSignatory(Long esiSignatory) {
+    public LegalEntityAuthSignatoryLink esiSignatory(Long esiSignatory) {
         this.esiSignatory = esiSignatory;
         return this;
     }
@@ -366,7 +385,7 @@ public class LegalEntity implements Serializable {
         return ptNumber;
     }
 
-    public LegalEntity ptNumber(Long ptNumber) {
+    public LegalEntityAuthSignatoryLink ptNumber(Long ptNumber) {
         this.ptNumber = ptNumber;
         return this;
     }
@@ -379,7 +398,7 @@ public class LegalEntity implements Serializable {
         return ptRegistrationDate;
     }
 
-    public LegalEntity ptRegistrationDate(Date ptRegistrationDate) {
+    public LegalEntityAuthSignatoryLink ptRegistrationDate(Date ptRegistrationDate) {
         this.ptRegistrationDate = ptRegistrationDate;
         return this;
     }
@@ -392,7 +411,7 @@ public class LegalEntity implements Serializable {
         return ptSignatory;
     }
 
-    public LegalEntity ptSignatory(Long ptSignatory) {
+    public LegalEntityAuthSignatoryLink ptSignatory(Long ptSignatory) {
         this.ptSignatory = ptSignatory;
         return this;
     }
@@ -405,7 +424,7 @@ public class LegalEntity implements Serializable {
         return branch;
     }
 
-    public LegalEntity branch(Branch branch) {
+    public LegalEntityAuthSignatoryLink branch(Branch branch) {
         this.branch = branch;
         return this;
     }
@@ -418,7 +437,7 @@ public class LegalEntity implements Serializable {
         return college;
     }
 
-    public LegalEntity college(College college) {
+    public LegalEntityAuthSignatoryLink college(College college) {
         this.college = college;
         return this;
     }
@@ -431,7 +450,7 @@ public class LegalEntity implements Serializable {
         return location;
     }
 
-    public LegalEntity location(Location location) {
+    public LegalEntityAuthSignatoryLink location(Location location) {
         this.location = location;
         return this;
     }
@@ -449,7 +468,7 @@ public class LegalEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        LegalEntity legalEntity = (LegalEntity) o;
+        LegalEntityAuthSignatoryLink legalEntity = (LegalEntityAuthSignatoryLink) o;
         if (legalEntity.getId() == null || getId() == null) {
             return false;
         }
@@ -460,31 +479,53 @@ public class LegalEntity implements Serializable {
     public int hashCode() {
         return Objects.hashCode(getId());
     }
+    
+	public AuthorizedSignatory getAuthorizedFormSignatory() {
+		return authorizedFormSignatory;
+	}
 
-    @Override
-    public String toString() {
-        return "LegalEntity{" +
-            "id=" + getId() +
-            ", logo=" + getLogo() +
-            ", legalNameOfTheCollege='" + getLegalNameOfTheCollege() + "'" +
-            ", typeOfCollege='" + getTypeOfCollege() + "'" +
-            ", dateOfIncorporation='" + getDateOfIncorporation() + "'" +
-            ", registeredOfficeAddress='" + getRegisteredOfficeAddress() + "'" +
-            ", collegeIdentificationNumber='" + getCollegeIdentificationNumber() + "'" +
-            ", pan='" + getPan() + "'" +
-            ", tan='" + getTan() + "'" +
-            ", tanCircleNumber='" + getTanCircleNumber() + "'" +
-            ", citTdsLocation='" + getCitTdsLocation() + "'" +
-            ", formSignatory=" + getFormSignatory() +
-            ", pfNumber='" + getPfNumber() + "'" +
-            ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
-            ", pfSignatory=" + getPfSignatory() +
-            ", esiNumber=" + getEsiNumber() +
-            ", esiRegistrationDate='" + getEsiRegistrationDate() + "'" +
-            ", esiSignatory=" + getEsiSignatory() +
-            ", ptNumber=" + getPtNumber() +
-            ", ptRegistrationDate='" + getPtRegistrationDate() + "'" +
-            ", ptSignatory=" + getPtSignatory() +
-            "}";
-    }
+	public void setAuthorizedFormSignatory(AuthorizedSignatory authorizedFormSignatory) {
+		this.authorizedFormSignatory = authorizedFormSignatory;
+	}
+
+	public AuthorizedSignatory getAuthorizedPfSignatory() {
+		return authorizedPfSignatory;
+	}
+
+	public void setAuthorizedPfSignatory(AuthorizedSignatory authorizedPfSignatory) {
+		this.authorizedPfSignatory = authorizedPfSignatory;
+	}
+
+	public AuthorizedSignatory getAuthorizedEsiSignatory() {
+		return authorizedEsiSignatory;
+	}
+
+	public void setAuthorizedEsiSignatory(AuthorizedSignatory authorizedEsiSignatory) {
+		this.authorizedEsiSignatory = authorizedEsiSignatory;
+	}
+
+	public AuthorizedSignatory getAuthorizedPtSignatory() {
+		return authorizedPtSignatory;
+	}
+
+	public void setAuthorizedPtSignatory(AuthorizedSignatory authorizedPtSignatory) {
+		this.authorizedPtSignatory = authorizedPtSignatory;
+	}
+
+	@Override
+	public String toString() {
+		return "LegalEntityAuthSignatoryLink [id=" + id + ", logo=" + logo + ", legalNameOfTheCollege="
+				+ legalNameOfTheCollege + ", typeOfCollege=" + typeOfCollege + ", dateOfIncorporation="
+				+ dateOfIncorporation + ", registeredOfficeAddress=" + registeredOfficeAddress
+				+ ", collegeIdentificationNumber=" + collegeIdentificationNumber + ", pan=" + pan + ", tan=" + tan
+				+ ", tanCircleNumber=" + tanCircleNumber + ", citTdsLocation=" + citTdsLocation + ", formSignatory="
+				+ formSignatory + ", pfNumber=" + pfNumber + ", pfRegistrationDate=" + pfRegistrationDate
+				+ ", pfSignatory=" + pfSignatory + ", esiNumber=" + esiNumber + ", esiRegistrationDate="
+				+ esiRegistrationDate + ", esiSignatory=" + esiSignatory + ", ptNumber=" + ptNumber
+				+ ", ptRegistrationDate=" + ptRegistrationDate + ", ptSignatory=" + ptSignatory + ", branch=" + branch
+				+ ", college=" + college + ", location=" + location + ", authorizedFormSignatory="
+				+ authorizedFormSignatory + ", authorizedPfSignatory=" + authorizedPfSignatory
+				+ ", authorizedEsiSignatory=" + authorizedEsiSignatory + ", authorizedPtSignatory="
+				+ authorizedPtSignatory + "]";
+	}
 }

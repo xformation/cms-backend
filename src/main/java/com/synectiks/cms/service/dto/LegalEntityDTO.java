@@ -44,7 +44,7 @@ public class LegalEntityDTO implements Serializable {
     private String citTdsLocation;
 
     @NotNull
-    private String formSignatory;
+    private Long formSignatory;
 
     @NotNull
     private String pfNumber;
@@ -53,13 +53,7 @@ public class LegalEntityDTO implements Serializable {
     private LocalDate pfRegistrationDate;
 
     @NotNull
-    private String pfSignatory;
-
-    @NotNull
-    private String pfSignatoryDesignation;
-
-    @NotNull
-    private String pfSignatoryFatherName;
+    private Long pfSignatory;
 
     @NotNull
     private Long esiNumber;
@@ -68,13 +62,7 @@ public class LegalEntityDTO implements Serializable {
     private LocalDate esiRegistrationDate;
 
     @NotNull
-    private String esiSignatory;
-
-    @NotNull
-    private String esiSignatoryDesignation;
-
-    @NotNull
-    private String esiSignatoryFatherName;
+    private Long esiSignatory;
 
     @NotNull
     private Long ptNumber;
@@ -83,7 +71,13 @@ public class LegalEntityDTO implements Serializable {
     private LocalDate ptRegistrationDate;
 
     @NotNull
-    private String ptSignatory;
+    private Long ptSignatory;
+
+    private Long branchId;
+
+    private Long collegeId;
+
+    private Long locationId;
 
     public Long getId() {
         return id;
@@ -173,11 +167,11 @@ public class LegalEntityDTO implements Serializable {
         this.citTdsLocation = citTdsLocation;
     }
 
-    public String getFormSignatory() {
+    public Long getFormSignatory() {
         return formSignatory;
     }
 
-    public void setFormSignatory(String formSignatory) {
+    public void setFormSignatory(Long formSignatory) {
         this.formSignatory = formSignatory;
     }
 
@@ -197,28 +191,12 @@ public class LegalEntityDTO implements Serializable {
         this.pfRegistrationDate = pfRegistrationDate;
     }
 
-    public String getPfSignatory() {
+    public Long getPfSignatory() {
         return pfSignatory;
     }
 
-    public void setPfSignatory(String pfSignatory) {
+    public void setPfSignatory(Long pfSignatory) {
         this.pfSignatory = pfSignatory;
-    }
-
-    public String getPfSignatoryDesignation() {
-        return pfSignatoryDesignation;
-    }
-
-    public void setPfSignatoryDesignation(String pfSignatoryDesignation) {
-        this.pfSignatoryDesignation = pfSignatoryDesignation;
-    }
-
-    public String getPfSignatoryFatherName() {
-        return pfSignatoryFatherName;
-    }
-
-    public void setPfSignatoryFatherName(String pfSignatoryFatherName) {
-        this.pfSignatoryFatherName = pfSignatoryFatherName;
     }
 
     public Long getEsiNumber() {
@@ -237,28 +215,12 @@ public class LegalEntityDTO implements Serializable {
         this.esiRegistrationDate = esiRegistrationDate;
     }
 
-    public String getEsiSignatory() {
+    public Long getEsiSignatory() {
         return esiSignatory;
     }
 
-    public void setEsiSignatory(String esiSignatory) {
+    public void setEsiSignatory(Long esiSignatory) {
         this.esiSignatory = esiSignatory;
-    }
-
-    public String getEsiSignatoryDesignation() {
-        return esiSignatoryDesignation;
-    }
-
-    public void setEsiSignatoryDesignation(String esiSignatoryDesignation) {
-        this.esiSignatoryDesignation = esiSignatoryDesignation;
-    }
-
-    public String getEsiSignatoryFatherName() {
-        return esiSignatoryFatherName;
-    }
-
-    public void setEsiSignatoryFatherName(String esiSignatoryFatherName) {
-        this.esiSignatoryFatherName = esiSignatoryFatherName;
     }
 
     public Long getPtNumber() {
@@ -277,12 +239,36 @@ public class LegalEntityDTO implements Serializable {
         this.ptRegistrationDate = ptRegistrationDate;
     }
 
-    public String getPtSignatory() {
+    public Long getPtSignatory() {
         return ptSignatory;
     }
 
-    public void setPtSignatory(String ptSignatory) {
+    public void setPtSignatory(Long ptSignatory) {
         this.ptSignatory = ptSignatory;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Long getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
     @Override
@@ -320,20 +306,19 @@ public class LegalEntityDTO implements Serializable {
             ", tan='" + getTan() + "'" +
             ", tanCircleNumber='" + getTanCircleNumber() + "'" +
             ", citTdsLocation='" + getCitTdsLocation() + "'" +
-            ", formSignatory='" + getFormSignatory() + "'" +
+            ", formSignatory=" + getFormSignatory() +
             ", pfNumber='" + getPfNumber() + "'" +
             ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
-            ", pfSignatory='" + getPfSignatory() + "'" +
-            ", pfSignatoryDesignation='" + getPfSignatoryDesignation() + "'" +
-            ", pfSignatoryFatherName='" + getPfSignatoryFatherName() + "'" +
+            ", pfSignatory=" + getPfSignatory() +
             ", esiNumber=" + getEsiNumber() +
             ", esiRegistrationDate='" + getEsiRegistrationDate() + "'" +
-            ", esiSignatory='" + getEsiSignatory() + "'" +
-            ", esiSignatoryDesignation='" + getEsiSignatoryDesignation() + "'" +
-            ", esiSignatoryFatherName='" + getEsiSignatoryFatherName() + "'" +
+            ", esiSignatory=" + getEsiSignatory() +
             ", ptNumber=" + getPtNumber() +
             ", ptRegistrationDate='" + getPtRegistrationDate() + "'" +
-            ", ptSignatory='" + getPtSignatory() + "'" +
+            ", ptSignatory=" + getPtSignatory() +
+            ", branch=" + getBranchId() +
+            ", college=" + getCollegeId() +
+            ", location=" + getLocationId() +
             "}";
     }
 }

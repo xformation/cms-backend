@@ -58,7 +58,7 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.AuthorizedSignatory.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.BankAccounts.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.Branch.class.getName() + ".teaches", jcacheConfiguration);
-            cm.createCache(com.synectiks.cms.domain.SignatoryLink.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.LegalEntityAuthSignatoryLink.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

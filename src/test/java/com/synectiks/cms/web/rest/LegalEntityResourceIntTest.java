@@ -1,14 +1,27 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
-import com.synectiks.cms.service.LegalEntityService;
-import com.synectiks.cms.service.dto.LegalEntityDTO;
-import com.synectiks.cms.service.mapper.LegalEntityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,23 +37,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.LegalEntity;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+import com.synectiks.cms.service.LegalEntityService;
+import com.synectiks.cms.service.dto.LegalEntityDTO;
+import com.synectiks.cms.service.mapper.LegalEntityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the LegalEntityResource REST controller.
  *
@@ -80,8 +85,8 @@ public class LegalEntityResourceIntTest {
     private static final String DEFAULT_CIT_TDS_LOCATION = "AAAAAAAAAA";
     private static final String UPDATED_CIT_TDS_LOCATION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_FORM_SIGNATORY = "AAAAAAAAAA";
-    private static final String UPDATED_FORM_SIGNATORY = "BBBBBBBBBB";
+    private static final Long DEFAULT_FORM_SIGNATORY = 1L;
+    private static final Long UPDATED_FORM_SIGNATORY = 2L;
 
     private static final String DEFAULT_PF_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PF_NUMBER = "BBBBBBBBBB";
@@ -89,14 +94,8 @@ public class LegalEntityResourceIntTest {
     private static final Date DEFAULT_PF_REGISTRATION_DATE = new Date();
     private static final Date UPDATED_PF_REGISTRATION_DATE = new Date();
 
-    private static final String DEFAULT_PF_SIGNATORY = "AAAAAAAAAA";
-    private static final String UPDATED_PF_SIGNATORY = "BBBBBBBBBB";
-
-    private static final String DEFAULT_PF_SIGNATORY_DESIGNATION = "AAAAAAAAAA";
-    private static final String UPDATED_PF_SIGNATORY_DESIGNATION = "BBBBBBBBBB";
-
-    private static final String DEFAULT_PF_SIGNATORY_FATHER_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_PF_SIGNATORY_FATHER_NAME = "BBBBBBBBBB";
+    private static final Long DEFAULT_PF_SIGNATORY = 1L;
+    private static final Long UPDATED_PF_SIGNATORY = 2L;
 
     private static final Long DEFAULT_ESI_NUMBER = 1L;
     private static final Long UPDATED_ESI_NUMBER = 2L;
@@ -104,14 +103,8 @@ public class LegalEntityResourceIntTest {
     private static final Date DEFAULT_ESI_REGISTRATION_DATE = new Date();
     private static final Date UPDATED_ESI_REGISTRATION_DATE = new Date();
 
-    private static final String DEFAULT_ESI_SIGNATORY = "AAAAAAAAAA";
-    private static final String UPDATED_ESI_SIGNATORY = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ESI_SIGNATORY_DESIGNATION = "AAAAAAAAAA";
-    private static final String UPDATED_ESI_SIGNATORY_DESIGNATION = "BBBBBBBBBB";
-
-    private static final String DEFAULT_ESI_SIGNATORY_FATHER_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_ESI_SIGNATORY_FATHER_NAME = "BBBBBBBBBB";
+    private static final Long DEFAULT_ESI_SIGNATORY = 1L;
+    private static final Long UPDATED_ESI_SIGNATORY = 2L;
 
     private static final Long DEFAULT_PT_NUMBER = 1L;
     private static final Long UPDATED_PT_NUMBER = 2L;
@@ -119,14 +112,16 @@ public class LegalEntityResourceIntTest {
     private static final Date DEFAULT_PT_REGISTRATION_DATE = new Date();
     private static final Date UPDATED_PT_REGISTRATION_DATE = new Date();
 
-    private static final String DEFAULT_PT_SIGNATORY = "AAAAAAAAAA";
-    private static final String UPDATED_PT_SIGNATORY = "BBBBBBBBBB";
+    private static final Long DEFAULT_PT_SIGNATORY = 1L;
+    private static final Long UPDATED_PT_SIGNATORY = 2L;
 
     @Autowired
     private LegalEntityRepository legalEntityRepository;
 
+
     @Autowired
     private LegalEntityMapper legalEntityMapper;
+    
 
     @Autowired
     private LegalEntityService legalEntityService;
@@ -173,31 +168,27 @@ public class LegalEntityResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static LegalEntity createEntity(EntityManager em) {
-        LegalEntity legalEntity = new LegalEntity();
-        legalEntity.logo(DEFAULT_LOGO);
-        legalEntity.legalNameOfTheCollege(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE);
-        legalEntity.typeOfCollege(DEFAULT_TYPE_OF_COLLEGE);
-        legalEntity.dateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION);
-        legalEntity.registeredOfficeAddress(DEFAULT_REGISTERED_OFFICE_ADDRESS);
-        legalEntity.collegeIdentificationNumber(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER);
-        legalEntity.pan(DEFAULT_PAN);
-        legalEntity.tan(DEFAULT_TAN);
-        legalEntity.tanCircleNumber(DEFAULT_TAN_CIRCLE_NUMBER);
-        legalEntity.citTdsLocation(DEFAULT_CIT_TDS_LOCATION);
-        legalEntity.formSignatory(DEFAULT_FORM_SIGNATORY);
-        legalEntity.pfNumber(DEFAULT_PF_NUMBER);
-        legalEntity.pfRegistrationDate(DEFAULT_PF_REGISTRATION_DATE);
-        legalEntity.pfSignatory(DEFAULT_PF_SIGNATORY);
-        legalEntity.pfSignatoryDesignation(DEFAULT_PF_SIGNATORY_DESIGNATION);
-        legalEntity.pfSignatoryFatherName(DEFAULT_PF_SIGNATORY_FATHER_NAME);
-        legalEntity.esiNumber(DEFAULT_ESI_NUMBER);
-        legalEntity.esiRegistrationDate(DEFAULT_ESI_REGISTRATION_DATE);
-        legalEntity.esiSignatory(DEFAULT_ESI_SIGNATORY);
-        legalEntity.esiSignatoryDesignation(DEFAULT_ESI_SIGNATORY_DESIGNATION);
-        legalEntity.esiSignatoryFatherName(DEFAULT_ESI_SIGNATORY_FATHER_NAME);
-        legalEntity.ptNumber(DEFAULT_PT_NUMBER);
-        legalEntity.ptRegistrationDate(DEFAULT_PT_REGISTRATION_DATE);
-        legalEntity.ptSignatory(DEFAULT_PT_SIGNATORY);
+        LegalEntity legalEntity = new LegalEntity()
+            .logo(DEFAULT_LOGO)
+            .legalNameOfTheCollege(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)
+            .typeOfCollege(DEFAULT_TYPE_OF_COLLEGE)
+            .dateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION)
+            .registeredOfficeAddress(DEFAULT_REGISTERED_OFFICE_ADDRESS)
+            .collegeIdentificationNumber(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER)
+            .pan(DEFAULT_PAN)
+            .tan(DEFAULT_TAN)
+            .tanCircleNumber(DEFAULT_TAN_CIRCLE_NUMBER)
+            .citTdsLocation(DEFAULT_CIT_TDS_LOCATION)
+            .formSignatory(DEFAULT_FORM_SIGNATORY)
+            .pfNumber(DEFAULT_PF_NUMBER)
+            .pfRegistrationDate(DEFAULT_PF_REGISTRATION_DATE)
+            .pfSignatory(DEFAULT_PF_SIGNATORY)
+            .esiNumber(DEFAULT_ESI_NUMBER)
+            .esiRegistrationDate(DEFAULT_ESI_REGISTRATION_DATE)
+            .esiSignatory(DEFAULT_ESI_SIGNATORY)
+            .ptNumber(DEFAULT_PT_NUMBER)
+            .ptRegistrationDate(DEFAULT_PT_REGISTRATION_DATE)
+            .ptSignatory(DEFAULT_PT_SIGNATORY);
         return legalEntity;
     }
 
@@ -236,13 +227,9 @@ public class LegalEntityResourceIntTest {
         assertThat(testLegalEntity.getPfNumber()).isEqualTo(DEFAULT_PF_NUMBER);
         assertThat(testLegalEntity.getPfRegistrationDate()).isEqualTo(DEFAULT_PF_REGISTRATION_DATE);
         assertThat(testLegalEntity.getPfSignatory()).isEqualTo(DEFAULT_PF_SIGNATORY);
-        assertThat(testLegalEntity.getPfSignatoryDesignation()).isEqualTo(DEFAULT_PF_SIGNATORY_DESIGNATION);
-        assertThat(testLegalEntity.getPfSignatoryFatherName()).isEqualTo(DEFAULT_PF_SIGNATORY_FATHER_NAME);
         assertThat(testLegalEntity.getEsiNumber()).isEqualTo(DEFAULT_ESI_NUMBER);
         assertThat(testLegalEntity.getEsiRegistrationDate()).isEqualTo(DEFAULT_ESI_REGISTRATION_DATE);
         assertThat(testLegalEntity.getEsiSignatory()).isEqualTo(DEFAULT_ESI_SIGNATORY);
-        assertThat(testLegalEntity.getEsiSignatoryDesignation()).isEqualTo(DEFAULT_ESI_SIGNATORY_DESIGNATION);
-        assertThat(testLegalEntity.getEsiSignatoryFatherName()).isEqualTo(DEFAULT_ESI_SIGNATORY_FATHER_NAME);
         assertThat(testLegalEntity.getPtNumber()).isEqualTo(DEFAULT_PT_NUMBER);
         assertThat(testLegalEntity.getPtRegistrationDate()).isEqualTo(DEFAULT_PT_REGISTRATION_DATE);
         assertThat(testLegalEntity.getPtSignatory()).isEqualTo(DEFAULT_PT_SIGNATORY);
@@ -542,44 +529,6 @@ public class LegalEntityResourceIntTest {
 
     @Test
     @Transactional
-    public void checkPfSignatoryDesignationIsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setPfSignatoryDesignation(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkPfSignatoryFatherNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setPfSignatoryFatherName(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkEsiNumberIsRequired() throws Exception {
         int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
         // set the field null
@@ -622,44 +571,6 @@ public class LegalEntityResourceIntTest {
         int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
         // set the field null
         legalEntity.setEsiSignatory(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkEsiSignatoryDesignationIsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setEsiSignatoryDesignation(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkEsiSignatoryFatherNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setEsiSignatoryFatherName(null);
 
         // Create the LegalEntity, which fails.
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
@@ -751,22 +662,19 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN.toString())))
             .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION.toString())))
-            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.toString())))
+            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.toString())))
-            .andExpect(jsonPath("$.[*].pfSignatoryDesignation").value(hasItem(DEFAULT_PF_SIGNATORY_DESIGNATION.toString())))
-            .andExpect(jsonPath("$.[*].pfSignatoryFatherName").value(hasItem(DEFAULT_PF_SIGNATORY_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].esiRegistrationDate").value(hasItem(DEFAULT_ESI_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY.toString())))
-            .andExpect(jsonPath("$.[*].esiSignatoryDesignation").value(hasItem(DEFAULT_ESI_SIGNATORY_DESIGNATION.toString())))
-            .andExpect(jsonPath("$.[*].esiSignatoryFatherName").value(hasItem(DEFAULT_ESI_SIGNATORY_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].ptRegistrationDate").value(hasItem(DEFAULT_PT_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.toString())));
+            .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.intValue())));
     }
     
+
     @Test
     @Transactional
     public void getLegalEntity() throws Exception {
@@ -788,22 +696,17 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.tan").value(DEFAULT_TAN.toString()))
             .andExpect(jsonPath("$.tanCircleNumber").value(DEFAULT_TAN_CIRCLE_NUMBER.toString()))
             .andExpect(jsonPath("$.citTdsLocation").value(DEFAULT_CIT_TDS_LOCATION.toString()))
-            .andExpect(jsonPath("$.formSignatory").value(DEFAULT_FORM_SIGNATORY.toString()))
+            .andExpect(jsonPath("$.formSignatory").value(DEFAULT_FORM_SIGNATORY.intValue()))
             .andExpect(jsonPath("$.pfNumber").value(DEFAULT_PF_NUMBER.toString()))
             .andExpect(jsonPath("$.pfRegistrationDate").value(DEFAULT_PF_REGISTRATION_DATE.toString()))
-            .andExpect(jsonPath("$.pfSignatory").value(DEFAULT_PF_SIGNATORY.toString()))
-            .andExpect(jsonPath("$.pfSignatoryDesignation").value(DEFAULT_PF_SIGNATORY_DESIGNATION.toString()))
-            .andExpect(jsonPath("$.pfSignatoryFatherName").value(DEFAULT_PF_SIGNATORY_FATHER_NAME.toString()))
+            .andExpect(jsonPath("$.pfSignatory").value(DEFAULT_PF_SIGNATORY.intValue()))
             .andExpect(jsonPath("$.esiNumber").value(DEFAULT_ESI_NUMBER.intValue()))
             .andExpect(jsonPath("$.esiRegistrationDate").value(DEFAULT_ESI_REGISTRATION_DATE.toString()))
-            .andExpect(jsonPath("$.esiSignatory").value(DEFAULT_ESI_SIGNATORY.toString()))
-            .andExpect(jsonPath("$.esiSignatoryDesignation").value(DEFAULT_ESI_SIGNATORY_DESIGNATION.toString()))
-            .andExpect(jsonPath("$.esiSignatoryFatherName").value(DEFAULT_ESI_SIGNATORY_FATHER_NAME.toString()))
+            .andExpect(jsonPath("$.esiSignatory").value(DEFAULT_ESI_SIGNATORY.intValue()))
             .andExpect(jsonPath("$.ptNumber").value(DEFAULT_PT_NUMBER.intValue()))
             .andExpect(jsonPath("$.ptRegistrationDate").value(DEFAULT_PT_REGISTRATION_DATE.toString()))
-            .andExpect(jsonPath("$.ptSignatory").value(DEFAULT_PT_SIGNATORY.toString()));
+            .andExpect(jsonPath("$.ptSignatory").value(DEFAULT_PT_SIGNATORY.intValue()));
     }
-
     @Test
     @Transactional
     public void getNonExistingLegalEntity() throws Exception {
@@ -824,31 +727,27 @@ public class LegalEntityResourceIntTest {
         LegalEntity updatedLegalEntity = legalEntityRepository.findById(legalEntity.getId()).get();
         // Disconnect from session so that the updates on updatedLegalEntity are not directly saved in db
         em.detach(updatedLegalEntity);
-        //updatedLegalEntity
-        updatedLegalEntity.logo(UPDATED_LOGO);
-        updatedLegalEntity.legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE);
-        updatedLegalEntity.typeOfCollege(UPDATED_TYPE_OF_COLLEGE);
-        updatedLegalEntity.setDateOfIncorporation(UPDATED_DATE_OF_INCORPORATION);
-        updatedLegalEntity.registeredOfficeAddress(UPDATED_REGISTERED_OFFICE_ADDRESS);
-        updatedLegalEntity.collegeIdentificationNumber(UPDATED_COLLEGE_IDENTIFICATION_NUMBER);
-        updatedLegalEntity.pan(UPDATED_PAN);
-        updatedLegalEntity.tan(UPDATED_TAN);
-        updatedLegalEntity.tanCircleNumber(UPDATED_TAN_CIRCLE_NUMBER);
-        updatedLegalEntity.citTdsLocation(UPDATED_CIT_TDS_LOCATION);
-        updatedLegalEntity.formSignatory(UPDATED_FORM_SIGNATORY);
-        updatedLegalEntity.pfNumber(UPDATED_PF_NUMBER);
-        updatedLegalEntity.setPfRegistrationDate(UPDATED_PF_REGISTRATION_DATE);
-        updatedLegalEntity.pfSignatory(UPDATED_PF_SIGNATORY);
-        updatedLegalEntity.pfSignatoryDesignation(UPDATED_PF_SIGNATORY_DESIGNATION);
-        updatedLegalEntity.pfSignatoryFatherName(UPDATED_PF_SIGNATORY_FATHER_NAME);
-        updatedLegalEntity.esiNumber(UPDATED_ESI_NUMBER);
-        updatedLegalEntity.setEsiRegistrationDate(UPDATED_ESI_REGISTRATION_DATE);
-        updatedLegalEntity.esiSignatory(UPDATED_ESI_SIGNATORY);
-        updatedLegalEntity.esiSignatoryDesignation(UPDATED_ESI_SIGNATORY_DESIGNATION);
-        updatedLegalEntity.esiSignatoryFatherName(UPDATED_ESI_SIGNATORY_FATHER_NAME);
-        updatedLegalEntity.ptNumber(UPDATED_PT_NUMBER);
-        updatedLegalEntity.setPtRegistrationDate(UPDATED_PT_REGISTRATION_DATE);
-        updatedLegalEntity.ptSignatory(UPDATED_PT_SIGNATORY);
+        updatedLegalEntity
+            .logo(UPDATED_LOGO)
+            .legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE)
+            .typeOfCollege(UPDATED_TYPE_OF_COLLEGE)
+            .dateOfIncorporation(UPDATED_DATE_OF_INCORPORATION)
+            .registeredOfficeAddress(UPDATED_REGISTERED_OFFICE_ADDRESS)
+            .collegeIdentificationNumber(UPDATED_COLLEGE_IDENTIFICATION_NUMBER)
+            .pan(UPDATED_PAN)
+            .tan(UPDATED_TAN)
+            .tanCircleNumber(UPDATED_TAN_CIRCLE_NUMBER)
+            .citTdsLocation(UPDATED_CIT_TDS_LOCATION)
+            .formSignatory(UPDATED_FORM_SIGNATORY)
+            .pfNumber(UPDATED_PF_NUMBER)
+            .pfRegistrationDate(UPDATED_PF_REGISTRATION_DATE)
+            .pfSignatory(UPDATED_PF_SIGNATORY)
+            .esiNumber(UPDATED_ESI_NUMBER)
+            .esiRegistrationDate(UPDATED_ESI_REGISTRATION_DATE)
+            .esiSignatory(UPDATED_ESI_SIGNATORY)
+            .ptNumber(UPDATED_PT_NUMBER)
+            .ptRegistrationDate(UPDATED_PT_REGISTRATION_DATE)
+            .ptSignatory(UPDATED_PT_SIGNATORY);
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(updatedLegalEntity);
 
         restLegalEntityMockMvc.perform(put("/api/legal-entities")
@@ -874,13 +773,9 @@ public class LegalEntityResourceIntTest {
         assertThat(testLegalEntity.getPfNumber()).isEqualTo(UPDATED_PF_NUMBER);
         assertThat(testLegalEntity.getPfRegistrationDate()).isEqualTo(UPDATED_PF_REGISTRATION_DATE);
         assertThat(testLegalEntity.getPfSignatory()).isEqualTo(UPDATED_PF_SIGNATORY);
-        assertThat(testLegalEntity.getPfSignatoryDesignation()).isEqualTo(UPDATED_PF_SIGNATORY_DESIGNATION);
-        assertThat(testLegalEntity.getPfSignatoryFatherName()).isEqualTo(UPDATED_PF_SIGNATORY_FATHER_NAME);
         assertThat(testLegalEntity.getEsiNumber()).isEqualTo(UPDATED_ESI_NUMBER);
         assertThat(testLegalEntity.getEsiRegistrationDate()).isEqualTo(UPDATED_ESI_REGISTRATION_DATE);
         assertThat(testLegalEntity.getEsiSignatory()).isEqualTo(UPDATED_ESI_SIGNATORY);
-        assertThat(testLegalEntity.getEsiSignatoryDesignation()).isEqualTo(UPDATED_ESI_SIGNATORY_DESIGNATION);
-        assertThat(testLegalEntity.getEsiSignatoryFatherName()).isEqualTo(UPDATED_ESI_SIGNATORY_FATHER_NAME);
         assertThat(testLegalEntity.getPtNumber()).isEqualTo(UPDATED_PT_NUMBER);
         assertThat(testLegalEntity.getPtRegistrationDate()).isEqualTo(UPDATED_PT_REGISTRATION_DATE);
         assertThat(testLegalEntity.getPtSignatory()).isEqualTo(UPDATED_PT_SIGNATORY);
@@ -897,7 +792,7 @@ public class LegalEntityResourceIntTest {
         // Create the LegalEntity
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restLegalEntityMockMvc.perform(put("/api/legal-entities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
@@ -945,29 +840,25 @@ public class LegalEntityResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(legalEntity.getId().intValue())))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
-            .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)))
+            .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].typeOfCollege").value(hasItem(DEFAULT_TYPE_OF_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].dateOfIncorporation").value(hasItem(DEFAULT_DATE_OF_INCORPORATION.toString())))
-            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS)))
-            .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER)))
-            .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN)))
-            .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN)))
-            .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER)))
-            .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION)))
-            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY)))
-            .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER)))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN.toString())))
+            .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN.toString())))
+            .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION.toString())))
+            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.intValue())))
+            .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY)))
-            .andExpect(jsonPath("$.[*].pfSignatoryDesignation").value(hasItem(DEFAULT_PF_SIGNATORY_DESIGNATION)))
-            .andExpect(jsonPath("$.[*].pfSignatoryFatherName").value(hasItem(DEFAULT_PF_SIGNATORY_FATHER_NAME)))
+            .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].esiRegistrationDate").value(hasItem(DEFAULT_ESI_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY)))
-            .andExpect(jsonPath("$.[*].esiSignatoryDesignation").value(hasItem(DEFAULT_ESI_SIGNATORY_DESIGNATION)))
-            .andExpect(jsonPath("$.[*].esiSignatoryFatherName").value(hasItem(DEFAULT_ESI_SIGNATORY_FATHER_NAME)))
+            .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].ptRegistrationDate").value(hasItem(DEFAULT_PT_REGISTRATION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY)));
+            .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.intValue())));
     }
 
     @Test

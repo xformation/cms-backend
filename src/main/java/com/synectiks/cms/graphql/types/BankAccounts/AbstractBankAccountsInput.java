@@ -1,5 +1,6 @@
 package com.synectiks.cms.graphql.types.BankAccounts;
 
+import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.enumeration.NameOfBank;
 
 import java.util.Objects;
@@ -9,10 +10,11 @@ public class AbstractBankAccountsInput {
     private NameOfBank nameOfBank;
     private Long accountNumber;
     private String typeOfAccount;
-    private String ifsCode;
-    private String branch;
+    private String ifscCode;
+    private String branchAddress;
     private Integer corporateId;
-
+    private Long branchId;
+    private Long collegeId;
     public Long getId() {
         return id;
     }
@@ -45,20 +47,20 @@ public class AbstractBankAccountsInput {
         this.typeOfAccount = typeOfAccount;
     }
 
-    public String getIfsCode() {
-        return ifsCode;
+    public String getIfscCode() {
+        return ifscCode;
     }
 
-    public void setIfsCode(String ifsCode) {
-        this.ifsCode = ifsCode;
+    public void setIfscCode(String ifsCode) {
+        this.ifscCode = ifsCode;
     }
 
-    public String getBranch() {
-        return branch;
+    public String getBranchAddress() {
+        return branchAddress;
     }
 
-    public void setBranch(String branch) {
-        this.branch = branch;
+    public void setBranchAddress(String branchAddress) {
+        this.branchAddress = branchAddress;
     }
 
     public Integer getCorporateId() {
@@ -78,14 +80,14 @@ public class AbstractBankAccountsInput {
             getNameOfBank() == that.getNameOfBank() &&
             Objects.equals(getAccountNumber(), that.getAccountNumber()) &&
             Objects.equals(getTypeOfAccount(), that.getTypeOfAccount()) &&
-            Objects.equals(getIfsCode(), that.getIfsCode()) &&
-            Objects.equals(getBranch(), that.getBranch()) &&
+            Objects.equals(getIfscCode(), that.getIfscCode()) &&
+            Objects.equals(getBranchAddress(), that.getBranchAddress()) &&
             Objects.equals(getCorporateId(), that.getCorporateId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getNameOfBank(), getAccountNumber(), getTypeOfAccount(), getIfsCode(), getBranch(), getCorporateId());
+        return Objects.hash(getId(), getNameOfBank(), getAccountNumber(), getTypeOfAccount(), getIfscCode(), getBranchAddress(), getCorporateId());
     }
 
     @Override
@@ -95,9 +97,25 @@ public class AbstractBankAccountsInput {
             ", nameOfBank=" + nameOfBank +
             ", accountNumber=" + accountNumber +
             ", typeOfAccount='" + typeOfAccount + '\'' +
-            ", ifsCode='" + ifsCode + '\'' +
-            ", branch='" + branch + '\'' +
+            ", ifsCode='" + ifscCode + '\'' +
+            ", branch='" + branchAddress + '\'' +
             ", corporateId=" + corporateId +
             '}';
     }
+
+	public Long getBranchId() {
+		return branchId;
+	}
+
+	public void setBranchId(Long branchId) {
+		this.branchId = branchId;
+	}
+
+	public Long getCollegeId() {
+		return collegeId;
+	}
+
+	public void setCollegeId(Long collegeId) {
+		this.collegeId = collegeId;
+	}
 }

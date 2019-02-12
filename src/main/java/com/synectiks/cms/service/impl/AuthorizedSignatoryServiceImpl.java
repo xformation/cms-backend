@@ -50,7 +50,6 @@ public class AuthorizedSignatoryServiceImpl implements AuthorizedSignatoryServic
     @Override
     public AuthorizedSignatoryDTO save(AuthorizedSignatoryDTO authorizedSignatoryDTO) {
         log.debug("Request to save AuthorizedSignatory : {}", authorizedSignatoryDTO);
-
         AuthorizedSignatory authorizedSignatory = authorizedSignatoryMapper.toEntity(authorizedSignatoryDTO);
         authorizedSignatory = authorizedSignatoryRepository.save(authorizedSignatory);
         AuthorizedSignatoryDTO result = authorizedSignatoryMapper.toDto(authorizedSignatory);

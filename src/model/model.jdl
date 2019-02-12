@@ -131,7 +131,7 @@ studentType StudentTypeEnum required
 }
 
 
-enum  StaffType{
+enum StaffType{
  TEACHING, NONTEACHING, GUEST
 }
 
@@ -235,9 +235,7 @@ PRIVATE, PUBLIC
 }
 
 
-entity SignatoryLink{
-	desc String
-}
+
 
 entity LegalEntity{
 logo Long required
@@ -250,21 +248,16 @@ pan String required
 tan String required
 tanCircleNumber String required
 citTdsLocation String required
-formSignatory String required
+formSignatory Long required
 pfNumber String required
 pfRegistrationDate LocalDate required
-pfSignatory String required
-pfSignatoryDesignation String required
-pfSignatoryFatherName String required
+pfSignatory Long required
 esiNumber Long required
 esiRegistrationDate LocalDate required
-esiSignatory String required
-esiSignatoryDesignation String required
-esiSignatoryFatherName String required
+esiSignatory Long required
 ptNumber Long required
 ptRegistrationDate LocalDate required
-ptSignatory String required
-ptNumber Long required
+ptSignatory Long required
 }
 
 entity AuthorizedSignatory{
@@ -280,8 +273,8 @@ entity BankAccounts{
 nameOfBank NameOfBank required
 accountNumber Long required
 typeOfAccount String required
-ifsCode String required
-branch String required
+ifscCode String required
+branchAddress String required
 corporateId Integer required
 }
 
@@ -309,10 +302,13 @@ Teach{subject} to Subject,
 Teach{teacher} to Teacher,
 Teacher {department} to Department,
 Teacher{branch} to Branch,
-SignatoryLink{authorizedSignatory} to AuthorizedSignatory,
-SignatoryLink{legalEntity} to LegalEntity,
 AuthorizedSignatory{branch} to Branch,
-AuthorizedSignatory{college} to College
+AuthorizedSignatory{college} to College,
+BankAccounts{branch} to Branch,
+BankAccounts{college} to College,
+LegalEntity{branch} to Branch,
+LegalEntity{college} to College,
+LegalEntity{location} to Location
 }
 
 dto * with mapstruct

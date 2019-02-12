@@ -61,7 +61,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="form_signatory" type="varchar(255)">
+            <column name="form_signatory" type="bigint">
                 <constraints nullable="false" />
             </column>
 
@@ -73,15 +73,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="pf_signatory" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="pf_signatory_designation" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="pf_signatory_father_name" type="varchar(255)">
+            <column name="pf_signatory" type="bigint">
                 <constraints nullable="false" />
             </column>
 
@@ -93,15 +85,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="esi_signatory" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="esi_signatory_designation" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="esi_signatory_father_name" type="varchar(255)">
+            <column name="esi_signatory" type="bigint">
                 <constraints nullable="false" />
             </column>
 
@@ -113,8 +97,20 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="pt_signatory" type="varchar(255)">
+            <column name="pt_signatory" type="bigint">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="college_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="location_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

@@ -479,7 +479,8 @@ QUERY:
 
 
 {
-  legalEntity(id: 1701){
+  legalEntity(id: 1050){
+   id
    logo
    legalNameOfTheCollege
    typeOfCollege
@@ -492,11 +493,51 @@ QUERY:
    citTdsLocation
    formSignatory
    pfNumber
-   registrationDate
+   pfRegistrationDate
+   pfSignatory
    esiNumber
+   esiRegistrationDate
+   esiSignatory
    ptRegistrationDate
    ptSignatory
    ptNumber
+   branch{
+      branchName 
+   }
+   college{
+      shortName
+   }
+   location{
+      name
+   }
+   authorizedFormSignatory{
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+   }
+   authorizedPfSignatory{
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+   }
+   authorizedEsiSignatory {
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+   }
+   authorizedPtSignatory{
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+  }
   }
 }
 
@@ -515,24 +556,67 @@ QUERY:
    citTdsLocation
    formSignatory
    pfNumber
-   registrationDate
+   pfRegistrationDate
+   pfSignatory
    esiNumber
+   esiRegistrationDate
+   esiSignatory
    ptRegistrationDate
    ptSignatory
    ptNumber
+   branch{
+      branchName 
+   }
+   college{
+      shortName
+   }
+   location{
+      name
+   }
+   authorizedFormSignatory{
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+   }
+   authorizedPfSignatory{
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+   }
+   authorizedEsiSignatory {
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+   }
+   authorizedPtSignatory{
+    id
+    signatoryName
+    signatoryFatherName
+    signatoryDesignation
+    address
+  }
   }
 }
 
 
 {
-  authorizedSignatory(id: 1751){
+  authorizedSignatory(id: 1100){
   signatoryName
   signatoryFatherName
   signatoryDesignation
   address
   email
   panCardNumber
-  legalEntity{
+  branch{
+    id
+  }
+  college{
     id
   }
   }
@@ -547,7 +631,10 @@ QUERY:
   address
   email
   panCardNumber
-  legalEntity{
+  branch{
+    id
+  }
+  college{
     id
   }
   }
@@ -572,13 +659,19 @@ QUERY:
 }
 
 {
-  bankAccount(id:1851){
+  bankAccount(id:1151){
+    id
     nameOfBank
     accountNumber
     typeOfAccount
-    ifsCode
-    branch
-    corporateId
+    ifscCode
+    branchAddress
+    branch{
+      id
+    }
+    college{
+      id
+    }
   }
 }
 
@@ -588,9 +681,14 @@ QUERY:
     nameOfBank
     accountNumber
     typeOfAccount
-    ifsCode
-    branch
-    corporateId
+    ifscCode
+    branchAddress
+    branch{
+      id
+    }
+    college{
+      id
+    }
   }
 }
 

@@ -33,16 +33,24 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="ifs_code" type="varchar(255)">
+            <column name="ifsc_code" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="branch" type="varchar(255)">
+            <column name="branch_address" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
             <column name="corporate_id" type="integer">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="college_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

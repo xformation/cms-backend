@@ -24,14 +24,14 @@
             ]
         },
         {
-            "fieldName": "ifsCode",
+            "fieldName": "ifscCode",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "branch",
+            "fieldName": "branchAddress",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
@@ -45,7 +45,20 @@
             ]
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "branch",
+            "otherEntityName": "branch",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "college",
+            "otherEntityName": "college",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20190118141530",
     "entityTableName": "bank_accounts",
     "dto": "mapstruct",

@@ -11,9 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.graphql.types.SignatoryLink.*;
-import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +20,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
@@ -143,6 +160,25 @@ import com.synectiks.cms.graphql.types.Term.RemoveTermInput;
 import com.synectiks.cms.graphql.types.Term.RemoveTermPayload;
 import com.synectiks.cms.graphql.types.Term.UpdateTermInput;
 import com.synectiks.cms.graphql.types.Term.UpdateTermPayload;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
 
 
 @Component
@@ -160,19 +196,15 @@ public class Mutation implements GraphQLMutationResolver {
     private final DepartmentRepository departmentRepository;
     private final HolidayRepository holidayRepository;
     private final LectureRepository lectureRepository;
-    //    private final InstituteRepository instituteRepository;
     private final LegalEntityRepository legalEntityRepository;
     private final LocationRepository locationRepository;
     private final SectionRepository sectionRepository;
-//  private final SemesterRepository semesterRepository;
     private final StudentRepository studentRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
-//    private final StudentYearRepository studentYearRepository;
     private final SubjectRepository subjectRepository;
     private final TeachRepository teachRepository;
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
-    private final SignatoryLinkRepository signatoryLinkRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -186,7 +218,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
     
-    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, SignatoryLinkRepository signatoryLinkRepository) {
+    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -209,7 +241,6 @@ public class Mutation implements GraphQLMutationResolver {
         this.teachRepository = teachRepository;
         this.attendanceMasterRepository=attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
-        this.signatoryLinkRepository = signatoryLinkRepository;
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -494,9 +525,13 @@ public class Mutation implements GraphQLMutationResolver {
         bankAccounts.setNameOfBank(addBankAccountsInput.getNameOfBank());
         bankAccounts.setAccountNumber(addBankAccountsInput.getAccountNumber());
         bankAccounts.setTypeOfAccount(addBankAccountsInput.getTypeOfAccount());
-        bankAccounts.setIfsCode(addBankAccountsInput.getIfsCode());
-        bankAccounts.setBranch(addBankAccountsInput.getBranch());
+        bankAccounts.setIfscCode(addBankAccountsInput.getIfscCode());
+        bankAccounts.setBranchAddress(addBankAccountsInput.getBranchAddress());
         bankAccounts.setCorporateId(addBankAccountsInput.getCorporateId());
+        Branch branch = branchRepository.findById(addBankAccountsInput.getBranchId()).get();
+        College college = collegeRepository.findById(addBankAccountsInput.getCollegeId()).get();
+        bankAccounts.setBranch(branch);
+        bankAccounts.setCollege(college);
         bankAccountsRepository.save(bankAccounts);
 
         return new AddBankAccountsPayload(bankAccounts);
@@ -513,15 +548,24 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateBankAccountsInput.getTypeOfAccount() != null) {
             bankAccounts.setTypeOfAccount(updateBankAccountsInput.getTypeOfAccount());
         }
-        if (updateBankAccountsInput.getIfsCode() != null) {
-            bankAccounts.setIfsCode(updateBankAccountsInput.getIfsCode());
+        if (updateBankAccountsInput.getIfscCode() != null) {
+            bankAccounts.setIfscCode(updateBankAccountsInput.getIfscCode());
         }
-        if (updateBankAccountsInput.getBranch() != null) {
-            bankAccounts.setBranch(updateBankAccountsInput.getBranch());
+        if (updateBankAccountsInput.getBranchAddress() != null) {
+            bankAccounts.setBranchAddress(updateBankAccountsInput.getBranchAddress());
         }
         if (updateBankAccountsInput.getCorporateId() != null) {
             bankAccounts.setCorporateId(updateBankAccountsInput.getCorporateId());
         }
+        if (updateBankAccountsInput.getBranchId() != null) {
+        	Branch branch = branchRepository.findById(updateBankAccountsInput.getBranchId()).get();
+        	bankAccounts.setBranch(branch);
+        }
+        if (updateBankAccountsInput.getCollegeId() != null) {
+        	College college = collegeRepository.findById(updateBankAccountsInput.getCollegeId()).get();
+        	bankAccounts.setCollege(college);
+        }
+        
         bankAccountsRepository.save(bankAccounts);
 
         return new UpdateBankAccountsPayload(bankAccounts);
@@ -1092,41 +1136,6 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveTeacherPayload(Lists.newArrayList(teacherRepository.findAll()));
     }
 
-    public AddSignatoryLinkPayload addSignatoryLink(AddSignatoryLinkInput addSignatoryLinkInput) {
-        final AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(addSignatoryLinkInput.getAuthorizedSignatoryId()).get();
-        final LegalEntity legalEntity = legalEntityRepository.findById(addSignatoryLinkInput.getLegalEntityId()).get();
-
-        final SignatoryLink signatoryLink = new SignatoryLink();
-        signatoryLink.setAuthorizedSignatory(authorizedSignatory);
-        signatoryLink.setLegalEntity(legalEntity);
-        signatoryLinkRepository.save(signatoryLink);
-        return new AddSignatoryLinkPayload(signatoryLink);
-    }
-
-    public UpdateSignatoryLinkPayload updateSignatoryLink(UpdateSignatoryLinkInput updateSignatoryLinkInput) {
-        SignatoryLink signatoryLink = signatoryLinkRepository.findById(updateSignatoryLinkInput.getId()).get();
-
-        if (updateSignatoryLinkInput.getDesc() != null) {
-            signatoryLink.setDesc(updateSignatoryLinkInput.getDesc());
-        }
-
-        if (updateSignatoryLinkInput.getAuthorizedSignatoryId() != null) {
-            final AuthorizedSignatory authorizedSignatory = authorizedSignatoryRepository.findById(updateSignatoryLinkInput.getAuthorizedSignatoryId()).get();
-            signatoryLink.setAuthorizedSignatory(authorizedSignatory);
-        }
-
-        signatoryLinkRepository.save(signatoryLink);
-
-        return new UpdateSignatoryLinkPayload(signatoryLink);
-    }
-
-    public RemoveSignatoryLinkPayload removeSignatoryLink(RemoveSignatoryLinkInput removeSignatoryLinkInput) {
-        SignatoryLink signatoryLink = signatoryLinkRepository.findById(removeSignatoryLinkInput.getSignatoryLinkId()).get();
-        signatoryLinkRepository.delete(signatoryLink);
-        return new RemoveSignatoryLinkPayload(Lists.newArrayList(signatoryLinkRepository.findAll()));
-    }
-
-
     public AddAuthorizedSignatoryPayload addAuthorizedSignatory(AddAuthorizedSignatoryInput addAuthorizedSignatoryInput) {
         final Branch branch = branchRepository.findById(addAuthorizedSignatoryInput.getBranchId()).get();
         final College college = collegeRepository.findById(addAuthorizedSignatoryInput.getCollegeId()).get();
@@ -1203,18 +1212,18 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setPfNumber(addLegalEntityInput.getPfNumber());
         legalEntity.setPfRegistrationDate(addLegalEntityInput.getPfRegistrationDate());
         legalEntity.setPfSignatory(addLegalEntityInput.getPfSignatory());
-        legalEntity.setPfSignatoryDesignation(addLegalEntityInput.getPfSignatoryDesignation());
-        legalEntity.setPfSignatoryFatherName(addLegalEntityInput.getPfSignatoryFatherName());
         legalEntity.setEsiNumber(addLegalEntityInput.getEsiNumber());
         legalEntity.setEsiRegistrationDate(addLegalEntityInput.getEsiRegistrationDate());
         legalEntity.setEsiSignatory(addLegalEntityInput.getEsiSignatory());
-        legalEntity.setEsiSignatoryDesignation(addLegalEntityInput.getEsiSignatoryDesignation());
-        legalEntity.setEsiSignatoryFatherName(addLegalEntityInput.getEsiSignatoryFatherName());
         legalEntity.setPtNumber(addLegalEntityInput.getPtNumber());
         legalEntity.setPtRegistrationDate(addLegalEntityInput.getPtRegistrationDate());
         legalEntity.setPtSignatory(addLegalEntityInput.getPtSignatory());
-
-
+        Branch branch = branchRepository.findById(addLegalEntityInput.getBranchId()).get();
+        College college = collegeRepository.findById(addLegalEntityInput.getCollegeId()).get();
+        Location location = locationRepository.findById(addLegalEntityInput.getLocationId()).get();
+        legalEntity.setBranch(branch);
+        legalEntity.setCollege(college);
+        legalEntity.setLocation(location);
         legalEntityRepository.save(legalEntity);
 
         return new AddLegalEntityPayload(legalEntity);
@@ -1265,13 +1274,6 @@ public class Mutation implements GraphQLMutationResolver {
             legalEntity.setPfSignatory(updateLegalEntityInput.getPfSignatory());
         }
 
-        if (updateLegalEntityInput.getPfSignatoryDesignation() != null) {
-            legalEntity.setPfSignatoryDesignation(updateLegalEntityInput.getPfSignatoryDesignation());
-        }
-
-        if (updateLegalEntityInput.getPfSignatoryFatherName() != null) {
-            legalEntity.setPfSignatoryFatherName(updateLegalEntityInput.getPfSignatoryFatherName());
-        }
         if (updateLegalEntityInput.getEsiNumber() != null) {
             legalEntity.setEsiNumber(updateLegalEntityInput.getEsiNumber());
         }
@@ -1282,13 +1284,6 @@ public class Mutation implements GraphQLMutationResolver {
             legalEntity.setEsiSignatory(updateLegalEntityInput.getEsiSignatory());
         }
 
-        if (updateLegalEntityInput.getEsiSignatoryDesignation() != null) {
-            legalEntity.setEsiSignatoryDesignation(updateLegalEntityInput.getEsiSignatoryDesignation());
-        }
-
-        if (updateLegalEntityInput.getEsiSignatoryFatherName() != null) {
-            legalEntity.setEsiSignatoryFatherName(updateLegalEntityInput.getEsiSignatoryFatherName());
-        }
         if (updateLegalEntityInput.getPtRegistrationDate() != null) {
             legalEntity.setPtRegistrationDate(updateLegalEntityInput.getPtRegistrationDate());
         }
@@ -1299,6 +1294,18 @@ public class Mutation implements GraphQLMutationResolver {
             legalEntity.setPtNumber(updateLegalEntityInput.getPtNumber());
         }
 
+        if(updateLegalEntityInput.getBranchId() != null) {
+            Branch branch = branchRepository.findById(updateLegalEntityInput.getBranchId()).get();
+            legalEntity.setBranch(branch);
+        }
+        if(updateLegalEntityInput.getCollegeId() != null) {
+            College college = collegeRepository.findById(updateLegalEntityInput.getCollegeId()).get();
+            legalEntity.setCollege(college);
+        }
+        if(updateLegalEntityInput.getLocationId() != null) {
+            Location location = locationRepository.findById(updateLegalEntityInput.getLocationId()).get();
+            legalEntity.setLocation(location);
+        }
         legalEntityRepository.save(legalEntity);
 
         return new UpdateLegalEntityPayload(legalEntity);

@@ -18,21 +18,23 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
         private String tan;
         private String tanCircleNumber;
         private String citTdsLocation;
-        private String formSignatory;
+        private Long formSignatory;
         private String pfNumber;
         private Date pfRegistrationDate;
-        private String pfSignatory;
-        private String pfSignatoryDesignation;
-        private String pfSignatoryFatherName;
+        private Long pfSignatory;
+//        private String pfSignatoryDesignation;
+//        private String pfSignatoryFatherName;
         private Long esiNumber;
         private Date esiRegistrationDate;
-        private String esiSignatory;
-        private String esiSignatoryDesignation;
-        private String esiSignatoryFatherName;
+        private Long esiSignatory;
+//        private String esiSignatoryDesignation;
+//        private String esiSignatoryFatherName;
         private Long ptNumber;
         private Date ptRegistrationDate;
-        private String ptSignatory;
-
+        private Long ptSignatory;
+        private Long branchId;
+        private Long collegeId;
+        private Long locationId;
         public Long getId() {
             return id;
         }
@@ -121,11 +123,11 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.citTdsLocation = citTdsLocation;
         }
 
-        public String getFormSignatory() {
+        public Long getFormSignatory() {
             return formSignatory;
         }
 
-        public void setFormSignatory(String formSignatory) {
+        public void setFormSignatory(Long formSignatory) {
             this.formSignatory = formSignatory;
         }
 
@@ -145,29 +147,25 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.pfRegistrationDate = pfRegistrationDate;
         }
 
-        public String getPfSignatory() {
+        public Long getPfSignatory() {
             return pfSignatory;
         }
 
-        public void setPfSignatory(String pfSignatory) {
+        public void setPfSignatory(Long pfSignatory) {
             this.pfSignatory = pfSignatory;
         }
 
-        public String getPfSignatoryDesignation() {
-            return pfSignatoryDesignation;
-        }
-
-        public void setPfSignatoryDesignation(String pfSignatoryDesignation) {
-            this.pfSignatoryDesignation = pfSignatoryDesignation;
-        }
-
-        public String getPfSignatoryFatherName() {
-            return pfSignatoryFatherName;
-        }
-
-        public void setPfSignatoryFatherName(String pfSignatoryFatherName) {
-            this.pfSignatoryFatherName = pfSignatoryFatherName;
-        }
+	/*
+	 * public String getPfSignatoryDesignation() { return pfSignatoryDesignation; }
+	 * 
+	 * public void setPfSignatoryDesignation(String pfSignatoryDesignation) {
+	 * this.pfSignatoryDesignation = pfSignatoryDesignation; }
+	 * 
+	 * public String getPfSignatoryFatherName() { return pfSignatoryFatherName; }
+	 * 
+	 * public void setPfSignatoryFatherName(String pfSignatoryFatherName) {
+	 * this.pfSignatoryFatherName = pfSignatoryFatherName; }
+	 */
 
         public Long getEsiNumber() {
             return esiNumber;
@@ -185,29 +183,26 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.esiRegistrationDate = esiRegistrationDate;
         }
 
-        public String getEsiSignatory() {
+        public Long getEsiSignatory() {
             return esiSignatory;
         }
 
-        public void setEsiSignatory(String esiSignatory) {
+        public void setEsiSignatory(Long esiSignatory) {
             this.esiSignatory = esiSignatory;
         }
 
-        public String getEsiSignatoryDesignation() {
-            return esiSignatoryDesignation;
-        }
-
-        public void setEsiSignatoryDesignation(String esiSignatoryDesignation) {
-            this.esiSignatoryDesignation = esiSignatoryDesignation;
-        }
-
-        public String getEsiSignatoryFatherName() {
-            return esiSignatoryFatherName;
-        }
-
-        public void setEsiSignatoryFatherName(String esiSignatoryFatherName) {
-            this.esiSignatoryFatherName = esiSignatoryFatherName;
-        }
+	/*
+	 * public String getEsiSignatoryDesignation() { return esiSignatoryDesignation;
+	 * }
+	 * 
+	 * public void setEsiSignatoryDesignation(String esiSignatoryDesignation) {
+	 * this.esiSignatoryDesignation = esiSignatoryDesignation; }
+	 * 
+	 * public String getEsiSignatoryFatherName() { return esiSignatoryFatherName; }
+	 * 
+	 * public void setEsiSignatoryFatherName(String esiSignatoryFatherName) {
+	 * this.esiSignatoryFatherName = esiSignatoryFatherName; }
+	 */
 
         public Long getPtNumber() {
             return ptNumber;
@@ -225,11 +220,11 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.ptRegistrationDate = ptRegistrationDate;
         }
 
-        public String getPtSignatory() {
+        public Long getPtSignatory() {
             return ptSignatory;
         }
 
-        public void setPtSignatory(String ptSignatory) {
+        public void setPtSignatory(Long ptSignatory) {
             this.ptSignatory = ptSignatory;
         }
 
@@ -251,16 +246,40 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
                 ", pfNumber='" + pfNumber + '\'' +
                 ", pfRegistrationDate=" + pfRegistrationDate +
                 ", pfSignatory='" + pfSignatory + '\'' +
-                ", pfSignatoryDesignation='" + pfSignatoryDesignation + '\'' +
-                ", pfSignatoryFatherName='" + pfSignatoryFatherName + '\'' +
+//                ", pfSignatoryDesignation='" + pfSignatoryDesignation + '\'' +
+//                ", pfSignatoryFatherName='" + pfSignatoryFatherName + '\'' +
                 ", esiNumber=" + esiNumber +
                 ", esiRegistrationDate=" + esiRegistrationDate +
                 ", esiSignatory='" + esiSignatory + '\'' +
-                ", esiSignatoryDesignation='" + esiSignatoryDesignation + '\'' +
-                ", esiSignatoryFatherName='" + esiSignatoryFatherName + '\'' +
+//                ", esiSignatoryDesignation='" + esiSignatoryDesignation + '\'' +
+//                ", esiSignatoryFatherName='" + esiSignatoryFatherName + '\'' +
                 ", ptNumber=" + ptNumber +
                 ", ptRegistrationDate=" + ptRegistrationDate +
                 ", ptSignatory='" + ptSignatory + '\'' +
                 '}';
         }
+
+		public Long getBranchId() {
+			return branchId;
+		}
+
+		public void setBranchId(Long branchId) {
+			this.branchId = branchId;
+		}
+
+		public Long getCollegeId() {
+			return collegeId;
+		}
+
+		public void setCollegeId(Long collegeId) {
+			this.collegeId = collegeId;
+		}
+
+		public Long getLocationId() {
+			return locationId;
+		}
+
+		public void setLocationId(Long locationId) {
+			this.locationId = locationId;
+		}
     }

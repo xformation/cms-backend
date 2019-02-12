@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -42,16 +43,24 @@ public class BankAccounts implements Serializable {
     private String typeOfAccount;
 
     @NotNull
-    @Column(name = "ifs_code", nullable = false)
-    private String ifsCode;
+    @Column(name = "ifsc_code", nullable = false)
+    private String ifscCode;
 
     @NotNull
-    @Column(name = "branch", nullable = false)
-    private String branch;
+    @Column(name = "branch_address", nullable = false)
+    private String branchAddress;
 
     @NotNull
     @Column(name = "corporate_id", nullable = false)
     private Integer corporateId;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Branch branch;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private College college;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -101,30 +110,30 @@ public class BankAccounts implements Serializable {
         this.typeOfAccount = typeOfAccount;
     }
 
-    public String getIfsCode() {
-        return ifsCode;
+    public String getIfscCode() {
+        return ifscCode;
     }
 
-    public BankAccounts ifsCode(String ifsCode) {
-        this.ifsCode = ifsCode;
+    public BankAccounts ifscCode(String ifscCode) {
+        this.ifscCode = ifscCode;
         return this;
     }
 
-    public void setIfsCode(String ifsCode) {
-        this.ifsCode = ifsCode;
+    public void setIfscCode(String ifscCode) {
+        this.ifscCode = ifscCode;
     }
 
-    public String getBranch() {
-        return branch;
+    public String getBranchAddress() {
+        return branchAddress;
     }
 
-    public BankAccounts branch(String branch) {
-        this.branch = branch;
+    public BankAccounts branchAddress(String branchAddress) {
+        this.branchAddress = branchAddress;
         return this;
     }
 
-    public void setBranch(String branch) {
-        this.branch = branch;
+    public void setBranchAddress(String branchAddress) {
+        this.branchAddress = branchAddress;
     }
 
     public Integer getCorporateId() {
@@ -138,6 +147,32 @@ public class BankAccounts implements Serializable {
 
     public void setCorporateId(Integer corporateId) {
         this.corporateId = corporateId;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public BankAccounts branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public College getCollege() {
+        return college;
+    }
+
+    public BankAccounts college(College college) {
+        this.college = college;
+        return this;
+    }
+
+    public void setCollege(College college) {
+        this.college = college;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -168,8 +203,8 @@ public class BankAccounts implements Serializable {
             ", nameOfBank='" + getNameOfBank() + "'" +
             ", accountNumber=" + getAccountNumber() +
             ", typeOfAccount='" + getTypeOfAccount() + "'" +
-            ", ifsCode='" + getIfsCode() + "'" +
-            ", branch='" + getBranch() + "'" +
+            ", ifscCode='" + getIfscCode() + "'" +
+            ", branchAddress='" + getBranchAddress() + "'" +
             ", corporateId=" + getCorporateId() +
             "}";
     }

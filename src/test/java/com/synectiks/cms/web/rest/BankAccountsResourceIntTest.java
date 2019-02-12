@@ -56,11 +56,11 @@ public class BankAccountsResourceIntTest {
     private static final String DEFAULT_TYPE_OF_ACCOUNT = "AAAAAAAAAA";
     private static final String UPDATED_TYPE_OF_ACCOUNT = "BBBBBBBBBB";
 
-    private static final String DEFAULT_IFS_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_IFS_CODE = "BBBBBBBBBB";
+    private static final String DEFAULT_IFSC_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_IFSC_CODE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_BRANCH = "AAAAAAAAAA";
-    private static final String UPDATED_BRANCH = "BBBBBBBBBB";
+    private static final String DEFAULT_BRANCH_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_BRANCH_ADDRESS = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_CORPORATE_ID = 1;
     private static final Integer UPDATED_CORPORATE_ID = 2;
@@ -122,8 +122,8 @@ public class BankAccountsResourceIntTest {
             .nameOfBank(DEFAULT_NAME_OF_BANK)
             .accountNumber(DEFAULT_ACCOUNT_NUMBER)
             .typeOfAccount(DEFAULT_TYPE_OF_ACCOUNT)
-            .ifsCode(DEFAULT_IFS_CODE)
-            .branch(DEFAULT_BRANCH)
+            .ifscCode(DEFAULT_IFSC_CODE)
+            .branchAddress(DEFAULT_BRANCH_ADDRESS)
             .corporateId(DEFAULT_CORPORATE_ID);
         return bankAccounts;
     }
@@ -152,8 +152,8 @@ public class BankAccountsResourceIntTest {
         assertThat(testBankAccounts.getNameOfBank()).isEqualTo(DEFAULT_NAME_OF_BANK);
         assertThat(testBankAccounts.getAccountNumber()).isEqualTo(DEFAULT_ACCOUNT_NUMBER);
         assertThat(testBankAccounts.getTypeOfAccount()).isEqualTo(DEFAULT_TYPE_OF_ACCOUNT);
-        assertThat(testBankAccounts.getIfsCode()).isEqualTo(DEFAULT_IFS_CODE);
-        assertThat(testBankAccounts.getBranch()).isEqualTo(DEFAULT_BRANCH);
+        assertThat(testBankAccounts.getIfscCode()).isEqualTo(DEFAULT_IFSC_CODE);
+        assertThat(testBankAccounts.getBranchAddress()).isEqualTo(DEFAULT_BRANCH_ADDRESS);
         assertThat(testBankAccounts.getCorporateId()).isEqualTo(DEFAULT_CORPORATE_ID);
 
         // Validate the BankAccounts in Elasticsearch
@@ -242,10 +242,10 @@ public class BankAccountsResourceIntTest {
 
     @Test
     @Transactional
-    public void checkIfsCodeIsRequired() throws Exception {
+    public void checkIfscCodeIsRequired() throws Exception {
         int databaseSizeBeforeTest = bankAccountsRepository.findAll().size();
         // set the field null
-        bankAccounts.setIfsCode(null);
+        bankAccounts.setIfscCode(null);
 
         // Create the BankAccounts, which fails.
         BankAccountsDTO bankAccountsDTO = bankAccountsMapper.toDto(bankAccounts);
@@ -261,10 +261,10 @@ public class BankAccountsResourceIntTest {
 
     @Test
     @Transactional
-    public void checkBranchIsRequired() throws Exception {
+    public void checkBranchAddressIsRequired() throws Exception {
         int databaseSizeBeforeTest = bankAccountsRepository.findAll().size();
         // set the field null
-        bankAccounts.setBranch(null);
+        bankAccounts.setBranchAddress(null);
 
         // Create the BankAccounts, which fails.
         BankAccountsDTO bankAccountsDTO = bankAccountsMapper.toDto(bankAccounts);
@@ -311,8 +311,8 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.[*].nameOfBank").value(hasItem(DEFAULT_NAME_OF_BANK.toString())))
             .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT.toString())))
-            .andExpect(jsonPath("$.[*].ifsCode").value(hasItem(DEFAULT_IFS_CODE.toString())))
-            .andExpect(jsonPath("$.[*].branch").value(hasItem(DEFAULT_BRANCH.toString())))
+            .andExpect(jsonPath("$.[*].ifscCode").value(hasItem(DEFAULT_IFSC_CODE.toString())))
+            .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].corporateId").value(hasItem(DEFAULT_CORPORATE_ID)));
     }
     
@@ -331,8 +331,8 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.nameOfBank").value(DEFAULT_NAME_OF_BANK.toString()))
             .andExpect(jsonPath("$.accountNumber").value(DEFAULT_ACCOUNT_NUMBER.intValue()))
             .andExpect(jsonPath("$.typeOfAccount").value(DEFAULT_TYPE_OF_ACCOUNT.toString()))
-            .andExpect(jsonPath("$.ifsCode").value(DEFAULT_IFS_CODE.toString()))
-            .andExpect(jsonPath("$.branch").value(DEFAULT_BRANCH.toString()))
+            .andExpect(jsonPath("$.ifscCode").value(DEFAULT_IFSC_CODE.toString()))
+            .andExpect(jsonPath("$.branchAddress").value(DEFAULT_BRANCH_ADDRESS.toString()))
             .andExpect(jsonPath("$.corporateId").value(DEFAULT_CORPORATE_ID));
     }
     @Test
@@ -359,8 +359,8 @@ public class BankAccountsResourceIntTest {
             .nameOfBank(UPDATED_NAME_OF_BANK)
             .accountNumber(UPDATED_ACCOUNT_NUMBER)
             .typeOfAccount(UPDATED_TYPE_OF_ACCOUNT)
-            .ifsCode(UPDATED_IFS_CODE)
-            .branch(UPDATED_BRANCH)
+            .ifscCode(UPDATED_IFSC_CODE)
+            .branchAddress(UPDATED_BRANCH_ADDRESS)
             .corporateId(UPDATED_CORPORATE_ID);
         BankAccountsDTO bankAccountsDTO = bankAccountsMapper.toDto(updatedBankAccounts);
 
@@ -376,8 +376,8 @@ public class BankAccountsResourceIntTest {
         assertThat(testBankAccounts.getNameOfBank()).isEqualTo(UPDATED_NAME_OF_BANK);
         assertThat(testBankAccounts.getAccountNumber()).isEqualTo(UPDATED_ACCOUNT_NUMBER);
         assertThat(testBankAccounts.getTypeOfAccount()).isEqualTo(UPDATED_TYPE_OF_ACCOUNT);
-        assertThat(testBankAccounts.getIfsCode()).isEqualTo(UPDATED_IFS_CODE);
-        assertThat(testBankAccounts.getBranch()).isEqualTo(UPDATED_BRANCH);
+        assertThat(testBankAccounts.getIfscCode()).isEqualTo(UPDATED_IFSC_CODE);
+        assertThat(testBankAccounts.getBranchAddress()).isEqualTo(UPDATED_BRANCH_ADDRESS);
         assertThat(testBankAccounts.getCorporateId()).isEqualTo(UPDATED_CORPORATE_ID);
 
         // Validate the BankAccounts in Elasticsearch
@@ -442,8 +442,8 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.[*].nameOfBank").value(hasItem(DEFAULT_NAME_OF_BANK.toString())))
             .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT.toString())))
-            .andExpect(jsonPath("$.[*].ifsCode").value(hasItem(DEFAULT_IFS_CODE.toString())))
-            .andExpect(jsonPath("$.[*].branch").value(hasItem(DEFAULT_BRANCH.toString())))
+            .andExpect(jsonPath("$.[*].ifscCode").value(hasItem(DEFAULT_IFSC_CODE.toString())))
+            .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].corporateId").value(hasItem(DEFAULT_CORPORATE_ID)));
     }
 

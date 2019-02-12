@@ -58,9 +58,6 @@ enum StudentTypeEnum{
 
 type Query {
 
-  signatoryLink(id: Int!): SignatoryLink!
-  signatoryLinks: [SignatoryLink!]!
-
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
 
@@ -91,8 +88,8 @@ type Query {
   holiday(id: Long!): Holiday!
   holidays: [Holiday!]!
 
-  legalEntity(id : Long!): LegalEntity!
-  legalEntities: [LegalEntity!]!
+  legalEntity(id : Long!): LegalEntityAuthSignatoryLink!
+  legalEntities: [LegalEntityAuthSignatoryLink!]!
 
   location(id: Long!): Location!
   locations: [Location!]!
@@ -123,14 +120,6 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 }
 
-type SignatoryLink{
-    id: Long!
-    desc: String!
-    authorizedSignatory: AuthorizedSignatory!
-    legalEntity: LegalEntity!
-
-}
-
 type AuthorizedSignatory {
     id: Long!
     signatoryName: String!
@@ -139,7 +128,7 @@ type AuthorizedSignatory {
     address: String!
     email: String!
     panCardNumber: String!
-    branch: Branch!
+    branch: Branch
     college: College!
 }
 type BankAccounts {
@@ -147,9 +136,11 @@ type BankAccounts {
     nameOfBank: NameOfBank!
     accountNumber: Long!
     typeOfAccount: String!
-    ifsCode: String!
-    branch: String!
+    ifscCode: String!
+    branchAddress: String!
     corporateId: Int!
+    branch: Branch
+    college: College!
 }
 type College{
     id: Long!
@@ -216,17 +207,49 @@ type LegalEntity{
     pfNumber:String!
     pfRegistrationDate: Date!
     pfSignatory: String!
-    pfSignatoryDesignation: String!
-    pfSignatoryFatherName: String!
     esiNumber:Long!
     esiRegistrationDate: Date!
     esiSignatory: String!
-    esiSignatoryDesignation: String!
-    esiSignatoryFatherName: String!
     ptNumber:Long!
     ptRegistrationDate:Date!
     ptSignatory:String!
+    branch: Branch
+    college: College!
+    location: Location!
 }
+
+type LegalEntityAuthSignatoryLink{
+ 	id: Long!
+    logo: Long!
+    legalNameOfTheCollege:String!
+    typeOfCollege: TypeOfCollege!
+    dateOfIncorporation:Date!
+    registeredOfficeAddress:String!
+    collegeIdentificationNumber:String!
+    pan:String!
+    tan:String!
+    tanCircleNumber:String!
+    citTdsLocation:String!
+    formSignatory:String!
+    pfNumber:String!
+    pfRegistrationDate: Date!
+    pfSignatory: String!
+    esiNumber:Long!
+    esiRegistrationDate: Date!
+    esiSignatory: String!
+    ptNumber:Long!
+    ptRegistrationDate:Date!
+    ptSignatory:String!
+    branch: Branch
+    college: College!
+    location: Location!
+    authorizedFormSignatory: AuthorizedSignatory
+    authorizedPfSignatory: AuthorizedSignatory
+    authorizedEsiSignatory: AuthorizedSignatory
+    authorizedPtSignatory: AuthorizedSignatory
+}
+
+
 type Location{
     id: Long!
     name: String!
@@ -516,10 +539,6 @@ type Mutation {
    updateTerm(input: UpdateTermInput!): UpdateTermPayload!
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
 
-   addSignatoryLink(input: AddSignatoryLinkInput!): AddSignatoryLinkPayload!
-   updateSignatoryLink(input: UpdateSignatoryLinkInput!): UpdateSignatoryLinkPayload!
-   removeSignatoryLink(input: RemoveSignatoryLinkInput!): RemoveSignatoryLinkPayload!
-   
    updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 
    addAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
@@ -596,9 +615,11 @@ input AddBankAccountsInput {
    nameOfBank: NameOfBank!
    accountNumber: Long!
    typeOfAccount: String!
-   ifsCode: String!
-   branch: String!
+   ifscCode: String!
+   branchAddress: String!
    corporateId: Int!
+   branchId: Long
+   collegeId: Long!
 }
 type AddBankAccountsPayload {
     bankAccounts: BankAccounts!
@@ -608,9 +629,11 @@ input UpdateBankAccountsInput {
    nameOfBank: NameOfBank!
    accountNumber: Long!
    typeOfAccount: String!
-   ifsCode: String!
-   branch: String!
+   ifscCode: String!
+   branchAddress: String!
    corporateId: Int!
+   branchId: Long
+   collegeId: Long
 }
 type UpdateBankAccountsPayload {
     bankAccounts: BankAccounts!
@@ -889,7 +912,7 @@ type RemoveHolidayPayload {
 }
 
 
-    input AddLegalEntityInput {
+input AddLegalEntityInput {
     logo: Long!
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
@@ -904,16 +927,15 @@ type RemoveHolidayPayload {
     pfNumber:String!
     pfRegistrationDate: Date!
     pfSignatory: String!
-    pfSignatoryDesignation: String!
-    pfSignatoryFatherName: String!
     esiNumber:Long!
     esiRegistrationDate: Date!
     esiSignatory: String!
-    esiSignatoryDesignation: String!
-    esiSignatoryFatherName: String!
     ptNumber:Long!
     ptRegistrationDate:Date!
     ptSignatory:String!
+    branchId: Long
+    collegeId: Long!
+    locationId: Long!
 }
 type AddLegalEntityPayload {
     legalEntity: LegalEntity!
@@ -934,16 +956,15 @@ input UpdateLegalEntityInput {
     pfNumber:String!
     pfRegistrationDate: Date!
     pfSignatory: String!
-    pfSignatoryDesignation: String!
-    pfSignatoryFatherName: String!
     esiNumber:Long!
     esiRegistrationDate: Date!
     esiSignatory: String!
-    esiSignatoryDesignation: String!
-    esiSignatoryFatherName: String!
     ptNumber:Long!
     ptRegistrationDate:Date!
     ptSignatory:String!
+    branchId: Long
+    collegeId: Long
+    locationId: Long
 }
 type UpdateLegalEntityPayload {
     legalEntity: LegalEntity!
@@ -954,34 +975,6 @@ input RemoveLegalEntityInput {
 type RemoveLegalEntityPayload {
     legalEntities: [LegalEntity!]!
 }
-
-input AddSignatoryLinkInput {
-    desc: String!
-    authorizedSignatory: Long!
-    legalEntity: Long!
-
-}
-type AddSignatoryLinkPayload {
-    signatoryLink: SignatoryLink!
-}
-input UpdateSignatoryLinkInput {
-    id: Long!
-    desc: String!
-    authorizedSignatory: Long!
-    legalEntity: Long!
-
-}
-type UpdateSignatoryLinkPayload {
-    signatoryLink: SignatoryLink!
-}
-input RemoveSignatoryLinkInput {
-    signatoryLinkId: Long!
-}
-type RemoveSignatoryLinkPayload {
-    signatoryLinks: [ SignatoryLink!]!
-}
-
-
 
 input AddLocationInput {
    name: String!

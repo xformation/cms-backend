@@ -22,13 +22,17 @@ public class BankAccountsDTO implements Serializable {
     private String typeOfAccount;
 
     @NotNull
-    private String ifsCode;
+    private String ifscCode;
 
     @NotNull
-    private String branch;
+    private String branchAddress;
 
     @NotNull
     private Integer corporateId;
+
+    private Long branchId;
+
+    private Long collegeId;
 
     public Long getId() {
         return id;
@@ -62,20 +66,20 @@ public class BankAccountsDTO implements Serializable {
         this.typeOfAccount = typeOfAccount;
     }
 
-    public String getIfsCode() {
-        return ifsCode;
+    public String getIfscCode() {
+        return ifscCode;
     }
 
-    public void setIfsCode(String ifsCode) {
-        this.ifsCode = ifsCode;
+    public void setIfscCode(String ifscCode) {
+        this.ifscCode = ifscCode;
     }
 
-    public String getBranch() {
-        return branch;
+    public String getBranchAddress() {
+        return branchAddress;
     }
 
-    public void setBranch(String branch) {
-        this.branch = branch;
+    public void setBranchAddress(String branchAddress) {
+        this.branchAddress = branchAddress;
     }
 
     public Integer getCorporateId() {
@@ -84,6 +88,22 @@ public class BankAccountsDTO implements Serializable {
 
     public void setCorporateId(Integer corporateId) {
         this.corporateId = corporateId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
     }
 
     @Override
@@ -114,9 +134,11 @@ public class BankAccountsDTO implements Serializable {
             ", nameOfBank='" + getNameOfBank() + "'" +
             ", accountNumber=" + getAccountNumber() +
             ", typeOfAccount='" + getTypeOfAccount() + "'" +
-            ", ifsCode='" + getIfsCode() + "'" +
-            ", branch='" + getBranch() + "'" +
+            ", ifscCode='" + getIfscCode() + "'" +
+            ", branchAddress='" + getBranchAddress() + "'" +
             ", corporateId=" + getCorporateId() +
+            ", branch=" + getBranchId() +
+            ", college=" + getCollegeId() +
             "}";
     }
 }

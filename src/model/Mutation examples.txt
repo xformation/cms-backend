@@ -1093,31 +1093,43 @@ mutation updateHoliday($input: UpdateHolidayInput!){
 
 mutation addLegalEntity($input:AddLegalEntityInput!){
 addLegalEntity(input:$input){
-legalEntity{
-id
-logo
-legalNameOfTheCollege
-typeOfCollege
-dateOfIncorporation
-registeredOfficeAddress
-collegeIdentificationNumber
-pan
-tan
-tanCircleNumber
-citTdsLocation
-formSignatory
-pfNumber
-registrationDate
-esiNumber
-ptRegistrationDate
-ptSignatory
-ptNumber
+	legalEntity{
+		id
+		logo
+		legalNameOfTheCollege
+		typeOfCollege
+		dateOfIncorporation
+		registeredOfficeAddress
+		collegeIdentificationNumber
+		pan
+		tan
+		tanCircleNumber
+		citTdsLocation
+		formSignatory
+		pfNumber
+		pfRegistrationDate
+		pfSignatory
+		esiNumber
+		esiRegistrationDate
+		esiSignatory
+		ptRegistrationDate
+		ptSignatory
+		ptNumber
+		  branch{
+		    id
+		  }
+		  college{
+		    id
+		  }
+		  location{
+		    id
+		  }
+		}
+	}
 }
-}
-}
+
 
 {
-
   "input": {
     "logo": 123,
     "legalNameOfTheCollege": "clg",
@@ -1129,15 +1141,22 @@ ptNumber
     "tan": "jikdi",
     "tanCircleNumber": "1254",
     "citTdsLocation": "fjkf",
-    "formSignatory": "valli",
-    "pfNumber": "jdhd",
-    "registrationDate": "2019-01-03",
+    "formSignatory": 1,
+    "pfNumber": "123456asd",
+    "pfRegistrationDate": "2019-01-03",
+    "pfSignatory": 456,
     "esiNumber": 123,
+    "esiRegistrationDate": "2019-01-03",
+    "esiSignatory": 123456,
+    "ptNumber": 123,
     "ptRegistrationDate": "2019-01-03",
-    "ptSignatory": "kjjv",
-    "ptNumber": 123
+    "ptSignatory": 2334,
+    "branchId": 1001,
+    "collegeId": 951,
+    "locationId": 1000
   }
 }
+
 
 mutation updateLegalEntity($input:UpdateLegalEntityInput!){
 updateLegalEntity(input:$input){
@@ -1155,38 +1174,58 @@ tanCircleNumber
 citTdsLocation
 formSignatory
 pfNumber
-registrationDate
+pfRegistrationDate
+pfSignatory
 esiNumber
+esiRegistrationDate
+esiSignatory
 ptRegistrationDate
 ptSignatory
 ptNumber
+  branch{
+    id
+  }
+  college{
+    id
+  }
+  location{
+    id
+  }
 }
 }
 }
+
 
 {
 
   "input": {
-    "id": 1701,
-    "logo": 123,
-    "legalNameOfTheCollege": "college",
+    "id": 1051,
+    "logo": 777777,
+    "legalNameOfTheCollege": "new colloege",
     "typeOfCollege": "PUBLIC",
-    "dateOfIncorporation": "2019-01-26",
-    "registeredOfficeAddress": "madhapur",
-    "collegeIdentificationNumber": "abc",
-    "pan": "ajsh33c",
-    "tan": "jikdi",
-    "tanCircleNumber": "1254",
-    "citTdsLocation": "fjkf",
-    "formSignatory": "valli",
-    "pfNumber": "jdhd",
-    "registrationDate": "2019-01-03",
+    "dateOfIncorporation": "2019-01-03",
+    "registeredOfficeAddress": "Karnataka",
+    "collegeIdentificationNumber": "4567890",
+    "pan": "12346ASDFGH",
+    "tan": "12346ASDFGH",
+    "tanCircleNumber": "12346ASDFGH",
+    "citTdsLocation": "12346ASDFGH",
+    "formSignatory": 1,
+    "pfNumber": "123456asd",
+    "pfRegistrationDate": "2019-01-03",
+    "pfSignatory": 456,
     "esiNumber": 123,
+    "esiRegistrationDate": "2019-01-03",
+    "esiSignatory": 123456,
+    "ptNumber": 123,
     "ptRegistrationDate": "2019-01-03",
-    "ptSignatory": "kjjv",
-    "ptNumber": 123
+    "ptSignatory": 2334,
+    "branchId": 1001,
+    "collegeId": 951,
+    "locationId": 1000
   }
 }
+
 
 
 mutation addAuthorizedSignatory($input:AddAuthorizedSignatoryInput!){
@@ -1199,9 +1238,12 @@ signatoryDesignation
 address
 email
 panCardNumber
-  legalEntity{
-    id
-  }
+branch{
+  id
+}
+college{
+  id
+}
 }
 }
 }
@@ -1214,7 +1256,8 @@ panCardNumber
 "address": "madhapur",
 "email": "valli@gmail.com",
 "panCardNumber": "hgsg72",
- "legalEntityId": 1701
+ "branchId": 1001,
+"collegeId": 951
 }
 }
 
@@ -1228,7 +1271,10 @@ signatoryDesignation
 address
 email
 panCardNumber
-  legalEntity{
+  branch{
+    id
+  }
+  college{
     id
   }
 }
@@ -1237,14 +1283,15 @@ panCardNumber
 
 {
   "input": {
-  "id":1751,
+  "id":1101,
   "signatoryName": "srivalli",
   "signatoryFatherName": "rao",
-  "signatoryDesignation": "employee",
-  "address": "madhapur",
+  "signatoryDesignation": "GM",
+  "address": "HYD",
   "email": "valli@gmail.com",
-  "panCardNumber": "hgsg72",
- "legalEntityId": 1701
+  "panCardNumber": "12345",
+  "branchId": 1001,
+  "collegeId": 951
 }
 }
 
@@ -1290,13 +1337,19 @@ location{
 mutation addBankAccounts($input: AddBankAccountsInput!) {
 addBankAccounts(input: $input) {
 bankAccounts{
-id
- nameOfBank
+	id
+ 	nameOfBank
   accountNumber
   typeOfAccount
-  ifsCode
-  branch
+  ifscCode
+  branchAddress
   corporateId
+  branch{
+    id
+  }
+  college{
+    id
+  }
 }
 }
 }
@@ -1306,35 +1359,46 @@ id
     "nameOfBank": "HDFC",
     "accountNumber": 7338093889389,
     "typeOfAccount": "Savings",
-    "ifsCode": "AD09832",
-    "branch": "madhapur",
-    "corporateId": 123
+    "ifscCode": "AD09832",
+    "branchAddress": "HYD bran",
+    "corporateId": 123,
+    "branchId": 1001,
+    "collegeId": 951
   }
 }
 
 mutation updateBankAccounts($input: UpdateBankAccountsInput!) {
 updateBankAccounts(input: $input) {
 bankAccounts{
-id
- nameOfBank
+	id
+ 	nameOfBank
   accountNumber
   typeOfAccount
-  ifsCode
-  branch
+  ifscCode
+  branchAddress
   corporateId
+  branch{
+    id
+  }
+  college{
+    id
+  }
 }
 }
 }
 
+
 {
   "input": {
-    "id":1851,
+    "id": 1151,
     "nameOfBank": "HDFC",
-    "accountNumber": 7338883889389,
-    "typeOfAccount": "Savings",
-    "ifsCode": "AD09832",
-    "branch": "madhapur",
-    "corporateId": 345
+    "accountNumber": 33333333,
+    "typeOfAccount": "current",
+    "ifscCode": "werty",
+    "branchAddress": "HYD bran",
+    "corporateId": 122,
+    "branchId": 1001,
+    "collegeId": 951
   }
 }
 
@@ -1387,6 +1451,8 @@ studentSubject{
   }
 }
 
+----- Get Student attendance data ----------------
+
 query getDailyStudentAttendance($filter:StudentAttendanceFilterInput!){
 getDailyStudentAttendance(filter: $filter){
 studentId
@@ -1412,6 +1478,21 @@ comments
 }
 }
 
+----------------- update Student Attendance data -------------------
+mutation updateStudentAttendanceData($input:StudentAttendanceUpdateFilter!){
+  updateStudenceAttendanceData(input:$input){
+    statusCode
+    statusDesc
+ } 
+}
+
+{
+  
+  "input": {
+    "studentIds": "1251,1255",
+	  "lectureId": 44750
+  }
+}
 
 
 

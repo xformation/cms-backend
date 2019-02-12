@@ -74,7 +74,7 @@
         },
         {
             "fieldName": "formSignatory",
-            "fieldType": "String",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
@@ -95,21 +95,7 @@
         },
         {
             "fieldName": "pfSignatory",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "pfSignatoryDesignation",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "pfSignatoryFatherName",
-            "fieldType": "String",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
@@ -130,21 +116,7 @@
         },
         {
             "fieldName": "esiSignatory",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "esiSignatoryDesignation",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "esiSignatoryFatherName",
-            "fieldType": "String",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
@@ -165,13 +137,32 @@
         },
         {
             "fieldName": "ptSignatory",
-            "fieldType": "String",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "branch",
+            "otherEntityName": "branch",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "college",
+            "otherEntityName": "college",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "location",
+            "otherEntityName": "location",
+            "otherEntityField": "id"
+        }
+    ],
     "changelogDate": "20190207114424",
     "entityTableName": "legal_entity",
     "dto": "mapstruct",
