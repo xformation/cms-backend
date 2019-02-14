@@ -58,10 +58,8 @@ public class StateResourceIntTest {
     @Autowired
     private StateRepository stateRepository;
 
-
     @Autowired
     private StateMapper stateMapper;
-    
 
     @Autowired
     private StateService stateService;
@@ -240,7 +238,6 @@ public class StateResourceIntTest {
             .andExpect(jsonPath("$.[*].stateCode").value(hasItem(DEFAULT_STATE_CODE.toString())));
     }
     
-
     @Test
     @Transactional
     public void getState() throws Exception {
@@ -256,6 +253,7 @@ public class StateResourceIntTest {
             .andExpect(jsonPath("$.divisionType").value(DEFAULT_DIVISION_TYPE.toString()))
             .andExpect(jsonPath("$.stateCode").value(DEFAULT_STATE_CODE.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingState() throws Exception {
@@ -307,7 +305,7 @@ public class StateResourceIntTest {
         // Create the State
         StateDTO stateDTO = stateMapper.toDto(state);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restStateMockMvc.perform(put("/api/states")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(stateDTO)))
@@ -354,9 +352,9 @@ public class StateResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(state.getId().intValue())))
-            .andExpect(jsonPath("$.[*].stateName").value(hasItem(DEFAULT_STATE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].divisionType").value(hasItem(DEFAULT_DIVISION_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].stateCode").value(hasItem(DEFAULT_STATE_CODE.toString())));
+            .andExpect(jsonPath("$.[*].stateName").value(hasItem(DEFAULT_STATE_NAME)))
+            .andExpect(jsonPath("$.[*].divisionType").value(hasItem(DEFAULT_DIVISION_TYPE)))
+            .andExpect(jsonPath("$.[*].stateCode").value(hasItem(DEFAULT_STATE_CODE)));
     }
 
     @Test

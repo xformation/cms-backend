@@ -158,12 +158,18 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "location",
-            "otherEntityName": "location",
+            "relationshipName": "state",
+            "otherEntityName": "state",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "city",
+            "otherEntityName": "city",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190207114424",
+    "changelogDate": "20190212105344",
     "entityTableName": "legal_entity",
     "dto": "mapstruct",
     "pagination": "no",

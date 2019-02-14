@@ -332,9 +332,10 @@ BankAccounts{branch} to Branch,
 BankAccounts{college} to College,
 LegalEntity{branch} to Branch,
 LegalEntity{college} to College,
-LegalEntity{location} to Location
-City{State} to State
-State{Country} to Country
+LegalEntity{state} to State,
+LegalEntity{city} to City,
+City{State} to State,
+State{Country} to Country,
 Currency{Country} to Country
 }
 

@@ -50,6 +50,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public CountryDTO save(CountryDTO countryDTO) {
         log.debug("Request to save Country : {}", countryDTO);
+
         Country country = countryMapper.toEntity(countryDTO);
         country = countryRepository.save(country);
         CountryDTO result = countryMapper.toDto(country);

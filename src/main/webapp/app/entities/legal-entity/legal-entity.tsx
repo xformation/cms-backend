@@ -89,16 +89,16 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                 <th>Pf Number</th>
                 <th>Pf Registration Date</th>
                 <th>Pf Signatory</th>
-                <th>Pf Signatory Designation</th>
-                <th>Pf Signatory Father Name</th>
                 <th>Esi Number</th>
                 <th>Esi Registration Date</th>
                 <th>Esi Signatory</th>
-                <th>Esi Signatory Designation</th>
-                <th>Esi Signatory Father Name</th>
                 <th>Pt Number</th>
                 <th>Pt Registration Date</th>
                 <th>Pt Signatory</th>
+                <th>Branch</th>
+                <th>College</th>
+                <th>State</th>
+                <th>City</th>
                 <th />
               </tr>
             </thead>
@@ -128,20 +128,20 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                     <TextFormat type="date" value={legalEntity.pfRegistrationDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{legalEntity.pfSignatory}</td>
-                  <td>{legalEntity.pfSignatoryDesignation}</td>
-                  <td>{legalEntity.pfSignatoryFatherName}</td>
                   <td>{legalEntity.esiNumber}</td>
                   <td>
                     <TextFormat type="date" value={legalEntity.esiRegistrationDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{legalEntity.esiSignatory}</td>
-                  <td>{legalEntity.esiSignatoryDesignation}</td>
-                  <td>{legalEntity.esiSignatoryFatherName}</td>
                   <td>{legalEntity.ptNumber}</td>
                   <td>
                     <TextFormat type="date" value={legalEntity.ptRegistrationDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{legalEntity.ptSignatory}</td>
+                  <td>{legalEntity.branchId ? <Link to={`branch/${legalEntity.branchId}`}>{legalEntity.branchId}</Link> : ''}</td>
+                  <td>{legalEntity.collegeId ? <Link to={`college/${legalEntity.collegeId}`}>{legalEntity.collegeId}</Link> : ''}</td>
+                  <td>{legalEntity.stateId ? <Link to={`state/${legalEntity.stateId}`}>{legalEntity.stateId}</Link> : ''}</td>
+                  <td>{legalEntity.cityId ? <Link to={`city/${legalEntity.cityId}`}>{legalEntity.cityId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${legalEntity.id}`} color="info" size="sm">

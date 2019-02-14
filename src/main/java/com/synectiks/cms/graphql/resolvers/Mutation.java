@@ -11,6 +11,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.City.*;
+import com.synectiks.cms.graphql.types.Country.*;
+import com.synectiks.cms.graphql.types.State.*;
+import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,26 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
@@ -160,25 +145,6 @@ import com.synectiks.cms.graphql.types.Term.RemoveTermInput;
 import com.synectiks.cms.graphql.types.Term.RemoveTermPayload;
 import com.synectiks.cms.graphql.types.Term.UpdateTermInput;
 import com.synectiks.cms.graphql.types.Term.UpdateTermPayload;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
 
 
 @Component
@@ -205,6 +171,9 @@ public class Mutation implements GraphQLMutationResolver {
     private final TeachRepository teachRepository;
     private final TeacherRepository teacherRepository;
     private final TermRepository termRepository;
+    private final CityRepository cityRepository;
+    private final StateRepository stateRepository;
+    private final CountryRepository countryRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -218,7 +187,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
     
-    public Mutation(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository) {
+    public Mutation(CountryRepository countryRepository,LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository,CityRepository cityRepository,StateRepository stateRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -241,6 +210,120 @@ public class Mutation implements GraphQLMutationResolver {
         this.teachRepository = teachRepository;
         this.attendanceMasterRepository=attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
+        this.cityRepository = cityRepository;
+        this.stateRepository = stateRepository;
+        this.countryRepository = countryRepository;
+    }
+
+    public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
+        final Country country = new Country();
+        country.setCountryName(addCountryInput.getCountryName());
+        country.setCountryCode(addCountryInput.getCountryCode());
+        country.setIsdCode(addCountryInput.getIsdCode());
+        countryRepository.save(country);
+        return new AddCountryPayload(country);
+    }
+
+    public UpdateCountryPayload updateCountry(UpdateCountryInput updateCountryInput) {
+        Country country = countryRepository.findById(updateCountryInput.getId()).get();
+        if (updateCountryInput.getCountryName() != null) {
+            country.setCountryName(updateCountryInput.getCountryName());
+        }
+        if (updateCountryInput.getCountryCode() != null) {
+            country .setCountryCode(updateCountryInput.getCountryCode());
+        }
+        if (updateCountryInput.getIsdCode() != null) {
+            country .setIsdCode(updateCountryInput.getIsdCode());
+        }
+
+        countryRepository.save(country);
+
+        return new UpdateCountryPayload(country);
+    }
+
+    public RemoveCountryPayload removeCountry(RemoveCountryInput removeCountryInput) {
+        Country country = countryRepository.findById(removeCountryInput.getCountryId()).get();
+        countryRepository.delete(country);
+        return new RemoveCountryPayload(Lists.newArrayList(countryRepository.findAll()));
+    }
+
+    public AddCityPayload addCity(AddCityInput addCityInput) {
+        final State state = stateRepository.findById(addCityInput.getStateId()).get();
+
+        final City city = new City();
+        city.setState(state);
+        city.setCityName(addCityInput.getCityName());
+        city.setCityCode(addCityInput.getCityCode());
+        city.setStdCode(addCityInput.getStdCode());
+        cityRepository.save(city);
+        return new AddCityPayload(city);
+    }
+
+    public UpdateCityPayload updateCity(UpdateCityInput updateCityInput) {
+        City city = cityRepository.findById(updateCityInput.getId()).get();
+        if (updateCityInput.getCityName() != null) {
+            city.setCityName(updateCityInput.getCityName());
+        }
+        if (updateCityInput.getCityCode() != null) {
+            city .setCityCode(updateCityInput.getCityCode());
+        }
+        if (updateCityInput.getStdCode() != null) {
+            city .setStdCode(updateCityInput.getStdCode());
+        }
+
+        if(updateCityInput.getStateId() != null) {
+            final State state = stateRepository.findById(updateCityInput.getStateId()).get();
+            city.setState(state);
+        }
+        cityRepository.save(city);
+
+        return new UpdateCityPayload(city);
+    }
+
+    public RemoveCityPayload removeCity(RemoveCityInput removeCityInput) {
+        City city = cityRepository.findById(removeCityInput.getCityId()).get();
+        cityRepository.delete(city);
+        return new RemoveCityPayload(Lists.newArrayList(cityRepository.findAll()));
+    }
+
+    public AddStatePayload addState(AddStateInput addStateInput) {
+        final Country country = countryRepository.findById(addStateInput.getCountryId()).get();
+
+        final State state = new State();
+        state.setCountry(country);
+        state.setStateName(addStateInput.getStateName());
+        state.setDivisionType(addStateInput.getDivisionType());
+        state.setStateCode(addStateInput.getStateCode());
+        stateRepository.save(state);
+        return new AddStatePayload(state);
+    }
+
+    public UpdateStatePayload updateState(UpdateStateInput updateStateInput) {
+        State state = stateRepository.findById(updateStateInput.getId()).get();
+
+        if (updateStateInput.getStateName() != null) {
+            state.setStateName(updateStateInput.getStateName());
+        }
+        if (updateStateInput.getDivisionType() != null) {
+            state.setDivisionType(updateStateInput.getDivisionType());
+        }
+        if (updateStateInput.getStateCode() != null) {
+            state.setStateCode(updateStateInput.getStateCode());
+        }
+
+        if(updateStateInput.getCountryId() != null) {
+            final Country country = countryRepository.findById(updateStateInput.getCountryId()).get();
+            state.setCountry(country);
+        }
+        stateRepository.save(state);
+
+        return new UpdateStatePayload(state);
+    }
+
+    public RemoveStatePayload removeState(RemoveStateInput removeStateInput) {
+        State state = stateRepository.findById(removeStateInput.getStateId()).get();
+        stateRepository.delete(state);
+        return new RemoveStatePayload(Lists.newArrayList(stateRepository.findAll()));
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
@@ -1220,10 +1303,11 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setPtSignatory(addLegalEntityInput.getPtSignatory());
         Branch branch = branchRepository.findById(addLegalEntityInput.getBranchId()).get();
         College college = collegeRepository.findById(addLegalEntityInput.getCollegeId()).get();
-        Location location = locationRepository.findById(addLegalEntityInput.getLocationId()).get();
+        City city = cityRepository.findById(addLegalEntityInput.getCityId()).get();
+        State state = stateRepository.findById(addLegalEntityInput.getStateId()).get();
         legalEntity.setBranch(branch);
         legalEntity.setCollege(college);
-        legalEntity.setLocation(location);
+        legalEntity.setCity(city);
         legalEntityRepository.save(legalEntity);
 
         return new AddLegalEntityPayload(legalEntity);
@@ -1302,9 +1386,14 @@ public class Mutation implements GraphQLMutationResolver {
             College college = collegeRepository.findById(updateLegalEntityInput.getCollegeId()).get();
             legalEntity.setCollege(college);
         }
-        if(updateLegalEntityInput.getLocationId() != null) {
-            Location location = locationRepository.findById(updateLegalEntityInput.getLocationId()).get();
-            legalEntity.setLocation(location);
+        if(updateLegalEntityInput.getCityId() != null) {
+            City city = cityRepository.findById(updateLegalEntityInput.getCityId()).get();
+            legalEntity.setCity(city);
+        }
+
+        if(updateLegalEntityInput.getStateId() != null) {
+            State state = stateRepository.findById(updateLegalEntityInput.getStateId()).get();
+            legalEntity.setState(state);
         }
         legalEntityRepository.save(legalEntity);
 

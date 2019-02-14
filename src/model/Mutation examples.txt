@@ -1,3 +1,72 @@
+Country:
+
+mutation addCountry($input:AddCountryInput!){
+  addCountry(input: $input){
+    country{
+      id
+      countryName
+      countryCode
+      isdCode
+    }
+  }
+}
+
+{
+  "input": {
+    "countryName": "Teja",
+    "countryCode": "TEHEN123",
+    "isdCode": "HFNH%65"
+  }
+}
+
+State:
+
+{
+  "input": {
+    "countryName": "Teja",
+    "countryCode": "TEHEN123",
+    "isdCode": "HFNH%65"
+  }
+}
+
+
+{
+  "input": {
+    "stateName": "Hyderabad",
+    "divisionType": "Class A",
+    "stateCode": "HYD2019",
+    "countryId": 1001
+  }
+}
+
+
+City:
+
+
+mutation addCity($input:AddCityInput!){
+  addCity(input: $input){
+    city{
+      id
+      cityName
+      cityCode
+      stdCode
+      state{
+        id
+      }
+    }
+  }
+}
+
+
+{
+  "input": {
+    "cityName": "Hyd",
+    "cityCode": "Hyd201",
+    "stdCode": "584128",
+    "stateId": 1051
+  }
+}
+
 
 College:
 

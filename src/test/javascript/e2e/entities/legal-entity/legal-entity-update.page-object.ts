@@ -18,16 +18,16 @@ export default class LegalEntityUpdatePage {
   pfNumberInput: ElementFinder = element(by.css('input#legal-entity-pfNumber'));
   pfRegistrationDateInput: ElementFinder = element(by.css('input#legal-entity-pfRegistrationDate'));
   pfSignatoryInput: ElementFinder = element(by.css('input#legal-entity-pfSignatory'));
-  pfSignatoryDesignationInput: ElementFinder = element(by.css('input#legal-entity-pfSignatoryDesignation'));
-  pfSignatoryFatherNameInput: ElementFinder = element(by.css('input#legal-entity-pfSignatoryFatherName'));
   esiNumberInput: ElementFinder = element(by.css('input#legal-entity-esiNumber'));
   esiRegistrationDateInput: ElementFinder = element(by.css('input#legal-entity-esiRegistrationDate'));
   esiSignatoryInput: ElementFinder = element(by.css('input#legal-entity-esiSignatory'));
-  esiSignatoryDesignationInput: ElementFinder = element(by.css('input#legal-entity-esiSignatoryDesignation'));
-  esiSignatoryFatherNameInput: ElementFinder = element(by.css('input#legal-entity-esiSignatoryFatherName'));
   ptNumberInput: ElementFinder = element(by.css('input#legal-entity-ptNumber'));
   ptRegistrationDateInput: ElementFinder = element(by.css('input#legal-entity-ptRegistrationDate'));
   ptSignatoryInput: ElementFinder = element(by.css('input#legal-entity-ptSignatory'));
+  branchSelect: ElementFinder = element(by.css('select#legal-entity-branch'));
+  collegeSelect: ElementFinder = element(by.css('select#legal-entity-college'));
+  stateSelect: ElementFinder = element(by.css('select#legal-entity-state'));
+  citySelect: ElementFinder = element(by.css('select#legal-entity-city'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -151,22 +151,6 @@ export default class LegalEntityUpdatePage {
     return this.pfSignatoryInput.getAttribute('value');
   }
 
-  async setPfSignatoryDesignationInput(pfSignatoryDesignation) {
-    await this.pfSignatoryDesignationInput.sendKeys(pfSignatoryDesignation);
-  }
-
-  async getPfSignatoryDesignationInput() {
-    return this.pfSignatoryDesignationInput.getAttribute('value');
-  }
-
-  async setPfSignatoryFatherNameInput(pfSignatoryFatherName) {
-    await this.pfSignatoryFatherNameInput.sendKeys(pfSignatoryFatherName);
-  }
-
-  async getPfSignatoryFatherNameInput() {
-    return this.pfSignatoryFatherNameInput.getAttribute('value');
-  }
-
   async setEsiNumberInput(esiNumber) {
     await this.esiNumberInput.sendKeys(esiNumber);
   }
@@ -191,22 +175,6 @@ export default class LegalEntityUpdatePage {
     return this.esiSignatoryInput.getAttribute('value');
   }
 
-  async setEsiSignatoryDesignationInput(esiSignatoryDesignation) {
-    await this.esiSignatoryDesignationInput.sendKeys(esiSignatoryDesignation);
-  }
-
-  async getEsiSignatoryDesignationInput() {
-    return this.esiSignatoryDesignationInput.getAttribute('value');
-  }
-
-  async setEsiSignatoryFatherNameInput(esiSignatoryFatherName) {
-    await this.esiSignatoryFatherNameInput.sendKeys(esiSignatoryFatherName);
-  }
-
-  async getEsiSignatoryFatherNameInput() {
-    return this.esiSignatoryFatherNameInput.getAttribute('value');
-  }
-
   async setPtNumberInput(ptNumber) {
     await this.ptNumberInput.sendKeys(ptNumber);
   }
@@ -229,6 +197,82 @@ export default class LegalEntityUpdatePage {
 
   async getPtSignatoryInput() {
     return this.ptSignatoryInput.getAttribute('value');
+  }
+
+  async branchSelectLastOption() {
+    await this.branchSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
+  }
+
+  getBranchSelect() {
+    return this.branchSelect;
+  }
+
+  async getBranchSelectedOption() {
+    return this.branchSelect.element(by.css('option:checked')).getText();
+  }
+
+  async collegeSelectLastOption() {
+    await this.collegeSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
+  }
+
+  getCollegeSelect() {
+    return this.collegeSelect;
+  }
+
+  async getCollegeSelectedOption() {
+    return this.collegeSelect.element(by.css('option:checked')).getText();
+  }
+
+  async stateSelectLastOption() {
+    await this.stateSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async stateSelectOption(option) {
+    await this.stateSelect.sendKeys(option);
+  }
+
+  getStateSelect() {
+    return this.stateSelect;
+  }
+
+  async getStateSelectedOption() {
+    return this.stateSelect.element(by.css('option:checked')).getText();
+  }
+
+  async citySelectLastOption() {
+    await this.citySelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async citySelectOption(option) {
+    await this.citySelect.sendKeys(option);
+  }
+
+  getCitySelect() {
+    return this.citySelect;
+  }
+
+  async getCitySelectedOption() {
+    return this.citySelect.element(by.css('option:checked')).getText();
   }
 
   async save() {

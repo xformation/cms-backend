@@ -17,20 +17,20 @@ export interface ILegalEntity {
   tan?: string;
   tanCircleNumber?: string;
   citTdsLocation?: string;
-  formSignatory?: string;
+  formSignatory?: number;
   pfNumber?: string;
   pfRegistrationDate?: Moment;
-  pfSignatory?: string;
-  pfSignatoryDesignation?: string;
-  pfSignatoryFatherName?: string;
+  pfSignatory?: number;
   esiNumber?: number;
   esiRegistrationDate?: Moment;
-  esiSignatory?: string;
-  esiSignatoryDesignation?: string;
-  esiSignatoryFatherName?: string;
+  esiSignatory?: number;
   ptNumber?: number;
   ptRegistrationDate?: Moment;
-  ptSignatory?: string;
+  ptSignatory?: number;
+  branchId?: number;
+  collegeId?: number;
+  stateId?: number;
+  cityId?: number;
 }
 
 export const defaultValue: Readonly<ILegalEntity> = {};

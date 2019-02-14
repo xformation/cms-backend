@@ -58,10 +58,8 @@ public class CountryResourceIntTest {
     @Autowired
     private CountryRepository countryRepository;
 
-
     @Autowired
     private CountryMapper countryMapper;
-    
 
     @Autowired
     private CountryService countryService;
@@ -221,7 +219,6 @@ public class CountryResourceIntTest {
             .andExpect(jsonPath("$.[*].isdCode").value(hasItem(DEFAULT_ISD_CODE.toString())));
     }
     
-
     @Test
     @Transactional
     public void getCountry() throws Exception {
@@ -237,6 +234,7 @@ public class CountryResourceIntTest {
             .andExpect(jsonPath("$.countryCode").value(DEFAULT_COUNTRY_CODE.toString()))
             .andExpect(jsonPath("$.isdCode").value(DEFAULT_ISD_CODE.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCountry() throws Exception {
@@ -288,7 +286,7 @@ public class CountryResourceIntTest {
         // Create the Country
         CountryDTO countryDTO = countryMapper.toDto(country);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCountryMockMvc.perform(put("/api/countries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(countryDTO)))
@@ -335,9 +333,9 @@ public class CountryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(country.getId().intValue())))
-            .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME.toString())))
-            .andExpect(jsonPath("$.[*].countryCode").value(hasItem(DEFAULT_COUNTRY_CODE.toString())))
-            .andExpect(jsonPath("$.[*].isdCode").value(hasItem(DEFAULT_ISD_CODE.toString())));
+            .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME)))
+            .andExpect(jsonPath("$.[*].countryCode").value(hasItem(DEFAULT_COUNTRY_CODE)))
+            .andExpect(jsonPath("$.[*].isdCode").value(hasItem(DEFAULT_ISD_CODE)));
     }
 
     @Test

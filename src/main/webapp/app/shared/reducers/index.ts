@@ -247,6 +247,42 @@ import branch, {
 import authorizedSignatory, {
   AuthorizedSignatoryState
 } from 'app/entities/authorized-signatory/authorized-signatory.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import country, {
+  CountryState
+} from 'app/entities/country/country.reducer';
+// prettier-ignore
+import currency, {
+  CurrencyState
+} from 'app/entities/currency/currency.reducer';
+// prettier-ignore
+import state, {
+  StateState
+} from 'app/entities/state/state.reducer';
+// prettier-ignore
+import city, {
+  CityState
+} from 'app/entities/city/city.reducer';
+// prettier-ignore
+import country, {
+  CountryState
+} from 'app/entities/country/country.reducer';
+// prettier-ignore
+import currency, {
+  CurrencyState
+} from 'app/entities/currency/currency.reducer';
+// prettier-ignore
+import state, {
+  StateState
+} from 'app/entities/state/state.reducer';
+// prettier-ignore
+import city, {
+  CityState
+} from 'app/entities/city/city.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -281,6 +317,10 @@ export interface IRootState {
   readonly authorizedSignatory: AuthorizedSignatoryState;
   readonly bankAccounts: BankAccountsState;
   readonly signatoryLink: SignatoryLinkState;
+  readonly country: CountryState;
+  readonly currency: CurrencyState;
+  readonly state: StateState;
+  readonly city: CityState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -317,6 +357,10 @@ const rootReducer = combineReducers<IRootState>({
   authorizedSignatory,
   bankAccounts,
   signatoryLink,
+  country,
+  currency,
+  state,
+  city,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

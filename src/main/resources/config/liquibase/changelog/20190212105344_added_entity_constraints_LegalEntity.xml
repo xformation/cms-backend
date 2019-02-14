@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity LegalEntity.
     -->
-    <changeSet id="20190207114424-2" author="jhipster">
+    <changeSet id="20190212105344-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="branch_id"
                                  baseTableName="legal_entity"
@@ -20,11 +20,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="college"/>
 
-        <addForeignKeyConstraint baseColumnNames="location_id"
+        <addForeignKeyConstraint baseColumnNames="state_id"
                                  baseTableName="legal_entity"
-                                 constraintName="fk_legal_entity_location_id"
+                                 constraintName="fk_legal_entity_state_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="location"/>
+                                 referencedTableName="state"/>
+
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="legal_entity"
+                                 constraintName="fk_legal_entity_city_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
 
     </changeSet>
 </databaseChangeLog>

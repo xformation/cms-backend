@@ -1,27 +1,14 @@
 package com.synectiks.cms.web.rest;
 
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.synectiks.cms.CmsApp;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+import com.synectiks.cms.service.LegalEntityService;
+import com.synectiks.cms.service.dto.LegalEntityDTO;
+import com.synectiks.cms.service.mapper.LegalEntityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,15 +24,21 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.LegalEntity;
+import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
-import com.synectiks.cms.service.LegalEntityService;
-import com.synectiks.cms.service.dto.LegalEntityDTO;
-import com.synectiks.cms.service.mapper.LegalEntityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the LegalEntityResource REST controller.
  *
@@ -118,10 +111,8 @@ public class LegalEntityResourceIntTest {
     @Autowired
     private LegalEntityRepository legalEntityRepository;
 
-
     @Autowired
     private LegalEntityMapper legalEntityMapper;
-    
 
     @Autowired
     private LegalEntityService legalEntityService;
@@ -674,7 +665,6 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getLegalEntity() throws Exception {
@@ -707,6 +697,7 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.ptRegistrationDate").value(DEFAULT_PT_REGISTRATION_DATE.toString()))
             .andExpect(jsonPath("$.ptSignatory").value(DEFAULT_PT_SIGNATORY.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingLegalEntity() throws Exception {
@@ -792,7 +783,7 @@ public class LegalEntityResourceIntTest {
         // Create the LegalEntity
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLegalEntityMockMvc.perform(put("/api/legal-entities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
@@ -840,17 +831,17 @@ public class LegalEntityResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(legalEntity.getId().intValue())))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
-            .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString())))
+            .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)))
             .andExpect(jsonPath("$.[*].typeOfCollege").value(hasItem(DEFAULT_TYPE_OF_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].dateOfIncorporation").value(hasItem(DEFAULT_DATE_OF_INCORPORATION.toString())))
-            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN.toString())))
-            .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN.toString())))
-            .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION.toString())))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS)))
+            .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER)))
+            .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN)))
+            .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN)))
+            .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER)))
+            .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION)))
             .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.intValue())))
-            .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER)))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.intValue())))

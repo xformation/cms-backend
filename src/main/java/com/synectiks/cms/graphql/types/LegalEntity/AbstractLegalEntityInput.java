@@ -2,6 +2,7 @@
 package com.synectiks.cms.graphql.types.LegalEntity;
 
 import java.util.Date;
+import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
@@ -32,9 +33,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
         private Long ptNumber;
         private Date ptRegistrationDate;
         private Long ptSignatory;
-        private Long branchId;
-        private Long collegeId;
-        private Long locationId;
+
         public Long getId() {
             return id;
         }
@@ -155,18 +154,6 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.pfSignatory = pfSignatory;
         }
 
-	/*
-	 * public String getPfSignatoryDesignation() { return pfSignatoryDesignation; }
-	 * 
-	 * public void setPfSignatoryDesignation(String pfSignatoryDesignation) {
-	 * this.pfSignatoryDesignation = pfSignatoryDesignation; }
-	 * 
-	 * public String getPfSignatoryFatherName() { return pfSignatoryFatherName; }
-	 * 
-	 * public void setPfSignatoryFatherName(String pfSignatoryFatherName) {
-	 * this.pfSignatoryFatherName = pfSignatoryFatherName; }
-	 */
-
         public Long getEsiNumber() {
             return esiNumber;
         }
@@ -190,19 +177,6 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
         public void setEsiSignatory(Long esiSignatory) {
             this.esiSignatory = esiSignatory;
         }
-
-	/*
-	 * public String getEsiSignatoryDesignation() { return esiSignatoryDesignation;
-	 * }
-	 * 
-	 * public void setEsiSignatoryDesignation(String esiSignatoryDesignation) {
-	 * this.esiSignatoryDesignation = esiSignatoryDesignation; }
-	 * 
-	 * public String getEsiSignatoryFatherName() { return esiSignatoryFatherName; }
-	 * 
-	 * public void setEsiSignatoryFatherName(String esiSignatoryFatherName) {
-	 * this.esiSignatoryFatherName = esiSignatoryFatherName; }
-	 */
 
         public Long getPtNumber() {
             return ptNumber;
@@ -229,6 +203,39 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            AbstractLegalEntityInput that = (AbstractLegalEntityInput) o;
+            return Objects.equals(id, that.id) &&
+                Objects.equals(logo, that.logo) &&
+                Objects.equals(legalNameOfTheCollege, that.legalNameOfTheCollege) &&
+                typeOfCollege == that.typeOfCollege &&
+                Objects.equals(dateOfIncorporation, that.dateOfIncorporation) &&
+                Objects.equals(registeredOfficeAddress, that.registeredOfficeAddress) &&
+                Objects.equals(collegeIdentificationNumber, that.collegeIdentificationNumber) &&
+                Objects.equals(pan, that.pan) &&
+                Objects.equals(tan, that.tan) &&
+                Objects.equals(tanCircleNumber, that.tanCircleNumber) &&
+                Objects.equals(citTdsLocation, that.citTdsLocation) &&
+                Objects.equals(formSignatory, that.formSignatory) &&
+                Objects.equals(pfNumber, that.pfNumber) &&
+                Objects.equals(pfRegistrationDate, that.pfRegistrationDate) &&
+                Objects.equals(pfSignatory, that.pfSignatory) &&
+                Objects.equals(esiNumber, that.esiNumber) &&
+                Objects.equals(esiRegistrationDate, that.esiRegistrationDate) &&
+                Objects.equals(esiSignatory, that.esiSignatory) &&
+                Objects.equals(ptNumber, that.ptNumber) &&
+                Objects.equals(ptRegistrationDate, that.ptRegistrationDate) &&
+                Objects.equals(ptSignatory, that.ptSignatory);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, logo, legalNameOfTheCollege, typeOfCollege, dateOfIncorporation, registeredOfficeAddress, collegeIdentificationNumber, pan, tan, tanCircleNumber, citTdsLocation, formSignatory, pfNumber, pfRegistrationDate, pfSignatory, esiNumber, esiRegistrationDate, esiSignatory, ptNumber, ptRegistrationDate, ptSignatory);
+        }
+
+        @Override
         public String toString() {
             return "AbstractLegalEntityInput{" +
                 "id=" + id +
@@ -242,44 +249,16 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
                 ", tan='" + tan + '\'' +
                 ", tanCircleNumber='" + tanCircleNumber + '\'' +
                 ", citTdsLocation='" + citTdsLocation + '\'' +
-                ", formSignatory='" + formSignatory + '\'' +
+                ", formSignatory=" + formSignatory +
                 ", pfNumber='" + pfNumber + '\'' +
                 ", pfRegistrationDate=" + pfRegistrationDate +
-                ", pfSignatory='" + pfSignatory + '\'' +
-//                ", pfSignatoryDesignation='" + pfSignatoryDesignation + '\'' +
-//                ", pfSignatoryFatherName='" + pfSignatoryFatherName + '\'' +
+                ", pfSignatory=" + pfSignatory +
                 ", esiNumber=" + esiNumber +
                 ", esiRegistrationDate=" + esiRegistrationDate +
-                ", esiSignatory='" + esiSignatory + '\'' +
-//                ", esiSignatoryDesignation='" + esiSignatoryDesignation + '\'' +
-//                ", esiSignatoryFatherName='" + esiSignatoryFatherName + '\'' +
+                ", esiSignatory=" + esiSignatory +
                 ", ptNumber=" + ptNumber +
                 ", ptRegistrationDate=" + ptRegistrationDate +
-                ", ptSignatory='" + ptSignatory + '\'' +
+                ", ptSignatory=" + ptSignatory +
                 '}';
         }
-
-		public Long getBranchId() {
-			return branchId;
-		}
-
-		public void setBranchId(Long branchId) {
-			this.branchId = branchId;
-		}
-
-		public Long getCollegeId() {
-			return collegeId;
-		}
-
-		public void setCollegeId(Long collegeId) {
-			this.collegeId = collegeId;
-		}
-
-		public Long getLocationId() {
-			return locationId;
-		}
-
-		public void setLocationId(Long locationId) {
-			this.locationId = locationId;
-		}
     }

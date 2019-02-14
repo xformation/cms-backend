@@ -115,9 +115,41 @@ type Query {
   term (id: Long!): Term!
   terms: [Term!]!
 
+  city (id: Long!): City!
+  cities: [City!]!
+
+  state (id: Long!): Long!
+  states: [State!]!
+
+  country (id: Long!): Long!
+  countries: [Country!]!
+
   getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
+}
+
+type City{
+    id: Long!
+    cityName: String!
+    cityCode: String!
+    stdCode: String!
+    state: State!
+}
+
+type State{
+    id: Long!
+    stateName: String!
+    divisionType: String!
+    stateCode: String!
+    country: Country!
+}
+
+type Country{
+    id: Long!
+    countryName: String!
+    countryCode: String!
+    isdCode: String!
 }
 
 type AuthorizedSignatory {
@@ -215,7 +247,8 @@ type LegalEntity{
     ptSignatory:String!
     branch: Branch
     college: College!
-    location: Location!
+    city: City!
+    state: State!
 }
 
 type LegalEntityAuthSignatoryLink{
@@ -539,7 +572,19 @@ type Mutation {
    updateTerm(input: UpdateTermInput!): UpdateTermPayload!
    removeTerm(input: RemoveTermInput!): RemoveTermPayload!
 
-   updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
+   addCity(input: AddCityInput!): AddCityPayload!
+   updateCity(input: UpdateCityInput!): UpdateCityPayload!
+   removeCity(input: RemoveCityInput!): RemoveCityPayload!
+
+   addState(input: AddStateInput!): AddStatePayload!
+   updateState(input: UpdateStateInput!): UpdateStatePayload!
+   removeState(input: RemoveStateInput!): RemoveStatePayload!
+
+   addCountry(input: AddCountryInput!): AddCountryPayload!
+   updateCountry(input: UpdateCountryInput!): UpdateCountryPayload!
+   removeCountry(input: RemoveCountryInput!): RemoveCountryPayload!
+
+    updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 
    addAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
    updateAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
@@ -1338,3 +1383,85 @@ input RemoveTermInput {
 type RemoveTermPayload {
     terms: [Term!]!
 }
+
+
+input AddCityInput {
+    cityName: String!
+    cityCode: String!
+    stdCode: String!
+    stateId: Long!
+}
+type AddCityPayload {
+    city: City!
+}
+input UpdateCityInput {
+    id: Long!
+    cityName: String!
+    cityCode: String!
+    stdCode: String!
+    stateId: Long!
+}
+type UpdateCityPayload {
+    city: City!
+}
+input RemoveCityInput {
+    cityId: Long!
+}
+type RemoveCityPayload {
+    cities: [ City!]!
+}
+
+
+input AddStateInput {
+    stateName: String!
+    divisionType: String!
+    stateCode: String!
+    countryId: Long!
+}
+type AddStatePayload {
+    state: State!
+}
+input UpdateStateInput {
+    id: Long!
+    stateName: String!
+    divisionType: String!
+    stateCode: String!
+    countryId: Long!
+}
+type UpdateStatePayload {
+    state: State!
+}
+input RemoveStateInput {
+    stateId: Long!
+}
+type RemoveStatePayload {
+    states: [ State!]!
+}
+
+
+input AddCountryInput {
+    countryName: String!
+    countryCode: String!
+    isdCode: String!
+}
+type AddCountryPayload {
+    country: Country!
+}
+input UpdateCountryInput {
+    id: Long!
+    countryName: String!
+    countryCode: String!
+    isdCode: String!
+}
+type UpdateCountryPayload {
+    country: Country!
+}
+input RemoveCountryInput {
+    countryId: Long!
+}
+type RemoveCountryPayload {
+    countries: [ Country!]!
+}
+
+
+

@@ -58,10 +58,8 @@ public class CityResourceIntTest {
     @Autowired
     private CityRepository cityRepository;
 
-
     @Autowired
     private CityMapper cityMapper;
-    
 
     @Autowired
     private CityService cityService;
@@ -202,7 +200,6 @@ public class CityResourceIntTest {
             .andExpect(jsonPath("$.[*].stdCode").value(hasItem(DEFAULT_STD_CODE.toString())));
     }
     
-
     @Test
     @Transactional
     public void getCity() throws Exception {
@@ -218,6 +215,7 @@ public class CityResourceIntTest {
             .andExpect(jsonPath("$.cityCode").value(DEFAULT_CITY_CODE.toString()))
             .andExpect(jsonPath("$.stdCode").value(DEFAULT_STD_CODE.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCity() throws Exception {
@@ -269,7 +267,7 @@ public class CityResourceIntTest {
         // Create the City
         CityDTO cityDTO = cityMapper.toDto(city);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCityMockMvc.perform(put("/api/cities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
@@ -316,9 +314,9 @@ public class CityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(city.getId().intValue())))
-            .andExpect(jsonPath("$.[*].cityName").value(hasItem(DEFAULT_CITY_NAME.toString())))
-            .andExpect(jsonPath("$.[*].cityCode").value(hasItem(DEFAULT_CITY_CODE.toString())))
-            .andExpect(jsonPath("$.[*].stdCode").value(hasItem(DEFAULT_STD_CODE.toString())));
+            .andExpect(jsonPath("$.[*].cityName").value(hasItem(DEFAULT_CITY_NAME)))
+            .andExpect(jsonPath("$.[*].cityCode").value(hasItem(DEFAULT_CITY_CODE)))
+            .andExpect(jsonPath("$.[*].stdCode").value(hasItem(DEFAULT_STD_CODE)));
     }
 
     @Test

@@ -8,17 +8,19 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity LegalEntity and its DTO LegalEntityDTO.
  */
-@Mapper(componentModel = "spring", uses = {BranchMapper.class, CollegeMapper.class, LocationMapper.class})
+@Mapper(componentModel = "spring", uses = {BranchMapper.class, CollegeMapper.class, StateMapper.class, CityMapper.class})
 public interface LegalEntityMapper extends EntityMapper<LegalEntityDTO, LegalEntity> {
 
     @Mapping(source = "branch.id", target = "branchId")
     @Mapping(source = "college.id", target = "collegeId")
-    @Mapping(source = "location.id", target = "locationId")
+    @Mapping(source = "state.id", target = "stateId")
+    @Mapping(source = "city.id", target = "cityId")
     LegalEntityDTO toDto(LegalEntity legalEntity);
 
     @Mapping(source = "branchId", target = "branch")
     @Mapping(source = "collegeId", target = "college")
-    @Mapping(source = "locationId", target = "location")
+    @Mapping(source = "stateId", target = "state")
+    @Mapping(source = "cityId", target = "city")
     LegalEntity toEntity(LegalEntityDTO legalEntityDTO);
 
     default LegalEntity fromId(Long id) {

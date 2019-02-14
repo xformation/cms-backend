@@ -77,7 +77,9 @@ public class LegalEntityDTO implements Serializable {
 
     private Long collegeId;
 
-    private Long locationId;
+    private Long stateId;
+
+    private Long cityId;
 
     public Long getId() {
         return id;
@@ -263,12 +265,20 @@ public class LegalEntityDTO implements Serializable {
         this.collegeId = collegeId;
     }
 
-    public Long getLocationId() {
-        return locationId;
+    public Long getStateId() {
+        return stateId;
     }
 
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+    public void setStateId(Long stateId) {
+        this.stateId = stateId;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
     @Override
@@ -318,7 +328,8 @@ public class LegalEntityDTO implements Serializable {
             ", ptSignatory=" + getPtSignatory() +
             ", branch=" + getBranchId() +
             ", college=" + getCollegeId() +
-            ", location=" + getLocationId() +
+            ", state=" + getStateId() +
+            ", city=" + getCityId() +
             "}";
     }
 }

@@ -16,7 +16,7 @@
     <!--
         Added the entity LegalEntity.
     -->
-    <changeSet id="20190207114424-1" author="jhipster">
+    <changeSet id="20190212105344-1" author="jhipster">
         <createTable tableName="legal_entity">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -109,7 +109,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="location_id" type="bigint">
+            <column name="state_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="city_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

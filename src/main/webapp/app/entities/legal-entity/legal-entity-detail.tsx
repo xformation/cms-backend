@@ -89,14 +89,6 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
             </dt>
             <dd>{legalEntityEntity.pfSignatory}</dd>
             <dt>
-              <span id="pfSignatoryDesignation">Pf Signatory Designation</span>
-            </dt>
-            <dd>{legalEntityEntity.pfSignatoryDesignation}</dd>
-            <dt>
-              <span id="pfSignatoryFatherName">Pf Signatory Father Name</span>
-            </dt>
-            <dd>{legalEntityEntity.pfSignatoryFatherName}</dd>
-            <dt>
               <span id="esiNumber">Esi Number</span>
             </dt>
             <dd>{legalEntityEntity.esiNumber}</dd>
@@ -111,14 +103,6 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
             </dt>
             <dd>{legalEntityEntity.esiSignatory}</dd>
             <dt>
-              <span id="esiSignatoryDesignation">Esi Signatory Designation</span>
-            </dt>
-            <dd>{legalEntityEntity.esiSignatoryDesignation}</dd>
-            <dt>
-              <span id="esiSignatoryFatherName">Esi Signatory Father Name</span>
-            </dt>
-            <dd>{legalEntityEntity.esiSignatoryFatherName}</dd>
-            <dt>
               <span id="ptNumber">Pt Number</span>
             </dt>
             <dd>{legalEntityEntity.ptNumber}</dd>
@@ -132,6 +116,14 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
               <span id="ptSignatory">Pt Signatory</span>
             </dt>
             <dd>{legalEntityEntity.ptSignatory}</dd>
+            <dt>Branch</dt>
+            <dd>{legalEntityEntity.branchId ? legalEntityEntity.branchId : ''}</dd>
+            <dt>College</dt>
+            <dd>{legalEntityEntity.collegeId ? legalEntityEntity.collegeId : ''}</dd>
+            <dt>State</dt>
+            <dd>{legalEntityEntity.stateId ? legalEntityEntity.stateId : ''}</dd>
+            <dt>City</dt>
+            <dd>{legalEntityEntity.cityId ? legalEntityEntity.cityId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/legal-entity" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

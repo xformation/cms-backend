@@ -26,6 +26,10 @@ import LegalEntity from './legal-entity';
 import AuthorizedSignatory from './authorized-signatory';
 import BankAccounts from './bank-accounts';
 import SignatoryLink from './signatory-link';
+import Country from './country';
+import Currency from './currency';
+import State from './state';
+import City from './city';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -54,6 +58,10 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/authorized-signatory`} component={AuthorizedSignatory} />
       <ErrorBoundaryRoute path={`${match.url}/bank-accounts`} component={BankAccounts} />
       <ErrorBoundaryRoute path={`${match.url}/signatory-link`} component={SignatoryLink} />
+      <ErrorBoundaryRoute path={`${match.url}/country`} component={Country} />
+      <ErrorBoundaryRoute path={`${match.url}/currency`} component={Currency} />
+      <ErrorBoundaryRoute path={`${match.url}/state`} component={State} />
+      <ErrorBoundaryRoute path={`${match.url}/city`} component={City} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>
