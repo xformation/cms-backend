@@ -6,13 +6,25 @@
     <!--
         Added the constraints for entity Branch.
     -->
-    <changeSet id="20190208044629-2" author="jhipster">
+    <changeSet id="20190214071443-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="college_id"
                                  baseTableName="branch"
                                  constraintName="fk_branch_college_id"
                                  referencedColumnNames="id"
                                  referencedTableName="college"/>
+
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="branch"
+                                 constraintName="fk_branch_city_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+
+        <addForeignKeyConstraint baseColumnNames="state_id"
+                                 baseTableName="branch"
+                                 constraintName="fk_branch_state_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="state"/>
 
     </changeSet>
 </databaseChangeLog>

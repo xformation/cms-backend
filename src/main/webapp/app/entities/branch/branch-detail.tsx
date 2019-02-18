@@ -33,15 +33,23 @@ export class BranchDetail extends React.Component<IBranchDetailProps> {
             </dt>
             <dd>{branchEntity.branchName}</dd>
             <dt>
-              <span id="description">Description</span>
+              <span id="address1">Address 1</span>
             </dt>
-            <dd>{branchEntity.description}</dd>
+            <dd>{branchEntity.address1}</dd>
             <dt>
-              <span id="collegeHead">College Head</span>
+              <span id="address2">Address 2</span>
             </dt>
-            <dd>{branchEntity.collegeHead}</dd>
+            <dd>{branchEntity.address2}</dd>
+            <dt>
+              <span id="branchHead">Branch Head</span>
+            </dt>
+            <dd>{branchEntity.branchHead}</dd>
             <dt>College</dt>
             <dd>{branchEntity.collegeId ? branchEntity.collegeId : ''}</dd>
+            <dt>City</dt>
+            <dd>{branchEntity.cityId ? branchEntity.cityId : ''}</dd>
+            <dt>State</dt>
+            <dd>{branchEntity.stateId ? branchEntity.stateId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/branch" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

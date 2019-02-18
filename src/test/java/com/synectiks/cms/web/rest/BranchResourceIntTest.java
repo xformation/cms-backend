@@ -49,11 +49,14 @@ public class BranchResourceIntTest {
     private static final String DEFAULT_BRANCH_NAME = "AAAAAAAAAA";
     private static final String UPDATED_BRANCH_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+    private static final String DEFAULT_ADDRESS_1 = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_1 = "BBBBBBBBBB";
 
-    private static final String DEFAULT_COLLEGE_HEAD = "AAAAAAAAAA";
-    private static final String UPDATED_COLLEGE_HEAD = "BBBBBBBBBB";
+    private static final String DEFAULT_ADDRESS_2 = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_2 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BRANCH_HEAD = "AAAAAAAAAA";
+    private static final String UPDATED_BRANCH_HEAD = "BBBBBBBBBB";
 
     @Autowired
     private BranchRepository branchRepository;
@@ -108,8 +111,9 @@ public class BranchResourceIntTest {
     public static Branch createEntity(EntityManager em) {
         Branch branch = new Branch()
             .branchName(DEFAULT_BRANCH_NAME)
-            .description(DEFAULT_DESCRIPTION)
-            .collegeHead(DEFAULT_COLLEGE_HEAD);
+            .address1(DEFAULT_ADDRESS_1)
+            .address2(DEFAULT_ADDRESS_2)
+            .branchHead(DEFAULT_BRANCH_HEAD);
         return branch;
     }
 
@@ -135,8 +139,9 @@ public class BranchResourceIntTest {
         assertThat(branchList).hasSize(databaseSizeBeforeCreate + 1);
         Branch testBranch = branchList.get(branchList.size() - 1);
         assertThat(testBranch.getBranchName()).isEqualTo(DEFAULT_BRANCH_NAME);
-        assertThat(testBranch.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testBranch.getCollegeHead()).isEqualTo(DEFAULT_COLLEGE_HEAD);
+        assertThat(testBranch.getAddress1()).isEqualTo(DEFAULT_ADDRESS_1);
+        assertThat(testBranch.getAddress2()).isEqualTo(DEFAULT_ADDRESS_2);
+        assertThat(testBranch.getBranchHead()).isEqualTo(DEFAULT_BRANCH_HEAD);
 
         // Validate the Branch in Elasticsearch
         verify(mockBranchSearchRepository, times(1)).save(testBranch);
@@ -186,10 +191,10 @@ public class BranchResourceIntTest {
 
     @Test
     @Transactional
-    public void checkDescriptionIsRequired() throws Exception {
+    public void checkAddress1IsRequired() throws Exception {
         int databaseSizeBeforeTest = branchRepository.findAll().size();
         // set the field null
-        branch.setDescription(null);
+        branch.setAddress1(null);
 
         // Create the Branch, which fails.
         BranchDTO branchDTO = branchMapper.toDto(branch);
@@ -205,10 +210,29 @@ public class BranchResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCollegeHeadIsRequired() throws Exception {
+    public void checkAddress2IsRequired() throws Exception {
         int databaseSizeBeforeTest = branchRepository.findAll().size();
         // set the field null
-        branch.setCollegeHead(null);
+        branch.setAddress2(null);
+
+        // Create the Branch, which fails.
+        BranchDTO branchDTO = branchMapper.toDto(branch);
+
+        restBranchMockMvc.perform(post("/api/branches")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Branch> branchList = branchRepository.findAll();
+        assertThat(branchList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkBranchHeadIsRequired() throws Exception {
+        int databaseSizeBeforeTest = branchRepository.findAll().size();
+        // set the field null
+        branch.setBranchHead(null);
 
         // Create the Branch, which fails.
         BranchDTO branchDTO = branchMapper.toDto(branch);
@@ -234,8 +258,9 @@ public class BranchResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(branch.getId().intValue())))
             .andExpect(jsonPath("$.[*].branchName").value(hasItem(DEFAULT_BRANCH_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-            .andExpect(jsonPath("$.[*].collegeHead").value(hasItem(DEFAULT_COLLEGE_HEAD.toString())));
+            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1.toString())))
+            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2.toString())))
+            .andExpect(jsonPath("$.[*].branchHead").value(hasItem(DEFAULT_BRANCH_HEAD.toString())));
     }
     
     @Test
@@ -250,8 +275,9 @@ public class BranchResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(branch.getId().intValue()))
             .andExpect(jsonPath("$.branchName").value(DEFAULT_BRANCH_NAME.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.collegeHead").value(DEFAULT_COLLEGE_HEAD.toString()));
+            .andExpect(jsonPath("$.address1").value(DEFAULT_ADDRESS_1.toString()))
+            .andExpect(jsonPath("$.address2").value(DEFAULT_ADDRESS_2.toString()))
+            .andExpect(jsonPath("$.branchHead").value(DEFAULT_BRANCH_HEAD.toString()));
     }
 
     @Test
@@ -276,8 +302,9 @@ public class BranchResourceIntTest {
         em.detach(updatedBranch);
         updatedBranch
             .branchName(UPDATED_BRANCH_NAME)
-            .description(UPDATED_DESCRIPTION)
-            .collegeHead(UPDATED_COLLEGE_HEAD);
+            .address1(UPDATED_ADDRESS_1)
+            .address2(UPDATED_ADDRESS_2)
+            .branchHead(UPDATED_BRANCH_HEAD);
         BranchDTO branchDTO = branchMapper.toDto(updatedBranch);
 
         restBranchMockMvc.perform(put("/api/branches")
@@ -290,8 +317,9 @@ public class BranchResourceIntTest {
         assertThat(branchList).hasSize(databaseSizeBeforeUpdate);
         Branch testBranch = branchList.get(branchList.size() - 1);
         assertThat(testBranch.getBranchName()).isEqualTo(UPDATED_BRANCH_NAME);
-        assertThat(testBranch.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testBranch.getCollegeHead()).isEqualTo(UPDATED_COLLEGE_HEAD);
+        assertThat(testBranch.getAddress1()).isEqualTo(UPDATED_ADDRESS_1);
+        assertThat(testBranch.getAddress2()).isEqualTo(UPDATED_ADDRESS_2);
+        assertThat(testBranch.getBranchHead()).isEqualTo(UPDATED_BRANCH_HEAD);
 
         // Validate the Branch in Elasticsearch
         verify(mockBranchSearchRepository, times(1)).save(testBranch);
@@ -353,8 +381,9 @@ public class BranchResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(branch.getId().intValue())))
             .andExpect(jsonPath("$.[*].branchName").value(hasItem(DEFAULT_BRANCH_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].collegeHead").value(hasItem(DEFAULT_COLLEGE_HEAD)));
+            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1)))
+            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2)))
+            .andExpect(jsonPath("$.[*].branchHead").value(hasItem(DEFAULT_BRANCH_HEAD)));
     }
 
     @Test

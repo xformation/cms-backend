@@ -16,30 +16,24 @@ import { getEntity, updateEntity, createEntity, reset } from './authorized-signa
 import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IAuthorizedSignatoryUpdateState {
   isNew: boolean;
-  branchId: string;
-  collegeId: string;
+  branchId: number;
+  collegeId: number;
 }
 
 export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignatoryUpdateProps, IAuthorizedSignatoryUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      branchId: '0',
-      collegeId: '0',
+      branchId: 0,
+      collegeId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -66,11 +60,46 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/authorized-signatory');
+  };
+
+  branchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        branchId: -1
+      });
+    } else {
+      for (const i in this.props.branches) {
+        if (id === this.props.branches[i].id.toString()) {
+          this.setState({
+            branchId: this.props.branches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  collegeUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        collegeId: -1
+      });
+    } else {
+      for (const i in this.props.colleges) {
+        if (id === this.props.colleges[i].id.toString()) {
+          this.setState({
+            collegeId: this.props.colleges[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -136,13 +165,65 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="addressLabel" for="address">
-                    Address
+                  <Label id="address1Label" for="address1">
+                    Address 1
                   </Label>
                   <AvField
-                    id="authorized-signatory-address"
+                    id="authorized-signatory-address1"
                     type="text"
-                    name="address"
+                    name="address1"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="address2Label" for="address2">
+                    Address 2
+                  </Label>
+                  <AvField
+                    id="authorized-signatory-address2"
+                    type="text"
+                    name="address2"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="address3Label" for="address3">
+                    Address 3
+                  </Label>
+                  <AvField
+                    id="authorized-signatory-address3"
+                    type="text"
+                    name="address3"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="address4Label" for="address4">
+                    Address 4
+                  </Label>
+                  <AvField
+                    id="authorized-signatory-address4"
+                    type="text"
+                    name="address4"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="address5Label" for="address5">
+                    Address 5
+                  </Label>
+                  <AvField
+                    id="authorized-signatory-address5"
+                    type="text"
+                    name="address5"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -176,7 +257,13 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="authorized-signatory-branch" type="select" className="form-control" name="branchId">
+                  <AvInput
+                    id="authorized-signatory-branch"
+                    type="select"
+                    className="form-control"
+                    name="branchId"
+                    onChange={this.branchUpdate}
+                  >
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -189,7 +276,13 @@ export class AuthorizedSignatoryUpdate extends React.Component<IAuthorizedSignat
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="authorized-signatory-college" type="select" className="form-control" name="collegeId">
+                  <AvInput
+                    id="authorized-signatory-college"
+                    type="select"
+                    className="form-control"
+                    name="collegeId"
+                    onChange={this.collegeUpdate}
+                  >
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -222,8 +315,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   colleges: storeState.college.entities,
   authorizedSignatoryEntity: storeState.authorizedSignatory.entity,
   loading: storeState.authorizedSignatory.loading,
-  updating: storeState.authorizedSignatory.updating,
-  updateSuccess: storeState.authorizedSignatory.updateSuccess
+  updating: storeState.authorizedSignatory.updating
 });
 
 const mapDispatchToProps = {

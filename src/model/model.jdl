@@ -6,8 +6,9 @@ instructionInformation String required
 }
 entity Branch{
 branchName String required
-description String required
-collegeHead String required
+address1 String required
+address2 String required
+branchHead String required
 }
 entity Department{
 name String required
@@ -235,8 +236,6 @@ PRIVATE, PUBLIC
 }
 
 
-
-
 entity LegalEntity{
 logo Long required
 legalNameOfTheCollege String required
@@ -264,7 +263,11 @@ entity AuthorizedSignatory{
 signatoryName String required
 signatoryFatherName String required
 signatoryDesignation String required
-address String required
+address1 String required
+address2 String required
+address3 String required
+address4 String required
+address5 String required
 email String required
 panCardNumber String required
 }
@@ -308,6 +311,8 @@ Student{batch required} to Batch ,
 Student{section required} to Section,
 Student{branch required} to Branch,
 Branch{college} to College,
+Branch{city} to City,
+Branch{state} to State,
 Department{branch} to Branch,
 Department{academicyear} to AcademicYear,
 Subject{department} to Department,
@@ -337,6 +342,7 @@ LegalEntity{city} to City,
 City{State} to State,
 State{Country} to Country,
 Currency{Country} to Country
+
 }
 
 dto * with mapstruct

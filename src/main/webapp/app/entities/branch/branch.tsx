@@ -76,9 +76,12 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
               <tr>
                 <th>ID</th>
                 <th>Branch Name</th>
-                <th>Description</th>
-                <th>College Head</th>
+                <th>Address 1</th>
+                <th>Address 2</th>
+                <th>Branch Head</th>
                 <th>College</th>
+                <th>City</th>
+                <th>State</th>
                 <th />
               </tr>
             </thead>
@@ -91,9 +94,12 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
                     </Button>
                   </td>
                   <td>{branch.branchName}</td>
-                  <td>{branch.description}</td>
-                  <td>{branch.collegeHead}</td>
+                  <td>{branch.address1}</td>
+                  <td>{branch.address2}</td>
+                  <td>{branch.branchHead}</td>
                   <td>{branch.collegeId ? <Link to={`college/${branch.collegeId}`}>{branch.collegeId}</Link> : ''}</td>
+                  <td>{branch.cityId ? <Link to={`city/${branch.cityId}`}>{branch.cityId}</Link> : ''}</td>
+                  <td>{branch.stateId ? <Link to={`state/${branch.stateId}`}>{branch.stateId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${branch.id}`} color="info" size="sm">

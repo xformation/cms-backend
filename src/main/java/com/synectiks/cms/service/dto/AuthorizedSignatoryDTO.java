@@ -21,7 +21,19 @@ public class AuthorizedSignatoryDTO implements Serializable {
     private String signatoryDesignation;
 
     @NotNull
-    private String address;
+    private String address1;
+
+    @NotNull
+    private String address2;
+
+    @NotNull
+    private String address3;
+
+    @NotNull
+    private String address4;
+
+    @NotNull
+    private String address5;
 
     @NotNull
     private String email;
@@ -65,12 +77,44 @@ public class AuthorizedSignatoryDTO implements Serializable {
         this.signatoryDesignation = signatoryDesignation;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getAddress3() {
+        return address3;
+    }
+
+    public void setAddress3(String address3) {
+        this.address3 = address3;
+    }
+
+    public String getAddress4() {
+        return address4;
+    }
+
+    public void setAddress4(String address4) {
+        this.address4 = address4;
+    }
+
+    public String getAddress5() {
+        return address5;
+    }
+
+    public void setAddress5(String address5) {
+        this.address5 = address5;
     }
 
     public String getEmail() {
@@ -133,7 +177,11 @@ public class AuthorizedSignatoryDTO implements Serializable {
             ", signatoryName='" + getSignatoryName() + "'" +
             ", signatoryFatherName='" + getSignatoryFatherName() + "'" +
             ", signatoryDesignation='" + getSignatoryDesignation() + "'" +
-            ", address='" + getAddress() + "'" +
+            ", address1='" + getAddress1() + "'" +
+            ", address2='" + getAddress2() + "'" +
+            ", address3='" + getAddress3() + "'" +
+            ", address4='" + getAddress4() + "'" +
+            ", address5='" + getAddress5() + "'" +
             ", email='" + getEmail() + "'" +
             ", panCardNumber='" + getPanCardNumber() + "'" +
             ", branch=" + getBranchId() +

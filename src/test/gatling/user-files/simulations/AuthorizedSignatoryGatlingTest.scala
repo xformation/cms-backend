@@ -68,7 +68,7 @@ class AuthorizedSignatoryGatlingTest extends Simulation {
             .exec(http("Create new authorizedSignatory")
             .post("/api/authorized-signatories")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "signatoryName":"SAMPLE_TEXT", "signatoryFatherName":"SAMPLE_TEXT", "signatoryDesignation":"SAMPLE_TEXT", "address":"SAMPLE_TEXT", "email":"SAMPLE_TEXT", "panCardNumber":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "signatoryName":"SAMPLE_TEXT", "signatoryFatherName":"SAMPLE_TEXT", "signatoryDesignation":"SAMPLE_TEXT", "address1":"SAMPLE_TEXT", "address2":"SAMPLE_TEXT", "address3":"SAMPLE_TEXT", "address4":"SAMPLE_TEXT", "address5":"SAMPLE_TEXT", "email":"SAMPLE_TEXT", "panCardNumber":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_authorizedSignatory_url"))).exitHereIfFailed
             .pause(10)

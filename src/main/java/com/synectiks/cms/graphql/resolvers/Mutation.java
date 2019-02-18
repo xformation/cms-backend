@@ -187,7 +187,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
     
-    public Mutation(CountryRepository countryRepository,LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository,CityRepository cityRepository,StateRepository stateRepository) {
+    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository) {
         this.batchRepository = batchRepository;
     	this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -213,6 +213,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.cityRepository = cityRepository;
         this.stateRepository = stateRepository;
         this.countryRepository = countryRepository;
+
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -840,11 +841,16 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddBranchPayload addBranch(AddBranchInput addBranchInput) {
     	College college = collegeRepository.findById(addBranchInput.getCollegeId()).get();
+    	City city = cityRepository.findById(addBranchInput.getCityId()).get();
+    	State state = stateRepository.findById(addBranchInput.getStateId()).get();
         final Branch branch = new Branch();
         branch.setBranchName(addBranchInput.getBranchName());
-        branch.setDescription(addBranchInput.getDescription());
-        branch.setCollegeHead(addBranchInput.getCollegeHead());
+        branch.setAddress1(addBranchInput.getAddress1());
+        branch.setAddress2(addBranchInput.getAddress2());
+        branch.setBranchHead(addBranchInput.getBranchHead());
         branch.setCollege(college);
+        branch.setCity(city);
+        branch.setState(state);
         branchRepository.save(branch);
 
         return new AddBranchPayload(branch);
@@ -856,16 +862,28 @@ public class Mutation implements GraphQLMutationResolver {
             branch.setBranchName(updateBranchInput.getBranchName());
         }
 
-        if (updateBranchInput.getDescription() != null) {
-            branch.setDescription(updateBranchInput.getDescription());
+        if (updateBranchInput.getAddress1() != null) {
+            branch.setAddress1(updateBranchInput.getAddress1());
         }
 
-        if (updateBranchInput.getCollegeHead() != null) {
-            branch.setCollegeHead(updateBranchInput.getCollegeHead());
+        if (updateBranchInput.getAddress2() != null) {
+            branch.setAddress2(updateBranchInput.getAddress2());
+        }
+
+        if (updateBranchInput.getBranchHead() != null) {
+            branch.setBranchHead(updateBranchInput.getBranchHead());
         }
         if(updateBranchInput.getCollegeId() != null) {
         	College college = collegeRepository.findById(updateBranchInput.getCollegeId()).get();
         	branch.setCollege(college);
+        }
+        if(updateBranchInput.getStateId() != null) {
+            State state = stateRepository.findById(updateBranchInput.getStateId()).get();
+            branch.setState(state);
+        }
+        if(updateBranchInput.getCityId() != null) {
+            City city = cityRepository.findById(updateBranchInput.getCityId()).get();
+            branch.setCity(city);
         }
         branchRepository.save(branch);
         return new UpdateBranchPayload(branch);
@@ -1226,7 +1244,11 @@ public class Mutation implements GraphQLMutationResolver {
         authorizedSignatory.setSignatoryName(addAuthorizedSignatoryInput.getSignatoryName());
         authorizedSignatory.setSignatoryFatherName(addAuthorizedSignatoryInput.getSignatoryFatherName());
         authorizedSignatory.setSignatoryDesignation(addAuthorizedSignatoryInput.getSignatoryDesignation());
-        authorizedSignatory.setAddress(addAuthorizedSignatoryInput.getAddress());
+        authorizedSignatory.setAddress1(addAuthorizedSignatoryInput.getAddress1());
+        authorizedSignatory.setAddress2(addAuthorizedSignatoryInput.getAddress2());
+        authorizedSignatory.setAddress3(addAuthorizedSignatoryInput.getAddress3());
+        authorizedSignatory.setAddress4(addAuthorizedSignatoryInput.getAddress4());
+        authorizedSignatory.setAddress5(addAuthorizedSignatoryInput.getAddress5());
         authorizedSignatory.setEmail(addAuthorizedSignatoryInput.getEmail());
         authorizedSignatory.setPanCardNumber(addAuthorizedSignatoryInput.getPanCardNumber());
         authorizedSignatory.setBranch(branch);
@@ -1248,8 +1270,21 @@ public class Mutation implements GraphQLMutationResolver {
             authorizedSignatory.setSignatoryDesignation(updateAuthorizedSignatoryInput.getSignatoryDesignation());
         }
 
-        if (updateAuthorizedSignatoryInput.getAddress() != null) {
-            authorizedSignatory.setAddress(updateAuthorizedSignatoryInput.getAddress());
+        if (updateAuthorizedSignatoryInput.getAddress1() != null) {
+            authorizedSignatory.setAddress1(updateAuthorizedSignatoryInput.getAddress1());
+        }
+
+        if (updateAuthorizedSignatoryInput.getAddress2() != null) {
+            authorizedSignatory.setAddress2(updateAuthorizedSignatoryInput.getAddress2());
+        }
+        if (updateAuthorizedSignatoryInput.getAddress3() != null) {
+            authorizedSignatory.setAddress3(updateAuthorizedSignatoryInput.getAddress3());
+        }
+        if (updateAuthorizedSignatoryInput.getAddress4() != null) {
+            authorizedSignatory.setAddress4(updateAuthorizedSignatoryInput.getAddress4());
+        }
+        if (updateAuthorizedSignatoryInput.getAddress5() != null) {
+            authorizedSignatory.setAddress5(updateAuthorizedSignatoryInput.getAddress5());
         }
 
         if (updateAuthorizedSignatoryInput.getEmail() != null) {

@@ -9,7 +9,11 @@ public class AbstractAuthorizedSignatoryInput {
     private String signatoryName;
     private String signatoryFatherName;
     private String signatoryDesignation;
-    private String address;
+    private String address1;
+    private String address2;
+    private String address3;
+    private String address4;
+    private String address5;
     private String email;
     private String panCardNumber;
 
@@ -45,12 +49,44 @@ public class AbstractAuthorizedSignatoryInput {
         this.signatoryDesignation = signatoryDesignation;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getAddress3() {
+        return address3;
+    }
+
+    public void setAddress3(String address3) {
+        this.address3 = address3;
+    }
+
+    public String getAddress4() {
+        return address4;
+    }
+
+    public void setAddress4(String address4) {
+        this.address4 = address4;
+    }
+
+    public String getAddress5() {
+        return address5;
+    }
+
+    public void setAddress5(String address5) {
+        this.address5 = address5;
     }
 
     public String getEmail() {
@@ -72,20 +108,24 @@ public class AbstractAuthorizedSignatoryInput {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractAuthorizedSignatoryInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractAuthorizedSignatoryInput that = (AbstractAuthorizedSignatoryInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getSignatoryName(), that.getSignatoryName()) &&
-            Objects.equals(getSignatoryFatherName(), that.getSignatoryFatherName()) &&
-            Objects.equals(getSignatoryDesignation(), that.getSignatoryDesignation()) &&
-            Objects.equals(getAddress(), that.getAddress()) &&
-            Objects.equals(getEmail(), that.getEmail()) &&
-            Objects.equals(getPanCardNumber(), that.getPanCardNumber());
+        return Objects.equals(id, that.id) &&
+            Objects.equals(signatoryName, that.signatoryName) &&
+            Objects.equals(signatoryFatherName, that.signatoryFatherName) &&
+            Objects.equals(signatoryDesignation, that.signatoryDesignation) &&
+            Objects.equals(address1, that.address1) &&
+            Objects.equals(address2, that.address2) &&
+            Objects.equals(address3, that.address3) &&
+            Objects.equals(address4, that.address4) &&
+            Objects.equals(address5, that.address5) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(panCardNumber, that.panCardNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getSignatoryName(), getSignatoryFatherName(), getSignatoryDesignation(), getAddress(), getEmail(), getPanCardNumber());
+        return Objects.hash(id, signatoryName, signatoryFatherName, signatoryDesignation, address1, address2, address3, address4, address5, email, panCardNumber);
     }
 
     @Override
@@ -95,7 +135,11 @@ public class AbstractAuthorizedSignatoryInput {
             ", signatoryName='" + signatoryName + '\'' +
             ", signatoryFatherName='" + signatoryFatherName + '\'' +
             ", signatoryDesignation='" + signatoryDesignation + '\'' +
-            ", address='" + address + '\'' +
+            ", address1='" + address1 + '\'' +
+            ", address2='" + address2 + '\'' +
+            ", address3='" + address3 + '\'' +
+            ", address4='" + address4 + '\'' +
+            ", address5='" + address5 + '\'' +
             ", email='" + email + '\'' +
             ", panCardNumber='" + panCardNumber + '\'' +
             '}';

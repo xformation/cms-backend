@@ -10,6 +10,10 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ICollege } from 'app/shared/model/college.model';
 import { getEntities as getColleges } from 'app/entities/college/college.reducer';
+import { ICity } from 'app/shared/model/city.model';
+import { getEntities as getCities } from 'app/entities/city/city.reducer';
+import { IState } from 'app/shared/model/state.model';
+import { getEntities as getStates } from 'app/entities/state/state.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './branch.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 // tslint:disable-next-line:no-unused-variable
@@ -21,6 +25,8 @@ export interface IBranchUpdateProps extends StateProps, DispatchProps, RouteComp
 export interface IBranchUpdateState {
   isNew: boolean;
   collegeId: string;
+  cityId: string;
+  stateId: string;
 }
 
 export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpdateState> {
@@ -28,6 +34,8 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
     super(props);
     this.state = {
       collegeId: '0',
+      cityId: '0',
+      stateId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -46,6 +54,8 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
     }
 
     this.props.getColleges();
+    this.props.getCities();
+    this.props.getStates();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +79,7 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
   };
 
   render() {
-    const { branchEntity, colleges, loading, updating } = this.props;
+    const { branchEntity, colleges, cities, states, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -105,26 +115,39 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="descriptionLabel" for="description">
-                    Description
+                  <Label id="address1Label" for="address1">
+                    Address 1
                   </Label>
                   <AvField
-                    id="branch-description"
+                    id="branch-address1"
                     type="text"
-                    name="description"
+                    name="address1"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="collegeHeadLabel" for="collegeHead">
-                    College Head
+                  <Label id="address2Label" for="address2">
+                    Address 2
                   </Label>
                   <AvField
-                    id="branch-collegeHead"
+                    id="branch-address2"
                     type="text"
-                    name="collegeHead"
+                    name="address2"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="branchHeadLabel" for="branchHead">
+                    Branch Head
+                  </Label>
+                  <AvField
+                    id="branch-branchHead"
+                    type="text"
+                    name="branchHead"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -136,6 +159,32 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="city.id">City</Label>
+                  <AvInput id="branch-city" type="select" className="form-control" name="cityId">
+                    <option value="" key="0" />
+                    {cities
+                      ? cities.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="state.id">State</Label>
+                  <AvInput id="branch-state" type="select" className="form-control" name="stateId">
+                    <option value="" key="0" />
+                    {states
+                      ? states.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -162,6 +211,8 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
 
 const mapStateToProps = (storeState: IRootState) => ({
   colleges: storeState.college.entities,
+  cities: storeState.city.entities,
+  states: storeState.state.entities,
   branchEntity: storeState.branch.entity,
   loading: storeState.branch.loading,
   updating: storeState.branch.updating,
@@ -170,6 +221,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getColleges,
+  getCities,
+  getStates,
   getEntity,
   updateEntity,
   createEntity,

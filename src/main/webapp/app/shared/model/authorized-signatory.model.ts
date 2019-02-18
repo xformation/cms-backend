@@ -3,7 +3,11 @@ export interface IAuthorizedSignatory {
   signatoryName?: string;
   signatoryFatherName?: string;
   signatoryDesignation?: string;
-  address?: string;
+  address1?: string;
+  address2?: string;
+  address3?: string;
+  address4?: string;
+  address5?: string;
   email?: string;
   panCardNumber?: string;
   branchId?: number;

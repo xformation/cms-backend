@@ -48,11 +48,15 @@ describe('Branch e2e test', () => {
 
     await branchUpdatePage.setBranchNameInput('branchName');
     expect(await branchUpdatePage.getBranchNameInput()).to.match(/branchName/);
-    await branchUpdatePage.setDescriptionInput('description');
-    expect(await branchUpdatePage.getDescriptionInput()).to.match(/description/);
-    await branchUpdatePage.setCollegeHeadInput('collegeHead');
-    expect(await branchUpdatePage.getCollegeHeadInput()).to.match(/collegeHead/);
+    await branchUpdatePage.setAddress1Input('address1');
+    expect(await branchUpdatePage.getAddress1Input()).to.match(/address1/);
+    await branchUpdatePage.setAddress2Input('address2');
+    expect(await branchUpdatePage.getAddress2Input()).to.match(/address2/);
+    await branchUpdatePage.setBranchHeadInput('branchHead');
+    expect(await branchUpdatePage.getBranchHeadInput()).to.match(/branchHead/);
     await branchUpdatePage.collegeSelectLastOption();
+    await branchUpdatePage.citySelectLastOption();
+    await branchUpdatePage.stateSelectLastOption();
     await waitUntilDisplayed(branchUpdatePage.getSaveButton());
     await branchUpdatePage.save();
     await waitUntilHidden(branchUpdatePage.getSaveButton());

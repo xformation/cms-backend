@@ -157,7 +157,11 @@ type AuthorizedSignatory {
     signatoryName: String!
     signatoryFatherName: String!
     signatoryDesignation: String!
-    address: String!
+    address1: String!
+    address2: String!
+    address3: String!
+    address4: String!
+    address5: String!
     email: String!
     panCardNumber: String!
     branch: Branch
@@ -184,9 +188,12 @@ type College{
 type Branch{
     id: Long!
     branchName: String!
-    description: String!
-    collegeHead: String!
+    address1: String!
+    address2: String
+    branchHead: String!
     college: College!
+    city: City!
+    state: State!
 }
 type Batch{
 	id: Long!
@@ -624,7 +631,11 @@ input AddAuthorizedSignatoryInput {
     signatoryName: String!
     signatoryFatherName: String!
     signatoryDesignation: String!
-    address: String!
+    address1: String!
+    address2: String!
+    address3: String!
+    address4: String!
+    address5: String!
     email: String!
     panCardNumber: String!
     branchId: Long!
@@ -638,7 +649,11 @@ input UpdateAuthorizedSignatoryInput {
     signatoryName: String!
     signatoryFatherName: String!
     signatoryDesignation: String!
-    address: String!
+    address1: String!
+    address2: String!
+    address3: String!
+    address4: String!
+    address5: String!
     email: String!
     panCardNumber: String!
     branchId: Long!
@@ -722,9 +737,12 @@ type RemoveCollegePayload {
 
 input AddBranchInput {
     branchName: String!
-    description: String!
-    collegeHead: String!
+    address1: String!
+    address2: String!
+    branchHead: String!
     collegeId: Long!
+    cityId: Long!
+    stateId: Long!
 }
 type AddBranchPayload {
     branch: Branch!
@@ -732,9 +750,12 @@ type AddBranchPayload {
 input UpdateBranchInput {
     id: Long!
     branchName: String!
-    description: String!
-    collegeHead: String!
+    address1: String!
+    address2: String!
+    branchHead: String!
     collegeId: Long!
+    cityId: Long!
+    stateId: Long!
 }
 type UpdateBranchPayload {
     branch: Branch!

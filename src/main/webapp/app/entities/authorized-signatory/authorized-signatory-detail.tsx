@@ -12,7 +12,7 @@ import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.mode
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IAuthorizedSignatoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAuthorizedSignatoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AuthorizedSignatoryDetail extends React.Component<IAuthorizedSignatoryDetailProps> {
   componentDidMount() {
@@ -41,9 +41,25 @@ export class AuthorizedSignatoryDetail extends React.Component<IAuthorizedSignat
             </dt>
             <dd>{authorizedSignatoryEntity.signatoryDesignation}</dd>
             <dt>
-              <span id="address">Address</span>
+              <span id="address1">Address 1</span>
             </dt>
-            <dd>{authorizedSignatoryEntity.address}</dd>
+            <dd>{authorizedSignatoryEntity.address1}</dd>
+            <dt>
+              <span id="address2">Address 2</span>
+            </dt>
+            <dd>{authorizedSignatoryEntity.address2}</dd>
+            <dt>
+              <span id="address3">Address 3</span>
+            </dt>
+            <dd>{authorizedSignatoryEntity.address3}</dd>
+            <dt>
+              <span id="address4">Address 4</span>
+            </dt>
+            <dd>{authorizedSignatoryEntity.address4}</dd>
+            <dt>
+              <span id="address5">Address 5</span>
+            </dt>
+            <dd>{authorizedSignatoryEntity.address5}</dd>
             <dt>
               <span id="email">Email</span>
             </dt>

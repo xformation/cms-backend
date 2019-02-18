@@ -63,6 +63,8 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.Currency.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.State.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.City.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.AdminOverview.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.AdminAttendance.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

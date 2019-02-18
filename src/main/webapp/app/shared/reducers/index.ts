@@ -12,6 +12,7 @@ import password, { PasswordState } from 'app/modules/account/password/password.r
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
+// @ts-ignore
 import college, {
   CollegeState
 } from 'app/entities/college/college.reducer';
@@ -76,10 +77,6 @@ import studentAttendance, {
   StudentAttendanceState
 } from 'app/entities/student-attendance/student-attendance.reducer';
 // prettier-ignore
-import studentSubject, {
-  StudentSubjectState
-} from 'app/entities/student-subject/student-subject.reducer';
-// prettier-ignore
 import location, {
   LocationState
 } from 'app/entities/location/location.reducer';
@@ -96,162 +93,6 @@ import bankAccounts, {
   BankAccountsState
 } from 'app/entities/bank-accounts/bank-accounts.reducer';
 // prettier-ignore
-import attendanceMaster, {
-  AttendanceMasterState
-} from 'app/entities/attendance-master/attendance-master.reducer';
-// prettier-ignore
-import attendanceMaster, {
-  AttendanceMasterState
-} from 'app/entities/attendance-master/attendance-master.reducer';
-// prettier-ignore
-import subject, {
-  SubjectState
-} from 'app/entities/subject/subject.reducer';
-// prettier-ignore
-import subject, {
-  SubjectState
-} from 'app/entities/subject/subject.reducer';
-// prettier-ignore
-import studentAttendance, {
-  StudentAttendanceState
-} from 'app/entities/student-attendance/student-attendance.reducer';
-// prettier-ignore
-import attendanceMaster, {
-  AttendanceMasterState
-} from 'app/entities/attendance-master/attendance-master.reducer';
-// prettier-ignore
-import attendanceMaster, {
-  AttendanceMasterState
-} from 'app/entities/attendance-master/attendance-master.reducer';
-// prettier-ignore
-import lecture, {
-  LectureState
-} from 'app/entities/lecture/lecture.reducer';
-// prettier-ignore
-import lecture, {
-  LectureState
-} from 'app/entities/lecture/lecture.reducer';
-// prettier-ignore
-import lecture, {
-  LectureState
-} from 'app/entities/lecture/lecture.reducer';
-// prettier-ignore
-import lecture, {
-  LectureState
-} from 'app/entities/lecture/lecture.reducer';
-// prettier-ignore
-import attendanceMaster, {
-  AttendanceMasterState
-} from 'app/entities/attendance-master/attendance-master.reducer';
-// prettier-ignore
-import attendanceMaster, {
-  AttendanceMasterState
-} from 'app/entities/attendance-master/attendance-master.reducer';
-// prettier-ignore
-import teach, {
-  TeachState
-} from 'app/entities/teach/teach.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import student, {
-  StudentState
-} from 'app/entities/student/student.reducer';
-// prettier-ignore
-import student, {
-  StudentState
-} from 'app/entities/student/student.reducer';
-// prettier-ignore
-import branch, {
-  BranchState
-} from 'app/entities/branch/branch.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import teach, {
-  TeachState
-} from 'app/entities/teach/teach.reducer';
-// prettier-ignore
-import branch, {
-  BranchState
-} from 'app/entities/branch/branch.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import teach, {
-  TeachState
-} from 'app/entities/teach/teach.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
-import authorizedSignatory, {
-  AuthorizedSignatoryState
-} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
-// prettier-ignore
-import student, {
-  StudentState
-} from 'app/entities/student/student.reducer';
-// prettier-ignore
-import signatoryLink, {
-  SignatoryLinkState
-} from 'app/entities/signatory-link/signatory-link.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
-import authorizedSignatory, {
-  AuthorizedSignatoryState
-} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
-// prettier-ignore
-import signatoryLink, {
-  SignatoryLinkState
-} from 'app/entities/signatory-link/signatory-link.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
-import authorizedSignatory, {
-  AuthorizedSignatoryState
-} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
-// prettier-ignore
-import college, {
-  CollegeState
-} from 'app/entities/college/college.reducer';
-// prettier-ignore
-import branch, {
-  BranchState
-} from 'app/entities/branch/branch.reducer';
-// prettier-ignore
-import authorizedSignatory, {
-  AuthorizedSignatoryState
-} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
 import country, {
   CountryState
 } from 'app/entities/country/country.reducer';
@@ -268,21 +109,17 @@ import city, {
   CityState
 } from 'app/entities/city/city.reducer';
 // prettier-ignore
-import country, {
-  CountryState
-} from 'app/entities/country/country.reducer';
+// import branch, {
+//   BranchState
+// } from 'app/entities/branch/branch.reducer';
 // prettier-ignore
-import currency, {
-  CurrencyState
-} from 'app/entities/currency/currency.reducer';
+import adminOverview, {
+  AdminOverviewState
+} from 'app/entities/admin-overview/admin-overview.reducer';
 // prettier-ignore
-import state, {
-  StateState
-} from 'app/entities/state/state.reducer';
-// prettier-ignore
-import city, {
-  CityState
-} from 'app/entities/city/city.reducer';
+import adminAttendance, {
+  AdminAttendanceState
+} from 'app/entities/admin-attendance/admin-attendance.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -311,16 +148,16 @@ export interface IRootState {
   readonly attendanceMaster: AttendanceMasterState;
   readonly lecture: LectureState;
   readonly studentAttendance: StudentAttendanceState;
-  readonly studentSubject: StudentSubjectState;
   readonly location: LocationState;
   readonly legalEntity: LegalEntityState;
   readonly authorizedSignatory: AuthorizedSignatoryState;
   readonly bankAccounts: BankAccountsState;
-  readonly signatoryLink: SignatoryLinkState;
   readonly country: CountryState;
   readonly currency: CurrencyState;
   readonly state: StateState;
   readonly city: CityState;
+  readonly adminOverview: AdminOverviewState;
+  readonly adminAttendance: AdminAttendanceState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -351,16 +188,16 @@ const rootReducer = combineReducers<IRootState>({
   attendanceMaster,
   lecture,
   studentAttendance,
-  studentSubject,
   location,
   legalEntity,
   authorizedSignatory,
   bankAccounts,
-  signatoryLink,
   country,
   currency,
   state,
   city,
+  adminOverview,
+  adminAttendance,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

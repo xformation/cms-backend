@@ -15,12 +15,19 @@ public class BranchDTO implements Serializable {
     private String branchName;
 
     @NotNull
-    private String description;
+    private String address1;
 
     @NotNull
-    private String collegeHead;
+    private String address2;
+
+    @NotNull
+    private String branchHead;
 
     private Long collegeId;
+
+    private Long cityId;
+
+    private Long stateId;
 
     public Long getId() {
         return id;
@@ -38,20 +45,28 @@ public class BranchDTO implements Serializable {
         this.branchName = branchName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
-    public String getCollegeHead() {
-        return collegeHead;
+    public String getAddress2() {
+        return address2;
     }
 
-    public void setCollegeHead(String collegeHead) {
-        this.collegeHead = collegeHead;
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getBranchHead() {
+        return branchHead;
+    }
+
+    public void setBranchHead(String branchHead) {
+        this.branchHead = branchHead;
     }
 
     public Long getCollegeId() {
@@ -60,6 +75,22 @@ public class BranchDTO implements Serializable {
 
     public void setCollegeId(Long collegeId) {
         this.collegeId = collegeId;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public Long getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Long stateId) {
+        this.stateId = stateId;
     }
 
     @Override
@@ -88,9 +119,12 @@ public class BranchDTO implements Serializable {
         return "BranchDTO{" +
             "id=" + getId() +
             ", branchName='" + getBranchName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", collegeHead='" + getCollegeHead() + "'" +
+            ", address1='" + getAddress1() + "'" +
+            ", address2='" + getAddress2() + "'" +
+            ", branchHead='" + getBranchHead() + "'" +
             ", college=" + getCollegeId() +
+            ", city=" + getCityId() +
+            ", state=" + getStateId() +
             "}";
     }
 }

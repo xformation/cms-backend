@@ -30,6 +30,8 @@ import Country from './country';
 import Currency from './currency';
 import State from './state';
 import City from './city';
+import AdminOverview from './admin-overview';
+import AdminAttendance from './admin-attendance';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -62,6 +64,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/currency`} component={Currency} />
       <ErrorBoundaryRoute path={`${match.url}/state`} component={State} />
       <ErrorBoundaryRoute path={`${match.url}/city`} component={City} />
+      <ErrorBoundaryRoute path={`${match.url}/admin-overview`} component={AdminOverview} />
+      <ErrorBoundaryRoute path={`${match.url}/admin-attendance`} component={AdminAttendance} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

@@ -55,8 +55,20 @@ public class AuthorizedSignatoryResourceIntTest {
     private static final String DEFAULT_SIGNATORY_DESIGNATION = "AAAAAAAAAA";
     private static final String UPDATED_SIGNATORY_DESIGNATION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+    private static final String DEFAULT_ADDRESS_1 = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_1 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_2 = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_2 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_3 = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_3 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_4 = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_4 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ADDRESS_5 = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS_5 = "BBBBBBBBBB";
 
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
@@ -121,7 +133,11 @@ public class AuthorizedSignatoryResourceIntTest {
             .signatoryName(DEFAULT_SIGNATORY_NAME)
             .signatoryFatherName(DEFAULT_SIGNATORY_FATHER_NAME)
             .signatoryDesignation(DEFAULT_SIGNATORY_DESIGNATION)
-            .address(DEFAULT_ADDRESS)
+            .address1(DEFAULT_ADDRESS_1)
+            .address2(DEFAULT_ADDRESS_2)
+            .address3(DEFAULT_ADDRESS_3)
+            .address4(DEFAULT_ADDRESS_4)
+            .address5(DEFAULT_ADDRESS_5)
             .email(DEFAULT_EMAIL)
             .panCardNumber(DEFAULT_PAN_CARD_NUMBER);
         return authorizedSignatory;
@@ -151,7 +167,11 @@ public class AuthorizedSignatoryResourceIntTest {
         assertThat(testAuthorizedSignatory.getSignatoryName()).isEqualTo(DEFAULT_SIGNATORY_NAME);
         assertThat(testAuthorizedSignatory.getSignatoryFatherName()).isEqualTo(DEFAULT_SIGNATORY_FATHER_NAME);
         assertThat(testAuthorizedSignatory.getSignatoryDesignation()).isEqualTo(DEFAULT_SIGNATORY_DESIGNATION);
-        assertThat(testAuthorizedSignatory.getAddress()).isEqualTo(DEFAULT_ADDRESS);
+        assertThat(testAuthorizedSignatory.getAddress1()).isEqualTo(DEFAULT_ADDRESS_1);
+        assertThat(testAuthorizedSignatory.getAddress2()).isEqualTo(DEFAULT_ADDRESS_2);
+        assertThat(testAuthorizedSignatory.getAddress3()).isEqualTo(DEFAULT_ADDRESS_3);
+        assertThat(testAuthorizedSignatory.getAddress4()).isEqualTo(DEFAULT_ADDRESS_4);
+        assertThat(testAuthorizedSignatory.getAddress5()).isEqualTo(DEFAULT_ADDRESS_5);
         assertThat(testAuthorizedSignatory.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testAuthorizedSignatory.getPanCardNumber()).isEqualTo(DEFAULT_PAN_CARD_NUMBER);
 
@@ -241,10 +261,86 @@ public class AuthorizedSignatoryResourceIntTest {
 
     @Test
     @Transactional
-    public void checkAddressIsRequired() throws Exception {
+    public void checkAddress1IsRequired() throws Exception {
         int databaseSizeBeforeTest = authorizedSignatoryRepository.findAll().size();
         // set the field null
-        authorizedSignatory.setAddress(null);
+        authorizedSignatory.setAddress1(null);
+
+        // Create the AuthorizedSignatory, which fails.
+        AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
+
+        restAuthorizedSignatoryMockMvc.perform(post("/api/authorized-signatories")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(authorizedSignatoryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AuthorizedSignatory> authorizedSignatoryList = authorizedSignatoryRepository.findAll();
+        assertThat(authorizedSignatoryList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddress2IsRequired() throws Exception {
+        int databaseSizeBeforeTest = authorizedSignatoryRepository.findAll().size();
+        // set the field null
+        authorizedSignatory.setAddress2(null);
+
+        // Create the AuthorizedSignatory, which fails.
+        AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
+
+        restAuthorizedSignatoryMockMvc.perform(post("/api/authorized-signatories")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(authorizedSignatoryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AuthorizedSignatory> authorizedSignatoryList = authorizedSignatoryRepository.findAll();
+        assertThat(authorizedSignatoryList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddress3IsRequired() throws Exception {
+        int databaseSizeBeforeTest = authorizedSignatoryRepository.findAll().size();
+        // set the field null
+        authorizedSignatory.setAddress3(null);
+
+        // Create the AuthorizedSignatory, which fails.
+        AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
+
+        restAuthorizedSignatoryMockMvc.perform(post("/api/authorized-signatories")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(authorizedSignatoryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AuthorizedSignatory> authorizedSignatoryList = authorizedSignatoryRepository.findAll();
+        assertThat(authorizedSignatoryList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddress4IsRequired() throws Exception {
+        int databaseSizeBeforeTest = authorizedSignatoryRepository.findAll().size();
+        // set the field null
+        authorizedSignatory.setAddress4(null);
+
+        // Create the AuthorizedSignatory, which fails.
+        AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
+
+        restAuthorizedSignatoryMockMvc.perform(post("/api/authorized-signatories")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(authorizedSignatoryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AuthorizedSignatory> authorizedSignatoryList = authorizedSignatoryRepository.findAll();
+        assertThat(authorizedSignatoryList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkAddress5IsRequired() throws Exception {
+        int databaseSizeBeforeTest = authorizedSignatoryRepository.findAll().size();
+        // set the field null
+        authorizedSignatory.setAddress5(null);
 
         // Create the AuthorizedSignatory, which fails.
         AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
@@ -310,7 +406,11 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(jsonPath("$.[*].signatoryName").value(hasItem(DEFAULT_SIGNATORY_NAME.toString())))
             .andExpect(jsonPath("$.[*].signatoryFatherName").value(hasItem(DEFAULT_SIGNATORY_FATHER_NAME.toString())))
             .andExpect(jsonPath("$.[*].signatoryDesignation").value(hasItem(DEFAULT_SIGNATORY_DESIGNATION.toString())))
-            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1.toString())))
+            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2.toString())))
+            .andExpect(jsonPath("$.[*].address3").value(hasItem(DEFAULT_ADDRESS_3.toString())))
+            .andExpect(jsonPath("$.[*].address4").value(hasItem(DEFAULT_ADDRESS_4.toString())))
+            .andExpect(jsonPath("$.[*].address5").value(hasItem(DEFAULT_ADDRESS_5.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER.toString())));
     }
@@ -330,7 +430,11 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(jsonPath("$.signatoryName").value(DEFAULT_SIGNATORY_NAME.toString()))
             .andExpect(jsonPath("$.signatoryFatherName").value(DEFAULT_SIGNATORY_FATHER_NAME.toString()))
             .andExpect(jsonPath("$.signatoryDesignation").value(DEFAULT_SIGNATORY_DESIGNATION.toString()))
-            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
+            .andExpect(jsonPath("$.address1").value(DEFAULT_ADDRESS_1.toString()))
+            .andExpect(jsonPath("$.address2").value(DEFAULT_ADDRESS_2.toString()))
+            .andExpect(jsonPath("$.address3").value(DEFAULT_ADDRESS_3.toString()))
+            .andExpect(jsonPath("$.address4").value(DEFAULT_ADDRESS_4.toString()))
+            .andExpect(jsonPath("$.address5").value(DEFAULT_ADDRESS_5.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.panCardNumber").value(DEFAULT_PAN_CARD_NUMBER.toString()));
     }
@@ -358,7 +462,11 @@ public class AuthorizedSignatoryResourceIntTest {
             .signatoryName(UPDATED_SIGNATORY_NAME)
             .signatoryFatherName(UPDATED_SIGNATORY_FATHER_NAME)
             .signatoryDesignation(UPDATED_SIGNATORY_DESIGNATION)
-            .address(UPDATED_ADDRESS)
+            .address1(UPDATED_ADDRESS_1)
+            .address2(UPDATED_ADDRESS_2)
+            .address3(UPDATED_ADDRESS_3)
+            .address4(UPDATED_ADDRESS_4)
+            .address5(UPDATED_ADDRESS_5)
             .email(UPDATED_EMAIL)
             .panCardNumber(UPDATED_PAN_CARD_NUMBER);
         AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(updatedAuthorizedSignatory);
@@ -375,7 +483,11 @@ public class AuthorizedSignatoryResourceIntTest {
         assertThat(testAuthorizedSignatory.getSignatoryName()).isEqualTo(UPDATED_SIGNATORY_NAME);
         assertThat(testAuthorizedSignatory.getSignatoryFatherName()).isEqualTo(UPDATED_SIGNATORY_FATHER_NAME);
         assertThat(testAuthorizedSignatory.getSignatoryDesignation()).isEqualTo(UPDATED_SIGNATORY_DESIGNATION);
-        assertThat(testAuthorizedSignatory.getAddress()).isEqualTo(UPDATED_ADDRESS);
+        assertThat(testAuthorizedSignatory.getAddress1()).isEqualTo(UPDATED_ADDRESS_1);
+        assertThat(testAuthorizedSignatory.getAddress2()).isEqualTo(UPDATED_ADDRESS_2);
+        assertThat(testAuthorizedSignatory.getAddress3()).isEqualTo(UPDATED_ADDRESS_3);
+        assertThat(testAuthorizedSignatory.getAddress4()).isEqualTo(UPDATED_ADDRESS_4);
+        assertThat(testAuthorizedSignatory.getAddress5()).isEqualTo(UPDATED_ADDRESS_5);
         assertThat(testAuthorizedSignatory.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testAuthorizedSignatory.getPanCardNumber()).isEqualTo(UPDATED_PAN_CARD_NUMBER);
 
@@ -441,7 +553,11 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(jsonPath("$.[*].signatoryName").value(hasItem(DEFAULT_SIGNATORY_NAME.toString())))
             .andExpect(jsonPath("$.[*].signatoryFatherName").value(hasItem(DEFAULT_SIGNATORY_FATHER_NAME.toString())))
             .andExpect(jsonPath("$.[*].signatoryDesignation").value(hasItem(DEFAULT_SIGNATORY_DESIGNATION.toString())))
-            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1.toString())))
+            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2.toString())))
+            .andExpect(jsonPath("$.[*].address3").value(hasItem(DEFAULT_ADDRESS_3.toString())))
+            .andExpect(jsonPath("$.[*].address4").value(hasItem(DEFAULT_ADDRESS_4.toString())))
+            .andExpect(jsonPath("$.[*].address5").value(hasItem(DEFAULT_ADDRESS_5.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER.toString())));
     }

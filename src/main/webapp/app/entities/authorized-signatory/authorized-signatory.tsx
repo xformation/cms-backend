@@ -78,7 +78,11 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                 <th>Signatory Name</th>
                 <th>Signatory Father Name</th>
                 <th>Signatory Designation</th>
-                <th>Address</th>
+                <th>Address 1</th>
+                <th>Address 2</th>
+                <th>Address 3</th>
+                <th>Address 4</th>
+                <th>Address 5</th>
                 <th>Email</th>
                 <th>Pan Card Number</th>
                 <th>Branch</th>
@@ -97,7 +101,11 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
                   <td>{authorizedSignatory.signatoryName}</td>
                   <td>{authorizedSignatory.signatoryFatherName}</td>
                   <td>{authorizedSignatory.signatoryDesignation}</td>
-                  <td>{authorizedSignatory.address}</td>
+                  <td>{authorizedSignatory.address1}</td>
+                  <td>{authorizedSignatory.address2}</td>
+                  <td>{authorizedSignatory.address3}</td>
+                  <td>{authorizedSignatory.address4}</td>
+                  <td>{authorizedSignatory.address5}</td>
                   <td>{authorizedSignatory.email}</td>
                   <td>{authorizedSignatory.panCardNumber}</td>
                   <td>

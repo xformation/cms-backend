@@ -5,8 +5,9 @@ import java.util.Objects;
 public class AbstractBranchInput {
     private Long id;
     private String branchName;
-    private String description;
-    private String collegeHead;
+    private String address1;
+    private String address2;
+    private String branchHead;
 
     public Long getId() {
         return id;
@@ -24,45 +25,55 @@ public class AbstractBranchInput {
         this.branchName = branchName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
-    public String getCollegeHead() {
-        return collegeHead;
+    public String getAddress2() {
+        return address2;
     }
 
-    public void setCollegeHead(String collegeHead) {
-        this.collegeHead = collegeHead;
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getBranchHead() {
+        return branchHead;
+    }
+
+    public void setBranchHead(String branchHead) {
+        this.branchHead = branchHead;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractBranchInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractBranchInput that = (AbstractBranchInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getBranchName(), that.getBranchName()) &&
-            Objects.equals(getDescription(), that.getDescription()) &&
-            Objects.equals(getCollegeHead(), that.getCollegeHead());
+        return Objects.equals(id, that.id) &&
+            Objects.equals(branchName, that.branchName) &&
+            Objects.equals(address1, that.address1) &&
+            Objects.equals(address2, that.address2) &&
+            Objects.equals(branchHead, that.branchHead);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getBranchName(), getDescription(), getCollegeHead());
+        return Objects.hash(id, branchName, address1, address2, branchHead);
     }
 
     @Override
     public String toString() {
-        return "AbstractCollegeBranchesInput{" +
+        return "AbstractBranchInput{" +
             "id=" + id +
             ", branchName='" + branchName + '\'' +
-            ", description='" + description + '\'' +
-            ", collegeHead='" + collegeHead + '\'' +
+            ", address1='" + address1 + '\'' +
+            ", address2='" + address2 + '\'' +
+            ", branchHead='" + branchHead + '\'' +
             '}';
     }
 }

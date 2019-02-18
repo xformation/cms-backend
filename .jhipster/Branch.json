@@ -9,14 +9,21 @@
             ]
         },
         {
-            "fieldName": "description",
+            "fieldName": "address1",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "collegeHead",
+            "fieldName": "address2",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "branchHead",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
@@ -29,9 +36,21 @@
             "relationshipName": "college",
             "otherEntityName": "college",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "city",
+            "otherEntityName": "city",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "state",
+            "otherEntityName": "state",
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190208044629",
+    "changelogDate": "20190214071443",
     "entityTableName": "branch",
     "dto": "mapstruct",
     "pagination": "no",

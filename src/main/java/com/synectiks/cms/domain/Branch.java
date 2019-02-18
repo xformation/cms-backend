@@ -32,16 +32,28 @@ public class Branch implements Serializable {
     private String branchName;
 
     @NotNull
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "address_1", nullable = false)
+    private String address1;
 
     @NotNull
-    @Column(name = "college_head", nullable = false)
-    private String collegeHead;
+    @Column(name = "address_2", nullable = false)
+    private String address2;
+
+    @NotNull
+    @Column(name = "branch_head", nullable = false)
+    private String branchHead;
 
     @ManyToOne
     @JsonIgnoreProperties("")
     private College college;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private City city;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private State state;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -65,30 +77,43 @@ public class Branch implements Serializable {
         this.branchName = branchName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress1() {
+        return address1;
     }
 
-    public Branch description(String description) {
-        this.description = description;
+    public Branch address1(String address1) {
+        this.address1 = address1;
         return this;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
-    public String getCollegeHead() {
-        return collegeHead;
+    public String getAddress2() {
+        return address2;
     }
 
-    public Branch collegeHead(String collegeHead) {
-        this.collegeHead = collegeHead;
+    public Branch address2(String address2) {
+        this.address2 = address2;
         return this;
     }
 
-    public void setCollegeHead(String collegeHead) {
-        this.collegeHead = collegeHead;
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getBranchHead() {
+        return branchHead;
+    }
+
+    public Branch branchHead(String branchHead) {
+        this.branchHead = branchHead;
+        return this;
+    }
+
+    public void setBranchHead(String branchHead) {
+        this.branchHead = branchHead;
     }
 
     public College getCollege() {
@@ -102,6 +127,32 @@ public class Branch implements Serializable {
 
     public void setCollege(College college) {
         this.college = college;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public Branch city(City city) {
+        this.city = city;
+        return this;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public Branch state(State state) {
+        this.state = state;
+        return this;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -130,8 +181,9 @@ public class Branch implements Serializable {
         return "Branch{" +
             "id=" + getId() +
             ", branchName='" + getBranchName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", collegeHead='" + getCollegeHead() + "'" +
+            ", address1='" + getAddress1() + "'" +
+            ", address2='" + getAddress2() + "'" +
+            ", branchHead='" + getBranchHead() + "'" +
             "}";
     }
 }
