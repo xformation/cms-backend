@@ -60,7 +60,7 @@ public class LectureScheduleProcessor {
     	String values[] = lectureScheduleInput.getValues();
     	try {
 
-        	Term tr = getTermById(filter.getTermId());
+        	Term tr = getTermById(Long.parseLong(filter.getTermId()));
         	List<LectureScheduleVo> lectureList = getLectureRecords(tr.getStartDate(), tr.getEndDate());
         	List<LectureScheduleVo> mondayList = filterDataOnDayOfweek(lectureList, Calendar.MONDAY);
         	List<LectureScheduleVo> tuesdayList = filterDataOnDayOfweek(lectureList, Calendar.TUESDAY);
@@ -270,11 +270,11 @@ public class LectureScheduleProcessor {
 	public QueryResult addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) throws JSONException, ParseException {
 		
 //		AcademicYear ay = getAcademicYearDates(filter.getAcademicYear());
-		Term tr = getTermById(filter.getTermId());
+		Term tr = getTermById(Long.parseLong(filter.getTermId()));
 		System.out.println("Term data retrieved.");
 		List<Date> dateList = createDates(tr);
 		System.out.println("Date list created.");
-		List<Holiday> holidayList = getHolidayList(filter.getAcademicYear());
+		List<Holiday> holidayList = getHolidayList(Long.parseLong(filter.getAcademicYear()));
 		System.out.println("Holiday data retrieved.");
 		filterHolidays (holidayList,dateList);
 		System.out.println("Holiday data filtered.");
@@ -428,10 +428,10 @@ public class LectureScheduleProcessor {
 	 * (java.sql.Date)result[1]; ay.setEndDate(new Date(dt.getTime())); } return ay;
 	 * }
 	 */
-	private Term getTermById(int termId) {
+	private Term getTermById(Long termId) {
 		Term tm = new Term();
 		tm.setTermStatus(Status.ACTIVE);
-		tm.setId(Long.valueOf(termId));;
+		tm.setId(termId);
 		Example<Term> example = Example.of(tm);
 		Optional<Term> term = this.termRepository.findOne(example);
 		if(term.isPresent()) {
@@ -461,8 +461,8 @@ public class LectureScheduleProcessor {
 		return new AcademicYear();
 	}
 	
-	private List<Holiday> getHolidayList(int academicYear) throws ParseException {
-		AcademicYear acd = findAcademicYear(Long.valueOf(academicYear));
+	private List<Holiday> getHolidayList(Long academicYear) throws ParseException {
+		AcademicYear acd = findAcademicYear(academicYear);
 		Holiday hl = new Holiday();
 		hl.setHolidayStatus(Status.ACTIVE);
 		hl.setAcademicyear(acd);

@@ -1,78 +1,63 @@
 package com.synectiks.cms.filter.lecture;
 
 public class LectureScheduleFilter {
-	private int academicYear;
-	private int branchId;
-	private int departmentId;
-	private int batchId;
-	private int semesterId;
-	private int sectionId;
+	private String academicYear;
+	private String branchId;
+	private String departmentId;
+	private String batchId;
+	private String semesterId;
+	private String sectionId;
 	private String status;
-	private int termId;
-	
-	public int getAcademicYear() {
+	private String termId;
+	public String getAcademicYear() {
 		return academicYear;
 	}
-
-	public void setAcademicYear(int academicYear) {
+	public void setAcademicYear(String academicYear) {
 		this.academicYear = academicYear;
 	}
-
-	public int getBranchId() {
+	public String getBranchId() {
 		return branchId;
 	}
-
-	public void setBranchId(int branchId) {
+	public void setBranchId(String branchId) {
 		this.branchId = branchId;
 	}
-
-	public int getDepartmentId() {
+	public String getDepartmentId() {
 		return departmentId;
 	}
-
-	public void setDepartmentId(int departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
-
-	public int getBatchId() {
+	public String getBatchId() {
 		return batchId;
 	}
-
-	public void setBatchId(int batchId) {
+	public void setBatchId(String batchId) {
 		this.batchId = batchId;
 	}
-
-	public int getSemesterId() {
+	public String getSemesterId() {
 		return semesterId;
 	}
-
-	public void setSemesterId(int semesterId) {
+	public void setSemesterId(String semesterId) {
 		this.semesterId = semesterId;
 	}
-
-	public int getSectionId() {
+	public String getSectionId() {
 		return sectionId;
 	}
-
-	public void setSectionId(int sectionId) {
+	public void setSectionId(String sectionId) {
 		this.sectionId = sectionId;
 	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public int getTermId() {
+	public String getTermId() {
 		return termId;
 	}
-
-	public void setTermId(int termId) {
+	public void setTermId(String termId) {
 		this.termId = termId;
 	}
+	
 	
 	
 }

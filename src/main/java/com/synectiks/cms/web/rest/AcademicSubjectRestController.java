@@ -41,8 +41,11 @@ public class AcademicSubjectRestController {
 	 * createSubjects method will create an entry in subject and teach table.
 	 * @param list
 	 * 
-	 * 
-	 * [{"id":null,"subjectCode":"ww","subjectDesc":null,"departmentId":1101,"batchId":1151,"teacherId":1310},{"id":null,"subjectCode":"qq","subjectDesc":null,"departmentId":1101,"batchId":1151,"teacherId":1310},{"id":null,"subjectCode":"aa","subjectDesc":null,"departmentId":1101,"batchId":1151,"teacherId":1310}]
+	 * [
+	 *	{"id":null,"subjectCode":"ww","subjectDesc":null,"departmentId":1101,"batchId":1151,"teacherId":1310},
+	 *	{"id":null,"subjectCode":"qq","subjectDesc":null,"departmentId":1101,"batchId":1151,"teacherId":1310},
+	 *	{"id":null,"subjectCode":"aa","subjectDesc":null,"departmentId":1101,"batchId":1151,"teacherId":1310}
+	 * ]
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/academicsubject/createsubjects")
 	public void createSubjects(@RequestBody List<AcademicSubjectDTO> list) {
