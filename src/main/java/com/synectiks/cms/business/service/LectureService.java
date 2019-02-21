@@ -34,12 +34,13 @@ import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleVo;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.TermRepository;
 
 @Component
 public class LectureService {
 	
-	private final static Logger logger = LoggerFactory.getLogger(Class.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@PersistenceContext
     private EntityManager entityManager;
@@ -52,6 +53,9 @@ public class LectureService {
 	
 	@Autowired
 	private TermRepository termRepository;
+	
+	@Autowired
+	private LectureRepository lectureRepository;
 	
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private static final String MONDAY = "MONDAY";
@@ -175,6 +179,7 @@ public class LectureService {
             vo.setAttendanceMasterId((BigInteger)result[6]);
             list.add(vo);
         }
+		
 		return list;
 	}
 	

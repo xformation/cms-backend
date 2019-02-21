@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class LectureRestController {
 
-	private final static Logger logger = LoggerFactory.getLogger(Class.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private LectureService lectureService;

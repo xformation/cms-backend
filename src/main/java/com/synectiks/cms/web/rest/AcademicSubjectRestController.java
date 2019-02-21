@@ -23,7 +23,7 @@ import com.synectiks.cms.service.dto.AcademicSubjectDTO;
 @RequestMapping("/api")
 public class AcademicSubjectRestController {
 
-	private final static Logger logger = LoggerFactory.getLogger(Class.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private AcademicSubjectService academicSubjectService; 
