@@ -56,6 +56,22 @@ enum StudentTypeEnum{
     OTHER_BENEFITS
 }
 
+enum Frequency {
+    WEEKLY
+    MONTHLY
+    QUARTERLY
+    HALFYEARLY
+    ANNUALLY
+}
+
+enum ModeOfPayment {
+    CARD
+    CASH
+    NETBANKING
+    CHEQUE
+    DEMANDDRAFT
+}
+
 type Query {
 
   authorizedSignatory(id: Int!): AuthorizedSignatory!
@@ -112,6 +128,18 @@ type Query {
   teacher(id: Long!): Teacher!
   teachers: [Teacher!]!
 
+  feeCategory(id: Long!): FeeCategory!
+  feeCategories: [FeeCategory!]!
+
+  feeDetail(id: Long!): FeeDetails!
+  feeDetails: [FeeDetails!]!
+
+  facility(id: Long!): Facility!
+  facilities: [Facility!]!
+
+  transportRoute(id: Long!): TransportRoute!
+  transportRoutes: [TransportRoute!]!
+
   term (id: Long!): Term!
   terms: [Term!]!
 
@@ -144,6 +172,41 @@ type State{
     stateCode: String!
     country: Country!
 }
+
+type FeeCategory{
+    id: Long!
+    categoryName: String!
+    description: String!
+   }
+
+type Facility{
+      id: Long!
+      facilityName: String!
+ }
+
+  type TransportRoute{
+    id: Long!
+    routeName: String!
+    routeDetails: String!
+    routeMapUrl: String!
+  }
+
+  type FeeDetails{
+       id: Long!
+       feeParticularsName: String!
+       feeParticularDesc: String!
+       studentType: StudentTypeEnum !
+       gender: Gender!
+       amount: Long!
+       feeCategory: FeeCategory!
+       batch: Batch!
+       facility: Facility!
+       transportRoute: TransportRoute!
+       college: College!
+       department: Department!
+       branch: Branch!
+       academicYear: AcademicYear!
+      }
 
 type Country{
     id: Long!
@@ -591,6 +654,22 @@ type Mutation {
    updateCountry(input: UpdateCountryInput!): UpdateCountryPayload!
    removeCountry(input: RemoveCountryInput!): RemoveCountryPayload!
 
+   addFeeCategory(input: AddFeeCategoryInput!): AddFeeCategoryPayload!
+   updateFeeCategory(input: UpdateFeeCategoryInput!): UpdateFeeCategoryPayload!
+   removeFeeCategory(input: RemoveFeeCategoryInput!): RemoveFeeCategoryPayload!
+
+   addFacility(input: AddFacilityInput!): AddFacilityPayload!
+   updateFacility(input: UpdateFacilityInput!): UpdateFacilityPayload!
+   removeFacility(input: RemoveFacilityInput!): RemoveFacilityPayload!
+
+    addTransportRoute(input: AddTransportRouteInput!): AddTransportRoutePayload!
+    updateTransportRoute(input: UpdateTransportRouteInput!): UpdateTransportRoutePayload!
+    removeTransportRoute(input: RemoveTransportRouteInput!): RemoveTransportRoutePayload!
+
+    addFeeDetails(input: AddFeeDetailsInput!): AddFeeDetailsPayload!
+    updateFeeDetails(input: UpdateFeeDetailsInput!): UpdateFeeDetailsPayload!
+    removeFeeDetails(input: RemoveFeeDetailsInput!): RemoveFeeDetailsPayload!
+
     updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 
    addAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
@@ -623,7 +702,7 @@ type QueryResult{
 input StudentAttendanceUpdateFilter {
 	studentIds: String!
 	lectureId: Long!
-} 
+}
 
 
 
@@ -705,6 +784,115 @@ type RemoveBankAccountsPayload {
     bankAccounts: [BankAccounts!]!
 }
 
+input AddFeeCategoryInput {
+     categoryName: String!
+     description: String!
+}
+type AddFeeCategoryPayload {
+    feeCategory: FeeCategory!
+}
+input UpdateFeeCategoryInput {
+    id: Long!
+    categoryName: String!
+    description: String!
+}
+type UpdateFeeCategoryPayload {
+    feeCategory: FeeCategory!
+}
+input RemoveFeeCategoryInput {
+    feeCategoryId: Long!
+}
+type RemoveFeeCategoryPayload {
+    feeCategories: [ FeeCategory!]!
+}
+
+input AddFeeDetailsInput {
+     feeParticularsName: String!
+     feeParticularDesc: String!
+     studentType: StudentTypeEnum !
+     gender: Gender!
+     amount: Long!
+     feeCategoryId: Long!
+     batchId: Long!
+     facilityId: Long!
+     transportRouteId: Long!
+     collegeId: Long!
+     departmentId: Long!
+     branchId: Long!
+     academicyearId: Long!
+}
+type AddFeeDetailsPayload {
+    feeDetails: FeeDetails!
+}
+input UpdateFeeDetailsInput {
+    id: Long!
+    feeParticularsName: String!
+    feeParticularDesc: String!
+    studentType: StudentTypeEnum !
+    gender: Gender!
+    amount: Long!
+    feeCategoryId: Long!
+    batchId: Long!
+    facilityId: Long!
+    transportRouteId: Long!
+    collegeId: Long!
+    departmentId: Long!
+    branchId: Long!
+    academicyearId: Long!
+}
+type UpdateFeeDetailsPayload {
+   feeDetails: FeeDetails!
+}
+input RemoveFeeDetailsInput {
+    feeDetailsId: Long!
+}
+type RemoveFeeDetailsPayload {
+    feeDetails: [ FeeDetails!]!
+}
+
+input AddFacilityInput {
+   facilityName: String!
+}
+type AddFacilityPayload {
+    facility: Facility!
+}
+input UpdateFacilityInput {
+     id: Long!
+     facilityName: String!
+}
+type UpdateFacilityPayload {
+    facility: Facility!
+}
+input RemoveFacilityInput {
+    facilityId: Long!
+}
+type RemoveFacilityPayload {
+    facilities: [ Facility!]!
+}
+
+input AddTransportRouteInput {
+     routeName: String!
+     routeDetails: String!
+     routeMapUrl: String!
+}
+type AddTransportRoutePayload {
+    transportRoute: TransportRoute!
+}
+input UpdateTransportRouteInput {
+    id: Long!
+    routeName: String!
+    routeDetails: String!
+    routeMapUrl: String!
+}
+type UpdateTransportRoutePayload {
+    transportRoute: TransportRoute!
+}
+input RemoveTransportRouteInput {
+    transportRouteId: Long!
+}
+type RemoveTransportRoutePayload {
+    transportRoutes: [ TransportRoute!]!
+}
 
 
 input AddCollegeInput {

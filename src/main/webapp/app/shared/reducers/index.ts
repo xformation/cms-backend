@@ -120,6 +120,102 @@ import adminOverview, {
 import adminAttendance, {
   AdminAttendanceState
 } from 'app/entities/admin-attendance/admin-attendance.reducer';
+// prettier-ignore
+import country, {
+  CountryState
+} from 'app/entities/country/country.reducer';
+// prettier-ignore
+import currency, {
+  CurrencyState
+} from 'app/entities/currency/currency.reducer';
+// prettier-ignore
+import state, {
+  StateState
+} from 'app/entities/state/state.reducer';
+// prettier-ignore
+import city, {
+  CityState
+} from 'app/entities/city/city.reducer';
+// prettier-ignore
+import feeCategory, {
+  FeeCategoryState
+} from 'app/entities/fee-category/fee-category.reducer';
+// prettier-ignore
+import facility, {
+  FacilityState
+} from 'app/entities/facility/facility.reducer';
+// prettier-ignore
+import transportRoute, {
+  TransportRouteState
+} from 'app/entities/transport-route/transport-route.reducer';
+// prettier-ignore
+import feeDetails, {
+  FeeDetailsState
+} from 'app/entities/fee-details/fee-details.reducer';
+// prettier-ignore
+import dueDate, {
+  DueDateState
+} from 'app/entities/due-date/due-date.reducer';
+// prettier-ignore
+import paymentRemainder, {
+  PaymentRemainderState
+} from 'app/entities/payment-remainder/payment-remainder.reducer';
+// prettier-ignore
+import lateFee, {
+  LateFeeState
+} from 'app/entities/late-fee/late-fee.reducer';
+// prettier-ignore
+import invoice, {
+  InvoiceState
+} from 'app/entities/invoice/invoice.reducer';
+// prettier-ignore
+import country, {
+  CountryState
+} from 'app/entities/country/country.reducer';
+// prettier-ignore
+import currency, {
+  CurrencyState
+} from 'app/entities/currency/currency.reducer';
+// prettier-ignore
+import state, {
+  StateState
+} from 'app/entities/state/state.reducer';
+// prettier-ignore
+import city, {
+  CityState
+} from 'app/entities/city/city.reducer';
+// prettier-ignore
+import feeCategory, {
+  FeeCategoryState
+} from 'app/entities/fee-category/fee-category.reducer';
+// prettier-ignore
+import facility, {
+  FacilityState
+} from 'app/entities/facility/facility.reducer';
+// prettier-ignore
+import transportRoute, {
+  TransportRouteState
+} from 'app/entities/transport-route/transport-route.reducer';
+// prettier-ignore
+import feeDetails, {
+  FeeDetailsState
+} from 'app/entities/fee-details/fee-details.reducer';
+// prettier-ignore
+import dueDate, {
+  DueDateState
+} from 'app/entities/due-date/due-date.reducer';
+// prettier-ignore
+import paymentRemainder, {
+  PaymentRemainderState
+} from 'app/entities/payment-remainder/payment-remainder.reducer';
+// prettier-ignore
+import lateFee, {
+  LateFeeState
+} from 'app/entities/late-fee/late-fee.reducer';
+// prettier-ignore
+import invoice, {
+  InvoiceState
+} from 'app/entities/invoice/invoice.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -158,6 +254,14 @@ export interface IRootState {
   readonly city: CityState;
   readonly adminOverview: AdminOverviewState;
   readonly adminAttendance: AdminAttendanceState;
+  readonly feeCategory: FeeCategoryState;
+  readonly facility: FacilityState;
+  readonly transportRoute: TransportRouteState;
+  readonly feeDetails: FeeDetailsState;
+  readonly dueDate: DueDateState;
+  readonly paymentRemainder: PaymentRemainderState;
+  readonly lateFee: LateFeeState;
+  readonly invoice: InvoiceState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -198,6 +302,14 @@ const rootReducer = combineReducers<IRootState>({
   city,
   adminOverview,
   adminAttendance,
+  feeCategory,
+  facility,
+  transportRoute,
+  feeDetails,
+  dueDate,
+  paymentRemainder,
+  lateFee,
+  invoice,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

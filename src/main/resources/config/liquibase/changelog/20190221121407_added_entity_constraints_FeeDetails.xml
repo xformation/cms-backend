@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity FeeDetails.
+    -->
+    <changeSet id="20190221121407-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="fee_category_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_fee_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fee_category"/>
+
+        <addForeignKeyConstraint baseColumnNames="batch_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_batch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="batch"/>
+
+        <addForeignKeyConstraint baseColumnNames="facility_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_facility_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="facility"/>
+
+        <addForeignKeyConstraint baseColumnNames="transport_route_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_transport_route_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transport_route"/>
+
+        <addForeignKeyConstraint baseColumnNames="college_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_college_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="college"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
+        <addForeignKeyConstraint baseColumnNames="academic_year_id"
+                                 baseTableName="fee_details"
+                                 constraintName="fk_fee_details_academic_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_year"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -78,6 +78,13 @@ enum StudentTypeEnum{
     REGULAR,STAFF_CONCESSION,BENEFITS,SCHOLARSHIP,OTHER_BENEFITS
 }
 
+enum Frequency {
+    WEEKLY, MONTHLY, QUARTERLY, HALFYEARLY, ANNUALLY
+}
+
+enum ModeOfPayment {
+    CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
+}
 
 entity Student{
 studentName String required
@@ -284,12 +291,12 @@ corporateId Integer required
 entity Country{
 	CountryName String required
 	CountryCode String required
-	IsdCode String 
+	IsdCode String
 }
 
 entity Currency{
 	CurrencyName String required
-	CurrencyCode String 
+	CurrencyCode String
 	CurrencySymbol String
 }
 
@@ -301,9 +308,74 @@ entity State{
 
 entity City{
 	CityName String required
-	CityCode String 
+	CityCode String
 	StdCode String
 }
+
+entity FeeCategory {
+categoryName String required
+description String required
+}
+
+entity Facility {
+facilityName String required
+}
+
+entity TransportRoute {
+routeName String required
+routeDetails String required
+routeMapUrl String required
+}
+
+entity FeeDetails {
+feeParticularsName String required
+feeParticularDesc  String required
+studentType StudentTypeEnum required
+gender Gender required
+amount Long required
+}
+
+entity DueDate {
+paymentMethod String required
+installments Integer required
+dayDesc String required
+frequency Frequency required
+}
+
+entity PaymentRemainder {
+feeRemainder Status required
+noticeDay Integer required
+overDueRemainder Status required
+remainderRecipients String required
+}
+
+entity LateFee {
+assignLateFee Status required
+lateFeeDays Integer required
+fixed Status
+percentage Status
+fixedCharges Long
+percentCharges Long
+lateFeeAssignmentFrequency Frequency required
+}
+
+
+entity Invoice {
+invoiceNumber String required
+amountPaid Long required
+paymentDate LocalDate required
+nextPaymentDate LocalDate required
+outStandingAmount Long required
+modeOfPayment ModeOfPayment required
+chequeNumber Long
+demandDraftNumber Long
+onlineTxnRefNumber String
+paymentStatus Status required
+comments String required
+updatedBy String required
+updatedOn LocalDate required
+}
+
 
 relationship ManyToOne {
 Student{department required} to Department ,
@@ -342,7 +414,29 @@ LegalEntity{city} to City,
 City{State} to State,
 State{Country} to Country,
 Currency{Country} to Country
-
+FeeDetails{feeCategory} to FeeCategory ,
+FeeDetails{batch} to Batch ,
+FeeDetails{facility} to Facility,
+FeeDetails{transportRoute} to TransportRoute,
+FeeDetails{college} to College,
+FeeDetails{department} to Department,
+FeeDetails{branch} to Branch,
+FeeDetails{academicYear} to AcademicYear,
+DueDate{college} to College,
+DueDate{branch} to Branch,
+PaymentRemainder{dueDate} to DueDate,
+PaymentRemainder{college} to College,
+PaymentRemainder{branch} to Branch,
+LateFee{college} to College,
+LateFee{branch} to Branch,
+Invoice{feeCategory} to FeeCategory,
+Invoice{feeDetails} to FeeDetails,
+Invoice{dueDate} to DueDate,
+Invoice{paymentRemainder} to PaymentRemainder,
+Invoice{college} to College,
+Invoice{branch} to Branch,
+Invoice{student} to Student,
+Invoice{academicYear} to AcademicYear
 }
 
 dto * with mapstruct
