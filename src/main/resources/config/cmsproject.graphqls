@@ -438,7 +438,17 @@ type Student {
        uploadPhoto: Long!
        admissionNo: Long!
        rollNo: String!
-       studentType: String!
+       transport: Status!
+       mess: Status!
+       gym: Status!
+       culturalClass: Status!
+       library: Status!
+       sports: Status!
+       swimming: Status!
+       extraClass: Status!
+       handicrafts: Status!
+       add: Status!
+       studentType: StudentTypeEnum!
        batch: Batch!
        section: Section!
        branch: Branch!
@@ -509,7 +519,7 @@ type Teacher{
                  designation: String!
                  staffType: StaffType!
                  branch: Branch!
-              department: Department!
+               department: Department!
 }
 type Term{
     id: Long!
@@ -1314,11 +1324,12 @@ input AddStudentInput {
          contactNo: Long!
          emailAddress: String!
          transport: Status!
+         gym: Status!
          mess: Status!
          culturalClass: Status!
          library: Status!
          sports: Status!
-         swimmming: Status!
+         swimming: Status!
          extraClass: Status!
          handicrafts: Status!
          add: Status!
@@ -1372,18 +1383,19 @@ input UpdateStudentInput {
              contactNo: Long!
              emailAddress: String!
              transport: Status!
+             gym: Status!
              mess: Status!
              culturalClass: Status!
              library: Status!
              sports: Status!
-             swimmming: Status!
+             swimming: Status!
              extraClass: Status!
              handicrafts: Status!
              add: Status!
              uploadPhoto: Long!
              admissionNo: Long!
              rollNo: String!
-             studentType: String!
+             studentType: StudentTypeEnum!
              batchId: Long
              sectionId: Long
              branchId: Long

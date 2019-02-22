@@ -3,6 +3,7 @@ package com.synectiks.cms.graphql.types.Student;
 import com.synectiks.cms.domain.enumeration.*;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class AbstractStudentInput {
     private Long id;
@@ -455,6 +456,68 @@ public class AbstractStudentInput {
 
     public void setStudentType(StudentTypeEnum studentType) {
         this.studentType = studentType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractStudentInput)) return false;
+        AbstractStudentInput that = (AbstractStudentInput) o;
+        return Objects.equals(getId(), that.getId()) &&
+            Objects.equals(getStudentName(), that.getStudentName()) &&
+            Objects.equals(getStudentMiddleName(), that.getStudentMiddleName()) &&
+            Objects.equals(getStudentLastName(), that.getStudentLastName()) &&
+            Objects.equals(getFatherName(), that.getFatherName()) &&
+            Objects.equals(getFatherMiddleName(), that.getFatherMiddleName()) &&
+            Objects.equals(getFatherLastName(), that.getFatherLastName()) &&
+            Objects.equals(getMotherName(), that.getMotherName()) &&
+            Objects.equals(getMotherMiddleName(), that.getMotherMiddleName()) &&
+            Objects.equals(getMotherLastName(), that.getMotherLastName()) &&
+            Objects.equals(getAadharNo(), that.getAadharNo()) &&
+            Objects.equals(getDateOfBirth(), that.getDateOfBirth()) &&
+            Objects.equals(getPlaceOfBirth(), that.getPlaceOfBirth()) &&
+            getReligion() == that.getReligion() &&
+            getCaste() == that.getCaste() &&
+            Objects.equals(getSubCaste(), that.getSubCaste()) &&
+            Objects.equals(getAge(), that.getAge()) &&
+            getSex() == that.getSex() &&
+            getBloodGroup() == that.getBloodGroup() &&
+            Objects.equals(getAddressLineOne(), that.getAddressLineOne()) &&
+            Objects.equals(getAddressLineTwo(), that.getAddressLineTwo()) &&
+            Objects.equals(getAddressLineThree(), that.getAddressLineThree()) &&
+            Objects.equals(getTown(), that.getTown()) &&
+            Objects.equals(getState(), that.getState()) &&
+            Objects.equals(getCountry(), that.getCountry()) &&
+            Objects.equals(getPincode(), that.getPincode()) &&
+            Objects.equals(getStudentContactNumber(), that.getStudentContactNumber()) &&
+            Objects.equals(getAlternateContactNumber(), that.getAlternateContactNumber()) &&
+            Objects.equals(getStudentEmailAddress(), that.getStudentEmailAddress()) &&
+            Objects.equals(getAlternateEmailAddress(), that.getAlternateEmailAddress()) &&
+            getRelationWithStudent() == that.getRelationWithStudent() &&
+            Objects.equals(getName(), that.getName()) &&
+            Objects.equals(getMiddleName(), that.getMiddleName()) &&
+            Objects.equals(getLastName(), that.getLastName()) &&
+            Objects.equals(getContactNo(), that.getContactNo()) &&
+            Objects.equals(getEmailAddress(), that.getEmailAddress()) &&
+            getTransport() == that.getTransport() &&
+            getMess() == that.getMess() &&
+            getGym() == that.getGym() &&
+            getCulturalClass() == that.getCulturalClass() &&
+            getLibrary() == that.getLibrary() &&
+            getSports() == that.getSports() &&
+            getSwimming() == that.getSwimming() &&
+            getExtraClass() == that.getExtraClass() &&
+            getHandicrafts() == that.getHandicrafts() &&
+            getAdd() == that.getAdd() &&
+            Objects.equals(getUploadPhoto(), that.getUploadPhoto()) &&
+            Objects.equals(getAdmissionNo(), that.getAdmissionNo()) &&
+            Objects.equals(getRollNo(), that.getRollNo()) &&
+            getStudentType() == that.getStudentType();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getStudentName(), getStudentMiddleName(), getStudentLastName(), getFatherName(), getFatherMiddleName(), getFatherLastName(), getMotherName(), getMotherMiddleName(), getMotherLastName(), getAadharNo(), getDateOfBirth(), getPlaceOfBirth(), getReligion(), getCaste(), getSubCaste(), getAge(), getSex(), getBloodGroup(), getAddressLineOne(), getAddressLineTwo(), getAddressLineThree(), getTown(), getState(), getCountry(), getPincode(), getStudentContactNumber(), getAlternateContactNumber(), getStudentEmailAddress(), getAlternateEmailAddress(), getRelationWithStudent(), getName(), getMiddleName(), getLastName(), getContactNo(), getEmailAddress(), getTransport(), getMess(), getGym(), getCulturalClass(), getLibrary(), getSports(), getSwimming(), getExtraClass(), getHandicrafts(), getAdd(), getUploadPhoto(), getAdmissionNo(), getRollNo(), getStudentType());
     }
 
     @Override
