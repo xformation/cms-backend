@@ -216,6 +216,14 @@ import lateFee, {
 import invoice, {
   InvoiceState
 } from 'app/entities/invoice/invoice.reducer';
+// prettier-ignore
+import academicYear, {
+  AcademicYearState
+} from 'app/entities/academic-year/academic-year.reducer';
+// prettier-ignore
+import academicYear, {
+  AcademicYearState
+} from 'app/entities/academic-year/academic-year.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

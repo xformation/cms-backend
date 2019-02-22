@@ -274,7 +274,7 @@ public class LectureScheduleProcessor {
 		System.out.println("Term data retrieved.");
 		List<Date> dateList = createDates(tr);
 		System.out.println("Date list created.");
-		List<Holiday> holidayList = getHolidayList(Long.parseLong(filter.getAcademicYear()));
+		List<Holiday> holidayList = getHolidayList((filter.getAcademicYear()));
 		System.out.println("Holiday data retrieved.");
 		filterHolidays (holidayList,dateList);
 		System.out.println("Holiday data filtered.");
@@ -440,8 +440,8 @@ public class LectureScheduleProcessor {
 		return new Term();
 	}
 	
-	private List<Term> getTerms(int academicYear) {
-		AcademicYear acd = findAcademicYear(Long.valueOf(academicYear));
+	private List<Term> getTerms(String academicYear) {
+		AcademicYear acd = findAcademicYear(academicYear);
 		Term tm = new Term();
 		tm.setTermStatus(Status.ACTIVE);
 		tm.setAcademicyear(acd);
@@ -450,7 +450,7 @@ public class LectureScheduleProcessor {
 		return list;
 	}
 	
-	private AcademicYear findAcademicYear(long academicYear) {
+	private AcademicYear findAcademicYear(String academicYear) {
 		AcademicYear ay = new AcademicYear();
 		ay.setYear(academicYear);
 		Example<AcademicYear> example = Example.of(ay);
@@ -461,7 +461,7 @@ public class LectureScheduleProcessor {
 		return new AcademicYear();
 	}
 	
-	private List<Holiday> getHolidayList(Long academicYear) throws ParseException {
+	private List<Holiday> getHolidayList(String academicYear) throws ParseException {
 		AcademicYear acd = findAcademicYear(academicYear);
 		Holiday hl = new Holiday();
 		hl.setHolidayStatus(Status.ACTIVE);

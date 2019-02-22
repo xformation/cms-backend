@@ -186,10 +186,9 @@ staffType StaffType required
 }
 
 entity AcademicYear{
-year Long required
+year String required
 startDate LocalDate required
 endDate LocalDate required
-desc String required
 }
 
 entity Holiday{

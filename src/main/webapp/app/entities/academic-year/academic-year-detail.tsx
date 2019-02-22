@@ -12,7 +12,7 @@ import { IAcademicYear } from 'app/shared/model/academic-year.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IAcademicYearDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAcademicYearDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class AcademicYearDetail extends React.Component<IAcademicYearDetailProps> {
   componentDidMount() {
@@ -44,10 +44,6 @@ export class AcademicYearDetail extends React.Component<IAcademicYearDetailProps
             <dd>
               <TextFormat value={academicYearEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
-            <dt>
-              <span id="desc">Desc</span>
-            </dt>
-            <dd>{academicYearEntity.desc}</dd>
           </dl>
           <Button tag={Link} to="/entity/academic-year" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

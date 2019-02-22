@@ -29,7 +29,7 @@ public class AcademicYear implements Serializable {
 
     @NotNull
     @Column(name = "jhi_year", nullable = false)
-    private Long year;
+    private String year;
 
     @NotNull
     @Column(name = "start_date", nullable = false)
@@ -38,10 +38,6 @@ public class AcademicYear implements Serializable {
     @NotNull
     @Column(name = "end_date", nullable = false)
     private Date endDate;
-
-    @NotNull
-    @Column(name = "jhi_desc", nullable = false)
-    private String desc;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -52,16 +48,16 @@ public class AcademicYear implements Serializable {
         this.id = id;
     }
 
-    public Long getYear() {
+    public String getYear() {
         return year;
     }
 
-    public AcademicYear year(Long year) {
+    public AcademicYear year(String year) {
         this.year = year;
         return this;
     }
 
-    public void setYear(Long year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -90,19 +86,6 @@ public class AcademicYear implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public AcademicYear desc(String desc) {
-        this.desc = desc;
-        return this;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -129,10 +112,9 @@ public class AcademicYear implements Serializable {
     public String toString() {
         return "AcademicYear{" +
             "id=" + getId() +
-            ", year=" + getYear() +
+            ", year='" + getYear() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", desc='" + getDesc() + "'" +
             "}";
     }
 }

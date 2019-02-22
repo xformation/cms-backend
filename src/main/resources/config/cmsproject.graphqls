@@ -983,26 +983,23 @@ type RemoveBatchPayload {
 
 type AcademicYear{
     id: Long!
-    year: Long!
+    year: String!
     startDate: Date!
     endDate: Date!
-    desc: String!
 }
 input AddAcademicYearInput {
-    year: Long!
+    year: String!
     startDate: Date!
     endDate: Date!
-    desc: String!
 }
 type AddAcademicYearPayload {
     academicYear: AcademicYear!
 }
 input UpdateAcademicYearInput {
     id:Long!
-    year: Long
-    startDate: Date
-    endDate: Date
-    desc: String
+    year: String!
+    startDate: Date!
+    endDate: Date!
 }
 type UpdateAcademicYearPayload {
     academicYear: AcademicYear!

@@ -2,10 +2,9 @@ import { Moment } from 'moment';
 
 export interface IAcademicYear {
   id?: number;
-  year?: number;
+  year?: string;
   startDate?: Moment;
   endDate?: Moment;
-  desc?: string;
 }
 
 export const defaultValue: Readonly<IAcademicYear> = {};

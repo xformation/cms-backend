@@ -9,7 +9,6 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190118141513_added_entity_Batch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141515_added_entity_Section.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141516_added_entity_Term.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190118141519_added_entity_AcademicYear.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141520_added_entity_Holiday.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141527_added_entity_Location.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141530_added_entity_BankAccounts.xml" relativeToChangelogFile="false"/>
@@ -36,6 +35,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190221121409_added_entity_PaymentRemainder.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190221121410_added_entity_LateFee.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190221121411_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190222065258_added_entity_AcademicYear.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>

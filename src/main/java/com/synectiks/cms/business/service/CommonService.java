@@ -34,7 +34,7 @@ public class CommonService {
 	@Autowired
 	private TeacherRepository teacherRepository;
 	
-	public AcademicYear findAcademicYearByYear(long academicYear) {
+	public AcademicYear findAcademicYearByYear(String academicYear) {
 		AcademicYear ay = new AcademicYear();
 		ay.setYear(academicYear);
 		Example<AcademicYear> example = Example.of(ay);

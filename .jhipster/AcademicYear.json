@@ -3,7 +3,7 @@
     "fields": [
         {
             "fieldName": "year",
-            "fieldType": "Long",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
@@ -21,17 +21,10 @@
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldName": "desc",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
         }
     ],
     "relationships": [],
-    "changelogDate": "20190118141519",
+    "changelogDate": "20190222065258",
     "entityTableName": "academic_year",
     "dto": "mapstruct",
     "pagination": "no",

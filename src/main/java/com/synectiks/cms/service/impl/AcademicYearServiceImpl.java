@@ -50,6 +50,7 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     @Override
     public AcademicYearDTO save(AcademicYearDTO academicYearDTO) {
         log.debug("Request to save AcademicYear : {}", academicYearDTO);
+
         AcademicYear academicYear = academicYearMapper.toEntity(academicYearDTO);
         academicYear = academicYearRepository.save(academicYear);
         AcademicYearDTO result = academicYearMapper.toDto(academicYear);

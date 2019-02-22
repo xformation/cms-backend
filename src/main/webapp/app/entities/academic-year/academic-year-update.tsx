@@ -12,9 +12,9 @@ import { getEntity, updateEntity, createEntity, reset } from './academic-year.re
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IAcademicYearUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAcademicYearUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAcademicYearUpdateState {
   isNew: boolean;
@@ -26,6 +26,12 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
     this.state = {
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -49,7 +55,6 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -86,12 +91,10 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                   </Label>
                   <AvField
                     id="academic-year-year"
-                    type="number"
-                    className="form-control"
+                    type="text"
                     name="year"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
@@ -123,19 +126,6 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                     }}
                   />
                 </AvGroup>
-                <AvGroup>
-                  <Label id="descLabel" for="desc">
-                    Desc
-                  </Label>
-                  <AvField
-                    id="academic-year-desc"
-                    type="text"
-                    name="desc"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/academic-year" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -156,7 +146,8 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
 const mapStateToProps = (storeState: IRootState) => ({
   academicYearEntity: storeState.academicYear.entity,
   loading: storeState.academicYear.loading,
-  updating: storeState.academicYear.updating
+  updating: storeState.academicYear.updating,
+  updateSuccess: storeState.academicYear.updateSuccess
 });
 
 const mapDispatchToProps = {

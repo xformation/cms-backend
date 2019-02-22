@@ -4,10 +4,9 @@ import java.util.Date;
 
 public class AbstractAcademicYearInput {
     private Long id;
-    private Long year;
+    private String year;
     private Date startDate;
     private Date endDate;
-    private String desc;
     
     public Long getId() {
         return id;
@@ -17,11 +16,11 @@ public class AbstractAcademicYearInput {
         this.id = id;
     }
 
-    public Long getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Long year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -51,11 +50,4 @@ public class AbstractAcademicYearInput {
             '}';
     }
 
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
 }
