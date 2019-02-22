@@ -694,7 +694,7 @@ input LectureScheduleInput {
 }
 
 input LectureScheduleFilter {
-	academicYear: Int
+	academicYear: String
 	branchId: Int
 	departmentId: Int!
 	batchId: Int
