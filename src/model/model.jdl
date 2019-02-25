@@ -186,10 +186,9 @@ staffType StaffType required
 }
 
 entity AcademicYear{
-year Long required
+year String required
 startDate LocalDate required
 endDate LocalDate required
-desc String required
 }
 
 entity Holiday{
@@ -248,7 +247,11 @@ logo Long required
 legalNameOfTheCollege String required
 typeOfCollege TypeOfCollege required
 dateOfIncorporation LocalDate required
-registeredOfficeAddress String required
+registeredOfficeAddress1 String required
+registeredOfficeAddress2 String required
+registeredOfficeAddress3 String required
+registeredOfficeAddress4 String required
+registeredOfficeAddress5 String required
 collegeIdentificationNumber String required
 pan String required
 tan String required

@@ -8,7 +8,11 @@ export default class LegalEntityUpdatePage {
   legalNameOfTheCollegeInput: ElementFinder = element(by.css('input#legal-entity-legalNameOfTheCollege'));
   typeOfCollegeSelect: ElementFinder = element(by.css('select#legal-entity-typeOfCollege'));
   dateOfIncorporationInput: ElementFinder = element(by.css('input#legal-entity-dateOfIncorporation'));
-  registeredOfficeAddressInput: ElementFinder = element(by.css('input#legal-entity-registeredOfficeAddress'));
+  registeredOfficeAddress1Input: ElementFinder = element(by.css('input#legal-entity-registeredOfficeAddress1'));
+  registeredOfficeAddress2Input: ElementFinder = element(by.css('input#legal-entity-registeredOfficeAddress2'));
+  registeredOfficeAddress3Input: ElementFinder = element(by.css('input#legal-entity-registeredOfficeAddress3'));
+  registeredOfficeAddress4Input: ElementFinder = element(by.css('input#legal-entity-registeredOfficeAddress4'));
+  registeredOfficeAddress5Input: ElementFinder = element(by.css('input#legal-entity-registeredOfficeAddress5'));
   collegeIdentificationNumberInput: ElementFinder = element(by.css('input#legal-entity-collegeIdentificationNumber'));
   panInput: ElementFinder = element(by.css('input#legal-entity-pan'));
   tanInput: ElementFinder = element(by.css('input#legal-entity-tan'));
@@ -71,12 +75,44 @@ export default class LegalEntityUpdatePage {
     return this.dateOfIncorporationInput.getAttribute('value');
   }
 
-  async setRegisteredOfficeAddressInput(registeredOfficeAddress) {
-    await this.registeredOfficeAddressInput.sendKeys(registeredOfficeAddress);
+  async setRegisteredOfficeAddress1Input(registeredOfficeAddress1) {
+    await this.registeredOfficeAddress1Input.sendKeys(registeredOfficeAddress1);
   }
 
-  async getRegisteredOfficeAddressInput() {
-    return this.registeredOfficeAddressInput.getAttribute('value');
+  async getRegisteredOfficeAddress1Input() {
+    return this.registeredOfficeAddress1Input.getAttribute('value');
+  }
+
+  async setRegisteredOfficeAddress2Input(registeredOfficeAddress2) {
+    await this.registeredOfficeAddress2Input.sendKeys(registeredOfficeAddress2);
+  }
+
+  async getRegisteredOfficeAddress2Input() {
+    return this.registeredOfficeAddress2Input.getAttribute('value');
+  }
+
+  async setRegisteredOfficeAddress3Input(registeredOfficeAddress3) {
+    await this.registeredOfficeAddress3Input.sendKeys(registeredOfficeAddress3);
+  }
+
+  async getRegisteredOfficeAddress3Input() {
+    return this.registeredOfficeAddress3Input.getAttribute('value');
+  }
+
+  async setRegisteredOfficeAddress4Input(registeredOfficeAddress4) {
+    await this.registeredOfficeAddress4Input.sendKeys(registeredOfficeAddress4);
+  }
+
+  async getRegisteredOfficeAddress4Input() {
+    return this.registeredOfficeAddress4Input.getAttribute('value');
+  }
+
+  async setRegisteredOfficeAddress5Input(registeredOfficeAddress5) {
+    await this.registeredOfficeAddress5Input.sendKeys(registeredOfficeAddress5);
+  }
+
+  async getRegisteredOfficeAddress5Input() {
+    return this.registeredOfficeAddress5Input.getAttribute('value');
   }
 
   async setCollegeIdentificationNumberInput(collegeIdentificationNumber) {

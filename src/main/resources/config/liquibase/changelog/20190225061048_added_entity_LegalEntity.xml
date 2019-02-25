@@ -16,7 +16,7 @@
     <!--
         Added the entity LegalEntity.
     -->
-    <changeSet id="20190212105344-1" author="jhipster">
+    <changeSet id="20190225061048-1" author="jhipster">
         <createTable tableName="legal_entity">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -37,7 +37,23 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="registered_office_address" type="varchar(255)">
+            <column name="registered_office_address_1" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="registered_office_address_2" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="registered_office_address_3" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="registered_office_address_4" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="registered_office_address_5" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 

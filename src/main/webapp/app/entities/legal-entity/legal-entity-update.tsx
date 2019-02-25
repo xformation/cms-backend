@@ -162,13 +162,65 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="registeredOfficeAddressLabel" for="registeredOfficeAddress">
-                    Registered Office Address
+                  <Label id="registeredOfficeAddress1Label" for="registeredOfficeAddress1">
+                    Registered Office Address 1
                   </Label>
                   <AvField
-                    id="legal-entity-registeredOfficeAddress"
+                    id="legal-entity-registeredOfficeAddress1"
                     type="text"
-                    name="registeredOfficeAddress"
+                    name="registeredOfficeAddress1"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="registeredOfficeAddress2Label" for="registeredOfficeAddress2">
+                    Registered Office Address 2
+                  </Label>
+                  <AvField
+                    id="legal-entity-registeredOfficeAddress2"
+                    type="text"
+                    name="registeredOfficeAddress2"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="registeredOfficeAddress3Label" for="registeredOfficeAddress3">
+                    Registered Office Address 3
+                  </Label>
+                  <AvField
+                    id="legal-entity-registeredOfficeAddress3"
+                    type="text"
+                    name="registeredOfficeAddress3"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="registeredOfficeAddress4Label" for="registeredOfficeAddress4">
+                    Registered Office Address 4
+                  </Label>
+                  <AvField
+                    id="legal-entity-registeredOfficeAddress4"
+                    type="text"
+                    name="registeredOfficeAddress4"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="registeredOfficeAddress5Label" for="registeredOfficeAddress5">
+                    Registered Office Address 5
+                  </Label>
+                  <AvField
+                    id="legal-entity-registeredOfficeAddress5"
+                    type="text"
+                    name="registeredOfficeAddress5"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}

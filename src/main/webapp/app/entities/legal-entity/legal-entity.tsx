@@ -79,7 +79,11 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                 <th>Legal Name Of The College</th>
                 <th>Type Of College</th>
                 <th>Date Of Incorporation</th>
-                <th>Registered Office Address</th>
+                <th>Registered Office Address 1</th>
+                <th>Registered Office Address 2</th>
+                <th>Registered Office Address 3</th>
+                <th>Registered Office Address 4</th>
+                <th>Registered Office Address 5</th>
                 <th>College Identification Number</th>
                 <th>Pan</th>
                 <th>Tan</th>
@@ -116,7 +120,11 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                   <td>
                     <TextFormat type="date" value={legalEntity.dateOfIncorporation} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>{legalEntity.registeredOfficeAddress}</td>
+                  <td>{legalEntity.registeredOfficeAddress1}</td>
+                  <td>{legalEntity.registeredOfficeAddress2}</td>
+                  <td>{legalEntity.registeredOfficeAddress3}</td>
+                  <td>{legalEntity.registeredOfficeAddress4}</td>
+                  <td>{legalEntity.registeredOfficeAddress5}</td>
                   <td>{legalEntity.collegeIdentificationNumber}</td>
                   <td>{legalEntity.pan}</td>
                   <td>{legalEntity.tan}</td>

@@ -53,8 +53,16 @@ describe('LegalEntity e2e test', () => {
     await legalEntityUpdatePage.typeOfCollegeSelectLastOption();
     await legalEntityUpdatePage.setDateOfIncorporationInput('01-01-2001');
     expect(await legalEntityUpdatePage.getDateOfIncorporationInput()).to.eq('2001-01-01');
-    await legalEntityUpdatePage.setRegisteredOfficeAddressInput('registeredOfficeAddress');
-    expect(await legalEntityUpdatePage.getRegisteredOfficeAddressInput()).to.match(/registeredOfficeAddress/);
+    await legalEntityUpdatePage.setRegisteredOfficeAddress1Input('registeredOfficeAddress1');
+    expect(await legalEntityUpdatePage.getRegisteredOfficeAddress1Input()).to.match(/registeredOfficeAddress1/);
+    await legalEntityUpdatePage.setRegisteredOfficeAddress2Input('registeredOfficeAddress2');
+    expect(await legalEntityUpdatePage.getRegisteredOfficeAddress2Input()).to.match(/registeredOfficeAddress2/);
+    await legalEntityUpdatePage.setRegisteredOfficeAddress3Input('registeredOfficeAddress3');
+    expect(await legalEntityUpdatePage.getRegisteredOfficeAddress3Input()).to.match(/registeredOfficeAddress3/);
+    await legalEntityUpdatePage.setRegisteredOfficeAddress4Input('registeredOfficeAddress4');
+    expect(await legalEntityUpdatePage.getRegisteredOfficeAddress4Input()).to.match(/registeredOfficeAddress4/);
+    await legalEntityUpdatePage.setRegisteredOfficeAddress5Input('registeredOfficeAddress5');
+    expect(await legalEntityUpdatePage.getRegisteredOfficeAddress5Input()).to.match(/registeredOfficeAddress5/);
     await legalEntityUpdatePage.setCollegeIdentificationNumberInput('collegeIdentificationNumber');
     expect(await legalEntityUpdatePage.getCollegeIdentificationNumberInput()).to.match(/collegeIdentificationNumber/);
     await legalEntityUpdatePage.setPanInput('pan');

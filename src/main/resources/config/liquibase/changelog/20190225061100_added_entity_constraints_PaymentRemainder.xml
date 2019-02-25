@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity PaymentRemainder.
     -->
-    <changeSet id="20190221121409-2" author="jhipster">
+    <changeSet id="20190225061100-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="due_date_id"
                                  baseTableName="payment_remainder"

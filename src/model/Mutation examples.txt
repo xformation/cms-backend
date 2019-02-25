@@ -21,14 +21,17 @@ mutation addCountry($input:AddCountryInput!){
 
 State:
 
-{
-  "input": {
-    "countryName": "Teja",
-    "countryCode": "TEHEN123",
-    "isdCode": "HFNH%65"
+mutation addState($input:AddStateInput!){
+  addState(input: $input){
+    state{
+      id
+      stateName
+      divisionType
+	  stateCode
+	  countryId
+    }
   }
 }
-
 
 {
   "input": {
@@ -115,14 +118,22 @@ instructionInformation
 
 mutation addBranch($input: AddBranchInput!) {
 addBranch(input: $input) {
-branch{st
+branch{
 id
 branchName
-description
-collegeHead
+address1
+address2
+branchHead
 college{
   id
 }
+state{
+  id
+}
+city{
+  id
+}
+
 }
 }
 }
@@ -130,8 +141,11 @@ college{
 {
   "input": {
     "branchName": "branch",
-    "description": "desc",
-    "collegeHead": "papu",
+    "address1": "madhapur",
+    "address2": "kavurihills",
+    "branchHead": "siddesh",
+    "cityId": 1101,
+    "stateId": 1051,
     "collegeId": 951
   }
 }
@@ -195,6 +209,130 @@ mutation updateAcademicYear($input: UpdateAcademicYearInput!){
   }
  }
 }
+
+FeeCategory:
+
+mutation addFeeCategory($input: AddFeeCategoryInput!){
+  	addFeeCategory(input: $input){
+    feeCategory{
+      id
+      categoryName
+      description
+		}
+	}
+}
+
+
+Input: {
+  "input": {
+   "categoryName":  "common",
+    "description":  "common"
+
+  }
+}
+
+Facility:
+
+mutation addFacility($input: AddFacilityInput!){
+  	addFacility(input: $input){
+    facility{
+      id
+     facilityName
+		}
+	}
+}
+
+Input: {
+  "input": {
+   "facilityName":   "transport"
+
+  }
+}
+
+Transport:
+
+mutation addTransportRoute($input: AddTransportRouteInput!){
+  	addTransportRoute(input: $input){
+    transportRoute{
+      id
+      routeName
+      routeDetails
+      routeMapUrl
+
+		}
+	}
+}
+
+Input: {
+  "input": {
+   "routeName":    "madhapur",
+    "routeMapUrl":  "asdf",
+    "routeDetails":  "rwwyas"
+  }
+}
+
+
+
+FeeDetails:
+
+mutation addFeeDetails($input: AddFeeDetailsInput!){
+  	addFeeDetails(input: $input){
+    feeDetails{
+      id
+      feeParticularsName
+      feeParticularDesc
+      studentType
+      gender
+      amount
+      academicYear{
+        id
+      }
+      branch{
+        id
+      }
+      department{
+        id
+      }
+      college{
+        id
+      }
+      transportRoute{
+        id
+      }
+			feeCategory{
+        id
+      }
+      batch{
+        id
+      }
+      facility{
+        id
+      }
+
+		}
+	}
+}
+
+Input: {
+  "input": {
+   "feeParticularsName":   "dghh",
+    "feeParticularDesc": "asdf",
+    "studentType": "REGULAR",
+    "gender": "MALE",
+    "amount": 10000,
+    "feeCategoryId": 1401,
+    "batchId": 1301,
+    "facilityId": 1451,
+    "transportRouteId": 1501,
+    "collegeId": 951,
+    "departmentId": 1251,
+    "academicyearId": 1201,
+    "branchId": 1151
+
+  }
+}
+
+
 
 {
   "input": {
@@ -1168,7 +1306,11 @@ addLegalEntity(input:$input){
 		legalNameOfTheCollege
 		typeOfCollege
 		dateOfIncorporation
-		registeredOfficeAddress
+		registeredOfficeAddress1
+		registeredOfficeAddress2
+		registeredOfficeAddress3
+		registeredOfficeAddress4
+		registeredOfficeAddress5
 		collegeIdentificationNumber
 		pan
 		tan
@@ -1190,9 +1332,7 @@ addLegalEntity(input:$input){
 		  college{
 		    id
 		  }
-		  location{
-		    id
-		  }
+
 		}
 	}
 }
@@ -1204,7 +1344,11 @@ addLegalEntity(input:$input){
     "legalNameOfTheCollege": "clg",
     "typeOfCollege": "PUBLIC",
     "dateOfIncorporation": "2019-01-03",
-    "registeredOfficeAddress": "madhapur",
+    "registeredOfficeAddress1": "madhapur1",
+    "registeredOfficeAddress2": "madhapur2",
+    "registeredOfficeAddress3": "madhapur3",
+    "registeredOfficeAddress4": "madhapur4",
+    "registeredOfficeAddress5": "madhapur5",
     "collegeIdentificationNumber": "abc",
     "pan": "ajsh33c",
     "tan": "jikdi",
@@ -1220,9 +1364,8 @@ addLegalEntity(input:$input){
     "ptNumber": 123,
     "ptRegistrationDate": "2019-01-03",
     "ptSignatory": 2334,
-    "branchId": 1001,
-    "collegeId": 951,
-    "locationId": 1000
+    "branchId": 1151,
+    "collegeId": 1101,
   }
 }
 

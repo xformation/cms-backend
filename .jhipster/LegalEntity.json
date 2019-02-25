@@ -31,7 +31,35 @@
             ]
         },
         {
-            "fieldName": "registeredOfficeAddress",
+            "fieldName": "registeredOfficeAddress1",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "registeredOfficeAddress2",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "registeredOfficeAddress3",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "registeredOfficeAddress4",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "registeredOfficeAddress5",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
@@ -169,7 +197,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190212105344",
+    "changelogDate": "20190225061048",
     "entityTableName": "legal_entity",
     "dto": "mapstruct",
     "pagination": "no",

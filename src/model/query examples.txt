@@ -23,9 +23,38 @@ QUERY:
   }
 }
 
+State:
 
 {
-  branch(id: 1001){
+  state(id: 1051) {
+  country(id: 1001) {
+    stateName
+    divisionType
+    stateCode
+  }
+  }
+}
+
+{
+  states{
+  id
+  stateName
+  divisionType
+  stateCode
+  country{
+    id
+  }
+  }
+}
+
+
+
+
+{
+  branch(id: 1151){
+  city(id: 1101) {
+  state(id: 1051) {
+  college(id: 951) {
    branchName
    description
    collegeHead
@@ -33,14 +62,23 @@ QUERY:
    id
    }
   }
+ }
+}
 }
 
 {
   branches{
   id
   branchName
-  description
-  collegeHead
+  address1
+  address2
+  branchHead
+  city{
+    id
+  }
+    state{
+      id
+    }
   college{
      id
    }
@@ -1470,5 +1508,144 @@ query getAcademicSubjects($input:AcademicSubjectQueryPayload!){
     "departmentId":1,
     "branchId":1001,
     "batchId":1
+  }
+}
+
+FeeCategory:
+
+{
+  feeCategory(id: 1401){
+  categoryName
+  description
+  }
+}
+
+{
+  feeCategories{
+  id
+  categoryName
+  description
+  }
+}
+
+Facility:
+
+{
+  facility(id: 1451){
+  facilityName
+  }
+}
+
+{
+  facilities{
+  id
+  facilityName
+  }
+}
+
+
+Transport:
+
+{
+  transportRoute(id: 1501){
+  routeName
+  routeDetails
+  routeMapUrl
+  }
+}
+
+{
+  transportRoutes{
+  id
+  routeName
+  routeDetails
+  routeMapUrl
+  }
+}
+
+
+FeeDetails:
+
+{
+  feeDetail(id: 1551){
+  feeCategory(id: 1401) {
+  batch(id: 1301) {
+  facility(id: 1451) {
+  transportRoute(id: 1501) {
+  college(id: 951) {
+  department(id: 1251) {
+  branch(id: 1151) {
+  academicYear(id: 1201) {
+  }
+  }
+  }
+  }
+  }
+  feeParticularsName
+  feeParticularDesc
+  studentType
+  gender
+  amount
+  feeCategory{
+    id
+  }
+  batch{
+    id
+  }
+    facility{
+      id
+    }
+    transportRoute{
+      id
+    }
+    college{
+      id
+    }
+    department{
+      id
+    }
+    branch{
+      id
+    }
+    academicYear{
+      id
+    }
+  }
+}
+
+
+
+{
+  feeDetails{
+  id
+  feeParticularsName
+  feeParticularDesc
+  studentType
+  gender
+  amount
+  feeCategory{
+    id
+  }
+  batch{
+    id
+  }
+    facility{
+      id
+    }
+    transportRoute{
+      id
+    }
+    college{
+      id
+    }
+    department{
+      id
+    }
+    branch{
+      id
+    }
+    academicYear{
+      id
+    }
   }
 }

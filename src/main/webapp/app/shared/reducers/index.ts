@@ -216,6 +216,66 @@ import lateFee, {
 import invoice, {
   InvoiceState
 } from 'app/entities/invoice/invoice.reducer';
+// prettier-ignore
+import academicYear, {
+  AcademicYearState
+} from 'app/entities/academic-year/academic-year.reducer';
+// prettier-ignore
+import academicYear, {
+  AcademicYearState
+} from 'app/entities/academic-year/academic-year.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import country, {
+  CountryState
+} from 'app/entities/country/country.reducer';
+// prettier-ignore
+import currency, {
+  CurrencyState
+} from 'app/entities/currency/currency.reducer';
+// prettier-ignore
+import state, {
+  StateState
+} from 'app/entities/state/state.reducer';
+// prettier-ignore
+import city, {
+  CityState
+} from 'app/entities/city/city.reducer';
+// prettier-ignore
+import feeCategory, {
+  FeeCategoryState
+} from 'app/entities/fee-category/fee-category.reducer';
+// prettier-ignore
+import facility, {
+  FacilityState
+} from 'app/entities/facility/facility.reducer';
+// prettier-ignore
+import transportRoute, {
+  TransportRouteState
+} from 'app/entities/transport-route/transport-route.reducer';
+// prettier-ignore
+import feeDetails, {
+  FeeDetailsState
+} from 'app/entities/fee-details/fee-details.reducer';
+// prettier-ignore
+import dueDate, {
+  DueDateState
+} from 'app/entities/due-date/due-date.reducer';
+// prettier-ignore
+import paymentRemainder, {
+  PaymentRemainderState
+} from 'app/entities/payment-remainder/payment-remainder.reducer';
+// prettier-ignore
+import lateFee, {
+  LateFeeState
+} from 'app/entities/late-fee/late-fee.reducer';
+// prettier-ignore
+import invoice, {
+  InvoiceState
+} from 'app/entities/invoice/invoice.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

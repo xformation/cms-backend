@@ -339,7 +339,11 @@ type LegalEntity{
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
     dateOfIncorporation:Date!
-    registeredOfficeAddress:String!
+    registeredOfficeAddress1:String!
+    registeredOfficeAddress2:String!
+    registeredOfficeAddress3:String!
+    registeredOfficeAddress4:String!
+    registeredOfficeAddress5:String!
     collegeIdentificationNumber:String!
     pan:String!
     tan:String!
@@ -478,7 +482,17 @@ type Student {
        uploadPhoto: Long!
        admissionNo: Long!
        rollNo: String!
-       studentType: String!
+       transport: Status!
+       mess: Status!
+       gym: Status!
+       culturalClass: Status!
+       library: Status!
+       sports: Status!
+       swimming: Status!
+       extraClass: Status!
+       handicrafts: Status!
+       add: Status!
+       studentType: StudentTypeEnum!
        batch: Batch!
        section: Section!
        branch: Branch!
@@ -549,7 +563,7 @@ type Teacher{
                  designation: String!
                  staffType: StaffType!
                  branch: Branch!
-              department: Department!
+               department: Department!
 }
 type Term{
     id: Long!
@@ -738,7 +752,7 @@ input LectureScheduleInput {
 }
 
 input LectureScheduleFilter {
-	academicYear: Int
+	academicYear: String
 	branchId: Int
 	departmentId: Int!
 	batchId: Int
@@ -1037,26 +1051,23 @@ type RemoveBatchPayload {
 
 type AcademicYear{
     id: Long!
-    year: Long!
+    year: String!
     startDate: Date!
     endDate: Date!
-    desc: String!
 }
 input AddAcademicYearInput {
-    year: Long!
+    year: String!
     startDate: Date!
     endDate: Date!
-    desc: String!
 }
 type AddAcademicYearPayload {
     academicYear: AcademicYear!
 }
 input UpdateAcademicYearInput {
     id:Long!
-    year: Long
-    startDate: Date
-    endDate: Date
-    desc: String
+    year: String!
+    startDate: Date!
+    endDate: Date!
 }
 type UpdateAcademicYearPayload {
     academicYear: AcademicYear!
@@ -1225,7 +1236,11 @@ input AddLegalEntityInput {
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
     dateOfIncorporation:Date!
-    registeredOfficeAddress:String!
+    registeredOfficeAddress1:String!
+    registeredOfficeAddress2:String!
+    registeredOfficeAddress3:String!
+    registeredOfficeAddress4:String!
+    registeredOfficeAddress5:String!
     collegeIdentificationNumber:String!
     pan:String!
     tan:String!
@@ -1243,7 +1258,8 @@ input AddLegalEntityInput {
     ptSignatory:String!
     branchId: Long
     collegeId: Long!
-    locationId: Long!
+    cityId: Long!
+    stateId: Long!
 }
 type AddLegalEntityPayload {
     legalEntity: LegalEntity!
@@ -1254,7 +1270,11 @@ input UpdateLegalEntityInput {
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
     dateOfIncorporation:Date!
-    registeredOfficeAddress:String!
+    registeredOfficeAddress1:String!
+    registeredOfficeAddress2:String!
+    registeredOfficeAddress3:String!
+    registeredOfficeAddress4:String!
+    registeredOfficeAddress5:String!
     collegeIdentificationNumber:String!
     pan:String!
     tan:String!
@@ -1272,7 +1292,8 @@ input UpdateLegalEntityInput {
     ptSignatory:String!
     branchId: Long
     collegeId: Long
-    locationId: Long
+    cityId: Long!
+    stateId: Long!
 }
 type UpdateLegalEntityPayload {
     legalEntity: LegalEntity!
@@ -1371,11 +1392,12 @@ input AddStudentInput {
          contactNo: Long!
          emailAddress: String!
          transport: Status!
+         gym: Status!
          mess: Status!
          culturalClass: Status!
          library: Status!
          sports: Status!
-         swimmming: Status!
+         swimming: Status!
          extraClass: Status!
          handicrafts: Status!
          add: Status!
@@ -1429,18 +1451,19 @@ input UpdateStudentInput {
              contactNo: Long!
              emailAddress: String!
              transport: Status!
+             gym: Status!
              mess: Status!
              culturalClass: Status!
              library: Status!
              sports: Status!
-             swimmming: Status!
+             swimming: Status!
              extraClass: Status!
              handicrafts: Status!
              add: Status!
              uploadPhoto: Long!
              admissionNo: Long!
              rollNo: String!
-             studentType: String!
+             studentType: StudentTypeEnum!
              batchId: Long
              sectionId: Long
              branchId: Long

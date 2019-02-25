@@ -7,50 +7,41 @@ export default class AcademicYearUpdatePage {
   yearInput: ElementFinder = element(by.css('input#academic-year-year'));
   startDateInput: ElementFinder = element(by.css('input#academic-year-startDate'));
   endDateInput: ElementFinder = element(by.css('input#academic-year-endDate'));
-  descInput: ElementFinder = element(by.css('input#academic-year-desc'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  setYearInput(year) {
-    this.yearInput.sendKeys(year);
+  async setYearInput(year) {
+    await this.yearInput.sendKeys(year);
   }
 
-  getYearInput() {
+  async getYearInput() {
     return this.yearInput.getAttribute('value');
   }
 
-  setStartDateInput(startDate) {
-    this.startDateInput.sendKeys(startDate);
+  async setStartDateInput(startDate) {
+    await this.startDateInput.sendKeys(startDate);
   }
 
-  getStartDateInput() {
+  async getStartDateInput() {
     return this.startDateInput.getAttribute('value');
   }
 
-  setEndDateInput(endDate) {
-    this.endDateInput.sendKeys(endDate);
+  async setEndDateInput(endDate) {
+    await this.endDateInput.sendKeys(endDate);
   }
 
-  getEndDateInput() {
+  async getEndDateInput() {
     return this.endDateInput.getAttribute('value');
   }
 
-  setDescInput(desc) {
-    this.descInput.sendKeys(desc);
+  async save() {
+    await this.saveButton.click();
   }
 
-  getDescInput() {
-    return this.descInput.getAttribute('value');
-  }
-
-  save() {
-    return this.saveButton.click();
-  }
-
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {
