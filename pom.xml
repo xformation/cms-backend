@@ -396,6 +396,12 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>4.2.1</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

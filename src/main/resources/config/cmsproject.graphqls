@@ -139,6 +139,13 @@ type Query {
 
   transportRoute(id: Long!): TransportRoute!
   transportRoutes: [TransportRoute!]!
+    dueDate(id:Long!):DueDate!
+    dueDates:[DueDate!]!
+    lateFee(id:Long!):LateFee!
+    lateFees:[LateFee!]!
+    paymentRemainder(id:Long!):PaymentRemainder!
+    paymentRemainders:[PaymentRemainder!]!
+
 
   term (id: Long!): Term!
   terms: [Term!]!
@@ -214,6 +221,39 @@ type Country{
     countryCode: String!
     isdCode: String!
 }
+type DueDate{
+    id:Long!
+    paymentMethod: String!
+    installments:Int!
+    dayDesc:String!
+    frequency:Frequency!
+    college:College!
+    branch:Branch!
+}
+type LateFee{
+    id :Long!
+    assignLateFee:Status!
+    lateFeeDays:Int!
+    fixed:Status!
+    percentage:Status!
+    fixedCharges:Long!
+    percentCharges:Long!
+    lateFeeAssignmentFrequency:Frequency!
+    college:College!
+    branch:Branch!
+
+}
+type PaymentRemainder{
+    id:Long!
+    feeRemainder: Status!
+    noticeDay:Int!
+    overDueRemainder:Status!
+    remainderRecipients:String!
+    dueDate:DueDate!
+    college:College!
+    branch:Branch!
+}
+
 
 type AuthorizedSignatory {
     id: Long!
@@ -691,6 +731,20 @@ type Mutation {
 
    addLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
    updateLectures(input: LectureScheduleInput!, filter: LectureScheduleFilter!): QueryResult!
+
+    addDueDate(input:AddDueDateInput!):AddDueDatePayload!
+    updateDueDate(input:UpdateDueDateInput!):UpdateDueDatePayload!
+    removeDueDate(input:RemoveDueDateInput!):RemoveDueDatePayload!
+
+    addLateFee(input:AddLateFeeInput!):AddLateFeePayload!
+    updateLateFee(input:UpdateLateFeeInput!):UpdateLateFeePayload!
+    removeLateFee(input:RemoveLateFeeInput!):RemoveLateFeePayload!
+
+
+    addPaymentRemainder(input:AddPaymentRemainderInput!):AddPaymentRemainderPayload!
+    updatePaymentRemainder(input:UpdatePaymentRemainderInput!):UpdatePaymentRemainderPayload!
+    removePaymentRemainder(input:RemovePaymentRemainderInput!):RemovePaymentRemainderPayload!
+
 }
 
 input LectureScheduleInput {
@@ -1694,6 +1748,104 @@ input RemoveCountryInput {
 type RemoveCountryPayload {
     countries: [ Country!]!
 }
+input AddDueDateInput{
+    paymentMethod: String!
+    installments:Int!
+    dayDesc:String!
+    frequency:Frequency!
+    collegeId:Long!
+    branchId:Long!
 
+}
+type AddDueDatePayload{
+    dueDate:DueDate!
+}
 
+input UpdateDueDateInput{
+    id :Long!
+    paymentMethod: String!
+    installments:Int!
+    dayDesc:String!
+    frequency:Frequency!
+    collegeId:Long!
+    branchId:Long!
+}
+type UpdateDueDatePayload{
+    dueDate:DueDate!
+}
+input RemoveDueDateInput{
+    dueDateId:Long!
+}
+type RemoveDueDatePayload{
+    dueDates:[DueDate]!
+}
+input AddLateFeeInput{
+    assignLateFee:Status!
+    lateFeeDays:Int!
+    fixed:Status!
+    percentage:Status!
+    fixedCharges:Long!
+    percentCharges:Long!
+    lateFeeAssignmentFrequency:Frequency!
+    collegeId:Long!
+    branchId:Long!
 
+}
+type AddLateFeePayload{
+    lateFee:LateFee!
+}
+input UpdateLateFeeInput{
+    id :Long!
+    assignLateFee:Status!
+    lateFeeDays:Int!
+    fixed:Status!
+    percentage:Status!
+    fixedCharges:Long!
+    percentCharges:Long!
+    lateFeeAssignmentFrequency:Frequency!
+    collegeId:Long!
+    branchId:Long!
+
+}
+type UpdateLateFeePayload{
+    lateFee:LateFee!
+
+}
+input RemoveLateFeeInput{
+    lateFeeId:Long!
+}
+type RemoveLateFeePayload{
+    lateFees:[LateFee]!
+
+}
+input AddPaymentRemainderInput{
+    feeRemainder: Status!
+    noticeDay:Int!
+    overDueRemainder:Status!
+    remainderRecipients:String!
+    dueDateId:Long!
+    collegeId:Long!
+    branchId:Long!
+}
+type AddPaymentRemainderPayload{
+    paymentRemainder:PaymentRemainder!
+}
+input UpdatePaymentRemainderInput{
+    id:Long!
+    feeRemainder: Status!
+    noticeDay:Int!
+    overDueRemainder:Status!
+    remainderRecipients:String!
+    dueDateId:Long!
+    collegeId:Long!
+    branchId:Long!
+}
+type UpdatePaymentRemainderPayload{
+    paymentRemainder:Long!
+}
+input RemovePaymentRemainderInput{
+    paymentRemainderId:Long!
+}
+type RemovePaymentRemainderPayload{
+paymentRemainders:[PaymentRemainder]!
+}
