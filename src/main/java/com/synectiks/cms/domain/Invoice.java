@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -150,7 +151,7 @@ public class Invoice implements Serializable {
         this.amountPaid = amountPaid;
     }
 
-    public @NotNull Date getPaymentDate() {
+    public Date getPaymentDate() {
         return paymentDate;
     }
 
@@ -163,7 +164,7 @@ public class Invoice implements Serializable {
         this.paymentDate = paymentDate;
     }
 
-    public @NotNull Date getNextPaymentDate() {
+    public Date getNextPaymentDate() {
         return nextPaymentDate;
     }
 
@@ -280,7 +281,7 @@ public class Invoice implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public @NotNull Date getUpdatedOn() {
+    public Date getUpdatedOn() {
         return updatedOn;
     }
 

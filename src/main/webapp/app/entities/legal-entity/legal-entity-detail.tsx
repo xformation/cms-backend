@@ -47,9 +47,25 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
               <TextFormat value={legalEntityEntity.dateOfIncorporation} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="registeredOfficeAddress">Registered Office Address</span>
+              <span id="registeredOfficeAddress1">Registered Office Address 1</span>
             </dt>
-            <dd>{legalEntityEntity.registeredOfficeAddress}</dd>
+            <dd>{legalEntityEntity.registeredOfficeAddress1}</dd>
+            <dt>
+              <span id="registeredOfficeAddress2">Registered Office Address 2</span>
+            </dt>
+            <dd>{legalEntityEntity.registeredOfficeAddress2}</dd>
+            <dt>
+              <span id="registeredOfficeAddress3">Registered Office Address 3</span>
+            </dt>
+            <dd>{legalEntityEntity.registeredOfficeAddress3}</dd>
+            <dt>
+              <span id="registeredOfficeAddress4">Registered Office Address 4</span>
+            </dt>
+            <dd>{legalEntityEntity.registeredOfficeAddress4}</dd>
+            <dt>
+              <span id="registeredOfficeAddress5">Registered Office Address 5</span>
+            </dt>
+            <dd>{legalEntityEntity.registeredOfficeAddress5}</dd>
             <dt>
               <span id="collegeIdentificationNumber">College Identification Number</span>
             </dt>

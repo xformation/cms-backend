@@ -1306,7 +1306,11 @@ addLegalEntity(input:$input){
 		legalNameOfTheCollege
 		typeOfCollege
 		dateOfIncorporation
-		registeredOfficeAddress
+		registeredOfficeAddress1
+		registeredOfficeAddress2
+		registeredOfficeAddress3
+		registeredOfficeAddress4
+		registeredOfficeAddress5
 		collegeIdentificationNumber
 		pan
 		tan
@@ -1328,9 +1332,7 @@ addLegalEntity(input:$input){
 		  college{
 		    id
 		  }
-		  location{
-		    id
-		  }
+
 		}
 	}
 }
@@ -1342,7 +1344,11 @@ addLegalEntity(input:$input){
     "legalNameOfTheCollege": "clg",
     "typeOfCollege": "PUBLIC",
     "dateOfIncorporation": "2019-01-03",
-    "registeredOfficeAddress": "madhapur",
+    "registeredOfficeAddress1": "madhapur1",
+    "registeredOfficeAddress2": "madhapur2",
+    "registeredOfficeAddress3": "madhapur3",
+    "registeredOfficeAddress4": "madhapur4",
+    "registeredOfficeAddress5": "madhapur5",
     "collegeIdentificationNumber": "abc",
     "pan": "ajsh33c",
     "tan": "jikdi",
@@ -1358,9 +1364,8 @@ addLegalEntity(input:$input){
     "ptNumber": 123,
     "ptRegistrationDate": "2019-01-03",
     "ptSignatory": 2334,
-    "branchId": 1001,
-    "collegeId": 951,
-    "locationId": 1000
+    "branchId": 1151,
+    "collegeId": 1101,
   }
 }
 

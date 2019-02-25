@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity DueDate.
     -->
-    <changeSet id="20190221121408-2" author="jhipster">
+    <changeSet id="20190225061059-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="college_id"
                                  baseTableName="due_date"

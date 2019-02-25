@@ -13,7 +13,11 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
         private String legalNameOfTheCollege;
         private TypeOfCollege typeOfCollege;
         private Date dateOfIncorporation;
-        private String registeredOfficeAddress;
+        private String registeredOfficeAddress1;
+        private String registeredOfficeAddress2;
+        private String registeredOfficeAddress3;
+        private String registeredOfficeAddress4;
+        private String registeredOfficeAddress5;
         private String collegeIdentificationNumber;
         private String pan;
         private String tan;
@@ -74,12 +78,44 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.dateOfIncorporation = dateOfIncorporation;
         }
 
-        public String getRegisteredOfficeAddress() {
-            return registeredOfficeAddress;
+        public String getRegisteredOfficeAddress1() {
+            return registeredOfficeAddress1;
         }
 
-        public void setRegisteredOfficeAddress(String registeredOfficeAddress) {
-            this.registeredOfficeAddress = registeredOfficeAddress;
+        public void setRegisteredOfficeAddress1(String registeredOfficeAddress1) {
+            this.registeredOfficeAddress1 = registeredOfficeAddress1;
+        }
+
+        public String getRegisteredOfficeAddress2() {
+            return registeredOfficeAddress2;
+        }
+
+        public void setRegisteredOfficeAddress2(String registeredOfficeAddress2) {
+            this.registeredOfficeAddress2 = registeredOfficeAddress2;
+        }
+
+        public String getRegisteredOfficeAddress3() {
+            return registeredOfficeAddress3;
+        }
+
+        public void setRegisteredOfficeAddress3(String registeredOfficeAddress3) {
+            this.registeredOfficeAddress3 = registeredOfficeAddress3;
+        }
+
+        public String getRegisteredOfficeAddress4() {
+            return registeredOfficeAddress4;
+        }
+
+        public void setRegisteredOfficeAddress4(String registeredOfficeAddress4) {
+            this.registeredOfficeAddress4 = registeredOfficeAddress4;
+        }
+
+        public String getRegisteredOfficeAddress5() {
+            return registeredOfficeAddress5;
+        }
+
+        public void setRegisteredOfficeAddress5(String registeredOfficeAddress5) {
+            this.registeredOfficeAddress5 = registeredOfficeAddress5;
         }
 
         public String getCollegeIdentificationNumber() {
@@ -212,7 +248,11 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
                 Objects.equals(legalNameOfTheCollege, that.legalNameOfTheCollege) &&
                 typeOfCollege == that.typeOfCollege &&
                 Objects.equals(dateOfIncorporation, that.dateOfIncorporation) &&
-                Objects.equals(registeredOfficeAddress, that.registeredOfficeAddress) &&
+                Objects.equals(registeredOfficeAddress1, that.registeredOfficeAddress1) &&
+                Objects.equals(registeredOfficeAddress2, that.registeredOfficeAddress2) &&
+                Objects.equals(registeredOfficeAddress3, that.registeredOfficeAddress3) &&
+                Objects.equals(registeredOfficeAddress4, that.registeredOfficeAddress4) &&
+                Objects.equals(registeredOfficeAddress5, that.registeredOfficeAddress5) &&
                 Objects.equals(collegeIdentificationNumber, that.collegeIdentificationNumber) &&
                 Objects.equals(pan, that.pan) &&
                 Objects.equals(tan, that.tan) &&
@@ -232,7 +272,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, logo, legalNameOfTheCollege, typeOfCollege, dateOfIncorporation, registeredOfficeAddress, collegeIdentificationNumber, pan, tan, tanCircleNumber, citTdsLocation, formSignatory, pfNumber, pfRegistrationDate, pfSignatory, esiNumber, esiRegistrationDate, esiSignatory, ptNumber, ptRegistrationDate, ptSignatory);
+            return Objects.hash(id, logo, legalNameOfTheCollege, typeOfCollege, dateOfIncorporation, registeredOfficeAddress1, registeredOfficeAddress2, registeredOfficeAddress3, registeredOfficeAddress4, registeredOfficeAddress5, collegeIdentificationNumber, pan, tan, tanCircleNumber, citTdsLocation, formSignatory, pfNumber, pfRegistrationDate, pfSignatory, esiNumber, esiRegistrationDate, esiSignatory, ptNumber, ptRegistrationDate, ptSignatory);
         }
 
         @Override
@@ -243,7 +283,11 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
                 ", legalNameOfTheCollege='" + legalNameOfTheCollege + '\'' +
                 ", typeOfCollege=" + typeOfCollege +
                 ", dateOfIncorporation=" + dateOfIncorporation +
-                ", registeredOfficeAddress='" + registeredOfficeAddress + '\'' +
+                ", registeredOfficeAddress1='" + registeredOfficeAddress1 + '\'' +
+                ", registeredOfficeAddress2='" + registeredOfficeAddress2 + '\'' +
+                ", registeredOfficeAddress3='" + registeredOfficeAddress3 + '\'' +
+                ", registeredOfficeAddress4='" + registeredOfficeAddress4 + '\'' +
+                ", registeredOfficeAddress5='" + registeredOfficeAddress5 + '\'' +
                 ", collegeIdentificationNumber='" + collegeIdentificationNumber + '\'' +
                 ", pan='" + pan + '\'' +
                 ", tan='" + tan + '\'' +

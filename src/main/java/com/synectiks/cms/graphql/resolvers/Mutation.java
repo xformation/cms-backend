@@ -1337,7 +1337,11 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setLegalNameOfTheCollege(addLegalEntityInput.getLegalNameOfTheCollege());
         legalEntity.setTypeOfCollege(addLegalEntityInput.getTypeOfCollege());
         legalEntity.setDateOfIncorporation(addLegalEntityInput.getDateOfIncorporation());
-        legalEntity.setRegisteredOfficeAddress(addLegalEntityInput.getRegisteredOfficeAddress());
+        legalEntity.setRegisteredOfficeAddress1(addLegalEntityInput.getRegisteredOfficeAddress1());
+        legalEntity.setRegisteredOfficeAddress2(addLegalEntityInput.getRegisteredOfficeAddress2());
+        legalEntity.setRegisteredOfficeAddress3(addLegalEntityInput.getRegisteredOfficeAddress3());
+        legalEntity.setRegisteredOfficeAddress4(addLegalEntityInput.getRegisteredOfficeAddress4());
+        legalEntity.setRegisteredOfficeAddress5(addLegalEntityInput.getRegisteredOfficeAddress5());
         legalEntity.setCollegeIdentificationNumber(addLegalEntityInput.getCollegeIdentificationNumber());
         legalEntity.setPan(addLegalEntityInput.getPan());
         legalEntity.setTan(addLegalEntityInput.getTan());
@@ -1360,6 +1364,7 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setBranch(branch);
         legalEntity.setCollege(college);
         legalEntity.setCity(city);
+        legalEntity.setState(state);
         legalEntityRepository.save(legalEntity);
 
         return new AddLegalEntityPayload(legalEntity);
@@ -1379,8 +1384,20 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateLegalEntityInput.getDateOfIncorporation() != null) {
             legalEntity.setDateOfIncorporation(updateLegalEntityInput.getDateOfIncorporation());
         }
-        if (updateLegalEntityInput.getRegisteredOfficeAddress() != null) {
-            legalEntity.setRegisteredOfficeAddress(updateLegalEntityInput.getRegisteredOfficeAddress());
+        if (updateLegalEntityInput.getRegisteredOfficeAddress1() != null) {
+            legalEntity.setRegisteredOfficeAddress1(updateLegalEntityInput.getRegisteredOfficeAddress1());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress2() != null) {
+            legalEntity.setRegisteredOfficeAddress2(updateLegalEntityInput.getRegisteredOfficeAddress2());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress3() != null) {
+            legalEntity.setRegisteredOfficeAddress3(updateLegalEntityInput.getRegisteredOfficeAddress3());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress4() != null) {
+            legalEntity.setRegisteredOfficeAddress4(updateLegalEntityInput.getRegisteredOfficeAddress4());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress5() != null) {
+            legalEntity.setRegisteredOfficeAddress5(updateLegalEntityInput.getRegisteredOfficeAddress5());
         }
         if (updateLegalEntityInput.getCollegeIdentificationNumber() != null) {
             legalEntity.setCollegeIdentificationNumber(updateLegalEntityInput.getCollegeIdentificationNumber());
