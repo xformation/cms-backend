@@ -66,7 +66,9 @@ public class Query implements GraphQLQueryResolver {
     private final FacilityRepository facilityRepository;
     private final TransportRouteRepository transportRouteRepository;
     private final FeeDetailsRepository feeDetailsRepository;
-
+    private final DueDateRepository dueDateRepository;
+    private final LateFeeRepository lateFeeRepository;
+    private final PaymentRemainderRepository paymentRemainderRepository;
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
 
@@ -76,7 +78,7 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     LegalEntitySelectRepository legalEntitySelectRepository;
 
-    public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository) {
+    public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository=instituteRepository;
@@ -106,6 +108,9 @@ public class Query implements GraphQLQueryResolver {
         this.facilityRepository = facilityRepository;
         this.transportRouteRepository = transportRouteRepository;
         this.feeDetailsRepository = feeDetailsRepository;
+        this.dueDateRepository = dueDateRepository;
+        this.lateFeeRepository = lateFeeRepository;
+        this.paymentRemainderRepository = paymentRemainderRepository;
     }
 
     public Student student(long id) {
@@ -257,7 +262,6 @@ public class Query implements GraphQLQueryResolver {
         return holidayRepository.findById(id).get();
     }
 
-
     public List<Term> terms() {
         return Lists.newArrayList(termRepository.findAll());
     }
@@ -351,4 +355,15 @@ public class Query implements GraphQLQueryResolver {
     public List<FeeDetails> feeDetails(){
         return Lists.newArrayList(feeDetailsRepository.findAll());
     }
+
+    public DueDate dueDate(long id) {return dueDateRepository.findById(id).get();}
+    public List<DueDate> dueDates() {return  Lists.newArrayList (dueDateRepository.findAll());}
+    public LateFee lateFee(long id ){return lateFeeRepository.findById(id).get();}
+    public List<LateFee> lateFees(){return Lists.newArrayList(lateFeeRepository.findAll());}
+
+    public PaymentRemainder paymentRemainder(Long id){return paymentRemainderRepository.findById(id).get();}
+    public List<PaymentRemainder>paymentRemainders(){return Lists.newArrayList(paymentRemainderRepository.findAll());}
+
+
+
 }
