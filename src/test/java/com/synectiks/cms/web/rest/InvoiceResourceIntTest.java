@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -56,11 +57,11 @@ public class InvoiceResourceIntTest {
     private static final Long DEFAULT_AMOUNT_PAID = 1L;
     private static final Long UPDATED_AMOUNT_PAID = 2L;
 
-    private static final LocalDate DEFAULT_PAYMENT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_PAYMENT_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_PAYMENT_DATE = new Date();
+    private static final Date UPDATED_PAYMENT_DATE = new Date();
 
-    private static final LocalDate DEFAULT_NEXT_PAYMENT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_NEXT_PAYMENT_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_NEXT_PAYMENT_DATE = new Date();
+    private static final Date UPDATED_NEXT_PAYMENT_DATE = new Date();
 
     private static final Long DEFAULT_OUT_STANDING_AMOUNT = 1L;
     private static final Long UPDATED_OUT_STANDING_AMOUNT = 2L;
@@ -86,8 +87,8 @@ public class InvoiceResourceIntTest {
     private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_UPDATED_ON = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_UPDATED_ON = new Date();
+    private static final Date UPDATED_UPDATED_ON = new Date();
 
     @Autowired
     private InvoiceRepository invoiceRepository;
