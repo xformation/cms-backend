@@ -49,8 +49,24 @@ public class LegalEntity implements Serializable {
     private Date dateOfIncorporation;
 
     @NotNull
-    @Column(name = "registered_office_address", nullable = false)
-    private String registeredOfficeAddress;
+    @Column(name = "registered_office_address_1", nullable = false)
+    private String registeredOfficeAddress1;
+
+    @NotNull
+    @Column(name = "registered_office_address_2", nullable = false)
+    private String registeredOfficeAddress2;
+
+    @NotNull
+    @Column(name = "registered_office_address_3", nullable = false)
+    private String registeredOfficeAddress3;
+
+    @NotNull
+    @Column(name = "registered_office_address_4", nullable = false)
+    private String registeredOfficeAddress4;
+
+    @NotNull
+    @Column(name = "registered_office_address_5", nullable = false)
+    private String registeredOfficeAddress5;
 
     @NotNull
     @Column(name = "college_identification_number", nullable = false)
@@ -189,17 +205,69 @@ public class LegalEntity implements Serializable {
         this.dateOfIncorporation = dateOfIncorporation;
     }
 
-    public String getRegisteredOfficeAddress() {
-        return registeredOfficeAddress;
+    public String getRegisteredOfficeAddress1() {
+        return registeredOfficeAddress1;
     }
 
-    public LegalEntity registeredOfficeAddress(String registeredOfficeAddress) {
-        this.registeredOfficeAddress = registeredOfficeAddress;
+    public LegalEntity registeredOfficeAddress1(String registeredOfficeAddress1) {
+        this.registeredOfficeAddress1 = registeredOfficeAddress1;
         return this;
     }
 
-    public void setRegisteredOfficeAddress(String registeredOfficeAddress) {
-        this.registeredOfficeAddress = registeredOfficeAddress;
+    public void setRegisteredOfficeAddress1(String registeredOfficeAddress1) {
+        this.registeredOfficeAddress1 = registeredOfficeAddress1;
+    }
+
+    public String getRegisteredOfficeAddress2() {
+        return registeredOfficeAddress2;
+    }
+
+    public LegalEntity registeredOfficeAddress2(String registeredOfficeAddress2) {
+        this.registeredOfficeAddress2 = registeredOfficeAddress2;
+        return this;
+    }
+
+    public void setRegisteredOfficeAddress2(String registeredOfficeAddress2) {
+        this.registeredOfficeAddress2 = registeredOfficeAddress2;
+    }
+
+    public String getRegisteredOfficeAddress3() {
+        return registeredOfficeAddress3;
+    }
+
+    public LegalEntity registeredOfficeAddress3(String registeredOfficeAddress3) {
+        this.registeredOfficeAddress3 = registeredOfficeAddress3;
+        return this;
+    }
+
+    public void setRegisteredOfficeAddress3(String registeredOfficeAddress3) {
+        this.registeredOfficeAddress3 = registeredOfficeAddress3;
+    }
+
+    public String getRegisteredOfficeAddress4() {
+        return registeredOfficeAddress4;
+    }
+
+    public LegalEntity registeredOfficeAddress4(String registeredOfficeAddress4) {
+        this.registeredOfficeAddress4 = registeredOfficeAddress4;
+        return this;
+    }
+
+    public void setRegisteredOfficeAddress4(String registeredOfficeAddress4) {
+        this.registeredOfficeAddress4 = registeredOfficeAddress4;
+    }
+
+    public String getRegisteredOfficeAddress5() {
+        return registeredOfficeAddress5;
+    }
+
+    public LegalEntity registeredOfficeAddress5(String registeredOfficeAddress5) {
+        this.registeredOfficeAddress5 = registeredOfficeAddress5;
+        return this;
+    }
+
+    public void setRegisteredOfficeAddress5(String registeredOfficeAddress5) {
+        this.registeredOfficeAddress5 = registeredOfficeAddress5;
     }
 
     public String getCollegeIdentificationNumber() {
@@ -478,7 +546,11 @@ public class LegalEntity implements Serializable {
             ", legalNameOfTheCollege='" + getLegalNameOfTheCollege() + "'" +
             ", typeOfCollege='" + getTypeOfCollege() + "'" +
             ", dateOfIncorporation='" + getDateOfIncorporation() + "'" +
-            ", registeredOfficeAddress='" + getRegisteredOfficeAddress() + "'" +
+            ", registeredOfficeAddress1='" + getRegisteredOfficeAddress1() + "'" +
+            ", registeredOfficeAddress2='" + getRegisteredOfficeAddress2() + "'" +
+            ", registeredOfficeAddress3='" + getRegisteredOfficeAddress3() + "'" +
+            ", registeredOfficeAddress4='" + getRegisteredOfficeAddress4() + "'" +
+            ", registeredOfficeAddress5='" + getRegisteredOfficeAddress5() + "'" +
             ", collegeIdentificationNumber='" + getCollegeIdentificationNumber() + "'" +
             ", pan='" + getPan() + "'" +
             ", tan='" + getTan() + "'" +

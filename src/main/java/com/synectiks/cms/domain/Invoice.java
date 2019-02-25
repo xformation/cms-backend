@@ -10,6 +10,7 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
@@ -42,11 +43,11 @@ public class Invoice implements Serializable {
 
     @NotNull
     @Column(name = "payment_date", nullable = false)
-    private LocalDate paymentDate;
+    private Date paymentDate;
 
     @NotNull
     @Column(name = "next_payment_date", nullable = false)
-    private LocalDate nextPaymentDate;
+    private Date nextPaymentDate;
 
     @NotNull
     @Column(name = "out_standing_amount", nullable = false)
@@ -81,7 +82,7 @@ public class Invoice implements Serializable {
 
     @NotNull
     @Column(name = "updated_on", nullable = false)
-    private LocalDate updatedOn;
+    private Date updatedOn;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -150,29 +151,29 @@ public class Invoice implements Serializable {
         this.amountPaid = amountPaid;
     }
 
-    public LocalDate getPaymentDate() {
+    public Date getPaymentDate() {
         return paymentDate;
     }
 
-    public Invoice paymentDate(LocalDate paymentDate) {
+    public Invoice paymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
         return this;
     }
 
-    public void setPaymentDate(LocalDate paymentDate) {
+    public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
     }
 
-    public LocalDate getNextPaymentDate() {
+    public Date getNextPaymentDate() {
         return nextPaymentDate;
     }
 
-    public Invoice nextPaymentDate(LocalDate nextPaymentDate) {
+    public Invoice nextPaymentDate(Date nextPaymentDate) {
         this.nextPaymentDate = nextPaymentDate;
         return this;
     }
 
-    public void setNextPaymentDate(LocalDate nextPaymentDate) {
+    public void setNextPaymentDate(Date nextPaymentDate) {
         this.nextPaymentDate = nextPaymentDate;
     }
 
@@ -280,16 +281,16 @@ public class Invoice implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getUpdatedOn() {
+    public Date getUpdatedOn() {
         return updatedOn;
     }
 
-    public Invoice updatedOn(LocalDate updatedOn) {
+    public Invoice updatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
         return this;
     }
 
-    public void setUpdatedOn(LocalDate updatedOn) {
+    public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
     }
 

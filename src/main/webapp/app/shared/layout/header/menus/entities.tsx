@@ -302,6 +302,45 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/academic-year">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Academic Year
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/legal-entity">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Legal Entity
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/country">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Country
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/currency">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Currency
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/state">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;State
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/city">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;City
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/fee-category">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Fee Category
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/facility">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Facility
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/transport-route">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Transport Route
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/fee-details">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Fee Details
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/due-date">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Due Date
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/payment-remainder">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Payment Remainder
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/late-fee">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Late Fee
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/invoice">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Invoice
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

@@ -11,7 +11,11 @@ export interface ILegalEntity {
   legalNameOfTheCollege?: string;
   typeOfCollege?: TypeOfCollege;
   dateOfIncorporation?: Moment;
-  registeredOfficeAddress?: string;
+  registeredOfficeAddress1?: string;
+  registeredOfficeAddress2?: string;
+  registeredOfficeAddress3?: string;
+  registeredOfficeAddress4?: string;
+  registeredOfficeAddress5?: string;
   collegeIdentificationNumber?: string;
   pan?: string;
   tan?: string;

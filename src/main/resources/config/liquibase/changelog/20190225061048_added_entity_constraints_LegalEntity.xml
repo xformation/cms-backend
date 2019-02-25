@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity LegalEntity.
     -->
-    <changeSet id="20190212105344-2" author="jhipster">
+    <changeSet id="20190225061048-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="branch_id"
                                  baseTableName="legal_entity"

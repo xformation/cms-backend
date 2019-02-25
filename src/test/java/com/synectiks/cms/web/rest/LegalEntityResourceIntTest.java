@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -60,8 +61,20 @@ public class LegalEntityResourceIntTest {
     private static final Date DEFAULT_DATE_OF_INCORPORATION = new Date();
     private static final Date UPDATED_DATE_OF_INCORPORATION = new Date();
 
-    private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_REGISTERED_OFFICE_ADDRESS = "BBBBBBBBBB";
+    private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS_1 = "AAAAAAAAAA";
+    private static final String UPDATED_REGISTERED_OFFICE_ADDRESS_1 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS_2 = "AAAAAAAAAA";
+    private static final String UPDATED_REGISTERED_OFFICE_ADDRESS_2 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS_3 = "AAAAAAAAAA";
+    private static final String UPDATED_REGISTERED_OFFICE_ADDRESS_3 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS_4 = "AAAAAAAAAA";
+    private static final String UPDATED_REGISTERED_OFFICE_ADDRESS_4 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS_5 = "AAAAAAAAAA";
+    private static final String UPDATED_REGISTERED_OFFICE_ADDRESS_5 = "BBBBBBBBBB";
 
     private static final String DEFAULT_COLLEGE_IDENTIFICATION_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_COLLEGE_IDENTIFICATION_NUMBER = "BBBBBBBBBB";
@@ -164,7 +177,11 @@ public class LegalEntityResourceIntTest {
             .legalNameOfTheCollege(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)
             .typeOfCollege(DEFAULT_TYPE_OF_COLLEGE)
             .dateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION)
-            .registeredOfficeAddress(DEFAULT_REGISTERED_OFFICE_ADDRESS)
+            .registeredOfficeAddress1(DEFAULT_REGISTERED_OFFICE_ADDRESS_1)
+            .registeredOfficeAddress2(DEFAULT_REGISTERED_OFFICE_ADDRESS_2)
+            .registeredOfficeAddress3(DEFAULT_REGISTERED_OFFICE_ADDRESS_3)
+            .registeredOfficeAddress4(DEFAULT_REGISTERED_OFFICE_ADDRESS_4)
+            .registeredOfficeAddress5(DEFAULT_REGISTERED_OFFICE_ADDRESS_5)
             .collegeIdentificationNumber(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER)
             .pan(DEFAULT_PAN)
             .tan(DEFAULT_TAN)
@@ -208,7 +225,11 @@ public class LegalEntityResourceIntTest {
         assertThat(testLegalEntity.getLegalNameOfTheCollege()).isEqualTo(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE);
         assertThat(testLegalEntity.getTypeOfCollege()).isEqualTo(DEFAULT_TYPE_OF_COLLEGE);
         assertThat(testLegalEntity.getDateOfIncorporation()).isEqualTo(DEFAULT_DATE_OF_INCORPORATION);
-        assertThat(testLegalEntity.getRegisteredOfficeAddress()).isEqualTo(DEFAULT_REGISTERED_OFFICE_ADDRESS);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress1()).isEqualTo(DEFAULT_REGISTERED_OFFICE_ADDRESS_1);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress2()).isEqualTo(DEFAULT_REGISTERED_OFFICE_ADDRESS_2);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress3()).isEqualTo(DEFAULT_REGISTERED_OFFICE_ADDRESS_3);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress4()).isEqualTo(DEFAULT_REGISTERED_OFFICE_ADDRESS_4);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress5()).isEqualTo(DEFAULT_REGISTERED_OFFICE_ADDRESS_5);
         assertThat(testLegalEntity.getCollegeIdentificationNumber()).isEqualTo(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER);
         assertThat(testLegalEntity.getPan()).isEqualTo(DEFAULT_PAN);
         assertThat(testLegalEntity.getTan()).isEqualTo(DEFAULT_TAN);
@@ -330,10 +351,86 @@ public class LegalEntityResourceIntTest {
 
     @Test
     @Transactional
-    public void checkRegisteredOfficeAddressIsRequired() throws Exception {
+    public void checkRegisteredOfficeAddress1IsRequired() throws Exception {
         int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
         // set the field null
-        legalEntity.setRegisteredOfficeAddress(null);
+        legalEntity.setRegisteredOfficeAddress1(null);
+
+        // Create the LegalEntity, which fails.
+        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
+
+        restLegalEntityMockMvc.perform(post("/api/legal-entities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
+        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRegisteredOfficeAddress2IsRequired() throws Exception {
+        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
+        // set the field null
+        legalEntity.setRegisteredOfficeAddress2(null);
+
+        // Create the LegalEntity, which fails.
+        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
+
+        restLegalEntityMockMvc.perform(post("/api/legal-entities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
+        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRegisteredOfficeAddress3IsRequired() throws Exception {
+        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
+        // set the field null
+        legalEntity.setRegisteredOfficeAddress3(null);
+
+        // Create the LegalEntity, which fails.
+        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
+
+        restLegalEntityMockMvc.perform(post("/api/legal-entities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
+        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRegisteredOfficeAddress4IsRequired() throws Exception {
+        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
+        // set the field null
+        legalEntity.setRegisteredOfficeAddress4(null);
+
+        // Create the LegalEntity, which fails.
+        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
+
+        restLegalEntityMockMvc.perform(post("/api/legal-entities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
+        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRegisteredOfficeAddress5IsRequired() throws Exception {
+        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
+        // set the field null
+        legalEntity.setRegisteredOfficeAddress5(null);
 
         // Create the LegalEntity, which fails.
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
@@ -647,7 +744,11 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].typeOfCollege").value(hasItem(DEFAULT_TYPE_OF_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].dateOfIncorporation").value(hasItem(DEFAULT_DATE_OF_INCORPORATION.toString())))
-            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress1").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_1.toString())))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress2").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_2.toString())))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress3").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_3.toString())))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress4").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_4.toString())))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress5").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_5.toString())))
             .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN.toString())))
             .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN.toString())))
@@ -680,7 +781,11 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.legalNameOfTheCollege").value(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString()))
             .andExpect(jsonPath("$.typeOfCollege").value(DEFAULT_TYPE_OF_COLLEGE.toString()))
             .andExpect(jsonPath("$.dateOfIncorporation").value(DEFAULT_DATE_OF_INCORPORATION.toString()))
-            .andExpect(jsonPath("$.registeredOfficeAddress").value(DEFAULT_REGISTERED_OFFICE_ADDRESS.toString()))
+            .andExpect(jsonPath("$.registeredOfficeAddress1").value(DEFAULT_REGISTERED_OFFICE_ADDRESS_1.toString()))
+            .andExpect(jsonPath("$.registeredOfficeAddress2").value(DEFAULT_REGISTERED_OFFICE_ADDRESS_2.toString()))
+            .andExpect(jsonPath("$.registeredOfficeAddress3").value(DEFAULT_REGISTERED_OFFICE_ADDRESS_3.toString()))
+            .andExpect(jsonPath("$.registeredOfficeAddress4").value(DEFAULT_REGISTERED_OFFICE_ADDRESS_4.toString()))
+            .andExpect(jsonPath("$.registeredOfficeAddress5").value(DEFAULT_REGISTERED_OFFICE_ADDRESS_5.toString()))
             .andExpect(jsonPath("$.collegeIdentificationNumber").value(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER.toString()))
             .andExpect(jsonPath("$.pan").value(DEFAULT_PAN.toString()))
             .andExpect(jsonPath("$.tan").value(DEFAULT_TAN.toString()))
@@ -723,7 +828,11 @@ public class LegalEntityResourceIntTest {
             .legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE)
             .typeOfCollege(UPDATED_TYPE_OF_COLLEGE)
             .dateOfIncorporation(UPDATED_DATE_OF_INCORPORATION)
-            .registeredOfficeAddress(UPDATED_REGISTERED_OFFICE_ADDRESS)
+            .registeredOfficeAddress1(UPDATED_REGISTERED_OFFICE_ADDRESS_1)
+            .registeredOfficeAddress2(UPDATED_REGISTERED_OFFICE_ADDRESS_2)
+            .registeredOfficeAddress3(UPDATED_REGISTERED_OFFICE_ADDRESS_3)
+            .registeredOfficeAddress4(UPDATED_REGISTERED_OFFICE_ADDRESS_4)
+            .registeredOfficeAddress5(UPDATED_REGISTERED_OFFICE_ADDRESS_5)
             .collegeIdentificationNumber(UPDATED_COLLEGE_IDENTIFICATION_NUMBER)
             .pan(UPDATED_PAN)
             .tan(UPDATED_TAN)
@@ -754,7 +863,11 @@ public class LegalEntityResourceIntTest {
         assertThat(testLegalEntity.getLegalNameOfTheCollege()).isEqualTo(UPDATED_LEGAL_NAME_OF_THE_COLLEGE);
         assertThat(testLegalEntity.getTypeOfCollege()).isEqualTo(UPDATED_TYPE_OF_COLLEGE);
         assertThat(testLegalEntity.getDateOfIncorporation()).isEqualTo(UPDATED_DATE_OF_INCORPORATION);
-        assertThat(testLegalEntity.getRegisteredOfficeAddress()).isEqualTo(UPDATED_REGISTERED_OFFICE_ADDRESS);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress1()).isEqualTo(UPDATED_REGISTERED_OFFICE_ADDRESS_1);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress2()).isEqualTo(UPDATED_REGISTERED_OFFICE_ADDRESS_2);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress3()).isEqualTo(UPDATED_REGISTERED_OFFICE_ADDRESS_3);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress4()).isEqualTo(UPDATED_REGISTERED_OFFICE_ADDRESS_4);
+        assertThat(testLegalEntity.getRegisteredOfficeAddress5()).isEqualTo(UPDATED_REGISTERED_OFFICE_ADDRESS_5);
         assertThat(testLegalEntity.getCollegeIdentificationNumber()).isEqualTo(UPDATED_COLLEGE_IDENTIFICATION_NUMBER);
         assertThat(testLegalEntity.getPan()).isEqualTo(UPDATED_PAN);
         assertThat(testLegalEntity.getTan()).isEqualTo(UPDATED_TAN);
@@ -834,7 +947,11 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)))
             .andExpect(jsonPath("$.[*].typeOfCollege").value(hasItem(DEFAULT_TYPE_OF_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].dateOfIncorporation").value(hasItem(DEFAULT_DATE_OF_INCORPORATION.toString())))
-            .andExpect(jsonPath("$.[*].registeredOfficeAddress").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS)))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress1").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_1)))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress2").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_2)))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress3").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_3)))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress4").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_4)))
+            .andExpect(jsonPath("$.[*].registeredOfficeAddress5").value(hasItem(DEFAULT_REGISTERED_OFFICE_ADDRESS_5)))
             .andExpect(jsonPath("$.[*].collegeIdentificationNumber").value(hasItem(DEFAULT_COLLEGE_IDENTIFICATION_NUMBER)))
             .andExpect(jsonPath("$.[*].pan").value(hasItem(DEFAULT_PAN)))
             .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN)))

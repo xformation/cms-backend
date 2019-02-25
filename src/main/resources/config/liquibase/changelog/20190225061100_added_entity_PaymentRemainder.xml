@@ -14,22 +14,38 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Country.
+        Added the entity PaymentRemainder.
     -->
-    <changeSet id="20190221121400-1" author="jhipster">
-        <createTable tableName="country">
+    <changeSet id="20190225061100-1" author="jhipster">
+        <createTable tableName="payment_remainder">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="country_name" type="varchar(255)">
+            <column name="fee_remainder" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="country_code" type="varchar(255)">
+            <column name="notice_day" type="integer">
                 <constraints nullable="false" />
             </column>
 
-            <column name="isd_code" type="varchar(255)">
+            <column name="over_due_remainder" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="remainder_recipients" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="due_date_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="college_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="branch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
