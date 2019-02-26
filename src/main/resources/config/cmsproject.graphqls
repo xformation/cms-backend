@@ -104,9 +104,6 @@ type Query {
   holiday(id: Long!): Holiday!
   holidays: [Holiday!]!
 
-  legalEntity(id : Long!): LegalEntityAuthSignatoryLink!
-  legalEntities: [LegalEntityAuthSignatoryLink!]!
-
   location(id: Long!): Location!
   locations: [Location!]!
 
@@ -365,44 +362,6 @@ type LegalEntity{
     state: State!
 }
 
-type LegalEntityAuthSignatoryLink{
- 	id: Long!
-    logo: Long!
-    legalNameOfTheCollege:String!
-    typeOfCollege: TypeOfCollege!
-    dateOfIncorporation:Date!
-    registeredOfficeAddress:String!
-    collegeIdentificationNumber:String!
-    pan:String!
-    tan:String!
-    tanCircleNumber:String!
-    citTdsLocation:String!
-    formSignatory:String!
-    pfNumber:String!
-    pfRegistrationDate: Date!
-    pfSignatory: String!
-    esiNumber:Long!
-    esiRegistrationDate: Date!
-    esiSignatory: String!
-    ptNumber:Long!
-    ptRegistrationDate:Date!
-    ptSignatory:String!
-    branch: Branch
-    college: College!
-    location: Location!
-    authorizedFormSignatory: AuthorizedSignatory
-    authorizedPfSignatory: AuthorizedSignatory
-    authorizedEsiSignatory: AuthorizedSignatory
-    authorizedPtSignatory: AuthorizedSignatory
-}
-
-
-type Location{
-    id: Long!
-    name: String!
-    address: String!
-    appliesTo: String!
-}
 type Section{
     id: Long!
     section: SectionEnum!
