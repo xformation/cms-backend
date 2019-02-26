@@ -1969,7 +1969,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new AddInvoicePayload(invoice);
     }
 
-    public UpdateInvoicePaylaod updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
+    public UpdateInvoicePayload updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
         Invoice invoice = invoiceRepository.findById(updateInvoiceInput.getId()).get();
         if (updateInvoiceInput.getInvoiceNumber() != null) {
             invoice.setInvoiceNumber(updateInvoiceInput.getInvoiceNumber());
@@ -2057,7 +2057,7 @@ public class Mutation implements GraphQLMutationResolver {
         }
 
         invoiceRepository.save(invoice);
-        return new UpdateInvoicePaylaod(invoice);
+        return new UpdateInvoicePayload(invoice);
     }
 
     public RemoveInvoicePayload removeInvoice(RemoveInvoiceInput removeInvoiceInput) {
