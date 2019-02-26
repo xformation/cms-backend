@@ -86,6 +86,7 @@ enum ModeOfPayment {
     CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
 }
 
+
 entity Student{
 studentName String required
 studentMiddleName String required
@@ -227,12 +228,6 @@ enum AttendanceStatusEnum{
 PRESENT,ABSENT
 }
 
-entity Location{
-name String required
-address String required
-appliesTo String required
-}
-
 enum NameOfBank{
 HDFC, SBI, ICICI, ANDHRABANK
 }
@@ -315,13 +310,13 @@ entity City{
 	StdCode String
 }
 
+entity Facility {
+facilityName String
+}
+
 entity FeeCategory {
 categoryName String required
 description String required
-}
-
-entity Facility {
-facilityName String required
 }
 
 entity TransportRoute {

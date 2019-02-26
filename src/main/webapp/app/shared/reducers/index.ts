@@ -276,6 +276,30 @@ import lateFee, {
 import invoice, {
   InvoiceState
 } from 'app/entities/invoice/invoice.reducer';
+// prettier-ignore
+import studentFee, {
+  StudentFeeState
+} from 'app/entities/student-fee/student-fee.reducer';
+// prettier-ignore
+import reports, {
+  ReportsState
+} from 'app/entities/reports/reports.reducer';
+// prettier-ignore
+import idCard, {
+  IdCardState
+} from 'app/entities/id-card/id-card.reducer';
+// prettier-ignore
+import documents, {
+  DocumentsState
+} from 'app/entities/documents/documents.reducer';
+// prettier-ignore
+import facility, {
+  FacilityState
+} from 'app/entities/facility/facility.reducer';
+// prettier-ignore
+import facility, {
+  FacilityState
+} from 'app/entities/facility/facility.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -322,6 +346,10 @@ export interface IRootState {
   readonly paymentRemainder: PaymentRemainderState;
   readonly lateFee: LateFeeState;
   readonly invoice: InvoiceState;
+  readonly studentFee: StudentFeeState;
+  readonly reports: ReportsState;
+  readonly idCard: IdCardState;
+  readonly documents: DocumentsState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -370,6 +398,10 @@ const rootReducer = combineReducers<IRootState>({
   paymentRemainder,
   lateFee,
   invoice,
+  studentFee,
+  reports,
+  idCard,
+  documents,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

@@ -40,6 +40,10 @@ import DueDate from './due-date';
 import PaymentRemainder from './payment-remainder';
 import LateFee from './late-fee';
 import Invoice from './invoice';
+import StudentFee from './student-fee';
+import Reports from './reports';
+import IdCard from './id-card';
+import Documents from './documents';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -82,6 +86,10 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/payment-remainder`} component={PaymentRemainder} />
       <ErrorBoundaryRoute path={`${match.url}/late-fee`} component={LateFee} />
       <ErrorBoundaryRoute path={`${match.url}/invoice`} component={Invoice} />
+      <ErrorBoundaryRoute path={`${match.url}/student-fee`} component={StudentFee} />
+      <ErrorBoundaryRoute path={`${match.url}/reports`} component={Reports} />
+      <ErrorBoundaryRoute path={`${match.url}/id-card`} component={IdCard} />
+      <ErrorBoundaryRoute path={`${match.url}/documents`} component={Documents} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

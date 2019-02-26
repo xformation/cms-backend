@@ -89,14 +89,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                   <Label id="facilityNameLabel" for="facilityName">
                     Facility Name
                   </Label>
-                  <AvField
-                    id="facility-facilityName"
-                    type="text"
-                    name="facilityName"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="facility-facilityName" type="text" name="facilityName" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/facility" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;

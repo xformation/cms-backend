@@ -28,7 +28,6 @@ import com.synectiks.cms.graphql.types.Invoice.*;
 import com.synectiks.cms.graphql.types.LateFee.*;
 import com.synectiks.cms.graphql.types.Lecture.*;
 import com.synectiks.cms.graphql.types.LegalEntity.*;
-import com.synectiks.cms.graphql.types.Location.*;
 import com.synectiks.cms.graphql.types.PaymentRemainder.*;
 import com.synectiks.cms.graphql.types.Section.*;
 import com.synectiks.cms.graphql.types.State.*;
@@ -636,39 +635,6 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveDepartmentPayload(Lists.newArrayList(departmentRepository.findAll()));
     }
 
-    public AddLocationPayload addLocation(AddLocationInput addLocationInput) {
-        final Location location = new Location();
-        location.setName(addLocationInput.getName());
-        location.setAddress(addLocationInput.getAddress());
-        location.setAppliesTo(addLocationInput.getAppliesTo());
-        locationRepository.save(location);
-
-        return new AddLocationPayload(location);
-    }
-
-    public UpdateLocationPayload updateLocation(UpdateLocationInput updateLocationInput) {
-        Location location = locationRepository.findById(updateLocationInput.getId()).get();
-        if (updateLocationInput.getName() != null) {
-            location.setName(updateLocationInput.getName());
-        }
-
-        if (updateLocationInput.getAppliesTo() != null) {
-            location.setAppliesTo(updateLocationInput.getAppliesTo());
-        }
-
-        if (updateLocationInput.getAddress() != null) {
-            location.setAddress(updateLocationInput.getAddress());
-        }
-        locationRepository.save(location);
-
-        return new UpdateLocationPayload(location);
-    }
-
-    public RemoveLocationPayload removeLocation(RemoveLocationInput removeLocationInput) {
-        Location location = locationRepository.findById(removeLocationInput.getLocationId()).get();
-        locationRepository.delete(location);
-        return new RemoveLocationPayload(Lists.newArrayList(locationRepository.findAll()));
-    }
 
     /*public AddSemesterPayload addSemester(AddSemesterInput addSemesterInput) {
         final Semester semester = new Semester();

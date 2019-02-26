@@ -1,6 +1,5 @@
 package com.synectiks.cms.service.dto;
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,7 +10,6 @@ public class FacilityDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String facilityName;
 
     public Long getId() {

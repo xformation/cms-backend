@@ -104,9 +104,6 @@ type Query {
   holiday(id: Long!): Holiday!
   holidays: [Holiday!]!
 
-  location(id: Long!): Location!
-  locations: [Location!]!
-
   section(id: Long!): Section!
   sections: [Section!]!
 
@@ -622,10 +619,6 @@ type Mutation {
    addLegalEntity(input: AddLegalEntityInput!): AddLegalEntityPayload!
    updateLegalEntity(input: UpdateLegalEntityInput!): UpdateLegalEntityPayload!
    removeLegalEntity(input: RemoveLegalEntityInput!): RemoveLegalEntityPayload!
-
-   addLocation(input: AddLocationInput!): AddLocationPayload!
-   updateLocation(input: UpdateLocationInput!): UpdateLocationPayload!
-   removeLocation(input: RemoveLocationInput!): RemoveLocationPayload!
 
    addSection(input: AddSectionInput!): AddSectionPayload!
    updateSection(input: UpdateSectionInput!): UpdateSectionPayload!
@@ -1263,31 +1256,6 @@ input RemoveLegalEntityInput {
 type RemoveLegalEntityPayload {
     legalEntities: [LegalEntity!]!
 }
-
-input AddLocationInput {
-   name: String!
-   address: String!
-   appliesTo: String!
-}
-type AddLocationPayload {
-    location: Location!
-}
-input UpdateLocationInput {
-   id: Long!
-   name: String
-   address: String
-   appliesTo: String
-}
-type UpdateLocationPayload {
-   location: Location!
-}
-input RemoveLocationInput {
-   locationId: Long!
-}
-type RemoveLocationPayload {
-   locations: [Location!]!
-}
-
 
 
 input AddSectionInput {
