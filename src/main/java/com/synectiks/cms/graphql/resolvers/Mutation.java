@@ -1210,6 +1210,11 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setLogo(addLegalEntityInput.getLogo());
         legalEntity.setLegalNameOfTheCollege(addLegalEntityInput.getLegalNameOfTheCollege());
         legalEntity.setTypeOfCollege(addLegalEntityInput.getTypeOfCollege());
+        legalEntity.setRegisteredOfficeAddress1(addLegalEntityInput.getRegisteredOfficeAddress1());
+        legalEntity.setRegisteredOfficeAddress2(addLegalEntityInput.getRegisteredOfficeAddress2());
+        legalEntity.setRegisteredOfficeAddress3(addLegalEntityInput.getRegisteredOfficeAddress3());
+        legalEntity.setRegisteredOfficeAddress4(addLegalEntityInput.getRegisteredOfficeAddress4());
+        legalEntity.setRegisteredOfficeAddress5(addLegalEntityInput.getRegisteredOfficeAddress5());
         legalEntity.setDateOfIncorporation(addLegalEntityInput.getDateOfIncorporation());
         legalEntity.setCollegeIdentificationNumber(addLegalEntityInput.getCollegeIdentificationNumber());
         legalEntity.setPan(addLegalEntityInput.getPan());
@@ -1249,6 +1254,21 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateLegalEntityInput.getTypeOfCollege() != null) {
             legalEntity.setTypeOfCollege(updateLegalEntityInput.getTypeOfCollege());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress1() != null) {
+            legalEntity.setRegisteredOfficeAddress1(updateLegalEntityInput.getRegisteredOfficeAddress1());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress2() != null) {
+            legalEntity.setRegisteredOfficeAddress2(updateLegalEntityInput.getRegisteredOfficeAddress2());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress3() != null) {
+            legalEntity.setRegisteredOfficeAddress3(updateLegalEntityInput.getRegisteredOfficeAddress3());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress4() != null) {
+            legalEntity.setRegisteredOfficeAddress4(updateLegalEntityInput.getRegisteredOfficeAddress4());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress5() != null) {
+            legalEntity.setRegisteredOfficeAddress5(updateLegalEntityInput.getRegisteredOfficeAddress5());
         }
         if (updateLegalEntityInput.getDateOfIncorporation() != null) {
             legalEntity.setDateOfIncorporation(updateLegalEntityInput.getDateOfIncorporation());
