@@ -10,6 +10,7 @@ This application was generated using JHipster 5.1.0, you can find documentation 
 
 ## Service Architecture 
 
+![Alt text](./backend-architecture.png?raw=true "Service Architecture")
 # Structure of the Project
 
 Since some part of its model &  rest part is generated from jhipster , it follows some common pattern of typical jhipster project. The jhipster specific source code & directories are as follows:
