@@ -140,6 +140,8 @@ type Query {
     paymentRemainder(id:Long!):PaymentRemainder!
     paymentRemainders:[PaymentRemainder!]!
 
+    invoice(id:Long!):Invoice!
+    invoices:[Invoice!]!
 
   term (id: Long!): Term!
   terms: [Term!]!
@@ -327,6 +329,12 @@ type Holiday{
     holidayStatus: Status!
     academicyear: AcademicYear!
 }
+type AcademicYear{
+    id: Long!
+    year: String!
+    startDate: Date!
+    endDate: Date!
+}
 type LegalEntity{
     id: Long!
     logo: Long!
@@ -363,6 +371,30 @@ type Section{
     id: Long!
     section: SectionEnum!
     batch: Batch!
+}
+type Invoice {
+id : Long!
+invoiceNumber:String!
+amountPaid:Long!
+paymentDate:Date!
+nextPaymentDate:Date!
+outStandingAmount:Long!
+modeOfPayment:ModeOfPayment
+chequeNumber:Long!
+demandDraftNumber:Long!
+onlineTxnRefNumber:String!
+paymentStatus:Status!
+comments:String!
+updatedBy:String!
+updatedOn:Date!
+feeCategory:FeeCategory!
+feeDetails:FeeDetails!
+dueDate:DueDate!
+paymentRemainder:PaymentRemainder!
+college:College!
+branch:Branch!
+student:Student!
+academicYear:AcademicYear!
 }
 enum Gender {
     MALE
@@ -696,6 +728,14 @@ type Mutation {
     addPaymentRemainder(input:AddPaymentRemainderInput!):AddPaymentRemainderPayload!
     updatePaymentRemainder(input:UpdatePaymentRemainderInput!):UpdatePaymentRemainderPayload!
     removePaymentRemainder(input:RemovePaymentRemainderInput!):RemovePaymentRemainderPayload!
+
+    addInvoice(input:AddInvoiceInput!):AddInvoicePayload!
+    updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
+    removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
+
+
+
+
 
 }
 
@@ -1775,4 +1815,64 @@ input RemovePaymentRemainderInput{
 }
 type RemovePaymentRemainderPayload{
 paymentRemainders:[PaymentRemainder]!
+}
+input AddInvoiceInput{
+    invoiceNumber:String!
+    amountPaid:Long!
+    paymentDate:Date!
+    nextPaymentDate:Date!
+    outStandingAmount:Long!
+    modeOfPayment:ModeOfPayment!
+    chequeNumber:Long!
+    demandDraftNumber:Long!
+    onlineTxnRefNumber:String!
+    paymentStatus:Status!
+    comments:String!
+    updatedBy:String!
+    updatedOn:Date!
+    feeCategoryId:Long!
+    feeDetailsId:Long!
+    dueDateId:Long!
+    paymentRemainderId:Long!
+    collegeId:Long!
+    branchId:Long!
+    studentId:Long!
+    academicyearId:Long!
+}
+type AddInvoicePayload{
+    invoice:Invoice!
+}
+input UpdateInvoiceInput{
+    id:Long!
+    invoiceNumber:String!
+    amountPaid:Long!
+    paymentDate:Date!
+    nextPaymentDate:Date!
+    outStandingAmount:Long!
+    modeOfPayment:ModeOfPayment!
+    chequeNumber:Long!
+    demandDraftNumber:Long!
+    onlineTxnRefNumber:String!
+    paymentStatus:Status!
+    comments:String!
+    updatedBy:String!
+    updatedOn:Date!
+    feeCategoryId:Long!
+    feeDetailsId:Long!
+    dueDateId:Long!
+    paymentRemainderId:Long!
+    collegeId:Long!
+    branchId:Long!
+    studentId:Long!
+    academicyearId:Long!
+
+}
+type UpdateInvoicePayload{
+    invoice:Long!
+}
+input RemoveInvoiceInput{
+    invoiceId:Long!
+}
+type RemoveInvoicePayload{
+    invoices:[Invoice]!
 }
