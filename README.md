@@ -50,7 +50,7 @@ Before you can build this project, you must install and configure the following 
 
 Though we don't use jhipster generated UI , but the UI is much helpful for test purpose. So in build process we will mention UI building steps also. In production environment , we only build the java services.
 
-# How to build the application 
+# How to build the application - dev environment
 
 For backend build --
 Simply run the following command 
@@ -72,14 +72,20 @@ psql --host="localhost" --port="5432" --username="postgres" --password="postgres
 
 The backup.sql is under the root directory of github.
 
+To access the backend grapiql apis -
+http://localhost:8080/graphiql
 
+The test script for graphiql is located at src/model/.
 
-After installing Node, you should be able to run the following command to install development tools.
+Build Jhipster frontend -- Just for tests and swagger api documentation access --
+
+Install node as prerequisites .After installing Node, you should be able to run the following command to install development tools.
 You will only need to run this command when dependencies change in [package.json](package.json).
 
     yarn install
 
-We use yarn scripts and [Webpack][] as our build system.
+We use yarn scripts and [Webpack][] as our build system. To build the frontend UI , you can simply do
+Yarn start
 
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
@@ -93,25 +99,8 @@ Add the `help` flag on any command to see how you can use it. For example, `yarn
 
 The `yarn run` command will list all of the scripts available to run for this project.
 
-### Service workers
 
-Service workers are commented by default, to enable them please uncomment the following code.
-
-* The service worker registering script in index.html
-
-```html
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-        .register('./service-worker.js')
-        .then(function() { console.log('Service Worker Registered'); });
-    }
-</script>
-```
-
-Note: workbox creates the respective service worker and dynamically generate the `service-worker.js`
-
-### Managing dependencies
+### Managing  UI library dependencies
 
 For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
 
@@ -141,7 +130,13 @@ To ensure everything worked, run:
 
 Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
-Refer to [Using JHipster in production][] for more details.
+You can login as admin/admin 
+
+You can check the swagger API as 
+http://localhost:8080/#/admin/docs
+
+To check all the entities and test their dependencies , you can play with it by clicking the entity menu and accesiing entities.
+http://localhost:8080/#/entity/college
 
 ## Testing
 
@@ -190,25 +185,4 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 
 ## Continuous Integration (optional)
 
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[JHipster Homepage and latest documentation]: https://www.jhipster.tech
-[JHipster 5.1.0 archive]: https://www.jhipster.tech/documentation-archive/v5.1.0
-
-[Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v5.1.0/development/
-[Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v5.1.0/docker-compose
-[Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v5.1.0/production/
-[Running tests page]: https://www.jhipster.tech/documentation-archive/v5.1.0/running-tests/
-[Setting up Continuous Integration]: https://www.jhipster.tech/documentation-archive/v5.1.0/setting-up-ci/
-
-[Gatling]: http://gatling.io/
-[Node.js]: https://nodejs.org/
-[Yarn]: https://yarnpkg.org/
-[Webpack]: https://webpack.github.io/
-[Angular CLI]: https://cli.angular.io/
-[BrowserSync]: http://www.browsersync.io/
-[Jest]: https://facebook.github.io/jest/
-[Jasmine]: http://jasmine.github.io/2.0/introduction.html
-[Protractor]: https://angular.github.io/protractor/
-[Leaflet]: http://leafletjs.com/
-[DefinitelyTyped]: http://definitelytyped.org/
+We are maintaining our jenkin CI server, we will publish its anonymous access asap.
