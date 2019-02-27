@@ -1,5 +1,12 @@
 # cms
+This is the backend services for synectiks college management system.
+
 This application was generated using JHipster 5.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.1.0](https://www.jhipster.tech/documentation-archive/v5.1.0).
+
+# Why did we choose jhipster 
+1. Generate the Model & Rest Services from ERD diagram and JDL. It generates stanbdardized code.
+2. Reuse its  JWT authentication , localization , internationilaztion inbuilt functionalties.
+3. Most imporatnatly use its inbuilt liquibase for upgrade.
 
 ## Development
 
@@ -9,7 +16,10 @@ Before you can build this project, you must install and configure the following 
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 2. [Yarn][]: We use Yarn to manage Node dependencies.
    Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
+3. [maven][]: We use maven for building dependencies. You can install maven from apache site.
+4. [java] -- This is build and run by oracle jdk1.8 environment , you can install oracle jdk1.8 from oracle site
 
+How the Application is organized 
 After installing Node, you should be able to run the following command to install development tools.
 You will only need to run this command when dependencies change in [package.json](package.json).
 
