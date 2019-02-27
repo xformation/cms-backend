@@ -35,9 +35,8 @@ export class Batch extends React.Component<IBatchProps, IBatchState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

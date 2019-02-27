@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -78,6 +79,9 @@ public class FacilityResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restFacilityMockMvc;
 
     private Facility facility;
@@ -90,7 +94,8 @@ public class FacilityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -252,7 +257,7 @@ public class FacilityResourceIntTest {
 
         int databaseSizeBeforeDelete = facilityRepository.findAll().size();
 
-        // Get the facility
+        // Delete the facility
         restFacilityMockMvc.perform(delete("/api/facilities/{id}", facility.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

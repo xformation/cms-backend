@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -23,7 +24,7 @@ import java.util.Objects;
 public class Lecture implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -50,7 +51,7 @@ public class Lecture implements Serializable {
     private String endTime;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("lectures")
     private AttendanceMaster attendancemaster;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -66,12 +67,22 @@ public class Lecture implements Serializable {
         return lecDate;
     }
 
+    public Lecture lecDate(Date lecDate) {
+        this.lecDate = lecDate;
+        return this;
+    }
+
     public void setLecDate(Date lecDate) {
         this.lecDate = lecDate;
     }
 
     public Date getLastUpdatedOn() {
         return lastUpdatedOn;
+    }
+
+    public Lecture lastUpdatedOn(Date lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
+        return this;
     }
 
     public void setLastUpdatedOn(Date lastUpdatedOn) {

@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -19,6 +18,7 @@ public class DepartmentDTO implements Serializable {
 
     @NotNull
     private String deptHead;
+
 
     private Long branchId;
 

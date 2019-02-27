@@ -14,74 +14,74 @@ export default class DepartmentUpdatePage {
     return this.pageTitle;
   }
 
-  setNameInput(name) {
-    this.nameInput.sendKeys(name);
+  async setNameInput(name) {
+    await this.nameInput.sendKeys(name);
   }
 
-  getNameInput() {
+  async getNameInput() {
     return this.nameInput.getAttribute('value');
   }
 
-  setDescriptionInput(description) {
-    this.descriptionInput.sendKeys(description);
+  async setDescriptionInput(description) {
+    await this.descriptionInput.sendKeys(description);
   }
 
-  getDescriptionInput() {
+  async getDescriptionInput() {
     return this.descriptionInput.getAttribute('value');
   }
 
-  setDeptHeadInput(deptHead) {
-    this.deptHeadInput.sendKeys(deptHead);
+  async setDeptHeadInput(deptHead) {
+    await this.deptHeadInput.sendKeys(deptHead);
   }
 
-  getDeptHeadInput() {
+  async getDeptHeadInput() {
     return this.deptHeadInput.getAttribute('value');
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  academicyearSelectLastOption() {
-    this.academicyearSelect
+  async academicyearSelectLastOption() {
+    await this.academicyearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  academicyearSelectOption(option) {
-    this.academicyearSelect.sendKeys(option);
+  async academicyearSelectOption(option) {
+    await this.academicyearSelect.sendKeys(option);
   }
 
   getAcademicyearSelect() {
     return this.academicyearSelect;
   }
 
-  getAcademicyearSelectedOption() {
+  async getAcademicyearSelectedOption() {
     return this.academicyearSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

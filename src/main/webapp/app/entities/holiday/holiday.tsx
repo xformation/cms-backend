@@ -35,9 +35,8 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -96,7 +95,7 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
                   </td>
                   <td>{holiday.holidayStatus}</td>
                   <td>
-                    {holiday.academicyearId ? <Link to={`academicYear/${holiday.academicyearId}`}>{holiday.academicyearId}</Link> : ''}
+                    {holiday.academicyearId ? <Link to={`academic-year/${holiday.academicyearId}`}>{holiday.academicyearId}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

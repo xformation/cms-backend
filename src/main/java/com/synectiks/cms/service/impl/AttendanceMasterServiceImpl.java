@@ -93,8 +93,7 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AttendanceMaster : {}", id);
-        attendanceMasterRepository.deleteById(id);
+        log.debug("Request to delete AttendanceMaster : {}", id);        attendanceMasterRepository.deleteById(id);
         attendanceMasterSearchRepository.deleteById(id);
     }
 

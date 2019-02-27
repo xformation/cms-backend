@@ -63,11 +63,6 @@ export default (state: AttendanceMasterState = initialState, action): Attendance
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ATTENDANCEMASTERS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_ATTENDANCEMASTER_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/attendance-masters';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IAttendanceMaster> = query => ({
+export const getSearchEntities: ICrudSearchAction<IAttendanceMaster> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_ATTENDANCEMASTERS,
-  payload: axios.get<IAttendanceMaster>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IAttendanceMaster>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IAttendanceMaster> = (page, size, sort) => ({

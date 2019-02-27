@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -201,6 +202,9 @@ public class TeacherResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restTeacherMockMvc;
 
     private Teacher teacher;
@@ -213,7 +217,8 @@ public class TeacherResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -223,46 +228,46 @@ public class TeacherResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Teacher createEntity(EntityManager em) {
-        Teacher teacher = new Teacher();
-        teacher.teacherName(DEFAULT_TEACHER_NAME);
-        teacher.teacherMiddleName(DEFAULT_TEACHER_MIDDLE_NAME);
-        teacher.teacherLastName(DEFAULT_TEACHER_LAST_NAME);
-        teacher.fatherName(DEFAULT_FATHER_NAME);
-        teacher.fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME);
-        teacher.fatherLastName(DEFAULT_FATHER_LAST_NAME);
-        teacher.motherName(DEFAULT_MOTHER_NAME);
-        teacher.motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME);
-        teacher.motherLastName(DEFAULT_MOTHER_LAST_NAME);
-        teacher.aadharNo(DEFAULT_AADHAR_NO);
-        teacher.setDateOfBirth(DEFAULT_DATE_OF_BIRTH);
-        teacher.placeOfBirth(DEFAULT_PLACE_OF_BIRTH);
-        teacher.religion(DEFAULT_RELIGION);
-        teacher.caste(DEFAULT_CASTE);
-        teacher.subCaste(DEFAULT_SUB_CASTE);
-        teacher.age(DEFAULT_AGE);
-        teacher.sex(DEFAULT_SEX);
-        teacher.bloodGroup(DEFAULT_BLOOD_GROUP);
-        teacher.addressLineOne(DEFAULT_ADDRESS_LINE_ONE);
-        teacher.addressLineTwo(DEFAULT_ADDRESS_LINE_TWO);
-        teacher.addressLineThree(DEFAULT_ADDRESS_LINE_THREE);
-        teacher.town(DEFAULT_TOWN);
-        teacher.state(DEFAULT_STATE);
-        teacher.country(DEFAULT_COUNTRY);
-        teacher.pincode(DEFAULT_PINCODE);
-        teacher.teacherContactNumber(DEFAULT_TEACHER_CONTACT_NUMBER);
-        teacher.alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER);
-        teacher.teacherEmailAddress(DEFAULT_TEACHER_EMAIL_ADDRESS);
-        teacher.alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS);
-        teacher.relationWithStaff(DEFAULT_RELATION_WITH_STAFF);
-        teacher.name(DEFAULT_NAME);
-        teacher.middleName(DEFAULT_MIDDLE_NAME);
-        teacher.lastName(DEFAULT_LAST_NAME);
-        teacher.contactNo(DEFAULT_CONTACT_NO);
-        teacher.emailAddress(DEFAULT_EMAIL_ADDRESS);
-        teacher.uploadPhoto(DEFAULT_UPLOAD_PHOTO);
-        teacher.employeeId(DEFAULT_EMPLOYEE_ID);
-        teacher.designation(DEFAULT_DESIGNATION);
-        teacher.staffType(DEFAULT_STAFF_TYPE);
+        Teacher teacher = new Teacher()
+            .teacherName(DEFAULT_TEACHER_NAME)
+            .teacherMiddleName(DEFAULT_TEACHER_MIDDLE_NAME)
+            .teacherLastName(DEFAULT_TEACHER_LAST_NAME)
+            .fatherName(DEFAULT_FATHER_NAME)
+            .fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME)
+            .fatherLastName(DEFAULT_FATHER_LAST_NAME)
+            .motherName(DEFAULT_MOTHER_NAME)
+            .motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME)
+            .motherLastName(DEFAULT_MOTHER_LAST_NAME)
+            .aadharNo(DEFAULT_AADHAR_NO)
+            .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
+            .placeOfBirth(DEFAULT_PLACE_OF_BIRTH)
+            .religion(DEFAULT_RELIGION)
+            .caste(DEFAULT_CASTE)
+            .subCaste(DEFAULT_SUB_CASTE)
+            .age(DEFAULT_AGE)
+            .sex(DEFAULT_SEX)
+            .bloodGroup(DEFAULT_BLOOD_GROUP)
+            .addressLineOne(DEFAULT_ADDRESS_LINE_ONE)
+            .addressLineTwo(DEFAULT_ADDRESS_LINE_TWO)
+            .addressLineThree(DEFAULT_ADDRESS_LINE_THREE)
+            .town(DEFAULT_TOWN)
+            .state(DEFAULT_STATE)
+            .country(DEFAULT_COUNTRY)
+            .pincode(DEFAULT_PINCODE)
+            .teacherContactNumber(DEFAULT_TEACHER_CONTACT_NUMBER)
+            .alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER)
+            .teacherEmailAddress(DEFAULT_TEACHER_EMAIL_ADDRESS)
+            .alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStaff(DEFAULT_RELATION_WITH_STAFF)
+            .name(DEFAULT_NAME)
+            .middleName(DEFAULT_MIDDLE_NAME)
+            .lastName(DEFAULT_LAST_NAME)
+            .contactNo(DEFAULT_CONTACT_NO)
+            .emailAddress(DEFAULT_EMAIL_ADDRESS)
+            .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
+            .employeeId(DEFAULT_EMPLOYEE_ID)
+            .designation(DEFAULT_DESIGNATION)
+            .staffType(DEFAULT_STAFF_TYPE);
         return teacher;
     }
 
@@ -1219,46 +1224,46 @@ public class TeacherResourceIntTest {
         Teacher updatedTeacher = teacherRepository.findById(teacher.getId()).get();
         // Disconnect from session so that the updates on updatedTeacher are not directly saved in db
         em.detach(updatedTeacher);
-        //updatedTeacher
-        updatedTeacher.teacherName(UPDATED_TEACHER_NAME);
-        updatedTeacher.teacherMiddleName(UPDATED_TEACHER_MIDDLE_NAME);
-        updatedTeacher.teacherLastName(UPDATED_TEACHER_LAST_NAME);
-        updatedTeacher.fatherName(UPDATED_FATHER_NAME);
-        updatedTeacher.fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME);
-        updatedTeacher.fatherLastName(UPDATED_FATHER_LAST_NAME);
-        updatedTeacher.motherName(UPDATED_MOTHER_NAME);
-        updatedTeacher.motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME);
-        updatedTeacher.motherLastName(UPDATED_MOTHER_LAST_NAME);
-        updatedTeacher.aadharNo(UPDATED_AADHAR_NO);
-        updatedTeacher.setDateOfBirth(UPDATED_DATE_OF_BIRTH);
-        updatedTeacher.placeOfBirth(UPDATED_PLACE_OF_BIRTH);
-        updatedTeacher.religion(UPDATED_RELIGION);
-        updatedTeacher.caste(UPDATED_CASTE);
-        updatedTeacher.subCaste(UPDATED_SUB_CASTE);
-        updatedTeacher.age(UPDATED_AGE);
-        updatedTeacher.sex(UPDATED_SEX);
-        updatedTeacher.bloodGroup(UPDATED_BLOOD_GROUP);
-        updatedTeacher.addressLineOne(UPDATED_ADDRESS_LINE_ONE);
-        updatedTeacher.addressLineTwo(UPDATED_ADDRESS_LINE_TWO);
-        updatedTeacher.addressLineThree(UPDATED_ADDRESS_LINE_THREE);
-        updatedTeacher.town(UPDATED_TOWN);
-        updatedTeacher.state(UPDATED_STATE);
-        updatedTeacher.country(UPDATED_COUNTRY);
-        updatedTeacher.pincode(UPDATED_PINCODE);
-        updatedTeacher.teacherContactNumber(UPDATED_TEACHER_CONTACT_NUMBER);
-        updatedTeacher.alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER);
-        updatedTeacher.teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS);
-        updatedTeacher.alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS);
-        updatedTeacher.relationWithStaff(UPDATED_RELATION_WITH_STAFF);
-        updatedTeacher.name(UPDATED_NAME);
-        updatedTeacher.middleName(UPDATED_MIDDLE_NAME);
-        updatedTeacher.lastName(UPDATED_LAST_NAME);
-        updatedTeacher.contactNo(UPDATED_CONTACT_NO);
-        updatedTeacher.emailAddress(UPDATED_EMAIL_ADDRESS);
-        updatedTeacher.uploadPhoto(UPDATED_UPLOAD_PHOTO);
-        updatedTeacher.employeeId(UPDATED_EMPLOYEE_ID);
-        updatedTeacher.designation(UPDATED_DESIGNATION);
-        updatedTeacher.staffType(UPDATED_STAFF_TYPE);
+        updatedTeacher
+            .teacherName(UPDATED_TEACHER_NAME)
+            .teacherMiddleName(UPDATED_TEACHER_MIDDLE_NAME)
+            .teacherLastName(UPDATED_TEACHER_LAST_NAME)
+            .fatherName(UPDATED_FATHER_NAME)
+            .fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME)
+            .fatherLastName(UPDATED_FATHER_LAST_NAME)
+            .motherName(UPDATED_MOTHER_NAME)
+            .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
+            .motherLastName(UPDATED_MOTHER_LAST_NAME)
+            .aadharNo(UPDATED_AADHAR_NO)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .placeOfBirth(UPDATED_PLACE_OF_BIRTH)
+            .religion(UPDATED_RELIGION)
+            .caste(UPDATED_CASTE)
+            .subCaste(UPDATED_SUB_CASTE)
+            .age(UPDATED_AGE)
+            .sex(UPDATED_SEX)
+            .bloodGroup(UPDATED_BLOOD_GROUP)
+            .addressLineOne(UPDATED_ADDRESS_LINE_ONE)
+            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
+            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
+            .town(UPDATED_TOWN)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY)
+            .pincode(UPDATED_PINCODE)
+            .teacherContactNumber(UPDATED_TEACHER_CONTACT_NUMBER)
+            .alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
+            .teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS)
+            .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStaff(UPDATED_RELATION_WITH_STAFF)
+            .name(UPDATED_NAME)
+            .middleName(UPDATED_MIDDLE_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .contactNo(UPDATED_CONTACT_NO)
+            .emailAddress(UPDATED_EMAIL_ADDRESS)
+            .uploadPhoto(UPDATED_UPLOAD_PHOTO)
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .designation(UPDATED_DESIGNATION)
+            .staffType(UPDATED_STAFF_TYPE);
         TeacherDTO teacherDTO = teacherMapper.toDto(updatedTeacher);
 
         restTeacherMockMvc.perform(put("/api/teachers")
@@ -1344,7 +1349,7 @@ public class TeacherResourceIntTest {
 
         int databaseSizeBeforeDelete = teacherRepository.findAll().size();
 
-        // Get the teacher
+        // Delete the teacher
         restTeacherMockMvc.perform(delete("/api/teachers/{id}", teacher.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

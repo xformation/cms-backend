@@ -21,130 +21,130 @@ export default class AuthorizedSignatoryUpdatePage {
     return this.pageTitle;
   }
 
-  setSignatoryNameInput(signatoryName) {
-    this.signatoryNameInput.sendKeys(signatoryName);
+  async setSignatoryNameInput(signatoryName) {
+    await this.signatoryNameInput.sendKeys(signatoryName);
   }
 
-  getSignatoryNameInput() {
+  async getSignatoryNameInput() {
     return this.signatoryNameInput.getAttribute('value');
   }
 
-  setSignatoryFatherNameInput(signatoryFatherName) {
-    this.signatoryFatherNameInput.sendKeys(signatoryFatherName);
+  async setSignatoryFatherNameInput(signatoryFatherName) {
+    await this.signatoryFatherNameInput.sendKeys(signatoryFatherName);
   }
 
-  getSignatoryFatherNameInput() {
+  async getSignatoryFatherNameInput() {
     return this.signatoryFatherNameInput.getAttribute('value');
   }
 
-  setSignatoryDesignationInput(signatoryDesignation) {
-    this.signatoryDesignationInput.sendKeys(signatoryDesignation);
+  async setSignatoryDesignationInput(signatoryDesignation) {
+    await this.signatoryDesignationInput.sendKeys(signatoryDesignation);
   }
 
-  getSignatoryDesignationInput() {
+  async getSignatoryDesignationInput() {
     return this.signatoryDesignationInput.getAttribute('value');
   }
 
-  setAddress1Input(address1) {
-    this.address1Input.sendKeys(address1);
+  async setAddress1Input(address1) {
+    await this.address1Input.sendKeys(address1);
   }
 
-  getAddress1Input() {
+  async getAddress1Input() {
     return this.address1Input.getAttribute('value');
   }
 
-  setAddress2Input(address2) {
-    this.address2Input.sendKeys(address2);
+  async setAddress2Input(address2) {
+    await this.address2Input.sendKeys(address2);
   }
 
-  getAddress2Input() {
+  async getAddress2Input() {
     return this.address2Input.getAttribute('value');
   }
 
-  setAddress3Input(address3) {
-    this.address3Input.sendKeys(address3);
+  async setAddress3Input(address3) {
+    await this.address3Input.sendKeys(address3);
   }
 
-  getAddress3Input() {
+  async getAddress3Input() {
     return this.address3Input.getAttribute('value');
   }
 
-  setAddress4Input(address4) {
-    this.address4Input.sendKeys(address4);
+  async setAddress4Input(address4) {
+    await this.address4Input.sendKeys(address4);
   }
 
-  getAddress4Input() {
+  async getAddress4Input() {
     return this.address4Input.getAttribute('value');
   }
 
-  setAddress5Input(address5) {
-    this.address5Input.sendKeys(address5);
+  async setAddress5Input(address5) {
+    await this.address5Input.sendKeys(address5);
   }
 
-  getAddress5Input() {
+  async getAddress5Input() {
     return this.address5Input.getAttribute('value');
   }
 
-  setEmailInput(email) {
-    this.emailInput.sendKeys(email);
+  async setEmailInput(email) {
+    await this.emailInput.sendKeys(email);
   }
 
-  getEmailInput() {
+  async getEmailInput() {
     return this.emailInput.getAttribute('value');
   }
 
-  setPanCardNumberInput(panCardNumber) {
-    this.panCardNumberInput.sendKeys(panCardNumber);
+  async setPanCardNumberInput(panCardNumber) {
+    await this.panCardNumberInput.sendKeys(panCardNumber);
   }
 
-  getPanCardNumberInput() {
+  async getPanCardNumberInput() {
     return this.panCardNumberInput.getAttribute('value');
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  collegeSelectLastOption() {
-    this.collegeSelect
+  async collegeSelectLastOption() {
+    await this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  getCollegeSelectedOption() {
+  async getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

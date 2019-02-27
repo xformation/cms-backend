@@ -23,8 +23,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -47,8 +50,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CmsApp.class)
 public class LectureResourceIntTest {
 
-    private static final Date DEFAULT_LEC_DATE =new Date();
-    private static final Date UPDATED_LEC_DATE =new Date();
+    private static final Date DEFAULT_LEC_DATE = new Date();
+    private static final Date UPDATED_LEC_DATE = new Date();
 
     private static final Date DEFAULT_LAST_UPDATED_ON = new Date();
     private static final Date UPDATED_LAST_UPDATED_ON = new Date();
@@ -65,10 +68,8 @@ public class LectureResourceIntTest {
     @Autowired
     private LectureRepository lectureRepository;
 
-
     @Autowired
     private LectureMapper lectureMapper;
-    
 
     @Autowired
     private LectureService lectureService;
@@ -93,6 +94,9 @@ public class LectureResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restLectureMockMvc;
 
     private Lecture lecture;
@@ -105,7 +109,8 @@ public class LectureResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -115,12 +120,12 @@ public class LectureResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Lecture createEntity(EntityManager em) {
-        Lecture lecture = new Lecture();
-        lecture.setLecDate(DEFAULT_LEC_DATE);
-        lecture.setLastUpdatedOn(DEFAULT_LAST_UPDATED_ON);
-        lecture.lastUpdatedBy(DEFAULT_LAST_UPDATED_BY);
-        lecture.startTime(DEFAULT_START_TIME);
-        lecture.endTime(DEFAULT_END_TIME);
+        Lecture lecture = new Lecture()
+            .lecDate(DEFAULT_LEC_DATE)
+            .lastUpdatedOn(DEFAULT_LAST_UPDATED_ON)
+            .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
+            .startTime(DEFAULT_START_TIME)
+            .endTime(DEFAULT_END_TIME);
         return lecture;
     }
 
@@ -291,7 +296,6 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
     
-
     @Test
     @Transactional
     public void getLecture() throws Exception {
@@ -309,6 +313,7 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
             .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingLecture() throws Exception {
@@ -329,12 +334,12 @@ public class LectureResourceIntTest {
         Lecture updatedLecture = lectureRepository.findById(lecture.getId()).get();
         // Disconnect from session so that the updates on updatedLecture are not directly saved in db
         em.detach(updatedLecture);
-        //updatedLecture
-        updatedLecture.setLecDate(UPDATED_LEC_DATE);
-        updatedLecture.setLastUpdatedOn(UPDATED_LAST_UPDATED_ON);
-        updatedLecture.lastUpdatedBy(UPDATED_LAST_UPDATED_BY);
-        updatedLecture.startTime(UPDATED_START_TIME);
-        updatedLecture.endTime(UPDATED_END_TIME);
+        updatedLecture
+            .lecDate(UPDATED_LEC_DATE)
+            .lastUpdatedOn(UPDATED_LAST_UPDATED_ON)
+            .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
+            .startTime(UPDATED_START_TIME)
+            .endTime(UPDATED_END_TIME);
         LectureDTO lectureDTO = lectureMapper.toDto(updatedLecture);
 
         restLectureMockMvc.perform(put("/api/lectures")
@@ -364,7 +369,7 @@ public class LectureResourceIntTest {
         // Create the Lecture
         LectureDTO lectureDTO = lectureMapper.toDto(lecture);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLectureMockMvc.perform(put("/api/lectures")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lectureDTO)))
@@ -386,7 +391,7 @@ public class LectureResourceIntTest {
 
         int databaseSizeBeforeDelete = lectureRepository.findAll().size();
 
-        // Get the lecture
+        // Delete the lecture
         restLectureMockMvc.perform(delete("/api/lectures/{id}", lecture.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -413,9 +418,9 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(lecture.getId().intValue())))
             .andExpect(jsonPath("$.[*].lecDate").value(hasItem(DEFAULT_LEC_DATE.toString())))
             .andExpect(jsonPath("$.[*].lastUpdatedOn").value(hasItem(DEFAULT_LAST_UPDATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY.toString())))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
+            .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME)))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME)));
     }
 
     @Test

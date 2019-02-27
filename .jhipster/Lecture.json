@@ -42,7 +42,8 @@
             "relationshipType": "many-to-one",
             "relationshipName": "attendancemaster",
             "otherEntityName": "attendanceMaster",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "lecture"
         }
     ],
     "changelogDate": "20190123115124",

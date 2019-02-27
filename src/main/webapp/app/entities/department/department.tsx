@@ -35,9 +35,8 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -97,7 +96,7 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
                   <td>{department.branchId ? <Link to={`branch/${department.branchId}`}>{department.branchId}</Link> : ''}</td>
                   <td>
                     {department.academicyearId ? (
-                      <Link to={`academicYear/${department.academicyearId}`}>{department.academicyearId}</Link>
+                      <Link to={`academic-year/${department.academicyearId}`}>{department.academicyearId}</Link>
                     ) : (
                       ''
                     )}

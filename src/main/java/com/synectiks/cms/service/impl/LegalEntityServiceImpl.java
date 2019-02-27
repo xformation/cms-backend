@@ -50,7 +50,6 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Override
     public LegalEntityDTO save(LegalEntityDTO legalEntityDTO) {
         log.debug("Request to save LegalEntity : {}", legalEntityDTO);
-
         LegalEntity legalEntity = legalEntityMapper.toEntity(legalEntityDTO);
         legalEntity = legalEntityRepository.save(legalEntity);
         LegalEntityDTO result = legalEntityMapper.toDto(legalEntity);
@@ -94,8 +93,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete LegalEntity : {}", id);
-        legalEntityRepository.deleteById(id);
+        log.debug("Request to delete LegalEntity : {}", id);        legalEntityRepository.deleteById(id);
         legalEntitySearchRepository.deleteById(id);
     }
 

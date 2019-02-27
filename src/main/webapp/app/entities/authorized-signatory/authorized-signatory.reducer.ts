@@ -63,11 +63,6 @@ export default (state: AuthorizedSignatoryState = initialState, action): Authori
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/authorized-signatories';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IAuthorizedSignatory> = query => ({
+export const getSearchEntities: ICrudSearchAction<IAuthorizedSignatory> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES,
-  payload: axios.get<IAuthorizedSignatory>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IAuthorizedSignatory>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IAuthorizedSignatory> = (page, size, sort) => ({

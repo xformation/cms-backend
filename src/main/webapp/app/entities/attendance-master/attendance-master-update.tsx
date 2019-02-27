@@ -17,27 +17,33 @@ import { getEntities as getTeaches } from 'app/entities/teach/teach.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './attendance-master.reducer';
 import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IAttendanceMasterUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAttendanceMasterUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAttendanceMasterUpdateState {
   isNew: boolean;
-  batchId: number;
-  sectionId: number;
-  teachId: number;
+  batchId: string;
+  sectionId: string;
+  teachId: string;
 }
 
 export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpdateProps, IAttendanceMasterUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      batchId: 0,
-      sectionId: 0,
-      teachId: 0,
+      batchId: '0',
+      sectionId: '0',
+      teachId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -65,7 +71,6 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -164,7 +169,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   teaches: storeState.teach.entities,
   attendanceMasterEntity: storeState.attendanceMaster.entity,
   loading: storeState.attendanceMaster.loading,
-  updating: storeState.attendanceMaster.updating
+  updating: storeState.attendanceMaster.updating,
+  updateSuccess: storeState.attendanceMaster.updateSuccess
 });
 
 const mapDispatchToProps = {

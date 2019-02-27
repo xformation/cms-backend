@@ -62,576 +62,576 @@ export default class StudentUpdatePage {
     return this.pageTitle;
   }
 
-  setStudentNameInput(studentName) {
-    this.studentNameInput.sendKeys(studentName);
+  async setStudentNameInput(studentName) {
+    await this.studentNameInput.sendKeys(studentName);
   }
 
-  getStudentNameInput() {
+  async getStudentNameInput() {
     return this.studentNameInput.getAttribute('value');
   }
 
-  setStudentMiddleNameInput(studentMiddleName) {
-    this.studentMiddleNameInput.sendKeys(studentMiddleName);
+  async setStudentMiddleNameInput(studentMiddleName) {
+    await this.studentMiddleNameInput.sendKeys(studentMiddleName);
   }
 
-  getStudentMiddleNameInput() {
+  async getStudentMiddleNameInput() {
     return this.studentMiddleNameInput.getAttribute('value');
   }
 
-  setStudentLastNameInput(studentLastName) {
-    this.studentLastNameInput.sendKeys(studentLastName);
+  async setStudentLastNameInput(studentLastName) {
+    await this.studentLastNameInput.sendKeys(studentLastName);
   }
 
-  getStudentLastNameInput() {
+  async getStudentLastNameInput() {
     return this.studentLastNameInput.getAttribute('value');
   }
 
-  setFatherNameInput(fatherName) {
-    this.fatherNameInput.sendKeys(fatherName);
+  async setFatherNameInput(fatherName) {
+    await this.fatherNameInput.sendKeys(fatherName);
   }
 
-  getFatherNameInput() {
+  async getFatherNameInput() {
     return this.fatherNameInput.getAttribute('value');
   }
 
-  setFatherMiddleNameInput(fatherMiddleName) {
-    this.fatherMiddleNameInput.sendKeys(fatherMiddleName);
+  async setFatherMiddleNameInput(fatherMiddleName) {
+    await this.fatherMiddleNameInput.sendKeys(fatherMiddleName);
   }
 
-  getFatherMiddleNameInput() {
+  async getFatherMiddleNameInput() {
     return this.fatherMiddleNameInput.getAttribute('value');
   }
 
-  setFatherLastNameInput(fatherLastName) {
-    this.fatherLastNameInput.sendKeys(fatherLastName);
+  async setFatherLastNameInput(fatherLastName) {
+    await this.fatherLastNameInput.sendKeys(fatherLastName);
   }
 
-  getFatherLastNameInput() {
+  async getFatherLastNameInput() {
     return this.fatherLastNameInput.getAttribute('value');
   }
 
-  setMotherNameInput(motherName) {
-    this.motherNameInput.sendKeys(motherName);
+  async setMotherNameInput(motherName) {
+    await this.motherNameInput.sendKeys(motherName);
   }
 
-  getMotherNameInput() {
+  async getMotherNameInput() {
     return this.motherNameInput.getAttribute('value');
   }
 
-  setMotherMiddleNameInput(motherMiddleName) {
-    this.motherMiddleNameInput.sendKeys(motherMiddleName);
+  async setMotherMiddleNameInput(motherMiddleName) {
+    await this.motherMiddleNameInput.sendKeys(motherMiddleName);
   }
 
-  getMotherMiddleNameInput() {
+  async getMotherMiddleNameInput() {
     return this.motherMiddleNameInput.getAttribute('value');
   }
 
-  setMotherLastNameInput(motherLastName) {
-    this.motherLastNameInput.sendKeys(motherLastName);
+  async setMotherLastNameInput(motherLastName) {
+    await this.motherLastNameInput.sendKeys(motherLastName);
   }
 
-  getMotherLastNameInput() {
+  async getMotherLastNameInput() {
     return this.motherLastNameInput.getAttribute('value');
   }
 
-  setAadharNoInput(aadharNo) {
-    this.aadharNoInput.sendKeys(aadharNo);
+  async setAadharNoInput(aadharNo) {
+    await this.aadharNoInput.sendKeys(aadharNo);
   }
 
-  getAadharNoInput() {
+  async getAadharNoInput() {
     return this.aadharNoInput.getAttribute('value');
   }
 
-  setDateOfBirthInput(dateOfBirth) {
-    this.dateOfBirthInput.sendKeys(dateOfBirth);
+  async setDateOfBirthInput(dateOfBirth) {
+    await this.dateOfBirthInput.sendKeys(dateOfBirth);
   }
 
-  getDateOfBirthInput() {
+  async getDateOfBirthInput() {
     return this.dateOfBirthInput.getAttribute('value');
   }
 
-  setPlaceOfBirthInput(placeOfBirth) {
-    this.placeOfBirthInput.sendKeys(placeOfBirth);
+  async setPlaceOfBirthInput(placeOfBirth) {
+    await this.placeOfBirthInput.sendKeys(placeOfBirth);
   }
 
-  getPlaceOfBirthInput() {
+  async getPlaceOfBirthInput() {
     return this.placeOfBirthInput.getAttribute('value');
   }
 
-  setReligionSelect(religion) {
-    this.religionSelect.sendKeys(religion);
+  async setReligionSelect(religion) {
+    await this.religionSelect.sendKeys(religion);
   }
 
-  getReligionSelect() {
+  async getReligionSelect() {
     return this.religionSelect.element(by.css('option:checked')).getText();
   }
 
-  religionSelectLastOption() {
-    this.religionSelect
+  async religionSelectLastOption() {
+    await this.religionSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setCasteSelect(caste) {
-    this.casteSelect.sendKeys(caste);
+  async setCasteSelect(caste) {
+    await this.casteSelect.sendKeys(caste);
   }
 
-  getCasteSelect() {
+  async getCasteSelect() {
     return this.casteSelect.element(by.css('option:checked')).getText();
   }
 
-  casteSelectLastOption() {
-    this.casteSelect
+  async casteSelectLastOption() {
+    await this.casteSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setSubCasteInput(subCaste) {
-    this.subCasteInput.sendKeys(subCaste);
+  async setSubCasteInput(subCaste) {
+    await this.subCasteInput.sendKeys(subCaste);
   }
 
-  getSubCasteInput() {
+  async getSubCasteInput() {
     return this.subCasteInput.getAttribute('value');
   }
 
-  setAgeInput(age) {
-    this.ageInput.sendKeys(age);
+  async setAgeInput(age) {
+    await this.ageInput.sendKeys(age);
   }
 
-  getAgeInput() {
+  async getAgeInput() {
     return this.ageInput.getAttribute('value');
   }
 
-  setSexSelect(sex) {
-    this.sexSelect.sendKeys(sex);
+  async setSexSelect(sex) {
+    await this.sexSelect.sendKeys(sex);
   }
 
-  getSexSelect() {
+  async getSexSelect() {
     return this.sexSelect.element(by.css('option:checked')).getText();
   }
 
-  sexSelectLastOption() {
-    this.sexSelect
+  async sexSelectLastOption() {
+    await this.sexSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setBloodGroupSelect(bloodGroup) {
-    this.bloodGroupSelect.sendKeys(bloodGroup);
+  async setBloodGroupSelect(bloodGroup) {
+    await this.bloodGroupSelect.sendKeys(bloodGroup);
   }
 
-  getBloodGroupSelect() {
+  async getBloodGroupSelect() {
     return this.bloodGroupSelect.element(by.css('option:checked')).getText();
   }
 
-  bloodGroupSelectLastOption() {
-    this.bloodGroupSelect
+  async bloodGroupSelectLastOption() {
+    await this.bloodGroupSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setAddressLineOneInput(addressLineOne) {
-    this.addressLineOneInput.sendKeys(addressLineOne);
+  async setAddressLineOneInput(addressLineOne) {
+    await this.addressLineOneInput.sendKeys(addressLineOne);
   }
 
-  getAddressLineOneInput() {
+  async getAddressLineOneInput() {
     return this.addressLineOneInput.getAttribute('value');
   }
 
-  setAddressLineTwoInput(addressLineTwo) {
-    this.addressLineTwoInput.sendKeys(addressLineTwo);
+  async setAddressLineTwoInput(addressLineTwo) {
+    await this.addressLineTwoInput.sendKeys(addressLineTwo);
   }
 
-  getAddressLineTwoInput() {
+  async getAddressLineTwoInput() {
     return this.addressLineTwoInput.getAttribute('value');
   }
 
-  setAddressLineThreeInput(addressLineThree) {
-    this.addressLineThreeInput.sendKeys(addressLineThree);
+  async setAddressLineThreeInput(addressLineThree) {
+    await this.addressLineThreeInput.sendKeys(addressLineThree);
   }
 
-  getAddressLineThreeInput() {
+  async getAddressLineThreeInput() {
     return this.addressLineThreeInput.getAttribute('value');
   }
 
-  setTownInput(town) {
-    this.townInput.sendKeys(town);
+  async setTownInput(town) {
+    await this.townInput.sendKeys(town);
   }
 
-  getTownInput() {
+  async getTownInput() {
     return this.townInput.getAttribute('value');
   }
 
-  setStateInput(state) {
-    this.stateInput.sendKeys(state);
+  async setStateInput(state) {
+    await this.stateInput.sendKeys(state);
   }
 
-  getStateInput() {
+  async getStateInput() {
     return this.stateInput.getAttribute('value');
   }
 
-  setCountryInput(country) {
-    this.countryInput.sendKeys(country);
+  async setCountryInput(country) {
+    await this.countryInput.sendKeys(country);
   }
 
-  getCountryInput() {
+  async getCountryInput() {
     return this.countryInput.getAttribute('value');
   }
 
-  setPincodeInput(pincode) {
-    this.pincodeInput.sendKeys(pincode);
+  async setPincodeInput(pincode) {
+    await this.pincodeInput.sendKeys(pincode);
   }
 
-  getPincodeInput() {
+  async getPincodeInput() {
     return this.pincodeInput.getAttribute('value');
   }
 
-  setStudentContactNumberInput(studentContactNumber) {
-    this.studentContactNumberInput.sendKeys(studentContactNumber);
+  async setStudentContactNumberInput(studentContactNumber) {
+    await this.studentContactNumberInput.sendKeys(studentContactNumber);
   }
 
-  getStudentContactNumberInput() {
+  async getStudentContactNumberInput() {
     return this.studentContactNumberInput.getAttribute('value');
   }
 
-  setAlternateContactNumberInput(alternateContactNumber) {
-    this.alternateContactNumberInput.sendKeys(alternateContactNumber);
+  async setAlternateContactNumberInput(alternateContactNumber) {
+    await this.alternateContactNumberInput.sendKeys(alternateContactNumber);
   }
 
-  getAlternateContactNumberInput() {
+  async getAlternateContactNumberInput() {
     return this.alternateContactNumberInput.getAttribute('value');
   }
 
-  setStudentEmailAddressInput(studentEmailAddress) {
-    this.studentEmailAddressInput.sendKeys(studentEmailAddress);
+  async setStudentEmailAddressInput(studentEmailAddress) {
+    await this.studentEmailAddressInput.sendKeys(studentEmailAddress);
   }
 
-  getStudentEmailAddressInput() {
+  async getStudentEmailAddressInput() {
     return this.studentEmailAddressInput.getAttribute('value');
   }
 
-  setAlternateEmailAddressInput(alternateEmailAddress) {
-    this.alternateEmailAddressInput.sendKeys(alternateEmailAddress);
+  async setAlternateEmailAddressInput(alternateEmailAddress) {
+    await this.alternateEmailAddressInput.sendKeys(alternateEmailAddress);
   }
 
-  getAlternateEmailAddressInput() {
+  async getAlternateEmailAddressInput() {
     return this.alternateEmailAddressInput.getAttribute('value');
   }
 
-  setRelationWithStudentSelect(relationWithStudent) {
-    this.relationWithStudentSelect.sendKeys(relationWithStudent);
+  async setRelationWithStudentSelect(relationWithStudent) {
+    await this.relationWithStudentSelect.sendKeys(relationWithStudent);
   }
 
-  getRelationWithStudentSelect() {
+  async getRelationWithStudentSelect() {
     return this.relationWithStudentSelect.element(by.css('option:checked')).getText();
   }
 
-  relationWithStudentSelectLastOption() {
-    this.relationWithStudentSelect
+  async relationWithStudentSelectLastOption() {
+    await this.relationWithStudentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setNameInput(name) {
-    this.nameInput.sendKeys(name);
+  async setNameInput(name) {
+    await this.nameInput.sendKeys(name);
   }
 
-  getNameInput() {
+  async getNameInput() {
     return this.nameInput.getAttribute('value');
   }
 
-  setMiddleNameInput(middleName) {
-    this.middleNameInput.sendKeys(middleName);
+  async setMiddleNameInput(middleName) {
+    await this.middleNameInput.sendKeys(middleName);
   }
 
-  getMiddleNameInput() {
+  async getMiddleNameInput() {
     return this.middleNameInput.getAttribute('value');
   }
 
-  setLastNameInput(lastName) {
-    this.lastNameInput.sendKeys(lastName);
+  async setLastNameInput(lastName) {
+    await this.lastNameInput.sendKeys(lastName);
   }
 
-  getLastNameInput() {
+  async getLastNameInput() {
     return this.lastNameInput.getAttribute('value');
   }
 
-  setContactNoInput(contactNo) {
-    this.contactNoInput.sendKeys(contactNo);
+  async setContactNoInput(contactNo) {
+    await this.contactNoInput.sendKeys(contactNo);
   }
 
-  getContactNoInput() {
+  async getContactNoInput() {
     return this.contactNoInput.getAttribute('value');
   }
 
-  setEmailAddressInput(emailAddress) {
-    this.emailAddressInput.sendKeys(emailAddress);
+  async setEmailAddressInput(emailAddress) {
+    await this.emailAddressInput.sendKeys(emailAddress);
   }
 
-  getEmailAddressInput() {
+  async getEmailAddressInput() {
     return this.emailAddressInput.getAttribute('value');
   }
 
-  setTransportSelect(transport) {
-    this.transportSelect.sendKeys(transport);
+  async setTransportSelect(transport) {
+    await this.transportSelect.sendKeys(transport);
   }
 
-  getTransportSelect() {
+  async getTransportSelect() {
     return this.transportSelect.element(by.css('option:checked')).getText();
   }
 
-  transportSelectLastOption() {
-    this.transportSelect
+  async transportSelectLastOption() {
+    await this.transportSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setMessSelect(mess) {
-    this.messSelect.sendKeys(mess);
+  async setMessSelect(mess) {
+    await this.messSelect.sendKeys(mess);
   }
 
-  getMessSelect() {
+  async getMessSelect() {
     return this.messSelect.element(by.css('option:checked')).getText();
   }
 
-  messSelectLastOption() {
-    this.messSelect
+  async messSelectLastOption() {
+    await this.messSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setGymSelect(gym) {
-    this.gymSelect.sendKeys(gym);
+  async setGymSelect(gym) {
+    await this.gymSelect.sendKeys(gym);
   }
 
-  getGymSelect() {
+  async getGymSelect() {
     return this.gymSelect.element(by.css('option:checked')).getText();
   }
 
-  gymSelectLastOption() {
-    this.gymSelect
+  async gymSelectLastOption() {
+    await this.gymSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setCulturalClassSelect(culturalClass) {
-    this.culturalClassSelect.sendKeys(culturalClass);
+  async setCulturalClassSelect(culturalClass) {
+    await this.culturalClassSelect.sendKeys(culturalClass);
   }
 
-  getCulturalClassSelect() {
+  async getCulturalClassSelect() {
     return this.culturalClassSelect.element(by.css('option:checked')).getText();
   }
 
-  culturalClassSelectLastOption() {
-    this.culturalClassSelect
+  async culturalClassSelectLastOption() {
+    await this.culturalClassSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setLibrarySelect(library) {
-    this.librarySelect.sendKeys(library);
+  async setLibrarySelect(library) {
+    await this.librarySelect.sendKeys(library);
   }
 
-  getLibrarySelect() {
+  async getLibrarySelect() {
     return this.librarySelect.element(by.css('option:checked')).getText();
   }
 
-  librarySelectLastOption() {
-    this.librarySelect
+  async librarySelectLastOption() {
+    await this.librarySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setSportsSelect(sports) {
-    this.sportsSelect.sendKeys(sports);
+  async setSportsSelect(sports) {
+    await this.sportsSelect.sendKeys(sports);
   }
 
-  getSportsSelect() {
+  async getSportsSelect() {
     return this.sportsSelect.element(by.css('option:checked')).getText();
   }
 
-  sportsSelectLastOption() {
-    this.sportsSelect
+  async sportsSelectLastOption() {
+    await this.sportsSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setSwimmingSelect(swimming) {
-    this.swimmingSelect.sendKeys(swimming);
+  async setSwimmingSelect(swimming) {
+    await this.swimmingSelect.sendKeys(swimming);
   }
 
-  getSwimmingSelect() {
+  async getSwimmingSelect() {
     return this.swimmingSelect.element(by.css('option:checked')).getText();
   }
 
-  swimmingSelectLastOption() {
-    this.swimmingSelect
+  async swimmingSelectLastOption() {
+    await this.swimmingSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setExtraClassSelect(extraClass) {
-    this.extraClassSelect.sendKeys(extraClass);
+  async setExtraClassSelect(extraClass) {
+    await this.extraClassSelect.sendKeys(extraClass);
   }
 
-  getExtraClassSelect() {
+  async getExtraClassSelect() {
     return this.extraClassSelect.element(by.css('option:checked')).getText();
   }
 
-  extraClassSelectLastOption() {
-    this.extraClassSelect
+  async extraClassSelectLastOption() {
+    await this.extraClassSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setHandicraftsSelect(handicrafts) {
-    this.handicraftsSelect.sendKeys(handicrafts);
+  async setHandicraftsSelect(handicrafts) {
+    await this.handicraftsSelect.sendKeys(handicrafts);
   }
 
-  getHandicraftsSelect() {
+  async getHandicraftsSelect() {
     return this.handicraftsSelect.element(by.css('option:checked')).getText();
   }
 
-  handicraftsSelectLastOption() {
-    this.handicraftsSelect
+  async handicraftsSelectLastOption() {
+    await this.handicraftsSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setAddSelect(add) {
-    this.addSelect.sendKeys(add);
+  async setAddSelect(add) {
+    await this.addSelect.sendKeys(add);
   }
 
-  getAddSelect() {
+  async getAddSelect() {
     return this.addSelect.element(by.css('option:checked')).getText();
   }
 
-  addSelectLastOption() {
-    this.addSelect
+  async addSelectLastOption() {
+    await this.addSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setUploadPhotoInput(uploadPhoto) {
-    this.uploadPhotoInput.sendKeys(uploadPhoto);
+  async setUploadPhotoInput(uploadPhoto) {
+    await this.uploadPhotoInput.sendKeys(uploadPhoto);
   }
 
-  getUploadPhotoInput() {
+  async getUploadPhotoInput() {
     return this.uploadPhotoInput.getAttribute('value');
   }
 
-  setAdmissionNoInput(admissionNo) {
-    this.admissionNoInput.sendKeys(admissionNo);
+  async setAdmissionNoInput(admissionNo) {
+    await this.admissionNoInput.sendKeys(admissionNo);
   }
 
-  getAdmissionNoInput() {
+  async getAdmissionNoInput() {
     return this.admissionNoInput.getAttribute('value');
   }
 
-  setRollNoInput(rollNo) {
-    this.rollNoInput.sendKeys(rollNo);
+  async setRollNoInput(rollNo) {
+    await this.rollNoInput.sendKeys(rollNo);
   }
 
-  getRollNoInput() {
+  async getRollNoInput() {
     return this.rollNoInput.getAttribute('value');
   }
 
-  setStudentTypeSelect(studentType) {
-    this.studentTypeSelect.sendKeys(studentType);
+  async setStudentTypeSelect(studentType) {
+    await this.studentTypeSelect.sendKeys(studentType);
   }
 
-  getStudentTypeSelect() {
+  async getStudentTypeSelect() {
     return this.studentTypeSelect.element(by.css('option:checked')).getText();
   }
 
-  studentTypeSelectLastOption() {
-    this.studentTypeSelect
+  async studentTypeSelectLastOption() {
+    await this.studentTypeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  departmentSelectLastOption() {
-    this.departmentSelect
+  async departmentSelectLastOption() {
+    await this.departmentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  departmentSelectOption(option) {
-    this.departmentSelect.sendKeys(option);
+  async departmentSelectOption(option) {
+    await this.departmentSelect.sendKeys(option);
   }
 
   getDepartmentSelect() {
     return this.departmentSelect;
   }
 
-  getDepartmentSelectedOption() {
+  async getDepartmentSelectedOption() {
     return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
-  batchSelectLastOption() {
-    this.batchSelect
+  async batchSelectLastOption() {
+    await this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  batchSelectOption(option) {
-    this.batchSelect.sendKeys(option);
+  async batchSelectOption(option) {
+    await this.batchSelect.sendKeys(option);
   }
 
   getBatchSelect() {
     return this.batchSelect;
   }
 
-  getBatchSelectedOption() {
+  async getBatchSelectedOption() {
     return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
-  sectionSelectLastOption() {
-    this.sectionSelect
+  async sectionSelectLastOption() {
+    await this.sectionSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  sectionSelectOption(option) {
-    this.sectionSelect.sendKeys(option);
+  async sectionSelectOption(option) {
+    await this.sectionSelect.sendKeys(option);
   }
 
   getSectionSelect() {
     return this.sectionSelect;
   }
 
-  getSectionSelectedOption() {
+  async getSectionSelectedOption() {
     return this.sectionSelect.element(by.css('option:checked')).getText();
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

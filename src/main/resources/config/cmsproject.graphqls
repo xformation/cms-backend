@@ -182,7 +182,10 @@ type FeeCategory{
 
 type Facility{
       id: Long!
-      facilityName: String!
+    facilityName: String!
+     academicYear: AcademicYear!
+     branch: Branch!
+     student: Student!
  }
 
   type TransportRoute{
@@ -872,6 +875,9 @@ type RemoveFeeDetailsPayload {
 
 input AddFacilityInput {
    facilityName: String!
+    academicyearId: Long!
+    branchId: Long!
+    studentId: Long!
 }
 type AddFacilityPayload {
     facility: Facility!
@@ -879,6 +885,9 @@ type AddFacilityPayload {
 input UpdateFacilityInput {
      id: Long!
      facilityName: String!
+     academicyearId: Long!
+     branchId: Long!
+     studentId: Long!
 }
 type UpdateFacilityPayload {
     facility: Facility!

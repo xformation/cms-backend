@@ -50,7 +50,6 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public BranchDTO save(BranchDTO branchDTO) {
         log.debug("Request to save Branch : {}", branchDTO);
-
         Branch branch = branchMapper.toEntity(branchDTO);
         branch = branchRepository.save(branch);
         BranchDTO result = branchMapper.toDto(branch);
@@ -94,8 +93,7 @@ public class BranchServiceImpl implements BranchService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Branch : {}", id);
-        branchRepository.deleteById(id);
+        log.debug("Request to delete Branch : {}", id);        branchRepository.deleteById(id);
         branchSearchRepository.deleteById(id);
     }
 

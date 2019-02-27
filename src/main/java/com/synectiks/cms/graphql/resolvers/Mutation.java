@@ -1714,9 +1714,14 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public AddFacilityPayload addFacility(AddFacilityInput addFacilityInput) {
+        final Branch branch = branchRepository.findById(addFacilityInput.getBranchId()).get();
+        final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
+        AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
         final Facility facility = new Facility();
         facility.setFacilityName(addFacilityInput.getFacilityName());
-
+        facility.setAcademicYear(academicYear);
+        facility.setStudent(student);
+        facility.setBranch(branch);
         facilityRepository.save(facility);
 
         return new AddFacilityPayload(facility);
@@ -1727,7 +1732,18 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateFacilityInput.getFacilityName() != null) {
             facility.setFacilityName(updateFacilityInput.getFacilityName());
         }
-
+        if(updateFacilityInput.getStudentId() != null) {
+     	Student student = studentRepository.findById(updateFacilityInput.getStudentId()).get();
+     	facility.setStudent(student);
+       }
+            if (updateFacilityInput.getBranchId() != null) {
+                Branch branch = branchRepository.findById(updateFacilityInput.getBranchId()).get();
+                facility.setBranch(branch);
+            }
+            if (updateFacilityInput.getAcademicyearId() != null) {
+                AcademicYear academicYear = academicYearRepository.findById(updateFacilityInput.getAcademicyearId()).get();
+                facility.setAcademicYear(academicYear);
+            }
         facilityRepository.save(facility);
 
         return new UpdateFacilityPayload(facility);

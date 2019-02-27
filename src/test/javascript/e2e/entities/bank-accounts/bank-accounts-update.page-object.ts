@@ -7,74 +7,114 @@ export default class BankAccountsUpdatePage {
   nameOfBankSelect: ElementFinder = element(by.css('select#bank-accounts-nameOfBank'));
   accountNumberInput: ElementFinder = element(by.css('input#bank-accounts-accountNumber'));
   typeOfAccountInput: ElementFinder = element(by.css('input#bank-accounts-typeOfAccount'));
-  ifsCodeInput: ElementFinder = element(by.css('input#bank-accounts-ifsCode'));
-  branchInput: ElementFinder = element(by.css('input#bank-accounts-branch'));
+  ifscCodeInput: ElementFinder = element(by.css('input#bank-accounts-ifscCode'));
+  branchAddressInput: ElementFinder = element(by.css('input#bank-accounts-branchAddress'));
   corporateIdInput: ElementFinder = element(by.css('input#bank-accounts-corporateId'));
+  branchSelect: ElementFinder = element(by.css('select#bank-accounts-branch'));
+  collegeSelect: ElementFinder = element(by.css('select#bank-accounts-college'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  setNameOfBankSelect(nameOfBank) {
-    this.nameOfBankSelect.sendKeys(nameOfBank);
+  async setNameOfBankSelect(nameOfBank) {
+    await this.nameOfBankSelect.sendKeys(nameOfBank);
   }
 
-  getNameOfBankSelect() {
+  async getNameOfBankSelect() {
     return this.nameOfBankSelect.element(by.css('option:checked')).getText();
   }
 
-  nameOfBankSelectLastOption() {
-    this.nameOfBankSelect
+  async nameOfBankSelectLastOption() {
+    await this.nameOfBankSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setAccountNumberInput(accountNumber) {
-    this.accountNumberInput.sendKeys(accountNumber);
+  async setAccountNumberInput(accountNumber) {
+    await this.accountNumberInput.sendKeys(accountNumber);
   }
 
-  getAccountNumberInput() {
+  async getAccountNumberInput() {
     return this.accountNumberInput.getAttribute('value');
   }
 
-  setTypeOfAccountInput(typeOfAccount) {
-    this.typeOfAccountInput.sendKeys(typeOfAccount);
+  async setTypeOfAccountInput(typeOfAccount) {
+    await this.typeOfAccountInput.sendKeys(typeOfAccount);
   }
 
-  getTypeOfAccountInput() {
+  async getTypeOfAccountInput() {
     return this.typeOfAccountInput.getAttribute('value');
   }
 
-  setIfsCodeInput(ifsCode) {
-    this.ifsCodeInput.sendKeys(ifsCode);
+  async setIfscCodeInput(ifscCode) {
+    await this.ifscCodeInput.sendKeys(ifscCode);
   }
 
-  getIfsCodeInput() {
-    return this.ifsCodeInput.getAttribute('value');
+  async getIfscCodeInput() {
+    return this.ifscCodeInput.getAttribute('value');
   }
 
-  setBranchInput(branch) {
-    this.branchInput.sendKeys(branch);
+  async setBranchAddressInput(branchAddress) {
+    await this.branchAddressInput.sendKeys(branchAddress);
   }
 
-  getBranchInput() {
-    return this.branchInput.getAttribute('value');
+  async getBranchAddressInput() {
+    return this.branchAddressInput.getAttribute('value');
   }
 
-  setCorporateIdInput(corporateId) {
-    this.corporateIdInput.sendKeys(corporateId);
+  async setCorporateIdInput(corporateId) {
+    await this.corporateIdInput.sendKeys(corporateId);
   }
 
-  getCorporateIdInput() {
+  async getCorporateIdInput() {
     return this.corporateIdInput.getAttribute('value');
   }
 
-  save() {
-    return this.saveButton.click();
+  async branchSelectLastOption() {
+    await this.branchSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
+  }
+
+  getBranchSelect() {
+    return this.branchSelect;
+  }
+
+  async getBranchSelectedOption() {
+    return this.branchSelect.element(by.css('option:checked')).getText();
+  }
+
+  async collegeSelectLastOption() {
+    await this.collegeSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
+  }
+
+  getCollegeSelect() {
+    return this.collegeSelect;
+  }
+
+  async getCollegeSelectedOption() {
+    return this.collegeSelect.element(by.css('option:checked')).getText();
+  }
+
+  async save() {
+    await this.saveButton.click();
+  }
+
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

@@ -9,7 +9,7 @@ import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './attendance-master.reducer';
 
-export interface IAttendanceMasterDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAttendanceMasterDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class AttendanceMasterDeleteDialog extends React.Component<IAttendanceMasterDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class AttendanceMasterDeleteDialog extends React.Component<IAttendanceMas
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this AttendanceMaster?</ModalBody>
+        <ModalBody id="cmsApp.attendanceMaster.delete.question">Are you sure you want to delete this AttendanceMaster?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-attendanceMaster" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

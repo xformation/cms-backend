@@ -9,7 +9,7 @@ import { ISection } from 'app/shared/model/section.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './section.reducer';
 
-export interface ISectionDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ISectionDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class SectionDeleteDialog extends React.Component<ISectionDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class SectionDeleteDialog extends React.Component<ISectionDeleteDialogPro
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Section?</ModalBody>
+        <ModalBody id="cmsApp.section.delete.question">Are you sure you want to delete this Section?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-section" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

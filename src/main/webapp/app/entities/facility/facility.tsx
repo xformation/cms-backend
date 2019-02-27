@@ -35,9 +35,8 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -76,6 +75,9 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
               <tr>
                 <th>ID</th>
                 <th>Facility Name</th>
+                <th>Academic Year</th>
+                <th>Branch</th>
+                <th>Student</th>
                 <th />
               </tr>
             </thead>
@@ -88,6 +90,11 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
                     </Button>
                   </td>
                   <td>{facility.facilityName}</td>
+                  <td>
+                    {facility.academicYearId ? <Link to={`academic-year/${facility.academicYearId}`}>{facility.academicYearId}</Link> : ''}
+                  </td>
+                  <td>{facility.branchId ? <Link to={`branch/${facility.branchId}`}>{facility.branchId}</Link> : ''}</td>
+                  <td>{facility.studentId ? <Link to={`student/${facility.studentId}`}>{facility.studentId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${facility.id}`} color="info" size="sm">

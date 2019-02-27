@@ -367,28 +367,32 @@
             "relationshipValidateRules": "required",
             "relationshipName": "department",
             "otherEntityName": "department",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "student"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
             "relationshipName": "batch",
             "otherEntityName": "batch",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "student"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
             "relationshipName": "section",
             "otherEntityName": "section",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "student"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "student"
         }
     ],
     "changelogDate": "20190205082417",

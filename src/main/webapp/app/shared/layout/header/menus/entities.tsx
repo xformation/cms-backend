@@ -359,6 +359,57 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/facility">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Facility
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/branch">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Branch
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/department">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Department
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/batch">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Batch
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/subject">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Subject
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/section">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Section
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/term">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Term
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/student">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Student
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/teacher">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Teacher
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/holiday">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Holiday
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/teach">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Teach
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/attendance-master">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Attendance Master
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/lecture">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Lecture
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/student-attendance">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Student Attendance
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/legal-entity">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Legal Entity
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/authorized-signatory">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Authorized Signatory
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/bank-accounts">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Bank Accounts
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/facility">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Facility
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

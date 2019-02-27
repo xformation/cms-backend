@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -68,10 +69,8 @@ public class BankAccountsResourceIntTest {
     @Autowired
     private BankAccountsRepository bankAccountsRepository;
 
-
     @Autowired
     private BankAccountsMapper bankAccountsMapper;
-    
 
     @Autowired
     private BankAccountsService bankAccountsService;
@@ -96,6 +95,9 @@ public class BankAccountsResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restBankAccountsMockMvc;
 
     private BankAccounts bankAccounts;
@@ -108,7 +110,8 @@ public class BankAccountsResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -316,7 +319,6 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.[*].corporateId").value(hasItem(DEFAULT_CORPORATE_ID)));
     }
     
-
     @Test
     @Transactional
     public void getBankAccounts() throws Exception {
@@ -335,6 +337,7 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.branchAddress").value(DEFAULT_BRANCH_ADDRESS.toString()))
             .andExpect(jsonPath("$.corporateId").value(DEFAULT_CORPORATE_ID));
     }
+
     @Test
     @Transactional
     public void getNonExistingBankAccounts() throws Exception {
@@ -392,7 +395,7 @@ public class BankAccountsResourceIntTest {
         // Create the BankAccounts
         BankAccountsDTO bankAccountsDTO = bankAccountsMapper.toDto(bankAccounts);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBankAccountsMockMvc.perform(put("/api/bank-accounts")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(bankAccountsDTO)))
@@ -414,7 +417,7 @@ public class BankAccountsResourceIntTest {
 
         int databaseSizeBeforeDelete = bankAccountsRepository.findAll().size();
 
-        // Get the bankAccounts
+        // Delete the bankAccounts
         restBankAccountsMockMvc.perform(delete("/api/bank-accounts/{id}", bankAccounts.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -441,9 +444,9 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(bankAccounts.getId().intValue())))
             .andExpect(jsonPath("$.[*].nameOfBank").value(hasItem(DEFAULT_NAME_OF_BANK.toString())))
             .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT.toString())))
-            .andExpect(jsonPath("$.[*].ifscCode").value(hasItem(DEFAULT_IFSC_CODE.toString())))
-            .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT)))
+            .andExpect(jsonPath("$.[*].ifscCode").value(hasItem(DEFAULT_IFSC_CODE)))
+            .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS)))
             .andExpect(jsonPath("$.[*].corporateId").value(hasItem(DEFAULT_CORPORATE_ID)));
     }
 

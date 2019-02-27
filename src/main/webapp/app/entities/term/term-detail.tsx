@@ -12,7 +12,7 @@ import { ITerm } from 'app/shared/model/term.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ITermDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITermDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TermDetail extends React.Component<ITermDetailProps> {
   componentDidMount() {
