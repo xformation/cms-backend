@@ -35,9 +35,8 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -78,9 +77,11 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
                 <th>Name Of Bank</th>
                 <th>Account Number</th>
                 <th>Type Of Account</th>
-                <th>Ifs Code</th>
-                <th>Branch</th>
+                <th>Ifsc Code</th>
+                <th>Branch Address</th>
                 <th>Corporate Id</th>
+                <th>Branch</th>
+                <th>College</th>
                 <th />
               </tr>
             </thead>
@@ -95,9 +96,11 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
                   <td>{bankAccounts.nameOfBank}</td>
                   <td>{bankAccounts.accountNumber}</td>
                   <td>{bankAccounts.typeOfAccount}</td>
-                  <td>{bankAccounts.ifsCode}</td>
-                  <td>{bankAccounts.branch}</td>
+                  <td>{bankAccounts.ifscCode}</td>
+                  <td>{bankAccounts.branchAddress}</td>
                   <td>{bankAccounts.corporateId}</td>
+                  <td>{bankAccounts.branchId ? <Link to={`branch/${bankAccounts.branchId}`}>{bankAccounts.branchId}</Link> : ''}</td>
+                  <td>{bankAccounts.collegeId ? <Link to={`college/${bankAccounts.collegeId}`}>{bankAccounts.collegeId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${bankAccounts.id}`} color="info" size="sm">

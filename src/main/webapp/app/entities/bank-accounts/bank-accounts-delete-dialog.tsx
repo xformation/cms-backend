@@ -9,7 +9,7 @@ import { IBankAccounts } from 'app/shared/model/bank-accounts.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './bank-accounts.reducer';
 
-export interface IBankAccountsDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBankAccountsDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class BankAccountsDeleteDialog extends React.Component<IBankAccountsDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class BankAccountsDeleteDialog extends React.Component<IBankAccountsDelet
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this BankAccounts?</ModalBody>
+        <ModalBody id="cmsApp.bankAccounts.delete.question">Are you sure you want to delete this BankAccounts?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-bankAccounts" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

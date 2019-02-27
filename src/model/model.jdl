@@ -434,7 +434,10 @@ Invoice{paymentRemainder} to PaymentRemainder,
 Invoice{college} to College,
 Invoice{branch} to Branch,
 Invoice{student} to Student,
-Invoice{academicYear} to AcademicYear
+Invoice{academicYear} to AcademicYear,
+Facility{academicYear} to AcademicYear,
+Facility{branch} to Branch,
+Facility{student} to Student
 }
 
 dto * with mapstruct

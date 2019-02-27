@@ -9,7 +9,7 @@ import { IBatch } from 'app/shared/model/batch.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './batch.reducer';
 
-export interface IBatchDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBatchDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class BatchDeleteDialog extends React.Component<IBatchDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class BatchDeleteDialog extends React.Component<IBatchDeleteDialogProps> 
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Batch?</ModalBody>
+        <ModalBody id="cmsApp.batch.delete.question">Are you sure you want to delete this Batch?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-batch" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

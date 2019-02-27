@@ -27,7 +27,6 @@ describe('Facility e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
-
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
@@ -48,6 +47,9 @@ describe('Facility e2e test', () => {
 
     await facilityUpdatePage.setFacilityNameInput('facilityName');
     expect(await facilityUpdatePage.getFacilityNameInput()).to.match(/facilityName/);
+    await facilityUpdatePage.academicYearSelectLastOption();
+    await facilityUpdatePage.branchSelectLastOption();
+    await facilityUpdatePage.studentSelectLastOption();
     await waitUntilDisplayed(facilityUpdatePage.getSaveButton());
     await facilityUpdatePage.save();
     await waitUntilHidden(facilityUpdatePage.getSaveButton());

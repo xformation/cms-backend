@@ -36,7 +36,8 @@
             "relationshipType": "many-to-one",
             "relationshipName": "academicyear",
             "otherEntityName": "academicYear",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "term"
         }
     ],
     "changelogDate": "20190118141516",

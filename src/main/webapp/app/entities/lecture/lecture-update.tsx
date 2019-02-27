@@ -13,23 +13,29 @@ import { getEntities as getAttendanceMasters } from 'app/entities/attendance-mas
 import { getEntity, updateEntity, createEntity, reset } from './lecture.reducer';
 import { ILecture } from 'app/shared/model/lecture.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ILectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ILectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ILectureUpdateState {
   isNew: boolean;
-  attendancemasterId: number;
+  attendancemasterId: string;
 }
 
 export class LectureUpdate extends React.Component<ILectureUpdateProps, ILectureUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      attendancemasterId: 0,
+      attendancemasterId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,7 +61,6 @@ export class LectureUpdate extends React.Component<ILectureUpdateProps, ILecture
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -187,7 +192,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   attendanceMasters: storeState.attendanceMaster.entities,
   lectureEntity: storeState.lecture.entity,
   loading: storeState.lecture.loading,
-  updating: storeState.lecture.updating
+  updating: storeState.lecture.updating,
+  updateSuccess: storeState.lecture.updateSuccess
 });
 
 const mapDispatchToProps = {

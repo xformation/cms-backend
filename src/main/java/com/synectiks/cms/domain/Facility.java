@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,7 +21,7 @@ import java.util.Objects;
 public class Facility implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -27,6 +29,18 @@ public class Facility implements Serializable {
 
     @Column(name = "facility_name")
     private String facilityName;
+
+    @ManyToOne
+    @JsonIgnoreProperties("facilities")
+    private AcademicYear academicYear;
+
+    @ManyToOne
+    @JsonIgnoreProperties("facilities")
+    private Branch branch;
+
+    @ManyToOne
+    @JsonIgnoreProperties("facilities")
+    private Student student;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -48,6 +62,45 @@ public class Facility implements Serializable {
 
     public void setFacilityName(String facilityName) {
         this.facilityName = facilityName;
+    }
+
+    public AcademicYear getAcademicYear() {
+        return academicYear;
+    }
+
+    public Facility academicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
+        return this;
+    }
+
+    public void setAcademicYear(AcademicYear academicYear) {
+        this.academicYear = academicYear;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Facility branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public Facility student(Student student) {
+        this.student = student;
+        return this;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

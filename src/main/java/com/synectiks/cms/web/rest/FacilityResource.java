@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.FacilityService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -45,7 +43,6 @@ public class FacilityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/facilities")
-    @Timed
     public ResponseEntity<FacilityDTO> createFacility(@RequestBody FacilityDTO facilityDTO) throws URISyntaxException {
         log.debug("REST request to save Facility : {}", facilityDTO);
         if (facilityDTO.getId() != null) {
@@ -67,7 +64,6 @@ public class FacilityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/facilities")
-    @Timed
     public ResponseEntity<FacilityDTO> updateFacility(@RequestBody FacilityDTO facilityDTO) throws URISyntaxException {
         log.debug("REST request to update Facility : {}", facilityDTO);
         if (facilityDTO.getId() == null) {
@@ -85,7 +81,6 @@ public class FacilityResource {
      * @return the ResponseEntity with status 200 (OK) and the list of facilities in body
      */
     @GetMapping("/facilities")
-    @Timed
     public List<FacilityDTO> getAllFacilities() {
         log.debug("REST request to get all Facilities");
         return facilityService.findAll();
@@ -98,7 +93,6 @@ public class FacilityResource {
      * @return the ResponseEntity with status 200 (OK) and with body the facilityDTO, or with status 404 (Not Found)
      */
     @GetMapping("/facilities/{id}")
-    @Timed
     public ResponseEntity<FacilityDTO> getFacility(@PathVariable Long id) {
         log.debug("REST request to get Facility : {}", id);
         Optional<FacilityDTO> facilityDTO = facilityService.findOne(id);
@@ -112,7 +106,6 @@ public class FacilityResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/facilities/{id}")
-    @Timed
     public ResponseEntity<Void> deleteFacility(@PathVariable Long id) {
         log.debug("REST request to delete Facility : {}", id);
         facilityService.delete(id);
@@ -127,7 +120,6 @@ public class FacilityResource {
      * @return the result of the search
      */
     @GetMapping("/_search/facilities")
-    @Timed
     public List<FacilityDTO> searchFacilities(@RequestParam String query) {
         log.debug("REST request to search Facilities for query {}", query);
         return facilityService.search(query);

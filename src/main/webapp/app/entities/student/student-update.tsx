@@ -19,29 +19,35 @@ import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './student.reducer';
 import { IStudent } from 'app/shared/model/student.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IStudentUpdateState {
   isNew: boolean;
-  departmentId: number;
-  batchId: number;
-  sectionId: number;
-  branchId: number;
+  departmentId: string;
+  batchId: string;
+  sectionId: string;
+  branchId: string;
 }
 
 export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudentUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      departmentId: 0,
-      batchId: 0,
-      sectionId: 0,
-      branchId: 0,
+      departmentId: '0',
+      batchId: '0',
+      sectionId: '0',
+      branchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -70,7 +76,6 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -224,7 +229,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-aadharNo"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="aadharNo"
                     validate={{
@@ -308,7 +313,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-age"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="age"
                     validate={{
@@ -431,7 +436,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-pincode"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="pincode"
                     validate={{
@@ -446,7 +451,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-studentContactNumber"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="studentContactNumber"
                     validate={{
@@ -461,7 +466,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-alternateContactNumber"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="alternateContactNumber"
                     validate={{
@@ -555,7 +560,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-contactNo"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="contactNo"
                     validate={{
@@ -713,7 +718,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-uploadPhoto"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="uploadPhoto"
                     validate={{
@@ -728,7 +733,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-admissionNo"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="admissionNo"
                     validate={{
@@ -838,7 +843,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
   studentEntity: storeState.student.entity,
   loading: storeState.student.loading,
-  updating: storeState.student.updating
+  updating: storeState.student.updating,
+  updateSuccess: storeState.student.updateSuccess
 });
 
 const mapDispatchToProps = {

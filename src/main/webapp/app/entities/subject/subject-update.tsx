@@ -15,25 +15,31 @@ import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './subject.reducer';
 import { ISubject } from 'app/shared/model/subject.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ISubjectUpdateState {
   isNew: boolean;
-  departmentId: number;
-  batchId: number;
+  departmentId: string;
+  batchId: string;
 }
 
 export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubjectUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      departmentId: 0,
-      batchId: 0,
+      departmentId: '0',
+      batchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,7 +66,6 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -191,7 +196,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   batches: storeState.batch.entities,
   subjectEntity: storeState.subject.entity,
   loading: storeState.subject.loading,
-  updating: storeState.subject.updating
+  updating: storeState.subject.updating,
+  updateSuccess: storeState.subject.updateSuccess
 });
 
 const mapDispatchToProps = {

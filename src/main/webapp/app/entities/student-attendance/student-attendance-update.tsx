@@ -15,25 +15,31 @@ import { getEntities as getLectures } from 'app/entities/lecture/lecture.reducer
 import { getEntity, updateEntity, createEntity, reset } from './student-attendance.reducer';
 import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IStudentAttendanceUpdateState {
   isNew: boolean;
-  studentId: number;
-  lectureId: number;
+  studentId: string;
+  lectureId: string;
 }
 
 export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceUpdateProps, IStudentAttendanceUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentId: 0,
-      lectureId: 0,
+      studentId: '0',
+      lectureId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,7 +66,6 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -158,7 +163,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   lectures: storeState.lecture.entities,
   studentAttendanceEntity: storeState.studentAttendance.entity,
   loading: storeState.studentAttendance.loading,
-  updating: storeState.studentAttendance.updating
+  updating: storeState.studentAttendance.updating,
+  updateSuccess: storeState.studentAttendance.updateSuccess
 });
 
 const mapDispatchToProps = {

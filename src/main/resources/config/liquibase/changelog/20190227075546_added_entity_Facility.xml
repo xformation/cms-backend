@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-
+    
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
@@ -16,12 +16,24 @@
     <!--
         Added the entity Facility.
     -->
-    <changeSet id="20190226100717-1" author="jhipster">
+    <changeSet id="20190227075546-1" author="jhipster">
         <createTable tableName="facility">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="facility_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="academic_year_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

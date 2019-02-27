@@ -27,8 +27,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -217,10 +220,8 @@ public class StudentResourceIntTest {
     @Autowired
     private StudentRepository studentRepository;
 
-
     @Autowired
     private StudentMapper studentMapper;
-    
 
     @Autowired
     private StudentService studentService;
@@ -245,6 +246,9 @@ public class StudentResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restStudentMockMvc;
 
     private Student student;
@@ -257,7 +261,8 @@ public class StudentResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -267,56 +272,56 @@ public class StudentResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Student createEntity(EntityManager em) {
-        Student student = new Student();
-        student.studentName(DEFAULT_STUDENT_NAME);
-        student.studentMiddleName(DEFAULT_STUDENT_MIDDLE_NAME);
-        student.studentLastName(DEFAULT_STUDENT_LAST_NAME);
-        student.fatherName(DEFAULT_FATHER_NAME);
-        student.fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME);
-        student.fatherLastName(DEFAULT_FATHER_LAST_NAME);
-        student.motherName(DEFAULT_MOTHER_NAME);
-        student.motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME);
-        student.motherLastName(DEFAULT_MOTHER_LAST_NAME);
-        student.aadharNo(DEFAULT_AADHAR_NO);
-        student.setDateOfBirth(DEFAULT_DATE_OF_BIRTH);
-        student.placeOfBirth(DEFAULT_PLACE_OF_BIRTH);
-        student.religion(DEFAULT_RELIGION);
-        student.caste(DEFAULT_CASTE);
-        student.subCaste(DEFAULT_SUB_CASTE);
-        student.age(DEFAULT_AGE);
-        student.sex(DEFAULT_SEX);
-        student.bloodGroup(DEFAULT_BLOOD_GROUP);
-        student.addressLineOne(DEFAULT_ADDRESS_LINE_ONE);
-        student.addressLineTwo(DEFAULT_ADDRESS_LINE_TWO);
-        student.addressLineThree(DEFAULT_ADDRESS_LINE_THREE);
-        student.town(DEFAULT_TOWN);
-        student.state(DEFAULT_STATE);
-        student.country(DEFAULT_COUNTRY);
-        student.pincode(DEFAULT_PINCODE);
-        student.studentContactNumber(DEFAULT_STUDENT_CONTACT_NUMBER);
-        student.alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER);
-        student.studentEmailAddress(DEFAULT_STUDENT_EMAIL_ADDRESS);
-        student.alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS);
-        student.relationWithStudent(DEFAULT_RELATION_WITH_STUDENT);
-        student.name(DEFAULT_NAME);
-        student.middleName(DEFAULT_MIDDLE_NAME);
-        student.lastName(DEFAULT_LAST_NAME);
-        student.contactNo(DEFAULT_CONTACT_NO);
-        student.emailAddress(DEFAULT_EMAIL_ADDRESS);
-        student.transport(DEFAULT_TRANSPORT);
-        student.mess(DEFAULT_MESS);
-        student.gym(DEFAULT_GYM);
-        student.culturalClass(DEFAULT_CULTURAL_CLASS);
-        student.library(DEFAULT_LIBRARY);
-        student.sports(DEFAULT_SPORTS);
-        student.swimming(DEFAULT_SWIMMING);
-        student.extraClass(DEFAULT_EXTRA_CLASS);
-        student.handicrafts(DEFAULT_HANDICRAFTS);
-        student.add(DEFAULT_ADD);
-        student.uploadPhoto(DEFAULT_UPLOAD_PHOTO);
-        student.admissionNo(DEFAULT_ADMISSION_NO);
-        student.rollNo(DEFAULT_ROLL_NO);
-        student.studentType(DEFAULT_STUDENT_TYPE);
+        Student student = new Student()
+            .studentName(DEFAULT_STUDENT_NAME)
+            .studentMiddleName(DEFAULT_STUDENT_MIDDLE_NAME)
+            .studentLastName(DEFAULT_STUDENT_LAST_NAME)
+            .fatherName(DEFAULT_FATHER_NAME)
+            .fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME)
+            .fatherLastName(DEFAULT_FATHER_LAST_NAME)
+            .motherName(DEFAULT_MOTHER_NAME)
+            .motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME)
+            .motherLastName(DEFAULT_MOTHER_LAST_NAME)
+            .aadharNo(DEFAULT_AADHAR_NO)
+            .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
+            .placeOfBirth(DEFAULT_PLACE_OF_BIRTH)
+            .religion(DEFAULT_RELIGION)
+            .caste(DEFAULT_CASTE)
+            .subCaste(DEFAULT_SUB_CASTE)
+            .age(DEFAULT_AGE)
+            .sex(DEFAULT_SEX)
+            .bloodGroup(DEFAULT_BLOOD_GROUP)
+            .addressLineOne(DEFAULT_ADDRESS_LINE_ONE)
+            .addressLineTwo(DEFAULT_ADDRESS_LINE_TWO)
+            .addressLineThree(DEFAULT_ADDRESS_LINE_THREE)
+            .town(DEFAULT_TOWN)
+            .state(DEFAULT_STATE)
+            .country(DEFAULT_COUNTRY)
+            .pincode(DEFAULT_PINCODE)
+            .studentContactNumber(DEFAULT_STUDENT_CONTACT_NUMBER)
+            .alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER)
+            .studentEmailAddress(DEFAULT_STUDENT_EMAIL_ADDRESS)
+            .alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStudent(DEFAULT_RELATION_WITH_STUDENT)
+            .name(DEFAULT_NAME)
+            .middleName(DEFAULT_MIDDLE_NAME)
+            .lastName(DEFAULT_LAST_NAME)
+            .contactNo(DEFAULT_CONTACT_NO)
+            .emailAddress(DEFAULT_EMAIL_ADDRESS)
+            .transport(DEFAULT_TRANSPORT)
+            .mess(DEFAULT_MESS)
+            .gym(DEFAULT_GYM)
+            .culturalClass(DEFAULT_CULTURAL_CLASS)
+            .library(DEFAULT_LIBRARY)
+            .sports(DEFAULT_SPORTS)
+            .swimming(DEFAULT_SWIMMING)
+            .extraClass(DEFAULT_EXTRA_CLASS)
+            .handicrafts(DEFAULT_HANDICRAFTS)
+            .add(DEFAULT_ADD)
+            .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
+            .admissionNo(DEFAULT_ADMISSION_NO)
+            .rollNo(DEFAULT_ROLL_NO)
+            .studentType(DEFAULT_STUDENT_TYPE);
         // Add required entity
         Department department = DepartmentResourceIntTest.createEntity(em);
         em.persist(department);
@@ -1431,7 +1436,6 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())));
     }
     
-
     @Test
     @Transactional
     public void getStudent() throws Exception {
@@ -1493,6 +1497,7 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.rollNo").value(DEFAULT_ROLL_NO.toString()))
             .andExpect(jsonPath("$.studentType").value(DEFAULT_STUDENT_TYPE.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingStudent() throws Exception {
@@ -1513,56 +1518,56 @@ public class StudentResourceIntTest {
         Student updatedStudent = studentRepository.findById(student.getId()).get();
         // Disconnect from session so that the updates on updatedStudent are not directly saved in db
         em.detach(updatedStudent);
-        //updatedStudent
-        updatedStudent.studentName(UPDATED_STUDENT_NAME);
-        updatedStudent.studentMiddleName(UPDATED_STUDENT_MIDDLE_NAME);
-        updatedStudent.studentLastName(UPDATED_STUDENT_LAST_NAME);
-        updatedStudent.fatherName(UPDATED_FATHER_NAME);
-        updatedStudent.fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME);
-        updatedStudent.fatherLastName(UPDATED_FATHER_LAST_NAME);
-        updatedStudent.motherName(UPDATED_MOTHER_NAME);
-        updatedStudent.motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME);
-        updatedStudent.motherLastName(UPDATED_MOTHER_LAST_NAME);
-        updatedStudent.aadharNo(UPDATED_AADHAR_NO);
-        updatedStudent.setDateOfBirth(UPDATED_DATE_OF_BIRTH);
-        updatedStudent.placeOfBirth(UPDATED_PLACE_OF_BIRTH);
-        updatedStudent.religion(UPDATED_RELIGION);
-        updatedStudent.caste(UPDATED_CASTE);
-        updatedStudent.subCaste(UPDATED_SUB_CASTE);
-        updatedStudent.age(UPDATED_AGE);
-        updatedStudent.sex(UPDATED_SEX);
-        updatedStudent.bloodGroup(UPDATED_BLOOD_GROUP);
-        updatedStudent.addressLineOne(UPDATED_ADDRESS_LINE_ONE);
-        updatedStudent.addressLineTwo(UPDATED_ADDRESS_LINE_TWO);
-        updatedStudent.addressLineThree(UPDATED_ADDRESS_LINE_THREE);
-        updatedStudent.town(UPDATED_TOWN);
-        updatedStudent.state(UPDATED_STATE);
-        updatedStudent.country(UPDATED_COUNTRY);
-        updatedStudent.pincode(UPDATED_PINCODE);
-        updatedStudent.studentContactNumber(UPDATED_STUDENT_CONTACT_NUMBER);
-        updatedStudent.alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER);
-        updatedStudent.studentEmailAddress(UPDATED_STUDENT_EMAIL_ADDRESS);
-        updatedStudent.alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS);
-        updatedStudent.relationWithStudent(UPDATED_RELATION_WITH_STUDENT);
-        updatedStudent.name(UPDATED_NAME);
-        updatedStudent.middleName(UPDATED_MIDDLE_NAME);
-        updatedStudent.lastName(UPDATED_LAST_NAME);
-        updatedStudent.contactNo(UPDATED_CONTACT_NO);
-        updatedStudent.emailAddress(UPDATED_EMAIL_ADDRESS);
-        updatedStudent.transport(UPDATED_TRANSPORT);
-        updatedStudent.mess(UPDATED_MESS);
-        updatedStudent.gym(UPDATED_GYM);
-        updatedStudent.culturalClass(UPDATED_CULTURAL_CLASS);
-        updatedStudent.library(UPDATED_LIBRARY);
-        updatedStudent.sports(UPDATED_SPORTS);
-        updatedStudent.swimming(UPDATED_SWIMMING);
-        updatedStudent.extraClass(UPDATED_EXTRA_CLASS);
-        updatedStudent.handicrafts(UPDATED_HANDICRAFTS);
-        updatedStudent.add(UPDATED_ADD);
-        updatedStudent.uploadPhoto(UPDATED_UPLOAD_PHOTO);
-        updatedStudent.admissionNo(UPDATED_ADMISSION_NO);
-        updatedStudent.rollNo(UPDATED_ROLL_NO);
-        updatedStudent.studentType(UPDATED_STUDENT_TYPE);
+        updatedStudent
+            .studentName(UPDATED_STUDENT_NAME)
+            .studentMiddleName(UPDATED_STUDENT_MIDDLE_NAME)
+            .studentLastName(UPDATED_STUDENT_LAST_NAME)
+            .fatherName(UPDATED_FATHER_NAME)
+            .fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME)
+            .fatherLastName(UPDATED_FATHER_LAST_NAME)
+            .motherName(UPDATED_MOTHER_NAME)
+            .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
+            .motherLastName(UPDATED_MOTHER_LAST_NAME)
+            .aadharNo(UPDATED_AADHAR_NO)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .placeOfBirth(UPDATED_PLACE_OF_BIRTH)
+            .religion(UPDATED_RELIGION)
+            .caste(UPDATED_CASTE)
+            .subCaste(UPDATED_SUB_CASTE)
+            .age(UPDATED_AGE)
+            .sex(UPDATED_SEX)
+            .bloodGroup(UPDATED_BLOOD_GROUP)
+            .addressLineOne(UPDATED_ADDRESS_LINE_ONE)
+            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
+            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
+            .town(UPDATED_TOWN)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY)
+            .pincode(UPDATED_PINCODE)
+            .studentContactNumber(UPDATED_STUDENT_CONTACT_NUMBER)
+            .alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
+            .studentEmailAddress(UPDATED_STUDENT_EMAIL_ADDRESS)
+            .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStudent(UPDATED_RELATION_WITH_STUDENT)
+            .name(UPDATED_NAME)
+            .middleName(UPDATED_MIDDLE_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .contactNo(UPDATED_CONTACT_NO)
+            .emailAddress(UPDATED_EMAIL_ADDRESS)
+            .transport(UPDATED_TRANSPORT)
+            .mess(UPDATED_MESS)
+            .gym(UPDATED_GYM)
+            .culturalClass(UPDATED_CULTURAL_CLASS)
+            .library(UPDATED_LIBRARY)
+            .sports(UPDATED_SPORTS)
+            .swimming(UPDATED_SWIMMING)
+            .extraClass(UPDATED_EXTRA_CLASS)
+            .handicrafts(UPDATED_HANDICRAFTS)
+            .add(UPDATED_ADD)
+            .uploadPhoto(UPDATED_UPLOAD_PHOTO)
+            .admissionNo(UPDATED_ADMISSION_NO)
+            .rollNo(UPDATED_ROLL_NO)
+            .studentType(UPDATED_STUDENT_TYPE);
         StudentDTO studentDTO = studentMapper.toDto(updatedStudent);
 
         restStudentMockMvc.perform(put("/api/students")
@@ -1636,7 +1641,7 @@ public class StudentResourceIntTest {
         // Create the Student
         StudentDTO studentDTO = studentMapper.toDto(student);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restStudentMockMvc.perform(put("/api/students")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
@@ -1658,7 +1663,7 @@ public class StudentResourceIntTest {
 
         int databaseSizeBeforeDelete = studentRepository.findAll().size();
 
-        // Get the student
+        // Delete the student
         restStudentMockMvc.perform(delete("/api/students/{id}", student.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -1683,41 +1688,41 @@ public class StudentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(student.getId().intValue())))
-            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].studentMiddleName").value(hasItem(DEFAULT_STUDENT_MIDDLE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].studentLastName").value(hasItem(DEFAULT_STUDENT_LAST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME)))
+            .andExpect(jsonPath("$.[*].studentMiddleName").value(hasItem(DEFAULT_STUDENT_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].studentLastName").value(hasItem(DEFAULT_STUDENT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME)))
+            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME)))
+            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME)))
             .andExpect(jsonPath("$.[*].aadharNo").value(hasItem(DEFAULT_AADHAR_NO.intValue())))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
-            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH)))
             .andExpect(jsonPath("$.[*].religion").value(hasItem(DEFAULT_RELIGION.toString())))
             .andExpect(jsonPath("$.[*].caste").value(hasItem(DEFAULT_CASTE.toString())))
-            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE.toString())))
+            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE)))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
             .andExpect(jsonPath("$.[*].bloodGroup").value(hasItem(DEFAULT_BLOOD_GROUP.toString())))
-            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE.toString())))
-            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO.toString())))
-            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE.toString())))
-            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN.toString())))
-            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
-            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY.toString())))
+            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE)))
+            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO)))
+            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE)))
+            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN)))
+            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)))
+            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY)))
             .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.intValue())))
             .andExpect(jsonPath("$.[*].studentContactNumber").value(hasItem(DEFAULT_STUDENT_CONTACT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].studentEmailAddress").value(hasItem(DEFAULT_STUDENT_EMAIL_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].studentEmailAddress").value(hasItem(DEFAULT_STUDENT_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS)))
             .andExpect(jsonPath("$.[*].relationWithStudent").value(hasItem(DEFAULT_RELATION_WITH_STUDENT.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
             .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
-            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS)))
             .andExpect(jsonPath("$.[*].transport").value(hasItem(DEFAULT_TRANSPORT.toString())))
             .andExpect(jsonPath("$.[*].mess").value(hasItem(DEFAULT_MESS.toString())))
             .andExpect(jsonPath("$.[*].gym").value(hasItem(DEFAULT_GYM.toString())))
@@ -1730,7 +1735,7 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].add").value(hasItem(DEFAULT_ADD.toString())))
             .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
             .andExpect(jsonPath("$.[*].admissionNo").value(hasItem(DEFAULT_ADMISSION_NO.intValue())))
-            .andExpect(jsonPath("$.[*].rollNo").value(hasItem(DEFAULT_ROLL_NO.toString())))
+            .andExpect(jsonPath("$.[*].rollNo").value(hasItem(DEFAULT_ROLL_NO)))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())));
     }
 

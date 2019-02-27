@@ -10,9 +10,11 @@ export interface IBankAccounts {
   nameOfBank?: NameOfBank;
   accountNumber?: number;
   typeOfAccount?: string;
-  ifsCode?: string;
-  branch?: string;
+  ifscCode?: string;
+  branchAddress?: string;
   corporateId?: number;
+  branchId?: number;
+  collegeId?: number;
 }
 
 export const defaultValue: Readonly<IBankAccounts> = {};

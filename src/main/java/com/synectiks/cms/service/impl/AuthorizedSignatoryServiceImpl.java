@@ -93,8 +93,7 @@ public class AuthorizedSignatoryServiceImpl implements AuthorizedSignatoryServic
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AuthorizedSignatory : {}", id);
-        authorizedSignatoryRepository.deleteById(id);
+        log.debug("Request to delete AuthorizedSignatory : {}", id);        authorizedSignatoryRepository.deleteById(id);
         authorizedSignatorySearchRepository.deleteById(id);
     }
 

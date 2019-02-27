@@ -50,7 +50,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherDTO save(TeacherDTO teacherDTO) {
         log.debug("Request to save Teacher : {}", teacherDTO);
-
         Teacher teacher = teacherMapper.toEntity(teacherDTO);
         teacher = teacherRepository.save(teacher);
         TeacherDTO result = teacherMapper.toDto(teacher);
@@ -94,8 +93,7 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Teacher : {}", id);
-        teacherRepository.deleteById(id);
+        log.debug("Request to delete Teacher : {}", id);        teacherRepository.deleteById(id);
         teacherSearchRepository.deleteById(id);
     }
 
