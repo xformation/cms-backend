@@ -46,8 +46,34 @@ Before you can build this project, you must install and configure the following 
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 4. [Yarn][]: We use Yarn to manage Node dependencies.
    Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
+5. We do backend development mostly inside the intelli jidea
 
-# How the Application is organized 
+Though we don't use jhipster generated UI , but the UI is much helpful for test purpose. So in build process we will mention UI building steps also. In production environment , we only build the java services.
+
+# How to build the application 
+
+For backend build --
+Simply run the following command 
+./mvnw 
+for windows - mvnw 
+This should build the entire application. Before starting the service , you need to start ElasticSearch application , the application uses ealsticsearch to index its records.
+To connect with database, you can make the following config changes inside -
+src/main/resources/config/application-dev.yml
+datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://localhost:5432/cms
+        username: postgres
+        password: postgres
+If you have a right postgresql database and elasticsearch database, the ./mvnw should be started properly.
+
+To start the application with some sample data, you can import backup.sql file in your postgresql database as follows:
+
+psql --host="localhost" --port="5432" --username="postgres" --password="postgres" --dbname="cms" --file="backup.sql"
+
+The backup.sql is under the root directory of github.
+
+
+
 After installing Node, you should be able to run the following command to install development tools.
 You will only need to run this command when dependencies change in [package.json](package.json).
 
