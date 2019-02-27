@@ -11,6 +11,9 @@ This application was generated using JHipster 5.1.0, you can find documentation 
 ## Service Architecture 
 
 ![Alt text](./backend-architecture.png?raw=true "Service Architecture")
+
+Most of the business logic is implemented in graphQL interface interacting with common model & services.
+
 # Structure of the Project
 
 Since some part of its model &  rest part is generated from jhipster , it follows some common pattern of typical jhipster project. The jhipster specific source code & directories are as follows:
@@ -30,6 +33,8 @@ The graphql resolvers and mutation are in src/main/java/com/synectiks/cms/graphq
 Some of the common services , like academic subjects and syllabus setup etc are located in :
 
 src/main/java/com/synectiks/cms/business/service/
+
+A good point to refer an example service is to follow LectureService.java , where we are processing the entire academic calender.
 
 ## Development Environent 
 
