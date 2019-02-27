@@ -8,6 +8,8 @@ This application was generated using JHipster 5.1.0, you can find documentation 
 2. Reuse its  JWT authentication , localization , internationilaztion inbuilt functionalties.
 3. Most imporatnatly use its inbuilt liquibase for upgrade.
 
+## Service Architecture 
+
 # Structure of the Project
 
 Since some part of its model &  rest part is generated from jhipster , it follows some common pattern of typical jhipster project. The jhipster specific source code & directories are as follows:
@@ -20,20 +22,26 @@ Since some part of its model &  rest part is generated from jhipster , it follow
 Some important locations of most of our code base is :
 
 src/model/ -- This is the location for our model jdl file and some grafql query scripts.
+model.jdl is the model file.
 
+The graphql resolvers and mutation are in src/main/java/com/synectiks/cms/graphql/ folder.
 
-## Development
+Some of the common services , like academic subjects and syllabus setup etc are located in :
+
+src/main/java/com/synectiks/cms/business/service/
+
+## Development Environent 
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
+1. [maven][]: We use maven for building dependencies. You can install maven from apache site.
+2. [java] -- This is build and run by oracle jdk1.8 environment , you can install oracle jdk1.8 from oracle site
+3. [Node.js][]: We use Node to run a development web server and build the project.
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
-2. [Yarn][]: We use Yarn to manage Node dependencies.
+4. [Yarn][]: We use Yarn to manage Node dependencies.
    Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
-3. [maven][]: We use maven for building dependencies. You can install maven from apache site.
-4. [java] -- This is build and run by oracle jdk1.8 environment , you can install oracle jdk1.8 from oracle site
 
-How the Application is organized 
+# How the Application is organized 
 After installing Node, you should be able to run the following command to install development tools.
 You will only need to run this command when dependencies change in [package.json](package.json).
 
