@@ -3,6 +3,7 @@ package com.synectiks.cms.web.rest;
 import java.util.List;
 import java.util.Map;
 
+import com.synectiks.cms.domain.Teacher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,13 @@ public class AcademicSubjectRestController {
 		logger.info("Returning list of subjects.");
 		return list;
 	}
-	
-	
+
+    @RequestMapping(method = RequestMethod.GET, value = "/academicsubject/getallteachers")
+    public List<Teacher> getAllTeachers(@RequestParam Map<String, String> dataMap) {
+        List<Teacher> list = this.academicSubjectService.getAllTeachers(dataMap);
+        logger.info("Returning list of teachers.");
+        return list;
+    }
 	
 	/**
 	 * createSubjects method will create an entry in subject and teach table.

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.repository.TeacherRepository;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -15,12 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
@@ -39,6 +35,9 @@ public class AcademicSubjectService {
 
 	@Autowired
 	private TeachRepository teachRepository;
+
+    @Autowired
+    private TeacherRepository teacherRepository;
 
 	@Autowired
 	CommonService commonService;
@@ -146,11 +145,11 @@ public class AcademicSubjectService {
      return res;
 
     }
-    
-    public List<Subject> getAcademicSubjects(AcademicSubjectQueryPayload academicSubjectQueryPayload) {
-        List<Subject> subjectList = getSubjectList(Long.valueOf(academicSubjectQueryPayload.getDepartmentId()), 
-        		Long.valueOf(academicSubjectQueryPayload.getBatchId()));
-        return subjectList;
+
+        public List<Subject> getAcademicSubjects(AcademicSubjectQueryPayload academicSubjectQueryPayload) {
+            List<Subject> subjectList = getSubjectList(Long.valueOf(academicSubjectQueryPayload.getDepartmentId()),
+                Long.valueOf(academicSubjectQueryPayload.getBatchId()));
+            return subjectList;
     }
 
     private List<Subject> getSubjectList(Long departmentId, Long batchId)  {
@@ -189,8 +188,27 @@ public class AcademicSubjectService {
 		logger.info("Total subject retrieved: "+list.size());
 		return list;
 	}
-    
-    
+
+    public List<Teacher> getAllTeachers(Map<String, String> dataMap) {
+        Teacher teacher = new Teacher();
+
+        if (dataMap.containsKey("deptId")) {
+            String deptId = dataMap.get("deptId");
+            Department dt = commonService.getDepartmentById(Long.parseLong(deptId));
+            logger.debug("Department retrieved by given department id : "+dt.toString());
+            teacher.setDepartment(dt);
+        }
+        if (dataMap.containsKey("branchId")) {
+            String branchId = dataMap.get("branchId");
+            Branch br = commonService.getBranchById(Long.parseLong(branchId));
+            logger.debug("Branch retrieved by given branch id : "+br.toString());
+            teacher.setBranch(br);
+        }
+        Example<Teacher> example = Example.of(teacher);
+        List<Teacher> list = this.teacherRepository.findAll(example);
+        logger.info("Total subject retrieved: "+list.size());
+        return list;
+    }
     
     @Transactional(propagation=Propagation.REQUIRED)
 	public void createSubjects(List<AcademicSubjectDTO> list) {

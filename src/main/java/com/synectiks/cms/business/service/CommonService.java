@@ -2,20 +2,13 @@ package com.synectiks.cms.business.service;
 
 import java.util.Optional;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
-
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.TeacherRepository;
 
 @Component
 public class CommonService {
@@ -30,6 +23,10 @@ public class CommonService {
 
 	@Autowired
 	private BatchRepository batchRepository;
+
+
+    @Autowired
+    private BranchRepository branchRepository;
 	
 	@Autowired
 	private TeacherRepository teacherRepository;
@@ -66,6 +63,17 @@ public class CommonService {
 		}
 		return null;
 	}
+
+    public Branch getBranchById(Long branchId) {
+        Branch branch = new Branch();
+        branch.setId(branchId);;
+        Example<Branch> example = Example.of(branch);
+        Optional<Branch> newBr = this.branchRepository.findOne(example);
+        if(newBr.isPresent()) {
+            return newBr.get();
+        }
+        return null;
+    }
 	
 	public Teacher getTeacherById(Long teacherId) {
 		Teacher tchr = new Teacher();
