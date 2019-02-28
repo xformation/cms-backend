@@ -9,7 +9,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -134,8 +133,8 @@ public class Invoice implements Serializable {
         return this;
     }
 
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
+    public void setInvoiceNumber(Long invoiceNumber) {
+        this.invoiceNumber = this.invoiceNumber;
     }
 
     public Long getAmountPaid() {

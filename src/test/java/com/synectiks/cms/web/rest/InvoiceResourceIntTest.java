@@ -25,8 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -225,7 +223,7 @@ public class InvoiceResourceIntTest {
     public void checkInvoiceNumberIsRequired() throws Exception {
         int databaseSizeBeforeTest = invoiceRepository.findAll().size();
         // set the field null
-        invoice.setInvoiceNumber(null);
+        invoice.setInvoiceNumber(invoiceNumber);
 
         // Create the Invoice, which fails.
         InvoiceDTO invoiceDTO = invoiceMapper.toDto(invoice);
