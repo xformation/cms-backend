@@ -12,7 +12,7 @@ import { IFacility } from 'app/shared/model/facility.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IFacilityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IFacilityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class FacilityDetail extends React.Component<IFacilityDetailProps> {
   componentDidMount() {

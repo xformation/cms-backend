@@ -93,7 +93,8 @@ public class TermServiceImpl implements TermService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Term : {}", id);        termRepository.deleteById(id);
+        log.debug("Request to delete Term : {}", id);
+        termRepository.deleteById(id);
         termSearchRepository.deleteById(id);
     }
 

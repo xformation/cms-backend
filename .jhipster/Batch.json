@@ -15,8 +15,7 @@
             "relationshipType": "many-to-one",
             "relationshipName": "department",
             "otherEntityName": "department",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "batch"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190118141513",

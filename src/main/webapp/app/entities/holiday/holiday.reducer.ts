@@ -63,6 +63,11 @@ export default (state: HolidayState = initialState, action): HolidayState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_HOLIDAYS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_HOLIDAY_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/holidays';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IHoliday> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<IHoliday> = query => ({
   type: ACTION_TYPES.SEARCH_HOLIDAYS,
-  payload: axios.get<IHoliday>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<IHoliday>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<IHoliday> = (page, size, sort) => ({

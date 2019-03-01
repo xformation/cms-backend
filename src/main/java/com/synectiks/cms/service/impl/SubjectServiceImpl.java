@@ -93,7 +93,8 @@ public class SubjectServiceImpl implements SubjectService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Subject : {}", id);        subjectRepository.deleteById(id);
+        log.debug("Request to delete Subject : {}", id);
+        subjectRepository.deleteById(id);
         subjectSearchRepository.deleteById(id);
     }
 

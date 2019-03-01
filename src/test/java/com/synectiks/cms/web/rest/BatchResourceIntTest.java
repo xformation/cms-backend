@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -54,8 +53,10 @@ public class BatchResourceIntTest {
     @Autowired
     private BatchRepository batchRepository;
 
+
     @Autowired
     private BatchMapper batchMapper;
+    
 
     @Autowired
     private BatchService batchService;
@@ -80,9 +81,6 @@ public class BatchResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restBatchMockMvc;
 
     private Batch batch;
@@ -95,8 +93,7 @@ public class BatchResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -194,6 +191,7 @@ public class BatchResourceIntTest {
             .andExpect(jsonPath("$.[*].batch").value(hasItem(DEFAULT_BATCH.toString())));
     }
     
+
     @Test
     @Transactional
     public void getBatch() throws Exception {
@@ -207,7 +205,6 @@ public class BatchResourceIntTest {
             .andExpect(jsonPath("$.id").value(batch.getId().intValue()))
             .andExpect(jsonPath("$.batch").value(DEFAULT_BATCH.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingBatch() throws Exception {
@@ -255,7 +252,7 @@ public class BatchResourceIntTest {
         // Create the Batch
         BatchDTO batchDTO = batchMapper.toDto(batch);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restBatchMockMvc.perform(put("/api/batches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(batchDTO)))
@@ -277,7 +274,7 @@ public class BatchResourceIntTest {
 
         int databaseSizeBeforeDelete = batchRepository.findAll().size();
 
-        // Delete the batch
+        // Get the batch
         restBatchMockMvc.perform(delete("/api/batches/{id}", batch.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

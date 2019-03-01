@@ -24,7 +24,6 @@ import com.synectiks.cms.graphql.types.Facility.*;
 import com.synectiks.cms.graphql.types.FeeCategory.*;
 import com.synectiks.cms.graphql.types.FeeDetails.*;
 import com.synectiks.cms.graphql.types.Holiday.*;
-import com.synectiks.cms.graphql.types.Invoice.*;
 import com.synectiks.cms.graphql.types.LateFee.*;
 import com.synectiks.cms.graphql.types.Lecture.*;
 import com.synectiks.cms.graphql.types.LegalEntity.*;
@@ -91,7 +90,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final DueDateRepository dueDateRepository;
     private final PaymentRemainderRepository paymentRemainderRepository;
     private final LateFeeRepository lateFeeRepository;
-    private final InvoiceRepository invoiceRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -104,7 +103,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, InvoiceRepository invoiceRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository) {
+    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -134,7 +133,6 @@ public class Mutation implements GraphQLMutationResolver {
         this.facilityRepository = facilityRepository;
         this.transportRouteRepository = transportRouteRepository;
         this.feeDetailsRepository = feeDetailsRepository;
-        this.invoiceRepository = invoiceRepository;
         this.dueDateRepository = dueDateRepository;
         this.paymentRemainderRepository = paymentRemainderRepository;
         this.lateFeeRepository = lateFeeRepository;
@@ -1949,140 +1947,6 @@ public class Mutation implements GraphQLMutationResolver {
         paymentRemainderRepository.delete(paymentRemainder);
         return new RemovePaymentRemainderPayload(Lists.newArrayList(paymentRemainderRepository.findAll()));
     }
-
-    public AddInvoicePayload addInvoice(AddInvoiceInput addInvoiceInput) {
-        FeeCategory feeCategory = feeCategoryRepository.findById(addInvoiceInput.getFeeCategoryId()).get();
-        Branch branch = branchRepository.findById(addInvoiceInput.getBranchId()).get();
-        College college = collegeRepository.findById(addInvoiceInput.getCollegeId()).get();
-        AcademicYear academicYear = academicYearRepository.findById(addInvoiceInput.getAcademicyearId()).get();
-        FeeDetails feeDetails = feeDetailsRepository.findById(addInvoiceInput.getFeeDetailsId()).get();
-        DueDate dueDate = dueDateRepository.findById(addInvoiceInput.getDueDateId()).get();
-        Student student = studentRepository.findById(addInvoiceInput.getStudentId()).get();
-        PaymentRemainder paymentRemainder = paymentRemainderRepository.findById(addInvoiceInput.getPaymentRemainderId()).get();
-        final Invoice invoice   = new Invoice();
-        invoice.setInvoiceNumber(invoiceNumber);
-        invoice.setPaymentDate(addInvoiceInput.getPaymentDate());
-        invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
-        invoice.setAmountPaid(addInvoiceInput.getAmountPaid());
-        invoice.setOnlineTxnRefNumber(addInvoiceInput.getOnlineTxnRefNumber());
-        invoice.setPaymentStatus(addInvoiceInput.getPaymentStatus());
-        invoice.setUpdatedBy(addInvoiceInput.getUpdatedBy());
-        invoice.setUpdatedOn(addInvoiceInput.getUpdatedOn());
-        invoice.setComments(addInvoiceInput.getComments());
-        invoice.setDemandDraftNumber(addInvoiceInput.getDemandDraftNumber());
-        invoice.setChequeNumber(addInvoiceInput.getChequeNumber());
-        invoice.setModeOfPayment(addInvoiceInput.getModeOfPayment());
-        invoice.setNextPaymentDate(addInvoiceInput.getNextPaymentDate());
-        invoice.setFeeCategory(feeCategory);
-        invoice.setFeeDetails(feeDetails);
-        invoice.setDueDate(dueDate);
-        invoice.setPaymentRemainder(paymentRemainder);
-        invoice.setCollege(college);
-        invoice.setBranch(branch);
-        invoice.setAcademicYear(academicYear);
-        invoice.setStudent(student);
-        invoiceRepository.save(invoice);
-        return new AddInvoicePayload(invoice);
-    }
-
-    public UpdateInvoicePayload updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
-        Invoice invoice = invoiceRepository.findById(updateInvoiceInput.getId()).get();
-        if (updateInvoiceInput.getInvoiceNumber() != null) {
-            invoice.setInvoiceNumber(invoiceNumber);
-        }
-
-        if (updateInvoiceInput.getAmountPaid() != null) {
-            invoice.setAmountPaid(updateInvoiceInput.getAmountPaid());
-        }
-
-        if (updateInvoiceInput.getPaymentDate() != null) {
-            invoice.setPaymentDate(updateInvoiceInput.getPaymentDate());
-        }
-
-        if (updateInvoiceInput.getNextPaymentDate() != null) {
-            invoice.setNextPaymentDate(updateInvoiceInput.getNextPaymentDate());
-        }
-        if (updateInvoiceInput.getOutStandingAmount() != null) {
-            invoice.setOutStandingAmount(updateInvoiceInput.getOutStandingAmount());
-        }
-
-        if (updateInvoiceInput.getModeOfPayment() != null) {
-            invoice.setModeOfPayment(updateInvoiceInput.getModeOfPayment());
-        }
-
-        if (updateInvoiceInput.getChequeNumber() != null) {
-            invoice.setChequeNumber(updateInvoiceInput.getChequeNumber());
-        }
-
-        if (updateInvoiceInput.getDemandDraftNumber() != null) {
-            invoice.setDemandDraftNumber(updateInvoiceInput.getDemandDraftNumber());
-        }
-
-        if (updateInvoiceInput.getOnlineTxnRefNumber() != null) {
-            invoice.setOnlineTxnRefNumber(updateInvoiceInput.getOnlineTxnRefNumber());
-        }
-        if (updateInvoiceInput.getPaymentStatus() != null) {
-            invoice.setPaymentStatus(updateInvoiceInput.getPaymentStatus());
-        }
-
-        if (updateInvoiceInput.getComments() != null) {
-            invoice.setComments(updateInvoiceInput.getComments());
-        }
-
-        if (updateInvoiceInput.getUpdatedBy() != null) {
-            invoice.setUpdatedBy(updateInvoiceInput.getUpdatedBy());
-        }
-
-        if (updateInvoiceInput.getUpdatedOn() != null) {
-            invoice.setUpdatedOn(updateInvoiceInput.getUpdatedOn());
-        }
-
-
-        if(updateInvoiceInput.getFeeCategoryId() != null) {
-            FeeCategory feeCategory = feeCategoryRepository.findById(updateInvoiceInput.getFeeCategoryId()).get();
-            invoice.setFeeCategory(feeCategory);
-        }
-        if(updateInvoiceInput.getFeeDetailsId() != null) {
-            FeeDetails feeDetails = feeDetailsRepository.findById(updateInvoiceInput.getFeeDetailsId()).get();
-            invoice.setFeeDetails(feeDetails);
-        }
-        if(updateInvoiceInput.getCollegeId() != null) {
-            College college =collegeRepository.findById(updateInvoiceInput.getCollegeId()).get();
-            invoice.setCollege(college);
-        }
-        if(updateInvoiceInput.getAcademicyearId() != null) {
-            AcademicYear academicYear = academicYearRepository.findById(updateInvoiceInput.getAcademicyearId()).get();
-            invoice.setAcademicYear(academicYear);
-        }
-        if(updateInvoiceInput.getDueDateId() != null) {
-            DueDate dueDate = dueDateRepository.findById(updateInvoiceInput.getDueDateId()).get();
-            invoice.setDueDate(dueDate);
-        }
-        if(updateInvoiceInput.getBranchId() != null) {
-            Branch branch = branchRepository.findById(updateInvoiceInput.getBranchId()).get();
-            invoice.setBranch(branch);
-        }
-
-        if(updateInvoiceInput.getStudentId() != null) {
-            Student student = studentRepository.findById(updateInvoiceInput.getStudentId()).get();
-            invoice.setStudent(student);
-        }
-        if(updateInvoiceInput.getPaymentRemainderId() != null) {
-            PaymentRemainder paymentRemainder = paymentRemainderRepository.findById(updateInvoiceInput.getPaymentRemainderId()).get();
-            invoice.setPaymentRemainder(paymentRemainder);
-        }
-
-        invoiceRepository.save(invoice);
-        return new UpdateInvoicePayload(invoice);
-    }
-
-    public RemoveInvoicePayload removeInvoice(RemoveInvoiceInput removeInvoiceInput) {
-        Invoice invoice = invoiceRepository.findById(removeInvoiceInput.getInvoiceId()).get();
-        invoiceRepository.delete(invoice);
-        return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
-    }
-
-
 
     @Transactional
     public QueryResult updateStudenceAttendanceData(StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {

@@ -9,7 +9,7 @@ import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './student-attendance.reducer';
 
-export interface IStudentAttendanceDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IStudentAttendanceDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class StudentAttendanceDeleteDialog extends React.Component<IStudentAttendanceDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class StudentAttendanceDeleteDialog extends React.Component<IStudentAtten
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.studentAttendance.delete.question">Are you sure you want to delete this StudentAttendance?</ModalBody>
+        <ModalBody>Are you sure you want to delete this StudentAttendance?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-studentAttendance" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

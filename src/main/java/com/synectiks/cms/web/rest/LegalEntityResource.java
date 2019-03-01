@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.LegalEntityService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class LegalEntityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/legal-entities")
+    @Timed
     public ResponseEntity<LegalEntityDTO> createLegalEntity(@Valid @RequestBody LegalEntityDTO legalEntityDTO) throws URISyntaxException {
         log.debug("REST request to save LegalEntity : {}", legalEntityDTO);
         if (legalEntityDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class LegalEntityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/legal-entities")
+    @Timed
     public ResponseEntity<LegalEntityDTO> updateLegalEntity(@Valid @RequestBody LegalEntityDTO legalEntityDTO) throws URISyntaxException {
         log.debug("REST request to update LegalEntity : {}", legalEntityDTO);
         if (legalEntityDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class LegalEntityResource {
      * @return the ResponseEntity with status 200 (OK) and the list of legalEntities in body
      */
     @GetMapping("/legal-entities")
+    @Timed
     public List<LegalEntityDTO> getAllLegalEntities() {
         log.debug("REST request to get all LegalEntities");
         return legalEntityService.findAll();
@@ -94,6 +99,7 @@ public class LegalEntityResource {
      * @return the ResponseEntity with status 200 (OK) and with body the legalEntityDTO, or with status 404 (Not Found)
      */
     @GetMapping("/legal-entities/{id}")
+    @Timed
     public ResponseEntity<LegalEntityDTO> getLegalEntity(@PathVariable Long id) {
         log.debug("REST request to get LegalEntity : {}", id);
         Optional<LegalEntityDTO> legalEntityDTO = legalEntityService.findOne(id);
@@ -107,6 +113,7 @@ public class LegalEntityResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/legal-entities/{id}")
+    @Timed
     public ResponseEntity<Void> deleteLegalEntity(@PathVariable Long id) {
         log.debug("REST request to delete LegalEntity : {}", id);
         legalEntityService.delete(id);
@@ -121,6 +128,7 @@ public class LegalEntityResource {
      * @return the result of the search
      */
     @GetMapping("/_search/legal-entities")
+    @Timed
     public List<LegalEntityDTO> searchLegalEntities(@RequestParam String query) {
         log.debug("REST request to search LegalEntities for query {}", query);
         return legalEntityService.search(query);

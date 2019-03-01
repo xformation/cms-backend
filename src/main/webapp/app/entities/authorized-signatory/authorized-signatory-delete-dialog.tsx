@@ -9,7 +9,7 @@ import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.mode
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './authorized-signatory.reducer';
 
-export interface IAuthorizedSignatoryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAuthorizedSignatoryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AuthorizedSignatoryDeleteDialog extends React.Component<IAuthorizedSignatoryDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class AuthorizedSignatoryDeleteDialog extends React.Component<IAuthorized
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.authorizedSignatory.delete.question">Are you sure you want to delete this AuthorizedSignatory?</ModalBody>
+        <ModalBody>Are you sure you want to delete this AuthorizedSignatory?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-authorizedSignatory" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

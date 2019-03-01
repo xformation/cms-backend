@@ -12,7 +12,7 @@ import { ISubject } from 'app/shared/model/subject.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ISubjectDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ISubjectDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class SubjectDetail extends React.Component<ISubjectDetailProps> {
   componentDidMount() {

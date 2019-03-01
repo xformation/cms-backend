@@ -14,69 +14,69 @@ export default class TermUpdatePage {
     return this.pageTitle;
   }
 
-  async setTermsDescInput(termsDesc) {
-    await this.termsDescInput.sendKeys(termsDesc);
+  setTermsDescInput(termsDesc) {
+    this.termsDescInput.sendKeys(termsDesc);
   }
 
-  async getTermsDescInput() {
+  getTermsDescInput() {
     return this.termsDescInput.getAttribute('value');
   }
 
-  async setStartDateInput(startDate) {
-    await this.startDateInput.sendKeys(startDate);
+  setStartDateInput(startDate) {
+    this.startDateInput.sendKeys(startDate);
   }
 
-  async getStartDateInput() {
+  getStartDateInput() {
     return this.startDateInput.getAttribute('value');
   }
 
-  async setEndDateInput(endDate) {
-    await this.endDateInput.sendKeys(endDate);
+  setEndDateInput(endDate) {
+    this.endDateInput.sendKeys(endDate);
   }
 
-  async getEndDateInput() {
+  getEndDateInput() {
     return this.endDateInput.getAttribute('value');
   }
 
-  async setTermStatusSelect(termStatus) {
-    await this.termStatusSelect.sendKeys(termStatus);
+  setTermStatusSelect(termStatus) {
+    this.termStatusSelect.sendKeys(termStatus);
   }
 
-  async getTermStatusSelect() {
+  getTermStatusSelect() {
     return this.termStatusSelect.element(by.css('option:checked')).getText();
   }
 
-  async termStatusSelectLastOption() {
-    await this.termStatusSelect
+  termStatusSelectLastOption() {
+    this.termStatusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async academicyearSelectLastOption() {
-    await this.academicyearSelect
+  academicyearSelectLastOption() {
+    this.academicyearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async academicyearSelectOption(option) {
-    await this.academicyearSelect.sendKeys(option);
+  academicyearSelectOption(option) {
+    this.academicyearSelect.sendKeys(option);
   }
 
   getAcademicyearSelect() {
     return this.academicyearSelect;
   }
 
-  async getAcademicyearSelectedOption() {
+  getAcademicyearSelectedOption() {
     return this.academicyearSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

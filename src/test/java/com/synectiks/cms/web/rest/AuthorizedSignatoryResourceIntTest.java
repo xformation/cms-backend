@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -80,8 +79,10 @@ public class AuthorizedSignatoryResourceIntTest {
     @Autowired
     private AuthorizedSignatoryRepository authorizedSignatoryRepository;
 
+
     @Autowired
     private AuthorizedSignatoryMapper authorizedSignatoryMapper;
+    
 
     @Autowired
     private AuthorizedSignatoryService authorizedSignatoryService;
@@ -106,9 +107,6 @@ public class AuthorizedSignatoryResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAuthorizedSignatoryMockMvc;
 
     private AuthorizedSignatory authorizedSignatory;
@@ -121,8 +119,7 @@ public class AuthorizedSignatoryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -418,6 +415,7 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER.toString())));
     }
     
+
     @Test
     @Transactional
     public void getAuthorizedSignatory() throws Exception {
@@ -440,7 +438,6 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.panCardNumber").value(DEFAULT_PAN_CARD_NUMBER.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingAuthorizedSignatory() throws Exception {
@@ -506,7 +503,7 @@ public class AuthorizedSignatoryResourceIntTest {
         // Create the AuthorizedSignatory
         AuthorizedSignatoryDTO authorizedSignatoryDTO = authorizedSignatoryMapper.toDto(authorizedSignatory);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restAuthorizedSignatoryMockMvc.perform(put("/api/authorized-signatories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(authorizedSignatoryDTO)))
@@ -528,7 +525,7 @@ public class AuthorizedSignatoryResourceIntTest {
 
         int databaseSizeBeforeDelete = authorizedSignatoryRepository.findAll().size();
 
-        // Delete the authorizedSignatory
+        // Get the authorizedSignatory
         restAuthorizedSignatoryMockMvc.perform(delete("/api/authorized-signatories/{id}", authorizedSignatory.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -553,16 +550,16 @@ public class AuthorizedSignatoryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(authorizedSignatory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].signatoryName").value(hasItem(DEFAULT_SIGNATORY_NAME)))
-            .andExpect(jsonPath("$.[*].signatoryFatherName").value(hasItem(DEFAULT_SIGNATORY_FATHER_NAME)))
-            .andExpect(jsonPath("$.[*].signatoryDesignation").value(hasItem(DEFAULT_SIGNATORY_DESIGNATION)))
-            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1)))
-            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2)))
-            .andExpect(jsonPath("$.[*].address3").value(hasItem(DEFAULT_ADDRESS_3)))
-            .andExpect(jsonPath("$.[*].address4").value(hasItem(DEFAULT_ADDRESS_4)))
-            .andExpect(jsonPath("$.[*].address5").value(hasItem(DEFAULT_ADDRESS_5)))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER)));
+            .andExpect(jsonPath("$.[*].signatoryName").value(hasItem(DEFAULT_SIGNATORY_NAME.toString())))
+            .andExpect(jsonPath("$.[*].signatoryFatherName").value(hasItem(DEFAULT_SIGNATORY_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].signatoryDesignation").value(hasItem(DEFAULT_SIGNATORY_DESIGNATION.toString())))
+            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1.toString())))
+            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2.toString())))
+            .andExpect(jsonPath("$.[*].address3").value(hasItem(DEFAULT_ADDRESS_3.toString())))
+            .andExpect(jsonPath("$.[*].address4").value(hasItem(DEFAULT_ADDRESS_4.toString())))
+            .andExpect(jsonPath("$.[*].address5").value(hasItem(DEFAULT_ADDRESS_5.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+            .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER.toString())));
     }
 
     @Test

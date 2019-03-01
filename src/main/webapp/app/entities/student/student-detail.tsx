@@ -12,7 +12,7 @@ import { IStudent } from 'app/shared/model/student.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IStudentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IStudentDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class StudentDetail extends React.Component<IStudentDetailProps> {
   componentDidMount() {

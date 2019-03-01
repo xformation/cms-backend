@@ -9,7 +9,7 @@ import { ITeacher } from 'app/shared/model/teacher.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './teacher.reducer';
 
-export interface ITeacherDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ITeacherDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class TeacherDeleteDialog extends React.Component<ITeacherDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class TeacherDeleteDialog extends React.Component<ITeacherDeleteDialogPro
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.teacher.delete.question">Are you sure you want to delete this Teacher?</ModalBody>
+        <ModalBody>Are you sure you want to delete this Teacher?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-teacher" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

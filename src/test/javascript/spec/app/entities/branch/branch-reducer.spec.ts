@@ -10,10 +10,8 @@ import reducer, {
   createEntity,
   deleteEntity,
   getEntities,
-  getSearchEntities,
   getEntity,
-  updateEntity,
-  reset
+  updateEntity
 } from 'app/entities/branch/branch.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IBranch, defaultValue } from 'app/shared/model/branch.model';
@@ -62,17 +60,13 @@ describe('Entities reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes(
-        [REQUEST(ACTION_TYPES.FETCH_BRANCH_LIST), REQUEST(ACTION_TYPES.SEARCH_BRANCHES), REQUEST(ACTION_TYPES.FETCH_BRANCH)],
-        {},
-        state => {
-          expect(state).toMatchObject({
-            errorMessage: null,
-            updateSuccess: false,
-            loading: true
-          });
-        }
-      );
+      testMultipleTypes([REQUEST(ACTION_TYPES.FETCH_BRANCH_LIST), REQUEST(ACTION_TYPES.FETCH_BRANCH)], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          loading: true
+        });
+      });
     });
 
     it('should set state to updating', () => {
@@ -88,19 +82,6 @@ describe('Entities reducer tests', () => {
         }
       );
     });
-
-    it('should reset the state', () => {
-      expect(
-        reducer(
-          { ...initialState, loading: true },
-          {
-            type: ACTION_TYPES.RESET
-          }
-        )
-      ).toEqual({
-        ...initialState
-      });
-    });
   });
 
   describe('Failures', () => {
@@ -108,7 +89,6 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_BRANCH_LIST),
-          FAILURE(ACTION_TYPES.SEARCH_BRANCHES),
           FAILURE(ACTION_TYPES.FETCH_BRANCH),
           FAILURE(ACTION_TYPES.CREATE_BRANCH),
           FAILURE(ACTION_TYPES.UPDATE_BRANCH),
@@ -138,33 +118,6 @@ describe('Entities reducer tests', () => {
         ...initialState,
         loading: false,
         entities: payload.data
-      });
-    });
-    it('should search all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.SEARCH_BRANCHES),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entities: payload.data
-      });
-    });
-
-    it('should fetch a single entity', () => {
-      const payload = { data: { 1: 'fake1' } };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_BRANCH),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entity: payload.data
       });
     });
 
@@ -220,18 +173,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-    it('dispatches ACTION_TYPES.SEARCH_BRANCHES actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.SEARCH_BRANCHES)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.SEARCH_BRANCHES),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_BRANCH actions', async () => {
@@ -305,16 +246,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.RESET actions', async () => {
-      const expectedActions = [
-        {
-          type: ACTION_TYPES.RESET
-        }
-      ];
-      await store.dispatch(reset());
-      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

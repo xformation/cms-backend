@@ -13,77 +13,77 @@ export default class AttendanceMasterUpdatePage {
     return this.pageTitle;
   }
 
-  async setDescInput(desc) {
-    await this.descInput.sendKeys(desc);
+  setDescInput(desc) {
+    this.descInput.sendKeys(desc);
   }
 
-  async getDescInput() {
+  getDescInput() {
     return this.descInput.getAttribute('value');
   }
 
-  async batchSelectLastOption() {
-    await this.batchSelect
+  batchSelectLastOption() {
+    this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async batchSelectOption(option) {
-    await this.batchSelect.sendKeys(option);
+  batchSelectOption(option) {
+    this.batchSelect.sendKeys(option);
   }
 
   getBatchSelect() {
     return this.batchSelect;
   }
 
-  async getBatchSelectedOption() {
+  getBatchSelectedOption() {
     return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
-  async sectionSelectLastOption() {
-    await this.sectionSelect
+  sectionSelectLastOption() {
+    this.sectionSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async sectionSelectOption(option) {
-    await this.sectionSelect.sendKeys(option);
+  sectionSelectOption(option) {
+    this.sectionSelect.sendKeys(option);
   }
 
   getSectionSelect() {
     return this.sectionSelect;
   }
 
-  async getSectionSelectedOption() {
+  getSectionSelectedOption() {
     return this.sectionSelect.element(by.css('option:checked')).getText();
   }
 
-  async teachSelectLastOption() {
-    await this.teachSelect
+  teachSelectLastOption() {
+    this.teachSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async teachSelectOption(option) {
-    await this.teachSelect.sendKeys(option);
+  teachSelectOption(option) {
+    this.teachSelect.sendKeys(option);
   }
 
   getTeachSelect() {
     return this.teachSelect;
   }
 
-  async getTeachSelectedOption() {
+  getTeachSelectedOption() {
     return this.teachSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

@@ -82,9 +82,6 @@ enum Frequency {
     WEEKLY, MONTHLY, QUARTERLY, HALFYEARLY, ANNUALLY
 }
 
-enum ModeOfPayment {
-    CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
-}
 
 
 entity Student{
@@ -358,23 +355,6 @@ lateFeeAssignmentFrequency Frequency required
 }
 
 
-entity Invoice {
-invoiceNumber String required
-amountPaid Long required
-paymentDate LocalDate required
-nextPaymentDate LocalDate required
-outStandingAmount Long required
-modeOfPayment ModeOfPayment required
-chequeNumber Long
-demandDraftNumber Long
-onlineTxnRefNumber String
-paymentStatus Status required
-comments String required
-updatedBy String required
-updatedOn LocalDate required
-}
-
-
 relationship ManyToOne {
 Student{department required} to Department ,
 Student{batch required} to Batch ,
@@ -427,14 +407,6 @@ PaymentRemainder{college} to College,
 PaymentRemainder{branch} to Branch,
 LateFee{college} to College,
 LateFee{branch} to Branch,
-Invoice{feeCategory} to FeeCategory,
-Invoice{feeDetails} to FeeDetails,
-Invoice{dueDate} to DueDate,
-Invoice{paymentRemainder} to PaymentRemainder,
-Invoice{college} to College,
-Invoice{branch} to Branch,
-Invoice{student} to Student,
-Invoice{academicYear} to AcademicYear,
 Facility{academicYear} to AcademicYear,
 Facility{branch} to Branch,
 Facility{student} to Student

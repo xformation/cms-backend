@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -59,8 +58,10 @@ public class DepartmentResourceIntTest {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+
     @Autowired
     private DepartmentMapper departmentMapper;
+    
 
     @Autowired
     private DepartmentService departmentService;
@@ -85,9 +86,6 @@ public class DepartmentResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restDepartmentMockMvc;
 
     private Department department;
@@ -100,8 +98,7 @@ public class DepartmentResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -243,6 +240,7 @@ public class DepartmentResourceIntTest {
             .andExpect(jsonPath("$.[*].deptHead").value(hasItem(DEFAULT_DEPT_HEAD.toString())));
     }
     
+
     @Test
     @Transactional
     public void getDepartment() throws Exception {
@@ -258,7 +256,6 @@ public class DepartmentResourceIntTest {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.deptHead").value(DEFAULT_DEPT_HEAD.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingDepartment() throws Exception {
@@ -310,7 +307,7 @@ public class DepartmentResourceIntTest {
         // Create the Department
         DepartmentDTO departmentDTO = departmentMapper.toDto(department);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restDepartmentMockMvc.perform(put("/api/departments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(departmentDTO)))
@@ -332,7 +329,7 @@ public class DepartmentResourceIntTest {
 
         int databaseSizeBeforeDelete = departmentRepository.findAll().size();
 
-        // Delete the department
+        // Get the department
         restDepartmentMockMvc.perform(delete("/api/departments/{id}", department.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -357,9 +354,9 @@ public class DepartmentResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(department.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].deptHead").value(hasItem(DEFAULT_DEPT_HEAD)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].deptHead").value(hasItem(DEFAULT_DEPT_HEAD.toString())));
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -24,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 public class StudentAttendance implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -39,11 +38,11 @@ public class StudentAttendance implements Serializable {
     private String comments;
 
     @ManyToOne
-    @JsonIgnoreProperties("studentAttendances")
+    @JsonIgnoreProperties("")
     private Student student;
 
     @ManyToOne
-    @JsonIgnoreProperties("studentAttendances")
+    @JsonIgnoreProperties("")
     private Lecture lecture;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

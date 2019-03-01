@@ -12,7 +12,7 @@ import { IHoliday } from 'app/shared/model/holiday.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IHolidayDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IHolidayDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class HolidayDetail extends React.Component<IHolidayDetailProps> {
   componentDidMount() {

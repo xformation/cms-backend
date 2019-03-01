@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -57,8 +56,10 @@ public class StudentAttendanceResourceIntTest {
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
 
+
     @Autowired
     private StudentAttendanceMapper studentAttendanceMapper;
+    
 
     @Autowired
     private StudentAttendanceService studentAttendanceService;
@@ -83,9 +84,6 @@ public class StudentAttendanceResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restStudentAttendanceMockMvc;
 
     private StudentAttendance studentAttendance;
@@ -98,8 +96,7 @@ public class StudentAttendanceResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -200,6 +197,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getStudentAttendance() throws Exception {
@@ -214,7 +212,6 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(jsonPath("$.attendanceStatus").value(DEFAULT_ATTENDANCE_STATUS.toString()))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingStudentAttendance() throws Exception {
@@ -264,7 +261,7 @@ public class StudentAttendanceResourceIntTest {
         // Create the StudentAttendance
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))
@@ -286,7 +283,7 @@ public class StudentAttendanceResourceIntTest {
 
         int databaseSizeBeforeDelete = studentAttendanceRepository.findAll().size();
 
-        // Delete the studentAttendance
+        // Get the studentAttendance
         restStudentAttendanceMockMvc.perform(delete("/api/student-attendances/{id}", studentAttendance.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -312,7 +309,7 @@ public class StudentAttendanceResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentAttendance.getId().intValue())))
             .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
 
     @Test

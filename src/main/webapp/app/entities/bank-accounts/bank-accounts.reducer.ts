@@ -63,6 +63,11 @@ export default (state: BankAccountsState = initialState, action): BankAccountsSt
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_BANKACCOUNTS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_BANKACCOUNTS_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/bank-accounts';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IBankAccounts> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<IBankAccounts> = query => ({
   type: ACTION_TYPES.SEARCH_BANKACCOUNTS,
-  payload: axios.get<IBankAccounts>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<IBankAccounts>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<IBankAccounts> = (page, size, sort) => ({

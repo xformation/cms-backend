@@ -17,104 +17,104 @@ export default class BankAccountsUpdatePage {
     return this.pageTitle;
   }
 
-  async setNameOfBankSelect(nameOfBank) {
-    await this.nameOfBankSelect.sendKeys(nameOfBank);
+  setNameOfBankSelect(nameOfBank) {
+    this.nameOfBankSelect.sendKeys(nameOfBank);
   }
 
-  async getNameOfBankSelect() {
+  getNameOfBankSelect() {
     return this.nameOfBankSelect.element(by.css('option:checked')).getText();
   }
 
-  async nameOfBankSelectLastOption() {
-    await this.nameOfBankSelect
+  nameOfBankSelectLastOption() {
+    this.nameOfBankSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async setAccountNumberInput(accountNumber) {
-    await this.accountNumberInput.sendKeys(accountNumber);
+  setAccountNumberInput(accountNumber) {
+    this.accountNumberInput.sendKeys(accountNumber);
   }
 
-  async getAccountNumberInput() {
+  getAccountNumberInput() {
     return this.accountNumberInput.getAttribute('value');
   }
 
-  async setTypeOfAccountInput(typeOfAccount) {
-    await this.typeOfAccountInput.sendKeys(typeOfAccount);
+  setTypeOfAccountInput(typeOfAccount) {
+    this.typeOfAccountInput.sendKeys(typeOfAccount);
   }
 
-  async getTypeOfAccountInput() {
+  getTypeOfAccountInput() {
     return this.typeOfAccountInput.getAttribute('value');
   }
 
-  async setIfscCodeInput(ifscCode) {
-    await this.ifscCodeInput.sendKeys(ifscCode);
+  setIfscCodeInput(ifscCode) {
+    this.ifscCodeInput.sendKeys(ifscCode);
   }
 
-  async getIfscCodeInput() {
+  getIfscCodeInput() {
     return this.ifscCodeInput.getAttribute('value');
   }
 
-  async setBranchAddressInput(branchAddress) {
-    await this.branchAddressInput.sendKeys(branchAddress);
+  setBranchAddressInput(branchAddress) {
+    this.branchAddressInput.sendKeys(branchAddress);
   }
 
-  async getBranchAddressInput() {
+  getBranchAddressInput() {
     return this.branchAddressInput.getAttribute('value');
   }
 
-  async setCorporateIdInput(corporateId) {
-    await this.corporateIdInput.sendKeys(corporateId);
+  setCorporateIdInput(corporateId) {
+    this.corporateIdInput.sendKeys(corporateId);
   }
 
-  async getCorporateIdInput() {
+  getCorporateIdInput() {
     return this.corporateIdInput.getAttribute('value');
   }
 
-  async branchSelectLastOption() {
-    await this.branchSelect
+  branchSelectLastOption() {
+    this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async branchSelectOption(option) {
-    await this.branchSelect.sendKeys(option);
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  async getBranchSelectedOption() {
+  getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  async collegeSelectLastOption() {
-    await this.collegeSelect
+  collegeSelectLastOption() {
+    this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async collegeSelectOption(option) {
-    await this.collegeSelect.sendKeys(option);
+  collegeSelectOption(option) {
+    this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  async getCollegeSelectedOption() {
+  getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

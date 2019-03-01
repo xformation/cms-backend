@@ -35,8 +35,9 @@ export class Term extends React.Component<ITermProps, ITermState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
@@ -98,7 +99,7 @@ export class Term extends React.Component<ITermProps, ITermState> {
                     <TextFormat type="date" value={term.endDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{term.termStatus}</td>
-                  <td>{term.academicyearId ? <Link to={`academic-year/${term.academicyearId}`}>{term.academicyearId}</Link> : ''}</td>
+                  <td>{term.academicyearId ? <Link to={`academicYear/${term.academicyearId}`}>{term.academicyearId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${term.id}`} color="info" size="sm">

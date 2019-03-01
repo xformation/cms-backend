@@ -63,6 +63,11 @@ export default (state: LegalEntityState = initialState, action): LegalEntityStat
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_LEGALENTITIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_LEGALENTITY_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/legal-entities';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ILegalEntity> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ILegalEntity> = query => ({
   type: ACTION_TYPES.SEARCH_LEGALENTITIES,
-  payload: axios.get<ILegalEntity>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ILegalEntity>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ILegalEntity> = (page, size, sort) => ({

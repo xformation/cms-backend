@@ -15,31 +15,25 @@ import { getEntities as getColleges } from 'app/entities/college/college.reducer
 import { getEntity, updateEntity, createEntity, reset } from './bank-accounts.reducer';
 import { IBankAccounts } from 'app/shared/model/bank-accounts.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IBankAccountsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IBankAccountsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IBankAccountsUpdateState {
   isNew: boolean;
-  branchId: string;
-  collegeId: string;
+  branchId: number;
+  collegeId: number;
 }
 
 export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps, IBankAccountsUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      branchId: '0',
-      collegeId: '0',
+      branchId: 0,
+      collegeId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -66,11 +60,46 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/bank-accounts');
+  };
+
+  branchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        branchId: -1
+      });
+    } else {
+      for (const i in this.props.branches) {
+        if (id === this.props.branches[i].id.toString()) {
+          this.setState({
+            branchId: this.props.branches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  collegeUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        collegeId: -1
+      });
+    } else {
+      for (const i in this.props.colleges) {
+        if (id === this.props.colleges[i].id.toString()) {
+          this.setState({
+            collegeId: this.props.colleges[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -117,7 +146,7 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
                   </Label>
                   <AvField
                     id="bank-accounts-accountNumber"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="accountNumber"
                     validate={{
@@ -171,7 +200,7 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
                   </Label>
                   <AvField
                     id="bank-accounts-corporateId"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="corporateId"
                     validate={{
@@ -182,7 +211,7 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="bank-accounts-branch" type="select" className="form-control" name="branchId">
+                  <AvInput id="bank-accounts-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -195,7 +224,7 @@ export class BankAccountsUpdate extends React.Component<IBankAccountsUpdateProps
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="bank-accounts-college" type="select" className="form-control" name="collegeId">
+                  <AvInput id="bank-accounts-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -228,8 +257,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   colleges: storeState.college.entities,
   bankAccountsEntity: storeState.bankAccounts.entity,
   loading: storeState.bankAccounts.loading,
-  updating: storeState.bankAccounts.updating,
-  updateSuccess: storeState.bankAccounts.updateSuccess
+  updating: storeState.bankAccounts.updating
 });
 
 const mapDispatchToProps = {
