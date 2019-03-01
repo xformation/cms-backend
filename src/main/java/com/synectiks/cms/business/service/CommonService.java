@@ -78,7 +78,26 @@ public class CommonService {
 		return null;
 	}
 
+    public List<Invoice> getInvoice(Long invoiceNumber) {
+        Invoice invc = new Invoice();
+        if(invoiceNumber != null){
+            invc.setInvoiceNumber(invoiceNumber);
+        }
+        Example<Invoice> example = Example.of(invc);
+        List<Invoice> newIn = this.invoiceRepository.findAll(example);
+        return newIn;
+    }
 
+    public Student getStudentById(Long studentId) {
+        Student student = new Student();
+        student.setId(studentId);;
+        Example<Student> example = Example.of(student);
+        Optional<Student> newSt = this.studentRepository.findOne(example);
+        if(newSt.isPresent()) {
+            return newSt.get();
+        }
+        return null;
+    }
 
 	
 }

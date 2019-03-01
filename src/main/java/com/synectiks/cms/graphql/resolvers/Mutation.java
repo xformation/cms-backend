@@ -1960,7 +1960,7 @@ public class Mutation implements GraphQLMutationResolver {
         Student student = studentRepository.findById(addInvoiceInput.getStudentId()).get();
         PaymentRemainder paymentRemainder = paymentRemainderRepository.findById(addInvoiceInput.getPaymentRemainderId()).get();
         final Invoice invoice   = new Invoice();
-        invoice.setInvoiceNumber(addInvoiceInput.getInvoiceNumber());
+        invoice.setInvoiceNumber(invoiceNumber);
         invoice.setPaymentDate(addInvoiceInput.getPaymentDate());
         invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
         invoice.setAmountPaid(addInvoiceInput.getAmountPaid());
@@ -1988,7 +1988,7 @@ public class Mutation implements GraphQLMutationResolver {
     public UpdateInvoicePayload updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
         Invoice invoice = invoiceRepository.findById(updateInvoiceInput.getId()).get();
         if (updateInvoiceInput.getInvoiceNumber() != null) {
-            invoice.setInvoiceNumber(updateInvoiceInput.getInvoiceNumber());
+            invoice.setInvoiceNumber(invoiceNumber);
         }
 
         if (updateInvoiceInput.getAmountPaid() != null) {
