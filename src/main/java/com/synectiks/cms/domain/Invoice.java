@@ -133,7 +133,7 @@ public class Invoice implements Serializable {
         return this;
     }
 
-    public void setInvoiceNumber(Long invoiceNumber) {
+    public void setInvoiceNumber(String invoiceNumber) {
         this.invoiceNumber = this.invoiceNumber;
     }
 

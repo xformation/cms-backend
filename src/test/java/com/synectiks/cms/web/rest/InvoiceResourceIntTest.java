@@ -223,7 +223,7 @@ public class InvoiceResourceIntTest {
     public void checkInvoiceNumberIsRequired() throws Exception {
         int databaseSizeBeforeTest = invoiceRepository.findAll().size();
         // set the field null
-        invoice.setInvoiceNumber(invoiceNumber);
+        invoice.setInvoiceNumber(null);
 
         // Create the Invoice, which fails.
         InvoiceDTO invoiceDTO = invoiceMapper.toDto(invoice);
