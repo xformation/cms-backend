@@ -21,6 +21,7 @@ mutation addCountry($input:AddCountryInput!){
 
 State:
 
+
 mutation addState($input:AddStateInput!){
   addState(input: $input){
     state{
@@ -28,10 +29,13 @@ mutation addState($input:AddStateInput!){
       stateName
       divisionType
 	  stateCode
-	  countryId
+	  country{
+      id
+    }
+    }
     }
   }
-}
+
 
 {
   "input": {
@@ -183,7 +187,7 @@ mutation addAcademicYear($input: AddAcademicYearInput!){
     year
     startDate
     endDate
-    desc
+
   }
  }
 }
@@ -192,8 +196,7 @@ mutation addAcademicYear($input: AddAcademicYearInput!){
   "input": {
    "year": 2019,
     "startDate": "2019-01-17",
-    "endDate": "2019-01-18",
-    "desc": "desc"
+    "endDate": "2019-01-18"
   }
 }
 
@@ -238,16 +241,31 @@ mutation addFacility($input: AddFacilityInput!){
     facility{
       id
      facilityName
+      academicYear{
+        id
+      }
+      branch{
+        id
+      }
+      student{
+        id
+      }
+
 		}
 	}
 }
 
 Input: {
-  "input": {
-   "facilityName":   "transport"
 
+{
+  "input": {
+    "facilityName": "transport",
+    "academicyearId": 1201,
+    "branchId": 1151,
+    "studentId": 1401
   }
 }
+
 
 Transport:
 
@@ -333,16 +351,149 @@ Input: {
 }
 
 
+DueDate:
+
+mutation addDueDate($input:AddDueDateInput!){
+  	addDueDate(input: $input){
+    dueDate{
+      id
+      paymentMethod
+      installments
+      dayDesc
+      frequency
+
+    college{
+        id
+      }
+       branch{
+        id
+      }
+    }
+  }
+}
+
+
+	{
+      "input": {
+        "paymentMethod": "online",
+        "installments": 1,
+        "dayDesc": "monday",
+        "frequency": "MONTHLY",
+        "collegeId": 1151,
+        "branchId": 1201
+
+      }
+    }
+
+PaymentRemainder:
+
+mutation addPaymentRemainder($input:AddPaymentRemainderInput!){
+  	addPaymentRemainder(input: $input){
+    paymentRemainder{
+      id
+      feeRemainder
+      noticeDay
+      overDueRemainder
+       remainderRecipients
+      dueDate{
+        id
+      }
+      college{
+        id
+      }
+      branch{
+        id
+      }
+    }
+  }
+}
 
 {
   "input": {
-   "id": 1051,
-   "year": 2019,
-    "startDate": "2018-06-01",
-    "endDate": "2019-06-01",
-    "desc": "desc"
+    "feeRemainder": "ACTIVE",
+    "noticeDay": 5,
+    "overDueRemainder": "ACTIVE",
+    "remainderRecipients": "done",
+    "dueDateId": 1251,
+    "collegeId": 1151,
+    "branchId": 1201
   }
 }
+Invoice :
+
+mutation addInvoice($input:AddInvoiceInput!){
+  	addInvoice(input: $input){
+    invoice{
+      id
+				invoiceNumber
+      amountPaid
+      amountPaid
+      paymentDate
+      nextPaymentDate
+      outStandingAmount
+      modeOfPayment
+      chequeNumber
+      demandDraftNumber
+      onlineTxnRefNumber
+      paymentStatus
+      comments
+      updatedBy
+      feeCategory{
+        id
+      }
+      feeDetails{
+        id
+      }
+
+      dueDate{
+        id
+      }
+      paymentRemainder{
+        id
+      }
+
+      college{
+        id
+      }
+       branch{
+        id
+      }
+      student{
+        id
+      }
+      academicYear{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+    "invoiceNumber": "db45",
+    "amountPaid": "451661",
+    "paymentDate": "2018-04-14",
+    "nextPaymentDate": "2018-06-18",
+    "outStandingAmount": "11412",
+    "modeOfPayment": "CARD",
+    "chequeNumber": "41155",
+    "demandDraftNumber": "5411",
+    "onlineTxnRefNumber": "15116",
+    "paymentStatus": "ACTIVE",
+    "comments": "paid",
+    "updatedBy": "rahul",
+    "updatedOn": "2018-06-18",
+    "feeCategoryId": 1551,
+    "feeDetailsId": 1701,
+    "dueDateId": 1251,
+    "paymentRemainderId": 1501,
+    "collegeId": 1151,
+    "branchId": 1201,
+    "studentId": 1451,
+    "academicyearId": 951
+  }
+}
+
 
 
 mutation addDepartment($input: AddDepartmentInput!){
@@ -491,7 +642,7 @@ mutation updateSection($input: UpdateSectionInput!){
 
 mutation addStudent($input: AddStudentInput!){
   	addStudent(input: $input){
-    student
+  student
   {
    id
    studentName
@@ -533,6 +684,20 @@ mutation addStudent($input: AddStudentInput!){
     admissionNo
     rollNo
     studentType
+    transport
+    mess
+    gym
+    culturalClass
+    library
+    sports
+    swimming
+    extraClass
+    handicrafts
+    addressLineOne
+    addressLineTwo
+    addressLineThree
+    studentType
+    handicrafts
    batch
     {
       id
@@ -549,6 +714,7 @@ mutation addStudent($input: AddStudentInput!){
   }
  }
 }
+
 
 {
   "input": {
@@ -590,13 +756,24 @@ mutation addStudent($input: AddStudentInput!){
     "uploadPhoto": 123,
     "admissionNo": 444334,
     "rollNo": "13p31ao595",
-    "studentType": "free",
-    "batchId": 1151,
-    "sectionId": 1201,
-    "branchId": 1001,
-    "departmentId": 1101
+    "studentType": "BENEFITS",
+    "batchId": 1351,
+    "sectionId": 1401,
+    "branchId": 1201,
+    "departmentId": 1301,
+    "transport": "ACTIVE",
+    "gym": "ACTIVE",
+    "mess": "ACTIVE",
+    "culturalClass": "ACTIVE",
+    "library": "DEACTIVE",
+    "sports": "DEACTIVE",
+    "swimming": "DEACTIVE",
+    "handicrafts": "ACTIVE",
+    "add": "DEACTIVE",
+    "extraClass": "ACTIVE"
   }
 }
+
 
 mutation updateStudent($input: UpdateStudentInput!){
   	updateStudent(input: $input){
@@ -1080,6 +1257,44 @@ mutation updateAttendanceMaster($input: UpdateAttendanceMasterInput!){
   }
 }
 
+LaateFee:
+mutation addLateFee($input: AddLateFeeInput!){
+  	addLateFee(input: $input){
+    lateFee{
+      id
+      assignLateFee
+      lateFeeDays
+      fixed
+      percentage
+      fixedCharges
+      percentCharges
+      lateFeeAssignmentFrequency
+       college{
+        id
+      }
+      branch{
+        id
+      }
+
+	}
+}
+}
+
+input :
+
+{
+  "input": {
+"assignLateFee": "ACTIVE",
+    "lateFeeDays":4,
+    "fixed": "ACTIVE",
+    "percentage": "ACTIVE",
+    "fixedCharges": 62,
+    "percentCharges": 70,
+    "lateFeeAssignmentFrequency": "QUARTERLY",
+     "collegeId": 952,
+    "branchId": 1151
+  }
+    }
 
 mutation addLecture($input: AddLectureInput!){
   	addLecture(input: $input){

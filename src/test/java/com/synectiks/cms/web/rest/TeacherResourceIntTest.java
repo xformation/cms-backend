@@ -25,8 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -175,8 +173,10 @@ public class TeacherResourceIntTest {
     @Autowired
     private TeacherRepository teacherRepository;
 
+
     @Autowired
     private TeacherMapper teacherMapper;
+    
 
     @Autowired
     private TeacherService teacherService;
@@ -223,46 +223,46 @@ public class TeacherResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Teacher createEntity(EntityManager em) {
-        Teacher teacher = new Teacher();
-        teacher.teacherName(DEFAULT_TEACHER_NAME);
-        teacher.teacherMiddleName(DEFAULT_TEACHER_MIDDLE_NAME);
-        teacher.teacherLastName(DEFAULT_TEACHER_LAST_NAME);
-        teacher.fatherName(DEFAULT_FATHER_NAME);
-        teacher.fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME);
-        teacher.fatherLastName(DEFAULT_FATHER_LAST_NAME);
-        teacher.motherName(DEFAULT_MOTHER_NAME);
-        teacher.motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME);
-        teacher.motherLastName(DEFAULT_MOTHER_LAST_NAME);
-        teacher.aadharNo(DEFAULT_AADHAR_NO);
-        teacher.setDateOfBirth(DEFAULT_DATE_OF_BIRTH);
-        teacher.placeOfBirth(DEFAULT_PLACE_OF_BIRTH);
-        teacher.religion(DEFAULT_RELIGION);
-        teacher.caste(DEFAULT_CASTE);
-        teacher.subCaste(DEFAULT_SUB_CASTE);
-        teacher.age(DEFAULT_AGE);
-        teacher.sex(DEFAULT_SEX);
-        teacher.bloodGroup(DEFAULT_BLOOD_GROUP);
-        teacher.addressLineOne(DEFAULT_ADDRESS_LINE_ONE);
-        teacher.addressLineTwo(DEFAULT_ADDRESS_LINE_TWO);
-        teacher.addressLineThree(DEFAULT_ADDRESS_LINE_THREE);
-        teacher.town(DEFAULT_TOWN);
-        teacher.state(DEFAULT_STATE);
-        teacher.country(DEFAULT_COUNTRY);
-        teacher.pincode(DEFAULT_PINCODE);
-        teacher.teacherContactNumber(DEFAULT_TEACHER_CONTACT_NUMBER);
-        teacher.alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER);
-        teacher.teacherEmailAddress(DEFAULT_TEACHER_EMAIL_ADDRESS);
-        teacher.alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS);
-        teacher.relationWithStaff(DEFAULT_RELATION_WITH_STAFF);
-        teacher.name(DEFAULT_NAME);
-        teacher.middleName(DEFAULT_MIDDLE_NAME);
-        teacher.lastName(DEFAULT_LAST_NAME);
-        teacher.contactNo(DEFAULT_CONTACT_NO);
-        teacher.emailAddress(DEFAULT_EMAIL_ADDRESS);
-        teacher.uploadPhoto(DEFAULT_UPLOAD_PHOTO);
-        teacher.employeeId(DEFAULT_EMPLOYEE_ID);
-        teacher.designation(DEFAULT_DESIGNATION);
-        teacher.staffType(DEFAULT_STAFF_TYPE);
+        Teacher teacher = new Teacher()
+            .teacherName(DEFAULT_TEACHER_NAME)
+            .teacherMiddleName(DEFAULT_TEACHER_MIDDLE_NAME)
+            .teacherLastName(DEFAULT_TEACHER_LAST_NAME)
+            .fatherName(DEFAULT_FATHER_NAME)
+            .fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME)
+            .fatherLastName(DEFAULT_FATHER_LAST_NAME)
+            .motherName(DEFAULT_MOTHER_NAME)
+            .motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME)
+            .motherLastName(DEFAULT_MOTHER_LAST_NAME)
+            .aadharNo(DEFAULT_AADHAR_NO)
+            .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
+            .placeOfBirth(DEFAULT_PLACE_OF_BIRTH)
+            .religion(DEFAULT_RELIGION)
+            .caste(DEFAULT_CASTE)
+            .subCaste(DEFAULT_SUB_CASTE)
+            .age(DEFAULT_AGE)
+            .sex(DEFAULT_SEX)
+            .bloodGroup(DEFAULT_BLOOD_GROUP)
+            .addressLineOne(DEFAULT_ADDRESS_LINE_ONE)
+            .addressLineTwo(DEFAULT_ADDRESS_LINE_TWO)
+            .addressLineThree(DEFAULT_ADDRESS_LINE_THREE)
+            .town(DEFAULT_TOWN)
+            .state(DEFAULT_STATE)
+            .country(DEFAULT_COUNTRY)
+            .pincode(DEFAULT_PINCODE)
+            .teacherContactNumber(DEFAULT_TEACHER_CONTACT_NUMBER)
+            .alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER)
+            .teacherEmailAddress(DEFAULT_TEACHER_EMAIL_ADDRESS)
+            .alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStaff(DEFAULT_RELATION_WITH_STAFF)
+            .name(DEFAULT_NAME)
+            .middleName(DEFAULT_MIDDLE_NAME)
+            .lastName(DEFAULT_LAST_NAME)
+            .contactNo(DEFAULT_CONTACT_NO)
+            .emailAddress(DEFAULT_EMAIL_ADDRESS)
+            .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
+            .employeeId(DEFAULT_EMPLOYEE_ID)
+            .designation(DEFAULT_DESIGNATION)
+            .staffType(DEFAULT_STAFF_TYPE);
         return teacher;
     }
 
@@ -1147,6 +1147,7 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
     
+
     @Test
     @Transactional
     public void getTeacher() throws Exception {
@@ -1198,7 +1199,6 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.designation").value(DEFAULT_DESIGNATION.toString()))
             .andExpect(jsonPath("$.staffType").value(DEFAULT_STAFF_TYPE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingTeacher() throws Exception {
@@ -1219,46 +1219,46 @@ public class TeacherResourceIntTest {
         Teacher updatedTeacher = teacherRepository.findById(teacher.getId()).get();
         // Disconnect from session so that the updates on updatedTeacher are not directly saved in db
         em.detach(updatedTeacher);
-        //updatedTeacher
-        updatedTeacher.teacherName(UPDATED_TEACHER_NAME);
-        updatedTeacher.teacherMiddleName(UPDATED_TEACHER_MIDDLE_NAME);
-        updatedTeacher.teacherLastName(UPDATED_TEACHER_LAST_NAME);
-        updatedTeacher.fatherName(UPDATED_FATHER_NAME);
-        updatedTeacher.fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME);
-        updatedTeacher.fatherLastName(UPDATED_FATHER_LAST_NAME);
-        updatedTeacher.motherName(UPDATED_MOTHER_NAME);
-        updatedTeacher.motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME);
-        updatedTeacher.motherLastName(UPDATED_MOTHER_LAST_NAME);
-        updatedTeacher.aadharNo(UPDATED_AADHAR_NO);
-        updatedTeacher.setDateOfBirth(UPDATED_DATE_OF_BIRTH);
-        updatedTeacher.placeOfBirth(UPDATED_PLACE_OF_BIRTH);
-        updatedTeacher.religion(UPDATED_RELIGION);
-        updatedTeacher.caste(UPDATED_CASTE);
-        updatedTeacher.subCaste(UPDATED_SUB_CASTE);
-        updatedTeacher.age(UPDATED_AGE);
-        updatedTeacher.sex(UPDATED_SEX);
-        updatedTeacher.bloodGroup(UPDATED_BLOOD_GROUP);
-        updatedTeacher.addressLineOne(UPDATED_ADDRESS_LINE_ONE);
-        updatedTeacher.addressLineTwo(UPDATED_ADDRESS_LINE_TWO);
-        updatedTeacher.addressLineThree(UPDATED_ADDRESS_LINE_THREE);
-        updatedTeacher.town(UPDATED_TOWN);
-        updatedTeacher.state(UPDATED_STATE);
-        updatedTeacher.country(UPDATED_COUNTRY);
-        updatedTeacher.pincode(UPDATED_PINCODE);
-        updatedTeacher.teacherContactNumber(UPDATED_TEACHER_CONTACT_NUMBER);
-        updatedTeacher.alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER);
-        updatedTeacher.teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS);
-        updatedTeacher.alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS);
-        updatedTeacher.relationWithStaff(UPDATED_RELATION_WITH_STAFF);
-        updatedTeacher.name(UPDATED_NAME);
-        updatedTeacher.middleName(UPDATED_MIDDLE_NAME);
-        updatedTeacher.lastName(UPDATED_LAST_NAME);
-        updatedTeacher.contactNo(UPDATED_CONTACT_NO);
-        updatedTeacher.emailAddress(UPDATED_EMAIL_ADDRESS);
-        updatedTeacher.uploadPhoto(UPDATED_UPLOAD_PHOTO);
-        updatedTeacher.employeeId(UPDATED_EMPLOYEE_ID);
-        updatedTeacher.designation(UPDATED_DESIGNATION);
-        updatedTeacher.staffType(UPDATED_STAFF_TYPE);
+        updatedTeacher
+            .teacherName(UPDATED_TEACHER_NAME)
+            .teacherMiddleName(UPDATED_TEACHER_MIDDLE_NAME)
+            .teacherLastName(UPDATED_TEACHER_LAST_NAME)
+            .fatherName(UPDATED_FATHER_NAME)
+            .fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME)
+            .fatherLastName(UPDATED_FATHER_LAST_NAME)
+            .motherName(UPDATED_MOTHER_NAME)
+            .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
+            .motherLastName(UPDATED_MOTHER_LAST_NAME)
+            .aadharNo(UPDATED_AADHAR_NO)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .placeOfBirth(UPDATED_PLACE_OF_BIRTH)
+            .religion(UPDATED_RELIGION)
+            .caste(UPDATED_CASTE)
+            .subCaste(UPDATED_SUB_CASTE)
+            .age(UPDATED_AGE)
+            .sex(UPDATED_SEX)
+            .bloodGroup(UPDATED_BLOOD_GROUP)
+            .addressLineOne(UPDATED_ADDRESS_LINE_ONE)
+            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
+            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
+            .town(UPDATED_TOWN)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY)
+            .pincode(UPDATED_PINCODE)
+            .teacherContactNumber(UPDATED_TEACHER_CONTACT_NUMBER)
+            .alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
+            .teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS)
+            .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStaff(UPDATED_RELATION_WITH_STAFF)
+            .name(UPDATED_NAME)
+            .middleName(UPDATED_MIDDLE_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .contactNo(UPDATED_CONTACT_NO)
+            .emailAddress(UPDATED_EMAIL_ADDRESS)
+            .uploadPhoto(UPDATED_UPLOAD_PHOTO)
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .designation(UPDATED_DESIGNATION)
+            .staffType(UPDATED_STAFF_TYPE);
         TeacherDTO teacherDTO = teacherMapper.toDto(updatedTeacher);
 
         restTeacherMockMvc.perform(put("/api/teachers")
@@ -1322,7 +1322,7 @@ public class TeacherResourceIntTest {
         // Create the Teacher
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restTeacherMockMvc.perform(put("/api/teachers")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
@@ -1369,44 +1369,44 @@ public class TeacherResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teacher.getId().intValue())))
-            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME)))
-            .andExpect(jsonPath("$.[*].teacherMiddleName").value(hasItem(DEFAULT_TEACHER_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].teacherLastName").value(hasItem(DEFAULT_TEACHER_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME)))
-            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME)))
-            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].teacherName").value(hasItem(DEFAULT_TEACHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].teacherMiddleName").value(hasItem(DEFAULT_TEACHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].teacherLastName").value(hasItem(DEFAULT_TEACHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].aadharNo").value(hasItem(DEFAULT_AADHAR_NO.intValue())))
             .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
-            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH)))
+            .andExpect(jsonPath("$.[*].placeOfBirth").value(hasItem(DEFAULT_PLACE_OF_BIRTH.toString())))
             .andExpect(jsonPath("$.[*].religion").value(hasItem(DEFAULT_RELIGION.toString())))
             .andExpect(jsonPath("$.[*].caste").value(hasItem(DEFAULT_CASTE.toString())))
-            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE)))
+            .andExpect(jsonPath("$.[*].subCaste").value(hasItem(DEFAULT_SUB_CASTE.toString())))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
             .andExpect(jsonPath("$.[*].bloodGroup").value(hasItem(DEFAULT_BLOOD_GROUP.toString())))
-            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE)))
-            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO)))
-            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE)))
-            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN)))
-            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE)))
-            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY)))
+            .andExpect(jsonPath("$.[*].addressLineOne").value(hasItem(DEFAULT_ADDRESS_LINE_ONE.toString())))
+            .andExpect(jsonPath("$.[*].addressLineTwo").value(hasItem(DEFAULT_ADDRESS_LINE_TWO.toString())))
+            .andExpect(jsonPath("$.[*].addressLineThree").value(hasItem(DEFAULT_ADDRESS_LINE_THREE.toString())))
+            .andExpect(jsonPath("$.[*].town").value(hasItem(DEFAULT_TOWN.toString())))
+            .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
+            .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY.toString())))
             .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.intValue())))
             .andExpect(jsonPath("$.[*].teacherContactNumber").value(hasItem(DEFAULT_TEACHER_CONTACT_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].teacherEmailAddress").value(hasItem(DEFAULT_TEACHER_EMAIL_ADDRESS)))
-            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].teacherEmailAddress").value(hasItem(DEFAULT_TEACHER_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].relationWithStaff").value(hasItem(DEFAULT_RELATION_WITH_STAFF.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME)))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
-            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS)))
+            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
             .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
-            .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION)))
+            .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
 

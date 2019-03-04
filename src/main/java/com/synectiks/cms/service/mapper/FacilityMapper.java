@@ -8,10 +8,18 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Facility and its DTO FacilityDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {AcademicYearMapper.class, BranchMapper.class, StudentMapper.class})
 public interface FacilityMapper extends EntityMapper<FacilityDTO, Facility> {
 
+    @Mapping(source = "academicYear.id", target = "academicYearId")
+    @Mapping(source = "branch.id", target = "branchId")
+    @Mapping(source = "student.id", target = "studentId")
+    FacilityDTO toDto(Facility facility);
 
+    @Mapping(source = "academicYearId", target = "academicYear")
+    @Mapping(source = "branchId", target = "branch")
+    @Mapping(source = "studentId", target = "student")
+    Facility toEntity(FacilityDTO facilityDTO);
 
     default Facility fromId(Long id) {
         if (id == null) {

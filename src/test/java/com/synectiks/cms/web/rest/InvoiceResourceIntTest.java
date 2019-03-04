@@ -57,6 +57,8 @@ public class InvoiceResourceIntTest {
     private static final Long DEFAULT_AMOUNT_PAID = 1L;
     private static final Long UPDATED_AMOUNT_PAID = 2L;
 
+
+
     private static final Date DEFAULT_PAYMENT_DATE = new Date();
     private static final Date UPDATED_PAYMENT_DATE = new Date();
 

@@ -48,6 +48,9 @@ describe('Facility e2e test', () => {
 
     await facilityUpdatePage.setFacilityNameInput('facilityName');
     expect(await facilityUpdatePage.getFacilityNameInput()).to.match(/facilityName/);
+    await facilityUpdatePage.academicYearSelectLastOption();
+    await facilityUpdatePage.branchSelectLastOption();
+    await facilityUpdatePage.studentSelectLastOption();
     await waitUntilDisplayed(facilityUpdatePage.getSaveButton());
     await facilityUpdatePage.save();
     await waitUntilHidden(facilityUpdatePage.getSaveButton());

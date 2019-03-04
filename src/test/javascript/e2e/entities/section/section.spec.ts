@@ -27,7 +27,7 @@ describe('Section e2e test', () => {
   it('should load create Section page', async () => {
     sectionComponentsPage.clickOnCreateButton();
     sectionUpdatePage = new SectionUpdatePage();
-    expect(await sectionUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.section.home.createOrEditLabel/);
+    expect(await sectionUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Section/);
   });
 
   it('should create and save Sections', async () => {

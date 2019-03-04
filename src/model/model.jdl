@@ -82,9 +82,9 @@ enum Frequency {
     WEEKLY, MONTHLY, QUARTERLY, HALFYEARLY, ANNUALLY
 }
 
-enum ModeOfPayment {
-    CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
-}
+enum ModeOfPayment{
+CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
+
 
 entity Student{
 studentName String required
@@ -227,12 +227,6 @@ enum AttendanceStatusEnum{
 PRESENT,ABSENT
 }
 
-entity Location{
-name String required
-address String required
-appliesTo String required
-}
-
 enum NameOfBank{
 HDFC, SBI, ICICI, ANDHRABANK
 }
@@ -315,13 +309,13 @@ entity City{
 	StdCode String
 }
 
+entity Facility {
+facilityName String
+}
+
 entity FeeCategory {
 categoryName String required
 description String required
-}
-
-entity Facility {
-facilityName String required
 }
 
 entity TransportRoute {
@@ -362,7 +356,6 @@ percentCharges Long
 lateFeeAssignmentFrequency Frequency required
 }
 
-
 entity Invoice {
 invoiceNumber String required
 amountPaid Long required
@@ -378,7 +371,6 @@ comments String required
 updatedBy String required
 updatedOn LocalDate required
 }
-
 
 relationship ManyToOne {
 Student{department required} to Department ,
@@ -432,6 +424,9 @@ PaymentRemainder{college} to College,
 PaymentRemainder{branch} to Branch,
 LateFee{college} to College,
 LateFee{branch} to Branch,
+Facility{academicYear} to AcademicYear,
+Facility{branch} to Branch,
+Facility{student} to Student
 Invoice{feeCategory} to FeeCategory,
 Invoice{feeDetails} to FeeDetails,
 Invoice{dueDate} to DueDate,

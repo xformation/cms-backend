@@ -8,6 +8,12 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IAcademicYear } from 'app/shared/model/academic-year.model';
+import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
+import { IStudent } from 'app/shared/model/student.model';
+import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './facility.reducer';
 import { IFacility } from 'app/shared/model/facility.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +24,18 @@ export interface IFacilityUpdateProps extends StateProps, DispatchProps, RouteCo
 
 export interface IFacilityUpdateState {
   isNew: boolean;
+  academicYearId: string;
+  branchId: string;
+  studentId: string;
 }
 
 export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacilityUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      academicYearId: '0',
+      branchId: '0',
+      studentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -40,6 +52,10 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getAcademicYears();
+    this.props.getBranches();
+    this.props.getStudents();
   }
 
   saveEntity = (event, errors, values) => {
@@ -63,7 +79,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
   };
 
   render() {
-    const { facilityEntity, loading, updating } = this.props;
+    const { facilityEntity, academicYears, branches, students, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -89,14 +105,46 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                   <Label id="facilityNameLabel" for="facilityName">
                     Facility Name
                   </Label>
-                  <AvField
-                    id="facility-facilityName"
-                    type="text"
-                    name="facilityName"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="facility-facilityName" type="text" name="facilityName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label for="academicYear.id">Academic Year</Label>
+                  <AvInput id="facility-academicYear" type="select" className="form-control" name="academicYearId">
+                    <option value="" key="0" />
+                    {academicYears
+                      ? academicYears.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="branch.id">Branch</Label>
+                  <AvInput id="facility-branch" type="select" className="form-control" name="branchId">
+                    <option value="" key="0" />
+                    {branches
+                      ? branches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="student.id">Student</Label>
+                  <AvInput id="facility-student" type="select" className="form-control" name="studentId">
+                    <option value="" key="0" />
+                    {students
+                      ? students.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/facility" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
@@ -116,6 +164,9 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  academicYears: storeState.academicYear.entities,
+  branches: storeState.branch.entities,
+  students: storeState.student.entities,
   facilityEntity: storeState.facility.entity,
   loading: storeState.facility.loading,
   updating: storeState.facility.updating,
@@ -123,6 +174,9 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getAcademicYears,
+  getBranches,
+  getStudents,
   getEntity,
   updateEntity,
   createEntity,

@@ -7,9 +7,11 @@ export default class BankAccountsUpdatePage {
   nameOfBankSelect: ElementFinder = element(by.css('select#bank-accounts-nameOfBank'));
   accountNumberInput: ElementFinder = element(by.css('input#bank-accounts-accountNumber'));
   typeOfAccountInput: ElementFinder = element(by.css('input#bank-accounts-typeOfAccount'));
-  ifsCodeInput: ElementFinder = element(by.css('input#bank-accounts-ifsCode'));
-  branchInput: ElementFinder = element(by.css('input#bank-accounts-branch'));
+  ifscCodeInput: ElementFinder = element(by.css('input#bank-accounts-ifscCode'));
+  branchAddressInput: ElementFinder = element(by.css('input#bank-accounts-branchAddress'));
   corporateIdInput: ElementFinder = element(by.css('input#bank-accounts-corporateId'));
+  branchSelect: ElementFinder = element(by.css('select#bank-accounts-branch'));
+  collegeSelect: ElementFinder = element(by.css('select#bank-accounts-college'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -45,20 +47,20 @@ export default class BankAccountsUpdatePage {
     return this.typeOfAccountInput.getAttribute('value');
   }
 
-  setIfsCodeInput(ifsCode) {
-    this.ifsCodeInput.sendKeys(ifsCode);
+  setIfscCodeInput(ifscCode) {
+    this.ifscCodeInput.sendKeys(ifscCode);
   }
 
-  getIfsCodeInput() {
-    return this.ifsCodeInput.getAttribute('value');
+  getIfscCodeInput() {
+    return this.ifscCodeInput.getAttribute('value');
   }
 
-  setBranchInput(branch) {
-    this.branchInput.sendKeys(branch);
+  setBranchAddressInput(branchAddress) {
+    this.branchAddressInput.sendKeys(branchAddress);
   }
 
-  getBranchInput() {
-    return this.branchInput.getAttribute('value');
+  getBranchAddressInput() {
+    return this.branchAddressInput.getAttribute('value');
   }
 
   setCorporateIdInput(corporateId) {
@@ -67,6 +69,44 @@ export default class BankAccountsUpdatePage {
 
   getCorporateIdInput() {
     return this.corporateIdInput.getAttribute('value');
+  }
+
+  branchSelectLastOption() {
+    this.branchSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
+  }
+
+  getBranchSelect() {
+    return this.branchSelect;
+  }
+
+  getBranchSelectedOption() {
+    return this.branchSelect.element(by.css('option:checked')).getText();
+  }
+
+  collegeSelectLastOption() {
+    this.collegeSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  collegeSelectOption(option) {
+    this.collegeSelect.sendKeys(option);
+  }
+
+  getCollegeSelect() {
+    return this.collegeSelect;
+  }
+
+  getCollegeSelectedOption() {
+    return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
   save() {

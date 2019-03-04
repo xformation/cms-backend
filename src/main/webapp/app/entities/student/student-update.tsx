@@ -20,7 +20,7 @@ import { getEntity, updateEntity, createEntity, reset } from './student.reducer'
 import { IStudent } from 'app/shared/model/student.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IStudentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -76,6 +76,74 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
 
   handleClose = () => {
     this.props.history.push('/entity/student');
+  };
+
+  departmentUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        departmentId: -1
+      });
+    } else {
+      for (const i in this.props.departments) {
+        if (id === this.props.departments[i].id.toString()) {
+          this.setState({
+            departmentId: this.props.departments[i].id
+          });
+        }
+      }
+    }
+  };
+
+  batchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        batchId: -1
+      });
+    } else {
+      for (const i in this.props.batches) {
+        if (id === this.props.batches[i].id.toString()) {
+          this.setState({
+            batchId: this.props.batches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  sectionUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        sectionId: -1
+      });
+    } else {
+      for (const i in this.props.sections) {
+        if (id === this.props.sections[i].id.toString()) {
+          this.setState({
+            sectionId: this.props.sections[i].id
+          });
+        }
+      }
+    }
+  };
+
+  branchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        branchId: -1
+      });
+    } else {
+      for (const i in this.props.branches) {
+        if (id === this.props.branches[i].id.toString()) {
+          this.setState({
+            branchId: this.props.branches[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -768,7 +836,14 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">Department</Label>
-                  <AvInput id="student-department" type="select" className="form-control" name="departmentId">
+                  <AvInput
+                    id="student-department"
+                    type="select"
+                    className="form-control"
+                    name="departmentId"
+                    onChange={this.departmentUpdate}
+                    value={isNew && departments ? departments[0] && departments[0].id : ''}
+                  >
                     {departments
                       ? departments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -780,7 +855,14 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
-                  <AvInput id="student-batch" type="select" className="form-control" name="batchId">
+                  <AvInput
+                    id="student-batch"
+                    type="select"
+                    className="form-control"
+                    name="batchId"
+                    onChange={this.batchUpdate}
+                    value={isNew && batches ? batches[0] && batches[0].id : ''}
+                  >
                     {batches
                       ? batches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -792,7 +874,14 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <AvGroup>
                   <Label for="section.id">Section</Label>
-                  <AvInput id="student-section" type="select" className="form-control" name="sectionId">
+                  <AvInput
+                    id="student-section"
+                    type="select"
+                    className="form-control"
+                    name="sectionId"
+                    onChange={this.sectionUpdate}
+                    value={isNew && sections ? sections[0] && sections[0].id : ''}
+                  >
                     {sections
                       ? sections.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -804,7 +893,14 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="student-branch" type="select" className="form-control" name="branchId">
+                  <AvInput
+                    id="student-branch"
+                    type="select"
+                    className="form-control"
+                    name="branchId"
+                    onChange={this.branchUpdate}
+                    value={isNew && branches ? branches[0] && branches[0].id : ''}
+                  >
                     {branches
                       ? branches.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>

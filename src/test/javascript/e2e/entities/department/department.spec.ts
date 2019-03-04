@@ -27,7 +27,7 @@ describe('Department e2e test', () => {
   it('should load create Department page', async () => {
     departmentComponentsPage.clickOnCreateButton();
     departmentUpdatePage = new DepartmentUpdatePage();
-    expect(await departmentUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.department.home.createOrEditLabel/);
+    expect(await departmentUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Department/);
   });
 
   it('should create and save Departments', async () => {

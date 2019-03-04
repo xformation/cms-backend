@@ -27,7 +27,7 @@ describe('Holiday e2e test', () => {
   it('should load create Holiday page', async () => {
     holidayComponentsPage.clickOnCreateButton();
     holidayUpdatePage = new HolidayUpdatePage();
-    expect(await holidayUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.holiday.home.createOrEditLabel/);
+    expect(await holidayUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Holiday/);
   });
 
   it('should create and save Holidays', async () => {

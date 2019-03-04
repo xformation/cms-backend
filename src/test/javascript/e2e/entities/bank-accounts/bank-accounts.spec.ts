@@ -27,7 +27,7 @@ describe('BankAccounts e2e test', () => {
   it('should load create BankAccounts page', async () => {
     bankAccountsComponentsPage.clickOnCreateButton();
     bankAccountsUpdatePage = new BankAccountsUpdatePage();
-    expect(await bankAccountsUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.bankAccounts.home.createOrEditLabel/);
+    expect(await bankAccountsUpdatePage.getPageTitle().getText()).to.match(/Create or edit a BankAccounts/);
   });
 
   it('should create and save BankAccounts', async () => {
@@ -36,12 +36,14 @@ describe('BankAccounts e2e test', () => {
     expect(await bankAccountsUpdatePage.getAccountNumberInput()).to.eq('5');
     bankAccountsUpdatePage.setTypeOfAccountInput('typeOfAccount');
     expect(await bankAccountsUpdatePage.getTypeOfAccountInput()).to.match(/typeOfAccount/);
-    bankAccountsUpdatePage.setIfsCodeInput('ifsCode');
-    expect(await bankAccountsUpdatePage.getIfsCodeInput()).to.match(/ifsCode/);
-    bankAccountsUpdatePage.setBranchInput('branch');
-    expect(await bankAccountsUpdatePage.getBranchInput()).to.match(/branch/);
+    bankAccountsUpdatePage.setIfscCodeInput('ifscCode');
+    expect(await bankAccountsUpdatePage.getIfscCodeInput()).to.match(/ifscCode/);
+    bankAccountsUpdatePage.setBranchAddressInput('branchAddress');
+    expect(await bankAccountsUpdatePage.getBranchAddressInput()).to.match(/branchAddress/);
     bankAccountsUpdatePage.setCorporateIdInput('5');
     expect(await bankAccountsUpdatePage.getCorporateIdInput()).to.eq('5');
+    bankAccountsUpdatePage.branchSelectLastOption();
+    bankAccountsUpdatePage.collegeSelectLastOption();
     await bankAccountsUpdatePage.save();
     expect(await bankAccountsUpdatePage.getSaveButton().isPresent()).to.be.false;
   });

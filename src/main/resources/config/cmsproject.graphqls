@@ -104,12 +104,6 @@ type Query {
   holiday(id: Long!): Holiday!
   holidays: [Holiday!]!
 
-  legalEntity(id : Long!): LegalEntityAuthSignatoryLink!
-  legalEntities: [LegalEntityAuthSignatoryLink!]!
-
-  location(id: Long!): Location!
-  locations: [Location!]!
-
   section(id: Long!): Section!
   sections: [Section!]!
 
@@ -139,13 +133,15 @@ type Query {
 
   transportRoute(id: Long!): TransportRoute!
   transportRoutes: [TransportRoute!]!
+
     dueDate(id:Long!):DueDate!
     dueDates:[DueDate!]!
+
     lateFee(id:Long!):LateFee!
     lateFees:[LateFee!]!
+
     paymentRemainder(id:Long!):PaymentRemainder!
     paymentRemainders:[PaymentRemainder!]!
-
 
   term (id: Long!): Term!
   terms: [Term!]!
@@ -156,10 +152,13 @@ type Query {
   state (id: Long!): Long!
   states: [State!]!
 
-  country (id: Long!): Long!
-  countries: [Country!]!
+    country (id: Long!): Long!
+    countries: [Country!]!
+    invoice(id:Long!):Invoice!
+    invoices:[Invoice!]!
 
-  getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+
+    getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 }
@@ -188,7 +187,10 @@ type FeeCategory{
 
 type Facility{
       id: Long!
-      facilityName: String!
+    facilityName: String!
+     academicYear: AcademicYear!
+     branch: Branch!
+     student: Student!
  }
 
   type TransportRoute{
@@ -333,6 +335,12 @@ type Holiday{
     holidayStatus: Status!
     academicyear: AcademicYear!
 }
+type AcademicYear{
+    id: Long!
+    year: String!
+    startDate: Date!
+    endDate: Date!
+}
 type LegalEntity{
     id: Long!
     logo: Long!
@@ -365,49 +373,12 @@ type LegalEntity{
     state: State!
 }
 
-type LegalEntityAuthSignatoryLink{
- 	id: Long!
-    logo: Long!
-    legalNameOfTheCollege:String!
-    typeOfCollege: TypeOfCollege!
-    dateOfIncorporation:Date!
-    registeredOfficeAddress:String!
-    collegeIdentificationNumber:String!
-    pan:String!
-    tan:String!
-    tanCircleNumber:String!
-    citTdsLocation:String!
-    formSignatory:String!
-    pfNumber:String!
-    pfRegistrationDate: Date!
-    pfSignatory: String!
-    esiNumber:Long!
-    esiRegistrationDate: Date!
-    esiSignatory: String!
-    ptNumber:Long!
-    ptRegistrationDate:Date!
-    ptSignatory:String!
-    branch: Branch
-    college: College!
-    location: Location!
-    authorizedFormSignatory: AuthorizedSignatory
-    authorizedPfSignatory: AuthorizedSignatory
-    authorizedEsiSignatory: AuthorizedSignatory
-    authorizedPtSignatory: AuthorizedSignatory
-}
-
-
-type Location{
-    id: Long!
-    name: String!
-    address: String!
-    appliesTo: String!
-}
 type Section{
     id: Long!
     section: SectionEnum!
     batch: Batch!
 }
+
 enum Gender {
     MALE
     FEMALE
@@ -618,6 +589,31 @@ input AcademicSubjectQueryPayload{
     batchId: Int!
     branchId: Int!
 }
+type Invoice {
+    id : Long!
+    invoiceNumber:String!
+    amountPaid:Long!
+    paymentDate:Date!
+    nextPaymentDate:Date!
+    outStandingAmount:Long!
+    modeOfPayment:ModeOfPayment
+    chequeNumber:Long!
+    demandDraftNumber:Long!
+    onlineTxnRefNumber:String!
+    paymentStatus:Status!
+    comments:String!
+    updatedBy:String!
+    updatedOn:Date!
+    feeCategory:FeeCategory!
+    feeDetails:FeeDetails!
+    dueDate:DueDate!
+    paymentRemainder:PaymentRemainder!
+    college:College!
+    branch:Branch!
+    student:Student!
+    academicYear:AcademicYear!
+}
+
 
 type Mutation {
    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
@@ -663,10 +659,6 @@ type Mutation {
    addLegalEntity(input: AddLegalEntityInput!): AddLegalEntityPayload!
    updateLegalEntity(input: UpdateLegalEntityInput!): UpdateLegalEntityPayload!
    removeLegalEntity(input: RemoveLegalEntityInput!): RemoveLegalEntityPayload!
-
-   addLocation(input: AddLocationInput!): AddLocationPayload!
-   updateLocation(input: UpdateLocationInput!): UpdateLocationPayload!
-   removeLocation(input: RemoveLocationInput!): RemoveLocationPayload!
 
    addSection(input: AddSectionInput!): AddSectionPayload!
    updateSection(input: UpdateSectionInput!): UpdateSectionPayload!
@@ -744,6 +736,10 @@ type Mutation {
     addPaymentRemainder(input:AddPaymentRemainderInput!):AddPaymentRemainderPayload!
     updatePaymentRemainder(input:UpdatePaymentRemainderInput!):UpdatePaymentRemainderPayload!
     removePaymentRemainder(input:RemovePaymentRemainderInput!):RemovePaymentRemainderPayload!
+
+    addInvoice(input:AddInvoiceInput!):AddInvoicePayload!
+    updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
+    removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
 
 }
 
@@ -920,6 +916,9 @@ type RemoveFeeDetailsPayload {
 
 input AddFacilityInput {
    facilityName: String!
+    academicyearId: Long!
+    branchId: Long!
+    studentId: Long!
 }
 type AddFacilityPayload {
     facility: Facility!
@@ -927,6 +926,9 @@ type AddFacilityPayload {
 input UpdateFacilityInput {
      id: Long!
      facilityName: String!
+     academicyearId: Long!
+     branchId: Long!
+     studentId: Long!
 }
 type UpdateFacilityPayload {
     facility: Facility!
@@ -1304,31 +1306,6 @@ input RemoveLegalEntityInput {
 type RemoveLegalEntityPayload {
     legalEntities: [LegalEntity!]!
 }
-
-input AddLocationInput {
-   name: String!
-   address: String!
-   appliesTo: String!
-}
-type AddLocationPayload {
-    location: Location!
-}
-input UpdateLocationInput {
-   id: Long!
-   name: String
-   address: String
-   appliesTo: String
-}
-type UpdateLocationPayload {
-   location: Location!
-}
-input RemoveLocationInput {
-   locationId: Long!
-}
-type RemoveLocationPayload {
-   locations: [Location!]!
-}
-
 
 
 input AddSectionInput {
@@ -1849,3 +1826,65 @@ input RemovePaymentRemainderInput{
 type RemovePaymentRemainderPayload{
 paymentRemainders:[PaymentRemainder]!
 }
+
+input AddInvoiceInput{
+    invoiceNumber:String!
+    amountPaid:Long!
+    paymentDate:Date!
+    nextPaymentDate:Date!
+    outStandingAmount:Long!
+    modeOfPayment:ModeOfPayment!
+    chequeNumber:Long!
+    demandDraftNumber:Long!
+    onlineTxnRefNumber:String!
+    paymentStatus:Status!
+    comments:String!
+    updatedBy:String!
+    updatedOn:Date!
+    feeCategoryId:Long!
+    feeDetailsId:Long!
+    dueDateId:Long!
+    paymentRemainderId:Long!
+    collegeId:Long!
+    branchId:Long!
+    studentId:Long!
+    academicyearId:Long!
+}
+type AddInvoicePayload{
+    invoice:Invoice!
+}
+input UpdateInvoiceInput{
+    id:Long!
+    invoiceNumber:String!
+    amountPaid:Long!
+    paymentDate:Date!
+    nextPaymentDate:Date!
+    outStandingAmount:Long!
+    modeOfPayment:ModeOfPayment!
+    chequeNumber:Long!
+    demandDraftNumber:Long!
+    onlineTxnRefNumber:String!
+    paymentStatus:Status!
+    comments:String!
+    updatedBy:String!
+    updatedOn:Date!
+    feeCategoryId:Long!
+    feeDetailsId:Long!
+    dueDateId:Long!
+    paymentRemainderId:Long!
+    collegeId:Long!
+    branchId:Long!
+    studentId:Long!
+    academicyearId:Long!
+
+}
+type UpdateInvoicePayload{
+    invoice:Long!
+}
+input RemoveInvoiceInput{
+    invoiceId:Long!
+}
+type RemoveInvoicePayload{
+    invoices:[Invoice]!
+}
+

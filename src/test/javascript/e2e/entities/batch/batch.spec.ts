@@ -27,7 +27,7 @@ describe('Batch e2e test', () => {
   it('should load create Batch page', async () => {
     batchComponentsPage.clickOnCreateButton();
     batchUpdatePage = new BatchUpdatePage();
-    expect(await batchUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.batch.home.createOrEditLabel/);
+    expect(await batchUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Batch/);
   });
 
   it('should create and save Batches', async () => {

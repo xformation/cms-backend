@@ -48,7 +48,6 @@ public class Query implements GraphQLQueryResolver {
     private final LectureRepository lectureRepository;
     //  private final InstituteRepository instituteRepository;
     private final LegalEntityRepository legalEntityRepository;
-    private final LocationRepository locationRepository;
     private final SectionRepository sectionRepository;
     //    private final SemesterRepository semesterRepository;
     private final StudentRepository studentRepository;
@@ -69,6 +68,7 @@ public class Query implements GraphQLQueryResolver {
     private final LateFeeRepository lateFeeRepository;
     private final PaymentRemainderRepository paymentRemainderRepository;
     private final InvoiceRepository invoiceRepository;
+
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
 
@@ -78,7 +78,7 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     LegalEntitySelectRepository legalEntitySelectRepository;
 
-    public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository) {
+    public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository=instituteRepository;
@@ -93,7 +93,6 @@ public class Query implements GraphQLQueryResolver {
         this.authorizedSignatoryRepository = authorizedSignatoryRepository;
         this.bankAccountsRepository = bankAccountsRepository;
         this.departmentRepository = departmentRepository;
-        this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
         this.academicYearRepository = academicYearRepository;
         this.holidayRepository = holidayRepository;
@@ -111,6 +110,7 @@ public class Query implements GraphQLQueryResolver {
         this.dueDateRepository = dueDateRepository;
         this.lateFeeRepository = lateFeeRepository;
         this.paymentRemainderRepository = paymentRemainderRepository;
+
         this.invoiceRepository = invoiceRepository;
     }
 
@@ -231,13 +231,6 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(departmentRepository.findAll());
     }
 
-    public Location location(long id) {
-        return locationRepository.findById(id).get();
-    }
-
-    public List<Location> locations() {
-        return Lists.newArrayList(locationRepository.findAll());
-    }
 
     public StudentAttendance studentAttendance(long id) {
         return studentAttendanceRepository.findById(id).get();
@@ -364,6 +357,7 @@ public class Query implements GraphQLQueryResolver {
 
     public PaymentRemainder paymentRemainder(Long id){return paymentRemainderRepository.findById(id).get();}
     public List<PaymentRemainder>paymentRemainders(){return Lists.newArrayList(paymentRemainderRepository.findAll());}
+
     public Invoice invoice(long id){
         return invoiceRepository.findById(id).get();
     }
@@ -371,6 +365,7 @@ public class Query implements GraphQLQueryResolver {
     public List<Invoice>  invoices(){
         return  Lists.newArrayList(invoiceRepository.findAll());
     }
+
 
 
 

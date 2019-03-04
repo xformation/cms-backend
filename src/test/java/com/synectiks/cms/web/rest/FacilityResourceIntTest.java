@@ -157,25 +157,6 @@ public class FacilityResourceIntTest {
 
     @Test
     @Transactional
-    public void checkFacilityNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = facilityRepository.findAll().size();
-        // set the field null
-        facility.setFacilityName(null);
-
-        // Create the Facility, which fails.
-        FacilityDTO facilityDTO = facilityMapper.toDto(facility);
-
-        restFacilityMockMvc.perform(post("/api/facilities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Facility> facilityList = facilityRepository.findAll();
-        assertThat(facilityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllFacilities() throws Exception {
         // Initialize the database
         facilityRepository.saveAndFlush(facility);

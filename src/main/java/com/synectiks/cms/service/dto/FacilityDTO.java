@@ -1,6 +1,5 @@
 package com.synectiks.cms.service.dto;
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,8 +10,13 @@ public class FacilityDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String facilityName;
+
+    private Long academicYearId;
+
+    private Long branchId;
+
+    private Long studentId;
 
     public Long getId() {
         return id;
@@ -28,6 +32,30 @@ public class FacilityDTO implements Serializable {
 
     public void setFacilityName(String facilityName) {
         this.facilityName = facilityName;
+    }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     @Override
@@ -56,6 +84,9 @@ public class FacilityDTO implements Serializable {
         return "FacilityDTO{" +
             "id=" + getId() +
             ", facilityName='" + getFacilityName() + "'" +
+            ", academicYear=" + getAcademicYearId() +
+            ", branch=" + getBranchId() +
+            ", student=" + getStudentId() +
             "}";
     }
 }

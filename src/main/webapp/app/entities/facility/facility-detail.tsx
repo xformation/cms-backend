@@ -32,6 +32,12 @@ export class FacilityDetail extends React.Component<IFacilityDetailProps> {
               <span id="facilityName">Facility Name</span>
             </dt>
             <dd>{facilityEntity.facilityName}</dd>
+            <dt>Academic Year</dt>
+            <dd>{facilityEntity.academicYearId ? facilityEntity.academicYearId : ''}</dd>
+            <dt>Branch</dt>
+            <dd>{facilityEntity.branchId ? facilityEntity.branchId : ''}</dd>
+            <dt>Student</dt>
+            <dd>{facilityEntity.studentId ? facilityEntity.studentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/facility" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

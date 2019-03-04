@@ -5,15 +5,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {
-  ACTION_TYPES,
-  createEntity,
-  deleteEntity,
-  getEntities,
-  getEntity,
-  updateEntity,
-  reset
-} from 'app/entities/teach/teach.reducer';
+import reducer, { ACTION_TYPES, createEntity, deleteEntity, getEntities, getEntity, updateEntity } from 'app/entities/teach/teach.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { ITeach, defaultValue } from 'app/shared/model/teach.model';
 
@@ -83,19 +75,6 @@ describe('Entities reducer tests', () => {
         }
       );
     });
-
-    it('should reset the state', () => {
-      expect(
-        reducer(
-          { ...initialState, loading: true },
-          {
-            type: ACTION_TYPES.RESET
-          }
-        )
-      ).toEqual({
-        ...initialState
-      });
-    });
   });
 
   describe('Failures', () => {
@@ -132,20 +111,6 @@ describe('Entities reducer tests', () => {
         ...initialState,
         loading: false,
         entities: payload.data
-      });
-    });
-
-    it('should fetch a single entity', () => {
-      const payload = { data: { 1: 'fake1' } };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_TEACH),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entity: payload.data
       });
     });
 
@@ -274,16 +239,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.RESET actions', async () => {
-      const expectedActions = [
-        {
-          type: ACTION_TYPES.RESET
-        }
-      ];
-      await store.dispatch(reset());
-      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

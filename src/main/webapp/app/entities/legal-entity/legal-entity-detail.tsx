@@ -12,7 +12,7 @@ import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ILegalEntityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ILegalEntityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> {
   componentDidMount() {

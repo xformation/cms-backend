@@ -261,7 +261,7 @@ public class StudentAttendanceResourceIntTest {
         // Create the StudentAttendance
         StudentAttendanceDTO studentAttendanceDTO = studentAttendanceMapper.toDto(studentAttendance);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restStudentAttendanceMockMvc.perform(put("/api/student-attendances")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(studentAttendanceDTO)))

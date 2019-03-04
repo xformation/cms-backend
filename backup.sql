@@ -25,10 +25,9 @@ SET default_with_oids = false;
 
 CREATE TABLE public.academic_year (
     id bigint NOT NULL,
-    jhi_year bigint NOT NULL,
+    jhi_year character varying(255) NOT NULL,
     start_date date NOT NULL,
-    end_date date NOT NULL,
-    jhi_desc character varying(255) NOT NULL
+    end_date date NOT NULL
 );
 
 
@@ -58,10 +57,15 @@ CREATE TABLE public.authorized_signatory (
     signatory_name character varying(255) NOT NULL,
     signatory_father_name character varying(255) NOT NULL,
     signatory_designation character varying(255) NOT NULL,
-    address character varying(255) NOT NULL,
+    address_1 character varying(255) NOT NULL,
+    address_2 character varying(255) NOT NULL,
+    address_3 character varying(255) NOT NULL,
+    address_4 character varying(255) NOT NULL,
+    address_5 character varying(255) NOT NULL,
     email character varying(255) NOT NULL,
     pan_card_number character varying(255) NOT NULL,
-    legal_entity_id bigint
+    branch_id bigint,
+    college_id bigint
 );
 
 
@@ -76,9 +80,11 @@ CREATE TABLE public.bank_accounts (
     name_of_bank character varying(255) NOT NULL,
     account_number bigint NOT NULL,
     type_of_account character varying(255) NOT NULL,
-    ifs_code character varying(255) NOT NULL,
-    branch character varying(255) NOT NULL,
-    corporate_id integer NOT NULL
+    ifsc_code character varying(255) NOT NULL,
+    branch_address character varying(255) NOT NULL,
+    corporate_id integer NOT NULL,
+    branch_id bigint,
+    college_id bigint
 );
 
 
@@ -104,13 +110,31 @@ ALTER TABLE public.batch OWNER TO postgres;
 CREATE TABLE public.branch (
     id bigint NOT NULL,
     branch_name character varying(255) NOT NULL,
-    description character varying(255) NOT NULL,
-    college_head character varying(255) NOT NULL,
-    college_id bigint
+    address_1 character varying(255) NOT NULL,
+    address_2 character varying(255) NOT NULL,
+    branch_head character varying(255) NOT NULL,
+    college_id bigint,
+    city_id bigint,
+    state_id bigint
 );
 
 
 ALTER TABLE public.branch OWNER TO postgres;
+
+--
+-- Name: city; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.city (
+    id bigint NOT NULL,
+    city_name character varying(255) NOT NULL,
+    city_code character varying(255),
+    std_code character varying(255),
+    state_id bigint
+);
+
+
+ALTER TABLE public.city OWNER TO postgres;
 
 --
 -- Name: college; Type: TABLE; Schema: public; Owner: postgres
@@ -126,6 +150,35 @@ CREATE TABLE public.college (
 
 
 ALTER TABLE public.college OWNER TO postgres;
+
+--
+-- Name: country; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.country (
+    id bigint NOT NULL,
+    country_name character varying(255) NOT NULL,
+    country_code character varying(255) NOT NULL,
+    isd_code character varying(255)
+);
+
+
+ALTER TABLE public.country OWNER TO postgres;
+
+--
+-- Name: currency; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.currency (
+    id bigint NOT NULL,
+    currency_name character varying(255) NOT NULL,
+    currency_code character varying(255),
+    currency_symbol character varying(255),
+    country_id bigint
+);
+
+
+ALTER TABLE public.currency OWNER TO postgres;
 
 --
 -- Name: databasechangelog; Type: TABLE; Schema: public; Owner: postgres
@@ -182,6 +235,72 @@ CREATE TABLE public.department (
 ALTER TABLE public.department OWNER TO postgres;
 
 --
+-- Name: due_date; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.due_date (
+    id bigint NOT NULL,
+    payment_method character varying(255) NOT NULL,
+    installments integer NOT NULL,
+    day_desc character varying(255) NOT NULL,
+    frequency character varying(255) NOT NULL,
+    college_id bigint,
+    branch_id bigint
+);
+
+
+ALTER TABLE public.due_date OWNER TO postgres;
+
+--
+-- Name: facility; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.facility (
+    id bigint NOT NULL,
+    facility_name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.facility OWNER TO postgres;
+
+--
+-- Name: fee_category; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fee_category (
+    id bigint NOT NULL,
+    category_name character varying(255) NOT NULL,
+    description character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.fee_category OWNER TO postgres;
+
+--
+-- Name: fee_details; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fee_details (
+    id bigint NOT NULL,
+    fee_particulars_name character varying(255) NOT NULL,
+    fee_particular_desc character varying(255) NOT NULL,
+    student_type character varying(255) NOT NULL,
+    gender character varying(255) NOT NULL,
+    amount bigint NOT NULL,
+    fee_category_id bigint,
+    batch_id bigint,
+    facility_id bigint,
+    transport_route_id bigint,
+    college_id bigint,
+    department_id bigint,
+    branch_id bigint,
+    academic_year_id bigint
+);
+
+
+ALTER TABLE public.fee_details OWNER TO postgres;
+
+--
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -209,6 +328,38 @@ CREATE TABLE public.holiday (
 
 
 ALTER TABLE public.holiday OWNER TO postgres;
+
+--
+-- Name: invoice; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.invoice (
+    id bigint NOT NULL,
+    invoice_number character varying(255) NOT NULL,
+    amount_paid bigint NOT NULL,
+    payment_date date NOT NULL,
+    next_payment_date date NOT NULL,
+    out_standing_amount bigint NOT NULL,
+    mode_of_payment character varying(255) NOT NULL,
+    cheque_number bigint,
+    demand_draft_number bigint,
+    online_txn_ref_number character varying(255),
+    payment_status character varying(255) NOT NULL,
+    comments character varying(255) NOT NULL,
+    updated_by character varying(255) NOT NULL,
+    updated_on date NOT NULL,
+    fee_category_id bigint,
+    fee_details_id bigint,
+    due_date_id bigint,
+    payment_remainder_id bigint,
+    college_id bigint,
+    branch_id bigint,
+    student_id bigint,
+    academic_year_id bigint
+);
+
+
+ALTER TABLE public.invoice OWNER TO postgres;
 
 --
 -- Name: jhi_authority; Type: TABLE; Schema: public; Owner: postgres
@@ -287,6 +438,26 @@ CREATE TABLE public.jhi_user_authority (
 ALTER TABLE public.jhi_user_authority OWNER TO postgres;
 
 --
+-- Name: late_fee; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.late_fee (
+    id bigint NOT NULL,
+    assign_late_fee character varying(255) NOT NULL,
+    late_fee_days integer NOT NULL,
+    fixed character varying(255),
+    percentage character varying(255),
+    fixed_charges bigint,
+    percent_charges bigint,
+    late_fee_assignment_frequency character varying(255) NOT NULL,
+    college_id bigint,
+    branch_id bigint
+);
+
+
+ALTER TABLE public.late_fee OWNER TO postgres;
+
+--
 -- Name: lecture; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -313,19 +484,30 @@ CREATE TABLE public.legal_entity (
     legal_name_of_the_college character varying(255) NOT NULL,
     type_of_college character varying(255) NOT NULL,
     date_of_incorporation date NOT NULL,
-    registered_office_address character varying(255) NOT NULL,
+    registered_office_address_1 character varying(255) NOT NULL,
+    registered_office_address_2 character varying(255) NOT NULL,
+    registered_office_address_3 character varying(255) NOT NULL,
+    registered_office_address_4 character varying(255) NOT NULL,
+    registered_office_address_5 character varying(255) NOT NULL,
     college_identification_number character varying(255) NOT NULL,
     pan character varying(255) NOT NULL,
     tan character varying(255) NOT NULL,
     tan_circle_number character varying(255) NOT NULL,
     cit_tds_location character varying(255) NOT NULL,
-    form_signatory character varying(255) NOT NULL,
+    form_signatory bigint NOT NULL,
     pf_number character varying(255) NOT NULL,
-    registration_date date NOT NULL,
+    pf_registration_date date NOT NULL,
+    pf_signatory bigint NOT NULL,
     esi_number bigint NOT NULL,
+    esi_registration_date date NOT NULL,
+    esi_signatory bigint NOT NULL,
+    pt_number bigint NOT NULL,
     pt_registration_date date NOT NULL,
-    pt_signatory character varying(255) NOT NULL,
-    pt_number bigint NOT NULL
+    pt_signatory bigint NOT NULL,
+    branch_id bigint,
+    college_id bigint,
+    state_id bigint,
+    city_id bigint
 );
 
 
@@ -346,6 +528,24 @@ CREATE TABLE public.location (
 ALTER TABLE public.location OWNER TO postgres;
 
 --
+-- Name: payment_remainder; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.payment_remainder (
+    id bigint NOT NULL,
+    fee_remainder character varying(255) NOT NULL,
+    notice_day integer NOT NULL,
+    over_due_remainder character varying(255) NOT NULL,
+    remainder_recipients character varying(255) NOT NULL,
+    due_date_id bigint,
+    college_id bigint,
+    branch_id bigint
+);
+
+
+ALTER TABLE public.payment_remainder OWNER TO postgres;
+
+--
 -- Name: section; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -357,6 +557,21 @@ CREATE TABLE public.section (
 
 
 ALTER TABLE public.section OWNER TO postgres;
+
+--
+-- Name: state; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.state (
+    id bigint NOT NULL,
+    state_name character varying(255) NOT NULL,
+    division_type character varying(255) NOT NULL,
+    state_code character varying(255) NOT NULL,
+    country_id bigint
+);
+
+
+ALTER TABLE public.state OWNER TO postgres;
 
 --
 -- Name: student; Type: TABLE; Schema: public; Owner: postgres
@@ -399,6 +614,16 @@ CREATE TABLE public.student (
     last_name character varying(255) NOT NULL,
     contact_no bigint NOT NULL,
     email_address character varying(255) NOT NULL,
+    transport character varying(255) NOT NULL,
+    mess character varying(255) NOT NULL,
+    gym character varying(255) NOT NULL,
+    cultural_class character varying(255) NOT NULL,
+    jhi_library character varying(255) NOT NULL,
+    sports character varying(255) NOT NULL,
+    swimming character varying(255) NOT NULL,
+    extra_class character varying(255) NOT NULL,
+    handicrafts character varying(255) NOT NULL,
+    jhi_add character varying(255) NOT NULL,
     upload_photo bigint NOT NULL,
     admission_no bigint NOT NULL,
     roll_no character varying(255) NOT NULL,
@@ -426,21 +651,6 @@ CREATE TABLE public.student_attendance (
 
 
 ALTER TABLE public.student_attendance OWNER TO postgres;
-
---
--- Name: student_subject; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.student_subject (
-    id bigint NOT NULL,
-    comments character varying(255),
-    lastupdated_date date NOT NULL,
-    student_id bigint,
-    subject_id bigint
-);
-
-
-ALTER TABLE public.student_subject OWNER TO postgres;
 
 --
 -- Name: subject; Type: TABLE; Schema: public; Owner: postgres
@@ -542,12 +752,26 @@ CREATE TABLE public.term (
 ALTER TABLE public.term OWNER TO postgres;
 
 --
+-- Name: transport_route; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.transport_route (
+    id bigint NOT NULL,
+    route_name character varying(255) NOT NULL,
+    route_details character varying(255) NOT NULL,
+    route_map_url character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.transport_route OWNER TO postgres;
+
+--
 -- Data for Name: academic_year; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.academic_year (id, jhi_year, start_date, end_date, jhi_desc) FROM stdin;
-11100	2018	2018-01-01	2018-12-31	Academic year 2018
-1051	2019	2019-01-01	2019-12-31	Academic year 2019
+COPY public.academic_year (id, jhi_year, start_date, end_date) FROM stdin;
+11100	2018	2018-01-01	2018-12-31
+1051	2019	2019-01-01	2019-12-31
 \.
 
 
@@ -627,8 +851,8 @@ COPY public.attendance_master (id, jhi_desc, batch_id, section_id, teach_id) FRO
 -- Data for Name: authorized_signatory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.authorized_signatory (id, signatory_name, signatory_father_name, signatory_designation, address, email, pan_card_number, legal_entity_id) FROM stdin;
-1651	Jack		DIG	madhapur	jack@gmail.com	AVGPT4072M	1601
+COPY public.authorized_signatory (id, signatory_name, signatory_father_name, signatory_designation, address_1, address_2, address_3, address_4, address_5, email, pan_card_number, branch_id, college_id) FROM stdin;
+1651	Jack	FJack	DIG	address_1	address_2	address_3	address_4	address_5	jack@gmail.com	AVGPT4072M	1001	951
 \.
 
 
@@ -636,8 +860,8 @@ COPY public.authorized_signatory (id, signatory_name, signatory_father_name, sig
 -- Data for Name: bank_accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.bank_accounts (id, name_of_bank, account_number, type_of_account, ifs_code, branch, corporate_id) FROM stdin;
-1751	HDFC	7338093889389	Savings	AD09832	madhapur	123
+COPY public.bank_accounts (id, name_of_bank, account_number, type_of_account, ifsc_code, branch_address, corporate_id, branch_id, college_id) FROM stdin;
+1751	HDFC	7338093889389	Savings	AD09832	madhapur	123	1001	951
 \.
 
 
@@ -669,9 +893,17 @@ COPY public.batch (id, batch, department_id) FROM stdin;
 -- Data for Name: branch; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.branch (id, branch_name, description, college_head, college_id) FROM stdin;
-1001	Hyd Engineering College	Hyd Engineering College, Central Market Branch	papu	951
-11150	Grand Engineering College	Grand Engineering College, Charminar Branch	Tez	951
+COPY public.branch (id, branch_name, address_1, address_2, branch_head, college_id, city_id, state_id) FROM stdin;
+1001	Hyd Engineering College	Hyd address 1	Hyd address 2	Mr. Venkat	951	\N	\N
+11150	Grand Engineering College	Hyd address 1	Hyd address 2	Mr. Tez	951	\N	\N
+\.
+
+
+--
+-- Data for Name: city; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.city (id, city_name, city_code, std_code, state_id) FROM stdin;
 \.
 
 
@@ -685,47 +917,84 @@ COPY public.college (id, short_name, logo, background_image, instruction_informa
 
 
 --
+-- Data for Name: country; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.country (id, country_name, country_code, isd_code) FROM stdin;
+\.
+
+
+--
+-- Data for Name: currency; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.currency (id, currency_name, currency_code, currency_symbol, country_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: databasechangelog; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.databasechangelog (id, author, filename, dateexecuted, orderexecuted, exectype, md5sum, description, comments, tag, liquibase, contexts, labels, deployment_id) FROM stdin;
-00000000000000	jhipster	config/liquibase/changelog/00000000000000_initial_schema.xml	2019-01-29 10:06:19.269946	1	EXECUTED	7:a6235f40597a13436aa36c6d61db2269	createSequence sequenceName=hibernate_sequence		\N	3.5.4	\N	\N	8736579103
-00000000000001	jhipster	config/liquibase/changelog/00000000000000_initial_schema.xml	2019-01-29 10:06:20.453212	2	EXECUTED	7:b5ee0758b78b82af99fff74284dca29f	createTable tableName=jhi_user; createTable tableName=jhi_authority; createTable tableName=jhi_user_authority; addPrimaryKey tableName=jhi_user_authority; addForeignKeyConstraint baseTableName=jhi_user_authority, constraintName=fk_authority_name, ...		\N	3.5.4	\N	\N	8736579103
-20190118141510-1	jhipster	config/liquibase/changelog/20190118141510_added_entity_College.xml	2019-01-29 10:06:20.631201	3	EXECUTED	7:0dc18017970bbd3e1473ae868f39ad23	createTable tableName=college		\N	3.5.4	\N	\N	8736579103
-20190118141511-1	jhipster	config/liquibase/changelog/20190118141511_added_entity_Branch.xml	2019-01-29 10:06:20.829259	4	EXECUTED	7:08f2ab7c4a70a320feba5521791adf86	createTable tableName=branch		\N	3.5.4	\N	\N	8736579103
-20190118141512-1	jhipster	config/liquibase/changelog/20190118141512_added_entity_Department.xml	2019-01-29 10:06:20.946862	5	EXECUTED	7:609a44ee8a7f80b44e8c12e6b612d2a5	createTable tableName=department		\N	3.5.4	\N	\N	8736579103
-20190118141513-1	jhipster	config/liquibase/changelog/20190118141513_added_entity_Batch.xml	2019-01-29 10:06:21.024625	6	EXECUTED	7:c680bb1d959026a27482af59024f3a3b	createTable tableName=batch		\N	3.5.4	\N	\N	8736579103
-20190118141515-1	jhipster	config/liquibase/changelog/20190118141515_added_entity_Section.xml	2019-01-29 10:06:21.103356	7	EXECUTED	7:a3f5d37983acf555ef52d8af2f48d841	createTable tableName=section		\N	3.5.4	\N	\N	8736579103
-20190118141516-1	jhipster	config/liquibase/changelog/20190118141516_added_entity_Term.xml	2019-01-29 10:06:21.246888	8	EXECUTED	7:b084e90a6ca30f84b23c3673dd304e26	createTable tableName=term		\N	3.5.4	\N	\N	8736579103
-20190118141519-1	jhipster	config/liquibase/changelog/20190118141519_added_entity_AcademicYear.xml	2019-01-29 10:06:21.315564	9	EXECUTED	7:b541c7f6a101b8197a6c5e35de68b422	createTable tableName=academic_year		\N	3.5.4	\N	\N	8736579103
-20190118141520-1	jhipster	config/liquibase/changelog/20190118141520_added_entity_Holiday.xml	2019-01-29 10:06:21.539304	10	EXECUTED	7:b2b3bbc0dc566733d1b6b0a4e8d99062	createTable tableName=holiday		\N	3.5.4	\N	\N	8736579103
-20190118141526-1	jhipster	config/liquibase/changelog/20190118141526_added_entity_StudentSubject.xml	2019-01-29 10:06:21.872515	11	EXECUTED	7:7ace81a7318fe88f74bc53b2980c4e6f	createTable tableName=student_subject		\N	3.5.4	\N	\N	8736579103
-20190118141527-1	jhipster	config/liquibase/changelog/20190118141527_added_entity_Location.xml	2019-01-29 10:06:22.095079	12	EXECUTED	7:dba1934903af0955a1cb5d1fabb8b478	createTable tableName=location		\N	3.5.4	\N	\N	8736579103
-20190118141528-1	jhipster	config/liquibase/changelog/20190118141528_added_entity_LegalEntity.xml	2019-01-29 10:06:22.46099	13	EXECUTED	7:9d94730bc12265ea20f95e4884770d02	createTable tableName=legal_entity		\N	3.5.4	\N	\N	8736579103
-20190118141529-1	jhipster	config/liquibase/changelog/20190118141529_added_entity_AuthorizedSignatory.xml	2019-01-29 10:06:22.72327	14	EXECUTED	7:03a898ef3c3ff82738c7ddd73926f2df	createTable tableName=authorized_signatory		\N	3.5.4	\N	\N	8736579103
-20190118141530-1	jhipster	config/liquibase/changelog/20190118141530_added_entity_BankAccounts.xml	2019-01-29 10:06:23.022234	15	EXECUTED	7:8b2fe3401899f13f86438bce12b62455	createTable tableName=bank_accounts		\N	3.5.4	\N	\N	8736579103
-20190122100629-1	jhipster	config/liquibase/changelog/20190122100629_added_entity_Subject.xml	2019-01-29 10:06:23.227856	16	EXECUTED	7:07b062127f835f246117e5744086f71c	createTable tableName=subject		\N	3.5.4	\N	\N	8736579103
-20190122101135-1	jhipster	config/liquibase/changelog/20190122101135_added_entity_StudentAttendance.xml	2019-01-29 10:06:23.715452	17	EXECUTED	7:d7c27b6e26d7f36e320efd20e1f2c722	createTable tableName=student_attendance		\N	3.5.4	\N	\N	8736579103
-20190123115124-1	jhipster	config/liquibase/changelog/20190123115124_added_entity_Lecture.xml	2019-01-29 10:06:23.870419	18	EXECUTED	7:e38b83414dfba9e1908ad67932be1777	createTable tableName=lecture		\N	3.5.4	\N	\N	8736579103
-20190124093523-1	jhipster	config/liquibase/changelog/20190124093523_added_entity_AttendanceMaster.xml	2019-01-29 10:06:23.91791	19	EXECUTED	7:6ea71444a4b583cabd293665e7555087	createTable tableName=attendance_master		\N	3.5.4	\N	\N	8736579103
-20190124103741-1	jhipster	config/liquibase/changelog/20190124103741_added_entity_Teach.xml	2019-01-29 10:06:24.02529	20	EXECUTED	7:45316a12134793fe683a51cf8f8b464d	createTable tableName=teach		\N	3.5.4	\N	\N	8736579103
-20190128085232-1	jhipster	config/liquibase/changelog/20190128085232_added_entity_Student.xml	2019-01-29 10:06:24.122447	21	EXECUTED	7:04bec0f8611327a08445545ff4a81ec3	createTable tableName=student		\N	3.5.4	\N	\N	8736579103
-20190128125803-1	jhipster	config/liquibase/changelog/20190128125803_added_entity_Teacher.xml	2019-01-29 10:06:24.29453	22	EXECUTED	7:97055a0b9e5de2f79c78fd80cb6856bd	createTable tableName=teacher		\N	3.5.4	\N	\N	8736579103
-20190118141511-2	jhipster	config/liquibase/changelog/20190118141511_added_entity_constraints_Branch.xml	2019-01-29 10:06:24.317537	23	EXECUTED	7:5314752ead61f9b74e1011548fb85f09	addForeignKeyConstraint baseTableName=branch, constraintName=fk_branch_college_id, referencedTableName=college		\N	3.5.4	\N	\N	8736579103
-20190118141512-2	jhipster	config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml	2019-01-29 10:06:24.325954	24	EXECUTED	7:53de67c219b94146c0759136fa060828	addForeignKeyConstraint baseTableName=department, constraintName=fk_department_branch_id, referencedTableName=branch; addForeignKeyConstraint baseTableName=department, constraintName=fk_department_academicyear_id, referencedTableName=academic_year		\N	3.5.4	\N	\N	8736579103
-20190118141513-2	jhipster	config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml	2019-01-29 10:06:24.331646	25	EXECUTED	7:87327eed6c22b67eefc24dc37471b7d5	addForeignKeyConstraint baseTableName=batch, constraintName=fk_batch_department_id, referencedTableName=department		\N	3.5.4	\N	\N	8736579103
-20190118141515-2	jhipster	config/liquibase/changelog/20190118141515_added_entity_constraints_Section.xml	2019-01-29 10:06:24.337036	26	EXECUTED	7:78f71b5c751d567bb339085fb73b327c	addForeignKeyConstraint baseTableName=section, constraintName=fk_section_batch_id, referencedTableName=batch		\N	3.5.4	\N	\N	8736579103
-20190118141516-2	jhipster	config/liquibase/changelog/20190118141516_added_entity_constraints_Term.xml	2019-01-29 10:06:24.344162	27	EXECUTED	7:f7ea236423beb89c3f961e64e21069d0	addForeignKeyConstraint baseTableName=term, constraintName=fk_term_academicyear_id, referencedTableName=academic_year		\N	3.5.4	\N	\N	8736579103
-20190118141520-2	jhipster	config/liquibase/changelog/20190118141520_added_entity_constraints_Holiday.xml	2019-01-29 10:06:24.350857	28	EXECUTED	7:957f40e08ecd004219ce0c739d3c8bc7	addForeignKeyConstraint baseTableName=holiday, constraintName=fk_holiday_academicyear_id, referencedTableName=academic_year		\N	3.5.4	\N	\N	8736579103
-20190118141526-2	jhipster	config/liquibase/changelog/20190118141526_added_entity_constraints_StudentSubject.xml	2019-01-29 10:06:24.412099	29	EXECUTED	7:771002c22865fa4a44f577298f85732c	addForeignKeyConstraint baseTableName=student_subject, constraintName=fk_student_subject_student_id, referencedTableName=student; addForeignKeyConstraint baseTableName=student_subject, constraintName=fk_student_subject_subject_id, referencedTableN...		\N	3.5.4	\N	\N	8736579103
-20190118141529-2	jhipster	config/liquibase/changelog/20190118141529_added_entity_constraints_AuthorizedSignatory.xml	2019-01-29 10:06:24.419249	30	EXECUTED	7:232c55e379d2d736e0030a6a2402d5c6	addForeignKeyConstraint baseTableName=authorized_signatory, constraintName=fk_authorized_signatory_legal_entity_id, referencedTableName=legal_entity		\N	3.5.4	\N	\N	8736579103
-20190122100629-2	jhipster	config/liquibase/changelog/20190122100629_added_entity_constraints_Subject.xml	2019-01-29 10:06:24.42718	31	EXECUTED	7:a31ba84a16ae94c8eb4637464a74ecde	addForeignKeyConstraint baseTableName=subject, constraintName=fk_subject_department_id, referencedTableName=department; addForeignKeyConstraint baseTableName=subject, constraintName=fk_subject_batch_id, referencedTableName=batch		\N	3.5.4	\N	\N	8736579103
-20190122101135-2	jhipster	config/liquibase/changelog/20190122101135_added_entity_constraints_StudentAttendance.xml	2019-01-29 10:06:24.436289	32	EXECUTED	7:731eeee10c037f2f79a4867425484e1d	addForeignKeyConstraint baseTableName=student_attendance, constraintName=fk_student_attendance_student_id, referencedTableName=student; addForeignKeyConstraint baseTableName=student_attendance, constraintName=fk_student_attendance_lecture_id, refe...		\N	3.5.4	\N	\N	8736579103
-20190123115124-2	jhipster	config/liquibase/changelog/20190123115124_added_entity_constraints_Lecture.xml	2019-01-29 10:06:24.443327	33	EXECUTED	7:30662fe2b472869dc680ca62ff65633a	addForeignKeyConstraint baseTableName=lecture, constraintName=fk_lecture_attendancemaster_id, referencedTableName=attendance_master		\N	3.5.4	\N	\N	8736579103
-20190124093523-2	jhipster	config/liquibase/changelog/20190124093523_added_entity_constraints_AttendanceMaster.xml	2019-01-29 10:06:24.45521	34	EXECUTED	7:62edd2777d56b98505cd4d05adae81b3	addForeignKeyConstraint baseTableName=attendance_master, constraintName=fk_attendance_master_batch_id, referencedTableName=batch; addForeignKeyConstraint baseTableName=attendance_master, constraintName=fk_attendance_master_section_id, referencedTa...		\N	3.5.4	\N	\N	8736579103
-20190124103741-2	jhipster	config/liquibase/changelog/20190124103741_added_entity_constraints_Teach.xml	2019-01-29 10:06:24.511843	35	EXECUTED	7:b5af7ed013cd7324419046e904e0fcd4	addForeignKeyConstraint baseTableName=teach, constraintName=fk_teach_subject_id, referencedTableName=subject; addForeignKeyConstraint baseTableName=teach, constraintName=fk_teach_teacher_id, referencedTableName=teacher		\N	3.5.4	\N	\N	8736579103
-20190128085232-2	jhipster	config/liquibase/changelog/20190128085232_added_entity_constraints_Student.xml	2019-01-29 10:06:24.529644	36	EXECUTED	7:2fb4f1941fa40fd126c322c418fc3db5	addForeignKeyConstraint baseTableName=student, constraintName=fk_student_department_id, referencedTableName=department; addForeignKeyConstraint baseTableName=student, constraintName=fk_student_batch_id, referencedTableName=batch; addForeignKeyCons...		\N	3.5.4	\N	\N	8736579103
-20190128125803-2	jhipster	config/liquibase/changelog/20190128125803_added_entity_constraints_Teacher.xml	2019-01-29 10:06:24.537655	37	EXECUTED	7:28caf2e2adc0f3abf2304b1253340332	addForeignKeyConstraint baseTableName=teacher, constraintName=fk_teacher_department_id, referencedTableName=department; addForeignKeyConstraint baseTableName=teacher, constraintName=fk_teacher_branch_id, referencedTableName=branch		\N	3.5.4	\N	\N	8736579103
+00000000000000	jhipster	config/liquibase/changelog/00000000000000_initial_schema.xml	2019-03-04 17:20:34.821653	1	EXECUTED	7:a6235f40597a13436aa36c6d61db2269	createSequence sequenceName=hibernate_sequence		\N	3.5.4	\N	\N	1700234586
+00000000000001	jhipster	config/liquibase/changelog/00000000000000_initial_schema.xml	2019-03-04 17:20:34.917659	2	EXECUTED	7:b5ee0758b78b82af99fff74284dca29f	createTable tableName=jhi_user; createTable tableName=jhi_authority; createTable tableName=jhi_user_authority; addPrimaryKey tableName=jhi_user_authority; addForeignKeyConstraint baseTableName=jhi_user_authority, constraintName=fk_authority_name, ...		\N	3.5.4	\N	\N	1700234586
+20190118141512-1	jhipster	config/liquibase/changelog/20190118141512_added_entity_Department.xml	2019-03-04 17:20:34.93766	3	EXECUTED	7:609a44ee8a7f80b44e8c12e6b612d2a5	createTable tableName=department		\N	3.5.4	\N	\N	1700234586
+20190118141513-1	jhipster	config/liquibase/changelog/20190118141513_added_entity_Batch.xml	2019-03-04 17:20:34.949661	4	EXECUTED	7:c680bb1d959026a27482af59024f3a3b	createTable tableName=batch		\N	3.5.4	\N	\N	1700234586
+20190118141515-1	jhipster	config/liquibase/changelog/20190118141515_added_entity_Section.xml	2019-03-04 17:20:34.960661	5	EXECUTED	7:a3f5d37983acf555ef52d8af2f48d841	createTable tableName=section		\N	3.5.4	\N	\N	1700234586
+20190118141516-1	jhipster	config/liquibase/changelog/20190118141516_added_entity_Term.xml	2019-03-04 17:20:34.975662	6	EXECUTED	7:b084e90a6ca30f84b23c3673dd304e26	createTable tableName=term		\N	3.5.4	\N	\N	1700234586
+20190118141520-1	jhipster	config/liquibase/changelog/20190118141520_added_entity_Holiday.xml	2019-03-04 17:20:34.991663	7	EXECUTED	7:b2b3bbc0dc566733d1b6b0a4e8d99062	createTable tableName=holiday		\N	3.5.4	\N	\N	1700234586
+20190118141527-1	jhipster	config/liquibase/changelog/20190118141527_added_entity_Location.xml	2019-03-04 17:20:35.006664	8	EXECUTED	7:dba1934903af0955a1cb5d1fabb8b478	createTable tableName=location		\N	3.5.4	\N	\N	1700234586
+20190118141530-1	jhipster	config/liquibase/changelog/20190118141530_added_entity_BankAccounts.xml	2019-03-04 17:20:35.023665	9	EXECUTED	7:50863971152d24e79c9ff7471a638819	createTable tableName=bank_accounts		\N	3.5.4	\N	\N	1700234586
+20190122100629-1	jhipster	config/liquibase/changelog/20190122100629_added_entity_Subject.xml	2019-03-04 17:20:35.036666	10	EXECUTED	7:07b062127f835f246117e5744086f71c	createTable tableName=subject		\N	3.5.4	\N	\N	1700234586
+20190122101135-1	jhipster	config/liquibase/changelog/20190122101135_added_entity_StudentAttendance.xml	2019-03-04 17:20:35.051667	11	EXECUTED	7:d7c27b6e26d7f36e320efd20e1f2c722	createTable tableName=student_attendance		\N	3.5.4	\N	\N	1700234586
+20190123115124-1	jhipster	config/liquibase/changelog/20190123115124_added_entity_Lecture.xml	2019-03-04 17:20:35.069668	12	EXECUTED	7:e38b83414dfba9e1908ad67932be1777	createTable tableName=lecture		\N	3.5.4	\N	\N	1700234586
+20190124093523-1	jhipster	config/liquibase/changelog/20190124093523_added_entity_AttendanceMaster.xml	2019-03-04 17:20:35.079668	13	EXECUTED	7:6ea71444a4b583cabd293665e7555087	createTable tableName=attendance_master		\N	3.5.4	\N	\N	1700234586
+20190124103741-1	jhipster	config/liquibase/changelog/20190124103741_added_entity_Teach.xml	2019-03-04 17:20:35.089669	14	EXECUTED	7:45316a12134793fe683a51cf8f8b464d	createTable tableName=teach		\N	3.5.4	\N	\N	1700234586
+20190128125803-1	jhipster	config/liquibase/changelog/20190128125803_added_entity_Teacher.xml	2019-03-04 17:20:35.10867	15	EXECUTED	7:97055a0b9e5de2f79c78fd80cb6856bd	createTable tableName=teacher		\N	3.5.4	\N	\N	1700234586
+20190205082417-1	jhipster	config/liquibase/changelog/20190205082417_added_entity_Student.xml	2019-03-04 17:20:35.129671	16	EXECUTED	7:9e5b3d75a939379a2ab6eeb5e10860ff	createTable tableName=student		\N	3.5.4	\N	\N	1700234586
+20190208044628-1	jhipster	config/liquibase/changelog/20190208044628_added_entity_College.xml	2019-03-04 17:20:35.144672	17	EXECUTED	7:0dc18017970bbd3e1473ae868f39ad23	createTable tableName=college		\N	3.5.4	\N	\N	1700234586
+20190214071443-1	jhipster	config/liquibase/changelog/20190214071443_added_entity_Branch.xml	2019-03-04 17:20:35.161673	18	EXECUTED	7:af29eac14e67e0b0c229fe29b5251579	createTable tableName=branch		\N	3.5.4	\N	\N	1700234586
+20190208044647-1	jhipster	config/liquibase/changelog/20190208044647_added_entity_AuthorizedSignatory.xml	2019-03-04 17:20:35.177674	19	EXECUTED	7:66fb0119c78e505a472292485564d854	createTable tableName=authorized_signatory		\N	3.5.4	\N	\N	1700234586
+20190222065258-1	jhipster	config/liquibase/changelog/20190222065258_added_entity_AcademicYear.xml	2019-03-04 17:20:35.186674	20	EXECUTED	7:b5eb835ba01801f4a4dc14838637539c	createTable tableName=academic_year		\N	3.5.4	\N	\N	1700234586
+20190225061048-1	jhipster	config/liquibase/changelog/20190225061048_added_entity_LegalEntity.xml	2019-03-04 17:20:35.205675	21	EXECUTED	7:7eb3227785d9fc3b670edfa547a37975	createTable tableName=legal_entity		\N	3.5.4	\N	\N	1700234586
+20190225061051-1	jhipster	config/liquibase/changelog/20190225061051_added_entity_Country.xml	2019-03-04 17:20:35.218676	22	EXECUTED	7:846368a1c0b6305f047f8d00432d0cd3	createTable tableName=country		\N	3.5.4	\N	\N	1700234586
+20190225061052-1	jhipster	config/liquibase/changelog/20190225061052_added_entity_Currency.xml	2019-03-04 17:20:35.232677	23	EXECUTED	7:bbb83aa78cf4429204b02f441b95949b	createTable tableName=currency		\N	3.5.4	\N	\N	1700234586
+20190225061053-1	jhipster	config/liquibase/changelog/20190225061053_added_entity_State.xml	2019-03-04 17:20:35.251678	24	EXECUTED	7:aa0fd71dc90b770a92d2abd164e0d21c	createTable tableName=state		\N	3.5.4	\N	\N	1700234586
+20190225061054-1	jhipster	config/liquibase/changelog/20190225061054_added_entity_City.xml	2019-03-04 17:20:35.266679	25	EXECUTED	7:3b84f91c84c26111a6e93b77e8115598	createTable tableName=city		\N	3.5.4	\N	\N	1700234586
+20190225061055-1	jhipster	config/liquibase/changelog/20190225061055_added_entity_FeeCategory.xml	2019-03-04 17:20:35.28168	26	EXECUTED	7:046743a42e33cf8951dafaee3988b72c	createTable tableName=fee_category		\N	3.5.4	\N	\N	1700234586
+20190225061056-1	jhipster	config/liquibase/changelog/20190225061056_added_entity_Facility.xml	2019-03-04 17:20:35.29068	27	EXECUTED	7:0ed9dd81ee6a40d8ae4ad0bfb038a9c7	createTable tableName=facility		\N	3.5.4	\N	\N	1700234586
+20190225061057-1	jhipster	config/liquibase/changelog/20190225061057_added_entity_TransportRoute.xml	2019-03-04 17:20:35.304681	28	EXECUTED	7:d920f9a258da59edef518300e856b1fb	createTable tableName=transport_route		\N	3.5.4	\N	\N	1700234586
+20190225061058-1	jhipster	config/liquibase/changelog/20190225061058_added_entity_FeeDetails.xml	2019-03-04 17:20:35.327682	29	EXECUTED	7:90f170ee2389a4d65aed589490f01ada	createTable tableName=fee_details		\N	3.5.4	\N	\N	1700234586
+20190225061059-1	jhipster	config/liquibase/changelog/20190225061059_added_entity_DueDate.xml	2019-03-04 17:20:35.341683	30	EXECUTED	7:418b001d767b314227719a5c059a9c60	createTable tableName=due_date		\N	3.5.4	\N	\N	1700234586
+20190225061100-1	jhipster	config/liquibase/changelog/20190225061100_added_entity_PaymentRemainder.xml	2019-03-04 17:20:35.357684	31	EXECUTED	7:af129382cc9bce6770e340b5215464e6	createTable tableName=payment_remainder		\N	3.5.4	\N	\N	1700234586
+20190225061101-1	jhipster	config/liquibase/changelog/20190225061101_added_entity_LateFee.xml	2019-03-04 17:20:35.376685	32	EXECUTED	7:29e456db68d4cf24b99b5c50e29605ec	createTable tableName=late_fee		\N	3.5.4	\N	\N	1700234586
+20190225061102-1	jhipster	config/liquibase/changelog/20190225061102_added_entity_Invoice.xml	2019-03-04 17:20:35.398686	33	EXECUTED	7:11e67d67152215dadd28efe0a4c83e00	createTable tableName=invoice		\N	3.5.4	\N	\N	1700234586
+20190118141512-2	jhipster	config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml	2019-03-04 17:20:35.409687	34	EXECUTED	7:53de67c219b94146c0759136fa060828	addForeignKeyConstraint baseTableName=department, constraintName=fk_department_branch_id, referencedTableName=branch; addForeignKeyConstraint baseTableName=department, constraintName=fk_department_academicyear_id, referencedTableName=academic_year		\N	3.5.4	\N	\N	1700234586
+20190118141513-2	jhipster	config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml	2019-03-04 17:20:35.417687	35	EXECUTED	7:87327eed6c22b67eefc24dc37471b7d5	addForeignKeyConstraint baseTableName=batch, constraintName=fk_batch_department_id, referencedTableName=department		\N	3.5.4	\N	\N	1700234586
+20190118141515-2	jhipster	config/liquibase/changelog/20190118141515_added_entity_constraints_Section.xml	2019-03-04 17:20:35.424688	36	EXECUTED	7:78f71b5c751d567bb339085fb73b327c	addForeignKeyConstraint baseTableName=section, constraintName=fk_section_batch_id, referencedTableName=batch		\N	3.5.4	\N	\N	1700234586
+20190118141516-2	jhipster	config/liquibase/changelog/20190118141516_added_entity_constraints_Term.xml	2019-03-04 17:20:35.431688	37	EXECUTED	7:f7ea236423beb89c3f961e64e21069d0	addForeignKeyConstraint baseTableName=term, constraintName=fk_term_academicyear_id, referencedTableName=academic_year		\N	3.5.4	\N	\N	1700234586
+20190118141520-2	jhipster	config/liquibase/changelog/20190118141520_added_entity_constraints_Holiday.xml	2019-03-04 17:20:35.439689	38	EXECUTED	7:957f40e08ecd004219ce0c739d3c8bc7	addForeignKeyConstraint baseTableName=holiday, constraintName=fk_holiday_academicyear_id, referencedTableName=academic_year		\N	3.5.4	\N	\N	1700234586
+20190122100629-2	jhipster	config/liquibase/changelog/20190122100629_added_entity_constraints_Subject.xml	2019-03-04 17:20:35.448689	39	EXECUTED	7:a31ba84a16ae94c8eb4637464a74ecde	addForeignKeyConstraint baseTableName=subject, constraintName=fk_subject_department_id, referencedTableName=department; addForeignKeyConstraint baseTableName=subject, constraintName=fk_subject_batch_id, referencedTableName=batch		\N	3.5.4	\N	\N	1700234586
+20190122101135-2	jhipster	config/liquibase/changelog/20190122101135_added_entity_constraints_StudentAttendance.xml	2019-03-04 17:20:35.45669	40	EXECUTED	7:731eeee10c037f2f79a4867425484e1d	addForeignKeyConstraint baseTableName=student_attendance, constraintName=fk_student_attendance_student_id, referencedTableName=student; addForeignKeyConstraint baseTableName=student_attendance, constraintName=fk_student_attendance_lecture_id, refe...		\N	3.5.4	\N	\N	1700234586
+20190123115124-2	jhipster	config/liquibase/changelog/20190123115124_added_entity_constraints_Lecture.xml	2019-03-04 17:20:35.46169	41	EXECUTED	7:30662fe2b472869dc680ca62ff65633a	addForeignKeyConstraint baseTableName=lecture, constraintName=fk_lecture_attendancemaster_id, referencedTableName=attendance_master		\N	3.5.4	\N	\N	1700234586
+20190124093523-2	jhipster	config/liquibase/changelog/20190124093523_added_entity_constraints_AttendanceMaster.xml	2019-03-04 17:20:35.473691	42	EXECUTED	7:62edd2777d56b98505cd4d05adae81b3	addForeignKeyConstraint baseTableName=attendance_master, constraintName=fk_attendance_master_batch_id, referencedTableName=batch; addForeignKeyConstraint baseTableName=attendance_master, constraintName=fk_attendance_master_section_id, referencedTa...		\N	3.5.4	\N	\N	1700234586
+20190124103741-2	jhipster	config/liquibase/changelog/20190124103741_added_entity_constraints_Teach.xml	2019-03-04 17:20:35.481691	43	EXECUTED	7:b5af7ed013cd7324419046e904e0fcd4	addForeignKeyConstraint baseTableName=teach, constraintName=fk_teach_subject_id, referencedTableName=subject; addForeignKeyConstraint baseTableName=teach, constraintName=fk_teach_teacher_id, referencedTableName=teacher		\N	3.5.4	\N	\N	1700234586
+20190128125803-2	jhipster	config/liquibase/changelog/20190128125803_added_entity_constraints_Teacher.xml	2019-03-04 17:20:35.488692	44	EXECUTED	7:28caf2e2adc0f3abf2304b1253340332	addForeignKeyConstraint baseTableName=teacher, constraintName=fk_teacher_department_id, referencedTableName=department; addForeignKeyConstraint baseTableName=teacher, constraintName=fk_teacher_branch_id, referencedTableName=branch		\N	3.5.4	\N	\N	1700234586
+20190205082417-2	jhipster	config/liquibase/changelog/20190205082417_added_entity_constraints_Student.xml	2019-03-04 17:20:35.502692	45	EXECUTED	7:2fb4f1941fa40fd126c322c418fc3db5	addForeignKeyConstraint baseTableName=student, constraintName=fk_student_department_id, referencedTableName=department; addForeignKeyConstraint baseTableName=student, constraintName=fk_student_batch_id, referencedTableName=batch; addForeignKeyCons...		\N	3.5.4	\N	\N	1700234586
+20190118141530-2	jhipster	config/liquibase/changelog/20190118141530_added_entity_constraints_BankAccounts.xml	2019-03-04 17:20:35.511693	46	EXECUTED	7:1881abb31f495b8f1253e91020c4e6cb	addForeignKeyConstraint baseTableName=bank_accounts, constraintName=fk_bank_accounts_branch_id, referencedTableName=branch; addForeignKeyConstraint baseTableName=bank_accounts, constraintName=fk_bank_accounts_college_id, referencedTableName=college		\N	3.5.4	\N	\N	1700234586
+20190214071443-2	jhipster	config/liquibase/changelog/20190214071443_added_entity_constraints_Branch.xml	2019-03-04 17:20:35.523694	47	EXECUTED	7:fa34714404d91862d8e3b274d3cc32b7	addForeignKeyConstraint baseTableName=branch, constraintName=fk_branch_college_id, referencedTableName=college; addForeignKeyConstraint baseTableName=branch, constraintName=fk_branch_city_id, referencedTableName=city; addForeignKeyConstraint baseT...		\N	3.5.4	\N	\N	1700234586
+20190208044647-2	jhipster	config/liquibase/changelog/20190208044647_added_entity_constraints_AuthorizedSignatory.xml	2019-03-04 17:20:35.534694	48	EXECUTED	7:65df57c42fbe8cf6a5280da34d50c0a4	addForeignKeyConstraint baseTableName=authorized_signatory, constraintName=fk_authorized_signatory_branch_id, referencedTableName=branch; addForeignKeyConstraint baseTableName=authorized_signatory, constraintName=fk_authorized_signatory_college_id...		\N	3.5.4	\N	\N	1700234586
+20190225061048-2	jhipster	config/liquibase/changelog/20190225061048_added_entity_constraints_LegalEntity.xml	2019-03-04 17:20:35.547695	49	EXECUTED	7:50085fd33cdebd071d034217c3fd1676	addForeignKeyConstraint baseTableName=legal_entity, constraintName=fk_legal_entity_branch_id, referencedTableName=branch; addForeignKeyConstraint baseTableName=legal_entity, constraintName=fk_legal_entity_college_id, referencedTableName=college; a...		\N	3.5.4	\N	\N	1700234586
+20190225061052-2	jhipster	config/liquibase/changelog/20190225061052_added_entity_constraints_Currency.xml	2019-03-04 17:20:35.554695	50	EXECUTED	7:e618c43c2d7a98ec2a715c1668b31682	addForeignKeyConstraint baseTableName=currency, constraintName=fk_currency_country_id, referencedTableName=country		\N	3.5.4	\N	\N	1700234586
+20190225061053-2	jhipster	config/liquibase/changelog/20190225061053_added_entity_constraints_State.xml	2019-03-04 17:20:35.560696	51	EXECUTED	7:763ec709ad29816303d0e2e5b78fb05c	addForeignKeyConstraint baseTableName=state, constraintName=fk_state_country_id, referencedTableName=country		\N	3.5.4	\N	\N	1700234586
+20190225061054-2	jhipster	config/liquibase/changelog/20190225061054_added_entity_constraints_City.xml	2019-03-04 17:20:35.566696	52	EXECUTED	7:752c9d17d18524d96187ffb89af6e3f8	addForeignKeyConstraint baseTableName=city, constraintName=fk_city_state_id, referencedTableName=state		\N	3.5.4	\N	\N	1700234586
+20190225061058-2	jhipster	config/liquibase/changelog/20190225061058_added_entity_constraints_FeeDetails.xml	2019-03-04 17:20:35.585697	53	EXECUTED	7:28b416a5736d4bf80117f5909d75f965	addForeignKeyConstraint baseTableName=fee_details, constraintName=fk_fee_details_fee_category_id, referencedTableName=fee_category; addForeignKeyConstraint baseTableName=fee_details, constraintName=fk_fee_details_batch_id, referencedTableName=batc...		\N	3.5.4	\N	\N	1700234586
+20190225061059-2	jhipster	config/liquibase/changelog/20190225061059_added_entity_constraints_DueDate.xml	2019-03-04 17:20:35.594698	54	EXECUTED	7:b36e309ef45ff1f011995add4a442ac8	addForeignKeyConstraint baseTableName=due_date, constraintName=fk_due_date_college_id, referencedTableName=college; addForeignKeyConstraint baseTableName=due_date, constraintName=fk_due_date_branch_id, referencedTableName=branch		\N	3.5.4	\N	\N	1700234586
+20190225061100-2	jhipster	config/liquibase/changelog/20190225061100_added_entity_constraints_PaymentRemainder.xml	2019-03-04 17:20:35.606698	55	EXECUTED	7:0bd78b59d59cf9075b0eb3b90e000ad0	addForeignKeyConstraint baseTableName=payment_remainder, constraintName=fk_payment_remainder_due_date_id, referencedTableName=due_date; addForeignKeyConstraint baseTableName=payment_remainder, constraintName=fk_payment_remainder_college_id, refere...		\N	3.5.4	\N	\N	1700234586
+20190225061101-2	jhipster	config/liquibase/changelog/20190225061101_added_entity_constraints_LateFee.xml	2019-03-04 17:20:35.616699	56	EXECUTED	7:0a3af2e8749dbcef97c5de2adbfdf676	addForeignKeyConstraint baseTableName=late_fee, constraintName=fk_late_fee_college_id, referencedTableName=college; addForeignKeyConstraint baseTableName=late_fee, constraintName=fk_late_fee_branch_id, referencedTableName=branch		\N	3.5.4	\N	\N	1700234586
+20190225061102-2	jhipster	config/liquibase/changelog/20190225061102_added_entity_constraints_Invoice.xml	2019-03-04 17:20:35.6367	57	EXECUTED	7:3de272ee91e1ac9d983f70874dede2f1	addForeignKeyConstraint baseTableName=invoice, constraintName=fk_invoice_fee_category_id, referencedTableName=fee_category; addForeignKeyConstraint baseTableName=invoice, constraintName=fk_invoice_fee_details_id, referencedTableName=fee_details; a...		\N	3.5.4	\N	\N	1700234586
+local_test_data_load	jhipster	config/liquibase/cms_test_data/local_test_data_load.xml	2019-03-04 17:20:37.635814	58	EXECUTED	7:11dfd15e250e5d7ee22a5ab0ff730605	loadData tableName=college; loadData tableName=location; loadData tableName=academic_year; loadData tableName=term; loadData tableName=holiday; loadData tableName=branch; loadData tableName=legal_entity; loadData tableName=authorized_signatory; lo...		\N	3.5.4	\N	\N	1700234586
 \.
 
 
@@ -751,6 +1020,38 @@ COPY public.department (id, name, description, dept_head, branch_id, academicyea
 
 
 --
+-- Data for Name: due_date; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.due_date (id, payment_method, installments, day_desc, frequency, college_id, branch_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: facility; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.facility (id, facility_name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: fee_category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.fee_category (id, category_name, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: fee_details; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.fee_details (id, fee_particulars_name, fee_particular_desc, student_type, gender, amount, fee_category_id, batch_id, facility_id, transport_route_id, college_id, department_id, branch_id, academic_year_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: holiday; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -765,6 +1066,14 @@ COPY public.holiday (id, holiday_desc, holiday_date, holiday_status, academicyea
 19650	Maha Shivaratri/Shivaratri	2019-03-04	ACTIVE	1051
 19700	Holi	2019-03-21	ACTIVE	1051
 19750	Diwali	2019-10-27	ACTIVE	1051
+\.
+
+
+--
+-- Data for Name: invoice; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.invoice (id, invoice_number, amount_paid, payment_date, next_payment_date, out_standing_amount, mode_of_payment, cheque_number, demand_draft_number, online_txn_ref_number, payment_status, comments, updated_by, updated_on, fee_category_id, fee_details_id, due_date_id, payment_remainder_id, college_id, branch_id, student_id, academic_year_id) FROM stdin;
 \.
 
 
@@ -799,10 +1108,10 @@ COPY public.jhi_persistent_audit_evt_data (event_id, name, value) FROM stdin;
 --
 
 COPY public.jhi_user (id, login, password_hash, first_name, last_name, email, image_url, activated, lang_key, activation_key, reset_key, created_by, created_date, reset_date, last_modified_by, last_modified_date) FROM stdin;
-1	system	$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG	System	System	system@localhost		t	en	\N	\N	system	2019-01-29 10:06:19.38158	\N	system	\N
-2	anonymoususer	$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO	Anonymous	User	anonymous@localhost		t	en	\N	\N	system	2019-01-29 10:06:19.38158	\N	system	\N
-3	admin	$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC	Administrator	Administrator	admin@localhost		t	en	\N	\N	system	2019-01-29 10:06:19.38158	\N	system	\N
-4	user	$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K	User	User	user@localhost		t	en	\N	\N	system	2019-01-29 10:06:19.38158	\N	system	\N
+1	system	$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG	System	System	system@localhost		t	en	\N	\N	system	2019-03-04 17:20:34.829654	\N	system	\N
+2	anonymoususer	$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO	Anonymous	User	anonymous@localhost		t	en	\N	\N	system	2019-03-04 17:20:34.829654	\N	system	\N
+3	admin	$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC	Administrator	Administrator	admin@localhost		t	en	\N	\N	system	2019-03-04 17:20:34.829654	\N	system	\N
+4	user	$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K	User	User	user@localhost		t	en	\N	\N	system	2019-03-04 17:20:34.829654	\N	system	\N
 \.
 
 
@@ -816,6 +1125,14 @@ COPY public.jhi_user_authority (user_id, authority_name) FROM stdin;
 3	ROLE_ADMIN
 3	ROLE_USER
 4	ROLE_USER
+\.
+
+
+--
+-- Data for Name: late_fee; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.late_fee (id, assign_late_fee, late_fee_days, fixed, percentage, fixed_charges, percent_charges, late_fee_assignment_frequency, college_id, branch_id) FROM stdin;
 \.
 
 
@@ -7272,6 +7589,661 @@ COPY public.lecture (id, lec_date, last_updated_on, last_updated_by, start_time,
 342100	2019-06-28	2019-01-30	Application User	8:30:00Am	9:30:00Am	18550
 342150	2019-06-28	2019-01-30	Application User	9:30:00Am	10:30:00Am	18600
 342200	2019-06-28	2019-01-30	Application User	11:00:00Am	12:00:01Pm	18650
+443550	2019-07-01	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+443600	2019-07-01	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+443650	2019-07-01	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+443700	2019-07-01	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+443750	2019-07-01	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+443800	2019-07-08	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+443850	2019-07-08	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+443900	2019-07-08	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+443950	2019-07-08	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+444000	2019-07-08	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+444050	2019-07-15	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+444100	2019-07-15	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+444150	2019-07-15	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+444200	2019-07-15	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+444250	2019-07-15	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+444300	2019-07-22	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+444350	2019-07-22	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+444400	2019-07-22	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+444450	2019-07-22	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+444500	2019-07-22	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+444550	2019-07-29	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+444600	2019-07-29	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+444650	2019-07-29	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+444700	2019-07-29	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+444750	2019-07-29	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+444800	2019-08-05	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+444850	2019-08-05	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+444900	2019-08-05	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+444950	2019-08-05	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+445000	2019-08-05	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+445050	2019-08-12	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+445100	2019-08-12	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+445150	2019-08-12	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+445200	2019-08-12	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+445250	2019-08-12	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+445300	2019-08-19	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+445350	2019-08-19	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+445400	2019-08-19	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+445450	2019-08-19	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+445500	2019-08-19	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+445550	2019-08-26	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+445600	2019-08-26	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+445650	2019-08-26	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+445700	2019-08-26	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+445750	2019-08-26	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+445800	2019-09-02	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+445850	2019-09-02	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+445900	2019-09-02	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+445950	2019-09-02	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+446000	2019-09-02	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+446050	2019-09-09	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+446100	2019-09-09	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+446150	2019-09-09	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+446200	2019-09-09	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+446250	2019-09-09	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+446300	2019-09-16	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+446350	2019-09-16	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+446400	2019-09-16	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+446450	2019-09-16	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+446500	2019-09-16	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+446550	2019-09-23	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+446600	2019-09-23	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+446650	2019-09-23	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+446700	2019-09-23	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+446750	2019-09-23	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+446800	2019-09-30	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+446850	2019-09-30	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+446900	2019-09-30	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+446950	2019-09-30	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+447000	2019-09-30	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+447050	2019-10-07	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+447100	2019-10-07	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+447150	2019-10-07	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+447200	2019-10-07	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+447250	2019-10-07	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+447300	2019-10-14	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+447350	2019-10-14	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+447400	2019-10-14	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+447450	2019-10-14	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+447500	2019-10-14	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+447550	2019-10-21	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+447600	2019-10-21	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+447650	2019-10-21	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+447700	2019-10-21	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+447750	2019-10-21	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+447800	2019-10-28	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+447850	2019-10-28	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+447900	2019-10-28	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+447950	2019-10-28	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+448000	2019-10-28	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+448050	2019-11-04	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+448100	2019-11-04	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+448150	2019-11-04	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+448200	2019-11-04	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+448250	2019-11-04	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+448300	2019-11-11	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+448350	2019-11-11	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+448400	2019-11-11	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+448450	2019-11-11	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+448500	2019-11-11	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+448550	2019-11-18	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+448600	2019-11-18	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+448650	2019-11-18	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+448700	2019-11-18	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+448750	2019-11-18	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+448800	2019-11-25	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+448850	2019-11-25	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+448900	2019-11-25	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+448950	2019-11-25	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+449000	2019-11-25	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+449050	2019-12-02	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+449100	2019-12-02	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+449150	2019-12-02	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+449200	2019-12-02	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+449250	2019-12-02	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+449300	2019-12-09	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+449350	2019-12-09	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+449400	2019-12-09	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+449450	2019-12-09	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+449500	2019-12-09	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+449550	2019-12-16	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+449600	2019-12-16	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+449650	2019-12-16	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+449700	2019-12-16	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+449750	2019-12-16	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+449800	2019-12-23	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+449850	2019-12-23	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+449900	2019-12-23	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+449950	2019-12-23	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+450000	2019-12-23	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+450050	2019-12-30	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+450100	2019-12-30	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+450150	2019-12-30	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+450200	2019-12-30	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+450250	2019-12-30	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+450300	2019-07-02	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+450350	2019-07-02	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+450400	2019-07-02	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+450450	2019-07-02	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+450500	2019-07-02	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+450550	2019-07-09	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+450600	2019-07-09	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+450650	2019-07-09	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+450700	2019-07-09	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+450750	2019-07-09	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+450800	2019-07-16	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+450850	2019-07-16	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+450900	2019-07-16	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+450950	2019-07-16	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+451000	2019-07-16	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+451050	2019-07-23	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+451100	2019-07-23	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+451150	2019-07-23	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+451200	2019-07-23	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+451250	2019-07-23	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+451300	2019-07-30	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+451350	2019-07-30	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+451400	2019-07-30	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+451450	2019-07-30	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+451500	2019-07-30	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+451550	2019-08-06	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+451600	2019-08-06	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+451650	2019-08-06	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+451700	2019-08-06	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+451750	2019-08-06	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+451800	2019-08-13	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+451850	2019-08-13	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+451900	2019-08-13	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+451950	2019-08-13	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+452000	2019-08-13	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+452050	2019-08-20	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+452100	2019-08-20	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+452150	2019-08-20	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+452200	2019-08-20	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+452250	2019-08-20	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+452300	2019-08-27	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+452350	2019-08-27	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+452400	2019-08-27	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+452450	2019-08-27	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+452500	2019-08-27	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+452550	2019-09-03	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+452600	2019-09-03	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+452650	2019-09-03	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+452700	2019-09-03	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+452750	2019-09-03	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+452800	2019-09-10	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+452850	2019-09-10	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+452900	2019-09-10	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+452950	2019-09-10	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+453000	2019-09-10	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+453050	2019-09-17	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+453100	2019-09-17	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+453150	2019-09-17	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+453200	2019-09-17	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+453250	2019-09-17	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+453300	2019-09-24	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+453350	2019-09-24	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+453400	2019-09-24	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+453450	2019-09-24	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+453500	2019-09-24	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+453550	2019-10-01	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+453600	2019-10-01	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+453650	2019-10-01	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+453700	2019-10-01	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+453750	2019-10-01	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+453800	2019-10-08	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+453850	2019-10-08	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+453900	2019-10-08	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+453950	2019-10-08	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+454000	2019-10-08	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+454050	2019-10-15	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+454100	2019-10-15	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+454150	2019-10-15	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+454200	2019-10-15	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+454250	2019-10-15	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+454300	2019-10-22	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+454350	2019-10-22	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+454400	2019-10-22	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+454450	2019-10-22	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+454500	2019-10-22	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+454550	2019-10-29	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+454600	2019-10-29	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+454650	2019-10-29	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+454700	2019-10-29	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+454750	2019-10-29	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+454800	2019-11-05	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+454850	2019-11-05	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+454900	2019-11-05	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+454950	2019-11-05	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+455000	2019-11-05	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+455050	2019-11-12	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+455100	2019-11-12	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+455150	2019-11-12	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+455200	2019-11-12	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+455250	2019-11-12	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+455300	2019-11-19	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+455350	2019-11-19	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+455400	2019-11-19	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+455450	2019-11-19	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+455500	2019-11-19	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+455550	2019-11-26	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+455600	2019-11-26	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+455650	2019-11-26	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+455700	2019-11-26	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+455750	2019-11-26	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+455800	2019-12-03	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+455850	2019-12-03	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+455900	2019-12-03	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+455950	2019-12-03	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+456000	2019-12-03	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+456050	2019-12-10	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+456100	2019-12-10	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+456150	2019-12-10	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+456200	2019-12-10	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+456250	2019-12-10	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+456300	2019-12-17	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+456350	2019-12-17	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+456400	2019-12-17	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+456450	2019-12-17	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+456500	2019-12-17	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+456550	2019-12-24	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+456600	2019-12-24	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+456650	2019-12-24	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+456700	2019-12-24	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+456750	2019-12-24	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+456800	2019-12-31	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+456850	2019-12-31	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+456900	2019-12-31	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+456950	2019-12-31	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+457000	2019-12-31	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+457050	2019-07-03	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+457100	2019-07-03	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+457150	2019-07-03	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+457200	2019-07-03	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+457250	2019-07-03	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+457300	2019-07-10	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+457350	2019-07-10	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+457400	2019-07-10	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+457450	2019-07-10	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+457500	2019-07-10	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+457550	2019-07-17	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+457600	2019-07-17	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+457650	2019-07-17	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+457700	2019-07-17	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+457750	2019-07-17	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+457800	2019-07-24	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+457850	2019-07-24	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+457900	2019-07-24	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+457950	2019-07-24	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+458000	2019-07-24	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+458050	2019-07-31	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+458100	2019-07-31	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+458150	2019-07-31	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+458200	2019-07-31	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+458250	2019-07-31	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+458300	2019-08-07	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+458350	2019-08-07	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+458400	2019-08-07	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+458450	2019-08-07	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+458500	2019-08-07	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+458550	2019-08-14	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+458600	2019-08-14	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+458650	2019-08-14	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+458700	2019-08-14	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+458750	2019-08-14	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+458800	2019-08-21	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+458850	2019-08-21	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+458900	2019-08-21	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+458950	2019-08-21	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+459000	2019-08-21	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+459050	2019-08-28	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+459100	2019-08-28	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+459150	2019-08-28	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+459200	2019-08-28	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+459250	2019-08-28	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+459300	2019-09-04	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+459350	2019-09-04	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+459400	2019-09-04	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+459450	2019-09-04	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+459500	2019-09-04	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+459550	2019-09-11	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+459600	2019-09-11	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+459650	2019-09-11	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+459700	2019-09-11	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+459750	2019-09-11	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+459800	2019-09-18	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+459850	2019-09-18	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+459900	2019-09-18	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+459950	2019-09-18	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+460000	2019-09-18	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+460050	2019-09-25	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+460100	2019-09-25	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+460150	2019-09-25	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+460200	2019-09-25	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+460250	2019-09-25	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+460300	2019-10-02	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+460350	2019-10-02	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+460400	2019-10-02	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+460450	2019-10-02	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+460500	2019-10-02	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+460550	2019-10-09	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+460600	2019-10-09	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+460650	2019-10-09	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+460700	2019-10-09	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+460750	2019-10-09	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+460800	2019-10-16	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+460850	2019-10-16	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+460900	2019-10-16	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+460950	2019-10-16	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+461000	2019-10-16	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+461050	2019-10-23	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+461100	2019-10-23	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+461150	2019-10-23	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+461200	2019-10-23	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+461250	2019-10-23	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+461300	2019-10-30	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+461350	2019-10-30	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+461400	2019-10-30	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+461450	2019-10-30	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+461500	2019-10-30	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+461550	2019-11-06	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+461600	2019-11-06	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+461650	2019-11-06	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+461700	2019-11-06	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+461750	2019-11-06	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+461800	2019-11-13	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+461850	2019-11-13	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+461900	2019-11-13	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+461950	2019-11-13	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+462000	2019-11-13	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+462050	2019-11-20	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+462100	2019-11-20	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+462150	2019-11-20	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+462200	2019-11-20	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+462250	2019-11-20	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+462300	2019-11-27	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+462350	2019-11-27	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+462400	2019-11-27	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+462450	2019-11-27	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+462500	2019-11-27	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+462550	2019-12-04	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+462600	2019-12-04	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+462650	2019-12-04	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+462700	2019-12-04	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+462750	2019-12-04	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+462800	2019-12-11	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+462850	2019-12-11	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+462900	2019-12-11	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+462950	2019-12-11	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+463000	2019-12-11	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+463050	2019-12-18	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+463100	2019-12-18	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+463150	2019-12-18	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+463200	2019-12-18	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+463250	2019-12-18	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+463300	2019-07-04	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+463350	2019-07-04	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+463400	2019-07-04	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+463450	2019-07-04	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+463500	2019-07-04	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+463550	2019-07-11	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+463600	2019-07-11	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+463650	2019-07-11	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+463700	2019-07-11	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+463750	2019-07-11	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+463800	2019-07-18	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+463850	2019-07-18	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+463900	2019-07-18	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+463950	2019-07-18	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+464000	2019-07-18	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+464050	2019-07-25	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+464100	2019-07-25	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+464150	2019-07-25	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+464200	2019-07-25	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+464250	2019-07-25	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+464300	2019-08-01	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+464350	2019-08-01	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+464400	2019-08-01	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+464450	2019-08-01	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+464500	2019-08-01	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+464550	2019-08-08	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+464600	2019-08-08	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+464650	2019-08-08	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+464700	2019-08-08	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+464750	2019-08-08	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+464800	2019-08-15	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+464850	2019-08-15	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+464900	2019-08-15	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+464950	2019-08-15	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+465000	2019-08-15	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+465050	2019-08-22	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+465100	2019-08-22	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+465150	2019-08-22	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+465200	2019-08-22	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+465250	2019-08-22	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+465300	2019-08-29	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+465350	2019-08-29	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+465400	2019-08-29	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+465450	2019-08-29	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+465500	2019-08-29	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+465550	2019-09-05	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+465600	2019-09-05	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+465650	2019-09-05	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+465700	2019-09-05	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+465750	2019-09-05	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+465800	2019-09-12	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+465850	2019-09-12	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+465900	2019-09-12	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+465950	2019-09-12	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+466000	2019-09-12	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+466050	2019-09-19	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+466100	2019-09-19	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+466150	2019-09-19	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+466200	2019-09-19	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+466250	2019-09-19	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+466300	2019-09-26	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+466350	2019-09-26	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+466400	2019-09-26	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+466450	2019-09-26	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+466500	2019-09-26	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+466550	2019-10-03	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+466600	2019-10-03	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+466650	2019-10-03	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+466700	2019-10-03	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+466750	2019-10-03	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+466800	2019-10-10	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+466850	2019-10-10	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+466900	2019-10-10	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+466950	2019-10-10	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+467000	2019-10-10	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+467050	2019-10-17	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+467100	2019-10-17	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+467150	2019-10-17	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+467200	2019-10-17	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+467250	2019-10-17	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+467300	2019-10-24	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+467350	2019-10-24	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+467400	2019-10-24	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+467450	2019-10-24	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+467500	2019-10-24	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+467550	2019-10-31	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+467600	2019-10-31	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+467650	2019-10-31	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+467700	2019-10-31	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+467750	2019-10-31	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+467800	2019-11-07	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+467850	2019-11-07	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+467900	2019-11-07	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+467950	2019-11-07	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+468000	2019-11-07	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+468050	2019-11-14	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+468100	2019-11-14	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+468150	2019-11-14	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+468200	2019-11-14	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+468250	2019-11-14	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+468300	2019-11-21	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+468350	2019-11-21	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+468400	2019-11-21	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+468450	2019-11-21	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+468500	2019-11-21	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+468550	2019-11-28	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+468600	2019-11-28	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+468650	2019-11-28	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+468700	2019-11-28	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+468750	2019-11-28	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+468800	2019-12-05	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+468850	2019-12-05	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+468900	2019-12-05	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+468950	2019-12-05	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+469000	2019-12-05	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+469050	2019-12-12	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+469100	2019-12-12	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+469150	2019-12-12	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+469200	2019-12-12	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+469250	2019-12-12	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+469300	2019-12-19	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+469350	2019-12-19	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+469400	2019-12-19	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+469450	2019-12-19	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+469500	2019-12-19	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+469550	2019-12-26	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+469600	2019-12-26	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+469650	2019-12-26	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+469700	2019-12-26	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+469750	2019-12-26	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+469800	2019-07-05	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+469850	2019-07-05	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+469900	2019-07-05	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+469950	2019-07-05	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+470000	2019-07-05	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+470050	2019-07-12	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+470100	2019-07-12	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+470150	2019-07-12	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+470200	2019-07-12	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+470250	2019-07-12	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+470300	2019-07-19	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+470350	2019-07-19	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+470400	2019-07-19	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+470450	2019-07-19	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+470500	2019-07-19	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+470550	2019-07-26	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+470600	2019-07-26	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+470650	2019-07-26	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+470700	2019-07-26	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+470750	2019-07-26	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+470800	2019-08-02	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+470850	2019-08-02	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+470900	2019-08-02	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+470950	2019-08-02	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+471000	2019-08-02	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+471050	2019-08-09	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+471100	2019-08-09	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+471150	2019-08-09	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+471200	2019-08-09	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+471250	2019-08-09	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+471300	2019-08-16	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+471350	2019-08-16	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+471400	2019-08-16	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+471450	2019-08-16	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+471500	2019-08-16	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+471550	2019-08-23	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+471600	2019-08-23	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+471650	2019-08-23	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+471700	2019-08-23	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+471750	2019-08-23	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+471800	2019-08-30	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+471850	2019-08-30	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+471900	2019-08-30	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+471950	2019-08-30	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+472000	2019-08-30	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+472050	2019-09-06	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+472100	2019-09-06	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+472150	2019-09-06	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+472200	2019-09-06	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+472250	2019-09-06	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+472300	2019-09-13	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+472350	2019-09-13	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+472400	2019-09-13	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+472450	2019-09-13	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+472500	2019-09-13	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+472550	2019-09-20	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+472600	2019-09-20	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+472650	2019-09-20	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+472700	2019-09-20	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+472750	2019-09-20	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+472800	2019-09-27	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+472850	2019-09-27	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+472900	2019-09-27	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+472950	2019-09-27	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+473000	2019-09-27	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+473050	2019-10-04	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+473100	2019-10-04	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+473150	2019-10-04	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+473200	2019-10-04	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+473250	2019-10-04	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+473300	2019-10-11	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+473350	2019-10-11	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+473400	2019-10-11	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+473450	2019-10-11	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+473500	2019-10-11	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+473550	2019-10-18	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+473600	2019-10-18	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+473650	2019-10-18	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+473700	2019-10-18	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+473750	2019-10-18	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+473800	2019-10-25	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+473850	2019-10-25	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+473900	2019-10-25	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+473950	2019-10-25	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+474000	2019-10-25	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+474050	2019-11-01	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+474100	2019-11-01	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+474150	2019-11-01	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+474200	2019-11-01	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+474250	2019-11-01	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+474300	2019-11-08	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+474350	2019-11-08	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+474400	2019-11-08	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+474450	2019-11-08	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+474500	2019-11-08	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+474550	2019-11-15	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+474600	2019-11-15	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+474650	2019-11-15	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+474700	2019-11-15	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+474750	2019-11-15	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+474800	2019-11-22	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+474850	2019-11-22	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+474900	2019-11-22	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+474950	2019-11-22	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+475000	2019-11-22	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+475050	2019-11-29	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+475100	2019-11-29	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+475150	2019-11-29	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+475200	2019-11-29	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+475250	2019-11-29	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+475300	2019-12-06	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+475350	2019-12-06	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+475400	2019-12-06	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+475450	2019-12-06	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+475500	2019-12-06	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+475550	2019-12-13	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+475600	2019-12-13	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+475650	2019-12-13	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+475700	2019-12-13	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+475750	2019-12-13	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+475800	2019-12-20	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+475850	2019-12-20	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+475900	2019-12-20	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+475950	2019-12-20	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+476000	2019-12-20	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
+476050	2019-12-27	2019-01-30	Application User	7:30:00Am	8:30:00Am	1451
+476100	2019-12-27	2019-01-30	Application User	8:30:00Am	9:30:00Am	1452
+476150	2019-12-27	2019-01-30	Application User	9:30:00Am	10:30:00Am	1453
+476200	2019-12-27	2019-01-30	Application User	11:00:00Am	12:00:01Pm	1454
+476250	2019-12-27	2019-01-30	Application User	02:00:00Pm	03:00:00Pm	1455
 \.
 
 
@@ -7279,8 +8251,8 @@ COPY public.lecture (id, lec_date, last_updated_on, last_updated_by, start_time,
 -- Data for Name: legal_entity; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.legal_entity (id, logo, legal_name_of_the_college, type_of_college, date_of_incorporation, registered_office_address, college_identification_number, pan, tan, tan_circle_number, cit_tds_location, form_signatory, pf_number, registration_date, esi_number, pt_registration_date, pt_signatory, pt_number) FROM stdin;
-1601	123	clg	PUBLIC	2019-01-03	madhapur	abc	ajsh33c	jikdi	1254	fjkf	valli	jdhd	2019-01-03	123	2019-01-03	kjjv	123
+COPY public.legal_entity (id, logo, legal_name_of_the_college, type_of_college, date_of_incorporation, registered_office_address_1, registered_office_address_2, registered_office_address_3, registered_office_address_4, registered_office_address_5, college_identification_number, pan, tan, tan_circle_number, cit_tds_location, form_signatory, pf_number, pf_registration_date, pf_signatory, esi_number, esi_registration_date, esi_signatory, pt_number, pt_registration_date, pt_signatory, branch_id, college_id, state_id, city_id) FROM stdin;
+1601	123	legal document of college	PUBLIC	2019-01-03	address_1	address_2	address_3	address_4	address_5	1234	AAAAAAAAAA	BBBBBBBBBB	AAAA2222	Hyderabad	1050	CCCCCC0000	2019-01-03	1100	7890889	2019-01-03	1200	5555	2019-01-03	1250	1001	951	\N	\N
 \.
 
 
@@ -7290,6 +8262,14 @@ COPY public.legal_entity (id, logo, legal_name_of_the_college, type_of_college, 
 
 COPY public.location (id, name, address, applies_to) FROM stdin;
 1701	madhapur	madhapur	20employees
+\.
+
+
+--
+-- Data for Name: payment_remainder; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.payment_remainder (id, fee_remainder, notice_day, over_due_remainder, remainder_recipients, due_date_id, college_id, branch_id) FROM stdin;
 \.
 
 
@@ -7366,30 +8346,38 @@ COPY public.section (id, section, batch_id) FROM stdin;
 
 
 --
+-- Data for Name: state; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.state (id, state_name, division_type, state_code, country_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.student (id, student_name, student_middle_name, student_last_name, father_name, father_middle_name, father_last_name, mother_name, mother_middle_name, mother_last_name, aadhar_no, date_of_birth, place_of_birth, religion, caste, sub_caste, age, sex, blood_group, address_line_one, address_line_two, address_line_three, town, state, country, pincode, student_contact_number, alternate_contact_number, student_email_address, alternate_email_address, relation_with_student, name, middle_name, last_name, contact_no, email_address, upload_photo, admission_no, roll_no, student_type, department_id, batch_id, section_id, branch_id) FROM stdin;
-1251	Ron			Henry	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	1201	1001
-1252	Kriss			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	1201	1001
-1253	Matt			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	1201	1001
-1254	Larry			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	1201	1001
-1255	Tim			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	1201	1001
-342300	Denny			FDenny	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12100	1001
-342350	Rinki			FRinki	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12100	1001
-342400	Brad			FBrad	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12100	1001
-342450	Bush			FBush	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12100	1001
-342500	Jerry			FJerry	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12100	1001
-342550	Nick			FNick	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12150	1001
-342600	Brook			FBrook	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12150	1001
-342650	Katti			FKatti	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12150	1001
-342700	Laim			FLaim	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12150	1001
-342750	Mecky			FMecky	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12150	1001
-342800	Nathan			FNathan	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12200	1001
-342850	Tim			FTim	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12200	1001
-342900	William			FWilliam	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12200	1001
-342950	Martin			FMartin	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12200	1001
-343000	Jackson			FJackson	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	123	444334	13p31ao595	free	1101	1151	12200	1001
+COPY public.student (id, student_name, student_middle_name, student_last_name, father_name, father_middle_name, father_last_name, mother_name, mother_middle_name, mother_last_name, aadhar_no, date_of_birth, place_of_birth, religion, caste, sub_caste, age, sex, blood_group, address_line_one, address_line_two, address_line_three, town, state, country, pincode, student_contact_number, alternate_contact_number, student_email_address, alternate_email_address, relation_with_student, name, middle_name, last_name, contact_no, email_address, transport, mess, gym, cultural_class, jhi_library, sports, swimming, extra_class, handicrafts, jhi_add, upload_photo, admission_no, roll_no, student_type, department_id, batch_id, section_id, branch_id) FROM stdin;
+1251	Ron			Henry	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	1201	1001
+1252	Kriss			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	1201	1001
+1253	Matt			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	1201	1001
+1254	Larry			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	1201	1001
+1255	Tim			Hamen	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	1201	1001
+342300	Denny			FDenny	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12100	1001
+342350	Rinki			FRinki	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12100	1001
+342400	Brad			FBrad	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12100	1001
+342450	Bush			FBush	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12100	1001
+342500	Jerry			FJerry	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12100	1001
+342550	Nick			FNick	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12150	1001
+342600	Brook			FBrook	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12150	1001
+342650	Katti			FKatti	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12150	1001
+342700	Laim			FLaim	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12150	1001
+342750	Mecky			FMecky	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12150	1001
+342800	Nathan			FNathan	abc	XYZ	Grey	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12200	1001
+342850	Tim			FTim	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12200	1001
+342900	William			FWilliam	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12200	1001
+342950	Martin			FMartin	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12200	1001
+343000	Jackson			FJackson	abc	XYZ	Blue	xyz	abc	38019819883	1995-12-31	Delhi	CHRISTIAN	BC	BCB	19	FEMALE	OPOSITIVE	DoorNo:42-3-2	kothapeta	Hyd	HYD	TG	india	500081	91002617333	94749584985	ron@gmail.com	ronnew@gmail.com	FATHER	Tom	Dane	Paul	12346585	ron@gmail.com	YES	NO	NO	NO	NO	NO	YES	YES	YES	HYD	123	444334	13p31ao595	free	1101	1151	12200	1001
 \.
 
 
@@ -8233,11 +9221,9 @@ COPY public.student_attendance (id, attendance_status, comments, student_id, lec
 413900	PRESENT		1253	44700
 413950	PRESENT		1254	44700
 414000	PRESENT		1255	44700
-414050	PRESENT		1251	44750
 414100	PRESENT		1252	44750
 414150	PRESENT		1253	44750
 414200	PRESENT		1254	44750
-414250	PRESENT		1255	44750
 420300	PRESENT		342300	63250
 420350	PRESENT		342350	63250
 420400	PRESENT		342400	63250
@@ -8698,15 +9684,8 @@ COPY public.student_attendance (id, attendance_status, comments, student_id, lec
 443150	PRESENT		342900	119050
 443200	PRESENT		342950	119050
 443250	PRESENT		343000	119050
-\.
-
-
---
--- Data for Name: student_subject; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.student_subject (id, comments, lastupdated_date, student_id, subject_id) FROM stdin;
-10601	os	2019-01-17	1251	1351
+414050	ABSENT		1251	44750
+414250	ABSENT		1255	44750
 \.
 
 
@@ -8787,10 +9766,18 @@ COPY public.term (id, terms_desc, start_date, end_date, term_status, academicyea
 
 
 --
+-- Data for Name: transport_route; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.transport_route (id, route_name, route_details, route_map_url) FROM stdin;
+\.
+
+
+--
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.hibernate_sequence', 443250, true);
+SELECT pg_catalog.setval('public.hibernate_sequence', 1000, false);
 
 
 --
@@ -8858,11 +9845,35 @@ ALTER TABLE ONLY public.branch
 
 
 --
+-- Name: city pk_city; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT pk_city PRIMARY KEY (id);
+
+
+--
 -- Name: college pk_college; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.college
     ADD CONSTRAINT pk_college PRIMARY KEY (id);
+
+
+--
+-- Name: country pk_country; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.country
+    ADD CONSTRAINT pk_country PRIMARY KEY (id);
+
+
+--
+-- Name: currency pk_currency; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.currency
+    ADD CONSTRAINT pk_currency PRIMARY KEY (id);
 
 
 --
@@ -8882,11 +9893,51 @@ ALTER TABLE ONLY public.department
 
 
 --
+-- Name: due_date pk_due_date; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.due_date
+    ADD CONSTRAINT pk_due_date PRIMARY KEY (id);
+
+
+--
+-- Name: facility pk_facility; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.facility
+    ADD CONSTRAINT pk_facility PRIMARY KEY (id);
+
+
+--
+-- Name: fee_category pk_fee_category; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_category
+    ADD CONSTRAINT pk_fee_category PRIMARY KEY (id);
+
+
+--
+-- Name: fee_details pk_fee_details; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT pk_fee_details PRIMARY KEY (id);
+
+
+--
 -- Name: holiday pk_holiday; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.holiday
     ADD CONSTRAINT pk_holiday PRIMARY KEY (id);
+
+
+--
+-- Name: invoice pk_invoice; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT pk_invoice PRIMARY KEY (id);
 
 
 --
@@ -8914,6 +9965,14 @@ ALTER TABLE ONLY public.jhi_user
 
 
 --
+-- Name: late_fee pk_late_fee; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.late_fee
+    ADD CONSTRAINT pk_late_fee PRIMARY KEY (id);
+
+
+--
 -- Name: lecture pk_lecture; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -8938,11 +9997,27 @@ ALTER TABLE ONLY public.location
 
 
 --
+-- Name: payment_remainder pk_payment_remainder; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payment_remainder
+    ADD CONSTRAINT pk_payment_remainder PRIMARY KEY (id);
+
+
+--
 -- Name: section pk_section; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.section
     ADD CONSTRAINT pk_section PRIMARY KEY (id);
+
+
+--
+-- Name: state pk_state; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.state
+    ADD CONSTRAINT pk_state PRIMARY KEY (id);
 
 
 --
@@ -8959,14 +10034,6 @@ ALTER TABLE ONLY public.student
 
 ALTER TABLE ONLY public.student_attendance
     ADD CONSTRAINT pk_student_attendance PRIMARY KEY (id);
-
-
---
--- Name: student_subject pk_student_subject; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.student_subject
-    ADD CONSTRAINT pk_student_subject PRIMARY KEY (id);
 
 
 --
@@ -8999,6 +10066,14 @@ ALTER TABLE ONLY public.teacher
 
 ALTER TABLE ONLY public.term
     ADD CONSTRAINT pk_term PRIMARY KEY (id);
+
+
+--
+-- Name: transport_route pk_transport_route; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transport_route
+    ADD CONSTRAINT pk_transport_route PRIMARY KEY (id);
 
 
 --
@@ -9064,11 +10139,35 @@ ALTER TABLE ONLY public.jhi_user_authority
 
 
 --
--- Name: authorized_signatory fk_authorized_signatory_legal_entity_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: authorized_signatory fk_authorized_signatory_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.authorized_signatory
-    ADD CONSTRAINT fk_authorized_signatory_legal_entity_id FOREIGN KEY (legal_entity_id) REFERENCES public.legal_entity(id);
+    ADD CONSTRAINT fk_authorized_signatory_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: authorized_signatory fk_authorized_signatory_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.authorized_signatory
+    ADD CONSTRAINT fk_authorized_signatory_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
+-- Name: bank_accounts fk_bank_accounts_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.bank_accounts
+    ADD CONSTRAINT fk_bank_accounts_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: bank_accounts fk_bank_accounts_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.bank_accounts
+    ADD CONSTRAINT fk_bank_accounts_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
 
 
 --
@@ -9080,11 +10179,43 @@ ALTER TABLE ONLY public.batch
 
 
 --
+-- Name: branch fk_branch_city_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.branch
+    ADD CONSTRAINT fk_branch_city_id FOREIGN KEY (city_id) REFERENCES public.city(id);
+
+
+--
 -- Name: branch fk_branch_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.branch
     ADD CONSTRAINT fk_branch_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
+-- Name: branch fk_branch_state_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.branch
+    ADD CONSTRAINT fk_branch_state_id FOREIGN KEY (state_id) REFERENCES public.state(id);
+
+
+--
+-- Name: city fk_city_state_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT fk_city_state_id FOREIGN KEY (state_id) REFERENCES public.state(id);
+
+
+--
+-- Name: currency fk_currency_country_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.currency
+    ADD CONSTRAINT fk_currency_country_id FOREIGN KEY (country_id) REFERENCES public.country(id);
 
 
 --
@@ -9104,11 +10235,91 @@ ALTER TABLE ONLY public.department
 
 
 --
+-- Name: due_date fk_due_date_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.due_date
+    ADD CONSTRAINT fk_due_date_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: due_date fk_due_date_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.due_date
+    ADD CONSTRAINT fk_due_date_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
 -- Name: jhi_persistent_audit_evt_data fk_evt_pers_audit_evt_data; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.jhi_persistent_audit_evt_data
     ADD CONSTRAINT fk_evt_pers_audit_evt_data FOREIGN KEY (event_id) REFERENCES public.jhi_persistent_audit_event(event_id);
+
+
+--
+-- Name: fee_details fk_fee_details_academic_year_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_academic_year_id FOREIGN KEY (academic_year_id) REFERENCES public.academic_year(id);
+
+
+--
+-- Name: fee_details fk_fee_details_batch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_batch_id FOREIGN KEY (batch_id) REFERENCES public.batch(id);
+
+
+--
+-- Name: fee_details fk_fee_details_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: fee_details fk_fee_details_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
+-- Name: fee_details fk_fee_details_department_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_department_id FOREIGN KEY (department_id) REFERENCES public.department(id);
+
+
+--
+-- Name: fee_details fk_fee_details_facility_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_facility_id FOREIGN KEY (facility_id) REFERENCES public.facility(id);
+
+
+--
+-- Name: fee_details fk_fee_details_fee_category_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_fee_category_id FOREIGN KEY (fee_category_id) REFERENCES public.fee_category(id);
+
+
+--
+-- Name: fee_details fk_fee_details_transport_route_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fee_details
+    ADD CONSTRAINT fk_fee_details_transport_route_id FOREIGN KEY (transport_route_id) REFERENCES public.transport_route(id);
 
 
 --
@@ -9120,6 +10331,86 @@ ALTER TABLE ONLY public.holiday
 
 
 --
+-- Name: invoice fk_invoice_academic_year_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_academic_year_id FOREIGN KEY (academic_year_id) REFERENCES public.academic_year(id);
+
+
+--
+-- Name: invoice fk_invoice_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: invoice fk_invoice_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
+-- Name: invoice fk_invoice_due_date_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_due_date_id FOREIGN KEY (due_date_id) REFERENCES public.due_date(id);
+
+
+--
+-- Name: invoice fk_invoice_fee_category_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_fee_category_id FOREIGN KEY (fee_category_id) REFERENCES public.fee_category(id);
+
+
+--
+-- Name: invoice fk_invoice_fee_details_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_fee_details_id FOREIGN KEY (fee_details_id) REFERENCES public.fee_details(id);
+
+
+--
+-- Name: invoice fk_invoice_payment_remainder_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_payment_remainder_id FOREIGN KEY (payment_remainder_id) REFERENCES public.payment_remainder(id);
+
+
+--
+-- Name: invoice fk_invoice_student_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.invoice
+    ADD CONSTRAINT fk_invoice_student_id FOREIGN KEY (student_id) REFERENCES public.student(id);
+
+
+--
+-- Name: late_fee fk_late_fee_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.late_fee
+    ADD CONSTRAINT fk_late_fee_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: late_fee fk_late_fee_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.late_fee
+    ADD CONSTRAINT fk_late_fee_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
 -- Name: lecture fk_lecture_attendancemaster_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -9128,11 +10419,75 @@ ALTER TABLE ONLY public.lecture
 
 
 --
+-- Name: legal_entity fk_legal_entity_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legal_entity
+    ADD CONSTRAINT fk_legal_entity_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: legal_entity fk_legal_entity_city_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legal_entity
+    ADD CONSTRAINT fk_legal_entity_city_id FOREIGN KEY (city_id) REFERENCES public.city(id);
+
+
+--
+-- Name: legal_entity fk_legal_entity_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legal_entity
+    ADD CONSTRAINT fk_legal_entity_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
+-- Name: legal_entity fk_legal_entity_state_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.legal_entity
+    ADD CONSTRAINT fk_legal_entity_state_id FOREIGN KEY (state_id) REFERENCES public.state(id);
+
+
+--
+-- Name: payment_remainder fk_payment_remainder_branch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payment_remainder
+    ADD CONSTRAINT fk_payment_remainder_branch_id FOREIGN KEY (branch_id) REFERENCES public.branch(id);
+
+
+--
+-- Name: payment_remainder fk_payment_remainder_college_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payment_remainder
+    ADD CONSTRAINT fk_payment_remainder_college_id FOREIGN KEY (college_id) REFERENCES public.college(id);
+
+
+--
+-- Name: payment_remainder fk_payment_remainder_due_date_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.payment_remainder
+    ADD CONSTRAINT fk_payment_remainder_due_date_id FOREIGN KEY (due_date_id) REFERENCES public.due_date(id);
+
+
+--
 -- Name: section fk_section_batch_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.section
     ADD CONSTRAINT fk_section_batch_id FOREIGN KEY (batch_id) REFERENCES public.batch(id);
+
+
+--
+-- Name: state fk_state_country_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.state
+    ADD CONSTRAINT fk_state_country_id FOREIGN KEY (country_id) REFERENCES public.country(id);
 
 
 --
@@ -9181,22 +10536,6 @@ ALTER TABLE ONLY public.student
 
 ALTER TABLE ONLY public.student
     ADD CONSTRAINT fk_student_section_id FOREIGN KEY (section_id) REFERENCES public.section(id);
-
-
---
--- Name: student_subject fk_student_subject_student_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.student_subject
-    ADD CONSTRAINT fk_student_subject_student_id FOREIGN KEY (student_id) REFERENCES public.student(id);
-
-
---
--- Name: student_subject fk_student_subject_subject_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.student_subject
-    ADD CONSTRAINT fk_student_subject_subject_id FOREIGN KEY (subject_id) REFERENCES public.subject(id);
 
 
 --

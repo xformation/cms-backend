@@ -27,7 +27,7 @@ describe('Term e2e test', () => {
   it('should load create Term page', async () => {
     termComponentsPage.clickOnCreateButton();
     termUpdatePage = new TermUpdatePage();
-    expect(await termUpdatePage.getPageTitle().getAttribute('id')).to.match(/cmsApp.term.home.createOrEditLabel/);
+    expect(await termUpdatePage.getPageTitle().getText()).to.match(/Create or edit a Term/);
   });
 
   it('should create and save Terms', async () => {

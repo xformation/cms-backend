@@ -68,7 +68,7 @@ class BankAccountsGatlingTest extends Simulation {
             .exec(http("Create new bankAccounts")
             .post("/api/bank-accounts")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "nameOfBank":null, "accountNumber":null, "typeOfAccount":"SAMPLE_TEXT", "ifsCode":"SAMPLE_TEXT", "branch":"SAMPLE_TEXT", "corporateId":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "nameOfBank":null, "accountNumber":null, "typeOfAccount":"SAMPLE_TEXT", "ifscCode":"SAMPLE_TEXT", "branchAddress":"SAMPLE_TEXT", "corporateId":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_bankAccounts_url"))).exitHereIfFailed
             .pause(10)

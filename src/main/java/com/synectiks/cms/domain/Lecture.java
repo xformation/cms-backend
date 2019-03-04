@@ -66,12 +66,22 @@ public class Lecture implements Serializable {
         return lecDate;
     }
 
+    public Lecture lecDate(Date lecDate) {
+        this.lecDate = lecDate;
+        return this;
+    }
+
     public void setLecDate(Date lecDate) {
         this.lecDate = lecDate;
     }
 
     public Date getLastUpdatedOn() {
         return lastUpdatedOn;
+    }
+
+    public Lecture lastUpdatedOn(Date lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
+        return this;
     }
 
     public void setLastUpdatedOn(Date lastUpdatedOn) {

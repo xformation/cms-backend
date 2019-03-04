@@ -20,34 +20,28 @@ import { getEntity, updateEntity, createEntity, reset } from './legal-entity.red
 import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ILegalEntityUpdateState {
   isNew: boolean;
-  branchId: string;
-  collegeId: string;
-  stateId: string;
-  cityId: string;
+  branchId: number;
+  collegeId: number;
+  stateId: number;
+  cityId: number;
 }
 
 export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, ILegalEntityUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      branchId: '0',
-      collegeId: '0',
-      stateId: '0',
-      cityId: '0',
+      branchId: 0,
+      collegeId: 0,
+      stateId: 0,
+      cityId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -76,11 +70,80 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/legal-entity');
+  };
+
+  branchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        branchId: -1
+      });
+    } else {
+      for (const i in this.props.branches) {
+        if (id === this.props.branches[i].id.toString()) {
+          this.setState({
+            branchId: this.props.branches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  collegeUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        collegeId: -1
+      });
+    } else {
+      for (const i in this.props.colleges) {
+        if (id === this.props.colleges[i].id.toString()) {
+          this.setState({
+            collegeId: this.props.colleges[i].id
+          });
+        }
+      }
+    }
+  };
+
+  stateUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        stateId: -1
+      });
+    } else {
+      for (const i in this.props.states) {
+        if (id === this.props.states[i].id.toString()) {
+          this.setState({
+            stateId: this.props.states[i].id
+          });
+        }
+      }
+    }
+  };
+
+  cityUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        cityId: -1
+      });
+    } else {
+      for (const i in this.props.cities) {
+        if (id === this.props.cities[i].id.toString()) {
+          this.setState({
+            cityId: this.props.cities[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -112,7 +175,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-logo"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="logo"
                     validate={{
@@ -297,7 +360,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-formSignatory"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="formSignatory"
                     validate={{
@@ -339,7 +402,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-pfSignatory"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="pfSignatory"
                     validate={{
@@ -354,7 +417,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-esiNumber"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="esiNumber"
                     validate={{
@@ -383,7 +446,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-esiSignatory"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="esiSignatory"
                     validate={{
@@ -398,7 +461,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-ptNumber"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="ptNumber"
                     validate={{
@@ -427,7 +490,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                   </Label>
                   <AvField
                     id="legal-entity-ptSignatory"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="ptSignatory"
                     validate={{
@@ -438,7 +501,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="legal-entity-branch" type="select" className="form-control" name="branchId">
+                  <AvInput id="legal-entity-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -451,7 +514,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="legal-entity-college" type="select" className="form-control" name="collegeId">
+                  <AvInput id="legal-entity-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -464,7 +527,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="state.id">State</Label>
-                  <AvInput id="legal-entity-state" type="select" className="form-control" name="stateId">
+                  <AvInput id="legal-entity-state" type="select" className="form-control" name="stateId" onChange={this.stateUpdate}>
                     <option value="" key="0" />
                     {states
                       ? states.map(otherEntity => (
@@ -477,7 +540,7 @@ export class LegalEntityUpdate extends React.Component<ILegalEntityUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="city.id">City</Label>
-                  <AvInput id="legal-entity-city" type="select" className="form-control" name="cityId">
+                  <AvInput id="legal-entity-city" type="select" className="form-control" name="cityId" onChange={this.cityUpdate}>
                     <option value="" key="0" />
                     {cities
                       ? cities.map(otherEntity => (
@@ -512,8 +575,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   cities: storeState.city.entities,
   legalEntityEntity: storeState.legalEntity.entity,
   loading: storeState.legalEntity.loading,
-  updating: storeState.legalEntity.updating,
-  updateSuccess: storeState.legalEntity.updateSuccess
+  updating: storeState.legalEntity.updating
 });
 
 const mapDispatchToProps = {

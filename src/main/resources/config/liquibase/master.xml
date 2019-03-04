@@ -10,7 +10,6 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190118141515_added_entity_Section.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141516_added_entity_Term.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141520_added_entity_Holiday.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190118141527_added_entity_Location.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141530_added_entity_BankAccounts.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122100629_added_entity_Subject.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190122101135_added_entity_StudentAttendance.xml" relativeToChangelogFile="false"/>
@@ -24,18 +23,18 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190208044647_added_entity_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190222065258_added_entity_AcademicYear.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190225061048_added_entity_LegalEntity.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061051_added_entity_Country.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061052_added_entity_Currency.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061053_added_entity_State.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061054_added_entity_City.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061055_added_entity_FeeCategory.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061056_added_entity_Facility.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061057_added_entity_TransportRoute.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061058_added_entity_FeeDetails.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061059_added_entity_DueDate.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061100_added_entity_PaymentRemainder.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061101_added_entity_LateFee.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061102_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045841_added_entity_Country.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045842_added_entity_Currency.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045843_added_entity_State.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045844_added_entity_City.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045845_added_entity_Facility.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045846_added_entity_FeeCategory.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045847_added_entity_TransportRoute.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045848_added_entity_FeeDetails.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045849_added_entity_DueDate.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045850_added_entity_PaymentRemainder.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045851_added_entity_LateFee.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045852_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>
@@ -53,13 +52,14 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190214071443_added_entity_constraints_Branch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190208044647_added_entity_constraints_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190225061048_added_entity_constraints_LegalEntity.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061052_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061053_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061054_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061058_added_entity_constraints_FeeDetails.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061059_added_entity_constraints_DueDate.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061100_added_entity_constraints_PaymentRemainder.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061101_added_entity_constraints_LateFee.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190225061102_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045842_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045843_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045844_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045845_added_entity_constraints_Facility.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045848_added_entity_constraints_FeeDetails.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045849_added_entity_constraints_DueDate.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045850_added_entity_constraints_PaymentRemainder.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045851_added_entity_constraints_LateFee.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190304045852_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

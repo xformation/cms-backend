@@ -41,17 +41,21 @@ export class BankAccountsDetail extends React.Component<IBankAccountsDetailProps
             </dt>
             <dd>{bankAccountsEntity.typeOfAccount}</dd>
             <dt>
-              <span id="ifsCode">Ifs Code</span>
+              <span id="ifscCode">Ifsc Code</span>
             </dt>
-            <dd>{bankAccountsEntity.ifsCode}</dd>
+            <dd>{bankAccountsEntity.ifscCode}</dd>
             <dt>
-              <span id="branch">Branch</span>
+              <span id="branchAddress">Branch Address</span>
             </dt>
-            <dd>{bankAccountsEntity.branch}</dd>
+            <dd>{bankAccountsEntity.branchAddress}</dd>
             <dt>
               <span id="corporateId">Corporate Id</span>
             </dt>
             <dd>{bankAccountsEntity.corporateId}</dd>
+            <dt>Branch</dt>
+            <dd>{bankAccountsEntity.branchId ? bankAccountsEntity.branchId : ''}</dd>
+            <dt>College</dt>
+            <dd>{bankAccountsEntity.collegeId ? bankAccountsEntity.collegeId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/bank-accounts" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

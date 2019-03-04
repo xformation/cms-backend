@@ -337,7 +337,7 @@ public class SubjectResourceIntTest {
         // Create the Subject
         SubjectDTO subjectDTO = subjectMapper.toDto(subject);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restSubjectMockMvc.perform(put("/api/subjects")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(subjectDTO)))

@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -63,7 +65,7 @@ public class HolidayResourceIntTest {
 
     @Autowired
     private HolidayMapper holidayMapper;
-
+    
 
     @Autowired
     private HolidayService holidayService;
@@ -110,10 +112,10 @@ public class HolidayResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Holiday createEntity(EntityManager em) {
-        Holiday holiday = new Holiday();
-        holiday.holidayDesc(DEFAULT_HOLIDAY_DESC);
-        holiday.setHolidayDate(DEFAULT_HOLIDAY_DATE);
-        holiday.holidayStatus(DEFAULT_HOLIDAY_STATUS);
+        Holiday holiday = new Holiday()
+            .holidayDesc(DEFAULT_HOLIDAY_DESC)
+            .holidayDate(DEFAULT_HOLIDAY_DATE)
+            .holidayStatus(DEFAULT_HOLIDAY_STATUS);
         return holiday;
     }
 
@@ -241,7 +243,7 @@ public class HolidayResourceIntTest {
             .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].holidayStatus").value(hasItem(DEFAULT_HOLIDAY_STATUS.toString())));
     }
-
+    
 
     @Test
     @Transactional

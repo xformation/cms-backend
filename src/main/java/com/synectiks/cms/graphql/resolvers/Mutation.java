@@ -28,7 +28,6 @@ import com.synectiks.cms.graphql.types.Invoice.*;
 import com.synectiks.cms.graphql.types.LateFee.*;
 import com.synectiks.cms.graphql.types.Lecture.*;
 import com.synectiks.cms.graphql.types.LegalEntity.*;
-import com.synectiks.cms.graphql.types.Location.*;
 import com.synectiks.cms.graphql.types.PaymentRemainder.*;
 import com.synectiks.cms.graphql.types.Section.*;
 import com.synectiks.cms.graphql.types.State.*;
@@ -105,7 +104,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, InvoiceRepository invoiceRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository) {
+    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -135,10 +134,10 @@ public class Mutation implements GraphQLMutationResolver {
         this.facilityRepository = facilityRepository;
         this.transportRouteRepository = transportRouteRepository;
         this.feeDetailsRepository = feeDetailsRepository;
-        this.invoiceRepository = invoiceRepository;
         this.dueDateRepository = dueDateRepository;
         this.paymentRemainderRepository = paymentRemainderRepository;
         this.lateFeeRepository = lateFeeRepository;
+        this.invoiceRepository = invoiceRepository;
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -636,39 +635,6 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveDepartmentPayload(Lists.newArrayList(departmentRepository.findAll()));
     }
 
-    public AddLocationPayload addLocation(AddLocationInput addLocationInput) {
-        final Location location = new Location();
-        location.setName(addLocationInput.getName());
-        location.setAddress(addLocationInput.getAddress());
-        location.setAppliesTo(addLocationInput.getAppliesTo());
-        locationRepository.save(location);
-
-        return new AddLocationPayload(location);
-    }
-
-    public UpdateLocationPayload updateLocation(UpdateLocationInput updateLocationInput) {
-        Location location = locationRepository.findById(updateLocationInput.getId()).get();
-        if (updateLocationInput.getName() != null) {
-            location.setName(updateLocationInput.getName());
-        }
-
-        if (updateLocationInput.getAppliesTo() != null) {
-            location.setAppliesTo(updateLocationInput.getAppliesTo());
-        }
-
-        if (updateLocationInput.getAddress() != null) {
-            location.setAddress(updateLocationInput.getAddress());
-        }
-        locationRepository.save(location);
-
-        return new UpdateLocationPayload(location);
-    }
-
-    public RemoveLocationPayload removeLocation(RemoveLocationInput removeLocationInput) {
-        Location location = locationRepository.findById(removeLocationInput.getLocationId()).get();
-        locationRepository.delete(location);
-        return new RemoveLocationPayload(Lists.newArrayList(locationRepository.findAll()));
-    }
 
     /*public AddSemesterPayload addSemester(AddSemesterInput addSemesterInput) {
         final Semester semester = new Semester();
@@ -1244,6 +1210,11 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setLogo(addLegalEntityInput.getLogo());
         legalEntity.setLegalNameOfTheCollege(addLegalEntityInput.getLegalNameOfTheCollege());
         legalEntity.setTypeOfCollege(addLegalEntityInput.getTypeOfCollege());
+        legalEntity.setRegisteredOfficeAddress1(addLegalEntityInput.getRegisteredOfficeAddress1());
+        legalEntity.setRegisteredOfficeAddress2(addLegalEntityInput.getRegisteredOfficeAddress2());
+        legalEntity.setRegisteredOfficeAddress3(addLegalEntityInput.getRegisteredOfficeAddress3());
+        legalEntity.setRegisteredOfficeAddress4(addLegalEntityInput.getRegisteredOfficeAddress4());
+        legalEntity.setRegisteredOfficeAddress5(addLegalEntityInput.getRegisteredOfficeAddress5());
         legalEntity.setDateOfIncorporation(addLegalEntityInput.getDateOfIncorporation());
         legalEntity.setCollegeIdentificationNumber(addLegalEntityInput.getCollegeIdentificationNumber());
         legalEntity.setPan(addLegalEntityInput.getPan());
@@ -1283,6 +1254,21 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateLegalEntityInput.getTypeOfCollege() != null) {
             legalEntity.setTypeOfCollege(updateLegalEntityInput.getTypeOfCollege());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress1() != null) {
+            legalEntity.setRegisteredOfficeAddress1(updateLegalEntityInput.getRegisteredOfficeAddress1());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress2() != null) {
+            legalEntity.setRegisteredOfficeAddress2(updateLegalEntityInput.getRegisteredOfficeAddress2());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress3() != null) {
+            legalEntity.setRegisteredOfficeAddress3(updateLegalEntityInput.getRegisteredOfficeAddress3());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress4() != null) {
+            legalEntity.setRegisteredOfficeAddress4(updateLegalEntityInput.getRegisteredOfficeAddress4());
+        }
+        if (updateLegalEntityInput.getRegisteredOfficeAddress5() != null) {
+            legalEntity.setRegisteredOfficeAddress5(updateLegalEntityInput.getRegisteredOfficeAddress5());
         }
         if (updateLegalEntityInput.getDateOfIncorporation() != null) {
             legalEntity.setDateOfIncorporation(updateLegalEntityInput.getDateOfIncorporation());
@@ -1728,9 +1714,14 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public AddFacilityPayload addFacility(AddFacilityInput addFacilityInput) {
+        final Branch branch = branchRepository.findById(addFacilityInput.getBranchId()).get();
+        final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
+        AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
         final Facility facility = new Facility();
         facility.setFacilityName(addFacilityInput.getFacilityName());
-
+        facility.setAcademicYear(academicYear);
+        facility.setStudent(student);
+        facility.setBranch(branch);
         facilityRepository.save(facility);
 
         return new AddFacilityPayload(facility);
@@ -1741,7 +1732,18 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateFacilityInput.getFacilityName() != null) {
             facility.setFacilityName(updateFacilityInput.getFacilityName());
         }
-
+        if(updateFacilityInput.getStudentId() != null) {
+     	Student student = studentRepository.findById(updateFacilityInput.getStudentId()).get();
+     	facility.setStudent(student);
+       }
+            if (updateFacilityInput.getBranchId() != null) {
+                Branch branch = branchRepository.findById(updateFacilityInput.getBranchId()).get();
+                facility.setBranch(branch);
+            }
+            if (updateFacilityInput.getAcademicyearId() != null) {
+                AcademicYear academicYear = academicYearRepository.findById(updateFacilityInput.getAcademicyearId()).get();
+                facility.setAcademicYear(academicYear);
+            }
         facilityRepository.save(facility);
 
         return new UpdateFacilityPayload(facility);
@@ -1948,6 +1950,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemovePaymentRemainderPayload(Lists.newArrayList(paymentRemainderRepository.findAll()));
     }
 
+
     public AddInvoicePayload addInvoice(AddInvoiceInput addInvoiceInput) {
         FeeCategory feeCategory = feeCategoryRepository.findById(addInvoiceInput.getFeeCategoryId()).get();
         Branch branch = branchRepository.findById(addInvoiceInput.getBranchId()).get();
@@ -1959,18 +1962,18 @@ public class Mutation implements GraphQLMutationResolver {
         PaymentRemainder paymentRemainder = paymentRemainderRepository.findById(addInvoiceInput.getPaymentRemainderId()).get();
         final Invoice invoice   = new Invoice();
         invoice.setInvoiceNumber(addInvoiceInput.getInvoiceNumber());
-        invoice.setPaymentDate(addInvoiceInput.getPaymentDate());
-        invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
         invoice.setAmountPaid(addInvoiceInput.getAmountPaid());
+        invoice.setPaymentDate(addInvoiceInput.getPaymentDate());
+        invoice.setNextPaymentDate(addInvoiceInput.getNextPaymentDate());
+        invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
+        invoice.setModeOfPayment(addInvoiceInput.getModeOfPayment());
+        invoice.setChequeNumber(addInvoiceInput.getChequeNumber());
+        invoice.setDemandDraftNumber(addInvoiceInput.getDemandDraftNumber());
         invoice.setOnlineTxnRefNumber(addInvoiceInput.getOnlineTxnRefNumber());
         invoice.setPaymentStatus(addInvoiceInput.getPaymentStatus());
+        invoice.setComments(addInvoiceInput.getComments());
         invoice.setUpdatedBy(addInvoiceInput.getUpdatedBy());
         invoice.setUpdatedOn(addInvoiceInput.getUpdatedOn());
-        invoice.setComments(addInvoiceInput.getComments());
-        invoice.setDemandDraftNumber(addInvoiceInput.getDemandDraftNumber());
-        invoice.setChequeNumber(addInvoiceInput.getChequeNumber());
-        invoice.setModeOfPayment(addInvoiceInput.getModeOfPayment());
-        invoice.setNextPaymentDate(addInvoiceInput.getNextPaymentDate());
         invoice.setFeeCategory(feeCategory);
         invoice.setFeeDetails(feeDetails);
         invoice.setDueDate(dueDate);
@@ -1983,7 +1986,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new AddInvoicePayload(invoice);
     }
 
-    public UpdateInvoicePaylaod updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
+    public UpdateInvoicePayload updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
         Invoice invoice = invoiceRepository.findById(updateInvoiceInput.getId()).get();
         if (updateInvoiceInput.getInvoiceNumber() != null) {
             invoice.setInvoiceNumber(updateInvoiceInput.getInvoiceNumber());
@@ -2071,7 +2074,7 @@ public class Mutation implements GraphQLMutationResolver {
         }
 
         invoiceRepository.save(invoice);
-        return new UpdateInvoicePaylaod(invoice);
+        return new UpdateInvoicePayload(invoice);
     }
 
     public RemoveInvoicePayload removeInvoice(RemoveInvoiceInput removeInvoiceInput) {
@@ -2079,9 +2082,6 @@ public class Mutation implements GraphQLMutationResolver {
         invoiceRepository.delete(invoice);
         return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
     }
-
-
-
     @Transactional
     public QueryResult updateStudenceAttendanceData(StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
         System.out.println("Input contents : " + filter.getStudentIds());

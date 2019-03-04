@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -47,8 +49,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CmsApp.class)
 public class LectureResourceIntTest {
 
-    private static final Date DEFAULT_LEC_DATE =new Date();
-    private static final Date UPDATED_LEC_DATE =new Date();
+    private static final Date DEFAULT_LEC_DATE = new Date();
+    private static final Date UPDATED_LEC_DATE = new Date();
 
     private static final Date DEFAULT_LAST_UPDATED_ON = new Date();
     private static final Date UPDATED_LAST_UPDATED_ON = new Date();
@@ -115,12 +117,12 @@ public class LectureResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Lecture createEntity(EntityManager em) {
-        Lecture lecture = new Lecture();
-        lecture.setLecDate(DEFAULT_LEC_DATE);
-        lecture.setLastUpdatedOn(DEFAULT_LAST_UPDATED_ON);
-        lecture.lastUpdatedBy(DEFAULT_LAST_UPDATED_BY);
-        lecture.startTime(DEFAULT_START_TIME);
-        lecture.endTime(DEFAULT_END_TIME);
+        Lecture lecture = new Lecture()
+            .lecDate(DEFAULT_LEC_DATE)
+            .lastUpdatedOn(DEFAULT_LAST_UPDATED_ON)
+            .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
+            .startTime(DEFAULT_START_TIME)
+            .endTime(DEFAULT_END_TIME);
         return lecture;
     }
 
@@ -329,12 +331,12 @@ public class LectureResourceIntTest {
         Lecture updatedLecture = lectureRepository.findById(lecture.getId()).get();
         // Disconnect from session so that the updates on updatedLecture are not directly saved in db
         em.detach(updatedLecture);
-        //updatedLecture
-        updatedLecture.setLecDate(UPDATED_LEC_DATE);
-        updatedLecture.setLastUpdatedOn(UPDATED_LAST_UPDATED_ON);
-        updatedLecture.lastUpdatedBy(UPDATED_LAST_UPDATED_BY);
-        updatedLecture.startTime(UPDATED_START_TIME);
-        updatedLecture.endTime(UPDATED_END_TIME);
+        updatedLecture
+            .lecDate(UPDATED_LEC_DATE)
+            .lastUpdatedOn(UPDATED_LAST_UPDATED_ON)
+            .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
+            .startTime(UPDATED_START_TIME)
+            .endTime(UPDATED_END_TIME);
         LectureDTO lectureDTO = lectureMapper.toDto(updatedLecture);
 
         restLectureMockMvc.perform(put("/api/lectures")
@@ -364,7 +366,7 @@ public class LectureResourceIntTest {
         // Create the Lecture
         LectureDTO lectureDTO = lectureMapper.toDto(lecture);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restLectureMockMvc.perform(put("/api/lectures")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lectureDTO)))

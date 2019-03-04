@@ -11,8 +11,7 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity,
-  reset
+  updateEntity
 } from 'app/entities/attendance-master/attendance-master.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IAttendanceMaster, defaultValue } from 'app/shared/model/attendance-master.model';
@@ -87,19 +86,6 @@ describe('Entities reducer tests', () => {
         }
       );
     });
-
-    it('should reset the state', () => {
-      expect(
-        reducer(
-          { data: { id: 1 } },
-          {
-            type: ACTION_TYPES.RESET
-          }
-        )
-      ).toEqual({
-        ...initialState
-      });
-    });
   });
 
   describe('Failures', () => {
@@ -136,20 +122,6 @@ describe('Entities reducer tests', () => {
         ...initialState,
         loading: false,
         entities: payload.data
-      });
-    });
-
-    it('should fetch a single entity', () => {
-      const payload = { data: { 1: 'fake1' } };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_ATTENDANCEMASTER),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entity: payload.data
       });
     });
 
@@ -278,16 +250,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.RESET actions', async () => {
-      const expectedActions = [
-        {
-          type: ACTION_TYPES.RESET
-        }
-      ];
-      await store.dispatch(reset());
-      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

@@ -16,7 +16,7 @@ import { getEntity, updateEntity, createEntity, reset } from './student-attendan
 import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -68,6 +68,40 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
     this.props.history.push('/entity/student-attendance');
   };
 
+  studentUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        studentId: -1
+      });
+    } else {
+      for (const i in this.props.students) {
+        if (id === this.props.students[i].id.toString()) {
+          this.setState({
+            studentId: this.props.students[i].id
+          });
+        }
+      }
+    }
+  };
+
+  lectureUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        lectureId: -1
+      });
+    } else {
+      for (const i in this.props.lectures) {
+        if (id === this.props.lectures[i].id.toString()) {
+          this.setState({
+            lectureId: this.props.lectures[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
     const { studentAttendanceEntity, students, lectures, loading, updating } = this.props;
     const { isNew } = this.state;
@@ -112,7 +146,13 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                 </AvGroup>
                 <AvGroup>
                   <Label for="student.id">Student</Label>
-                  <AvInput id="student-attendance-student" type="select" className="form-control" name="studentId">
+                  <AvInput
+                    id="student-attendance-student"
+                    type="select"
+                    className="form-control"
+                    name="studentId"
+                    onChange={this.studentUpdate}
+                  >
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -125,7 +165,13 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                 </AvGroup>
                 <AvGroup>
                   <Label for="lecture.id">Lecture</Label>
-                  <AvInput id="student-attendance-lecture" type="select" className="form-control" name="lectureId">
+                  <AvInput
+                    id="student-attendance-lecture"
+                    type="select"
+                    className="form-control"
+                    name="lectureId"
+                    onChange={this.lectureUpdate}
+                  >
                     <option value="" key="0" />
                     {lectures
                       ? lectures.map(otherEntity => (
