@@ -52,10 +52,8 @@ public class FacilityResourceIntTest {
     @Autowired
     private FacilityRepository facilityRepository;
 
-
     @Autowired
     private FacilityMapper facilityMapper;
-    
 
     @Autowired
     private FacilityService facilityService;
@@ -171,7 +169,6 @@ public class FacilityResourceIntTest {
             .andExpect(jsonPath("$.[*].facilityName").value(hasItem(DEFAULT_FACILITY_NAME.toString())));
     }
     
-
     @Test
     @Transactional
     public void getFacility() throws Exception {
@@ -185,6 +182,7 @@ public class FacilityResourceIntTest {
             .andExpect(jsonPath("$.id").value(facility.getId().intValue()))
             .andExpect(jsonPath("$.facilityName").value(DEFAULT_FACILITY_NAME.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingFacility() throws Exception {
@@ -232,7 +230,7 @@ public class FacilityResourceIntTest {
         // Create the Facility
         FacilityDTO facilityDTO = facilityMapper.toDto(facility);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFacilityMockMvc.perform(put("/api/facilities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
@@ -279,7 +277,7 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(facility.getId().intValue())))
-            .andExpect(jsonPath("$.[*].facilityName").value(hasItem(DEFAULT_FACILITY_NAME.toString())));
+            .andExpect(jsonPath("$.[*].facilityName").value(hasItem(DEFAULT_FACILITY_NAME)));
     }
 
     @Test

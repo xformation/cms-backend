@@ -13,77 +13,77 @@ export default class FacilityUpdatePage {
     return this.pageTitle;
   }
 
-  setFacilityNameInput(facilityName) {
-    this.facilityNameInput.sendKeys(facilityName);
+  async setFacilityNameInput(facilityName) {
+    await this.facilityNameInput.sendKeys(facilityName);
   }
 
-  getFacilityNameInput() {
+  async getFacilityNameInput() {
     return this.facilityNameInput.getAttribute('value');
   }
 
-  academicYearSelectLastOption() {
-    this.academicYearSelect
+  async academicYearSelectLastOption() {
+    await this.academicYearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  academicYearSelectOption(option) {
-    this.academicYearSelect.sendKeys(option);
+  async academicYearSelectOption(option) {
+    await this.academicYearSelect.sendKeys(option);
   }
 
   getAcademicYearSelect() {
     return this.academicYearSelect;
   }
 
-  getAcademicYearSelectedOption() {
+  async getAcademicYearSelectedOption() {
     return this.academicYearSelect.element(by.css('option:checked')).getText();
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  studentSelectLastOption() {
-    this.studentSelect
+  async studentSelectLastOption() {
+    await this.studentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  studentSelectOption(option) {
-    this.studentSelect.sendKeys(option);
+  async studentSelectOption(option) {
+    await this.studentSelect.sendKeys(option);
   }
 
   getStudentSelect() {
     return this.studentSelect;
   }
 
-  getStudentSelectedOption() {
+  async getStudentSelectedOption() {
     return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

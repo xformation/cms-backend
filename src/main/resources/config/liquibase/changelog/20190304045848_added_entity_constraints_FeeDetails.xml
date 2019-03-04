@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity FeeDetails.
     -->
-    <changeSet id="20190225061058-2" author="jhipster">
+    <changeSet id="20190304045848-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="fee_category_id"
                                  baseTableName="fee_details"

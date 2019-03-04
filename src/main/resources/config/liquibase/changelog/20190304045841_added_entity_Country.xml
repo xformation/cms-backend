@@ -14,26 +14,22 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Currency.
+        Added the entity Country.
     -->
-    <changeSet id="20190225061052-1" author="jhipster">
-        <createTable tableName="currency">
+    <changeSet id="20190304045841-1" author="jhipster">
+        <createTable tableName="country">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="currency_name" type="varchar(255)">
+            <column name="country_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="currency_code" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="country_code" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
 
-            <column name="currency_symbol" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="country_id" type="bigint">
+            <column name="isd_code" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

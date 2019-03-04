@@ -14,30 +14,62 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity FeeDetails.
+        Added the entity Invoice.
     -->
-    <changeSet id="20190225061058-1" author="jhipster">
-        <createTable tableName="fee_details">
+    <changeSet id="20190304045852-1" author="jhipster">
+        <createTable tableName="invoice">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="fee_particulars_name" type="varchar(255)">
+            <column name="invoice_number" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="fee_particular_desc" type="varchar(255)">
+            <column name="amount_paid" type="bigint">
                 <constraints nullable="false" />
             </column>
 
-            <column name="student_type" type="varchar(255)">
+            <column name="payment_date" type="date">
                 <constraints nullable="false" />
             </column>
 
-            <column name="gender" type="varchar(255)">
+            <column name="next_payment_date" type="date">
                 <constraints nullable="false" />
             </column>
 
-            <column name="amount" type="bigint">
+            <column name="out_standing_amount" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="mode_of_payment" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="cheque_number" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="demand_draft_number" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="online_txn_ref_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="payment_status" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="comments" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="updated_by" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="updated_on" type="date">
                 <constraints nullable="false" />
             </column>
 
@@ -45,15 +77,15 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="batch_id" type="bigint">
+            <column name="fee_details_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="facility_id" type="bigint">
+            <column name="due_date_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="transport_route_id" type="bigint">
+            <column name="payment_remainder_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -61,11 +93,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="department_id" type="bigint">
+            <column name="branch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="branch_id" type="bigint">
+            <column name="student_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
