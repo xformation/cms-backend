@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.StudentService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class StudentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/students")
+    @Timed
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
         log.debug("REST request to save Student : {}", studentDTO);
         if (studentDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class StudentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/students")
+    @Timed
     public ResponseEntity<StudentDTO> updateStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
         log.debug("REST request to update Student : {}", studentDTO);
         if (studentDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class StudentResource {
      * @return the ResponseEntity with status 200 (OK) and the list of students in body
      */
     @GetMapping("/students")
+    @Timed
     public List<StudentDTO> getAllStudents() {
         log.debug("REST request to get all Students");
         return studentService.findAll();
@@ -94,6 +99,7 @@ public class StudentResource {
      * @return the ResponseEntity with status 200 (OK) and with body the studentDTO, or with status 404 (Not Found)
      */
     @GetMapping("/students/{id}")
+    @Timed
     public ResponseEntity<StudentDTO> getStudent(@PathVariable Long id) {
         log.debug("REST request to get Student : {}", id);
         Optional<StudentDTO> studentDTO = studentService.findOne(id);
@@ -107,6 +113,7 @@ public class StudentResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/students/{id}")
+    @Timed
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         log.debug("REST request to delete Student : {}", id);
         studentService.delete(id);
@@ -121,6 +128,7 @@ public class StudentResource {
      * @return the result of the search
      */
     @GetMapping("/_search/students")
+    @Timed
     public List<StudentDTO> searchStudents(@RequestParam String query) {
         log.debug("REST request to search Students for query {}", query);
         return studentService.search(query);

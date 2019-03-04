@@ -82,9 +82,8 @@ enum Frequency {
     WEEKLY, MONTHLY, QUARTERLY, HALFYEARLY, ANNUALLY
 }
 
-enum ModeOfPayment {
-    CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
-}
+enum ModeOfPayment{
+CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
 
 
 entity Student{
@@ -357,7 +356,6 @@ percentCharges Long
 lateFeeAssignmentFrequency Frequency required
 }
 
-
 entity Invoice {
 invoiceNumber String required
 amountPaid Long required
@@ -373,7 +371,6 @@ comments String required
 updatedBy String required
 updatedOn LocalDate required
 }
-
 
 relationship ManyToOne {
 Student{department required} to Department ,
@@ -427,6 +424,9 @@ PaymentRemainder{college} to College,
 PaymentRemainder{branch} to Branch,
 LateFee{college} to College,
 LateFee{branch} to Branch,
+Facility{academicYear} to AcademicYear,
+Facility{branch} to Branch,
+Facility{student} to Student
 Invoice{feeCategory} to FeeCategory,
 Invoice{feeDetails} to FeeDetails,
 Invoice{dueDate} to DueDate,
@@ -434,10 +434,7 @@ Invoice{paymentRemainder} to PaymentRemainder,
 Invoice{college} to College,
 Invoice{branch} to Branch,
 Invoice{student} to Student,
-Invoice{academicYear} to AcademicYear,
-Facility{academicYear} to AcademicYear,
-Facility{branch} to Branch,
-Facility{student} to Student
+Invoice{academicYear} to AcademicYear
 }
 
 dto * with mapstruct

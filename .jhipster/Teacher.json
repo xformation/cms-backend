@@ -286,15 +286,13 @@
             "relationshipType": "many-to-one",
             "relationshipName": "department",
             "otherEntityName": "department",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "teacher"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "teacher"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190128125803",

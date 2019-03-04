@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -53,8 +52,10 @@ public class TeachResourceIntTest {
     @Autowired
     private TeachRepository teachRepository;
 
+
     @Autowired
     private TeachMapper teachMapper;
+    
 
     @Autowired
     private TeachService teachService;
@@ -79,9 +80,6 @@ public class TeachResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restTeachMockMvc;
 
     private Teach teach;
@@ -94,8 +92,7 @@ public class TeachResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -174,6 +171,7 @@ public class TeachResourceIntTest {
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
     
+
     @Test
     @Transactional
     public void getTeach() throws Exception {
@@ -187,7 +185,6 @@ public class TeachResourceIntTest {
             .andExpect(jsonPath("$.id").value(teach.getId().intValue()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingTeach() throws Exception {
@@ -235,7 +232,7 @@ public class TeachResourceIntTest {
         // Create the Teach
         TeachDTO teachDTO = teachMapper.toDto(teach);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restTeachMockMvc.perform(put("/api/teaches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(teachDTO)))
@@ -257,7 +254,7 @@ public class TeachResourceIntTest {
 
         int databaseSizeBeforeDelete = teachRepository.findAll().size();
 
-        // Delete the teach
+        // Get the teach
         restTeachMockMvc.perform(delete("/api/teaches/{id}", teach.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -282,7 +279,7 @@ public class TeachResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(teach.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC)));
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
 
     @Test

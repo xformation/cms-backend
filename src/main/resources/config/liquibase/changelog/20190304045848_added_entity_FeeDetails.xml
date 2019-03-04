@@ -14,34 +14,62 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity DueDate.
+        Added the entity FeeDetails.
     -->
-    <changeSet id="20190225061059-1" author="jhipster">
-        <createTable tableName="due_date">
+    <changeSet id="20190304045848-1" author="jhipster">
+        <createTable tableName="fee_details">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="payment_method" type="varchar(255)">
+            <column name="fee_particulars_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="installments" type="integer">
+            <column name="fee_particular_desc" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="day_desc" type="varchar(255)">
+            <column name="student_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="frequency" type="varchar(255)">
+            <column name="gender" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="amount" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="fee_category_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="batch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="facility_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="transport_route_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <column name="college_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
+            <column name="department_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="branch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="academic_year_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

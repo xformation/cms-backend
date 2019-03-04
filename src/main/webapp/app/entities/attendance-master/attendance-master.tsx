@@ -35,8 +35,9 @@ export class AttendanceMaster extends React.Component<IAttendanceMasterProps, IA
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

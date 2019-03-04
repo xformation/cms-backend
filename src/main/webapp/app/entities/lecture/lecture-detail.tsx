@@ -12,7 +12,7 @@ import { ILecture } from 'app/shared/model/lecture.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ILectureDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ILectureDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class LectureDetail extends React.Component<ILectureDetailProps> {
   componentDidMount() {

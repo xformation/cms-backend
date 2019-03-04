@@ -68,6 +68,7 @@ public class Query implements GraphQLQueryResolver {
     private final LateFeeRepository lateFeeRepository;
     private final PaymentRemainderRepository paymentRemainderRepository;
     private final InvoiceRepository invoiceRepository;
+
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
 
@@ -109,6 +110,7 @@ public class Query implements GraphQLQueryResolver {
         this.dueDateRepository = dueDateRepository;
         this.lateFeeRepository = lateFeeRepository;
         this.paymentRemainderRepository = paymentRemainderRepository;
+
         this.invoiceRepository = invoiceRepository;
     }
 
@@ -355,6 +357,7 @@ public class Query implements GraphQLQueryResolver {
 
     public PaymentRemainder paymentRemainder(Long id){return paymentRemainderRepository.findById(id).get();}
     public List<PaymentRemainder>paymentRemainders(){return Lists.newArrayList(paymentRemainderRepository.findAll());}
+
     public Invoice invoice(long id){
         return invoiceRepository.findById(id).get();
     }
@@ -362,6 +365,7 @@ public class Query implements GraphQLQueryResolver {
     public List<Invoice>  invoices(){
         return  Lists.newArrayList(invoiceRepository.findAll());
     }
+
 
 
 

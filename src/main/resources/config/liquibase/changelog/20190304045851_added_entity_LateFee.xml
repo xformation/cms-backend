@@ -14,19 +14,47 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity FeeCategory.
+        Added the entity LateFee.
     -->
-    <changeSet id="20190225061055-1" author="jhipster">
-        <createTable tableName="fee_category">
+    <changeSet id="20190304045851-1" author="jhipster">
+        <createTable tableName="late_fee">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="category_name" type="varchar(255)">
+            <column name="assign_late_fee" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="description" type="varchar(255)">
+            <column name="late_fee_days" type="integer">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="fixed" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="percentage" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="fixed_charges" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="percent_charges" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="late_fee_assignment_frequency" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="college_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

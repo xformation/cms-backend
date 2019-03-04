@@ -63,6 +63,11 @@ export default (state: DepartmentState = initialState, action): DepartmentState 
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_DEPARTMENTS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_DEPARTMENT_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/departments';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IDepartment> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<IDepartment> = query => ({
   type: ACTION_TYPES.SEARCH_DEPARTMENTS,
-  payload: axios.get<IDepartment>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<IDepartment>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<IDepartment> = (page, size, sort) => ({

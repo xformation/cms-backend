@@ -12,7 +12,7 @@ import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IAttendanceMasterDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAttendanceMasterDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AttendanceMasterDetail extends React.Component<IAttendanceMasterDetailProps> {
   componentDidMount() {

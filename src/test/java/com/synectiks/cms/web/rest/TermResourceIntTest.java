@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -66,8 +65,10 @@ public class TermResourceIntTest {
     @Autowired
     private TermRepository termRepository;
 
+
     @Autowired
     private TermMapper termMapper;
+    
 
     @Autowired
     private TermService termService;
@@ -92,9 +93,6 @@ public class TermResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restTermMockMvc;
 
     private Term term;
@@ -107,8 +105,7 @@ public class TermResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -272,6 +269,7 @@ public class TermResourceIntTest {
             .andExpect(jsonPath("$.[*].termStatus").value(hasItem(DEFAULT_TERM_STATUS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getTerm() throws Exception {
@@ -288,7 +286,6 @@ public class TermResourceIntTest {
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.termStatus").value(DEFAULT_TERM_STATUS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingTerm() throws Exception {
@@ -342,7 +339,7 @@ public class TermResourceIntTest {
         // Create the Term
         TermDTO termDTO = termMapper.toDto(term);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restTermMockMvc.perform(put("/api/terms")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(termDTO)))
@@ -364,7 +361,7 @@ public class TermResourceIntTest {
 
         int databaseSizeBeforeDelete = termRepository.findAll().size();
 
-        // Delete the term
+        // Get the term
         restTermMockMvc.perform(delete("/api/terms/{id}", term.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -389,7 +386,7 @@ public class TermResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(term.getId().intValue())))
-            .andExpect(jsonPath("$.[*].termsDesc").value(hasItem(DEFAULT_TERMS_DESC)))
+            .andExpect(jsonPath("$.[*].termsDesc").value(hasItem(DEFAULT_TERMS_DESC.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].termStatus").value(hasItem(DEFAULT_TERM_STATUS.toString())));

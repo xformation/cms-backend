@@ -21,6 +21,7 @@ mutation addCountry($input:AddCountryInput!){
 
 State:
 
+
 mutation addState($input:AddStateInput!){
   addState(input: $input){
     state{
@@ -28,10 +29,13 @@ mutation addState($input:AddStateInput!){
       stateName
       divisionType
 	  stateCode
-	  countryId
+	  country{
+      id
+    }
+    }
     }
   }
-}
+
 
 {
   "input": {
@@ -183,7 +187,7 @@ mutation addAcademicYear($input: AddAcademicYearInput!){
     year
     startDate
     endDate
-    desc
+
   }
  }
 }
@@ -192,8 +196,7 @@ mutation addAcademicYear($input: AddAcademicYearInput!){
   "input": {
    "year": 2019,
     "startDate": "2019-01-17",
-    "endDate": "2019-01-18",
-    "desc": "desc"
+    "endDate": "2019-01-18"
   }
 }
 
@@ -238,16 +241,31 @@ mutation addFacility($input: AddFacilityInput!){
     facility{
       id
      facilityName
+      academicYear{
+        id
+      }
+      branch{
+        id
+      }
+      student{
+        id
+      }
+
 		}
 	}
 }
 
 Input: {
-  "input": {
-   "facilityName":   "transport"
 
+{
+  "input": {
+    "facilityName": "transport",
+    "academicyearId": 1201,
+    "branchId": 1151,
+    "studentId": 1401
   }
 }
+
 
 Transport:
 
@@ -1239,6 +1257,44 @@ mutation updateAttendanceMaster($input: UpdateAttendanceMasterInput!){
   }
 }
 
+LaateFee:
+mutation addLateFee($input: AddLateFeeInput!){
+  	addLateFee(input: $input){
+    lateFee{
+      id
+      assignLateFee
+      lateFeeDays
+      fixed
+      percentage
+      fixedCharges
+      percentCharges
+      lateFeeAssignmentFrequency
+       college{
+        id
+      }
+      branch{
+        id
+      }
+
+	}
+}
+}
+
+input :
+
+{
+  "input": {
+"assignLateFee": "ACTIVE",
+    "lateFeeDays":4,
+    "fixed": "ACTIVE",
+    "percentage": "ACTIVE",
+    "fixedCharges": 62,
+    "percentCharges": 70,
+    "lateFeeAssignmentFrequency": "QUARTERLY",
+     "collegeId": 952,
+    "branchId": 1151
+  }
+    }
 
 mutation addLecture($input: AddLectureInput!){
   	addLecture(input: $input){

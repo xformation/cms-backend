@@ -104,7 +104,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, InvoiceRepository invoiceRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository) {
+    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -134,10 +134,10 @@ public class Mutation implements GraphQLMutationResolver {
         this.facilityRepository = facilityRepository;
         this.transportRouteRepository = transportRouteRepository;
         this.feeDetailsRepository = feeDetailsRepository;
-        this.invoiceRepository = invoiceRepository;
         this.dueDateRepository = dueDateRepository;
         this.paymentRemainderRepository = paymentRemainderRepository;
         this.lateFeeRepository = lateFeeRepository;
+        this.invoiceRepository = invoiceRepository;
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -1950,6 +1950,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemovePaymentRemainderPayload(Lists.newArrayList(paymentRemainderRepository.findAll()));
     }
 
+
     public AddInvoicePayload addInvoice(AddInvoiceInput addInvoiceInput) {
         FeeCategory feeCategory = feeCategoryRepository.findById(addInvoiceInput.getFeeCategoryId()).get();
         Branch branch = branchRepository.findById(addInvoiceInput.getBranchId()).get();
@@ -1961,18 +1962,18 @@ public class Mutation implements GraphQLMutationResolver {
         PaymentRemainder paymentRemainder = paymentRemainderRepository.findById(addInvoiceInput.getPaymentRemainderId()).get();
         final Invoice invoice   = new Invoice();
         invoice.setInvoiceNumber(addInvoiceInput.getInvoiceNumber());
-        invoice.setPaymentDate(addInvoiceInput.getPaymentDate());
-        invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
         invoice.setAmountPaid(addInvoiceInput.getAmountPaid());
+        invoice.setPaymentDate(addInvoiceInput.getPaymentDate());
+        invoice.setNextPaymentDate(addInvoiceInput.getNextPaymentDate());
+        invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
+        invoice.setModeOfPayment(addInvoiceInput.getModeOfPayment());
+        invoice.setChequeNumber(addInvoiceInput.getChequeNumber());
+        invoice.setDemandDraftNumber(addInvoiceInput.getDemandDraftNumber());
         invoice.setOnlineTxnRefNumber(addInvoiceInput.getOnlineTxnRefNumber());
         invoice.setPaymentStatus(addInvoiceInput.getPaymentStatus());
+        invoice.setComments(addInvoiceInput.getComments());
         invoice.setUpdatedBy(addInvoiceInput.getUpdatedBy());
         invoice.setUpdatedOn(addInvoiceInput.getUpdatedOn());
-        invoice.setComments(addInvoiceInput.getComments());
-        invoice.setDemandDraftNumber(addInvoiceInput.getDemandDraftNumber());
-        invoice.setChequeNumber(addInvoiceInput.getChequeNumber());
-        invoice.setModeOfPayment(addInvoiceInput.getModeOfPayment());
-        invoice.setNextPaymentDate(addInvoiceInput.getNextPaymentDate());
         invoice.setFeeCategory(feeCategory);
         invoice.setFeeDetails(feeDetails);
         invoice.setDueDate(dueDate);
@@ -2081,9 +2082,6 @@ public class Mutation implements GraphQLMutationResolver {
         invoiceRepository.delete(invoice);
         return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
     }
-
-
-
     @Transactional
     public QueryResult updateStudenceAttendanceData(StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
         System.out.println("Input contents : " + filter.getStudentIds());

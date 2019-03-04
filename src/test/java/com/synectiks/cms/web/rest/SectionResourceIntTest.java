@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -54,8 +53,10 @@ public class SectionResourceIntTest {
     @Autowired
     private SectionRepository sectionRepository;
 
+
     @Autowired
     private SectionMapper sectionMapper;
+    
 
     @Autowired
     private SectionService sectionService;
@@ -80,9 +81,6 @@ public class SectionResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restSectionMockMvc;
 
     private Section section;
@@ -95,8 +93,7 @@ public class SectionResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -194,6 +191,7 @@ public class SectionResourceIntTest {
             .andExpect(jsonPath("$.[*].section").value(hasItem(DEFAULT_SECTION.toString())));
     }
     
+
     @Test
     @Transactional
     public void getSection() throws Exception {
@@ -207,7 +205,6 @@ public class SectionResourceIntTest {
             .andExpect(jsonPath("$.id").value(section.getId().intValue()))
             .andExpect(jsonPath("$.section").value(DEFAULT_SECTION.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingSection() throws Exception {
@@ -255,7 +252,7 @@ public class SectionResourceIntTest {
         // Create the Section
         SectionDTO sectionDTO = sectionMapper.toDto(section);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restSectionMockMvc.perform(put("/api/sections")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(sectionDTO)))
@@ -277,7 +274,7 @@ public class SectionResourceIntTest {
 
         int databaseSizeBeforeDelete = sectionRepository.findAll().size();
 
-        // Delete the section
+        // Get the section
         restSectionMockMvc.perform(delete("/api/sections/{id}", section.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

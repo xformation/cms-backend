@@ -93,7 +93,8 @@ public class BatchServiceImpl implements BatchService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Batch : {}", id);        batchRepository.deleteById(id);
+        log.debug("Request to delete Batch : {}", id);
+        batchRepository.deleteById(id);
         batchSearchRepository.deleteById(id);
     }
 

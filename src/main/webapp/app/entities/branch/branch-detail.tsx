@@ -12,7 +12,7 @@ import { IBranch } from 'app/shared/model/branch.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IBranchDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IBranchDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class BranchDetail extends React.Component<IBranchDetailProps> {
   componentDidMount() {

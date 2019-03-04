@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -64,8 +63,10 @@ public class SubjectResourceIntTest {
     @Autowired
     private SubjectRepository subjectRepository;
 
+
     @Autowired
     private SubjectMapper subjectMapper;
+    
 
     @Autowired
     private SubjectService subjectService;
@@ -90,9 +91,6 @@ public class SubjectResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restSubjectMockMvc;
 
     private Subject subject;
@@ -105,8 +103,7 @@ public class SubjectResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -270,6 +267,7 @@ public class SubjectResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getSubject() throws Exception {
@@ -286,7 +284,6 @@ public class SubjectResourceIntTest {
             .andExpect(jsonPath("$.subjectDesc").value(DEFAULT_SUBJECT_DESC.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingSubject() throws Exception {
@@ -340,7 +337,7 @@ public class SubjectResourceIntTest {
         // Create the Subject
         SubjectDTO subjectDTO = subjectMapper.toDto(subject);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restSubjectMockMvc.perform(put("/api/subjects")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(subjectDTO)))
@@ -362,7 +359,7 @@ public class SubjectResourceIntTest {
 
         int databaseSizeBeforeDelete = subjectRepository.findAll().size();
 
-        // Delete the subject
+        // Get the subject
         restSubjectMockMvc.perform(delete("/api/subjects/{id}", subject.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -387,9 +384,9 @@ public class SubjectResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].subjectCode").value(hasItem(DEFAULT_SUBJECT_CODE)))
+            .andExpect(jsonPath("$.[*].subjectCode").value(hasItem(DEFAULT_SUBJECT_CODE.toString())))
             .andExpect(jsonPath("$.[*].subjectType").value(hasItem(DEFAULT_SUBJECT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC)))
+            .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 

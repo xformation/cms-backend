@@ -11,22 +11,19 @@
             "relationshipType": "many-to-one",
             "relationshipName": "batch",
             "otherEntityName": "batch",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "attendanceMaster"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "section",
             "otherEntityName": "section",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "attendanceMaster"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "teach",
             "otherEntityName": "teach",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "attendanceMaster"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190124093523",

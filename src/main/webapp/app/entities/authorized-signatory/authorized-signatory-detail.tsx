@@ -12,7 +12,7 @@ import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.mode
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IAuthorizedSignatoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAuthorizedSignatoryDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class AuthorizedSignatoryDetail extends React.Component<IAuthorizedSignatoryDetailProps> {
   componentDidMount() {
