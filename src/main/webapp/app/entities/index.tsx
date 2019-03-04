@@ -20,12 +20,12 @@ import CourseOffer from './course-offer';
 import AttendanceMaster from './attendance-master';
 import Lecture from './lecture';
 import StudentAttendance from './student-attendance';
-import StudentSubject from './student-subject';
+// import StudentSubject from './student-subject';
 import Location from './location';
 import LegalEntity from './legal-entity';
 import AuthorizedSignatory from './authorized-signatory';
 import BankAccounts from './bank-accounts';
-import SignatoryLink from './signatory-link';
+// import SignatoryLink from './signatory-link';
 import Country from './country';
 import Currency from './currency';
 import State from './state';
@@ -66,12 +66,12 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/attendance-master`} component={AttendanceMaster} />
       <ErrorBoundaryRoute path={`${match.url}/lecture`} component={Lecture} />
       <ErrorBoundaryRoute path={`${match.url}/student-attendance`} component={StudentAttendance} />
-      <ErrorBoundaryRoute path={`${match.url}/student-subject`} component={StudentSubject} />
+      {/* <ErrorBoundaryRoute path={`${match.url}/student-subject`} component={StudentSubject} /> */}
       <ErrorBoundaryRoute path={`${match.url}/location`} component={Location} />
       <ErrorBoundaryRoute path={`${match.url}/legal-entity`} component={LegalEntity} />
       <ErrorBoundaryRoute path={`${match.url}/authorized-signatory`} component={AuthorizedSignatory} />
       <ErrorBoundaryRoute path={`${match.url}/bank-accounts`} component={BankAccounts} />
-      <ErrorBoundaryRoute path={`${match.url}/signatory-link`} component={SignatoryLink} />
+      {/* <ErrorBoundaryRoute path={`${match.url}/signatory-link`} component={SignatoryLink} /> */}
       <ErrorBoundaryRoute path={`${match.url}/country`} component={Country} />
       <ErrorBoundaryRoute path={`${match.url}/currency`} component={Currency} />
       <ErrorBoundaryRoute path={`${match.url}/state`} component={State} />
