@@ -12,7 +12,7 @@
     	<delete tableName="holiday">  </delete>
     	<delete tableName="term">  </delete>
     	<delete tableName="academic_year">  </delete>
-    	<delete tableName="location">  </delete>
+    	<!-- <delete tableName="location">  </delete> -->
     	<delete tableName="college">  </delete>
     	<delete tableName="authorized_signatory">  </delete>
     	<delete tableName="bank_accounts">  </delete>
@@ -32,10 +32,10 @@
                   separator=";"
                   tableName="college"/>
 		
-		<loadData encoding="UTF-8"
+		<!-- <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/location.csv"
                   separator=";"
-                  tableName="location"/> 
+                  tableName="location"/>  -->
 
 		<loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/academic_year.csv"
