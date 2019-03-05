@@ -34,21 +34,11 @@ export default class StudentUpdatePage {
   studentEmailAddressInput: ElementFinder = element(by.css('input#student-studentEmailAddress'));
   alternateEmailAddressInput: ElementFinder = element(by.css('input#student-alternateEmailAddress'));
   relationWithStudentSelect: ElementFinder = element(by.css('select#student-relationWithStudent'));
-  nameInput: ElementFinder = element(by.css('input#student-name'));
-  middleNameInput: ElementFinder = element(by.css('input#student-middleName'));
-  lastNameInput: ElementFinder = element(by.css('input#student-lastName'));
-  contactNoInput: ElementFinder = element(by.css('input#student-contactNo'));
-  emailAddressInput: ElementFinder = element(by.css('input#student-emailAddress'));
-  transportSelect: ElementFinder = element(by.css('select#student-transport'));
-  messSelect: ElementFinder = element(by.css('select#student-mess'));
-  gymSelect: ElementFinder = element(by.css('select#student-gym'));
-  culturalClassSelect: ElementFinder = element(by.css('select#student-culturalClass'));
-  librarySelect: ElementFinder = element(by.css('select#student-library'));
-  sportsSelect: ElementFinder = element(by.css('select#student-sports'));
-  swimmingSelect: ElementFinder = element(by.css('select#student-swimming'));
-  extraClassSelect: ElementFinder = element(by.css('select#student-extraClass'));
-  handicraftsSelect: ElementFinder = element(by.css('select#student-handicrafts'));
-  addSelect: ElementFinder = element(by.css('select#student-add'));
+  emergencyContactNameInput: ElementFinder = element(by.css('input#student-emergencyContactName'));
+  emergencyContactMiddleNameInput: ElementFinder = element(by.css('input#student-emergencyContactMiddleName'));
+  emergencyContactLastNameInput: ElementFinder = element(by.css('input#student-emergencyContactLastName'));
+  emergencyContactNoInput: ElementFinder = element(by.css('input#student-emergencyContactNo'));
+  emergencyContactEmailAddressInput: ElementFinder = element(by.css('input#student-emergencyContactEmailAddress'));
   uploadPhotoInput: ElementFinder = element(by.css('input#student-uploadPhoto'));
   admissionNoInput: ElementFinder = element(by.css('input#student-admissionNo'));
   rollNoInput: ElementFinder = element(by.css('input#student-rollNo'));
@@ -332,186 +322,46 @@ export default class StudentUpdatePage {
       .last()
       .click();
   }
-  setNameInput(name) {
-    this.nameInput.sendKeys(name);
+  setEmergencyContactNameInput(emergencyContactName) {
+    this.emergencyContactNameInput.sendKeys(emergencyContactName);
   }
 
-  getNameInput() {
-    return this.nameInput.getAttribute('value');
+  getEmergencyContactNameInput() {
+    return this.emergencyContactNameInput.getAttribute('value');
   }
 
-  setMiddleNameInput(middleName) {
-    this.middleNameInput.sendKeys(middleName);
+  setEmergencyContactMiddleNameInput(emergencyContactMiddleName) {
+    this.emergencyContactMiddleNameInput.sendKeys(emergencyContactMiddleName);
   }
 
-  getMiddleNameInput() {
-    return this.middleNameInput.getAttribute('value');
+  getEmergencyContactMiddleNameInput() {
+    return this.emergencyContactMiddleNameInput.getAttribute('value');
   }
 
-  setLastNameInput(lastName) {
-    this.lastNameInput.sendKeys(lastName);
+  setEmergencyContactLastNameInput(emergencyContactLastName) {
+    this.emergencyContactLastNameInput.sendKeys(emergencyContactLastName);
   }
 
-  getLastNameInput() {
-    return this.lastNameInput.getAttribute('value');
+  getEmergencyContactLastNameInput() {
+    return this.emergencyContactLastNameInput.getAttribute('value');
   }
 
-  setContactNoInput(contactNo) {
-    this.contactNoInput.sendKeys(contactNo);
+  setEmergencyContactNoInput(emergencyContactNo) {
+    this.emergencyContactNoInput.sendKeys(emergencyContactNo);
   }
 
-  getContactNoInput() {
-    return this.contactNoInput.getAttribute('value');
+  getEmergencyContactNoInput() {
+    return this.emergencyContactNoInput.getAttribute('value');
   }
 
-  setEmailAddressInput(emailAddress) {
-    this.emailAddressInput.sendKeys(emailAddress);
+  setEmergencyContactEmailAddressInput(emergencyContactEmailAddress) {
+    this.emergencyContactEmailAddressInput.sendKeys(emergencyContactEmailAddress);
   }
 
-  getEmailAddressInput() {
-    return this.emailAddressInput.getAttribute('value');
+  getEmergencyContactEmailAddressInput() {
+    return this.emergencyContactEmailAddressInput.getAttribute('value');
   }
 
-  setTransportSelect(transport) {
-    this.transportSelect.sendKeys(transport);
-  }
-
-  getTransportSelect() {
-    return this.transportSelect.element(by.css('option:checked')).getText();
-  }
-
-  transportSelectLastOption() {
-    this.transportSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setMessSelect(mess) {
-    this.messSelect.sendKeys(mess);
-  }
-
-  getMessSelect() {
-    return this.messSelect.element(by.css('option:checked')).getText();
-  }
-
-  messSelectLastOption() {
-    this.messSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setGymSelect(gym) {
-    this.gymSelect.sendKeys(gym);
-  }
-
-  getGymSelect() {
-    return this.gymSelect.element(by.css('option:checked')).getText();
-  }
-
-  gymSelectLastOption() {
-    this.gymSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setCulturalClassSelect(culturalClass) {
-    this.culturalClassSelect.sendKeys(culturalClass);
-  }
-
-  getCulturalClassSelect() {
-    return this.culturalClassSelect.element(by.css('option:checked')).getText();
-  }
-
-  culturalClassSelectLastOption() {
-    this.culturalClassSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setLibrarySelect(library) {
-    this.librarySelect.sendKeys(library);
-  }
-
-  getLibrarySelect() {
-    return this.librarySelect.element(by.css('option:checked')).getText();
-  }
-
-  librarySelectLastOption() {
-    this.librarySelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setSportsSelect(sports) {
-    this.sportsSelect.sendKeys(sports);
-  }
-
-  getSportsSelect() {
-    return this.sportsSelect.element(by.css('option:checked')).getText();
-  }
-
-  sportsSelectLastOption() {
-    this.sportsSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setSwimmingSelect(swimming) {
-    this.swimmingSelect.sendKeys(swimming);
-  }
-
-  getSwimmingSelect() {
-    return this.swimmingSelect.element(by.css('option:checked')).getText();
-  }
-
-  swimmingSelectLastOption() {
-    this.swimmingSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setExtraClassSelect(extraClass) {
-    this.extraClassSelect.sendKeys(extraClass);
-  }
-
-  getExtraClassSelect() {
-    return this.extraClassSelect.element(by.css('option:checked')).getText();
-  }
-
-  extraClassSelectLastOption() {
-    this.extraClassSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setHandicraftsSelect(handicrafts) {
-    this.handicraftsSelect.sendKeys(handicrafts);
-  }
-
-  getHandicraftsSelect() {
-    return this.handicraftsSelect.element(by.css('option:checked')).getText();
-  }
-
-  handicraftsSelectLastOption() {
-    this.handicraftsSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  setAddSelect(add) {
-    this.addSelect.sendKeys(add);
-  }
-
-  getAddSelect() {
-    return this.addSelect.element(by.css('option:checked')).getText();
-  }
-
-  addSelectLastOption() {
-    this.addSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
   setUploadPhotoInput(uploadPhoto) {
     this.uploadPhotoInput.sendKeys(uploadPhoto);
   }

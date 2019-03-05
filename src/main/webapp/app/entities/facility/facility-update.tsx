@@ -18,32 +18,26 @@ import { getEntity, updateEntity, createEntity, reset } from './facility.reducer
 import { IFacility } from 'app/shared/model/facility.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IFacilityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IFacilityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface IFacilityUpdateState {
   isNew: boolean;
-  academicYearId: string;
-  branchId: string;
-  studentId: string;
+  academicYearId: number;
+  branchId: number;
+  studentId: number;
 }
 
 export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacilityUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      academicYearId: '0',
-      branchId: '0',
-      studentId: '0',
+      academicYearId: 0,
+      branchId: 0,
+      studentId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -71,11 +65,63 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/facility');
+  };
+
+  academicYearUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        academicYearId: -1
+      });
+    } else {
+      for (const i in this.props.academicYears) {
+        if (id === this.props.academicYears[i].id.toString()) {
+          this.setState({
+            academicYearId: this.props.academicYears[i].id
+          });
+        }
+      }
+    }
+  };
+
+  branchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        branchId: -1
+      });
+    } else {
+      for (const i in this.props.branches) {
+        if (id === this.props.branches[i].id.toString()) {
+          this.setState({
+            branchId: this.props.branches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  studentUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        studentId: -1
+      });
+    } else {
+      for (const i in this.props.students) {
+        if (id === this.props.students[i].id.toString()) {
+          this.setState({
+            studentId: this.props.students[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -102,14 +148,131 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="facilityNameLabel" for="facilityName">
-                    Facility Name
-                  </Label>
-                  <AvField id="facility-facilityName" type="text" name="facilityName" />
+                  <Label id="transportLabel">Transport</Label>
+                  <AvInput
+                    id="facility-transport"
+                    type="select"
+                    className="form-control"
+                    name="transport"
+                    value={(!isNew && facilityEntity.transport) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="messLabel">Mess</Label>
+                  <AvInput
+                    id="facility-mess"
+                    type="select"
+                    className="form-control"
+                    name="mess"
+                    value={(!isNew && facilityEntity.mess) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="gymLabel">Gym</Label>
+                  <AvInput
+                    id="facility-gym"
+                    type="select"
+                    className="form-control"
+                    name="gym"
+                    value={(!isNew && facilityEntity.gym) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="culturalClassLabel">Cultural Class</Label>
+                  <AvInput
+                    id="facility-culturalClass"
+                    type="select"
+                    className="form-control"
+                    name="culturalClass"
+                    value={(!isNew && facilityEntity.culturalClass) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="libraryLabel">Library</Label>
+                  <AvInput
+                    id="facility-library"
+                    type="select"
+                    className="form-control"
+                    name="library"
+                    value={(!isNew && facilityEntity.library) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="sportsLabel">Sports</Label>
+                  <AvInput
+                    id="facility-sports"
+                    type="select"
+                    className="form-control"
+                    name="sports"
+                    value={(!isNew && facilityEntity.sports) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="swimmingLabel">Swimming</Label>
+                  <AvInput
+                    id="facility-swimming"
+                    type="select"
+                    className="form-control"
+                    name="swimming"
+                    value={(!isNew && facilityEntity.swimming) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="extraClassLabel">Extra Class</Label>
+                  <AvInput
+                    id="facility-extraClass"
+                    type="select"
+                    className="form-control"
+                    name="extraClass"
+                    value={(!isNew && facilityEntity.extraClass) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="handicraftsLabel">Handicrafts</Label>
+                  <AvInput
+                    id="facility-handicrafts"
+                    type="select"
+                    className="form-control"
+                    name="handicrafts"
+                    value={(!isNew && facilityEntity.handicrafts) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="academicYear.id">Academic Year</Label>
-                  <AvInput id="facility-academicYear" type="select" className="form-control" name="academicYearId">
+                  <AvInput
+                    id="facility-academicYear"
+                    type="select"
+                    className="form-control"
+                    name="academicYearId"
+                    onChange={this.academicYearUpdate}
+                  >
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
@@ -122,7 +285,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="facility-branch" type="select" className="form-control" name="branchId">
+                  <AvInput id="facility-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -135,7 +298,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                 </AvGroup>
                 <AvGroup>
                   <Label for="student.id">Student</Label>
-                  <AvInput id="facility-student" type="select" className="form-control" name="studentId">
+                  <AvInput id="facility-student" type="select" className="form-control" name="studentId" onChange={this.studentUpdate}>
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -169,8 +332,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   students: storeState.student.entities,
   facilityEntity: storeState.facility.entity,
   loading: storeState.facility.loading,
-  updating: storeState.facility.updating,
-  updateSuccess: storeState.facility.updateSuccess
+  updating: storeState.facility.updating
 });
 
 const mapDispatchToProps = {

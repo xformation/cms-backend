@@ -81,6 +81,9 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                 <th>Father Name</th>
                 <th>Father Middle Name</th>
                 <th>Father Last Name</th>
+                <th>Spouse Name</th>
+                <th>Spouse Middle Name</th>
+                <th>Spouse Last Name</th>
                 <th>Mother Name</th>
                 <th>Mother Middle Name</th>
                 <th>Mother Last Name</th>
@@ -105,11 +108,11 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                 <th>Teacher Email Address</th>
                 <th>Alternate Email Address</th>
                 <th>Relation With Staff</th>
-                <th>Name</th>
-                <th>Middle Name</th>
-                <th>Last Name</th>
-                <th>Contact No</th>
-                <th>Email Address</th>
+                <th>Emergency Contact Name</th>
+                <th>Emergency Contact Middle Name</th>
+                <th>Emergency Contact Last Name</th>
+                <th>Emergency Contact No</th>
+                <th>Emergency Contact Email Address</th>
                 <th>Upload Photo</th>
                 <th>Employee Id</th>
                 <th>Designation</th>
@@ -133,6 +136,9 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                   <td>{teacher.fatherName}</td>
                   <td>{teacher.fatherMiddleName}</td>
                   <td>{teacher.fatherLastName}</td>
+                  <td>{teacher.spouseName}</td>
+                  <td>{teacher.spouseMiddleName}</td>
+                  <td>{teacher.spouseLastName}</td>
                   <td>{teacher.motherName}</td>
                   <td>{teacher.motherMiddleName}</td>
                   <td>{teacher.motherLastName}</td>
@@ -159,11 +165,11 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                   <td>{teacher.teacherEmailAddress}</td>
                   <td>{teacher.alternateEmailAddress}</td>
                   <td>{teacher.relationWithStaff}</td>
-                  <td>{teacher.name}</td>
-                  <td>{teacher.middleName}</td>
-                  <td>{teacher.lastName}</td>
-                  <td>{teacher.contactNo}</td>
-                  <td>{teacher.emailAddress}</td>
+                  <td>{teacher.emergencyContactName}</td>
+                  <td>{teacher.emergencyContactMiddleName}</td>
+                  <td>{teacher.emergencyContactLastName}</td>
+                  <td>{teacher.emergencyContactNo}</td>
+                  <td>{teacher.emergencyContactEmailAddress}</td>
                   <td>{teacher.uploadPhoto}</td>
                   <td>{teacher.employeeId}</td>
                   <td>{teacher.designation}</td>

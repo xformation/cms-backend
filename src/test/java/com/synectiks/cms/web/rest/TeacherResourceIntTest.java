@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +72,15 @@ public class TeacherResourceIntTest {
 
     private static final String DEFAULT_FATHER_LAST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FATHER_LAST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SPOUSE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_SPOUSE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SPOUSE_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_SPOUSE_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SPOUSE_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_SPOUSE_LAST_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_MOTHER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_MOTHER_NAME = "BBBBBBBBBB";
@@ -128,11 +139,11 @@ public class TeacherResourceIntTest {
     private static final Long DEFAULT_PINCODE = 1L;
     private static final Long UPDATED_PINCODE = 2L;
 
-    private static final Long DEFAULT_TEACHER_CONTACT_NUMBER = 1L;
-    private static final Long UPDATED_TEACHER_CONTACT_NUMBER = 2L;
+    private static final String DEFAULT_TEACHER_CONTACT_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_TEACHER_CONTACT_NUMBER = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_ALTERNATE_CONTACT_NUMBER = 1L;
-    private static final Long UPDATED_ALTERNATE_CONTACT_NUMBER = 2L;
+    private static final String DEFAULT_ALTERNATE_CONTACT_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_ALTERNATE_CONTACT_NUMBER = "BBBBBBBBBB";
 
     private static final String DEFAULT_TEACHER_EMAIL_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_TEACHER_EMAIL_ADDRESS = "BBBBBBBBBB";
@@ -143,23 +154,23 @@ public class TeacherResourceIntTest {
     private static final RelationWithStudentEnum DEFAULT_RELATION_WITH_STAFF = RelationWithStudentEnum.FATHER;
     private static final RelationWithStudentEnum UPDATED_RELATION_WITH_STAFF = RelationWithStudentEnum.MOTHER;
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_EMERGENCY_CONTACT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_EMERGENCY_CONTACT_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_MIDDLE_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_MIDDLE_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_EMERGENCY_CONTACT_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_EMERGENCY_CONTACT_LAST_NAME = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_CONTACT_NO = 1L;
-    private static final Long UPDATED_CONTACT_NO = 2L;
+    private static final String DEFAULT_EMERGENCY_CONTACT_NO = "AAAAAAAAAA";
+    private static final String UPDATED_EMERGENCY_CONTACT_NO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_EMAIL_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_EMAIL_ADDRESS = "BBBBBBBBBB";
+    private static final String DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_UPLOAD_PHOTO = 1L;
-    private static final Long UPDATED_UPLOAD_PHOTO = 2L;
+    private static final String DEFAULT_UPLOAD_PHOTO = "AAAAAAAAAA";
+    private static final String UPDATED_UPLOAD_PHOTO = "BBBBBBBBBB";
 
     private static final Long DEFAULT_EMPLOYEE_ID = 1L;
     private static final Long UPDATED_EMPLOYEE_ID = 2L;
@@ -230,6 +241,9 @@ public class TeacherResourceIntTest {
             .fatherName(DEFAULT_FATHER_NAME)
             .fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME)
             .fatherLastName(DEFAULT_FATHER_LAST_NAME)
+            .spouseName(DEFAULT_SPOUSE_NAME)
+            .spouseMiddleName(DEFAULT_SPOUSE_MIDDLE_NAME)
+            .spouseLastName(DEFAULT_SPOUSE_LAST_NAME)
             .motherName(DEFAULT_MOTHER_NAME)
             .motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME)
             .motherLastName(DEFAULT_MOTHER_LAST_NAME)
@@ -254,11 +268,11 @@ public class TeacherResourceIntTest {
             .teacherEmailAddress(DEFAULT_TEACHER_EMAIL_ADDRESS)
             .alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS)
             .relationWithStaff(DEFAULT_RELATION_WITH_STAFF)
-            .name(DEFAULT_NAME)
-            .middleName(DEFAULT_MIDDLE_NAME)
-            .lastName(DEFAULT_LAST_NAME)
-            .contactNo(DEFAULT_CONTACT_NO)
-            .emailAddress(DEFAULT_EMAIL_ADDRESS)
+            .emergencyContactName(DEFAULT_EMERGENCY_CONTACT_NAME)
+            .emergencyContactMiddleName(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME)
+            .emergencyContactLastName(DEFAULT_EMERGENCY_CONTACT_LAST_NAME)
+            .emergencyContactNo(DEFAULT_EMERGENCY_CONTACT_NO)
+            .emergencyContactEmailAddress(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS)
             .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
             .employeeId(DEFAULT_EMPLOYEE_ID)
             .designation(DEFAULT_DESIGNATION)
@@ -293,6 +307,9 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getFatherName()).isEqualTo(DEFAULT_FATHER_NAME);
         assertThat(testTeacher.getFatherMiddleName()).isEqualTo(DEFAULT_FATHER_MIDDLE_NAME);
         assertThat(testTeacher.getFatherLastName()).isEqualTo(DEFAULT_FATHER_LAST_NAME);
+        assertThat(testTeacher.getSpouseName()).isEqualTo(DEFAULT_SPOUSE_NAME);
+        assertThat(testTeacher.getSpouseMiddleName()).isEqualTo(DEFAULT_SPOUSE_MIDDLE_NAME);
+        assertThat(testTeacher.getSpouseLastName()).isEqualTo(DEFAULT_SPOUSE_LAST_NAME);
         assertThat(testTeacher.getMotherName()).isEqualTo(DEFAULT_MOTHER_NAME);
         assertThat(testTeacher.getMotherMiddleName()).isEqualTo(DEFAULT_MOTHER_MIDDLE_NAME);
         assertThat(testTeacher.getMotherLastName()).isEqualTo(DEFAULT_MOTHER_LAST_NAME);
@@ -317,11 +334,11 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getTeacherEmailAddress()).isEqualTo(DEFAULT_TEACHER_EMAIL_ADDRESS);
         assertThat(testTeacher.getAlternateEmailAddress()).isEqualTo(DEFAULT_ALTERNATE_EMAIL_ADDRESS);
         assertThat(testTeacher.getRelationWithStaff()).isEqualTo(DEFAULT_RELATION_WITH_STAFF);
-        assertThat(testTeacher.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testTeacher.getMiddleName()).isEqualTo(DEFAULT_MIDDLE_NAME);
-        assertThat(testTeacher.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
-        assertThat(testTeacher.getContactNo()).isEqualTo(DEFAULT_CONTACT_NO);
-        assertThat(testTeacher.getEmailAddress()).isEqualTo(DEFAULT_EMAIL_ADDRESS);
+        assertThat(testTeacher.getEmergencyContactName()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_NAME);
+        assertThat(testTeacher.getEmergencyContactMiddleName()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME);
+        assertThat(testTeacher.getEmergencyContactLastName()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_LAST_NAME);
+        assertThat(testTeacher.getEmergencyContactNo()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_NO);
+        assertThat(testTeacher.getEmergencyContactEmailAddress()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS);
         assertThat(testTeacher.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
         assertThat(testTeacher.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
         assertThat(testTeacher.getDesignation()).isEqualTo(DEFAULT_DESIGNATION);
@@ -850,48 +867,10 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
-    public void checkAlternateContactNumberIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setAlternateContactNumber(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkTeacherEmailAddressIsRequired() throws Exception {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
         teacher.setTeacherEmailAddress(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkAlternateEmailAddressIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setAlternateEmailAddress(null);
 
         // Create the Teacher, which fails.
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
@@ -926,10 +905,10 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
-    public void checkNameIsRequired() throws Exception {
+    public void checkEmergencyContactNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
-        teacher.setName(null);
+        teacher.setEmergencyContactName(null);
 
         // Create the Teacher, which fails.
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
@@ -945,10 +924,10 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
-    public void checkMiddleNameIsRequired() throws Exception {
+    public void checkEmergencyContactLastNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
-        teacher.setMiddleName(null);
+        teacher.setEmergencyContactLastName(null);
 
         // Create the Teacher, which fails.
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
@@ -964,10 +943,10 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
-    public void checkLastNameIsRequired() throws Exception {
+    public void checkEmergencyContactNoIsRequired() throws Exception {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
-        teacher.setLastName(null);
+        teacher.setEmergencyContactNo(null);
 
         // Create the Teacher, which fails.
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
@@ -983,29 +962,10 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
-    public void checkContactNoIsRequired() throws Exception {
+    public void checkEmergencyContactEmailAddressIsRequired() throws Exception {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
-        teacher.setContactNo(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkEmailAddressIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setEmailAddress(null);
+        teacher.setEmergencyContactEmailAddress(null);
 
         // Create the Teacher, which fails.
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
@@ -1025,25 +985,6 @@ public class TeacherResourceIntTest {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
         teacher.setUploadPhoto(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkEmployeeIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setEmployeeId(null);
 
         // Create the Teacher, which fails.
         TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
@@ -1112,6 +1053,9 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
             .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME.toString())))
             .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].spouseName").value(hasItem(DEFAULT_SPOUSE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].spouseMiddleName").value(hasItem(DEFAULT_SPOUSE_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].spouseLastName").value(hasItem(DEFAULT_SPOUSE_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME.toString())))
             .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME.toString())))
             .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME.toString())))
@@ -1131,17 +1075,17 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
             .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY.toString())))
             .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.intValue())))
-            .andExpect(jsonPath("$.[*].teacherContactNumber").value(hasItem(DEFAULT_TEACHER_CONTACT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].teacherContactNumber").value(hasItem(DEFAULT_TEACHER_CONTACT_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].teacherEmailAddress").value(hasItem(DEFAULT_TEACHER_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].relationWithStaff").value(hasItem(DEFAULT_RELATION_WITH_STAFF.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
-            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
+            .andExpect(jsonPath("$.[*].emergencyContactName").value(hasItem(DEFAULT_EMERGENCY_CONTACT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactMiddleName").value(hasItem(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactLastName").value(hasItem(DEFAULT_EMERGENCY_CONTACT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactNo").value(hasItem(DEFAULT_EMERGENCY_CONTACT_NO.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactEmailAddress").value(hasItem(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.toString())))
             .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
@@ -1165,6 +1109,9 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.fatherName").value(DEFAULT_FATHER_NAME.toString()))
             .andExpect(jsonPath("$.fatherMiddleName").value(DEFAULT_FATHER_MIDDLE_NAME.toString()))
             .andExpect(jsonPath("$.fatherLastName").value(DEFAULT_FATHER_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.spouseName").value(DEFAULT_SPOUSE_NAME.toString()))
+            .andExpect(jsonPath("$.spouseMiddleName").value(DEFAULT_SPOUSE_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.spouseLastName").value(DEFAULT_SPOUSE_LAST_NAME.toString()))
             .andExpect(jsonPath("$.motherName").value(DEFAULT_MOTHER_NAME.toString()))
             .andExpect(jsonPath("$.motherMiddleName").value(DEFAULT_MOTHER_MIDDLE_NAME.toString()))
             .andExpect(jsonPath("$.motherLastName").value(DEFAULT_MOTHER_LAST_NAME.toString()))
@@ -1184,17 +1131,17 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.state").value(DEFAULT_STATE.toString()))
             .andExpect(jsonPath("$.country").value(DEFAULT_COUNTRY.toString()))
             .andExpect(jsonPath("$.pincode").value(DEFAULT_PINCODE.intValue()))
-            .andExpect(jsonPath("$.teacherContactNumber").value(DEFAULT_TEACHER_CONTACT_NUMBER.intValue()))
-            .andExpect(jsonPath("$.alternateContactNumber").value(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue()))
+            .andExpect(jsonPath("$.teacherContactNumber").value(DEFAULT_TEACHER_CONTACT_NUMBER.toString()))
+            .andExpect(jsonPath("$.alternateContactNumber").value(DEFAULT_ALTERNATE_CONTACT_NUMBER.toString()))
             .andExpect(jsonPath("$.teacherEmailAddress").value(DEFAULT_TEACHER_EMAIL_ADDRESS.toString()))
             .andExpect(jsonPath("$.alternateEmailAddress").value(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString()))
             .andExpect(jsonPath("$.relationWithStaff").value(DEFAULT_RELATION_WITH_STAFF.toString()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.middleName").value(DEFAULT_MIDDLE_NAME.toString()))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
-            .andExpect(jsonPath("$.contactNo").value(DEFAULT_CONTACT_NO.intValue()))
-            .andExpect(jsonPath("$.emailAddress").value(DEFAULT_EMAIL_ADDRESS.toString()))
-            .andExpect(jsonPath("$.uploadPhoto").value(DEFAULT_UPLOAD_PHOTO.intValue()))
+            .andExpect(jsonPath("$.emergencyContactName").value(DEFAULT_EMERGENCY_CONTACT_NAME.toString()))
+            .andExpect(jsonPath("$.emergencyContactMiddleName").value(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.emergencyContactLastName").value(DEFAULT_EMERGENCY_CONTACT_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.emergencyContactNo").value(DEFAULT_EMERGENCY_CONTACT_NO.toString()))
+            .andExpect(jsonPath("$.emergencyContactEmailAddress").value(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS.toString()))
+            .andExpect(jsonPath("$.uploadPhoto").value(DEFAULT_UPLOAD_PHOTO.toString()))
             .andExpect(jsonPath("$.employeeId").value(DEFAULT_EMPLOYEE_ID.intValue()))
             .andExpect(jsonPath("$.designation").value(DEFAULT_DESIGNATION.toString()))
             .andExpect(jsonPath("$.staffType").value(DEFAULT_STAFF_TYPE.toString()));
@@ -1226,6 +1173,9 @@ public class TeacherResourceIntTest {
             .fatherName(UPDATED_FATHER_NAME)
             .fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME)
             .fatherLastName(UPDATED_FATHER_LAST_NAME)
+            .spouseName(UPDATED_SPOUSE_NAME)
+            .spouseMiddleName(UPDATED_SPOUSE_MIDDLE_NAME)
+            .spouseLastName(UPDATED_SPOUSE_LAST_NAME)
             .motherName(UPDATED_MOTHER_NAME)
             .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
             .motherLastName(UPDATED_MOTHER_LAST_NAME)
@@ -1250,11 +1200,11 @@ public class TeacherResourceIntTest {
             .teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS)
             .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
             .relationWithStaff(UPDATED_RELATION_WITH_STAFF)
-            .name(UPDATED_NAME)
-            .middleName(UPDATED_MIDDLE_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .contactNo(UPDATED_CONTACT_NO)
-            .emailAddress(UPDATED_EMAIL_ADDRESS)
+            .emergencyContactName(UPDATED_EMERGENCY_CONTACT_NAME)
+            .emergencyContactMiddleName(UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME)
+            .emergencyContactLastName(UPDATED_EMERGENCY_CONTACT_LAST_NAME)
+            .emergencyContactNo(UPDATED_EMERGENCY_CONTACT_NO)
+            .emergencyContactEmailAddress(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS)
             .uploadPhoto(UPDATED_UPLOAD_PHOTO)
             .employeeId(UPDATED_EMPLOYEE_ID)
             .designation(UPDATED_DESIGNATION)
@@ -1276,6 +1226,9 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getFatherName()).isEqualTo(UPDATED_FATHER_NAME);
         assertThat(testTeacher.getFatherMiddleName()).isEqualTo(UPDATED_FATHER_MIDDLE_NAME);
         assertThat(testTeacher.getFatherLastName()).isEqualTo(UPDATED_FATHER_LAST_NAME);
+        assertThat(testTeacher.getSpouseName()).isEqualTo(UPDATED_SPOUSE_NAME);
+        assertThat(testTeacher.getSpouseMiddleName()).isEqualTo(UPDATED_SPOUSE_MIDDLE_NAME);
+        assertThat(testTeacher.getSpouseLastName()).isEqualTo(UPDATED_SPOUSE_LAST_NAME);
         assertThat(testTeacher.getMotherName()).isEqualTo(UPDATED_MOTHER_NAME);
         assertThat(testTeacher.getMotherMiddleName()).isEqualTo(UPDATED_MOTHER_MIDDLE_NAME);
         assertThat(testTeacher.getMotherLastName()).isEqualTo(UPDATED_MOTHER_LAST_NAME);
@@ -1300,11 +1253,11 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getTeacherEmailAddress()).isEqualTo(UPDATED_TEACHER_EMAIL_ADDRESS);
         assertThat(testTeacher.getAlternateEmailAddress()).isEqualTo(UPDATED_ALTERNATE_EMAIL_ADDRESS);
         assertThat(testTeacher.getRelationWithStaff()).isEqualTo(UPDATED_RELATION_WITH_STAFF);
-        assertThat(testTeacher.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testTeacher.getMiddleName()).isEqualTo(UPDATED_MIDDLE_NAME);
-        assertThat(testTeacher.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testTeacher.getContactNo()).isEqualTo(UPDATED_CONTACT_NO);
-        assertThat(testTeacher.getEmailAddress()).isEqualTo(UPDATED_EMAIL_ADDRESS);
+        assertThat(testTeacher.getEmergencyContactName()).isEqualTo(UPDATED_EMERGENCY_CONTACT_NAME);
+        assertThat(testTeacher.getEmergencyContactMiddleName()).isEqualTo(UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME);
+        assertThat(testTeacher.getEmergencyContactLastName()).isEqualTo(UPDATED_EMERGENCY_CONTACT_LAST_NAME);
+        assertThat(testTeacher.getEmergencyContactNo()).isEqualTo(UPDATED_EMERGENCY_CONTACT_NO);
+        assertThat(testTeacher.getEmergencyContactEmailAddress()).isEqualTo(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS);
         assertThat(testTeacher.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
         assertThat(testTeacher.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testTeacher.getDesignation()).isEqualTo(UPDATED_DESIGNATION);
@@ -1375,6 +1328,9 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
             .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME.toString())))
             .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].spouseName").value(hasItem(DEFAULT_SPOUSE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].spouseMiddleName").value(hasItem(DEFAULT_SPOUSE_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].spouseLastName").value(hasItem(DEFAULT_SPOUSE_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME.toString())))
             .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME.toString())))
             .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME.toString())))
@@ -1394,17 +1350,17 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].state").value(hasItem(DEFAULT_STATE.toString())))
             .andExpect(jsonPath("$.[*].country").value(hasItem(DEFAULT_COUNTRY.toString())))
             .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.intValue())))
-            .andExpect(jsonPath("$.[*].teacherContactNumber").value(hasItem(DEFAULT_TEACHER_CONTACT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].teacherContactNumber").value(hasItem(DEFAULT_TEACHER_CONTACT_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].alternateContactNumber").value(hasItem(DEFAULT_ALTERNATE_CONTACT_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].teacherEmailAddress").value(hasItem(DEFAULT_TEACHER_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].alternateEmailAddress").value(hasItem(DEFAULT_ALTERNATE_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].relationWithStaff").value(hasItem(DEFAULT_RELATION_WITH_STAFF.toString())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].middleName").value(hasItem(DEFAULT_MIDDLE_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].contactNo").value(hasItem(DEFAULT_CONTACT_NO.intValue())))
-            .andExpect(jsonPath("$.[*].emailAddress").value(hasItem(DEFAULT_EMAIL_ADDRESS.toString())))
-            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.intValue())))
+            .andExpect(jsonPath("$.[*].emergencyContactName").value(hasItem(DEFAULT_EMERGENCY_CONTACT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactMiddleName").value(hasItem(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactLastName").value(hasItem(DEFAULT_EMERGENCY_CONTACT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactNo").value(hasItem(DEFAULT_EMERGENCY_CONTACT_NO.toString())))
+            .andExpect(jsonPath("$.[*].emergencyContactEmailAddress").value(hasItem(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS.toString())))
+            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.toString())))
             .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));

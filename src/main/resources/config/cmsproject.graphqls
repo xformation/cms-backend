@@ -187,7 +187,15 @@ type FeeCategory{
 
 type Facility{
       id: Long!
-    facilityName: String!
+    transport: Status!
+    mess: Status!
+    gym: Status!
+    culturalClass: Status!
+    library: Status!
+    sports: Status!
+    swimming: Status!
+    extraClass: Status!
+    handicrafts: Status!
      academicYear: AcademicYear!
      branch: Branch!
      student: Student!
@@ -440,29 +448,19 @@ type Student {
        state: String!
        country: String!
        pincode: Long!
-       studentContactNumber: Long!
-       alternateContactNumber: Long!
+       studentContactNumber: String!
+       alternateContactNumber: String!
        studentEmailAddress: String!
        alternateEmailAddress: String!
        relationWithStudent: RelationWithStudentEnum!
-       name: String!
-       middleName: String!
-       lastName: String!
-       contactNo: Long!
-       emailAddress: String!
-       uploadPhoto: Long!
+       emergencyContactName: String!
+       emergencyContactMiddleName: String!
+       emergencyContactLastName: String!
+       emergencyContactNo: String!
+       emergencyContactEmailAddress: String!
+       uploadPhoto: String!
        admissionNo: Long!
        rollNo: String!
-       transport: Status!
-       mess: Status!
-       gym: Status!
-       culturalClass: Status!
-       library: Status!
-       sports: Status!
-       swimming: Status!
-       extraClass: Status!
-       handicrafts: Status!
-       add: Status!
        studentType: StudentTypeEnum!
        batch: Batch!
        section: Section!
@@ -519,17 +517,17 @@ type Teacher{
                  state: String!
                  country: String!
                  pincode: Long!
-                 teacherContactNumber: Long!
-                 alternateContactNumber: Long!
+                 teacherContactNumber: String!
+                 alternateContactNumber: String!
                  teacherEmailAddress: String!
                  alternateEmailAddress: String!
                  relationWithStaff: RelationWithStudentEnum!
-                 name: String!
-                 middleName: String!
-                 lastName: String!
-                 contactNo: Long!
-                 emailAddress: String!
-                 uploadPhoto: Long!
+                 emergencyContactName: String!
+                 emergencyContactMiddleName: String!
+                 emergencyContactLastName: String!
+                 emergencyContactNo: String!
+                 emergencyContactEmailAddress: String!
+                 uploadPhoto: String!
                  employeeId: Long!
                  designation: String!
                  staffType: StaffType!
@@ -915,7 +913,15 @@ type RemoveFeeDetailsPayload {
 }
 
 input AddFacilityInput {
-   facilityName: String!
+    transport: Status!
+    gym: Status!
+    mess: Status!
+    culturalClass: Status!
+    library: Status!
+    sports: Status!
+    swimming: Status!
+    extraClass: Status!
+    handicrafts: Status!
     academicyearId: Long!
     branchId: Long!
     studentId: Long!
@@ -925,7 +931,15 @@ type AddFacilityPayload {
 }
 input UpdateFacilityInput {
      id: Long!
-     facilityName: String!
+    transport: Status!
+    gym: Status!
+    mess: Status!
+    culturalClass: Status!
+    library: Status!
+    sports: Status!
+    swimming: Status!
+    extraClass: Status!
+    handicrafts: Status!
      academicyearId: Long!
      branchId: Long!
      studentId: Long!
@@ -1358,27 +1372,17 @@ input AddStudentInput {
          state: String!
          country: String!
          pincode: Long!
-         studentContactNumber: Long!
-         alternateContactNumber: Long!
+         studentContactNumber: String!
+         alternateContactNumber: String!
          studentEmailAddress: String!
          alternateEmailAddress: String!
          relationWithStudent: RelationWithStudentEnum!
-         name: String!
-         middleName: String!
-         lastName: String!
-         contactNo: Long!
-         emailAddress: String!
-         transport: Status!
-         gym: Status!
-         mess: Status!
-         culturalClass: Status!
-         library: Status!
-         sports: Status!
-         swimming: Status!
-         extraClass: Status!
-         handicrafts: Status!
-         add: Status!
-         uploadPhoto: Long!
+         emergencyContactName: String!
+         emergencyContactMiddleName: String!
+         emergencyContactLastName: String!
+         emergencyContactNo: String!
+         emergencyContactEmailAddress: String!
+         uploadPhoto: String!
          admissionNo: Long!
          rollNo: String!
          studentType: StudentTypeEnum !
@@ -1417,27 +1421,17 @@ input UpdateStudentInput {
              state: String!
              country: String!
              pincode: Long!
-             studentContactNumber: Long!
-             alternateContactNumber: Long!
+             studentContactNumber: String!
+             alternateContactNumber: String!
              studentEmailAddress: String!
              alternateEmailAddress: String!
              relationWithStudent: RelationWithStudentEnum!
-             name: String!
-             middleName: String!
-             lastName: String!
-             contactNo: Long!
-             emailAddress: String!
-             transport: Status!
-             gym: Status!
-             mess: Status!
-             culturalClass: Status!
-             library: Status!
-             sports: Status!
-             swimming: Status!
-             extraClass: Status!
-             handicrafts: Status!
-             add: Status!
-             uploadPhoto: Long!
+             emergencyContactName: String!
+             emergencyContactMiddleName: String!
+             emergencyContactLastName: String!
+             emergencyContactNo: String!
+             emergencyContactEmailAddress: String!
+             uploadPhoto: String!
              admissionNo: Long!
              rollNo: String!
              studentType: StudentTypeEnum!
@@ -1543,17 +1537,17 @@ input AddTeacherInput {
                    state: String!
                    country: String!
                    pincode: Long!
-                   teacherContactNumber: Long!
-                   alternateContactNumber: Long!
+                   teacherContactNumber: String!
+                   alternateContactNumber: String!
                    teacherEmailAddress: String!
                    alternateEmailAddress: String!
                    relationWithStaff: RelationWithStudentEnum!
-                   name: String!
-                   middleName: String!
-                   lastName: String!
-                   contactNo: Long!
-                   emailAddress: String!
-                   uploadPhoto: Long!
+                   emergencyContactName: String!
+                   emergencyContactMiddleName: String!
+                   emergencyContactLastName: String!
+                   emergencyContactNo: String!
+                   emergencyContactEmailAddress: String!
+                   uploadPhoto: String!
                    employeeId: Long!
                    designation: String!
                    staffType: StaffType!
@@ -1590,17 +1584,17 @@ input UpdateTeacherInput {
                     state: String!
                     country: String!
                     pincode: Long!
-                    teacherContactNumber: Long!
-                    alternateContactNumber: Long!
+                    teacherContactNumber: String!
+                    alternateContactNumber: String!
                     teacherEmailAddress: String!
                     alternateEmailAddress: String!
                     relationWithStaff: RelationWithStudentEnum!
-                    name: String!
-                    middleName: String!
-                    lastName: String!
-                    contactNo: Long!
-                    emailAddress: String!
-                    uploadPhoto: Long!
+                    emergencyContactName: String!
+                    emergencyContactMiddleName: String!
+                    emergencyContactLastName: String!
+                    emergencyContactNo: String!
+                    emergencyContactEmailAddress: String!
+                    uploadPhoto: String!
                     employeeId: Long!
                     designation: String!
                     staffType: StaffType!

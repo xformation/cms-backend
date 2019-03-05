@@ -4,7 +4,15 @@ export default class FacilityUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.facility.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  facilityNameInput: ElementFinder = element(by.css('input#facility-facilityName'));
+  transportSelect: ElementFinder = element(by.css('select#facility-transport'));
+  messSelect: ElementFinder = element(by.css('select#facility-mess'));
+  gymSelect: ElementFinder = element(by.css('select#facility-gym'));
+  culturalClassSelect: ElementFinder = element(by.css('select#facility-culturalClass'));
+  librarySelect: ElementFinder = element(by.css('select#facility-library'));
+  sportsSelect: ElementFinder = element(by.css('select#facility-sports'));
+  swimmingSelect: ElementFinder = element(by.css('select#facility-swimming'));
+  extraClassSelect: ElementFinder = element(by.css('select#facility-extraClass'));
+  handicraftsSelect: ElementFinder = element(by.css('select#facility-handicrafts'));
   academicYearSelect: ElementFinder = element(by.css('select#facility-academicYear'));
   branchSelect: ElementFinder = element(by.css('select#facility-branch'));
   studentSelect: ElementFinder = element(by.css('select#facility-student'));
@@ -13,77 +21,195 @@ export default class FacilityUpdatePage {
     return this.pageTitle;
   }
 
-  async setFacilityNameInput(facilityName) {
-    await this.facilityNameInput.sendKeys(facilityName);
+  setTransportSelect(transport) {
+    this.transportSelect.sendKeys(transport);
   }
 
-  async getFacilityNameInput() {
-    return this.facilityNameInput.getAttribute('value');
+  getTransportSelect() {
+    return this.transportSelect.element(by.css('option:checked')).getText();
   }
 
-  async academicYearSelectLastOption() {
-    await this.academicYearSelect
+  transportSelectLastOption() {
+    this.transportSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setMessSelect(mess) {
+    this.messSelect.sendKeys(mess);
+  }
+
+  getMessSelect() {
+    return this.messSelect.element(by.css('option:checked')).getText();
+  }
+
+  messSelectLastOption() {
+    this.messSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setGymSelect(gym) {
+    this.gymSelect.sendKeys(gym);
+  }
+
+  getGymSelect() {
+    return this.gymSelect.element(by.css('option:checked')).getText();
+  }
+
+  gymSelectLastOption() {
+    this.gymSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setCulturalClassSelect(culturalClass) {
+    this.culturalClassSelect.sendKeys(culturalClass);
+  }
+
+  getCulturalClassSelect() {
+    return this.culturalClassSelect.element(by.css('option:checked')).getText();
+  }
+
+  culturalClassSelectLastOption() {
+    this.culturalClassSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setLibrarySelect(library) {
+    this.librarySelect.sendKeys(library);
+  }
+
+  getLibrarySelect() {
+    return this.librarySelect.element(by.css('option:checked')).getText();
+  }
+
+  librarySelectLastOption() {
+    this.librarySelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setSportsSelect(sports) {
+    this.sportsSelect.sendKeys(sports);
+  }
+
+  getSportsSelect() {
+    return this.sportsSelect.element(by.css('option:checked')).getText();
+  }
+
+  sportsSelectLastOption() {
+    this.sportsSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setSwimmingSelect(swimming) {
+    this.swimmingSelect.sendKeys(swimming);
+  }
+
+  getSwimmingSelect() {
+    return this.swimmingSelect.element(by.css('option:checked')).getText();
+  }
+
+  swimmingSelectLastOption() {
+    this.swimmingSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setExtraClassSelect(extraClass) {
+    this.extraClassSelect.sendKeys(extraClass);
+  }
+
+  getExtraClassSelect() {
+    return this.extraClassSelect.element(by.css('option:checked')).getText();
+  }
+
+  extraClassSelectLastOption() {
+    this.extraClassSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  setHandicraftsSelect(handicrafts) {
+    this.handicraftsSelect.sendKeys(handicrafts);
+  }
+
+  getHandicraftsSelect() {
+    return this.handicraftsSelect.element(by.css('option:checked')).getText();
+  }
+
+  handicraftsSelectLastOption() {
+    this.handicraftsSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  academicYearSelectLastOption() {
+    this.academicYearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async academicYearSelectOption(option) {
-    await this.academicYearSelect.sendKeys(option);
+  academicYearSelectOption(option) {
+    this.academicYearSelect.sendKeys(option);
   }
 
   getAcademicYearSelect() {
     return this.academicYearSelect;
   }
 
-  async getAcademicYearSelectedOption() {
+  getAcademicYearSelectedOption() {
     return this.academicYearSelect.element(by.css('option:checked')).getText();
   }
 
-  async branchSelectLastOption() {
-    await this.branchSelect
+  branchSelectLastOption() {
+    this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async branchSelectOption(option) {
-    await this.branchSelect.sendKeys(option);
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  async getBranchSelectedOption() {
+  getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  async studentSelectLastOption() {
-    await this.studentSelect
+  studentSelectLastOption() {
+    this.studentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async studentSelectOption(option) {
-    await this.studentSelect.sendKeys(option);
+  studentSelectOption(option) {
+    this.studentSelect.sendKeys(option);
   }
 
   getStudentSelect() {
     return this.studentSelect;
   }
 
-  async getStudentSelectedOption() {
+  getStudentSelectedOption() {
     return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

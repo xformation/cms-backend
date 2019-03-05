@@ -204,6 +204,24 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="spouseNameLabel" for="spouseName">
+                    Spouse Name
+                  </Label>
+                  <AvField id="teacher-spouseName" type="text" name="spouseName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="spouseMiddleNameLabel" for="spouseMiddleName">
+                    Spouse Middle Name
+                  </Label>
+                  <AvField id="teacher-spouseMiddleName" type="text" name="spouseMiddleName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="spouseLastNameLabel" for="spouseLastName">
+                    Spouse Last Name
+                  </Label>
+                  <AvField id="teacher-spouseLastName" type="text" name="spouseLastName" />
+                </AvGroup>
+                <AvGroup>
                   <Label id="motherNameLabel" for="motherName">
                     Mother Name
                   </Label>
@@ -470,12 +488,10 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   </Label>
                   <AvField
                     id="teacher-teacherContactNumber"
-                    type="number"
-                    className="form-control"
+                    type="text"
                     name="teacherContactNumber"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
@@ -483,16 +499,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   <Label id="alternateContactNumberLabel" for="alternateContactNumber">
                     Alternate Contact Number
                   </Label>
-                  <AvField
-                    id="teacher-alternateContactNumber"
-                    type="number"
-                    className="form-control"
-                    name="alternateContactNumber"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
+                  <AvField id="teacher-alternateContactNumber" type="text" name="alternateContactNumber" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="teacherEmailAddressLabel" for="teacherEmailAddress">
@@ -511,14 +518,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   <Label id="alternateEmailAddressLabel" for="alternateEmailAddress">
                     Alternate Email Address
                   </Label>
-                  <AvField
-                    id="teacher-alternateEmailAddress"
-                    type="text"
-                    name="alternateEmailAddress"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="teacher-alternateEmailAddress" type="text" name="alternateEmailAddress" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="relationWithStaffLabel">Relation With Staff</Label>
@@ -535,67 +535,58 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="nameLabel" for="name">
-                    Name
+                  <Label id="emergencyContactNameLabel" for="emergencyContactName">
+                    Emergency Contact Name
                   </Label>
                   <AvField
-                    id="teacher-name"
+                    id="teacher-emergencyContactName"
                     type="text"
-                    name="name"
+                    name="emergencyContactName"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="middleNameLabel" for="middleName">
-                    Middle Name
+                  <Label id="emergencyContactMiddleNameLabel" for="emergencyContactMiddleName">
+                    Emergency Contact Middle Name
+                  </Label>
+                  <AvField id="teacher-emergencyContactMiddleName" type="text" name="emergencyContactMiddleName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="emergencyContactLastNameLabel" for="emergencyContactLastName">
+                    Emergency Contact Last Name
                   </Label>
                   <AvField
-                    id="teacher-middleName"
+                    id="teacher-emergencyContactLastName"
                     type="text"
-                    name="middleName"
+                    name="emergencyContactLastName"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="lastNameLabel" for="lastName">
-                    Last Name
+                  <Label id="emergencyContactNoLabel" for="emergencyContactNo">
+                    Emergency Contact No
                   </Label>
                   <AvField
-                    id="teacher-lastName"
+                    id="teacher-emergencyContactNo"
                     type="text"
-                    name="lastName"
+                    name="emergencyContactNo"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="contactNoLabel" for="contactNo">
-                    Contact No
+                  <Label id="emergencyContactEmailAddressLabel" for="emergencyContactEmailAddress">
+                    Emergency Contact Email Address
                   </Label>
                   <AvField
-                    id="teacher-contactNo"
-                    type="number"
-                    className="form-control"
-                    name="contactNo"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="emailAddressLabel" for="emailAddress">
-                    Email Address
-                  </Label>
-                  <AvField
-                    id="teacher-emailAddress"
+                    id="teacher-emergencyContactEmailAddress"
                     type="text"
-                    name="emailAddress"
+                    name="emergencyContactEmailAddress"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -607,12 +598,10 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   </Label>
                   <AvField
                     id="teacher-uploadPhoto"
-                    type="number"
-                    className="form-control"
+                    type="text"
                     name="uploadPhoto"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
@@ -620,16 +609,7 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                   <Label id="employeeIdLabel" for="employeeId">
                     Employee Id
                   </Label>
-                  <AvField
-                    id="teacher-employeeId"
-                    type="number"
-                    className="form-control"
-                    name="employeeId"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
+                  <AvField id="teacher-employeeId" type="number" className="form-control" name="employeeId" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="designationLabel" for="designation">

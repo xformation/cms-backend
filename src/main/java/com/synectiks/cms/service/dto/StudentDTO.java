@@ -9,16 +9,6 @@ import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 /**
@@ -104,72 +94,38 @@ public class StudentDTO implements Serializable {
     private Long pincode;
 
     @NotNull
-    private Long studentContactNumber;
+    private String studentContactNumber;
 
-    @NotNull
-    private Long alternateContactNumber;
+    private String alternateContactNumber;
 
     @NotNull
     private String studentEmailAddress;
 
-    @NotNull
     private String alternateEmailAddress;
 
     @NotNull
     private RelationWithStudentEnum relationWithStudent;
 
     @NotNull
-    private String name;
+    private String emergencyContactName;
 
     @NotNull
-    private String middleName;
+    private String emergencyContactMiddleName;
 
     @NotNull
-    private String lastName;
+    private String emergencyContactLastName;
 
     @NotNull
-    private Long contactNo;
+    private String emergencyContactNo;
 
     @NotNull
-    private String emailAddress;
+    private String emergencyContactEmailAddress;
 
     @NotNull
-    private Status transport;
+    private String uploadPhoto;
 
-    @NotNull
-    private Status mess;
-
-    @NotNull
-    private Status gym;
-
-    @NotNull
-    private Status culturalClass;
-
-    @NotNull
-    private Status library;
-
-    @NotNull
-    private Status sports;
-
-    @NotNull
-    private Status swimming;
-
-    @NotNull
-    private Status extraClass;
-
-    @NotNull
-    private Status handicrafts;
-
-    @NotNull
-    private Status add;
-
-    @NotNull
-    private Long uploadPhoto;
-
-    @NotNull
     private Long admissionNo;
 
-    @NotNull
     private String rollNo;
 
     @NotNull
@@ -391,19 +347,19 @@ public class StudentDTO implements Serializable {
         this.pincode = pincode;
     }
 
-    public Long getStudentContactNumber() {
+    public String getStudentContactNumber() {
         return studentContactNumber;
     }
 
-    public void setStudentContactNumber(Long studentContactNumber) {
+    public void setStudentContactNumber(String studentContactNumber) {
         this.studentContactNumber = studentContactNumber;
     }
 
-    public Long getAlternateContactNumber() {
+    public String getAlternateContactNumber() {
         return alternateContactNumber;
     }
 
-    public void setAlternateContactNumber(Long alternateContactNumber) {
+    public void setAlternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
     }
 
@@ -431,131 +387,51 @@ public class StudentDTO implements Serializable {
         this.relationWithStudent = relationWithStudent;
     }
 
-    public String getName() {
-        return name;
+    public String getEmergencyContactName() {
+        return emergencyContactName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getEmergencyContactMiddleName() {
+        return emergencyContactMiddleName;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setEmergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getEmergencyContactLastName() {
+        return emergencyContactLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
     }
 
-    public Long getContactNo() {
-        return contactNo;
+    public String getEmergencyContactNo() {
+        return emergencyContactNo;
     }
 
-    public void setContactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public void setEmergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmergencyContactEmailAddress() {
+        return emergencyContactEmailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
     }
 
-    public Status getTransport() {
-        return transport;
-    }
-
-    public void setTransport(Status transport) {
-        this.transport = transport;
-    }
-
-    public Status getMess() {
-        return mess;
-    }
-
-    public void setMess(Status mess) {
-        this.mess = mess;
-    }
-
-    public Status getGym() {
-        return gym;
-    }
-
-    public void setGym(Status gym) {
-        this.gym = gym;
-    }
-
-    public Status getCulturalClass() {
-        return culturalClass;
-    }
-
-    public void setCulturalClass(Status culturalClass) {
-        this.culturalClass = culturalClass;
-    }
-
-    public Status getLibrary() {
-        return library;
-    }
-
-    public void setLibrary(Status library) {
-        this.library = library;
-    }
-
-    public Status getSports() {
-        return sports;
-    }
-
-    public void setSports(Status sports) {
-        this.sports = sports;
-    }
-
-    public Status getSwimming() {
-        return swimming;
-    }
-
-    public void setSwimming(Status swimming) {
-        this.swimming = swimming;
-    }
-
-    public Status getExtraClass() {
-        return extraClass;
-    }
-
-    public void setExtraClass(Status extraClass) {
-        this.extraClass = extraClass;
-    }
-
-    public Status getHandicrafts() {
-        return handicrafts;
-    }
-
-    public void setHandicrafts(Status handicrafts) {
-        this.handicrafts = handicrafts;
-    }
-
-    public Status getAdd() {
-        return add;
-    }
-
-    public void setAdd(Status add) {
-        this.add = add;
-    }
-
-    public Long getUploadPhoto() {
+    public String getUploadPhoto() {
         return uploadPhoto;
     }
 
-    public void setUploadPhoto(Long uploadPhoto) {
+    public void setUploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
     }
 
@@ -665,27 +541,17 @@ public class StudentDTO implements Serializable {
             ", state='" + getState() + "'" +
             ", country='" + getCountry() + "'" +
             ", pincode=" + getPincode() +
-            ", studentContactNumber=" + getStudentContactNumber() +
-            ", alternateContactNumber=" + getAlternateContactNumber() +
+            ", studentContactNumber='" + getStudentContactNumber() + "'" +
+            ", alternateContactNumber='" + getAlternateContactNumber() + "'" +
             ", studentEmailAddress='" + getStudentEmailAddress() + "'" +
             ", alternateEmailAddress='" + getAlternateEmailAddress() + "'" +
             ", relationWithStudent='" + getRelationWithStudent() + "'" +
-            ", name='" + getName() + "'" +
-            ", middleName='" + getMiddleName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", contactNo=" + getContactNo() +
-            ", emailAddress='" + getEmailAddress() + "'" +
-            ", transport='" + getTransport() + "'" +
-            ", mess='" + getMess() + "'" +
-            ", gym='" + getGym() + "'" +
-            ", culturalClass='" + getCulturalClass() + "'" +
-            ", library='" + getLibrary() + "'" +
-            ", sports='" + getSports() + "'" +
-            ", swimming='" + getSwimming() + "'" +
-            ", extraClass='" + getExtraClass() + "'" +
-            ", handicrafts='" + getHandicrafts() + "'" +
-            ", add='" + getAdd() + "'" +
-            ", uploadPhoto=" + getUploadPhoto() +
+            ", emergencyContactName='" + getEmergencyContactName() + "'" +
+            ", emergencyContactMiddleName='" + getEmergencyContactMiddleName() + "'" +
+            ", emergencyContactLastName='" + getEmergencyContactLastName() + "'" +
+            ", emergencyContactNo='" + getEmergencyContactNo() + "'" +
+            ", emergencyContactEmailAddress='" + getEmergencyContactEmailAddress() + "'" +
+            ", uploadPhoto='" + getUploadPhoto() + "'" +
             ", admissionNo=" + getAdmissionNo() +
             ", rollNo='" + getRollNo() + "'" +
             ", studentType='" + getStudentType() + "'" +

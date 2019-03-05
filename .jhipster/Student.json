@@ -182,17 +182,14 @@
         },
         {
             "fieldName": "studentContactNumber",
-            "fieldType": "Long",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "alternateContactNumber",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
             "fieldName": "studentEmailAddress",
@@ -203,10 +200,7 @@
         },
         {
             "fieldName": "alternateEmailAddress",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
             "fieldName": "relationWithStudent",
@@ -217,140 +211,54 @@
             ]
         },
         {
-            "fieldName": "name",
+            "fieldName": "emergencyContactName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "middleName",
+            "fieldName": "emergencyContactMiddleName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "lastName",
+            "fieldName": "emergencyContactLastName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "contactNo",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "emailAddress",
+            "fieldName": "emergencyContactNo",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "transport",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "mess",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "gym",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "culturalClass",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "library",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "sports",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "swimming",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "extraClass",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "handicrafts",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "add",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldName": "emergencyContactEmailAddress",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "uploadPhoto",
-            "fieldType": "Long",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "admissionNo",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "Long"
         },
         {
             "fieldName": "rollNo",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
             "fieldName": "studentType",
@@ -391,7 +299,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190205082417",
+    "changelogDate": "20190305093209",
     "entityTableName": "student",
     "dto": "mapstruct",
     "pagination": "no",

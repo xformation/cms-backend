@@ -84,7 +84,7 @@ enum Frequency {
 
 enum ModeOfPayment{
 CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
-
+}
 
 entity Student{
 studentName String required
@@ -112,29 +112,19 @@ town String required
 state String required
 country String required
 pincode Long required
-studentContactNumber Long required
-alternateContactNumber Long required
+studentContactNumber String required
+alternateContactNumber String
 studentEmailAddress String required
-alternateEmailAddress String required
+alternateEmailAddress String
 relationWithStudent RelationWithStudentEnum required
-name String required
-middleName String required
-lastName String required
-contactNo Long required
-emailAddress String required
-transport Status required
-mess Status required
-gym Status required
-culturalClass Status required
-library Status required
-sports Status required
-swimming Status required
-extraClass Status required
-handicrafts Status required
-add Status required
-uploadPhoto Long required
-admissionNo Long required
-rollNo String required
+emergencyContactName String required
+emergencyContactMiddleName String required
+emergencyContactLastName String required
+emergencyContactNo String required
+emergencyContactEmailAddress String required
+uploadPhoto String required
+admissionNo Long
+rollNo String
 studentType StudentTypeEnum required
 }
 
@@ -150,6 +140,9 @@ teacherLastName String required
 fatherName String required
 fatherMiddleName String required
 fatherLastName String required
+spouseName String
+spouseMiddleName String
+spouseLastName String
 motherName String required
 motherMiddleName String required
 motherLastName String required
@@ -169,18 +162,18 @@ town String required
 state String required
 country String required
 pincode Long required
-teacherContactNumber Long required
-alternateContactNumber Long required
+teacherContactNumber String required
+alternateContactNumber String
 teacherEmailAddress String required
-alternateEmailAddress String required
+alternateEmailAddress String
 relationWithStaff RelationWithStudentEnum required
-name String required
-middleName String required
-lastName String required
-contactNo Long required
-emailAddress String required
-uploadPhoto Long required
-employeeId Long required
+emergencyContactName String required
+emergencyContactMiddleName String
+emergencyContactLastName String required
+emergencyContactNo String required
+emergencyContactEmailAddress String required
+uploadPhoto String required
+employeeId Long
 designation String required
 staffType StaffType required
 }
@@ -310,7 +303,15 @@ entity City{
 }
 
 entity Facility {
-facilityName String
+transport Status
+mess Status
+gym Status
+culturalClass Status
+library Status
+sports Status
+swimming Status
+extraClass Status
+handicrafts Status
 }
 
 entity FeeCategory {
@@ -426,7 +427,7 @@ LateFee{college} to College,
 LateFee{branch} to Branch,
 Facility{academicYear} to AcademicYear,
 Facility{branch} to Branch,
-Facility{student} to Student
+Facility{student} to Student,
 Invoice{feeCategory} to FeeCategory,
 Invoice{feeDetails} to FeeDetails,
 Invoice{dueDate} to DueDate,

@@ -151,65 +151,25 @@ export class StudentDetail extends React.Component<IStudentDetailProps> {
             </dt>
             <dd>{studentEntity.relationWithStudent}</dd>
             <dt>
-              <span id="name">Name</span>
+              <span id="emergencyContactName">Emergency Contact Name</span>
             </dt>
-            <dd>{studentEntity.name}</dd>
+            <dd>{studentEntity.emergencyContactName}</dd>
             <dt>
-              <span id="middleName">Middle Name</span>
+              <span id="emergencyContactMiddleName">Emergency Contact Middle Name</span>
             </dt>
-            <dd>{studentEntity.middleName}</dd>
+            <dd>{studentEntity.emergencyContactMiddleName}</dd>
             <dt>
-              <span id="lastName">Last Name</span>
+              <span id="emergencyContactLastName">Emergency Contact Last Name</span>
             </dt>
-            <dd>{studentEntity.lastName}</dd>
+            <dd>{studentEntity.emergencyContactLastName}</dd>
             <dt>
-              <span id="contactNo">Contact No</span>
+              <span id="emergencyContactNo">Emergency Contact No</span>
             </dt>
-            <dd>{studentEntity.contactNo}</dd>
+            <dd>{studentEntity.emergencyContactNo}</dd>
             <dt>
-              <span id="emailAddress">Email Address</span>
+              <span id="emergencyContactEmailAddress">Emergency Contact Email Address</span>
             </dt>
-            <dd>{studentEntity.emailAddress}</dd>
-            <dt>
-              <span id="transport">Transport</span>
-            </dt>
-            <dd>{studentEntity.transport}</dd>
-            <dt>
-              <span id="mess">Mess</span>
-            </dt>
-            <dd>{studentEntity.mess}</dd>
-            <dt>
-              <span id="gym">Gym</span>
-            </dt>
-            <dd>{studentEntity.gym}</dd>
-            <dt>
-              <span id="culturalClass">Cultural Class</span>
-            </dt>
-            <dd>{studentEntity.culturalClass}</dd>
-            <dt>
-              <span id="library">Library</span>
-            </dt>
-            <dd>{studentEntity.library}</dd>
-            <dt>
-              <span id="sports">Sports</span>
-            </dt>
-            <dd>{studentEntity.sports}</dd>
-            <dt>
-              <span id="swimming">Swimming</span>
-            </dt>
-            <dd>{studentEntity.swimming}</dd>
-            <dt>
-              <span id="extraClass">Extra Class</span>
-            </dt>
-            <dd>{studentEntity.extraClass}</dd>
-            <dt>
-              <span id="handicrafts">Handicrafts</span>
-            </dt>
-            <dd>{studentEntity.handicrafts}</dd>
-            <dt>
-              <span id="add">Add</span>
-            </dt>
-            <dd>{studentEntity.add}</dd>
+            <dd>{studentEntity.emergencyContactEmailAddress}</dd>
             <dt>
               <span id="uploadPhoto">Upload Photo</span>
             </dt>

@@ -514,12 +514,10 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-studentContactNumber"
-                    type="number"
-                    className="form-control"
+                    type="text"
                     name="studentContactNumber"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
@@ -527,16 +525,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   <Label id="alternateContactNumberLabel" for="alternateContactNumber">
                     Alternate Contact Number
                   </Label>
-                  <AvField
-                    id="student-alternateContactNumber"
-                    type="number"
-                    className="form-control"
-                    name="alternateContactNumber"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
+                  <AvField id="student-alternateContactNumber" type="text" name="alternateContactNumber" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="studentEmailAddressLabel" for="studentEmailAddress">
@@ -555,14 +544,7 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   <Label id="alternateEmailAddressLabel" for="alternateEmailAddress">
                     Alternate Email Address
                   </Label>
-                  <AvField
-                    id="student-alternateEmailAddress"
-                    type="text"
-                    name="alternateEmailAddress"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="student-alternateEmailAddress" type="text" name="alternateEmailAddress" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="relationWithStudentLabel">Relation With Student</Label>
@@ -579,201 +561,69 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="nameLabel" for="name">
-                    Name
+                  <Label id="emergencyContactNameLabel" for="emergencyContactName">
+                    Emergency Contact Name
                   </Label>
                   <AvField
-                    id="student-name"
+                    id="student-emergencyContactName"
                     type="text"
-                    name="name"
+                    name="emergencyContactName"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="middleNameLabel" for="middleName">
-                    Middle Name
+                  <Label id="emergencyContactMiddleNameLabel" for="emergencyContactMiddleName">
+                    Emergency Contact Middle Name
                   </Label>
                   <AvField
-                    id="student-middleName"
+                    id="student-emergencyContactMiddleName"
                     type="text"
-                    name="middleName"
+                    name="emergencyContactMiddleName"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="lastNameLabel" for="lastName">
-                    Last Name
+                  <Label id="emergencyContactLastNameLabel" for="emergencyContactLastName">
+                    Emergency Contact Last Name
                   </Label>
                   <AvField
-                    id="student-lastName"
+                    id="student-emergencyContactLastName"
                     type="text"
-                    name="lastName"
+                    name="emergencyContactLastName"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="contactNoLabel" for="contactNo">
-                    Contact No
+                  <Label id="emergencyContactNoLabel" for="emergencyContactNo">
+                    Emergency Contact No
                   </Label>
                   <AvField
-                    id="student-contactNo"
-                    type="number"
-                    className="form-control"
-                    name="contactNo"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="emailAddressLabel" for="emailAddress">
-                    Email Address
-                  </Label>
-                  <AvField
-                    id="student-emailAddress"
+                    id="student-emergencyContactNo"
                     type="text"
-                    name="emailAddress"
+                    name="emergencyContactNo"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="transportLabel">Transport</Label>
-                  <AvInput
-                    id="student-transport"
-                    type="select"
-                    className="form-control"
-                    name="transport"
-                    value={(!isNew && studentEntity.transport) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="messLabel">Mess</Label>
-                  <AvInput
-                    id="student-mess"
-                    type="select"
-                    className="form-control"
-                    name="mess"
-                    value={(!isNew && studentEntity.mess) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="gymLabel">Gym</Label>
-                  <AvInput
-                    id="student-gym"
-                    type="select"
-                    className="form-control"
-                    name="gym"
-                    value={(!isNew && studentEntity.gym) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="culturalClassLabel">Cultural Class</Label>
-                  <AvInput
-                    id="student-culturalClass"
-                    type="select"
-                    className="form-control"
-                    name="culturalClass"
-                    value={(!isNew && studentEntity.culturalClass) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="libraryLabel">Library</Label>
-                  <AvInput
-                    id="student-library"
-                    type="select"
-                    className="form-control"
-                    name="library"
-                    value={(!isNew && studentEntity.library) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="sportsLabel">Sports</Label>
-                  <AvInput
-                    id="student-sports"
-                    type="select"
-                    className="form-control"
-                    name="sports"
-                    value={(!isNew && studentEntity.sports) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="swimmingLabel">Swimming</Label>
-                  <AvInput
-                    id="student-swimming"
-                    type="select"
-                    className="form-control"
-                    name="swimming"
-                    value={(!isNew && studentEntity.swimming) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="extraClassLabel">Extra Class</Label>
-                  <AvInput
-                    id="student-extraClass"
-                    type="select"
-                    className="form-control"
-                    name="extraClass"
-                    value={(!isNew && studentEntity.extraClass) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="handicraftsLabel">Handicrafts</Label>
-                  <AvInput
-                    id="student-handicrafts"
-                    type="select"
-                    className="form-control"
-                    name="handicrafts"
-                    value={(!isNew && studentEntity.handicrafts) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="addLabel">Add</Label>
-                  <AvInput
-                    id="student-add"
-                    type="select"
-                    className="form-control"
-                    name="add"
-                    value={(!isNew && studentEntity.add) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
+                  <Label id="emergencyContactEmailAddressLabel" for="emergencyContactEmailAddress">
+                    Emergency Contact Email Address
+                  </Label>
+                  <AvField
+                    id="student-emergencyContactEmailAddress"
+                    type="text"
+                    name="emergencyContactEmailAddress"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="uploadPhotoLabel" for="uploadPhoto">
@@ -781,12 +631,10 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   </Label>
                   <AvField
                     id="student-uploadPhoto"
-                    type="number"
-                    className="form-control"
+                    type="text"
                     name="uploadPhoto"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
@@ -794,29 +642,13 @@ export class StudentUpdate extends React.Component<IStudentUpdateProps, IStudent
                   <Label id="admissionNoLabel" for="admissionNo">
                     Admission No
                   </Label>
-                  <AvField
-                    id="student-admissionNo"
-                    type="number"
-                    className="form-control"
-                    name="admissionNo"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
+                  <AvField id="student-admissionNo" type="number" className="form-control" name="admissionNo" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="rollNoLabel" for="rollNo">
                     Roll No
                   </Label>
-                  <AvField
-                    id="student-rollNo"
-                    type="text"
-                    name="rollNo"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="student-rollNo" type="text" name="rollNo" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="studentTypeLabel">Student Type</Label>

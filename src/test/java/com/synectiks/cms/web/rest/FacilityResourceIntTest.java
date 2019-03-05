@@ -37,6 +37,15 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
 /**
  * Test class for the FacilityResource REST controller.
  *
@@ -46,14 +55,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CmsApp.class)
 public class FacilityResourceIntTest {
 
-    private static final String DEFAULT_FACILITY_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_FACILITY_NAME = "BBBBBBBBBB";
+    private static final Status DEFAULT_TRANSPORT = Status.ACTIVE;
+    private static final Status UPDATED_TRANSPORT = Status.DEACTIVE;
+
+    private static final Status DEFAULT_MESS = Status.ACTIVE;
+    private static final Status UPDATED_MESS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_GYM = Status.ACTIVE;
+    private static final Status UPDATED_GYM = Status.DEACTIVE;
+
+    private static final Status DEFAULT_CULTURAL_CLASS = Status.ACTIVE;
+    private static final Status UPDATED_CULTURAL_CLASS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_LIBRARY = Status.ACTIVE;
+    private static final Status UPDATED_LIBRARY = Status.DEACTIVE;
+
+    private static final Status DEFAULT_SPORTS = Status.ACTIVE;
+    private static final Status UPDATED_SPORTS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_SWIMMING = Status.ACTIVE;
+    private static final Status UPDATED_SWIMMING = Status.DEACTIVE;
+
+    private static final Status DEFAULT_EXTRA_CLASS = Status.ACTIVE;
+    private static final Status UPDATED_EXTRA_CLASS = Status.DEACTIVE;
+
+    private static final Status DEFAULT_HANDICRAFTS = Status.ACTIVE;
+    private static final Status UPDATED_HANDICRAFTS = Status.DEACTIVE;
 
     @Autowired
     private FacilityRepository facilityRepository;
 
+
     @Autowired
     private FacilityMapper facilityMapper;
+    
 
     @Autowired
     private FacilityService facilityService;
@@ -101,7 +136,15 @@ public class FacilityResourceIntTest {
      */
     public static Facility createEntity(EntityManager em) {
         Facility facility = new Facility()
-            .facilityName(DEFAULT_FACILITY_NAME);
+            .transport(DEFAULT_TRANSPORT)
+            .mess(DEFAULT_MESS)
+            .gym(DEFAULT_GYM)
+            .culturalClass(DEFAULT_CULTURAL_CLASS)
+            .library(DEFAULT_LIBRARY)
+            .sports(DEFAULT_SPORTS)
+            .swimming(DEFAULT_SWIMMING)
+            .extraClass(DEFAULT_EXTRA_CLASS)
+            .handicrafts(DEFAULT_HANDICRAFTS);
         return facility;
     }
 
@@ -126,7 +169,15 @@ public class FacilityResourceIntTest {
         List<Facility> facilityList = facilityRepository.findAll();
         assertThat(facilityList).hasSize(databaseSizeBeforeCreate + 1);
         Facility testFacility = facilityList.get(facilityList.size() - 1);
-        assertThat(testFacility.getFacilityName()).isEqualTo(DEFAULT_FACILITY_NAME);
+        assertThat(testFacility.getTransport()).isEqualTo(DEFAULT_TRANSPORT);
+        assertThat(testFacility.getMess()).isEqualTo(DEFAULT_MESS);
+        assertThat(testFacility.getGym()).isEqualTo(DEFAULT_GYM);
+        assertThat(testFacility.getCulturalClass()).isEqualTo(DEFAULT_CULTURAL_CLASS);
+        assertThat(testFacility.getLibrary()).isEqualTo(DEFAULT_LIBRARY);
+        assertThat(testFacility.getSports()).isEqualTo(DEFAULT_SPORTS);
+        assertThat(testFacility.getSwimming()).isEqualTo(DEFAULT_SWIMMING);
+        assertThat(testFacility.getExtraClass()).isEqualTo(DEFAULT_EXTRA_CLASS);
+        assertThat(testFacility.getHandicrafts()).isEqualTo(DEFAULT_HANDICRAFTS);
 
         // Validate the Facility in Elasticsearch
         verify(mockFacilitySearchRepository, times(1)).save(testFacility);
@@ -166,9 +217,18 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(facility.getId().intValue())))
-            .andExpect(jsonPath("$.[*].facilityName").value(hasItem(DEFAULT_FACILITY_NAME.toString())));
+            .andExpect(jsonPath("$.[*].transport").value(hasItem(DEFAULT_TRANSPORT.toString())))
+            .andExpect(jsonPath("$.[*].mess").value(hasItem(DEFAULT_MESS.toString())))
+            .andExpect(jsonPath("$.[*].gym").value(hasItem(DEFAULT_GYM.toString())))
+            .andExpect(jsonPath("$.[*].culturalClass").value(hasItem(DEFAULT_CULTURAL_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].library").value(hasItem(DEFAULT_LIBRARY.toString())))
+            .andExpect(jsonPath("$.[*].sports").value(hasItem(DEFAULT_SPORTS.toString())))
+            .andExpect(jsonPath("$.[*].swimming").value(hasItem(DEFAULT_SWIMMING.toString())))
+            .andExpect(jsonPath("$.[*].extraClass").value(hasItem(DEFAULT_EXTRA_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].handicrafts").value(hasItem(DEFAULT_HANDICRAFTS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getFacility() throws Exception {
@@ -180,9 +240,16 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(facility.getId().intValue()))
-            .andExpect(jsonPath("$.facilityName").value(DEFAULT_FACILITY_NAME.toString()));
+            .andExpect(jsonPath("$.transport").value(DEFAULT_TRANSPORT.toString()))
+            .andExpect(jsonPath("$.mess").value(DEFAULT_MESS.toString()))
+            .andExpect(jsonPath("$.gym").value(DEFAULT_GYM.toString()))
+            .andExpect(jsonPath("$.culturalClass").value(DEFAULT_CULTURAL_CLASS.toString()))
+            .andExpect(jsonPath("$.library").value(DEFAULT_LIBRARY.toString()))
+            .andExpect(jsonPath("$.sports").value(DEFAULT_SPORTS.toString()))
+            .andExpect(jsonPath("$.swimming").value(DEFAULT_SWIMMING.toString()))
+            .andExpect(jsonPath("$.extraClass").value(DEFAULT_EXTRA_CLASS.toString()))
+            .andExpect(jsonPath("$.handicrafts").value(DEFAULT_HANDICRAFTS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingFacility() throws Exception {
@@ -204,7 +271,15 @@ public class FacilityResourceIntTest {
         // Disconnect from session so that the updates on updatedFacility are not directly saved in db
         em.detach(updatedFacility);
         updatedFacility
-            .facilityName(UPDATED_FACILITY_NAME);
+            .transport(UPDATED_TRANSPORT)
+            .mess(UPDATED_MESS)
+            .gym(UPDATED_GYM)
+            .culturalClass(UPDATED_CULTURAL_CLASS)
+            .library(UPDATED_LIBRARY)
+            .sports(UPDATED_SPORTS)
+            .swimming(UPDATED_SWIMMING)
+            .extraClass(UPDATED_EXTRA_CLASS)
+            .handicrafts(UPDATED_HANDICRAFTS);
         FacilityDTO facilityDTO = facilityMapper.toDto(updatedFacility);
 
         restFacilityMockMvc.perform(put("/api/facilities")
@@ -216,7 +291,15 @@ public class FacilityResourceIntTest {
         List<Facility> facilityList = facilityRepository.findAll();
         assertThat(facilityList).hasSize(databaseSizeBeforeUpdate);
         Facility testFacility = facilityList.get(facilityList.size() - 1);
-        assertThat(testFacility.getFacilityName()).isEqualTo(UPDATED_FACILITY_NAME);
+        assertThat(testFacility.getTransport()).isEqualTo(UPDATED_TRANSPORT);
+        assertThat(testFacility.getMess()).isEqualTo(UPDATED_MESS);
+        assertThat(testFacility.getGym()).isEqualTo(UPDATED_GYM);
+        assertThat(testFacility.getCulturalClass()).isEqualTo(UPDATED_CULTURAL_CLASS);
+        assertThat(testFacility.getLibrary()).isEqualTo(UPDATED_LIBRARY);
+        assertThat(testFacility.getSports()).isEqualTo(UPDATED_SPORTS);
+        assertThat(testFacility.getSwimming()).isEqualTo(UPDATED_SWIMMING);
+        assertThat(testFacility.getExtraClass()).isEqualTo(UPDATED_EXTRA_CLASS);
+        assertThat(testFacility.getHandicrafts()).isEqualTo(UPDATED_HANDICRAFTS);
 
         // Validate the Facility in Elasticsearch
         verify(mockFacilitySearchRepository, times(1)).save(testFacility);
@@ -230,7 +313,7 @@ public class FacilityResourceIntTest {
         // Create the Facility
         FacilityDTO facilityDTO = facilityMapper.toDto(facility);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restFacilityMockMvc.perform(put("/api/facilities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
@@ -277,7 +360,15 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(facility.getId().intValue())))
-            .andExpect(jsonPath("$.[*].facilityName").value(hasItem(DEFAULT_FACILITY_NAME)));
+            .andExpect(jsonPath("$.[*].transport").value(hasItem(DEFAULT_TRANSPORT.toString())))
+            .andExpect(jsonPath("$.[*].mess").value(hasItem(DEFAULT_MESS.toString())))
+            .andExpect(jsonPath("$.[*].gym").value(hasItem(DEFAULT_GYM.toString())))
+            .andExpect(jsonPath("$.[*].culturalClass").value(hasItem(DEFAULT_CULTURAL_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].library").value(hasItem(DEFAULT_LIBRARY.toString())))
+            .andExpect(jsonPath("$.[*].sports").value(hasItem(DEFAULT_SPORTS.toString())))
+            .andExpect(jsonPath("$.[*].swimming").value(hasItem(DEFAULT_SWIMMING.toString())))
+            .andExpect(jsonPath("$.[*].extraClass").value(hasItem(DEFAULT_EXTRA_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].handicrafts").value(hasItem(DEFAULT_HANDICRAFTS.toString())));
     }
 
     @Test

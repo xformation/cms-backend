@@ -10,6 +10,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.synectiks.cms.domain.enumeration.Status;
+
 /**
  * A Facility.
  */
@@ -26,8 +28,41 @@ public class Facility implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "facility_name")
-    private String facilityName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transport")
+    private Status transport;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "mess")
+    private Status mess;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gym")
+    private Status gym;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "cultural_class")
+    private Status culturalClass;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "jhi_library")
+    private Status library;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sports")
+    private Status sports;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "swimming")
+    private Status swimming;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "extra_class")
+    private Status extraClass;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "handicrafts")
+    private Status handicrafts;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -50,17 +85,121 @@ public class Facility implements Serializable {
         this.id = id;
     }
 
-    public String getFacilityName() {
-        return facilityName;
+    public Status getTransport() {
+        return transport;
     }
 
-    public Facility facilityName(String facilityName) {
-        this.facilityName = facilityName;
+    public Facility transport(Status transport) {
+        this.transport = transport;
         return this;
     }
 
-    public void setFacilityName(String facilityName) {
-        this.facilityName = facilityName;
+    public void setTransport(Status transport) {
+        this.transport = transport;
+    }
+
+    public Status getMess() {
+        return mess;
+    }
+
+    public Facility mess(Status mess) {
+        this.mess = mess;
+        return this;
+    }
+
+    public void setMess(Status mess) {
+        this.mess = mess;
+    }
+
+    public Status getGym() {
+        return gym;
+    }
+
+    public Facility gym(Status gym) {
+        this.gym = gym;
+        return this;
+    }
+
+    public void setGym(Status gym) {
+        this.gym = gym;
+    }
+
+    public Status getCulturalClass() {
+        return culturalClass;
+    }
+
+    public Facility culturalClass(Status culturalClass) {
+        this.culturalClass = culturalClass;
+        return this;
+    }
+
+    public void setCulturalClass(Status culturalClass) {
+        this.culturalClass = culturalClass;
+    }
+
+    public Status getLibrary() {
+        return library;
+    }
+
+    public Facility library(Status library) {
+        this.library = library;
+        return this;
+    }
+
+    public void setLibrary(Status library) {
+        this.library = library;
+    }
+
+    public Status getSports() {
+        return sports;
+    }
+
+    public Facility sports(Status sports) {
+        this.sports = sports;
+        return this;
+    }
+
+    public void setSports(Status sports) {
+        this.sports = sports;
+    }
+
+    public Status getSwimming() {
+        return swimming;
+    }
+
+    public Facility swimming(Status swimming) {
+        this.swimming = swimming;
+        return this;
+    }
+
+    public void setSwimming(Status swimming) {
+        this.swimming = swimming;
+    }
+
+    public Status getExtraClass() {
+        return extraClass;
+    }
+
+    public Facility extraClass(Status extraClass) {
+        this.extraClass = extraClass;
+        return this;
+    }
+
+    public void setExtraClass(Status extraClass) {
+        this.extraClass = extraClass;
+    }
+
+    public Status getHandicrafts() {
+        return handicrafts;
+    }
+
+    public Facility handicrafts(Status handicrafts) {
+        this.handicrafts = handicrafts;
+        return this;
+    }
+
+    public void setHandicrafts(Status handicrafts) {
+        this.handicrafts = handicrafts;
     }
 
     public AcademicYear getAcademicYear() {
@@ -127,7 +266,15 @@ public class Facility implements Serializable {
     public String toString() {
         return "Facility{" +
             "id=" + getId() +
-            ", facilityName='" + getFacilityName() + "'" +
+            ", transport='" + getTransport() + "'" +
+            ", mess='" + getMess() + "'" +
+            ", gym='" + getGym() + "'" +
+            ", culturalClass='" + getCulturalClass() + "'" +
+            ", library='" + getLibrary() + "'" +
+            ", sports='" + getSports() + "'" +
+            ", swimming='" + getSwimming() + "'" +
+            ", extraClass='" + getExtraClass() + "'" +
+            ", handicrafts='" + getHandicrafts() + "'" +
             "}";
     }
 }

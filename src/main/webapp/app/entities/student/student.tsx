@@ -105,21 +105,11 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                 <th>Student Email Address</th>
                 <th>Alternate Email Address</th>
                 <th>Relation With Student</th>
-                <th>Name</th>
-                <th>Middle Name</th>
-                <th>Last Name</th>
-                <th>Contact No</th>
-                <th>Email Address</th>
-                <th>Transport</th>
-                <th>Mess</th>
-                <th>Gym</th>
-                <th>Cultural Class</th>
-                <th>Library</th>
-                <th>Sports</th>
-                <th>Swimming</th>
-                <th>Extra Class</th>
-                <th>Handicrafts</th>
-                <th>Add</th>
+                <th>Emergency Contact Name</th>
+                <th>Emergency Contact Middle Name</th>
+                <th>Emergency Contact Last Name</th>
+                <th>Emergency Contact No</th>
+                <th>Emergency Contact Email Address</th>
                 <th>Upload Photo</th>
                 <th>Admission No</th>
                 <th>Roll No</th>
@@ -171,21 +161,11 @@ export class Student extends React.Component<IStudentProps, IStudentState> {
                   <td>{student.studentEmailAddress}</td>
                   <td>{student.alternateEmailAddress}</td>
                   <td>{student.relationWithStudent}</td>
-                  <td>{student.name}</td>
-                  <td>{student.middleName}</td>
-                  <td>{student.lastName}</td>
-                  <td>{student.contactNo}</td>
-                  <td>{student.emailAddress}</td>
-                  <td>{student.transport}</td>
-                  <td>{student.mess}</td>
-                  <td>{student.gym}</td>
-                  <td>{student.culturalClass}</td>
-                  <td>{student.library}</td>
-                  <td>{student.sports}</td>
-                  <td>{student.swimming}</td>
-                  <td>{student.extraClass}</td>
-                  <td>{student.handicrafts}</td>
-                  <td>{student.add}</td>
+                  <td>{student.emergencyContactName}</td>
+                  <td>{student.emergencyContactMiddleName}</td>
+                  <td>{student.emergencyContactLastName}</td>
+                  <td>{student.emergencyContactNo}</td>
+                  <td>{student.emergencyContactEmailAddress}</td>
                   <td>{student.uploadPhoto}</td>
                   <td>{student.admissionNo}</td>
                   <td>{student.rollNo}</td>

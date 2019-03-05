@@ -12,7 +12,7 @@ import { IFacility } from 'app/shared/model/facility.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IFacilityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IFacilityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class FacilityDetail extends React.Component<IFacilityDetailProps> {
   componentDidMount() {
@@ -29,9 +29,41 @@ export class FacilityDetail extends React.Component<IFacilityDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="facilityName">Facility Name</span>
+              <span id="transport">Transport</span>
             </dt>
-            <dd>{facilityEntity.facilityName}</dd>
+            <dd>{facilityEntity.transport}</dd>
+            <dt>
+              <span id="mess">Mess</span>
+            </dt>
+            <dd>{facilityEntity.mess}</dd>
+            <dt>
+              <span id="gym">Gym</span>
+            </dt>
+            <dd>{facilityEntity.gym}</dd>
+            <dt>
+              <span id="culturalClass">Cultural Class</span>
+            </dt>
+            <dd>{facilityEntity.culturalClass}</dd>
+            <dt>
+              <span id="library">Library</span>
+            </dt>
+            <dd>{facilityEntity.library}</dd>
+            <dt>
+              <span id="sports">Sports</span>
+            </dt>
+            <dd>{facilityEntity.sports}</dd>
+            <dt>
+              <span id="swimming">Swimming</span>
+            </dt>
+            <dd>{facilityEntity.swimming}</dd>
+            <dt>
+              <span id="extraClass">Extra Class</span>
+            </dt>
+            <dd>{facilityEntity.extraClass}</dd>
+            <dt>
+              <span id="handicrafts">Handicrafts</span>
+            </dt>
+            <dd>{facilityEntity.handicrafts}</dd>
             <dt>Academic Year</dt>
             <dd>{facilityEntity.academicYearId ? facilityEntity.academicYearId : ''}</dd>
             <dt>Branch</dt>

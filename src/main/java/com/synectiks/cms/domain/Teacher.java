@@ -65,6 +65,15 @@ public class Teacher implements Serializable {
     @Column(name = "father_last_name", nullable = false)
     private String fatherLastName;
 
+    @Column(name = "spouse_name")
+    private String spouseName;
+
+    @Column(name = "spouse_middle_name")
+    private String spouseMiddleName;
+
+    @Column(name = "spouse_last_name")
+    private String spouseLastName;
+
     @NotNull
     @Column(name = "mother_name", nullable = false)
     private String motherName;
@@ -147,18 +156,16 @@ public class Teacher implements Serializable {
 
     @NotNull
     @Column(name = "teacher_contact_number", nullable = false)
-    private Long teacherContactNumber;
+    private String teacherContactNumber;
 
-    @NotNull
-    @Column(name = "alternate_contact_number", nullable = false)
-    private Long alternateContactNumber;
+    @Column(name = "alternate_contact_number")
+    private String alternateContactNumber;
 
     @NotNull
     @Column(name = "teacher_email_address", nullable = false)
     private String teacherEmailAddress;
 
-    @NotNull
-    @Column(name = "alternate_email_address", nullable = false)
+    @Column(name = "alternate_email_address")
     private String alternateEmailAddress;
 
     @NotNull
@@ -167,31 +174,29 @@ public class Teacher implements Serializable {
     private RelationWithStudentEnum relationWithStaff;
 
     @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "emergency_contact_name", nullable = false)
+    private String emergencyContactName;
+
+    @Column(name = "emergency_contact_middle_name")
+    private String emergencyContactMiddleName;
 
     @NotNull
-    @Column(name = "middle_name", nullable = false)
-    private String middleName;
+    @Column(name = "emergency_contact_last_name", nullable = false)
+    private String emergencyContactLastName;
 
     @NotNull
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column(name = "emergency_contact_no", nullable = false)
+    private String emergencyContactNo;
 
     @NotNull
-    @Column(name = "contact_no", nullable = false)
-    private Long contactNo;
-
-    @NotNull
-    @Column(name = "email_address", nullable = false)
-    private String emailAddress;
+    @Column(name = "emergency_contact_email_address", nullable = false)
+    private String emergencyContactEmailAddress;
 
     @NotNull
     @Column(name = "upload_photo", nullable = false)
-    private Long uploadPhoto;
+    private String uploadPhoto;
 
-    @NotNull
-    @Column(name = "employee_id", nullable = false)
+    @Column(name = "employee_id")
     private Long employeeId;
 
     @NotNull
@@ -296,6 +301,45 @@ public class Teacher implements Serializable {
 
     public void setFatherLastName(String fatherLastName) {
         this.fatherLastName = fatherLastName;
+    }
+
+    public String getSpouseName() {
+        return spouseName;
+    }
+
+    public Teacher spouseName(String spouseName) {
+        this.spouseName = spouseName;
+        return this;
+    }
+
+    public void setSpouseName(String spouseName) {
+        this.spouseName = spouseName;
+    }
+
+    public String getSpouseMiddleName() {
+        return spouseMiddleName;
+    }
+
+    public Teacher spouseMiddleName(String spouseMiddleName) {
+        this.spouseMiddleName = spouseMiddleName;
+        return this;
+    }
+
+    public void setSpouseMiddleName(String spouseMiddleName) {
+        this.spouseMiddleName = spouseMiddleName;
+    }
+
+    public String getSpouseLastName() {
+        return spouseLastName;
+    }
+
+    public Teacher spouseLastName(String spouseLastName) {
+        this.spouseLastName = spouseLastName;
+        return this;
+    }
+
+    public void setSpouseLastName(String spouseLastName) {
+        this.spouseLastName = spouseLastName;
     }
 
     public String getMotherName() {
@@ -545,29 +589,29 @@ public class Teacher implements Serializable {
         this.pincode = pincode;
     }
 
-    public Long getTeacherContactNumber() {
+    public String getTeacherContactNumber() {
         return teacherContactNumber;
     }
 
-    public Teacher teacherContactNumber(Long teacherContactNumber) {
+    public Teacher teacherContactNumber(String teacherContactNumber) {
         this.teacherContactNumber = teacherContactNumber;
         return this;
     }
 
-    public void setTeacherContactNumber(Long teacherContactNumber) {
+    public void setTeacherContactNumber(String teacherContactNumber) {
         this.teacherContactNumber = teacherContactNumber;
     }
 
-    public Long getAlternateContactNumber() {
+    public String getAlternateContactNumber() {
         return alternateContactNumber;
     }
 
-    public Teacher alternateContactNumber(Long alternateContactNumber) {
+    public Teacher alternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
         return this;
     }
 
-    public void setAlternateContactNumber(Long alternateContactNumber) {
+    public void setAlternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
     }
 
@@ -610,81 +654,81 @@ public class Teacher implements Serializable {
         this.relationWithStaff = relationWithStaff;
     }
 
-    public String getName() {
-        return name;
+    public String getEmergencyContactName() {
+        return emergencyContactName;
     }
 
-    public Teacher name(String name) {
-        this.name = name;
+    public Teacher emergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getEmergencyContactMiddleName() {
+        return emergencyContactMiddleName;
     }
 
-    public Teacher middleName(String middleName) {
-        this.middleName = middleName;
+    public Teacher emergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
         return this;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setEmergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getEmergencyContactLastName() {
+        return emergencyContactLastName;
     }
 
-    public Teacher lastName(String lastName) {
-        this.lastName = lastName;
+    public Teacher emergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
         return this;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
     }
 
-    public Long getContactNo() {
-        return contactNo;
+    public String getEmergencyContactNo() {
+        return emergencyContactNo;
     }
 
-    public Teacher contactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public Teacher emergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
         return this;
     }
 
-    public void setContactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public void setEmergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmergencyContactEmailAddress() {
+        return emergencyContactEmailAddress;
     }
 
-    public Teacher emailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public Teacher emergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
         return this;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
     }
 
-    public Long getUploadPhoto() {
+    public String getUploadPhoto() {
         return uploadPhoto;
     }
 
-    public Teacher uploadPhoto(Long uploadPhoto) {
+    public Teacher uploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
         return this;
     }
 
-    public void setUploadPhoto(Long uploadPhoto) {
+    public void setUploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
     }
 
@@ -784,6 +828,9 @@ public class Teacher implements Serializable {
             ", fatherName='" + getFatherName() + "'" +
             ", fatherMiddleName='" + getFatherMiddleName() + "'" +
             ", fatherLastName='" + getFatherLastName() + "'" +
+            ", spouseName='" + getSpouseName() + "'" +
+            ", spouseMiddleName='" + getSpouseMiddleName() + "'" +
+            ", spouseLastName='" + getSpouseLastName() + "'" +
             ", motherName='" + getMotherName() + "'" +
             ", motherMiddleName='" + getMotherMiddleName() + "'" +
             ", motherLastName='" + getMotherLastName() + "'" +
@@ -803,17 +850,17 @@ public class Teacher implements Serializable {
             ", state='" + getState() + "'" +
             ", country='" + getCountry() + "'" +
             ", pincode=" + getPincode() +
-            ", teacherContactNumber=" + getTeacherContactNumber() +
-            ", alternateContactNumber=" + getAlternateContactNumber() +
+            ", teacherContactNumber='" + getTeacherContactNumber() + "'" +
+            ", alternateContactNumber='" + getAlternateContactNumber() + "'" +
             ", teacherEmailAddress='" + getTeacherEmailAddress() + "'" +
             ", alternateEmailAddress='" + getAlternateEmailAddress() + "'" +
             ", relationWithStaff='" + getRelationWithStaff() + "'" +
-            ", name='" + getName() + "'" +
-            ", middleName='" + getMiddleName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", contactNo=" + getContactNo() +
-            ", emailAddress='" + getEmailAddress() + "'" +
-            ", uploadPhoto=" + getUploadPhoto() +
+            ", emergencyContactName='" + getEmergencyContactName() + "'" +
+            ", emergencyContactMiddleName='" + getEmergencyContactMiddleName() + "'" +
+            ", emergencyContactLastName='" + getEmergencyContactLastName() + "'" +
+            ", emergencyContactNo='" + getEmergencyContactNo() + "'" +
+            ", emergencyContactEmailAddress='" + getEmergencyContactEmailAddress() + "'" +
+            ", uploadPhoto='" + getUploadPhoto() + "'" +
             ", employeeId=" + getEmployeeId() +
             ", designation='" + getDesignation() + "'" +
             ", staffType='" + getStaffType() + "'" +

@@ -75,7 +75,15 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Facility Name</th>
+                <th>Transport</th>
+                <th>Mess</th>
+                <th>Gym</th>
+                <th>Cultural Class</th>
+                <th>Library</th>
+                <th>Sports</th>
+                <th>Swimming</th>
+                <th>Extra Class</th>
+                <th>Handicrafts</th>
                 <th>Academic Year</th>
                 <th>Branch</th>
                 <th>Student</th>
@@ -90,9 +98,17 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
                       {facility.id}
                     </Button>
                   </td>
-                  <td>{facility.facilityName}</td>
+                  <td>{facility.transport}</td>
+                  <td>{facility.mess}</td>
+                  <td>{facility.gym}</td>
+                  <td>{facility.culturalClass}</td>
+                  <td>{facility.library}</td>
+                  <td>{facility.sports}</td>
+                  <td>{facility.swimming}</td>
+                  <td>{facility.extraClass}</td>
+                  <td>{facility.handicrafts}</td>
                   <td>
-                    {facility.academicYearId ? <Link to={`academic-year/${facility.academicYearId}`}>{facility.academicYearId}</Link> : ''}
+                    {facility.academicYearId ? <Link to={`academicYear/${facility.academicYearId}`}>{facility.academicYearId}</Link> : ''}
                   </td>
                   <td>{facility.branchId ? <Link to={`branch/${facility.branchId}`}>{facility.branchId}</Link> : ''}</td>
                   <td>{facility.studentId ? <Link to={`student/${facility.studentId}`}>{facility.studentId}</Link> : ''}</td>

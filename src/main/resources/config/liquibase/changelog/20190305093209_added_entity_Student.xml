@@ -16,7 +16,7 @@
     <!--
         Added the entity Student.
     -->
-    <changeSet id="20190205082417-1" author="jhipster">
+    <changeSet id="20190305093209-1" author="jhipster">
         <createTable tableName="student">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -121,12 +121,12 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="student_contact_number" type="bigint">
+            <column name="student_contact_number" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="alternate_contact_number" type="bigint">
-                <constraints nullable="false" />
+            <column name="alternate_contact_number" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
             <column name="student_email_address" type="varchar(255)">
@@ -134,83 +134,43 @@
             </column>
 
             <column name="alternate_email_address" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="relation_with_student" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="name" type="varchar(255)">
+            <column name="emergency_contact_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="middle_name" type="varchar(255)">
+            <column name="emergency_contact_middle_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="last_name" type="varchar(255)">
+            <column name="emergency_contact_last_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="contact_no" type="bigint">
+            <column name="emergency_contact_no" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="email_address" type="varchar(255)">
+            <column name="emergency_contact_email_address" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="transport" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="mess" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="gym" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="cultural_class" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="jhi_library" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="sports" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="swimming" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="extra_class" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="handicrafts" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="jhi_add" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="upload_photo" type="bigint">
+            <column name="upload_photo" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
             <column name="admission_no" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="roll_no" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="student_type" type="varchar(255)">

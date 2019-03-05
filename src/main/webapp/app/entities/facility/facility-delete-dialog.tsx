@@ -9,7 +9,7 @@ import { IFacility } from 'app/shared/model/facility.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './facility.reducer';
 
-export interface IFacilityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IFacilityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class FacilityDeleteDialog extends React.Component<IFacilityDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class FacilityDeleteDialog extends React.Component<IFacilityDeleteDialogP
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.facility.delete.question">Are you sure you want to delete this Facility?</ModalBody>
+        <ModalBody>Are you sure you want to delete this Facility?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-facility" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

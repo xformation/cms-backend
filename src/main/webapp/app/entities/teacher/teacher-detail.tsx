@@ -53,6 +53,18 @@ export class TeacherDetail extends React.Component<ITeacherDetailProps> {
             </dt>
             <dd>{teacherEntity.fatherLastName}</dd>
             <dt>
+              <span id="spouseName">Spouse Name</span>
+            </dt>
+            <dd>{teacherEntity.spouseName}</dd>
+            <dt>
+              <span id="spouseMiddleName">Spouse Middle Name</span>
+            </dt>
+            <dd>{teacherEntity.spouseMiddleName}</dd>
+            <dt>
+              <span id="spouseLastName">Spouse Last Name</span>
+            </dt>
+            <dd>{teacherEntity.spouseLastName}</dd>
+            <dt>
               <span id="motherName">Mother Name</span>
             </dt>
             <dd>{teacherEntity.motherName}</dd>
@@ -151,25 +163,25 @@ export class TeacherDetail extends React.Component<ITeacherDetailProps> {
             </dt>
             <dd>{teacherEntity.relationWithStaff}</dd>
             <dt>
-              <span id="name">Name</span>
+              <span id="emergencyContactName">Emergency Contact Name</span>
             </dt>
-            <dd>{teacherEntity.name}</dd>
+            <dd>{teacherEntity.emergencyContactName}</dd>
             <dt>
-              <span id="middleName">Middle Name</span>
+              <span id="emergencyContactMiddleName">Emergency Contact Middle Name</span>
             </dt>
-            <dd>{teacherEntity.middleName}</dd>
+            <dd>{teacherEntity.emergencyContactMiddleName}</dd>
             <dt>
-              <span id="lastName">Last Name</span>
+              <span id="emergencyContactLastName">Emergency Contact Last Name</span>
             </dt>
-            <dd>{teacherEntity.lastName}</dd>
+            <dd>{teacherEntity.emergencyContactLastName}</dd>
             <dt>
-              <span id="contactNo">Contact No</span>
+              <span id="emergencyContactNo">Emergency Contact No</span>
             </dt>
-            <dd>{teacherEntity.contactNo}</dd>
+            <dd>{teacherEntity.emergencyContactNo}</dd>
             <dt>
-              <span id="emailAddress">Email Address</span>
+              <span id="emergencyContactEmailAddress">Emergency Contact Email Address</span>
             </dt>
-            <dd>{teacherEntity.emailAddress}</dd>
+            <dd>{teacherEntity.emergencyContactEmailAddress}</dd>
             <dt>
               <span id="uploadPhoto">Upload Photo</span>
             </dt>

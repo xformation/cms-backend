@@ -10,6 +10,9 @@ export default class TeacherUpdatePage {
   fatherNameInput: ElementFinder = element(by.css('input#teacher-fatherName'));
   fatherMiddleNameInput: ElementFinder = element(by.css('input#teacher-fatherMiddleName'));
   fatherLastNameInput: ElementFinder = element(by.css('input#teacher-fatherLastName'));
+  spouseNameInput: ElementFinder = element(by.css('input#teacher-spouseName'));
+  spouseMiddleNameInput: ElementFinder = element(by.css('input#teacher-spouseMiddleName'));
+  spouseLastNameInput: ElementFinder = element(by.css('input#teacher-spouseLastName'));
   motherNameInput: ElementFinder = element(by.css('input#teacher-motherName'));
   motherMiddleNameInput: ElementFinder = element(by.css('input#teacher-motherMiddleName'));
   motherLastNameInput: ElementFinder = element(by.css('input#teacher-motherLastName'));
@@ -34,11 +37,11 @@ export default class TeacherUpdatePage {
   teacherEmailAddressInput: ElementFinder = element(by.css('input#teacher-teacherEmailAddress'));
   alternateEmailAddressInput: ElementFinder = element(by.css('input#teacher-alternateEmailAddress'));
   relationWithStaffSelect: ElementFinder = element(by.css('select#teacher-relationWithStaff'));
-  nameInput: ElementFinder = element(by.css('input#teacher-name'));
-  middleNameInput: ElementFinder = element(by.css('input#teacher-middleName'));
-  lastNameInput: ElementFinder = element(by.css('input#teacher-lastName'));
-  contactNoInput: ElementFinder = element(by.css('input#teacher-contactNo'));
-  emailAddressInput: ElementFinder = element(by.css('input#teacher-emailAddress'));
+  emergencyContactNameInput: ElementFinder = element(by.css('input#teacher-emergencyContactName'));
+  emergencyContactMiddleNameInput: ElementFinder = element(by.css('input#teacher-emergencyContactMiddleName'));
+  emergencyContactLastNameInput: ElementFinder = element(by.css('input#teacher-emergencyContactLastName'));
+  emergencyContactNoInput: ElementFinder = element(by.css('input#teacher-emergencyContactNo'));
+  emergencyContactEmailAddressInput: ElementFinder = element(by.css('input#teacher-emergencyContactEmailAddress'));
   uploadPhotoInput: ElementFinder = element(by.css('input#teacher-uploadPhoto'));
   employeeIdInput: ElementFinder = element(by.css('input#teacher-employeeId'));
   designationInput: ElementFinder = element(by.css('input#teacher-designation'));
@@ -96,6 +99,30 @@ export default class TeacherUpdatePage {
 
   getFatherLastNameInput() {
     return this.fatherLastNameInput.getAttribute('value');
+  }
+
+  setSpouseNameInput(spouseName) {
+    this.spouseNameInput.sendKeys(spouseName);
+  }
+
+  getSpouseNameInput() {
+    return this.spouseNameInput.getAttribute('value');
+  }
+
+  setSpouseMiddleNameInput(spouseMiddleName) {
+    this.spouseMiddleNameInput.sendKeys(spouseMiddleName);
+  }
+
+  getSpouseMiddleNameInput() {
+    return this.spouseMiddleNameInput.getAttribute('value');
+  }
+
+  setSpouseLastNameInput(spouseLastName) {
+    this.spouseLastNameInput.sendKeys(spouseLastName);
+  }
+
+  getSpouseLastNameInput() {
+    return this.spouseLastNameInput.getAttribute('value');
   }
 
   setMotherNameInput(motherName) {
@@ -320,44 +347,44 @@ export default class TeacherUpdatePage {
       .last()
       .click();
   }
-  setNameInput(name) {
-    this.nameInput.sendKeys(name);
+  setEmergencyContactNameInput(emergencyContactName) {
+    this.emergencyContactNameInput.sendKeys(emergencyContactName);
   }
 
-  getNameInput() {
-    return this.nameInput.getAttribute('value');
+  getEmergencyContactNameInput() {
+    return this.emergencyContactNameInput.getAttribute('value');
   }
 
-  setMiddleNameInput(middleName) {
-    this.middleNameInput.sendKeys(middleName);
+  setEmergencyContactMiddleNameInput(emergencyContactMiddleName) {
+    this.emergencyContactMiddleNameInput.sendKeys(emergencyContactMiddleName);
   }
 
-  getMiddleNameInput() {
-    return this.middleNameInput.getAttribute('value');
+  getEmergencyContactMiddleNameInput() {
+    return this.emergencyContactMiddleNameInput.getAttribute('value');
   }
 
-  setLastNameInput(lastName) {
-    this.lastNameInput.sendKeys(lastName);
+  setEmergencyContactLastNameInput(emergencyContactLastName) {
+    this.emergencyContactLastNameInput.sendKeys(emergencyContactLastName);
   }
 
-  getLastNameInput() {
-    return this.lastNameInput.getAttribute('value');
+  getEmergencyContactLastNameInput() {
+    return this.emergencyContactLastNameInput.getAttribute('value');
   }
 
-  setContactNoInput(contactNo) {
-    this.contactNoInput.sendKeys(contactNo);
+  setEmergencyContactNoInput(emergencyContactNo) {
+    this.emergencyContactNoInput.sendKeys(emergencyContactNo);
   }
 
-  getContactNoInput() {
-    return this.contactNoInput.getAttribute('value');
+  getEmergencyContactNoInput() {
+    return this.emergencyContactNoInput.getAttribute('value');
   }
 
-  setEmailAddressInput(emailAddress) {
-    this.emailAddressInput.sendKeys(emailAddress);
+  setEmergencyContactEmailAddressInput(emergencyContactEmailAddress) {
+    this.emergencyContactEmailAddressInput.sendKeys(emergencyContactEmailAddress);
   }
 
-  getEmailAddressInput() {
-    return this.emailAddressInput.getAttribute('value');
+  getEmergencyContactEmailAddressInput() {
+    return this.emergencyContactEmailAddressInput.getAttribute('value');
   }
 
   setUploadPhotoInput(uploadPhoto) {

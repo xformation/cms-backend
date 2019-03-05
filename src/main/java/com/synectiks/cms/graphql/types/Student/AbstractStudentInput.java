@@ -32,31 +32,20 @@ public class AbstractStudentInput {
     private String state;
     private String country;
     private Long pincode;
-    private Long studentContactNumber;
-    private Long alternateContactNumber;
+    private String studentContactNumber;
+    private String alternateContactNumber;
     private String studentEmailAddress;
     private String alternateEmailAddress;
     private RelationWithStudentEnum relationWithStudent;
-    private String name;
-    private String middleName;
-    private String lastName;
-    private Long contactNo;
-    private String emailAddress;
-    private Status transport;
-    private Status mess;
-    private Status gym;
-    private Status culturalClass;
-    private Status library;
-    private Status sports;
-    private Status swimming;
-    private Status extraClass;
-    private Status handicrafts;
-    private Status add;
-    private Long uploadPhoto;
+    private String emergencyContactName ;
+    private String emergencyContactMiddleName ;
+    private String emergencyContactLastName ;
+    private String emergencyContactNo ;
+    private String emergencyContactEmailAddress ;
+    private String uploadPhoto;
     private Long admissionNo;
     private String rollNo;
     private StudentTypeEnum studentType;
-
 
     public Long getId() {
         return id;
@@ -266,19 +255,19 @@ public class AbstractStudentInput {
         this.pincode = pincode;
     }
 
-    public Long getStudentContactNumber() {
+    public String getStudentContactNumber() {
         return studentContactNumber;
     }
 
-    public void setStudentContactNumber(Long studentContactNumber) {
+    public void setStudentContactNumber(String studentContactNumber) {
         this.studentContactNumber = studentContactNumber;
     }
 
-    public Long getAlternateContactNumber() {
+    public String getAlternateContactNumber() {
         return alternateContactNumber;
     }
 
-    public void setAlternateContactNumber(Long alternateContactNumber) {
+    public void setAlternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
     }
 
@@ -306,131 +295,51 @@ public class AbstractStudentInput {
         this.relationWithStudent = relationWithStudent;
     }
 
-    public String getName() {
-        return name;
+    public String getEmergencyContactName() {
+        return emergencyContactName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getEmergencyContactMiddleName() {
+        return emergencyContactMiddleName;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setEmergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getEmergencyContactLastName() {
+        return emergencyContactLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
     }
 
-    public Long getContactNo() {
-        return contactNo;
+    public String getEmergencyContactNo() {
+        return emergencyContactNo;
     }
 
-    public void setContactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public void setEmergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmergencyContactEmailAddress() {
+        return emergencyContactEmailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
     }
 
-    public Status getTransport() {
-        return transport;
-    }
-
-    public void setTransport(Status transport) {
-        this.transport = transport;
-    }
-
-    public Status getMess() {
-        return mess;
-    }
-
-    public void setMess(Status mess) {
-        this.mess = mess;
-    }
-
-    public Status getGym() {
-        return gym;
-    }
-
-    public void setGym(Status gym) {
-        this.gym = gym;
-    }
-
-    public Status getCulturalClass() {
-        return culturalClass;
-    }
-
-    public void setCulturalClass(Status culturalClass) {
-        this.culturalClass = culturalClass;
-    }
-
-    public Status getLibrary() {
-        return library;
-    }
-
-    public void setLibrary(Status library) {
-        this.library = library;
-    }
-
-    public Status getSports() {
-        return sports;
-    }
-
-    public void setSports(Status sports) {
-        this.sports = sports;
-    }
-
-    public Status getSwimming() {
-        return swimming;
-    }
-
-    public void setSwimming(Status swimming) {
-        this.swimming = swimming;
-    }
-
-    public Status getExtraClass() {
-        return extraClass;
-    }
-
-    public void setExtraClass(Status extraClass) {
-        this.extraClass = extraClass;
-    }
-
-    public Status getHandicrafts() {
-        return handicrafts;
-    }
-
-    public void setHandicrafts(Status handicrafts) {
-        this.handicrafts = handicrafts;
-    }
-
-    public Status getAdd() {
-        return add;
-    }
-
-    public void setAdd(Status add) {
-        this.add = add;
-    }
-
-    public Long getUploadPhoto() {
+    public String getUploadPhoto() {
         return uploadPhoto;
     }
 
-    public void setUploadPhoto(Long uploadPhoto) {
+    public void setUploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
     }
 
@@ -461,63 +370,53 @@ public class AbstractStudentInput {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractStudentInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractStudentInput that = (AbstractStudentInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getStudentName(), that.getStudentName()) &&
-            Objects.equals(getStudentMiddleName(), that.getStudentMiddleName()) &&
-            Objects.equals(getStudentLastName(), that.getStudentLastName()) &&
-            Objects.equals(getFatherName(), that.getFatherName()) &&
-            Objects.equals(getFatherMiddleName(), that.getFatherMiddleName()) &&
-            Objects.equals(getFatherLastName(), that.getFatherLastName()) &&
-            Objects.equals(getMotherName(), that.getMotherName()) &&
-            Objects.equals(getMotherMiddleName(), that.getMotherMiddleName()) &&
-            Objects.equals(getMotherLastName(), that.getMotherLastName()) &&
-            Objects.equals(getAadharNo(), that.getAadharNo()) &&
-            Objects.equals(getDateOfBirth(), that.getDateOfBirth()) &&
-            Objects.equals(getPlaceOfBirth(), that.getPlaceOfBirth()) &&
-            getReligion() == that.getReligion() &&
-            getCaste() == that.getCaste() &&
-            Objects.equals(getSubCaste(), that.getSubCaste()) &&
-            Objects.equals(getAge(), that.getAge()) &&
-            getSex() == that.getSex() &&
-            getBloodGroup() == that.getBloodGroup() &&
-            Objects.equals(getAddressLineOne(), that.getAddressLineOne()) &&
-            Objects.equals(getAddressLineTwo(), that.getAddressLineTwo()) &&
-            Objects.equals(getAddressLineThree(), that.getAddressLineThree()) &&
-            Objects.equals(getTown(), that.getTown()) &&
-            Objects.equals(getState(), that.getState()) &&
-            Objects.equals(getCountry(), that.getCountry()) &&
-            Objects.equals(getPincode(), that.getPincode()) &&
-            Objects.equals(getStudentContactNumber(), that.getStudentContactNumber()) &&
-            Objects.equals(getAlternateContactNumber(), that.getAlternateContactNumber()) &&
-            Objects.equals(getStudentEmailAddress(), that.getStudentEmailAddress()) &&
-            Objects.equals(getAlternateEmailAddress(), that.getAlternateEmailAddress()) &&
-            getRelationWithStudent() == that.getRelationWithStudent() &&
-            Objects.equals(getName(), that.getName()) &&
-            Objects.equals(getMiddleName(), that.getMiddleName()) &&
-            Objects.equals(getLastName(), that.getLastName()) &&
-            Objects.equals(getContactNo(), that.getContactNo()) &&
-            Objects.equals(getEmailAddress(), that.getEmailAddress()) &&
-            getTransport() == that.getTransport() &&
-            getMess() == that.getMess() &&
-            getGym() == that.getGym() &&
-            getCulturalClass() == that.getCulturalClass() &&
-            getLibrary() == that.getLibrary() &&
-            getSports() == that.getSports() &&
-            getSwimming() == that.getSwimming() &&
-            getExtraClass() == that.getExtraClass() &&
-            getHandicrafts() == that.getHandicrafts() &&
-            getAdd() == that.getAdd() &&
-            Objects.equals(getUploadPhoto(), that.getUploadPhoto()) &&
-            Objects.equals(getAdmissionNo(), that.getAdmissionNo()) &&
-            Objects.equals(getRollNo(), that.getRollNo()) &&
-            getStudentType() == that.getStudentType();
+        return Objects.equals(id, that.id) &&
+            Objects.equals(studentName, that.studentName) &&
+            Objects.equals(studentMiddleName, that.studentMiddleName) &&
+            Objects.equals(studentLastName, that.studentLastName) &&
+            Objects.equals(fatherName, that.fatherName) &&
+            Objects.equals(fatherMiddleName, that.fatherMiddleName) &&
+            Objects.equals(fatherLastName, that.fatherLastName) &&
+            Objects.equals(motherName, that.motherName) &&
+            Objects.equals(motherMiddleName, that.motherMiddleName) &&
+            Objects.equals(motherLastName, that.motherLastName) &&
+            Objects.equals(aadharNo, that.aadharNo) &&
+            Objects.equals(dateOfBirth, that.dateOfBirth) &&
+            Objects.equals(placeOfBirth, that.placeOfBirth) &&
+            religion == that.religion &&
+            caste == that.caste &&
+            Objects.equals(subCaste, that.subCaste) &&
+            Objects.equals(age, that.age) &&
+            sex == that.sex &&
+            bloodGroup == that.bloodGroup &&
+            Objects.equals(addressLineOne, that.addressLineOne) &&
+            Objects.equals(addressLineTwo, that.addressLineTwo) &&
+            Objects.equals(addressLineThree, that.addressLineThree) &&
+            Objects.equals(town, that.town) &&
+            Objects.equals(state, that.state) &&
+            Objects.equals(country, that.country) &&
+            Objects.equals(pincode, that.pincode) &&
+            Objects.equals(studentContactNumber, that.studentContactNumber) &&
+            Objects.equals(alternateContactNumber, that.alternateContactNumber) &&
+            Objects.equals(studentEmailAddress, that.studentEmailAddress) &&
+            Objects.equals(alternateEmailAddress, that.alternateEmailAddress) &&
+            relationWithStudent == that.relationWithStudent &&
+            Objects.equals(emergencyContactName, that.emergencyContactName) &&
+            Objects.equals(emergencyContactMiddleName, that.emergencyContactMiddleName) &&
+            Objects.equals(emergencyContactLastName, that.emergencyContactLastName) &&
+            Objects.equals(emergencyContactNo, that.emergencyContactNo) &&
+            Objects.equals(emergencyContactEmailAddress, that.emergencyContactEmailAddress) &&
+            Objects.equals(uploadPhoto, that.uploadPhoto) &&
+            Objects.equals(admissionNo, that.admissionNo) &&
+            Objects.equals(rollNo, that.rollNo) &&
+            studentType == that.studentType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getStudentName(), getStudentMiddleName(), getStudentLastName(), getFatherName(), getFatherMiddleName(), getFatherLastName(), getMotherName(), getMotherMiddleName(), getMotherLastName(), getAadharNo(), getDateOfBirth(), getPlaceOfBirth(), getReligion(), getCaste(), getSubCaste(), getAge(), getSex(), getBloodGroup(), getAddressLineOne(), getAddressLineTwo(), getAddressLineThree(), getTown(), getState(), getCountry(), getPincode(), getStudentContactNumber(), getAlternateContactNumber(), getStudentEmailAddress(), getAlternateEmailAddress(), getRelationWithStudent(), getName(), getMiddleName(), getLastName(), getContactNo(), getEmailAddress(), getTransport(), getMess(), getGym(), getCulturalClass(), getLibrary(), getSports(), getSwimming(), getExtraClass(), getHandicrafts(), getAdd(), getUploadPhoto(), getAdmissionNo(), getRollNo(), getStudentType());
+        return Objects.hash(id, studentName, studentMiddleName, studentLastName, fatherName, fatherMiddleName, fatherLastName, motherName, motherMiddleName, motherLastName, aadharNo, dateOfBirth, placeOfBirth, religion, caste, subCaste, age, sex, bloodGroup, addressLineOne, addressLineTwo, addressLineThree, town, state, country, pincode, studentContactNumber, alternateContactNumber, studentEmailAddress, alternateEmailAddress, relationWithStudent, emergencyContactName, emergencyContactMiddleName, emergencyContactLastName, emergencyContactNo, emergencyContactEmailAddress, uploadPhoto, admissionNo, rollNo, studentType);
     }
 
     @Override
@@ -549,26 +448,16 @@ public class AbstractStudentInput {
             ", state='" + state + '\'' +
             ", country='" + country + '\'' +
             ", pincode=" + pincode +
-            ", studentContactNumber=" + studentContactNumber +
-            ", alternateContactNumber=" + alternateContactNumber +
+            ", studentContactNumber='" + studentContactNumber + '\'' +
+            ", alternateContactNumber='" + alternateContactNumber + '\'' +
             ", studentEmailAddress='" + studentEmailAddress + '\'' +
             ", alternateEmailAddress='" + alternateEmailAddress + '\'' +
             ", relationWithStudent=" + relationWithStudent +
-            ", name='" + name + '\'' +
-            ", middleName='" + middleName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", contactNo=" + contactNo +
-            ", emailAddress='" + emailAddress + '\'' +
-            ", transport=" + transport +
-            ", mess=" + mess +
-            ", gym=" + gym +
-            ", culturalClass=" + culturalClass +
-            ", library=" + library +
-            ", sports=" + sports +
-            ", swimming=" + swimming +
-            ", extraClass=" + extraClass +
-            ", handicrafts=" + handicrafts +
-            ", add=" + add +
+            ", emergencyContactName='" + emergencyContactName + '\'' +
+            ", emergencyContactMiddleName='" + emergencyContactMiddleName + '\'' +
+            ", emergencyContactLastName='" + emergencyContactLastName + '\'' +
+            ", emergencyContactNo='" + emergencyContactNo + '\'' +
+            ", emergencyContactEmailAddress='" + emergencyContactEmailAddress + '\'' +
             ", uploadPhoto=" + uploadPhoto +
             ", admissionNo=" + admissionNo +
             ", rollNo='" + rollNo + '\'' +

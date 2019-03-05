@@ -287,21 +287,11 @@ public class Mutation implements GraphQLMutationResolver {
         student.setStudentEmailAddress(addStudentInput.getStudentEmailAddress());
         student.setAlternateEmailAddress(addStudentInput.getAlternateEmailAddress());
         student.setRelationWithStudent(addStudentInput.getRelationWithStudent());
-        student.setName(addStudentInput.getName());
-        student.setMiddleName(addStudentInput.getMiddleName());
-        student.setLastName(addStudentInput.getLastName());
-        student.setContactNo(addStudentInput.getContactNo());
-        student.setEmailAddress(addStudentInput.getEmailAddress());
-        student.setTransport(addStudentInput.getTransport());
-        student.setMess(addStudentInput.getMess());
-        student.setGym(addStudentInput.getGym());
-        student.setCulturalClass(addStudentInput.getCulturalClass());
-        student.setLibrary(addStudentInput.getLibrary());
-        student.setSports(addStudentInput.getSports());
-        student.setSwimming(addStudentInput.getSwimming());
-        student.setExtraClass(addStudentInput.getExtraClass());
-        student.setHandicrafts(addStudentInput.getHandicrafts());
-        student.setAdd(addStudentInput.getAdd());
+        student.setEmergencyContactName(addStudentInput.getEmergencyContactName());
+        student.setEmergencyContactMiddleName(addStudentInput.getEmergencyContactMiddleName());
+        student.setEmergencyContactLastName(addStudentInput.getEmergencyContactLastName());
+        student.setEmergencyContactNo(addStudentInput.getEmergencyContactNo());
+        student.setEmergencyContactEmailAddress(addStudentInput.getEmergencyContactEmailAddress());
         student.setUploadPhoto(addStudentInput.getUploadPhoto());
         student.setAdmissionNo(addStudentInput.getAdmissionNo());
         student.setRollNo(addStudentInput.getRollNo());
@@ -406,51 +396,22 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getRelationWithStudent() != null) {
             student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
         }
-        if (updateStudentInput.getName() != null) {
-            student.setName(updateStudentInput.getName());
+        if (updateStudentInput.getEmergencyContactName() != null) {
+            student.setEmergencyContactName(updateStudentInput.getEmergencyContactName());
         }
-        if (updateStudentInput.getMiddleName() != null) {
-            student.setMiddleName(updateStudentInput.getMiddleName());
+        if (updateStudentInput.getEmergencyContactMiddleName() != null) {
+            student.setEmergencyContactMiddleName(updateStudentInput.getEmergencyContactMiddleName());
         }
-        if (updateStudentInput.getLastName() != null) {
-            student.setLastName(updateStudentInput.getLastName());
+        if (updateStudentInput.getEmergencyContactLastName() != null) {
+            student.setEmergencyContactLastName(updateStudentInput.getEmergencyContactLastName());
         }
-        if (updateStudentInput.getContactNo() != null) {
-            student.setContactNo(updateStudentInput.getContactNo());
+        if (updateStudentInput.getEmergencyContactNo() != null) {
+            student.setEmergencyContactNo(updateStudentInput.getEmergencyContactNo());
         }
-        if (updateStudentInput.getEmailAddress() != null) {
-            student.setEmailAddress(updateStudentInput.getEmailAddress());
+        if (updateStudentInput.getEmergencyContactEmailAddress() != null) {
+            student.setEmergencyContactEmailAddress(updateStudentInput.getEmergencyContactEmailAddress());
         }
-        if (updateStudentInput.getTransport() != null) {
-            student.setTransport(updateStudentInput.getTransport());
-        }
-        if (updateStudentInput.getMess() != null) {
-            student.setMess(updateStudentInput.getMess());
-        }
-        if (updateStudentInput.getGym() != null) {
-            student.setGym(updateStudentInput.getGym());
-        }
-        if (updateStudentInput.getCulturalClass() != null) {
-            student.setCulturalClass(updateStudentInput.getCulturalClass());
-        }
-        if (updateStudentInput.getLibrary() != null) {
-            student.setLibrary(updateStudentInput.getLibrary());
-        }
-        if (updateStudentInput.getSports() != null) {
-            student.setSports(updateStudentInput.getSports());
-        }
-        if (updateStudentInput.getSwimming() != null) {
-            student.setSwimming(updateStudentInput.getSwimming());
-        }
-        if (updateStudentInput.getExtraClass() != null) {
-            student.setExtraClass(updateStudentInput.getExtraClass());
-        }
-        if (updateStudentInput.getHandicrafts() != null) {
-            student.setHandicrafts(updateStudentInput.getHandicrafts());
-        }
-        if (updateStudentInput.getAdd() != null) {
-            student.setAdd(updateStudentInput.getAdd());
-        }
+
         if (updateStudentInput.getUploadPhoto() != null) {
             student.setUploadPhoto(updateStudentInput.getUploadPhoto());
         }
@@ -947,6 +908,9 @@ public class Mutation implements GraphQLMutationResolver {
         teacher.setFatherName(addTeacherInput.getFatherName());
         teacher.setFatherMiddleName(addTeacherInput.getFatherMiddleName());
         teacher.setFatherLastName(addTeacherInput.getFatherLastName());
+        teacher.setSpouseName(addTeacherInput.getSpouseName());
+        teacher.setSpouseMiddleName(addTeacherInput.getSpouseMiddleName());
+        teacher.setSpouseLastName(addTeacherInput.getSpouseLastName());
         teacher.setMotherName(addTeacherInput.getMotherName());
         teacher.setMotherMiddleName(addTeacherInput.getMotherMiddleName());
         teacher.setMotherLastName(addTeacherInput.getMotherLastName());
@@ -971,11 +935,11 @@ public class Mutation implements GraphQLMutationResolver {
         teacher.setTeacherEmailAddress(addTeacherInput.getTeacherEmailAddress());
         teacher.setAlternateEmailAddress(addTeacherInput.getAlternateEmailAddress());
         teacher.setRelationWithStaff(addTeacherInput.getRelationWithStaff());
-        teacher.setName(addTeacherInput.getName());
-        teacher.setMiddleName(addTeacherInput.getMiddleName());
-        teacher.setLastName(addTeacherInput.getLastName());
-        teacher.setContactNo(addTeacherInput.getContactNo());
-        teacher.setEmailAddress(addTeacherInput.getEmailAddress());
+        teacher.setEmergencyContactName(addTeacherInput.getEmergencyContactName());
+        teacher.setEmergencyContactMiddleName(addTeacherInput.getEmergencyContactMiddleName());
+        teacher.setEmergencyContactLastName(addTeacherInput.getEmergencyContactLastName());
+        teacher.setEmergencyContactNo(addTeacherInput.getEmergencyContactNo());
+        teacher.setEmergencyContactEmailAddress(addTeacherInput.getEmergencyContactEmailAddress());
         teacher.setUploadPhoto(addTeacherInput.getUploadPhoto());
         teacher.setEmployeeId(addTeacherInput.getEmployeeId());
         teacher.setDesignation(addTeacherInput.getDesignation());
@@ -1008,6 +972,17 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateTeacherInput.getFatherLastName() != null) {
             teacher.setFatherLastName(updateTeacherInput.getFatherLastName());
         }
+
+        if (updateTeacherInput.getSpouseName() != null) {
+            teacher.setSpouseName(updateTeacherInput.getSpouseName());
+        }
+        if (updateTeacherInput.getSpouseMiddleName() != null) {
+            teacher.setSpouseMiddleName(updateTeacherInput.getSpouseMiddleName());
+        }
+        if (updateTeacherInput.getSpouseLastName() != null) {
+            teacher.setSpouseLastName(updateTeacherInput.getSpouseLastName());
+        }
+
         if (updateTeacherInput.getMotherName() != null) {
             teacher.setMotherName(updateTeacherInput.getMotherName());
         }
@@ -1080,20 +1055,20 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateTeacherInput.getRelationWithStaff() != null) {
             teacher.setRelationWithStaff(updateTeacherInput.getRelationWithStaff());
         }
-        if (updateTeacherInput.getName() != null) {
-            teacher.setName(updateTeacherInput.getName());
+        if (updateTeacherInput.getEmergencyContactName() != null) {
+            teacher.setEmergencyContactName(updateTeacherInput.getEmergencyContactName());
         }
-        if (updateTeacherInput.getMiddleName() != null) {
-            teacher.setMiddleName(updateTeacherInput.getMiddleName());
+        if (updateTeacherInput.getEmergencyContactMiddleName() != null) {
+            teacher.setEmergencyContactMiddleName(updateTeacherInput.getEmergencyContactMiddleName());
         }
-        if (updateTeacherInput.getLastName() != null) {
-            teacher.setLastName(updateTeacherInput.getLastName());
+        if (updateTeacherInput.getEmergencyContactLastName() != null) {
+            teacher.setEmergencyContactLastName(updateTeacherInput.getEmergencyContactLastName());
         }
-        if (updateTeacherInput.getContactNo() != null) {
-            teacher.setContactNo(updateTeacherInput.getContactNo());
+        if (updateTeacherInput.getEmergencyContactNo() != null) {
+            teacher.setEmergencyContactNo(updateTeacherInput.getEmergencyContactNo());
         }
-        if (updateTeacherInput.getEmailAddress() != null) {
-            teacher.setEmailAddress(updateTeacherInput.getEmailAddress());
+        if (updateTeacherInput.getEmergencyContactEmailAddress() != null) {
+            teacher.setEmergencyContactEmailAddress(updateTeacherInput.getEmergencyContactEmailAddress());
         }
         if (updateTeacherInput.getUploadPhoto() != null) {
             teacher.setUploadPhoto(updateTeacherInput.getUploadPhoto());
@@ -1718,7 +1693,15 @@ public class Mutation implements GraphQLMutationResolver {
         final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
         AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
         final Facility facility = new Facility();
-        facility.setFacilityName(addFacilityInput.getFacilityName());
+        facility.setTransport(addFacilityInput.getTransport());
+        facility.setMess(addFacilityInput.getMess());
+        facility.setGym(addFacilityInput.getGym());
+        facility.setCulturalClass(addFacilityInput.getCulturalClass());
+        facility.setLibrary(addFacilityInput.getLibrary());
+        facility.setSports(addFacilityInput.getSports());
+        facility.setSwimming(addFacilityInput.getSwimming());
+        facility.setExtraClass(addFacilityInput.getExtraClass());
+        facility.setHandicrafts(addFacilityInput.getHandicrafts());
         facility.setAcademicYear(academicYear);
         facility.setStudent(student);
         facility.setBranch(branch);
@@ -1729,9 +1712,35 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateFacilityPayload updateFacility(UpdateFacilityInput updateFacilityInput) {
         Facility facility = facilityRepository.findById(updateFacilityInput.getId()).get();
-        if (updateFacilityInput.getFacilityName() != null) {
-            facility.setFacilityName(updateFacilityInput.getFacilityName());
+
+        if (updateFacilityInput.getTransport() != null) {
+            facility.setTransport(updateFacilityInput.getTransport());
         }
+        if (updateFacilityInput.getMess() != null) {
+            facility.setMess(updateFacilityInput.getMess());
+        }
+        if (updateFacilityInput.getGym() != null) {
+            facility.setGym(updateFacilityInput.getGym());
+        }
+        if (updateFacilityInput.getCulturalClass() != null) {
+            facility.setCulturalClass(updateFacilityInput.getCulturalClass());
+        }
+        if (updateFacilityInput.getLibrary() != null) {
+            facility.setLibrary(updateFacilityInput.getLibrary());
+        }
+        if (updateFacilityInput.getSports() != null) {
+            facility.setSports(updateFacilityInput.getSports());
+        }
+        if (updateFacilityInput.getSwimming() != null) {
+            facility.setSwimming(updateFacilityInput.getSwimming());
+        }
+        if (updateFacilityInput.getExtraClass() != null) {
+            facility.setExtraClass(updateFacilityInput.getExtraClass());
+        }
+        if (updateFacilityInput.getHandicrafts() != null) {
+            facility.setHandicrafts(updateFacilityInput.getHandicrafts());
+        }
+
         if(updateFacilityInput.getStudentId() != null) {
      	Student student = studentRepository.findById(updateFacilityInput.getStudentId()).get();
      	facility.setStudent(student);

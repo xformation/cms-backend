@@ -23,8 +23,6 @@ import com.synectiks.cms.domain.enumeration.Bloodgroup;
 
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 
-import com.synectiks.cms.domain.enumeration.Status;
-
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 /**
@@ -149,18 +147,16 @@ public class Student implements Serializable {
 
     @NotNull
     @Column(name = "student_contact_number", nullable = false)
-    private Long studentContactNumber;
+    private String studentContactNumber;
 
-    @NotNull
-    @Column(name = "alternate_contact_number", nullable = false)
-    private Long alternateContactNumber;
+    @Column(name = "alternate_contact_number")
+    private String alternateContactNumber;
 
     @NotNull
     @Column(name = "student_email_address", nullable = false)
     private String studentEmailAddress;
 
-    @NotNull
-    @Column(name = "alternate_email_address", nullable = false)
+    @Column(name = "alternate_email_address")
     private String alternateEmailAddress;
 
     @NotNull
@@ -169,85 +165,33 @@ public class Student implements Serializable {
     private RelationWithStudentEnum relationWithStudent;
 
     @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "emergency_contact_name", nullable = false)
+    private String emergencyContactName;
 
     @NotNull
-    @Column(name = "middle_name", nullable = false)
-    private String middleName;
+    @Column(name = "emergency_contact_middle_name", nullable = false)
+    private String emergencyContactMiddleName;
 
     @NotNull
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column(name = "emergency_contact_last_name", nullable = false)
+    private String emergencyContactLastName;
 
     @NotNull
-    @Column(name = "contact_no", nullable = false)
-    private Long contactNo;
+    @Column(name = "emergency_contact_no", nullable = false)
+    private String emergencyContactNo;
 
     @NotNull
-    @Column(name = "email_address", nullable = false)
-    private String emailAddress;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "transport", nullable = false)
-    private Status transport;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "mess", nullable = false)
-    private Status mess;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gym", nullable = false)
-    private Status gym;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "cultural_class", nullable = false)
-    private Status culturalClass;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "jhi_library", nullable = false)
-    private Status library;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "sports", nullable = false)
-    private Status sports;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "swimming", nullable = false)
-    private Status swimming;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "extra_class", nullable = false)
-    private Status extraClass;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "handicrafts", nullable = false)
-    private Status handicrafts;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "jhi_add", nullable = false)
-    private Status add;
+    @Column(name = "emergency_contact_email_address", nullable = false)
+    private String emergencyContactEmailAddress;
 
     @NotNull
     @Column(name = "upload_photo", nullable = false)
-    private Long uploadPhoto;
+    private String uploadPhoto;
 
-    @NotNull
-    @Column(name = "admission_no", nullable = false)
+    @Column(name = "admission_no")
     private Long admissionNo;
 
-    @NotNull
-    @Column(name = "roll_no", nullable = false)
+    @Column(name = "roll_no")
     private String rollNo;
 
     @NotNull
@@ -609,29 +553,29 @@ public class Student implements Serializable {
         this.pincode = pincode;
     }
 
-    public Long getStudentContactNumber() {
+    public String getStudentContactNumber() {
         return studentContactNumber;
     }
 
-    public Student studentContactNumber(Long studentContactNumber) {
+    public Student studentContactNumber(String studentContactNumber) {
         this.studentContactNumber = studentContactNumber;
         return this;
     }
 
-    public void setStudentContactNumber(Long studentContactNumber) {
+    public void setStudentContactNumber(String studentContactNumber) {
         this.studentContactNumber = studentContactNumber;
     }
 
-    public Long getAlternateContactNumber() {
+    public String getAlternateContactNumber() {
         return alternateContactNumber;
     }
 
-    public Student alternateContactNumber(Long alternateContactNumber) {
+    public Student alternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
         return this;
     }
 
-    public void setAlternateContactNumber(Long alternateContactNumber) {
+    public void setAlternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
     }
 
@@ -674,211 +618,81 @@ public class Student implements Serializable {
         this.relationWithStudent = relationWithStudent;
     }
 
-    public String getName() {
-        return name;
+    public String getEmergencyContactName() {
+        return emergencyContactName;
     }
 
-    public Student name(String name) {
-        this.name = name;
+    public Student emergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getEmergencyContactMiddleName() {
+        return emergencyContactMiddleName;
     }
 
-    public Student middleName(String middleName) {
-        this.middleName = middleName;
+    public Student emergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
         return this;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setEmergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getEmergencyContactLastName() {
+        return emergencyContactLastName;
     }
 
-    public Student lastName(String lastName) {
-        this.lastName = lastName;
+    public Student emergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
         return this;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
     }
 
-    public Long getContactNo() {
-        return contactNo;
+    public String getEmergencyContactNo() {
+        return emergencyContactNo;
     }
 
-    public Student contactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public Student emergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
         return this;
     }
 
-    public void setContactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public void setEmergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmergencyContactEmailAddress() {
+        return emergencyContactEmailAddress;
     }
 
-    public Student emailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public Student emergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
         return this;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
     }
 
-    public Status getTransport() {
-        return transport;
-    }
-
-    public Student transport(Status transport) {
-        this.transport = transport;
-        return this;
-    }
-
-    public void setTransport(Status transport) {
-        this.transport = transport;
-    }
-
-    public Status getMess() {
-        return mess;
-    }
-
-    public Student mess(Status mess) {
-        this.mess = mess;
-        return this;
-    }
-
-    public void setMess(Status mess) {
-        this.mess = mess;
-    }
-
-    public Status getGym() {
-        return gym;
-    }
-
-    public Student gym(Status gym) {
-        this.gym = gym;
-        return this;
-    }
-
-    public void setGym(Status gym) {
-        this.gym = gym;
-    }
-
-    public Status getCulturalClass() {
-        return culturalClass;
-    }
-
-    public Student culturalClass(Status culturalClass) {
-        this.culturalClass = culturalClass;
-        return this;
-    }
-
-    public void setCulturalClass(Status culturalClass) {
-        this.culturalClass = culturalClass;
-    }
-
-    public Status getLibrary() {
-        return library;
-    }
-
-    public Student library(Status library) {
-        this.library = library;
-        return this;
-    }
-
-    public void setLibrary(Status library) {
-        this.library = library;
-    }
-
-    public Status getSports() {
-        return sports;
-    }
-
-    public Student sports(Status sports) {
-        this.sports = sports;
-        return this;
-    }
-
-    public void setSports(Status sports) {
-        this.sports = sports;
-    }
-
-    public Status getSwimming() {
-        return swimming;
-    }
-
-    public Student swimming(Status swimming) {
-        this.swimming = swimming;
-        return this;
-    }
-
-    public void setSwimming(Status swimming) {
-        this.swimming = swimming;
-    }
-
-    public Status getExtraClass() {
-        return extraClass;
-    }
-
-    public Student extraClass(Status extraClass) {
-        this.extraClass = extraClass;
-        return this;
-    }
-
-    public void setExtraClass(Status extraClass) {
-        this.extraClass = extraClass;
-    }
-
-    public Status getHandicrafts() {
-        return handicrafts;
-    }
-
-    public Student handicrafts(Status handicrafts) {
-        this.handicrafts = handicrafts;
-        return this;
-    }
-
-    public void setHandicrafts(Status handicrafts) {
-        this.handicrafts = handicrafts;
-    }
-
-    public Status getAdd() {
-        return add;
-    }
-
-    public Student add(Status add) {
-        this.add = add;
-        return this;
-    }
-
-    public void setAdd(Status add) {
-        this.add = add;
-    }
-
-    public Long getUploadPhoto() {
+    public String getUploadPhoto() {
         return uploadPhoto;
     }
 
-    public Student uploadPhoto(Long uploadPhoto) {
+    public Student uploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
         return this;
     }
 
-    public void setUploadPhoto(Long uploadPhoto) {
+    public void setUploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
     }
 
@@ -1023,27 +837,17 @@ public class Student implements Serializable {
             ", state='" + getState() + "'" +
             ", country='" + getCountry() + "'" +
             ", pincode=" + getPincode() +
-            ", studentContactNumber=" + getStudentContactNumber() +
-            ", alternateContactNumber=" + getAlternateContactNumber() +
+            ", studentContactNumber='" + getStudentContactNumber() + "'" +
+            ", alternateContactNumber='" + getAlternateContactNumber() + "'" +
             ", studentEmailAddress='" + getStudentEmailAddress() + "'" +
             ", alternateEmailAddress='" + getAlternateEmailAddress() + "'" +
             ", relationWithStudent='" + getRelationWithStudent() + "'" +
-            ", name='" + getName() + "'" +
-            ", middleName='" + getMiddleName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", contactNo=" + getContactNo() +
-            ", emailAddress='" + getEmailAddress() + "'" +
-            ", transport='" + getTransport() + "'" +
-            ", mess='" + getMess() + "'" +
-            ", gym='" + getGym() + "'" +
-            ", culturalClass='" + getCulturalClass() + "'" +
-            ", library='" + getLibrary() + "'" +
-            ", sports='" + getSports() + "'" +
-            ", swimming='" + getSwimming() + "'" +
-            ", extraClass='" + getExtraClass() + "'" +
-            ", handicrafts='" + getHandicrafts() + "'" +
-            ", add='" + getAdd() + "'" +
-            ", uploadPhoto=" + getUploadPhoto() +
+            ", emergencyContactName='" + getEmergencyContactName() + "'" +
+            ", emergencyContactMiddleName='" + getEmergencyContactMiddleName() + "'" +
+            ", emergencyContactLastName='" + getEmergencyContactLastName() + "'" +
+            ", emergencyContactNo='" + getEmergencyContactNo() + "'" +
+            ", emergencyContactEmailAddress='" + getEmergencyContactEmailAddress() + "'" +
+            ", uploadPhoto='" + getUploadPhoto() + "'" +
             ", admissionNo=" + getAdmissionNo() +
             ", rollNo='" + getRollNo() + "'" +
             ", studentType='" + getStudentType() + "'" +

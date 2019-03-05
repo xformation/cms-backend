@@ -2,6 +2,15 @@ package com.synectiks.cms.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the Facility entity.
@@ -10,7 +19,23 @@ public class FacilityDTO implements Serializable {
 
     private Long id;
 
-    private String facilityName;
+    private Status transport;
+
+    private Status mess;
+
+    private Status gym;
+
+    private Status culturalClass;
+
+    private Status library;
+
+    private Status sports;
+
+    private Status swimming;
+
+    private Status extraClass;
+
+    private Status handicrafts;
 
     private Long academicYearId;
 
@@ -26,12 +51,76 @@ public class FacilityDTO implements Serializable {
         this.id = id;
     }
 
-    public String getFacilityName() {
-        return facilityName;
+    public Status getTransport() {
+        return transport;
     }
 
-    public void setFacilityName(String facilityName) {
-        this.facilityName = facilityName;
+    public void setTransport(Status transport) {
+        this.transport = transport;
+    }
+
+    public Status getMess() {
+        return mess;
+    }
+
+    public void setMess(Status mess) {
+        this.mess = mess;
+    }
+
+    public Status getGym() {
+        return gym;
+    }
+
+    public void setGym(Status gym) {
+        this.gym = gym;
+    }
+
+    public Status getCulturalClass() {
+        return culturalClass;
+    }
+
+    public void setCulturalClass(Status culturalClass) {
+        this.culturalClass = culturalClass;
+    }
+
+    public Status getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Status library) {
+        this.library = library;
+    }
+
+    public Status getSports() {
+        return sports;
+    }
+
+    public void setSports(Status sports) {
+        this.sports = sports;
+    }
+
+    public Status getSwimming() {
+        return swimming;
+    }
+
+    public void setSwimming(Status swimming) {
+        this.swimming = swimming;
+    }
+
+    public Status getExtraClass() {
+        return extraClass;
+    }
+
+    public void setExtraClass(Status extraClass) {
+        this.extraClass = extraClass;
+    }
+
+    public Status getHandicrafts() {
+        return handicrafts;
+    }
+
+    public void setHandicrafts(Status handicrafts) {
+        this.handicrafts = handicrafts;
     }
 
     public Long getAcademicYearId() {
@@ -83,7 +172,15 @@ public class FacilityDTO implements Serializable {
     public String toString() {
         return "FacilityDTO{" +
             "id=" + getId() +
-            ", facilityName='" + getFacilityName() + "'" +
+            ", transport='" + getTransport() + "'" +
+            ", mess='" + getMess() + "'" +
+            ", gym='" + getGym() + "'" +
+            ", culturalClass='" + getCulturalClass() + "'" +
+            ", library='" + getLibrary() + "'" +
+            ", sports='" + getSports() + "'" +
+            ", swimming='" + getSwimming() + "'" +
+            ", extraClass='" + getExtraClass() + "'" +
+            ", handicrafts='" + getHandicrafts() + "'" +
             ", academicYear=" + getAcademicYearId() +
             ", branch=" + getBranchId() +
             ", student=" + getStudentId() +

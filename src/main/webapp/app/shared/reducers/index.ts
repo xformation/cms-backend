@@ -484,6 +484,22 @@ import lateFee, {
 import invoice, {
   InvoiceState
 } from 'app/entities/invoice/invoice.reducer';
+// prettier-ignore
+import student, {
+  StudentState
+} from 'app/entities/student/student.reducer';
+// prettier-ignore
+import teacher, {
+  TeacherState
+} from 'app/entities/teacher/teacher.reducer';
+// prettier-ignore
+import facility, {
+  FacilityState
+} from 'app/entities/facility/facility.reducer';
+// prettier-ignore
+import invoice, {
+  InvoiceState
+} from 'app/entities/invoice/invoice.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

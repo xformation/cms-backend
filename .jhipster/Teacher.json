@@ -44,6 +44,18 @@
             ]
         },
         {
+            "fieldName": "spouseName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "spouseMiddleName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "spouseLastName",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "motherName",
             "fieldType": "String",
             "fieldValidateRules": [
@@ -182,17 +194,14 @@
         },
         {
             "fieldName": "teacherContactNumber",
-            "fieldType": "Long",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "alternateContactNumber",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
             "fieldName": "teacherEmailAddress",
@@ -203,10 +212,7 @@
         },
         {
             "fieldName": "alternateEmailAddress",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
             "fieldName": "relationWithStaff",
@@ -217,35 +223,32 @@
             ]
         },
         {
-            "fieldName": "name",
+            "fieldName": "emergencyContactName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "middleName",
+            "fieldName": "emergencyContactMiddleName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "emergencyContactLastName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "lastName",
+            "fieldName": "emergencyContactNo",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "contactNo",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "emailAddress",
+            "fieldName": "emergencyContactEmailAddress",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
@@ -253,17 +256,14 @@
         },
         {
             "fieldName": "uploadPhoto",
-            "fieldType": "Long",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "employeeId",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "Long"
         },
         {
             "fieldName": "designation",
@@ -295,7 +295,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190128125803",
+    "changelogDate": "20190305093210",
     "entityTableName": "teacher",
     "dto": "mapstruct",
     "pagination": "no",

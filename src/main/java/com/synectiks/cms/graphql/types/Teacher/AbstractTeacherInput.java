@@ -18,6 +18,9 @@ public class AbstractTeacherInput {
     private String fatherName;
     private String fatherMiddleName;
     private String fatherLastName;
+    private String spouseName;
+    private String spouseMiddleName;
+    private String spouseLastName;
     private String motherName;
     private String motherMiddleName;
     private String motherLastName;
@@ -37,17 +40,17 @@ public class AbstractTeacherInput {
     private String state;
     private String country;
     private Long pincode;
-    private Long teacherContactNumber;
-    private Long alternateContactNumber;
+    private String teacherContactNumber;
+    private String alternateContactNumber;
     private String teacherEmailAddress;
     private String alternateEmailAddress;
     private RelationWithStudentEnum relationWithStaff;
-    private String name;
-    private String middleName;
-    private String lastName;
-    private Long contactNo;
-    private String emailAddress;
-    private Long uploadPhoto;
+    private String emergencyContactName ;
+    private String emergencyContactMiddleName ;
+    private String emergencyContactLastName ;
+    private String emergencyContactNo ;
+    private String emergencyContactEmailAddress ;
+    private String uploadPhoto;
     private Long employeeId;
     private String designation;
     private StaffType staffType;
@@ -106,6 +109,30 @@ public class AbstractTeacherInput {
 
     public void setFatherLastName(String fatherLastName) {
         this.fatherLastName = fatherLastName;
+    }
+
+    public String getSpouseName() {
+        return spouseName;
+    }
+
+    public void setSpouseName(String spouseName) {
+        this.spouseName = spouseName;
+    }
+
+    public String getSpouseMiddleName() {
+        return spouseMiddleName;
+    }
+
+    public void setSpouseMiddleName(String spouseMiddleName) {
+        this.spouseMiddleName = spouseMiddleName;
+    }
+
+    public String getSpouseLastName() {
+        return spouseLastName;
+    }
+
+    public void setSpouseLastName(String spouseLastName) {
+        this.spouseLastName = spouseLastName;
     }
 
     public String getMotherName() {
@@ -260,19 +287,19 @@ public class AbstractTeacherInput {
         this.pincode = pincode;
     }
 
-    public Long getTeacherContactNumber() {
+    public String getTeacherContactNumber() {
         return teacherContactNumber;
     }
 
-    public void setTeacherContactNumber(Long teacherContactNumber) {
+    public void setTeacherContactNumber(String teacherContactNumber) {
         this.teacherContactNumber = teacherContactNumber;
     }
 
-    public Long getAlternateContactNumber() {
+    public String getAlternateContactNumber() {
         return alternateContactNumber;
     }
 
-    public void setAlternateContactNumber(Long alternateContactNumber) {
+    public void setAlternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
     }
 
@@ -300,51 +327,51 @@ public class AbstractTeacherInput {
         this.relationWithStaff = relationWithStaff;
     }
 
-    public String getName() {
-        return name;
+    public String getEmergencyContactName() {
+        return emergencyContactName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getEmergencyContactMiddleName() {
+        return emergencyContactMiddleName;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setEmergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getEmergencyContactLastName() {
+        return emergencyContactLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
     }
 
-    public Long getContactNo() {
-        return contactNo;
+    public String getEmergencyContactNo() {
+        return emergencyContactNo;
     }
 
-    public void setContactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public void setEmergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmergencyContactEmailAddress() {
+        return emergencyContactEmailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
     }
 
-    public Long getUploadPhoto() {
+    public String getUploadPhoto() {
         return uploadPhoto;
     }
 
-    public void setUploadPhoto(Long uploadPhoto) {
+    public void setUploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
     }
 
@@ -373,6 +400,61 @@ public class AbstractTeacherInput {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractTeacherInput that = (AbstractTeacherInput) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(teacherName, that.teacherName) &&
+            Objects.equals(teacherMiddleName, that.teacherMiddleName) &&
+            Objects.equals(teacherLastName, that.teacherLastName) &&
+            Objects.equals(fatherName, that.fatherName) &&
+            Objects.equals(fatherMiddleName, that.fatherMiddleName) &&
+            Objects.equals(fatherLastName, that.fatherLastName) &&
+            Objects.equals(spouseName, that.spouseName) &&
+            Objects.equals(spouseMiddleName, that.spouseMiddleName) &&
+            Objects.equals(spouseLastName, that.spouseLastName) &&
+            Objects.equals(motherName, that.motherName) &&
+            Objects.equals(motherMiddleName, that.motherMiddleName) &&
+            Objects.equals(motherLastName, that.motherLastName) &&
+            Objects.equals(aadharNo, that.aadharNo) &&
+            Objects.equals(dateOfBirth, that.dateOfBirth) &&
+            Objects.equals(placeOfBirth, that.placeOfBirth) &&
+            religion == that.religion &&
+            caste == that.caste &&
+            Objects.equals(subCaste, that.subCaste) &&
+            Objects.equals(age, that.age) &&
+            sex == that.sex &&
+            bloodGroup == that.bloodGroup &&
+            Objects.equals(addressLineOne, that.addressLineOne) &&
+            Objects.equals(addressLineTwo, that.addressLineTwo) &&
+            Objects.equals(addressLineThree, that.addressLineThree) &&
+            Objects.equals(town, that.town) &&
+            Objects.equals(state, that.state) &&
+            Objects.equals(country, that.country) &&
+            Objects.equals(pincode, that.pincode) &&
+            Objects.equals(teacherContactNumber, that.teacherContactNumber) &&
+            Objects.equals(alternateContactNumber, that.alternateContactNumber) &&
+            Objects.equals(teacherEmailAddress, that.teacherEmailAddress) &&
+            Objects.equals(alternateEmailAddress, that.alternateEmailAddress) &&
+            relationWithStaff == that.relationWithStaff &&
+            Objects.equals(emergencyContactName, that.emergencyContactName) &&
+            Objects.equals(emergencyContactMiddleName, that.emergencyContactMiddleName) &&
+            Objects.equals(emergencyContactLastName, that.emergencyContactLastName) &&
+            Objects.equals(emergencyContactNo, that.emergencyContactNo) &&
+            Objects.equals(emergencyContactEmailAddress, that.emergencyContactEmailAddress) &&
+            Objects.equals(uploadPhoto, that.uploadPhoto) &&
+            Objects.equals(employeeId, that.employeeId) &&
+            Objects.equals(designation, that.designation) &&
+            staffType == that.staffType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, teacherName, teacherMiddleName, teacherLastName, fatherName, fatherMiddleName, fatherLastName, spouseName, spouseMiddleName, spouseLastName, motherName, motherMiddleName, motherLastName, aadharNo, dateOfBirth, placeOfBirth, religion, caste, subCaste, age, sex, bloodGroup, addressLineOne, addressLineTwo, addressLineThree, town, state, country, pincode, teacherContactNumber, alternateContactNumber, teacherEmailAddress, alternateEmailAddress, relationWithStaff, emergencyContactName, emergencyContactMiddleName, emergencyContactLastName, emergencyContactNo, emergencyContactEmailAddress, uploadPhoto, employeeId, designation, staffType);
+    }
+
+    @Override
     public String toString() {
         return "AbstractTeacherInput{" +
             "id=" + id +
@@ -382,6 +464,9 @@ public class AbstractTeacherInput {
             ", fatherName='" + fatherName + '\'' +
             ", fatherMiddleName='" + fatherMiddleName + '\'' +
             ", fatherLastName='" + fatherLastName + '\'' +
+            ", spouseName='" + spouseName + '\'' +
+            ", spouseMiddleName='" + spouseMiddleName + '\'' +
+            ", spouseLastName='" + spouseLastName + '\'' +
             ", motherName='" + motherName + '\'' +
             ", motherMiddleName='" + motherMiddleName + '\'' +
             ", motherLastName='" + motherLastName + '\'' +
@@ -401,17 +486,17 @@ public class AbstractTeacherInput {
             ", state='" + state + '\'' +
             ", country='" + country + '\'' +
             ", pincode=" + pincode +
-            ", teacherContactNumber=" + teacherContactNumber +
-            ", alternateContactNumber=" + alternateContactNumber +
+            ", teacherContactNumber='" + teacherContactNumber + '\'' +
+            ", alternateContactNumber='" + alternateContactNumber + '\'' +
             ", teacherEmailAddress='" + teacherEmailAddress + '\'' +
             ", alternateEmailAddress='" + alternateEmailAddress + '\'' +
             ", relationWithStaff=" + relationWithStaff +
-            ", name='" + name + '\'' +
-            ", middleName='" + middleName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", contactNo=" + contactNo +
-            ", emailAddress='" + emailAddress + '\'' +
-            ", uploadPhoto=" + uploadPhoto +
+            ", emergencyContactName='" + emergencyContactName + '\'' +
+            ", emergencyContactMiddleName='" + emergencyContactMiddleName + '\'' +
+            ", emergencyContactLastName='" + emergencyContactLastName + '\'' +
+            ", emergencyContactNo='" + emergencyContactNo + '\'' +
+            ", emergencyContactEmailAddress='" + emergencyContactEmailAddress + '\'' +
+            ", uploadPhoto='" + uploadPhoto + '\'' +
             ", employeeId=" + employeeId +
             ", designation='" + designation + '\'' +
             ", staffType=" + staffType +

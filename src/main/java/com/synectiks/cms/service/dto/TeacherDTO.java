@@ -36,6 +36,12 @@ public class TeacherDTO implements Serializable {
     @NotNull
     private String fatherLastName;
 
+    private String spouseName;
+
+    private String spouseMiddleName;
+
+    private String spouseLastName;
+
     @NotNull
     private String motherName;
 
@@ -94,39 +100,35 @@ public class TeacherDTO implements Serializable {
     private Long pincode;
 
     @NotNull
-    private Long teacherContactNumber;
+    private String teacherContactNumber;
 
-    @NotNull
-    private Long alternateContactNumber;
+    private String alternateContactNumber;
 
     @NotNull
     private String teacherEmailAddress;
 
-    @NotNull
     private String alternateEmailAddress;
 
     @NotNull
     private RelationWithStudentEnum relationWithStaff;
 
     @NotNull
-    private String name;
+    private String emergencyContactName;
+
+    private String emergencyContactMiddleName;
 
     @NotNull
-    private String middleName;
+    private String emergencyContactLastName;
 
     @NotNull
-    private String lastName;
+    private String emergencyContactNo;
 
     @NotNull
-    private Long contactNo;
+    private String emergencyContactEmailAddress;
 
     @NotNull
-    private String emailAddress;
+    private String uploadPhoto;
 
-    @NotNull
-    private Long uploadPhoto;
-
-    @NotNull
     private Long employeeId;
 
     @NotNull
@@ -193,6 +195,30 @@ public class TeacherDTO implements Serializable {
 
     public void setFatherLastName(String fatherLastName) {
         this.fatherLastName = fatherLastName;
+    }
+
+    public String getSpouseName() {
+        return spouseName;
+    }
+
+    public void setSpouseName(String spouseName) {
+        this.spouseName = spouseName;
+    }
+
+    public String getSpouseMiddleName() {
+        return spouseMiddleName;
+    }
+
+    public void setSpouseMiddleName(String spouseMiddleName) {
+        this.spouseMiddleName = spouseMiddleName;
+    }
+
+    public String getSpouseLastName() {
+        return spouseLastName;
+    }
+
+    public void setSpouseLastName(String spouseLastName) {
+        this.spouseLastName = spouseLastName;
     }
 
     public String getMotherName() {
@@ -347,19 +373,19 @@ public class TeacherDTO implements Serializable {
         this.pincode = pincode;
     }
 
-    public Long getTeacherContactNumber() {
+    public String getTeacherContactNumber() {
         return teacherContactNumber;
     }
 
-    public void setTeacherContactNumber(Long teacherContactNumber) {
+    public void setTeacherContactNumber(String teacherContactNumber) {
         this.teacherContactNumber = teacherContactNumber;
     }
 
-    public Long getAlternateContactNumber() {
+    public String getAlternateContactNumber() {
         return alternateContactNumber;
     }
 
-    public void setAlternateContactNumber(Long alternateContactNumber) {
+    public void setAlternateContactNumber(String alternateContactNumber) {
         this.alternateContactNumber = alternateContactNumber;
     }
 
@@ -387,51 +413,51 @@ public class TeacherDTO implements Serializable {
         this.relationWithStaff = relationWithStaff;
     }
 
-    public String getName() {
-        return name;
+    public String getEmergencyContactName() {
+        return emergencyContactName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmergencyContactName(String emergencyContactName) {
+        this.emergencyContactName = emergencyContactName;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getEmergencyContactMiddleName() {
+        return emergencyContactMiddleName;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setEmergencyContactMiddleName(String emergencyContactMiddleName) {
+        this.emergencyContactMiddleName = emergencyContactMiddleName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getEmergencyContactLastName() {
+        return emergencyContactLastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmergencyContactLastName(String emergencyContactLastName) {
+        this.emergencyContactLastName = emergencyContactLastName;
     }
 
-    public Long getContactNo() {
-        return contactNo;
+    public String getEmergencyContactNo() {
+        return emergencyContactNo;
     }
 
-    public void setContactNo(Long contactNo) {
-        this.contactNo = contactNo;
+    public void setEmergencyContactNo(String emergencyContactNo) {
+        this.emergencyContactNo = emergencyContactNo;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmergencyContactEmailAddress() {
+        return emergencyContactEmailAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmergencyContactEmailAddress(String emergencyContactEmailAddress) {
+        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
     }
 
-    public Long getUploadPhoto() {
+    public String getUploadPhoto() {
         return uploadPhoto;
     }
 
-    public void setUploadPhoto(Long uploadPhoto) {
+    public void setUploadPhoto(String uploadPhoto) {
         this.uploadPhoto = uploadPhoto;
     }
 
@@ -506,6 +532,9 @@ public class TeacherDTO implements Serializable {
             ", fatherName='" + getFatherName() + "'" +
             ", fatherMiddleName='" + getFatherMiddleName() + "'" +
             ", fatherLastName='" + getFatherLastName() + "'" +
+            ", spouseName='" + getSpouseName() + "'" +
+            ", spouseMiddleName='" + getSpouseMiddleName() + "'" +
+            ", spouseLastName='" + getSpouseLastName() + "'" +
             ", motherName='" + getMotherName() + "'" +
             ", motherMiddleName='" + getMotherMiddleName() + "'" +
             ", motherLastName='" + getMotherLastName() + "'" +
@@ -525,17 +554,17 @@ public class TeacherDTO implements Serializable {
             ", state='" + getState() + "'" +
             ", country='" + getCountry() + "'" +
             ", pincode=" + getPincode() +
-            ", teacherContactNumber=" + getTeacherContactNumber() +
-            ", alternateContactNumber=" + getAlternateContactNumber() +
+            ", teacherContactNumber='" + getTeacherContactNumber() + "'" +
+            ", alternateContactNumber='" + getAlternateContactNumber() + "'" +
             ", teacherEmailAddress='" + getTeacherEmailAddress() + "'" +
             ", alternateEmailAddress='" + getAlternateEmailAddress() + "'" +
             ", relationWithStaff='" + getRelationWithStaff() + "'" +
-            ", name='" + getName() + "'" +
-            ", middleName='" + getMiddleName() + "'" +
-            ", lastName='" + getLastName() + "'" +
-            ", contactNo=" + getContactNo() +
-            ", emailAddress='" + getEmailAddress() + "'" +
-            ", uploadPhoto=" + getUploadPhoto() +
+            ", emergencyContactName='" + getEmergencyContactName() + "'" +
+            ", emergencyContactMiddleName='" + getEmergencyContactMiddleName() + "'" +
+            ", emergencyContactLastName='" + getEmergencyContactLastName() + "'" +
+            ", emergencyContactNo='" + getEmergencyContactNo() + "'" +
+            ", emergencyContactEmailAddress='" + getEmergencyContactEmailAddress() + "'" +
+            ", uploadPhoto='" + getUploadPhoto() + "'" +
             ", employeeId=" + getEmployeeId() +
             ", designation='" + getDesignation() + "'" +
             ", staffType='" + getStaffType() + "'" +
