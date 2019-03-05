@@ -10,6 +10,9 @@ services:
             - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=cms-elasticsearch:9300
         ports:
             - 8080:8080
+        links:
+            - cms-postgresql:cms-postgresql
+            - cms-elasticsearch:cms-elasticsearch
     cms-postgresql:
         extends:
             file: postgresql.yml
