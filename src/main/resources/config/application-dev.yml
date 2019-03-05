@@ -55,7 +55,7 @@ spring:
                     data: target/elasticsearch/data
     liquibase:
         contexts: dev
-        labels: loadtestdata
+        
     mail:
         host: localhost
         port: 25

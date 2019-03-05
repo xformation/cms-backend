@@ -6,36 +6,13 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="22200000000222" author="jhipster">
-    	<delete tableName="legal_entity">  </delete>
-    	<delete tableName="branch">  </delete>
-    	<delete tableName="holiday">  </delete>
-    	<delete tableName="term">  </delete>
-    	<delete tableName="academic_year">  </delete>
-    	<delete tableName="college">  </delete>
-    	<delete tableName="authorized_signatory">  </delete>
-    	<delete tableName="bank_accounts">  </delete>
-    	<delete tableName="department">  </delete>
-    	<delete tableName="batch">  </delete>
-    	<delete tableName="section">  </delete>
-    	<delete tableName="student">  </delete>
-    	<delete tableName="subject">  </delete>
-    	<delete tableName="teacher">  </delete>
-    	<delete tableName="teach">  </delete>
-    	<delete tableName="attendance_master">  </delete>
-    	<delete tableName="lecture">  </delete>
-    	<delete tableName="student_attendance">  </delete>
+    <changeSet id="local_test_data_load" author="jhipster">
     	
         <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/college.csv"
                   separator=";"
                   tableName="college"/>
 		
-		<!-- <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/location.csv"
-                  separator=";"
-                  tableName="location"/>  -->
-
 		<loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/academic_year.csv"
                   separator=";"
