@@ -10,6 +10,7 @@ import java.util.Base64;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,22 @@ public class Base64FileProcessor  {
 	public QueryResult createFileFromBase64String(String base64EncodeStr, String filePath, String fileName, String branchId) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
 		logger.info("Start creating file from base64 encoded string.");
 		
-		validateFileParameters(filePath, fileName, branchId);
+		if(filePath == null) {
+			throw new FilePathNotFoundException("File path not provided to save uploaded file");
+		}
+		if(fileName == null) {
+			fileName = getDefaultValues();
+		}
+		
+		String completeFilePath = filePath;
+		if(branchId != null) {
+			completeFilePath = filePath+File.separator+branchId;
+		}
+		
+		File f = new File(completeFilePath);
+		if(!f.exists()) {
+			f.mkdirs();
+		}
 		
 		QueryResult res = new QueryResult();
 		res.setStatusCode(0);
@@ -51,12 +67,13 @@ public class Base64FileProcessor  {
 		
 		String[] strings = base64EncodeStr.split(",");
 		String extension =	  getFileExtensionFromBase64Srting(strings[0]);
+		String absFileName = completeFilePath+File.separator+fileName+"."+extension;
 		
 		byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
-		File file = new File(generateFileName(filePath, fileName, branchId, extension));
+		f = new File(absFileName);
 		
 		logger.debug("Starting file creation from base64 encoded string.");
-		try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+		try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(f))) {
 		    outputStream.write(data);
 		} catch (IOException e) {
 		    logger.error("Exception while creating file from base64 encoded string: ",e);
@@ -66,31 +83,11 @@ public class Base64FileProcessor  {
 		logger.info("File created successfully from base64 encoded string.");
 		return res;
 	}
-
 	
-	private String generateFileName(String filePath, String fileName, String branchId, String extension) {
-		File f = new File(filePath+File.separator+branchId);
-		if(!f.exists()) {
-			f.mkdirs();
-		}
-		return filePath+File.separator+branchId+File.separator+fileName+"."+extension;
-	}
-
-	private void validateFileParameters(String filePath, String fileName, String branchId)
-			throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-		
-		if(filePath == null) {
-			throw new FilePathNotFoundException("File path not provided to save uploaded file");
-		}
-		if(!new File(filePath).exists()) {
-			throw new FilePathNotFoundException(String.format("File path does not exist: %s",filePath));
-		}
-		if(fileName == null) {
-			throw new FileNameNotFoundException("File name not provided to save uploaded file");
-		}
-		if(branchId == null) {
-			throw new BranchIdNotFoundException("Branch id not provided to save uploaded file");
-		}
+	private String getDefaultValues() {
+		String systemGeneratedFileName = RandomStringUtils.random(12, true, true);
+		logger.debug("Random file name : "+systemGeneratedFileName);
+		return systemGeneratedFileName;
 	}
 	
 	private String getFileExtensionFromBase64Srting(String str) {

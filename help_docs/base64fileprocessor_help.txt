@@ -1,0 +1,33 @@
+#Base64 Encoded File Processor
+
+Base64FileProcessor.java is responsible for converting base64 econded string into file and vice versa.
+
+It has two APIs
+
+1. public QueryResult createFileFromBase64String(String base64EncodeStr, String filePath, String fileName, String branchId)
+	
+	This APIs accept four parameters as below:
+	
+	String base64EncodeStr = "data:text/plain;base64,VHh0IGZpbGUgdG8gdGVzdCBiYXNlNjQgZmlsZSBlbmNvZGluZyBhbmQgZGVjb2Rpbmcu";
+	String filePath = "D:/test";
+	String fileName = "abc";
+	String branchId = "1001";
+
+	As per the above input parameters, program will identify the file type from the base64 string and after successful execution abc.txt 
+	file will be created at	D:/test/1001 location. The complet file path will be D:/test/1001/abc.txt.
+	
+	if filePath is not given, program will throw FilePathNotFoundException as belwo:
+	if(filePath == null) {
+		throw new FilePathNotFoundException("File path not provided to save uploaded file");
+	}
+	
+	If branchId is not given, the file path will not contains branchId. In this case file will be saved at D:/test location. 
+	
+	If fileName is not given, system will generate a 12 characters file name automatically by using the Apaches RandomStringUtils API
+	as belwo:
+	String systemGeneratedFileName = RandomStringUtils.random(12, true, true); 
+
+2. public String createBase64StringFromFile(String filePath)
+	
+	This API converts the file into base64 econded string.
+	
