@@ -86,6 +86,10 @@
                   file="config/liquibase/cms_test_data/student_attendance.csv"
                   separator=";"
                   tableName="student_attendance"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/facility.csv"
+                  separator=";"
+                  tableName="facility"/>
                                                              
     </changeSet>
 </databaseChangeLog>
