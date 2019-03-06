@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -61,10 +62,8 @@ public class BranchResourceIntTest {
     @Autowired
     private BranchRepository branchRepository;
 
-
     @Autowired
     private BranchMapper branchMapper;
-    
 
     @Autowired
     private BranchService branchService;
@@ -89,6 +88,9 @@ public class BranchResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restBranchMockMvc;
 
     private Branch branch;
@@ -101,7 +103,8 @@ public class BranchResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -265,7 +268,6 @@ public class BranchResourceIntTest {
             .andExpect(jsonPath("$.[*].branchHead").value(hasItem(DEFAULT_BRANCH_HEAD.toString())));
     }
     
-
     @Test
     @Transactional
     public void getBranch() throws Exception {
@@ -282,6 +284,7 @@ public class BranchResourceIntTest {
             .andExpect(jsonPath("$.address2").value(DEFAULT_ADDRESS_2.toString()))
             .andExpect(jsonPath("$.branchHead").value(DEFAULT_BRANCH_HEAD.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingBranch() throws Exception {
@@ -335,7 +338,7 @@ public class BranchResourceIntTest {
         // Create the Branch
         BranchDTO branchDTO = branchMapper.toDto(branch);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBranchMockMvc.perform(put("/api/branches")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
@@ -357,7 +360,7 @@ public class BranchResourceIntTest {
 
         int databaseSizeBeforeDelete = branchRepository.findAll().size();
 
-        // Get the branch
+        // Delete the branch
         restBranchMockMvc.perform(delete("/api/branches/{id}", branch.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -382,10 +385,10 @@ public class BranchResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(branch.getId().intValue())))
-            .andExpect(jsonPath("$.[*].branchName").value(hasItem(DEFAULT_BRANCH_NAME.toString())))
-            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1.toString())))
-            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2.toString())))
-            .andExpect(jsonPath("$.[*].branchHead").value(hasItem(DEFAULT_BRANCH_HEAD.toString())));
+            .andExpect(jsonPath("$.[*].branchName").value(hasItem(DEFAULT_BRANCH_NAME)))
+            .andExpect(jsonPath("$.[*].address1").value(hasItem(DEFAULT_ADDRESS_1)))
+            .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2)))
+            .andExpect(jsonPath("$.[*].branchHead").value(hasItem(DEFAULT_BRANCH_HEAD)));
     }
 
     @Test

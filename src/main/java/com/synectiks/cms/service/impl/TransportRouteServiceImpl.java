@@ -50,7 +50,6 @@ public class TransportRouteServiceImpl implements TransportRouteService {
     @Override
     public TransportRouteDTO save(TransportRouteDTO transportRouteDTO) {
         log.debug("Request to save TransportRoute : {}", transportRouteDTO);
-
         TransportRoute transportRoute = transportRouteMapper.toEntity(transportRouteDTO);
         transportRoute = transportRouteRepository.save(transportRoute);
         TransportRouteDTO result = transportRouteMapper.toDto(transportRoute);
@@ -94,8 +93,7 @@ public class TransportRouteServiceImpl implements TransportRouteService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete TransportRoute : {}", id);
-        transportRouteRepository.deleteById(id);
+        log.debug("Request to delete TransportRoute : {}", id);        transportRouteRepository.deleteById(id);
         transportRouteSearchRepository.deleteById(id);
     }
 

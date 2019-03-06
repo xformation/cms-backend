@@ -93,8 +93,7 @@ public class HolidayServiceImpl implements HolidayService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Holiday : {}", id);
-        holidayRepository.deleteById(id);
+        log.debug("Request to delete Holiday : {}", id);        holidayRepository.deleteById(id);
         holidaySearchRepository.deleteById(id);
     }
 

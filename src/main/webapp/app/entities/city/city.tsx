@@ -35,9 +35,8 @@ export class City extends React.Component<ICityProps, ICityState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

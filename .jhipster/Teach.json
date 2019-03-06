@@ -11,13 +11,15 @@
             "relationshipType": "many-to-one",
             "relationshipName": "subject",
             "otherEntityName": "subject",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "teach"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "teacher",
             "otherEntityName": "teacher",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "teach"
         }
     ],
     "changelogDate": "20190124103741",

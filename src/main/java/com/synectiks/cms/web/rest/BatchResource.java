@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.BatchService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class BatchResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/batches")
-    @Timed
     public ResponseEntity<BatchDTO> createBatch(@Valid @RequestBody BatchDTO batchDTO) throws URISyntaxException {
         log.debug("REST request to save Batch : {}", batchDTO);
         if (batchDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class BatchResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/batches")
-    @Timed
     public ResponseEntity<BatchDTO> updateBatch(@Valid @RequestBody BatchDTO batchDTO) throws URISyntaxException {
         log.debug("REST request to update Batch : {}", batchDTO);
         if (batchDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class BatchResource {
      * @return the ResponseEntity with status 200 (OK) and the list of batches in body
      */
     @GetMapping("/batches")
-    @Timed
     public List<BatchDTO> getAllBatches() {
         log.debug("REST request to get all Batches");
         return batchService.findAll();
@@ -99,7 +94,6 @@ public class BatchResource {
      * @return the ResponseEntity with status 200 (OK) and with body the batchDTO, or with status 404 (Not Found)
      */
     @GetMapping("/batches/{id}")
-    @Timed
     public ResponseEntity<BatchDTO> getBatch(@PathVariable Long id) {
         log.debug("REST request to get Batch : {}", id);
         Optional<BatchDTO> batchDTO = batchService.findOne(id);
@@ -113,7 +107,6 @@ public class BatchResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/batches/{id}")
-    @Timed
     public ResponseEntity<Void> deleteBatch(@PathVariable Long id) {
         log.debug("REST request to delete Batch : {}", id);
         batchService.delete(id);
@@ -128,7 +121,6 @@ public class BatchResource {
      * @return the result of the search
      */
     @GetMapping("/_search/batches")
-    @Timed
     public List<BatchDTO> searchBatches(@RequestParam String query) {
         log.debug("REST request to search Batches for query {}", query);
         return batchService.search(query);

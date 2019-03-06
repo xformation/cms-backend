@@ -50,7 +50,6 @@ public class DueDateServiceImpl implements DueDateService {
     @Override
     public DueDateDTO save(DueDateDTO dueDateDTO) {
         log.debug("Request to save DueDate : {}", dueDateDTO);
-
         DueDate dueDate = dueDateMapper.toEntity(dueDateDTO);
         dueDate = dueDateRepository.save(dueDate);
         DueDateDTO result = dueDateMapper.toDto(dueDate);
@@ -94,8 +93,7 @@ public class DueDateServiceImpl implements DueDateService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete DueDate : {}", id);
-        dueDateRepository.deleteById(id);
+        log.debug("Request to delete DueDate : {}", id);        dueDateRepository.deleteById(id);
         dueDateSearchRepository.deleteById(id);
     }
 

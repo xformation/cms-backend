@@ -50,13 +50,15 @@
             "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "bankAccounts"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "college",
             "otherEntityName": "college",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "bankAccounts"
         }
     ],
     "changelogDate": "20190118141530",

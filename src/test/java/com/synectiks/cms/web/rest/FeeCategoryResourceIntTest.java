@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -81,6 +82,9 @@ public class FeeCategoryResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restFeeCategoryMockMvc;
 
     private FeeCategory feeCategory;
@@ -93,7 +97,8 @@ public class FeeCategoryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -299,7 +304,7 @@ public class FeeCategoryResourceIntTest {
 
         int databaseSizeBeforeDelete = feeCategoryRepository.findAll().size();
 
-        // Get the feeCategory
+        // Delete the feeCategory
         restFeeCategoryMockMvc.perform(delete("/api/fee-categories/{id}", feeCategory.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

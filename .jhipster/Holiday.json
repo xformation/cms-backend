@@ -29,7 +29,8 @@
             "relationshipType": "many-to-one",
             "relationshipName": "academicyear",
             "otherEntityName": "academicYear",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "holiday"
         }
     ],
     "changelogDate": "20190118141520",

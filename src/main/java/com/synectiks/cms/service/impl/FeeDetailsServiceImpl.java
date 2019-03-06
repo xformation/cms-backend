@@ -50,7 +50,6 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
     @Override
     public FeeDetailsDTO save(FeeDetailsDTO feeDetailsDTO) {
         log.debug("Request to save FeeDetails : {}", feeDetailsDTO);
-
         FeeDetails feeDetails = feeDetailsMapper.toEntity(feeDetailsDTO);
         feeDetails = feeDetailsRepository.save(feeDetails);
         FeeDetailsDTO result = feeDetailsMapper.toDto(feeDetails);
@@ -94,8 +93,7 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete FeeDetails : {}", id);
-        feeDetailsRepository.deleteById(id);
+        log.debug("Request to delete FeeDetails : {}", id);        feeDetailsRepository.deleteById(id);
         feeDetailsSearchRepository.deleteById(id);
     }
 

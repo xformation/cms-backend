@@ -50,7 +50,6 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
     @Override
     public PaymentRemainderDTO save(PaymentRemainderDTO paymentRemainderDTO) {
         log.debug("Request to save PaymentRemainder : {}", paymentRemainderDTO);
-
         PaymentRemainder paymentRemainder = paymentRemainderMapper.toEntity(paymentRemainderDTO);
         paymentRemainder = paymentRemainderRepository.save(paymentRemainder);
         PaymentRemainderDTO result = paymentRemainderMapper.toDto(paymentRemainder);
@@ -94,8 +93,7 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete PaymentRemainder : {}", id);
-        paymentRemainderRepository.deleteById(id);
+        log.debug("Request to delete PaymentRemainder : {}", id);        paymentRemainderRepository.deleteById(id);
         paymentRemainderSearchRepository.deleteById(id);
     }
 

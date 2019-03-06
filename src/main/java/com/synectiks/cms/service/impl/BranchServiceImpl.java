@@ -93,8 +93,7 @@ public class BranchServiceImpl implements BranchService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Branch : {}", id);
-        branchRepository.deleteById(id);
+        log.debug("Request to delete Branch : {}", id);        branchRepository.deleteById(id);
         branchSearchRepository.deleteById(id);
     }
 

@@ -50,7 +50,6 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDTO save(CityDTO cityDTO) {
         log.debug("Request to save City : {}", cityDTO);
-
         City city = cityMapper.toEntity(cityDTO);
         city = cityRepository.save(city);
         CityDTO result = cityMapper.toDto(city);
@@ -94,8 +93,7 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete City : {}", id);
-        cityRepository.deleteById(id);
+        log.debug("Request to delete City : {}", id);        cityRepository.deleteById(id);
         citySearchRepository.deleteById(id);
     }
 

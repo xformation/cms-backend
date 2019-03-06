@@ -63,11 +63,6 @@ export default (state: BranchState = initialState, action): BranchState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_BRANCHES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_BRANCH_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/branches';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IBranch> = query => ({
+export const getSearchEntities: ICrudSearchAction<IBranch> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_BRANCHES,
-  payload: axios.get<IBranch>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IBranch>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IBranch> = (page, size, sort) => ({

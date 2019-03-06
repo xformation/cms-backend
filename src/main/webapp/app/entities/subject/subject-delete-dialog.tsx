@@ -9,7 +9,7 @@ import { ISubject } from 'app/shared/model/subject.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './subject.reducer';
 
-export interface ISubjectDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ISubjectDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class SubjectDeleteDialog extends React.Component<ISubjectDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class SubjectDeleteDialog extends React.Component<ISubjectDeleteDialogPro
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Subject?</ModalBody>
+        <ModalBody id="cmsApp.subject.delete.question">Are you sure you want to delete this Subject?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-subject" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

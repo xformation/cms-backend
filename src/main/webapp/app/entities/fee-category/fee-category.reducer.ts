@@ -63,11 +63,6 @@ export default (state: FeeCategoryState = initialState, action): FeeCategoryStat
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_FEECATEGORIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_FEECATEGORY_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/fee-categories';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IFeeCategory> = query => ({
+export const getSearchEntities: ICrudSearchAction<IFeeCategory> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_FEECATEGORIES,
-  payload: axios.get<IFeeCategory>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IFeeCategory>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IFeeCategory> = (page, size, sort) => ({

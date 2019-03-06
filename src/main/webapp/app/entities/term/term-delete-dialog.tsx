@@ -9,7 +9,7 @@ import { ITerm } from 'app/shared/model/term.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './term.reducer';
 
-export interface ITermDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITermDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TermDeleteDialog extends React.Component<ITermDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class TermDeleteDialog extends React.Component<ITermDeleteDialogProps> {
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Term?</ModalBody>
+        <ModalBody id="cmsApp.term.delete.question">Are you sure you want to delete this Term?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-term" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

@@ -9,7 +9,7 @@ import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './legal-entity.reducer';
 
-export interface ILegalEntityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ILegalEntityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class LegalEntityDeleteDialog extends React.Component<ILegalEntityDeleteDialogProps> {
   componentDidMount() {
@@ -31,12 +31,12 @@ export class LegalEntityDeleteDialog extends React.Component<ILegalEntityDeleteD
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this LegalEntity?</ModalBody>
+        <ModalBody id="cmsApp.legalEntity.delete.question">Are you sure you want to delete this LegalEntity?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-legalEntity" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

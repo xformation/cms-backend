@@ -15,25 +15,31 @@ import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './subject.reducer';
 import { ISubject } from 'app/shared/model/subject.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ISubjectUpdateState {
   isNew: boolean;
-  departmentId: number;
-  batchId: number;
+  departmentId: string;
+  batchId: string;
 }
 
 export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubjectUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      departmentId: 0,
-      batchId: 0,
+      departmentId: '0',
+      batchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,46 +66,11 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/subject');
-  };
-
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
-  };
-
-  batchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        batchId: -1
-      });
-    } else {
-      for (const i in this.props.batches) {
-        if (id === this.props.batches[i].id.toString()) {
-          this.setState({
-            batchId: this.props.batches[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -179,13 +150,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">Department</Label>
-                  <AvInput
-                    id="subject-department"
-                    type="select"
-                    className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
-                  >
+                  <AvInput id="subject-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
@@ -198,7 +163,7 @@ export class SubjectUpdate extends React.Component<ISubjectUpdateProps, ISubject
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
-                  <AvInput id="subject-batch" type="select" className="form-control" name="batchId" onChange={this.batchUpdate}>
+                  <AvInput id="subject-batch" type="select" className="form-control" name="batchId">
                     <option value="" key="0" />
                     {batches
                       ? batches.map(otherEntity => (
@@ -231,7 +196,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   batches: storeState.batch.entities,
   subjectEntity: storeState.subject.entity,
   loading: storeState.subject.loading,
-  updating: storeState.subject.updating
+  updating: storeState.subject.updating,
+  updateSuccess: storeState.subject.updateSuccess
 });
 
 const mapDispatchToProps = {

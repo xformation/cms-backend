@@ -13,23 +13,29 @@ import { getEntities as getAcademicYears } from 'app/entities/academic-year/acad
 import { getEntity, updateEntity, createEntity, reset } from './term.reducer';
 import { ITerm } from 'app/shared/model/term.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ITermUpdateState {
   isNew: boolean;
-  academicyearId: number;
+  academicyearId: string;
 }
 
 export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      academicyearId: 0,
+      academicyearId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/term');
-  };
-
-  academicyearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        academicyearId: -1
-      });
-    } else {
-      for (const i in this.props.academicYears) {
-        if (id === this.props.academicYears[i].id.toString()) {
-          this.setState({
-            academicyearId: this.props.academicYears[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -159,13 +147,7 @@ export class TermUpdate extends React.Component<ITermUpdateProps, ITermUpdateSta
                 </AvGroup>
                 <AvGroup>
                   <Label for="academicyear.id">Academicyear</Label>
-                  <AvInput
-                    id="term-academicyear"
-                    type="select"
-                    className="form-control"
-                    name="academicyearId"
-                    onChange={this.academicyearUpdate}
-                  >
+                  <AvInput id="term-academicyear" type="select" className="form-control" name="academicyearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
@@ -197,7 +179,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   academicYears: storeState.academicYear.entities,
   termEntity: storeState.term.entity,
   loading: storeState.term.loading,
-  updating: storeState.term.updating
+  updating: storeState.term.updating,
+  updateSuccess: storeState.term.updateSuccess
 });
 
 const mapDispatchToProps = {

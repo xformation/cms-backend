@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Invoice.
+    -->
+    <changeSet id="20190306044441-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="fee_category_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_fee_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fee_category"/>
+
+        <addForeignKeyConstraint baseColumnNames="fee_details_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_fee_details_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fee_details"/>
+
+        <addForeignKeyConstraint baseColumnNames="due_date_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_due_date_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="due_date"/>
+
+        <addForeignKeyConstraint baseColumnNames="payment_remainder_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_payment_remainder_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="payment_remainder"/>
+
+        <addForeignKeyConstraint baseColumnNames="college_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_college_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="college"/>
+
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
+        <addForeignKeyConstraint baseColumnNames="student_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_student_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="student"/>
+
+        <addForeignKeyConstraint baseColumnNames="academic_year_id"
+                                 baseTableName="invoice"
+                                 constraintName="fk_invoice_academic_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_year"/>
+
+    </changeSet>
+</databaseChangeLog>

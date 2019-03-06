@@ -15,25 +15,31 @@ import { getEntities as getTeachers } from 'app/entities/teacher/teacher.reducer
 import { getEntity, updateEntity, createEntity, reset } from './teach.reducer';
 import { ITeach } from 'app/shared/model/teach.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ITeachUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITeachUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ITeachUpdateState {
   isNew: boolean;
-  subjectId: number;
-  teacherId: number;
+  subjectId: string;
+  teacherId: string;
 }
 
 export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      subjectId: 0,
-      teacherId: 0,
+      subjectId: '0',
+      teacherId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,46 +66,11 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/teach');
-  };
-
-  subjectUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        subjectId: -1
-      });
-    } else {
-      for (const i in this.props.subjects) {
-        if (id === this.props.subjects[i].id.toString()) {
-          this.setState({
-            subjectId: this.props.subjects[i].id
-          });
-        }
-      }
-    }
-  };
-
-  teacherUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        teacherId: -1
-      });
-    } else {
-      for (const i in this.props.teachers) {
-        if (id === this.props.teachers[i].id.toString()) {
-          this.setState({
-            teacherId: this.props.teachers[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -133,7 +104,7 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
                 </AvGroup>
                 <AvGroup>
                   <Label for="subject.id">Subject</Label>
-                  <AvInput id="teach-subject" type="select" className="form-control" name="subjectId" onChange={this.subjectUpdate}>
+                  <AvInput id="teach-subject" type="select" className="form-control" name="subjectId">
                     <option value="" key="0" />
                     {subjects
                       ? subjects.map(otherEntity => (
@@ -146,7 +117,7 @@ export class TeachUpdate extends React.Component<ITeachUpdateProps, ITeachUpdate
                 </AvGroup>
                 <AvGroup>
                   <Label for="teacher.id">Teacher</Label>
-                  <AvInput id="teach-teacher" type="select" className="form-control" name="teacherId" onChange={this.teacherUpdate}>
+                  <AvInput id="teach-teacher" type="select" className="form-control" name="teacherId">
                     <option value="" key="0" />
                     {teachers
                       ? teachers.map(otherEntity => (
@@ -179,7 +150,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   teachers: storeState.teacher.entities,
   teachEntity: storeState.teach.entity,
   loading: storeState.teach.loading,
-  updating: storeState.teach.updating
+  updating: storeState.teach.updating,
+  updateSuccess: storeState.teach.updateSuccess
 });
 
 const mapDispatchToProps = {

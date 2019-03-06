@@ -50,7 +50,6 @@ public class LateFeeServiceImpl implements LateFeeService {
     @Override
     public LateFeeDTO save(LateFeeDTO lateFeeDTO) {
         log.debug("Request to save LateFee : {}", lateFeeDTO);
-
         LateFee lateFee = lateFeeMapper.toEntity(lateFeeDTO);
         lateFee = lateFeeRepository.save(lateFee);
         LateFeeDTO result = lateFeeMapper.toDto(lateFee);
@@ -94,8 +93,7 @@ public class LateFeeServiceImpl implements LateFeeService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete LateFee : {}", id);
-        lateFeeRepository.deleteById(id);
+        log.debug("Request to delete LateFee : {}", id);        lateFeeRepository.deleteById(id);
         lateFeeSearchRepository.deleteById(id);
     }
 
