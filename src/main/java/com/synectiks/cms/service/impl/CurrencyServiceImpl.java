@@ -50,7 +50,6 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public CurrencyDTO save(CurrencyDTO currencyDTO) {
         log.debug("Request to save Currency : {}", currencyDTO);
-
         Currency currency = currencyMapper.toEntity(currencyDTO);
         currency = currencyRepository.save(currency);
         CurrencyDTO result = currencyMapper.toDto(currency);
@@ -94,8 +93,7 @@ public class CurrencyServiceImpl implements CurrencyService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Currency : {}", id);
-        currencyRepository.deleteById(id);
+        log.debug("Request to delete Currency : {}", id);        currencyRepository.deleteById(id);
         currencySearchRepository.deleteById(id);
     }
 

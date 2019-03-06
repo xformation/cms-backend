@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -49,6 +48,7 @@ public class InvoiceDTO implements Serializable {
 
     @NotNull
     private LocalDate updatedOn;
+
 
     private Long feeCategoryId;
 

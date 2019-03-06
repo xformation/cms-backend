@@ -39,6 +39,7 @@ public class Query implements GraphQLQueryResolver {
     private final AcademicYearRepository academicYearRepository;
     private final AttendanceMasterRepository attendanceMasterRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
+    private final AcademicHistoryRepository academicHistoryRepository;
     private final BankAccountsRepository bankAccountsRepository;
     private final BatchRepository batchRepository;
     private final BranchRepository branchRepository;
@@ -78,7 +79,7 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     LegalEntitySelectRepository legalEntitySelectRepository;
 
-    public Query(LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository) {
+    public Query(LectureRepository lectureRepository, AcademicHistoryRepository academicHistoryRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository=instituteRepository;
@@ -100,6 +101,7 @@ public class Query implements GraphQLQueryResolver {
         this.teachRepository = teachRepository;
         this.attendanceMasterRepository = attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
+        this.academicHistoryRepository = academicHistoryRepository;
         this.cityRepository = cityRepository;
         this.stateRepository = stateRepository;
         this.countryRepository = countryRepository;
@@ -182,6 +184,15 @@ public class Query implements GraphQLQueryResolver {
     public List<Section> sections() {
         return Lists.newArrayList(sectionRepository.findAll());
     }
+
+    public AcademicHistory academicHistory(long id) {
+        return academicHistoryRepository.findById(id).get();
+    }
+
+    public List<AcademicHistory> academicHistories() {
+        return Lists.newArrayList(academicHistoryRepository.findAll());
+    }
+
 
     public Subject subject(long id) {
         return subjectRepository.findById(id).get();

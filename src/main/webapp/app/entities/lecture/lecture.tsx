@@ -35,9 +35,8 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -103,7 +102,7 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
                   <td>{lecture.endTime}</td>
                   <td>
                     {lecture.attendancemasterId ? (
-                      <Link to={`attendanceMaster/${lecture.attendancemasterId}`}>{lecture.attendancemasterId}</Link>
+                      <Link to={`attendance-master/${lecture.attendancemasterId}`}>{lecture.attendancemasterId}</Link>
                     ) : (
                       ''
                     )}

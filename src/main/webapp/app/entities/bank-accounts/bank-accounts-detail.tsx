@@ -12,7 +12,7 @@ import { IBankAccounts } from 'app/shared/model/bank-accounts.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IBankAccountsDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBankAccountsDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class BankAccountsDetail extends React.Component<IBankAccountsDetailProps> {
   componentDidMount() {

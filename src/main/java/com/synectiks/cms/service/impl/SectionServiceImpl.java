@@ -93,8 +93,7 @@ public class SectionServiceImpl implements SectionService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Section : {}", id);
-        sectionRepository.deleteById(id);
+        log.debug("Request to delete Section : {}", id);        sectionRepository.deleteById(id);
         sectionSearchRepository.deleteById(id);
     }
 

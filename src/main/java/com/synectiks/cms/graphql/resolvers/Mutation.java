@@ -9,6 +9,7 @@ import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
+import com.synectiks.cms.graphql.types.AcademicHistory.*;
 import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AttendanceMaster.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
@@ -65,6 +66,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final AcademicYearRepository academicYearRepository;
     private final AttendanceMasterRepository attendanceMasterRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
+    private final AcademicHistoryRepository academicHistoryRepository;
     private final BankAccountsRepository bankAccountsRepository;
     private final BatchRepository batchRepository;
     private final BranchRepository branchRepository;
@@ -104,7 +106,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository) {
+    public Mutation(CountryRepository countryRepository,AcademicHistoryRepository academicHistoryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -127,6 +129,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.teachRepository = teachRepository;
         this.attendanceMasterRepository = attendanceMasterRepository;
         this.lectureRepository = lectureRepository;
+        this.academicHistoryRepository = academicHistoryRepository;
         this.cityRepository = cityRepository;
         this.stateRepository = stateRepository;
         this.countryRepository = countryRepository;
@@ -249,6 +252,61 @@ public class Mutation implements GraphQLMutationResolver {
         State state = stateRepository.findById(removeStateInput.getStateId()).get();
         stateRepository.delete(state);
         return new RemoveStatePayload(Lists.newArrayList(stateRepository.findAll()));
+    }
+
+    public AddAcademicHistoryPayload addAcademicHistory(AddAcademicHistoryInput addAcademicHistoryInput) {
+        final Student student = studentRepository.findById(addAcademicHistoryInput.getStudentId()).get();
+
+        final AcademicHistory academicHistory = new AcademicHistory();
+        academicHistory.setStudent(student);
+        academicHistory.setQualification(addAcademicHistoryInput.getQualification());
+        academicHistory.setYearOfPassing(addAcademicHistoryInput.getYearOfPassing());
+        academicHistory.setInstitution(addAcademicHistoryInput.getInstitution());
+        academicHistory.setUniversity(addAcademicHistoryInput.getUniversity());
+        academicHistory.setEnrollmentNo(addAcademicHistoryInput.getEnrollmentNo());
+        academicHistory.setScore(addAcademicHistoryInput.getScore());
+        academicHistory.setPercentage(addAcademicHistoryInput.getPercentage());
+        academicHistoryRepository.save(academicHistory);
+        return new AddAcademicHistoryPayload(academicHistory);
+    }
+
+    public UpdateAcademicHistoryPayload updateAcademicHistory(UpdateAcademicHistoryInput updateAcademicHistoryInput) {
+        AcademicHistory academicHistory = academicHistoryRepository.findById(updateAcademicHistoryInput.getId()).get();
+        if (updateAcademicHistoryInput.getQualification() != null) {
+            academicHistory.setQualification(updateAcademicHistoryInput.getQualification());
+        }
+        if (updateAcademicHistoryInput.getYearOfPassing() != null) {
+            academicHistory.setYearOfPassing(updateAcademicHistoryInput.getYearOfPassing());
+        }
+        if (updateAcademicHistoryInput.getInstitution() != null) {
+            academicHistory.setInstitution(updateAcademicHistoryInput.getInstitution());
+        }
+        if (updateAcademicHistoryInput.getUniversity() != null) {
+            academicHistory.setUniversity(updateAcademicHistoryInput.getUniversity());
+        }
+        if (updateAcademicHistoryInput.getEnrollmentNo() != null) {
+            academicHistory.setEnrollmentNo(updateAcademicHistoryInput.getEnrollmentNo());
+        }
+        if (updateAcademicHistoryInput.getScore() != null) {
+            academicHistory.setScore(updateAcademicHistoryInput.getScore());
+        }
+        if (updateAcademicHistoryInput.getPercentage() != null) {
+            academicHistory.setPercentage(updateAcademicHistoryInput.getPercentage());
+        }
+
+        if (updateAcademicHistoryInput.getStudentId() != null) {
+            final Student student = studentRepository.findById(updateAcademicHistoryInput.getStudentId()).get();
+            academicHistory.setStudent(student);
+        }
+        academicHistoryRepository.save(academicHistory);
+
+        return new UpdateAcademicHistoryPayload(academicHistory);
+    }
+
+    public RemoveAcademicHistoryPayload removeAcademicHistory(RemoveAcademicHistoryInput removeAcademicHistoryInput) {
+        AcademicHistory academicHistory = academicHistoryRepository.findById(removeAcademicHistoryInput.getAcademicHistoryId()).get();
+        academicHistoryRepository.delete(academicHistory);
+        return new RemoveAcademicHistoryPayload(Lists.newArrayList(academicHistoryRepository.findAll()));
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {

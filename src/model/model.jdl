@@ -373,6 +373,17 @@ updatedBy String required
 updatedOn LocalDate required
 }
 
+entity AcademicHistory{
+qualification String required
+yearOfPassing String required
+institution String required
+university String required
+enrollmentNo Long required
+score Long required
+percentage Integer required
+}
+
+
 relationship ManyToOne {
 Student{department required} to Department ,
 Student{batch required} to Batch ,
@@ -435,7 +446,8 @@ Invoice{paymentRemainder} to PaymentRemainder,
 Invoice{college} to College,
 Invoice{branch} to Branch,
 Invoice{student} to Student,
-Invoice{academicYear} to AcademicYear
+Invoice{academicYear} to AcademicYear,
+AcademicHistory{student} to Student
 }
 
 dto * with mapstruct

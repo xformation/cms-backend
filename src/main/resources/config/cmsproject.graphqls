@@ -134,28 +134,32 @@ type Query {
   transportRoute(id: Long!): TransportRoute!
   transportRoutes: [TransportRoute!]!
 
-    dueDate(id:Long!):DueDate!
-    dueDates:[DueDate!]!
+   dueDate(id:Long!):DueDate!
+   dueDates:[DueDate!]!
 
-    lateFee(id:Long!):LateFee!
-    lateFees:[LateFee!]!
+   lateFee(id:Long!):LateFee!
+   lateFees:[LateFee!]!
 
-    paymentRemainder(id:Long!):PaymentRemainder!
-    paymentRemainders:[PaymentRemainder!]!
+   paymentRemainder(id:Long!):PaymentRemainder!
+   paymentRemainders:[PaymentRemainder!]!
 
-  term (id: Long!): Term!
-  terms: [Term!]!
+    term (id: Long!): Term!
+    terms: [Term!]!
 
-  city (id: Long!): City!
-  cities: [City!]!
+    city (id: Long!): City!
+    cities: [City!]!
 
-  state (id: Long!): Long!
-  states: [State!]!
+    state (id: Long!): Long!
+    states: [State!]!
 
     country (id: Long!): Long!
     countries: [Country!]!
+
     invoice(id:Long!):Invoice!
     invoices:[Invoice!]!
+
+    academicHistory(id:Long!): AcademicHistory!
+    academicHistories: [AcademicHistory!]!
 
 
     getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -240,6 +244,7 @@ type DueDate{
     college:College!
     branch:Branch!
 }
+
 type LateFee{
     id :Long!
     assignLateFee:Status!
@@ -251,8 +256,8 @@ type LateFee{
     lateFeeAssignmentFrequency:Frequency!
     college:College!
     branch:Branch!
-
 }
+
 type PaymentRemainder{
     id:Long!
     feeRemainder: Status!
@@ -264,6 +269,17 @@ type PaymentRemainder{
     branch:Branch!
 }
 
+type AcademicHistory{
+id:Long!
+qualification:String!
+yearOfPassing:String!
+institution:String!
+university:String!
+enrollmentNo:Long!
+score:Long!
+percentage:Int!
+student:Student!
+}
 
 type AuthorizedSignatory {
     id: Long!
@@ -649,6 +665,11 @@ type Mutation {
    addLecture(input: AddLectureInput!): AddLecturePayload!
    updateLecture(input: UpdateLectureInput!): UpdateLecturePayload!
    removeLecture(input: RemoveLectureInput!): RemoveLecturePayload!
+
+   addAcademicHistory(input: AddAcademicHistoryInput!): AddAcademicHistoryPayload!
+   updateAcademicHistory(input: UpdateAcademicHistoryInput!): UpdateAcademicHistoryPayload!
+   removeAcademicHistory(input: RemoveAcademicHistoryInput!): RemoveAcademicHistoryPayload!
+
 
    addHoliday(input: AddHolidayInput!): AddHolidayPayload!
    updateHoliday(input: UpdateHolidayInput!): UpdateHolidayPayload!
@@ -1342,6 +1363,41 @@ input RemoveSectionInput {
 }
 type RemoveSectionPayload {
    sections: [Section!]!
+}
+
+input AddAcademicHistoryInput {
+    qualification: String!
+    yearOfPassing: String!
+    institution: String!
+    university: String!
+    enrollmentNo: Long!
+    score: Long!
+    percentage: Int!
+    studentId: Long!
+
+}
+type AddAcademicHistoryPayload {
+    academicHistory: AcademicHistory!
+}
+input UpdateAcademicHistoryInput {
+    id: Long!
+    qualification: String!
+    yearOfPassing: String!
+    institution: String!
+    university: String!
+    enrollmentNo: Long!
+    score: Long!
+    percentage: Int!
+    studentId: Long!
+}
+type UpdateAcademicHistoryPayload {
+    academicHistory: AcademicHistory!
+}
+input RemoveAcademicHistoryInput {
+    academicHistoryId: Long!
+}
+type RemoveAcademicHistoryPayload {
+    academicHistories: [AcademicHistory!]!
 }
 
 

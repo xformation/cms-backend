@@ -11,7 +11,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity, updateEntity, createEntity, reset } from './fee-category.reducer';
 import { IFeeCategory } from 'app/shared/model/fee-category.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IFeeCategoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

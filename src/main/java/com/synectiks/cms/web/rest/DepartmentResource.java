@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.DepartmentService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class DepartmentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/departments")
-    @Timed
     public ResponseEntity<DepartmentDTO> createDepartment(@Valid @RequestBody DepartmentDTO departmentDTO) throws URISyntaxException {
         log.debug("REST request to save Department : {}", departmentDTO);
         if (departmentDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class DepartmentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/departments")
-    @Timed
     public ResponseEntity<DepartmentDTO> updateDepartment(@Valid @RequestBody DepartmentDTO departmentDTO) throws URISyntaxException {
         log.debug("REST request to update Department : {}", departmentDTO);
         if (departmentDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class DepartmentResource {
      * @return the ResponseEntity with status 200 (OK) and the list of departments in body
      */
     @GetMapping("/departments")
-    @Timed
     public List<DepartmentDTO> getAllDepartments() {
         log.debug("REST request to get all Departments");
         return departmentService.findAll();
@@ -99,7 +94,6 @@ public class DepartmentResource {
      * @return the ResponseEntity with status 200 (OK) and with body the departmentDTO, or with status 404 (Not Found)
      */
     @GetMapping("/departments/{id}")
-    @Timed
     public ResponseEntity<DepartmentDTO> getDepartment(@PathVariable Long id) {
         log.debug("REST request to get Department : {}", id);
         Optional<DepartmentDTO> departmentDTO = departmentService.findOne(id);
@@ -113,7 +107,6 @@ public class DepartmentResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/departments/{id}")
-    @Timed
     public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
         log.debug("REST request to delete Department : {}", id);
         departmentService.delete(id);
@@ -128,7 +121,6 @@ public class DepartmentResource {
      * @return the result of the search
      */
     @GetMapping("/_search/departments")
-    @Timed
     public List<DepartmentDTO> searchDepartments(@RequestParam String query) {
         log.debug("REST request to search Departments for query {}", query);
         return departmentService.search(query);

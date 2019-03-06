@@ -93,8 +93,7 @@ public class LectureServiceImpl implements LectureService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Lecture : {}", id);
-        lectureRepository.deleteById(id);
+        log.debug("Request to delete Lecture : {}", id);        lectureRepository.deleteById(id);
         lectureSearchRepository.deleteById(id);
     }
 

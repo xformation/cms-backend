@@ -63,11 +63,6 @@ export default (state: TransportRouteState = initialState, action): TransportRou
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_TRANSPORTROUTES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_TRANSPORTROUTE_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/transport-routes';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ITransportRoute> = query => ({
+export const getSearchEntities: ICrudSearchAction<ITransportRoute> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_TRANSPORTROUTES,
-  payload: axios.get<ITransportRoute>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<ITransportRoute>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<ITransportRoute> = (page, size, sort) => ({

@@ -17,27 +17,33 @@ import { getEntities as getStates } from 'app/entities/state/state.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './branch.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IBranchUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBranchUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IBranchUpdateState {
   isNew: boolean;
-  collegeId: number;
-  cityId: number;
-  stateId: number;
+  collegeId: string;
+  cityId: string;
+  stateId: string;
 }
 
 export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      collegeId: 0,
-      cityId: 0,
-      stateId: 0,
+      collegeId: '0',
+      cityId: '0',
+      stateId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -65,63 +71,11 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/branch');
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
-  };
-
-  cityUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        cityId: -1
-      });
-    } else {
-      for (const i in this.props.cities) {
-        if (id === this.props.cities[i].id.toString()) {
-          this.setState({
-            cityId: this.props.cities[i].id
-          });
-        }
-      }
-    }
-  };
-
-  stateUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        stateId: -1
-      });
-    } else {
-      for (const i in this.props.states) {
-        if (id === this.props.states[i].id.toString()) {
-          this.setState({
-            stateId: this.props.states[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -201,7 +155,7 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="branch-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="branch-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -214,7 +168,7 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="city.id">City</Label>
-                  <AvInput id="branch-city" type="select" className="form-control" name="cityId" onChange={this.cityUpdate}>
+                  <AvInput id="branch-city" type="select" className="form-control" name="cityId">
                     <option value="" key="0" />
                     {cities
                       ? cities.map(otherEntity => (
@@ -227,7 +181,7 @@ export class BranchUpdate extends React.Component<IBranchUpdateProps, IBranchUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="state.id">State</Label>
-                  <AvInput id="branch-state" type="select" className="form-control" name="stateId" onChange={this.stateUpdate}>
+                  <AvInput id="branch-state" type="select" className="form-control" name="stateId">
                     <option value="" key="0" />
                     {states
                       ? states.map(otherEntity => (
@@ -261,7 +215,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   states: storeState.state.entities,
   branchEntity: storeState.branch.entity,
   loading: storeState.branch.loading,
-  updating: storeState.branch.updating
+  updating: storeState.branch.updating,
+  updateSuccess: storeState.branch.updateSuccess
 });
 
 const mapDispatchToProps = {

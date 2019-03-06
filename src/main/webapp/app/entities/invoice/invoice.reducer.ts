@@ -63,11 +63,6 @@ export default (state: InvoiceState = initialState, action): InvoiceState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_INVOICES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_INVOICE_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/invoices';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IInvoice> = query => ({
+export const getSearchEntities: ICrudSearchAction<IInvoice> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_INVOICES,
-  payload: axios.get<IInvoice>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IInvoice>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IInvoice> = (page, size, sort) => ({

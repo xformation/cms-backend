@@ -28,6 +28,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -57,8 +58,8 @@ public class StudentFeeResourceIntTest {
     private static final String DEFAULT_FEES_DUE = "AAAAAAAAAA";
     private static final String UPDATED_FEES_DUE = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_DUE_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DUE_DATE = LocalDate.now(ZoneId.systemDefault());
+    private static final Date DEFAULT_DUE_DATE = new Date();
+    private static final Date UPDATED_DUE_DATE = new Date();
 
     private static final String DEFAULT_TOTAL_REMAINING = "AAAAAAAAAA";
     private static final String UPDATED_TOTAL_REMAINING = "BBBBBBBBBB";

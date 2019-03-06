@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.CurrencyService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class CurrencyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/currencies")
-    @Timed
     public ResponseEntity<CurrencyDTO> createCurrency(@Valid @RequestBody CurrencyDTO currencyDTO) throws URISyntaxException {
         log.debug("REST request to save Currency : {}", currencyDTO);
         if (currencyDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class CurrencyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/currencies")
-    @Timed
     public ResponseEntity<CurrencyDTO> updateCurrency(@Valid @RequestBody CurrencyDTO currencyDTO) throws URISyntaxException {
         log.debug("REST request to update Currency : {}", currencyDTO);
         if (currencyDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class CurrencyResource {
      * @return the ResponseEntity with status 200 (OK) and the list of currencies in body
      */
     @GetMapping("/currencies")
-    @Timed
     public List<CurrencyDTO> getAllCurrencies() {
         log.debug("REST request to get all Currencies");
         return currencyService.findAll();
@@ -99,7 +94,6 @@ public class CurrencyResource {
      * @return the ResponseEntity with status 200 (OK) and with body the currencyDTO, or with status 404 (Not Found)
      */
     @GetMapping("/currencies/{id}")
-    @Timed
     public ResponseEntity<CurrencyDTO> getCurrency(@PathVariable Long id) {
         log.debug("REST request to get Currency : {}", id);
         Optional<CurrencyDTO> currencyDTO = currencyService.findOne(id);
@@ -113,7 +107,6 @@ public class CurrencyResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/currencies/{id}")
-    @Timed
     public ResponseEntity<Void> deleteCurrency(@PathVariable Long id) {
         log.debug("REST request to delete Currency : {}", id);
         currencyService.delete(id);
@@ -128,7 +121,6 @@ public class CurrencyResource {
      * @return the result of the search
      */
     @GetMapping("/_search/currencies")
-    @Timed
     public List<CurrencyDTO> searchCurrencies(@RequestParam String query) {
         log.debug("REST request to search Currencies for query {}", query);
         return currencyService.search(query);

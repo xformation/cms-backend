@@ -11,7 +11,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntity, updateEntity, createEntity, reset } from './transport-route.reducer';
 import { ITransportRoute } from 'app/shared/model/transport-route.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITransportRouteUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

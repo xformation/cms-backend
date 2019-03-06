@@ -35,9 +35,8 @@ export class TransportRoute extends React.Component<ITransportRouteProps, ITrans
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
