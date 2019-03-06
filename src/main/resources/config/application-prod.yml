@@ -46,7 +46,7 @@ spring:
             cluster-nodes: localhost:9300
     liquibase:
         contexts: prod
-        labels: loadtestdata
+ #       labels: loadtestdata
     mail:
         host: localhost
         port: 25
