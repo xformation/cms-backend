@@ -16,7 +16,7 @@ import { ILecture } from 'app/shared/model/lecture.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ILectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ILectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ILectureUpdateState {
   isNew: boolean;

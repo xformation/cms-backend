@@ -9,7 +9,7 @@ import { ICourseOffer } from 'app/shared/model/course-offer.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './course-offer.reducer';
 
-export interface ICourseOfferDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICourseOfferDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class CourseOfferDeleteDialog extends React.Component<ICourseOfferDeleteDialogProps> {
   componentDidMount() {

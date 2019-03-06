@@ -12,7 +12,6 @@ import { getEntity, updateEntity, createEntity, reset } from './student-fee.redu
 import { IStudentFee } from 'app/shared/model/student-fee.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IStudentFeeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

@@ -12,7 +12,7 @@ import { ICourseOffer } from 'app/shared/model/course-offer.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ICourseOfferDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICourseOfferDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class CourseOfferDetail extends React.Component<ICourseOfferDetailProps> {
   componentDidMount() {

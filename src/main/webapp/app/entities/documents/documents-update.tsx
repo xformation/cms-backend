@@ -12,7 +12,6 @@ import { getEntity, updateEntity, createEntity, reset } from './documents.reduce
 import { IDocuments } from 'app/shared/model/documents.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IDocumentsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

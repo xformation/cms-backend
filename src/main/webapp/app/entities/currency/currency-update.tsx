@@ -14,7 +14,6 @@ import { getEntity, updateEntity, createEntity, reset } from './currency.reducer
 import { ICurrency } from 'app/shared/model/currency.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ICurrencyUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

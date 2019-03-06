@@ -12,7 +12,6 @@ import { getEntity, updateEntity, createEntity, reset } from './country.reducer'
 import { ICountry } from 'app/shared/model/country.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ICountryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

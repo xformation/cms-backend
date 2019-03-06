@@ -9,7 +9,7 @@ import { ITerm } from 'app/shared/model/term.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './term.reducer';
 
-export interface ITermDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITermDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TermDeleteDialog extends React.Component<ITermDeleteDialogProps> {
   componentDidMount() {

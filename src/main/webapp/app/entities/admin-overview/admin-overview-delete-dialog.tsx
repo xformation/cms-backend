@@ -9,7 +9,7 @@ import { IAdminOverview } from 'app/shared/model/admin-overview.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './admin-overview.reducer';
 
-export interface IAdminOverviewDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAdminOverviewDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class AdminOverviewDeleteDialog extends React.Component<IAdminOverviewDeleteDialogProps> {
   componentDidMount() {

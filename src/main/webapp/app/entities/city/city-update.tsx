@@ -14,7 +14,6 @@ import { getEntity, updateEntity, createEntity, reset } from './city.reducer';
 import { ICity } from 'app/shared/model/city.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ICityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

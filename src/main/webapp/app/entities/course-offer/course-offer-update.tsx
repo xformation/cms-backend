@@ -20,7 +20,7 @@ import { ICourseOffer } from 'app/shared/model/course-offer.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ICourseOfferUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICourseOfferUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICourseOfferUpdateState {
   isNew: boolean;

@@ -18,7 +18,7 @@ import { IAuthorizedSignatory } from 'app/shared/model/authorized-signatory.mode
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAuthorizedSignatoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAuthorizedSignatoryUpdateState {
   isNew: boolean;

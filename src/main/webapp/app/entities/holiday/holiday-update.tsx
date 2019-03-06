@@ -16,7 +16,7 @@ import { IHoliday } from 'app/shared/model/holiday.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IHolidayUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IHolidayUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IHolidayUpdateState {
   isNew: boolean;

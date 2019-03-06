@@ -9,7 +9,7 @@ import { IBatch } from 'app/shared/model/batch.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './batch.reducer';
 
-export interface IBatchDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBatchDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class BatchDeleteDialog extends React.Component<IBatchDeleteDialogProps> {
   componentDidMount() {
