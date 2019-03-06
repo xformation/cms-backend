@@ -325,7 +325,7 @@ public class CmsAutomatedTestDataSetupProcessor {
 			Runtime.getRuntime().gc();
 			Thread.sleep(1000*5);
 		}
-	} 
+	}
 	
 	private void saveAcademicYear(Cell cell) {
 		logger.debug("Saving academic year data started.");

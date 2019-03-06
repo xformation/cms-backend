@@ -303,7 +303,7 @@ public class LectureService {
 		Example<Holiday> example = Example.of(hl);
 		List<Holiday> list = this.holidayRepository.findAll(example);
 		return list;
-	} 
+	}
 	
 	public List<Date> createDates(Term tr) {
 		List<Date> dateList = new ArrayList<Date>();
