@@ -35,8 +35,9 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

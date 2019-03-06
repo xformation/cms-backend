@@ -35,8 +35,9 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
@@ -107,7 +108,7 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
                   <td>{facility.extraClass}</td>
                   <td>{facility.handicrafts}</td>
                   <td>
-                    {facility.academicYearId ? <Link to={`academic-year/${facility.academicYearId}`}>{facility.academicYearId}</Link> : ''}
+                    {facility.academicYearId ? <Link to={`academicYear/${facility.academicYearId}`}>{facility.academicYearId}</Link> : ''}
                   </td>
                   <td>{facility.branchId ? <Link to={`branch/${facility.branchId}`}>{facility.branchId}</Link> : ''}</td>
                   <td>{facility.studentId ? <Link to={`student/${facility.studentId}`}>{facility.studentId}</Link> : ''}</td>

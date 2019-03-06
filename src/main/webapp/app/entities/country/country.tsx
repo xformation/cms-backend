@@ -35,8 +35,9 @@ export class Country extends React.Component<ICountryProps, ICountryState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

@@ -63,6 +63,11 @@ export default (state: StudentAttendanceState = initialState, action): StudentAt
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_STUDENTATTENDANCES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_STUDENTATTENDANCE_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/student-attendances';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IStudentAttendance> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<IStudentAttendance> = query => ({
   type: ACTION_TYPES.SEARCH_STUDENTATTENDANCES,
-  payload: axios.get<IStudentAttendance>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<IStudentAttendance>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<IStudentAttendance> = (page, size, sort) => ({

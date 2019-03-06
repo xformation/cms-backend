@@ -63,6 +63,11 @@ export default (state: TermState = initialState, action): TermState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_TERMS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_TERM_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/terms';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ITerm> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ITerm> = query => ({
   type: ACTION_TYPES.SEARCH_TERMS,
-  payload: axios.get<ITerm>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ITerm>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ITerm> = (page, size, sort) => ({

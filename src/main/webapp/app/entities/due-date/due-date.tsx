@@ -35,8 +35,9 @@ export class DueDate extends React.Component<IDueDateProps, IDueDateState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

@@ -27,43 +27,37 @@ import { getEntities as getAcademicYears } from 'app/entities/academic-year/acad
 import { getEntity, updateEntity, createEntity, reset } from './invoice.reducer';
 import { IInvoice } from 'app/shared/model/invoice.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IInvoiceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IInvoiceUpdateState {
   isNew: boolean;
-  feeCategoryId: string;
-  feeDetailsId: string;
-  dueDateId: string;
-  paymentRemainderId: string;
-  collegeId: string;
-  branchId: string;
-  studentId: string;
-  academicYearId: string;
+  feeCategoryId: number;
+  feeDetailsId: number;
+  dueDateId: number;
+  paymentRemainderId: number;
+  collegeId: number;
+  branchId: number;
+  studentId: number;
+  academicYearId: number;
 }
 
 export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoiceUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      feeCategoryId: '0',
-      feeDetailsId: '0',
-      dueDateId: '0',
-      paymentRemainderId: '0',
-      collegeId: '0',
-      branchId: '0',
-      studentId: '0',
-      academicYearId: '0',
+      feeCategoryId: 0,
+      feeDetailsId: 0,
+      dueDateId: 0,
+      paymentRemainderId: 0,
+      collegeId: 0,
+      branchId: 0,
+      studentId: 0,
+      academicYearId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -96,11 +90,148 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/invoice');
+  };
+
+  feeCategoryUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        feeCategoryId: -1
+      });
+    } else {
+      for (const i in this.props.feeCategories) {
+        if (id === this.props.feeCategories[i].id.toString()) {
+          this.setState({
+            feeCategoryId: this.props.feeCategories[i].id
+          });
+        }
+      }
+    }
+  };
+
+  feeDetailsUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        feeDetailsId: -1
+      });
+    } else {
+      for (const i in this.props.feeDetails) {
+        if (id === this.props.feeDetails[i].id.toString()) {
+          this.setState({
+            feeDetailsId: this.props.feeDetails[i].id
+          });
+        }
+      }
+    }
+  };
+
+  dueDateUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        dueDateId: -1
+      });
+    } else {
+      for (const i in this.props.dueDates) {
+        if (id === this.props.dueDates[i].id.toString()) {
+          this.setState({
+            dueDateId: this.props.dueDates[i].id
+          });
+        }
+      }
+    }
+  };
+
+  paymentRemainderUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        paymentRemainderId: -1
+      });
+    } else {
+      for (const i in this.props.paymentRemainders) {
+        if (id === this.props.paymentRemainders[i].id.toString()) {
+          this.setState({
+            paymentRemainderId: this.props.paymentRemainders[i].id
+          });
+        }
+      }
+    }
+  };
+
+  collegeUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        collegeId: -1
+      });
+    } else {
+      for (const i in this.props.colleges) {
+        if (id === this.props.colleges[i].id.toString()) {
+          this.setState({
+            collegeId: this.props.colleges[i].id
+          });
+        }
+      }
+    }
+  };
+
+  branchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        branchId: -1
+      });
+    } else {
+      for (const i in this.props.branches) {
+        if (id === this.props.branches[i].id.toString()) {
+          this.setState({
+            branchId: this.props.branches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  studentUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        studentId: -1
+      });
+    } else {
+      for (const i in this.props.students) {
+        if (id === this.props.students[i].id.toString()) {
+          this.setState({
+            studentId: this.props.students[i].id
+          });
+        }
+      }
+    }
+  };
+
+  academicYearUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        academicYearId: -1
+      });
+    } else {
+      for (const i in this.props.academicYears) {
+        if (id === this.props.academicYears[i].id.toString()) {
+          this.setState({
+            academicYearId: this.props.academicYears[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -157,7 +288,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                   </Label>
                   <AvField
                     id="invoice-amountPaid"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="amountPaid"
                     validate={{
@@ -200,7 +331,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                   </Label>
                   <AvField
                     id="invoice-outStandingAmount"
-                    type="string"
+                    type="number"
                     className="form-control"
                     name="outStandingAmount"
                     validate={{
@@ -229,13 +360,13 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                   <Label id="chequeNumberLabel" for="chequeNumber">
                     Cheque Number
                   </Label>
-                  <AvField id="invoice-chequeNumber" type="string" className="form-control" name="chequeNumber" />
+                  <AvField id="invoice-chequeNumber" type="number" className="form-control" name="chequeNumber" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="demandDraftNumberLabel" for="demandDraftNumber">
                     Demand Draft Number
                   </Label>
-                  <AvField id="invoice-demandDraftNumber" type="string" className="form-control" name="demandDraftNumber" />
+                  <AvField id="invoice-demandDraftNumber" type="number" className="form-control" name="demandDraftNumber" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="onlineTxnRefNumberLabel" for="onlineTxnRefNumber">
@@ -298,7 +429,13 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="feeCategory.id">Fee Category</Label>
-                  <AvInput id="invoice-feeCategory" type="select" className="form-control" name="feeCategoryId">
+                  <AvInput
+                    id="invoice-feeCategory"
+                    type="select"
+                    className="form-control"
+                    name="feeCategoryId"
+                    onChange={this.feeCategoryUpdate}
+                  >
                     <option value="" key="0" />
                     {feeCategories
                       ? feeCategories.map(otherEntity => (
@@ -311,7 +448,13 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="feeDetails.id">Fee Details</Label>
-                  <AvInput id="invoice-feeDetails" type="select" className="form-control" name="feeDetailsId">
+                  <AvInput
+                    id="invoice-feeDetails"
+                    type="select"
+                    className="form-control"
+                    name="feeDetailsId"
+                    onChange={this.feeDetailsUpdate}
+                  >
                     <option value="" key="0" />
                     {feeDetails
                       ? feeDetails.map(otherEntity => (
@@ -324,7 +467,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="dueDate.id">Due Date</Label>
-                  <AvInput id="invoice-dueDate" type="select" className="form-control" name="dueDateId">
+                  <AvInput id="invoice-dueDate" type="select" className="form-control" name="dueDateId" onChange={this.dueDateUpdate}>
                     <option value="" key="0" />
                     {dueDates
                       ? dueDates.map(otherEntity => (
@@ -337,7 +480,13 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="paymentRemainder.id">Payment Remainder</Label>
-                  <AvInput id="invoice-paymentRemainder" type="select" className="form-control" name="paymentRemainderId">
+                  <AvInput
+                    id="invoice-paymentRemainder"
+                    type="select"
+                    className="form-control"
+                    name="paymentRemainderId"
+                    onChange={this.paymentRemainderUpdate}
+                  >
                     <option value="" key="0" />
                     {paymentRemainders
                       ? paymentRemainders.map(otherEntity => (
@@ -350,7 +499,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="invoice-college" type="select" className="form-control" name="collegeId">
+                  <AvInput id="invoice-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -363,7 +512,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="invoice-branch" type="select" className="form-control" name="branchId">
+                  <AvInput id="invoice-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -376,7 +525,7 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="student.id">Student</Label>
-                  <AvInput id="invoice-student" type="select" className="form-control" name="studentId">
+                  <AvInput id="invoice-student" type="select" className="form-control" name="studentId" onChange={this.studentUpdate}>
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -389,7 +538,13 @@ export class InvoiceUpdate extends React.Component<IInvoiceUpdateProps, IInvoice
                 </AvGroup>
                 <AvGroup>
                   <Label for="academicYear.id">Academic Year</Label>
-                  <AvInput id="invoice-academicYear" type="select" className="form-control" name="academicYearId">
+                  <AvInput
+                    id="invoice-academicYear"
+                    type="select"
+                    className="form-control"
+                    name="academicYearId"
+                    onChange={this.academicYearUpdate}
+                  >
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
@@ -428,8 +583,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   academicYears: storeState.academicYear.entities,
   invoiceEntity: storeState.invoice.entity,
   loading: storeState.invoice.loading,
-  updating: storeState.invoice.updating,
-  updateSuccess: storeState.invoice.updateSuccess
+  updating: storeState.invoice.updating
 });
 
 const mapDispatchToProps = {

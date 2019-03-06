@@ -63,6 +63,11 @@ export default (state: SubjectState = initialState, action): SubjectState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_SUBJECTS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_SUBJECT_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/subjects';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ISubject> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ISubject> = query => ({
   type: ACTION_TYPES.SEARCH_SUBJECTS,
-  payload: axios.get<ISubject>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ISubject>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ISubject> = (page, size, sort) => ({

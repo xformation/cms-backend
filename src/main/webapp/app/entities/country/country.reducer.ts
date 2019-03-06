@@ -63,6 +63,11 @@ export default (state: CountryState = initialState, action): CountryState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_COUNTRIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_COUNTRY_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/countries';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ICountry> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ICountry> = query => ({
   type: ACTION_TYPES.SEARCH_COUNTRIES,
-  payload: axios.get<ICountry>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ICountry>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ICountry> = (page, size, sort) => ({

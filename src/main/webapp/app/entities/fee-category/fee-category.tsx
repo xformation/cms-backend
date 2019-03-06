@@ -35,8 +35,9 @@ export class FeeCategory extends React.Component<IFeeCategoryProps, IFeeCategory
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
