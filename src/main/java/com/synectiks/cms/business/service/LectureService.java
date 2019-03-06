@@ -146,7 +146,7 @@ public class LectureService {
 		return list;
 	}
 	
-	private List<Date> filterDateListOnDayOfweek(List<Date> dateList, int dayOfweek) {
+	public List<Date> filterDateListOnDayOfweek(List<Date> dateList, int dayOfweek) {
 		Calendar cal = Calendar.getInstance();
 		List<Date> list = new ArrayList<Date>();
 		for (Iterator<Date> iterator = dateList.iterator(); iterator.hasNext();) {
@@ -295,7 +295,7 @@ public class LectureService {
 		return new AcademicYear();
 	}
 	
-	private List<Holiday> getHolidayList(String academicYear) throws ParseException {
+	public List<Holiday> getHolidayList(String academicYear) throws ParseException {
 		AcademicYear acd = findAcademicYear(academicYear);
 		Holiday hl = new Holiday();
 		hl.setHolidayStatus(Status.ACTIVE);
@@ -305,7 +305,7 @@ public class LectureService {
 		return list;
 	}
 	
-	private List<Date> createDates(Term tr) {
+	public List<Date> createDates(Term tr) {
 		List<Date> dateList = new ArrayList<Date>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(tr.getStartDate());
@@ -317,7 +317,7 @@ public class LectureService {
 		return dateList;
 	}
 	
-	private void filterHolidays (List<Holiday> holidayList, List<Date> dateList) {
+	public void filterHolidays (List<Holiday> holidayList, List<Date> dateList) {
 		List<Date> hlList = new ArrayList<>();
 		for(Iterator<Holiday> itrHoliday = holidayList.iterator(); itrHoliday.hasNext();) {
 			Holiday hl = itrHoliday.next();
@@ -326,7 +326,7 @@ public class LectureService {
 		dateList.removeAll(hlList);
 	}
 	
-	private void filterSundays(List<Date> dateList) {
+	public void filterSundays(List<Date> dateList) {
 		Calendar cal = Calendar.getInstance();
 		for (Iterator<Date> iterator = dateList.iterator(); iterator.hasNext();) {
 			Date date = iterator.next();
