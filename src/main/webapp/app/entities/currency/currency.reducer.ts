@@ -63,11 +63,6 @@ export default (state: CurrencyState = initialState, action): CurrencyState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_CURRENCIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_CURRENCY_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/currencies';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ICurrency> = query => ({
+export const getSearchEntities: ICrudSearchAction<ICurrency> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_CURRENCIES,
-  payload: axios.get<ICurrency>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<ICurrency>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<ICurrency> = (page, size, sort) => ({

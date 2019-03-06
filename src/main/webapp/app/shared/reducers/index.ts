@@ -221,6 +221,7 @@ export interface IRootState {
   readonly reports: ReportsState;
   readonly idCard: IdCardState;
   readonly documents: DocumentsState;
+  readonly academicHistory: AcademicHistoryState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -273,6 +274,7 @@ const rootReducer = combineReducers<IRootState>({
   reports,
   idCard,
   documents,
+  academicHistory,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });
