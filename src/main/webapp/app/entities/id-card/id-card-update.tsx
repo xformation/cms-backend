@@ -12,7 +12,6 @@ import { getEntity, updateEntity, createEntity, reset } from './id-card.reducer'
 import { IIdCard } from 'app/shared/model/id-card.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IIdCardUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

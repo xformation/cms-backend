@@ -16,7 +16,7 @@ import { ISection } from 'app/shared/model/section.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ISectionUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ISectionUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ISectionUpdateState {
   isNew: boolean;

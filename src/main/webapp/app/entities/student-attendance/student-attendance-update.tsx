@@ -18,7 +18,7 @@ import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IStudentAttendanceUpdateState {
   isNew: boolean;

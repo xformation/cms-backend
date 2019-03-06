@@ -16,7 +16,7 @@ import { ITerm } from 'app/shared/model/term.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ITermUpdateState {
   isNew: boolean;

@@ -9,7 +9,7 @@ import { IAdminAttendance } from 'app/shared/model/admin-attendance.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './admin-attendance.reducer';
 
-export interface IAdminAttendanceDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAdminAttendanceDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class AdminAttendanceDeleteDialog extends React.Component<IAdminAttendanceDeleteDialogProps> {
   componentDidMount() {

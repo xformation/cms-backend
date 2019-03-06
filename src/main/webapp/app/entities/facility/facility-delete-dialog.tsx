@@ -9,7 +9,7 @@ import { IFacility } from 'app/shared/model/facility.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './facility.reducer';
 
-export interface IFacilityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IFacilityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class FacilityDeleteDialog extends React.Component<IFacilityDeleteDialogProps> {
   componentDidMount() {

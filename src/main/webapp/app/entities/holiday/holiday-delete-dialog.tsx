@@ -9,7 +9,7 @@ import { IHoliday } from 'app/shared/model/holiday.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './holiday.reducer';
 
-export interface IHolidayDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IHolidayDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class HolidayDeleteDialog extends React.Component<IHolidayDeleteDialogProps> {
   componentDidMount() {

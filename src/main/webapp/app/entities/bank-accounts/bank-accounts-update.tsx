@@ -18,7 +18,7 @@ import { IBankAccounts } from 'app/shared/model/bank-accounts.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IBankAccountsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBankAccountsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IBankAccountsUpdateState {
   isNew: boolean;

@@ -9,7 +9,7 @@ import { IBranch } from 'app/shared/model/branch.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './branch.reducer';
 
-export interface IBranchDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IBranchDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class BranchDeleteDialog extends React.Component<IBranchDeleteDialogProps> {
   componentDidMount() {

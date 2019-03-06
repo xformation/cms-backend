@@ -9,7 +9,7 @@ import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './attendance-master.reducer';
 
-export interface IAttendanceMasterDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAttendanceMasterDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class AttendanceMasterDeleteDialog extends React.Component<IAttendanceMasterDeleteDialogProps> {
   componentDidMount() {

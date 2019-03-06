@@ -18,7 +18,7 @@ import { IAdminOverview } from 'app/shared/model/admin-overview.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IAdminOverviewUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAdminOverviewUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAdminOverviewUpdateState {
   isNew: boolean;

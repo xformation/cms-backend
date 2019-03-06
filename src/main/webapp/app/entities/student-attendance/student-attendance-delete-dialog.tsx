@@ -9,7 +9,7 @@ import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './student-attendance.reducer';
 
-export interface IStudentAttendanceDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IStudentAttendanceDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class StudentAttendanceDeleteDialog extends React.Component<IStudentAttendanceDeleteDialogProps> {
   componentDidMount() {

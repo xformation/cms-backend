@@ -12,7 +12,6 @@ import { getEntity, updateEntity, createEntity, reset } from './reports.reducer'
 import { IReports } from 'app/shared/model/reports.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IReportsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

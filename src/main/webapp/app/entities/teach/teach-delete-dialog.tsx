@@ -9,7 +9,7 @@ import { ITeach } from 'app/shared/model/teach.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './teach.reducer';
 
-export interface ITeachDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ITeachDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class TeachDeleteDialog extends React.Component<ITeachDeleteDialogProps> {
   componentDidMount() {

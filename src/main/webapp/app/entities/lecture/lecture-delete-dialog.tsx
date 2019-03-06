@@ -9,7 +9,7 @@ import { ILecture } from 'app/shared/model/lecture.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './lecture.reducer';
 
-export interface ILectureDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ILectureDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class LectureDeleteDialog extends React.Component<ILectureDeleteDialogProps> {
   componentDidMount() {
