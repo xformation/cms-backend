@@ -76,7 +76,8 @@ import com.synectiks.cms.repository.TermRepository;
 public class CmsAutomatedTestDataSetupProcessor {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	private static final String DATA_FILE = "cms_test_data_setup.xlsx";
+	private static final String DATA_FILE_XLSX = "cms_test_data_setup.xlsx";
+	private static final String DATA_FILE_XLS = "cms_test_data_setup.xls";
 	private TestDataPojoBuilder testDataPojoBuilder;
 	
 	private Country country = null;
@@ -170,8 +171,9 @@ public class CmsAutomatedTestDataSetupProcessor {
 		this.testDataPojoBuilder = new TestDataPojoBuilder();
 		FileInputStream fis = null;
 		try {
-			fis = loadFile(DATA_FILE);
-			Workbook wb = getWorkbook(DATA_FILE, fis);
+			File f = getFile();
+			fis = loadFile(f);
+			Workbook wb = getWorkbook(fis);
 			saveCountryData();
 			saveStateData(wb);
 			saveCityData(wb);
@@ -181,20 +183,24 @@ public class CmsAutomatedTestDataSetupProcessor {
 			if(fis != null) fis.close();
 		}
 	}
-	
-	private FileInputStream loadFile(String fileName) throws FileNotFoundException {
-//        String rootPath = Paths.get(".").toUri().normalize().getPath().substring(1)+"src/test/"+fileName;
-        String r = Paths.get("").toAbsolutePath()+"/src/test/"+fileName;
-		return new FileInputStream(new File(r));
+	private File getFile() throws FileNotFoundException {
+		String r = Paths.get("").toAbsolutePath()+"/src/test/"+DATA_FILE_XLSX;
+		File f = new File(r);
+    	if(!f.exists()) {
+    		r = Paths.get("").toAbsolutePath()+"/src/test/"+DATA_FILE_XLS;
+    		f = new File(r);
+    		if(!f.exists()) {
+    			throw new FileNotFoundException("File not found : "+r);
+    		}
+    	}
+		return f;
+	}
+	private FileInputStream loadFile(File f) throws FileNotFoundException {
+		return new FileInputStream(f);
 	}
 	
-	private Workbook getWorkbook(String fileName, FileInputStream fis) throws IOException {
-		Workbook workbook = null;
-		if(fileName.toLowerCase().endsWith("xlsx")){
-			workbook = new XSSFWorkbook(fis);
-		}else if(fileName.toLowerCase().endsWith("xls")){
-			workbook = new HSSFWorkbook(fis);
-		}
+	private Workbook getWorkbook(FileInputStream fis) throws IOException {
+		Workbook workbook = new XSSFWorkbook(fis);
 		return workbook;
 	}
 	
@@ -322,8 +328,6 @@ public class CmsAutomatedTestDataSetupProcessor {
 					saveStudentAttendanceData();
 				}
 			}
-			Runtime.getRuntime().gc();
-			Thread.sleep(1000*5);
 		}
 	} 
 	
