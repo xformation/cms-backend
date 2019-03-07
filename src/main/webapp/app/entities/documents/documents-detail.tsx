@@ -29,9 +29,15 @@ export class DocumentsDetail extends React.Component<IDocumentsDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="desc">Desc</span>
+              <span id="documentName">Document Name</span>
             </dt>
-            <dd>{documentsEntity.desc}</dd>
+            <dd>{documentsEntity.documentName}</dd>
+            <dt>
+              <span id="upload">Upload</span>
+            </dt>
+            <dd>{documentsEntity.upload}</dd>
+            <dt>Student</dt>
+            <dd>{documentsEntity.studentId ? documentsEntity.studentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/documents" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

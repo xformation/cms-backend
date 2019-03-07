@@ -63,11 +63,6 @@ export default (state: SubjectState = initialState, action): SubjectState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_SUBJECTS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_SUBJECT_LIST):
       return {
         ...state,

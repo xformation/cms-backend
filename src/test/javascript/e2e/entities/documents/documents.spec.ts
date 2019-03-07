@@ -27,7 +27,6 @@ describe('Documents e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
-
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
@@ -46,8 +45,11 @@ describe('Documents e2e test', () => {
   it('should create and save Documents', async () => {
     const nbButtonsBeforeCreate = await documentsComponentsPage.countDeleteButtons();
 
-    await documentsUpdatePage.setDescInput('desc');
-    expect(await documentsUpdatePage.getDescInput()).to.match(/desc/);
+    await documentsUpdatePage.setDocumentNameInput('documentName');
+    expect(await documentsUpdatePage.getDocumentNameInput()).to.match(/documentName/);
+    await documentsUpdatePage.setUploadInput('upload');
+    expect(await documentsUpdatePage.getUploadInput()).to.match(/upload/);
+    await documentsUpdatePage.studentSelectLastOption();
     await waitUntilDisplayed(documentsUpdatePage.getSaveButton());
     await documentsUpdatePage.save();
     await waitUntilHidden(documentsUpdatePage.getSaveButton());

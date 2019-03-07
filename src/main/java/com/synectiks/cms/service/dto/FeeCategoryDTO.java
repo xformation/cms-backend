@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,6 +15,7 @@ public class FeeCategoryDTO implements Serializable {
 
     @NotNull
     private String description;
+
 
     public Long getId() {
         return id;

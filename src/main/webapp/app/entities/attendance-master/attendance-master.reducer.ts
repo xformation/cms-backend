@@ -63,11 +63,6 @@ export default (state: AttendanceMasterState = initialState, action): Attendance
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ATTENDANCEMASTERS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_ATTENDANCEMASTER_LIST):
       return {
         ...state,

@@ -63,11 +63,6 @@ export default (state: FeeCategoryState = initialState, action): FeeCategoryStat
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_FEECATEGORIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_FEECATEGORY_LIST):
       return {
         ...state,

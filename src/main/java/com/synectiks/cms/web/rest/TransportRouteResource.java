@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.TransportRouteService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class TransportRouteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/transport-routes")
-    @Timed
     public ResponseEntity<TransportRouteDTO> createTransportRoute(@Valid @RequestBody TransportRouteDTO transportRouteDTO) throws URISyntaxException {
         log.debug("REST request to save TransportRoute : {}", transportRouteDTO);
         if (transportRouteDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class TransportRouteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/transport-routes")
-    @Timed
     public ResponseEntity<TransportRouteDTO> updateTransportRoute(@Valid @RequestBody TransportRouteDTO transportRouteDTO) throws URISyntaxException {
         log.debug("REST request to update TransportRoute : {}", transportRouteDTO);
         if (transportRouteDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class TransportRouteResource {
      * @return the ResponseEntity with status 200 (OK) and the list of transportRoutes in body
      */
     @GetMapping("/transport-routes")
-    @Timed
     public List<TransportRouteDTO> getAllTransportRoutes() {
         log.debug("REST request to get all TransportRoutes");
         return transportRouteService.findAll();
@@ -99,7 +94,6 @@ public class TransportRouteResource {
      * @return the ResponseEntity with status 200 (OK) and with body the transportRouteDTO, or with status 404 (Not Found)
      */
     @GetMapping("/transport-routes/{id}")
-    @Timed
     public ResponseEntity<TransportRouteDTO> getTransportRoute(@PathVariable Long id) {
         log.debug("REST request to get TransportRoute : {}", id);
         Optional<TransportRouteDTO> transportRouteDTO = transportRouteService.findOne(id);
@@ -113,7 +107,6 @@ public class TransportRouteResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/transport-routes/{id}")
-    @Timed
     public ResponseEntity<Void> deleteTransportRoute(@PathVariable Long id) {
         log.debug("REST request to delete TransportRoute : {}", id);
         transportRouteService.delete(id);
@@ -128,7 +121,6 @@ public class TransportRouteResource {
      * @return the result of the search
      */
     @GetMapping("/_search/transport-routes")
-    @Timed
     public List<TransportRouteDTO> searchTransportRoutes(@RequestParam String query) {
         log.debug("REST request to search TransportRoutes for query {}", query);
         return transportRouteService.search(query);

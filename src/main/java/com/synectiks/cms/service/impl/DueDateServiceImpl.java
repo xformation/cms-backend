@@ -50,7 +50,6 @@ public class DueDateServiceImpl implements DueDateService {
     @Override
     public DueDateDTO save(DueDateDTO dueDateDTO) {
         log.debug("Request to save DueDate : {}", dueDateDTO);
-
         DueDate dueDate = dueDateMapper.toEntity(dueDateDTO);
         dueDate = dueDateRepository.save(dueDate);
         DueDateDTO result = dueDateMapper.toDto(dueDate);

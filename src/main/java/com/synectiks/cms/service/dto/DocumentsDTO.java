@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,7 +11,13 @@ public class DocumentsDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String desc;
+    private String documentName;
+
+    @NotNull
+    private String upload;
+
+
+    private Long studentId;
 
     public Long getId() {
         return id;
@@ -22,12 +27,28 @@ public class DocumentsDTO implements Serializable {
         this.id = id;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDocumentName() {
+        return documentName;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public String getUpload() {
+        return upload;
+    }
+
+    public void setUpload(String upload) {
+        this.upload = upload;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     @Override
@@ -55,7 +76,9 @@ public class DocumentsDTO implements Serializable {
     public String toString() {
         return "DocumentsDTO{" +
             "id=" + getId() +
-            ", desc='" + getDesc() + "'" +
+            ", documentName='" + getDocumentName() + "'" +
+            ", upload='" + getUpload() + "'" +
+            ", student=" + getStudentId() +
             "}";
     }
 }

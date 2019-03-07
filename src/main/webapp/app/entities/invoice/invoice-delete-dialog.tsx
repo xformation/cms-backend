@@ -31,12 +31,12 @@ export class InvoiceDeleteDialog extends React.Component<IInvoiceDeleteDialogPro
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Invoice?</ModalBody>
+        <ModalBody id="cmsApp.invoice.delete.question">Are you sure you want to delete this Invoice?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-invoice" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

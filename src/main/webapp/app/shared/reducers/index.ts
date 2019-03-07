@@ -27,9 +27,7 @@ import location, {
 } from 'app/entities/location/location.reducer';
 // prettier-ignore
 // prettier-ignore
-import branch, {
-  BranchState
-} from 'app/entities/branch/branch.reducer';
+
 // prettier-ignore
 import adminOverview, {
   AdminOverviewState
@@ -52,15 +50,22 @@ import idCard, {
   IdCardState
 } from 'app/entities/id-card/id-card.reducer';
 // prettier-ignore
-import documents, {
-  DocumentsState
-} from 'app/entities/documents/documents.reducer';
+
 // prettier-ignore
 // prettier-ignore
-import facility, {
-  FacilityState
-} from 'app/entities/facility/facility.reducer';
+
 // prettier-ignore
+// prettier-ignore
+
+// prettier-ignore
+
+import academicYear, {
+  AcademicYearState
+} from 'app/entities/academic-year/academic-year.reducer';
+// prettier-ignore
+import branch, {
+  BranchState
+} from 'app/entities/branch/branch.reducer';
 // prettier-ignore
 import department, {
   DepartmentState
@@ -81,10 +86,6 @@ import section, {
 import term, {
   TermState
 } from 'app/entities/term/term.reducer';
-// prettier-ignore
-import academicYear, {
-  AcademicYearState
-} from 'app/entities/academic-year/academic-year.reducer';
 // prettier-ignore
 import student, {
   StudentState
@@ -126,7 +127,6 @@ import bankAccounts, {
   BankAccountsState
 } from 'app/entities/bank-accounts/bank-accounts.reducer';
 // prettier-ignore
-// prettier-ignore
 import country, {
   CountryState
 } from 'app/entities/country/country.reducer';
@@ -143,6 +143,9 @@ import city, {
   CityState
 } from 'app/entities/city/city.reducer';
 // prettier-ignore
+import facility, {
+  FacilityState
+} from 'app/entities/facility/facility.reducer';
 // prettier-ignore
 import feeCategory, {
   FeeCategoryState
@@ -171,6 +174,14 @@ import lateFee, {
 import invoice, {
   InvoiceState
 } from 'app/entities/invoice/invoice.reducer';
+// prettier-ignore
+import competitiveExam, {
+  CompetitiveExamState
+} from 'app/entities/competitive-exam/competitive-exam.reducer';
+// prettier-ignore
+import documents, {
+  DocumentsState
+} from 'app/entities/documents/documents.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -221,6 +232,7 @@ export interface IRootState {
   readonly reports: ReportsState;
   readonly idCard: IdCardState;
   readonly documents: DocumentsState;
+  readonly competitiveExam: CompetitiveExamState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -273,6 +285,7 @@ const rootReducer = combineReducers<IRootState>({
   reports,
   idCard,
   documents,
+  competitiveExam,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

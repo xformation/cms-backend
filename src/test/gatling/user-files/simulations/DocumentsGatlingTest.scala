@@ -72,7 +72,8 @@ class DocumentsGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "id":null
-                , "desc":"SAMPLE_TEXT"
+                , "documentName":"SAMPLE_TEXT"
+                , "upload":"SAMPLE_TEXT"
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_documents_url"))).exitHereIfFailed

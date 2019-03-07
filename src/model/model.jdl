@@ -372,6 +372,17 @@ comments String required
 updatedBy String required
 updatedOn LocalDate required
 }
+entity CompetitiveExam {
+testName String required
+testScore Integer required
+enrollmentNo Long required
+rank Long required
+}
+
+entity Documents{
+documentName String required
+upload String required
+}
 
 relationship ManyToOne {
 Student{department required} to Department ,
@@ -436,6 +447,9 @@ Invoice{college} to College,
 Invoice{branch} to Branch,
 Invoice{student} to Student,
 Invoice{academicYear} to AcademicYear
+CompetitiveExam{student} to Student,
+Documents{student} to Student
+
 }
 
 dto * with mapstruct

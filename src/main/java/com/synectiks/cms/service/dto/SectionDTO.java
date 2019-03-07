@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,6 +13,7 @@ public class SectionDTO implements Serializable {
 
     @NotNull
     private SectionEnum section;
+
 
     private Long batchId;
 

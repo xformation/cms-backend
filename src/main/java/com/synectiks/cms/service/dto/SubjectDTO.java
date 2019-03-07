@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -24,6 +23,7 @@ public class SubjectDTO implements Serializable {
 
     @NotNull
     private Status status;
+
 
     private Long departmentId;
 

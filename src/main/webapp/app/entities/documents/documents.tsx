@@ -35,9 +35,8 @@ export class Documents extends React.Component<IDocumentsProps, IDocumentsState>
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -75,7 +74,9 @@ export class Documents extends React.Component<IDocumentsProps, IDocumentsState>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Desc</th>
+                <th>Document Name</th>
+                <th>Upload</th>
+                <th>Student</th>
                 <th />
               </tr>
             </thead>
@@ -87,7 +88,9 @@ export class Documents extends React.Component<IDocumentsProps, IDocumentsState>
                       {documents.id}
                     </Button>
                   </td>
-                  <td>{documents.desc}</td>
+                  <td>{documents.documentName}</td>
+                  <td>{documents.upload}</td>
+                  <td>{documents.studentId ? <Link to={`student/${documents.studentId}`}>{documents.studentId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${documents.id}`} color="info" size="sm">

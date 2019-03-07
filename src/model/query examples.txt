@@ -5,13 +5,13 @@ QUERY:
 QUERY:
 
 {
-  college(id: 951){
-  shortName
-  logo
-  backgroundImage
-  instructionInformation
-  }
-}
+   college(id: 951){
+   shortName
+   logo
+   backgroundImage
+   instructionInformation
+   }
+ }
 
 {
   colleges{

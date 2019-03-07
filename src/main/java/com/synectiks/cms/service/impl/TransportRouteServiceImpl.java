@@ -50,7 +50,6 @@ public class TransportRouteServiceImpl implements TransportRouteService {
     @Override
     public TransportRouteDTO save(TransportRouteDTO transportRouteDTO) {
         log.debug("Request to save TransportRoute : {}", transportRouteDTO);
-
         TransportRoute transportRoute = transportRouteMapper.toEntity(transportRouteDTO);
         transportRoute = transportRouteRepository.save(transportRoute);
         TransportRouteDTO result = transportRouteMapper.toDto(transportRoute);

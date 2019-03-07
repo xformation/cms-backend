@@ -63,11 +63,6 @@ export default (state: HolidayState = initialState, action): HolidayState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_HOLIDAYS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_HOLIDAY_LIST):
       return {
         ...state,

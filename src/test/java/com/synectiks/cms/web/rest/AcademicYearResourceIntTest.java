@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
+
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;

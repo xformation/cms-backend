@@ -42,7 +42,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     /**
-     * Save a documents.
+     * Save a documents.csv.
      *
      * @param documentsDTO the entity to save
      * @return the persisted entity
@@ -50,7 +50,6 @@ public class DocumentsServiceImpl implements DocumentsService {
     @Override
     public DocumentsDTO save(DocumentsDTO documentsDTO) {
         log.debug("Request to save Documents : {}", documentsDTO);
-
         Documents documents = documentsMapper.toEntity(documentsDTO);
         documents = documentsRepository.save(documents);
         DocumentsDTO result = documentsMapper.toDto(documents);
@@ -59,7 +58,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     /**
-     * Get all the documents.
+     * Get all the documents.csv.
      *
      * @return the list of entities
      */
@@ -74,7 +73,7 @@ public class DocumentsServiceImpl implements DocumentsService {
 
 
     /**
-     * Get one documents by id.
+     * Get one documents.csv by id.
      *
      * @param id the id of the entity
      * @return the entity
@@ -88,7 +87,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     /**
-     * Delete the documents by id.
+     * Delete the documents.csv by id.
      *
      * @param id the id of the entity
      */
@@ -100,7 +99,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     /**
-     * Search for the documents corresponding to the query.
+     * Search for the documents.csv corresponding to the query.
      *
      * @param query the query of the search
      * @return the list of entities

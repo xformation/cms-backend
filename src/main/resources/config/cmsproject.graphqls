@@ -131,6 +131,12 @@ type Query {
   facility(id: Long!): Facility!
   facilities: [Facility!]!
 
+  competitiveExam (id: Long!): Long!
+  competitiveExams: [CompetitiveExam!]!
+
+  document (id: Long!): Long!
+  documents: [Documents!]!
+
   transportRoute(id: Long!): TransportRoute!
   transportRoutes: [TransportRoute!]!
 
@@ -178,6 +184,22 @@ type State{
     stateCode: String!
     country: Country!
 }
+
+type CompetitiveExam{
+    id: Long!
+    testName: String!
+    testScore: Int!
+    enrollmentNo: Long!
+    rank: Long!
+    student: Student!
+ }
+
+type Documents{
+    id: Long!
+    documentName: String!
+    upload: String!
+    student: Student!
+ }
 
 type FeeCategory{
     id: Long!
@@ -739,6 +761,69 @@ type Mutation {
     updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
     removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
 
+    addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
+    updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
+    removeCompetitiveExam(input:RemoveCompetitiveExamInput!):RemoveCompetitiveExamPayload!
+
+    addDocuments(input:AddDocumentsInput!):AddDocumentsPayload!
+    updateDocuments(input:UpdateDocumentsInput!):UpdateDocumentsPayload!
+    removeDocuments(input:RemoveDocumentsInput!):RemoveDocumentsPayload!
+
+}
+
+input AddDocumentsInput{
+    documentName: String!
+    upload: String!
+    studentId: Long!
+}
+
+type AddDocumentsPayload {
+    documents: Documents!
+}
+input UpdateDocumentsInput {
+    id: Long!
+    studentId: Long!
+    documentName: String!
+    upload: String!
+}
+type UpdateDocumentsPayload {
+documents: Documents!
+}
+input RemoveDocumentsInput {
+documentsId: Long!
+}
+type RemoveDocumentsPayload {
+ documents: [ Documents!]!
+}
+
+input AddCompetitiveExamInput{
+    testName: String!
+    testScore: Int!
+    enrollmentNo: Long!
+    rank: Long!
+    studentId: Long!
+}
+
+type AddCompetitiveExamPayload {
+    competitiveExam: CompetitiveExam!
+}
+input UpdateCompetitiveExamInput {
+    id: Long!
+    studentId: Long!
+    testName: String!
+    testScore: Int!
+    enrollmentNo: Long!
+    rank: Long!
+}
+
+type UpdateCompetitiveExamPayload {
+    competitiveExam: CompetitiveExam!
+}
+input RemoveCompetitiveExamInput {
+   competitiveExamId: Long!
+}
+type RemoveCompetitiveExamPayload {
+    competitiveExam: [ CompetitiveExam!]!
 }
 
 input LectureScheduleInput {

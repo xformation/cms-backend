@@ -4,18 +4,47 @@ export default class DocumentsUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.documents.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  descInput: ElementFinder = element(by.css('input#documents-desc'));
+  documentNameInput: ElementFinder = element(by.css('input#documents.csv-documentName'));
+  uploadInput: ElementFinder = element(by.css('input#documents.csv-upload'));
+  studentSelect: ElementFinder = element(by.css('select#documents.csv-student'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  async setDescInput(desc) {
-    await this.descInput.sendKeys(desc);
+  async setDocumentNameInput(documentName) {
+    await this.documentNameInput.sendKeys(documentName);
   }
 
-  async getDescInput() {
-    return this.descInput.getAttribute('value');
+  async getDocumentNameInput() {
+    return this.documentNameInput.getAttribute('value');
+  }
+
+  async setUploadInput(upload) {
+    await this.uploadInput.sendKeys(upload);
+  }
+
+  async getUploadInput() {
+    return this.uploadInput.getAttribute('value');
+  }
+
+  async studentSelectLastOption() {
+    await this.studentSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async studentSelectOption(option) {
+    await this.studentSelect.sendKeys(option);
+  }
+
+  getStudentSelect() {
+    return this.studentSelect;
+  }
+
+  async getStudentSelectedOption() {
+    return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
   async save() {

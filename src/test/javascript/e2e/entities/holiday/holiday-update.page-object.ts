@@ -13,61 +13,61 @@ export default class HolidayUpdatePage {
     return this.pageTitle;
   }
 
-  setHolidayDescInput(holidayDesc) {
-    this.holidayDescInput.sendKeys(holidayDesc);
+  async setHolidayDescInput(holidayDesc) {
+    await this.holidayDescInput.sendKeys(holidayDesc);
   }
 
-  getHolidayDescInput() {
+  async getHolidayDescInput() {
     return this.holidayDescInput.getAttribute('value');
   }
 
-  setHolidayDateInput(holidayDate) {
-    this.holidayDateInput.sendKeys(holidayDate);
+  async setHolidayDateInput(holidayDate) {
+    await this.holidayDateInput.sendKeys(holidayDate);
   }
 
-  getHolidayDateInput() {
+  async getHolidayDateInput() {
     return this.holidayDateInput.getAttribute('value');
   }
 
-  setHolidayStatusSelect(holidayStatus) {
-    this.holidayStatusSelect.sendKeys(holidayStatus);
+  async setHolidayStatusSelect(holidayStatus) {
+    await this.holidayStatusSelect.sendKeys(holidayStatus);
   }
 
-  getHolidayStatusSelect() {
+  async getHolidayStatusSelect() {
     return this.holidayStatusSelect.element(by.css('option:checked')).getText();
   }
 
-  holidayStatusSelectLastOption() {
-    this.holidayStatusSelect
+  async holidayStatusSelectLastOption() {
+    await this.holidayStatusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  academicyearSelectLastOption() {
-    this.academicyearSelect
+  async academicyearSelectLastOption() {
+    await this.academicyearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  academicyearSelectOption(option) {
-    this.academicyearSelect.sendKeys(option);
+  async academicyearSelectOption(option) {
+    await this.academicyearSelect.sendKeys(option);
   }
 
   getAcademicyearSelect() {
     return this.academicyearSelect;
   }
 
-  getAcademicyearSelectedOption() {
+  async getAcademicyearSelectedOption() {
     return this.academicyearSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

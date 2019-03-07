@@ -63,11 +63,6 @@ export default (state: TransportRouteState = initialState, action): TransportRou
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_TRANSPORTROUTES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_TRANSPORTROUTE_LIST):
       return {
         ...state,

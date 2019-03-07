@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -136,6 +135,7 @@ public class TeacherDTO implements Serializable {
 
     @NotNull
     private StaffType staffType;
+
 
     private Long departmentId;
 

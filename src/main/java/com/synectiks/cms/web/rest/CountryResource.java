@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.CountryService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class CountryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/countries")
-    @Timed
     public ResponseEntity<CountryDTO> createCountry(@Valid @RequestBody CountryDTO countryDTO) throws URISyntaxException {
         log.debug("REST request to save Country : {}", countryDTO);
         if (countryDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class CountryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/countries")
-    @Timed
     public ResponseEntity<CountryDTO> updateCountry(@Valid @RequestBody CountryDTO countryDTO) throws URISyntaxException {
         log.debug("REST request to update Country : {}", countryDTO);
         if (countryDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class CountryResource {
      * @return the ResponseEntity with status 200 (OK) and the list of countries in body
      */
     @GetMapping("/countries")
-    @Timed
     public List<CountryDTO> getAllCountries() {
         log.debug("REST request to get all Countries");
         return countryService.findAll();
@@ -99,7 +94,6 @@ public class CountryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the countryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/countries/{id}")
-    @Timed
     public ResponseEntity<CountryDTO> getCountry(@PathVariable Long id) {
         log.debug("REST request to get Country : {}", id);
         Optional<CountryDTO> countryDTO = countryService.findOne(id);
@@ -113,7 +107,6 @@ public class CountryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/countries/{id}")
-    @Timed
     public ResponseEntity<Void> deleteCountry(@PathVariable Long id) {
         log.debug("REST request to delete Country : {}", id);
         countryService.delete(id);
@@ -128,7 +121,6 @@ public class CountryResource {
      * @return the result of the search
      */
     @GetMapping("/_search/countries")
-    @Timed
     public List<CountryDTO> searchCountries(@RequestParam String query) {
         log.debug("REST request to search Countries for query {}", query);
         return countryService.search(query);

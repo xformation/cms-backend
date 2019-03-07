@@ -63,11 +63,6 @@ export default (state: LectureState = initialState, action): LectureState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_LECTURES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_LECTURE_LIST):
       return {
         ...state,
