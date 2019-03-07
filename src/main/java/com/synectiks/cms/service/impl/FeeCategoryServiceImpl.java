@@ -50,7 +50,6 @@ public class FeeCategoryServiceImpl implements FeeCategoryService {
     @Override
     public FeeCategoryDTO save(FeeCategoryDTO feeCategoryDTO) {
         log.debug("Request to save FeeCategory : {}", feeCategoryDTO);
-
         FeeCategory feeCategory = feeCategoryMapper.toEntity(feeCategoryDTO);
         feeCategory = feeCategoryRepository.save(feeCategory);
         FeeCategoryDTO result = feeCategoryMapper.toDto(feeCategory);

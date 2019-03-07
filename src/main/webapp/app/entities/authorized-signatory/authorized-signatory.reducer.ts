@@ -63,11 +63,6 @@ export default (state: AuthorizedSignatoryState = initialState, action): Authori
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY_LIST):
       return {
         ...state,

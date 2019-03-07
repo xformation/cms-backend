@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.DocumentsService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -30,7 +28,7 @@ public class DocumentsResource {
 
     private final Logger log = LoggerFactory.getLogger(DocumentsResource.class);
 
-    private static final String ENTITY_NAME = "documents";
+    private static final String ENTITY_NAME = "documents.csv";
 
     private final DocumentsService documentsService;
 
@@ -39,27 +37,26 @@ public class DocumentsResource {
     }
 
     /**
-     * POST  /documents : Create a new documents.
+     * POST  /documents.csv : Create a new documents.csv.
      *
      * @param documentsDTO the documentsDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new documentsDTO, or with status 400 (Bad Request) if the documents has already an ID
+     * @return the ResponseEntity with status 201 (Created) and with body the new documentsDTO, or with status 400 (Bad Request) if the documents.csv has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/documents")
-    @Timed
     public ResponseEntity<DocumentsDTO> createDocuments(@Valid @RequestBody DocumentsDTO documentsDTO) throws URISyntaxException {
         log.debug("REST request to save Documents : {}", documentsDTO);
         if (documentsDTO.getId() != null) {
-            throw new BadRequestAlertException("A new documents cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new documents.csv cannot already have an ID", ENTITY_NAME, "idexists");
         }
         DocumentsDTO result = documentsService.save(documentsDTO);
-        return ResponseEntity.created(new URI("/api/documents/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/documents.csv/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /documents : Updates an existing documents.
+     * PUT  /documents.csv : Updates an existing documents.csv.
      *
      * @param documentsDTO the documentsDTO to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated documentsDTO,
@@ -68,7 +65,6 @@ public class DocumentsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/documents")
-    @Timed
     public ResponseEntity<DocumentsDTO> updateDocuments(@Valid @RequestBody DocumentsDTO documentsDTO) throws URISyntaxException {
         log.debug("REST request to update Documents : {}", documentsDTO);
         if (documentsDTO.getId() == null) {
@@ -81,25 +77,23 @@ public class DocumentsResource {
     }
 
     /**
-     * GET  /documents : get all the documents.
+     * GET  /documents.csv : get all the documents.csv.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of documents in body
+     * @return the ResponseEntity with status 200 (OK) and the list of documents.csv in body
      */
     @GetMapping("/documents")
-    @Timed
     public List<DocumentsDTO> getAllDocuments() {
         log.debug("REST request to get all Documents");
         return documentsService.findAll();
     }
 
     /**
-     * GET  /documents/:id : get the "id" documents.
+     * GET  /documents.csv/:id : get the "id" documents.csv.
      *
      * @param id the id of the documentsDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the documentsDTO, or with status 404 (Not Found)
      */
     @GetMapping("/documents/{id}")
-    @Timed
     public ResponseEntity<DocumentsDTO> getDocuments(@PathVariable Long id) {
         log.debug("REST request to get Documents : {}", id);
         Optional<DocumentsDTO> documentsDTO = documentsService.findOne(id);
@@ -107,13 +101,12 @@ public class DocumentsResource {
     }
 
     /**
-     * DELETE  /documents/:id : delete the "id" documents.
+     * DELETE  /documents.csv/:id : delete the "id" documents.csv.
      *
      * @param id the id of the documentsDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/documents/{id}")
-    @Timed
     public ResponseEntity<Void> deleteDocuments(@PathVariable Long id) {
         log.debug("REST request to delete Documents : {}", id);
         documentsService.delete(id);
@@ -121,14 +114,13 @@ public class DocumentsResource {
     }
 
     /**
-     * SEARCH  /_search/documents?query=:query : search for the documents corresponding
+     * SEARCH  /_search/documents.csv?query=:query : search for the documents.csv corresponding
      * to the query.
      *
-     * @param query the query of the documents search
+     * @param query the query of the documents.csv search
      * @return the result of the search
      */
     @GetMapping("/_search/documents")
-    @Timed
     public List<DocumentsDTO> searchDocuments(@RequestParam String query) {
         log.debug("REST request to search Documents for query {}", query);
         return documentsService.search(query);

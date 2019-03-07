@@ -13,72 +13,72 @@ export default class StudentAttendanceUpdatePage {
     return this.pageTitle;
   }
 
-  setAttendanceStatusSelect(attendanceStatus) {
-    this.attendanceStatusSelect.sendKeys(attendanceStatus);
+  async setAttendanceStatusSelect(attendanceStatus) {
+    await this.attendanceStatusSelect.sendKeys(attendanceStatus);
   }
 
-  getAttendanceStatusSelect() {
+  async getAttendanceStatusSelect() {
     return this.attendanceStatusSelect.element(by.css('option:checked')).getText();
   }
 
-  attendanceStatusSelectLastOption() {
-    this.attendanceStatusSelect
+  async attendanceStatusSelectLastOption() {
+    await this.attendanceStatusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setCommentsInput(comments) {
-    this.commentsInput.sendKeys(comments);
+  async setCommentsInput(comments) {
+    await this.commentsInput.sendKeys(comments);
   }
 
-  getCommentsInput() {
+  async getCommentsInput() {
     return this.commentsInput.getAttribute('value');
   }
 
-  studentSelectLastOption() {
-    this.studentSelect
+  async studentSelectLastOption() {
+    await this.studentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  studentSelectOption(option) {
-    this.studentSelect.sendKeys(option);
+  async studentSelectOption(option) {
+    await this.studentSelect.sendKeys(option);
   }
 
   getStudentSelect() {
     return this.studentSelect;
   }
 
-  getStudentSelectedOption() {
+  async getStudentSelectedOption() {
     return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
-  lectureSelectLastOption() {
-    this.lectureSelect
+  async lectureSelectLastOption() {
+    await this.lectureSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  lectureSelectOption(option) {
-    this.lectureSelect.sendKeys(option);
+  async lectureSelectOption(option) {
+    await this.lectureSelect.sendKeys(option);
   }
 
   getLectureSelect() {
     return this.lectureSelect;
   }
 
-  getLectureSelectedOption() {
+  async getLectureSelectedOption() {
     return this.lectureSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

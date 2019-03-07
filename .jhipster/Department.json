@@ -26,14 +26,16 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "branch",
             "otherEntityName": "branch",
+            "otherEntityRelationshipName": "department",
+            "relationshipName": "branch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicyear",
             "otherEntityName": "academicYear",
+            "otherEntityRelationshipName": "department",
+            "relationshipName": "academicyear",
             "otherEntityField": "id"
         }
     ],

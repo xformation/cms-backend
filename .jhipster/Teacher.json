@@ -284,14 +284,16 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "department",
             "otherEntityName": "department",
+            "otherEntityRelationshipName": "teacher",
+            "relationshipName": "department",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "branch",
             "otherEntityName": "branch",
+            "otherEntityRelationshipName": "teacher",
+            "relationshipName": "branch",
             "otherEntityField": "id"
         }
     ],

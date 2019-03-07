@@ -13,23 +13,27 @@ import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './section.reducer';
 import { ISection } from 'app/shared/model/section.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface ISectionUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ISectionUpdateState {
   isNew: boolean;
-  batchId: number;
+  batchId: string;
 }
 
 export class SectionUpdate extends React.Component<ISectionUpdateProps, ISectionUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      batchId: 0,
+      batchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +59,11 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/section');
-  };
-
-  batchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        batchId: -1
-      });
-    } else {
-      for (const i in this.props.batches) {
-        if (id === this.props.batches[i].id.toString()) {
-          this.setState({
-            batchId: this.props.batches[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -120,7 +106,7 @@ export class SectionUpdate extends React.Component<ISectionUpdateProps, ISection
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
-                  <AvInput id="section-batch" type="select" className="form-control" name="batchId" onChange={this.batchUpdate}>
+                  <AvInput id="section-batch" type="select" className="form-control" name="batchId">
                     <option value="" key="0" />
                     {batches
                       ? batches.map(otherEntity => (
@@ -152,7 +138,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   batches: storeState.batch.entities,
   sectionEntity: storeState.section.entity,
   loading: storeState.section.loading,
-  updating: storeState.section.updating
+  updating: storeState.section.updating,
+  updateSuccess: storeState.section.updateSuccess
 });
 
 const mapDispatchToProps = {

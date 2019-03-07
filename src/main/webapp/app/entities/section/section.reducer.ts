@@ -63,11 +63,6 @@ export default (state: SectionState = initialState, action): SectionState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_SECTIONS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_SECTION_LIST):
       return {
         ...state,

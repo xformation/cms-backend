@@ -17,8 +17,10 @@ import com.synectiks.cms.graphql.types.Batch.*;
 import com.synectiks.cms.graphql.types.Branch.*;
 import com.synectiks.cms.graphql.types.City.*;
 import com.synectiks.cms.graphql.types.College.*;
+import com.synectiks.cms.graphql.types.CompetitiveExam.*;
 import com.synectiks.cms.graphql.types.Country.*;
 import com.synectiks.cms.graphql.types.Department.*;
+import com.synectiks.cms.graphql.types.Documents.*;
 import com.synectiks.cms.graphql.types.DueDate.*;
 import com.synectiks.cms.graphql.types.Facility.*;
 import com.synectiks.cms.graphql.types.FeeCategory.*;
@@ -92,6 +94,8 @@ public class Mutation implements GraphQLMutationResolver {
     private final PaymentRemainderRepository paymentRemainderRepository;
     private final LateFeeRepository lateFeeRepository;
     private final InvoiceRepository invoiceRepository;
+    private final CompetitiveExamRepository competitiveExamRepository;
+    private final DocumentsRepository documentsRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -104,7 +108,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository) {
+    public Mutation(CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository = instituteRepository;
@@ -138,6 +142,8 @@ public class Mutation implements GraphQLMutationResolver {
         this.paymentRemainderRepository = paymentRemainderRepository;
         this.lateFeeRepository = lateFeeRepository;
         this.invoiceRepository = invoiceRepository;
+        this.competitiveExamRepository = competitiveExamRepository;
+        this.documentsRepository = documentsRepository;
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -594,6 +600,88 @@ public class Mutation implements GraphQLMutationResolver {
         Department departments = departmentRepository.findById(removeDepartmentsInput.getDepartmentId()).get();
         departmentRepository.delete(departments);
         return new RemoveDepartmentPayload(Lists.newArrayList(departmentRepository.findAll()));
+    }
+    public AddCompetitiveExamPayload addCompetitiveExam(AddCompetitiveExamInput addCompetitiveExamInput) {
+        final Student student = studentRepository.findById(addCompetitiveExamInput.getStudentId()).get();
+
+        final CompetitiveExam competitiveExam = new CompetitiveExam();
+        competitiveExam.setStudent(student);
+        competitiveExam.setTestName(addCompetitiveExamInput.getTestName());
+        competitiveExam.setEnrollmentNo(addCompetitiveExamInput.getEnrollmentNo());
+        competitiveExam.setRank(addCompetitiveExamInput.getRank());
+        competitiveExamRepository.save(competitiveExam);
+        return new AddCompetitiveExamPayload(competitiveExam);
+    }
+
+    public UpdateCompetitiveExamPayload updateCompetitiveExam(UpdateCompetitiveExamInput updateCompetitiveExamInput) {
+        final CompetitiveExam competitiveExam = competitiveExamRepository.findById(updateCompetitiveExamInput.getId()).get();
+
+        if (updateCompetitiveExamInput.getTestName() != null){
+            competitiveExam.setTestName(updateCompetitiveExamInput.getTestName());
+        }
+        if(updateCompetitiveExamInput.getTestScore() != null){
+            competitiveExam.setTestScore(updateCompetitiveExamInput.getTestScore());
+        }
+        if(updateCompetitiveExamInput.getEnrollmentNo() != null){
+            competitiveExam.setEnrollmentNo(updateCompetitiveExamInput.getEnrollmentNo());
+        }
+
+        if(updateCompetitiveExamInput.getRank() != null){
+            competitiveExam.setRank(updateCompetitiveExamInput.getRank());
+        }
+
+        if (updateCompetitiveExamInput.getStudentId() != null) {
+            final Student student = studentRepository.findById(updateCompetitiveExamInput.getStudentId()).get();
+            competitiveExam.setStudent(student);
+        }
+        competitiveExamRepository.save(competitiveExam);
+
+        return new UpdateCompetitiveExamPayload(competitiveExam);
+    }
+
+
+    public RemoveCompetitiveExamPayload removeCompetitiveExam(RemoveCompetitiveExamInput removeCompetitiveExamInput) {
+        CompetitiveExam CompetitiveExam = competitiveExamRepository.findById(removeCompetitiveExamInput.getCompetitiveExamId()).get();
+        competitiveExamRepository.delete(CompetitiveExam);
+        return new RemoveCompetitiveExamPayload(Lists.newArrayList(competitiveExamRepository.findAll()));
+    }
+
+
+    public AddDocumentsPayload addDocuments(AddDocumentsInput addDocumentsInput) {
+        final Student student = studentRepository.findById(addDocumentsInput.getStudentId()).get();
+
+        final Documents documents = new Documents();
+        documents.setStudent(student);
+        documents.setUpload(addDocumentsInput.getUpload());
+        documents.setDocumentName(addDocumentsInput.getDocumentName());
+        documentsRepository.save(documents);
+        return new AddDocumentsPayload(documents);
+    }
+
+
+    public UpdateDocumentsPayload updateDocuments(UpdateDocumentsInput updateDocumentsInput) {
+        final Documents documents = documentsRepository.findById(updateDocumentsInput.getId()).get();
+
+        if (updateDocumentsInput.getUpload() != null){
+            documents.setUpload(updateDocumentsInput.getUpload());
+        }
+        if(updateDocumentsInput.getDocumentName() != null){
+            documents.setDocumentName(updateDocumentsInput.getDocumentName());
+        }
+
+        if (updateDocumentsInput.getStudentId() != null) {
+            final Student student = studentRepository.findById(updateDocumentsInput.getStudentId()).get();
+            documents.setStudent(student);
+        }
+        documentsRepository.save(documents);
+
+        return new UpdateDocumentsPayload(documents);
+    }
+
+    public RemoveDocumentsPayload removeDocuments(RemoveDocumentsInput removeDocumentsInput) {
+        Documents documents = documentsRepository.findById(removeDocumentsInput.getDocumentsId()).get();
+        documentsRepository.delete(documents);
+        return new RemoveDocumentsPayload(Lists.newArrayList(documentsRepository.findAll()));
     }
 
 

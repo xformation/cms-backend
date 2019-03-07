@@ -31,12 +31,12 @@ export class StudentDeleteDialog extends React.Component<IStudentDeleteDialogPro
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Student?</ModalBody>
+        <ModalBody id="cmsApp.student.delete.question">Are you sure you want to delete this Student?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-student" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -46,8 +47,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CmsApp.class)
 public class DocumentsResourceIntTest {
 
-    private static final String DEFAULT_DESC = "AAAAAAAAAA";
-    private static final String UPDATED_DESC = "BBBBBBBBBB";
+    private static final String DEFAULT_DOCUMENT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_DOCUMENT_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_UPLOAD = "AAAAAAAAAA";
+    private static final String UPDATED_UPLOAD = "BBBBBBBBBB";
 
     @Autowired
     private DocumentsRepository documentsRepository;
@@ -78,6 +82,9 @@ public class DocumentsResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restDocumentsMockMvc;
 
     private Documents documents;
@@ -90,7 +97,8 @@ public class DocumentsResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -101,7 +109,8 @@ public class DocumentsResourceIntTest {
      */
     public static Documents createEntity(EntityManager em) {
         Documents documents = new Documents()
-            .desc(DEFAULT_DESC);
+            .documentName(DEFAULT_DOCUMENT_NAME)
+            .upload(DEFAULT_UPLOAD);
         return documents;
     }
 
@@ -117,7 +126,7 @@ public class DocumentsResourceIntTest {
 
         // Create the Documents
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
-        restDocumentsMockMvc.perform(post("/api/documents")
+        restDocumentsMockMvc.perform(post("/api/documents.csv")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isCreated());
@@ -126,7 +135,8 @@ public class DocumentsResourceIntTest {
         List<Documents> documentsList = documentsRepository.findAll();
         assertThat(documentsList).hasSize(databaseSizeBeforeCreate + 1);
         Documents testDocuments = documentsList.get(documentsList.size() - 1);
-        assertThat(testDocuments.getDesc()).isEqualTo(DEFAULT_DESC);
+        assertThat(testDocuments.getDocumentName()).isEqualTo(DEFAULT_DOCUMENT_NAME);
+        assertThat(testDocuments.getUpload()).isEqualTo(DEFAULT_UPLOAD);
 
         // Validate the Documents in Elasticsearch
         verify(mockDocumentsSearchRepository, times(1)).save(testDocuments);
@@ -142,7 +152,7 @@ public class DocumentsResourceIntTest {
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restDocumentsMockMvc.perform(post("/api/documents")
+        restDocumentsMockMvc.perform(post("/api/documents.csv")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isBadRequest());
@@ -157,15 +167,34 @@ public class DocumentsResourceIntTest {
 
     @Test
     @Transactional
-    public void checkDescIsRequired() throws Exception {
+    public void checkDocumentNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = documentsRepository.findAll().size();
         // set the field null
-        documents.setDesc(null);
+        documents.setDocumentName(null);
 
         // Create the Documents, which fails.
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
-        restDocumentsMockMvc.perform(post("/api/documents")
+        restDocumentsMockMvc.perform(post("/api/documents.csv")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Documents> documentsList = documentsRepository.findAll();
+        assertThat(documentsList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkUploadIsRequired() throws Exception {
+        int databaseSizeBeforeTest = documentsRepository.findAll().size();
+        // set the field null
+        documents.setUpload(null);
+
+        // Create the Documents, which fails.
+        DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
+
+        restDocumentsMockMvc.perform(post("/api/documents.csv")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isBadRequest());
@@ -181,11 +210,12 @@ public class DocumentsResourceIntTest {
         documentsRepository.saveAndFlush(documents);
 
         // Get all the documentsList
-        restDocumentsMockMvc.perform(get("/api/documents?sort=id,desc"))
+        restDocumentsMockMvc.perform(get("/api/documents.csv?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documents.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].documentName").value(hasItem(DEFAULT_DOCUMENT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].upload").value(hasItem(DEFAULT_UPLOAD.toString())));
     }
     
     @Test
@@ -194,19 +224,20 @@ public class DocumentsResourceIntTest {
         // Initialize the database
         documentsRepository.saveAndFlush(documents);
 
-        // Get the documents
-        restDocumentsMockMvc.perform(get("/api/documents/{id}", documents.getId()))
+        // Get the documents.csv
+        restDocumentsMockMvc.perform(get("/api/documents.csv/{id}", documents.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(documents.getId().intValue()))
-            .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()));
+            .andExpect(jsonPath("$.documentName").value(DEFAULT_DOCUMENT_NAME.toString()))
+            .andExpect(jsonPath("$.upload").value(DEFAULT_UPLOAD.toString()));
     }
 
     @Test
     @Transactional
     public void getNonExistingDocuments() throws Exception {
-        // Get the documents
-        restDocumentsMockMvc.perform(get("/api/documents/{id}", Long.MAX_VALUE))
+        // Get the documents.csv
+        restDocumentsMockMvc.perform(get("/api/documents.csv/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -218,15 +249,16 @@ public class DocumentsResourceIntTest {
 
         int databaseSizeBeforeUpdate = documentsRepository.findAll().size();
 
-        // Update the documents
+        // Update the documents.csv
         Documents updatedDocuments = documentsRepository.findById(documents.getId()).get();
         // Disconnect from session so that the updates on updatedDocuments are not directly saved in db
         em.detach(updatedDocuments);
         updatedDocuments
-            .desc(UPDATED_DESC);
+            .documentName(UPDATED_DOCUMENT_NAME)
+            .upload(UPDATED_UPLOAD);
         DocumentsDTO documentsDTO = documentsMapper.toDto(updatedDocuments);
 
-        restDocumentsMockMvc.perform(put("/api/documents")
+        restDocumentsMockMvc.perform(put("/api/documents.csv")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isOk());
@@ -235,7 +267,8 @@ public class DocumentsResourceIntTest {
         List<Documents> documentsList = documentsRepository.findAll();
         assertThat(documentsList).hasSize(databaseSizeBeforeUpdate);
         Documents testDocuments = documentsList.get(documentsList.size() - 1);
-        assertThat(testDocuments.getDesc()).isEqualTo(UPDATED_DESC);
+        assertThat(testDocuments.getDocumentName()).isEqualTo(UPDATED_DOCUMENT_NAME);
+        assertThat(testDocuments.getUpload()).isEqualTo(UPDATED_UPLOAD);
 
         // Validate the Documents in Elasticsearch
         verify(mockDocumentsSearchRepository, times(1)).save(testDocuments);
@@ -250,7 +283,7 @@ public class DocumentsResourceIntTest {
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restDocumentsMockMvc.perform(put("/api/documents")
+        restDocumentsMockMvc.perform(put("/api/documents.csv")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isBadRequest());
@@ -271,8 +304,8 @@ public class DocumentsResourceIntTest {
 
         int databaseSizeBeforeDelete = documentsRepository.findAll().size();
 
-        // Get the documents
-        restDocumentsMockMvc.perform(delete("/api/documents/{id}", documents.getId())
+        // Delete the documents.csv
+        restDocumentsMockMvc.perform(delete("/api/documents.csv/{id}", documents.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
@@ -291,12 +324,13 @@ public class DocumentsResourceIntTest {
         documentsRepository.saveAndFlush(documents);
         when(mockDocumentsSearchRepository.search(queryStringQuery("id:" + documents.getId())))
             .thenReturn(Collections.singletonList(documents));
-        // Search the documents
-        restDocumentsMockMvc.perform(get("/api/_search/documents?query=id:" + documents.getId()))
+        // Search the documents.csv
+        restDocumentsMockMvc.perform(get("/api/_search/documents.csv?query=id:" + documents.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documents.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC)));
+            .andExpect(jsonPath("$.[*].documentName").value(hasItem(DEFAULT_DOCUMENT_NAME)))
+            .andExpect(jsonPath("$.[*].upload").value(hasItem(DEFAULT_UPLOAD)));
     }
 
     @Test

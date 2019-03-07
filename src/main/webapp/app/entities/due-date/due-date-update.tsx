@@ -15,7 +15,6 @@ import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './due-date.reducer';
 import { IDueDate } from 'app/shared/model/due-date.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 
 export interface IDueDateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

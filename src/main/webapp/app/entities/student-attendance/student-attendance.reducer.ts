@@ -63,11 +63,6 @@ export default (state: StudentAttendanceState = initialState, action): StudentAt
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_STUDENTATTENDANCES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_STUDENTATTENDANCE_LIST):
       return {
         ...state,

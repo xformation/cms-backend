@@ -13,23 +13,27 @@ import { getEntities as getAttendanceMasters } from 'app/entities/attendance-mas
 import { getEntity, updateEntity, createEntity, reset } from './lecture.reducer';
 import { ILecture } from 'app/shared/model/lecture.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface ILectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ILectureUpdateState {
   isNew: boolean;
-  attendancemasterId: number;
+  attendancemasterId: string;
 }
 
 export class LectureUpdate extends React.Component<ILectureUpdateProps, ILectureUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      attendancemasterId: 0,
+      attendancemasterId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +59,11 @@ export class LectureUpdate extends React.Component<ILectureUpdateProps, ILecture
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/lecture');
-  };
-
-  attendancemasterUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        attendancemasterId: -1
-      });
-    } else {
-      for (const i in this.props.attendanceMasters) {
-        if (id === this.props.attendanceMasters[i].id.toString()) {
-          this.setState({
-            attendancemasterId: this.props.attendanceMasters[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -172,13 +158,7 @@ export class LectureUpdate extends React.Component<ILectureUpdateProps, ILecture
                 </AvGroup>
                 <AvGroup>
                   <Label for="attendancemaster.id">Attendancemaster</Label>
-                  <AvInput
-                    id="lecture-attendancemaster"
-                    type="select"
-                    className="form-control"
-                    name="attendancemasterId"
-                    onChange={this.attendancemasterUpdate}
-                  >
+                  <AvInput id="lecture-attendancemaster" type="select" className="form-control" name="attendancemasterId">
                     <option value="" key="0" />
                     {attendanceMasters
                       ? attendanceMasters.map(otherEntity => (
@@ -210,7 +190,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   attendanceMasters: storeState.attendanceMaster.entities,
   lectureEntity: storeState.lecture.entity,
   loading: storeState.lecture.loading,
-  updating: storeState.lecture.updating
+  updating: storeState.lecture.updating,
+  updateSuccess: storeState.lecture.updateSuccess
 });
 
 const mapDispatchToProps = {

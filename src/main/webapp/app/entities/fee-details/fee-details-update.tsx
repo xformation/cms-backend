@@ -27,7 +27,6 @@ import { getEntities as getAcademicYears } from 'app/entities/academic-year/acad
 import { getEntity, updateEntity, createEntity, reset } from './fee-details.reducer';
 import { IFeeDetails } from 'app/shared/model/fee-details.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 
 export interface IFeeDetailsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

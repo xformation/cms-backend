@@ -63,11 +63,6 @@ export default (state: PaymentRemainderState = initialState, action): PaymentRem
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_PAYMENTREMAINDERS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_PAYMENTREMAINDER_LIST):
       return {
         ...state,

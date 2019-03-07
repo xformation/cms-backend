@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity DueDate.
+    -->
+    <changeSet id="20190307052142-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="college_id"
+                                 baseTableName="due_date"
+                                 constraintName="fk_due_date_college_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="college"/>
+
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="due_date"
+                                 constraintName="fk_due_date_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
+    </changeSet>
+</databaseChangeLog>

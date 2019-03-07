@@ -15,7 +15,6 @@ import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './late-fee.reducer';
 import { ILateFee } from 'app/shared/model/late-fee.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 
 export interface ILateFeeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

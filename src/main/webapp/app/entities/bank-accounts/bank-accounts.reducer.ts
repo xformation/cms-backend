@@ -63,11 +63,6 @@ export default (state: BankAccountsState = initialState, action): BankAccountsSt
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_BANKACCOUNTS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_BANKACCOUNTS_LIST):
       return {
         ...state,

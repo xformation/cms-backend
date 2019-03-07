@@ -63,11 +63,6 @@ export default (state: LegalEntityState = initialState, action): LegalEntityStat
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_LEGALENTITIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_LEGALENTITY_LIST):
       return {
         ...state,

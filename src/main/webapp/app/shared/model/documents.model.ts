@@ -1,6 +1,8 @@
 export interface IDocuments {
   id?: number;
-  desc?: string;
+  documentName?: string;
+  upload?: string;
+  studentId?: number;
 }
 
 export const defaultValue: Readonly<IDocuments> = {};

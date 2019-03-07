@@ -77,6 +77,7 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.IdCard.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.Documents.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.Invoice.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.CompetitiveExam.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

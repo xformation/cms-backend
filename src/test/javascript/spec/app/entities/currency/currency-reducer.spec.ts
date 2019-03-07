@@ -10,6 +10,7 @@ import reducer, {
   createEntity,
   deleteEntity,
   getEntities,
+  getSearchEntities,
   getEntity,
   updateEntity,
   reset
@@ -61,13 +62,17 @@ describe('Entities reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([REQUEST(ACTION_TYPES.FETCH_CURRENCY_LIST), REQUEST(ACTION_TYPES.FETCH_CURRENCY)], {}, state => {
-        expect(state).toMatchObject({
-          errorMessage: null,
-          updateSuccess: false,
-          loading: true
-        });
-      });
+      testMultipleTypes(
+        [REQUEST(ACTION_TYPES.FETCH_CURRENCY_LIST), REQUEST(ACTION_TYPES.SEARCH_CURRENCIES), REQUEST(ACTION_TYPES.FETCH_CURRENCY)],
+        {},
+        state => {
+          expect(state).toMatchObject({
+            errorMessage: null,
+            updateSuccess: false,
+            loading: true
+          });
+        }
+      );
     });
 
     it('should set state to updating', () => {
@@ -103,6 +108,7 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_CURRENCY_LIST),
+          FAILURE(ACTION_TYPES.SEARCH_CURRENCIES),
           FAILURE(ACTION_TYPES.FETCH_CURRENCY),
           FAILURE(ACTION_TYPES.CREATE_CURRENCY),
           FAILURE(ACTION_TYPES.UPDATE_CURRENCY),
@@ -126,6 +132,19 @@ describe('Entities reducer tests', () => {
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_CURRENCY_LIST),
+          payload
+        })
+      ).toEqual({
+        ...initialState,
+        loading: false,
+        entities: payload.data
+      });
+    });
+    it('should search all entities', () => {
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
+      expect(
+        reducer(undefined, {
+          type: SUCCESS(ACTION_TYPES.SEARCH_CURRENCIES),
           payload
         })
       ).toEqual({
@@ -201,6 +220,18 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
+    it('dispatches ACTION_TYPES.SEARCH_CURRENCIES actions', async () => {
+      const expectedActions = [
+        {
+          type: REQUEST(ACTION_TYPES.SEARCH_CURRENCIES)
+        },
+        {
+          type: SUCCESS(ACTION_TYPES.SEARCH_CURRENCIES),
+          payload: resolvedObject
+        }
+      ];
+      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_CURRENCY actions', async () => {

@@ -63,11 +63,6 @@ export default (state: BranchState = initialState, action): BranchState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_BRANCHES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_BRANCH_LIST):
       return {
         ...state,
