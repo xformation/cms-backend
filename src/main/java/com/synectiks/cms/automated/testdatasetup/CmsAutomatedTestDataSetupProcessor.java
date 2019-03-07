@@ -540,6 +540,36 @@ public class CmsAutomatedTestDataSetupProcessor {
 	}
 	
 	private void saveLectureSchedule(String day, Cell cell, int intDay) {
+		boolean isGoAhead = false;
+		switch(cell.getCellTypeEnum()) {
+			case BLANK:
+				logger.warn("Blank cell. No lecture record will be created.");
+				break;
+			case BOOLEAN:
+				logger.warn("Boolean cell. No lecture record will be created.");
+				break;
+			case ERROR:
+				logger.warn("Error cell. No lecture record will be created.");
+				break;
+			case FORMULA:
+				logger.warn("Formula cell. lecture No record will be created.");
+				break;
+			case NUMERIC:
+				logger.warn("Numeric cell. lecture No record will be created.");
+				break;
+			case STRING:
+				isGoAhead = true;
+				break;
+			case _NONE:
+				logger.warn("_None cell. No lecture record will be created.");
+				break;
+			default:
+				logger.warn("Blank or _None cell. lecture No record will be created.");
+				break;
+		}
+		if(isGoAhead == false) {
+			return;
+		}
 		logger.debug("Saving lecture data for "+day+" started.");
 		try {
 			LectureScheduleInput lectureScheduleInput = new LectureScheduleInput();
