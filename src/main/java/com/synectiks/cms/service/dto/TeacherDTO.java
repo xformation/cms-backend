@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.StaffType;
 
 /**
@@ -128,6 +130,9 @@ public class TeacherDTO implements Serializable {
     @NotNull
     private String uploadPhoto;
 
+    @NotNull
+    private Status status;
+
     private Long employeeId;
 
     @NotNull
@@ -135,7 +140,6 @@ public class TeacherDTO implements Serializable {
 
     @NotNull
     private StaffType staffType;
-
 
     private Long departmentId;
 
@@ -461,6 +465,14 @@ public class TeacherDTO implements Serializable {
         this.uploadPhoto = uploadPhoto;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public Long getEmployeeId() {
         return employeeId;
     }
@@ -565,6 +577,7 @@ public class TeacherDTO implements Serializable {
             ", emergencyContactNo='" + getEmergencyContactNo() + "'" +
             ", emergencyContactEmailAddress='" + getEmergencyContactEmailAddress() + "'" +
             ", uploadPhoto='" + getUploadPhoto() + "'" +
+            ", status='" + getStatus() + "'" +
             ", employeeId=" + getEmployeeId() +
             ", designation='" + getDesignation() + "'" +
             ", staffType='" + getStaffType() + "'" +

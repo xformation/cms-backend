@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -23,6 +22,8 @@ import com.synectiks.cms.domain.enumeration.Bloodgroup;
 
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 
+import com.synectiks.cms.domain.enumeration.Status;
+
 import com.synectiks.cms.domain.enumeration.StaffType;
 
 /**
@@ -35,7 +36,7 @@ import com.synectiks.cms.domain.enumeration.StaffType;
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -196,6 +197,11 @@ public class Teacher implements Serializable {
     @Column(name = "upload_photo", nullable = false)
     private String uploadPhoto;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
+
     @Column(name = "employee_id")
     private Long employeeId;
 
@@ -209,11 +215,11 @@ public class Teacher implements Serializable {
     private StaffType staffType;
 
     @ManyToOne
-    @JsonIgnoreProperties("teachers")
+    @JsonIgnoreProperties("")
     private Department department;
 
     @ManyToOne
-    @JsonIgnoreProperties("teachers")
+    @JsonIgnoreProperties("")
     private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -732,6 +738,19 @@ public class Teacher implements Serializable {
         this.uploadPhoto = uploadPhoto;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public Teacher status(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public Long getEmployeeId() {
         return employeeId;
     }
@@ -861,6 +880,7 @@ public class Teacher implements Serializable {
             ", emergencyContactNo='" + getEmergencyContactNo() + "'" +
             ", emergencyContactEmailAddress='" + getEmergencyContactEmailAddress() + "'" +
             ", uploadPhoto='" + getUploadPhoto() + "'" +
+            ", status='" + getStatus() + "'" +
             ", employeeId=" + getEmployeeId() +
             ", designation='" + getDesignation() + "'" +
             ", staffType='" + getStaffType() + "'" +

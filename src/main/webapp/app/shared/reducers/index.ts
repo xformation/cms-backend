@@ -91,10 +91,6 @@ import student, {
   StudentState
 } from 'app/entities/student/student.reducer';
 // prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
 import holiday, {
   HolidayState
 } from 'app/entities/holiday/holiday.reducer';
@@ -182,6 +178,10 @@ import competitiveExam, {
 import documents, {
   DocumentsState
 } from 'app/entities/documents/documents.reducer';
+// prettier-ignore
+import teacher, {
+  TeacherState
+} from 'app/entities/teacher/teacher.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

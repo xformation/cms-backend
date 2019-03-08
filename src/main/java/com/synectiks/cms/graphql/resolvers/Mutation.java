@@ -1032,6 +1032,7 @@ public class Mutation implements GraphQLMutationResolver {
         teacher.setEmployeeId(addTeacherInput.getEmployeeId());
         teacher.setDesignation(addTeacherInput.getDesignation());
         teacher.setStaffType(addTeacherInput.getStaffType());
+        teacher.setStatus(addTeacherInput.getStatus());
         teacher.setBranch(branch);
         teacher.setDepartment(department);
 

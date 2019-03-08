@@ -33,6 +33,11 @@ export const enum RelationWithStudentEnum {
   GUARDIAN = 'GUARDIAN'
 }
 
+export const enum Status {
+  ACTIVE = 'ACTIVE',
+  DEACTIVE = 'DEACTIVE'
+}
+
 export const enum StaffType {
   TEACHING = 'TEACHING',
   NONTEACHING = 'NONTEACHING',
@@ -80,6 +85,7 @@ export interface ITeacher {
   emergencyContactNo?: string;
   emergencyContactEmailAddress?: string;
   uploadPhoto?: string;
+  status?: Status;
   employeeId?: number;
   designation?: string;
   staffType?: StaffType;

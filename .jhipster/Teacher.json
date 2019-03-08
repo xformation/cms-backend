@@ -262,6 +262,14 @@
             ]
         },
         {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "employeeId",
             "fieldType": "Long"
         },
@@ -295,7 +303,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190305093210",
+    "changelogDate": "20190308061736",
     "entityTableName": "teacher",
     "dto": "mapstruct",
     "pagination": "no",

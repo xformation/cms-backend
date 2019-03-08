@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-    
+
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
@@ -16,7 +16,7 @@
     <!--
         Added the entity Teacher.
     -->
-    <changeSet id="20190305093210-1" author="jhipster">
+    <changeSet id="20190308061736-1" author="jhipster">
         <createTable tableName="teacher">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -174,6 +174,10 @@
             </column>
 
             <column name="upload_photo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="status" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 

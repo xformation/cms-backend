@@ -111,6 +111,7 @@ class TeacherGatlingTest extends Simulation {
                 , "emergencyContactNo":"SAMPLE_TEXT"
                 , "emergencyContactEmailAddress":"SAMPLE_TEXT"
                 , "uploadPhoto":"SAMPLE_TEXT"
+                , "status":"ACTIVE"
                 , "employeeId":null
                 , "designation":"SAMPLE_TEXT"
                 , "staffType":"TEACHING"

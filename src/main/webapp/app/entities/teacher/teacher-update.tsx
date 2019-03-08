@@ -15,6 +15,7 @@ import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './teacher.reducer';
 import { ITeacher } from 'app/shared/model/teacher.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 
 export interface ITeacherUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -573,6 +574,19 @@ export class TeacherUpdate extends React.Component<ITeacherUpdateProps, ITeacher
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="statusLabel">Status</Label>
+                  <AvInput
+                    id="teacher-status"
+                    type="select"
+                    className="form-control"
+                    name="status"
+                    value={(!isNew && teacherEntity.status) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="employeeIdLabel" for="employeeId">

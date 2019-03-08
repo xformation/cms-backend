@@ -187,6 +187,10 @@ export class TeacherDetail extends React.Component<ITeacherDetailProps> {
             </dt>
             <dd>{teacherEntity.uploadPhoto}</dd>
             <dt>
+              <span id="status">Status</span>
+            </dt>
+            <dd>{teacherEntity.status}</dd>
+            <dt>
               <span id="employeeId">Employee Id</span>
             </dt>
             <dd>{teacherEntity.employeeId}</dd>

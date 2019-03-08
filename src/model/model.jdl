@@ -173,6 +173,7 @@ emergencyContactLastName String required
 emergencyContactNo String required
 emergencyContactEmailAddress String required
 uploadPhoto String required
+status Status required
 employeeId Long
 designation String required
 staffType StaffType required

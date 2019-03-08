@@ -54,6 +54,7 @@ public class AbstractTeacherInput {
     private Long employeeId;
     private String designation;
     private StaffType staffType;
+    private Status status;
 
     public Long getId() {
         return id;
@@ -399,59 +400,68 @@ public class AbstractTeacherInput {
         this.staffType = staffType;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof AbstractTeacherInput)) return false;
         AbstractTeacherInput that = (AbstractTeacherInput) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(teacherName, that.teacherName) &&
-            Objects.equals(teacherMiddleName, that.teacherMiddleName) &&
-            Objects.equals(teacherLastName, that.teacherLastName) &&
-            Objects.equals(fatherName, that.fatherName) &&
-            Objects.equals(fatherMiddleName, that.fatherMiddleName) &&
-            Objects.equals(fatherLastName, that.fatherLastName) &&
-            Objects.equals(spouseName, that.spouseName) &&
-            Objects.equals(spouseMiddleName, that.spouseMiddleName) &&
-            Objects.equals(spouseLastName, that.spouseLastName) &&
-            Objects.equals(motherName, that.motherName) &&
-            Objects.equals(motherMiddleName, that.motherMiddleName) &&
-            Objects.equals(motherLastName, that.motherLastName) &&
-            Objects.equals(aadharNo, that.aadharNo) &&
-            Objects.equals(dateOfBirth, that.dateOfBirth) &&
-            Objects.equals(placeOfBirth, that.placeOfBirth) &&
-            religion == that.religion &&
-            caste == that.caste &&
-            Objects.equals(subCaste, that.subCaste) &&
-            Objects.equals(age, that.age) &&
-            sex == that.sex &&
-            bloodGroup == that.bloodGroup &&
-            Objects.equals(addressLineOne, that.addressLineOne) &&
-            Objects.equals(addressLineTwo, that.addressLineTwo) &&
-            Objects.equals(addressLineThree, that.addressLineThree) &&
-            Objects.equals(town, that.town) &&
-            Objects.equals(state, that.state) &&
-            Objects.equals(country, that.country) &&
-            Objects.equals(pincode, that.pincode) &&
-            Objects.equals(teacherContactNumber, that.teacherContactNumber) &&
-            Objects.equals(alternateContactNumber, that.alternateContactNumber) &&
-            Objects.equals(teacherEmailAddress, that.teacherEmailAddress) &&
-            Objects.equals(alternateEmailAddress, that.alternateEmailAddress) &&
-            relationWithStaff == that.relationWithStaff &&
-            Objects.equals(emergencyContactName, that.emergencyContactName) &&
-            Objects.equals(emergencyContactMiddleName, that.emergencyContactMiddleName) &&
-            Objects.equals(emergencyContactLastName, that.emergencyContactLastName) &&
-            Objects.equals(emergencyContactNo, that.emergencyContactNo) &&
-            Objects.equals(emergencyContactEmailAddress, that.emergencyContactEmailAddress) &&
-            Objects.equals(uploadPhoto, that.uploadPhoto) &&
-            Objects.equals(employeeId, that.employeeId) &&
-            Objects.equals(designation, that.designation) &&
-            staffType == that.staffType;
+        return Objects.equals(getId(), that.getId()) &&
+            Objects.equals(getTeacherName(), that.getTeacherName()) &&
+            Objects.equals(getTeacherMiddleName(), that.getTeacherMiddleName()) &&
+            Objects.equals(getTeacherLastName(), that.getTeacherLastName()) &&
+            Objects.equals(getFatherName(), that.getFatherName()) &&
+            Objects.equals(getFatherMiddleName(), that.getFatherMiddleName()) &&
+            Objects.equals(getFatherLastName(), that.getFatherLastName()) &&
+            Objects.equals(getSpouseName(), that.getSpouseName()) &&
+            Objects.equals(getSpouseMiddleName(), that.getSpouseMiddleName()) &&
+            Objects.equals(getSpouseLastName(), that.getSpouseLastName()) &&
+            Objects.equals(getMotherName(), that.getMotherName()) &&
+            Objects.equals(getMotherMiddleName(), that.getMotherMiddleName()) &&
+            Objects.equals(getMotherLastName(), that.getMotherLastName()) &&
+            Objects.equals(getAadharNo(), that.getAadharNo()) &&
+            Objects.equals(getDateOfBirth(), that.getDateOfBirth()) &&
+            Objects.equals(getPlaceOfBirth(), that.getPlaceOfBirth()) &&
+            getReligion() == that.getReligion() &&
+            getCaste() == that.getCaste() &&
+            Objects.equals(getSubCaste(), that.getSubCaste()) &&
+            Objects.equals(getAge(), that.getAge()) &&
+            getSex() == that.getSex() &&
+            getBloodGroup() == that.getBloodGroup() &&
+            Objects.equals(getAddressLineOne(), that.getAddressLineOne()) &&
+            Objects.equals(getAddressLineTwo(), that.getAddressLineTwo()) &&
+            Objects.equals(getAddressLineThree(), that.getAddressLineThree()) &&
+            Objects.equals(getTown(), that.getTown()) &&
+            Objects.equals(getState(), that.getState()) &&
+            Objects.equals(getCountry(), that.getCountry()) &&
+            Objects.equals(getPincode(), that.getPincode()) &&
+            Objects.equals(getTeacherContactNumber(), that.getTeacherContactNumber()) &&
+            Objects.equals(getAlternateContactNumber(), that.getAlternateContactNumber()) &&
+            Objects.equals(getTeacherEmailAddress(), that.getTeacherEmailAddress()) &&
+            Objects.equals(getAlternateEmailAddress(), that.getAlternateEmailAddress()) &&
+            getRelationWithStaff() == that.getRelationWithStaff() &&
+            Objects.equals(getEmergencyContactName(), that.getEmergencyContactName()) &&
+            Objects.equals(getEmergencyContactMiddleName(), that.getEmergencyContactMiddleName()) &&
+            Objects.equals(getEmergencyContactLastName(), that.getEmergencyContactLastName()) &&
+            Objects.equals(getEmergencyContactNo(), that.getEmergencyContactNo()) &&
+            Objects.equals(getEmergencyContactEmailAddress(), that.getEmergencyContactEmailAddress()) &&
+            Objects.equals(getUploadPhoto(), that.getUploadPhoto()) &&
+            Objects.equals(getEmployeeId(), that.getEmployeeId()) &&
+            Objects.equals(getDesignation(), that.getDesignation()) &&
+            getStaffType() == that.getStaffType() &&
+            getStatus() == that.getStatus();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, teacherName, teacherMiddleName, teacherLastName, fatherName, fatherMiddleName, fatherLastName, spouseName, spouseMiddleName, spouseLastName, motherName, motherMiddleName, motherLastName, aadharNo, dateOfBirth, placeOfBirth, religion, caste, subCaste, age, sex, bloodGroup, addressLineOne, addressLineTwo, addressLineThree, town, state, country, pincode, teacherContactNumber, alternateContactNumber, teacherEmailAddress, alternateEmailAddress, relationWithStaff, emergencyContactName, emergencyContactMiddleName, emergencyContactLastName, emergencyContactNo, emergencyContactEmailAddress, uploadPhoto, employeeId, designation, staffType);
+        return Objects.hash(getId(), getTeacherName(), getTeacherMiddleName(), getTeacherLastName(), getFatherName(), getFatherMiddleName(), getFatherLastName(), getSpouseName(), getSpouseMiddleName(), getSpouseLastName(), getMotherName(), getMotherMiddleName(), getMotherLastName(), getAadharNo(), getDateOfBirth(), getPlaceOfBirth(), getReligion(), getCaste(), getSubCaste(), getAge(), getSex(), getBloodGroup(), getAddressLineOne(), getAddressLineTwo(), getAddressLineThree(), getTown(), getState(), getCountry(), getPincode(), getTeacherContactNumber(), getAlternateContactNumber(), getTeacherEmailAddress(), getAlternateEmailAddress(), getRelationWithStaff(), getEmergencyContactName(), getEmergencyContactMiddleName(), getEmergencyContactLastName(), getEmergencyContactNo(), getEmergencyContactEmailAddress(), getUploadPhoto(), getEmployeeId(), getDesignation(), getStaffType(), getStatus());
     }
 
     @Override
@@ -500,6 +510,7 @@ public class AbstractTeacherInput {
             ", employeeId=" + employeeId +
             ", designation='" + designation + '\'' +
             ", staffType=" + staffType +
+            ", status=" + status +
             '}';
     }
 }

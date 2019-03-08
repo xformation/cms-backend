@@ -27,6 +27,7 @@ describe('Teacher e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
+
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
@@ -118,6 +119,7 @@ describe('Teacher e2e test', () => {
     expect(await teacherUpdatePage.getEmergencyContactEmailAddressInput()).to.match(/emergencyContactEmailAddress/);
     await teacherUpdatePage.setUploadPhotoInput('uploadPhoto');
     expect(await teacherUpdatePage.getUploadPhotoInput()).to.match(/uploadPhoto/);
+    await teacherUpdatePage.statusSelectLastOption();
     await teacherUpdatePage.setEmployeeIdInput('5');
     expect(await teacherUpdatePage.getEmployeeIdInput()).to.eq('5');
     await teacherUpdatePage.setDesignationInput('designation');

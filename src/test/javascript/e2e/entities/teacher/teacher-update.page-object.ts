@@ -43,6 +43,7 @@ export default class TeacherUpdatePage {
   emergencyContactNoInput: ElementFinder = element(by.css('input#teacher-emergencyContactNo'));
   emergencyContactEmailAddressInput: ElementFinder = element(by.css('input#teacher-emergencyContactEmailAddress'));
   uploadPhotoInput: ElementFinder = element(by.css('input#teacher-uploadPhoto'));
+  statusSelect: ElementFinder = element(by.css('select#teacher-status'));
   employeeIdInput: ElementFinder = element(by.css('input#teacher-employeeId'));
   designationInput: ElementFinder = element(by.css('input#teacher-designation'));
   staffTypeSelect: ElementFinder = element(by.css('select#teacher-staffType'));
@@ -395,6 +396,20 @@ export default class TeacherUpdatePage {
     return this.uploadPhotoInput.getAttribute('value');
   }
 
+  async setStatusSelect(status) {
+    await this.statusSelect.sendKeys(status);
+  }
+
+  async getStatusSelect() {
+    return this.statusSelect.element(by.css('option:checked')).getText();
+  }
+
+  async statusSelectLastOption() {
+    await this.statusSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setEmployeeIdInput(employeeId) {
     await this.employeeIdInput.sendKeys(employeeId);
   }

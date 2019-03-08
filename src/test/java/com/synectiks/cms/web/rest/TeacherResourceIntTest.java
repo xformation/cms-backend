@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.ZoneId;
@@ -45,6 +44,7 @@ import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.StaffType;
 /**
  * Test class for the TeacherResource REST controller.
@@ -95,7 +95,7 @@ public class TeacherResourceIntTest {
     private static final Long UPDATED_AADHAR_NO = 2L;
 
     private static final Date DEFAULT_DATE_OF_BIRTH = new Date();
-    private static final Date UPDATED_DATE_OF_BIRTH = new Date();
+    private static final Date UPDATED_DATE_OF_BIRTH =  new Date();
 
     private static final String DEFAULT_PLACE_OF_BIRTH = "AAAAAAAAAA";
     private static final String UPDATED_PLACE_OF_BIRTH = "BBBBBBBBBB";
@@ -172,6 +172,9 @@ public class TeacherResourceIntTest {
     private static final String DEFAULT_UPLOAD_PHOTO = "AAAAAAAAAA";
     private static final String UPDATED_UPLOAD_PHOTO = "BBBBBBBBBB";
 
+    private static final Status DEFAULT_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_STATUS = Status.DEACTIVE;
+
     private static final Long DEFAULT_EMPLOYEE_ID = 1L;
     private static final Long UPDATED_EMPLOYEE_ID = 2L;
 
@@ -210,9 +213,6 @@ public class TeacherResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restTeacherMockMvc;
 
     private Teacher teacher;
@@ -225,8 +225,7 @@ public class TeacherResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -276,6 +275,7 @@ public class TeacherResourceIntTest {
             .emergencyContactNo(DEFAULT_EMERGENCY_CONTACT_NO)
             .emergencyContactEmailAddress(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS)
             .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
+            .status(DEFAULT_STATUS)
             .employeeId(DEFAULT_EMPLOYEE_ID)
             .designation(DEFAULT_DESIGNATION)
             .staffType(DEFAULT_STAFF_TYPE);
@@ -342,6 +342,7 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getEmergencyContactNo()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_NO);
         assertThat(testTeacher.getEmergencyContactEmailAddress()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS);
         assertThat(testTeacher.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
+        assertThat(testTeacher.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testTeacher.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
         assertThat(testTeacher.getDesignation()).isEqualTo(DEFAULT_DESIGNATION);
         assertThat(testTeacher.getStaffType()).isEqualTo(DEFAULT_STAFF_TYPE);
@@ -1002,6 +1003,25 @@ public class TeacherResourceIntTest {
 
     @Test
     @Transactional
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+        // set the field null
+        teacher.setStatus(null);
+
+        // Create the Teacher, which fails.
+        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+
+        restTeacherMockMvc.perform(post("/api/teachers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Teacher> teacherList = teacherRepository.findAll();
+        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkDesignationIsRequired() throws Exception {
         int databaseSizeBeforeTest = teacherRepository.findAll().size();
         // set the field null
@@ -1088,6 +1108,7 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].emergencyContactNo").value(hasItem(DEFAULT_EMERGENCY_CONTACT_NO.toString())))
             .andExpect(jsonPath("$.[*].emergencyContactEmailAddress").value(hasItem(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
@@ -1143,6 +1164,7 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.emergencyContactNo").value(DEFAULT_EMERGENCY_CONTACT_NO.toString()))
             .andExpect(jsonPath("$.emergencyContactEmailAddress").value(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS.toString()))
             .andExpect(jsonPath("$.uploadPhoto").value(DEFAULT_UPLOAD_PHOTO.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.employeeId").value(DEFAULT_EMPLOYEE_ID.intValue()))
             .andExpect(jsonPath("$.designation").value(DEFAULT_DESIGNATION.toString()))
             .andExpect(jsonPath("$.staffType").value(DEFAULT_STAFF_TYPE.toString()));
@@ -1208,6 +1230,7 @@ public class TeacherResourceIntTest {
             .emergencyContactNo(UPDATED_EMERGENCY_CONTACT_NO)
             .emergencyContactEmailAddress(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS)
             .uploadPhoto(UPDATED_UPLOAD_PHOTO)
+            .status(UPDATED_STATUS)
             .employeeId(UPDATED_EMPLOYEE_ID)
             .designation(UPDATED_DESIGNATION)
             .staffType(UPDATED_STAFF_TYPE);
@@ -1261,6 +1284,7 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getEmergencyContactNo()).isEqualTo(UPDATED_EMERGENCY_CONTACT_NO);
         assertThat(testTeacher.getEmergencyContactEmailAddress()).isEqualTo(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS);
         assertThat(testTeacher.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
+        assertThat(testTeacher.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testTeacher.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testTeacher.getDesignation()).isEqualTo(UPDATED_DESIGNATION);
         assertThat(testTeacher.getStaffType()).isEqualTo(UPDATED_STAFF_TYPE);
@@ -1299,7 +1323,7 @@ public class TeacherResourceIntTest {
 
         int databaseSizeBeforeDelete = teacherRepository.findAll().size();
 
-        // Delete the teacher
+        // Get the teacher
         restTeacherMockMvc.perform(delete("/api/teachers/{id}", teacher.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -1363,6 +1387,7 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].emergencyContactNo").value(hasItem(DEFAULT_EMERGENCY_CONTACT_NO)))
             .andExpect(jsonPath("$.[*].emergencyContactEmailAddress").value(hasItem(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS)))
             .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())))
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION)))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));

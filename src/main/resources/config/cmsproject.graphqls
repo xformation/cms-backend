@@ -520,6 +520,9 @@ type Teacher{
                  fatherName: String!
                  fatherMiddleName: String!
                  fatherLastName: String!
+                 spouseName: String!
+                 spouseMiddleName: String!
+                  spouseLastName: String!
                  motherName: String!
                  motherMiddleName: String!
                  motherLastName: String!
@@ -553,6 +556,7 @@ type Teacher{
                  employeeId: Long!
                  designation: String!
                  staffType: StaffType!
+                 status: Status!
                  branch: Branch!
                department: Department!
 }
@@ -1603,6 +1607,9 @@ input AddTeacherInput {
                    fatherName: String!
                    fatherMiddleName: String!
                    fatherLastName: String!
+                   spouseName: String!
+                   spouseMiddleName: String!
+                   spouseLastName: String!
                    motherName: String!
                    motherMiddleName: String!
                    motherLastName: String!
@@ -1636,6 +1643,7 @@ input AddTeacherInput {
                    employeeId: Long!
                    designation: String!
                    staffType: StaffType!
+                   status: Status!
                    branchId: Long!
                   departmentId: Long!
 }
@@ -1650,6 +1658,9 @@ input UpdateTeacherInput {
                     fatherName: String!
                     fatherMiddleName: String!
                     fatherLastName: String!
+                    spouseName: String!
+                    spouseMiddleName: String!
+                    spouseLastName: String!
                     motherName: String!
                     motherMiddleName: String!
                     motherLastName: String!
@@ -1683,6 +1694,7 @@ input UpdateTeacherInput {
                     employeeId: Long!
                     designation: String!
                     staffType: StaffType!
+                    status: Status!
                     branchId: Long!
                     departmentId: Long!
 }

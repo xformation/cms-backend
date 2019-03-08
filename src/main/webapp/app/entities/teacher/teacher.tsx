@@ -35,8 +35,9 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
@@ -113,6 +114,7 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                 <th>Emergency Contact No</th>
                 <th>Emergency Contact Email Address</th>
                 <th>Upload Photo</th>
+                <th>Status</th>
                 <th>Employee Id</th>
                 <th>Designation</th>
                 <th>Staff Type</th>
@@ -170,6 +172,7 @@ export class Teacher extends React.Component<ITeacherProps, ITeacherState> {
                   <td>{teacher.emergencyContactNo}</td>
                   <td>{teacher.emergencyContactEmailAddress}</td>
                   <td>{teacher.uploadPhoto}</td>
+                  <td>{teacher.status}</td>
                   <td>{teacher.employeeId}</td>
                   <td>{teacher.designation}</td>
                   <td>{teacher.staffType}</td>
