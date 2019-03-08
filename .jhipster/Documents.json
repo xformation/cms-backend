@@ -1,10 +1,16 @@
 {
-    "name": "Batch",
+    "name": "Documents",
     "fields": [
         {
-            "fieldName": "batch",
-            "fieldType": "BatchEnum",
-            "fieldValues": "FIRSTYEAR,SECONDYEAR,THIRDYEAR,FOURTHYEAR",
+            "fieldName": "documentName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "upload",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
@@ -13,13 +19,13 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "department",
-            "otherEntityName": "department",
+            "relationshipName": "student",
+            "otherEntityName": "student",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141513",
-    "entityTableName": "batch",
+    "changelogDate": "20190307052537",
+    "entityTableName": "documents",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",

@@ -1,31 +1,31 @@
 {
-    "name": "Term",
+    "name": "DueDate",
     "fields": [
         {
-            "fieldName": "termsDesc",
+            "fieldName": "paymentMethod",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "startDate",
-            "fieldType": "LocalDate",
+            "fieldName": "installments",
+            "fieldType": "Integer",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "endDate",
-            "fieldType": "LocalDate",
+            "fieldName": "dayDesc",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "termStatus",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldName": "frequency",
+            "fieldType": "Frequency",
+            "fieldValues": "WEEKLY,MONTHLY,QUARTERLY,HALFYEARLY,ANNUALLY",
             "fieldValidateRules": [
                 "required"
             ]
@@ -34,13 +34,19 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicyear",
-            "otherEntityName": "academicYear",
+            "relationshipName": "college",
+            "otherEntityName": "college",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "branch",
+            "otherEntityName": "branch",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141516",
-    "entityTableName": "term",
+    "changelogDate": "20190307052142",
+    "entityTableName": "due_date",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",

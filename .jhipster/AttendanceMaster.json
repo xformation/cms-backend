@@ -9,23 +9,20 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "batch",
-            "otherEntityRelationshipName": "attendanceMaster",
             "relationshipName": "batch",
+            "otherEntityName": "batch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "section",
-            "otherEntityRelationshipName": "attendanceMaster",
             "relationshipName": "section",
+            "otherEntityName": "section",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "teach",
-            "otherEntityRelationshipName": "attendanceMaster",
             "relationshipName": "teach",
+            "otherEntityName": "teach",
             "otherEntityField": "id"
         }
     ],

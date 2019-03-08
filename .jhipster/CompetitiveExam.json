@@ -1,31 +1,30 @@
 {
-    "name": "Term",
+    "name": "CompetitiveExam",
     "fields": [
         {
-            "fieldName": "termsDesc",
+            "fieldName": "testName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "startDate",
-            "fieldType": "LocalDate",
+            "fieldName": "testScore",
+            "fieldType": "Integer",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "endDate",
-            "fieldType": "LocalDate",
+            "fieldName": "enrollmentNo",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "termStatus",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldName": "rank",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
@@ -34,13 +33,13 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicyear",
-            "otherEntityName": "academicYear",
+            "relationshipName": "student",
+            "otherEntityName": "student",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141516",
-    "entityTableName": "term",
+    "changelogDate": "20190307052356",
+    "entityTableName": "competitive_exam",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",

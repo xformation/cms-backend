@@ -1,0 +1,69 @@
+{
+    "name": "LateFee",
+    "fields": [
+        {
+            "fieldName": "assignLateFee",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "lateFeeDays",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "fixed",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE"
+        },
+        {
+            "fieldName": "percentage",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE"
+        },
+        {
+            "fieldName": "fixedCharges",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "percentCharges",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "lateFeeAssignmentFrequency",
+            "fieldType": "Frequency",
+            "fieldValues": "WEEKLY,MONTHLY,QUARTERLY,HALFYEARLY,ANNUALLY",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "college",
+            "otherEntityName": "college",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "branch",
+            "otherEntityName": "branch",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190307052144",
+    "entityTableName": "late_fee",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

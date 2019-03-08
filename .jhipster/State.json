@@ -1,31 +1,23 @@
 {
-    "name": "Term",
+    "name": "State",
     "fields": [
         {
-            "fieldName": "termsDesc",
+            "fieldName": "stateName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "startDate",
-            "fieldType": "LocalDate",
+            "fieldName": "divisionType",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "endDate",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "termStatus",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldName": "stateCode",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
@@ -34,13 +26,13 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicyear",
-            "otherEntityName": "academicYear",
+            "relationshipName": "country",
+            "otherEntityName": "country",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141516",
-    "entityTableName": "term",
+    "changelogDate": "20190307052136",
+    "entityTableName": "state",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",

@@ -1,37 +1,51 @@
 {
-    "name": "Lecture",
+    "name": "AcademicHistory",
     "fields": [
         {
-            "fieldName": "lecDate",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "lastUpdatedOn",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "lastUpdatedBy",
+            "fieldName": "qualification",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "startTime",
+            "fieldName": "yearOfPassing",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "endTime",
+            "fieldName": "institution",
             "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "university",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "enrollmentNo",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "score",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "percentage",
+            "fieldType": "Integer",
             "fieldValidateRules": [
                 "required"
             ]
@@ -40,13 +54,13 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "attendancemaster",
-            "otherEntityName": "attendanceMaster",
+            "relationshipName": "student",
+            "otherEntityName": "student",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190123115124",
-    "entityTableName": "lecture",
+    "changelogDate": "20190308041421",
+    "entityTableName": "academic_history",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",

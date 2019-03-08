@@ -1,31 +1,32 @@
 {
-    "name": "Term",
+    "name": "AdmissionApplication",
     "fields": [
         {
-            "fieldName": "termsDesc",
+            "fieldName": "admissionStatus",
+            "fieldType": "AdmissionStatusEnum",
+            "fieldValues": "RECEIVED,INPROCESS,DECLINED,ACCEPTED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "course",
+            "fieldType": "CourseEnum",
+            "fieldValues": "BTECH,MTECH,BBA,MBA",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "comments",
             "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "startDate",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "endDate",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "termStatus",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
             "fieldValidateRules": [
                 "required"
             ]
@@ -34,13 +35,13 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicyear",
-            "otherEntityName": "academicYear",
+            "relationshipName": "student",
+            "otherEntityName": "student",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141516",
-    "entityTableName": "term",
+    "changelogDate": "20190308042622",
+    "entityTableName": "admission_application",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",

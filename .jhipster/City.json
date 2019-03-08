@@ -1,25 +1,32 @@
 {
-    "name": "Batch",
+    "name": "City",
     "fields": [
         {
-            "fieldName": "batch",
-            "fieldType": "BatchEnum",
-            "fieldValues": "FIRSTYEAR,SECONDYEAR,THIRDYEAR,FOURTHYEAR",
+            "fieldName": "cityName",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "cityCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stdCode",
+            "fieldType": "String"
         }
     ],
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "department",
-            "otherEntityName": "department",
+            "relationshipName": "state",
+            "otherEntityName": "state",
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190118141513",
-    "entityTableName": "batch",
+    "changelogDate": "20190307052137",
+    "entityTableName": "city",
     "dto": "mapstruct",
     "pagination": "no",
     "service": "serviceImpl",
