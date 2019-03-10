@@ -309,6 +309,7 @@ public class TestDataPojoBuilder {
 		thr.setEmergencyContactNo("123456789");
 		thr.setEmergencyContactEmailAddress("");
 		thr.setUploadPhoto("");
+		thr.setStatus(Status.ACTIVE);
 		thr.setEmployeeId(123456L);
 		thr.setDesignation("");
 		thr.setStaffType(StaffType.TEACHING);
@@ -356,27 +357,12 @@ public class TestDataPojoBuilder {
 		return list;
 	}
 	
-	boolean findLecture(Date dt, LectureScheduleDTO dto, AttendanceMaster am, LectureRepository lectureRepository){
-		Lecture lc = new Lecture();
-		lc.setAttendancemaster(am);
-		lc.setStartTime(dto.getStartTime());
-		lc.setEndTime(dto.getEndTime());
-		lc.setLecDate(dt);
-		Example<Lecture> example = Example.of(lc);
-		List<Lecture> list = lectureRepository.findAll(example);
-		if(list.size() > 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	
-	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
-		StudentAttendance sa = new StudentAttendance(); 
-		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
-		sa.setStudent(student);
-		sa.setLecture(lecture);
-		return sa;
-	}
+//	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
+//		StudentAttendance sa = new StudentAttendance(); 
+//		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
+//		sa.setStudent(student);
+//		sa.setLecture(lecture);
+//		return sa;
+//	}
 
 }

@@ -13,9 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.ServletContext;
-
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -31,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synectiks.cms.business.dto.LectureScheduleDTO;
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.LectureService;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.AttendanceMaster;
@@ -42,7 +40,6 @@ import com.synectiks.cms.domain.Country;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.State;
 import com.synectiks.cms.domain.Student;
@@ -51,8 +48,8 @@ import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
-import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.BatchRepository;
@@ -95,7 +92,6 @@ public class CmsAutomatedTestDataSetupProcessor {
 	private Teacher teacher = null;
 	private Teach teach = null;
 	private AttendanceMaster attendanceMaster = null;
-	private StudentAttendance studentAttendance = null;
 	
 	@Autowired
 	private AcademicYearRepository academicYearRepository;
@@ -152,11 +148,11 @@ public class CmsAutomatedTestDataSetupProcessor {
 	private StudentAttendanceRepository studentAttendanceRepository;
 	
 	@Autowired
-	ServletContext context;
+	private CommonService commonService;
 	
-//	public static void main(String args[]) throws IOException, ParseException{
-//		new CmsAutomatedTestDataSetupProcessor().init();
-//	}
+	private ObjectMapper mapper = new ObjectMapper();
+	String values[] = new String[1];
+	LectureScheduleFilter filter = new LectureScheduleFilter();
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/create")
 	public void createCmsTestData() throws IOException, ParseException{
@@ -572,26 +568,28 @@ public class CmsAutomatedTestDataSetupProcessor {
 		}
 		logger.debug("Saving lecture data for "+day+" started.");
 		try {
-			LectureScheduleInput lectureScheduleInput = new LectureScheduleInput();
-			ObjectMapper mapper = new ObjectMapper();
-			String values[] = new String[1];
 			LectureScheduleDTO dto =  this.testDataPojoBuilder.getDto(day, cell, this.subject, this.teacher);
-			values[0] = mapper.writeValueAsString(dto);
-			lectureScheduleInput.setValues(values); 
-			
-			LectureScheduleFilter filter = new LectureScheduleFilter();
+			values[0] = this.mapper.writeValueAsString(dto);
 			filter.setTermId(String.valueOf(this.term.getId()));
 			filter.setAcademicYear(this.academicYear.getYear());
 			filter.setSectionId(String.valueOf(this.section.getId()));
 			filter.setBatchId(String.valueOf(this.batch.getId()));
+			
 			List<Date> dtList = filterDates(intDay);
+			
+			Lecture lc = new Lecture();
+			lc.setAttendancemaster(this.attendanceMaster);
+			lc.setStartTime(dto.getStartTime());
+			lc.setEndTime(dto.getEndTime());
+			Example<Lecture> example = Example.of(lc);;
+			
 			for(Date dt : dtList) {
-				boolean isLectureExists = this.testDataPojoBuilder.findLecture(dt, dto, this.attendanceMaster, this.lectureRepository);
-				if(isLectureExists == false) {
-					QueryResult res = this.lectureService.addLectureSchedule(lectureScheduleInput, filter);
+				lc.setId(null);
+				lc.setLecDate(dt);
+				if(this.lectureRepository.exists(example) == false) {
+					this.lectureService.createLectureSchedule(dt, values, day, filter);
 				}
 			}
-			
 		}catch(Exception e) {
 			logger.warn("Lecture data for "+day+" could not be saved in DB due the below exception.");
 			logger.warn("Exception. "+e.getMessage());
@@ -601,21 +599,26 @@ public class CmsAutomatedTestDataSetupProcessor {
 	
 	private List<Date> filterDates(int day) throws ParseException {
 		List<Date> dateList = this.lectureService.createDates(this.term);
-		List<Holiday> holidayList = this.lectureService.getHolidayList(this.academicYear.getYear());
+		List<Holiday> holidayList = this.commonService.getHolidayList(this.academicYear.getYear());
 		this.lectureService.filterHolidays (holidayList,dateList);
 		this.lectureService.filterSundays(dateList);
 		List<Date> list = this.lectureService.filterDateListOnDayOfweek(dateList, day);
 		return list;
 	}
+	
 	private void saveStudentAttendanceData() {
 		List<Lecture> lcList =  this.testDataPojoBuilder.findLectureByAttendanceMaster(this.lectureRepository, this.attendanceMaster);
+		
+		StudentAttendance sa = new StudentAttendance(); 
+		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
+		sa.setStudent(student);
+		Example<StudentAttendance> example = Example.of(sa);
 		for(Lecture lecture : lcList) {
-			this.studentAttendance = this.testDataPojoBuilder.createStudentAttendanceData(this.student, lecture);
+			sa.setId(null);
+			sa.setLecture(lecture);
 			try {
-				Example<StudentAttendance> example = Example.of(this.studentAttendance);
 				if(this.studentAttendanceRepository.exists(example) == false) {
-					this.studentAttendance = this.studentAttendanceRepository.save(this.studentAttendance);
-					this.studentAttendance = null;
+					this.studentAttendanceRepository.save(sa);
 				}
 			}catch(Exception e) {
 				logger.warn("Exception in saving studentAttendance data. "+e.getMessage());

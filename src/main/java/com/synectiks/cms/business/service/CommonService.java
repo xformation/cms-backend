@@ -1,9 +1,11 @@
 package com.synectiks.cms.business.service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +30,26 @@ public class CommonService {
 	@Autowired
 	private TeacherRepository teacherRepository;
 
-
-    @Autowired
-    private StudentRepository studentRepository;
+	@Autowired
+	private SectionRepository sectionRepository;
+	
+	@Autowired
+	private SubjectRepository subjectRepository;
+	
+	@Autowired
+	private TeachRepository teachRepository;
+	
+	@Autowired
+	private AttendanceMasterRepository attendanceMasterRepository;
+	
+	@Autowired
+	private HolidayRepository holidayRepository;
+	
+	@Autowired
+	private TermRepository termRepository;
+	
+//    @Autowired
+//    private StudentRepository studentRepository;
 	
 	public AcademicYear findAcademicYearByYear(String academicYear) {
 		AcademicYear ay = new AcademicYear();
@@ -45,7 +64,7 @@ public class CommonService {
 	
 	public Department getDepartmentById(Long departmentId) {
 		Department dept = new Department();
-		dept.setId(departmentId);;
+		dept.setId(departmentId);
 		Example<Department> example = Example.of(dept);
 		Optional<Department> newDt = this.departmentRepository.findOne(example);
 		if(newDt.isPresent()) {
@@ -56,7 +75,7 @@ public class CommonService {
 	
 	public Batch getBatchById(Long batchId) {
 		Batch batch = new Batch();
-		batch.setId(batchId);;
+		batch.setId(batchId);
 		Example<Batch> example = Example.of(batch);
 		Optional<Batch> newBt = this.batchRepository.findOne(example);
 		if(newBt.isPresent()) {
@@ -67,7 +86,7 @@ public class CommonService {
 	
 	public Teacher getTeacherById(Long teacherId) {
 		Teacher tchr = new Teacher();
-		tchr.setId(teacherId);;
+		tchr.setId(teacherId);
 		Example<Teacher> example = Example.of(tchr);
 		Optional<Teacher> newTh = this.teacherRepository.findOne(example);
 		if(newTh.isPresent()) {
@@ -76,5 +95,75 @@ public class CommonService {
 		return null;
 	}
 
+	public Section getSectionById(Long secId) {
+		Section sc = new Section();
+		sc.setId(secId);
+		Example<Section> example = Example.of(sc);
+		Optional<Section> newSc = this.sectionRepository.findOne(example);
+		if(newSc.isPresent()) {
+			return newSc.get();
+		}
+		return null;
+	}
+	
+	public Subject getSubjectById(Long subId) {
+		Subject sb = new Subject();
+		sb.setId(subId);
+		Example<Subject> example = Example.of(sb);
+		Optional<Subject> newSb = this.subjectRepository.findOne(example);
+		if(newSb.isPresent()) {
+			return newSb.get();
+		}
+		return null;
+	}
+	
+	public Teach getTeachBySubjectAndTeacherId(Long thrId, Long subId) {
+		Teach th = new Teach();
+		Subject s = getSubjectById(subId);
+		Teacher t = getTeacherById(thrId);
+		th.setSubject(s);
+		th.setTeacher(t);
+		Example<Teach> example = Example.of(th);
+		Optional<Teach> newTh = this.teachRepository.findOne(example);
+		if(newTh.isPresent()) {
+			return newTh.get();
+		}
+		return null;
+	}
+	
+	public AttendanceMaster getAttendanceMasterByBatchSectionTeach(Batch bt, Section sc, Teach th) {
+		AttendanceMaster am = new AttendanceMaster();
+		am.setBatch(bt);
+		am.setSection(sc);
+		am.setTeach(th);
+		Example<AttendanceMaster> example = Example.of(am);
+		Optional<AttendanceMaster> newAm = this.attendanceMasterRepository.findOne(example);
+		if(newAm.isPresent()) {
+			return newAm.get();
+		}
+		return null;
+	}
+	
+	public List<Holiday> getHolidayList(String academicYear) throws ParseException {
+		AcademicYear acd = findAcademicYearByYear(academicYear);
+		Holiday hl = new Holiday();
+		hl.setHolidayStatus(Status.ACTIVE);
+		hl.setAcademicyear(acd);
+		Example<Holiday> example = Example.of(hl);
+		List<Holiday> list = this.holidayRepository.findAll(example);
+		return list;
+	} 
+	
+	public Term getTermById(Long termId) {
+		Term tm = new Term();
+		tm.setTermStatus(Status.ACTIVE);
+		tm.setId(termId);
+		Example<Term> example = Example.of(tm);
+		Optional<Term> term = this.termRepository.findOne(example);
+		if(term.isPresent()) {
+			return term.get();
+		}
+		return new Term();
+	}
 	
 }
