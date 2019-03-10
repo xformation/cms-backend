@@ -355,7 +355,7 @@ public class TestDataPojoBuilder {
 		Example<Lecture> example = Example.of(lc);
 		List<Lecture> list = lectureRepository.findAll(example);
 		return list;
-	}
+	} 
 	
 //	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
 //		StudentAttendance sa = new StudentAttendance(); 

@@ -343,6 +343,6 @@ public class LectureService {
 				iterator.remove();
 		    }
 		}
-	}
+	} 
 	
 }

@@ -624,7 +624,7 @@ public class CmsAutomatedTestDataSetupProcessor {
 				logger.warn("Exception in saving studentAttendance data. "+e.getMessage());
 			}
 		}
-	}
+	} 
 	
 	
 }
