@@ -35,8 +35,9 @@ export class Invoice extends React.Component<IInvoiceProps, IInvoiceState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
@@ -125,12 +126,12 @@ export class Invoice extends React.Component<IInvoiceProps, IInvoiceState> {
                   <td>
                     <TextFormat type="date" value={invoice.updatedOn} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>{invoice.feeCategoryId ? <Link to={`fee-category/${invoice.feeCategoryId}`}>{invoice.feeCategoryId}</Link> : ''}</td>
-                  <td>{invoice.feeDetailsId ? <Link to={`fee-details/${invoice.feeDetailsId}`}>{invoice.feeDetailsId}</Link> : ''}</td>
-                  <td>{invoice.dueDateId ? <Link to={`due-date/${invoice.dueDateId}`}>{invoice.dueDateId}</Link> : ''}</td>
+                  <td>{invoice.feeCategoryId ? <Link to={`feeCategory/${invoice.feeCategoryId}`}>{invoice.feeCategoryId}</Link> : ''}</td>
+                  <td>{invoice.feeDetailsId ? <Link to={`feeDetails/${invoice.feeDetailsId}`}>{invoice.feeDetailsId}</Link> : ''}</td>
+                  <td>{invoice.dueDateId ? <Link to={`dueDate/${invoice.dueDateId}`}>{invoice.dueDateId}</Link> : ''}</td>
                   <td>
                     {invoice.paymentRemainderId ? (
-                      <Link to={`payment-remainder/${invoice.paymentRemainderId}`}>{invoice.paymentRemainderId}</Link>
+                      <Link to={`paymentRemainder/${invoice.paymentRemainderId}`}>{invoice.paymentRemainderId}</Link>
                     ) : (
                       ''
                     )}
@@ -139,7 +140,7 @@ export class Invoice extends React.Component<IInvoiceProps, IInvoiceState> {
                   <td>{invoice.branchId ? <Link to={`branch/${invoice.branchId}`}>{invoice.branchId}</Link> : ''}</td>
                   <td>{invoice.studentId ? <Link to={`student/${invoice.studentId}`}>{invoice.studentId}</Link> : ''}</td>
                   <td>
-                    {invoice.academicYearId ? <Link to={`academic-year/${invoice.academicYearId}`}>{invoice.academicYearId}</Link> : ''}
+                    {invoice.academicYearId ? <Link to={`academicYear/${invoice.academicYearId}`}>{invoice.academicYearId}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

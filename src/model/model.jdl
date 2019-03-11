@@ -403,11 +403,33 @@ enum AdmissionStatusEnum{
     RECEIVED, INPROCESS, DECLINED, ACCEPTED
 }
 
+enum EnquiryStatus{
+    RECEIVED, FOLLOWUP, DECLINED, CONVERTED
+}
+
+enum ModeOfEnquiry{
+    INPERSON, TELEPHONE, EMAIL
+}
+
 entity AdmissionApplication{
     admissionStatus AdmissionStatusEnum required
     course CourseEnum required
     date LocalDate required
     comments String required
+}
+
+entity AdmissionEnquiry {
+    studentName String required
+    mobileNumber String required
+    alternateMobileNumber String
+    email String
+    courseApplyingFor CourseEnum required
+    modeOfEnquiry ModeOfEnquiry required
+    status EnquiryStatus required
+    description String required
+    enquiryDate LocalDate required
+    updatedOn LocalDate
+    updatedBy String
 }
 
 relationship ManyToOne {
@@ -476,7 +498,9 @@ Invoice{academicYear} to AcademicYear
 CompetitiveExam{student} to Student,
 Documents{student} to Student,
 AcademicHistory{student} to Student,
-AdmissionApplication{student} to Student
+AdmissionApplication{student} to Student,
+AdmissionEnquiry{branch} to Branch,
+AdmissionEnquiry{admissionApplication} to AdmissionApplication
 }
 
 dto * with mapstruct

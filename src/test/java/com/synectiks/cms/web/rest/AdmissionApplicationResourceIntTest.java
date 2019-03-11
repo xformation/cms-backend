@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -67,8 +66,10 @@ public class AdmissionApplicationResourceIntTest {
     @Autowired
     private AdmissionApplicationRepository admissionApplicationRepository;
 
+
     @Autowired
     private AdmissionApplicationMapper admissionApplicationMapper;
+    
 
     @Autowired
     private AdmissionApplicationService admissionApplicationService;
@@ -93,9 +94,6 @@ public class AdmissionApplicationResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAdmissionApplicationMockMvc;
 
     private AdmissionApplication admissionApplication;
@@ -108,8 +106,7 @@ public class AdmissionApplicationResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -273,6 +270,7 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getAdmissionApplication() throws Exception {
@@ -289,7 +287,6 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingAdmissionApplication() throws Exception {
@@ -343,7 +340,7 @@ public class AdmissionApplicationResourceIntTest {
         // Create the AdmissionApplication
         AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restAdmissionApplicationMockMvc.perform(put("/api/admission-applications")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
@@ -365,7 +362,7 @@ public class AdmissionApplicationResourceIntTest {
 
         int databaseSizeBeforeDelete = admissionApplicationRepository.findAll().size();
 
-        // Delete the admissionApplication
+        // Get the admissionApplication
         restAdmissionApplicationMockMvc.perform(delete("/api/admission-applications/{id}", admissionApplication.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -393,7 +390,7 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.[*].admissionStatus").value(hasItem(DEFAULT_ADMISSION_STATUS.toString())))
             .andExpect(jsonPath("$.[*].course").value(hasItem(DEFAULT_COURSE.toString())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
 
     @Test

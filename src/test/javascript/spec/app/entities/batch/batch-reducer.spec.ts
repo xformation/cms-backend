@@ -5,16 +5,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {
-  ACTION_TYPES,
-  createEntity,
-  deleteEntity,
-  getEntities,
-  getSearchEntities,
-  getEntity,
-  updateEntity,
-  reset
-} from 'app/entities/batch/batch.reducer';
+import reducer, { ACTION_TYPES, createEntity, deleteEntity, getEntities, getEntity, updateEntity } from 'app/entities/batch/batch.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IBatch, defaultValue } from 'app/shared/model/batch.model';
 
@@ -62,17 +53,13 @@ describe('Entities reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes(
-        [REQUEST(ACTION_TYPES.FETCH_BATCH_LIST), REQUEST(ACTION_TYPES.SEARCH_BATCHES), REQUEST(ACTION_TYPES.FETCH_BATCH)],
-        {},
-        state => {
-          expect(state).toMatchObject({
-            errorMessage: null,
-            updateSuccess: false,
-            loading: true
-          });
-        }
-      );
+      testMultipleTypes([REQUEST(ACTION_TYPES.FETCH_BATCH_LIST), REQUEST(ACTION_TYPES.FETCH_BATCH)], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          loading: true
+        });
+      });
     });
 
     it('should set state to updating', () => {
@@ -88,19 +75,6 @@ describe('Entities reducer tests', () => {
         }
       );
     });
-
-    it('should reset the state', () => {
-      expect(
-        reducer(
-          { ...initialState, loading: true },
-          {
-            type: ACTION_TYPES.RESET
-          }
-        )
-      ).toEqual({
-        ...initialState
-      });
-    });
   });
 
   describe('Failures', () => {
@@ -108,7 +82,6 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_BATCH_LIST),
-          FAILURE(ACTION_TYPES.SEARCH_BATCHES),
           FAILURE(ACTION_TYPES.FETCH_BATCH),
           FAILURE(ACTION_TYPES.CREATE_BATCH),
           FAILURE(ACTION_TYPES.UPDATE_BATCH),
@@ -138,33 +111,6 @@ describe('Entities reducer tests', () => {
         ...initialState,
         loading: false,
         entities: payload.data
-      });
-    });
-    it('should search all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.SEARCH_BATCHES),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entities: payload.data
-      });
-    });
-
-    it('should fetch a single entity', () => {
-      const payload = { data: { 1: 'fake1' } };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.FETCH_BATCH),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entity: payload.data
       });
     });
 
@@ -220,18 +166,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-    it('dispatches ACTION_TYPES.SEARCH_BATCHES actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.SEARCH_BATCHES)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.SEARCH_BATCHES),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_BATCH actions', async () => {
@@ -305,16 +239,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-
-    it('dispatches ACTION_TYPES.RESET actions', async () => {
-      const expectedActions = [
-        {
-          type: ACTION_TYPES.RESET
-        }
-      ];
-      await store.dispatch(reset());
-      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

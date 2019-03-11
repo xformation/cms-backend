@@ -44,57 +44,49 @@
             "relationshipType": "many-to-one",
             "relationshipName": "feeCategory",
             "otherEntityName": "feeCategory",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "batch",
             "otherEntityName": "batch",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "facility",
             "otherEntityName": "facility",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "transportRoute",
             "otherEntityName": "transportRoute",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "college",
             "otherEntityName": "college",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "department",
             "otherEntityName": "department",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "academicYear",
             "otherEntityName": "academicYear",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "feeDetails"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190307052141",

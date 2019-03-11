@@ -15,71 +15,71 @@ export default class LectureUpdatePage {
     return this.pageTitle;
   }
 
-  async setLecDateInput(lecDate) {
-    await this.lecDateInput.sendKeys(lecDate);
+  setLecDateInput(lecDate) {
+    this.lecDateInput.sendKeys(lecDate);
   }
 
-  async getLecDateInput() {
+  getLecDateInput() {
     return this.lecDateInput.getAttribute('value');
   }
 
-  async setLastUpdatedOnInput(lastUpdatedOn) {
-    await this.lastUpdatedOnInput.sendKeys(lastUpdatedOn);
+  setLastUpdatedOnInput(lastUpdatedOn) {
+    this.lastUpdatedOnInput.sendKeys(lastUpdatedOn);
   }
 
-  async getLastUpdatedOnInput() {
+  getLastUpdatedOnInput() {
     return this.lastUpdatedOnInput.getAttribute('value');
   }
 
-  async setLastUpdatedByInput(lastUpdatedBy) {
-    await this.lastUpdatedByInput.sendKeys(lastUpdatedBy);
+  setLastUpdatedByInput(lastUpdatedBy) {
+    this.lastUpdatedByInput.sendKeys(lastUpdatedBy);
   }
 
-  async getLastUpdatedByInput() {
+  getLastUpdatedByInput() {
     return this.lastUpdatedByInput.getAttribute('value');
   }
 
-  async setStartTimeInput(startTime) {
-    await this.startTimeInput.sendKeys(startTime);
+  setStartTimeInput(startTime) {
+    this.startTimeInput.sendKeys(startTime);
   }
 
-  async getStartTimeInput() {
+  getStartTimeInput() {
     return this.startTimeInput.getAttribute('value');
   }
 
-  async setEndTimeInput(endTime) {
-    await this.endTimeInput.sendKeys(endTime);
+  setEndTimeInput(endTime) {
+    this.endTimeInput.sendKeys(endTime);
   }
 
-  async getEndTimeInput() {
+  getEndTimeInput() {
     return this.endTimeInput.getAttribute('value');
   }
 
-  async attendancemasterSelectLastOption() {
-    await this.attendancemasterSelect
+  attendancemasterSelectLastOption() {
+    this.attendancemasterSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async attendancemasterSelectOption(option) {
-    await this.attendancemasterSelect.sendKeys(option);
+  attendancemasterSelectOption(option) {
+    this.attendancemasterSelect.sendKeys(option);
   }
 
   getAttendancemasterSelect() {
     return this.attendancemasterSelect;
   }
 
-  async getAttendancemasterSelectedOption() {
+  getAttendancemasterSelectedOption() {
     return this.attendancemasterSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

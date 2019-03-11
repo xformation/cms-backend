@@ -43,6 +43,20 @@ enum CourseEnum {
     MBA
 }
 
+enum EnquiryStatus{
+    RECEIVED
+    FOLLOWUP
+    DECLINED
+    CONVERTED
+}
+
+enum ModeOfEnquiry{
+    INPERSON
+    TELEPHONE
+    EMAIL
+}
+
+
 enum TypeOfCollege{
     PRIVATE
     PUBLIC
@@ -136,6 +150,8 @@ type Query {
   admissionApplication(id: Int!): AdmissionApplication!
   admissionApplications:[AdmissionApplication!]!
 
+  admissionEnquiry(id: Int!): AdmissionEnquiry!
+  admissionEnquiries:[AdmissionEnquiry!]!
 
   teach(id: Long!): Teach!
   teaches: [Teach!]!
@@ -399,19 +415,36 @@ type AdmissionApplication{
      course:CourseEnum!
      date: Date!
      comments: String!
- }
+}
 
 type AcademicHistory{
- id:Long!
- qualification:String!
- yearOfPassing:String!
- institution:String!
- university:String!
- enrollmentNo:Long!
- score:Long!
- percentage:Int!
- student:Student!
- }
+    id:Long!
+    qualification:String!
+    yearOfPassing:String!
+    institution:String!
+    university:String!
+    enrollmentNo:Long!
+    score:Long!
+    percentage:Int!
+    student:Student!
+}
+
+type AdmissionEnquiry {
+    id: Long!
+    studentName: String!
+    mobileNumber: String!
+    alternateMobileNumber: String!
+    email: String!
+    courseApplyingFor: CourseEnum!
+    modeOfEnquiry: ModeOfEnquiry!
+    status: EnquiryStatus!
+    description: String!
+    enquiryDate: Date!
+    updatedOn: Date!
+    updatedBy: String!
+    branch: Branch!
+    admissionApplication: AdmissionApplication!
+}
 
 type LegalEntity{
     id: Long!
@@ -822,6 +855,10 @@ type Mutation {
     addAcademicHistory(input: AddAcademicHistoryInput!): AddAcademicHistoryPayload!
     updateAcademicHistory(input: UpdateAcademicHistoryInput!): UpdateAcademicHistoryPayload!
     removeAcademicHistory(input: RemoveAcademicHistoryInput!): RemoveAcademicHistoryPayload!
+
+    addAdmissionEnquiry(input: AddAdmissionEnquiryInput!): AddAdmissionEnquiryPayload!
+    updateAdmissionEnquiry(input: UpdateAdmissionEnquiryInput!): UpdateAdmissionEnquiryPayload!
+    removeAdmissionEnquiry(input: RemoveAdmissionEnquiryInput!): RemoveAdmissionEnquiryPayload!
 
 
 }
@@ -1243,6 +1280,51 @@ type RemoveAdmissionApplicationPayload {
     admissionApplications: [AdmissionApplication!]!
 }
 
+
+input AddAdmissionEnquiryInput {
+        studentName: String!
+        mobileNumber: String!
+        alternateMobileNumber: String!
+        email: String!
+        courseApplyingFor: CourseEnum!
+        modeOfEnquiry: ModeOfEnquiry!
+        status: EnquiryStatus!
+        description: String!
+        enquiryDate: Date!
+        updatedOn: Date!
+        updatedBy: String!
+        branch: Long!
+        admissionApplication: Long!
+}
+
+type AddAdmissionEnquiryPayload {
+    admissionEnquiry: AdmissionEnquiry!
+}
+input UpdateAdmissionEnquiryInput {
+    id: Long!
+    studentName: String!
+    mobileNumber: String!
+    alternateMobileNumber: String
+    email: String!
+    courseApplyingFor: CourseEnum!
+    modeOfEnquiry: ModeOfEnquiry!
+    status: EnquiryStatus!
+    description: String!
+    enquiryDate: Date!
+    updatedOn: Date!
+    updatedBy: String!
+    branch: Long!
+    admissionApplication: Long!
+}
+type UpdateAdmissionEnquiryPayload {
+    admissionEnquiry: AdmissionEnquiry!
+}
+input RemoveAdmissionEnquiryInput {
+    admissionEnquiryId: Long!
+}
+type RemoveAdmissionEnquiryPayload {
+    admissionEnquiries: [AdmissionEnquiry!]!
+}
 
 input AddBatchInput {
     batch: BatchEnum!

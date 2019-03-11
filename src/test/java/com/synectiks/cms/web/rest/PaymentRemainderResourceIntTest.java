@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -64,8 +63,10 @@ public class PaymentRemainderResourceIntTest {
     @Autowired
     private PaymentRemainderRepository paymentRemainderRepository;
 
+
     @Autowired
     private PaymentRemainderMapper paymentRemainderMapper;
+    
 
     @Autowired
     private PaymentRemainderService paymentRemainderService;
@@ -90,9 +91,6 @@ public class PaymentRemainderResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restPaymentRemainderMockMvc;
 
     private PaymentRemainder paymentRemainder;
@@ -105,8 +103,7 @@ public class PaymentRemainderResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -270,6 +267,7 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getPaymentRemainder() throws Exception {
@@ -286,7 +284,6 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(jsonPath("$.overDueRemainder").value(DEFAULT_OVER_DUE_REMAINDER.toString()))
             .andExpect(jsonPath("$.remainderRecipients").value(DEFAULT_REMAINDER_RECIPIENTS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingPaymentRemainder() throws Exception {
@@ -340,7 +337,7 @@ public class PaymentRemainderResourceIntTest {
         // Create the PaymentRemainder
         PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(paymentRemainder);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restPaymentRemainderMockMvc.perform(put("/api/payment-remainders")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(paymentRemainderDTO)))
@@ -362,7 +359,7 @@ public class PaymentRemainderResourceIntTest {
 
         int databaseSizeBeforeDelete = paymentRemainderRepository.findAll().size();
 
-        // Delete the paymentRemainder
+        // Get the paymentRemainder
         restPaymentRemainderMockMvc.perform(delete("/api/payment-remainders/{id}", paymentRemainder.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -390,7 +387,7 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(jsonPath("$.[*].feeRemainder").value(hasItem(DEFAULT_FEE_REMAINDER.toString())))
             .andExpect(jsonPath("$.[*].noticeDay").value(hasItem(DEFAULT_NOTICE_DAY)))
             .andExpect(jsonPath("$.[*].overDueRemainder").value(hasItem(DEFAULT_OVER_DUE_REMAINDER.toString())))
-            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS)));
+            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS.toString())));
     }
 
     @Test

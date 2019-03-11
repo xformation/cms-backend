@@ -18,32 +18,26 @@ import { getEntity, updateEntity, createEntity, reset } from './attendance-maste
 import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-// import { mapIdList } from 'app/shared/util/entity-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
 export interface IAttendanceMasterUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAttendanceMasterUpdateState {
   isNew: boolean;
-  batchId: string;
-  sectionId: string;
-  teachId: string;
+  batchId: number;
+  sectionId: number;
+  teachId: number;
 }
 
 export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpdateProps, IAttendanceMasterUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      batchId: '0',
-      sectionId: '0',
-      teachId: '0',
+      batchId: 0,
+      sectionId: 0,
+      teachId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -71,11 +65,63 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/attendance-master');
+  };
+
+  batchUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        batchId: -1
+      });
+    } else {
+      for (const i in this.props.batches) {
+        if (id === this.props.batches[i].id.toString()) {
+          this.setState({
+            batchId: this.props.batches[i].id
+          });
+        }
+      }
+    }
+  };
+
+  sectionUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        sectionId: -1
+      });
+    } else {
+      for (const i in this.props.sections) {
+        if (id === this.props.sections[i].id.toString()) {
+          this.setState({
+            sectionId: this.props.sections[i].id
+          });
+        }
+      }
+    }
+  };
+
+  teachUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        teachId: -1
+      });
+    } else {
+      for (const i in this.props.teaches) {
+        if (id === this.props.teaches[i].id.toString()) {
+          this.setState({
+            teachId: this.props.teaches[i].id
+          });
+        }
+      }
+    }
   };
 
   render() {
@@ -109,7 +155,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
-                  <AvInput id="attendance-master-batch" type="select" className="form-control" name="batchId">
+                  <AvInput id="attendance-master-batch" type="select" className="form-control" name="batchId" onChange={this.batchUpdate}>
                     <option value="" key="0" />
                     {batches
                       ? batches.map(otherEntity => (
@@ -122,7 +168,13 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="section.id">Section</Label>
-                  <AvInput id="attendance-master-section" type="select" className="form-control" name="sectionId">
+                  <AvInput
+                    id="attendance-master-section"
+                    type="select"
+                    className="form-control"
+                    name="sectionId"
+                    onChange={this.sectionUpdate}
+                  >
                     <option value="" key="0" />
                     {sections
                       ? sections.map(otherEntity => (
@@ -135,7 +187,7 @@ export class AttendanceMasterUpdate extends React.Component<IAttendanceMasterUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="teach.id">Teach</Label>
-                  <AvInput id="attendance-master-teach" type="select" className="form-control" name="teachId">
+                  <AvInput id="attendance-master-teach" type="select" className="form-control" name="teachId" onChange={this.teachUpdate}>
                     <option value="" key="0" />
                     {teaches
                       ? teaches.map(otherEntity => (
@@ -169,8 +221,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   teaches: storeState.teach.entities,
   attendanceMasterEntity: storeState.attendanceMaster.entity,
   loading: storeState.attendanceMaster.loading,
-  updating: storeState.attendanceMaster.updating,
-  updateSuccess: storeState.attendanceMaster.updateSuccess
+  updating: storeState.attendanceMaster.updating
 });
 
 const mapDispatchToProps = {

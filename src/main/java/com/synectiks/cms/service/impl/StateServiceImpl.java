@@ -93,7 +93,8 @@ public class StateServiceImpl implements StateService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete State : {}", id);        stateRepository.deleteById(id);
+        log.debug("Request to delete State : {}", id);
+        stateRepository.deleteById(id);
         stateSearchRepository.deleteById(id);
     }
 

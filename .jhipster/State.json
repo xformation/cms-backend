@@ -28,8 +28,7 @@
             "relationshipType": "many-to-one",
             "relationshipName": "country",
             "otherEntityName": "country",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "state"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190307052136",

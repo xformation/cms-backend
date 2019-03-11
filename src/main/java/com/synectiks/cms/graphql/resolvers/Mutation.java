@@ -12,6 +12,7 @@ import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
 import com.synectiks.cms.graphql.types.AcademicHistory.*;
 import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AdmissionApplication.*;
+import com.synectiks.cms.graphql.types.AdmissionEnquiry.*;
 import com.synectiks.cms.graphql.types.AttendanceMaster.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
 import com.synectiks.cms.graphql.types.BankAccounts.*;
@@ -71,6 +72,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
     private final AcademicHistoryRepository academicHistoryRepository;
     private final AdmissionApplicationRepository admissionApplicationRepository;
+    private final AdmissionEnquiryRepository admissionEnquiryRepository;
     private final BankAccountsRepository bankAccountsRepository;
     private final BatchRepository batchRepository;
     private final BranchRepository branchRepository;
@@ -112,8 +114,9 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Mutation(AcademicHistoryRepository academicHistoryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+    public Mutation(AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicHistoryRepository = academicHistoryRepository;
+        this.admissionEnquiryRepository = admissionEnquiryRepository;
         this.admissionApplicationRepository = admissionApplicationRepository;
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
@@ -257,6 +260,12 @@ public class Mutation implements GraphQLMutationResolver {
         return new UpdateStatePayload(state);
     }
 
+    public RemoveStatePayload removeState(RemoveStateInput removeStateInput) {
+        State state = stateRepository.findById(removeStateInput.getStateId()).get();
+        stateRepository.delete(state);
+        return new RemoveStatePayload(Lists.newArrayList(stateRepository.findAll()));
+    }
+
     public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput addAdmissionApplicationInput) {
         Student student = studentRepository.findById(addAdmissionApplicationInput.getStudentId()).get();
 
@@ -360,10 +369,88 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveAcademicHistoryPayload(Lists.newArrayList(academicHistoryRepository.findAll()));
     }
 
-    public RemoveStatePayload removeState(RemoveStateInput removeStateInput) {
-        State state = stateRepository.findById(removeStateInput.getStateId()).get();
-        stateRepository.delete(state);
-        return new RemoveStatePayload(Lists.newArrayList(stateRepository.findAll()));
+    public AddAdmissionEnquiryPayload addAdmissionEnquiry(AddAdmissionEnquiryInput addAdmissionEnquiryInput) {
+
+
+        final AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
+
+
+        admissionEnquiry.setStudentName(addAdmissionEnquiryInput.getStudentName());
+        admissionEnquiry.setMobileNumber(addAdmissionEnquiryInput.getMobileNumber());
+        admissionEnquiry.setAlternateMobileNumber(addAdmissionEnquiryInput.getAlternateMobileNumber());
+        admissionEnquiry.setEmail(addAdmissionEnquiryInput.getEmail());
+        admissionEnquiry.setCourseApplyingFor(addAdmissionEnquiryInput.getCourseApplyingFor());
+        admissionEnquiry.setModeOfEnquiry(addAdmissionEnquiryInput.getModeOfEnquiry());
+        admissionEnquiry.setStatus(addAdmissionEnquiryInput.getStatus());
+        admissionEnquiry.setDescription(addAdmissionEnquiryInput.getDescription());
+        admissionEnquiry.setEnquiryDate(addAdmissionEnquiryInput.getEnquiryDate());
+        admissionEnquiry.setUpdatedOn(addAdmissionEnquiryInput.getUpdatedOn());
+        admissionEnquiry.setUpdatedBy(addAdmissionEnquiryInput.getUpdatedBy());
+        Branch branch = branchRepository.findById(addAdmissionEnquiryInput.getBranchId()).get();
+        AdmissionApplication admissionApplication = admissionApplicationRepository.findById(addAdmissionEnquiryInput.getAdmissionApplicationId()).get();
+        admissionEnquiry.setBranch(branch);
+        admissionEnquiry.setAdmissionApplication(admissionApplication);
+
+        admissionEnquiryRepository.save(admissionEnquiry);
+        return new AddAdmissionEnquiryPayload(admissionEnquiry);
+    }
+
+    public UpdateAdmissionEnquiryPayload updateAdmissionEnquiry(UpdateAdmissionEnquiryInput updateAdmissionEnquiryInput) {
+        AdmissionEnquiry admissionEnquiry = admissionEnquiryRepository.findById(updateAdmissionEnquiryInput.getId()).get();
+
+        if (updateAdmissionEnquiryInput.getStudentName() != null) {
+            admissionEnquiry.setStudentName(updateAdmissionEnquiryInput.getStudentName());
+        }
+        if (updateAdmissionEnquiryInput.getMobileNumber() != null) {
+            admissionEnquiry.setMobileNumber(updateAdmissionEnquiryInput.getMobileNumber());
+        }
+
+        if (updateAdmissionEnquiryInput.getAlternateMobileNumber() != null) {
+            admissionEnquiry.setAlternateMobileNumber(updateAdmissionEnquiryInput.getAlternateMobileNumber());
+        }
+
+        if (updateAdmissionEnquiryInput.getEmail() != null) {
+            admissionEnquiry.setEmail(updateAdmissionEnquiryInput.getEmail());
+        }
+        if (updateAdmissionEnquiryInput.getCourseApplyingFor() != null) {
+            admissionEnquiry.setCourseApplyingFor(updateAdmissionEnquiryInput.getCourseApplyingFor());
+        }
+        if (updateAdmissionEnquiryInput.getModeOfEnquiry() != null) {
+            admissionEnquiry.setModeOfEnquiry(updateAdmissionEnquiryInput.getModeOfEnquiry());
+        }
+        if (updateAdmissionEnquiryInput.getStatus() != null) {
+            admissionEnquiry.setStatus(updateAdmissionEnquiryInput.getStatus());
+        }
+        if (updateAdmissionEnquiryInput.getDescription() != null) {
+            admissionEnquiry.setDescription(updateAdmissionEnquiryInput.getDescription());
+        }
+        if (updateAdmissionEnquiryInput.getEnquiryDate() != null) {
+            admissionEnquiry.setEnquiryDate(updateAdmissionEnquiryInput.getEnquiryDate());
+        }
+        if (updateAdmissionEnquiryInput.getUpdatedOn() != null) {
+            admissionEnquiry.setUpdatedOn(updateAdmissionEnquiryInput.getUpdatedOn());
+        }
+        if (updateAdmissionEnquiryInput.getUpdatedBy() != null) {
+            admissionEnquiry.setUpdatedBy(updateAdmissionEnquiryInput.getUpdatedBy());
+        }
+        if (updateAdmissionEnquiryInput.getBranchId() != null) {
+            final Branch branch = branchRepository.findById(updateAdmissionEnquiryInput.getBranchId()).get();
+            admissionEnquiry.setBranch(branch);
+        }
+        if (updateAdmissionEnquiryInput.getAdmissionApplicationId() != null) {
+            final AdmissionApplication admissionApplication = admissionApplicationRepository.findById(updateAdmissionEnquiryInput.getAdmissionApplicationId()).get();
+            admissionEnquiry.setAdmissionApplication(admissionApplication);
+        }
+
+        admissionEnquiryRepository.save(admissionEnquiry);
+
+        return new UpdateAdmissionEnquiryPayload(admissionEnquiry);
+    }
+
+    public RemoveAdmissionEnquiryPayload removeAdmissionEnquiry(RemoveAdmissionEnquiryInput removeAdmissionEnquiryInput) {
+        AdmissionEnquiry admissionEnquiry = admissionEnquiryRepository.findById(removeAdmissionEnquiryInput.getAdmissionEnquiryId()).get();
+        admissionEnquiryRepository.delete(admissionEnquiry);
+        return new RemoveAdmissionEnquiryPayload(Lists.newArrayList(admissionEnquiryRepository.findAll()));
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) {

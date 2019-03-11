@@ -63,6 +63,11 @@ export default (state: LateFeeState = initialState, action): LateFeeState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_LATEFEES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_LATEFEE_LIST):
       return {
         ...state,

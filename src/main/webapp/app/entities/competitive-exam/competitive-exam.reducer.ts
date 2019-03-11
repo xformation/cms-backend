@@ -63,6 +63,11 @@ export default (state: CompetitiveExamState = initialState, action): Competitive
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_COMPETITIVEEXAMS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_COMPETITIVEEXAM_LIST):
       return {
         ...state,

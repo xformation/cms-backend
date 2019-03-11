@@ -63,6 +63,11 @@ export default (state: DepartmentState = initialState, action): DepartmentState 
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_DEPARTMENTS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_DEPARTMENT_LIST):
       return {
         ...state,

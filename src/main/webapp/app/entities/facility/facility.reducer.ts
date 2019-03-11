@@ -63,6 +63,11 @@ export default (state: FacilityState = initialState, action): FacilityState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_FACILITIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_FACILITY_LIST):
       return {
         ...state,

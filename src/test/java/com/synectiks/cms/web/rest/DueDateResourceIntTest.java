@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -63,8 +62,10 @@ public class DueDateResourceIntTest {
     @Autowired
     private DueDateRepository dueDateRepository;
 
+
     @Autowired
     private DueDateMapper dueDateMapper;
+    
 
     @Autowired
     private DueDateService dueDateService;
@@ -89,9 +90,6 @@ public class DueDateResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restDueDateMockMvc;
 
     private DueDate dueDate;
@@ -104,8 +102,7 @@ public class DueDateResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -269,6 +266,7 @@ public class DueDateResourceIntTest {
             .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.toString())));
     }
     
+
     @Test
     @Transactional
     public void getDueDate() throws Exception {
@@ -285,7 +283,6 @@ public class DueDateResourceIntTest {
             .andExpect(jsonPath("$.dayDesc").value(DEFAULT_DAY_DESC.toString()))
             .andExpect(jsonPath("$.frequency").value(DEFAULT_FREQUENCY.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingDueDate() throws Exception {
@@ -339,7 +336,7 @@ public class DueDateResourceIntTest {
         // Create the DueDate
         DueDateDTO dueDateDTO = dueDateMapper.toDto(dueDate);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restDueDateMockMvc.perform(put("/api/due-dates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(dueDateDTO)))
@@ -361,7 +358,7 @@ public class DueDateResourceIntTest {
 
         int databaseSizeBeforeDelete = dueDateRepository.findAll().size();
 
-        // Delete the dueDate
+        // Get the dueDate
         restDueDateMockMvc.perform(delete("/api/due-dates/{id}", dueDate.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -386,9 +383,9 @@ public class DueDateResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(dueDate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].paymentMethod").value(hasItem(DEFAULT_PAYMENT_METHOD)))
+            .andExpect(jsonPath("$.[*].paymentMethod").value(hasItem(DEFAULT_PAYMENT_METHOD.toString())))
             .andExpect(jsonPath("$.[*].installments").value(hasItem(DEFAULT_INSTALLMENTS)))
-            .andExpect(jsonPath("$.[*].dayDesc").value(hasItem(DEFAULT_DAY_DESC)))
+            .andExpect(jsonPath("$.[*].dayDesc").value(hasItem(DEFAULT_DAY_DESC.toString())))
             .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.toString())));
     }
 

@@ -63,6 +63,11 @@ export default (state: TeachState = initialState, action): TeachState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_TEACHES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_TEACH_LIST):
       return {
         ...state,

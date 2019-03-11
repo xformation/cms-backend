@@ -63,6 +63,11 @@ export default (state: FeeDetailsState = initialState, action): FeeDetailsState 
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_FEEDETAILS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_FEEDETAILS_LIST):
       return {
         ...state,

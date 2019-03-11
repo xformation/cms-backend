@@ -63,6 +63,11 @@ export default (state: AdmissionApplicationState = initialState, action): Admiss
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION_LIST):
       return {
         ...state,

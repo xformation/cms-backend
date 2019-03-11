@@ -91,57 +91,49 @@
             "relationshipType": "many-to-one",
             "relationshipName": "feeCategory",
             "otherEntityName": "feeCategory",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "feeDetails",
             "otherEntityName": "feeDetails",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "dueDate",
             "otherEntityName": "dueDate",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "paymentRemainder",
             "otherEntityName": "paymentRemainder",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "college",
             "otherEntityName": "college",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "academicYear",
             "otherEntityName": "academicYear",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "invoice"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190305093231",

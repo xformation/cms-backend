@@ -80,6 +80,7 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.CompetitiveExam.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.AcademicHistory.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.AdmissionApplication.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.AdmissionEnquiry.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

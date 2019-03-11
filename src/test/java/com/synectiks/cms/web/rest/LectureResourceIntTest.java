@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -68,8 +67,10 @@ public class LectureResourceIntTest {
     @Autowired
     private LectureRepository lectureRepository;
 
+
     @Autowired
     private LectureMapper lectureMapper;
+    
 
     @Autowired
     private LectureService lectureService;
@@ -94,9 +95,6 @@ public class LectureResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restLectureMockMvc;
 
     private Lecture lecture;
@@ -109,8 +107,7 @@ public class LectureResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -296,6 +293,7 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
     
+
     @Test
     @Transactional
     public void getLecture() throws Exception {
@@ -313,7 +311,6 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
             .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingLecture() throws Exception {
@@ -369,7 +366,7 @@ public class LectureResourceIntTest {
         // Create the Lecture
         LectureDTO lectureDTO = lectureMapper.toDto(lecture);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restLectureMockMvc.perform(put("/api/lectures")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lectureDTO)))
@@ -391,7 +388,7 @@ public class LectureResourceIntTest {
 
         int databaseSizeBeforeDelete = lectureRepository.findAll().size();
 
-        // Delete the lecture
+        // Get the lecture
         restLectureMockMvc.perform(delete("/api/lectures/{id}", lecture.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -418,9 +415,9 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(lecture.getId().intValue())))
             .andExpect(jsonPath("$.[*].lecDate").value(hasItem(DEFAULT_LEC_DATE.toString())))
             .andExpect(jsonPath("$.[*].lastUpdatedOn").value(hasItem(DEFAULT_LAST_UPDATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME)))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME)));
+            .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
 
     @Test

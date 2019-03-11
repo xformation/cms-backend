@@ -63,6 +63,11 @@ export default (state: CurrencyState = initialState, action): CurrencyState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_CURRENCIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_CURRENCY_LIST):
       return {
         ...state,

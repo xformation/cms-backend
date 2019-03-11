@@ -63,6 +63,11 @@ export default (state: InvoiceState = initialState, action): InvoiceState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_INVOICES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_INVOICE_LIST):
       return {
         ...state,

@@ -63,6 +63,11 @@ export default (state: DueDateState = initialState, action): DueDateState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_DUEDATES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_DUEDATE_LIST):
       return {
         ...state,

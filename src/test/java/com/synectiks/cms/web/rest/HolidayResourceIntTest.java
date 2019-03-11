@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -63,8 +62,10 @@ public class HolidayResourceIntTest {
     @Autowired
     private HolidayRepository holidayRepository;
 
+
     @Autowired
     private HolidayMapper holidayMapper;
+    
 
     @Autowired
     private HolidayService holidayService;
@@ -89,9 +90,6 @@ public class HolidayResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restHolidayMockMvc;
 
     private Holiday holiday;
@@ -104,8 +102,7 @@ public class HolidayResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -247,6 +244,7 @@ public class HolidayResourceIntTest {
             .andExpect(jsonPath("$.[*].holidayStatus").value(hasItem(DEFAULT_HOLIDAY_STATUS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getHoliday() throws Exception {
@@ -262,7 +260,6 @@ public class HolidayResourceIntTest {
             .andExpect(jsonPath("$.holidayDate").value(DEFAULT_HOLIDAY_DATE.toString()))
             .andExpect(jsonPath("$.holidayStatus").value(DEFAULT_HOLIDAY_STATUS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingHoliday() throws Exception {
@@ -314,7 +311,7 @@ public class HolidayResourceIntTest {
         // Create the Holiday
         HolidayDTO holidayDTO = holidayMapper.toDto(holiday);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restHolidayMockMvc.perform(put("/api/holidays")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(holidayDTO)))
@@ -336,7 +333,7 @@ public class HolidayResourceIntTest {
 
         int databaseSizeBeforeDelete = holidayRepository.findAll().size();
 
-        // Delete the holiday
+        // Get the holiday
         restHolidayMockMvc.perform(delete("/api/holidays/{id}", holiday.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -361,7 +358,7 @@ public class HolidayResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(holiday.getId().intValue())))
-            .andExpect(jsonPath("$.[*].holidayDesc").value(hasItem(DEFAULT_HOLIDAY_DESC)))
+            .andExpect(jsonPath("$.[*].holidayDesc").value(hasItem(DEFAULT_HOLIDAY_DESC.toString())))
             .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].holidayStatus").value(hasItem(DEFAULT_HOLIDAY_STATUS.toString())));
     }

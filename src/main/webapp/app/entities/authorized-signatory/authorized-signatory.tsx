@@ -35,8 +35,9 @@ export class AuthorizedSignatory extends React.Component<IAuthorizedSignatoryPro
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

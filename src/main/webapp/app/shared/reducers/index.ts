@@ -27,7 +27,6 @@ import location, {
 } from 'app/entities/location/location.reducer';
 // prettier-ignore
 // prettier-ignore
-
 // prettier-ignore
 import adminOverview, {
   AdminOverviewState
@@ -71,11 +70,6 @@ import feeCategory, {
 import transportRoute, {
   TransportRouteState
 } from 'app/entities/transport-route/transport-route.reducer';
-// prettier-ignore
-
-import branch, {
-  BranchState
-} from 'app/entities/branch/branch.reducer';
 // prettier-ignore
 import department, {
   DepartmentState
@@ -192,6 +186,14 @@ import academicHistory, {
 import admissionApplication, {
   AdmissionApplicationState
 } from 'app/entities/admission-application/admission-application.reducer';
+// prettier-ignore
+import branch, {
+  BranchState
+} from 'app/entities/branch/branch.reducer';
+// prettier-ignore
+import admissionEnquiry, {
+  AdmissionEnquiryState
+} from 'app/entities/admission-enquiry/admission-enquiry.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -245,6 +247,7 @@ export interface IRootState {
   readonly competitiveExam: CompetitiveExamState;
   readonly academicHistory: AcademicHistoryState;
   readonly admissionApplication: AdmissionApplicationState;
+  readonly admissionEnquiry: AdmissionEnquiryState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -300,6 +303,7 @@ const rootReducer = combineReducers<IRootState>({
   competitiveExam,
   academicHistory,
   admissionApplication,
+  admissionEnquiry,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

@@ -12,58 +12,58 @@ export default class TeachUpdatePage {
     return this.pageTitle;
   }
 
-  async setDescInput(desc) {
-    await this.descInput.sendKeys(desc);
+  setDescInput(desc) {
+    this.descInput.sendKeys(desc);
   }
 
-  async getDescInput() {
+  getDescInput() {
     return this.descInput.getAttribute('value');
   }
 
-  async subjectSelectLastOption() {
-    await this.subjectSelect
+  subjectSelectLastOption() {
+    this.subjectSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async subjectSelectOption(option) {
-    await this.subjectSelect.sendKeys(option);
+  subjectSelectOption(option) {
+    this.subjectSelect.sendKeys(option);
   }
 
   getSubjectSelect() {
     return this.subjectSelect;
   }
 
-  async getSubjectSelectedOption() {
+  getSubjectSelectedOption() {
     return this.subjectSelect.element(by.css('option:checked')).getText();
   }
 
-  async teacherSelectLastOption() {
-    await this.teacherSelect
+  teacherSelectLastOption() {
+    this.teacherSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async teacherSelectOption(option) {
-    await this.teacherSelect.sendKeys(option);
+  teacherSelectOption(option) {
+    this.teacherSelect.sendKeys(option);
   }
 
   getTeacherSelect() {
     return this.teacherSelect;
   }
 
-  async getTeacherSelectedOption() {
+  getTeacherSelectedOption() {
     return this.teacherSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

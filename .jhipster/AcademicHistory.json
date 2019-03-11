@@ -56,8 +56,7 @@
             "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "academicHistory"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190308041421",

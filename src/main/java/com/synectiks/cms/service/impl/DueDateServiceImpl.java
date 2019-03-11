@@ -93,7 +93,8 @@ public class DueDateServiceImpl implements DueDateService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete DueDate : {}", id);        dueDateRepository.deleteById(id);
+        log.debug("Request to delete DueDate : {}", id);
+        dueDateRepository.deleteById(id);
         dueDateSearchRepository.deleteById(id);
     }
 

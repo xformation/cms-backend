@@ -15,88 +15,88 @@ export default class DueDateUpdatePage {
     return this.pageTitle;
   }
 
-  async setPaymentMethodInput(paymentMethod) {
-    await this.paymentMethodInput.sendKeys(paymentMethod);
+  setPaymentMethodInput(paymentMethod) {
+    this.paymentMethodInput.sendKeys(paymentMethod);
   }
 
-  async getPaymentMethodInput() {
+  getPaymentMethodInput() {
     return this.paymentMethodInput.getAttribute('value');
   }
 
-  async setInstallmentsInput(installments) {
-    await this.installmentsInput.sendKeys(installments);
+  setInstallmentsInput(installments) {
+    this.installmentsInput.sendKeys(installments);
   }
 
-  async getInstallmentsInput() {
+  getInstallmentsInput() {
     return this.installmentsInput.getAttribute('value');
   }
 
-  async setDayDescInput(dayDesc) {
-    await this.dayDescInput.sendKeys(dayDesc);
+  setDayDescInput(dayDesc) {
+    this.dayDescInput.sendKeys(dayDesc);
   }
 
-  async getDayDescInput() {
+  getDayDescInput() {
     return this.dayDescInput.getAttribute('value');
   }
 
-  async setFrequencySelect(frequency) {
-    await this.frequencySelect.sendKeys(frequency);
+  setFrequencySelect(frequency) {
+    this.frequencySelect.sendKeys(frequency);
   }
 
-  async getFrequencySelect() {
+  getFrequencySelect() {
     return this.frequencySelect.element(by.css('option:checked')).getText();
   }
 
-  async frequencySelectLastOption() {
-    await this.frequencySelect
+  frequencySelectLastOption() {
+    this.frequencySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async collegeSelectLastOption() {
-    await this.collegeSelect
+  collegeSelectLastOption() {
+    this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async collegeSelectOption(option) {
-    await this.collegeSelect.sendKeys(option);
+  collegeSelectOption(option) {
+    this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  async getCollegeSelectedOption() {
+  getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  async branchSelectLastOption() {
-    await this.branchSelect
+  branchSelectLastOption() {
+    this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async branchSelectOption(option) {
-    await this.branchSelect.sendKeys(option);
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  async getBranchSelectedOption() {
+  getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

@@ -689,6 +689,96 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/admission-application">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Admission Application
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/branch">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Branch
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/department">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Department
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/batch">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Batch
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/subject">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Subject
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/section">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Section
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/term">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Term
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/student">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Student
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/teacher">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Teacher
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/holiday">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Holiday
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/teach">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Teach
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/attendance-master">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Attendance Master
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/lecture">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Lecture
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/student-attendance">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Student Attendance
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/legal-entity">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Legal Entity
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/authorized-signatory">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Authorized Signatory
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/bank-accounts">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Bank Accounts
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/currency">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Currency
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/state">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;State
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/city">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;City
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/facility">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Facility
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/fee-details">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Fee Details
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/due-date">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Due Date
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/payment-remainder">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Payment Remainder
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/late-fee">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Late Fee
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/invoice">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Invoice
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/competitive-exam">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Competitive Exam
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/documents">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Documents
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/academic-history">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Academic History
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/admission-application">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Admission Application
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/admission-enquiry">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;Admission Enquiry
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

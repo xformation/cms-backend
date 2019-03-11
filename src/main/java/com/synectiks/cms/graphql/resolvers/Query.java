@@ -41,6 +41,7 @@ public class Query implements GraphQLQueryResolver {
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
     private final AcademicHistoryRepository academicHistoryRepository;
     private final AdmissionApplicationRepository admissionApplicationRepository;
+    private final AdmissionEnquiryRepository admissionEnquiryRepository;
     private final BankAccountsRepository bankAccountsRepository;
     private final BatchRepository batchRepository;
     private final BranchRepository branchRepository;
@@ -83,8 +84,9 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     LegalEntitySelectRepository legalEntitySelectRepository;
 
-    public Query(AcademicHistoryRepository academicHistoryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+    public Query(AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicHistoryRepository = academicHistoryRepository;
+        this.admissionEnquiryRepository = admissionEnquiryRepository;
         this.batchRepository = batchRepository;
         this.studentRepository = studentRepository;
 //        this.instituteRepository=instituteRepository;
@@ -278,6 +280,15 @@ public class Query implements GraphQLQueryResolver {
     public List<StudentAttendance> studentAttendances() {
         return Lists.newArrayList(studentAttendanceRepository.findAll());
     }
+
+    public AdmissionEnquiry admissionEnquiry(long id) {
+        return admissionEnquiryRepository.findById(id).get();
+    }
+
+    public List<AdmissionEnquiry> admissionEnquiries() {
+        return Lists.newArrayList(admissionEnquiryRepository.findAll());
+    }
+
 
     public List<AcademicYear> academicYears() {
         return Lists.newArrayList(academicYearRepository.findAll());

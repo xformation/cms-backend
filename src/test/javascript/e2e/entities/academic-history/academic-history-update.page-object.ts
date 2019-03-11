@@ -17,87 +17,87 @@ export default class AcademicHistoryUpdatePage {
     return this.pageTitle;
   }
 
-  async setQualificationInput(qualification) {
-    await this.qualificationInput.sendKeys(qualification);
+  setQualificationInput(qualification) {
+    this.qualificationInput.sendKeys(qualification);
   }
 
-  async getQualificationInput() {
+  getQualificationInput() {
     return this.qualificationInput.getAttribute('value');
   }
 
-  async setYearOfPassingInput(yearOfPassing) {
-    await this.yearOfPassingInput.sendKeys(yearOfPassing);
+  setYearOfPassingInput(yearOfPassing) {
+    this.yearOfPassingInput.sendKeys(yearOfPassing);
   }
 
-  async getYearOfPassingInput() {
+  getYearOfPassingInput() {
     return this.yearOfPassingInput.getAttribute('value');
   }
 
-  async setInstitutionInput(institution) {
-    await this.institutionInput.sendKeys(institution);
+  setInstitutionInput(institution) {
+    this.institutionInput.sendKeys(institution);
   }
 
-  async getInstitutionInput() {
+  getInstitutionInput() {
     return this.institutionInput.getAttribute('value');
   }
 
-  async setUniversityInput(university) {
-    await this.universityInput.sendKeys(university);
+  setUniversityInput(university) {
+    this.universityInput.sendKeys(university);
   }
 
-  async getUniversityInput() {
+  getUniversityInput() {
     return this.universityInput.getAttribute('value');
   }
 
-  async setEnrollmentNoInput(enrollmentNo) {
-    await this.enrollmentNoInput.sendKeys(enrollmentNo);
+  setEnrollmentNoInput(enrollmentNo) {
+    this.enrollmentNoInput.sendKeys(enrollmentNo);
   }
 
-  async getEnrollmentNoInput() {
+  getEnrollmentNoInput() {
     return this.enrollmentNoInput.getAttribute('value');
   }
 
-  async setScoreInput(score) {
-    await this.scoreInput.sendKeys(score);
+  setScoreInput(score) {
+    this.scoreInput.sendKeys(score);
   }
 
-  async getScoreInput() {
+  getScoreInput() {
     return this.scoreInput.getAttribute('value');
   }
 
-  async setPercentageInput(percentage) {
-    await this.percentageInput.sendKeys(percentage);
+  setPercentageInput(percentage) {
+    this.percentageInput.sendKeys(percentage);
   }
 
-  async getPercentageInput() {
+  getPercentageInput() {
     return this.percentageInput.getAttribute('value');
   }
 
-  async studentSelectLastOption() {
-    await this.studentSelect
+  studentSelectLastOption() {
+    this.studentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async studentSelectOption(option) {
-    await this.studentSelect.sendKeys(option);
+  studentSelectOption(option) {
+    this.studentSelect.sendKeys(option);
   }
 
   getStudentSelect() {
     return this.studentSelect;
   }
 
-  async getStudentSelectedOption() {
+  getStudentSelectedOption() {
     return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

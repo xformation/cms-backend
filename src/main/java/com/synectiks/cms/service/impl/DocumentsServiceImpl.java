@@ -93,7 +93,8 @@ public class DocumentsServiceImpl implements DocumentsService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Documents : {}", id);        documentsRepository.deleteById(id);
+        log.debug("Request to delete Documents : {}", id);
+        documentsRepository.deleteById(id);
         documentsSearchRepository.deleteById(id);
     }
 

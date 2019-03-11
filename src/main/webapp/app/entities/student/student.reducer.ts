@@ -63,6 +63,11 @@ export default (state: StudentState = initialState, action): StudentState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_STUDENTS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_STUDENT_LIST):
       return {
         ...state,

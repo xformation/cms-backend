@@ -93,7 +93,8 @@ public class BankAccountsServiceImpl implements BankAccountsService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete BankAccounts : {}", id);        bankAccountsRepository.deleteById(id);
+        log.debug("Request to delete BankAccounts : {}", id);
+        bankAccountsRepository.deleteById(id);
         bankAccountsSearchRepository.deleteById(id);
     }
 

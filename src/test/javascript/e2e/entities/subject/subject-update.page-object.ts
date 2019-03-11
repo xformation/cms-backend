@@ -15,94 +15,94 @@ export default class SubjectUpdatePage {
     return this.pageTitle;
   }
 
-  async setSubjectCodeInput(subjectCode) {
-    await this.subjectCodeInput.sendKeys(subjectCode);
+  setSubjectCodeInput(subjectCode) {
+    this.subjectCodeInput.sendKeys(subjectCode);
   }
 
-  async getSubjectCodeInput() {
+  getSubjectCodeInput() {
     return this.subjectCodeInput.getAttribute('value');
   }
 
-  async setSubjectTypeSelect(subjectType) {
-    await this.subjectTypeSelect.sendKeys(subjectType);
+  setSubjectTypeSelect(subjectType) {
+    this.subjectTypeSelect.sendKeys(subjectType);
   }
 
-  async getSubjectTypeSelect() {
+  getSubjectTypeSelect() {
     return this.subjectTypeSelect.element(by.css('option:checked')).getText();
   }
 
-  async subjectTypeSelectLastOption() {
-    await this.subjectTypeSelect
+  subjectTypeSelectLastOption() {
+    this.subjectTypeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async setSubjectDescInput(subjectDesc) {
-    await this.subjectDescInput.sendKeys(subjectDesc);
+  setSubjectDescInput(subjectDesc) {
+    this.subjectDescInput.sendKeys(subjectDesc);
   }
 
-  async getSubjectDescInput() {
+  getSubjectDescInput() {
     return this.subjectDescInput.getAttribute('value');
   }
 
-  async setStatusSelect(status) {
-    await this.statusSelect.sendKeys(status);
+  setStatusSelect(status) {
+    this.statusSelect.sendKeys(status);
   }
 
-  async getStatusSelect() {
+  getStatusSelect() {
     return this.statusSelect.element(by.css('option:checked')).getText();
   }
 
-  async statusSelectLastOption() {
-    await this.statusSelect
+  statusSelectLastOption() {
+    this.statusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async departmentSelectLastOption() {
-    await this.departmentSelect
+  departmentSelectLastOption() {
+    this.departmentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async departmentSelectOption(option) {
-    await this.departmentSelect.sendKeys(option);
+  departmentSelectOption(option) {
+    this.departmentSelect.sendKeys(option);
   }
 
   getDepartmentSelect() {
     return this.departmentSelect;
   }
 
-  async getDepartmentSelectedOption() {
+  getDepartmentSelectedOption() {
     return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
-  async batchSelectLastOption() {
-    await this.batchSelect
+  batchSelectLastOption() {
+    this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async batchSelectOption(option) {
-    await this.batchSelect.sendKeys(option);
+  batchSelectOption(option) {
+    this.batchSelect.sendKeys(option);
   }
 
   getBatchSelect() {
     return this.batchSelect;
   }
 
-  async getBatchSelectedOption() {
+  getBatchSelectedOption() {
     return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

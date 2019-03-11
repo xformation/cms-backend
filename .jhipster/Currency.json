@@ -22,8 +22,7 @@
             "relationshipType": "many-to-one",
             "relationshipName": "country",
             "otherEntityName": "country",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "currency"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190307052135",

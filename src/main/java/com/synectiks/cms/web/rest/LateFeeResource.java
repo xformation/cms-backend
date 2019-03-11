@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.LateFeeService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class LateFeeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/late-fees")
+    @Timed
     public ResponseEntity<LateFeeDTO> createLateFee(@Valid @RequestBody LateFeeDTO lateFeeDTO) throws URISyntaxException {
         log.debug("REST request to save LateFee : {}", lateFeeDTO);
         if (lateFeeDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class LateFeeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/late-fees")
+    @Timed
     public ResponseEntity<LateFeeDTO> updateLateFee(@Valid @RequestBody LateFeeDTO lateFeeDTO) throws URISyntaxException {
         log.debug("REST request to update LateFee : {}", lateFeeDTO);
         if (lateFeeDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class LateFeeResource {
      * @return the ResponseEntity with status 200 (OK) and the list of lateFees in body
      */
     @GetMapping("/late-fees")
+    @Timed
     public List<LateFeeDTO> getAllLateFees() {
         log.debug("REST request to get all LateFees");
         return lateFeeService.findAll();
@@ -94,6 +99,7 @@ public class LateFeeResource {
      * @return the ResponseEntity with status 200 (OK) and with body the lateFeeDTO, or with status 404 (Not Found)
      */
     @GetMapping("/late-fees/{id}")
+    @Timed
     public ResponseEntity<LateFeeDTO> getLateFee(@PathVariable Long id) {
         log.debug("REST request to get LateFee : {}", id);
         Optional<LateFeeDTO> lateFeeDTO = lateFeeService.findOne(id);
@@ -107,6 +113,7 @@ public class LateFeeResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/late-fees/{id}")
+    @Timed
     public ResponseEntity<Void> deleteLateFee(@PathVariable Long id) {
         log.debug("REST request to delete LateFee : {}", id);
         lateFeeService.delete(id);
@@ -121,6 +128,7 @@ public class LateFeeResource {
      * @return the result of the search
      */
     @GetMapping("/_search/late-fees")
+    @Timed
     public List<LateFeeDTO> searchLateFees(@RequestParam String query) {
         log.debug("REST request to search LateFees for query {}", query);
         return lateFeeService.search(query);

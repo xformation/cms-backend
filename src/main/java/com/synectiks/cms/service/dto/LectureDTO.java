@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -25,7 +26,6 @@ public class LectureDTO implements Serializable {
 
     @NotNull
     private String endTime;
-
 
     private Long attendancemasterId;
 

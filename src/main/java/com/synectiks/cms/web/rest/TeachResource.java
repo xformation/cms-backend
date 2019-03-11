@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.TeachService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -43,6 +45,7 @@ public class TeachResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/teaches")
+    @Timed
     public ResponseEntity<TeachDTO> createTeach(@RequestBody TeachDTO teachDTO) throws URISyntaxException {
         log.debug("REST request to save Teach : {}", teachDTO);
         if (teachDTO.getId() != null) {
@@ -64,6 +67,7 @@ public class TeachResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/teaches")
+    @Timed
     public ResponseEntity<TeachDTO> updateTeach(@RequestBody TeachDTO teachDTO) throws URISyntaxException {
         log.debug("REST request to update Teach : {}", teachDTO);
         if (teachDTO.getId() == null) {
@@ -81,6 +85,7 @@ public class TeachResource {
      * @return the ResponseEntity with status 200 (OK) and the list of teaches in body
      */
     @GetMapping("/teaches")
+    @Timed
     public List<TeachDTO> getAllTeaches() {
         log.debug("REST request to get all Teaches");
         return teachService.findAll();
@@ -93,6 +98,7 @@ public class TeachResource {
      * @return the ResponseEntity with status 200 (OK) and with body the teachDTO, or with status 404 (Not Found)
      */
     @GetMapping("/teaches/{id}")
+    @Timed
     public ResponseEntity<TeachDTO> getTeach(@PathVariable Long id) {
         log.debug("REST request to get Teach : {}", id);
         Optional<TeachDTO> teachDTO = teachService.findOne(id);
@@ -106,6 +112,7 @@ public class TeachResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/teaches/{id}")
+    @Timed
     public ResponseEntity<Void> deleteTeach(@PathVariable Long id) {
         log.debug("REST request to delete Teach : {}", id);
         teachService.delete(id);
@@ -120,6 +127,7 @@ public class TeachResource {
      * @return the result of the search
      */
     @GetMapping("/_search/teaches")
+    @Timed
     public List<TeachDTO> searchTeaches(@RequestParam String query) {
         log.debug("REST request to search Teaches for query {}", query);
         return teachService.search(query);

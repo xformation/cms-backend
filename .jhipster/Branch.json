@@ -35,22 +35,19 @@
             "relationshipType": "many-to-one",
             "relationshipName": "college",
             "otherEntityName": "college",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "branch"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "city",
             "otherEntityName": "city",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "branch"
+            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "state",
             "otherEntityName": "state",
-            "otherEntityField": "id",
-            "otherEntityRelationshipName": "branch"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190214071443",

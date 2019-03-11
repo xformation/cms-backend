@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -53,8 +52,10 @@ public class AttendanceMasterResourceIntTest {
     @Autowired
     private AttendanceMasterRepository attendanceMasterRepository;
 
+
     @Autowired
     private AttendanceMasterMapper attendanceMasterMapper;
+    
 
     @Autowired
     private AttendanceMasterService attendanceMasterService;
@@ -79,9 +80,6 @@ public class AttendanceMasterResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAttendanceMasterMockMvc;
 
     private AttendanceMaster attendanceMaster;
@@ -94,8 +92,7 @@ public class AttendanceMasterResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -174,6 +171,7 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
     
+
     @Test
     @Transactional
     public void getAttendanceMaster() throws Exception {
@@ -187,7 +185,6 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(jsonPath("$.id").value(attendanceMaster.getId().intValue()))
             .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingAttendanceMaster() throws Exception {
@@ -235,7 +232,7 @@ public class AttendanceMasterResourceIntTest {
         // Create the AttendanceMaster
         AttendanceMasterDTO attendanceMasterDTO = attendanceMasterMapper.toDto(attendanceMaster);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restAttendanceMasterMockMvc.perform(put("/api/attendance-masters")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(attendanceMasterDTO)))
@@ -257,7 +254,7 @@ public class AttendanceMasterResourceIntTest {
 
         int databaseSizeBeforeDelete = attendanceMasterRepository.findAll().size();
 
-        // Delete the attendanceMaster
+        // Get the attendanceMaster
         restAttendanceMasterMockMvc.perform(delete("/api/attendance-masters/{id}", attendanceMaster.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -282,7 +279,7 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(attendanceMaster.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC)));
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
 
     @Test

@@ -37,286 +37,286 @@ export default class LegalEntityUpdatePage {
     return this.pageTitle;
   }
 
-  async setLogoInput(logo) {
-    await this.logoInput.sendKeys(logo);
+  setLogoInput(logo) {
+    this.logoInput.sendKeys(logo);
   }
 
-  async getLogoInput() {
+  getLogoInput() {
     return this.logoInput.getAttribute('value');
   }
 
-  async setLegalNameOfTheCollegeInput(legalNameOfTheCollege) {
-    await this.legalNameOfTheCollegeInput.sendKeys(legalNameOfTheCollege);
+  setLegalNameOfTheCollegeInput(legalNameOfTheCollege) {
+    this.legalNameOfTheCollegeInput.sendKeys(legalNameOfTheCollege);
   }
 
-  async getLegalNameOfTheCollegeInput() {
+  getLegalNameOfTheCollegeInput() {
     return this.legalNameOfTheCollegeInput.getAttribute('value');
   }
 
-  async setTypeOfCollegeSelect(typeOfCollege) {
-    await this.typeOfCollegeSelect.sendKeys(typeOfCollege);
+  setTypeOfCollegeSelect(typeOfCollege) {
+    this.typeOfCollegeSelect.sendKeys(typeOfCollege);
   }
 
-  async getTypeOfCollegeSelect() {
+  getTypeOfCollegeSelect() {
     return this.typeOfCollegeSelect.element(by.css('option:checked')).getText();
   }
 
-  async typeOfCollegeSelectLastOption() {
-    await this.typeOfCollegeSelect
+  typeOfCollegeSelectLastOption() {
+    this.typeOfCollegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async setDateOfIncorporationInput(dateOfIncorporation) {
-    await this.dateOfIncorporationInput.sendKeys(dateOfIncorporation);
+  setDateOfIncorporationInput(dateOfIncorporation) {
+    this.dateOfIncorporationInput.sendKeys(dateOfIncorporation);
   }
 
-  async getDateOfIncorporationInput() {
+  getDateOfIncorporationInput() {
     return this.dateOfIncorporationInput.getAttribute('value');
   }
 
-  async setRegisteredOfficeAddress1Input(registeredOfficeAddress1) {
-    await this.registeredOfficeAddress1Input.sendKeys(registeredOfficeAddress1);
+  setRegisteredOfficeAddress1Input(registeredOfficeAddress1) {
+    this.registeredOfficeAddress1Input.sendKeys(registeredOfficeAddress1);
   }
 
-  async getRegisteredOfficeAddress1Input() {
+  getRegisteredOfficeAddress1Input() {
     return this.registeredOfficeAddress1Input.getAttribute('value');
   }
 
-  async setRegisteredOfficeAddress2Input(registeredOfficeAddress2) {
-    await this.registeredOfficeAddress2Input.sendKeys(registeredOfficeAddress2);
+  setRegisteredOfficeAddress2Input(registeredOfficeAddress2) {
+    this.registeredOfficeAddress2Input.sendKeys(registeredOfficeAddress2);
   }
 
-  async getRegisteredOfficeAddress2Input() {
+  getRegisteredOfficeAddress2Input() {
     return this.registeredOfficeAddress2Input.getAttribute('value');
   }
 
-  async setRegisteredOfficeAddress3Input(registeredOfficeAddress3) {
-    await this.registeredOfficeAddress3Input.sendKeys(registeredOfficeAddress3);
+  setRegisteredOfficeAddress3Input(registeredOfficeAddress3) {
+    this.registeredOfficeAddress3Input.sendKeys(registeredOfficeAddress3);
   }
 
-  async getRegisteredOfficeAddress3Input() {
+  getRegisteredOfficeAddress3Input() {
     return this.registeredOfficeAddress3Input.getAttribute('value');
   }
 
-  async setRegisteredOfficeAddress4Input(registeredOfficeAddress4) {
-    await this.registeredOfficeAddress4Input.sendKeys(registeredOfficeAddress4);
+  setRegisteredOfficeAddress4Input(registeredOfficeAddress4) {
+    this.registeredOfficeAddress4Input.sendKeys(registeredOfficeAddress4);
   }
 
-  async getRegisteredOfficeAddress4Input() {
+  getRegisteredOfficeAddress4Input() {
     return this.registeredOfficeAddress4Input.getAttribute('value');
   }
 
-  async setRegisteredOfficeAddress5Input(registeredOfficeAddress5) {
-    await this.registeredOfficeAddress5Input.sendKeys(registeredOfficeAddress5);
+  setRegisteredOfficeAddress5Input(registeredOfficeAddress5) {
+    this.registeredOfficeAddress5Input.sendKeys(registeredOfficeAddress5);
   }
 
-  async getRegisteredOfficeAddress5Input() {
+  getRegisteredOfficeAddress5Input() {
     return this.registeredOfficeAddress5Input.getAttribute('value');
   }
 
-  async setCollegeIdentificationNumberInput(collegeIdentificationNumber) {
-    await this.collegeIdentificationNumberInput.sendKeys(collegeIdentificationNumber);
+  setCollegeIdentificationNumberInput(collegeIdentificationNumber) {
+    this.collegeIdentificationNumberInput.sendKeys(collegeIdentificationNumber);
   }
 
-  async getCollegeIdentificationNumberInput() {
+  getCollegeIdentificationNumberInput() {
     return this.collegeIdentificationNumberInput.getAttribute('value');
   }
 
-  async setPanInput(pan) {
-    await this.panInput.sendKeys(pan);
+  setPanInput(pan) {
+    this.panInput.sendKeys(pan);
   }
 
-  async getPanInput() {
+  getPanInput() {
     return this.panInput.getAttribute('value');
   }
 
-  async setTanInput(tan) {
-    await this.tanInput.sendKeys(tan);
+  setTanInput(tan) {
+    this.tanInput.sendKeys(tan);
   }
 
-  async getTanInput() {
+  getTanInput() {
     return this.tanInput.getAttribute('value');
   }
 
-  async setTanCircleNumberInput(tanCircleNumber) {
-    await this.tanCircleNumberInput.sendKeys(tanCircleNumber);
+  setTanCircleNumberInput(tanCircleNumber) {
+    this.tanCircleNumberInput.sendKeys(tanCircleNumber);
   }
 
-  async getTanCircleNumberInput() {
+  getTanCircleNumberInput() {
     return this.tanCircleNumberInput.getAttribute('value');
   }
 
-  async setCitTdsLocationInput(citTdsLocation) {
-    await this.citTdsLocationInput.sendKeys(citTdsLocation);
+  setCitTdsLocationInput(citTdsLocation) {
+    this.citTdsLocationInput.sendKeys(citTdsLocation);
   }
 
-  async getCitTdsLocationInput() {
+  getCitTdsLocationInput() {
     return this.citTdsLocationInput.getAttribute('value');
   }
 
-  async setFormSignatoryInput(formSignatory) {
-    await this.formSignatoryInput.sendKeys(formSignatory);
+  setFormSignatoryInput(formSignatory) {
+    this.formSignatoryInput.sendKeys(formSignatory);
   }
 
-  async getFormSignatoryInput() {
+  getFormSignatoryInput() {
     return this.formSignatoryInput.getAttribute('value');
   }
 
-  async setPfNumberInput(pfNumber) {
-    await this.pfNumberInput.sendKeys(pfNumber);
+  setPfNumberInput(pfNumber) {
+    this.pfNumberInput.sendKeys(pfNumber);
   }
 
-  async getPfNumberInput() {
+  getPfNumberInput() {
     return this.pfNumberInput.getAttribute('value');
   }
 
-  async setPfRegistrationDateInput(pfRegistrationDate) {
-    await this.pfRegistrationDateInput.sendKeys(pfRegistrationDate);
+  setPfRegistrationDateInput(pfRegistrationDate) {
+    this.pfRegistrationDateInput.sendKeys(pfRegistrationDate);
   }
 
-  async getPfRegistrationDateInput() {
+  getPfRegistrationDateInput() {
     return this.pfRegistrationDateInput.getAttribute('value');
   }
 
-  async setPfSignatoryInput(pfSignatory) {
-    await this.pfSignatoryInput.sendKeys(pfSignatory);
+  setPfSignatoryInput(pfSignatory) {
+    this.pfSignatoryInput.sendKeys(pfSignatory);
   }
 
-  async getPfSignatoryInput() {
+  getPfSignatoryInput() {
     return this.pfSignatoryInput.getAttribute('value');
   }
 
-  async setEsiNumberInput(esiNumber) {
-    await this.esiNumberInput.sendKeys(esiNumber);
+  setEsiNumberInput(esiNumber) {
+    this.esiNumberInput.sendKeys(esiNumber);
   }
 
-  async getEsiNumberInput() {
+  getEsiNumberInput() {
     return this.esiNumberInput.getAttribute('value');
   }
 
-  async setEsiRegistrationDateInput(esiRegistrationDate) {
-    await this.esiRegistrationDateInput.sendKeys(esiRegistrationDate);
+  setEsiRegistrationDateInput(esiRegistrationDate) {
+    this.esiRegistrationDateInput.sendKeys(esiRegistrationDate);
   }
 
-  async getEsiRegistrationDateInput() {
+  getEsiRegistrationDateInput() {
     return this.esiRegistrationDateInput.getAttribute('value');
   }
 
-  async setEsiSignatoryInput(esiSignatory) {
-    await this.esiSignatoryInput.sendKeys(esiSignatory);
+  setEsiSignatoryInput(esiSignatory) {
+    this.esiSignatoryInput.sendKeys(esiSignatory);
   }
 
-  async getEsiSignatoryInput() {
+  getEsiSignatoryInput() {
     return this.esiSignatoryInput.getAttribute('value');
   }
 
-  async setPtNumberInput(ptNumber) {
-    await this.ptNumberInput.sendKeys(ptNumber);
+  setPtNumberInput(ptNumber) {
+    this.ptNumberInput.sendKeys(ptNumber);
   }
 
-  async getPtNumberInput() {
+  getPtNumberInput() {
     return this.ptNumberInput.getAttribute('value');
   }
 
-  async setPtRegistrationDateInput(ptRegistrationDate) {
-    await this.ptRegistrationDateInput.sendKeys(ptRegistrationDate);
+  setPtRegistrationDateInput(ptRegistrationDate) {
+    this.ptRegistrationDateInput.sendKeys(ptRegistrationDate);
   }
 
-  async getPtRegistrationDateInput() {
+  getPtRegistrationDateInput() {
     return this.ptRegistrationDateInput.getAttribute('value');
   }
 
-  async setPtSignatoryInput(ptSignatory) {
-    await this.ptSignatoryInput.sendKeys(ptSignatory);
+  setPtSignatoryInput(ptSignatory) {
+    this.ptSignatoryInput.sendKeys(ptSignatory);
   }
 
-  async getPtSignatoryInput() {
+  getPtSignatoryInput() {
     return this.ptSignatoryInput.getAttribute('value');
   }
 
-  async branchSelectLastOption() {
-    await this.branchSelect
+  branchSelectLastOption() {
+    this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async branchSelectOption(option) {
-    await this.branchSelect.sendKeys(option);
+  branchSelectOption(option) {
+    this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  async getBranchSelectedOption() {
+  getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  async collegeSelectLastOption() {
-    await this.collegeSelect
+  collegeSelectLastOption() {
+    this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async collegeSelectOption(option) {
-    await this.collegeSelect.sendKeys(option);
+  collegeSelectOption(option) {
+    this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  async getCollegeSelectedOption() {
+  getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  async stateSelectLastOption() {
-    await this.stateSelect
+  stateSelectLastOption() {
+    this.stateSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async stateSelectOption(option) {
-    await this.stateSelect.sendKeys(option);
+  stateSelectOption(option) {
+    this.stateSelect.sendKeys(option);
   }
 
   getStateSelect() {
     return this.stateSelect;
   }
 
-  async getStateSelectedOption() {
+  getStateSelectedOption() {
     return this.stateSelect.element(by.css('option:checked')).getText();
   }
 
-  async citySelectLastOption() {
-    await this.citySelect
+  citySelectLastOption() {
+    this.citySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async citySelectOption(option) {
-    await this.citySelect.sendKeys(option);
+  citySelectOption(option) {
+    this.citySelect.sendKeys(option);
   }
 
   getCitySelect() {
     return this.citySelect;
   }
 
-  async getCitySelectedOption() {
+  getCitySelectedOption() {
     return this.citySelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

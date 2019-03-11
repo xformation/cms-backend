@@ -63,6 +63,11 @@ export default (state: CityState = initialState, action): CityState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_CITIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_CITY_LIST):
       return {
         ...state,

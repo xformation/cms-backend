@@ -31,12 +31,12 @@ export class StateDeleteDialog extends React.Component<IStateDeleteDialogProps> 
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.state.delete.question">Are you sure you want to delete this State?</ModalBody>
+        <ModalBody>Are you sure you want to delete this State?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-state" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

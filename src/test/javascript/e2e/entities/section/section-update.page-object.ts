@@ -11,45 +11,45 @@ export default class SectionUpdatePage {
     return this.pageTitle;
   }
 
-  async setSectionSelect(section) {
-    await this.sectionSelect.sendKeys(section);
+  setSectionSelect(section) {
+    this.sectionSelect.sendKeys(section);
   }
 
-  async getSectionSelect() {
+  getSectionSelect() {
     return this.sectionSelect.element(by.css('option:checked')).getText();
   }
 
-  async sectionSelectLastOption() {
-    await this.sectionSelect
+  sectionSelectLastOption() {
+    this.sectionSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  async batchSelectLastOption() {
-    await this.batchSelect
+  batchSelectLastOption() {
+    this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async batchSelectOption(option) {
-    await this.batchSelect.sendKeys(option);
+  batchSelectOption(option) {
+    this.batchSelect.sendKeys(option);
   }
 
   getBatchSelect() {
     return this.batchSelect;
   }
 
-  async getBatchSelectedOption() {
+  getBatchSelectedOption() {
     return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

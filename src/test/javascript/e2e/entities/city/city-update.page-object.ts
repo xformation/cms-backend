@@ -13,55 +13,55 @@ export default class CityUpdatePage {
     return this.pageTitle;
   }
 
-  async setCityNameInput(cityName) {
-    await this.cityNameInput.sendKeys(cityName);
+  setCityNameInput(cityName) {
+    this.cityNameInput.sendKeys(cityName);
   }
 
-  async getCityNameInput() {
+  getCityNameInput() {
     return this.cityNameInput.getAttribute('value');
   }
 
-  async setCityCodeInput(cityCode) {
-    await this.cityCodeInput.sendKeys(cityCode);
+  setCityCodeInput(cityCode) {
+    this.cityCodeInput.sendKeys(cityCode);
   }
 
-  async getCityCodeInput() {
+  getCityCodeInput() {
     return this.cityCodeInput.getAttribute('value');
   }
 
-  async setStdCodeInput(stdCode) {
-    await this.stdCodeInput.sendKeys(stdCode);
+  setStdCodeInput(stdCode) {
+    this.stdCodeInput.sendKeys(stdCode);
   }
 
-  async getStdCodeInput() {
+  getStdCodeInput() {
     return this.stdCodeInput.getAttribute('value');
   }
 
-  async stateSelectLastOption() {
-    await this.stateSelect
+  stateSelectLastOption() {
+    this.stateSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async stateSelectOption(option) {
-    await this.stateSelect.sendKeys(option);
+  stateSelectOption(option) {
+    this.stateSelect.sendKeys(option);
   }
 
   getStateSelect() {
     return this.stateSelect;
   }
 
-  async getStateSelectedOption() {
+  getStateSelectedOption() {
     return this.stateSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {

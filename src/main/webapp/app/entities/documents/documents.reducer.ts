@@ -63,6 +63,11 @@ export default (state: DocumentsState = initialState, action): DocumentsState =>
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_DOCUMENTS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_DOCUMENTS_LIST):
       return {
         ...state,

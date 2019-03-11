@@ -31,12 +31,12 @@ export class PaymentRemainderDeleteDialog extends React.Component<IPaymentRemain
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.paymentRemainder.delete.question">Are you sure you want to delete this PaymentRemainder?</ModalBody>
+        <ModalBody>Are you sure you want to delete this PaymentRemainder?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-paymentRemainder" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

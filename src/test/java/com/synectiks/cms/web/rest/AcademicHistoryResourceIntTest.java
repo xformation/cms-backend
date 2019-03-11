@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -71,8 +70,10 @@ public class AcademicHistoryResourceIntTest {
     @Autowired
     private AcademicHistoryRepository academicHistoryRepository;
 
+
     @Autowired
     private AcademicHistoryMapper academicHistoryMapper;
+    
 
     @Autowired
     private AcademicHistoryService academicHistoryService;
@@ -97,9 +98,6 @@ public class AcademicHistoryResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAcademicHistoryMockMvc;
 
     private AcademicHistory academicHistory;
@@ -112,8 +110,7 @@ public class AcademicHistoryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -343,6 +340,7 @@ public class AcademicHistoryResourceIntTest {
             .andExpect(jsonPath("$.[*].percentage").value(hasItem(DEFAULT_PERCENTAGE)));
     }
     
+
     @Test
     @Transactional
     public void getAcademicHistory() throws Exception {
@@ -362,7 +360,6 @@ public class AcademicHistoryResourceIntTest {
             .andExpect(jsonPath("$.score").value(DEFAULT_SCORE.intValue()))
             .andExpect(jsonPath("$.percentage").value(DEFAULT_PERCENTAGE));
     }
-
     @Test
     @Transactional
     public void getNonExistingAcademicHistory() throws Exception {
@@ -422,7 +419,7 @@ public class AcademicHistoryResourceIntTest {
         // Create the AcademicHistory
         AcademicHistoryDTO academicHistoryDTO = academicHistoryMapper.toDto(academicHistory);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restAcademicHistoryMockMvc.perform(put("/api/academic-histories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(academicHistoryDTO)))
@@ -444,7 +441,7 @@ public class AcademicHistoryResourceIntTest {
 
         int databaseSizeBeforeDelete = academicHistoryRepository.findAll().size();
 
-        // Delete the academicHistory
+        // Get the academicHistory
         restAcademicHistoryMockMvc.perform(delete("/api/academic-histories/{id}", academicHistory.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -469,10 +466,10 @@ public class AcademicHistoryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(academicHistory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].qualification").value(hasItem(DEFAULT_QUALIFICATION)))
-            .andExpect(jsonPath("$.[*].yearOfPassing").value(hasItem(DEFAULT_YEAR_OF_PASSING)))
-            .andExpect(jsonPath("$.[*].institution").value(hasItem(DEFAULT_INSTITUTION)))
-            .andExpect(jsonPath("$.[*].university").value(hasItem(DEFAULT_UNIVERSITY)))
+            .andExpect(jsonPath("$.[*].qualification").value(hasItem(DEFAULT_QUALIFICATION.toString())))
+            .andExpect(jsonPath("$.[*].yearOfPassing").value(hasItem(DEFAULT_YEAR_OF_PASSING.toString())))
+            .andExpect(jsonPath("$.[*].institution").value(hasItem(DEFAULT_INSTITUTION.toString())))
+            .andExpect(jsonPath("$.[*].university").value(hasItem(DEFAULT_UNIVERSITY.toString())))
             .andExpect(jsonPath("$.[*].enrollmentNo").value(hasItem(DEFAULT_ENROLLMENT_NO.intValue())))
             .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE.intValue())))
             .andExpect(jsonPath("$.[*].percentage").value(hasItem(DEFAULT_PERCENTAGE)));

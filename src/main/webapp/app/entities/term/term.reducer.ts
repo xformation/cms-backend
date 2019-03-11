@@ -63,6 +63,11 @@ export default (state: TermState = initialState, action): TermState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_TERMS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_TERM_LIST):
       return {
         ...state,

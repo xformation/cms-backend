@@ -31,12 +31,12 @@ export class BatchDeleteDialog extends React.Component<IBatchDeleteDialogProps> 
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.batch.delete.question">Are you sure you want to delete this Batch?</ModalBody>
+        <ModalBody>Are you sure you want to delete this Batch?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-batch" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

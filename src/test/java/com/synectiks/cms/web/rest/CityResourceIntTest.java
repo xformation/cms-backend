@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -59,8 +58,10 @@ public class CityResourceIntTest {
     @Autowired
     private CityRepository cityRepository;
 
+
     @Autowired
     private CityMapper cityMapper;
+    
 
     @Autowired
     private CityService cityService;
@@ -85,9 +86,6 @@ public class CityResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restCityMockMvc;
 
     private City city;
@@ -100,8 +98,7 @@ public class CityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -205,6 +202,7 @@ public class CityResourceIntTest {
             .andExpect(jsonPath("$.[*].stdCode").value(hasItem(DEFAULT_STD_CODE.toString())));
     }
     
+
     @Test
     @Transactional
     public void getCity() throws Exception {
@@ -220,7 +218,6 @@ public class CityResourceIntTest {
             .andExpect(jsonPath("$.cityCode").value(DEFAULT_CITY_CODE.toString()))
             .andExpect(jsonPath("$.stdCode").value(DEFAULT_STD_CODE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingCity() throws Exception {
@@ -272,7 +269,7 @@ public class CityResourceIntTest {
         // Create the City
         CityDTO cityDTO = cityMapper.toDto(city);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restCityMockMvc.perform(put("/api/cities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(cityDTO)))
@@ -294,7 +291,7 @@ public class CityResourceIntTest {
 
         int databaseSizeBeforeDelete = cityRepository.findAll().size();
 
-        // Delete the city
+        // Get the city
         restCityMockMvc.perform(delete("/api/cities/{id}", city.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -319,9 +316,9 @@ public class CityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(city.getId().intValue())))
-            .andExpect(jsonPath("$.[*].cityName").value(hasItem(DEFAULT_CITY_NAME)))
-            .andExpect(jsonPath("$.[*].cityCode").value(hasItem(DEFAULT_CITY_CODE)))
-            .andExpect(jsonPath("$.[*].stdCode").value(hasItem(DEFAULT_STD_CODE)));
+            .andExpect(jsonPath("$.[*].cityName").value(hasItem(DEFAULT_CITY_NAME.toString())))
+            .andExpect(jsonPath("$.[*].cityCode").value(hasItem(DEFAULT_CITY_CODE.toString())))
+            .andExpect(jsonPath("$.[*].stdCode").value(hasItem(DEFAULT_STD_CODE.toString())));
     }
 
     @Test

@@ -31,12 +31,12 @@ export class FacilityDeleteDialog extends React.Component<IFacilityDeleteDialogP
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody id="cmsApp.facility.delete.question">Are you sure you want to delete this Facility?</ModalBody>
+        <ModalBody>Are you sure you want to delete this Facility?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button id="jhi-confirm-delete-facility" color="danger" onClick={this.confirmDelete}>
+          <Button color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

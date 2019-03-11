@@ -63,6 +63,11 @@ export default (state: AcademicHistoryState = initialState, action): AcademicHis
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ACADEMICHISTORIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_ACADEMICHISTORY_LIST):
       return {
         ...state,

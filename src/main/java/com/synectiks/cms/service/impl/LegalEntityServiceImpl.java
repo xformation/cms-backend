@@ -93,7 +93,8 @@ public class LegalEntityServiceImpl implements LegalEntityService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete LegalEntity : {}", id);        legalEntityRepository.deleteById(id);
+        log.debug("Request to delete LegalEntity : {}", id);
+        legalEntityRepository.deleteById(id);
         legalEntitySearchRepository.deleteById(id);
     }
 

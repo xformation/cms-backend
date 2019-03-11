@@ -93,7 +93,8 @@ public class AcademicHistoryServiceImpl implements AcademicHistoryService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AcademicHistory : {}", id);        academicHistoryRepository.deleteById(id);
+        log.debug("Request to delete AcademicHistory : {}", id);
+        academicHistoryRepository.deleteById(id);
         academicHistorySearchRepository.deleteById(id);
     }
 

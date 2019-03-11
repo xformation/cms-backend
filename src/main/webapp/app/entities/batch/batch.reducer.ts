@@ -63,6 +63,11 @@ export default (state: BatchState = initialState, action): BatchState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_BATCHES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_BATCH_LIST):
       return {
         ...state,

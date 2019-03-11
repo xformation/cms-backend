@@ -93,7 +93,8 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Student : {}", id);        studentRepository.deleteById(id);
+        log.debug("Request to delete Student : {}", id);
+        studentRepository.deleteById(id);
         studentSearchRepository.deleteById(id);
     }
 

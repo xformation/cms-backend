@@ -93,7 +93,8 @@ public class FacilityServiceImpl implements FacilityService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Facility : {}", id);        facilityRepository.deleteById(id);
+        log.debug("Request to delete Facility : {}", id);
+        facilityRepository.deleteById(id);
         facilitySearchRepository.deleteById(id);
     }
 

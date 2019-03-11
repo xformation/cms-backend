@@ -14,63 +14,63 @@ export default class CompetitiveExamUpdatePage {
     return this.pageTitle;
   }
 
-  async setTestNameInput(testName) {
-    await this.testNameInput.sendKeys(testName);
+  setTestNameInput(testName) {
+    this.testNameInput.sendKeys(testName);
   }
 
-  async getTestNameInput() {
+  getTestNameInput() {
     return this.testNameInput.getAttribute('value');
   }
 
-  async setTestScoreInput(testScore) {
-    await this.testScoreInput.sendKeys(testScore);
+  setTestScoreInput(testScore) {
+    this.testScoreInput.sendKeys(testScore);
   }
 
-  async getTestScoreInput() {
+  getTestScoreInput() {
     return this.testScoreInput.getAttribute('value');
   }
 
-  async setEnrollmentNoInput(enrollmentNo) {
-    await this.enrollmentNoInput.sendKeys(enrollmentNo);
+  setEnrollmentNoInput(enrollmentNo) {
+    this.enrollmentNoInput.sendKeys(enrollmentNo);
   }
 
-  async getEnrollmentNoInput() {
+  getEnrollmentNoInput() {
     return this.enrollmentNoInput.getAttribute('value');
   }
 
-  async setRankInput(rank) {
-    await this.rankInput.sendKeys(rank);
+  setRankInput(rank) {
+    this.rankInput.sendKeys(rank);
   }
 
-  async getRankInput() {
+  getRankInput() {
     return this.rankInput.getAttribute('value');
   }
 
-  async studentSelectLastOption() {
-    await this.studentSelect
+  studentSelectLastOption() {
+    this.studentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async studentSelectOption(option) {
-    await this.studentSelect.sendKeys(option);
+  studentSelectOption(option) {
+    this.studentSelect.sendKeys(option);
   }
 
   getStudentSelect() {
     return this.studentSelect;
   }
 
-  async getStudentSelectedOption() {
+  getStudentSelectedOption() {
     return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
-  async save() {
-    await this.saveButton.click();
+  save() {
+    return this.saveButton.click();
   }
 
-  async cancel() {
-    await this.cancelButton.click();
+  cancel() {
+    this.cancelButton.click();
   }
 
   getSaveButton() {
