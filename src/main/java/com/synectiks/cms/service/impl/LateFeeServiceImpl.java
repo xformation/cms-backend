@@ -93,8 +93,7 @@ public class LateFeeServiceImpl implements LateFeeService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete LateFee : {}", id);
-        lateFeeRepository.deleteById(id);
+        log.debug("Request to delete LateFee : {}", id);        lateFeeRepository.deleteById(id);
         lateFeeSearchRepository.deleteById(id);
     }
 

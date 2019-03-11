@@ -35,8 +35,10 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190307052144_added_entity_LateFee.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190307052145_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190307052356_added_entity_CompetitiveExam.xml" relativeToChangelogFile="false"/>
-<include file="config/liquibase/changelog/20190307052357_added_entity_Documents.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190308061736_added_entity_Teacher.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052537_added_entity_Documents.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190308041421_added_entity_AcademicHistory.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190308042622_added_entity_AdmissionApplication.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>
@@ -52,20 +54,24 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190214071443_added_entity_constraints_Branch.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190208044647_added_entity_constraints_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190225061048_added_entity_constraints_LegalEntity.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190305093209_added_entity_constraints_Student.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052135_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052136_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052137_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052138_added_entity_constraints_Facility.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052141_added_entity_constraints_FeeDetails.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052142_added_entity_constraints_DueDate.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052143_added_entity_constraints_PaymentRemainder.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052144_added_entity_constraints_LateFee.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052145_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052356_added_entity_constraints_CompetitiveExam.xml" relativeToChangelogFile="false"/>
- <include file="config/liquibase/changelog/20190307052357_added_entity_constraints_Documents.xml" relativeToChangelogFile="false"/>
-    <!--<include file="config/liquibase/cms_test_data/local_test_data_load.xml" relativeToChangelogFile="false"/>-->
-    <include file="config/liquibase/changelog/20190308061736_added_entity_constraints_Teacher.xml" relativeToChangelogFile="false"/>
-    <!--jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here-->
+<include file="config/liquibase/changelog/20190305093209_added_entity_constraints_Student.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052135_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052136_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052137_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052138_added_entity_constraints_Facility.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052141_added_entity_constraints_FeeDetails.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052142_added_entity_constraints_DueDate.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052143_added_entity_constraints_PaymentRemainder.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052144_added_entity_constraints_LateFee.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052145_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190307052356_added_entity_constraints_CompetitiveExam.xml" relativeToChangelogFile="false"/>
+
+<include file="config/liquibase/changelog/20190308061736_added_entity_constraints_Teacher.xml" relativeToChangelogFile="false"/>
+
+<include file="config/liquibase/changelog/20190307052537_added_entity_constraints_Documents.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190308041421_added_entity_constraints_AcademicHistory.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190308042622_added_entity_constraints_AdmissionApplication.xml" relativeToChangelogFile="false"/>
+<!--<include file="config/liquibase/cms_test_data/local_test_data_load.xml" relativeToChangelogFile="false"/>-->
+<!--jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here-->
 
 </databaseChangeLog>

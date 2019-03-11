@@ -22,7 +22,8 @@
             "relationshipType": "many-to-one",
             "relationshipName": "state",
             "otherEntityName": "state",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "city"
         }
     ],
     "changelogDate": "20190307052137",

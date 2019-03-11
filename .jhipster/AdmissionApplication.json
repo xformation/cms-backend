@@ -37,7 +37,8 @@
             "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "admissionApplication"
         }
     ],
     "changelogDate": "20190308042622",

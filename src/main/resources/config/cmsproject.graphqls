@@ -29,6 +29,20 @@ enum SubTypeEnum {
     ELECTIVE
 }
 
+enum AdmissionStatusEnum{
+    RECEIVED
+    INPROCESS
+    DECLINED
+    ACCEPTED
+}
+
+enum CourseEnum {
+    BTECH
+    MTECH
+    BBA
+    MBA
+}
+
 enum TypeOfCollege{
     PRIVATE
     PUBLIC
@@ -115,6 +129,13 @@ type Query {
 
   subject(id: Long!): Subject!
   subjects: [Subject!]!
+
+  academicHistory(id:Long!): AcademicHistory!
+  academicHistories: [AcademicHistory!]!
+
+  admissionApplication(id: Int!): AdmissionApplication!
+  admissionApplications:[AdmissionApplication!]!
+
 
   teach(id: Long!): Teach!
   teaches: [Teach!]!
@@ -371,6 +392,27 @@ type AcademicYear{
     startDate: Date!
     endDate: Date!
 }
+
+type AdmissionApplication{
+     id: Long!
+     admissionStatus: AdmissionStatusEnum!
+     course:CourseEnum!
+     date: Date!
+     comments: String!
+ }
+
+type AcademicHistory{
+ id:Long!
+ qualification:String!
+ yearOfPassing:String!
+ institution:String!
+ university:String!
+ enrollmentNo:Long!
+ score:Long!
+ percentage:Int!
+ student:Student!
+ }
+
 type LegalEntity{
     id: Long!
     logo: Long!
@@ -773,6 +815,15 @@ type Mutation {
     updateDocuments(input:UpdateDocumentsInput!):UpdateDocumentsPayload!
     removeDocuments(input:RemoveDocumentsInput!):RemoveDocumentsPayload!
 
+    addAdmissionApplication(input: AddAdmissionApplicationInput!): AddAdmissionApplicationPayload!
+    updateAdmissionApplication(input: UpdateAdmissionApplicationInput!): UpdateAdmissionApplicationPayload!
+    removeAdmissionApplication(input: RemoveAdmissionApplicationInput!): RemoveAdmissionApplicationPayload!
+
+    addAcademicHistory(input: AddAcademicHistoryInput!): AddAcademicHistoryPayload!
+    updateAcademicHistory(input: UpdateAcademicHistoryInput!): UpdateAcademicHistoryPayload!
+    removeAcademicHistory(input: RemoveAcademicHistoryInput!): RemoveAcademicHistoryPayload!
+
+
 }
 
 input AddDocumentsInput{
@@ -1128,6 +1179,69 @@ type RemoveBranchPayload {
     branch: [Branch!]!
 }
 
+input AddAcademicHistoryInput {
+    qualification: String!
+    yearOfPassing: String!
+    institution: String!
+    university: String!
+    enrollmentNo: Long!
+    score: Long!
+    percentage: Int!
+    studentId: Long!
+
+}
+type AddAcademicHistoryPayload {
+    academicHistory: AcademicHistory!
+}
+input UpdateAcademicHistoryInput {
+    id: Long!
+    qualification: String!
+    yearOfPassing: String!
+    institution: String!
+    university: String!
+    enrollmentNo: Long!
+    score: Long!
+    percentage: Int!
+    studentId: Long!
+}
+type UpdateAcademicHistoryPayload {
+    academicHistory: AcademicHistory!
+}
+input RemoveAcademicHistoryInput {
+    academicHistoryId: Long!
+}
+type RemoveAcademicHistoryPayload {
+    academicHistories: [AcademicHistory!]!
+}
+
+
+input AddAdmissionApplicationInput {
+        admissionStatus: AdmissionStatusEnum!
+        course:CourseEnum!
+        date: Date!
+        comments: String!
+        studentId: Long!
+}
+type AddAdmissionApplicationPayload {
+    admissionApplication: AdmissionApplication!
+}
+input UpdateAdmissionApplicationInput {
+    id: Long!
+    admissionStatus: AdmissionStatusEnum!
+    course:CourseEnum!
+    date: Date!
+    comments: String!
+    studentId: Long!
+}
+type UpdateAdmissionApplicationPayload {
+    admissionApplication: AdmissionApplication!
+}
+input RemoveAdmissionApplicationInput {
+    admissionApplicationId: Long!
+}
+type RemoveAdmissionApplicationPayload {
+    admissionApplications: [AdmissionApplication!]!
+}
 
 
 input AddBatchInput {

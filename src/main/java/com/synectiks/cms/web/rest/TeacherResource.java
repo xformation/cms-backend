@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.TeacherService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class TeacherResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/teachers")
-    @Timed
     public ResponseEntity<TeacherDTO> createTeacher(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
         log.debug("REST request to save Teacher : {}", teacherDTO);
         if (teacherDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class TeacherResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/teachers")
-    @Timed
     public ResponseEntity<TeacherDTO> updateTeacher(@Valid @RequestBody TeacherDTO teacherDTO) throws URISyntaxException {
         log.debug("REST request to update Teacher : {}", teacherDTO);
         if (teacherDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class TeacherResource {
      * @return the ResponseEntity with status 200 (OK) and the list of teachers in body
      */
     @GetMapping("/teachers")
-    @Timed
     public List<TeacherDTO> getAllTeachers() {
         log.debug("REST request to get all Teachers");
         return teacherService.findAll();
@@ -99,7 +94,6 @@ public class TeacherResource {
      * @return the ResponseEntity with status 200 (OK) and with body the teacherDTO, or with status 404 (Not Found)
      */
     @GetMapping("/teachers/{id}")
-    @Timed
     public ResponseEntity<TeacherDTO> getTeacher(@PathVariable Long id) {
         log.debug("REST request to get Teacher : {}", id);
         Optional<TeacherDTO> teacherDTO = teacherService.findOne(id);
@@ -113,7 +107,6 @@ public class TeacherResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/teachers/{id}")
-    @Timed
     public ResponseEntity<Void> deleteTeacher(@PathVariable Long id) {
         log.debug("REST request to delete Teacher : {}", id);
         teacherService.delete(id);
@@ -128,7 +121,6 @@ public class TeacherResource {
      * @return the result of the search
      */
     @GetMapping("/_search/teachers")
-    @Timed
     public List<TeacherDTO> searchTeachers(@RequestParam String query) {
         log.debug("REST request to search Teachers for query {}", query);
         return teacherService.search(query);

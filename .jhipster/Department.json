@@ -28,13 +28,15 @@
             "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "department"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "academicyear",
             "otherEntityName": "academicYear",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "department"
         }
     ],
     "changelogDate": "20190118141512",

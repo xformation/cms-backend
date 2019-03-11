@@ -93,8 +93,7 @@ public class CurrencyServiceImpl implements CurrencyService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Currency : {}", id);
-        currencyRepository.deleteById(id);
+        log.debug("Request to delete Currency : {}", id);        currencyRepository.deleteById(id);
         currencySearchRepository.deleteById(id);
     }
 

@@ -19,13 +19,15 @@
             "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "studentAttendance"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "lecture",
             "otherEntityName": "lecture",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "studentAttendance"
         }
     ],
     "changelogDate": "20190122101135",

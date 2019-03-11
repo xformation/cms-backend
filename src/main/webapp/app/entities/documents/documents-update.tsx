@@ -13,6 +13,8 @@ import { getEntities as getStudents } from 'app/entities/student/student.reducer
 import { getEntity, updateEntity, createEntity, reset } from './documents.reducer';
 import { IDocuments } from 'app/shared/model/documents.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+// import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IDocumentsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -63,7 +65,7 @@ export class DocumentsUpdate extends React.Component<IDocumentsUpdateProps, IDoc
   };
 
   handleClose = () => {
-    this.props.history.push('/entity/documents.csv');
+    this.props.history.push('/entity/documents');
   };
 
   render() {

@@ -37,19 +37,22 @@
             "relationshipType": "many-to-one",
             "relationshipName": "dueDate",
             "otherEntityName": "dueDate",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "paymentRemainder"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "college",
             "otherEntityName": "college",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "paymentRemainder"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "paymentRemainder"
         }
     ],
     "changelogDate": "20190307052143",

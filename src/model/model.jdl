@@ -385,6 +385,31 @@ documentName String required
 upload String required
 }
 
+entity AcademicHistory{
+    qualification String required
+    yearOfPassing String required
+    institution String required
+    university String required
+    enrollmentNo Long required
+    score Long required
+    percentage Integer required
+}
+
+enum CourseEnum {
+    BTECH,MTECH,BBA,MBA
+}
+
+enum AdmissionStatusEnum{
+    RECEIVED, INPROCESS, DECLINED, ACCEPTED
+}
+
+entity AdmissionApplication{
+    admissionStatus AdmissionStatusEnum required
+    course CourseEnum required
+    date LocalDate required
+    comments String required
+}
+
 relationship ManyToOne {
 Student{department required} to Department ,
 Student{batch required} to Batch ,
@@ -449,8 +474,9 @@ Invoice{branch} to Branch,
 Invoice{student} to Student,
 Invoice{academicYear} to AcademicYear
 CompetitiveExam{student} to Student,
-Documents{student} to Student
-
+Documents{student} to Student,
+AcademicHistory{student} to Student,
+AdmissionApplication{student} to Student
 }
 
 dto * with mapstruct

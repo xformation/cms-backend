@@ -93,8 +93,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete StudentAttendance : {}", id);
-        studentAttendanceRepository.deleteById(id);
+        log.debug("Request to delete StudentAttendance : {}", id);        studentAttendanceRepository.deleteById(id);
         studentAttendanceSearchRepository.deleteById(id);
     }
 

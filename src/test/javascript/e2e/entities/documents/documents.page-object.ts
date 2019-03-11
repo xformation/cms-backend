@@ -5,7 +5,7 @@ import { waitUntilCount, waitUntilDisplayed } from '../../util/utils';
 export default class DocumentsComponentsPage {
   createButton: ElementFinder = element(by.id('jh-create-entity'));
   deleteButtons = element.all(by.css('div table .btn-danger'));
-  title: ElementFinder = element(by.id('documents.csv-heading'));
+  title: ElementFinder = element(by.id('documents-heading'));
 
   async clickOnCreateButton() {
     await this.createButton.click();
@@ -34,7 +34,7 @@ export default class DocumentsComponentsPage {
 
 export class DocumentsDeleteDialog {
   private dialogTitle: ElementFinder = element(by.id('cmsApp.documents.delete.question'));
-  private confirmButton = element(by.id('jhi-confirm-delete-documents.csv'));
+  private confirmButton = element(by.id('jhi-confirm-delete-documents'));
 
   getDialogTitle() {
     return this.dialogTitle;

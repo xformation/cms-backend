@@ -17,7 +17,8 @@ import { getEntities as getTeaches } from 'app/entities/teach/teach.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './attendance-master.reducer';
 import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
 // tslint:disable-next-line:no-unused-variable
-// import { convertDateTimeFromServer} from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+// import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAttendanceMasterUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

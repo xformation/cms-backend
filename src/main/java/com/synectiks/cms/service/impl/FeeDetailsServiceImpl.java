@@ -93,8 +93,7 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete FeeDetails : {}", id);
-        feeDetailsRepository.deleteById(id);
+        log.debug("Request to delete FeeDetails : {}", id);        feeDetailsRepository.deleteById(id);
         feeDetailsSearchRepository.deleteById(id);
     }
 

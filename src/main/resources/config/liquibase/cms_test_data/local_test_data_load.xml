@@ -98,6 +98,14 @@
                   file="config/liquibase/cms_test_data/documents.csv"
                   separator=";"
                   tableName="documents"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/academic_history.csv"
+                  separator=";"
+                  tableName="academic_history"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/admission_application.csv"
+                  separator=";"
+                  tableName="admission_application"/>
                                                              
     </changeSet>
 </databaseChangeLog>

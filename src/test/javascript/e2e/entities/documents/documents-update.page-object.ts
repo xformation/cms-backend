@@ -4,9 +4,9 @@ export default class DocumentsUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.documents.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  documentNameInput: ElementFinder = element(by.css('input#documents.csv-documentName'));
-  uploadInput: ElementFinder = element(by.css('input#documents.csv-upload'));
-  studentSelect: ElementFinder = element(by.css('select#documents.csv-student'));
+  documentNameInput: ElementFinder = element(by.css('input#documents-documentName'));
+  uploadInput: ElementFinder = element(by.css('input#documents-upload'));
+  studentSelect: ElementFinder = element(by.css('select#documents-student'));
 
   getPageTitle() {
     return this.pageTitle;

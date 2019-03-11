@@ -23,8 +23,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
@@ -95,7 +97,7 @@ public class TeacherResourceIntTest {
     private static final Long UPDATED_AADHAR_NO = 2L;
 
     private static final Date DEFAULT_DATE_OF_BIRTH = new Date();
-    private static final Date UPDATED_DATE_OF_BIRTH =  new Date();
+    private static final Date UPDATED_DATE_OF_BIRTH = new Date();
 
     private static final String DEFAULT_PLACE_OF_BIRTH = "AAAAAAAAAA";
     private static final String UPDATED_PLACE_OF_BIRTH = "BBBBBBBBBB";
@@ -213,6 +215,9 @@ public class TeacherResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restTeacherMockMvc;
 
     private Teacher teacher;
@@ -225,7 +230,8 @@ public class TeacherResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -1323,7 +1329,7 @@ public class TeacherResourceIntTest {
 
         int databaseSizeBeforeDelete = teacherRepository.findAll().size();
 
-        // Get the teacher
+        // Delete the teacher
         restTeacherMockMvc.perform(delete("/api/teachers/{id}", teacher.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

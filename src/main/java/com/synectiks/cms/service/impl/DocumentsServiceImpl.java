@@ -42,7 +42,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     /**
-     * Save a documents.csv.
+     * Save a documents.
      *
      * @param documentsDTO the entity to save
      * @return the persisted entity
@@ -58,7 +58,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     /**
-     * Get all the documents.csv.
+     * Get all the documents.
      *
      * @return the list of entities
      */
@@ -73,7 +73,7 @@ public class DocumentsServiceImpl implements DocumentsService {
 
 
     /**
-     * Get one documents.csv by id.
+     * Get one documents by id.
      *
      * @param id the id of the entity
      * @return the entity
@@ -87,19 +87,18 @@ public class DocumentsServiceImpl implements DocumentsService {
     }
 
     /**
-     * Delete the documents.csv by id.
+     * Delete the documents by id.
      *
      * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Documents : {}", id);
-        documentsRepository.deleteById(id);
+        log.debug("Request to delete Documents : {}", id);        documentsRepository.deleteById(id);
         documentsSearchRepository.deleteById(id);
     }
 
     /**
-     * Search for the documents.csv corresponding to the query.
+     * Search for the documents corresponding to the query.
      *
      * @param query the query of the search
      * @return the list of entities

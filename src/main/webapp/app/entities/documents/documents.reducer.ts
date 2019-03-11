@@ -7,13 +7,13 @@ import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util'
 import { IDocuments, defaultValue } from 'app/shared/model/documents.model';
 
 export const ACTION_TYPES = {
-  SEARCH_DOCUMENTS: 'documents.csv/SEARCH_DOCUMENTS',
-  FETCH_DOCUMENTS_LIST: 'documents.csv/FETCH_DOCUMENTS_LIST',
-  FETCH_DOCUMENTS: 'documents.csv/FETCH_DOCUMENTS',
-  CREATE_DOCUMENTS: 'documents.csv/CREATE_DOCUMENTS',
-  UPDATE_DOCUMENTS: 'documents.csv/UPDATE_DOCUMENTS',
-  DELETE_DOCUMENTS: 'documents.csv/DELETE_DOCUMENTS',
-  RESET: 'documents.csv/RESET'
+  SEARCH_DOCUMENTS: 'documents/SEARCH_DOCUMENTS',
+  FETCH_DOCUMENTS_LIST: 'documents/FETCH_DOCUMENTS_LIST',
+  FETCH_DOCUMENTS: 'documents/FETCH_DOCUMENTS',
+  CREATE_DOCUMENTS: 'documents/CREATE_DOCUMENTS',
+  UPDATE_DOCUMENTS: 'documents/UPDATE_DOCUMENTS',
+  DELETE_DOCUMENTS: 'documents/DELETE_DOCUMENTS',
+  RESET: 'documents/RESET'
 };
 
 const initialState = {
@@ -99,8 +99,8 @@ export default (state: DocumentsState = initialState, action): DocumentsState =>
   }
 };
 
-const apiUrl = 'api/documents.csv';
-const apiSearchUrl = 'api/_search/documents.csv';
+const apiUrl = 'api/documents';
+const apiSearchUrl = 'api/_search/documents';
 
 // Actions
 

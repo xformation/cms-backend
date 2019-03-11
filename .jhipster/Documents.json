@@ -21,7 +21,8 @@
             "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "documents"
         }
     ],
     "changelogDate": "20190307052537",

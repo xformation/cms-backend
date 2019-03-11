@@ -126,7 +126,7 @@ public class DocumentsResourceIntTest {
 
         // Create the Documents
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
-        restDocumentsMockMvc.perform(post("/api/documents.csv")
+        restDocumentsMockMvc.perform(post("/api/documents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isCreated());
@@ -152,7 +152,7 @@ public class DocumentsResourceIntTest {
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restDocumentsMockMvc.perform(post("/api/documents.csv")
+        restDocumentsMockMvc.perform(post("/api/documents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isBadRequest());
@@ -175,7 +175,7 @@ public class DocumentsResourceIntTest {
         // Create the Documents, which fails.
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
-        restDocumentsMockMvc.perform(post("/api/documents.csv")
+        restDocumentsMockMvc.perform(post("/api/documents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isBadRequest());
@@ -194,7 +194,7 @@ public class DocumentsResourceIntTest {
         // Create the Documents, which fails.
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
-        restDocumentsMockMvc.perform(post("/api/documents.csv")
+        restDocumentsMockMvc.perform(post("/api/documents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isBadRequest());
@@ -210,7 +210,7 @@ public class DocumentsResourceIntTest {
         documentsRepository.saveAndFlush(documents);
 
         // Get all the documentsList
-        restDocumentsMockMvc.perform(get("/api/documents.csv?sort=id,desc"))
+        restDocumentsMockMvc.perform(get("/api/documents?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documents.getId().intValue())))
@@ -224,8 +224,8 @@ public class DocumentsResourceIntTest {
         // Initialize the database
         documentsRepository.saveAndFlush(documents);
 
-        // Get the documents.csv
-        restDocumentsMockMvc.perform(get("/api/documents.csv/{id}", documents.getId()))
+        // Get the documents
+        restDocumentsMockMvc.perform(get("/api/documents/{id}", documents.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(documents.getId().intValue()))
@@ -236,8 +236,8 @@ public class DocumentsResourceIntTest {
     @Test
     @Transactional
     public void getNonExistingDocuments() throws Exception {
-        // Get the documents.csv
-        restDocumentsMockMvc.perform(get("/api/documents.csv/{id}", Long.MAX_VALUE))
+        // Get the documents
+        restDocumentsMockMvc.perform(get("/api/documents/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -249,7 +249,7 @@ public class DocumentsResourceIntTest {
 
         int databaseSizeBeforeUpdate = documentsRepository.findAll().size();
 
-        // Update the documents.csv
+        // Update the documents
         Documents updatedDocuments = documentsRepository.findById(documents.getId()).get();
         // Disconnect from session so that the updates on updatedDocuments are not directly saved in db
         em.detach(updatedDocuments);
@@ -258,7 +258,7 @@ public class DocumentsResourceIntTest {
             .upload(UPDATED_UPLOAD);
         DocumentsDTO documentsDTO = documentsMapper.toDto(updatedDocuments);
 
-        restDocumentsMockMvc.perform(put("/api/documents.csv")
+        restDocumentsMockMvc.perform(put("/api/documents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isOk());
@@ -283,7 +283,7 @@ public class DocumentsResourceIntTest {
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restDocumentsMockMvc.perform(put("/api/documents.csv")
+        restDocumentsMockMvc.perform(put("/api/documents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
             .andExpect(status().isBadRequest());
@@ -304,8 +304,8 @@ public class DocumentsResourceIntTest {
 
         int databaseSizeBeforeDelete = documentsRepository.findAll().size();
 
-        // Delete the documents.csv
-        restDocumentsMockMvc.perform(delete("/api/documents.csv/{id}", documents.getId())
+        // Delete the documents
+        restDocumentsMockMvc.perform(delete("/api/documents/{id}", documents.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
@@ -324,8 +324,8 @@ public class DocumentsResourceIntTest {
         documentsRepository.saveAndFlush(documents);
         when(mockDocumentsSearchRepository.search(queryStringQuery("id:" + documents.getId())))
             .thenReturn(Collections.singletonList(documents));
-        // Search the documents.csv
-        restDocumentsMockMvc.perform(get("/api/_search/documents.csv?query=id:" + documents.getId()))
+        // Search the documents
+        restDocumentsMockMvc.perform(get("/api/_search/documents?query=id:" + documents.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documents.getId().intValue())))

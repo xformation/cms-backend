@@ -16,9 +16,9 @@ import java.util.Objects;
  * A Documents.
  */
 @Entity
-@Table(name = "documents.csv")
+@Table(name = "documents")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "documents.csv")
+@Document(indexName = "documents")
 public class Documents implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,7 +37,7 @@ public class Documents implements Serializable {
     private String upload;
 
     @ManyToOne
-    @JsonIgnoreProperties("documents.csv")
+    @JsonIgnoreProperties("documents")
     private Student student;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

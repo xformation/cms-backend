@@ -16,7 +16,7 @@ import java.util.Objects;
  * A CompetitiveExam.
  */
 @Entity
-@Table(name = "competitive_exam.csv")
+@Table(name = "competitive_exam")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "competitiveexam")
 public class CompetitiveExam implements Serializable {

@@ -52,19 +52,22 @@
             "relationshipType": "many-to-one",
             "relationshipName": "academicYear",
             "otherEntityName": "academicYear",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "facility"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "branch",
             "otherEntityName": "branch",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "facility"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "facility"
         }
     ],
     "changelogDate": "20190307052138",

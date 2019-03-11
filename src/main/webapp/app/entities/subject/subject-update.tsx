@@ -15,6 +15,8 @@ import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './subject.reducer';
 import { ISubject } from 'app/shared/model/subject.model';
 // tslint:disable-next-line:no-unused-variable
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+// import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ISubjectUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 

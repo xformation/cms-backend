@@ -93,8 +93,7 @@ public class CompetitiveExamServiceImpl implements CompetitiveExamService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete CompetitiveExam : {}", id);
-        competitiveExamRepository.deleteById(id);
+        log.debug("Request to delete CompetitiveExam : {}", id);        competitiveExamRepository.deleteById(id);
         competitiveExamSearchRepository.deleteById(id);
     }
 

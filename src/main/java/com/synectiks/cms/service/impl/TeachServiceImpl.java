@@ -93,8 +93,7 @@ public class TeachServiceImpl implements TeachService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Teach : {}", id);
-        teachRepository.deleteById(id);
+        log.debug("Request to delete Teach : {}", id);        teachRepository.deleteById(id);
         teachSearchRepository.deleteById(id);
     }
 

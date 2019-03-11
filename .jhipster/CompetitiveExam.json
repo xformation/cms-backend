@@ -35,7 +35,8 @@
             "relationshipType": "many-to-one",
             "relationshipName": "student",
             "otherEntityName": "student",
-            "otherEntityField": "id"
+            "otherEntityField": "id",
+            "otherEntityRelationshipName": "competitiveExam"
         }
     ],
     "changelogDate": "20190307052356",

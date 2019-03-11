@@ -93,8 +93,7 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete PaymentRemainder : {}", id);
-        paymentRemainderRepository.deleteById(id);
+        log.debug("Request to delete PaymentRemainder : {}", id);        paymentRemainderRepository.deleteById(id);
         paymentRemainderSearchRepository.deleteById(id);
     }
 

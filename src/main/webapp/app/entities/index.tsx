@@ -45,6 +45,8 @@ import Reports from './reports';
 import IdCard from './id-card';
 import Documents from './documents';
 import CompetitiveExam from './competitive-exam';
+import AcademicHistory from './academic-history';
+import AdmissionApplication from './admission-application';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -92,6 +94,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/id-card`} component={IdCard} />
       <ErrorBoundaryRoute path={`${match.url}/documents`} component={Documents} />
       <ErrorBoundaryRoute path={`${match.url}/competitive-exam`} component={CompetitiveExam} />
+      <ErrorBoundaryRoute path={`${match.url}/academic-history`} component={AcademicHistory} />
+      <ErrorBoundaryRoute path={`${match.url}/admission-application`} component={AdmissionApplication} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>
