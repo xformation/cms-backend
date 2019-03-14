@@ -1,3 +1,4 @@
+
 Country:
 
 mutation addCountry($input:AddCountryInput!){
@@ -18,9 +19,8 @@ mutation addCountry($input:AddCountryInput!){
     "isdCode": "HFNH%65"
   }
 }
-
+----------------
 State:
-
 
 mutation addState($input:AddStateInput!){
   addState(input: $input){
@@ -36,7 +36,6 @@ mutation addState($input:AddStateInput!){
     }
   }
 
-
 {
   "input": {
     "stateName": "Hyderabad",
@@ -46,9 +45,8 @@ mutation addState($input:AddStateInput!){
   }
 }
 
-
+---------------
 City:
-
 
 mutation addCity($input:AddCityInput!){
   addCity(input: $input){
@@ -74,7 +72,7 @@ mutation addCity($input:AddCityInput!){
   }
 }
 
-
+-----------------
 College:
 
 mutation addCollege($input: AddCollegeInput!) {
@@ -119,6 +117,8 @@ instructionInformation
     "instructionInformation": "info"
   }
 }
+------------------------
+Branch:
 
 mutation addBranch($input: AddBranchInput!) {
 addBranch(input: $input) {
@@ -178,6 +178,220 @@ college{
   }
 }
 
+----------------
+Academichistory
+
+mutation addAcademicHistory($input: AddAcademicHistoryInput!) {
+  addAcademicHistory(input: $input) {
+    academicHistory {
+      id
+      qualification
+      yearOfPassing
+      institution
+      university
+      enrollmentNo
+      score
+      percentage
+      student {
+        id
+      }
+    }
+  }
+}
+
+
+{
+ "input":{
+	"qualification": "SSC",
+    "yearOfPassing": 2018,
+    "institution": "BHASHYAM SCHOOL",
+    "university": "SSC",
+    "enrollmentNo": 45678,
+    "score": 43,
+    "percentage": 78,
+    "studentId": 1001
+  }
+}
+
+mutation updateAcademicHistory($input: UpdateAcademicHistoryInput!) {
+  updateAcademicHistory(input: $input) {
+    academicHistory {
+      id
+      qualification
+      yearOfPassing
+      institution
+      university
+      enrollmentNo
+      score
+      percentage
+      student {
+        id
+      }
+    }
+  }
+}
+
+
+{
+  "input":{
+    "id": 1151,
+    "qualification": "SSC",
+    "yearOfPassing": 2018,
+    "institution": "BHASHYAM SCHOOL",
+    "university": "secondary board",
+    "enrollmentNo": 45678,
+    "score": 43,
+    "percentage": 78,
+    "studentId": 1001
+  }
+}
+-----------------
+Admission Application:
+
+mutation addAdmissionApplication($input: AddAdmissionApplicationInput!){
+  addAdmissionApplication(input: $input) {
+    admissionApplication{
+      id
+      admissionStatus
+      course
+      date
+      comments
+      student{
+        id
+      }
+
+    }
+
+{
+  "input": {
+    "admissionStatus": "DECLINED",
+    "course": "MTECH",
+    "date": "2019-03-05",
+    "comments": "under progress",
+    "studentId": 1001
+  }
+}
+
+mutation updateAdmissionApplication ($input: UpdateAdmissionApplicationInput!){
+  updateAdmissionApplication(input: $input){
+    admissionApplication{
+      id
+      admissionStatus
+      course
+      date
+      comments
+      student{
+        id
+      }
+    }
+  }
+}
+
+{
+"input": {
+  "id": 1051,
+  "admissionStatus": "INPROCESS",
+  "course": "BTECH",
+  "date": "2019-03-14",
+  "comments": "under progress",
+  "studentId": 1001
+}
+}
+
+-----------------
+Admission Enquiry:
+
+mutation addAdmissionEnquiry($input: AddAdmissionEnquiryInput!) {
+  addAdmissionEnquiry(input: $input) {
+    admissionEnquiry {
+      id
+      studentName
+      mobileNumber
+      alternateMobileNumber
+      email
+      courseApplyingFor
+      modeOfEnquiry
+      status
+      description
+      enquiryDate
+      updatedOn
+      updatedBy
+      branch {
+        id
+      }
+      admissionApplication {
+        id
+      }
+    }
+  }
+}
+
+{
+"input": {
+  "studentName": "Ron",
+  "mobileNumber": 34567890789,
+  "alternateMobileNumber": 1234890,
+  "email": "ron@gmail.com",
+  "courseApplyingFor": "MTECH",
+  "modeOfEnquiry": "EMAIL",
+  "status": "FOLLOWUP",
+  "description": "under review",
+  "enquiryDate": "2019-02-27",
+  "updatedOn":  "2019-03-14",
+  "updatedBy": "mounika",
+  "branchId": 1001,
+  "admissionApplicationId": 1051
+ }
+}
+
+
+mutation updateAdmissionEnquiry($input: UpdateAdmissionEnquiryInput!) {
+  updateAdmissionEnquiry(input: $input) {
+    admissionEnquiry {
+      id
+      studentName
+      mobileNumber
+      alternateMobileNumber
+      email
+      courseApplyingFor
+      modeOfEnquiry
+      status
+      description
+      enquiryDate
+      updatedOn
+      updatedBy
+      branch {
+        id
+      }
+      admissionApplication {
+        id
+      }
+    }
+  }
+}
+
+
+{
+  "input": {
+    "id": 1101,
+    "studentName": "Ron",
+    "mobileNumber": 34567890789,
+    "alternateMobileNumber": 1234890,
+    "email": "ron@gmail.com",
+    "courseApplyingFor": "BTECH",
+    "modeOfEnquiry": "EMAIL",
+    "status": "FOLLOWUP",
+    "description": "under review",
+    "enquiryDate": "2019-02-27",
+    "updatedOn": "2019-03-13",
+    "updatedBy": "mounika",
+    "branchId": 1001,
+    "admissionApplicationId": 1051
+  }
+}
+
+-----------------
+Academic Year:
 
 mutation addAcademicYear($input: AddAcademicYearInput!){
   	addAcademicYear(input: $input){
@@ -213,6 +427,7 @@ mutation updateAcademicYear($input: UpdateAcademicYearInput!){
  }
 }
 
+---------------------
 FeeCategory:
 
 mutation addFeeCategory($input: AddFeeCategoryInput!){
@@ -233,7 +448,7 @@ Input: {
 
   }
 }
-
+---------------------
 Facility:
 
 mutation addFacility($input: AddFacilityInput!){
@@ -266,7 +481,7 @@ Input: {
   }
 }
 
-
+-----------------------
 Transport:
 
 mutation addTransportRoute($input: AddTransportRouteInput!){
@@ -289,7 +504,7 @@ Input: {
   }
 }
 
-
+-----------------------
 
 FeeDetails:
 
@@ -350,7 +565,7 @@ Input: {
   }
 }
 
-
+--------------------
 DueDate:
 
 mutation addDueDate($input:AddDueDateInput!){
@@ -385,6 +600,7 @@ mutation addDueDate($input:AddDueDateInput!){
       }
     }
 
+--------------------
 PaymentRemainder:
 
 mutation addPaymentRemainder($input:AddPaymentRemainderInput!){
@@ -419,6 +635,7 @@ mutation addPaymentRemainder($input:AddPaymentRemainderInput!){
     "branchId": 1201
   }
 }
+---------------
 Invoice :
 
 mutation addInvoice($input:AddInvoiceInput!){
@@ -494,7 +711,8 @@ mutation addInvoice($input:AddInvoiceInput!){
   }
 }
 
-
+--------------
+Department:
 
 mutation addDepartment($input: AddDepartmentInput!){
    	addDepartment(input: $input){
@@ -555,6 +773,8 @@ mutation updateDepartment($input: UpdateDepartmentInput!){
   }
 }
 
+----------------
+Batch:
 
 mutation addBatch($input: AddBatchInput!){
   	addBatch(input: $input){
@@ -597,6 +817,8 @@ mutation updateBatch($input: UpdateBatchInput!){
   }
 }
 
+-----------------------
+Section:
 
 mutation addSection($input: AddSectionInput!){
   	addSection(input: $input){
@@ -639,80 +861,66 @@ mutation updateSection($input: UpdateSectionInput!){
   }
 }
 
+------------------
+Student:
 
-mutation addStudent($input: AddStudentInput!){
-  	addStudent(input: $input){
-  student
-  {
-   id
-   studentName
-   studentMiddleName
-    studentLastName
-    fatherName
-    fatherMiddleName
-    fatherLastName
-    motherName
-    motherMiddleName
-    motherLastName
-    aadharNo
-    dateOfBirth
-    placeOfBirth
-    religion
-    caste
-    subCaste
-    age
-    sex
-    bloodGroup
-    addressLineOne
-    addressLineTwo
-    addressLineThree
-    town
-    state
-    country
-    pincode
-    studentContactNumber
-    alternateContactNumber
-     studentEmailAddress
-    alternateEmailAddress
-    relationWithStudent
-    name
-    middleName
-    lastName
-    contactNo
-    emailAddress
-    uploadPhoto
-    admissionNo
-    rollNo
-    studentType
-    transport
-    mess
-    gym
-    culturalClass
-    library
-    sports
-    swimming
-    extraClass
-    handicrafts
-    addressLineOne
-    addressLineTwo
-    addressLineThree
-    studentType
-    handicrafts
-   batch
-    {
+mutation addStudent($input: AddStudentInput!) {
+  addStudent(input: $input) {
+    student {
       id
-    }
-    section{
-      id
-    }
-    branch{
-      id
-    }
-    department{
-      id
+      studentName
+      studentMiddleName
+      studentLastName
+      fatherName
+      fatherMiddleName
+      fatherLastName
+      motherName
+      motherMiddleName
+      motherLastName
+      aadharNo
+      dateOfBirth
+      placeOfBirth
+      religion
+      caste
+      subCaste
+      age
+      sex
+      bloodGroup
+      addressLineOne
+      addressLineTwo
+      addressLineThree
+      town
+      state
+      country
+      pincode
+      studentContactNumber
+      alternateContactNumber
+      studentEmailAddress
+      alternateEmailAddress
+      relationWithStudent
+      emergencyContactName
+      emergencyContactMiddleName
+      emergencyContactLastName
+      emergencyContactNo
+      emergencyContactEmailAddress
+      uploadPhoto
+      admissionNo
+      rollNo
+      studentType
+      batch {
+        id
+      }
+      section {
+        id
+      }
+      branch {
+        id
+      }
+      department {
+        id
+      }
     }
   }
- }
 }
 
 
@@ -727,7 +935,7 @@ mutation addStudent($input: AddStudentInput!){
     "motherName": "jyothi",
     "motherMiddleName": "rao",
     "motherLastName": "musini",
-    "aadharNo": 38019819883,
+    "aadharNo": "38019819883",
     "dateOfBirth": "1995-12-31",
     "placeOfBirth": "rjy",
     "religion": "HINDU",
@@ -743,34 +951,24 @@ mutation addStudent($input: AddStudentInput!){
     "state": "AP",
     "country": "india",
     "pincode": 533101,
-    "studentContactNumber": 91002617333,
-    "alternateContactNumber": 94749584985,
+    "studentContactNumber": "91002617333",
+    "alternateContactNumber": "94749584985",
     "studentEmailAddress": "srivalli@gmail.com",
     "alternateEmailAddress": "lavanya@gmail.com",
     "relationWithStudent": "FATHER",
-    "name": "venkat",
-    "middleName": "rao",
-    "lastName": "musini",
-    "contactNo": 9491637830,
-    "emailAddress": "venkat@gmail.com",
-    "uploadPhoto": 123,
-    "admissionNo": 444334,
+    "emergencyContactName": "beck",
+    "emergencyContactMiddleName": "adam",
+    "emergencyContactLastName": "snow",
+    "emergencyContactNo": "2348204658",
+    "emergencyContactEmailAddress": "beck.adam@gmail.com",
+    "uploadPhoto": "123",
+    "admissionNo": "444334",
     "rollNo": "13p31ao595",
     "studentType": "BENEFITS",
-    "batchId": 1351,
-    "sectionId": 1401,
-    "branchId": 1201,
-    "departmentId": 1301,
-    "transport": "ACTIVE",
-    "gym": "ACTIVE",
-    "mess": "ACTIVE",
-    "culturalClass": "ACTIVE",
-    "library": "DEACTIVE",
-    "sports": "DEACTIVE",
-    "swimming": "DEACTIVE",
-    "handicrafts": "ACTIVE",
-    "add": "DEACTIVE",
-    "extraClass": "ACTIVE"
+    "batchId": 1151,
+    "sectionId": 1201,
+    "branchId": 1001,
+    "departmentId": 1101
   }
 }
 
@@ -780,65 +978,64 @@ mutation updateStudent($input: UpdateStudentInput!){
     student
   {
    id
-   studentName
-   studentMiddleName
-    studentLastName
-    fatherName
-    fatherMiddleName
-    fatherLastName
-    motherName
-    motherMiddleName
-    motherLastName
-    aadharNo
-    dateOfBirth
-    placeOfBirth
-    religion
-    caste
-    subCaste
-    age
-    sex
-    bloodGroup
-    addressLineOne
-    addressLineTwo
-    addressLineThree
-    town
-    state
-    country
-    pincode
-    studentContactNumber
-    alternateContactNumber
-     studentEmailAddress
-    alternateEmailAddress
-    relationWithStudent
-    name
-    middleName
-    lastName
-    contactNo
-    emailAddress
-    uploadPhoto
-    admissionNo
-    rollNo
-    studentType
-   batch
-    {
-      id
-    }
-    section{
-      id
-    }
-    branch{
-      id
-    }
-    department{
-      id
+        studentName
+        studentMiddleName
+        studentLastName
+        fatherName
+        fatherMiddleName
+        fatherLastName
+        motherName
+        motherMiddleName
+        motherLastName
+        aadharNo
+        dateOfBirth
+        placeOfBirth
+        religion
+        caste
+        subCaste
+        age
+        sex
+        bloodGroup
+        addressLineOne
+        addressLineTwo
+        addressLineThree
+        town
+        state
+        country
+        pincode
+        studentContactNumber
+        alternateContactNumber
+        studentEmailAddress
+        alternateEmailAddress
+        relationWithStudent
+        emergencyContactName
+        emergencyContactMiddleName
+        emergencyContactLastName
+        emergencyContactNo
+        emergencyContactEmailAddress
+        uploadPhoto
+        admissionNo
+        rollNo
+        studentType
+        batch {
+          id
+        }
+        section {
+          id
+        }
+        branch {
+          id
+        }
+        department {
+          id
+        }
+      }
     }
   }
- }
-}
 
 {
   "input": {
-    "id": 1251,
+    "id": 1001,
     "studentName": "lavanya",
     "studentMiddleName": "venkata",
     "studentLastName": "srivalli",
@@ -864,26 +1061,30 @@ mutation updateStudent($input: UpdateStudentInput!){
     "state": "AP",
     "country": "india",
     "pincode": 533101,
-    "studentContactNumber": 91002617333,
-    "alternateContactNumber": 94749584985,
+    "studentContactNumber": "91002617333",
+    "alternateContactNumber": "94749584985",
     "studentEmailAddress": "srivalli@gmail.com",
     "alternateEmailAddress": "lavanya@gmail.com",
     "relationWithStudent": "FATHER",
-    "name": "venkat",
-    "middleName": "rao",
-    "lastName": "musini",
-    "contactNo": 9491637830,
-    "emailAddress": "venkat@gmail.com",
-    "uploadPhoto": 123,
+    "emergencyContactName": "monica",
+    "emergencyContactMiddleName": "sander",
+    "emergencyContactLastName": "moparthy",
+    "emergencyContactNo": "6342984",
+    "emergencyContactEmailAddress": "mon.sander@gmail.com",
+    "uploadPhoto": "123",
     "admissionNo": 444334,
     "rollNo": "13p31ao595",
-    "studentType": "free",
+    "studentType": "BENEFITS",
     "batchId": 1151,
     "sectionId": 1201,
     "branchId": 1001,
     "departmentId": 1101
   }
 }
+
+
+---------------
+Teacher:
 
 mutation addTeacher($input: AddTeacherInput!){
   	addTeacher(input: $input){
@@ -1088,6 +1289,9 @@ mutation updateTeacher($input: UpdateTeacherInput!){
   }
 }
 
+----------------
+Subject:
+
 mutation addSubject($input: AddSubjectInput!){
   	addSubject(input: $input){
     subject
@@ -1149,6 +1353,8 @@ mutation updateSubject($input: UpdateSubjectInput!){
   }
 }
 
+-------------
+Teach:
 
 mutation addTeach($input: AddTeachInput!){
   	addTeach(input: $input){
@@ -1199,6 +1405,8 @@ mutation updateTeach($input: UpdateTeachInput!){
   }
 }
 
+------------------
+AttendanceMaster:
 
 mutation addAttendanceMaster($input: AddAttendanceMasterInput!){
   	addAttendanceMaster(input: $input){
@@ -1257,7 +1465,9 @@ mutation updateAttendanceMaster($input: UpdateAttendanceMasterInput!){
   }
 }
 
-LaateFee:
+------------------
+LateFee:
+
 mutation addLateFee($input: AddLateFeeInput!){
   	addLateFee(input: $input){
     lateFee{
@@ -1295,6 +1505,9 @@ input :
     "branchId": 1151
   }
     }
+
+--------------
+Lecture:
 
 mutation addLecture($input: AddLectureInput!){
   	addLecture(input: $input){
@@ -1352,6 +1565,8 @@ mutation updateLecture($input: UpdateLectureInput!){
    "attendanceMasterId": 1451
   }
 }
+----------
+Student Attendance:
 
 mutation addStudentAttendance($input: AddStudentAttendanceInput!){
   	addStudentAttendance(input: $input){
@@ -1406,6 +1621,8 @@ mutation updateStudentAttendance($input: UpdateStudentAttendanceInput!){
   }
 }
 
+---------------
+Term:
 
 mutation addTerm($input: AddTermInput!){
   	addTerm(input: $input){
@@ -1461,6 +1678,9 @@ mutation updateTerm($input: UpdateTermInput!){
     }
  }
 
+---------------
+Holiday:
+
 mutation addHoliday($input: AddHolidayInput!){
   	addHoliday(input: $input){
     holiday
@@ -1510,8 +1730,8 @@ mutation updateHoliday($input: UpdateHolidayInput!){
   }
 }
 
-
-
+---------------
+Legal entity:
 
 mutation addLegalEntity($input:AddLegalEntityInput!){
 addLegalEntity(input:$input){
@@ -1653,7 +1873,8 @@ ptNumber
   }
 }
 
-
+--------------
+Authorized signatory:
 
 mutation addAuthorizedSignatory($input:AddAuthorizedSignatoryInput!){
 addAuthorizedSignatory(input:$input){
@@ -1722,6 +1943,9 @@ panCardNumber
 }
 }
 
+--------------
+Location:
+
 mutation addLocation($input: AddLocationInput!) {
 addLocation(input: $input) {
 location{
@@ -1760,6 +1984,8 @@ location{
   }
 }
 
+---------------
+BankAccounts:
 
 mutation addBankAccounts($input: AddBankAccountsInput!) {
 addBankAccounts(input: $input) {
@@ -1828,6 +2054,9 @@ bankAccounts{
     "collegeId": 951
   }
 }
+
+--------------
+Student Subject:
 
 mutation addStudentSubject($input: AddStudentSubjectInput!) {
 addStudentSubject(input: $input) {
@@ -1910,11 +2139,11 @@ mutation updateStudentAttendanceData($input:StudentAttendanceUpdateFilter!){
   updateStudenceAttendanceData(input:$input){
     statusCode
     statusDesc
- } 
+ }
 }
 
 {
-  
+
   "input": {
     "studentIds": "1251,1255",
 	  "lectureId": 44750
@@ -1929,7 +2158,7 @@ mutation addLectures($input:LectureScheduleInput!, $filter:LectureScheduleFilter
   addLectures(input:$input, filter:$filter){
     statusCode
     statusDesc
- } 
+ }
 }
 
 
@@ -1942,35 +2171,35 @@ mutation addLectures($input:LectureScheduleInput!, $filter:LectureScheduleFilter
 		{ "WEEKDAY":"MONDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"MONDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"MONDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
-    
+
     { "WEEKDAY":"TUESDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"TUESDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"TUESDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"TUESDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"TUESDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
-    
+
     { "WEEKDAY":"WEDNESDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"WEDNESDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"WEDNESDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"WEDNESDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"WEDNESDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
-    
+
     { "WEEKDAY":"THURSDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"THURSDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"THURSDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"THURSDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"THURSDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" },
-    
+
     { "WEEKDAY":"FRIDAY", "startTime": "7:30:00Am", "endTime":"8:30:00Am", "subjectId":"1351", "teacherId":"1301", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"FRIDAY", "startTime": "8:30:00Am", "endTime":"9:30:00Am", "subjectId":"1352", "teacherId":"1302", "batchId": "1151", "sectionId": "1201" },
 		{ "WEEKDAY":"FRIDAY", "startTime": "9:30:00Am", "endTime":"10:30:00Am", "subjectId":"1353", "teacherId":"1303", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"FRIDAY", "startTime": "11:00:00Am", "endTime":"12:00:01Pm", "subjectId":"1354", "teacherId":"1304", "batchId": "1151", "sectionId": "1201" },
     { "WEEKDAY":"FRIDAY", "startTime": "02:00:00Pm", "endTime":"03:00:00Pm", "subjectId":"1355", "teacherId":"1305", "batchId": "1151", "sectionId": "1201" }
-    
-	
+
+
    ]
   },
-  
+
   "filter": {
     "academicYear": 2019,
     "sectionId": 2,
@@ -1985,17 +2214,17 @@ mutation updateLectures($input:LectureScheduleInput!, $filter:LectureScheduleFil
   updateLectures(input:$input, filter:$filter){
     statusCode
     statusDesc
- } 
+ }
 }
 
 {
   "input": {
    "values": [
 		{ "WEEKDAY":"MONDAY", "startTime": "7:30:01Am", "endTime":"8:30:01Am", "subjectId":"2" }
-	
+
    ]
   },
-  
+
   "filter": {
     "academicYear": 2019,
     "sectionId": 2,
@@ -2010,7 +2239,7 @@ mutation addAcademicSubjects($input:AcademicSubjectMutationPayload!){
   addAcademicSubjects(input:$input){
      statusCode
     statusDesc
- } 
+ }
 }
 {
   "input": {
@@ -2018,7 +2247,7 @@ mutation addAcademicSubjects($input:AcademicSubjectMutationPayload!){
       {"subjectCode": "CPP","subjectType": "COMMON","subjectDesc": "CPP","status": "ACTIVE","departmentId": "1","batchId": "1", "teacherId": "16"},
       {"subjectCode": "DS","subjectType": "COMMON","subjectDesc": "Data Structure","status": "ACTIVE","departmentId": "1","batchId": "1", "teacherId": "17"}
     ]
-    
+
   }
 }
 
@@ -2027,7 +2256,7 @@ mutation updateAcademicSubjects($input:AcademicSubjectMutationPayload!){
   updateAcademicSubjects(input:$input){
      statusCode
     statusDesc
- } 
+ }
 }
 
 {
@@ -2036,6 +2265,6 @@ mutation updateAcademicSubjects($input:AcademicSubjectMutationPayload!){
       {"subjectCode": "OSS S","subjectType": "ELE S","subjectDesc": "OPS ELES","status": "DRAFT","departmentId": "1","batchId": "1","teacherId": "18", "subjectId":"1", "teachId":"1"},
       {"subjectCode": "SE S","subjectType": "ELEC","subjectDesc": "SES ELE","status": "DEACTIVE","departmentId": "1","batchId": "1","teacherId": "19", "subjectId":"2", "teachId":"2"}
     ]
-    
+
   }
 }

@@ -147,10 +147,10 @@ type Query {
   academicHistory(id:Long!): AcademicHistory!
   academicHistories: [AcademicHistory!]!
 
-  admissionApplication(id: Int!): AdmissionApplication!
+  admissionApplication(id: Long!): AdmissionApplication!
   admissionApplications:[AdmissionApplication!]!
 
-  admissionEnquiry(id: Int!): AdmissionEnquiry!
+  admissionEnquiry(id: Long!): AdmissionEnquiry!
   admissionEnquiries:[AdmissionEnquiry!]!
 
   teach(id: Long!): Teach!
@@ -415,6 +415,7 @@ type AdmissionApplication{
      course:CourseEnum!
      date: Date!
      comments: String!
+     student:Student!
 }
 
 type AcademicHistory{
@@ -1293,8 +1294,8 @@ input AddAdmissionEnquiryInput {
         enquiryDate: Date!
         updatedOn: Date!
         updatedBy: String!
-        branch: Long!
-        admissionApplication: Long!
+        branchId: Long!
+        admissionApplicationId: Long!
 }
 
 type AddAdmissionEnquiryPayload {
@@ -1313,8 +1314,8 @@ input UpdateAdmissionEnquiryInput {
     enquiryDate: Date!
     updatedOn: Date!
     updatedBy: String!
-    branch: Long!
-    admissionApplication: Long!
+    branchId: Long!
+    admissionApplicationId: Long!
 }
 type UpdateAdmissionEnquiryPayload {
     admissionEnquiry: AdmissionEnquiry!
