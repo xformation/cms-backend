@@ -58,8 +58,8 @@
         },
         {
             "fieldName": "paymentStatus",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldType": "InvoicePaymentStatus",
+            "fieldValues": "PAID,UNPAID,CANCELED",
             "fieldValidateRules": [
                 "required"
             ]

@@ -1732,3 +1732,35 @@ Admission Enquiry:
 	}
 }
 
+---- invoice filter queries
+
+query{
+  searchInvoice(invoiceNumber:"1",studentId:2){
+    invoiceNumber
+  }
+}
+
+query{
+  getTotalInvoice(collegeId:1,branchId:2,academicYearId:2019)
+}
+
+query{
+  getTotalPaidInvoice(collegeId:1,branchId:2,academicYearId:2019)
+}
+
+query{
+  getTotalUnPaidInvoice(collegeId:1,branchId:2,academicYearId:2019)
+}
+
+query{
+  getTotalCanceledInvoice(collegeId:1,branchId:2,academicYearId:2019)
+}
+
+query{
+  getInvoiceData(collegeId:1,branchId:1,academicYearId:1){
+    totalInvoice
+    totalPaidInvoice
+    totalUnPaidInvoice
+    totalCanceledInvoice
+  }
+}

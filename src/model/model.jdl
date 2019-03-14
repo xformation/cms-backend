@@ -54,6 +54,10 @@ enum Status {
 ACTIVE,DEACTIVE
 }
 
+enum InvoicePaymentStatus {
+PAID,UNPAID,CANCELED
+}
+
 enum Gender {
     MALE, FEMALE, OTHER
 }
@@ -368,7 +372,7 @@ modeOfPayment ModeOfPayment required
 chequeNumber Long
 demandDraftNumber Long
 onlineTxnRefNumber String
-paymentStatus Status required
+paymentStatus InvoicePaymentStatus required
 comments String required
 updatedBy String required
 updatedOn LocalDate required

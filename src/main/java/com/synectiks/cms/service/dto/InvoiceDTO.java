@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 
 /**
  * A DTO for the Invoice entity.
@@ -39,7 +39,7 @@ public class InvoiceDTO implements Serializable {
     private String onlineTxnRefNumber;
 
     @NotNull
-    private Status paymentStatus;
+    private InvoicePaymentStatus paymentStatus;
 
     @NotNull
     private String comments;
@@ -146,11 +146,11 @@ public class InvoiceDTO implements Serializable {
         this.onlineTxnRefNumber = onlineTxnRefNumber;
     }
 
-    public Status getPaymentStatus() {
+    public InvoicePaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(Status paymentStatus) {
+    public void setPaymentStatus(InvoicePaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

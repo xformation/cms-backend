@@ -100,6 +100,12 @@ enum ModeOfPayment {
     DEMANDDRAFT
 }
 
+enum InvoicePaymentStatus {
+	PAID
+	UNPAID
+	CANCELED
+}
+
 type Query {
 
   authorizedSignatory(id: Int!): AuthorizedSignatory!
@@ -204,6 +210,20 @@ type Query {
     getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
+
+  searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
+  getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+  getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+  getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+  getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+  getInvoiceData(collegeId:Long, branchId:Long!, academicYearId:Long!): InvoiceFilterProcessor!
+}
+
+type InvoiceFilterProcessor{
+	totalInvoice: Long
+	totalPaidInvoice: Long
+	totalUnPaidInvoice: Long
+	totalCanceledInvoice: Long
 }
 
 type City{
@@ -700,7 +720,7 @@ type Invoice {
     chequeNumber:Long!
     demandDraftNumber:Long!
     onlineTxnRefNumber:String!
-    paymentStatus:Status!
+    paymentStatus:InvoicePaymentStatus!
     comments:String!
     updatedBy:String!
     updatedOn:Date!
@@ -2125,7 +2145,7 @@ input AddInvoiceInput{
     chequeNumber:Long!
     demandDraftNumber:Long!
     onlineTxnRefNumber:String!
-    paymentStatus:Status!
+    paymentStatus:InvoicePaymentStatus!
     comments:String!
     updatedBy:String!
     updatedOn:Date!
@@ -2152,7 +2172,7 @@ input UpdateInvoiceInput{
     chequeNumber:Long!
     demandDraftNumber:Long!
     onlineTxnRefNumber:String!
-    paymentStatus:Status!
+    paymentStatus:InvoicePaymentStatus!
     comments:String!
     updatedBy:String!
     updatedOn:Date!

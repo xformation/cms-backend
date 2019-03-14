@@ -1,21 +1,28 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.ModeOfPayment;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.domain.enumeration.ModeOfPayment;
 
 /**
  * A Invoice.
@@ -70,7 +77,7 @@ public class Invoice implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", nullable = false)
-    private Status paymentStatus;
+    private InvoicePaymentStatus paymentStatus;
 
     @NotNull
     @Column(name = "comments", nullable = false)
@@ -242,16 +249,16 @@ public class Invoice implements Serializable {
         this.onlineTxnRefNumber = onlineTxnRefNumber;
     }
 
-    public Status getPaymentStatus() {
+    public InvoicePaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public Invoice paymentStatus(Status paymentStatus) {
+    public Invoice paymentStatus(InvoicePaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
         return this;
     }
 
-    public void setPaymentStatus(Status paymentStatus) {
+    public void setPaymentStatus(InvoicePaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 

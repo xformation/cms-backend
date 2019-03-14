@@ -1,5 +1,6 @@
 package com.synectiks.cms.graphql.types.Invoice;
 
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
 import com.synectiks.cms.domain.enumeration.Status;
 
@@ -17,7 +18,7 @@ public class AbstractInvoiceInput {
     private Long chequeNumber;
     private Long demandDraftNumber;
     private String onlineTxnRefNumber;
-    private Status paymentStatus;
+    private InvoicePaymentStatus paymentStatus;
     private String comments;
     private String updatedBy;
     private Date updatedOn;
@@ -102,11 +103,11 @@ public class AbstractInvoiceInput {
         this.onlineTxnRefNumber = onlineTxnRefNumber;
     }
 
-    public Status getPaymentStatus() {
+    public InvoicePaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(Status paymentStatus) {
+    public void setPaymentStatus(InvoicePaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
