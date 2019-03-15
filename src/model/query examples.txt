@@ -103,6 +103,60 @@ branch:
 }
 ---------------
 
+competitiveExams:
+
+{
+  competitiveExams {
+    id
+    testName
+    testScore
+    enrollmentNo
+    rank
+    student {
+      id
+    }
+  }
+}
+
+
+{
+  competitiveExam(id:1001) {
+  
+    testName
+    testScore
+    enrollmentNo
+    rank
+    student {
+      id
+    }
+  }
+}
+------------------------
+
+Documents:
+{
+  document(id: 1051) {
+    id
+    documentName
+    upload
+    student {
+      id
+    }
+  }
+}
+
+{
+  documents {
+    id
+    documentName
+    upload
+    student {
+      id
+    }
+  }
+}
+----------------------
+
 {
   department(id: 1101){
     name

@@ -174,10 +174,10 @@ type Query {
   facility(id: Long!): Facility!
   facilities: [Facility!]!
 
-  competitiveExam (id: Long!): Long!
+  competitiveExam (id: Long!): CompetitiveExam!
   competitiveExams: [CompetitiveExam!]!
 
-  document (id: Long!): Long!
+  document (id: Long!): Documents!
   documents: [Documents!]!
 
   transportRoute(id: Long!): TransportRoute!

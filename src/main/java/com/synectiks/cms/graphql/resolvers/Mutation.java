@@ -803,6 +803,7 @@ public class Mutation implements GraphQLMutationResolver {
         final CompetitiveExam competitiveExam = new CompetitiveExam();
         competitiveExam.setStudent(student);
         competitiveExam.setTestName(addCompetitiveExamInput.getTestName());
+        competitiveExam.setTestScore(addCompetitiveExamInput.getTestScore());
         competitiveExam.setEnrollmentNo(addCompetitiveExamInput.getEnrollmentNo());
         competitiveExam.setRank(addCompetitiveExamInput.getRank());
         competitiveExamRepository.save(competitiveExam);

@@ -426,7 +426,109 @@ mutation updateAcademicYear($input: UpdateAcademicYearInput!){
   }
  }
 }
+-----------------------
+Competitive Exam:
 
+mutation addCompetitiveExam($input: AddCompetitiveExamInput!) {
+  addCompetitiveExam(input: $input) {
+    competitiveExam {
+      id
+      testName
+      testScore
+      enrollmentNo
+      rank
+      student {
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+    "testName": "EAMCET",
+    "testScore": 12,
+    "enrollmentNo": 112345,
+    "rank": 1231,
+    "studentId": 951
+  }
+}
+
+mutation updateCompetitiveExam($input: UpdateCompetitiveExamInput!) {
+  updateCompetitiveExam(input: $input) {
+    competitiveExam {
+      id
+      testName
+      testScore
+      enrollmentNo
+      rank
+      student {
+        id
+      }
+    }
+  }
+}
+
+
+{
+  "input": {
+    "id": 1001,
+    "testName": "EAMCET",
+    "testScore": 12,
+    "enrollmentNo": 112345,
+    "rank": 1231,
+    "studentId": 951
+  }
+}
+
+
+--------------------
+Documents:
+
+mutation addDocuments($input: AddDocumentsInput!) {
+  addDocuments(input: $input) {
+    documents {
+      id
+      documentName
+      upload
+      student {
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+	
+    "documentName": "SSC",
+    "upload": "ssc",
+    "studentId": 951
+	}
+}
+
+
+mutation updateDocuments($input: UpdateDocumentsInput!) {
+  updateDocuments(input: $input) {
+    documents {
+      id
+      documentName
+      upload
+      student {
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+	"id":1051,
+    "documentName": "SSC",
+    "upload": "ssc-doc",
+    "studentId": 951
+	}
+}
 ---------------------
 FeeCategory:
 
@@ -448,6 +550,8 @@ Input: {
 
   }
 }
+
+
 ---------------------
 Facility:
 
