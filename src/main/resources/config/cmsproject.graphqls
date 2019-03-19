@@ -211,6 +211,8 @@ type Query {
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
+    searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
+
   searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
   getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
