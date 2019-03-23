@@ -1,6 +1,16 @@
 package com.synectiks.cms.service.impl;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import com.synectiks.cms.service.InvoiceService;
+import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.repository.search.InvoiceSearchRepository;
+import com.synectiks.cms.service.dto.InvoiceDTO;
+import com.synectiks.cms.service.mapper.InvoiceMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -8,23 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.search.InvoiceSearchRepository;
-import com.synectiks.cms.service.InvoiceService;
-import com.synectiks.cms.service.dto.InvoiceDTO;
-import com.synectiks.cms.service.mapper.InvoiceMapper;
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Invoice.
@@ -118,103 +112,5 @@ public class InvoiceServiceImpl implements InvoiceService {
             .stream(invoiceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(invoiceMapper::toDto)
             .collect(Collectors.toList());
-    }
-    
-    
-    public Long getTotalInvoice(Long collegeId, Long branchId, Long academicYearId) {
-    	Long a = getTotalPaidInvoice(collegeId, branchId, academicYearId);
-    	Long b = getTotalUnPaidInvoice(collegeId, branchId, academicYearId);
-    	Long c = getTotalCanceledInvoice(collegeId, branchId, academicYearId);
-    	return a+b+c;
-    }
-    
-    public Long getTotalPaidInvoice(Long collegeId, Long branchId, Long academicYearId) {
-    	Invoice inv = new Invoice();
-    	
-    	if(collegeId != null) {
-    		College college = new College();
-    		college.setId(collegeId);
-    		inv.setCollege(college);
-    	}
-    	
-    	if(branchId != null) {
-    		Branch branch = new Branch();
-    		branch.setId(branchId);
-    		inv.setBranch(branch);
-    	}
-    	
-    	AcademicYear ac = new AcademicYear();
-    	ac.setId(academicYearId);
-    	
-    	inv.setPaymentStatus(InvoicePaymentStatus.PAID);
-    	inv.setAcademicYear(ac);
-    	Example<Invoice> example = Example.of(inv);
-    	Long cnt = this.invoiceRepository.count(example);
-    	return cnt;
-    }
-    
-    public Long getTotalUnPaidInvoice(Long collegeId, Long branchId, Long academicYearId) {
-    	Invoice inv = new Invoice();
-    	
-    	if(collegeId != null) {
-    		College college = new College();
-    		college.setId(collegeId);
-    		inv.setCollege(college);
-    	}
-    	
-    	if(branchId != null) {
-    		Branch branch = new Branch();
-    		branch.setId(branchId);
-    		inv.setBranch(branch);
-    	}
-    	
-    	AcademicYear ac = new AcademicYear();
-    	ac.setId(academicYearId);
-    	
-    	inv.setPaymentStatus(InvoicePaymentStatus.UNPAID);
-    	inv.setAcademicYear(ac);
-    	Example<Invoice> example = Example.of(inv);
-    	Long cnt = this.invoiceRepository.count(example);
-    	return cnt;
-    }
-    
-    public Long getTotalCanceledInvoice(Long collegeId, Long branchId, Long academicYearId) {
-    	Invoice inv = new Invoice();
-    	
-    	if(collegeId != null) {
-    		College college = new College();
-    		college.setId(collegeId);
-    		inv.setCollege(college);
-    	}
-    	
-    	if(branchId != null) {
-    		Branch branch = new Branch();
-    		branch.setId(branchId);
-    		inv.setBranch(branch);
-    	}
-    	AcademicYear ac = new AcademicYear();
-    	ac.setId(academicYearId);
-    	
-    	inv.setPaymentStatus(InvoicePaymentStatus.CANCELED);
-    	inv.setAcademicYear(ac);
-    	Example<Invoice> example = Example.of(inv);
-    	Long cnt = this.invoiceRepository.count(example);
-    	return cnt;
-    }
-    
-    public List<Invoice> searchInvoice(String invoiceNumber, Long studentId) {
-    	Invoice inv = new Invoice();
-    	
-    	if(invoiceNumber != null) {
-    		inv.setInvoiceNumber(invoiceNumber);
-    	}
-    	if(studentId != null) {
-    		Student student = new Student();
-    		student.setId(studentId);
-    		inv.setStudent(student);
-    	}
-    	Example<Invoice> example = Example.of(inv);
-    	List<Invoice> list = this.invoiceRepository.findAll(example);
-    	return list;
     }
 }

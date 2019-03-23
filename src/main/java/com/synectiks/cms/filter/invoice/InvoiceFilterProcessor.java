@@ -7,39 +7,40 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.service.impl.InvoiceServiceImpl;
 
 @Component
 public class InvoiceFilterProcessor {
 
 	private final Logger logger = LoggerFactory.getLogger(InvoiceFilterProcessor.class);
+	
 	private Long totalInvoice = 0L;
 	private Long totalPaidInvoice = 0L;
 	private Long totalUnPaidInvoice = 0L;
 	private Long totalCanceledInvoice = 0L;
 	
 	@Autowired
-	private InvoiceServiceImpl invoiceServiceImpl;
+	private CmsInvoiceService cmsInvoiceService;
 	
 	public List<Invoice> searchInvoice(String invoiceNumber, Long studentId){
-		return invoiceServiceImpl.searchInvoice(invoiceNumber, studentId);
+		return cmsInvoiceService.searchInvoice(invoiceNumber, studentId);
 	}
 	
 	public Long getTotalInvoice(Long collegeId, Long branchId, Long academicYearId) {
-		return invoiceServiceImpl.getTotalInvoice(collegeId, branchId, academicYearId);
+		return cmsInvoiceService.getTotalInvoice(collegeId, branchId, academicYearId);
 	}
 	
 	public Long getTotalPaidInvoice(Long collegeId, Long branchId, Long academicYearId) {
-		return invoiceServiceImpl.getTotalPaidInvoice(collegeId, branchId, academicYearId);
+		return cmsInvoiceService.getTotalPaidInvoice(collegeId, branchId, academicYearId);
 	}
 	
 	public Long getTotalUnPaidInvoice(Long collegeId, Long branchId, Long academicYearId) {
-		return invoiceServiceImpl.getTotalUnPaidInvoice(collegeId, branchId, academicYearId);
+		return cmsInvoiceService.getTotalUnPaidInvoice(collegeId, branchId, academicYearId);
 	}
 	
 	public Long getTotalCanceledInvoice(Long collegeId, Long branchId, Long academicYearId) {
-		return invoiceServiceImpl.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
+		return cmsInvoiceService.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
 	}
 	
 	public InvoiceFilterProcessor getInvoiceData(Long collegeId, Long branchId, Long academicYearId) {

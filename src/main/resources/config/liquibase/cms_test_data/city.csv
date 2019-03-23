@@ -1,0 +1,641 @@
+id;city_name;city_code;std_code;state_id
+1051;24 Parganas North;PN;<null>;1036
+1052;24 Parganas South;PS;<null>;1036
+1053;Adilabad;AD;<null>;1032
+1054;Agra;AG;<null>;1035
+1055;Ahmedabad;AH;<null>;1012
+1056;Ahmednagar;AH;<null>;1021
+1057;Aizawl;AI;<null>;1024
+1058;Ajmer;AJ;<null>;1029
+1059;Akola;AK;<null>;1021
+1060;Alappuzha;AL;<null>;1018
+1061;Aligarh;AL;<null>;1035
+1062;Alirajpur;AR;<null>;1020
+1063;Allahabad;AH;<null>;1035
+1064;Almora;AL;<null>;1034
+1065;Alwar;AL;<null>;1029
+1066;Ambala;AM;<null>;1013
+1067;Ambedkar Nagar;AN;<null>;1035
+1068;Amravati;AM;<null>;1021
+1069;Amreli;AM;<null>;1012
+1070;Amritsar;AR;<null>;1028
+1071;Anand;AN;<null>;1012
+1072;Anantapur;AN;<null>;1002
+1073;Anantnag;AG;<null>;1015
+1074;Angul;AN;<null>;1026
+1075;Anjaw;AJ;<null>;1003
+1076;Anuppur;AP;<null>;1020
+1077;Araria;AR;<null>;1005
+1078;Ariyalur;AR;<null>;1031
+1079;Arwal;AW;<null>;1005
+1080;Ashoknagar;AN;<null>;1020
+1081;Auraiya;AU;<null>;1035
+1082;Aurangabad;AU;<null>;1005
+1083;Aurangabad;AU;<null>;1021
+1084;Azamgarh;AZ;<null>;1035
+1085;Badaun;BD;<null>;1035
+1086;Badgam;BD;<null>;1015
+1087;Bagalkot;BK;<null>;1017
+1088;Bageshwar;BA;<null>;1034
+1089;Baghpat;BG;<null>;1035
+1090;Bahraich;BH;<null>;1035
+1091;Baksa;BK;<null>;1004
+1092;Balaghat;BL;<null>;1020
+1093;Baleshwar;BW;<null>;1026
+1094;Ballia;BL;<null>;1035
+1095;Balrampur;BP;<null>;1035
+1096;Banas Kantha;BK;<null>;1012
+1097;Banda;BN;<null>;1035
+1098;Bandipore;BP;<null>;1015
+1099;Bangalore;BN;<null>;1017
+1100;Bangalore Rural;BU;<null>;1017
+1101;Banka;BA;<null>;1005
+1102;Bankura;BN;<null>;1036
+1103;Banswara;BS;<null>;1029
+1104;Barabanki;BB;<null>;1035
+1105;Baragarh;BR;<null>;1026
+1106;Baramula;BL;<null>;1015
+1107;Baran;BR;<null>;1029
+1108;Bardhaman;BR;<null>;1036
+1109;Bareilly;BR;<null>;1035
+1110;Barmer;BM;<null>;1029
+1111;Barnala;BL;<null>;1028
+1112;Barpeta;BP;<null>;1004
+1113;Barwani;BR;<null>;1020
+1114;Bastar;BT;<null>;1007
+1115;Basti;BS;<null>;1035
+1116;Bathinda;BA;<null>;1028
+1117;Begusarai;BE;<null>;1005
+1118;Belgaum;BG;<null>;1017
+1119;Bellary;BL;<null>;1017
+1120;Betul;BE;<null>;1020
+1121;Bhadrak;BH;<null>;1026
+1122;Bhagalpur;BG;<null>;1005
+1123;Bhandara;BH;<null>;1021
+1124;Bharatpur;BP;<null>;1029
+1125;Bharuch;BR;<null>;1012
+1126;Bhavnagar;BV;<null>;1012
+1127;Bhilwara;BW;<null>;1029
+1128;Bhind;BD;<null>;1020
+1129;Bhiwani;BH;<null>;1013
+1130;Bhojpur;BJ;<null>;1005
+1131;Bhopal;BP;<null>;1020
+1132;Bid;BI;<null>;1021
+1133;Bidar;BD;<null>;1017
+1134;Bijapur;BJ;<null>;1007
+1135;Bijapur;BJ;<null>;1017
+1136;Bijnor;BI;<null>;1035
+1137;Bikaner;BI;<null>;1029
+1138;Bilaspur;BI;<null>;1007
+1139;Bilaspur;BI;<null>;1014
+1140;Birbhum;BI;<null>;1036
+1141;Bishnupur;BI;<null>;1022
+1142;Bokaro;BO;<null>;1016
+1143;Bolangir;BL;<null>;1026
+1144;Bongaigaon;BG;<null>;1004
+1145;Boudh;BD;<null>;1026
+1146;Bulandshahr;BU;<null>;1035
+1147;Buldhana;BU;<null>;1021
+1148;Bundi;BU;<null>;1029
+1149;Burhanpur;BU;<null>;1020
+1150;Buxar;BU;<null>;1005
+1151;Cachar;CA;<null>;1004
+1152;Central;CE;<null>;1010
+1153;Chamba;CH;<null>;1014
+1154;Chamoli;CL;<null>;1034
+1155;Champawat;CP;<null>;1034
+1156;Champhai;CH;<null>;1024
+1157;Chamrajnagar;CJ;<null>;1017
+1158;Chandauli;CD;<null>;1035
+1159;Chandel;CD;<null>;1022
+1160;Chandigarh;CH;<null>;1006
+1161;Chandrapur;CH;<null>;1021
+1162;Changlang;CH;<null>;1003
+1163;Chatra;CH;<null>;1016
+1164;Chennai;CH;<null>;1031
+1165;Chhatarpur;CT;<null>;1020
+1166;Chhindwara;CN;<null>;1020
+1167;Chikballapura;CB;<null>;1017
+1168;Chikmagalur;CK;<null>;1017
+1169;Chirang;CH;<null>;1004
+1170;Chitradurga;CT;<null>;1017
+1171;Chitrakoot;CT;<null>;1035
+1172;Chittoor;CH;<null>;1002
+1173;Chittorgarh;CH;<null>;1029
+1174;Churachandpur;CC;<null>;1022
+1175;Churu;CR;<null>;1029
+1176;Coimbatore;CM;<null>;1031
+1177;Cuddalore;CU;<null>;1031
+1178;Cuddapah;CU;<null>;1002
+1179;Cuttack;CU;<null>;1026
+1180;Dadra and Nagar Haveli;DN;<null>;1008
+1181;Dahod;DA;<null>;1012
+1182;Dakshina Kannada;DK;<null>;1017
+1183;Dakshin Dinajpur;DD;<null>;1036
+1184;Daman;DA;<null>;1009
+1185;Damoh;DM;<null>;1020
+1186;Dantewada;DW;<null>;1007
+1187;Darbhanga;DA;<null>;1005
+1188;Darjeeling;DA;<null>;1036
+1189;Darrang;DR;<null>;1004
+1190;Datia;DT;<null>;1020
+1191;Dausa;DA;<null>;1029
+1192;Davanagere;DA;<null>;1017
+1193;Dehradun;DD;<null>;1034
+1194;Deogarh;DE;<null>;1026
+1195;Deoghar;DE;<null>;1016
+1196;Deoria;DE;<null>;1035
+1197;Dewas;DE;<null>;1020
+1198;Dhalai;DH;<null>;1033
+1199;Dhamtari;DH;<null>;1007
+1200;Dhanbad;DH;<null>;1016
+1201;Dhar;DH;<null>;1020
+1202;Dharmapuri;DM;<null>;1031
+1203;Dharwad;DH;<null>;1017
+1204;Dhemaji;DM;<null>;1004
+1205;Dhenkanal;DH;<null>;1026
+1206;Dholpur;DH;<null>;1029
+1207;Dhubri;DB;<null>;1004
+1208;Dhule;DH;<null>;1021
+1209;Dibrugarh;DI;<null>;1004
+1210;Dimapur;DI;<null>;1025
+1211;Dindigul;DI;<null>;1031
+1212;Dindori;DI;<null>;1020
+1213;Diu;DI;<null>;1009
+1214;Doda;DD;<null>;1015
+1215;Dumka;DM;<null>;1016
+1216;Dungarpur;DU;<null>;1029
+1217;Durg;DU;<null>;1007
+1218;East;EA;<null>;1010
+1219;East Garo Hills;EG;<null>;1023
+1220;East Godavari;EG;<null>;1002
+1221;East Imphal;EI;<null>;1022
+1222;East Kameng;EK;<null>;1003
+1223;East Khasi Hills;EK;<null>;1023
+1224;East Nimar;KW;<null>;1020
+1225;East Siang;ES;<null>;1003
+1226;East Sikkim;ES;<null>;1030
+1227;Ernakulam;ER;<null>;1018
+1228;Erode;ED;<null>;1031
+1229;Etah;EH;<null>;1035
+1230;Etawah;EW;<null>;1035
+1231;Faizabad;FZ;<null>;1035
+1232;Faridabad;FD;<null>;1013
+1233;Faridkot;FR;<null>;1028
+1234;Farrukhabad;FR;<null>;1035
+1235;Fatehabad;FT;<null>;1013
+1236;Fatehgarh Sahib;FT;<null>;1028
+1237;Fatehpur;FT;<null>;1035
+1238;Firozabad;FI;<null>;1035
+1239;Firozpur;FI;<null>;1028
+1240;Gadag;GA;<null>;1017
+1241;Gadchiroli;GA;<null>;1021
+1242;Gajapati;GP;<null>;1026
+1243;Ganderbal;GA;<null>;1015
+1244;Gandhinagar;GA;<null>;1012
+1245;Ganganagar;GA;<null>;1029
+1246;Ganjam;GN;<null>;1026
+1247;Garhwa;GA;<null>;1016
+1248;Gautam Buddha Nagar;GB;<null>;1035
+1249;Gaya;GA;<null>;1005
+1250;Ghaziabad;GZ;<null>;1035
+1251;Ghazipur;GP;<null>;1035
+1252;Giridih;GI;<null>;1016
+1253;Goalpara;GP;<null>;1004
+1254;Godda;GO;<null>;1016
+1255;Golaghat;GG;<null>;1004
+1256;Gonda;GN;<null>;1035
+1257;Gondiya;GO;<null>;1021
+1258;Gopalganj;GO;<null>;1005
+1259;Gorakhpur;GR;<null>;1035
+1260;Gulbarga;GB;<null>;1017
+1261;Gumla;GM;<null>;1016
+1262;Guna;GN;<null>;1020
+1263;Guntur;GU;<null>;1002
+1264;Gurdaspur;GU;<null>;1028
+1265;Gurgaon;GG;<null>;1013
+1266;Gwalior;GW;<null>;1020
+1267;Hailakandi;HA;<null>;1004
+1268;Hamirpur;HA;<null>;1014
+1269;Hamirpur;HM;<null>;1035
+1270;Hanumangarh;HA;<null>;1029
+1271;Harda;HA;<null>;1020
+1272;Hardoi;HR;<null>;1035
+1273;Haridwar;HA;<null>;1034
+1274;Hassan;HS;<null>;1017
+1275;Hathras;HT;<null>;1035
+1276;Haveri;HV;<null>;1017
+1277;Hazaribagh;HZ;<null>;1016
+1278;Hingoli;HI;<null>;1021
+1279;Hissar;HI;<null>;1013
+1280;Hooghly;HG;<null>;1036
+1281;Hoshangabad;HO;<null>;1020
+1282;Hoshiarpur;HO;<null>;1028
+1283;Howrah;HR;<null>;1036
+1284;Hyderabad;HY;<null>;1032
+1285;Idukki;ID;<null>;1018
+1286;Indore;IN;<null>;1020
+1287;Jabalpur;JA;<null>;1020
+1288;Jagatsinghpur;JS;<null>;1026
+1289;Jaintia Hills;JH;<null>;1023
+1290;Jaipur;JP;<null>;1029
+1291;Jaisalmer;JS;<null>;1029
+1292;Jajpur;JP;<null>;1026
+1293;Jalandhar;JA;<null>;1028
+1294;Jalaun;JL;<null>;1035
+1295;Jalgaon;JG;<null>;1021
+1296;Jalna;JN;<null>;1021
+1297;Jalore;JL;<null>;1029
+1298;Jalpaiguri;JA;<null>;1036
+1299;Jammu;JM;<null>;1015
+1300;Jamnagar;JA;<null>;1012
+1301;Jamtara;JA;<null>;1016
+1302;Jamui;JA;<null>;1005
+1303;Janjgir-Champa;JC;<null>;1007
+1304;Jashpur;JA;<null>;1007
+1305;Jaunpur;JU;<null>;1035
+1306;Jehanabad;JH;<null>;1005
+1307;Jhabua;JB;<null>;1020
+1308;Jhajjar;JH;<null>;1013
+1309;Jhalawar;JW;<null>;1029
+1310;Jhansi;JH;<null>;1035
+1311;Jharsuguda;JH;<null>;1026
+1312;Jhunjhunun;JJ;<null>;1029
+1313;Jind;JI;<null>;1013
+1314;Jodhpur;JO;<null>;1029
+1315;Jorhat;JO;<null>;1004
+1316;Junagadh;JU;<null>;1012
+1317;Jyotiba Phule Nagar;JP;<null>;1035
+1318;Kachchh;KA;<null>;1012
+1319;Kaimur;KM;<null>;1005
+1320;Kaithal;KT;<null>;1013
+1321;Kalahandi;KL;<null>;1026
+1322;Kamrup;KU;<null>;1004
+1323;Kamrup Metropolitan;KM;<null>;1004
+1324;Kancheepuram;KC;<null>;1031
+1325;Kandhamal;KN;<null>;1026
+1326;Kangra;KA;<null>;1014
+1327;Kanker;KK;<null>;1007
+1328;Kannauj;KJ;<null>;1035
+1329;Kannur;KN;<null>;1018
+1330;Kanpur;KN;<null>;1035
+1331;Kanpur Dehat;KD;<null>;1035
+1332;Kanshi Ram Nagar;KR;<null>;1035
+1333;Kanyakumari;KK;<null>;1031
+1334;Kapurthala;KA;<null>;1028
+1335;Karaikal;KA;<null>;1027
+1336;Karauli;KA;<null>;1029
+1337;Karbi Anglong;KA;<null>;1004
+1338;Kargil;KR;<null>;1015
+1339;Karimganj;KR;<null>;1004
+1340;Karimnagar;KA;<null>;1032
+1341;Karnal;KR;<null>;1013
+1342;Karur;KR;<null>;1031
+1343;Kasargod;KS;<null>;1018
+1344;Kathua;KA;<null>;1015
+1345;Katihar;KT;<null>;1005
+1346;Katni;KA;<null>;1020
+1347;Kaushambi;KS;<null>;1035
+1348;Kawardha;KW;<null>;1007
+1349;Kendrapara;KP;<null>;1026
+1350;Keonjhar;KJ;<null>;1026
+1351;Khagaria;KH;<null>;1005
+1352;Khammam;KH;<null>;1032
+1353;Kheda;KH;<null>;1012
+1354;Khordha;KH;<null>;1026
+1355;Khunti;KH;<null>;1016
+1356;Kinnaur;KI;<null>;1014
+1357;Kiphire;KP;<null>;1025
+1358;Kishanganj;KI;<null>;1005
+1359;Kishtwar;KW;<null>;1015
+1360;Koch Bihar;KB;<null>;1036
+1361;Kodagu;KD;<null>;1017
+1362;Koderma;KO;<null>;1016
+1363;Kohima;KH;<null>;1025
+1364;Kokrajhar;KJ;<null>;1004
+1365;Kolar;KO;<null>;1017
+1366;Kolasib;KO;<null>;1024
+1367;Kolhapur;KO;<null>;1021
+1368;Kolkata;KO;<null>;1036
+1369;Kollam;KL;<null>;1018
+1370;Koppal;KP;<null>;1017
+1371;Koraput;KO;<null>;1026
+1372;Korba;KB;<null>;1007
+1373;Koriya;KJ;<null>;1007
+1374;Kota;KO;<null>;1029
+1375;Kottayam;KT;<null>;1018
+1376;Kozhikode;KZ;<null>;1018
+1377;Krishna;KR;<null>;1002
+1378;Krishnagiri;KG;<null>;1031
+1379;Kulgam;KG;<null>;1015
+1380;Kulu;KU;<null>;1014
+1381;Kupwara;KU;<null>;1015
+1382;Kurnool;KU;<null>;1002
+1383;Kurukshetra;KU;<null>;1013
+1384;Kurung Kumey;KK;<null>;1003
+1385;Kushinagar;KU;<null>;1035
+1386;Lahaul and Spiti;LS;<null>;1014
+1387;Lakhimpur;LA;<null>;1004
+1388;Lakhimpur Kheri;LK;<null>;1035
+1389;Lakhisarai;LA;<null>;1005
+1390;Lakshadweep;LD;<null>;1019
+1391;Lalitpur;LA;<null>;1035
+1392;Latehar;LA;<null>;1016
+1393;Latur;LA;<null>;1021
+1394;Lawngtlai;LA;<null>;1024
+1395;Leh;LE;<null>;1015
+1396;Lohardaga;LO;<null>;1016
+1397;Lohit;LH;<null>;1003
+1398;Lower Dibang Valley;DL;<null>;1003
+1399;Lower Subansiri;LS;<null>;1003
+1400;Lucknow;LU;<null>;1035
+1401;Ludhiana;LU;<null>;1028
+1402;Lunglei;LU;<null>;1024
+1403;Madhepura;MP;<null>;1005
+1404;Madhubani;MB;<null>;1005
+1405;Madurai;MA;<null>;1031
+1406;Maharajganj;MG;<null>;1035
+1407;Mahasamund;MA;<null>;1007
+1408;Mahbubnagar;MA;<null>;1032
+1409;Mahe;MA;<null>;1027
+1410;Mahendragarh;MA;<null>;1013
+1411;Mahesana;MA;<null>;1012
+1412;Mahoba;MH;<null>;1035
+1413;Mainpuri;MP;<null>;1035
+1414;Malappuram;MA;<null>;1018
+1415;Malda;MA;<null>;1036
+1416;Malkangiri;ML;<null>;1026
+1417;Mamit;MA;<null>;1024
+1418;Mandi;MA;<null>;1014
+1419;Mandla;ML;<null>;1020
+1420;Mandsaur;MS;<null>;1020
+1421;Mandya;MA;<null>;1017
+1422;Mansa;MA;<null>;1028
+1423;Marigaon;MA;<null>;1004
+1424;Mathura;MT;<null>;1035
+1425;Maunathbhanjan;MB;<null>;1035
+1426;Mayurbhanj;MY;<null>;1026
+1427;Medak;ME;<null>;1032
+1428;Meerut;ME;<null>;1035
+1429;Mewat;MW;<null>;1013
+1430;Mirzapur;MI;<null>;1035
+1431;Moga;MO;<null>;1028
+1432;Mohali;AJ;<null>;1028
+1433;Mokokchung;MK;<null>;1025
+1434;Mon;MN;<null>;1025
+1435;Moradabad;MO;<null>;1035
+1436;Morena;MO;<null>;1020
+1437;Muktsar;MU;<null>;1028
+1438;Mumbai City;MC;<null>;1021
+1439;Mumbai Suburban;MU;<null>;1021
+1440;Munger;MG;<null>;1005
+1441;Murshidabad;MU;<null>;1036
+1442;Muzaffarnagar;MU;<null>;1035
+1443;Muzaffarpur;MZ;<null>;1005
+1444;Mysore;MY;<null>;1017
+1445;Nabarangpur;NB;<null>;1026
+1446;Nadia;NA;<null>;1036
+1447;Nagaon;NG;<null>;1004
+1448;Nagapattinam;NG;<null>;1031
+1449;Nagaur;NA;<null>;1029
+1450;Nagpur;NG;<null>;1021
+1451;Nainital;NA;<null>;1034
+1452;Nalanda;NL;<null>;1005
+1453;Nalbari;NB;<null>;1004
+1454;Nalgonda;NA;<null>;1032
+1455;Namakkal;NM;<null>;1031
+1456;Nanded;ND;<null>;1021
+1457;Nandurbar;NB;<null>;1021
+1458;Narayanpur;NA;<null>;1007
+1459;Narmada;NR;<null>;1012
+1460;Narsinghpur;NA;<null>;1020
+1461;Nashik;NS;<null>;1021
+1462;Navsari;NV;<null>;1012
+1463;Nawada;NW;<null>;1005
+1464;Nawan Shehar;NS;<null>;1028
+1465;Nayagarh;NY;<null>;1026
+1466;Neemuch;NE;<null>;1020
+1467;Nellore;NE;<null>;1002
+1468;New Delhi;ND;<null>;1010
+1469;Nicobar Islands;NI;<null>;1001
+1470;Nilgiris;NI;<null>;1031
+1471;Nizamabad;NI;<null>;1032
+1472;North;NO;<null>;1010
+1473;North and Middle Andaman;NM;<null>;1001
+1474;North Cachar Hills;NC;<null>;1004
+1475;North East;NE;<null>;1010
+1476;North Goa;NG;<null>;1011
+1477;North Sikkim;NS;<null>;1030
+1478;North Tripura;NT;<null>;1033
+1479;North West;NW;<null>;1010
+1480;Nuapada;NU;<null>;1026
+1481;Osmanabad;OS;<null>;1021
+1482;Pakur;PK;<null>;1016
+1483;Palakkad;PL;<null>;1018
+1484;Palamu;PM;<null>;1016
+1485;Pali;PA;<null>;1029
+1486;Palwal;PW;<null>;1013
+1487;Panchkula;PK;<null>;1013
+1488;Panch Mahals;PM;<null>;1012
+1489;Panipat;PP;<null>;1013
+1490;Panna;PA;<null>;1020
+1491;Papum Pare;PA;<null>;1003
+1492;Parbhani;PA;<null>;1021
+1493;Paschim Medinipur;WM;<null>;1036
+1494;Pashchim Champaran;WC;<null>;1005
+1495;Pashchim Singhbhum;WS;<null>;1016
+1496;Patan;PA;<null>;1012
+1497;Pathanamthitta;PT;<null>;1018
+1498;Patiala;PT;<null>;1028
+1499;Patna;PA;<null>;1005
+1500;Pauri Garhwal;PG;<null>;1034
+1501;Perambalur;PE;<null>;1031
+1502;Peren;PE;<null>;1025
+1503;Phek;PH;<null>;1025
+1504;Pilibhit;PI;<null>;1035
+1505;Pithoragarh;PI;<null>;1034
+1506;Pondicherry;PO;<null>;1027
+1507;Poonch;PO;<null>;1015
+1508;Porbandar;PO;<null>;1012
+1509;Prakasam;PR;<null>;1002
+1510;Pratapgarh;PR;<null>;1029
+1511;Pratapgarh;PR;<null>;1035
+1512;Pudukkottai;PU;<null>;1031
+1513;Pulwama;PW;<null>;1015
+1514;Pune;PU;<null>;1021
+1515;Purba Champaran;EC;<null>;1005
+1516;Purba Medinipur;EM;<null>;1036
+1517;Purba Singhbhum;ES;<null>;1016
+1518;Puri;PU;<null>;1026
+1519;Purnia;PU;<null>;1005
+1520;Purulia;PU;<null>;1036
+1521;Rae Bareli;RB;<null>;1035
+1522;Raichur;RA;<null>;1017
+1523;Raigarh;RG;<null>;1007
+1524;Raigarh;RG;<null>;1021
+1525;Raipur;RP;<null>;1007
+1526;Raisen;RS;<null>;1020
+1527;Rajauri;RA;<null>;1015
+1528;Rajgarh;RG;<null>;1020
+1529;Rajkot;RA;<null>;1012
+1530;Rajnandgaon;RN;<null>;1007
+1531;Rajsamand;RA;<null>;1029
+1532;Ramanagara;RM;<null>;1017
+1533;Ramanathapuram;RA;<null>;1031
+1534;Ramban;RB;<null>;1015
+1535;Ramgarh;RM;<null>;1016
+1536;Rampur;RA;<null>;1035
+1537;Ranchi;RN;<null>;1016
+1538;Rangareddi;RA;<null>;1032
+1539;Ratlam;RL;<null>;1020
+1540;Ratnagiri;RT;<null>;1021
+1541;Rayagada;RA;<null>;1026
+1542;Reasi;RE;<null>;1015
+1543;Rewa;RE;<null>;1020
+1544;Rewari;RE;<null>;1013
+1545;Ri-Bhoi;RB;<null>;1023
+1546;Rohtak;RO;<null>;1013
+1547;Rohtas;RO;<null>;1005
+1548;Rudra Prayag;RP;<null>;1034
+1549;Rupnagar;RP;<null>;1028
+1550;Sabar Kantha;SK;<null>;1012
+1551;Sagar;SG;<null>;1020
+1552;Saharanpur;SA;<null>;1035
+1553;Saharsa;SH;<null>;1005
+1554;Sahibganj;SA;<null>;1016
+1555;Saiha;SA;<null>;1024
+1556;Salem;SA;<null>;1031
+1557;Samastipur;SM;<null>;1005
+1558;Samba;SM;<null>;1015
+1559;Sambalpur;SA;<null>;1026
+1560;Sangli;SN;<null>;1021
+1561;Sangrur;SR;<null>;1028
+1562;Sant Kabir Nagar;SK;<null>;1035
+1563;Sant Ravi Das Nagar;SR;<null>;1035
+1564;Saran;SR;<null>;1005
+1565;Satara;ST;<null>;1021
+1566;Satna;ST;<null>;1020
+1567;Sawai Madhopur;SM;<null>;1029
+1568;Sehore;SR;<null>;1020
+1569;Senapati;SE;<null>;1022
+1570;Seoni;SO;<null>;1020
+1571;Seraikela;SK;<null>;1016
+1572;Serchhip;SE;<null>;1024
+1573;Shahdol;SL;<null>;1020
+1574;Shahjahanpur;SJ;<null>;1035
+1575;Shajapur;SJ;<null>;1020
+1576;Sheikhpura;SP;<null>;1005
+1577;Sheohar;SO;<null>;1005
+1578;Sheopur;SP;<null>;1020
+1579;Shimla;SH;<null>;1014
+1580;Shimoga;SH;<null>;1017
+1581;Shivpuri;SV;<null>;1020
+1582;Shravasti;SV;<null>;1035
+1583;Shupiyan;SH;<null>;1015
+1584;Sibsagar;SI;<null>;1004
+1585;Siddharth Nagar;SN;<null>;1035
+1586;Sidhi;SD;<null>;1020
+1587;Sikar;SK;<null>;1029
+1588;Simdega;SD;<null>;1016
+1589;Sindhudurg;SI;<null>;1021
+1590;Singrauli;SU;<null>;1020
+1591;Sirmaur;SI;<null>;1014
+1592;Sirohi;SR;<null>;1029
+1593;Sirsa;SI;<null>;1013
+1594;Sitamarhi;ST;<null>;1005
+1595;Sitapur;SI;<null>;1035
+1596;Sivaganga;SI;<null>;1031
+1597;Siwan;SW;<null>;1005
+1598;Solan;SO;<null>;1014
+1599;Solapur;SO;<null>;1021
+1600;Sonbhadra;SO;<null>;1035
+1601;Sonepat;SO;<null>;1013
+1602;Sonepur;SO;<null>;1026
+1603;Sonitpur;SN;<null>;1004
+1604;South;SO;<null>;1010
+1605;South Andaman;SA;<null>;1001
+1606;South Garo Hills;SG;<null>;1023
+1607;South Goa;SG;<null>;1011
+1608;South Sikkim;SS;<null>;1030
+1609;South Tripura;ST;<null>;1033
+1610;South West;SW;<null>;1010
+1611;Srikakulam;SR;<null>;1002
+1612;Srinagar;SN;<null>;1015
+1613;Sultanpur;SU;<null>;1035
+1614;Sundargarh;SU;<null>;1026
+1615;Supaul;SU;<null>;1005
+1616;Surat;SR;<null>;1012
+1617;Surendranagar;SN;<null>;1012
+1618;Surguja;SU;<null>;1007
+1619;Tamenglong;TA;<null>;1022
+1620;Tapi;TP;<null>;1012
+1621;Tarn Taran;TT;<null>;1028
+1622;Tawang;TA;<null>;1003
+1623;Tehri Garhwal;TG;<null>;1034
+1624;Thane;TH;<null>;1021
+1625;Thanjavur;TJ;<null>;1031
+1626;The Dangs;DG;<null>;1012
+1627;Theni;TH;<null>;1031
+1628;Thiruvallur;TL;<null>;1031
+1629;Thiruvananthapuram;TV;<null>;1018
+1630;Thiruvarur;TR;<null>;1031
+1631;Thoothukudi;TK;<null>;1031
+1632;Thoubal;TH;<null>;1022
+1633;Thrissur;TS;<null>;1018
+1634;Tikamgarh;TI;<null>;1020
+1635;Tinsukia;TI;<null>;1004
+1636;Tirap;TI;<null>;1003
+1637;Tiruchirappalli;TC;<null>;1031
+1638;Tirunelveli;TI;<null>;1031
+1639;Tiruppur;TP;<null>;1031
+1640;Tiruvannamalai;TV;<null>;1031
+1641;Tonk;TO;<null>;1029
+1642;Tuensang;LL;<null>;1025
+1643;Tuensang;TS;<null>;1025
+1644;Tumkur;TU;<null>;1017
+1645;Udaipur;UP;<null>;1029
+1646;Udalguri;UD;<null>;1004
+1647;Udhampur;UM;<null>;1015
+1648;Udham Singh Nagar;US;<null>;1034
+1649;Udupi;UD;<null>;1017
+1650;Ujjain;UJ;<null>;1020
+1651;Ukhrul;UK;<null>;1022
+1652;Umaria;UM;<null>;1020
+1653;Una;UN;<null>;1014
+1654;Unnao;UN;<null>;1035
+1655;Upper Dibang Valley;DU;<null>;1003
+1656;Upper Siang;US;<null>;1003
+1657;Upper Subansiri;UB;<null>;1003
+1658;Uttara Kannada;UK;<null>;1017
+1659;Uttar Dinajpur;UD;<null>;1036
+1660;Uttarkashi;UT;<null>;1034
+1661;Vadodara;VD;<null>;1012
+1662;Vaishali;VA;<null>;1005
+1663;Valsad;VL;<null>;1012
+1664;Varanasi;VA;<null>;1035
+1665;Vellore;VE;<null>;1031
+1666;Vidisha;VI;<null>;1020
+1667;Villupuram;VL;<null>;1031
+1668;Virudhunagar;VR;<null>;1031
+1669;Vishakhapatnam;VS;<null>;1002
+1670;Vizianagaram;VZ;<null>;1002
+1671;Warangal;WA;<null>;1032
+1672;Wardha;WR;<null>;1021
+1673;Washim;WS;<null>;1021
+1674;Wayanad;WA;<null>;1018
+1675;West;WE;<null>;1010
+1676;West Garo Hills;WG;<null>;1023
+1677;West Godavari;WG;<null>;1002
+1678;West Imphal;WI;<null>;1022
+1679;West Kameng;WK;<null>;1003
+1680;West Khasi Hills;WK;<null>;1023
+1681;West Nimar;WN;<null>;1020
+1682;West Siang;WS;<null>;1003
+1683;West Sikkim;WS;<null>;1030
+1684;West Tripura;WT;<null>;1033
+1685;Wokha;WO;<null>;1025
+1686;Yadgir;YD;<null>;1017
+1687;Yamuna Nagar;YN;<null>;1013
+1688;Yanam;YA;<null>;1027
+1689;Yavatmal;YA;<null>;1021
+1690;Zunheboto;ZU;<null>;1025

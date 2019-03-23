@@ -8,6 +8,21 @@
 
     <changeSet id="local_test_data_load" author="jhipster">
     	
+    	<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/country.csv"
+                  separator=";"
+                  tableName="country"/>
+                  
+    	<loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/state.csv"
+                  separator=";"
+                  tableName="state"/>
+        
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/city.csv"
+                  separator=";"
+                  tableName="city"/>
+                  
         <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/college.csv"
                   separator=";"

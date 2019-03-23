@@ -1,0 +1,37 @@
+id;state_name;division_type;state_code;country_id
+1001;Andaman and Nicobar Islands;Union Territory;AN;951
+1002;Andhra Pradesh;State;AD;951
+1003;Arunachal Pradesh;State;AR;951
+1004;Assam;State;AS;951
+1005;Bihar;State;BR;951
+1006;Chandigarh;Union Territory;CH;951
+1007;Chhattisgarh;State;CT;951
+1008;Dadra and Nagar Haveli;Union Territory;DN;951
+1009;Daman and Diu;Union Territory;DD;951
+1010;Delhi;State;DL;951
+1011;Goa;State;GA;951
+1012;Gujarat;State;GJ;951
+1013;Haryana;State;HR;951
+1014;Himachal Pradesh;State;HP;951
+1015;Jammu and Kashmir;State;JK;951
+1016;Jharkhand;State;JH;951
+1017;Karnataka;State;KA;951
+1018;Kerala;State;KL;951
+1019;Lakshadweep;Union Territory;LD;951
+1020;Madhya Pradesh;State;MP;951
+1021;Maharashtra;State;MH;951
+1022;Manipur;State;MN;951
+1023;Meghalaya;State;ML;951
+1024;Mizoram;State;MZ;951
+1025;Nagaland;State;NL;951
+1026;Odisha;State;OR;951
+1027;Puducherry;Union Territory;PY;951
+1028;Punjab;State;PB;951
+1029;Rajasthan;State;RJ;951
+1030;Sikkim;State;SK;951
+1031;Tamil Nadu;State;TN;951
+1032;Telangana;State;TG;951
+1033;Tripura;State;TR;951
+1034;Uttarakhand;State;UT;951
+1035;Uttar Pradesh;State;UP;951
+1036;West Bengal;State;WB;951
