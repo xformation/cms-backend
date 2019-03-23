@@ -937,8 +937,8 @@ public class Mutation implements GraphQLMutationResolver {
     public AddCollegePayload addCollege(AddCollegeInput addCollegeInput) {
         final College college = new College();
         college.setShortName(addCollegeInput.getShortName());
-        college.setLogo(addCollegeInput.getLogo());
-        college.setBackgroundImage(addCollegeInput.getBackgroundImage());
+        college.setLogoPath(addCollegeInput.getLogoPath());
+        college.setBackgroundImagePath(addCollegeInput.getBackgroundImagePath());
         college.setInstructionInformation(addCollegeInput.getInstructionInformation());
 
         collegeRepository.save(college);
@@ -952,12 +952,12 @@ public class Mutation implements GraphQLMutationResolver {
             college.setShortName(updateCollegeInput.getShortName());
         }
 
-        if (updateCollegeInput.getLogo() != null) {
-            college.setLogo(updateCollegeInput.getLogo());
+        if (updateCollegeInput.getLogoPath() != null) {
+            college.setLogoPath(updateCollegeInput.getLogoPath());
         }
 
-        if (updateCollegeInput.getBackgroundImage() != null) {
-            college.setBackgroundImage(updateCollegeInput.getBackgroundImage());
+        if (updateCollegeInput.getBackgroundImagePath() != null) {
+            college.setBackgroundImagePath(updateCollegeInput.getBackgroundImagePath());
         }
 
         if (updateCollegeInput.getInstructionInformation() != null) {

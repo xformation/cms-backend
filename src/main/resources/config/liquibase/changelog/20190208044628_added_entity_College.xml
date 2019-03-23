@@ -25,11 +25,11 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="logo" type="bigint">
+            <column name="logo_path" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="background_image" type="bigint">
+            <column name="background_image_path" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 

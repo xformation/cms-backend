@@ -375,8 +375,8 @@ type BankAccounts {
 type College{
     id: Long!
     shortName: String!
-    logo: Long!
-    backgroundImage: Long!
+    logoPath: String!
+    backgroundImagePath: String!
     instructionInformation: String!
 }
 type Branch{
@@ -1181,8 +1181,8 @@ type RemoveTransportRoutePayload {
 
 input AddCollegeInput {
     shortName: String
-    logo: Long
-    backgroundImage: Long
+    logoPath: String
+    backgroundImagePath: String
     instructionInformation: String
 }
 
@@ -1192,8 +1192,8 @@ type AddCollegePayload {
 input UpdateCollegeInput {
     id: Long!
     shortName: String
-    logo: Long
-    backgroundImage: Long
+    logoPath: String
+    backgroundImagePath: String
     instructionInformation: String
 }
 type UpdateCollegePayload {

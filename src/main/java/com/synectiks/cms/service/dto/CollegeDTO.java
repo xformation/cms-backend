@@ -15,10 +15,10 @@ public class CollegeDTO implements Serializable {
     private String shortName;
 
     @NotNull
-    private Long logo;
+    private String logoPath;
 
     @NotNull
-    private Long backgroundImage;
+    private String backgroundImagePath;
 
     @NotNull
     private String instructionInformation;
@@ -39,20 +39,20 @@ public class CollegeDTO implements Serializable {
         this.shortName = shortName;
     }
 
-    public Long getLogo() {
-        return logo;
+    public String getLogoPath() {
+        return logoPath;
     }
 
-    public void setLogo(Long logo) {
-        this.logo = logo;
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
     }
 
-    public Long getBackgroundImage() {
-        return backgroundImage;
+    public String getBackgroundImagePath() {
+        return backgroundImagePath;
     }
 
-    public void setBackgroundImage(Long backgroundImage) {
-        this.backgroundImage = backgroundImage;
+    public void setBackgroundImagePath(String backgroundImagePath) {
+        this.backgroundImagePath = backgroundImagePath;
     }
 
     public String getInstructionInformation() {
@@ -89,8 +89,8 @@ public class CollegeDTO implements Serializable {
         return "CollegeDTO{" +
             "id=" + getId() +
             ", shortName='" + getShortName() + "'" +
-            ", logo=" + getLogo() +
-            ", backgroundImage=" + getBackgroundImage() +
+            ", logoPath='" + getLogoPath() + "'" +
+            ", backgroundImagePath='" + getBackgroundImagePath() + "'" +
             ", instructionInformation='" + getInstructionInformation() + "'" +
             "}";
     }

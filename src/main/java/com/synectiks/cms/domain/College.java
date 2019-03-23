@@ -31,12 +31,12 @@ public class College implements Serializable {
     private String shortName;
 
     @NotNull
-    @Column(name = "logo", nullable = false)
-    private Long logo;
+    @Column(name = "logo_path", nullable = false)
+    private String logoPath;
 
     @NotNull
-    @Column(name = "background_image", nullable = false)
-    private Long backgroundImage;
+    @Column(name = "background_image_path", nullable = false)
+    private String backgroundImagePath;
 
     @NotNull
     @Column(name = "instruction_information", nullable = false)
@@ -64,30 +64,30 @@ public class College implements Serializable {
         this.shortName = shortName;
     }
 
-    public Long getLogo() {
-        return logo;
+    public String getLogoPath() {
+        return logoPath;
     }
 
-    public College logo(Long logo) {
-        this.logo = logo;
+    public College logoPath(String logoPath) {
+        this.logoPath = logoPath;
         return this;
     }
 
-    public void setLogo(Long logo) {
-        this.logo = logo;
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
     }
 
-    public Long getBackgroundImage() {
-        return backgroundImage;
+    public String getBackgroundImagePath() {
+        return backgroundImagePath;
     }
 
-    public College backgroundImage(Long backgroundImage) {
-        this.backgroundImage = backgroundImage;
+    public College backgroundImagePath(String backgroundImagePath) {
+        this.backgroundImagePath = backgroundImagePath;
         return this;
     }
 
-    public void setBackgroundImage(Long backgroundImage) {
-        this.backgroundImage = backgroundImage;
+    public void setBackgroundImagePath(String backgroundImagePath) {
+        this.backgroundImagePath = backgroundImagePath;
     }
 
     public String getInstructionInformation() {
@@ -129,8 +129,8 @@ public class College implements Serializable {
         return "College{" +
             "id=" + getId() +
             ", shortName='" + getShortName() + "'" +
-            ", logo=" + getLogo() +
-            ", backgroundImage=" + getBackgroundImage() +
+            ", logoPath='" + getLogoPath() + "'" +
+            ", backgroundImagePath='" + getBackgroundImagePath() + "'" +
             ", instructionInformation='" + getInstructionInformation() + "'" +
             "}";
     }

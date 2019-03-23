@@ -1,19 +1,20 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './college.reducer';
 import { ICollege } from 'app/shared/model/college.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ICollegeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export interface ICollegeUpdateState {
   isNew: boolean;
@@ -25,12 +26,6 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
     this.state = {
       isNew: !this.props.match.params || !this.props.match.params.id
     };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
-      this.handleClose();
-    }
   }
 
   componentDidMount() {
@@ -54,6 +49,7 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
       } else {
         this.props.updateEntity(entity);
       }
+      this.handleClose();
     }
   };
 
@@ -62,6 +58,7 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
   };
 
   render() {
+    const isInvalid = false;
     const { collegeEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
@@ -98,32 +95,28 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="logoLabel" for="logo">
-                    Logo
+                  <Label id="logoPathLabel" for="logoPath">
+                    Logo Path
                   </Label>
                   <AvField
-                    id="college-logo"
-                    type="string"
-                    className="form-control"
-                    name="logo"
+                    id="college-logoPath"
+                    type="text"
+                    name="logoPath"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="backgroundImageLabel" for="backgroundImage">
-                    Background Image
+                  <Label id="backgroundImagePathLabel" for="backgroundImagePath">
+                    Background Image Path
                   </Label>
                   <AvField
-                    id="college-backgroundImage"
-                    type="string"
-                    className="form-control"
-                    name="backgroundImage"
+                    id="college-backgroundImagePath"
+                    type="text"
+                    name="backgroundImagePath"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
@@ -145,7 +138,7 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
-                <Button color="primary" id="save-entity" type="submit" disabled={updating}>
+                <Button color="primary" id="save-entity" type="submit" disabled={isInvalid || updating}>
                   <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
@@ -160,8 +153,7 @@ export class CollegeUpdate extends React.Component<ICollegeUpdateProps, ICollege
 const mapStateToProps = (storeState: IRootState) => ({
   collegeEntity: storeState.college.entity,
   loading: storeState.college.loading,
-  updating: storeState.college.updating,
-  updateSuccess: storeState.college.updateSuccess
+  updating: storeState.college.updating
 });
 
 const mapDispatchToProps = {
@@ -174,7 +166,4 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CollegeUpdate);
+export default connect(mapStateToProps, mapDispatchToProps)(CollegeUpdate);

@@ -3,6 +3,7 @@ import { ICrudSearchAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction, I
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
+import { SERVER_API_URL } from 'app/config/constants';
 
 import { ICollege, defaultValue } from 'app/shared/model/college.model';
 
@@ -104,8 +105,8 @@ export default (state: CollegeState = initialState, action): CollegeState => {
   }
 };
 
-const apiUrl = 'api/colleges';
-const apiSearchUrl = 'api/_search/colleges';
+const apiUrl = SERVER_API_URL + '/api/colleges';
+const apiSearchUrl = SERVER_API_URL + '/api/_search/colleges';
 
 // Actions
 

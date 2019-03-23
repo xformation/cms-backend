@@ -153,8 +153,8 @@ public class TestDataPojoBuilder {
 		College college = new College();
 		college.setShortName(cell.getStringCellValue());
 		college.setInstructionInformation(cell.getStringCellValue());
-		college.setLogo(1L);
-		college.setBackgroundImage(1L);
+		college.setLogoPath("");
+		college.setBackgroundImagePath("");
 		System.out.println(college.toString());
 		return college;
 	}

@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
 import { ICrudGetAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './college.reducer';
@@ -12,7 +12,7 @@ import { ICollege } from 'app/shared/model/college.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ICollegeDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface ICollegeDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
 export class CollegeDetail extends React.Component<ICollegeDetailProps> {
   componentDidMount() {
@@ -33,13 +33,13 @@ export class CollegeDetail extends React.Component<ICollegeDetailProps> {
             </dt>
             <dd>{collegeEntity.shortName}</dd>
             <dt>
-              <span id="logo">Logo</span>
+              <span id="logoPath">Logo Path</span>
             </dt>
-            <dd>{collegeEntity.logo}</dd>
+            <dd>{collegeEntity.logoPath}</dd>
             <dt>
-              <span id="backgroundImage">Background Image</span>
+              <span id="backgroundImagePath">Background Image Path</span>
             </dt>
-            <dd>{collegeEntity.backgroundImage}</dd>
+            <dd>{collegeEntity.backgroundImagePath}</dd>
             <dt>
               <span id="instructionInformation">Instruction Information</span>
             </dt>
@@ -66,7 +66,4 @@ const mapDispatchToProps = { getEntity };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CollegeDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(CollegeDetail);

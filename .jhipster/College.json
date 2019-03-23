@@ -9,15 +9,15 @@
             ]
         },
         {
-            "fieldName": "logo",
-            "fieldType": "Long",
+            "fieldName": "logoPath",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "backgroundImage",
-            "fieldType": "Long",
+            "fieldName": "backgroundImagePath",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]

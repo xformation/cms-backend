@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getSearchEntities, getEntities } from './college.reducer';
@@ -76,8 +76,8 @@ export class College extends React.Component<ICollegeProps, ICollegeState> {
               <tr>
                 <th>ID</th>
                 <th>Short Name</th>
-                <th>Logo</th>
-                <th>Background Image</th>
+                <th>Logo Path</th>
+                <th>Background Image Path</th>
                 <th>Instruction Information</th>
                 <th />
               </tr>
@@ -91,8 +91,8 @@ export class College extends React.Component<ICollegeProps, ICollegeState> {
                     </Button>
                   </td>
                   <td>{college.shortName}</td>
-                  <td>{college.logo}</td>
-                  <td>{college.backgroundImage}</td>
+                  <td>{college.logoPath}</td>
+                  <td>{college.backgroundImagePath}</td>
                   <td>{college.instructionInformation}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -129,7 +129,4 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(College);
+export default connect(mapStateToProps, mapDispatchToProps)(College);

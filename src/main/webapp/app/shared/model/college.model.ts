@@ -1,8 +1,8 @@
 export interface ICollege {
   id?: number;
   shortName?: string;
-  logo?: number;
-  backgroundImage?: number;
+  logoPath?: string;
+  backgroundImagePath?: string;
   instructionInformation?: string;
 }
 
