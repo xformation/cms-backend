@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * A DTO for the College entity.
  */
-public class CollegeDTO implements Serializable {
+public class CollegeDTO implements Serializable { 
 
     private Long id;
 

@@ -25,7 +25,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @Service
 @Transactional
-public class CollegeServiceImpl implements CollegeService {
+public class CollegeServiceImpl implements CollegeService { 
 
     private final Logger log = LoggerFactory.getLogger(CollegeServiceImpl.class);
 

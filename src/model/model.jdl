@@ -1,4 +1,4 @@
-entity College {
+entity College { 
 shortName String required
 logoPath String required
 backgroundImagePath String required

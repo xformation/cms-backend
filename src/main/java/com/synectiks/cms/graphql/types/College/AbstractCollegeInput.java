@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.College;
 
 public class AbstractCollegeInput {
-    private Long id;
+    private Long id; 
     private String shortName;
     private String logoPath;
     private String backgroundImagePath;

@@ -63,7 +63,7 @@ import java.util.StringTokenizer;
 
 
 @Component
-public class Mutation implements GraphQLMutationResolver {
+public class Mutation implements GraphQLMutationResolver { 
 
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
 

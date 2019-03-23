@@ -36,7 +36,7 @@ public class College implements Serializable {
 
     @NotNull
     @Column(name = "background_image_path", nullable = false)
-    private String backgroundImagePath;
+    private String backgroundImagePath; 
 
     @NotNull
     @Column(name = "instruction_information", nullable = false)
