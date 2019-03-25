@@ -213,6 +213,14 @@ type Query {
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
 
+    getAllBranches(branchName:String, collegeId:Long): [Branch!]!
+    getCollegeById(collegeId:Long): College!
+    getBranchById(branchId:Long): Branch!
+    getCollegeByName(shortName:String): College!
+    getDepartmentById(departmentId:Long): Department!
+    getSectionById(sectionId:Long): Section!
+    getBatchById(batchId:Long): Batch!
+
   searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
   getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!

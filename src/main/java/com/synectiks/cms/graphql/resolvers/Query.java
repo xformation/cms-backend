@@ -22,6 +22,7 @@ import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
+import com.synectiks.cms.filter.common.CommonGraphiqlFilter;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
@@ -93,6 +94,10 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private StudentFilterProcessor studentFilterProcessor;
+
+    @Autowired
+    private CommonGraphiqlFilter commonGraphiqlFilter;
+
 
     public Query(AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicHistoryRepository = academicHistoryRepository;
@@ -454,5 +459,21 @@ public class Query implements GraphQLQueryResolver {
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName){
         return Lists.newArrayList(studentFilterProcessor.searchStudent(departmentId, batchId, sectionId, branchId, gender, studentType, studentName));
     }
+
+    public List<Branch> getAllBranches(String branchName, Long collegeId){
+    return  Lists.newArrayList(commonGraphiqlFilter.getAllBranches(branchName, collegeId));
+    }
+    public Branch getBranchById(Long branchId){
+        return commonGraphiqlFilter.getBranchById(branchId);
+    }
+    public College getCollegeById(Long collegeId){
+        return commonGraphiqlFilter.getCollegeById(collegeId);
+    }
+    public College getCollegeByName(String  shortName){
+        return commonGraphiqlFilter.getCollegeByName(shortName);
+    }
+    public Department getDepartmentById(Long departmentId){return commonGraphiqlFilter.getDepartmentById(departmentId);}
+    public Section getSectionById(Long sectionId){return commonGraphiqlFilter.getSectionById(sectionId);}
+    public Batch getBatchById(Long batchId){return commonGraphiqlFilter.getBatchById(batchId);}
 
 }
