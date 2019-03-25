@@ -1818,3 +1818,59 @@ query{
     totalCanceledInvoice
   }
 }
+
+-------------commonFilter---------------------------
+
+query{
+  getAllBranches(collegeId: "951") {
+    branchName
+
+  }}
+
+query{
+  getBranchById(branchId: "1001") {
+    branchName
+
+  }}
+
+
+query{
+  getCollegeById(collegeId: "951") {
+    shortName
+
+  }}
+
+
+query{
+  getCollegeByName(shortName: "Hyd Technical University") {
+    shortName
+
+  }}
+
+ query{
+ getSectionById(sectionId: "1201") {
+    section
+
+  }}
+
+
+{
+  getDepartmentById(departmentId: "1101") {
+    branch {
+      id
+    }
+
+  }}
+
+{
+  getBatchById(batchId: "1151") {
+    batch
+
+  }}
+
+}
+
+
+
+
+
