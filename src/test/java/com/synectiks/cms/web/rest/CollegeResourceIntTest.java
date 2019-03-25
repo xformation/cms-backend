@@ -49,11 +49,11 @@ public class CollegeResourceIntTest {
     private static final String DEFAULT_SHORT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_SHORT_NAME = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_LOGO = 1L;
-    private static final Long UPDATED_LOGO = 2L;
+    private static final String DEFAULT_LOGO_PATH = "AAAAAAAAAA";
+    private static final String UPDATED_LOGO_PATH = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_BACKGROUND_IMAGE = 1L;
-    private static final Long UPDATED_BACKGROUND_IMAGE = 2L;
+    private static final String DEFAULT_BACKGROUND_IMAGE_PATH = "AAAAAAAAAA";
+    private static final String UPDATED_BACKGROUND_IMAGE_PATH = "BBBBBBBBBB";
 
     private static final String DEFAULT_INSTRUCTION_INFORMATION = "AAAAAAAAAA";
     private static final String UPDATED_INSTRUCTION_INFORMATION = "BBBBBBBBBB";
@@ -61,8 +61,10 @@ public class CollegeResourceIntTest {
     @Autowired
     private CollegeRepository collegeRepository;
 
+
     @Autowired
     private CollegeMapper collegeMapper;
+    
 
     @Autowired
     private CollegeService collegeService;
@@ -111,8 +113,8 @@ public class CollegeResourceIntTest {
     public static College createEntity(EntityManager em) {
         College college = new College()
             .shortName(DEFAULT_SHORT_NAME)
-            .logo(DEFAULT_LOGO)
-            .backgroundImage(DEFAULT_BACKGROUND_IMAGE)
+            .logoPath(DEFAULT_LOGO_PATH)
+            .backgroundImagePath(DEFAULT_BACKGROUND_IMAGE_PATH)
             .instructionInformation(DEFAULT_INSTRUCTION_INFORMATION);
         return college;
     }
@@ -139,8 +141,8 @@ public class CollegeResourceIntTest {
         assertThat(collegeList).hasSize(databaseSizeBeforeCreate + 1);
         College testCollege = collegeList.get(collegeList.size() - 1);
         assertThat(testCollege.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
-        assertThat(testCollege.getLogo()).isEqualTo(DEFAULT_LOGO);
-        assertThat(testCollege.getBackgroundImage()).isEqualTo(DEFAULT_BACKGROUND_IMAGE);
+        assertThat(testCollege.getLogoPath()).isEqualTo(DEFAULT_LOGO_PATH);
+        assertThat(testCollege.getBackgroundImagePath()).isEqualTo(DEFAULT_BACKGROUND_IMAGE_PATH);
         assertThat(testCollege.getInstructionInformation()).isEqualTo(DEFAULT_INSTRUCTION_INFORMATION);
 
         // Validate the College in Elasticsearch
@@ -191,63 +193,6 @@ public class CollegeResourceIntTest {
 
     @Test
     @Transactional
-    public void checkLogoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = collegeRepository.findAll().size();
-        // set the field null
-        college.setLogo(null);
-
-        // Create the College, which fails.
-        CollegeDTO collegeDTO = collegeMapper.toDto(college);
-
-        restCollegeMockMvc.perform(post("/api/colleges")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(collegeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<College> collegeList = collegeRepository.findAll();
-        assertThat(collegeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkBackgroundImageIsRequired() throws Exception {
-        int databaseSizeBeforeTest = collegeRepository.findAll().size();
-        // set the field null
-        college.setBackgroundImage(null);
-
-        // Create the College, which fails.
-        CollegeDTO collegeDTO = collegeMapper.toDto(college);
-
-        restCollegeMockMvc.perform(post("/api/colleges")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(collegeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<College> collegeList = collegeRepository.findAll();
-        assertThat(collegeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkInstructionInformationIsRequired() throws Exception {
-        int databaseSizeBeforeTest = collegeRepository.findAll().size();
-        // set the field null
-        college.setInstructionInformation(null);
-
-        // Create the College, which fails.
-        CollegeDTO collegeDTO = collegeMapper.toDto(college);
-
-        restCollegeMockMvc.perform(post("/api/colleges")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(collegeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<College> collegeList = collegeRepository.findAll();
-        assertThat(collegeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllColleges() throws Exception {
         // Initialize the database
         collegeRepository.saveAndFlush(college);
@@ -258,11 +203,12 @@ public class CollegeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(college.getId().intValue())))
             .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
-            .andExpect(jsonPath("$.[*].backgroundImage").value(hasItem(DEFAULT_BACKGROUND_IMAGE.intValue())))
+            .andExpect(jsonPath("$.[*].logoPath").value(hasItem(DEFAULT_LOGO_PATH.toString())))
+            .andExpect(jsonPath("$.[*].backgroundImagePath").value(hasItem(DEFAULT_BACKGROUND_IMAGE_PATH.toString())))
             .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())));
     }
     
+
     @Test
     @Transactional
     public void getCollege() throws Exception {
@@ -275,11 +221,10 @@ public class CollegeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(college.getId().intValue()))
             .andExpect(jsonPath("$.shortName").value(DEFAULT_SHORT_NAME.toString()))
-            .andExpect(jsonPath("$.logo").value(DEFAULT_LOGO.intValue()))
-            .andExpect(jsonPath("$.backgroundImage").value(DEFAULT_BACKGROUND_IMAGE.intValue()))
+            .andExpect(jsonPath("$.logoPath").value(DEFAULT_LOGO_PATH.toString()))
+            .andExpect(jsonPath("$.backgroundImagePath").value(DEFAULT_BACKGROUND_IMAGE_PATH.toString()))
             .andExpect(jsonPath("$.instructionInformation").value(DEFAULT_INSTRUCTION_INFORMATION.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingCollege() throws Exception {
@@ -302,8 +247,8 @@ public class CollegeResourceIntTest {
         em.detach(updatedCollege);
         updatedCollege
             .shortName(UPDATED_SHORT_NAME)
-            .logo(UPDATED_LOGO)
-            .backgroundImage(UPDATED_BACKGROUND_IMAGE)
+            .logoPath(UPDATED_LOGO_PATH)
+            .backgroundImagePath(UPDATED_BACKGROUND_IMAGE_PATH)
             .instructionInformation(UPDATED_INSTRUCTION_INFORMATION);
         CollegeDTO collegeDTO = collegeMapper.toDto(updatedCollege);
 
@@ -317,8 +262,8 @@ public class CollegeResourceIntTest {
         assertThat(collegeList).hasSize(databaseSizeBeforeUpdate);
         College testCollege = collegeList.get(collegeList.size() - 1);
         assertThat(testCollege.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
-        assertThat(testCollege.getLogo()).isEqualTo(UPDATED_LOGO);
-        assertThat(testCollege.getBackgroundImage()).isEqualTo(UPDATED_BACKGROUND_IMAGE);
+        assertThat(testCollege.getLogoPath()).isEqualTo(UPDATED_LOGO_PATH);
+        assertThat(testCollege.getBackgroundImagePath()).isEqualTo(UPDATED_BACKGROUND_IMAGE_PATH);
         assertThat(testCollege.getInstructionInformation()).isEqualTo(UPDATED_INSTRUCTION_INFORMATION);
 
         // Validate the College in Elasticsearch
@@ -333,7 +278,7 @@ public class CollegeResourceIntTest {
         // Create the College
         CollegeDTO collegeDTO = collegeMapper.toDto(college);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restCollegeMockMvc.perform(put("/api/colleges")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(collegeDTO)))
@@ -380,10 +325,10 @@ public class CollegeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(college.getId().intValue())))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
-            .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
-            .andExpect(jsonPath("$.[*].backgroundImage").value(hasItem(DEFAULT_BACKGROUND_IMAGE.intValue())))
-            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION)));
+            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].logoPath").value(hasItem(DEFAULT_LOGO_PATH.toString())))
+            .andExpect(jsonPath("$.[*].backgroundImagePath").value(hasItem(DEFAULT_BACKGROUND_IMAGE_PATH.toString())))
+            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())));
     }
 
     @Test

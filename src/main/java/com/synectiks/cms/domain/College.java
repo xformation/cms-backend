@@ -30,16 +30,13 @@ public class College implements Serializable {
     @Column(name = "short_name", nullable = false)
     private String shortName;
 
-    @NotNull
-    @Column(name = "logo_path", nullable = false)
+    @Column(name = "logo_path")
     private String logoPath;
 
-    @NotNull
-    @Column(name = "background_image_path", nullable = false)
-    private String backgroundImagePath; 
+    @Column(name = "background_image_path")
+    private String backgroundImagePath;
 
-    @NotNull
-    @Column(name = "instruction_information", nullable = false)
+    @Column(name = "instruction_information")
     private String instructionInformation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

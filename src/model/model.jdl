@@ -1,8 +1,8 @@
 entity College { 
 shortName String required
-logoPath String required
-backgroundImagePath String required
-instructionInformation String required
+logoPath String
+backgroundImagePath String
+instructionInformation String
 }
 entity Branch{
 branchName String required
