@@ -70,23 +70,5 @@ public class CollegeRestController {
 		logger.debug("REST request to get all the college records.");
         return collegeRepository.findAll();
     }
-	
-//	@Autowired
-//	private AcademicSubjectService academicSubjectService; 
-//	
-//	@RequestMapping(method = RequestMethod.GET, value = "/academicsubject/getallsubjects")
-//	public List<Subject> getAllSubjects(@RequestParam Map<String, String> dataMap) {
-//		List<Subject> list = this.academicSubjectService.getAllSubjects(dataMap);
-//		logger.info("Returning list of subjects.");
-//		return list;
-//	}
-	
-	
-	
-//	@RequestMapping(method = RequestMethod.POST, value = "/academicsubject/createsubjects")
-//	public void createSubjects(@RequestBody List<AcademicSubjectDTO> list) {
-//		this.academicSubjectService.createSubjects(list);
-//		logger.info("Subject and Teach data created successfully.");
-//	}
 
 }
