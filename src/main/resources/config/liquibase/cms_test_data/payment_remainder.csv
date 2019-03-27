@@ -1,0 +1,5 @@
+id;fee_remainder;notice_day;over_due_remainder;remainder_recipients;due_date_id;college_id;branch_id
+8851;ACTIVE;2;ACTIVE;recipient;3851;951;1001
+8852;ACTIVE;3;ACTIVE;recipient;3852;951;1001
+8853;ACTIVE;4;ACTIVE;recipient;3853;951;1001
+8854;ACTIVE;5;ACTIVE;recipient;3854;951;1001
