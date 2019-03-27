@@ -1,6 +1,0 @@
-id;payment_method;installments;day_desc;frequency;college_id;branch_id
-3851;online;12;monday;MONTHLY;951;1001
-3852;cash;1;tuesday;ANNUALLY;951;1001
-3853;cheque;3;wednesday;QUARTERLY;951;1001
-3854;demanddraft;6;thursday;HALFYEARLY;951;1001
-3855;cash;7;friday;WEEKLY;951;1001
