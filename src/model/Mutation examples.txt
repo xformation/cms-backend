@@ -76,16 +76,16 @@ mutation addCity($input:AddCityInput!){
 College:
 
 mutation addCollege($input: AddCollegeInput!) {
-addCollege(input: $input) {
-college{
-id
-shortName
-logo
-backgroundImage
-instructionInformation
-}
-}
-}
+ addCollege(input: $input) {
+ college{
+ id
+ shortName
+ logo
+ backgroundImage
+ instructionInformation
+ }
+ }
+ }
 
 {
   "input": {
@@ -679,6 +679,7 @@ mutation addDueDate($input:AddDueDateInput!){
       paymentMethod
       installments
       dayDesc
+       paymentDate
       frequency
 
     college{
@@ -691,18 +692,18 @@ mutation addDueDate($input:AddDueDateInput!){
   }
 }
 
-
 	{
-      "input": {
-        "paymentMethod": "online",
-        "installments": 1,
-        "dayDesc": "monday",
-        "frequency": "MONTHLY",
-        "collegeId": 1151,
-        "branchId": 1201
+          "input": {
+            "paymentMethod": "online",
+            "installments": 1,
+            "dayDesc": "monday",
+            "paymentDate": "2019-11-14",
+    		"frequency": "MONTHLY",
+            "collegeId": 951,
+            "branchId": 1151
 
-      }
-    }
+          }
+        }
 
 --------------------
 PaymentRemainder:

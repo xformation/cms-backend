@@ -23,6 +23,13 @@
             ]
         },
         {
+            "fieldName": "paymentDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "frequency",
             "fieldType": "Frequency",
             "fieldValues": "WEEKLY,MONTHLY,QUARTERLY,HALFYEARLY,ANNUALLY",
@@ -45,7 +52,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190307052142",
+    "changelogDate": "20190327092709",
     "entityTableName": "due_date",
     "dto": "mapstruct",
     "pagination": "no",

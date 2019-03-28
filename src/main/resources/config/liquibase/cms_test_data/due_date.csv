@@ -1,6 +1,6 @@
-id;payment_method;installments;day_desc;frequency;college_id;branch_id
-3851;online;12;monday;MONTHLY;951;1001
-3852;cash;1;tuesday;ANNUALLY;951;1001
-3853;cheque;3;wednesday;QUARTERLY;951;1001
-3854;demanddraft;6;thursday;HALFYEARLY;951;1001
-3855;cash;7;friday;WEEKLY;951;1001
+id;payment_method;installments;day_desc;payment_date;frequency;college_id;branch_id
+
+3852;cash;1;tuesday;2019-11-14;ANNUALLY;951;1001
+3853;cheque;3;wednesday;2019-10-05;QUARTERLY;951;1001
+3854;demanddraft;6;thursday;2019-06-08;HALFYEARLY;951;1001
+3855;cash;7;friday;2019-09-04;WEEKLY;951;1001

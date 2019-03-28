@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Frequency;
@@ -40,6 +41,10 @@ public class DueDate implements Serializable {
     @NotNull
     @Column(name = "day_desc", nullable = false)
     private String dayDesc;
+
+    @NotNull
+    @Column(name = "payment_date", nullable = false)
+    private Date paymentDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -101,6 +106,25 @@ public class DueDate implements Serializable {
     public void setDayDesc(String dayDesc) {
         this.dayDesc = dayDesc;
     }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public DueDate paymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+        return this;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+
+
+
+
+
 
     public Frequency getFrequency() {
         return frequency;
@@ -169,6 +193,7 @@ public class DueDate implements Serializable {
             ", paymentMethod='" + getPaymentMethod() + "'" +
             ", installments=" + getInstallments() +
             ", dayDesc='" + getDayDesc() + "'" +
+            ", paymentDate='" + getPaymentDate() + "'" +
             ", frequency='" + getFrequency() + "'" +
             "}";
     }

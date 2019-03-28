@@ -325,6 +325,7 @@ type DueDate{
     paymentMethod: String!
     installments:Int!
     dayDesc:String!
+    paymentDate:Date!
     frequency:Frequency!
     college:College!
     branch:Branch!
@@ -2047,6 +2048,7 @@ input AddDueDateInput{
     paymentMethod: String!
     installments:Int!
     dayDesc:String!
+    paymentDate:Date!
     frequency:Frequency!
     collegeId:Long!
     branchId:Long!
@@ -2061,6 +2063,7 @@ input UpdateDueDateInput{
     paymentMethod: String!
     installments:Int!
     dayDesc:String!
+    paymentDate:Date!
     frequency:Frequency!
     collegeId:Long!
     branchId:Long!

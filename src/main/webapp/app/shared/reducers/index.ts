@@ -194,6 +194,10 @@ import branch, {
 import admissionEnquiry, {
   AdmissionEnquiryState
 } from 'app/entities/admission-enquiry/admission-enquiry.reducer';
+// prettier-ignore
+import dueDate, {
+  DueDateState
+} from 'app/entities/due-date/due-date.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

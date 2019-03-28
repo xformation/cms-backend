@@ -7,6 +7,7 @@ export default class DueDateUpdatePage {
   paymentMethodInput: ElementFinder = element(by.css('input#due-date-paymentMethod'));
   installmentsInput: ElementFinder = element(by.css('input#due-date-installments'));
   dayDescInput: ElementFinder = element(by.css('input#due-date-dayDesc'));
+  paymentDateInput: ElementFinder = element(by.css('input#due-date-paymentDate'));
   frequencySelect: ElementFinder = element(by.css('select#due-date-frequency'));
   collegeSelect: ElementFinder = element(by.css('select#due-date-college'));
   branchSelect: ElementFinder = element(by.css('select#due-date-branch'));
@@ -15,88 +16,96 @@ export default class DueDateUpdatePage {
     return this.pageTitle;
   }
 
-  setPaymentMethodInput(paymentMethod) {
-    this.paymentMethodInput.sendKeys(paymentMethod);
+  async setPaymentMethodInput(paymentMethod) {
+    await this.paymentMethodInput.sendKeys(paymentMethod);
   }
 
-  getPaymentMethodInput() {
+  async getPaymentMethodInput() {
     return this.paymentMethodInput.getAttribute('value');
   }
 
-  setInstallmentsInput(installments) {
-    this.installmentsInput.sendKeys(installments);
+  async setInstallmentsInput(installments) {
+    await this.installmentsInput.sendKeys(installments);
   }
 
-  getInstallmentsInput() {
+  async getInstallmentsInput() {
     return this.installmentsInput.getAttribute('value');
   }
 
-  setDayDescInput(dayDesc) {
-    this.dayDescInput.sendKeys(dayDesc);
+  async setDayDescInput(dayDesc) {
+    await this.dayDescInput.sendKeys(dayDesc);
   }
 
-  getDayDescInput() {
+  async getDayDescInput() {
     return this.dayDescInput.getAttribute('value');
   }
 
-  setFrequencySelect(frequency) {
-    this.frequencySelect.sendKeys(frequency);
+  async setPaymentDateInput(paymentDate) {
+    await this.paymentDateInput.sendKeys(paymentDate);
   }
 
-  getFrequencySelect() {
+  async getPaymentDateInput() {
+    return this.paymentDateInput.getAttribute('value');
+  }
+
+  async setFrequencySelect(frequency) {
+    await this.frequencySelect.sendKeys(frequency);
+  }
+
+  async getFrequencySelect() {
     return this.frequencySelect.element(by.css('option:checked')).getText();
   }
 
-  frequencySelectLastOption() {
-    this.frequencySelect
+  async frequencySelectLastOption() {
+    await this.frequencySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  collegeSelectLastOption() {
-    this.collegeSelect
+  async collegeSelectLastOption() {
+    await this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  getCollegeSelectedOption() {
+  async getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

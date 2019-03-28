@@ -2,6 +2,7 @@ package com.synectiks.cms.graphql.types.DueDate;
 
 import com.synectiks.cms.domain.enumeration.Frequency;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class AbstractDueDateInput {
@@ -9,7 +10,10 @@ public class AbstractDueDateInput {
     private String paymentMethod;
     private Integer installments;
     private String dayDesc;
+    private Date paymentDate;
     private Frequency frequency;
+
+
 
     public Long getId() {
         return id;
@@ -43,6 +47,13 @@ public class AbstractDueDateInput {
         this.dayDesc = dayDesc;
     }
 
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
+    }
     public Frequency getFrequency() {
         return frequency;
     }
@@ -68,6 +79,8 @@ public class AbstractDueDateInput {
         return Objects.hash(id, paymentMethod, installments, dayDesc, frequency);
     }
 
+
+
     @Override
     public String toString() {
         return "AbstractDueDateInput{" +
@@ -75,6 +88,7 @@ public class AbstractDueDateInput {
             ", paymentMethod='" + paymentMethod + '\'' +
             ", installments=" + installments +
             ", dayDesc='" + dayDesc + '\'' +
+            ", paymentDate=" + paymentDate +
             ", frequency=" + frequency +
             '}';
     }

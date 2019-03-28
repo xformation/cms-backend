@@ -16,24 +16,30 @@ import { getEntity, updateEntity, createEntity, reset } from './due-date.reducer
 import { IDueDate } from 'app/shared/model/due-date.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IDueDateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IDueDateUpdateState {
   isNew: boolean;
-  collegeId: number;
-  branchId: number;
+  collegeId: string;
+  branchId: string;
 }
 
 export class DueDateUpdate extends React.Component<IDueDateUpdateProps, IDueDateUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      collegeId: 0,
-      branchId: 0,
+      collegeId: '0',
+      branchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,46 +66,11 @@ export class DueDateUpdate extends React.Component<IDueDateUpdateProps, IDueDate
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/due-date');
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
-  };
-
-  branchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        branchId: -1
-      });
-    } else {
-      for (const i in this.props.branches) {
-        if (id === this.props.branches[i].id.toString()) {
-          this.setState({
-            branchId: this.props.branches[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -144,7 +115,7 @@ export class DueDateUpdate extends React.Component<IDueDateUpdateProps, IDueDate
                   </Label>
                   <AvField
                     id="due-date-installments"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="installments"
                     validate={{
@@ -161,6 +132,20 @@ export class DueDateUpdate extends React.Component<IDueDateUpdateProps, IDueDate
                     id="due-date-dayDesc"
                     type="text"
                     name="dayDesc"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="paymentDateLabel" for="paymentDate">
+                    Payment Date
+                  </Label>
+                  <AvField
+                    id="due-date-paymentDate"
+                    type="date"
+                    className="form-control"
+                    name="paymentDate"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -184,7 +169,7 @@ export class DueDateUpdate extends React.Component<IDueDateUpdateProps, IDueDate
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="due-date-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="due-date-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -197,7 +182,7 @@ export class DueDateUpdate extends React.Component<IDueDateUpdateProps, IDueDate
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="due-date-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
+                  <AvInput id="due-date-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -230,7 +215,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
   dueDateEntity: storeState.dueDate.entity,
   loading: storeState.dueDate.loading,
-  updating: storeState.dueDate.updating
+  updating: storeState.dueDate.updating,
+  updateSuccess: storeState.dueDate.updateSuccess
 });
 
 const mapDispatchToProps = {

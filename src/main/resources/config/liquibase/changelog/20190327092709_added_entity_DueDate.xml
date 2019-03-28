@@ -16,7 +16,7 @@
     <!--
         Added the entity DueDate.
     -->
-    <changeSet id="20190307052142-1" author="jhipster">
+    <changeSet id="20190327092709-1" author="jhipster">
         <createTable tableName="due_date">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -30,6 +30,10 @@
             </column>
 
             <column name="day_desc" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="payment_date" type="date">
                 <constraints nullable="false" />
             </column>
 

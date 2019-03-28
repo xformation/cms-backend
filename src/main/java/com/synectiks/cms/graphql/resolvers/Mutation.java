@@ -2091,6 +2091,7 @@ public class Mutation implements GraphQLMutationResolver {
         dueDate.setPaymentMethod(addDueDateInput.getPaymentMethod());
         dueDate.setInstallments(addDueDateInput.getInstallments());
         dueDate.setDayDesc(addDueDateInput.getDayDesc());
+        dueDate.setPaymentDate((addDueDateInput.getPaymentDate()));
         dueDate.setFrequency(addDueDateInput.getFrequency());
         dueDate.setCollege(college);
         dueDate.setBranch(branch);
@@ -2108,6 +2109,9 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateDueDateInput.getDayDesc() != null) {
             dueDate.setDayDesc(updateDueDateInput.getDayDesc());
+        }
+        if (updateDueDateInput.getPaymentDate() != null) {
+            dueDate.setPaymentDate(updateDueDateInput.getPaymentDate());
         }
         if (updateDueDateInput.getFrequency() != null) {
             dueDate.setFrequency(updateDueDateInput.getFrequency());
