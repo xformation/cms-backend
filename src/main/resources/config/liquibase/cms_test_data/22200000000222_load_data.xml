@@ -25,14 +25,7 @@
     	<delete tableName="attendance_master">  </delete>
     	<delete tableName="lecture">  </delete>
     	<delete tableName="student_attendance">  </delete>
-        <delete tableName="due_date">  </delete>
-        <delete tableName="facility">  </delete>
-        <delete tableName="fee_category">  </delete>
-        <delete tableName="fee_details">  </delete>
-        <delete tableName="invoice">  </delete>
-        <delete tableName="late_fee">  </delete>
-        <delete tableName="payment_remainder">  </delete>
-        <delete tableName="transport_route">  </delete>
+    	
         <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/college.csv"
                   separator=";"
@@ -116,38 +109,6 @@
                   file="config/liquibase/cms_test_data/student_attendance.csv"
                   separator=";"
                   tableName="student_attendance"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/due_date.csv"
-                  separator=";"
-                  tableName="due_date"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/facility.csv"
-                  separator=";"
-                  tableName="facility"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/fee_category.csv"
-                  separator=";"
-                  tableName="fee_category"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/fee_details.csv"
-                  separator=";"
-                  tableName="fee_details"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/invoice.csv"
-                  separator=";"
-                  tableName="invoice"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/late_fee.csv"
-                  separator=";"
-                  tableName="late_fee"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/payment_remainder.csv"
-                  separator=";"
-                  tableName="payment_remainder"/>
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/transport_route.csv"
-                  separator=";"
-                  tableName="transport_route"/>
                                                              
     </changeSet>
 </databaseChangeLog>
