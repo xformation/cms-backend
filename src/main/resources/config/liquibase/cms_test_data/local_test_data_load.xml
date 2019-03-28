@@ -7,97 +7,97 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="local_test_data_load" author="jhipster">
-    	
-    	<loadData encoding="UTF-8"
+
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/country.csv"
                   separator=";"
                   tableName="country"/>
-                  
-    	<loadData encoding="UTF-8"
+
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/state.csv"
                   separator=";"
                   tableName="state"/>
-        
+
         <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/city.csv"
                   separator=";"
                   tableName="city"/>
-                  
+
         <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/college.csv"
                   separator=";"
                   tableName="college"/>
-		
-		<loadData encoding="UTF-8"
+
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/academic_year.csv"
                   separator=";"
-                  tableName="academic_year"/> 
-                                                   
-		 <loadData encoding="UTF-8"
+                  tableName="academic_year"/>
+
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/term.csv"
                   separator=";"
                   tableName="term"/>
 
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/holiday.csv"
                   separator=";"
-                  tableName="holiday"/>                  
-         
+                  tableName="holiday"/>
+
         <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/branch.csv"
                   separator=";"
                   tableName="branch"/>
-		
-		<loadData encoding="UTF-8"
+
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/legal_entity.csv"
                   separator=";"
                   tableName="legal_entity"/>
-		
-		<loadData encoding="UTF-8"
+
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/authorized_signatory.csv"
                   separator=";"
                   tableName="authorized_signatory"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/bank_accounts.csv"
                   separator=";"
                   tableName="bank_accounts"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/department.csv"
                   separator=";"
                   tableName="department"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/batch.csv"
                   separator=";"
                   tableName="batch"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/section.csv"
                   separator=";"
                   tableName="section"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/student.csv"
                   separator=";"
                   tableName="student"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/subject.csv"
                   separator=";"
-                  tableName="subject"/>                  
-		<loadData encoding="UTF-8"
+                  tableName="subject"/>
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/teacher.csv"
                   separator=";"
                   tableName="teacher"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/teach.csv"
                   separator=";"
                   tableName="teach"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/attendance_master.csv"
                   separator=";"
                   tableName="attendance_master"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/lecture.csv"
                   separator=";"
                   tableName="lecture"/>
-		<loadData encoding="UTF-8"
+        <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/student_attendance.csv"
                   separator=";"
                   tableName="student_attendance"/>
@@ -125,6 +125,34 @@
                   file="config/liquibase/cms_test_data/admission_enquiry.csv"
                   separator=";"
                   tableName="admission_enquiry"/>
-                                                             
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/fee_category.csv"
+                  separator=";"
+                  tableName="fee_category"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/transport_route.csv"
+                  separator=";"
+                  tableName="transport_route"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/fee_details.csv"
+                  separator=";"
+                  tableName="fee_details"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/due_date.csv"
+                  separator=";"
+                  tableName="due_date"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/payment_remainder.csv"
+                  separator=";"
+                  tableName="payment_remainder"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/invoice.csv"
+                  separator=";"
+                  tableName="invoice"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/late_fee.csv"
+                  separator=";"
+                  tableName="late_fee"/>
+
     </changeSet>
 </databaseChangeLog>

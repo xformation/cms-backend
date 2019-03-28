@@ -1,0 +1,2 @@
+id;invoice_number;amount_paid;payment_date;next_payment_date;out_standing_amount;mode_of_payment;cheque_number;demand_draft_number;online_txn_ref_number;payment_status;comments;updated_by;updated_on;fee_category_id;fee_details_id;due_date_id;payment_remainder_id;college_id;branch_id;student_id;academic_year_id
+5231;12345;10000;2019-03-28;2019-12-31;10000;CARD;67894;34567;b5984m;PAID;paid;ADMIN;2019-03-28;4951;6951;7951;9651;951;1001;1251;1051

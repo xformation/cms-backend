@@ -1,0 +1,3 @@
+id;fee_particulars_name;fee_particular_desc;student_type;gender;amount;fee_category_id;batch_id;facility_id;transport_route_id;college_id;department_id;branch_id;academic_year_id
+6951;TutionFee;tutionfee;REGULAR;FEMALE;20000;4951;1151;11242;5951;951;1101;1001;1051
+6952;TutionFee;tutionfee;REGULAR;MALE;25000;4951;1151;11243;5952;951;1101;1001;1051
