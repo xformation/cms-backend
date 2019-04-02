@@ -1,14 +1,26 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
-import com.synectiks.cms.service.LegalEntityService;
-import com.synectiks.cms.service.dto.LegalEntityDTO;
-import com.synectiks.cms.service.mapper.LegalEntityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,23 +36,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.LegalEntity;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+import com.synectiks.cms.service.LegalEntityService;
+import com.synectiks.cms.service.dto.LegalEntityDTO;
+import com.synectiks.cms.service.mapper.LegalEntityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the LegalEntityResource REST controller.
  *
@@ -50,8 +54,14 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 @SpringBootTest(classes = CmsApp.class)
 public class LegalEntityResourceIntTest {
 
-    private static final Long DEFAULT_LOGO = 1L;
-    private static final Long UPDATED_LOGO = 2L;
+    private static final String DEFAULT_LOGO_PATH = "AAAAAAAAAA";
+    private static final String UPDATED_LOGO_PATH = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LOGO_FILE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LOGO_FILE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LOGO_FILE = "AAAAAAAAAA";
+    private static final String UPDATED_LOGO_FILE = "BBBBBBBBBB";
 
     private static final String DEFAULT_LEGAL_NAME_OF_THE_COLLEGE = "AAAAAAAAAA";
     private static final String UPDATED_LEGAL_NAME_OF_THE_COLLEGE = "BBBBBBBBBB";
@@ -176,7 +186,9 @@ public class LegalEntityResourceIntTest {
      */
     public static LegalEntity createEntity(EntityManager em) {
         LegalEntity legalEntity = new LegalEntity()
-            .logo(DEFAULT_LOGO)
+            .logoPath(DEFAULT_LOGO_PATH)
+            .logoFileName(DEFAULT_LOGO_FILE_NAME)
+            .logoFile(DEFAULT_LOGO_FILE)
             .legalNameOfTheCollege(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE)
             .typeOfCollege(DEFAULT_TYPE_OF_COLLEGE)
             .dateOfIncorporation(DEFAULT_DATE_OF_INCORPORATION)
@@ -224,7 +236,9 @@ public class LegalEntityResourceIntTest {
         List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
         assertThat(legalEntityList).hasSize(databaseSizeBeforeCreate + 1);
         LegalEntity testLegalEntity = legalEntityList.get(legalEntityList.size() - 1);
-        assertThat(testLegalEntity.getLogo()).isEqualTo(DEFAULT_LOGO);
+        assertThat(testLegalEntity.getLogoPath()).isEqualTo(DEFAULT_LOGO_PATH);
+        assertThat(testLegalEntity.getLogoFileName()).isEqualTo(DEFAULT_LOGO_FILE_NAME);
+        assertThat(testLegalEntity.getLogoFile()).isEqualTo(DEFAULT_LOGO_FILE);
         assertThat(testLegalEntity.getLegalNameOfTheCollege()).isEqualTo(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE);
         assertThat(testLegalEntity.getTypeOfCollege()).isEqualTo(DEFAULT_TYPE_OF_COLLEGE);
         assertThat(testLegalEntity.getDateOfIncorporation()).isEqualTo(DEFAULT_DATE_OF_INCORPORATION);
@@ -274,25 +288,6 @@ public class LegalEntityResourceIntTest {
 
         // Validate the LegalEntity in Elasticsearch
         verify(mockLegalEntitySearchRepository, times(0)).save(legalEntity);
-    }
-
-    @Test
-    @Transactional
-    public void checkLogoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setLogo(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -743,7 +738,9 @@ public class LegalEntityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(legalEntity.getId().intValue())))
-            .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
+            .andExpect(jsonPath("$.[*].logoPath").value(hasItem(DEFAULT_LOGO_PATH.toString())))
+            .andExpect(jsonPath("$.[*].logoFileName").value(hasItem(DEFAULT_LOGO_FILE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].logoFile").value(hasItem(DEFAULT_LOGO_FILE.toString())))
             .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].typeOfCollege").value(hasItem(DEFAULT_TYPE_OF_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].dateOfIncorporation").value(hasItem(DEFAULT_DATE_OF_INCORPORATION.toString())))
@@ -781,7 +778,9 @@ public class LegalEntityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(legalEntity.getId().intValue()))
-            .andExpect(jsonPath("$.logo").value(DEFAULT_LOGO.intValue()))
+            .andExpect(jsonPath("$.logoPath").value(DEFAULT_LOGO_PATH.toString()))
+            .andExpect(jsonPath("$.logoFileName").value(DEFAULT_LOGO_FILE_NAME.toString()))
+            .andExpect(jsonPath("$.logoFile").value(DEFAULT_LOGO_FILE.toString()))
             .andExpect(jsonPath("$.legalNameOfTheCollege").value(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString()))
             .andExpect(jsonPath("$.typeOfCollege").value(DEFAULT_TYPE_OF_COLLEGE.toString()))
             .andExpect(jsonPath("$.dateOfIncorporation").value(DEFAULT_DATE_OF_INCORPORATION.toString()))
@@ -827,7 +826,9 @@ public class LegalEntityResourceIntTest {
         // Disconnect from session so that the updates on updatedLegalEntity are not directly saved in db
         em.detach(updatedLegalEntity);
         updatedLegalEntity
-            .logo(UPDATED_LOGO)
+            .logoPath(UPDATED_LOGO_PATH)
+            .logoFileName(UPDATED_LOGO_FILE_NAME)
+            .logoFile(UPDATED_LOGO_FILE)
             .legalNameOfTheCollege(UPDATED_LEGAL_NAME_OF_THE_COLLEGE)
             .typeOfCollege(UPDATED_TYPE_OF_COLLEGE)
             .dateOfIncorporation(UPDATED_DATE_OF_INCORPORATION)
@@ -862,7 +863,9 @@ public class LegalEntityResourceIntTest {
         List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
         assertThat(legalEntityList).hasSize(databaseSizeBeforeUpdate);
         LegalEntity testLegalEntity = legalEntityList.get(legalEntityList.size() - 1);
-        assertThat(testLegalEntity.getLogo()).isEqualTo(UPDATED_LOGO);
+        assertThat(testLegalEntity.getLogoPath()).isEqualTo(UPDATED_LOGO_PATH);
+        assertThat(testLegalEntity.getLogoFileName()).isEqualTo(UPDATED_LOGO_FILE_NAME);
+        assertThat(testLegalEntity.getLogoFile()).isEqualTo(UPDATED_LOGO_FILE);
         assertThat(testLegalEntity.getLegalNameOfTheCollege()).isEqualTo(UPDATED_LEGAL_NAME_OF_THE_COLLEGE);
         assertThat(testLegalEntity.getTypeOfCollege()).isEqualTo(UPDATED_TYPE_OF_COLLEGE);
         assertThat(testLegalEntity.getDateOfIncorporation()).isEqualTo(UPDATED_DATE_OF_INCORPORATION);
@@ -946,7 +949,9 @@ public class LegalEntityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(legalEntity.getId().intValue())))
-            .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO.intValue())))
+            .andExpect(jsonPath("$.[*].logoPath").value(hasItem(DEFAULT_LOGO_PATH.toString())))
+            .andExpect(jsonPath("$.[*].logoFileName").value(hasItem(DEFAULT_LOGO_FILE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].logoFile").value(hasItem(DEFAULT_LOGO_FILE.toString())))
             .andExpect(jsonPath("$.[*].legalNameOfTheCollege").value(hasItem(DEFAULT_LEGAL_NAME_OF_THE_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].typeOfCollege").value(hasItem(DEFAULT_TYPE_OF_COLLEGE.toString())))
             .andExpect(jsonPath("$.[*].dateOfIncorporation").value(hasItem(DEFAULT_DATE_OF_INCORPORATION.toString())))

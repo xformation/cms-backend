@@ -3,6 +3,8 @@ shortName String required
 logoPath String
 backgroundImagePath String
 instructionInformation String
+logoFileName String
+backgroundImageFileName String
 }
 entity Branch{
 branchName String required
@@ -235,7 +237,9 @@ PRIVATE, PUBLIC
 
 
 entity LegalEntity{
-logo Long required
+logoPath String
+logoFileName String
+logoFile String
 legalNameOfTheCollege String required
 typeOfCollege TypeOfCollege required
 dateOfIncorporation LocalDate required
@@ -266,10 +270,10 @@ signatoryName String required
 signatoryFatherName String required
 signatoryDesignation String required
 address1 String required
-address2 String required
-address3 String required
-address4 String required
-address5 String required
+address2 String
+address3 String
+address4 String
+address5 String
 email String required
 panCardNumber String required
 }

@@ -480,7 +480,9 @@ type AdmissionEnquiry {
 
 type LegalEntity{
     id: Long!
-    logo: Long!
+    logoPath: String
+    logoFileName: String
+    logoFile: String
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
     dateOfIncorporation:Date!
@@ -1565,7 +1567,9 @@ type RemoveHolidayPayload {
 
 
 input AddLegalEntityInput {
-    logo: Long!
+    logoPath: String
+    logoFileName: String
+    logoFile: String
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
     dateOfIncorporation:Date!
@@ -1599,7 +1603,9 @@ type AddLegalEntityPayload {
 }
 input UpdateLegalEntityInput {
     id: Long!
-    logo: Long!
+    logoPath: String
+    logoFileName: String
+    logoFile: String
     legalNameOfTheCollege:String!
     typeOfCollege: TypeOfCollege!
     dateOfIncorporation:Date!

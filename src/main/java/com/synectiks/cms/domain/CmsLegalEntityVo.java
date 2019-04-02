@@ -1,4 +1,4 @@
-package com.synectiks.cms.service.dto;
+package com.synectiks.cms.domain;
 
 import java.time.LocalDate;
 import javax.validation.constraints.*;
@@ -7,85 +7,62 @@ import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 /**
- * A DTO for the LegalEntity entity.
+ * A VO for the LegalEntity entity.
  */
-public class LegalEntityDTO implements Serializable {
+public class CmsLegalEntityVo implements Serializable {
 
     private Long id;
 
     private String logoPath;
 
     private String logoFileName;
-
+    
     private String logoFile;
-
-    @NotNull
+    
     private String legalNameOfTheCollege;
 
-    @NotNull
     private TypeOfCollege typeOfCollege;
 
-    @NotNull
     private LocalDate dateOfIncorporation;
 
-    @NotNull
     private String registeredOfficeAddress1;
 
-    @NotNull
     private String registeredOfficeAddress2;
 
-    @NotNull
     private String registeredOfficeAddress3;
 
-    @NotNull
     private String registeredOfficeAddress4;
 
-    @NotNull
     private String registeredOfficeAddress5;
 
-    @NotNull
     private String collegeIdentificationNumber;
 
-    @NotNull
     private String pan;
 
-    @NotNull
     private String tan;
 
-    @NotNull
     private String tanCircleNumber;
 
-    @NotNull
     private String citTdsLocation;
 
-    @NotNull
     private Long formSignatory;
 
-    @NotNull
     private String pfNumber;
 
-    @NotNull
     private LocalDate pfRegistrationDate;
 
-    @NotNull
     private Long pfSignatory;
 
-    @NotNull
     private Long esiNumber;
 
-    @NotNull
     private LocalDate esiRegistrationDate;
 
-    @NotNull
     private Long esiSignatory;
 
-    @NotNull
     private Long ptNumber;
 
-    @NotNull
     private LocalDate ptRegistrationDate;
 
-    @NotNull
     private Long ptSignatory;
 
     private Long branchId;
@@ -118,14 +95,6 @@ public class LegalEntityDTO implements Serializable {
 
     public void setLogoFileName(String logoFileName) {
         this.logoFileName = logoFileName;
-    }
-
-    public String getLogoFile() {
-        return logoFile;
-    }
-
-    public void setLogoFile(String logoFile) {
-        this.logoFile = logoFile;
     }
 
     public String getLegalNameOfTheCollege() {
@@ -353,7 +322,7 @@ public class LegalEntityDTO implements Serializable {
             return false;
         }
 
-        LegalEntityDTO legalEntityDTO = (LegalEntityDTO) o;
+        CmsLegalEntityVo legalEntityDTO = (CmsLegalEntityVo) o;
         if (legalEntityDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -371,7 +340,6 @@ public class LegalEntityDTO implements Serializable {
             "id=" + getId() +
             ", logoPath='" + getLogoPath() + "'" +
             ", logoFileName='" + getLogoFileName() + "'" +
-            ", logoFile='" + getLogoFile() + "'" +
             ", legalNameOfTheCollege='" + getLegalNameOfTheCollege() + "'" +
             ", typeOfCollege='" + getTypeOfCollege() + "'" +
             ", dateOfIncorporation='" + getDateOfIncorporation() + "'" +
@@ -401,4 +369,12 @@ public class LegalEntityDTO implements Serializable {
             ", city=" + getCityId() +
             "}";
     }
+
+	public String getLogoFile() {
+		return logoFile;
+	}
+
+	public void setLogoFile(String logoFile) {
+		this.logoFile = logoFile;
+	}
 }

@@ -2,11 +2,16 @@
     "name": "LegalEntity",
     "fields": [
         {
-            "fieldName": "logo",
-            "fieldType": "Long",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldName": "logoPath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "logoFileName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "logoFile",
+            "fieldType": "String"
         },
         {
             "fieldName": "legalNameOfTheCollege",

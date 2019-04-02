@@ -43,20 +43,16 @@ public class AuthorizedSignatory implements Serializable {
     @Column(name = "address_1", nullable = false)
     private String address1;
 
-    @NotNull
-    @Column(name = "address_2", nullable = false)
+    @Column(name = "address_2")
     private String address2;
 
-    @NotNull
-    @Column(name = "address_3", nullable = false)
+    @Column(name = "address_3")
     private String address3;
 
-    @NotNull
-    @Column(name = "address_4", nullable = false)
+    @Column(name = "address_4")
     private String address4;
 
-    @NotNull
-    @Column(name = "address_5", nullable = false)
+    @Column(name = "address_5")
     private String address5;
 
     @NotNull

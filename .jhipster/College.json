@@ -19,6 +19,14 @@
         {
             "fieldName": "instructionInformation",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "logoFileName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "backgroundImageFileName",
+            "fieldType": "String"
         }
     ],
     "relationships": [],

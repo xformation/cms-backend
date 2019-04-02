@@ -21,8 +21,16 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="logo" type="bigint">
-                <constraints nullable="false" />
+            <column name="logo_path" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="logo_file_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="logo_file" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
             <column name="legal_name_of_the_college" type="varchar(255)">

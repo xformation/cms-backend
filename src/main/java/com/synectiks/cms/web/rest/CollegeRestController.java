@@ -43,6 +43,8 @@ public class CollegeRestController {
 				String filePath = Paths.get("", CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_PATH).toString();
 				String fileName = CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_NAME;
 				String branchId = null;
+				String ext = base64FileProcessor.getFileExtensionFromBase64Srting(cmsCollegeVo.getBgImage().split(",")[0]);
+				college.setBackgroundImageFileName(CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_NAME+"."+ext);
 				base64FileProcessor.createFileFromBase64String(cmsCollegeVo.getBgImage(), filePath, fileName, branchId);
 			}
 			if(cmsCollegeVo.getLogoImage() != null) {
@@ -50,6 +52,8 @@ public class CollegeRestController {
 				String filePath = Paths.get("", CmsConstants.CMS_COLLEGE_LOGO_FILE_PATH).toString();
 				String fileName = CmsConstants.CMS_COLLEGE_LOGO_FILE_NAME;
 				String branchId = null;
+				String ext = base64FileProcessor.getFileExtensionFromBase64Srting(cmsCollegeVo.getLogoImage().split(",")[0]);
+				college.setLogoFileName(CmsConstants.CMS_COLLEGE_LOGO_FILE_NAME+"."+ext);
 				base64FileProcessor.createFileFromBase64String(cmsCollegeVo.getLogoImage(), filePath, fileName, branchId);
 			}
 			college.setShortName(cmsCollegeVo.getShortName());
@@ -70,5 +74,6 @@ public class CollegeRestController {
 		logger.debug("REST request to get all the college records.");
         return collegeRepository.findAll();
     }
-
+	
+	
 }

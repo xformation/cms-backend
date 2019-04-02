@@ -39,6 +39,12 @@ public class College implements Serializable {
     @Column(name = "instruction_information")
     private String instructionInformation;
 
+    @Column(name = "logo_file_name")
+    private String logoFileName;
+
+    @Column(name = "background_image_file_name")
+    private String backgroundImageFileName;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -99,6 +105,32 @@ public class College implements Serializable {
     public void setInstructionInformation(String instructionInformation) {
         this.instructionInformation = instructionInformation;
     }
+
+    public String getLogoFileName() {
+        return logoFileName;
+    }
+
+    public College logoFileName(String logoFileName) {
+        this.logoFileName = logoFileName;
+        return this;
+    }
+
+    public void setLogoFileName(String logoFileName) {
+        this.logoFileName = logoFileName;
+    }
+
+    public String getBackgroundImageFileName() {
+        return backgroundImageFileName;
+    }
+
+    public College backgroundImageFileName(String backgroundImageFileName) {
+        this.backgroundImageFileName = backgroundImageFileName;
+        return this;
+    }
+
+    public void setBackgroundImageFileName(String backgroundImageFileName) {
+        this.backgroundImageFileName = backgroundImageFileName;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -129,6 +161,8 @@ public class College implements Serializable {
             ", logoPath='" + getLogoPath() + "'" +
             ", backgroundImagePath='" + getBackgroundImagePath() + "'" +
             ", instructionInformation='" + getInstructionInformation() + "'" +
+            ", logoFileName='" + getLogoFileName() + "'" +
+            ", backgroundImageFileName='" + getBackgroundImageFileName() + "'" +
             "}";
     }
 }

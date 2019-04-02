@@ -1,46 +1,29 @@
-package com.synectiks.cms.service.dto;
+package com.synectiks.cms.domain;
 
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the AuthorizedSignatory entity.
+ * A VO for the AuthorizedSignatory entity.
  */
-public class AuthorizedSignatoryDTO implements Serializable {
+public class CmsAuthorizedSignatoryVo implements Serializable {
 
     private Long id;
-
-    @NotNull
     private String signatoryName;
-
-    @NotNull
     private String signatoryFatherName;
-
-    @NotNull
     private String signatoryDesignation;
-
-    @NotNull
     private String address1;
-
     private String address2;
-
     private String address3;
-
     private String address4;
-
     private String address5;
-
-    @NotNull
     private String email;
-
-    @NotNull
     private String panCardNumber;
-
     private Long branchId;
-
     private Long collegeId;
-
+    private Branch branch;
+    private College college;
+    
     public Long getId() {
         return id;
     }
@@ -154,7 +137,7 @@ public class AuthorizedSignatoryDTO implements Serializable {
             return false;
         }
 
-        AuthorizedSignatoryDTO authorizedSignatoryDTO = (AuthorizedSignatoryDTO) o;
+        CmsAuthorizedSignatoryVo authorizedSignatoryDTO = (CmsAuthorizedSignatoryVo) o;
         if (authorizedSignatoryDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -184,4 +167,20 @@ public class AuthorizedSignatoryDTO implements Serializable {
             ", college=" + getCollegeId() +
             "}";
     }
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public College getCollege() {
+		return college;
+	}
+
+	public void setCollege(College college) {
+		this.college = college;
+	}
 }

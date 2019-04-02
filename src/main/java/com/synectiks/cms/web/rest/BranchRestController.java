@@ -10,15 +10,14 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.City;
 import com.synectiks.cms.domain.CmsBranchVo;
@@ -29,6 +28,7 @@ import com.synectiks.cms.repository.CityRepository;
 import com.synectiks.cms.repository.CollegeRepository;
 import com.synectiks.cms.repository.StateRepository;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
+import com.synectiks.cms.web.rest.util.CommonUtil;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
 /**
@@ -122,6 +122,25 @@ public class BranchRestController {
         return ls;
     }
 
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/cmsbranches-collegeid/{id}")
+	public List<CmsBranchVo> getAllBranchesByCollegeId(@PathVariable Long id){
+		College college = this.collegeRepository.findById(id).get();
+		Branch branch = new Branch();
+		branch.setCollege(college);
+		Example<Branch> example = Example.of(branch);
+		List<Branch> list = branchRepository.findAll(example);
+		List<CmsBranchVo> ls = new ArrayList<>();
+		for(Branch br : list) {
+			CmsBranchVo vo = CommonUtil.createCopyProperties(br, CmsBranchVo.class);
+			vo.setCollegeId(br.getCollege().getId());
+	        vo.setStateId(br.getState().getId());
+	        vo.setCityId(br.getCity().getId());
+	        ls.add(vo);
+		}
+        return ls;
+	}
+	
 	
     @RequestMapping(method = RequestMethod.DELETE, value = "/cmsbranches/{id}")
     public ResponseEntity<Void> deleteBranch(@PathVariable Long id) {

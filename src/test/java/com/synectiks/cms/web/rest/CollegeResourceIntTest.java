@@ -58,6 +58,12 @@ public class CollegeResourceIntTest {
     private static final String DEFAULT_INSTRUCTION_INFORMATION = "AAAAAAAAAA";
     private static final String UPDATED_INSTRUCTION_INFORMATION = "BBBBBBBBBB";
 
+    private static final String DEFAULT_LOGO_FILE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LOGO_FILE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BACKGROUND_IMAGE_FILE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_BACKGROUND_IMAGE_FILE_NAME = "BBBBBBBBBB";
+
     @Autowired
     private CollegeRepository collegeRepository;
 
@@ -115,7 +121,9 @@ public class CollegeResourceIntTest {
             .shortName(DEFAULT_SHORT_NAME)
             .logoPath(DEFAULT_LOGO_PATH)
             .backgroundImagePath(DEFAULT_BACKGROUND_IMAGE_PATH)
-            .instructionInformation(DEFAULT_INSTRUCTION_INFORMATION);
+            .instructionInformation(DEFAULT_INSTRUCTION_INFORMATION)
+            .logoFileName(DEFAULT_LOGO_FILE_NAME)
+            .backgroundImageFileName(DEFAULT_BACKGROUND_IMAGE_FILE_NAME);
         return college;
     }
 
@@ -144,6 +152,8 @@ public class CollegeResourceIntTest {
         assertThat(testCollege.getLogoPath()).isEqualTo(DEFAULT_LOGO_PATH);
         assertThat(testCollege.getBackgroundImagePath()).isEqualTo(DEFAULT_BACKGROUND_IMAGE_PATH);
         assertThat(testCollege.getInstructionInformation()).isEqualTo(DEFAULT_INSTRUCTION_INFORMATION);
+        assertThat(testCollege.getLogoFileName()).isEqualTo(DEFAULT_LOGO_FILE_NAME);
+        assertThat(testCollege.getBackgroundImageFileName()).isEqualTo(DEFAULT_BACKGROUND_IMAGE_FILE_NAME);
 
         // Validate the College in Elasticsearch
         verify(mockCollegeSearchRepository, times(1)).save(testCollege);
@@ -205,7 +215,9 @@ public class CollegeResourceIntTest {
             .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
             .andExpect(jsonPath("$.[*].logoPath").value(hasItem(DEFAULT_LOGO_PATH.toString())))
             .andExpect(jsonPath("$.[*].backgroundImagePath").value(hasItem(DEFAULT_BACKGROUND_IMAGE_PATH.toString())))
-            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())));
+            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())))
+            .andExpect(jsonPath("$.[*].logoFileName").value(hasItem(DEFAULT_LOGO_FILE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].backgroundImageFileName").value(hasItem(DEFAULT_BACKGROUND_IMAGE_FILE_NAME.toString())));
     }
     
 
@@ -223,7 +235,9 @@ public class CollegeResourceIntTest {
             .andExpect(jsonPath("$.shortName").value(DEFAULT_SHORT_NAME.toString()))
             .andExpect(jsonPath("$.logoPath").value(DEFAULT_LOGO_PATH.toString()))
             .andExpect(jsonPath("$.backgroundImagePath").value(DEFAULT_BACKGROUND_IMAGE_PATH.toString()))
-            .andExpect(jsonPath("$.instructionInformation").value(DEFAULT_INSTRUCTION_INFORMATION.toString()));
+            .andExpect(jsonPath("$.instructionInformation").value(DEFAULT_INSTRUCTION_INFORMATION.toString()))
+            .andExpect(jsonPath("$.logoFileName").value(DEFAULT_LOGO_FILE_NAME.toString()))
+            .andExpect(jsonPath("$.backgroundImageFileName").value(DEFAULT_BACKGROUND_IMAGE_FILE_NAME.toString()));
     }
     @Test
     @Transactional
@@ -249,7 +263,9 @@ public class CollegeResourceIntTest {
             .shortName(UPDATED_SHORT_NAME)
             .logoPath(UPDATED_LOGO_PATH)
             .backgroundImagePath(UPDATED_BACKGROUND_IMAGE_PATH)
-            .instructionInformation(UPDATED_INSTRUCTION_INFORMATION);
+            .instructionInformation(UPDATED_INSTRUCTION_INFORMATION)
+            .logoFileName(UPDATED_LOGO_FILE_NAME)
+            .backgroundImageFileName(UPDATED_BACKGROUND_IMAGE_FILE_NAME);
         CollegeDTO collegeDTO = collegeMapper.toDto(updatedCollege);
 
         restCollegeMockMvc.perform(put("/api/colleges")
@@ -265,6 +281,8 @@ public class CollegeResourceIntTest {
         assertThat(testCollege.getLogoPath()).isEqualTo(UPDATED_LOGO_PATH);
         assertThat(testCollege.getBackgroundImagePath()).isEqualTo(UPDATED_BACKGROUND_IMAGE_PATH);
         assertThat(testCollege.getInstructionInformation()).isEqualTo(UPDATED_INSTRUCTION_INFORMATION);
+        assertThat(testCollege.getLogoFileName()).isEqualTo(UPDATED_LOGO_FILE_NAME);
+        assertThat(testCollege.getBackgroundImageFileName()).isEqualTo(UPDATED_BACKGROUND_IMAGE_FILE_NAME);
 
         // Validate the College in Elasticsearch
         verify(mockCollegeSearchRepository, times(1)).save(testCollege);
@@ -328,7 +346,9 @@ public class CollegeResourceIntTest {
             .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME.toString())))
             .andExpect(jsonPath("$.[*].logoPath").value(hasItem(DEFAULT_LOGO_PATH.toString())))
             .andExpect(jsonPath("$.[*].backgroundImagePath").value(hasItem(DEFAULT_BACKGROUND_IMAGE_PATH.toString())))
-            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())));
+            .andExpect(jsonPath("$.[*].instructionInformation").value(hasItem(DEFAULT_INSTRUCTION_INFORMATION.toString())))
+            .andExpect(jsonPath("$.[*].logoFileName").value(hasItem(DEFAULT_LOGO_FILE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].backgroundImageFileName").value(hasItem(DEFAULT_BACKGROUND_IMAGE_FILE_NAME.toString())));
     }
 
     @Test

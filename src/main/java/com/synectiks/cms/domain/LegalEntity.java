@@ -1,18 +1,26 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 /**
@@ -31,9 +39,14 @@ public class LegalEntity implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "logo", nullable = false)
-    private Long logo;
+    @Column(name = "logo_path")
+    private String logoPath;
+
+    @Column(name = "logo_file_name")
+    private String logoFileName;
+
+    @Column(name = "logo_file")
+    private String logoFile;
 
     @NotNull
     @Column(name = "legal_name_of_the_college", nullable = false)
@@ -153,17 +166,43 @@ public class LegalEntity implements Serializable {
         this.id = id;
     }
 
-    public Long getLogo() {
-        return logo;
+    public String getLogoPath() {
+        return logoPath;
     }
 
-    public LegalEntity logo(Long logo) {
-        this.logo = logo;
+    public LegalEntity logoPath(String logoPath) {
+        this.logoPath = logoPath;
         return this;
     }
 
-    public void setLogo(Long logo) {
-        this.logo = logo;
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public String getLogoFileName() {
+        return logoFileName;
+    }
+
+    public LegalEntity logoFileName(String logoFileName) {
+        this.logoFileName = logoFileName;
+        return this;
+    }
+
+    public void setLogoFileName(String logoFileName) {
+        this.logoFileName = logoFileName;
+    }
+
+    public String getLogoFile() {
+        return logoFile;
+    }
+
+    public LegalEntity logoFile(String logoFile) {
+        this.logoFile = logoFile;
+        return this;
+    }
+
+    public void setLogoFile(String logoFile) {
+        this.logoFile = logoFile;
     }
 
     public String getLegalNameOfTheCollege() {
@@ -542,7 +581,9 @@ public class LegalEntity implements Serializable {
     public String toString() {
         return "LegalEntity{" +
             "id=" + getId() +
-            ", logo=" + getLogo() +
+            ", logoPath='" + getLogoPath() + "'" +
+            ", logoFileName='" + getLogoFileName() + "'" +
+            ", logoFile='" + getLogoFile() + "'" +
             ", legalNameOfTheCollege='" + getLegalNameOfTheCollege() + "'" +
             ", typeOfCollege='" + getTypeOfCollege() + "'" +
             ", dateOfIncorporation='" + getDateOfIncorporation() + "'" +

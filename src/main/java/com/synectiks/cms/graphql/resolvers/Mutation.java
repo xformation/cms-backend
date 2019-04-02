@@ -1468,7 +1468,8 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddLegalEntityPayload addLegalEntity(AddLegalEntityInput addLegalEntityInput) {
         final LegalEntity legalEntity = new LegalEntity();
-        legalEntity.setLogo(addLegalEntityInput.getLogo());
+        legalEntity.setLogoFileName(addLegalEntityInput.getLogoFileName());
+        legalEntity.setLogoPath(addLegalEntityInput.getLogoPath());
         legalEntity.setLegalNameOfTheCollege(addLegalEntityInput.getLegalNameOfTheCollege());
         legalEntity.setTypeOfCollege(addLegalEntityInput.getTypeOfCollege());
         legalEntity.setRegisteredOfficeAddress1(addLegalEntityInput.getRegisteredOfficeAddress1());
@@ -1507,8 +1508,11 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateLegalEntityPayload updateLegalEntity(UpdateLegalEntityInput updateLegalEntityInput) {
         LegalEntity legalEntity = legalEntityRepository.findById(updateLegalEntityInput.getId()).get();
-        if (updateLegalEntityInput.getLogo() != null) {
-            legalEntity.setLogo(updateLegalEntityInput.getLogo());
+        if (updateLegalEntityInput.getLogoFileName() != null) {
+            legalEntity.setLogoFileName(updateLegalEntityInput.getLogoFileName());
+        }
+        if (updateLegalEntityInput.getLogoPath() != null) {
+            legalEntity.setLogoPath(updateLegalEntityInput.getLogoPath());
         }
         if (updateLegalEntityInput.getLegalNameOfTheCollege() != null) {
             legalEntity.setLegalNameOfTheCollege(updateLegalEntityInput.getLegalNameOfTheCollege());

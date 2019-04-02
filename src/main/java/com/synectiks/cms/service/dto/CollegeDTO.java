@@ -20,6 +20,10 @@ public class CollegeDTO implements Serializable {
 
     private String instructionInformation;
 
+    private String logoFileName;
+
+    private String backgroundImageFileName;
+
     public Long getId() {
         return id;
     }
@@ -60,6 +64,22 @@ public class CollegeDTO implements Serializable {
         this.instructionInformation = instructionInformation;
     }
 
+    public String getLogoFileName() {
+        return logoFileName;
+    }
+
+    public void setLogoFileName(String logoFileName) {
+        this.logoFileName = logoFileName;
+    }
+
+    public String getBackgroundImageFileName() {
+        return backgroundImageFileName;
+    }
+
+    public void setBackgroundImageFileName(String backgroundImageFileName) {
+        this.backgroundImageFileName = backgroundImageFileName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -89,6 +109,8 @@ public class CollegeDTO implements Serializable {
             ", logoPath='" + getLogoPath() + "'" +
             ", backgroundImagePath='" + getBackgroundImagePath() + "'" +
             ", instructionInformation='" + getInstructionInformation() + "'" +
+            ", logoFileName='" + getLogoFileName() + "'" +
+            ", backgroundImageFileName='" + getBackgroundImageFileName() + "'" +
             "}";
     }
 }

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Paths;
 import java.util.Base64;
 
 import javax.xml.bind.DatatypeConverter;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
@@ -24,12 +26,16 @@ import com.synectiks.cms.exceptions.UnSupportedFileTypeException;
 @Component
 public class Base64FileProcessor  {
 
-	private final static Logger logger = LoggerFactory.getLogger(Class.class);
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public String createBase64StringFromFile(String filePath) {
 		logger.info(String.format("Start creating base64 encoded string from file: %s",filePath));
 		String base64EncodedString = null;
+		String fPath = Paths.get("", filePath).toString();
 		File file = new File(filePath);
+		if(!file.exists()) {
+			return null;
+		}
 		try (FileInputStream ins = new FileInputStream(file)) {
 			byte binaryData[] = new byte[(int) file.length()];
 			ins.read(binaryData);
@@ -90,7 +96,7 @@ public class Base64FileProcessor  {
 		return systemGeneratedFileName;
 	}
 	
-	private String getFileExtensionFromBase64Srting(String str) {
+	public String getFileExtensionFromBase64Srting(String str) {
 		String extension = null;
 		switch (str) {
 		    case "data:image/jpeg;base64":
