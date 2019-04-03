@@ -39,8 +39,8 @@ public class CollegeRestController {
 		College college = new College();
 		try {
 			if(cmsCollegeVo.getBgImage() != null) {
-				college.setBackgroundImagePath(CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_PATH);
-				String filePath = Paths.get("", CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_PATH).toString();
+				college.setBackgroundImagePath(CmsConstants.CMS_IMAGE_FILE_PATH);
+				String filePath = Paths.get("", CmsConstants.CMS_IMAGE_FILE_PATH).toString();
 				String fileName = CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_NAME;
 				String branchId = null;
 				String ext = base64FileProcessor.getFileExtensionFromBase64Srting(cmsCollegeVo.getBgImage().split(",")[0]);
@@ -48,8 +48,8 @@ public class CollegeRestController {
 				base64FileProcessor.createFileFromBase64String(cmsCollegeVo.getBgImage(), filePath, fileName, branchId);
 			}
 			if(cmsCollegeVo.getLogoImage() != null) {
-				college.setLogoPath(CmsConstants.CMS_COLLEGE_LOGO_FILE_PATH);
-				String filePath = Paths.get("", CmsConstants.CMS_COLLEGE_LOGO_FILE_PATH).toString();
+				college.setLogoPath(CmsConstants.CMS_IMAGE_FILE_PATH);
+				String filePath = Paths.get("", CmsConstants.CMS_IMAGE_FILE_PATH).toString();
 				String fileName = CmsConstants.CMS_COLLEGE_LOGO_FILE_NAME;
 				String branchId = null;
 				String ext = base64FileProcessor.getFileExtensionFromBase64Srting(cmsCollegeVo.getLogoImage().split(",")[0]);

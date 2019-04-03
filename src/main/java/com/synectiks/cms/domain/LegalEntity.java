@@ -65,20 +65,16 @@ public class LegalEntity implements Serializable {
     @Column(name = "registered_office_address_1", nullable = false)
     private String registeredOfficeAddress1;
 
-    @NotNull
-    @Column(name = "registered_office_address_2", nullable = false)
+    @Column(name = "registered_office_address_2")
     private String registeredOfficeAddress2;
 
-    @NotNull
-    @Column(name = "registered_office_address_3", nullable = false)
+    @Column(name = "registered_office_address_3")
     private String registeredOfficeAddress3;
 
-    @NotNull
-    @Column(name = "registered_office_address_4", nullable = false)
+    @Column(name = "registered_office_address_4")
     private String registeredOfficeAddress4;
 
-    @NotNull
-    @Column(name = "registered_office_address_5", nullable = false)
+    @Column(name = "registered_office_address_5")
     private String registeredOfficeAddress5;
 
     @NotNull
@@ -119,7 +115,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "esi_number", nullable = false)
-    private Long esiNumber;
+    private String esiNumber;
 
     @NotNull
     @Column(name = "esi_registration_date", nullable = false)
@@ -131,7 +127,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "pt_number", nullable = false)
-    private Long ptNumber;
+    private String ptNumber;
 
     @NotNull
     @Column(name = "pt_registration_date", nullable = false)
@@ -426,16 +422,16 @@ public class LegalEntity implements Serializable {
         this.pfSignatory = pfSignatory;
     }
 
-    public Long getEsiNumber() {
+    public String getEsiNumber() {
         return esiNumber;
     }
 
-    public LegalEntity esiNumber(Long esiNumber) {
+    public LegalEntity esiNumber(String esiNumber) {
         this.esiNumber = esiNumber;
         return this;
     }
 
-    public void setEsiNumber(Long esiNumber) {
+    public void setEsiNumber(String esiNumber) {
         this.esiNumber = esiNumber;
     }
 
@@ -465,16 +461,16 @@ public class LegalEntity implements Serializable {
         this.esiSignatory = esiSignatory;
     }
 
-    public Long getPtNumber() {
+    public String getPtNumber() {
         return ptNumber;
     }
 
-    public LegalEntity ptNumber(Long ptNumber) {
+    public LegalEntity ptNumber(String ptNumber) {
         this.ptNumber = ptNumber;
         return this;
     }
 
-    public void setPtNumber(Long ptNumber) {
+    public void setPtNumber(String ptNumber) {
         this.ptNumber = ptNumber;
     }
 
@@ -601,10 +597,10 @@ public class LegalEntity implements Serializable {
             ", pfNumber='" + getPfNumber() + "'" +
             ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
             ", pfSignatory=" + getPfSignatory() +
-            ", esiNumber=" + getEsiNumber() +
+            ", esiNumber='" + getEsiNumber() + "'" +
             ", esiRegistrationDate='" + getEsiRegistrationDate() + "'" +
             ", esiSignatory=" + getEsiSignatory() +
-            ", ptNumber=" + getPtNumber() +
+            ", ptNumber='" + getPtNumber() + "'" +
             ", ptRegistrationDate='" + getPtRegistrationDate() + "'" +
             ", ptSignatory=" + getPtSignatory() +
             "}";

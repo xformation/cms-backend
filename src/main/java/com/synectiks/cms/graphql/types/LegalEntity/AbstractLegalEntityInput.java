@@ -29,12 +29,12 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
         private Long pfSignatory;
 //        private String pfSignatoryDesignation;
 //        private String pfSignatoryFatherName;
-        private Long esiNumber;
+        private String esiNumber;
         private Date esiRegistrationDate;
         private Long esiSignatory;
 //        private String esiSignatoryDesignation;
 //        private String esiSignatoryFatherName;
-        private Long ptNumber;
+        private String ptNumber;
         private Date ptRegistrationDate;
         private Long ptSignatory;
 
@@ -184,11 +184,11 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.pfSignatory = pfSignatory;
         }
 
-        public Long getEsiNumber() {
+        public String getEsiNumber() {
             return esiNumber;
         }
 
-        public void setEsiNumber(Long esiNumber) {
+        public void setEsiNumber(String esiNumber) {
             this.esiNumber = esiNumber;
         }
 
@@ -208,11 +208,11 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
             this.esiSignatory = esiSignatory;
         }
 
-        public Long getPtNumber() {
+        public String getPtNumber() {
             return ptNumber;
         }
 
-        public void setPtNumber(Long ptNumber) {
+        public void setPtNumber(String ptNumber) {
             this.ptNumber = ptNumber;
         }
 

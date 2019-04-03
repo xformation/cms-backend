@@ -31,16 +31,12 @@ public class LegalEntityDTO implements Serializable {
     @NotNull
     private String registeredOfficeAddress1;
 
-    @NotNull
     private String registeredOfficeAddress2;
 
-    @NotNull
     private String registeredOfficeAddress3;
 
-    @NotNull
     private String registeredOfficeAddress4;
 
-    @NotNull
     private String registeredOfficeAddress5;
 
     @NotNull
@@ -71,7 +67,7 @@ public class LegalEntityDTO implements Serializable {
     private Long pfSignatory;
 
     @NotNull
-    private Long esiNumber;
+    private String esiNumber;
 
     @NotNull
     private LocalDate esiRegistrationDate;
@@ -80,7 +76,7 @@ public class LegalEntityDTO implements Serializable {
     private Long esiSignatory;
 
     @NotNull
-    private Long ptNumber;
+    private String ptNumber;
 
     @NotNull
     private LocalDate ptRegistrationDate;
@@ -264,11 +260,11 @@ public class LegalEntityDTO implements Serializable {
         this.pfSignatory = pfSignatory;
     }
 
-    public Long getEsiNumber() {
+    public String getEsiNumber() {
         return esiNumber;
     }
 
-    public void setEsiNumber(Long esiNumber) {
+    public void setEsiNumber(String esiNumber) {
         this.esiNumber = esiNumber;
     }
 
@@ -288,11 +284,11 @@ public class LegalEntityDTO implements Serializable {
         this.esiSignatory = esiSignatory;
     }
 
-    public Long getPtNumber() {
+    public String getPtNumber() {
         return ptNumber;
     }
 
-    public void setPtNumber(Long ptNumber) {
+    public void setPtNumber(String ptNumber) {
         this.ptNumber = ptNumber;
     }
 
@@ -389,10 +385,10 @@ public class LegalEntityDTO implements Serializable {
             ", pfNumber='" + getPfNumber() + "'" +
             ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
             ", pfSignatory=" + getPfSignatory() +
-            ", esiNumber=" + getEsiNumber() +
+            ", esiNumber='" + getEsiNumber() + "'" +
             ", esiRegistrationDate='" + getEsiRegistrationDate() + "'" +
             ", esiSignatory=" + getEsiSignatory() +
-            ", ptNumber=" + getPtNumber() +
+            ", ptNumber='" + getPtNumber() + "'" +
             ", ptRegistrationDate='" + getPtRegistrationDate() + "'" +
             ", ptSignatory=" + getPtSignatory() +
             ", branch=" + getBranchId() +

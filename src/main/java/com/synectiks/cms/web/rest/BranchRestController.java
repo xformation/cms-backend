@@ -3,6 +3,7 @@ package com.synectiks.cms.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -125,6 +126,9 @@ public class BranchRestController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cmsbranches-collegeid/{id}")
 	public List<CmsBranchVo> getAllBranchesByCollegeId(@PathVariable Long id){
+		if(!this.collegeRepository.existsById(id)) {
+			return Collections.emptyList();
+		}
 		College college = this.collegeRepository.findById(id).get();
 		Branch branch = new Branch();
 		branch.setCollege(college);

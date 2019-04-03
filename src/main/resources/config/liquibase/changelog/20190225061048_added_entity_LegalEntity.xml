@@ -50,19 +50,19 @@
             </column>
 
             <column name="registered_office_address_2" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="registered_office_address_3" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="registered_office_address_4" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="registered_office_address_5" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="college_identification_number" type="varchar(255)">
@@ -101,7 +101,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="esi_number" type="bigint">
+            <column name="esi_number" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
@@ -113,7 +113,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="pt_number" type="bigint">
+            <column name="pt_number" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 

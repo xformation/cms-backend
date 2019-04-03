@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -114,8 +113,8 @@ public class LegalEntityResourceIntTest {
     private static final Long DEFAULT_PF_SIGNATORY = 1L;
     private static final Long UPDATED_PF_SIGNATORY = 2L;
 
-    private static final Long DEFAULT_ESI_NUMBER = 1L;
-    private static final Long UPDATED_ESI_NUMBER = 2L;
+    private static final String DEFAULT_ESI_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_ESI_NUMBER = "BBBBBBBBBB";
 
     private static final Date DEFAULT_ESI_REGISTRATION_DATE = new Date();
     private static final Date UPDATED_ESI_REGISTRATION_DATE = new Date();
@@ -123,8 +122,8 @@ public class LegalEntityResourceIntTest {
     private static final Long DEFAULT_ESI_SIGNATORY = 1L;
     private static final Long UPDATED_ESI_SIGNATORY = 2L;
 
-    private static final Long DEFAULT_PT_NUMBER = 1L;
-    private static final Long UPDATED_PT_NUMBER = 2L;
+    private static final String DEFAULT_PT_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_PT_NUMBER = "BBBBBBBBBB";
 
     private static final Date DEFAULT_PT_REGISTRATION_DATE = new Date();
     private static final Date UPDATED_PT_REGISTRATION_DATE = new Date();
@@ -353,82 +352,6 @@ public class LegalEntityResourceIntTest {
         int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
         // set the field null
         legalEntity.setRegisteredOfficeAddress1(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkRegisteredOfficeAddress2IsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setRegisteredOfficeAddress2(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkRegisteredOfficeAddress3IsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setRegisteredOfficeAddress3(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkRegisteredOfficeAddress4IsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setRegisteredOfficeAddress4(null);
-
-        // Create the LegalEntity, which fails.
-        LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
-
-        restLegalEntityMockMvc.perform(post("/api/legal-entities")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(legalEntityDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LegalEntity> legalEntityList = legalEntityRepository.findAll();
-        assertThat(legalEntityList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkRegisteredOfficeAddress5IsRequired() throws Exception {
-        int databaseSizeBeforeTest = legalEntityRepository.findAll().size();
-        // set the field null
-        legalEntity.setRegisteredOfficeAddress5(null);
 
         // Create the LegalEntity, which fails.
         LegalEntityDTO legalEntityDTO = legalEntityMapper.toDto(legalEntity);
@@ -758,10 +681,10 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.intValue())))
-            .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].esiRegistrationDate").value(hasItem(DEFAULT_ESI_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY.intValue())))
-            .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].ptRegistrationDate").value(hasItem(DEFAULT_PT_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.intValue())));
     }
@@ -798,10 +721,10 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.pfNumber").value(DEFAULT_PF_NUMBER.toString()))
             .andExpect(jsonPath("$.pfRegistrationDate").value(DEFAULT_PF_REGISTRATION_DATE.toString()))
             .andExpect(jsonPath("$.pfSignatory").value(DEFAULT_PF_SIGNATORY.intValue()))
-            .andExpect(jsonPath("$.esiNumber").value(DEFAULT_ESI_NUMBER.intValue()))
+            .andExpect(jsonPath("$.esiNumber").value(DEFAULT_ESI_NUMBER.toString()))
             .andExpect(jsonPath("$.esiRegistrationDate").value(DEFAULT_ESI_REGISTRATION_DATE.toString()))
             .andExpect(jsonPath("$.esiSignatory").value(DEFAULT_ESI_SIGNATORY.intValue()))
-            .andExpect(jsonPath("$.ptNumber").value(DEFAULT_PT_NUMBER.intValue()))
+            .andExpect(jsonPath("$.ptNumber").value(DEFAULT_PT_NUMBER.toString()))
             .andExpect(jsonPath("$.ptRegistrationDate").value(DEFAULT_PT_REGISTRATION_DATE.toString()))
             .andExpect(jsonPath("$.ptSignatory").value(DEFAULT_PT_SIGNATORY.intValue()));
     }
@@ -969,10 +892,10 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.intValue())))
-            .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].esiNumber").value(hasItem(DEFAULT_ESI_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].esiRegistrationDate").value(hasItem(DEFAULT_ESI_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].esiSignatory").value(hasItem(DEFAULT_ESI_SIGNATORY.intValue())))
-            .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].ptNumber").value(hasItem(DEFAULT_PT_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].ptRegistrationDate").value(hasItem(DEFAULT_PT_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.intValue())));
     }
