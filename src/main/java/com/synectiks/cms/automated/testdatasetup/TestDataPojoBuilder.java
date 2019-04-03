@@ -154,7 +154,9 @@ public class TestDataPojoBuilder {
 		college.setShortName(cell.getStringCellValue());
 		college.setInstructionInformation(cell.getStringCellValue());
 		college.setLogoPath("");
-		college.setBackgroundImagePath(""); 
+		college.setBackgroundImagePath("");
+		college.setLogoFileName("");
+		college.backgroundImageFileName("");
 		System.out.println(college.toString());
 		return college;
 	}

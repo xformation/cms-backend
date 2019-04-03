@@ -1,2 +1,2 @@
-id;short_name;logo_path;background_image_path;instruction_information
-951;Hyd Technical University;124;456;Hyd Technical University
+id;short_name;logo_path;background_image_path;instruction_information;logo_file_name;background_image_file_name
+951;Hyd Technical University;124;456;Hyd Technical University;logo;backgroundimage

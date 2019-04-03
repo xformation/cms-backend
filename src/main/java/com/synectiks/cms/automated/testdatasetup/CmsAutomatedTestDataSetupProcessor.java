@@ -153,7 +153,7 @@ public class CmsAutomatedTestDataSetupProcessor {
 	private ObjectMapper mapper = new ObjectMapper();
 	String values[] = new String[1];
 	LectureScheduleFilter filter = new LectureScheduleFilter();
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/create")
 	public void createCmsTestData() throws IOException, ParseException{
 		try {
@@ -162,8 +162,236 @@ public class CmsAutomatedTestDataSetupProcessor {
 			logger.error("Exception in creating CMS test data ",e);
 		}
 	}
-	
-	private void execute() throws IOException, ParseException, InterruptedException {
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAcademicYear")
+    public void createCmsTestAcademicYearData() throws IOException, ParseException{
+        try {
+            executeAcademicYear();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS AcademicYear test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createTerm")
+    public void createCmsTestTermData() throws IOException, ParseException{
+        try {
+            executeTerm();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS Term test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createCollege")
+    public void createCmsTestCollegeData() throws IOException, ParseException{
+        try {
+            executeCollege();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS College test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createBranch")
+    public void createCmsTestBranchData() throws IOException, ParseException{
+        try {
+            executeBranch();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS Branch test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createDepartment")
+    public void createCmsTestDepartmentData() throws IOException, ParseException{
+        try {
+            executeDepartment();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS Department test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createBatch")
+    public void createCmsTestBatchData() throws IOException, ParseException{
+        try {
+            executeBatch();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS Batch test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createSection")
+    public void createCmsTestSectionData() throws IOException, ParseException{
+        try {
+            executeSection();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS Section test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createStudent")
+    public void createCmsTestStudentData() throws IOException, ParseException{
+        try {
+            executeStudent();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS Student test data ",e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createSubject")
+    public void createCmsTestSubjectData() throws IOException, ParseException{
+        try {
+            executeSubject();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS Subject test data ",e);
+        }
+    }
+
+    private void executeAcademicYear() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAcademicYearData(wb);
+            logger.info("AcademicYear TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeTerm() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAcademicYearData(wb);
+            saveCmsTermData(wb);
+            logger.info("Term TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeCollege() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsCollegeData(wb);
+            logger.info("College TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeBranch() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCountryData();
+            saveStateData(wb);
+            saveCityData(wb);
+            saveCmsCollegeData(wb);
+            saveCmsBranchData(wb);
+            logger.info("Branch TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+
+    private void executeDepartment() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsBranchData(wb);
+            saveCmsAcademicYearData(wb);
+            saveCmsDepartmentData(wb);
+            logger.info("Department TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeBatch() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsDepartmentData(wb);
+            saveCmsBatchData(wb);
+            logger.info("Batch TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeSection() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsBatchData(wb);
+            saveCmsSectionData(wb);
+            logger.info("Section TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeStudent() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCountryData();
+            saveStateData(wb);
+            saveCityData(wb);
+            saveCmsDepartmentData(wb);
+            saveCmsBatchData(wb);
+            saveCmsSectionData(wb);
+            saveCmsBranchData(wb);
+            saveCmsStudentData(wb);
+            logger.info("Student TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeSubject() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsDepartmentData(wb);
+            saveCmsBatchData(wb);
+            saveCmsSubjectData(wb);
+            logger.info("Subject TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+
+    private void execute() throws IOException, ParseException, InterruptedException {
 		this.testDataPojoBuilder = new TestDataPojoBuilder();
 		FileInputStream fis = null;
 		try {
@@ -325,9 +553,189 @@ public class CmsAutomatedTestDataSetupProcessor {
 				}
 			}
 		}
-	} 
-	
-	private void saveAcademicYear(Cell cell) {
+	}
+
+
+    private void saveCmsAcademicYearData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 0) {
+                    saveAcademicYear(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsTermData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 1) {
+                    saveTermData(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsCollegeData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 2) {
+                    saveCollegeData(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsBranchData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 3) {
+                    saveBranchData(cell);
+                }
+            }
+        }
+    }
+
+
+    private void saveCmsDepartmentData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 4) {
+                    saveDepartmentData(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsBatchData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 5) {
+                    saveBatchData(cell);
+                }
+            }
+        }
+    }
+
+
+    private void saveCmsSectionData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 6) {
+                    saveSectionData(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsStudentData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+                if (cell.getColumnIndex() == 7) {
+                    saveStudentData(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsSubjectData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+                if (cell.getColumnIndex() == 8) {
+                    saveSubjectData(cell);
+                }
+            }
+        }
+    }
+    private void saveAcademicYear(Cell cell) {
 		logger.debug("Saving academic year data started.");
 		this.academicYear = this.testDataPojoBuilder.createAcademicYearPojo(cell);
 		try {
@@ -528,6 +936,7 @@ public class CmsAutomatedTestDataSetupProcessor {
 			}else {
 				this.attendanceMaster = this.attendanceMasterRepository.findOne(amExample).get();
 			}
+
 			
 		}catch(Exception e) {
 			logger.warn("Exception in saving teacher, teach and attendance_master data. "+e.getMessage());
