@@ -191,6 +191,15 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createTeacherTeachAttendanceMaster")
+    public void createCmsTeacherTeachAttendanceMasterData() throws IOException, ParseException{
+        try {
+            executeTeacherTeachAttendanceMaster();
+        }catch(Exception e) {
+            logger.error("Exception in creating CMS TeacherTeachAttendanceMaster test data ",e);
+        }
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createBranch")
     public void createCmsTestBranchData() throws IOException, ParseException{
         try {
@@ -259,6 +268,7 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+
     private void executeTerm() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
         FileInputStream fis = null;
@@ -301,6 +311,28 @@ public class CmsAutomatedTestDataSetupProcessor {
             saveCmsCollegeData(wb);
             saveCmsBranchData(wb);
             logger.info("Branch TEST DATA LOADING COMPLETED......");
+        }finally {
+            if(fis != null) fis.close();
+        }
+    }
+
+    private void executeTeacherTeachAttendanceMaster() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCountryData();
+            saveStateData(wb);
+            saveCityData(wb);
+            saveCmsSubjectData(wb);
+            saveCmsTeacherTeachAttendanceMaster(wb);
+            saveCmsBatchData(wb);
+            saveCmsSectionData(wb);
+            saveCmsDepartmentData(wb);
+            saveCmsBranchData(wb);
+            logger.info("TeacherTeachAttendanceMaster TEST DATA LOADING COMPLETED......");
         }finally {
             if(fis != null) fis.close();
         }
@@ -657,6 +689,8 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+
+
     private void saveCmsBatchData(Workbook workbook) throws ParseException, InterruptedException {
         Sheet sheet = getSheet(workbook, "cmstestdata");
         logger.debug(sheet.getSheetName());
@@ -735,6 +769,27 @@ public class CmsAutomatedTestDataSetupProcessor {
             }
         }
     }
+
+    private void saveCmsTeacherTeachAttendanceMaster(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 9) {
+                    saveTeacherTeachAttendanceMasterData(cell);
+                }
+            }
+        }
+    }
+    
     private void saveAcademicYear(Cell cell) {
 		logger.debug("Saving academic year data started.");
 		this.academicYear = this.testDataPojoBuilder.createAcademicYearPojo(cell);
