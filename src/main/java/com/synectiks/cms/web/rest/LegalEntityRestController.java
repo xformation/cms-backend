@@ -26,8 +26,8 @@ import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
 import com.synectiks.cms.exceptions.FilePathNotFoundException;
 import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.CommonUtil;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;

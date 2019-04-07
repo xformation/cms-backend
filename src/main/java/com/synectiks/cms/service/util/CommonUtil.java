@@ -1,4 +1,4 @@
-package com.synectiks.cms.web.rest.util;
+package com.synectiks.cms.service.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ public class CommonUtil {
 				instance = cls.newInstance();
 				BeanUtils.copyProperties(src, instance);
 			} catch (InstantiationException | IllegalAccessException e) {
-				logger.error("Failed to instancate class: " + cls.getName(), e);
+				logger.error("Failed to instantiate class: " + cls.getName(), e);
 			} catch (BeansException be) {
 				logger.error("Failed to fill bean: " + cls.getName(), be);
 			}

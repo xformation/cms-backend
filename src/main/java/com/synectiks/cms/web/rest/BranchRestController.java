@@ -28,8 +28,8 @@ import com.synectiks.cms.repository.BranchRepository;
 import com.synectiks.cms.repository.CityRepository;
 import com.synectiks.cms.repository.CollegeRepository;
 import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.CommonUtil;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
 /**
@@ -138,8 +138,12 @@ public class BranchRestController {
 		for(Branch br : list) {
 			CmsBranchVo vo = CommonUtil.createCopyProperties(br, CmsBranchVo.class);
 			vo.setCollegeId(br.getCollege().getId());
-	        vo.setStateId(br.getState().getId());
-	        vo.setCityId(br.getCity().getId());
+			if(br.getState() != null) {
+				vo.setStateId(br.getState().getId());
+			}
+			if(br.getCity() != null) {
+				vo.setCityId(br.getCity().getId());
+			}
 	        ls.add(vo);
 		}
         return ls;

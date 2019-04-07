@@ -26,8 +26,8 @@ import com.synectiks.cms.domain.College;
 import com.synectiks.cms.repository.BankAccountsRepository;
 import com.synectiks.cms.repository.BranchRepository;
 import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.CommonUtil;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
 /**
