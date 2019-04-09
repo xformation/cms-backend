@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import com.synectiks.cms.aop.dateformat.ChangeDateFormat;
-
 /**
  * A Vo for the AcademicYear entity.
  */
