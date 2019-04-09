@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.CmsAcademicYearVo;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
@@ -88,14 +90,19 @@ public class AcademicYearRestController {
      * GET  /cmsacademic-years : get all the academicYears.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of academicYears in body
+     * @throws Exception 
      */
     @RequestMapping(method = RequestMethod.GET, value = "/cmsacademic-years")
-    public List<CmsAcademicYearVo> getAllAcademicYears() {
+    public List<CmsAcademicYearVo> getAllAcademicYears() throws Exception {
         logger.debug("REST request to get all the AcademicYears");
         List<AcademicYear> list = academicYearRepository.findAll();
         List<CmsAcademicYearVo> ls = new ArrayList<>();
         for(AcademicYear ay: list) {
+        	String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getStartDate());
+        	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getEndDate());
         	CmsAcademicYearVo cay = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+        	cay.setStartDate(stDt);
+        	cay.setEndDate(enDt);
         	ls.add(cay);
         }
         return ls;
