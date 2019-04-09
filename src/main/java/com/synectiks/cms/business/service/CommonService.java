@@ -48,6 +48,19 @@ public class CommonService {
 	@Autowired
 	private TermRepository termRepository;
 	
+	@Autowired
+	private CollegeRepository collegeRepository;
+	
+	@Autowired
+	private StateRepository stateRepository;
+	
+	@Autowired
+	private CityRepository cityRepository;
+	
+	@Autowired
+	private BranchRepository branchRepository;
+	
+	
 //    @Autowired
 //    private StudentRepository studentRepository;
 	
@@ -166,4 +179,34 @@ public class CommonService {
 		return new Term();
 	}
 	
+	public College getCollegeById(Long id) {
+		Optional<College> clg =  this.collegeRepository.findById(id);
+		if(clg.isPresent()) {
+			return clg.get();
+		}
+		return null;
+	}
+	
+	public State getStateById(Long id) {
+		Optional<State> st =  this.stateRepository.findById(id);
+		if(st.isPresent()) {
+			return st.get();
+		}
+		return null;
+	}
+	
+	public City getCityById(Long id) {
+		Optional<City> ct =  this.cityRepository.findById(id);
+		if(ct.isPresent()) {
+			return ct.get();
+		}
+		return null;
+	}
+	public Branch getBranchById(Long id) {
+		Optional<Branch> bt =  this.branchRepository.findById(id);
+		if(bt.isPresent()) {
+			return bt.get();
+		}
+		return null;
+	}
 } 

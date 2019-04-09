@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.base64.file.Base64FileProcessor;
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.CmsLegalEntityVo;
 import com.synectiks.cms.domain.LegalEntity;
@@ -48,6 +49,9 @@ public class LegalEntityRestController {
 	@Autowired
 	private Base64FileProcessor base64FileProcessor;
 	
+	@Autowired
+	private CommonService commonService;
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmslegal-entities")
 	public ResponseEntity<CmsLegalEntityVo> createLegalEntity(@RequestBody CmsLegalEntityVo cmsLegalEntityVo) throws URISyntaxException, FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
 		
@@ -57,16 +61,41 @@ public class LegalEntityRestController {
         }
         
         LegalEntity legalEntity = CommonUtil.createCopyProperties(cmsLegalEntityVo, LegalEntity.class);
+        if(cmsLegalEntityVo.getCollegeId() != null && cmsLegalEntityVo.getCollegeId() > 0) {
+        	legalEntity.setCollege(this.commonService.getCollegeById(cmsLegalEntityVo.getCollegeId()));
+        }
+        if(cmsLegalEntityVo.getStateId() != null && cmsLegalEntityVo.getStateId() > 0) {
+        	legalEntity.setState(this.commonService.getStateById(cmsLegalEntityVo.getStateId()));
+        }
+        if(cmsLegalEntityVo.getCityId() != null && cmsLegalEntityVo.getCityId() > 0) {
+        	legalEntity.setCity(this.commonService.getCityById(cmsLegalEntityVo.getCityId()));
+        }
+        if(cmsLegalEntityVo.getBranchId() != null && cmsLegalEntityVo.getBranchId() > 0) {
+        	legalEntity.setBranch(this.commonService.getBranchById(cmsLegalEntityVo.getBranchId()));
+        }
         String logoFile = null;
+        String fileName = null;
         if(cmsLegalEntityVo.getLogoFile() != null) {
         	logoFile = cmsLegalEntityVo.getLogoFile();
         	String ext = base64FileProcessor.getFileExtensionFromBase64Srting(cmsLegalEntityVo.getLogoFile().split(",")[0]);
-        	base64FileProcessor.createFileFromBase64String(cmsLegalEntityVo.getLogoFile(), CmsConstants.CMS_IMAGE_FILE_PATH, CmsConstants.CMS_LEGAL_ENTITY_LOGO_FILE_NAME, null);
-        	legalEntity.setLogoFileName(CmsConstants.CMS_LEGAL_ENTITY_LOGO_FILE_NAME+"."+ext);
+//        	base64FileProcessor.createFileFromBase64String(cmsLegalEntityVo.getLogoFile(), CmsConstants.CMS_IMAGE_FILE_PATH, CmsConstants.CMS_LEGAL_ENTITY_LOGO_FILE_NAME, null);
+        	fileName = CmsConstants.CMS_LEGAL_ENTITY_LOGO_FILE_NAME +"_CollegeId_"+legalEntity.getCollege().getId()+(legalEntity.getBranch() != null ? "_BranchId_"+legalEntity.getBranch().getId() : "");
+        	legalEntity.setLogoFileName(fileName+"."+ext);
         	legalEntity.setLogoPath(CmsConstants.CMS_IMAGE_FILE_PATH);
         	legalEntity.setLogoFile(null);
         }
+        
+        
         legalEntity = legalEntityRepository.save(legalEntity);
+        
+        if(cmsLegalEntityVo.getLogoFile() != null) {
+        	try {
+	        		base64FileProcessor.createFileFromBase64String(cmsLegalEntityVo.getLogoFile(), CmsConstants.CMS_IMAGE_FILE_PATH, fileName, null);
+        	}catch(Exception e) {
+        		logger.error("Some error in saving legal entity logo file on disk. Rolling back the transaction.",e);
+        		legalEntityRepository.deleteById(legalEntity.getId());
+        	}
+        }
         cmsLegalEntityVo = CommonUtil.createCopyProperties(legalEntity, CmsLegalEntityVo.class);
         cmsLegalEntityVo.setLogoFile(logoFile);
         
