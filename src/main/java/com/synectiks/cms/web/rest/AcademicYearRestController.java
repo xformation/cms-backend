@@ -48,17 +48,23 @@ public class AcademicYearRestController {
      *
      * @param cmsAcademicYearVo the cmsAcademicYearVo to create
      * @return the ResponseEntity with status 201 (Created) and with body the new cmsAcademicYearVo, or with status 400 (Bad Request) if the academicYear has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @throws Exception 
      */
     @RequestMapping(method = RequestMethod.POST, value = "/cmsacademic-years")
-    public ResponseEntity<CmsAcademicYearVo> createAcademicYear(@Valid @RequestBody CmsAcademicYearVo cmsAcademicYearVo) throws URISyntaxException {
+    public ResponseEntity<CmsAcademicYearVo> createAcademicYear(@Valid @RequestBody CmsAcademicYearVo cmsAcademicYearVo) throws Exception {
         logger.debug("REST request to save an AcademicYear : {}", cmsAcademicYearVo);
         if (cmsAcademicYearVo.getId() != null) {
             throw new BadRequestAlertException("A new academicYear cannot have an ID which already exists.", ENTITY_NAME, "idexists");
         }
         AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
+        
         ay = academicYearRepository.save(ay);
+        String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getStartDate());
+    	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getEndDate());
+    	
         cmsAcademicYearVo.setId(ay.getId());
+        cmsAcademicYearVo.setStrStartDate(stDt);
+        cmsAcademicYearVo.setStrEndDate(enDt);
         return ResponseEntity.created(new URI("/api/academic-years/" + cmsAcademicYearVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsAcademicYearVo.getId().toString()))
             .body(cmsAcademicYearVo);
@@ -71,16 +77,21 @@ public class AcademicYearRestController {
      * @return the ResponseEntity with status 200 (OK) and with body the updated cmsAcademicYearVo,
      * or with status 400 (Bad Request) if the cmsAcademicYearVo is not valid,
      * or with status 500 (Internal Server Error) if the cmsAcademicYearVo couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @throws Exception 
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/cmsacademic-years")
-    public ResponseEntity<CmsAcademicYearVo> updateAcademicYear(@Valid @RequestBody CmsAcademicYearVo cmsAcademicYearVo) throws URISyntaxException {
+    public ResponseEntity<CmsAcademicYearVo> updateAcademicYear(@Valid @RequestBody CmsAcademicYearVo cmsAcademicYearVo) throws Exception {
         logger.debug("REST request to update an AcademicYear : {}", cmsAcademicYearVo);
         if (cmsAcademicYearVo.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
         ay = academicYearRepository.save(ay);
+        String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getStartDate());
+    	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getEndDate());
+    	
+        cmsAcademicYearVo.setStrStartDate(stDt);
+        cmsAcademicYearVo.setStrEndDate(enDt);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsAcademicYearVo.getId().toString()))
             .body(cmsAcademicYearVo);
@@ -101,8 +112,8 @@ public class AcademicYearRestController {
         	String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getStartDate());
         	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getEndDate());
         	CmsAcademicYearVo cay = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
-        	cay.setStartDate(stDt);
-        	cay.setEndDate(enDt);
+        	cay.setStrStartDate(stDt);
+        	cay.setStrEndDate(enDt);
         	ls.add(cay);
         }
         return ls;
@@ -113,14 +124,19 @@ public class AcademicYearRestController {
      *
      * @param id the id of the cmsAcademicYearVo to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the cmsAcademicYearVo, or with status 404 (Not Found)
+     * @throws Exception 
      */
     @RequestMapping(method = RequestMethod.GET, value = "/cmsacademic-years/{id}")
-    public ResponseEntity<CmsAcademicYearVo> getAcademicYear(@PathVariable Long id) {
+    public ResponseEntity<CmsAcademicYearVo> getAcademicYear(@PathVariable Long id) throws Exception {
         logger.debug("REST request to get an AcademicYear : {}", id);
         Optional<AcademicYear> ay = academicYearRepository.findById(id);
         CmsAcademicYearVo cay = new CmsAcademicYearVo();
         if(ay.isPresent()) {
-        	cay = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+        	String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.get().getStartDate());
+        	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.get().getEndDate());
+        	cay = CommonUtil.createCopyProperties(ay.get(), CmsAcademicYearVo.class);
+        	cay.setStrStartDate(stDt);
+        	cay.setStrEndDate(enDt);
         }
         return ResponseUtil.wrapOrNotFound(Optional.of(cay));
     }
