@@ -113,7 +113,9 @@ public class LegalEntityRestController {
         CmsLegalEntityVo cvo = null;
         for(LegalEntity l: le) {
         	cvo = CommonUtil.createCopyProperties(l, CmsLegalEntityVo.class);
-        	cvo.setCollegeId(l.getCollege().getId());
+        	if(l.getCollege() != null) {
+        		cvo.setCollegeId(l.getCollege().getId());
+        	}
         	cle.add(cvo);
         }
         return cle;
