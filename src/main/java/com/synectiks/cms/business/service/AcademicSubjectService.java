@@ -27,7 +27,8 @@ import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.service.dto.AcademicSubjectDTO;
+import com.synectiks.cms.service.dto.CmsSubjectVo;
+import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
 public class AcademicSubjectService {
@@ -167,7 +168,7 @@ public class AcademicSubjectService {
 
     public List<Subject> getAllSubjects(Map<String, String> dataMap) {
 		Subject subject = new Subject();
-		subject.setStatus(Status.ACTIVE);
+//		subject.setStatus(Status.ACTIVE);
     	if(dataMap.containsKey("subCode")) {
     		String subjectCode = dataMap.get("subCode");
     		subject.setSubjectCode(subjectCode);
@@ -184,18 +185,24 @@ public class AcademicSubjectService {
 			logger.debug("Batch retrieved by given batch id : "+bt.toString());
 			subject.setBatch(bt);
 		}
-		Example<Subject> example = Example.of(subject);
-		List<Subject> list = this.subjectRepository.findAll(example);
-		logger.info("Total subject retrieved: "+list.size());
+		List<Subject> list = null;
+		if(dataMap.size() > 0) {
+			Example<Subject> example = Example.of(subject);
+			list = this.subjectRepository.findAll(example);
+		}else {
+			list = this.subjectRepository.findAll();
+		}
+		
+		logger.info("Total subjects retrieved: "+list.size());
 		return list;
 	}
     
     
     
     @Transactional(propagation=Propagation.REQUIRED)
-	public void createSubjects(List<AcademicSubjectDTO> list) {
-		for (Iterator<AcademicSubjectDTO> iterator = list.iterator(); iterator.hasNext();) {
-			AcademicSubjectDTO dto = iterator.next();
+	public void createSubjects(List<CmsSubjectVo> list) {
+		for (Iterator<CmsSubjectVo> iterator = list.iterator(); iterator.hasNext();) {
+			CmsSubjectVo dto = iterator.next();
 			Subject sub = new Subject();
 			sub.setSubjectCode(dto.getSubjectCode());
 			if(dto.getSubjectType() == null) {
@@ -232,6 +239,87 @@ public class AcademicSubjectService {
 			logger.info("Teach data saved.");
 		}
 		logger.info("Subject and Teach records saved into database successfully.");
+		
+	}
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+	public CmsSubjectVo createSubject(CmsSubjectVo cmsSubjectVo) {
+		Subject sub = new Subject();
+		sub.setSubjectCode(cmsSubjectVo.getSubjectCode());
+		if(cmsSubjectVo.getSubjectType() == null) {
+			sub.setSubjectType(SubTypeEnum.COMMON);
+		}else {
+			sub.setSubjectType(cmsSubjectVo.getSubjectType());
+		}
+		
+		if(cmsSubjectVo.getSubjectDesc() != null) {
+			sub.setSubjectDesc(cmsSubjectVo.getSubjectDesc());
+		}else {
+			sub.setSubjectDesc(cmsSubjectVo.getSubjectCode());
+		}
+		
+		if(cmsSubjectVo.getStatus() != null) {
+			sub.setStatus(cmsSubjectVo.getStatus());
+		}else {
+			sub.setStatus(Status.ACTIVE);
+		}
+		Department dt = commonService.getDepartmentById(cmsSubjectVo.getDepartmentId());
+		Batch bt =  commonService.getBatchById(cmsSubjectVo.getBatchId());
+		sub.setDepartment(dt);
+		sub.setBatch(bt);
+		sub = this.subjectRepository.save(sub);
+		logger.info("Subject data saved.");
+		
+		Teacher teacher = commonService.getTeacherById(cmsSubjectVo.getTeacherId());
+		
+		Teach teach = new Teach();
+		teach.setSubject(sub);
+		teach.setTeacher(teacher);
+		teach.setDesc(cmsSubjectVo.getSubjectCode());
+		teach = this.teachRepository.save(teach);
+		
+		cmsSubjectVo = CommonUtil.createCopyProperties(sub, CmsSubjectVo.class);
+		cmsSubjectVo.setId(sub.getId());
+		cmsSubjectVo.setTeacher(teacher);
+		cmsSubjectVo.setTeacherId(teacher.getId());
+		
+		logger.info("Subject and Teach records saved in database successfully.");
+		return cmsSubjectVo;
+		
+	}
+    
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+	public CmsSubjectVo updateSubject(CmsSubjectVo cmsSubjectVo) {
+		Subject sub = CommonUtil.createCopyProperties(cmsSubjectVo, Subject.class);
+		
+		Department dt = commonService.getDepartmentById(cmsSubjectVo.getDepartmentId());
+		Batch bt =  commonService.getBatchById(cmsSubjectVo.getBatchId());
+		sub.setDepartment(dt);
+		sub.setBatch(bt);
+		sub = this.subjectRepository.save(sub);
+		logger.info("Subject data updated.");
+		
+		Teacher teacher = commonService.getTeacherById(cmsSubjectVo.getTeacherId());
+		
+		// find the existing record in teach table for given teacher and subject. If not exists, create a new teach record.
+		Teach teach = new Teach();
+		teach.setSubject(sub);
+		teach.setTeacher(teacher);
+		Example<Teach> example = Example.of(teach);
+		
+		if(!this.teachRepository.exists(example)) {
+			teach.setDesc(cmsSubjectVo.getSubjectCode());
+			teach = this.teachRepository.save(teach);
+		}
+		
+		cmsSubjectVo = CommonUtil.createCopyProperties(sub, CmsSubjectVo.class);
+		cmsSubjectVo.setId(sub.getId());
+		cmsSubjectVo.setTeacher(teacher);
+		cmsSubjectVo.setTeacherId(teacher.getId());
+		
+		logger.info("Subject and Teach records updated in database successfully.");
+		return cmsSubjectVo;
 		
 	}
     

@@ -4,6 +4,11 @@
         {
             "fieldName": "desc",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "semester",
+            "fieldType": "Semester",
+            "fieldValues": "FIRST,SECOND,THIRD,FOURTH,FIFTH,SIXTH,SEVENTH,EIGHTH"
         }
     ],
     "relationships": [

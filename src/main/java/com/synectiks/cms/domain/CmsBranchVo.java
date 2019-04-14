@@ -109,19 +109,7 @@ public class CmsBranchVo implements Serializable {
         return Objects.hashCode(getId());
     }
 
-    @Override
-    public String toString() {
-        return "BranchDTO{" +
-            "id=" + getId() +
-            ", branchName='" + getBranchName() + "'" +
-            ", address1='" + getAddress1() + "'" +
-            ", address2='" + getAddress2() + "'" +
-            ", branchHead='" + getBranchHead() + "'" +
-            ", college=" + getCollegeId() +
-            ", city=" + getCityId() +
-            ", state=" + getStateId() +
-            "}";
-    }
+   
 
 	public College getCollege() {
 		return college;
@@ -145,5 +133,12 @@ public class CmsBranchVo implements Serializable {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	@Override
+	public String toString() {
+		return "CmsBranchVo [id=" + id + ", branchName=" + branchName + ", address1=" + address1 + ", address2="
+				+ address2 + ", branchHead=" + branchHead + ", collegeId=" + collegeId + ", cityId=" + cityId
+				+ ", stateId=" + stateId + ", college=" + college + ", city=" + city + ", state=" + state + "]";
 	}
 }

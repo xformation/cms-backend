@@ -10,6 +10,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.synectiks.cms.domain.enumeration.Semester;
+
 /**
  * A AttendanceMaster.
  */
@@ -28,6 +30,10 @@ public class AttendanceMaster implements Serializable {
 
     @Column(name = "jhi_desc")
     private String desc;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "semester")
+    private Semester semester;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -61,6 +67,19 @@ public class AttendanceMaster implements Serializable {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public AttendanceMaster semester(Semester semester) {
+        this.semester = semester;
+        return this;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 
     public Batch getBatch() {
@@ -128,6 +147,7 @@ public class AttendanceMaster implements Serializable {
         return "AttendanceMaster{" +
             "id=" + getId() +
             ", desc='" + getDesc() + "'" +
+            ", semester='" + getSemester() + "'" +
             "}";
     }
 }

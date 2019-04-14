@@ -68,7 +68,7 @@ class AttendanceMasterGatlingTest extends Simulation {
             .exec(http("Create new attendanceMaster")
             .post("/api/attendance-masters")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "desc":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "desc":"SAMPLE_TEXT", "semester":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_attendanceMaster_url"))).exitHereIfFailed
             .pause(10)

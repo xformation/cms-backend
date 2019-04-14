@@ -3,30 +3,29 @@ package com.synectiks.cms.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 
 /**
- * A DTO for the Subject and Teach entity.
+ * A Vo for the Subject, Teacher and Teach entity.
  */
 
-public class AcademicSubjectDTO implements Serializable {
+public class CmsSubjectVo implements Serializable {
 
     private Long id;
-
     private String subjectCode;
-
     private SubTypeEnum subjectType;
-
     private String subjectDesc;
-
     private Status status;
-
     private Long departmentId;
-
     private Long batchId;
-
     private Long teacherId;
+    private Department department;
+    private Batch batch;
+    private Teacher teacher;
     
     public Long getId() {
         return id;
@@ -93,7 +92,7 @@ public class AcademicSubjectDTO implements Serializable {
             return false;
         }
 
-        AcademicSubjectDTO subjectDTO = (AcademicSubjectDTO) o;
+        CmsSubjectVo subjectDTO = (CmsSubjectVo) o;
         if (subjectDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -115,10 +114,35 @@ public class AcademicSubjectDTO implements Serializable {
 		this.teacherId = teacherId;
 	}
 
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public Batch getBatch() {
+		return batch;
+	}
+
+	public void setBatch(Batch batch) {
+		this.batch = batch;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
 	@Override
 	public String toString() {
-		return "AcademicSubjectDTO [id=" + id + ", subjectCode=" + subjectCode + ", subjectType=" + subjectType
+		return "CmsSubjectVo [id=" + id + ", subjectCode=" + subjectCode + ", subjectType=" + subjectType
 				+ ", subjectDesc=" + subjectDesc + ", status=" + status + ", departmentId=" + departmentId
-				+ ", batchId=" + batchId + ", teacherId=" + teacherId + "]";
+				+ ", batchId=" + batchId + ", teacherId=" + teacherId + ", department=" + department + ", batch="
+				+ batch + ", teacher=" + teacher + "]";
 	}
 }

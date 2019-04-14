@@ -18,6 +18,10 @@ description String required
 deptHead String required
 }
 
+enum Semester {
+    FIRST,SECOND,THIRD,FOURTH,FIFTH,SIXTH,SEVENTH,EIGHTH
+}
+
 entity Batch{
 batch BatchEnum required
 }
@@ -203,6 +207,7 @@ desc String
 
 entity AttendanceMaster{
 desc String
+semester Semester
 }
 
 entity Lecture{

@@ -37,6 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.Semester;
 /**
  * Test class for the AttendanceMasterResource REST controller.
  *
@@ -48,6 +49,9 @@ public class AttendanceMasterResourceIntTest {
 
     private static final String DEFAULT_DESC = "AAAAAAAAAA";
     private static final String UPDATED_DESC = "BBBBBBBBBB";
+
+    private static final Semester DEFAULT_SEMESTER = Semester.FIRST;
+    private static final Semester UPDATED_SEMESTER = Semester.SECOND;
 
     @Autowired
     private AttendanceMasterRepository attendanceMasterRepository;
@@ -103,7 +107,8 @@ public class AttendanceMasterResourceIntTest {
      */
     public static AttendanceMaster createEntity(EntityManager em) {
         AttendanceMaster attendanceMaster = new AttendanceMaster()
-            .desc(DEFAULT_DESC);
+            .desc(DEFAULT_DESC)
+            .semester(DEFAULT_SEMESTER);
         return attendanceMaster;
     }
 
@@ -129,6 +134,7 @@ public class AttendanceMasterResourceIntTest {
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeCreate + 1);
         AttendanceMaster testAttendanceMaster = attendanceMasterList.get(attendanceMasterList.size() - 1);
         assertThat(testAttendanceMaster.getDesc()).isEqualTo(DEFAULT_DESC);
+        assertThat(testAttendanceMaster.getSemester()).isEqualTo(DEFAULT_SEMESTER);
 
         // Validate the AttendanceMaster in Elasticsearch
         verify(mockAttendanceMasterSearchRepository, times(1)).save(testAttendanceMaster);
@@ -168,7 +174,8 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(attendanceMaster.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
     }
     
 
@@ -183,7 +190,8 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(attendanceMaster.getId().intValue()))
-            .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()));
+            .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()))
+            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()));
     }
     @Test
     @Transactional
@@ -206,7 +214,8 @@ public class AttendanceMasterResourceIntTest {
         // Disconnect from session so that the updates on updatedAttendanceMaster are not directly saved in db
         em.detach(updatedAttendanceMaster);
         updatedAttendanceMaster
-            .desc(UPDATED_DESC);
+            .desc(UPDATED_DESC)
+            .semester(UPDATED_SEMESTER);
         AttendanceMasterDTO attendanceMasterDTO = attendanceMasterMapper.toDto(updatedAttendanceMaster);
 
         restAttendanceMasterMockMvc.perform(put("/api/attendance-masters")
@@ -219,6 +228,7 @@ public class AttendanceMasterResourceIntTest {
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeUpdate);
         AttendanceMaster testAttendanceMaster = attendanceMasterList.get(attendanceMasterList.size() - 1);
         assertThat(testAttendanceMaster.getDesc()).isEqualTo(UPDATED_DESC);
+        assertThat(testAttendanceMaster.getSemester()).isEqualTo(UPDATED_SEMESTER);
 
         // Validate the AttendanceMaster in Elasticsearch
         verify(mockAttendanceMasterSearchRepository, times(1)).save(testAttendanceMaster);
@@ -279,7 +289,8 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(attendanceMaster.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
     }
 
     @Test
