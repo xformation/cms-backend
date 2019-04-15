@@ -75,7 +75,9 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Logo</th>
+                <th>Logo Path</th>
+                <th>Logo File Name</th>
+                <th>Logo File</th>
                 <th>Legal Name Of The College</th>
                 <th>Type Of College</th>
                 <th>Date Of Incorporation</th>
@@ -114,7 +116,9 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
                       {legalEntity.id}
                     </Button>
                   </td>
-                  <td>{legalEntity.logo}</td>
+                  <td>{legalEntity.logoPath}</td>
+                  <td>{legalEntity.logoFileName}</td>
+                  <td>{legalEntity.logoFile}</td>
                   <td>{legalEntity.legalNameOfTheCollege}</td>
                   <td>{legalEntity.typeOfCollege}</td>
                   <td>

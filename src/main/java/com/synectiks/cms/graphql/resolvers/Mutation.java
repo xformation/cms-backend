@@ -1468,6 +1468,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddLegalEntityPayload addLegalEntity(AddLegalEntityInput addLegalEntityInput) {
         final LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setLogoFile(addLegalEntityInput.getLogoFile());
         legalEntity.setLogoFileName(addLegalEntityInput.getLogoFileName());
         legalEntity.setLogoPath(addLegalEntityInput.getLogoPath());
         legalEntity.setLegalNameOfTheCollege(addLegalEntityInput.getLegalNameOfTheCollege());

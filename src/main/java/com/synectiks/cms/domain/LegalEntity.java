@@ -1,26 +1,17 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 /**
@@ -99,7 +90,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "form_signatory", nullable = false)
-    private Long formSignatory;
+    private String formSignatory;
 
     @NotNull
     @Column(name = "pf_number", nullable = false)
@@ -370,16 +361,16 @@ public class LegalEntity implements Serializable {
         this.citTdsLocation = citTdsLocation;
     }
 
-    public Long getFormSignatory() {
+    public String getFormSignatory() {
         return formSignatory;
     }
 
-    public LegalEntity formSignatory(Long formSignatory) {
+    public LegalEntity formSignatory(String formSignatory) {
         this.formSignatory = formSignatory;
         return this;
     }
 
-    public void setFormSignatory(Long formSignatory) {
+    public void setFormSignatory(String formSignatory) {
         this.formSignatory = formSignatory;
     }
 
@@ -593,7 +584,7 @@ public class LegalEntity implements Serializable {
             ", tan='" + getTan() + "'" +
             ", tanCircleNumber='" + getTanCircleNumber() + "'" +
             ", citTdsLocation='" + getCitTdsLocation() + "'" +
-            ", formSignatory=" + getFormSignatory() +
+            ", formSignatory='" + getFormSignatory() + "'" +
             ", pfNumber='" + getPfNumber() + "'" +
             ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
             ", pfSignatory=" + getPfSignatory() +

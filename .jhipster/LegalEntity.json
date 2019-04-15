@@ -95,7 +95,7 @@
         },
         {
             "fieldName": "formSignatory",
-            "fieldType": "Long",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]

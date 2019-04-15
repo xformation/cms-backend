@@ -81,6 +81,7 @@ public class AdmissionEnquiryResourceIntTest {
 
     private static final Date DEFAULT_UPDATED_ON = new Date();
     private static final Date UPDATED_UPDATED_ON = new Date();
+
     private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
 

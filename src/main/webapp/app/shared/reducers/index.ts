@@ -198,6 +198,14 @@ import admissionEnquiry, {
 import dueDate, {
   DueDateState
 } from 'app/entities/due-date/due-date.reducer';
+// prettier-ignore
+import legalEntity, {
+  LegalEntityState
+} from 'app/entities/legal-entity/legal-entity.reducer';
+// prettier-ignore
+import admissionEnquiry, {
+  AdmissionEnquiryState
+} from 'app/entities/admission-enquiry/admission-enquiry.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

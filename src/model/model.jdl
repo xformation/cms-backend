@@ -258,7 +258,7 @@ pan String required
 tan String required
 tanCircleNumber String required
 citTdsLocation String required
-formSignatory Long required
+formSignatory String required
 pfNumber String required
 pfRegistrationDate LocalDate required
 pfSignatory Long required
