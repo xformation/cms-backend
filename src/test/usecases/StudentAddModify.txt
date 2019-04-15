@@ -1,0 +1,107 @@
+=========================================
+mutation addStudent($input: AddStudentInput!) {
+addStudent(input: $input) {
+student {
+id
+studentName
+studentMiddleName
+studentLastName
+fatherName
+fatherMiddleName
+fatherLastName
+motherName
+motherMiddleName
+motherLastName
+aadharNo
+dateOfBirth
+placeOfBirth
+religion
+caste
+subCaste
+age
+sex
+bloodGroup
+addressLineOne
+addressLineTwo
+addressLineThree
+town
+state
+country
+pincode
+studentContactNumber
+alternateContactNumber
+studentEmailAddress
+alternateEmailAddress
+relationWithStudent
+emergencyContactName
+emergencyContactMiddleName
+emergencyContactLastName
+emergencyContactNo
+emergencyContactEmailAddress
+uploadPhoto
+admissionNo
+rollNo
+studentType
+batch {
+id
+}
+section {
+id
+}
+branch {
+id
+}
+department {
+id
+}
+}
+}
+}
+==============================================================
+{
+"input": {
+"studentName": "ANANYA",
+"studentMiddleName": "SRI",
+"studentLastName": "M",
+"fatherName": "VAMSI",
+"fatherMiddleName": "rao",
+"fatherLastName": "M",
+"motherName": "JYOTHI",
+"motherMiddleName": "rao",
+"motherLastName": "M",
+"aadharNo": "38019819883",
+"dateOfBirth": "1995-12-31",
+"placeOfBirth": "HYDERABAD",
+"religion": "HINDU",
+"caste": "BC",
+"subCaste": "BCB",
+"age": 19,
+"sex": "FEMALE",
+"bloodGroup": "ABPOSITIVE",
+"addressLineOne": "DoorNo:42-3-2",
+"addressLineTwo": "MADHAPUR",
+"addressLineThree": "HYDERABAD",
+"town": "HYDERABAD",
+"state": "AP",
+"country": "india",
+"pincode": 533101,
+"studentContactNumber": "91002617333",
+"alternateContactNumber": "94749584985",
+"studentEmailAddress": "ananya@gmail.com",
+"alternateEmailAddress": "sri@gmail.com",
+"relationWithStudent": "FATHER",
+"emergencyContactName": "beck",
+"emergencyContactMiddleName": "adam",
+"emergencyContactLastName": "snow",
+"emergencyContactNo": "2348204658",
+"emergencyContactEmailAddress": "beck.adam@gmail.com",
+"uploadPhoto": "123",
+"admissionNo": "444334",
+"rollNo": "13P31Ao595",
+"studentType": "BENEFITS",
+"batchId": 1951,
+"sectionId": 2001,
+"branchId": 1851,
+"departmentId": 1901
+}
+}
