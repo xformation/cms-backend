@@ -105,3 +105,18 @@ id
 "departmentId": 1901
 }
 }
+=================================================
+mutation removeStudent($input: RemoveStudentInput!) {
+removeStudent(input: $input) {
+students{
+id
+}
+}
+}
+
+{
+"input": {
+"studentId": 951
+}
+}
+======================================
