@@ -22,11 +22,19 @@
  ---------------------
  Facility:
 
- mutation addFacility($input: AddFacilityInput!){
+mutation addFacility($input: AddFacilityInput!){
    	addFacility(input: $input){
      facility{
        id
-      facilityName
+      transport
+      mess
+      gym
+      culturalClass
+      library
+      sports
+      swimming
+      extraClass
+      handicrafts
        academicYear{
          id
        }
@@ -41,11 +49,17 @@
  	}
  }
 
- Input: {
-
- {
+{
    "input": {
-     "facilityName": "transport",
+    "transport": "ACTIVE",
+    "gym": "ACTIVE",
+    "mess": "ACTIVE",
+    "culturalClass": "ACTIVE",
+    "library": "ACTIVE",
+    "sports": "ACTIVE",
+    "swimming": "ACTIVE",
+    "extraClass": "ACTIVE",
+    "handicrafts": "ACTIVE",
      "academicyearId": 1201,
      "branchId": 1151,
      "studentId": 1401
@@ -67,7 +81,7 @@
  	}
  }
 
- Input: {
+ {
    "input": {
     "routeName":    "madhapur",
      "routeMapUrl":  "asdf",
@@ -117,8 +131,9 @@
  	}
  }
 
- Input: {
-   "input": {
+
+{
+  "input": {
     "feeParticularsName":   "dghh",
      "feeParticularDesc": "asdf",
      "studentType": "REGULAR",
@@ -139,37 +154,39 @@
  --------------------
  DueDate:
 
- mutation addDueDate($input:AddDueDateInput!){
-   	addDueDate(input: $input){
-     dueDate{
-       id
-       paymentMethod
-       installments
-       dayDesc
-       frequency
+  mutation addDueDate($input:AddDueDateInput!){
+    	addDueDate(input: $input){
+      dueDate{
+        id
+        paymentMethod
+        installments
+        dayDesc
+       paymentDate
+        frequency
 
-     college{
-         id
-       }
-        branch{
-         id
-       }
-     }
-   }
- }
+      college{
+          id
+        }
+         branch{
+          id
+        }
+      }
+    }
+  }
 
 
- 	{
-       "input": {
-         "paymentMethod": "online",
-         "installments": 1,
-         "dayDesc": "monday",
-         "frequency": "MONTHLY",
-         "collegeId": 1151,
-         "branchId": 1201
+ {
+        "input": {
+          "paymentMethod": "online",
+          "installments": 1,
+          "dayDesc": "monday",
+         "paymentDate": "2018-04-14",
+          "frequency": "MONTHLY",
+          "collegeId": 1151,
+          "branchId": 1201
 
-       }
-     }
+        }
+      }
 
  --------------------
  PaymentRemainder:
