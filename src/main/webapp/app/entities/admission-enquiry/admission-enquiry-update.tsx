@@ -18,7 +18,7 @@ import { IAdmissionEnquiry } from 'app/shared/model/admission-enquiry.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IAdmissionEnquiryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAdmissionEnquiryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAdmissionEnquiryUpdateState {
   isNew: boolean;

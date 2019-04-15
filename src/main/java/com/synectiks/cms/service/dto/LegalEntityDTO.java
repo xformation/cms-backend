@@ -55,7 +55,7 @@ public class LegalEntityDTO implements Serializable {
     private String citTdsLocation;
 
     @NotNull
-    private String formSignatory;
+    private Long formSignatory;
 
     @NotNull
     private String pfNumber;
@@ -228,11 +228,11 @@ public class LegalEntityDTO implements Serializable {
         this.citTdsLocation = citTdsLocation;
     }
 
-    public String getFormSignatory() {
+    public Long getFormSignatory() {
         return formSignatory;
     }
 
-    public void setFormSignatory(String formSignatory) {
+    public void setFormSignatory(Long formSignatory) {
         this.formSignatory = formSignatory;
     }
 
@@ -381,7 +381,7 @@ public class LegalEntityDTO implements Serializable {
             ", tan='" + getTan() + "'" +
             ", tanCircleNumber='" + getTanCircleNumber() + "'" +
             ", citTdsLocation='" + getCitTdsLocation() + "'" +
-            ", formSignatory='" + getFormSignatory() + "'" +
+            ", formSignatory=" + getFormSignatory() +
             ", pfNumber='" + getPfNumber() + "'" +
             ", pfRegistrationDate='" + getPfRegistrationDate() + "'" +
             ", pfSignatory=" + getPfSignatory() +

@@ -12,7 +12,7 @@ import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ILegalEntityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ILegalEntityDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> {
   componentDidMount() {
@@ -29,17 +29,9 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="logoPath">Logo Path</span>
+              <span id="logo">Logo</span>
             </dt>
-            <dd>{legalEntityEntity.logoPath}</dd>
-            <dt>
-              <span id="logoFileName">Logo File Name</span>
-            </dt>
-            <dd>{legalEntityEntity.logoFileName}</dd>
-            <dt>
-              <span id="logoFile">Logo File</span>
-            </dt>
-            <dd>{legalEntityEntity.logoFile}</dd>
+            <dd>{legalEntityEntity.logo}</dd>
             <dt>
               <span id="legalNameOfTheCollege">Legal Name Of The College</span>
             </dt>

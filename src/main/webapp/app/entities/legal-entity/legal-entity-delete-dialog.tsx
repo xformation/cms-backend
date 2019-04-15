@@ -9,7 +9,7 @@ import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './legal-entity.reducer';
 
-export interface ILegalEntityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ILegalEntityDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class LegalEntityDeleteDialog extends React.Component<ILegalEntityDeleteDialogProps> {
   componentDidMount() {

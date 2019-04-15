@@ -1,14 +1,25 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
-import com.synectiks.cms.service.LegalEntityService;
-import com.synectiks.cms.service.dto.LegalEntityDTO;
-import com.synectiks.cms.service.mapper.LegalEntityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,23 +35,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.LegalEntity;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+import com.synectiks.cms.service.LegalEntityService;
+import com.synectiks.cms.service.dto.LegalEntityDTO;
+import com.synectiks.cms.service.mapper.LegalEntityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the LegalEntityResource REST controller.
  *
@@ -98,8 +101,8 @@ public class LegalEntityResourceIntTest {
     private static final String DEFAULT_CIT_TDS_LOCATION = "AAAAAAAAAA";
     private static final String UPDATED_CIT_TDS_LOCATION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_FORM_SIGNATORY = "AAAAAAAAAA";
-    private static final String UPDATED_FORM_SIGNATORY = "BBBBBBBBBB";
+    private static final Long DEFAULT_FORM_SIGNATORY = 1L;
+    private static final Long UPDATED_FORM_SIGNATORY = 2L;
 
     private static final String DEFAULT_PF_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PF_NUMBER = "BBBBBBBBBB";
@@ -123,7 +126,7 @@ public class LegalEntityResourceIntTest {
     private static final String UPDATED_PT_NUMBER = "BBBBBBBBBB";
 
     private static final Date DEFAULT_PT_REGISTRATION_DATE = new Date();
-    private static final Date UPDATED_PT_REGISTRATION_DATE = new Date() ;
+    private static final Date UPDATED_PT_REGISTRATION_DATE = new Date();
 
     private static final Long DEFAULT_PT_SIGNATORY = 1L;
     private static final Long UPDATED_PT_SIGNATORY = 2L;
@@ -674,7 +677,7 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN.toString())))
             .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION.toString())))
-            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.toString())))
+            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.intValue())))
@@ -714,7 +717,7 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.tan").value(DEFAULT_TAN.toString()))
             .andExpect(jsonPath("$.tanCircleNumber").value(DEFAULT_TAN_CIRCLE_NUMBER.toString()))
             .andExpect(jsonPath("$.citTdsLocation").value(DEFAULT_CIT_TDS_LOCATION.toString()))
-            .andExpect(jsonPath("$.formSignatory").value(DEFAULT_FORM_SIGNATORY.toString()))
+            .andExpect(jsonPath("$.formSignatory").value(DEFAULT_FORM_SIGNATORY.intValue()))
             .andExpect(jsonPath("$.pfNumber").value(DEFAULT_PF_NUMBER.toString()))
             .andExpect(jsonPath("$.pfRegistrationDate").value(DEFAULT_PF_REGISTRATION_DATE.toString()))
             .andExpect(jsonPath("$.pfSignatory").value(DEFAULT_PF_SIGNATORY.intValue()))
@@ -885,7 +888,7 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].tan").value(hasItem(DEFAULT_TAN.toString())))
             .andExpect(jsonPath("$.[*].tanCircleNumber").value(hasItem(DEFAULT_TAN_CIRCLE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].citTdsLocation").value(hasItem(DEFAULT_CIT_TDS_LOCATION.toString())))
-            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.toString())))
+            .andExpect(jsonPath("$.[*].formSignatory").value(hasItem(DEFAULT_FORM_SIGNATORY.intValue())))
             .andExpect(jsonPath("$.[*].pfNumber").value(hasItem(DEFAULT_PF_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].pfRegistrationDate").value(hasItem(DEFAULT_PF_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].pfSignatory").value(hasItem(DEFAULT_PF_SIGNATORY.intValue())))

@@ -85,7 +85,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="form_signatory" type="varchar(255)">
+            <column name="form_signatory" type="bigint">
                 <constraints nullable="false" />
             </column>
 

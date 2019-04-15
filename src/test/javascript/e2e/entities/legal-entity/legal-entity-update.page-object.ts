@@ -4,9 +4,7 @@ export default class LegalEntityUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.legalEntity.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  logoPathInput: ElementFinder = element(by.css('input#legal-entity-logoPath'));
-  logoFileNameInput: ElementFinder = element(by.css('input#legal-entity-logoFileName'));
-  logoFileInput: ElementFinder = element(by.css('input#legal-entity-logoFile'));
+  logoInput: ElementFinder = element(by.css('input#legal-entity-logo'));
   legalNameOfTheCollegeInput: ElementFinder = element(by.css('input#legal-entity-legalNameOfTheCollege'));
   typeOfCollegeSelect: ElementFinder = element(by.css('select#legal-entity-typeOfCollege'));
   dateOfIncorporationInput: ElementFinder = element(by.css('input#legal-entity-dateOfIncorporation'));
@@ -39,28 +37,12 @@ export default class LegalEntityUpdatePage {
     return this.pageTitle;
   }
 
-  setLogoPathInput(logoPath) {
-    this.logoPathInput.sendKeys(logoPath);
+  setLogoInput(logo) {
+    this.logoInput.sendKeys(logo);
   }
 
-  getLogoPathInput() {
-    return this.logoPathInput.getAttribute('value');
-  }
-
-  setLogoFileNameInput(logoFileName) {
-    this.logoFileNameInput.sendKeys(logoFileName);
-  }
-
-  getLogoFileNameInput() {
-    return this.logoFileNameInput.getAttribute('value');
-  }
-
-  setLogoFileInput(logoFile) {
-    this.logoFileInput.sendKeys(logoFile);
-  }
-
-  getLogoFileInput() {
-    return this.logoFileInput.getAttribute('value');
+  getLogoInput() {
+    return this.logoInput.getAttribute('value');
   }
 
   setLegalNameOfTheCollegeInput(legalNameOfTheCollege) {

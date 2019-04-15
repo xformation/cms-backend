@@ -9,7 +9,7 @@ import { IAdmissionEnquiry } from 'app/shared/model/admission-enquiry.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './admission-enquiry.reducer';
 
-export interface IAdmissionEnquiryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAdmissionEnquiryDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class AdmissionEnquiryDeleteDialog extends React.Component<IAdmissionEnquiryDeleteDialogProps> {
   componentDidMount() {

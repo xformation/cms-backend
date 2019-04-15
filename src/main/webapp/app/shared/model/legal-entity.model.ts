@@ -7,9 +7,7 @@ export const enum TypeOfCollege {
 
 export interface ILegalEntity {
   id?: number;
-  logoPath?: string;
-  logoFileName?: string;
-  logoFile?: string;
+  logo?: number;
   legalNameOfTheCollege?: string;
   typeOfCollege?: TypeOfCollege;
   dateOfIncorporation?: Moment;
@@ -23,14 +21,14 @@ export interface ILegalEntity {
   tan?: string;
   tanCircleNumber?: string;
   citTdsLocation?: string;
-  formSignatory?: string;
+  formSignatory?: number;
   pfNumber?: string;
   pfRegistrationDate?: Moment;
   pfSignatory?: number;
-  esiNumber?: string;
+  esiNumber?: number;
   esiRegistrationDate?: Moment;
   esiSignatory?: number;
-  ptNumber?: string;
+  ptNumber?: number;
   ptRegistrationDate?: Moment;
   ptSignatory?: number;
   branchId?: number;
