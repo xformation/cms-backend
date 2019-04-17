@@ -8,28 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import com.synectiks.cms.domain.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.data.domain.Example;
 
 import com.synectiks.cms.business.dto.LectureScheduleDTO;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.domain.enumeration.BatchEnum;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
@@ -357,14 +341,36 @@ public class TestDataPojoBuilder {
 		Example<Lecture> example = Example.of(lc);
 		List<Lecture> list = lectureRepository.findAll(example);
 		return list;
-	} 
-	
-//	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
+	}
+
+
+    public FeeCategory createFeeCategoryPojo(Cell cell) {
+        FeeCategory feeCategory = new FeeCategory();
+        feeCategory.setCategoryName(cell.getStringCellValue());
+        feeCategory.setDescription(" ");
+        return feeCategory;
+    }
+
+    public Facility createFacilityPojo(Cell cell, AcademicYear academicYear,Branch branch,Student student) {
+        Facility facility = new Facility();
+        facility.setTransport(Status.ACTIVE);
+        facility.setMess(Status.ACTIVE);
+        facility.setGym(Status.ACTIVE);
+        facility.setCulturalClass(Status.DEACTIVE);
+        facility.setSports(Status.DEACTIVE);
+        facility.setSwimming(Status.ACTIVE);
+        facility.setExtraClass(Status.DEACTIVE);
+        facility.setHandicrafts(Status.ACTIVE);
+        facility.setAcademicYear(academicYear );
+        facility.setBranch(branch);
+        facility.setStudent(student);
+        return facility;
+    }
+}
+    //	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
 //		StudentAttendance sa = new StudentAttendance(); 
 //		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
 //		sa.setStudent(student);
 //		sa.setLecture(lecture);
 //		return sa;
-//	}
-
-}
+//
