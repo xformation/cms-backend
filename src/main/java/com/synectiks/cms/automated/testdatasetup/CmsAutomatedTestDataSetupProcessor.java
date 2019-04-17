@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,8 @@ public class CmsAutomatedTestDataSetupProcessor {
     private AttendanceMaster attendanceMaster = null;
     private FeeCategory feeCategory = null;
     private Facility facility = null;
+    private TransportRoute transportRoute=null;
+    private FeeDetails feeDetails=null;
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -124,7 +127,10 @@ public class CmsAutomatedTestDataSetupProcessor {
 
     @Autowired
     private FacilityRepository facilityRepository;
-
+    @Autowired
+    private TransportRouteRepository transportRouteRepository;
+    @Autowired
+    private FeeDetailsRepository feeDetailsRepository;
 
     private ObjectMapper mapper = new ObjectMapper();
     String values[] = new String[1];
@@ -256,7 +262,22 @@ public class CmsAutomatedTestDataSetupProcessor {
             logger.error("Exception in creating CMS  Facility test data ", e);
         }
     }
-
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createTransportRoute")
+    public void createCmsTestTransportRouteData() throws IOException, ParseException {
+        try {
+            executeTransportRoute();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  TransportRoute test data ", e);
+        }
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createFeeDetails")
+    public void createCmsTestFeeDetailsData() throws IOException, ParseException {
+        try {
+            executeFeeDetails();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  FeeDetails test data ", e);
+        }
+    }
 
     private void executeAcademicYear() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
@@ -472,6 +493,40 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+    private void executeTransportRoute() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsTransportRouteData(wb);
+            logger.info("TransportRoute TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+    private void executeFeeDetails() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsFeeCategory(wb);
+            saveCmsBatchData(wb);
+            saveCmsFacilityData(wb);
+            saveCmsTransportRouteData(wb);
+            saveCmsCollegeData(wb);
+            saveCmsDepartmentData(wb);
+            saveCmsBranchData(wb);
+            saveCmsAcademicYearData(wb);
+            saveCmsFeeDetails(wb);
+            logger.info("FeeDetails TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
     private void execute() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
         FileInputStream fis = null;
@@ -640,6 +695,12 @@ public class CmsAutomatedTestDataSetupProcessor {
                 }
                 if (cell.getColumnIndex() == 18) {
                     saveFacility(cell);
+                }
+                if (cell.getColumnIndex()== 19){
+                    saveTransportRoute(cell);
+                }
+                if (cell.getColumnIndex()==20){
+                    saveFeeDetails(cell);
                 }
             }
         }
@@ -923,6 +984,47 @@ public class CmsAutomatedTestDataSetupProcessor {
             }
         }
     }
+
+    private void saveCmsTransportRouteData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 19) {
+                    saveTransportRoute(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsFeeDetails(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 20) {
+                    saveFeeDetails(cell);
+                }
+            }
+        }
+    }
+
 
 
     private void saveAcademicYear(Cell cell) {
@@ -1257,5 +1359,38 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
         logger.debug("Saving facility data completed.");
     }
-}
 
+
+    private void saveTransportRoute(Cell cell) {
+        logger.debug("Saving transportRoute data started.");
+        this.transportRoute = this.testDataPojoBuilder.createTransportRoutePojo(cell);
+        try {
+            Example<TransportRoute> example = Example.of(this.transportRoute);
+            if(this.transportRouteRepository.exists(example) == false) {
+                this.transportRoute = this.transportRouteRepository.save(this.transportRoute);
+            }else {
+                this.transportRoute = this.transportRouteRepository.findOne(example).get();
+            }
+        }catch(Exception e) {
+            logger.warn("Exception in saving transportRoute data. "+e.getMessage());
+        }
+        logger.debug("Saving transportRoute data completed.");
+    }
+
+
+    private void saveFeeDetails(Cell cell) {
+        logger.debug("Saving feeDetails data started.");
+        this.feeDetails = this.testDataPojoBuilder.createFeeDetailsPojo(cell,this.feeCategory,this.batch,this.facility,this.transportRoute,this.college,this.department,this.branch,this.academicYear);
+        try {
+            Example<FeeDetails> example = Example.of(this.feeDetails);
+            if(this.feeDetailsRepository.exists(example) == false) {
+                this.feeDetails = this.feeDetailsRepository.save(this.feeDetails);
+            }else {
+                this.feeDetails = this.feeDetailsRepository.findOne(example).get();
+            }
+        }catch(Exception e) {
+            logger.warn("Exception in saving transportRoute data. "+e.getMessage());
+        }
+        logger.debug("Saving transportRoute data completed.");
+    }
+}

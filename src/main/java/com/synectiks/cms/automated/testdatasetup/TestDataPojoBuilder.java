@@ -31,7 +31,7 @@ import com.synectiks.cms.repository.StateRepository;
 
 public class TestDataPojoBuilder {
 	SimpleDateFormat ddMMyyyyDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	
+
 	public Country createCountryPojo() {
 		Country ct = new Country();
 		ct.setCountryName("India");
@@ -39,7 +39,7 @@ public class TestDataPojoBuilder {
 		ct.setIsdCode("+91");
 		return ct;
 	}
-	
+
 	public State createStatePojo(Row row, Country country) {
 		State state = new State();
 		Iterator<Cell> cellIterator = row.cellIterator();
@@ -58,7 +58,7 @@ public class TestDataPojoBuilder {
 		state.setCountry(country);
 		return state;
 	}
-	
+
 	public City createCityPojo(Row row, StateRepository stateRepository) {
 		City city = new City();
 		Iterator<Cell> cellIterator = row.cellIterator();
@@ -81,7 +81,7 @@ public class TestDataPojoBuilder {
 		}
 		return city;
 	}
-	
+
 	private State findStateByStateCode(String stateCode, StateRepository stateRepository) {
 		State st = new State();
 		st.setStateCode(stateCode);
@@ -92,7 +92,7 @@ public class TestDataPojoBuilder {
 		}
 		return null;
 	}
-	
+
 	public AcademicYear createAcademicYearPojo(Cell cell) {
 		AcademicYear ay = new AcademicYear();
 		String jhiYear = null;
@@ -110,7 +110,7 @@ public class TestDataPojoBuilder {
 //				System.out.println("Row index : "+cell.getRowIndex()+", cell index : "+cell.getColumnIndex()+", DEFAULT CELL");
 				break;
 		}
-		
+
 		ay.setYear(jhiYear);
 		Calendar cal = Calendar.getInstance();
 		cal.set(Integer.parseInt(jhiYear), 01, 01);
@@ -120,7 +120,7 @@ public class TestDataPojoBuilder {
 		System.out.println(ay.toString());
 		return ay;
 	}
-	
+
 	public Term createTermPojo(Cell cell, AcademicYear ay) throws ParseException {
 		Term tm = new Term();
 		String dt [] = cell.getStringCellValue().split("to");
@@ -132,7 +132,7 @@ public class TestDataPojoBuilder {
 		System.out.println(tm.toString());
 		return tm;
 	}
-	
+
 	public College createCollegePojo(Cell cell) {
 		College college = new College();
 		college.setShortName(cell.getStringCellValue());
@@ -144,7 +144,7 @@ public class TestDataPojoBuilder {
 		System.out.println(college.toString());
 		return college;
 	}
-	
+
 	public Branch createBranchPojo(Cell cell, College college, State state, City city) {
 		Branch branch = new Branch();
 		branch.setBranchName(cell.getStringCellValue());
@@ -156,7 +156,7 @@ public class TestDataPojoBuilder {
 		branch.setCity(city);
 		return branch;
 	}
-	
+
 	public Department createDepartmentPojo(Cell cell, Branch branch, AcademicYear academicYear) {
 		Department dt = new Department();
 		dt.setName(cell.getStringCellValue());
@@ -166,7 +166,7 @@ public class TestDataPojoBuilder {
 		dt.setAcademicyear(academicYear);
 		return dt;
 	}
-	
+
 	public Batch createBatchPojo(Cell cell,  Department department) {
 		Batch bt = new Batch();
 		if(cell.getStringCellValue().equalsIgnoreCase("FIRSTYEAR")) {
@@ -181,7 +181,7 @@ public class TestDataPojoBuilder {
 		bt.setDepartment(department);
 		return bt;
 	}
-	
+
 	public Section createSectionPojo(Cell cell, Batch batch) {
 		Section sec = new Section();
 		if(cell.getStringCellValue().equalsIgnoreCase("A")) {
@@ -196,9 +196,9 @@ public class TestDataPojoBuilder {
 		sec.batch(batch);
 		return sec;
 	}
-	
-	public Student createStudentPojo(Cell cell, Department department, Batch batch, 
-			Section section, Branch branch, State state, City city, Country country) { 
+
+	public Student createStudentPojo(Cell cell, Department department, Batch batch,
+			Section section, Branch branch, State state, City city, Country country) {
 		Student st = new Student();
 		st.setStudentName(cell.getStringCellValue());
 		st.setStudentMiddleName("");
@@ -245,7 +245,7 @@ public class TestDataPojoBuilder {
 		st.setBranch(branch);
 		return st;
 	}
-	
+
 	public Subject createSubjectPojo(Cell cell, Department department, Batch batch) {
 		Subject sb = new Subject();
 		sb.setSubjectCode(cell.getStringCellValue());
@@ -256,7 +256,7 @@ public class TestDataPojoBuilder {
 		sb.setBatch(batch);
 		return sb;
 	}
-	
+
 	public Teacher createTeacherPojo(Cell cell, Department department, Branch branch, State state, City city, Country country) {
 		Teacher thr = new Teacher();
 		thr.setTeacherName(cell.getStringCellValue());
@@ -303,7 +303,7 @@ public class TestDataPojoBuilder {
 		thr.setBranch(branch);
 		return thr;
 	}
-	
+
 	public Teach createTeachPojo(Cell cell, Subject subject, Teacher teacher) {
 		Teach th = new Teach();
 		th.setDesc("Subject "+subject.getSubjectCode()+" and teacher "+teacher.getTeacherName());
@@ -311,9 +311,9 @@ public class TestDataPojoBuilder {
 		th.setTeacher(teacher);
 		return th;
 	}
-	
+
 	public AttendanceMaster createAttendanceMasterPojo(Cell cell,Batch batch, Section section, Teach teach, Subject subject, Teacher teacher) {
-		AttendanceMaster am = new AttendanceMaster(); 
+		AttendanceMaster am = new AttendanceMaster();
 		am.setId(null);
 		am.setDesc("Teacher "+teacher.getTeacherName()+ " is the attendance master of section "+section.getSection()+" and subject "+subject.getSubjectCode());
 		am.setBatch(batch);
@@ -321,20 +321,20 @@ public class TestDataPojoBuilder {
 		am.setTeach(teach);
 		return am;
 	}
-	
+
 	public LectureScheduleDTO getDto(String weekDay, Cell cell, Subject sub, Teacher thr) {
 		String time[] = cell.getStringCellValue().split("-");
-		
+
 		LectureScheduleDTO dto = new LectureScheduleDTO();
 		dto.setWeekDay(weekDay);
 		dto.setStartTime(time[0].trim());
 		dto.setEndTime(time[1].trim());
 		dto.setSubjectId(String.valueOf(sub.getId()));
 		dto.setTeacherId(String.valueOf(thr.getId()));
-		
+
 		return dto;
 	}
-	
+
 	public List<Lecture> findLectureByAttendanceMaster(LectureRepository lectureRepository, AttendanceMaster am) {
 		Lecture lc = new Lecture();
 		lc.setAttendancemaster(am);
@@ -366,7 +366,44 @@ public class TestDataPojoBuilder {
         facility.setStudent(student);
         return facility;
     }
+
+    public TransportRoute createTransportRoutePojo(Cell cell) {
+        TransportRoute transportRoute = new TransportRoute();
+        transportRoute.setRouteName(cell.getStringCellValue());
+        transportRoute.setRouteDetails(cell.getStringCellValue());
+        transportRoute.setRouteMapUrl(" ");
+        return transportRoute;
+    }
+    public FeeDetails createFeeDetailsPojo(Cell cell,FeeCategory feeCategory,Batch batch,Facility facility, TransportRoute transportRoute,College college,Department department,Branch branch,AcademicYear academicYear) {
+        FeeDetails feeDetails  = new FeeDetails();
+        feeDetails.setFeeParticularsName(cell.getStringCellValue());
+        feeDetails.setFeeParticularDesc(cell.getStringCellValue());
+        feeDetails.setStudentType(StudentTypeEnum.REGULAR);
+        feeDetails.setGender(Gender.MALE);
+        feeDetails.setAmount(1234l);
+        feeDetails.setFeeCategory(feeCategory);
+        feeDetails.setBatch(batch);
+        feeDetails.setFacility(facility);
+        feeDetails.setTransportRoute(transportRoute);
+        feeDetails.setCollege(college);
+        feeDetails.setDepartment(department);
+        feeDetails.setBranch(branch);
+        feeDetails.setAcademicYear(academicYear);
+
+        return feeDetails ;
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
     //	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
 //		StudentAttendance sa = new StudentAttendance(); 
 //		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
