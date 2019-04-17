@@ -18,10 +18,6 @@ description String required
 deptHead String required
 }
 
-enum Semester {
-    FIRST,SECOND,THIRD,FOURTH,FIFTH,SIXTH,SEVENTH,EIGHTH
-}
-
 entity Batch{
 batch BatchEnum required
 }
@@ -207,7 +203,6 @@ desc String
 
 entity AttendanceMaster{
 desc String
-semester Semester
 }
 
 entity Lecture{
@@ -249,10 +244,10 @@ legalNameOfTheCollege String required
 typeOfCollege TypeOfCollege required
 dateOfIncorporation LocalDate required
 registeredOfficeAddress1 String required
-registeredOfficeAddress2 String 
-registeredOfficeAddress3 String 
-registeredOfficeAddress4 String 
-registeredOfficeAddress5 String 
+registeredOfficeAddress2 String
+registeredOfficeAddress3 String
+registeredOfficeAddress4 String
+registeredOfficeAddress5 String
 collegeIdentificationNumber String required
 pan String required
 tan String required
@@ -446,6 +441,11 @@ entity AdmissionEnquiry {
     updatedBy String
 }
 
+entity AdminAttendance{
+    updatedOn LocalDate
+    updatedBy String
+}
+
 relationship ManyToOne {
 Student{department required} to Department ,
 Student{batch required} to Batch ,
@@ -514,7 +514,14 @@ Documents{student} to Student,
 AcademicHistory{student} to Student,
 AdmissionApplication{student} to Student,
 AdmissionEnquiry{branch} to Branch,
-AdmissionEnquiry{admissionApplication} to AdmissionApplication
+AdmissionEnquiry{admissionApplication} to AdmissionApplication,
+AdminAttendance{lecture} to Lecture,
+AdminAttendance{branch} to Branch,
+AdminAttendance{college} to College,
+AdminAttendance{department} to Department,
+AdminAttendance{academicyear} to AcademicYear,
+AdminAttendance{section} to Section,
+AdminAttendance{student} to Student
 }
 
 dto * with mapstruct

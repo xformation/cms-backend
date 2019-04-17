@@ -23,9 +23,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
+import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,7 +41,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 /**
  * Test class for the AdminAttendanceResource REST controller.
  *
@@ -47,19 +50,17 @@ import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 @SpringBootTest(classes = CmsApp.class)
 public class AdminAttendanceResourceIntTest {
 
-    private static final AttendanceStatusEnum DEFAULT_ATTENDANCE_STATUS = AttendanceStatusEnum.PRESENT;
-    private static final AttendanceStatusEnum UPDATED_ATTENDANCE_STATUS = AttendanceStatusEnum.ABSENT;
+    private static final Date DEFAULT_UPDATED_ON = new Date();
+    private static final Date UPDATED_UPDATED_ON = new Date();
 
-    private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
-    private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
+    private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
 
     @Autowired
     private AdminAttendanceRepository adminAttendanceRepository;
 
-
     @Autowired
     private AdminAttendanceMapper adminAttendanceMapper;
-    
 
     @Autowired
     private AdminAttendanceService adminAttendanceService;
@@ -84,6 +85,9 @@ public class AdminAttendanceResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restAdminAttendanceMockMvc;
 
     private AdminAttendance adminAttendance;
@@ -96,7 +100,8 @@ public class AdminAttendanceResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -107,8 +112,8 @@ public class AdminAttendanceResourceIntTest {
      */
     public static AdminAttendance createEntity(EntityManager em) {
         AdminAttendance adminAttendance = new AdminAttendance()
-            .attendanceStatus(DEFAULT_ATTENDANCE_STATUS)
-            .comments(DEFAULT_COMMENTS);
+            .updatedOn(DEFAULT_UPDATED_ON)
+            .updatedBy(DEFAULT_UPDATED_BY);
         return adminAttendance;
     }
 
@@ -133,8 +138,8 @@ public class AdminAttendanceResourceIntTest {
         List<AdminAttendance> adminAttendanceList = adminAttendanceRepository.findAll();
         assertThat(adminAttendanceList).hasSize(databaseSizeBeforeCreate + 1);
         AdminAttendance testAdminAttendance = adminAttendanceList.get(adminAttendanceList.size() - 1);
-        assertThat(testAdminAttendance.getAttendanceStatus()).isEqualTo(DEFAULT_ATTENDANCE_STATUS);
-        assertThat(testAdminAttendance.getComments()).isEqualTo(DEFAULT_COMMENTS);
+        assertThat(testAdminAttendance.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
+        assertThat(testAdminAttendance.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
 
         // Validate the AdminAttendance in Elasticsearch
         verify(mockAdminAttendanceSearchRepository, times(1)).save(testAdminAttendance);
@@ -165,44 +170,6 @@ public class AdminAttendanceResourceIntTest {
 
     @Test
     @Transactional
-    public void checkAttendanceStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = adminAttendanceRepository.findAll().size();
-        // set the field null
-        adminAttendance.setAttendanceStatus(null);
-
-        // Create the AdminAttendance, which fails.
-        AdminAttendanceDTO adminAttendanceDTO = adminAttendanceMapper.toDto(adminAttendance);
-
-        restAdminAttendanceMockMvc.perform(post("/api/admin-attendances")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(adminAttendanceDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdminAttendance> adminAttendanceList = adminAttendanceRepository.findAll();
-        assertThat(adminAttendanceList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCommentsIsRequired() throws Exception {
-        int databaseSizeBeforeTest = adminAttendanceRepository.findAll().size();
-        // set the field null
-        adminAttendance.setComments(null);
-
-        // Create the AdminAttendance, which fails.
-        AdminAttendanceDTO adminAttendanceDTO = adminAttendanceMapper.toDto(adminAttendance);
-
-        restAdminAttendanceMockMvc.perform(post("/api/admin-attendances")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(adminAttendanceDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdminAttendance> adminAttendanceList = adminAttendanceRepository.findAll();
-        assertThat(adminAttendanceList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllAdminAttendances() throws Exception {
         // Initialize the database
         adminAttendanceRepository.saveAndFlush(adminAttendance);
@@ -212,11 +179,10 @@ public class AdminAttendanceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(adminAttendance.getId().intValue())))
-            .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())));
     }
     
-
     @Test
     @Transactional
     public void getAdminAttendance() throws Exception {
@@ -228,9 +194,10 @@ public class AdminAttendanceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(adminAttendance.getId().intValue()))
-            .andExpect(jsonPath("$.attendanceStatus").value(DEFAULT_ATTENDANCE_STATUS.toString()))
-            .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
+            .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
+            .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingAdminAttendance() throws Exception {
@@ -252,8 +219,8 @@ public class AdminAttendanceResourceIntTest {
         // Disconnect from session so that the updates on updatedAdminAttendance are not directly saved in db
         em.detach(updatedAdminAttendance);
         updatedAdminAttendance
-            .attendanceStatus(UPDATED_ATTENDANCE_STATUS)
-            .comments(UPDATED_COMMENTS);
+            .updatedOn(UPDATED_UPDATED_ON)
+            .updatedBy(UPDATED_UPDATED_BY);
         AdminAttendanceDTO adminAttendanceDTO = adminAttendanceMapper.toDto(updatedAdminAttendance);
 
         restAdminAttendanceMockMvc.perform(put("/api/admin-attendances")
@@ -265,8 +232,8 @@ public class AdminAttendanceResourceIntTest {
         List<AdminAttendance> adminAttendanceList = adminAttendanceRepository.findAll();
         assertThat(adminAttendanceList).hasSize(databaseSizeBeforeUpdate);
         AdminAttendance testAdminAttendance = adminAttendanceList.get(adminAttendanceList.size() - 1);
-        assertThat(testAdminAttendance.getAttendanceStatus()).isEqualTo(UPDATED_ATTENDANCE_STATUS);
-        assertThat(testAdminAttendance.getComments()).isEqualTo(UPDATED_COMMENTS);
+        assertThat(testAdminAttendance.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
+        assertThat(testAdminAttendance.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
 
         // Validate the AdminAttendance in Elasticsearch
         verify(mockAdminAttendanceSearchRepository, times(1)).save(testAdminAttendance);
@@ -280,7 +247,7 @@ public class AdminAttendanceResourceIntTest {
         // Create the AdminAttendance
         AdminAttendanceDTO adminAttendanceDTO = adminAttendanceMapper.toDto(adminAttendance);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAdminAttendanceMockMvc.perform(put("/api/admin-attendances")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(adminAttendanceDTO)))
@@ -302,7 +269,7 @@ public class AdminAttendanceResourceIntTest {
 
         int databaseSizeBeforeDelete = adminAttendanceRepository.findAll().size();
 
-        // Get the adminAttendance
+        // Delete the adminAttendance
         restAdminAttendanceMockMvc.perform(delete("/api/admin-attendances/{id}", adminAttendance.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -327,8 +294,8 @@ public class AdminAttendanceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(adminAttendance.getId().intValue())))
-            .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY)));
     }
 
     @Test

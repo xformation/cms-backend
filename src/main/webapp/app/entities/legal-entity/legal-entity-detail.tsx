@@ -29,9 +29,17 @@ export class LegalEntityDetail extends React.Component<ILegalEntityDetailProps> 
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="logo">Logo</span>
+              <span id="logoPath">Logo Path</span>
             </dt>
-            <dd>{legalEntityEntity.logo}</dd>
+            <dd>{legalEntityEntity.logoPath}</dd>
+            <dt>
+              <span id="logoFileName">Logo File Name</span>
+            </dt>
+            <dd>{legalEntityEntity.logoFileName}</dd>
+            <dt>
+              <span id="logoFile">Logo File</span>
+            </dt>
+            <dd>{legalEntityEntity.logoFile}</dd>
             <dt>
               <span id="legalNameOfTheCollege">Legal Name Of The College</span>
             </dt>

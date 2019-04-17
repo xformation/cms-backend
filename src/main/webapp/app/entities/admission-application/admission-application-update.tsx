@@ -13,23 +13,29 @@ import { getEntities as getStudents } from 'app/entities/student/student.reducer
 import { getEntity, updateEntity, createEntity, reset } from './admission-application.reducer';
 import { IAdmissionApplication } from 'app/shared/model/admission-application.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAdmissionApplicationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAdmissionApplicationUpdateState {
   isNew: boolean;
-  studentId: number;
+  studentId: string;
 }
 
 export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplicationUpdateProps, IAdmissionApplicationUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentId: 0,
+      studentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/admission-application');
-  };
-
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -162,13 +150,7 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
                 </AvGroup>
                 <AvGroup>
                   <Label for="student.id">Student</Label>
-                  <AvInput
-                    id="admission-application-student"
-                    type="select"
-                    className="form-control"
-                    name="studentId"
-                    onChange={this.studentUpdate}
-                  >
+                  <AvInput id="admission-application-student" type="select" className="form-control" name="studentId">
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -200,7 +182,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   students: storeState.student.entities,
   admissionApplicationEntity: storeState.admissionApplication.entity,
   loading: storeState.admissionApplication.loading,
-  updating: storeState.admissionApplication.updating
+  updating: storeState.admissionApplication.updating,
+  updateSuccess: storeState.admissionApplication.updateSuccess
 });
 
 const mapDispatchToProps = {

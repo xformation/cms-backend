@@ -31,12 +31,12 @@ export class CompetitiveExamDeleteDialog extends React.Component<ICompetitiveExa
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this CompetitiveExam?</ModalBody>
+        <ModalBody id="cmsApp.competitiveExam.delete.question">Are you sure you want to delete this CompetitiveExam?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-competitiveExam" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

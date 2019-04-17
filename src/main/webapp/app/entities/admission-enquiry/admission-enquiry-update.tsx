@@ -15,25 +15,31 @@ import { getEntities as getAdmissionApplications } from 'app/entities/admission-
 import { getEntity, updateEntity, createEntity, reset } from './admission-enquiry.reducer';
 import { IAdmissionEnquiry } from 'app/shared/model/admission-enquiry.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAdmissionEnquiryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAdmissionEnquiryUpdateState {
   isNew: boolean;
-  branchId: number;
-  admissionApplicationId: number;
+  branchId: string;
+  admissionApplicationId: string;
 }
 
 export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpdateProps, IAdmissionEnquiryUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      branchId: 0,
-      admissionApplicationId: 0,
+      branchId: '0',
+      admissionApplicationId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,46 +66,11 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/admission-enquiry');
-  };
-
-  branchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        branchId: -1
-      });
-    } else {
-      for (const i in this.props.branches) {
-        if (id === this.props.branches[i].id.toString()) {
-          this.setState({
-            branchId: this.props.branches[i].id
-          });
-        }
-      }
-    }
-  };
-
-  admissionApplicationUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        admissionApplicationId: -1
-      });
-    } else {
-      for (const i in this.props.admissionApplications) {
-        if (id === this.props.admissionApplications[i].id.toString()) {
-          this.setState({
-            admissionApplicationId: this.props.admissionApplications[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -248,13 +219,7 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput
-                    id="admission-enquiry-branch"
-                    type="select"
-                    className="form-control"
-                    name="branchId"
-                    onChange={this.branchUpdate}
-                  >
+                  <AvInput id="admission-enquiry-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -267,13 +232,7 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="admissionApplication.id">Admission Application</Label>
-                  <AvInput
-                    id="admission-enquiry-admissionApplication"
-                    type="select"
-                    className="form-control"
-                    name="admissionApplicationId"
-                    onChange={this.admissionApplicationUpdate}
-                  >
+                  <AvInput id="admission-enquiry-admissionApplication" type="select" className="form-control" name="admissionApplicationId">
                     <option value="" key="0" />
                     {admissionApplications
                       ? admissionApplications.map(otherEntity => (
@@ -306,7 +265,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   admissionApplications: storeState.admissionApplication.entities,
   admissionEnquiryEntity: storeState.admissionEnquiry.entity,
   loading: storeState.admissionEnquiry.loading,
-  updating: storeState.admissionEnquiry.updating
+  updating: storeState.admissionEnquiry.updating,
+  updateSuccess: storeState.admissionEnquiry.updateSuccess
 });
 
 const mapDispatchToProps = {

@@ -63,11 +63,6 @@ export default (state: AdminAttendanceState = initialState, action): AdminAttend
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ADMINATTENDANCES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_ADMINATTENDANCE_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/admin-attendances';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IAdminAttendance> = query => ({
+export const getSearchEntities: ICrudSearchAction<IAdminAttendance> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_ADMINATTENDANCES,
-  payload: axios.get<IAdminAttendance>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IAdminAttendance>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IAdminAttendance> = (page, size, sort) => ({

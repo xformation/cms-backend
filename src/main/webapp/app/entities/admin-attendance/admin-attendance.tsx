@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -35,9 +35,8 @@ export class AdminAttendance extends React.Component<IAdminAttendanceProps, IAdm
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -75,10 +74,15 @@ export class AdminAttendance extends React.Component<IAdminAttendanceProps, IAdm
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Attendance Status</th>
-                <th>Comments</th>
-                <th>Student</th>
+                <th>Updated On</th>
+                <th>Updated By</th>
                 <th>Lecture</th>
+                <th>Branch</th>
+                <th>College</th>
+                <th>Department</th>
+                <th>Academicyear</th>
+                <th>Section</th>
+                <th>Student</th>
                 <th />
               </tr>
             </thead>
@@ -90,13 +94,38 @@ export class AdminAttendance extends React.Component<IAdminAttendanceProps, IAdm
                       {adminAttendance.id}
                     </Button>
                   </td>
-                  <td>{adminAttendance.attendanceStatus}</td>
-                  <td>{adminAttendance.comments}</td>
                   <td>
-                    {adminAttendance.studentId ? <Link to={`student/${adminAttendance.studentId}`}>{adminAttendance.studentId}</Link> : ''}
+                    <TextFormat type="date" value={adminAttendance.updatedOn} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
+                  <td>{adminAttendance.updatedBy}</td>
                   <td>
                     {adminAttendance.lectureId ? <Link to={`lecture/${adminAttendance.lectureId}`}>{adminAttendance.lectureId}</Link> : ''}
+                  </td>
+                  <td>
+                    {adminAttendance.branchId ? <Link to={`branch/${adminAttendance.branchId}`}>{adminAttendance.branchId}</Link> : ''}
+                  </td>
+                  <td>
+                    {adminAttendance.collegeId ? <Link to={`college/${adminAttendance.collegeId}`}>{adminAttendance.collegeId}</Link> : ''}
+                  </td>
+                  <td>
+                    {adminAttendance.departmentId ? (
+                      <Link to={`department/${adminAttendance.departmentId}`}>{adminAttendance.departmentId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {adminAttendance.academicyearId ? (
+                      <Link to={`academic-year/${adminAttendance.academicyearId}`}>{adminAttendance.academicyearId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {adminAttendance.sectionId ? <Link to={`section/${adminAttendance.sectionId}`}>{adminAttendance.sectionId}</Link> : ''}
+                  </td>
+                  <td>
+                    {adminAttendance.studentId ? <Link to={`student/${adminAttendance.studentId}`}>{adminAttendance.studentId}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

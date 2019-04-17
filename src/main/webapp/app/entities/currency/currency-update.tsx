@@ -13,23 +13,29 @@ import { getEntities as getCountries } from 'app/entities/country/country.reduce
 import { getEntity, updateEntity, createEntity, reset } from './currency.reducer';
 import { ICurrency } from 'app/shared/model/currency.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ICurrencyUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICurrencyUpdateState {
   isNew: boolean;
-  countryId: number;
+  countryId: string;
 }
 
 export class CurrencyUpdate extends React.Component<ICurrencyUpdateProps, ICurrencyUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      countryId: 0,
+      countryId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class CurrencyUpdate extends React.Component<ICurrencyUpdateProps, ICurre
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/currency');
-  };
-
-  countryUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        countryId: -1
-      });
-    } else {
-      for (const i in this.props.countries) {
-        if (id === this.props.countries[i].id.toString()) {
-          this.setState({
-            countryId: this.props.countries[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -130,7 +118,7 @@ export class CurrencyUpdate extends React.Component<ICurrencyUpdateProps, ICurre
                 </AvGroup>
                 <AvGroup>
                   <Label for="country.id">Country</Label>
-                  <AvInput id="currency-country" type="select" className="form-control" name="countryId" onChange={this.countryUpdate}>
+                  <AvInput id="currency-country" type="select" className="form-control" name="countryId">
                     <option value="" key="0" />
                     {countries
                       ? countries.map(otherEntity => (
@@ -162,7 +150,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   countries: storeState.country.entities,
   currencyEntity: storeState.currency.entity,
   loading: storeState.currency.loading,
-  updating: storeState.currency.updating
+  updating: storeState.currency.updating,
+  updateSuccess: storeState.currency.updateSuccess
 });
 
 const mapDispatchToProps = {

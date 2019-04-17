@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.AdminAttendanceService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -46,8 +43,7 @@ public class AdminAttendanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/admin-attendances")
-    @Timed
-    public ResponseEntity<AdminAttendanceDTO> createAdminAttendance(@Valid @RequestBody AdminAttendanceDTO adminAttendanceDTO) throws URISyntaxException {
+    public ResponseEntity<AdminAttendanceDTO> createAdminAttendance(@RequestBody AdminAttendanceDTO adminAttendanceDTO) throws URISyntaxException {
         log.debug("REST request to save AdminAttendance : {}", adminAttendanceDTO);
         if (adminAttendanceDTO.getId() != null) {
             throw new BadRequestAlertException("A new adminAttendance cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,8 +64,7 @@ public class AdminAttendanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/admin-attendances")
-    @Timed
-    public ResponseEntity<AdminAttendanceDTO> updateAdminAttendance(@Valid @RequestBody AdminAttendanceDTO adminAttendanceDTO) throws URISyntaxException {
+    public ResponseEntity<AdminAttendanceDTO> updateAdminAttendance(@RequestBody AdminAttendanceDTO adminAttendanceDTO) throws URISyntaxException {
         log.debug("REST request to update AdminAttendance : {}", adminAttendanceDTO);
         if (adminAttendanceDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -86,7 +81,6 @@ public class AdminAttendanceResource {
      * @return the ResponseEntity with status 200 (OK) and the list of adminAttendances in body
      */
     @GetMapping("/admin-attendances")
-    @Timed
     public List<AdminAttendanceDTO> getAllAdminAttendances() {
         log.debug("REST request to get all AdminAttendances");
         return adminAttendanceService.findAll();
@@ -99,7 +93,6 @@ public class AdminAttendanceResource {
      * @return the ResponseEntity with status 200 (OK) and with body the adminAttendanceDTO, or with status 404 (Not Found)
      */
     @GetMapping("/admin-attendances/{id}")
-    @Timed
     public ResponseEntity<AdminAttendanceDTO> getAdminAttendance(@PathVariable Long id) {
         log.debug("REST request to get AdminAttendance : {}", id);
         Optional<AdminAttendanceDTO> adminAttendanceDTO = adminAttendanceService.findOne(id);
@@ -113,7 +106,6 @@ public class AdminAttendanceResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/admin-attendances/{id}")
-    @Timed
     public ResponseEntity<Void> deleteAdminAttendance(@PathVariable Long id) {
         log.debug("REST request to delete AdminAttendance : {}", id);
         adminAttendanceService.delete(id);
@@ -128,7 +120,6 @@ public class AdminAttendanceResource {
      * @return the result of the search
      */
     @GetMapping("/_search/admin-attendances")
-    @Timed
     public List<AdminAttendanceDTO> searchAdminAttendances(@RequestParam String query) {
         log.debug("REST request to search AdminAttendances for query {}", query);
         return adminAttendanceService.search(query);

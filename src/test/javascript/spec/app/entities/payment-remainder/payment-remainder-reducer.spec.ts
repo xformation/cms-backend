@@ -10,8 +10,10 @@ import reducer, {
   createEntity,
   deleteEntity,
   getEntities,
+  getSearchEntities,
   getEntity,
-  updateEntity
+  updateEntity,
+  reset
 } from 'app/entities/payment-remainder/payment-remainder.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IPaymentRemainder, defaultValue } from 'app/shared/model/payment-remainder.model';
@@ -60,13 +62,21 @@ describe('Entities reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([REQUEST(ACTION_TYPES.FETCH_PAYMENTREMAINDER_LIST), REQUEST(ACTION_TYPES.FETCH_PAYMENTREMAINDER)], {}, state => {
-        expect(state).toMatchObject({
-          errorMessage: null,
-          updateSuccess: false,
-          loading: true
-        });
-      });
+      testMultipleTypes(
+        [
+          REQUEST(ACTION_TYPES.FETCH_PAYMENTREMAINDER_LIST),
+          REQUEST(ACTION_TYPES.SEARCH_PAYMENTREMAINDERS),
+          REQUEST(ACTION_TYPES.FETCH_PAYMENTREMAINDER)
+        ],
+        {},
+        state => {
+          expect(state).toMatchObject({
+            errorMessage: null,
+            updateSuccess: false,
+            loading: true
+          });
+        }
+      );
     });
 
     it('should set state to updating', () => {
@@ -86,6 +96,19 @@ describe('Entities reducer tests', () => {
         }
       );
     });
+
+    it('should reset the state', () => {
+      expect(
+        reducer(
+          { ...initialState, loading: true },
+          {
+            type: ACTION_TYPES.RESET
+          }
+        )
+      ).toEqual({
+        ...initialState
+      });
+    });
   });
 
   describe('Failures', () => {
@@ -93,6 +116,7 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_PAYMENTREMAINDER_LIST),
+          FAILURE(ACTION_TYPES.SEARCH_PAYMENTREMAINDERS),
           FAILURE(ACTION_TYPES.FETCH_PAYMENTREMAINDER),
           FAILURE(ACTION_TYPES.CREATE_PAYMENTREMAINDER),
           FAILURE(ACTION_TYPES.UPDATE_PAYMENTREMAINDER),
@@ -122,6 +146,33 @@ describe('Entities reducer tests', () => {
         ...initialState,
         loading: false,
         entities: payload.data
+      });
+    });
+    it('should search all entities', () => {
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
+      expect(
+        reducer(undefined, {
+          type: SUCCESS(ACTION_TYPES.SEARCH_PAYMENTREMAINDERS),
+          payload
+        })
+      ).toEqual({
+        ...initialState,
+        loading: false,
+        entities: payload.data
+      });
+    });
+
+    it('should fetch a single entity', () => {
+      const payload = { data: { 1: 'fake1' } };
+      expect(
+        reducer(undefined, {
+          type: SUCCESS(ACTION_TYPES.FETCH_PAYMENTREMAINDER),
+          payload
+        })
+      ).toEqual({
+        ...initialState,
+        loading: false,
+        entity: payload.data
       });
     });
 
@@ -177,6 +228,18 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
+    it('dispatches ACTION_TYPES.SEARCH_PAYMENTREMAINDERS actions', async () => {
+      const expectedActions = [
+        {
+          type: REQUEST(ACTION_TYPES.SEARCH_PAYMENTREMAINDERS)
+        },
+        {
+          type: SUCCESS(ACTION_TYPES.SEARCH_PAYMENTREMAINDERS),
+          payload: resolvedObject
+        }
+      ];
+      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_PAYMENTREMAINDER actions', async () => {
@@ -250,6 +313,16 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
+
+    it('dispatches ACTION_TYPES.RESET actions', async () => {
+      const expectedActions = [
+        {
+          type: ACTION_TYPES.RESET
+        }
+      ];
+      await store.dispatch(reset());
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

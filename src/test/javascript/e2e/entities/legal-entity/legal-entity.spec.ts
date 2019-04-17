@@ -1,92 +1,131 @@
 /* tslint:disable no-unused-expression */
-import { browser } from 'protractor';
+import { browser, element, by } from 'protractor';
 
 import NavBarPage from './../../page-objects/navbar-page';
+import SignInPage from './../../page-objects/signin-page';
 import LegalEntityComponentsPage from './legal-entity.page-object';
+import { LegalEntityDeleteDialog } from './legal-entity.page-object';
 import LegalEntityUpdatePage from './legal-entity-update.page-object';
+import { waitUntilDisplayed, waitUntilHidden } from '../../util/utils';
 
 const expect = chai.expect;
 
 describe('LegalEntity e2e test', () => {
   let navBarPage: NavBarPage;
+  let signInPage: SignInPage;
   let legalEntityUpdatePage: LegalEntityUpdatePage;
   let legalEntityComponentsPage: LegalEntityComponentsPage;
+  let legalEntityDeleteDialog: LegalEntityDeleteDialog;
 
-  before(() => {
-    browser.get('/');
+  before(async () => {
+    await browser.get('/');
     navBarPage = new NavBarPage();
-    navBarPage.autoSignIn();
+    signInPage = await navBarPage.getSignInPage();
+    await signInPage.waitUntilDisplayed();
+
+    await signInPage.username.sendKeys('admin');
+    await signInPage.password.sendKeys('admin');
+    await signInPage.loginButton.click();
+    await signInPage.waitUntilHidden();
+    await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
   it('should load LegalEntities', async () => {
-    navBarPage.getEntityPage('legal-entity');
+    await navBarPage.getEntityPage('legal-entity');
     legalEntityComponentsPage = new LegalEntityComponentsPage();
     expect(await legalEntityComponentsPage.getTitle().getText()).to.match(/Legal Entities/);
   });
 
   it('should load create LegalEntity page', async () => {
-    legalEntityComponentsPage.clickOnCreateButton();
+    await legalEntityComponentsPage.clickOnCreateButton();
     legalEntityUpdatePage = new LegalEntityUpdatePage();
     expect(await legalEntityUpdatePage.getPageTitle().getText()).to.match(/Create or edit a LegalEntity/);
   });
 
   it('should create and save LegalEntities', async () => {
-    legalEntityUpdatePage.setLogoInput('5');
-    expect(await legalEntityUpdatePage.getLogoInput()).to.eq('5');
-    legalEntityUpdatePage.setLegalNameOfTheCollegeInput('legalNameOfTheCollege');
+    const nbButtonsBeforeCreate = await legalEntityComponentsPage.countDeleteButtons();
+
+    await legalEntityUpdatePage.setLogoPathInput('logoPath');
+    expect(await legalEntityUpdatePage.getLogoPathInput()).to.match(/logoPath/);
+    await legalEntityUpdatePage.setLogoFileNameInput('logoFileName');
+    expect(await legalEntityUpdatePage.getLogoFileNameInput()).to.match(/logoFileName/);
+    await legalEntityUpdatePage.setLogoFileInput('logoFile');
+    expect(await legalEntityUpdatePage.getLogoFileInput()).to.match(/logoFile/);
+    await legalEntityUpdatePage.setLegalNameOfTheCollegeInput('legalNameOfTheCollege');
     expect(await legalEntityUpdatePage.getLegalNameOfTheCollegeInput()).to.match(/legalNameOfTheCollege/);
-    legalEntityUpdatePage.typeOfCollegeSelectLastOption();
-    legalEntityUpdatePage.setDateOfIncorporationInput('01-01-2001');
+    await legalEntityUpdatePage.typeOfCollegeSelectLastOption();
+    await legalEntityUpdatePage.setDateOfIncorporationInput('01-01-2001');
     expect(await legalEntityUpdatePage.getDateOfIncorporationInput()).to.eq('2001-01-01');
-    legalEntityUpdatePage.setRegisteredOfficeAddress1Input('registeredOfficeAddress1');
+    await legalEntityUpdatePage.setRegisteredOfficeAddress1Input('registeredOfficeAddress1');
     expect(await legalEntityUpdatePage.getRegisteredOfficeAddress1Input()).to.match(/registeredOfficeAddress1/);
-    legalEntityUpdatePage.setRegisteredOfficeAddress2Input('registeredOfficeAddress2');
+    await legalEntityUpdatePage.setRegisteredOfficeAddress2Input('registeredOfficeAddress2');
     expect(await legalEntityUpdatePage.getRegisteredOfficeAddress2Input()).to.match(/registeredOfficeAddress2/);
-    legalEntityUpdatePage.setRegisteredOfficeAddress3Input('registeredOfficeAddress3');
+    await legalEntityUpdatePage.setRegisteredOfficeAddress3Input('registeredOfficeAddress3');
     expect(await legalEntityUpdatePage.getRegisteredOfficeAddress3Input()).to.match(/registeredOfficeAddress3/);
-    legalEntityUpdatePage.setRegisteredOfficeAddress4Input('registeredOfficeAddress4');
+    await legalEntityUpdatePage.setRegisteredOfficeAddress4Input('registeredOfficeAddress4');
     expect(await legalEntityUpdatePage.getRegisteredOfficeAddress4Input()).to.match(/registeredOfficeAddress4/);
-    legalEntityUpdatePage.setRegisteredOfficeAddress5Input('registeredOfficeAddress5');
+    await legalEntityUpdatePage.setRegisteredOfficeAddress5Input('registeredOfficeAddress5');
     expect(await legalEntityUpdatePage.getRegisteredOfficeAddress5Input()).to.match(/registeredOfficeAddress5/);
-    legalEntityUpdatePage.setCollegeIdentificationNumberInput('collegeIdentificationNumber');
+    await legalEntityUpdatePage.setCollegeIdentificationNumberInput('collegeIdentificationNumber');
     expect(await legalEntityUpdatePage.getCollegeIdentificationNumberInput()).to.match(/collegeIdentificationNumber/);
-    legalEntityUpdatePage.setPanInput('pan');
+    await legalEntityUpdatePage.setPanInput('pan');
     expect(await legalEntityUpdatePage.getPanInput()).to.match(/pan/);
-    legalEntityUpdatePage.setTanInput('tan');
+    await legalEntityUpdatePage.setTanInput('tan');
     expect(await legalEntityUpdatePage.getTanInput()).to.match(/tan/);
-    legalEntityUpdatePage.setTanCircleNumberInput('tanCircleNumber');
+    await legalEntityUpdatePage.setTanCircleNumberInput('tanCircleNumber');
     expect(await legalEntityUpdatePage.getTanCircleNumberInput()).to.match(/tanCircleNumber/);
-    legalEntityUpdatePage.setCitTdsLocationInput('citTdsLocation');
+    await legalEntityUpdatePage.setCitTdsLocationInput('citTdsLocation');
     expect(await legalEntityUpdatePage.getCitTdsLocationInput()).to.match(/citTdsLocation/);
-    legalEntityUpdatePage.setFormSignatoryInput('5');
+    await legalEntityUpdatePage.setFormSignatoryInput('5');
     expect(await legalEntityUpdatePage.getFormSignatoryInput()).to.eq('5');
-    legalEntityUpdatePage.setPfNumberInput('pfNumber');
+    await legalEntityUpdatePage.setPfNumberInput('pfNumber');
     expect(await legalEntityUpdatePage.getPfNumberInput()).to.match(/pfNumber/);
-    legalEntityUpdatePage.setPfRegistrationDateInput('01-01-2001');
+    await legalEntityUpdatePage.setPfRegistrationDateInput('01-01-2001');
     expect(await legalEntityUpdatePage.getPfRegistrationDateInput()).to.eq('2001-01-01');
-    legalEntityUpdatePage.setPfSignatoryInput('5');
+    await legalEntityUpdatePage.setPfSignatoryInput('5');
     expect(await legalEntityUpdatePage.getPfSignatoryInput()).to.eq('5');
-    legalEntityUpdatePage.setEsiNumberInput('5');
-    expect(await legalEntityUpdatePage.getEsiNumberInput()).to.eq('5');
-    legalEntityUpdatePage.setEsiRegistrationDateInput('01-01-2001');
+    await legalEntityUpdatePage.setEsiNumberInput('esiNumber');
+    expect(await legalEntityUpdatePage.getEsiNumberInput()).to.match(/esiNumber/);
+    await legalEntityUpdatePage.setEsiRegistrationDateInput('01-01-2001');
     expect(await legalEntityUpdatePage.getEsiRegistrationDateInput()).to.eq('2001-01-01');
-    legalEntityUpdatePage.setEsiSignatoryInput('5');
+    await legalEntityUpdatePage.setEsiSignatoryInput('5');
     expect(await legalEntityUpdatePage.getEsiSignatoryInput()).to.eq('5');
-    legalEntityUpdatePage.setPtNumberInput('5');
-    expect(await legalEntityUpdatePage.getPtNumberInput()).to.eq('5');
-    legalEntityUpdatePage.setPtRegistrationDateInput('01-01-2001');
+    await legalEntityUpdatePage.setPtNumberInput('ptNumber');
+    expect(await legalEntityUpdatePage.getPtNumberInput()).to.match(/ptNumber/);
+    await legalEntityUpdatePage.setPtRegistrationDateInput('01-01-2001');
     expect(await legalEntityUpdatePage.getPtRegistrationDateInput()).to.eq('2001-01-01');
-    legalEntityUpdatePage.setPtSignatoryInput('5');
+    await legalEntityUpdatePage.setPtSignatoryInput('5');
     expect(await legalEntityUpdatePage.getPtSignatoryInput()).to.eq('5');
-    legalEntityUpdatePage.branchSelectLastOption();
-    legalEntityUpdatePage.collegeSelectLastOption();
-    legalEntityUpdatePage.stateSelectLastOption();
-    legalEntityUpdatePage.citySelectLastOption();
+    await legalEntityUpdatePage.branchSelectLastOption();
+    await legalEntityUpdatePage.collegeSelectLastOption();
+    await legalEntityUpdatePage.stateSelectLastOption();
+    await legalEntityUpdatePage.citySelectLastOption();
+    await waitUntilDisplayed(legalEntityUpdatePage.getSaveButton());
     await legalEntityUpdatePage.save();
+    await waitUntilHidden(legalEntityUpdatePage.getSaveButton());
     expect(await legalEntityUpdatePage.getSaveButton().isPresent()).to.be.false;
+
+    await legalEntityComponentsPage.waitUntilDeleteButtonsLength(nbButtonsBeforeCreate + 1);
+    expect(await legalEntityComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1);
   });
 
-  after(() => {
-    navBarPage.autoSignOut();
+  it('should delete last LegalEntity', async () => {
+    await legalEntityComponentsPage.waitUntilLoaded();
+    const nbButtonsBeforeDelete = await legalEntityComponentsPage.countDeleteButtons();
+    await legalEntityComponentsPage.clickOnLastDeleteButton();
+
+    const deleteModal = element(by.className('modal'));
+    await waitUntilDisplayed(deleteModal);
+
+    legalEntityDeleteDialog = new LegalEntityDeleteDialog();
+    expect(await legalEntityDeleteDialog.getDialogTitle().getAttribute('id')).to.match(/cmsApp.legalEntity.delete.question/);
+    await legalEntityDeleteDialog.clickOnConfirmButton();
+
+    await legalEntityComponentsPage.waitUntilDeleteButtonsLength(nbButtonsBeforeDelete - 1);
+    expect(await legalEntityComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+  });
+
+  after(async () => {
+    await navBarPage.autoSignOut();
   });
 });

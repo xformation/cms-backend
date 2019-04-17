@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -43,6 +42,7 @@ public class AdmissionEnquiryDTO implements Serializable {
     private LocalDate updatedOn;
 
     private String updatedBy;
+
 
     private Long branchId;
 

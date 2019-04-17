@@ -27,37 +27,43 @@ import { getEntities as getAcademicYears } from 'app/entities/academic-year/acad
 import { getEntity, updateEntity, createEntity, reset } from './fee-details.reducer';
 import { IFeeDetails } from 'app/shared/model/fee-details.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IFeeDetailsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IFeeDetailsUpdateState {
   isNew: boolean;
-  feeCategoryId: number;
-  batchId: number;
-  facilityId: number;
-  transportRouteId: number;
-  collegeId: number;
-  departmentId: number;
-  branchId: number;
-  academicYearId: number;
+  feeCategoryId: string;
+  batchId: string;
+  facilityId: string;
+  transportRouteId: string;
+  collegeId: string;
+  departmentId: string;
+  branchId: string;
+  academicYearId: string;
 }
 
 export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IFeeDetailsUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      feeCategoryId: 0,
-      batchId: 0,
-      facilityId: 0,
-      transportRouteId: 0,
-      collegeId: 0,
-      departmentId: 0,
-      branchId: 0,
-      academicYearId: 0,
+      feeCategoryId: '0',
+      batchId: '0',
+      facilityId: '0',
+      transportRouteId: '0',
+      collegeId: '0',
+      departmentId: '0',
+      branchId: '0',
+      academicYearId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -90,148 +96,11 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/fee-details');
-  };
-
-  feeCategoryUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        feeCategoryId: -1
-      });
-    } else {
-      for (const i in this.props.feeCategories) {
-        if (id === this.props.feeCategories[i].id.toString()) {
-          this.setState({
-            feeCategoryId: this.props.feeCategories[i].id
-          });
-        }
-      }
-    }
-  };
-
-  batchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        batchId: -1
-      });
-    } else {
-      for (const i in this.props.batches) {
-        if (id === this.props.batches[i].id.toString()) {
-          this.setState({
-            batchId: this.props.batches[i].id
-          });
-        }
-      }
-    }
-  };
-
-  facilityUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        facilityId: -1
-      });
-    } else {
-      for (const i in this.props.facilities) {
-        if (id === this.props.facilities[i].id.toString()) {
-          this.setState({
-            facilityId: this.props.facilities[i].id
-          });
-        }
-      }
-    }
-  };
-
-  transportRouteUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        transportRouteId: -1
-      });
-    } else {
-      for (const i in this.props.transportRoutes) {
-        if (id === this.props.transportRoutes[i].id.toString()) {
-          this.setState({
-            transportRouteId: this.props.transportRoutes[i].id
-          });
-        }
-      }
-    }
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
-  };
-
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
-  };
-
-  branchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        branchId: -1
-      });
-    } else {
-      for (const i in this.props.branches) {
-        if (id === this.props.branches[i].id.toString()) {
-          this.setState({
-            branchId: this.props.branches[i].id
-          });
-        }
-      }
-    }
-  };
-
-  academicYearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        academicYearId: -1
-      });
-    } else {
-      for (const i in this.props.academicYears) {
-        if (id === this.props.academicYears[i].id.toString()) {
-          this.setState({
-            academicYearId: this.props.academicYears[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -331,7 +200,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                   </Label>
                   <AvField
                     id="fee-details-amount"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="amount"
                     validate={{
@@ -342,13 +211,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="feeCategory.id">Fee Category</Label>
-                  <AvInput
-                    id="fee-details-feeCategory"
-                    type="select"
-                    className="form-control"
-                    name="feeCategoryId"
-                    onChange={this.feeCategoryUpdate}
-                  >
+                  <AvInput id="fee-details-feeCategory" type="select" className="form-control" name="feeCategoryId">
                     <option value="" key="0" />
                     {feeCategories
                       ? feeCategories.map(otherEntity => (
@@ -361,7 +224,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
-                  <AvInput id="fee-details-batch" type="select" className="form-control" name="batchId" onChange={this.batchUpdate}>
+                  <AvInput id="fee-details-batch" type="select" className="form-control" name="batchId">
                     <option value="" key="0" />
                     {batches
                       ? batches.map(otherEntity => (
@@ -374,13 +237,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="facility.id">Facility</Label>
-                  <AvInput
-                    id="fee-details-facility"
-                    type="select"
-                    className="form-control"
-                    name="facilityId"
-                    onChange={this.facilityUpdate}
-                  >
+                  <AvInput id="fee-details-facility" type="select" className="form-control" name="facilityId">
                     <option value="" key="0" />
                     {facilities
                       ? facilities.map(otherEntity => (
@@ -393,13 +250,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="transportRoute.id">Transport Route</Label>
-                  <AvInput
-                    id="fee-details-transportRoute"
-                    type="select"
-                    className="form-control"
-                    name="transportRouteId"
-                    onChange={this.transportRouteUpdate}
-                  >
+                  <AvInput id="fee-details-transportRoute" type="select" className="form-control" name="transportRouteId">
                     <option value="" key="0" />
                     {transportRoutes
                       ? transportRoutes.map(otherEntity => (
@@ -412,7 +263,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="fee-details-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="fee-details-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -425,13 +276,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">Department</Label>
-                  <AvInput
-                    id="fee-details-department"
-                    type="select"
-                    className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
-                  >
+                  <AvInput id="fee-details-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
@@ -444,7 +289,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="fee-details-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
+                  <AvInput id="fee-details-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -457,13 +302,7 @@ export class FeeDetailsUpdate extends React.Component<IFeeDetailsUpdateProps, IF
                 </AvGroup>
                 <AvGroup>
                   <Label for="academicYear.id">Academic Year</Label>
-                  <AvInput
-                    id="fee-details-academicYear"
-                    type="select"
-                    className="form-control"
-                    name="academicYearId"
-                    onChange={this.academicYearUpdate}
-                  >
+                  <AvInput id="fee-details-academicYear" type="select" className="form-control" name="academicYearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
@@ -502,7 +341,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   academicYears: storeState.academicYear.entities,
   feeDetailsEntity: storeState.feeDetails.entity,
   loading: storeState.feeDetails.loading,
-  updating: storeState.feeDetails.updating
+  updating: storeState.feeDetails.updating,
+  updateSuccess: storeState.feeDetails.updateSuccess
 });
 
 const mapDispatchToProps = {

@@ -27,6 +27,7 @@ class LegalEntityGatlingTest extends Simulation {
         .acceptLanguageHeader("fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3")
         .connectionHeader("keep-alive")
         .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:33.0) Gecko/20100101 Firefox/33.0")
+        .silentResources // Silence all resources like css or css so they don't clutter the results
 
     val headers_http = Map(
         "Accept" -> """application/json"""
@@ -46,14 +47,15 @@ class LegalEntityGatlingTest extends Simulation {
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
-        .check(status.is(401))).exitHereIfFailed
+        .check(status.is(401))
+        ).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
         .post("/api/authenticate")
         .headers(headers_http_authentication)
         .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJSON
         .check(header.get("Authorization").saveAs("access_token"))).exitHereIfFailed
-        .pause(1)
+        .pause(2)
         .exec(http("Authenticated request")
         .get("/api/account")
         .headers(headers_http_authenticated)
@@ -68,7 +70,35 @@ class LegalEntityGatlingTest extends Simulation {
             .exec(http("Create new legalEntity")
             .post("/api/legal-entities")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "logoPath":"SAMPLE_TEXT", "logoFileName":"SAMPLE_TEXT", "logoFile":"SAMPLE_TEXT", "legalNameOfTheCollege":"SAMPLE_TEXT", "typeOfCollege":null, "dateOfIncorporation":"2020-01-01T00:00:00.000Z", "registeredOfficeAddress1":"SAMPLE_TEXT", "registeredOfficeAddress2":"SAMPLE_TEXT", "registeredOfficeAddress3":"SAMPLE_TEXT", "registeredOfficeAddress4":"SAMPLE_TEXT", "registeredOfficeAddress5":"SAMPLE_TEXT", "collegeIdentificationNumber":"SAMPLE_TEXT", "pan":"SAMPLE_TEXT", "tan":"SAMPLE_TEXT", "tanCircleNumber":"SAMPLE_TEXT", "citTdsLocation":"SAMPLE_TEXT", "formSignatory":null, "pfNumber":"SAMPLE_TEXT", "pfRegistrationDate":"2020-01-01T00:00:00.000Z", "pfSignatory":null, "esiNumber":"SAMPLE_TEXT", "esiRegistrationDate":"2020-01-01T00:00:00.000Z", "esiSignatory":null, "ptNumber":"SAMPLE_TEXT", "ptRegistrationDate":"2020-01-01T00:00:00.000Z", "ptSignatory":null}""")).asJSON
+            .body(StringBody("""{
+                "id":null
+                , "logoPath":"SAMPLE_TEXT"
+                , "logoFileName":"SAMPLE_TEXT"
+                , "logoFile":"SAMPLE_TEXT"
+                , "legalNameOfTheCollege":"SAMPLE_TEXT"
+                , "typeOfCollege":"PRIVATE"
+                , "dateOfIncorporation":"2020-01-01T00:00:00.000Z"
+                , "registeredOfficeAddress1":"SAMPLE_TEXT"
+                , "registeredOfficeAddress2":"SAMPLE_TEXT"
+                , "registeredOfficeAddress3":"SAMPLE_TEXT"
+                , "registeredOfficeAddress4":"SAMPLE_TEXT"
+                , "registeredOfficeAddress5":"SAMPLE_TEXT"
+                , "collegeIdentificationNumber":"SAMPLE_TEXT"
+                , "pan":"SAMPLE_TEXT"
+                , "tan":"SAMPLE_TEXT"
+                , "tanCircleNumber":"SAMPLE_TEXT"
+                , "citTdsLocation":"SAMPLE_TEXT"
+                , "formSignatory":null
+                , "pfNumber":"SAMPLE_TEXT"
+                , "pfRegistrationDate":"2020-01-01T00:00:00.000Z"
+                , "pfSignatory":null
+                , "esiNumber":"SAMPLE_TEXT"
+                , "esiRegistrationDate":"2020-01-01T00:00:00.000Z"
+                , "esiSignatory":null
+                , "ptNumber":"SAMPLE_TEXT"
+                , "ptRegistrationDate":"2020-01-01T00:00:00.000Z"
+                , "ptSignatory":null
+                }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_legalEntity_url"))).exitHereIfFailed
             .pause(10)

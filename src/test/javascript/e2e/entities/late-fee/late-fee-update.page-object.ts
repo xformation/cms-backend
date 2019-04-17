@@ -18,130 +18,130 @@ export default class LateFeeUpdatePage {
     return this.pageTitle;
   }
 
-  setAssignLateFeeSelect(assignLateFee) {
-    this.assignLateFeeSelect.sendKeys(assignLateFee);
+  async setAssignLateFeeSelect(assignLateFee) {
+    await this.assignLateFeeSelect.sendKeys(assignLateFee);
   }
 
-  getAssignLateFeeSelect() {
+  async getAssignLateFeeSelect() {
     return this.assignLateFeeSelect.element(by.css('option:checked')).getText();
   }
 
-  assignLateFeeSelectLastOption() {
-    this.assignLateFeeSelect
+  async assignLateFeeSelectLastOption() {
+    await this.assignLateFeeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setLateFeeDaysInput(lateFeeDays) {
-    this.lateFeeDaysInput.sendKeys(lateFeeDays);
+  async setLateFeeDaysInput(lateFeeDays) {
+    await this.lateFeeDaysInput.sendKeys(lateFeeDays);
   }
 
-  getLateFeeDaysInput() {
+  async getLateFeeDaysInput() {
     return this.lateFeeDaysInput.getAttribute('value');
   }
 
-  setFixedSelect(fixed) {
-    this.fixedSelect.sendKeys(fixed);
+  async setFixedSelect(fixed) {
+    await this.fixedSelect.sendKeys(fixed);
   }
 
-  getFixedSelect() {
+  async getFixedSelect() {
     return this.fixedSelect.element(by.css('option:checked')).getText();
   }
 
-  fixedSelectLastOption() {
-    this.fixedSelect
+  async fixedSelectLastOption() {
+    await this.fixedSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setPercentageSelect(percentage) {
-    this.percentageSelect.sendKeys(percentage);
+  async setPercentageSelect(percentage) {
+    await this.percentageSelect.sendKeys(percentage);
   }
 
-  getPercentageSelect() {
+  async getPercentageSelect() {
     return this.percentageSelect.element(by.css('option:checked')).getText();
   }
 
-  percentageSelectLastOption() {
-    this.percentageSelect
+  async percentageSelectLastOption() {
+    await this.percentageSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setFixedChargesInput(fixedCharges) {
-    this.fixedChargesInput.sendKeys(fixedCharges);
+  async setFixedChargesInput(fixedCharges) {
+    await this.fixedChargesInput.sendKeys(fixedCharges);
   }
 
-  getFixedChargesInput() {
+  async getFixedChargesInput() {
     return this.fixedChargesInput.getAttribute('value');
   }
 
-  setPercentChargesInput(percentCharges) {
-    this.percentChargesInput.sendKeys(percentCharges);
+  async setPercentChargesInput(percentCharges) {
+    await this.percentChargesInput.sendKeys(percentCharges);
   }
 
-  getPercentChargesInput() {
+  async getPercentChargesInput() {
     return this.percentChargesInput.getAttribute('value');
   }
 
-  setLateFeeAssignmentFrequencySelect(lateFeeAssignmentFrequency) {
-    this.lateFeeAssignmentFrequencySelect.sendKeys(lateFeeAssignmentFrequency);
+  async setLateFeeAssignmentFrequencySelect(lateFeeAssignmentFrequency) {
+    await this.lateFeeAssignmentFrequencySelect.sendKeys(lateFeeAssignmentFrequency);
   }
 
-  getLateFeeAssignmentFrequencySelect() {
+  async getLateFeeAssignmentFrequencySelect() {
     return this.lateFeeAssignmentFrequencySelect.element(by.css('option:checked')).getText();
   }
 
-  lateFeeAssignmentFrequencySelectLastOption() {
-    this.lateFeeAssignmentFrequencySelect
+  async lateFeeAssignmentFrequencySelectLastOption() {
+    await this.lateFeeAssignmentFrequencySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  collegeSelectLastOption() {
-    this.collegeSelect
+  async collegeSelectLastOption() {
+    await this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  getCollegeSelectedOption() {
+  async getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

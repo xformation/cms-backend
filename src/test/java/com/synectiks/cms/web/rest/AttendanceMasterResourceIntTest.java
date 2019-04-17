@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -37,7 +38,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Semester;
 /**
  * Test class for the AttendanceMasterResource REST controller.
  *
@@ -50,16 +50,11 @@ public class AttendanceMasterResourceIntTest {
     private static final String DEFAULT_DESC = "AAAAAAAAAA";
     private static final String UPDATED_DESC = "BBBBBBBBBB";
 
-    private static final Semester DEFAULT_SEMESTER = Semester.FIRST;
-    private static final Semester UPDATED_SEMESTER = Semester.SECOND;
-
     @Autowired
     private AttendanceMasterRepository attendanceMasterRepository;
 
-
     @Autowired
     private AttendanceMasterMapper attendanceMasterMapper;
-    
 
     @Autowired
     private AttendanceMasterService attendanceMasterService;
@@ -84,6 +79,9 @@ public class AttendanceMasterResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restAttendanceMasterMockMvc;
 
     private AttendanceMaster attendanceMaster;
@@ -96,7 +94,8 @@ public class AttendanceMasterResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -107,8 +106,7 @@ public class AttendanceMasterResourceIntTest {
      */
     public static AttendanceMaster createEntity(EntityManager em) {
         AttendanceMaster attendanceMaster = new AttendanceMaster()
-            .desc(DEFAULT_DESC)
-            .semester(DEFAULT_SEMESTER);
+            .desc(DEFAULT_DESC);
         return attendanceMaster;
     }
 
@@ -134,7 +132,6 @@ public class AttendanceMasterResourceIntTest {
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeCreate + 1);
         AttendanceMaster testAttendanceMaster = attendanceMasterList.get(attendanceMasterList.size() - 1);
         assertThat(testAttendanceMaster.getDesc()).isEqualTo(DEFAULT_DESC);
-        assertThat(testAttendanceMaster.getSemester()).isEqualTo(DEFAULT_SEMESTER);
 
         // Validate the AttendanceMaster in Elasticsearch
         verify(mockAttendanceMasterSearchRepository, times(1)).save(testAttendanceMaster);
@@ -174,11 +171,9 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(attendanceMaster.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
     
-
     @Test
     @Transactional
     public void getAttendanceMaster() throws Exception {
@@ -190,9 +185,9 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(attendanceMaster.getId().intValue()))
-            .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()))
-            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()));
+            .andExpect(jsonPath("$.desc").value(DEFAULT_DESC.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingAttendanceMaster() throws Exception {
@@ -214,8 +209,7 @@ public class AttendanceMasterResourceIntTest {
         // Disconnect from session so that the updates on updatedAttendanceMaster are not directly saved in db
         em.detach(updatedAttendanceMaster);
         updatedAttendanceMaster
-            .desc(UPDATED_DESC)
-            .semester(UPDATED_SEMESTER);
+            .desc(UPDATED_DESC);
         AttendanceMasterDTO attendanceMasterDTO = attendanceMasterMapper.toDto(updatedAttendanceMaster);
 
         restAttendanceMasterMockMvc.perform(put("/api/attendance-masters")
@@ -228,7 +222,6 @@ public class AttendanceMasterResourceIntTest {
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeUpdate);
         AttendanceMaster testAttendanceMaster = attendanceMasterList.get(attendanceMasterList.size() - 1);
         assertThat(testAttendanceMaster.getDesc()).isEqualTo(UPDATED_DESC);
-        assertThat(testAttendanceMaster.getSemester()).isEqualTo(UPDATED_SEMESTER);
 
         // Validate the AttendanceMaster in Elasticsearch
         verify(mockAttendanceMasterSearchRepository, times(1)).save(testAttendanceMaster);
@@ -242,7 +235,7 @@ public class AttendanceMasterResourceIntTest {
         // Create the AttendanceMaster
         AttendanceMasterDTO attendanceMasterDTO = attendanceMasterMapper.toDto(attendanceMaster);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAttendanceMasterMockMvc.perform(put("/api/attendance-masters")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(attendanceMasterDTO)))
@@ -264,7 +257,7 @@ public class AttendanceMasterResourceIntTest {
 
         int databaseSizeBeforeDelete = attendanceMasterRepository.findAll().size();
 
-        // Get the attendanceMaster
+        // Delete the attendanceMaster
         restAttendanceMasterMockMvc.perform(delete("/api/attendance-masters/{id}", attendanceMaster.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -289,8 +282,7 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(attendanceMaster.getId().intValue())))
-            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())))
-            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())));
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC)));
     }
 
     @Test

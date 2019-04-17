@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -24,7 +25,7 @@ import com.synectiks.cms.domain.enumeration.Frequency;
 public class DueDate implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -52,11 +53,11 @@ public class DueDate implements Serializable {
     private Frequency frequency;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("dueDates")
     private College college;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("dueDates")
     private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -119,12 +120,6 @@ public class DueDate implements Serializable {
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
     }
-
-
-
-
-
-
 
     public Frequency getFrequency() {
         return frequency;

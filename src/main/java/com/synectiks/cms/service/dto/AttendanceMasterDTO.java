@@ -1,8 +1,6 @@
 package com.synectiks.cms.service.dto;
-
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Semester;
 
 /**
  * A DTO for the AttendanceMaster entity.
@@ -13,7 +11,6 @@ public class AttendanceMasterDTO implements Serializable {
 
     private String desc;
 
-    private Semester semester;
 
     private Long batchId;
 
@@ -35,14 +32,6 @@ public class AttendanceMasterDTO implements Serializable {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
     }
 
     public Long getBatchId() {
@@ -95,7 +84,6 @@ public class AttendanceMasterDTO implements Serializable {
         return "AttendanceMasterDTO{" +
             "id=" + getId() +
             ", desc='" + getDesc() + "'" +
-            ", semester='" + getSemester() + "'" +
             ", batch=" + getBatchId() +
             ", section=" + getSectionId() +
             ", teach=" + getTeachId() +

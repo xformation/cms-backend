@@ -35,9 +35,8 @@ export class PaymentRemainder extends React.Component<IPaymentRemainderProps, IP
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -99,7 +98,7 @@ export class PaymentRemainder extends React.Component<IPaymentRemainderProps, IP
                   <td>{paymentRemainder.remainderRecipients}</td>
                   <td>
                     {paymentRemainder.dueDateId ? (
-                      <Link to={`dueDate/${paymentRemainder.dueDateId}`}>{paymentRemainder.dueDateId}</Link>
+                      <Link to={`due-date/${paymentRemainder.dueDateId}`}>{paymentRemainder.dueDateId}</Link>
                     ) : (
                       ''
                     )}

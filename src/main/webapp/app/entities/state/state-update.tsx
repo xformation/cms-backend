@@ -13,23 +13,29 @@ import { getEntities as getCountries } from 'app/entities/country/country.reduce
 import { getEntity, updateEntity, createEntity, reset } from './state.reducer';
 import { IState } from 'app/shared/model/state.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IStateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IStateUpdateState {
   isNew: boolean;
-  countryId: number;
+  countryId: string;
 }
 
 export class StateUpdate extends React.Component<IStateUpdateProps, IStateUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      countryId: 0,
+      countryId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class StateUpdate extends React.Component<IStateUpdateProps, IStateUpdate
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/state');
-  };
-
-  countryUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        countryId: -1
-      });
-    } else {
-      for (const i in this.props.countries) {
-        if (id === this.props.countries[i].id.toString()) {
-          this.setState({
-            countryId: this.props.countries[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -144,7 +132,7 @@ export class StateUpdate extends React.Component<IStateUpdateProps, IStateUpdate
                 </AvGroup>
                 <AvGroup>
                   <Label for="country.id">Country</Label>
-                  <AvInput id="state-country" type="select" className="form-control" name="countryId" onChange={this.countryUpdate}>
+                  <AvInput id="state-country" type="select" className="form-control" name="countryId">
                     <option value="" key="0" />
                     {countries
                       ? countries.map(otherEntity => (
@@ -176,7 +164,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   countries: storeState.country.entities,
   stateEntity: storeState.state.entity,
   loading: storeState.state.loading,
-  updating: storeState.state.updating
+  updating: storeState.state.updating,
+  updateSuccess: storeState.state.updateSuccess
 });
 
 const mapDispatchToProps = {

@@ -31,12 +31,12 @@ export class AdminAttendanceDeleteDialog extends React.Component<IAdminAttendanc
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this AdminAttendance?</ModalBody>
+        <ModalBody id="cmsApp.adminAttendance.delete.question">Are you sure you want to delete this AdminAttendance?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-adminAttendance" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

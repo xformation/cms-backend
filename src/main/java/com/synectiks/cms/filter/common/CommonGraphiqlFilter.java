@@ -1,5 +1,6 @@
 package com.synectiks.cms.filter.common;
 
+import com.synectiks.cms.business.service.BranchService;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.repository.*;
 import com.synectiks.cms.service.impl.BranchServiceImpl;
@@ -34,7 +35,7 @@ public class CommonGraphiqlFilter {
     BatchRepository batchRepository;
 
     @Autowired
-    BranchServiceImpl branchServiceImpl;
+    BranchService branchService;
 
     public College getCollegeByName(String shortName) {
         College cg = new College();
@@ -101,7 +102,7 @@ public class CommonGraphiqlFilter {
 }
 
         public List<Branch> getAllBranches(String branchName, Long collegeId){
-            return branchServiceImpl.getAllBranches(branchName, collegeId);
+            return branchService.getAllBranches(branchName, collegeId);
         }
     }
 

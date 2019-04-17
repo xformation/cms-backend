@@ -78,7 +78,7 @@ public class Query implements GraphQLQueryResolver {
     private final InvoiceRepository invoiceRepository;
     private final CompetitiveExamRepository competitiveExamRepository;
     private final DocumentsRepository documentsRepository;
-
+    private final AdminAttendanceRepository adminAttendanceRepository;
 
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
@@ -88,7 +88,7 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     LegalEntitySelectRepository legalEntitySelectRepository;
-    
+
     @Autowired
     private InvoiceFilterProcessor invoiceFilterProcessor;
 
@@ -99,7 +99,7 @@ public class Query implements GraphQLQueryResolver {
     private CommonGraphiqlFilter commonGraphiqlFilter;
 
 
-    public Query(AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+    public Query(AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
         this.batchRepository = batchRepository;
@@ -137,6 +137,7 @@ public class Query implements GraphQLQueryResolver {
         this.invoiceRepository = invoiceRepository;
         this.competitiveExamRepository = competitiveExamRepository;
         this.documentsRepository = documentsRepository;
+        this.adminAttendanceRepository = adminAttendanceRepository;
     }
 
     public Student student(long id) {
@@ -420,6 +421,9 @@ public class Query implements GraphQLQueryResolver {
     public LateFee lateFee(long id ){return lateFeeRepository.findById(id).get();}
     public List<LateFee> lateFees(){return Lists.newArrayList(lateFeeRepository.findAll());}
 
+    public AdminAttendance adminAttendance(Long id){return adminAttendanceRepository.findById(id).get();}
+    public List<AdminAttendance> adminAttendances(){return Lists.newArrayList(adminAttendanceRepository.findAll());}
+
     public PaymentRemainder paymentRemainder(Long id){return paymentRemainderRepository.findById(id).get();}
     public List<PaymentRemainder>paymentRemainders(){return Lists.newArrayList(paymentRemainderRepository.findAll());}
 
@@ -431,37 +435,37 @@ public class Query implements GraphQLQueryResolver {
         return  Lists.newArrayList(invoiceRepository.findAll());
     }
 
-    
+
     public List<Invoice> searchInvoice(String invoiceNumber, long studentId){
-		return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId));
-	}
-	
-	public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
-		return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);
-	}
-	
-	public Long getTotalPaidInvoice(long collegeId, long branchId, long academicYearId) {
-		return invoiceFilterProcessor.getTotalPaidInvoice(collegeId, branchId, academicYearId);
-	}
-	
-	public Long getTotalUnPaidInvoice(long collegeId, long branchId, long academicYearId) {
-		return invoiceFilterProcessor.getTotalUnPaidInvoice(collegeId, branchId, academicYearId);
-	}
-	
-	public Long getTotalCanceledInvoice(long collegeId, long branchId, long academicYearId) {
-		return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
-	}
-	
-	public InvoiceFilterProcessor getInvoiceData(long collegeId, long branchId, long academicYearId) {
-		return invoiceFilterProcessor.getInvoiceData(collegeId, branchId, academicYearId);
-	}
+        return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId));
+    }
+
+    public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public Long getTotalPaidInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalPaidInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public Long getTotalUnPaidInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalUnPaidInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public Long getTotalCanceledInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public InvoiceFilterProcessor getInvoiceData(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getInvoiceData(collegeId, branchId, academicYearId);
+    }
 
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName){
         return Lists.newArrayList(studentFilterProcessor.searchStudent(departmentId, batchId, sectionId, branchId, gender, studentType, studentName));
     }
 
     public List<Branch> getAllBranches(String branchName, Long collegeId){
-    return  Lists.newArrayList(commonGraphiqlFilter.getAllBranches(branchName, collegeId));
+        return  Lists.newArrayList(commonGraphiqlFilter.getAllBranches(branchName, collegeId));
     }
     public Branch getBranchById(Long branchId){
         return commonGraphiqlFilter.getBranchById(branchId);

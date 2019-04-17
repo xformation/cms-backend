@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -61,10 +62,8 @@ public class CompetitiveExamResourceIntTest {
     @Autowired
     private CompetitiveExamRepository competitiveExamRepository;
 
-
     @Autowired
     private CompetitiveExamMapper competitiveExamMapper;
-    
 
     @Autowired
     private CompetitiveExamService competitiveExamService;
@@ -89,6 +88,9 @@ public class CompetitiveExamResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restCompetitiveExamMockMvc;
 
     private CompetitiveExam competitiveExam;
@@ -101,7 +103,8 @@ public class CompetitiveExamResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -265,7 +268,6 @@ public class CompetitiveExamResourceIntTest {
             .andExpect(jsonPath("$.[*].rank").value(hasItem(DEFAULT_RANK.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getCompetitiveExam() throws Exception {
@@ -282,6 +284,7 @@ public class CompetitiveExamResourceIntTest {
             .andExpect(jsonPath("$.enrollmentNo").value(DEFAULT_ENROLLMENT_NO.intValue()))
             .andExpect(jsonPath("$.rank").value(DEFAULT_RANK.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCompetitiveExam() throws Exception {
@@ -335,7 +338,7 @@ public class CompetitiveExamResourceIntTest {
         // Create the CompetitiveExam
         CompetitiveExamDTO competitiveExamDTO = competitiveExamMapper.toDto(competitiveExam);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCompetitiveExamMockMvc.perform(put("/api/competitive-exams")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(competitiveExamDTO)))
@@ -357,7 +360,7 @@ public class CompetitiveExamResourceIntTest {
 
         int databaseSizeBeforeDelete = competitiveExamRepository.findAll().size();
 
-        // Get the competitiveExam
+        // Delete the competitiveExam
         restCompetitiveExamMockMvc.perform(delete("/api/competitive-exams/{id}", competitiveExam.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -382,7 +385,7 @@ public class CompetitiveExamResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(competitiveExam.getId().intValue())))
-            .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].testName").value(hasItem(DEFAULT_TEST_NAME)))
             .andExpect(jsonPath("$.[*].testScore").value(hasItem(DEFAULT_TEST_SCORE)))
             .andExpect(jsonPath("$.[*].enrollmentNo").value(hasItem(DEFAULT_ENROLLMENT_NO.intValue())))
             .andExpect(jsonPath("$.[*].rank").value(hasItem(DEFAULT_RANK.intValue())));

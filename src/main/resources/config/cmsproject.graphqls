@@ -111,6 +111,9 @@ type Query {
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
 
+  adminAttendance(id: Long!):AdminAttendance!
+  adminAttendances: [AdminAttendance!]!
+
   bankAccount(id: Long!): BankAccounts!
   bankAccounts: [BankAccounts!]!
 
@@ -320,6 +323,9 @@ type Country{
     countryCode: String!
     isdCode: String!
 }
+
+
+
 type DueDate{
     id:Long!
     paymentMethod: String!
@@ -894,6 +900,9 @@ type Mutation {
     updateAdmissionEnquiry(input: UpdateAdmissionEnquiryInput!): UpdateAdmissionEnquiryPayload!
     removeAdmissionEnquiry(input: RemoveAdmissionEnquiryInput!): RemoveAdmissionEnquiryPayload!
 
+addAdminAttendance(input:AddAdminAttendanceInput!):AddAdminAttendancePayload!
+    updateAdminAttendance(input:UpdateAdminAttendanceInput!):UpdateAdminAttendancePayload!
+    removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
 
 }
 
@@ -1381,8 +1390,54 @@ input RemoveBatchInput {
 type RemoveBatchPayload {
     batch: [Batch!]!
 }
+type AdminAttendance{
+    id: Long!
+    updatedOn: Date!
+    updatedBy: String!
+    lecture: Lecture!
+    branch: Branch!
+    college: College!
+    department: Department!
+    academicyear: AcademicYear!
+    section: Section!
+    student: Student!
+}
 
-
+input AddAdminAttendanceInput {
+    updatedOn: Date!
+    updatedBy: String!
+    lectureId: Long!
+    branchId: Long!
+    collegeId: Long!
+    departmentId: Long!
+    academicyearId: Long!
+    sectionId: Long!
+    studentId: Long!
+}
+type AddAdminAttendancePayload {
+    adminAttendance: AdminAttendance!
+}
+input UpdateAdminAttendanceInput {
+    id: Long!
+    updatedOn: Date!
+    updatedBy: String!
+    lectureId: Long!
+    branchId: Long!
+    collegeId: Long!
+    departmentId: Long!
+    academicyearId: Long!
+    sectionId: Long!
+    studentId: Long!
+}
+type UpdateAdminAttendancePayload {
+    adminAttendance: AdminAttendance!
+}
+input RemoveAdminAttendanceInput {
+    adminAttendanceId: Long!
+}
+type RemoveAdminAttendancePayload {
+    adminAttendance: [AdminAttendance!]!
+}
 
 type AcademicYear{
     id: Long!
@@ -1413,6 +1468,7 @@ input RemoveAcademicYearInput {
 type RemoveAcademicYearPayload {
     academicYears: [AcademicYear!]!
 }
+
 
 
 
@@ -2214,4 +2270,3 @@ input RemoveInvoiceInput{
 type RemoveInvoicePayload{
     invoices:[Invoice]!
 }
-

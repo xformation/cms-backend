@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.AuthorizedSignatoryService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class AuthorizedSignatoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/authorized-signatories")
-    @Timed
     public ResponseEntity<AuthorizedSignatoryDTO> createAuthorizedSignatory(@Valid @RequestBody AuthorizedSignatoryDTO authorizedSignatoryDTO) throws URISyntaxException {
         log.debug("REST request to save AuthorizedSignatory : {}", authorizedSignatoryDTO);
         if (authorizedSignatoryDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class AuthorizedSignatoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/authorized-signatories")
-    @Timed
     public ResponseEntity<AuthorizedSignatoryDTO> updateAuthorizedSignatory(@Valid @RequestBody AuthorizedSignatoryDTO authorizedSignatoryDTO) throws URISyntaxException {
         log.debug("REST request to update AuthorizedSignatory : {}", authorizedSignatoryDTO);
         if (authorizedSignatoryDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class AuthorizedSignatoryResource {
      * @return the ResponseEntity with status 200 (OK) and the list of authorizedSignatories in body
      */
     @GetMapping("/authorized-signatories")
-    @Timed
     public List<AuthorizedSignatoryDTO> getAllAuthorizedSignatories() {
         log.debug("REST request to get all AuthorizedSignatories");
         return authorizedSignatoryService.findAll();
@@ -99,7 +94,6 @@ public class AuthorizedSignatoryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the authorizedSignatoryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/authorized-signatories/{id}")
-    @Timed
     public ResponseEntity<AuthorizedSignatoryDTO> getAuthorizedSignatory(@PathVariable Long id) {
         log.debug("REST request to get AuthorizedSignatory : {}", id);
         Optional<AuthorizedSignatoryDTO> authorizedSignatoryDTO = authorizedSignatoryService.findOne(id);
@@ -113,7 +107,6 @@ public class AuthorizedSignatoryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/authorized-signatories/{id}")
-    @Timed
     public ResponseEntity<Void> deleteAuthorizedSignatory(@PathVariable Long id) {
         log.debug("REST request to delete AuthorizedSignatory : {}", id);
         authorizedSignatoryService.delete(id);
@@ -128,7 +121,6 @@ public class AuthorizedSignatoryResource {
      * @return the result of the search
      */
     @GetMapping("/_search/authorized-signatories")
-    @Timed
     public List<AuthorizedSignatoryDTO> searchAuthorizedSignatories(@RequestParam String query) {
         log.debug("REST request to search AuthorizedSignatories for query {}", query);
         return authorizedSignatoryService.search(query);

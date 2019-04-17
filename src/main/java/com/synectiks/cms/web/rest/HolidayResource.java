@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.HolidayService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class HolidayResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/holidays")
-    @Timed
     public ResponseEntity<HolidayDTO> createHoliday(@Valid @RequestBody HolidayDTO holidayDTO) throws URISyntaxException {
         log.debug("REST request to save Holiday : {}", holidayDTO);
         if (holidayDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class HolidayResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/holidays")
-    @Timed
     public ResponseEntity<HolidayDTO> updateHoliday(@Valid @RequestBody HolidayDTO holidayDTO) throws URISyntaxException {
         log.debug("REST request to update Holiday : {}", holidayDTO);
         if (holidayDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class HolidayResource {
      * @return the ResponseEntity with status 200 (OK) and the list of holidays in body
      */
     @GetMapping("/holidays")
-    @Timed
     public List<HolidayDTO> getAllHolidays() {
         log.debug("REST request to get all Holidays");
         return holidayService.findAll();
@@ -99,7 +94,6 @@ public class HolidayResource {
      * @return the ResponseEntity with status 200 (OK) and with body the holidayDTO, or with status 404 (Not Found)
      */
     @GetMapping("/holidays/{id}")
-    @Timed
     public ResponseEntity<HolidayDTO> getHoliday(@PathVariable Long id) {
         log.debug("REST request to get Holiday : {}", id);
         Optional<HolidayDTO> holidayDTO = holidayService.findOne(id);
@@ -113,7 +107,6 @@ public class HolidayResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/holidays/{id}")
-    @Timed
     public ResponseEntity<Void> deleteHoliday(@PathVariable Long id) {
         log.debug("REST request to delete Holiday : {}", id);
         holidayService.delete(id);
@@ -128,7 +121,6 @@ public class HolidayResource {
      * @return the result of the search
      */
     @GetMapping("/_search/holidays")
-    @Timed
     public List<HolidayDTO> searchHolidays(@RequestParam String query) {
         log.debug("REST request to search Holidays for query {}", query);
         return holidayService.search(query);

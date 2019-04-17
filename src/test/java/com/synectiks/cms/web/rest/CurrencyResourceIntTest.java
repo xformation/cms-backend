@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -58,10 +59,8 @@ public class CurrencyResourceIntTest {
     @Autowired
     private CurrencyRepository currencyRepository;
 
-
     @Autowired
     private CurrencyMapper currencyMapper;
-    
 
     @Autowired
     private CurrencyService currencyService;
@@ -86,6 +85,9 @@ public class CurrencyResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restCurrencyMockMvc;
 
     private Currency currency;
@@ -98,7 +100,8 @@ public class CurrencyResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -202,7 +205,6 @@ public class CurrencyResourceIntTest {
             .andExpect(jsonPath("$.[*].currencySymbol").value(hasItem(DEFAULT_CURRENCY_SYMBOL.toString())));
     }
     
-
     @Test
     @Transactional
     public void getCurrency() throws Exception {
@@ -218,6 +220,7 @@ public class CurrencyResourceIntTest {
             .andExpect(jsonPath("$.currencyCode").value(DEFAULT_CURRENCY_CODE.toString()))
             .andExpect(jsonPath("$.currencySymbol").value(DEFAULT_CURRENCY_SYMBOL.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCurrency() throws Exception {
@@ -269,7 +272,7 @@ public class CurrencyResourceIntTest {
         // Create the Currency
         CurrencyDTO currencyDTO = currencyMapper.toDto(currency);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCurrencyMockMvc.perform(put("/api/currencies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(currencyDTO)))
@@ -291,7 +294,7 @@ public class CurrencyResourceIntTest {
 
         int databaseSizeBeforeDelete = currencyRepository.findAll().size();
 
-        // Get the currency
+        // Delete the currency
         restCurrencyMockMvc.perform(delete("/api/currencies/{id}", currency.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -316,9 +319,9 @@ public class CurrencyResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(currency.getId().intValue())))
-            .andExpect(jsonPath("$.[*].currencyName").value(hasItem(DEFAULT_CURRENCY_NAME.toString())))
-            .andExpect(jsonPath("$.[*].currencyCode").value(hasItem(DEFAULT_CURRENCY_CODE.toString())))
-            .andExpect(jsonPath("$.[*].currencySymbol").value(hasItem(DEFAULT_CURRENCY_SYMBOL.toString())));
+            .andExpect(jsonPath("$.[*].currencyName").value(hasItem(DEFAULT_CURRENCY_NAME)))
+            .andExpect(jsonPath("$.[*].currencyCode").value(hasItem(DEFAULT_CURRENCY_CODE)))
+            .andExpect(jsonPath("$.[*].currencySymbol").value(hasItem(DEFAULT_CURRENCY_SYMBOL)));
     }
 
     @Test

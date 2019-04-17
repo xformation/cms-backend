@@ -13,55 +13,55 @@ export default class CurrencyUpdatePage {
     return this.pageTitle;
   }
 
-  setCurrencyNameInput(currencyName) {
-    this.currencyNameInput.sendKeys(currencyName);
+  async setCurrencyNameInput(currencyName) {
+    await this.currencyNameInput.sendKeys(currencyName);
   }
 
-  getCurrencyNameInput() {
+  async getCurrencyNameInput() {
     return this.currencyNameInput.getAttribute('value');
   }
 
-  setCurrencyCodeInput(currencyCode) {
-    this.currencyCodeInput.sendKeys(currencyCode);
+  async setCurrencyCodeInput(currencyCode) {
+    await this.currencyCodeInput.sendKeys(currencyCode);
   }
 
-  getCurrencyCodeInput() {
+  async getCurrencyCodeInput() {
     return this.currencyCodeInput.getAttribute('value');
   }
 
-  setCurrencySymbolInput(currencySymbol) {
-    this.currencySymbolInput.sendKeys(currencySymbol);
+  async setCurrencySymbolInput(currencySymbol) {
+    await this.currencySymbolInput.sendKeys(currencySymbol);
   }
 
-  getCurrencySymbolInput() {
+  async getCurrencySymbolInput() {
     return this.currencySymbolInput.getAttribute('value');
   }
 
-  countrySelectLastOption() {
-    this.countrySelect
+  async countrySelectLastOption() {
+    await this.countrySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  countrySelectOption(option) {
-    this.countrySelect.sendKeys(option);
+  async countrySelectOption(option) {
+    await this.countrySelect.sendKeys(option);
   }
 
   getCountrySelect() {
     return this.countrySelect;
   }
 
-  getCountrySelectedOption() {
+  async getCountrySelectedOption() {
     return this.countrySelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

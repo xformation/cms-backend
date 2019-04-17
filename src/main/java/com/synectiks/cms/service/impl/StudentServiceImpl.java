@@ -1,9 +1,7 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.service.StudentService;
+import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.search.StudentSearchRepository;
 import com.synectiks.cms.service.dto.StudentDTO;
@@ -11,7 +9,6 @@ import com.synectiks.cms.service.mapper.StudentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -115,45 +112,5 @@ public class StudentServiceImpl implements StudentService {
             .stream(studentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(studentMapper::toDto)
             .collect(Collectors.toList());
-    }
-    public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName) {
-        Student std = new Student();
-
-        if(studentType != null) {
-            std.setStudentType(studentType);
-        }
-
-        if(studentName != null){
-            std.setStudentName(studentName);
-        }
-
-        if(gender != null) {
-            std.setSex(gender);
-        }
-        if(departmentId != null) {
-            Department department = new Department();
-            department.setId(departmentId);
-            std.setDepartment(department);
-        }
-
-        if(batchId != null) {
-            Batch batch = new Batch();
-            batch.setId(batchId);
-            std.setBatch(batch);
-        }
-
-        if(sectionId != null) {
-            Section section = new Section();
-            section.setId(sectionId);
-            std.setSection(section);
-        }
-        if(branchId != null) {
-            Branch branch = new Branch();
-            branch.setId(branchId);
-            std.setBranch(branch);
-        }
-        Example<Student> example = Example.of(std);
-        List<Student> list = this.studentRepository.findAll(example);
-        return list;
     }
 }

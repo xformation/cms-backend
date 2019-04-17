@@ -15,25 +15,31 @@ import { getEntities as getLectures } from 'app/entities/lecture/lecture.reducer
 import { getEntity, updateEntity, createEntity, reset } from './student-attendance.reducer';
 import { IStudentAttendance } from 'app/shared/model/student-attendance.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IStudentAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IStudentAttendanceUpdateState {
   isNew: boolean;
-  studentId: number;
-  lectureId: number;
+  studentId: string;
+  lectureId: string;
 }
 
 export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceUpdateProps, IStudentAttendanceUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentId: 0,
-      lectureId: 0,
+      studentId: '0',
+      lectureId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,46 +66,11 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/student-attendance');
-  };
-
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
-  };
-
-  lectureUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        lectureId: -1
-      });
-    } else {
-      for (const i in this.props.lectures) {
-        if (id === this.props.lectures[i].id.toString()) {
-          this.setState({
-            lectureId: this.props.lectures[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -146,13 +117,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                 </AvGroup>
                 <AvGroup>
                   <Label for="student.id">Student</Label>
-                  <AvInput
-                    id="student-attendance-student"
-                    type="select"
-                    className="form-control"
-                    name="studentId"
-                    onChange={this.studentUpdate}
-                  >
+                  <AvInput id="student-attendance-student" type="select" className="form-control" name="studentId">
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -165,13 +130,7 @@ export class StudentAttendanceUpdate extends React.Component<IStudentAttendanceU
                 </AvGroup>
                 <AvGroup>
                   <Label for="lecture.id">Lecture</Label>
-                  <AvInput
-                    id="student-attendance-lecture"
-                    type="select"
-                    className="form-control"
-                    name="lectureId"
-                    onChange={this.lectureUpdate}
-                  >
+                  <AvInput id="student-attendance-lecture" type="select" className="form-control" name="lectureId">
                     <option value="" key="0" />
                     {lectures
                       ? lectures.map(otherEntity => (
@@ -204,7 +163,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   lectures: storeState.lecture.entities,
   studentAttendanceEntity: storeState.studentAttendance.entity,
   loading: storeState.studentAttendance.loading,
-  updating: storeState.studentAttendance.updating
+  updating: storeState.studentAttendance.updating,
+  updateSuccess: storeState.studentAttendance.updateSuccess
 });
 
 const mapDispatchToProps = {

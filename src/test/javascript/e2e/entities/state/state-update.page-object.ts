@@ -13,55 +13,55 @@ export default class StateUpdatePage {
     return this.pageTitle;
   }
 
-  setStateNameInput(stateName) {
-    this.stateNameInput.sendKeys(stateName);
+  async setStateNameInput(stateName) {
+    await this.stateNameInput.sendKeys(stateName);
   }
 
-  getStateNameInput() {
+  async getStateNameInput() {
     return this.stateNameInput.getAttribute('value');
   }
 
-  setDivisionTypeInput(divisionType) {
-    this.divisionTypeInput.sendKeys(divisionType);
+  async setDivisionTypeInput(divisionType) {
+    await this.divisionTypeInput.sendKeys(divisionType);
   }
 
-  getDivisionTypeInput() {
+  async getDivisionTypeInput() {
     return this.divisionTypeInput.getAttribute('value');
   }
 
-  setStateCodeInput(stateCode) {
-    this.stateCodeInput.sendKeys(stateCode);
+  async setStateCodeInput(stateCode) {
+    await this.stateCodeInput.sendKeys(stateCode);
   }
 
-  getStateCodeInput() {
+  async getStateCodeInput() {
     return this.stateCodeInput.getAttribute('value');
   }
 
-  countrySelectLastOption() {
-    this.countrySelect
+  async countrySelectLastOption() {
+    await this.countrySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  countrySelectOption(option) {
-    this.countrySelect.sendKeys(option);
+  async countrySelectOption(option) {
+    await this.countrySelect.sendKeys(option);
   }
 
   getCountrySelect() {
     return this.countrySelect;
   }
 
-  getCountrySelectedOption() {
+  async getCountrySelectedOption() {
     return this.countrySelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

@@ -8,9 +8,10 @@ export const enum ModeOfPayment {
   DEMANDDRAFT = 'DEMANDDRAFT'
 }
 
-export const enum Status {
-  ACTIVE = 'ACTIVE',
-  DEACTIVE = 'DEACTIVE'
+export const enum InvoicePaymentStatus {
+  PAID = 'PAID',
+  UNPAID = 'UNPAID',
+  CANCELED = 'CANCELED'
 }
 
 export interface IInvoice {
@@ -24,7 +25,7 @@ export interface IInvoice {
   chequeNumber?: number;
   demandDraftNumber?: number;
   onlineTxnRefNumber?: string;
-  paymentStatus?: Status;
+  paymentStatus?: InvoicePaymentStatus;
   comments?: string;
   updatedBy?: string;
   updatedOn?: Moment;

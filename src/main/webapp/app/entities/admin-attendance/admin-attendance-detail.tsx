@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -29,17 +29,29 @@ export class AdminAttendanceDetail extends React.Component<IAdminAttendanceDetai
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="attendanceStatus">Attendance Status</span>
+              <span id="updatedOn">Updated On</span>
             </dt>
-            <dd>{adminAttendanceEntity.attendanceStatus}</dd>
+            <dd>
+              <TextFormat value={adminAttendanceEntity.updatedOn} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>
-              <span id="comments">Comments</span>
+              <span id="updatedBy">Updated By</span>
             </dt>
-            <dd>{adminAttendanceEntity.comments}</dd>
-            <dt>Student</dt>
-            <dd>{adminAttendanceEntity.studentId ? adminAttendanceEntity.studentId : ''}</dd>
+            <dd>{adminAttendanceEntity.updatedBy}</dd>
             <dt>Lecture</dt>
             <dd>{adminAttendanceEntity.lectureId ? adminAttendanceEntity.lectureId : ''}</dd>
+            <dt>Branch</dt>
+            <dd>{adminAttendanceEntity.branchId ? adminAttendanceEntity.branchId : ''}</dd>
+            <dt>College</dt>
+            <dd>{adminAttendanceEntity.collegeId ? adminAttendanceEntity.collegeId : ''}</dd>
+            <dt>Department</dt>
+            <dd>{adminAttendanceEntity.departmentId ? adminAttendanceEntity.departmentId : ''}</dd>
+            <dt>Academicyear</dt>
+            <dd>{adminAttendanceEntity.academicyearId ? adminAttendanceEntity.academicyearId : ''}</dd>
+            <dt>Section</dt>
+            <dd>{adminAttendanceEntity.sectionId ? adminAttendanceEntity.sectionId : ''}</dd>
+            <dt>Student</dt>
+            <dd>{adminAttendanceEntity.studentId ? adminAttendanceEntity.studentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/admin-attendance" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -74,10 +75,8 @@ public class LateFeeResourceIntTest {
     @Autowired
     private LateFeeRepository lateFeeRepository;
 
-
     @Autowired
     private LateFeeMapper lateFeeMapper;
-    
 
     @Autowired
     private LateFeeService lateFeeService;
@@ -102,6 +101,9 @@ public class LateFeeResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restLateFeeMockMvc;
 
     private LateFee lateFee;
@@ -114,7 +116,8 @@ public class LateFeeResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -268,7 +271,6 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.[*].lateFeeAssignmentFrequency").value(hasItem(DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY.toString())));
     }
     
-
     @Test
     @Transactional
     public void getLateFee() throws Exception {
@@ -288,6 +290,7 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.percentCharges").value(DEFAULT_PERCENT_CHARGES.intValue()))
             .andExpect(jsonPath("$.lateFeeAssignmentFrequency").value(DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingLateFee() throws Exception {
@@ -347,7 +350,7 @@ public class LateFeeResourceIntTest {
         // Create the LateFee
         LateFeeDTO lateFeeDTO = lateFeeMapper.toDto(lateFee);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLateFeeMockMvc.perform(put("/api/late-fees")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lateFeeDTO)))
@@ -369,7 +372,7 @@ public class LateFeeResourceIntTest {
 
         int databaseSizeBeforeDelete = lateFeeRepository.findAll().size();
 
-        // Get the lateFee
+        // Delete the lateFee
         restLateFeeMockMvc.perform(delete("/api/late-fees/{id}", lateFee.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -55,10 +56,8 @@ public class DocumentsResourceIntTest {
     @Autowired
     private DocumentsRepository documentsRepository;
 
-
     @Autowired
     private DocumentsMapper documentsMapper;
-    
 
     @Autowired
     private DocumentsService documentsService;
@@ -83,6 +82,9 @@ public class DocumentsResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restDocumentsMockMvc;
 
     private Documents documents;
@@ -95,7 +97,8 @@ public class DocumentsResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -215,7 +218,6 @@ public class DocumentsResourceIntTest {
             .andExpect(jsonPath("$.[*].upload").value(hasItem(DEFAULT_UPLOAD.toString())));
     }
     
-
     @Test
     @Transactional
     public void getDocuments() throws Exception {
@@ -230,6 +232,7 @@ public class DocumentsResourceIntTest {
             .andExpect(jsonPath("$.documentName").value(DEFAULT_DOCUMENT_NAME.toString()))
             .andExpect(jsonPath("$.upload").value(DEFAULT_UPLOAD.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingDocuments() throws Exception {
@@ -279,7 +282,7 @@ public class DocumentsResourceIntTest {
         // Create the Documents
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restDocumentsMockMvc.perform(put("/api/documents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(documentsDTO)))
@@ -301,7 +304,7 @@ public class DocumentsResourceIntTest {
 
         int databaseSizeBeforeDelete = documentsRepository.findAll().size();
 
-        // Get the documents
+        // Delete the documents
         restDocumentsMockMvc.perform(delete("/api/documents/{id}", documents.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -326,8 +329,8 @@ public class DocumentsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documents.getId().intValue())))
-            .andExpect(jsonPath("$.[*].documentName").value(hasItem(DEFAULT_DOCUMENT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].upload").value(hasItem(DEFAULT_UPLOAD.toString())));
+            .andExpect(jsonPath("$.[*].documentName").value(hasItem(DEFAULT_DOCUMENT_NAME)))
+            .andExpect(jsonPath("$.[*].upload").value(hasItem(DEFAULT_UPLOAD)));
     }
 
     @Test

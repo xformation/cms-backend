@@ -13,23 +13,29 @@ import { getEntities as getStudents } from 'app/entities/student/student.reducer
 import { getEntity, updateEntity, createEntity, reset } from './competitive-exam.reducer';
 import { ICompetitiveExam } from 'app/shared/model/competitive-exam.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ICompetitiveExamUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICompetitiveExamUpdateState {
   isNew: boolean;
-  studentId: number;
+  studentId: string;
 }
 
 export class CompetitiveExamUpdate extends React.Component<ICompetitiveExamUpdateProps, ICompetitiveExamUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentId: 0,
+      studentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class CompetitiveExamUpdate extends React.Component<ICompetitiveExamUpdat
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/competitive-exam');
-  };
-
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -122,7 +110,7 @@ export class CompetitiveExamUpdate extends React.Component<ICompetitiveExamUpdat
                   </Label>
                   <AvField
                     id="competitive-exam-testScore"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="testScore"
                     validate={{
@@ -137,7 +125,7 @@ export class CompetitiveExamUpdate extends React.Component<ICompetitiveExamUpdat
                   </Label>
                   <AvField
                     id="competitive-exam-enrollmentNo"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="enrollmentNo"
                     validate={{
@@ -152,7 +140,7 @@ export class CompetitiveExamUpdate extends React.Component<ICompetitiveExamUpdat
                   </Label>
                   <AvField
                     id="competitive-exam-rank"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="rank"
                     validate={{
@@ -163,13 +151,7 @@ export class CompetitiveExamUpdate extends React.Component<ICompetitiveExamUpdat
                 </AvGroup>
                 <AvGroup>
                   <Label for="student.id">Student</Label>
-                  <AvInput
-                    id="competitive-exam-student"
-                    type="select"
-                    className="form-control"
-                    name="studentId"
-                    onChange={this.studentUpdate}
-                  >
+                  <AvInput id="competitive-exam-student" type="select" className="form-control" name="studentId">
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -201,7 +183,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   students: storeState.student.entities,
   competitiveExamEntity: storeState.competitiveExam.entity,
   loading: storeState.competitiveExam.loading,
-  updating: storeState.competitiveExam.updating
+  updating: storeState.competitiveExam.updating,
+  updateSuccess: storeState.competitiveExam.updateSuccess
 });
 
 const mapDispatchToProps = {

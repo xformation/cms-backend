@@ -15,25 +15,31 @@ import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './late-fee.reducer';
 import { ILateFee } from 'app/shared/model/late-fee.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ILateFeeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ILateFeeUpdateState {
   isNew: boolean;
-  collegeId: number;
-  branchId: number;
+  collegeId: string;
+  branchId: string;
 }
 
 export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFeeUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      collegeId: 0,
-      branchId: 0,
+      collegeId: '0',
+      branchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -60,46 +66,11 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/late-fee');
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
-  };
-
-  branchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        branchId: -1
-      });
-    } else {
-      for (const i in this.props.branches) {
-        if (id === this.props.branches[i].id.toString()) {
-          this.setState({
-            branchId: this.props.branches[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -144,7 +115,7 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
                   </Label>
                   <AvField
                     id="late-fee-lateFeeDays"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="lateFeeDays"
                     validate={{
@@ -183,13 +154,13 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
                   <Label id="fixedChargesLabel" for="fixedCharges">
                     Fixed Charges
                   </Label>
-                  <AvField id="late-fee-fixedCharges" type="number" className="form-control" name="fixedCharges" />
+                  <AvField id="late-fee-fixedCharges" type="string" className="form-control" name="fixedCharges" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="percentChargesLabel" for="percentCharges">
                     Percent Charges
                   </Label>
-                  <AvField id="late-fee-percentCharges" type="number" className="form-control" name="percentCharges" />
+                  <AvField id="late-fee-percentCharges" type="string" className="form-control" name="percentCharges" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="lateFeeAssignmentFrequencyLabel">Late Fee Assignment Frequency</Label>
@@ -209,7 +180,7 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput id="late-fee-college" type="select" className="form-control" name="collegeId" onChange={this.collegeUpdate}>
+                  <AvInput id="late-fee-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -222,7 +193,7 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="late-fee-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
+                  <AvInput id="late-fee-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -255,7 +226,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
   lateFeeEntity: storeState.lateFee.entity,
   loading: storeState.lateFee.loading,
-  updating: storeState.lateFee.updating
+  updating: storeState.lateFee.updating,
+  updateSuccess: storeState.lateFee.updateSuccess
 });
 
 const mapDispatchToProps = {

@@ -16,101 +16,101 @@ export default class BranchUpdatePage {
     return this.pageTitle;
   }
 
-  setBranchNameInput(branchName) {
-    this.branchNameInput.sendKeys(branchName);
+  async setBranchNameInput(branchName) {
+    await this.branchNameInput.sendKeys(branchName);
   }
 
-  getBranchNameInput() {
+  async getBranchNameInput() {
     return this.branchNameInput.getAttribute('value');
   }
 
-  setAddress1Input(address1) {
-    this.address1Input.sendKeys(address1);
+  async setAddress1Input(address1) {
+    await this.address1Input.sendKeys(address1);
   }
 
-  getAddress1Input() {
+  async getAddress1Input() {
     return this.address1Input.getAttribute('value');
   }
 
-  setAddress2Input(address2) {
-    this.address2Input.sendKeys(address2);
+  async setAddress2Input(address2) {
+    await this.address2Input.sendKeys(address2);
   }
 
-  getAddress2Input() {
+  async getAddress2Input() {
     return this.address2Input.getAttribute('value');
   }
 
-  setBranchHeadInput(branchHead) {
-    this.branchHeadInput.sendKeys(branchHead);
+  async setBranchHeadInput(branchHead) {
+    await this.branchHeadInput.sendKeys(branchHead);
   }
 
-  getBranchHeadInput() {
+  async getBranchHeadInput() {
     return this.branchHeadInput.getAttribute('value');
   }
 
-  collegeSelectLastOption() {
-    this.collegeSelect
+  async collegeSelectLastOption() {
+    await this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  getCollegeSelectedOption() {
+  async getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  citySelectLastOption() {
-    this.citySelect
+  async citySelectLastOption() {
+    await this.citySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  citySelectOption(option) {
-    this.citySelect.sendKeys(option);
+  async citySelectOption(option) {
+    await this.citySelect.sendKeys(option);
   }
 
   getCitySelect() {
     return this.citySelect;
   }
 
-  getCitySelectedOption() {
+  async getCitySelectedOption() {
     return this.citySelect.element(by.css('option:checked')).getText();
   }
 
-  stateSelectLastOption() {
-    this.stateSelect
+  async stateSelectLastOption() {
+    await this.stateSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  stateSelectOption(option) {
-    this.stateSelect.sendKeys(option);
+  async stateSelectOption(option) {
+    await this.stateSelect.sendKeys(option);
   }
 
   getStateSelect() {
     return this.stateSelect;
   }
 
-  getStateSelectedOption() {
+  async getStateSelectedOption() {
     return this.stateSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

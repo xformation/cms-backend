@@ -13,23 +13,29 @@ import { getEntities as getDepartments } from 'app/entities/department/departmen
 import { getEntity, updateEntity, createEntity, reset } from './batch.reducer';
 import { IBatch } from 'app/shared/model/batch.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IBatchUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IBatchUpdateState {
   isNew: boolean;
-  departmentId: number;
+  departmentId: string;
 }
 
 export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      departmentId: 0,
+      departmentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/batch');
-  };
-
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -120,13 +108,7 @@ export class BatchUpdate extends React.Component<IBatchUpdateProps, IBatchUpdate
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">Department</Label>
-                  <AvInput
-                    id="batch-department"
-                    type="select"
-                    className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
-                  >
+                  <AvInput id="batch-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
@@ -158,7 +140,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   departments: storeState.department.entities,
   batchEntity: storeState.batch.entity,
   loading: storeState.batch.loading,
-  updating: storeState.batch.updating
+  updating: storeState.batch.updating,
+  updateSuccess: storeState.batch.updateSuccess
 });
 
 const mapDispatchToProps = {

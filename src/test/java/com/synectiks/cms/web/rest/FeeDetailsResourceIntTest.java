@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -66,10 +67,8 @@ public class FeeDetailsResourceIntTest {
     @Autowired
     private FeeDetailsRepository feeDetailsRepository;
 
-
     @Autowired
     private FeeDetailsMapper feeDetailsMapper;
-    
 
     @Autowired
     private FeeDetailsService feeDetailsService;
@@ -94,6 +93,9 @@ public class FeeDetailsResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restFeeDetailsMockMvc;
 
     private FeeDetails feeDetails;
@@ -106,7 +108,8 @@ public class FeeDetailsResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -292,7 +295,6 @@ public class FeeDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getFeeDetails() throws Exception {
@@ -310,6 +312,7 @@ public class FeeDetailsResourceIntTest {
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingFeeDetails() throws Exception {
@@ -365,7 +368,7 @@ public class FeeDetailsResourceIntTest {
         // Create the FeeDetails
         FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFeeDetailsMockMvc.perform(put("/api/fee-details")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
@@ -387,7 +390,7 @@ public class FeeDetailsResourceIntTest {
 
         int databaseSizeBeforeDelete = feeDetailsRepository.findAll().size();
 
-        // Get the feeDetails
+        // Delete the feeDetails
         restFeeDetailsMockMvc.perform(delete("/api/fee-details/{id}", feeDetails.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -412,8 +415,8 @@ public class FeeDetailsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(feeDetails.getId().intValue())))
-            .andExpect(jsonPath("$.[*].feeParticularsName").value(hasItem(DEFAULT_FEE_PARTICULARS_NAME.toString())))
-            .andExpect(jsonPath("$.[*].feeParticularDesc").value(hasItem(DEFAULT_FEE_PARTICULAR_DESC.toString())))
+            .andExpect(jsonPath("$.[*].feeParticularsName").value(hasItem(DEFAULT_FEE_PARTICULARS_NAME)))
+            .andExpect(jsonPath("$.[*].feeParticularDesc").value(hasItem(DEFAULT_FEE_PARTICULAR_DESC)))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())));

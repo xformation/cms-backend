@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -9,8 +10,6 @@ import javax.persistence.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.synectiks.cms.domain.enumeration.Semester;
 
 /**
  * A AttendanceMaster.
@@ -22,7 +21,7 @@ import com.synectiks.cms.domain.enumeration.Semester;
 public class AttendanceMaster implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -31,20 +30,16 @@ public class AttendanceMaster implements Serializable {
     @Column(name = "jhi_desc")
     private String desc;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "semester")
-    private Semester semester;
-
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("attendanceMasters")
     private Batch batch;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("attendanceMasters")
     private Section section;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("attendanceMasters")
     private Teach teach;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -67,19 +62,6 @@ public class AttendanceMaster implements Serializable {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public Semester getSemester() {
-        return semester;
-    }
-
-    public AttendanceMaster semester(Semester semester) {
-        this.semester = semester;
-        return this;
-    }
-
-    public void setSemester(Semester semester) {
-        this.semester = semester;
     }
 
     public Batch getBatch() {
@@ -147,7 +129,6 @@ public class AttendanceMaster implements Serializable {
         return "AttendanceMaster{" +
             "id=" + getId() +
             ", desc='" + getDesc() + "'" +
-            ", semester='" + getSemester() + "'" +
             "}";
     }
 }

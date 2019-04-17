@@ -23,12 +23,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
+import java.util.Date;
 import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -81,16 +81,15 @@ public class AdmissionEnquiryResourceIntTest {
 
     private static final Date DEFAULT_UPDATED_ON = new Date();
     private static final Date UPDATED_UPDATED_ON = new Date();
+
     private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
 
     @Autowired
     private AdmissionEnquiryRepository admissionEnquiryRepository;
 
-
     @Autowired
     private AdmissionEnquiryMapper admissionEnquiryMapper;
-    
 
     @Autowired
     private AdmissionEnquiryService admissionEnquiryService;
@@ -115,6 +114,9 @@ public class AdmissionEnquiryResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restAdmissionEnquiryMockMvc;
 
     private AdmissionEnquiry admissionEnquiry;
@@ -127,7 +129,8 @@ public class AdmissionEnquiryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -369,7 +372,6 @@ public class AdmissionEnquiryResourceIntTest {
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())));
     }
     
-
     @Test
     @Transactional
     public void getAdmissionEnquiry() throws Exception {
@@ -393,6 +395,7 @@ public class AdmissionEnquiryResourceIntTest {
             .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
             .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingAdmissionEnquiry() throws Exception {
@@ -460,7 +463,7 @@ public class AdmissionEnquiryResourceIntTest {
         // Create the AdmissionEnquiry
         AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAdmissionEnquiryMockMvc.perform(put("/api/admission-enquiries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(admissionEnquiryDTO)))
@@ -482,7 +485,7 @@ public class AdmissionEnquiryResourceIntTest {
 
         int databaseSizeBeforeDelete = admissionEnquiryRepository.findAll().size();
 
-        // Get the admissionEnquiry
+        // Delete the admissionEnquiry
         restAdmissionEnquiryMockMvc.perform(delete("/api/admission-enquiries/{id}", admissionEnquiry.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -507,17 +510,17 @@ public class AdmissionEnquiryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(admissionEnquiry.getId().intValue())))
-            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].mobileNumber").value(hasItem(DEFAULT_MOBILE_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].alternateMobileNumber").value(hasItem(DEFAULT_ALTERNATE_MOBILE_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME)))
+            .andExpect(jsonPath("$.[*].mobileNumber").value(hasItem(DEFAULT_MOBILE_NUMBER)))
+            .andExpect(jsonPath("$.[*].alternateMobileNumber").value(hasItem(DEFAULT_ALTERNATE_MOBILE_NUMBER)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].courseApplyingFor").value(hasItem(DEFAULT_COURSE_APPLYING_FOR.toString())))
             .andExpect(jsonPath("$.[*].modeOfEnquiry").value(hasItem(DEFAULT_MODE_OF_ENQUIRY.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].enquiryDate").value(hasItem(DEFAULT_ENQUIRY_DATE.toString())))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())));
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY)));
     }
 
     @Test

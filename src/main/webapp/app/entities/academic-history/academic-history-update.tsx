@@ -13,23 +13,29 @@ import { getEntities as getStudents } from 'app/entities/student/student.reducer
 import { getEntity, updateEntity, createEntity, reset } from './academic-history.reducer';
 import { IAcademicHistory } from 'app/shared/model/academic-history.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAcademicHistoryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAcademicHistoryUpdateState {
   isNew: boolean;
-  studentId: number;
+  studentId: string;
 }
 
 export class AcademicHistoryUpdate extends React.Component<IAcademicHistoryUpdateProps, IAcademicHistoryUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentId: 0,
+      studentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class AcademicHistoryUpdate extends React.Component<IAcademicHistoryUpdat
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/academic-history');
-  };
-
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -161,7 +149,7 @@ export class AcademicHistoryUpdate extends React.Component<IAcademicHistoryUpdat
                   </Label>
                   <AvField
                     id="academic-history-enrollmentNo"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="enrollmentNo"
                     validate={{
@@ -176,7 +164,7 @@ export class AcademicHistoryUpdate extends React.Component<IAcademicHistoryUpdat
                   </Label>
                   <AvField
                     id="academic-history-score"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="score"
                     validate={{
@@ -191,7 +179,7 @@ export class AcademicHistoryUpdate extends React.Component<IAcademicHistoryUpdat
                   </Label>
                   <AvField
                     id="academic-history-percentage"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="percentage"
                     validate={{
@@ -202,13 +190,7 @@ export class AcademicHistoryUpdate extends React.Component<IAcademicHistoryUpdat
                 </AvGroup>
                 <AvGroup>
                   <Label for="student.id">Student</Label>
-                  <AvInput
-                    id="academic-history-student"
-                    type="select"
-                    className="form-control"
-                    name="studentId"
-                    onChange={this.studentUpdate}
-                  >
+                  <AvInput id="academic-history-student" type="select" className="form-control" name="studentId">
                     <option value="" key="0" />
                     {students
                       ? students.map(otherEntity => (
@@ -240,7 +222,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   students: storeState.student.entities,
   academicHistoryEntity: storeState.academicHistory.entity,
   loading: storeState.academicHistory.loading,
-  updating: storeState.academicHistory.updating
+  updating: storeState.academicHistory.updating,
+  updateSuccess: storeState.academicHistory.updateSuccess
 });
 
 const mapDispatchToProps = {

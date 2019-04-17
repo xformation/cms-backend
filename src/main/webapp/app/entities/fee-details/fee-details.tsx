@@ -35,9 +35,8 @@ export class FeeDetails extends React.Component<IFeeDetailsProps, IFeeDetailsSta
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -105,13 +104,17 @@ export class FeeDetails extends React.Component<IFeeDetailsProps, IFeeDetailsSta
                   <td>{feeDetails.gender}</td>
                   <td>{feeDetails.amount}</td>
                   <td>
-                    {feeDetails.feeCategoryId ? <Link to={`feeCategory/${feeDetails.feeCategoryId}`}>{feeDetails.feeCategoryId}</Link> : ''}
+                    {feeDetails.feeCategoryId ? (
+                      <Link to={`fee-category/${feeDetails.feeCategoryId}`}>{feeDetails.feeCategoryId}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td>{feeDetails.batchId ? <Link to={`batch/${feeDetails.batchId}`}>{feeDetails.batchId}</Link> : ''}</td>
                   <td>{feeDetails.facilityId ? <Link to={`facility/${feeDetails.facilityId}`}>{feeDetails.facilityId}</Link> : ''}</td>
                   <td>
                     {feeDetails.transportRouteId ? (
-                      <Link to={`transportRoute/${feeDetails.transportRouteId}`}>{feeDetails.transportRouteId}</Link>
+                      <Link to={`transport-route/${feeDetails.transportRouteId}`}>{feeDetails.transportRouteId}</Link>
                     ) : (
                       ''
                     )}
@@ -123,7 +126,7 @@ export class FeeDetails extends React.Component<IFeeDetailsProps, IFeeDetailsSta
                   <td>{feeDetails.branchId ? <Link to={`branch/${feeDetails.branchId}`}>{feeDetails.branchId}</Link> : ''}</td>
                   <td>
                     {feeDetails.academicYearId ? (
-                      <Link to={`academicYear/${feeDetails.academicYearId}`}>{feeDetails.academicYearId}</Link>
+                      <Link to={`academic-year/${feeDetails.academicYearId}`}>{feeDetails.academicYearId}</Link>
                     ) : (
                       ''
                     )}

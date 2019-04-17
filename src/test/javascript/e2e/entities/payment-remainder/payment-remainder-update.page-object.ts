@@ -16,113 +16,113 @@ export default class PaymentRemainderUpdatePage {
     return this.pageTitle;
   }
 
-  setFeeRemainderSelect(feeRemainder) {
-    this.feeRemainderSelect.sendKeys(feeRemainder);
+  async setFeeRemainderSelect(feeRemainder) {
+    await this.feeRemainderSelect.sendKeys(feeRemainder);
   }
 
-  getFeeRemainderSelect() {
+  async getFeeRemainderSelect() {
     return this.feeRemainderSelect.element(by.css('option:checked')).getText();
   }
 
-  feeRemainderSelectLastOption() {
-    this.feeRemainderSelect
+  async feeRemainderSelectLastOption() {
+    await this.feeRemainderSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setNoticeDayInput(noticeDay) {
-    this.noticeDayInput.sendKeys(noticeDay);
+  async setNoticeDayInput(noticeDay) {
+    await this.noticeDayInput.sendKeys(noticeDay);
   }
 
-  getNoticeDayInput() {
+  async getNoticeDayInput() {
     return this.noticeDayInput.getAttribute('value');
   }
 
-  setOverDueRemainderSelect(overDueRemainder) {
-    this.overDueRemainderSelect.sendKeys(overDueRemainder);
+  async setOverDueRemainderSelect(overDueRemainder) {
+    await this.overDueRemainderSelect.sendKeys(overDueRemainder);
   }
 
-  getOverDueRemainderSelect() {
+  async getOverDueRemainderSelect() {
     return this.overDueRemainderSelect.element(by.css('option:checked')).getText();
   }
 
-  overDueRemainderSelectLastOption() {
-    this.overDueRemainderSelect
+  async overDueRemainderSelectLastOption() {
+    await this.overDueRemainderSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setRemainderRecipientsInput(remainderRecipients) {
-    this.remainderRecipientsInput.sendKeys(remainderRecipients);
+  async setRemainderRecipientsInput(remainderRecipients) {
+    await this.remainderRecipientsInput.sendKeys(remainderRecipients);
   }
 
-  getRemainderRecipientsInput() {
+  async getRemainderRecipientsInput() {
     return this.remainderRecipientsInput.getAttribute('value');
   }
 
-  dueDateSelectLastOption() {
-    this.dueDateSelect
+  async dueDateSelectLastOption() {
+    await this.dueDateSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  dueDateSelectOption(option) {
-    this.dueDateSelect.sendKeys(option);
+  async dueDateSelectOption(option) {
+    await this.dueDateSelect.sendKeys(option);
   }
 
   getDueDateSelect() {
     return this.dueDateSelect;
   }
 
-  getDueDateSelectedOption() {
+  async getDueDateSelectedOption() {
     return this.dueDateSelect.element(by.css('option:checked')).getText();
   }
 
-  collegeSelectLastOption() {
-    this.collegeSelect
+  async collegeSelectLastOption() {
+    await this.collegeSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  collegeSelectOption(option) {
-    this.collegeSelect.sendKeys(option);
+  async collegeSelectOption(option) {
+    await this.collegeSelect.sendKeys(option);
   }
 
   getCollegeSelect() {
     return this.collegeSelect;
   }
 
-  getCollegeSelectedOption() {
+  async getCollegeSelectedOption() {
     return this.collegeSelect.element(by.css('option:checked')).getText();
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

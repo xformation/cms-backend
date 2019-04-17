@@ -22,156 +22,156 @@ export default class AdmissionEnquiryUpdatePage {
     return this.pageTitle;
   }
 
-  setStudentNameInput(studentName) {
-    this.studentNameInput.sendKeys(studentName);
+  async setStudentNameInput(studentName) {
+    await this.studentNameInput.sendKeys(studentName);
   }
 
-  getStudentNameInput() {
+  async getStudentNameInput() {
     return this.studentNameInput.getAttribute('value');
   }
 
-  setMobileNumberInput(mobileNumber) {
-    this.mobileNumberInput.sendKeys(mobileNumber);
+  async setMobileNumberInput(mobileNumber) {
+    await this.mobileNumberInput.sendKeys(mobileNumber);
   }
 
-  getMobileNumberInput() {
+  async getMobileNumberInput() {
     return this.mobileNumberInput.getAttribute('value');
   }
 
-  setAlternateMobileNumberInput(alternateMobileNumber) {
-    this.alternateMobileNumberInput.sendKeys(alternateMobileNumber);
+  async setAlternateMobileNumberInput(alternateMobileNumber) {
+    await this.alternateMobileNumberInput.sendKeys(alternateMobileNumber);
   }
 
-  getAlternateMobileNumberInput() {
+  async getAlternateMobileNumberInput() {
     return this.alternateMobileNumberInput.getAttribute('value');
   }
 
-  setEmailInput(email) {
-    this.emailInput.sendKeys(email);
+  async setEmailInput(email) {
+    await this.emailInput.sendKeys(email);
   }
 
-  getEmailInput() {
+  async getEmailInput() {
     return this.emailInput.getAttribute('value');
   }
 
-  setCourseApplyingForSelect(courseApplyingFor) {
-    this.courseApplyingForSelect.sendKeys(courseApplyingFor);
+  async setCourseApplyingForSelect(courseApplyingFor) {
+    await this.courseApplyingForSelect.sendKeys(courseApplyingFor);
   }
 
-  getCourseApplyingForSelect() {
+  async getCourseApplyingForSelect() {
     return this.courseApplyingForSelect.element(by.css('option:checked')).getText();
   }
 
-  courseApplyingForSelectLastOption() {
-    this.courseApplyingForSelect
+  async courseApplyingForSelectLastOption() {
+    await this.courseApplyingForSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setModeOfEnquirySelect(modeOfEnquiry) {
-    this.modeOfEnquirySelect.sendKeys(modeOfEnquiry);
+  async setModeOfEnquirySelect(modeOfEnquiry) {
+    await this.modeOfEnquirySelect.sendKeys(modeOfEnquiry);
   }
 
-  getModeOfEnquirySelect() {
+  async getModeOfEnquirySelect() {
     return this.modeOfEnquirySelect.element(by.css('option:checked')).getText();
   }
 
-  modeOfEnquirySelectLastOption() {
-    this.modeOfEnquirySelect
+  async modeOfEnquirySelectLastOption() {
+    await this.modeOfEnquirySelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setStatusSelect(status) {
-    this.statusSelect.sendKeys(status);
+  async setStatusSelect(status) {
+    await this.statusSelect.sendKeys(status);
   }
 
-  getStatusSelect() {
+  async getStatusSelect() {
     return this.statusSelect.element(by.css('option:checked')).getText();
   }
 
-  statusSelectLastOption() {
-    this.statusSelect
+  async statusSelectLastOption() {
+    await this.statusSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
-  setDescriptionInput(description) {
-    this.descriptionInput.sendKeys(description);
+  async setDescriptionInput(description) {
+    await this.descriptionInput.sendKeys(description);
   }
 
-  getDescriptionInput() {
+  async getDescriptionInput() {
     return this.descriptionInput.getAttribute('value');
   }
 
-  setEnquiryDateInput(enquiryDate) {
-    this.enquiryDateInput.sendKeys(enquiryDate);
+  async setEnquiryDateInput(enquiryDate) {
+    await this.enquiryDateInput.sendKeys(enquiryDate);
   }
 
-  getEnquiryDateInput() {
+  async getEnquiryDateInput() {
     return this.enquiryDateInput.getAttribute('value');
   }
 
-  setUpdatedOnInput(updatedOn) {
-    this.updatedOnInput.sendKeys(updatedOn);
+  async setUpdatedOnInput(updatedOn) {
+    await this.updatedOnInput.sendKeys(updatedOn);
   }
 
-  getUpdatedOnInput() {
+  async getUpdatedOnInput() {
     return this.updatedOnInput.getAttribute('value');
   }
 
-  setUpdatedByInput(updatedBy) {
-    this.updatedByInput.sendKeys(updatedBy);
+  async setUpdatedByInput(updatedBy) {
+    await this.updatedByInput.sendKeys(updatedBy);
   }
 
-  getUpdatedByInput() {
+  async getUpdatedByInput() {
     return this.updatedByInput.getAttribute('value');
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  admissionApplicationSelectLastOption() {
-    this.admissionApplicationSelect
+  async admissionApplicationSelectLastOption() {
+    await this.admissionApplicationSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  admissionApplicationSelectOption(option) {
-    this.admissionApplicationSelect.sendKeys(option);
+  async admissionApplicationSelectOption(option) {
+    await this.admissionApplicationSelect.sendKeys(option);
   }
 
   getAdmissionApplicationSelect() {
     return this.admissionApplicationSelect;
   }
 
-  getAdmissionApplicationSelectedOption() {
+  async getAdmissionApplicationSelectedOption() {
     return this.admissionApplicationSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

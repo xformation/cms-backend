@@ -17,27 +17,33 @@ import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './payment-remainder.reducer';
 import { IPaymentRemainder } from 'app/shared/model/payment-remainder.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IPaymentRemainderUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IPaymentRemainderUpdateState {
   isNew: boolean;
-  dueDateId: number;
-  collegeId: number;
-  branchId: number;
+  dueDateId: string;
+  collegeId: string;
+  branchId: string;
 }
 
 export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpdateProps, IPaymentRemainderUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      dueDateId: 0,
-      collegeId: 0,
-      branchId: 0,
+      dueDateId: '0',
+      collegeId: '0',
+      branchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -65,63 +71,11 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/payment-remainder');
-  };
-
-  dueDateUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        dueDateId: -1
-      });
-    } else {
-      for (const i in this.props.dueDates) {
-        if (id === this.props.dueDates[i].id.toString()) {
-          this.setState({
-            dueDateId: this.props.dueDates[i].id
-          });
-        }
-      }
-    }
-  };
-
-  collegeUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        collegeId: -1
-      });
-    } else {
-      for (const i in this.props.colleges) {
-        if (id === this.props.colleges[i].id.toString()) {
-          this.setState({
-            collegeId: this.props.colleges[i].id
-          });
-        }
-      }
-    }
-  };
-
-  branchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        branchId: -1
-      });
-    } else {
-      for (const i in this.props.branches) {
-        if (id === this.props.branches[i].id.toString()) {
-          this.setState({
-            branchId: this.props.branches[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -166,7 +120,7 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
                   </Label>
                   <AvField
                     id="payment-remainder-noticeDay"
-                    type="number"
+                    type="string"
                     className="form-control"
                     name="noticeDay"
                     validate={{
@@ -203,13 +157,7 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="dueDate.id">Due Date</Label>
-                  <AvInput
-                    id="payment-remainder-dueDate"
-                    type="select"
-                    className="form-control"
-                    name="dueDateId"
-                    onChange={this.dueDateUpdate}
-                  >
+                  <AvInput id="payment-remainder-dueDate" type="select" className="form-control" name="dueDateId">
                     <option value="" key="0" />
                     {dueDates
                       ? dueDates.map(otherEntity => (
@@ -222,13 +170,7 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
-                  <AvInput
-                    id="payment-remainder-college"
-                    type="select"
-                    className="form-control"
-                    name="collegeId"
-                    onChange={this.collegeUpdate}
-                  >
+                  <AvInput id="payment-remainder-college" type="select" className="form-control" name="collegeId">
                     <option value="" key="0" />
                     {colleges
                       ? colleges.map(otherEntity => (
@@ -241,13 +183,7 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput
-                    id="payment-remainder-branch"
-                    type="select"
-                    className="form-control"
-                    name="branchId"
-                    onChange={this.branchUpdate}
-                  >
+                  <AvInput id="payment-remainder-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -281,7 +217,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
   paymentRemainderEntity: storeState.paymentRemainder.entity,
   loading: storeState.paymentRemainder.loading,
-  updating: storeState.paymentRemainder.updating
+  updating: storeState.paymentRemainder.updating,
+  updateSuccess: storeState.paymentRemainder.updateSuccess
 });
 
 const mapDispatchToProps = {

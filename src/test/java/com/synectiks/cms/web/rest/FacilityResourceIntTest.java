@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -85,10 +86,8 @@ public class FacilityResourceIntTest {
     @Autowired
     private FacilityRepository facilityRepository;
 
-
     @Autowired
     private FacilityMapper facilityMapper;
-    
 
     @Autowired
     private FacilityService facilityService;
@@ -113,6 +112,9 @@ public class FacilityResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restFacilityMockMvc;
 
     private Facility facility;
@@ -125,7 +127,8 @@ public class FacilityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -228,7 +231,6 @@ public class FacilityResourceIntTest {
             .andExpect(jsonPath("$.[*].handicrafts").value(hasItem(DEFAULT_HANDICRAFTS.toString())));
     }
     
-
     @Test
     @Transactional
     public void getFacility() throws Exception {
@@ -250,6 +252,7 @@ public class FacilityResourceIntTest {
             .andExpect(jsonPath("$.extraClass").value(DEFAULT_EXTRA_CLASS.toString()))
             .andExpect(jsonPath("$.handicrafts").value(DEFAULT_HANDICRAFTS.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingFacility() throws Exception {
@@ -313,7 +316,7 @@ public class FacilityResourceIntTest {
         // Create the Facility
         FacilityDTO facilityDTO = facilityMapper.toDto(facility);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFacilityMockMvc.perform(put("/api/facilities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
@@ -335,7 +338,7 @@ public class FacilityResourceIntTest {
 
         int databaseSizeBeforeDelete = facilityRepository.findAll().size();
 
-        // Get the facility
+        // Delete the facility
         restFacilityMockMvc.perform(delete("/api/facilities/{id}", facility.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

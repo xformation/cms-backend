@@ -31,12 +31,12 @@ export class AdmissionEnquiryDeleteDialog extends React.Component<IAdmissionEnqu
     return (
       <Modal isOpen toggle={this.handleClose}>
         <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this AdmissionEnquiry?</ModalBody>
+        <ModalBody id="cmsApp.admissionEnquiry.delete.question">Are you sure you want to delete this AdmissionEnquiry?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
             <FontAwesomeIcon icon="ban" />&nbsp; Cancel
           </Button>
-          <Button color="danger" onClick={this.confirmDelete}>
+          <Button id="jhi-confirm-delete-admissionEnquiry" color="danger" onClick={this.confirmDelete}>
             <FontAwesomeIcon icon="trash" />&nbsp; Delete
           </Button>
         </ModalFooter>

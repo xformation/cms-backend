@@ -1,9 +1,7 @@
 package com.synectiks.cms.service.dto;
-
-import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 
 /**
  * A DTO for the AdminAttendance entity.
@@ -12,15 +10,24 @@ public class AdminAttendanceDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
-    private AttendanceStatusEnum attendanceStatus;
+    private LocalDate updatedOn;
 
-    @NotNull
-    private String comments;
+    private String updatedBy;
 
-    private Long studentId;
 
     private Long lectureId;
+
+    private Long branchId;
+
+    private Long collegeId;
+
+    private Long departmentId;
+
+    private Long academicyearId;
+
+    private Long sectionId;
+
+    private Long studentId;
 
     public Long getId() {
         return id;
@@ -30,28 +37,20 @@ public class AdminAttendanceDTO implements Serializable {
         this.id = id;
     }
 
-    public AttendanceStatusEnum getAttendanceStatus() {
-        return attendanceStatus;
+    public LocalDate getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setAttendanceStatus(AttendanceStatusEnum attendanceStatus) {
-        this.attendanceStatus = attendanceStatus;
+    public void setUpdatedOn(LocalDate updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
-    public String getComments() {
-        return comments;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public Long getLectureId() {
@@ -60,6 +59,54 @@ public class AdminAttendanceDTO implements Serializable {
 
     public void setLectureId(Long lectureId) {
         this.lectureId = lectureId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getAcademicyearId() {
+        return academicyearId;
+    }
+
+    public void setAcademicyearId(Long academicYearId) {
+        this.academicyearId = academicYearId;
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     @Override
@@ -87,10 +134,15 @@ public class AdminAttendanceDTO implements Serializable {
     public String toString() {
         return "AdminAttendanceDTO{" +
             "id=" + getId() +
-            ", attendanceStatus='" + getAttendanceStatus() + "'" +
-            ", comments='" + getComments() + "'" +
-            ", student=" + getStudentId() +
+            ", updatedOn='" + getUpdatedOn() + "'" +
+            ", updatedBy='" + getUpdatedBy() + "'" +
             ", lecture=" + getLectureId() +
+            ", branch=" + getBranchId() +
+            ", college=" + getCollegeId() +
+            ", department=" + getDepartmentId() +
+            ", academicyear=" + getAcademicyearId() +
+            ", section=" + getSectionId() +
+            ", student=" + getStudentId() +
             "}";
     }
 }

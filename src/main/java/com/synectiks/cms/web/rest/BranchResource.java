@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.BranchService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class BranchResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/branches")
-    @Timed
     public ResponseEntity<BranchDTO> createBranch(@Valid @RequestBody BranchDTO branchDTO) throws URISyntaxException {
         log.debug("REST request to save Branch : {}", branchDTO);
         if (branchDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class BranchResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/branches")
-    @Timed
     public ResponseEntity<BranchDTO> updateBranch(@Valid @RequestBody BranchDTO branchDTO) throws URISyntaxException {
         log.debug("REST request to update Branch : {}", branchDTO);
         if (branchDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class BranchResource {
      * @return the ResponseEntity with status 200 (OK) and the list of branches in body
      */
     @GetMapping("/branches")
-    @Timed
     public List<BranchDTO> getAllBranches() {
         log.debug("REST request to get all Branches");
         return branchService.findAll();
@@ -99,7 +94,6 @@ public class BranchResource {
      * @return the ResponseEntity with status 200 (OK) and with body the branchDTO, or with status 404 (Not Found)
      */
     @GetMapping("/branches/{id}")
-    @Timed
     public ResponseEntity<BranchDTO> getBranch(@PathVariable Long id) {
         log.debug("REST request to get Branch : {}", id);
         Optional<BranchDTO> branchDTO = branchService.findOne(id);
@@ -113,7 +107,6 @@ public class BranchResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/branches/{id}")
-    @Timed
     public ResponseEntity<Void> deleteBranch(@PathVariable Long id) {
         log.debug("REST request to delete Branch : {}", id);
         branchService.delete(id);
@@ -128,7 +121,6 @@ public class BranchResource {
      * @return the result of the search
      */
     @GetMapping("/_search/branches")
-    @Timed
     public List<BranchDTO> searchBranches(@RequestParam String query) {
         log.debug("REST request to search Branches for query {}", query);
         return branchService.search(query);

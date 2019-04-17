@@ -12,47 +12,47 @@ export default class DocumentsUpdatePage {
     return this.pageTitle;
   }
 
-  setDocumentNameInput(documentName) {
-    this.documentNameInput.sendKeys(documentName);
+  async setDocumentNameInput(documentName) {
+    await this.documentNameInput.sendKeys(documentName);
   }
 
-  getDocumentNameInput() {
+  async getDocumentNameInput() {
     return this.documentNameInput.getAttribute('value');
   }
 
-  setUploadInput(upload) {
-    this.uploadInput.sendKeys(upload);
+  async setUploadInput(upload) {
+    await this.uploadInput.sendKeys(upload);
   }
 
-  getUploadInput() {
+  async getUploadInput() {
     return this.uploadInput.getAttribute('value');
   }
 
-  studentSelectLastOption() {
-    this.studentSelect
+  async studentSelectLastOption() {
+    await this.studentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  studentSelectOption(option) {
-    this.studentSelect.sendKeys(option);
+  async studentSelectOption(option) {
+    await this.studentSelect.sendKeys(option);
   }
 
   getStudentSelect() {
     return this.studentSelect;
   }
 
-  getStudentSelectedOption() {
+  async getStudentSelectedOption() {
     return this.studentSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

@@ -8,32 +8,58 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IStudent } from 'app/shared/model/student.model';
-import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { ILecture } from 'app/shared/model/lecture.model';
 import { getEntities as getLectures } from 'app/entities/lecture/lecture.reducer';
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
+import { ICollege } from 'app/shared/model/college.model';
+import { getEntities as getColleges } from 'app/entities/college/college.reducer';
+import { IDepartment } from 'app/shared/model/department.model';
+import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
+import { IAcademicYear } from 'app/shared/model/academic-year.model';
+import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
+import { ISection } from 'app/shared/model/section.model';
+import { getEntities as getSections } from 'app/entities/section/section.reducer';
+import { IStudent } from 'app/shared/model/student.model';
+import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './admin-attendance.reducer';
 import { IAdminAttendance } from 'app/shared/model/admin-attendance.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAdminAttendanceUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IAdminAttendanceUpdateState {
   isNew: boolean;
-  studentId: number;
-  lectureId: number;
+  lectureId: string;
+  branchId: string;
+  collegeId: string;
+  departmentId: string;
+  academicyearId: string;
+  sectionId: string;
+  studentId: string;
 }
 
 export class AdminAttendanceUpdate extends React.Component<IAdminAttendanceUpdateProps, IAdminAttendanceUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      studentId: 0,
-      lectureId: 0,
+      lectureId: '0',
+      branchId: '0',
+      collegeId: '0',
+      departmentId: '0',
+      academicyearId: '0',
+      sectionId: '0',
+      studentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -43,8 +69,13 @@ export class AdminAttendanceUpdate extends React.Component<IAdminAttendanceUpdat
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getStudents();
     this.props.getLectures();
+    this.props.getBranches();
+    this.props.getColleges();
+    this.props.getDepartments();
+    this.props.getAcademicYears();
+    this.props.getSections();
+    this.props.getStudents();
   }
 
   saveEntity = (event, errors, values) => {
@@ -60,7 +91,6 @@ export class AdminAttendanceUpdate extends React.Component<IAdminAttendanceUpdat
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -68,42 +98,19 @@ export class AdminAttendanceUpdate extends React.Component<IAdminAttendanceUpdat
     this.props.history.push('/entity/admin-attendance');
   };
 
-  studentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        studentId: -1
-      });
-    } else {
-      for (const i in this.props.students) {
-        if (id === this.props.students[i].id.toString()) {
-          this.setState({
-            studentId: this.props.students[i].id
-          });
-        }
-      }
-    }
-  };
-
-  lectureUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        lectureId: -1
-      });
-    } else {
-      for (const i in this.props.lectures) {
-        if (id === this.props.lectures[i].id.toString()) {
-          this.setState({
-            lectureId: this.props.lectures[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
-    const { adminAttendanceEntity, students, lectures, loading, updating } = this.props;
+    const {
+      adminAttendanceEntity,
+      lectures,
+      branches,
+      colleges,
+      departments,
+      academicYears,
+      sections,
+      students,
+      loading,
+      updating
+    } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -126,43 +133,23 @@ export class AdminAttendanceUpdate extends React.Component<IAdminAttendanceUpdat
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="attendanceStatusLabel">Attendance Status</Label>
-                  <AvInput
-                    id="admin-attendance-attendanceStatus"
-                    type="select"
-                    className="form-control"
-                    name="attendanceStatus"
-                    value={(!isNew && adminAttendanceEntity.attendanceStatus) || 'PRESENT'}
-                  >
-                    <option value="PRESENT">PRESENT</option>
-                    <option value="ABSENT">ABSENT</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="commentsLabel" for="comments">
-                    Comments
+                  <Label id="updatedOnLabel" for="updatedOn">
+                    Updated On
                   </Label>
-                  <AvField
-                    id="admin-attendance-comments"
-                    type="text"
-                    name="comments"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admin-attendance-updatedOn" type="date" className="form-control" name="updatedOn" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="student.id">Student</Label>
-                  <AvInput
-                    id="admin-attendance-student"
-                    type="select"
-                    className="form-control"
-                    name="studentId"
-                    onChange={this.studentUpdate}
-                  >
+                  <Label id="updatedByLabel" for="updatedBy">
+                    Updated By
+                  </Label>
+                  <AvField id="admin-attendance-updatedBy" type="text" name="updatedBy" />
+                </AvGroup>
+                <AvGroup>
+                  <Label for="lecture.id">Lecture</Label>
+                  <AvInput id="admin-attendance-lecture" type="select" className="form-control" name="lectureId">
                     <option value="" key="0" />
-                    {students
-                      ? students.map(otherEntity => (
+                    {lectures
+                      ? lectures.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -171,17 +158,76 @@ export class AdminAttendanceUpdate extends React.Component<IAdminAttendanceUpdat
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="lecture.id">Lecture</Label>
-                  <AvInput
-                    id="admin-attendance-lecture"
-                    type="select"
-                    className="form-control"
-                    name="lectureId"
-                    onChange={this.lectureUpdate}
-                  >
+                  <Label for="branch.id">Branch</Label>
+                  <AvInput id="admin-attendance-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
-                    {lectures
-                      ? lectures.map(otherEntity => (
+                    {branches
+                      ? branches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="college.id">College</Label>
+                  <AvInput id="admin-attendance-college" type="select" className="form-control" name="collegeId">
+                    <option value="" key="0" />
+                    {colleges
+                      ? colleges.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="department.id">Department</Label>
+                  <AvInput id="admin-attendance-department" type="select" className="form-control" name="departmentId">
+                    <option value="" key="0" />
+                    {departments
+                      ? departments.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="academicyear.id">Academicyear</Label>
+                  <AvInput id="admin-attendance-academicyear" type="select" className="form-control" name="academicyearId">
+                    <option value="" key="0" />
+                    {academicYears
+                      ? academicYears.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="section.id">Section</Label>
+                  <AvInput id="admin-attendance-section" type="select" className="form-control" name="sectionId">
+                    <option value="" key="0" />
+                    {sections
+                      ? sections.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="student.id">Student</Label>
+                  <AvInput id="admin-attendance-student" type="select" className="form-control" name="studentId">
+                    <option value="" key="0" />
+                    {students
+                      ? students.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -207,16 +253,27 @@ export class AdminAttendanceUpdate extends React.Component<IAdminAttendanceUpdat
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  students: storeState.student.entities,
   lectures: storeState.lecture.entities,
+  branches: storeState.branch.entities,
+  colleges: storeState.college.entities,
+  departments: storeState.department.entities,
+  academicYears: storeState.academicYear.entities,
+  sections: storeState.section.entities,
+  students: storeState.student.entities,
   adminAttendanceEntity: storeState.adminAttendance.entity,
   loading: storeState.adminAttendance.loading,
-  updating: storeState.adminAttendance.updating
+  updating: storeState.adminAttendance.updating,
+  updateSuccess: storeState.adminAttendance.updateSuccess
 });
 
 const mapDispatchToProps = {
-  getStudents,
   getLectures,
+  getBranches,
+  getColleges,
+  getDepartments,
+  getAcademicYears,
+  getSections,
+  getStudents,
   getEntity,
   updateEntity,
   createEntity,

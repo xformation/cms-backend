@@ -35,9 +35,8 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -119,7 +118,7 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
                   </td>
                   <td>
                     {admissionEnquiry.admissionApplicationId ? (
-                      <Link to={`admissionApplication/${admissionEnquiry.admissionApplicationId}`}>
+                      <Link to={`admission-application/${admissionEnquiry.admissionApplicationId}`}>
                         {admissionEnquiry.admissionApplicationId}
                       </Link>
                     ) : (

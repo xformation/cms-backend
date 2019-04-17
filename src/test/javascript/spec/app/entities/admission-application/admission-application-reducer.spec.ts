@@ -10,8 +10,10 @@ import reducer, {
   createEntity,
   deleteEntity,
   getEntities,
+  getSearchEntities,
   getEntity,
-  updateEntity
+  updateEntity,
+  reset
 } from 'app/entities/admission-application/admission-application.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IAdmissionApplication, defaultValue } from 'app/shared/model/admission-application.model';
@@ -61,7 +63,11 @@ describe('Entities reducer tests', () => {
   describe('Requests', () => {
     it('should set state to loading', () => {
       testMultipleTypes(
-        [REQUEST(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION_LIST), REQUEST(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION)],
+        [
+          REQUEST(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION_LIST),
+          REQUEST(ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS),
+          REQUEST(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION)
+        ],
         {},
         state => {
           expect(state).toMatchObject({
@@ -90,6 +96,19 @@ describe('Entities reducer tests', () => {
         }
       );
     });
+
+    it('should reset the state', () => {
+      expect(
+        reducer(
+          { ...initialState, loading: true },
+          {
+            type: ACTION_TYPES.RESET
+          }
+        )
+      ).toEqual({
+        ...initialState
+      });
+    });
   });
 
   describe('Failures', () => {
@@ -97,6 +116,7 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION_LIST),
+          FAILURE(ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS),
           FAILURE(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION),
           FAILURE(ACTION_TYPES.CREATE_ADMISSIONAPPLICATION),
           FAILURE(ACTION_TYPES.UPDATE_ADMISSIONAPPLICATION),
@@ -126,6 +146,33 @@ describe('Entities reducer tests', () => {
         ...initialState,
         loading: false,
         entities: payload.data
+      });
+    });
+    it('should search all entities', () => {
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
+      expect(
+        reducer(undefined, {
+          type: SUCCESS(ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS),
+          payload
+        })
+      ).toEqual({
+        ...initialState,
+        loading: false,
+        entities: payload.data
+      });
+    });
+
+    it('should fetch a single entity', () => {
+      const payload = { data: { 1: 'fake1' } };
+      expect(
+        reducer(undefined, {
+          type: SUCCESS(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION),
+          payload
+        })
+      ).toEqual({
+        ...initialState,
+        loading: false,
+        entity: payload.data
       });
     });
 
@@ -181,6 +228,18 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
+    it('dispatches ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS actions', async () => {
+      const expectedActions = [
+        {
+          type: REQUEST(ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS)
+        },
+        {
+          type: SUCCESS(ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS),
+          payload: resolvedObject
+        }
+      ];
+      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_ADMISSIONAPPLICATION actions', async () => {
@@ -254,6 +313,16 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
+
+    it('dispatches ACTION_TYPES.RESET actions', async () => {
+      const expectedActions = [
+        {
+          type: ACTION_TYPES.RESET
+        }
+      ];
+      await store.dispatch(reset());
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

@@ -13,23 +13,29 @@ import { getEntities as getStates } from 'app/entities/state/state.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './city.reducer';
 import { ICity } from 'app/shared/model/city.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ICityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface ICityUpdateState {
   isNew: boolean;
-  stateId: number;
+  stateId: string;
 }
 
 export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      stateId: 0,
+      stateId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -55,29 +61,11 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
   handleClose = () => {
     this.props.history.push('/entity/city');
-  };
-
-  stateUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        stateId: -1
-      });
-    } else {
-      for (const i in this.props.states) {
-        if (id === this.props.states[i].id.toString()) {
-          this.setState({
-            stateId: this.props.states[i].id
-          });
-        }
-      }
-    }
   };
 
   render() {
@@ -130,7 +118,7 @@ export class CityUpdate extends React.Component<ICityUpdateProps, ICityUpdateSta
                 </AvGroup>
                 <AvGroup>
                   <Label for="state.id">State</Label>
-                  <AvInput id="city-state" type="select" className="form-control" name="stateId" onChange={this.stateUpdate}>
+                  <AvInput id="city-state" type="select" className="form-control" name="stateId">
                     <option value="" key="0" />
                     {states
                       ? states.map(otherEntity => (
@@ -162,7 +150,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   states: storeState.state.entities,
   cityEntity: storeState.city.entity,
   loading: storeState.city.loading,
-  updating: storeState.city.updating
+  updating: storeState.city.updating,
+  updateSuccess: storeState.city.updateSuccess
 });
 
 const mapDispatchToProps = {
