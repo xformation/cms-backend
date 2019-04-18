@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AdminAttendance.
+    -->
+    <changeSet id="20190417113123-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="lecture_id"
+                                 baseTableName="admin_attendance"
+                                 constraintName="fk_admin_attendance_lecture_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lecture"/>
+
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="admin_attendance"
+                                 constraintName="fk_admin_attendance_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
+        <addForeignKeyConstraint baseColumnNames="college_id"
+                                 baseTableName="admin_attendance"
+                                 constraintName="fk_admin_attendance_college_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="college"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="admin_attendance"
+                                 constraintName="fk_admin_attendance_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="academicyear_id"
+                                 baseTableName="admin_attendance"
+                                 constraintName="fk_admin_attendance_academicyear_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_year"/>
+
+        <addForeignKeyConstraint baseColumnNames="section_id"
+                                 baseTableName="admin_attendance"
+                                 constraintName="fk_admin_attendance_section_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="section"/>
+
+        <addForeignKeyConstraint baseColumnNames="student_id"
+                                 baseTableName="admin_attendance"
+                                 constraintName="fk_admin_attendance_student_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="student"/>
+
+    </changeSet>
+</databaseChangeLog>

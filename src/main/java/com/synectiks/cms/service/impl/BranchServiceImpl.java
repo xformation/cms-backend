@@ -1,5 +1,6 @@
 package com.synectiks.cms.service.impl;
 
+import com.synectiks.cms.domain.College;
 import com.synectiks.cms.service.BranchService;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.repository.BranchRepository;
@@ -9,6 +10,7 @@ import com.synectiks.cms.service.mapper.BranchMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -112,5 +114,19 @@ public class BranchServiceImpl implements BranchService {
             .stream(branchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(branchMapper::toDto)
             .collect(Collectors.toList());
+    }
+    public List<Branch> getAllBranches(String branchName, Long collegeId) {
+        Branch branch = new Branch();
+        if (branchName != null) {
+            branch.setBranchName(branchName);
+        }
+        if(collegeId != null) {
+            College college = new College();
+            college.setId(collegeId);
+            branch.setCollege(college);
+        }
+        Example<Branch> example = Example.of(branch);
+        List<Branch> list = this.branchRepository.findAll(example);
+        return list;
     }
 }
