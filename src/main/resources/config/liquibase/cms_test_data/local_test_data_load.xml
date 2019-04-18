@@ -153,6 +153,10 @@
                   file="config/liquibase/cms_test_data/late_fee.csv"
                   separator=";"
                   tableName="late_fee"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/admin_attendance.csv"
+                  separator=";"
+                  tableName="admin_attendance"/>
 
     </changeSet>
 </databaseChangeLog>
