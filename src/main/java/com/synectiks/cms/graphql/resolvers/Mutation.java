@@ -9,6 +9,7 @@ import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
+import com.synectiks.cms.graphql.types.AcademicExamSetting.*;
 import com.synectiks.cms.graphql.types.AcademicHistory.*;
 import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AdminAttendance.*;
@@ -72,6 +73,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final AttendanceMasterRepository attendanceMasterRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
     private final AcademicHistoryRepository academicHistoryRepository;
+    private final AcademicExamSettingRepository academicExamSettingRepository;
     private final AdmissionApplicationRepository admissionApplicationRepository;
     private final AdmissionEnquiryRepository admissionEnquiryRepository;
     private final BankAccountsRepository bankAccountsRepository;
@@ -117,7 +119,8 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
 
-    public Mutation(AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+        this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
         this.admissionApplicationRepository = admissionApplicationRepository;
@@ -316,6 +319,93 @@ public class Mutation implements GraphQLMutationResolver {
         AdmissionApplication admissionApplication = admissionApplicationRepository.findById(removeAdmissionApplicationsInput.getAdmissionApplicationId()).get();
         admissionApplicationRepository.delete(admissionApplication);
         return new RemoveAdmissionApplicationPayload(Lists.newArrayList(admissionApplicationRepository.findAll()));
+    }
+
+    public AddAcademicExamSettingPayload addAcademicExamSetting(AddAcademicExamSettingInput addAcademicExamSettingInput) {
+        final AcademicExamSetting academicExamSetting = new AcademicExamSetting();
+
+        Department department = departmentRepository.findById(addAcademicExamSettingInput.getDepartmentId()).get();
+        AcademicYear academicYear = academicYearRepository.findById(addAcademicExamSettingInput.getAcademicYearId()).get();
+        AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addAcademicExamSettingInput.getAttendanceMasterId()).get();
+        Section section = sectionRepository.findById(addAcademicExamSettingInput.getSectionId()).get();
+        academicExamSetting.setDepartment(department);
+        academicExamSetting.setAcademicYear(academicYear);
+        academicExamSetting.setAttendanceMaster(attendanceMaster);
+        academicExamSetting.setSection(section);
+        academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
+        academicExamSetting.setSubject(addAcademicExamSettingInput.getSubject());
+        academicExamSetting.setDate(addAcademicExamSettingInput.getDate());
+        academicExamSetting.setDay(addAcademicExamSettingInput.getDay());
+        academicExamSetting.setDuration(addAcademicExamSettingInput.getDuration());
+        academicExamSetting.setStartTime(addAcademicExamSettingInput.getStartTime());
+        academicExamSetting.setEndTime(addAcademicExamSettingInput.getEndTime());
+        academicExamSetting.setTotal(addAcademicExamSettingInput.getTotal());
+        academicExamSetting.setPassing(addAcademicExamSettingInput.getPassing());
+        academicExamSetting.setActions(addAcademicExamSettingInput.getActions());
+        academicExamSettingRepository.save(academicExamSetting);
+        return new AddAcademicExamSettingPayload(academicExamSetting);
+    }
+
+    public UpdateAcademicExamSettingPayload updateAcademicExamSetting(UpdateAcademicExamSettingInput updateAcademicExamSettingInput) {
+        AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(updateAcademicExamSettingInput.getId()).get();
+
+
+        if (updateAcademicExamSettingInput.getExamType() != null) {
+            academicExamSetting.setExamType(updateAcademicExamSettingInput.getExamType());
+        }
+        if (updateAcademicExamSettingInput.getSubject() != null) {
+            academicExamSetting.setSubject(updateAcademicExamSettingInput.getSubject());
+        }
+        if (updateAcademicExamSettingInput.getDate() != null) {
+            academicExamSetting.setDate(updateAcademicExamSettingInput.getDate());
+        }
+        if (updateAcademicExamSettingInput.getDay() != null) {
+            academicExamSetting.setDay(updateAcademicExamSettingInput.getDay());
+        }
+        if (updateAcademicExamSettingInput.getDuration() != null) {
+            academicExamSetting.setDuration(updateAcademicExamSettingInput.getDuration());
+        }
+        if (updateAcademicExamSettingInput.getStartTime() != null) {
+            academicExamSetting.setStartTime(updateAcademicExamSettingInput.getStartTime());
+        }
+        if (updateAcademicExamSettingInput.getEndTime() != null) {
+            academicExamSetting.setEndTime(updateAcademicExamSettingInput.getEndTime());
+        }
+        if (updateAcademicExamSettingInput.getTotal() != null) {
+            academicExamSetting.setTotal(updateAcademicExamSettingInput.getTotal());
+        }
+        if (updateAcademicExamSettingInput.getPassing() != null) {
+            academicExamSetting.setPassing(updateAcademicExamSettingInput.getPassing());
+        }
+        if (updateAcademicExamSettingInput.getActions() != null) {
+            academicExamSetting.setActions(updateAcademicExamSettingInput.getActions());
+        }
+        if (updateAcademicExamSettingInput.getDepartmentId() != null) {
+            final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();
+            academicExamSetting.setDepartment(department);
+        }
+        if (updateAcademicExamSettingInput.getAcademicYearId() != null) {
+            final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicYearId()).get();
+            academicExamSetting.setAcademicYear(academicYear);
+        }
+        if (updateAcademicExamSettingInput.getAttendanceMasterId() != null) {
+            final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(updateAcademicExamSettingInput.getAttendanceMasterId()).get();
+            academicExamSetting.setAttendanceMaster(attendanceMaster);
+        }
+        if (updateAcademicExamSettingInput.getSectionId() != null) {
+            final Section section = sectionRepository.findById(updateAcademicExamSettingInput.getSectionId()).get();
+            academicExamSetting.setSection(section);
+        }
+
+        academicExamSettingRepository.save(academicExamSetting);
+
+        return new UpdateAcademicExamSettingPayload(academicExamSetting);
+    }
+
+    public RemoveAcademicExamSettingPayload removeAcademicExamSetting(RemoveAcademicExamSettingInput removeAcademicExamSettingsInput) {
+        AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(removeAcademicExamSettingsInput.getAcademicExamSettingId()).get();
+        academicExamSettingRepository.delete(academicExamSetting);
+        return new RemoveAcademicExamSettingPayload(Lists.newArrayList(academicExamSettingRepository.findAll()));
     }
 
     public AddAcademicHistoryPayload addAcademicHistory(AddAcademicHistoryInput addAcademicHistoryInput) {

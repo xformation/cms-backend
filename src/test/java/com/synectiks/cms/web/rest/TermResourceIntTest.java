@@ -26,9 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.util.Date;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -55,6 +56,7 @@ public class TermResourceIntTest {
 
     private static final Date DEFAULT_START_DATE = new Date();
     private static final Date UPDATED_START_DATE = new Date();
+
     private static final Date DEFAULT_END_DATE = new Date();
     private static final Date UPDATED_END_DATE = new Date();
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AcademicExamSetting.
+    -->
+    <changeSet id="20190408064825-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="academic_exam_setting"
+                                 constraintName="fk_academic_exam_setting_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="academic_year_id"
+                                 baseTableName="academic_exam_setting"
+                                 constraintName="fk_academic_exam_setting_academic_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_year"/>
+
+        <addForeignKeyConstraint baseColumnNames="attendance_master_id"
+                                 baseTableName="academic_exam_setting"
+                                 constraintName="fk_academic_exam_setting_attendance_master_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="attendance_master"/>
+
+        <addForeignKeyConstraint baseColumnNames="section_id"
+                                 baseTableName="academic_exam_setting"
+                                 constraintName="fk_academic_exam_setting_section_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="section"/>
+
+    </changeSet>
+</databaseChangeLog>

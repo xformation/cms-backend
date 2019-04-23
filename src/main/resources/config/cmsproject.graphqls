@@ -114,6 +114,9 @@ type Query {
   adminAttendance(id: Long!):AdminAttendance!
   adminAttendances: [AdminAttendance!]!
 
+  academicExamSetting(id: Long!):AcademicExamSetting!
+  academicExamSettings: [AcademicExamSetting!]!
+
   bankAccount(id: Long!): BankAccounts!
   bankAccounts: [BankAccounts!]!
 
@@ -186,14 +189,14 @@ type Query {
   transportRoute(id: Long!): TransportRoute!
   transportRoutes: [TransportRoute!]!
 
-    dueDate(id:Long!):DueDate!
-    dueDates:[DueDate!]!
+  dueDate(id:Long!):DueDate!
+  dueDates:[DueDate!]!
 
-    lateFee(id:Long!):LateFee!
-    lateFees:[LateFee!]!
+  lateFee(id:Long!):LateFee!
+  lateFees:[LateFee!]!
 
-    paymentRemainder(id:Long!):PaymentRemainder!
-    paymentRemainders:[PaymentRemainder!]!
+  paymentRemainder(id:Long!):PaymentRemainder!
+  paymentRemainders:[PaymentRemainder!]!
 
   term (id: Long!): Term!
   terms: [Term!]!
@@ -204,10 +207,11 @@ type Query {
   state (id: Long!): Long!
   states: [State!]!
 
-    country (id: Long!): Long!
-    countries: [Country!]!
-    invoice(id:Long!):Invoice!
-    invoices:[Invoice!]!
+  country (id: Long!): Long!
+  countries: [Country!]!
+
+  invoice(id:Long!):Invoice!
+  invoices:[Invoice!]!
 
 
     getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -524,6 +528,24 @@ type Section{
     batch: Batch!
 }
 
+type AcademicExamSetting{
+    id: Long!
+    examType: String!
+    subject: String!
+    date: Date!
+    day: String!
+    duration: String!
+    startTime: String!
+    endTime: String!
+    total: Int!
+    passing: Int!
+    actions: String!
+    department: Department!
+    academicYear: AcademicYear!
+    attendanceMaster: AttendanceMaster!
+    section: Section!
+}
+
 enum Gender {
     MALE
     FEMALE
@@ -771,6 +793,10 @@ type Mutation {
    updateBranch(input: UpdateBranchInput!): UpdateBranchPayload!
    removeBranch(input: RemoveBranchInput!): RemoveBranchPayload!
 
+   addAcademicExamSetting(input: AddAcademicExamSettingInput!): AddAcademicExamSettingPayload!
+   updateAcademicExamSetting(input: UpdateAcademicExamSettingInput!): UpdateAcademicExamSettingPayload!
+   removeAcademicExamSetting(input: RemoveAcademicExamSettingInput!): RemoveAcademicExamSettingPayload!
+
    addBatch(input: AddBatchInput!): AddBatchPayload!
    updateBatch(input: UpdateBatchInput!): UpdateBatchPayload!
    removeBatch(input: RemoveBatchInput!): RemoveBatchPayload!
@@ -959,6 +985,55 @@ input RemoveCompetitiveExamInput {
 }
 type RemoveCompetitiveExamPayload {
     competitiveExam: [ CompetitiveExam!]!
+}
+
+
+input AddAcademicExamSettingInput{
+    examType: String!
+    subject: String!
+    date: Date!
+    day: String!
+    duration: String!
+    startTime: String!
+    endTime: String!
+    total: Int!
+    passing: Int!
+    actions: String!
+    department: Long!
+    academicYear: Long!
+    attendanceMaster: Long!
+    section: Long!
+}
+
+type AddAcademicExamSettingPayload {
+    academicExamSetting: AcademicExamSetting!
+}
+input UpdateAcademicExamSettingInput {
+    id: Long!
+    examType: String!
+    subject: String!
+    date: Date!
+    day: String!
+    duration: String!
+    startTime: String!
+    endTime: String!
+    total: Int!
+    passing: Int!
+    actions: String!
+    department: Long!
+    academicYear: Long!
+    attendanceMaster: Long!
+    section: Long!
+}
+
+type UpdateAcademicExamSettingPayload {
+    academicExamSetting: AcademicExamSetting!
+}
+input RemoveAcademicExamSettingInput {
+   academicExamSettingId: Long!
+}
+type RemoveAcademicExamSettingPayload {
+    academicExamSettings: [ AcademicExamSetting!]!
 }
 
 input LectureScheduleInput {
