@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,22 +19,27 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleVo;
 import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
 public class LectureService {
@@ -343,6 +349,46 @@ public class LectureService {
 				iterator.remove();
 		    }
 		}
-	} 
+	}
+	
+	
+	public List<CmsLectureVo> getAllLecturess(Map<String, String> dataMap) throws ParseException {
+		Lecture lecture = new Lecture();
+		String dateFormat1 = "dd/MM/yyyy";
+		String dateFormat2 = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat1);
+		SimpleDateFormat sdf2 = new SimpleDateFormat(dateFormat2);
+    	if(dataMap.containsKey("lecDate")) {
+    		String lecDate = dataMap.get("subCode");
+    		Date dt = sdf.parse(lecDate);  
+    		lecture.lecDate(dt);
+    	}
+		if (dataMap.containsKey("atndMstrId")) {
+			String atndMstrId = dataMap.get("atndMstrId");
+			AttendanceMaster am = commonService.getAttendanceMasterById(Long.parseLong(atndMstrId));
+			logger.debug("AttendanceMaster retrieved by given id : "+atndMstrId);
+			lecture.setAttendancemaster(am);
+		}
+		
+		List<Lecture> list = null;
+		if(dataMap.size() > 0) {
+			Example<Lecture> example = Example.of(lecture);
+			list = this.lectureRepository.findAll(example);
+		}else {
+			list = this.lectureRepository.findAll();
+		}
+		logger.info("Total lecture retrieved: "+list.size());
+		
+		List<CmsLectureVo> ls = new ArrayList<>();
+		for(Lecture lc : list) {
+			CmsLectureVo vo = CommonUtil.createCopyProperties(lc,  CmsLectureVo.class);
+			String d = sdf.format(lc.getLecDate());
+			vo.setStrLecDate(d);
+			vo.setAttendancemasterId(lc.getAttendancemaster().getId());
+			ls.add(vo);
+		}
+		
+		return ls;
+	}
 	
 }

@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.AcademicSubjectService;
+import com.synectiks.cms.domain.CmsSubjectVo;
 import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.service.dto.CmsSubjectVo;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
@@ -42,8 +42,8 @@ public class SubjectRestController {
 	private SubjectRepository subjectRepository;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cmssubjects")
-	public List<Subject> getAllSubjects(@RequestParam Map<String, String> dataMap) {
-		List<Subject> list = this.academicSubjectService.getAllSubjects(dataMap);
+	public List<CmsSubjectVo> getAllSubjects(@RequestParam Map<String, String> dataMap) {
+		List<CmsSubjectVo> list = this.academicSubjectService.getAllSubjectAndTeachData(dataMap);
 		logger.info("Returning list of subjects.");
 		return list;
 	}

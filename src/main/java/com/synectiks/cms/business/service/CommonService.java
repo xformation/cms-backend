@@ -157,6 +157,14 @@ public class CommonService {
 		return null;
 	}
 	
+	public AttendanceMaster getAttendanceMasterById(Long id) {
+		Optional<AttendanceMaster> newAm = this.attendanceMasterRepository.findById(id);
+		if(newAm.isPresent()) {
+			return newAm.get();
+		}
+		return null;
+	}
+	
 	public List<Holiday> getHolidayList(String academicYear) throws ParseException {
 		AcademicYear acd = findAcademicYearByYear(academicYear);
 		Holiday hl = new Holiday();
@@ -206,6 +214,13 @@ public class CommonService {
 		Optional<Branch> bt =  this.branchRepository.findById(id);
 		if(bt.isPresent()) {
 			return bt.get();
+		}
+		return null;
+	}
+	public Teach getTeachById(Long id) {
+		Optional<Teach> th =  this.teachRepository.findById(id);
+		if(th.isPresent()) {
+			return th.get();
 		}
 		return null;
 	}

@@ -1,6 +1,7 @@
 package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.CmsSubjectVo;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Subject;
@@ -27,7 +29,6 @@ import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.service.dto.CmsSubjectVo;
 import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
@@ -43,6 +44,7 @@ public class AcademicSubjectService {
 
 	@Autowired
 	CommonService commonService;
+	
 	
     @Transactional(propagation=Propagation.REQUIRED)
     public QueryResult insertSubjectAndTeachRecord(AcademicSubjectMutationPayload academicSubjectMutationPayload) throws JSONException, ParseException {
@@ -165,6 +167,39 @@ public class AcademicSubjectService {
 		return list;
 	}
     
+    public List<CmsSubjectVo> getAllSubjectAndTeachData(Map<String, String> dataMap){
+    	List<Teach> teachList = this.teachRepository.findAll();
+    	List<CmsSubjectVo> ls = new ArrayList<>();
+    	for(Teach th: teachList ) {
+    		Department dp = this.commonService.getDepartmentById(th.getSubject().getDepartment().getId());
+    		Batch bt = this.commonService.getBatchById(th.getSubject().getBatch().getId());
+    		CmsSubjectVo vo = new CmsSubjectVo();
+    		vo.setDepartment(dp);
+    		vo.setBatch(bt);
+    		vo.setSubject(th.getSubject());
+    		vo.setTeacher(th.getTeacher());
+    		vo.setTeach(th);
+    		vo.setTeacherId(th.getTeacher().getId());
+    		
+    		vo.setId(th.getSubject().getId());
+    		vo.setStatus(th.getSubject().getStatus());
+    		vo.setSubjectCode(th.getSubject().getSubjectCode());
+    		vo.setSubjectDesc(th.getSubject().getSubjectDesc());
+    		vo.setSubjectType(th.getSubject().getSubjectType());
+    		if (dataMap.containsKey("unfiltered-records")) {
+    			logger.debug("Getting all subjects without considering status: "+th.getSubject().toString());
+    			ls.add(vo);
+    		}else {
+    			logger.debug("Getting subjects for ACTIVE status only: "+th.getSubject().toString());
+    			if(th.getSubject().getStatus().equals(Status.ACTIVE)) {
+    				ls.add(vo);
+    			}
+    		}
+    		
+    	}
+    	return ls;
+    }
+    
 
     public List<Subject> getAllSubjects(Map<String, String> dataMap) {
 		Subject subject = new Subject();
@@ -258,10 +293,10 @@ public class AcademicSubjectService {
 			sub.setSubjectDesc(cmsSubjectVo.getSubjectCode());
 		}
 		
-		if(cmsSubjectVo.getStatus() != null) {
-			sub.setStatus(cmsSubjectVo.getStatus());
+		if(cmsSubjectVo.getStatus() == null) {
+			sub.setStatus(Status.DEACTIVE);
 		}else {
-			sub.setStatus(Status.ACTIVE);
+			sub.setStatus(cmsSubjectVo.getStatus());
 		}
 		Department dt = commonService.getDepartmentById(cmsSubjectVo.getDepartmentId());
 		Batch bt =  commonService.getBatchById(cmsSubjectVo.getBatchId());

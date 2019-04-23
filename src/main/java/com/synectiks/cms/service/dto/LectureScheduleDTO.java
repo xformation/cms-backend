@@ -1,4 +1,4 @@
-package com.synectiks.cms.business.dto;
+package com.synectiks.cms.service.dto;
 
 import java.io.Serializable;
 

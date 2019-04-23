@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.synectiks.cms.business.dto.LectureScheduleDTO;
 import com.synectiks.cms.business.service.LectureService;
+import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
+import com.synectiks.cms.service.dto.LectureScheduleDTO;
 
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -39,7 +40,7 @@ public class LectureRestController {
 	@Autowired
 	private LectureService lectureService;
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/lecture/addlectures")
+	@RequestMapping(method = RequestMethod.POST, value = "/cmslectures")
 	public ResponseEntity<QueryResult> addLectures(@RequestBody List<LectureScheduleDTO> list, @RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
 		LectureScheduleInput lectureScheduleInput = new LectureScheduleInput();
 		LectureScheduleFilter filter = new LectureScheduleFilter();
@@ -65,7 +66,7 @@ public class LectureRestController {
 		return ResponseUtil.wrapOrNotFound(r);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, value = "/lecture/updatelectures")
+	@RequestMapping(method = RequestMethod.PUT, value = "/cmslectures")
 	public ResponseEntity<QueryResult> updateLectures(@RequestBody List<LectureScheduleDTO> list, @RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
 		LectureScheduleInput lectureScheduleInput = new LectureScheduleInput();
 		LectureScheduleFilter filter = new LectureScheduleFilter();
@@ -92,7 +93,11 @@ public class LectureRestController {
 	}
 
 	
-	
+	@RequestMapping(method = RequestMethod.GET, value = "/cmslectures")
+    public List<CmsLectureVo> getAllLectures(@RequestParam Map<String, String> dataMap) throws ParseException {
+        logger.debug("REST request to get all the Lectures");
+        return this.lectureService.getAllLecturess(dataMap);
+    }
 	
 	
 
