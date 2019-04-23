@@ -47,6 +47,7 @@ public class Query implements GraphQLQueryResolver {
     private final AcademicHistoryRepository academicHistoryRepository;
     private final AdmissionApplicationRepository admissionApplicationRepository;
     private final AdmissionEnquiryRepository admissionEnquiryRepository;
+    private final AcademicExamSettingRepository academicExamSettingRepository;
     private final BankAccountsRepository bankAccountsRepository;
     private final BatchRepository batchRepository;
     private final BranchRepository branchRepository;
@@ -99,7 +100,8 @@ public class Query implements GraphQLQueryResolver {
     private CommonGraphiqlFilter commonGraphiqlFilter;
 
 
-    public Query(AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+    public Query(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+        this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
         this.batchRepository = batchRepository;
@@ -163,6 +165,14 @@ public class Query implements GraphQLQueryResolver {
 
     public List<College> colleges() {
         return Lists.newArrayList(collegeRepository.findAll());
+    }
+
+    public AcademicExamSetting academicExamSetting (long id) {
+        return academicExamSettingRepository.findById(id).get();
+    }
+
+    public List<AcademicExamSetting> academicExamSettings() {
+        return Lists.newArrayList(academicExamSettingRepository.findAll());
     }
 
     public Branch branch(long id) {

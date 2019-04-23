@@ -4,30 +4,28 @@
         {
             "fieldName": "desc",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "semester",
-            "fieldType": "Semester",
-            "fieldValues": "FIRST,SECOND,THIRD,FOURTH,FIFTH,SIXTH,SEVENTH,EIGHTH"
         }
     ],
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "batch",
             "otherEntityName": "batch",
+            "otherEntityRelationshipName": "attendanceMaster",
+            "relationshipName": "batch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "section",
             "otherEntityName": "section",
+            "otherEntityRelationshipName": "attendanceMaster",
+            "relationshipName": "section",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "teach",
             "otherEntityName": "teach",
+            "otherEntityRelationshipName": "attendanceMaster",
+            "relationshipName": "teach",
             "otherEntityField": "id"
         }
     ],

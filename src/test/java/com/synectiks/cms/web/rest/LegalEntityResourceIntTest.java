@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.util.Date;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
@@ -68,6 +68,7 @@ public class LegalEntityResourceIntTest {
 
     private static final Date DEFAULT_DATE_OF_INCORPORATION = new Date();
     private static final Date UPDATED_DATE_OF_INCORPORATION = new Date();
+
     private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS_1 = "AAAAAAAAAA";
     private static final String UPDATED_REGISTERED_OFFICE_ADDRESS_1 = "BBBBBBBBBB";
 

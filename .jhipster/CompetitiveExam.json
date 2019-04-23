@@ -33,8 +33,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "student",
             "otherEntityName": "student",
+            "otherEntityRelationshipName": "competitiveExam",
+            "relationshipName": "student",
             "otherEntityField": "id"
         }
     ],

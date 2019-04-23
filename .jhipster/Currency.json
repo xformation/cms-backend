@@ -20,8 +20,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "country",
             "otherEntityName": "country",
+            "otherEntityRelationshipName": "currency",
+            "relationshipName": "country",
             "otherEntityField": "id"
         }
     ],

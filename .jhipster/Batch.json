@@ -13,8 +13,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "department",
             "otherEntityName": "department",
+            "otherEntityRelationshipName": "batch",
+            "relationshipName": "department",
             "otherEntityField": "id"
         }
     ],

@@ -157,6 +157,10 @@
                   file="config/liquibase/cms_test_data/admin_attendance.csv"
                   separator=";"
                   tableName="admin_attendance"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/academic_exam_setting.csv"
+                  separator=";"
+                  tableName="academic_exam_setting"/>
 
     </changeSet>
 </databaseChangeLog>

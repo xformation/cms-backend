@@ -63,14 +63,16 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "branch",
             "otherEntityName": "branch",
+            "otherEntityRelationshipName": "authorizedSignatory",
+            "relationshipName": "branch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "college",
             "otherEntityName": "college",
+            "otherEntityRelationshipName": "authorizedSignatory",
+            "relationshipName": "college",
             "otherEntityField": "id"
         }
     ],

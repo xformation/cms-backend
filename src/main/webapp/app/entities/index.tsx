@@ -48,6 +48,7 @@ import CompetitiveExam from './competitive-exam';
 import AcademicHistory from './academic-history';
 import AdmissionApplication from './admission-application';
 import AdmissionEnquiry from './admission-enquiry';
+import AcademicExamSetting from './academic-exam-setting';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -98,6 +99,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/academic-history`} component={AcademicHistory} />
       <ErrorBoundaryRoute path={`${match.url}/admission-application`} component={AdmissionApplication} />
       <ErrorBoundaryRoute path={`${match.url}/admission-enquiry`} component={AdmissionEnquiry} />
+      <ErrorBoundaryRoute path={`${match.url}/academic-exam-setting`} component={AcademicExamSetting} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

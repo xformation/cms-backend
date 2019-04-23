@@ -26,9 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.util.Date;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -59,7 +60,6 @@ public class AdmissionApplicationResourceIntTest {
 
     private static final Date DEFAULT_DATE = new Date();
     private static final Date UPDATED_DATE = new Date();
-
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
 

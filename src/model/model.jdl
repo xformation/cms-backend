@@ -446,6 +446,19 @@ entity AdminAttendance{
     updatedBy String
 }
 
+entity AcademicExamSetting {
+    examType String required
+    subject String
+    date LocalDate required
+    day String required
+    duration String required
+    startTime String required
+    endTime String required
+    total Integer required
+    passing Integer required
+    actions String required
+}
+
 relationship ManyToOne {
 Student{department required} to Department ,
 Student{batch required} to Batch ,
@@ -521,7 +534,12 @@ AdminAttendance{college} to College,
 AdminAttendance{department} to Department,
 AdminAttendance{academicyear} to AcademicYear,
 AdminAttendance{section} to Section,
-AdminAttendance{student} to Student
+AdminAttendance{student} to Student,
+AcademicExamSetting{department} to Department,
+AcademicExamSetting{academicYear} to AcademicYear,
+AcademicExamSetting{attendanceMaster} to AttendanceMaster,
+AcademicExamSetting{section} to Section
+
 }
 
 dto * with mapstruct
