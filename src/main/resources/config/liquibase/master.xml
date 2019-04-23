@@ -73,7 +73,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190307052145_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190311065242_added_entity_constraints_AdmissionEnquiry.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190327092709_added_entity_constraints_DueDate.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/cms_test_data/local_test_data_load.xml" relativeToChangelogFile="false"/>
+    <!--<include file="config/liquibase/cms_test_data/local_test_data_load.xml" relativeToChangelogFile="false"/>-->
 <include file="config/liquibase/changelog/20190417113123_added_entity_constraints_AdminAttendance.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190408064825_added_entity_constraints_AcademicExamSetting.xml" relativeToChangelogFile="false"/>
 <!--jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here-->
