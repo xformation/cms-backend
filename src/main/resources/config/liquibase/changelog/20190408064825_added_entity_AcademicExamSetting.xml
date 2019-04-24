@@ -25,6 +25,10 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="semester" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
             <column name="subject" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -58,7 +62,7 @@
             </column>
 
             <column name="actions" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="department_id" type="bigint">
@@ -66,10 +70,6 @@
             </column>
 
             <column name="academic_year_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="attendance_master_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

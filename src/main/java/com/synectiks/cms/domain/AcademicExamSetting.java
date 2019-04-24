@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
+
 /**
  * A AcademicExamSetting.
  */
@@ -33,6 +35,11 @@ public class AcademicExamSetting implements Serializable {
     @NotNull
     @Column(name = "exam_type", nullable = false)
     private String examType;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "semester", nullable = false)
+    private SemesterEnum semester;
 
     @Column(name = "subject")
     private String subject;
@@ -65,8 +72,7 @@ public class AcademicExamSetting implements Serializable {
     @Column(name = "passing", nullable = false)
     private Integer passing;
 
-    @NotNull
-    @Column(name = "actions", nullable = false)
+    @Column(name = "actions")
     private String actions;
 
     @ManyToOne
@@ -76,10 +82,6 @@ public class AcademicExamSetting implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
     private AcademicYear academicYear;
-
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private AttendanceMaster attendanceMaster;
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
@@ -105,6 +107,19 @@ public class AcademicExamSetting implements Serializable {
 
     public void setExamType(String examType) {
         this.examType = examType;
+    }
+
+    public SemesterEnum getSemester() {
+        return semester;
+    }
+
+    public AcademicExamSetting semester(SemesterEnum semester) {
+        this.semester = semester;
+        return this;
+    }
+
+    public void setSemester(SemesterEnum semester) {
+        this.semester = semester;
     }
 
     public String getSubject() {
@@ -250,19 +265,6 @@ public class AcademicExamSetting implements Serializable {
         this.academicYear = academicYear;
     }
 
-    public AttendanceMaster getAttendanceMaster() {
-        return attendanceMaster;
-    }
-
-    public AcademicExamSetting attendanceMaster(AttendanceMaster attendanceMaster) {
-        this.attendanceMaster = attendanceMaster;
-        return this;
-    }
-
-    public void setAttendanceMaster(AttendanceMaster attendanceMaster) {
-        this.attendanceMaster = attendanceMaster;
-    }
-
     public Section getSection() {
         return section;
     }
@@ -302,6 +304,7 @@ public class AcademicExamSetting implements Serializable {
         return "AcademicExamSetting{" +
             "id=" + getId() +
             ", examType='" + getExamType() + "'" +
+            ", semester='" + getSemester() + "'" +
             ", subject='" + getSubject() + "'" +
             ", date='" + getDate() + "'" +
             ", day='" + getDay() + "'" +

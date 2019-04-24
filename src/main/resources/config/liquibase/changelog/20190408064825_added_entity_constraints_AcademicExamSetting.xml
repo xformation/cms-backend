@@ -20,12 +20,6 @@
                                  referencedColumnNames="id"
                                  referencedTableName="academic_year"/>
 
-        <addForeignKeyConstraint baseColumnNames="attendance_master_id"
-                                 baseTableName="academic_exam_setting"
-                                 constraintName="fk_academic_exam_setting_attendance_master_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="attendance_master"/>
-
         <addForeignKeyConstraint baseColumnNames="section_id"
                                  baseTableName="academic_exam_setting"
                                  constraintName="fk_academic_exam_setting_section_id"

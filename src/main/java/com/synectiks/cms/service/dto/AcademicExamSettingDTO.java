@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
 
 /**
  * A DTO for the AcademicExamSetting entity.
@@ -13,6 +14,9 @@ public class AcademicExamSettingDTO implements Serializable {
 
     @NotNull
     private String examType;
+
+    @NotNull
+    private SemesterEnum semester;
 
     private String subject;
 
@@ -37,15 +41,12 @@ public class AcademicExamSettingDTO implements Serializable {
     @NotNull
     private Integer passing;
 
-    @NotNull
     private String actions;
 
 
     private Long departmentId;
 
     private Long academicYearId;
-
-    private Long attendanceMasterId;
 
     private Long sectionId;
 
@@ -63,6 +64,14 @@ public class AcademicExamSettingDTO implements Serializable {
 
     public void setExamType(String examType) {
         this.examType = examType;
+    }
+
+    public SemesterEnum getSemester() {
+        return semester;
+    }
+
+    public void setSemester(SemesterEnum semester) {
+        this.semester = semester;
     }
 
     public String getSubject() {
@@ -153,14 +162,6 @@ public class AcademicExamSettingDTO implements Serializable {
         this.academicYearId = academicYearId;
     }
 
-    public Long getAttendanceMasterId() {
-        return attendanceMasterId;
-    }
-
-    public void setAttendanceMasterId(Long attendanceMasterId) {
-        this.attendanceMasterId = attendanceMasterId;
-    }
-
     public Long getSectionId() {
         return sectionId;
     }
@@ -195,6 +196,7 @@ public class AcademicExamSettingDTO implements Serializable {
         return "AcademicExamSettingDTO{" +
             "id=" + getId() +
             ", examType='" + getExamType() + "'" +
+            ", semester='" + getSemester() + "'" +
             ", subject='" + getSubject() + "'" +
             ", date='" + getDate() + "'" +
             ", day='" + getDay() + "'" +
@@ -206,7 +208,6 @@ public class AcademicExamSettingDTO implements Serializable {
             ", actions='" + getActions() + "'" +
             ", department=" + getDepartmentId() +
             ", academicYear=" + getAcademicYearId() +
-            ", attendanceMaster=" + getAttendanceMasterId() +
             ", section=" + getSectionId() +
             "}";
     }

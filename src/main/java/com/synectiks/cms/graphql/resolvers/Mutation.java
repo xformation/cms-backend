@@ -326,13 +326,12 @@ public class Mutation implements GraphQLMutationResolver {
 
         Department department = departmentRepository.findById(addAcademicExamSettingInput.getDepartmentId()).get();
         AcademicYear academicYear = academicYearRepository.findById(addAcademicExamSettingInput.getAcademicYearId()).get();
-        AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addAcademicExamSettingInput.getAttendanceMasterId()).get();
         Section section = sectionRepository.findById(addAcademicExamSettingInput.getSectionId()).get();
         academicExamSetting.setDepartment(department);
         academicExamSetting.setAcademicYear(academicYear);
-        academicExamSetting.setAttendanceMaster(attendanceMaster);
         academicExamSetting.setSection(section);
         academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
+        academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
         academicExamSetting.setSubject(addAcademicExamSettingInput.getSubject());
         academicExamSetting.setDate(addAcademicExamSettingInput.getDate());
         academicExamSetting.setDay(addAcademicExamSettingInput.getDay());
@@ -352,6 +351,9 @@ public class Mutation implements GraphQLMutationResolver {
 
         if (updateAcademicExamSettingInput.getExamType() != null) {
             academicExamSetting.setExamType(updateAcademicExamSettingInput.getExamType());
+        }
+        if (updateAcademicExamSettingInput.getSemester() != null) {
+            academicExamSetting.setSemester(updateAcademicExamSettingInput.getSemester());
         }
         if (updateAcademicExamSettingInput.getSubject() != null) {
             academicExamSetting.setSubject(updateAcademicExamSettingInput.getSubject());
@@ -387,10 +389,6 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicExamSettingInput.getAcademicYearId() != null) {
             final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicYearId()).get();
             academicExamSetting.setAcademicYear(academicYear);
-        }
-        if (updateAcademicExamSettingInput.getAttendanceMasterId() != null) {
-            final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(updateAcademicExamSettingInput.getAttendanceMasterId()).get();
-            academicExamSetting.setAttendanceMaster(attendanceMaster);
         }
         if (updateAcademicExamSettingInput.getSectionId() != null) {
             final Section section = sectionRepository.findById(updateAcademicExamSettingInput.getSectionId()).get();

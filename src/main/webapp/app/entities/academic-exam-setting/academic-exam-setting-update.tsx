@@ -12,8 +12,6 @@ import { IDepartment } from 'app/shared/model/department.model';
 import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
 import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
-import { IAttendanceMaster } from 'app/shared/model/attendance-master.model';
-import { getEntities as getAttendanceMasters } from 'app/entities/attendance-master/attendance-master.reducer';
 import { ISection } from 'app/shared/model/section.model';
 import { getEntities as getSections } from 'app/entities/section/section.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './academic-exam-setting.reducer';
@@ -28,7 +26,6 @@ export interface IAcademicExamSettingUpdateState {
   isNew: boolean;
   departmentId: string;
   academicYearId: string;
-  attendanceMasterId: string;
   sectionId: string;
 }
 
@@ -38,7 +35,6 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
     this.state = {
       departmentId: '0',
       academicYearId: '0',
-      attendanceMasterId: '0',
       sectionId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -59,7 +55,6 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
 
     this.props.getDepartments();
     this.props.getAcademicYears();
-    this.props.getAttendanceMasters();
     this.props.getSections();
   }
 
@@ -84,7 +79,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
   };
 
   render() {
-    const { academicExamSettingEntity, departments, academicYears, attendanceMasters, sections, loading, updating } = this.props;
+    const { academicExamSettingEntity, departments, academicYears, sections, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -118,6 +113,25 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="semesterLabel">Semester</Label>
+                  <AvInput
+                    id="academic-exam-setting-semester"
+                    type="select"
+                    className="form-control"
+                    name="semester"
+                    value={(!isNew && academicExamSettingEntity.semester) || 'SEMESTER1'}
+                  >
+                    <option value="SEMESTER1">SEMESTER1</option>
+                    <option value="SEMESTER2">SEMESTER2</option>
+                    <option value="SEMESTER3">SEMESTER3</option>
+                    <option value="SEMESTER4">SEMESTER4</option>
+                    <option value="SEMESTER5">SEMESTER5</option>
+                    <option value="SEMESTER6">SEMESTER6</option>
+                    <option value="SEMESTER7">SEMESTER7</option>
+                    <option value="SEMESTER8">SEMESTER8</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label id="subjectLabel" for="subject">
@@ -225,14 +239,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                   <Label id="actionsLabel" for="actions">
                     Actions
                   </Label>
-                  <AvField
-                    id="academic-exam-setting-actions"
-                    type="text"
-                    name="actions"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="academic-exam-setting-actions" type="text" name="actions" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">Department</Label>
@@ -253,19 +260,6 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="attendanceMaster.id">Attendance Master</Label>
-                  <AvInput id="academic-exam-setting-attendanceMaster" type="select" className="form-control" name="attendanceMasterId">
-                    <option value="" key="0" />
-                    {attendanceMasters
-                      ? attendanceMasters.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -306,7 +300,6 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
 const mapStateToProps = (storeState: IRootState) => ({
   departments: storeState.department.entities,
   academicYears: storeState.academicYear.entities,
-  attendanceMasters: storeState.attendanceMaster.entities,
   sections: storeState.section.entities,
   academicExamSettingEntity: storeState.academicExamSetting.entity,
   loading: storeState.academicExamSetting.loading,
@@ -317,7 +310,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getDepartments,
   getAcademicYears,
-  getAttendanceMasters,
   getSections,
   getEntity,
   updateEntity,

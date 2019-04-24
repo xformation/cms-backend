@@ -41,6 +41,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
 /**
  * Test class for the AcademicExamSettingResource REST controller.
  *
@@ -52,6 +53,9 @@ public class AcademicExamSettingResourceIntTest {
 
     private static final String DEFAULT_EXAM_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_EXAM_TYPE = "BBBBBBBBBB";
+
+    private static final SemesterEnum DEFAULT_SEMESTER = SemesterEnum.SEMESTER1;
+    private static final SemesterEnum UPDATED_SEMESTER = SemesterEnum.SEMESTER2;
 
     private static final String DEFAULT_SUBJECT = "AAAAAAAAAA";
     private static final String UPDATED_SUBJECT = "BBBBBBBBBB";
@@ -137,6 +141,7 @@ public class AcademicExamSettingResourceIntTest {
     public static AcademicExamSetting createEntity(EntityManager em) {
         AcademicExamSetting academicExamSetting = new AcademicExamSetting()
             .examType(DEFAULT_EXAM_TYPE)
+            .semester(DEFAULT_SEMESTER)
             .subject(DEFAULT_SUBJECT)
             .date(DEFAULT_DATE)
             .day(DEFAULT_DAY)
@@ -171,6 +176,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(academicExamSettingList).hasSize(databaseSizeBeforeCreate + 1);
         AcademicExamSetting testAcademicExamSetting = academicExamSettingList.get(academicExamSettingList.size() - 1);
         assertThat(testAcademicExamSetting.getExamType()).isEqualTo(DEFAULT_EXAM_TYPE);
+        assertThat(testAcademicExamSetting.getSemester()).isEqualTo(DEFAULT_SEMESTER);
         assertThat(testAcademicExamSetting.getSubject()).isEqualTo(DEFAULT_SUBJECT);
         assertThat(testAcademicExamSetting.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testAcademicExamSetting.getDay()).isEqualTo(DEFAULT_DAY);
@@ -214,6 +220,25 @@ public class AcademicExamSettingResourceIntTest {
         int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
         // set the field null
         academicExamSetting.setExamType(null);
+
+        // Create the AcademicExamSetting, which fails.
+        AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(academicExamSetting);
+
+        restAcademicExamSettingMockMvc.perform(post("/api/academic-exam-settings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(academicExamSettingDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
+        assertThat(academicExamSettingList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSemesterIsRequired() throws Exception {
+        int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
+        // set the field null
+        academicExamSetting.setSemester(null);
 
         // Create the AcademicExamSetting, which fails.
         AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(academicExamSetting);
@@ -362,25 +387,6 @@ public class AcademicExamSettingResourceIntTest {
 
     @Test
     @Transactional
-    public void checkActionsIsRequired() throws Exception {
-        int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
-        // set the field null
-        academicExamSetting.setActions(null);
-
-        // Create the AcademicExamSetting, which fails.
-        AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(academicExamSetting);
-
-        restAcademicExamSettingMockMvc.perform(post("/api/academic-exam-settings")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(academicExamSettingDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
-        assertThat(academicExamSettingList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllAcademicExamSettings() throws Exception {
         // Initialize the database
         academicExamSettingRepository.saveAndFlush(academicExamSetting);
@@ -391,6 +397,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(academicExamSetting.getId().intValue())))
             .andExpect(jsonPath("$.[*].examType").value(hasItem(DEFAULT_EXAM_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
             .andExpect(jsonPath("$.[*].subject").value(hasItem(DEFAULT_SUBJECT.toString())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].day").value(hasItem(DEFAULT_DAY.toString())))
@@ -414,6 +421,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(academicExamSetting.getId().intValue()))
             .andExpect(jsonPath("$.examType").value(DEFAULT_EXAM_TYPE.toString()))
+            .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()))
             .andExpect(jsonPath("$.subject").value(DEFAULT_SUBJECT.toString()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.day").value(DEFAULT_DAY.toString()))
@@ -447,6 +455,7 @@ public class AcademicExamSettingResourceIntTest {
         em.detach(updatedAcademicExamSetting);
         updatedAcademicExamSetting
             .examType(UPDATED_EXAM_TYPE)
+            .semester(UPDATED_SEMESTER)
             .subject(UPDATED_SUBJECT)
             .date(UPDATED_DATE)
             .day(UPDATED_DAY)
@@ -468,6 +477,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(academicExamSettingList).hasSize(databaseSizeBeforeUpdate);
         AcademicExamSetting testAcademicExamSetting = academicExamSettingList.get(academicExamSettingList.size() - 1);
         assertThat(testAcademicExamSetting.getExamType()).isEqualTo(UPDATED_EXAM_TYPE);
+        assertThat(testAcademicExamSetting.getSemester()).isEqualTo(UPDATED_SEMESTER);
         assertThat(testAcademicExamSetting.getSubject()).isEqualTo(UPDATED_SUBJECT);
         assertThat(testAcademicExamSetting.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testAcademicExamSetting.getDay()).isEqualTo(UPDATED_DAY);
@@ -538,6 +548,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(academicExamSetting.getId().intValue())))
             .andExpect(jsonPath("$.[*].examType").value(hasItem(DEFAULT_EXAM_TYPE)))
+            .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
             .andExpect(jsonPath("$.[*].subject").value(hasItem(DEFAULT_SUBJECT)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].day").value(hasItem(DEFAULT_DAY)))

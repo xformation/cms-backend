@@ -5,6 +5,7 @@ export default class AcademicExamSettingUpdatePage {
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   examTypeInput: ElementFinder = element(by.css('input#academic-exam-setting-examType'));
+  semesterSelect: ElementFinder = element(by.css('select#academic-exam-setting-semester'));
   subjectInput: ElementFinder = element(by.css('input#academic-exam-setting-subject'));
   dateInput: ElementFinder = element(by.css('input#academic-exam-setting-date'));
   dayInput: ElementFinder = element(by.css('input#academic-exam-setting-day'));
@@ -16,7 +17,6 @@ export default class AcademicExamSettingUpdatePage {
   actionsInput: ElementFinder = element(by.css('input#academic-exam-setting-actions'));
   departmentSelect: ElementFinder = element(by.css('select#academic-exam-setting-department'));
   academicYearSelect: ElementFinder = element(by.css('select#academic-exam-setting-academicYear'));
-  attendanceMasterSelect: ElementFinder = element(by.css('select#academic-exam-setting-attendanceMaster'));
   sectionSelect: ElementFinder = element(by.css('select#academic-exam-setting-section'));
 
   getPageTitle() {
@@ -31,6 +31,20 @@ export default class AcademicExamSettingUpdatePage {
     return this.examTypeInput.getAttribute('value');
   }
 
+  async setSemesterSelect(semester) {
+    await this.semesterSelect.sendKeys(semester);
+  }
+
+  async getSemesterSelect() {
+    return this.semesterSelect.element(by.css('option:checked')).getText();
+  }
+
+  async semesterSelectLastOption() {
+    await this.semesterSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setSubjectInput(subject) {
     await this.subjectInput.sendKeys(subject);
   }
@@ -139,25 +153,6 @@ export default class AcademicExamSettingUpdatePage {
 
   async getAcademicYearSelectedOption() {
     return this.academicYearSelect.element(by.css('option:checked')).getText();
-  }
-
-  async attendanceMasterSelectLastOption() {
-    await this.attendanceMasterSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async attendanceMasterSelectOption(option) {
-    await this.attendanceMasterSelect.sendKeys(option);
-  }
-
-  getAttendanceMasterSelect() {
-    return this.attendanceMasterSelect;
-  }
-
-  async getAttendanceMasterSelectedOption() {
-    return this.attendanceMasterSelect.element(by.css('option:checked')).getText();
   }
 
   async sectionSelectLastOption() {

@@ -442,6 +442,10 @@ import admissionApplication, {
 import academicExamSetting, {
   AcademicExamSettingState
 } from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
+// prettier-ignore
+import academicExamSetting, {
+  AcademicExamSettingState
+} from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

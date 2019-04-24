@@ -1,11 +1,14 @@
 package com.synectiks.cms.graphql.types.AcademicExamSetting;
 
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
+
 import java.util.Date;
 import java.util.Objects;
 
 public class AbstractAcademicExamSettingInput {
     private Long id;
     private String examType;
+    private SemesterEnum semester;
     private String subject;
     private Date date;
     private String day;
@@ -30,6 +33,14 @@ public class AbstractAcademicExamSettingInput {
 
     public void setExamType(String examType) {
         this.examType = examType;
+    }
+
+    public SemesterEnum getSemester() {
+        return semester;
+    }
+
+    public void setSemester(SemesterEnum semester) {
+        this.semester = semester;
     }
 
     public String getSubject() {
@@ -111,6 +122,7 @@ public class AbstractAcademicExamSettingInput {
         AbstractAcademicExamSettingInput that = (AbstractAcademicExamSettingInput) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(examType, that.examType) &&
+            semester == that.semester &&
             Objects.equals(subject, that.subject) &&
             Objects.equals(date, that.date) &&
             Objects.equals(day, that.day) &&
@@ -124,7 +136,7 @@ public class AbstractAcademicExamSettingInput {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examType, subject, date, day, duration, startTime, endTime, total, passing, actions);
+        return Objects.hash(id, examType, semester, subject, date, day, duration, startTime, endTime, total, passing, actions);
     }
 
     @Override
@@ -132,6 +144,7 @@ public class AbstractAcademicExamSettingInput {
         return "AbstractAcademicExamSettingInput{" +
             "id=" + id +
             ", examType='" + examType + '\'' +
+            ", semester=" + semester +
             ", subject='" + subject + '\'' +
             ", date=" + date +
             ", day='" + day + '\'' +

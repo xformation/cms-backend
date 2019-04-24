@@ -75,6 +75,7 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
               <tr>
                 <th>ID</th>
                 <th>Exam Type</th>
+                <th>Semester</th>
                 <th>Subject</th>
                 <th>Date</th>
                 <th>Day</th>
@@ -86,7 +87,6 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                 <th>Actions</th>
                 <th>Department</th>
                 <th>Academic Year</th>
-                <th>Attendance Master</th>
                 <th>Section</th>
                 <th />
               </tr>
@@ -100,6 +100,7 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                     </Button>
                   </td>
                   <td>{academicExamSetting.examType}</td>
+                  <td>{academicExamSetting.semester}</td>
                   <td>{academicExamSetting.subject}</td>
                   <td>
                     <TextFormat type="date" value={academicExamSetting.date} format={APP_LOCAL_DATE_FORMAT} />
@@ -121,15 +122,6 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                   <td>
                     {academicExamSetting.academicYearId ? (
                       <Link to={`academic-year/${academicExamSetting.academicYearId}`}>{academicExamSetting.academicYearId}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {academicExamSetting.attendanceMasterId ? (
-                      <Link to={`attendance-master/${academicExamSetting.attendanceMasterId}`}>
-                        {academicExamSetting.attendanceMasterId}
-                      </Link>
                     ) : (
                       ''
                     )}

@@ -47,6 +47,7 @@ describe('AcademicExamSetting e2e test', () => {
 
     await academicExamSettingUpdatePage.setExamTypeInput('examType');
     expect(await academicExamSettingUpdatePage.getExamTypeInput()).to.match(/examType/);
+    await academicExamSettingUpdatePage.semesterSelectLastOption();
     await academicExamSettingUpdatePage.setSubjectInput('subject');
     expect(await academicExamSettingUpdatePage.getSubjectInput()).to.match(/subject/);
     await academicExamSettingUpdatePage.setDateInput('01-01-2001');
@@ -67,7 +68,6 @@ describe('AcademicExamSetting e2e test', () => {
     expect(await academicExamSettingUpdatePage.getActionsInput()).to.match(/actions/);
     await academicExamSettingUpdatePage.departmentSelectLastOption();
     await academicExamSettingUpdatePage.academicYearSelectLastOption();
-    await academicExamSettingUpdatePage.attendanceMasterSelectLastOption();
     await academicExamSettingUpdatePage.sectionSelectLastOption();
     await waitUntilDisplayed(academicExamSettingUpdatePage.getSaveButton());
     await academicExamSettingUpdatePage.save();

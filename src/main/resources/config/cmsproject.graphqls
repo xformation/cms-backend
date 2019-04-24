@@ -105,6 +105,16 @@ enum InvoicePaymentStatus {
 	UNPAID
 	CANCELED
 }
+enum SemesterEnum{
+    SEMESTER1
+    SEMESTER2
+    SEMESTER3
+    SEMESTER4
+    SEMESTER5
+    SEMESTER6
+    SEMESTER7
+    SEMESTER8
+}
 
 type Query {
 
@@ -531,6 +541,7 @@ type Section{
 type AcademicExamSetting{
     id: Long!
     examType: String!
+    semester: SemesterEnum!
     subject: String!
     date: Date!
     day: String!
@@ -542,7 +553,6 @@ type AcademicExamSetting{
     actions: String!
     department: Department!
     academicYear: AcademicYear!
-    attendanceMaster: AttendanceMaster!
     section: Section!
 }
 
@@ -990,6 +1000,7 @@ type RemoveCompetitiveExamPayload {
 
 input AddAcademicExamSettingInput{
     examType: String!
+    semester: SemesterEnum!
     subject: String!
     date: Date!
     day: String!
@@ -1001,7 +1012,6 @@ input AddAcademicExamSettingInput{
     actions: String!
     department: Long!
     academicYear: Long!
-    attendanceMaster: Long!
     section: Long!
 }
 
@@ -1011,6 +1021,7 @@ type AddAcademicExamSettingPayload {
 input UpdateAcademicExamSettingInput {
     id: Long!
     examType: String!
+    semester: SemesterEnum!
     subject: String!
     date: Date!
     day: String!
@@ -1022,7 +1033,6 @@ input UpdateAcademicExamSettingInput {
     actions: String!
     department: Long!
     academicYear: Long!
-    attendanceMaster: Long!
     section: Long!
 }
 

@@ -73,6 +73,7 @@ class AcademicExamSettingGatlingTest extends Simulation {
             .body(StringBody("""{
                 "id":null
                 , "examType":"SAMPLE_TEXT"
+                , "semester":"SEMESTER1"
                 , "subject":"SAMPLE_TEXT"
                 , "date":"2020-01-01T00:00:00.000Z"
                 , "day":"SAMPLE_TEXT"

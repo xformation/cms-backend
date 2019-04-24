@@ -33,6 +33,10 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
             </dt>
             <dd>{academicExamSettingEntity.examType}</dd>
             <dt>
+              <span id="semester">Semester</span>
+            </dt>
+            <dd>{academicExamSettingEntity.semester}</dd>
+            <dt>
               <span id="subject">Subject</span>
             </dt>
             <dd>{academicExamSettingEntity.subject}</dd>
@@ -74,8 +78,6 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
             <dd>{academicExamSettingEntity.departmentId ? academicExamSettingEntity.departmentId : ''}</dd>
             <dt>Academic Year</dt>
             <dd>{academicExamSettingEntity.academicYearId ? academicExamSettingEntity.academicYearId : ''}</dd>
-            <dt>Attendance Master</dt>
-            <dd>{academicExamSettingEntity.attendanceMasterId ? academicExamSettingEntity.attendanceMasterId : ''}</dd>
             <dt>Section</dt>
             <dd>{academicExamSettingEntity.sectionId ? academicExamSettingEntity.sectionId : ''}</dd>
           </dl>

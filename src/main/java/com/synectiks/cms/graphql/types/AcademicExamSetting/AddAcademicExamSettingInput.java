@@ -3,7 +3,6 @@ package com.synectiks.cms.graphql.types.AcademicExamSetting;
 public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInput {
     private Long departmentId;
     private Long academicYearId;
-    private Long attendanceMasterId;
     private Long sectionId;
 
     public Long getDepartmentId() {
@@ -22,14 +21,6 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         this.academicYearId = academicYearId;
     }
 
-    public Long getAttendanceMasterId() {
-        return attendanceMasterId;
-    }
-
-    public void setAttendanceMasterId(Long attendanceMasterId) {
-        this.attendanceMasterId = attendanceMasterId;
-    }
-
     public Long getSectionId() {
         return sectionId;
     }
@@ -43,7 +34,6 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         return "AddAcademicExamSettingInput{" +
             "departmentId=" + departmentId +
             ", academicYearId=" + academicYearId +
-            ", attendanceMasterId=" + attendanceMasterId +
             ", sectionId=" + sectionId +
             '}';
     }

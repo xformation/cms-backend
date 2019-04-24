@@ -446,8 +446,13 @@ entity AdminAttendance{
     updatedBy String
 }
 
+enum SemesterEnum{
+    SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4,SEMESTER5,SEMESTER6,SEMESTER7,SEMESTER8
+}
+
 entity AcademicExamSetting {
     examType String required
+    semester SemesterEnum required
     subject String
     date LocalDate required
     day String required
@@ -456,7 +461,7 @@ entity AcademicExamSetting {
     endTime String required
     total Integer required
     passing Integer required
-    actions String required
+    actions String
 }
 
 relationship ManyToOne {
@@ -537,7 +542,6 @@ AdminAttendance{section} to Section,
 AdminAttendance{student} to Student,
 AcademicExamSetting{department} to Department,
 AcademicExamSetting{academicYear} to AcademicYear,
-AcademicExamSetting{attendanceMaster} to AttendanceMaster,
 AcademicExamSetting{section} to Section
 
 }
