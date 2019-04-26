@@ -113,4 +113,23 @@ public class AttendanceMasterRestController {
     	return ResponseUtil.wrapOrNotFound(Optional.of(am));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/cmsattendance-masters-bybatchsection")
+    public List<AttendanceMaster> getAllAttendanceMasterByBatchSection(@RequestParam Map<String, String> dataMap) {
+    	if (!dataMap.containsKey("batchId")) {
+            throw new BadRequestAlertException("Batch id not present", ENTITY_NAME, "batch id null");
+        }
+    	if (!dataMap.containsKey("sectionId")) {
+            throw new BadRequestAlertException("Section id not present", ENTITY_NAME, "section id null");
+        }
+    	
+    	String batchId = dataMap.get("batchId");
+    	String sectionId = dataMap.get("sectionId");
+    	logger.debug("Getting attendance master id for batch id : "+batchId+", section id : "+sectionId);
+    	Batch bt = this.commonService.getBatchById(Long.parseLong(batchId));
+    	Section sc = this.commonService.getSectionById(Long.parseLong(sectionId));
+    	List<AttendanceMaster> list = this.commonService.getAttendanceMasterByBatchSection(bt, sc);
+    	logger.debug("AttendanceMaster : "+list);
+    	return list;
+    }
+    
 }

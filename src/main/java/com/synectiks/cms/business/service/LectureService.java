@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsLectureVo;
-import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
@@ -64,6 +63,10 @@ public class LectureService {
 	private static final String FRIDAY = "FRIDAY";
 	private static final String SATURDAY = "SATURDAY";
 	private static final String WEEKDAY= "weekDay";
+	
+	private Batch bth = null;
+	private Section sec = null;
+	private Map<String, Object> map = new HashMap<String, Object>();
 	
 	@Transactional(propagation=Propagation.REQUIRED)
 	public QueryResult updateLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) {
@@ -206,7 +209,8 @@ public class LectureService {
 		List<Date> saturdayList = filterDateListOnDayOfweek(dateList, Calendar.SATURDAY);
     	String[] values = lectureScheduleInput.getValues();
 //    	this.query = this.entityManager.createNativeQuery(INSERT_SQL);
-    	
+    	this.bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+		this.sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
 		try {
 			createLectureSchedule(mondayList, values, MONDAY, filter);
 			createLectureSchedule(tuesdayList, values, TUESDAY, filter);
@@ -226,10 +230,13 @@ public class LectureService {
 			throws ParseException {
 		logger.debug(String.format("Inserting records for %s.",dayName));
 		
-		Batch bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
-		Section sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+//		Batch bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+//		Section sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
 		Lecture lecture = new Lecture();
 		JSONObject jsonObj;
+		
+		Teach th = null;
+		AttendanceMaster am = null;
 		for (Iterator<Date> iterator = dataList.iterator(); iterator.hasNext();) {
 			Date dt = iterator.next();
 			for(String val: values) {
@@ -242,8 +249,20 @@ public class LectureService {
 				if(!dayName.equalsIgnoreCase(jsonObj.getString(WEEKDAY))) {
 					continue;
 				}else {
-					Teach th = commonService.getTeachBySubjectAndTeacherId(Long.parseLong(jsonObj.getString("teacherId")), Long.parseLong(jsonObj.getString("subjectId")));
-					AttendanceMaster am = commonService.getAttendanceMasterByBatchSectionTeach(bth, sec, th);
+					if(this.map.get("Teach") != null) {
+						th = (Teach)this.map.get("Teach");
+					}else {
+						th = commonService.getTeachBySubjectAndTeacherId(Long.parseLong(jsonObj.getString("teacherId")), 
+								Long.parseLong(jsonObj.getString("subjectId")));
+						this.map.put("Teach", th);
+					}
+					if(this.map.get("AttendanceMaster") != null) {
+						am = (AttendanceMaster)this.map.get("AttendanceMaster");
+					}else {
+						am = commonService.getAttendanceMasterByBatchSectionTeach(this.bth, this.sec, th);
+						this.map.put("AttendanceMaster", am);
+					}
+					
 					lecture.setId(null);
 					lecture.setAttendancemaster(am);
 					lecture.setLecDate(getDate(dt));
@@ -256,6 +275,8 @@ public class LectureService {
 				}
 			}
 		}
+		this.map.remove("Teach");
+		this.map.remove("AttendanceMaster");
 	}
 	
 	public void createLectureSchedule(Date dt, String[] values, String dayName, LectureScheduleFilter filter)

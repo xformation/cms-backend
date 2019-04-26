@@ -4,14 +4,17 @@ import java.io.Serializable;
 
 public class LectureScheduleDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7457671175499837400L;
 	private String weekDay;
 	private String startTime;
     private String endTime;
     private String subjectId;
     private String teacherId;
-    private String attendancemasterId;
+//    private String attendancemasterId;
 	public String getWeekDay() {
 		return weekDay;
 	}
@@ -42,17 +45,17 @@ public class LectureScheduleDTO implements Serializable {
 	public void setTeacherId(String teacherId) {
 		this.teacherId = teacherId;
 	}
-	public String getAttendancemasterId() {
-		return attendancemasterId;
-	}
-	public void setAttendancemasterId(String attendancemasterId) {
-		this.attendancemasterId = attendancemasterId;
-	}
+//	public String getAttendancemasterId() {
+//		return attendancemasterId;
+//	}
+//	public void setAttendancemasterId(String attendancemasterId) {
+//		this.attendancemasterId = attendancemasterId;
+//	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((attendancemasterId == null) ? 0 : attendancemasterId.hashCode());
+//		result = prime * result + ((attendancemasterId == null) ? 0 : attendancemasterId.hashCode());
 		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
 		result = prime * result + ((startTime == null) ? 0 : startTime.hashCode());
 		result = prime * result + ((subjectId == null) ? 0 : subjectId.hashCode());
@@ -69,11 +72,11 @@ public class LectureScheduleDTO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		LectureScheduleDTO other = (LectureScheduleDTO) obj;
-		if (attendancemasterId == null) {
-			if (other.attendancemasterId != null)
-				return false;
-		} else if (!attendancemasterId.equals(other.attendancemasterId))
-			return false;
+//		if (attendancemasterId == null) {
+//			if (other.attendancemasterId != null)
+//				return false;
+//		} else if (!attendancemasterId.equals(other.attendancemasterId))
+//			return false;
 		if (endTime == null) {
 			if (other.endTime != null)
 				return false;
@@ -101,14 +104,18 @@ public class LectureScheduleDTO implements Serializable {
 			return false;
 		return true;
 	}
+//	@Override
+//	public String toString() {
+//		return "LectureScheduleDTO [weekDay=" + weekDay + ", startTime=" + startTime + ", endTime=" + endTime
+//				+ ", subjectId=" + subjectId + ", teacherId=" + teacherId + ", attendancemasterId=" + attendancemasterId
+//				+ "]";
+//	}
+
 	@Override
 	public String toString() {
 		return "LectureScheduleDTO [weekDay=" + weekDay + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", subjectId=" + subjectId + ", teacherId=" + teacherId + ", attendancemasterId=" + attendancemasterId
-				+ "]";
+				+ ", subjectId=" + subjectId + ", teacherId=" + teacherId +" ]";
 	}
-
-    
 
 	
 }

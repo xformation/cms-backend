@@ -76,10 +76,10 @@ public class CommonService {
 	}
 	
 	public Department getDepartmentById(Long departmentId) {
-		Department dept = new Department();
-		dept.setId(departmentId);
-		Example<Department> example = Example.of(dept);
-		Optional<Department> newDt = this.departmentRepository.findOne(example);
+//		Department dept = new Department();
+//		dept.setId(departmentId);
+//		Example<Department> example = Example.of(dept);
+		Optional<Department> newDt = this.departmentRepository.findById(departmentId);
 		if(newDt.isPresent()) {
 			return newDt.get();
 		}
@@ -87,10 +87,10 @@ public class CommonService {
 	}
 	
 	public Batch getBatchById(Long batchId) {
-		Batch batch = new Batch();
-		batch.setId(batchId);
-		Example<Batch> example = Example.of(batch);
-		Optional<Batch> newBt = this.batchRepository.findOne(example);
+//		Batch batch = new Batch();
+//		batch.setId(batchId);
+//		Example<Batch> example = Example.of(batch);
+		Optional<Batch> newBt = this.batchRepository.findById(batchId);
 		if(newBt.isPresent()) {
 			return newBt.get();
 		}
@@ -98,10 +98,10 @@ public class CommonService {
 	}
 	
 	public Teacher getTeacherById(Long teacherId) {
-		Teacher tchr = new Teacher();
-		tchr.setId(teacherId);
-		Example<Teacher> example = Example.of(tchr);
-		Optional<Teacher> newTh = this.teacherRepository.findOne(example);
+//		Teacher tchr = new Teacher();
+//		tchr.setId(teacherId);
+//		Example<Teacher> example = Example.of(tchr);
+		Optional<Teacher> newTh = this.teacherRepository.findById(teacherId);
 		if(newTh.isPresent()) {
 			return newTh.get();
 		}
@@ -109,10 +109,10 @@ public class CommonService {
 	}
 
 	public Section getSectionById(Long secId) {
-		Section sc = new Section();
-		sc.setId(secId);
-		Example<Section> example = Example.of(sc);
-		Optional<Section> newSc = this.sectionRepository.findOne(example);
+//		Section sc = new Section();
+//		sc.setId(secId);
+//		Example<Section> example = Example.of(sc);
+		Optional<Section> newSc = this.sectionRepository.findById(secId);
 		if(newSc.isPresent()) {
 			return newSc.get();
 		}
@@ -120,10 +120,10 @@ public class CommonService {
 	}
 	
 	public Subject getSubjectById(Long subId) {
-		Subject sb = new Subject();
-		sb.setId(subId);
-		Example<Subject> example = Example.of(sb);
-		Optional<Subject> newSb = this.subjectRepository.findOne(example);
+//		Subject sb = new Subject();
+//		sb.setId(subId);
+//		Example<Subject> example = Example.of(sb);
+		Optional<Subject> newSb = this.subjectRepository.findById(subId);
 		if(newSb.isPresent()) {
 			return newSb.get();
 		}
@@ -157,6 +157,15 @@ public class CommonService {
 		return null;
 	}
 	
+	public List<AttendanceMaster> getAttendanceMasterByBatchSection(Batch bt, Section sc) {
+		AttendanceMaster am = new AttendanceMaster();
+		am.setBatch(bt);
+		am.setSection(sc);
+		Example<AttendanceMaster> example = Example.of(am);
+		List<AttendanceMaster> newAm = this.attendanceMasterRepository.findAll(example);
+		return newAm;
+	}
+	
 	public AttendanceMaster getAttendanceMasterById(Long id) {
 		Optional<AttendanceMaster> newAm = this.attendanceMasterRepository.findById(id);
 		if(newAm.isPresent()) {
@@ -184,7 +193,7 @@ public class CommonService {
 		if(term.isPresent()) {
 			return term.get();
 		}
-		return new Term();
+		return null;
 	}
 	
 	public College getCollegeById(Long id) {
