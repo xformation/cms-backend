@@ -8,6 +8,9 @@ import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
+import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
+import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
+import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
 import com.synectiks.cms.graphql.types.AcademicExamSetting.*;
 import com.synectiks.cms.graphql.types.AcademicHistory.*;
@@ -61,6 +64,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
@@ -110,6 +114,9 @@ public class Mutation implements GraphQLMutationResolver {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
+    
 //    @Autowired
 //    private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
 
@@ -2600,4 +2607,9 @@ public class Mutation implements GraphQLMutationResolver {
         QueryResult res = lectureScheduleProcessor.updateLectureSchedule(lectureScheduleInput, filter);
         return res;
     }
+    
+    public List<DailyAttendanceVo> getDailyStudentAttendanceData(StudentAttendanceFilterInput filter) throws Exception {
+        return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
+    }
+    
 }

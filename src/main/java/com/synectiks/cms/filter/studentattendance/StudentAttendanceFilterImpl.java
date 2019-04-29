@@ -2,6 +2,7 @@ package com.synectiks.cms.filter.studentattendance;
 
     import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,9 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.service.util.DateFormatUtil;
+
 
 @Repository
 public class StudentAttendanceFilterImpl  {
@@ -17,7 +21,7 @@ public class StudentAttendanceFilterImpl  {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) {
+    public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) throws Exception {
     	String selectQry = "select st.id, st.student_name, sa.attendance_status as current_date_status, " + 
     			"(select a.attendance_status as prev1_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 1)),  " + 
     			"(select a.attendance_status as prev2_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 2)),  " + 
@@ -39,7 +43,13 @@ public class StudentAttendanceFilterImpl  {
             query.setParameter(6, Integer.parseInt(filter.getBatchId()));
             query.setParameter(7, Integer.parseInt(filter.getSectionId()));
             query.setParameter(8, Integer.parseInt(filter.getLectureId()));
-            query.setParameter(9, filter.getAttendanceDate());
+            if(filter.getAttendanceDate() != null) {
+            	query.setParameter(9, filter.getAttendanceDate());
+            }else {
+            	String today = DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, new Date(System.currentTimeMillis()));
+            	query.setParameter(9, today);
+            }
+            
             if(filter.getStudentName() != null) {
                 query.setParameter(10, filter.getStudentName());
             }

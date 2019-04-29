@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsLectureVo;
@@ -375,10 +376,10 @@ public class LectureService {
 	
 	public List<CmsLectureVo> getAllLecturess(Map<String, String> dataMap) throws ParseException {
 		Lecture lecture = new Lecture();
-		String dateFormat1 = "dd/MM/yyyy";
-		String dateFormat2 = "yyyy-MM-dd";
-		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat1);
-		SimpleDateFormat sdf2 = new SimpleDateFormat(dateFormat2);
+//		String dateFormat1 = 
+//		String dateFormat2 = "yyyy-MM-dd";
+		SimpleDateFormat sdf = new SimpleDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy);
+//		SimpleDateFormat sdf2 = new SimpleDateFormat(dateFormat2);
     	if(dataMap.containsKey("lecDate")) {
     		String lecDate = dataMap.get("subCode");
     		Date dt = sdf.parse(lecDate);  

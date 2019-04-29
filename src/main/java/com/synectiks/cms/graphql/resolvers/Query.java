@@ -364,7 +364,7 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(lectureRepository.findAll());
     }
 
-    public List<DailyAttendanceVo> getDailyStudentAttendance(StudentAttendanceFilterInput filter) {
+    public List<DailyAttendanceVo> getDailyStudentAttendance(StudentAttendanceFilterInput filter) throws Exception {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
 

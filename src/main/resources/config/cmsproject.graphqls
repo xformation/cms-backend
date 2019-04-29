@@ -162,7 +162,9 @@ type Query {
 
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
-
+  
+  getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+  
   subject(id: Long!): Subject!
   subjects: [Subject!]!
 
@@ -224,7 +226,7 @@ type Query {
   invoices:[Invoice!]!
 
 
-    getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+    
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
@@ -940,6 +942,7 @@ addAdminAttendance(input:AddAdminAttendanceInput!):AddAdminAttendancePayload!
     updateAdminAttendance(input:UpdateAdminAttendanceInput!):UpdateAdminAttendancePayload!
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
 
+	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 }
 
 input AddDocumentsInput{
