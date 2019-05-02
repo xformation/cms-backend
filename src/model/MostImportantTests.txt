@@ -1,5 +1,5 @@
 ============================================================
-Get student list for Attendance:
+Get student list for Attendance: - Query
 
 query getDailyStudentAttendance($filter:StudentAttendanceFilterInput!){
 getDailyStudentAttendance(filter: $filter){
@@ -21,13 +21,44 @@ comments
 "sectionId": "1201",
 "subjectId": "1401",
 "attendanceDate": "2019-01-11",
-"lectureId": "44750"
+"lectureId": "44750",
+"teacherId": "1301"
 }
 }
+
+============================================================
+Get student list for Attendance: From Mutation using Apollo client
+
+mutation getDailyStudentAttendanceData($filter: StudentAttendanceFilterInput!) {
+  getDailyStudentAttendanceData(filter: $filter) {
+  	studentId
+    studentName
+    currentDateStatus
+    previousOneDayStatus
+    previousTwoDayStatus
+    previousThreeDayStatus
+    comments
+  }
+}
+
+{
+	"filter": {
+	"branchId": "1001",
+	"departmentId": "1101",
+	"batchId": "1151",
+	"sectionId": "1201",
+	"subjectId": "1401",
+	"attendanceDate": "2019-01-11",
+	"lectureId": "44750"
+	}
+}
+=========================================================================
+
+
 =========================================================================
 Update the Attendance status for students ---
 mutation updateStudentAttendanceData($input:StudentAttendanceUpdateFilter!){
-  updateStudenceAttendanceData(input:$input){
+  updateStudentAttendanceData(input:$input){
     statusCode
     statusDesc
  }
@@ -36,7 +67,7 @@ mutation updateStudentAttendanceData($input:StudentAttendanceUpdateFilter!){
 {
   "input": {
     "studentIds": "1251,1255",
-	  "lectureId": 44750
+	  "lectureId": "44750"
   }
 }
 ==========================================================================================

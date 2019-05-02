@@ -2552,7 +2552,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
     }
     @Transactional
-    public QueryResult updateStudenceAttendanceData(StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
+    public QueryResult updateStudentAttendanceData(StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
         System.out.println("Input contents : " + filter.getStudentIds());
         String sql = "update student_attendance set attendance_status= ? where student_id  = ?  and lecture_id = ? ";
         Query query1 = this.entityManager.createNativeQuery(sql);
@@ -2576,17 +2576,6 @@ public class Mutation implements GraphQLMutationResolver {
         return res;
 
     }
-
-    public String subtractDays(String dt, int days) throws ParseException {
-        String dtFormat = "yyyy-MM-dd";
-        Date date = new SimpleDateFormat(dtFormat).parse(dt);
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, -days);
-        String newDt = new SimpleDateFormat(dtFormat).format(cal.getTime());
-        return newDt;
-    }
-
 
     public QueryResult updateAcademicSubjects(AcademicSubjectMutationPayload academicSubjectMutationPayload) throws JSONException, ParseException {
         QueryResult res = this.academicSubjectProcessor.updateAcademicSubjects(academicSubjectMutationPayload);

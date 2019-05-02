@@ -1,5 +1,7 @@
 package com.synectiks.cms.filter.studentattendance;
 
+import com.synectiks.cms.domain.Student;
+
 public class DailyAttendanceVo {
 	
 	private String studentId;
@@ -9,6 +11,7 @@ public class DailyAttendanceVo {
 	private String previousTwoDayStatus;
 	private String previousThreeDayStatus;
 	private String comments;
+	private Student student;
 	
 	public String getStudentId() {
 		return studentId;
@@ -52,10 +55,24 @@ public class DailyAttendanceVo {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+//	@Override
+//	public String toString() {
+//		return "DailyAttendance [studentName=" + studentName + ", currentDateStatus=" + currentDateStatus
+//				+ ", previousOneDayStatus=" + previousOneDayStatus + ", previousTwoDayStatus=" + previousTwoDayStatus
+//				+ ", previousThreeDayStatus=" + previousThreeDayStatus + ", comments=" + comments + "]";
+//	}
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 	@Override
 	public String toString() {
-		return "DailyAttendance [studentName=" + studentName + ", currentDateStatus=" + currentDateStatus
-				+ ", previousOneDayStatus=" + previousOneDayStatus + ", previousTwoDayStatus=" + previousTwoDayStatus
-				+ ", previousThreeDayStatus=" + previousThreeDayStatus + ", comments=" + comments + "]";
+		return "DailyAttendanceVo [studentId=" + studentId + ", studentName=" + studentName + ", currentDateStatus="
+				+ currentDateStatus + ", previousOneDayStatus=" + previousOneDayStatus + ", previousTwoDayStatus="
+				+ previousTwoDayStatus + ", previousThreeDayStatus=" + previousThreeDayStatus + ", comments=" + comments
+				+ ", student=" + student + "]";
 	}
+	
 }

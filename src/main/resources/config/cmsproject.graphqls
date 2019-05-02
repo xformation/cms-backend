@@ -726,6 +726,7 @@ type DailyAttendanceVo {
 	previousTwoDayStatus: String
 	previousThreeDayStatus: String
 	comments: String
+	student: Student
 }
 
 
@@ -740,6 +741,8 @@ input StudentAttendanceFilterInput {
 	studentId: String
 	studentName: String
 	lectureId: String!
+	teacherId: String!
+	academicYearId: String
 }
 
 type AcademicSubjectVo{
@@ -893,7 +896,7 @@ type Mutation {
     updateFeeDetails(input: UpdateFeeDetailsInput!): UpdateFeeDetailsPayload!
     removeFeeDetails(input: RemoveFeeDetailsInput!): RemoveFeeDetailsPayload!
 
-    updateStudenceAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
+    updateStudentAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
 
    addAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
    updateAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
@@ -1071,7 +1074,7 @@ type QueryResult{
 
 input StudentAttendanceUpdateFilter {
 	studentIds: String!
-	lectureId: Long!
+	lectureId: String!
 }
 
 

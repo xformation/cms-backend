@@ -1,81 +1,244 @@
 package com.synectiks.cms.filter.studentattendance;
 
-    import java.math.BigInteger;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
 
 @Repository
 public class StudentAttendanceFilterImpl  {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+//    @PersistenceContext
+//    private EntityManager entityManager;
+    
+    @Autowired
+    private StudentRepository studentRepository;
 
+    @Autowired
+    private CommonService commonService;
+    
+    @Autowired
+    private StudentAttendanceRepository studentAttendanceRepository;
+    
+    @Autowired
+    private LectureRepository lectureRepository;
+    
     public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) throws Exception {
-    	String selectQry = "select st.id, st.student_name, sa.attendance_status as current_date_status, " + 
-    			"(select a.attendance_status as prev1_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 1)),  " + 
-    			"(select a.attendance_status as prev2_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 2)),  " + 
-    			"(select a.attendance_status as prev3_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 3)),  " +
-    			"sa.comments "+
-    			"from student st, student_attendance sa, lecture lc " + 
-    			"where st.id = sa.student_id and sa.lecture_id = lc.id  and " + 
-    			"st.branch_id = ? and st.department_id = ? and st.batch_id = ? and st.section_id = ? and sa.lecture_id = ? and lc.lec_date = date(?) ";
-        if(filter.getStudentName() != null) {
-            selectQry = selectQry + " and st.student_name = ? ";
-        }
-        Query query = this.entityManager.createNativeQuery(selectQry);
-        if(filter != null) {
-            query.setParameter(1, Integer.parseInt(filter.getLectureId()));
-            query.setParameter(2, Integer.parseInt(filter.getLectureId()));
-            query.setParameter(3, Integer.parseInt(filter.getLectureId()));
-            query.setParameter(4, Integer.parseInt(filter.getBranchId()));
-            query.setParameter(5, Integer.parseInt(filter.getDepartmentId()));
-            query.setParameter(6, Integer.parseInt(filter.getBatchId()));
-            query.setParameter(7, Integer.parseInt(filter.getSectionId()));
-            query.setParameter(8, Integer.parseInt(filter.getLectureId()));
-            if(filter.getAttendanceDate() != null) {
-            	query.setParameter(9, filter.getAttendanceDate());
-            }else {
-            	String today = DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, new Date(System.currentTimeMillis()));
-            	query.setParameter(9, today);
-            }
-            
-            if(filter.getStudentName() != null) {
-                query.setParameter(10, filter.getStudentName());
-            }
-        }
-
-        List<DailyAttendanceVo> resultList = executeSelectQuery(query);
-        return resultList;
+//    	String selectQry = "select st.id, st.student_name, sa.attendance_status as current_date_status, " + 
+//    			"(select a.attendance_status as prev1_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 1)),  " + 
+//    			"(select a.attendance_status as prev2_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 2)),  " + 
+//    			"(select a.attendance_status as prev3_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 3)),  " +
+//    			"sa.comments "+
+//    			"from student st, student_attendance sa, lecture lc " + 
+//    			"where st.id = sa.student_id and sa.lecture_id = lc.id  and " + 
+//    			"st.branch_id = ? and st.department_id = ? and st.batch_id = ? and st.section_id = ? and sa.lecture_id = ? and lc.lec_date = date(?) ";
+//        if(filter.getStudentName() != null) {
+//            selectQry = selectQry + " and st.student_name = ? ";
+//        }
+//        Query query = this.entityManager.createNativeQuery(selectQry);
+//        if(filter != null) {
+//            query.setParameter(1, Integer.parseInt(filter.getLectureId()));
+//            query.setParameter(2, Integer.parseInt(filter.getLectureId()));
+//            query.setParameter(3, Integer.parseInt(filter.getLectureId()));
+//            query.setParameter(4, Integer.parseInt(filter.getBranchId()));
+//            query.setParameter(5, Integer.parseInt(filter.getDepartmentId()));
+//            query.setParameter(6, Integer.parseInt(filter.getBatchId()));
+//            query.setParameter(7, Integer.parseInt(filter.getSectionId()));
+//            query.setParameter(8, Integer.parseInt(filter.getLectureId()));
+//            if(filter.getAttendanceDate() != null) {
+//            	query.setParameter(9, filter.getAttendanceDate());
+//            }else {
+//            	String today = DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, new Date(System.currentTimeMillis()));
+//            	query.setParameter(9, today);
+//            }
+//            
+//            if(filter.getStudentName() != null) {
+//                query.setParameter(10, filter.getStudentName());
+//            }
+//        }
+//
+//        List<DailyAttendanceVo> resultList = executeSelectQuery(query);
+        
+        
+        Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
+    	Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+    	Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+    	Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+    	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(Long.valueOf(filter.getTeacherId()), Long.valueOf(filter.getSubjectId()));
+    	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
+    	
+    	List<DailyAttendanceVo> voList = new ArrayList<>();
+        List<Student> studentList = getStudentList(branch, department, batch, section);
+        
+        Lecture currentDateLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 0);
+        Lecture oneDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 1);
+        Lecture twoDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 2);
+        Lecture threeDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 3);
+        
+        // lecture schedule on current date insert/update all the students in student_attendance table.
+        setCurrentDateStatus(voList, studentList, currentDateLecture);
+        setHistoryDateStatus(voList, oneDayPrevLecture, 1);
+        setHistoryDateStatus(voList, twoDayPrevLecture, 2);
+        setHistoryDateStatus(voList, threeDayPrevLecture, 3);
+        
+        return voList;
     }
 
-    private List<DailyAttendanceVo> executeSelectQuery(Query query) {
-        List<DailyAttendanceVo> resultList = new ArrayList<DailyAttendanceVo>();
-
-        List<Object[]> ls = query.getResultList();
-        for (Object[] result : ls){
-            DailyAttendanceVo da = new DailyAttendanceVo();
-            da.setStudentId(String.valueOf((BigInteger)result[0]));
-            da.setStudentName((String)result[1]);
-            da.setCurrentDateStatus((String)result[2]);
-            da.setPreviousOneDayStatus((String)result[3]);
-            da.setPreviousTwoDayStatus((String)result[4]);
-            da.setPreviousThreeDayStatus((String)result[5]);
-            da.setComments((String)result[6]);
-            resultList.add(da);
+	private void setCurrentDateStatus(List<DailyAttendanceVo> voList, List<Student> studentList,
+			Lecture currentDateLecture) {
+		if(currentDateLecture != null) {
+        	for(Student st : studentList) {
+        		StudentAttendance sa = getStudentAttendance(st, currentDateLecture);
+        		DailyAttendanceVo vo = new DailyAttendanceVo();
+				if(sa != null) {
+				   	vo.setStudentId(String.valueOf(st.getId()));
+				   	vo.setStudentName(st.getStudentName() + " " + st.getStudentMiddleName() + " " +st.getStudentLastName());
+				   	vo.setCurrentDateStatus(sa.getAttendanceStatus().toString());
+				}else {
+					// insert record in student_attendance table and mark the status as present by default.
+					sa = new StudentAttendance();
+					sa.setLecture(currentDateLecture);
+					sa.setStudent(st);
+					sa.setAttendanceStatus(AttendanceStatusEnum.PRESENT);
+					sa = this.studentAttendanceRepository.save(sa);
+					vo.setStudentId(String.valueOf(sa.getId()));
+					vo.setStudentName(st.getStudentName() + " " + st.getStudentMiddleName() + " " +st.getStudentLastName());
+					vo.setCurrentDateStatus(sa.getAttendanceStatus().toString());
+				}
+				vo.setStudent(st);
+				voList.add(vo);
+        	}
+        }else {
+        	for(Student st : studentList) {
+        		DailyAttendanceVo vo = new DailyAttendanceVo();
+        		vo.setStudentId(String.valueOf(st.getId()));
+        		vo.setStudentName(st.getStudentName() + " " + st.getStudentMiddleName() + " " +st.getStudentLastName());
+        		vo.setStudent(st);
+				vo.setCurrentDateStatus(CmsConstants.LECTURE_NOT_SCHEDULED);
+				voList.add(vo);
+        	}
         }
-        return resultList;
+	}
+	
+	private void setHistoryDateStatus(List<DailyAttendanceVo> voList, Lecture historyDateLecture, int day) {
+		if(historyDateLecture != null) {
+        	for(DailyAttendanceVo vo : voList) {
+        		StudentAttendance sa = getStudentAttendance(vo.getStudent(), historyDateLecture);
+				if(sa != null) {
+					if(day == 1) {
+						vo.setPreviousOneDayStatus(sa.getAttendanceStatus().toString());
+					}else if(day == 2) {
+						vo.setPreviousTwoDayStatus(sa.getAttendanceStatus().toString());
+					}else if(day == 3) {
+						vo.setPreviousThreeDayStatus(sa.getAttendanceStatus().toString());
+					}
+				}else {
+					if(day == 1) {
+						vo.setPreviousOneDayStatus(AttendanceStatusEnum.ABSENT.toString());
+					}else if(day == 2) {
+						vo.setPreviousTwoDayStatus(AttendanceStatusEnum.ABSENT.toString());
+					}else if(day == 3) {
+						vo.setPreviousThreeDayStatus(AttendanceStatusEnum.ABSENT.toString());
+					}
+				}
+        	}
+        }else {
+        	for(DailyAttendanceVo vo : voList) {
+        		if(day == 1) {
+					vo.setPreviousOneDayStatus(CmsConstants.LECTURE_NOT_SCHEDULED);
+				}else if(day == 2) {
+					vo.setPreviousTwoDayStatus(CmsConstants.LECTURE_NOT_SCHEDULED);
+				}else if(day == 3) {
+					vo.setPreviousThreeDayStatus(CmsConstants.LECTURE_NOT_SCHEDULED);
+				}
+        	}
+        }
+	}
+	
+	
+    private StudentAttendance getStudentAttendance(Student student, Lecture lecture) {
+    	if(null == lecture) return null;
+    	StudentAttendance sa = new StudentAttendance();
+    	sa.student(student);
+    	sa.lecture(lecture);
+    	Example<StudentAttendance> example = Example.of(sa);
+    	Optional<StudentAttendance> nsa = this.studentAttendanceRepository.findOne(example);
+    	if(nsa.isPresent()) {
+    		return nsa.get();
+    	}
+    	return null;
     }
+    
+    private Lecture lectureScheduleStatus(String lectureDate, AttendanceMaster attendanceMaster, int days) throws ParseException, Exception {
+    	Lecture lec = new Lecture();
+    	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
+//    			DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", lectureDate));
+    	if(days > 0) {
+    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
+    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
+    	}
+    	lec.setLecDate(lecDate);
+    	lec.setAttendancemaster(attendanceMaster);
+    	Example<Lecture> example = Example.of(lec);
+    	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
+    	if(nlec.isPresent()) {
+    		return nlec.get();
+    	}
+    	return null;
+    }
+    
+    private List<Student> getStudentList(Branch branch, Department department, Batch batch, Section section){
+    	Student student = new Student();
+    	student.setBranch(branch);
+    	student.setDepartment(department);
+    	student.setBatch(batch);
+    	student.setSection(section);
+    	Example<Student> example = Example.of(student);
+    	List<Student> studentList = this.studentRepository.findAll(example);
+    	return studentList;
+    }
+    
+    
+//    private List<DailyAttendanceVo> executeSelectQuery(Query query) {
+//        List<DailyAttendanceVo> resultList = new ArrayList<DailyAttendanceVo>();
+//
+//        List<Object[]> ls = query.getResultList();
+//        for (Object[] result : ls){
+//            DailyAttendanceVo da = new DailyAttendanceVo();
+//            da.setStudentId(String.valueOf((BigInteger)result[0]));
+//            da.setStudentName((String)result[1]);
+//            da.setCurrentDateStatus((String)result[2]);
+//            da.setPreviousOneDayStatus((String)result[3]);
+//            da.setPreviousTwoDayStatus((String)result[4]);
+//            da.setPreviousThreeDayStatus((String)result[5]);
+//            da.setComments((String)result[6]);
+//            resultList.add(da);
+//        }
+//        return resultList;
+//    }
  
 
 }

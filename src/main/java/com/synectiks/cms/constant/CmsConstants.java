@@ -10,4 +10,6 @@ public interface CmsConstants {
 	
 	String SRC_DATE_FORMAT_yyyy_MM_dd = "yyyy-MM-dd";
 	String DATE_FORMAT_dd_MM_yyyy = "dd-MM-yyyy";
+	
+	String LECTURE_NOT_SCHEDULED = "LECTURE_NOT_SCHEDULED";
 }

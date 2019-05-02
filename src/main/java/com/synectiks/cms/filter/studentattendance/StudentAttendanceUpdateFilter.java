@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class StudentAttendanceUpdateFilter {
 	
     private String studentIds;
-    private long lectureId;
+    private String lectureId;
 	
     @JsonProperty("studentIds")
 	public String getStudentIds() {
@@ -17,10 +17,10 @@ public class StudentAttendanceUpdateFilter {
 	}
 
 	@JsonProperty("lectureId")
-	public long getLectureId() {
+	public String getLectureId() {
 		return lectureId;
 	}
-	public void setLectureId(long lectureId) {
+	public void setLectureId(String lectureId) {
 		this.lectureId = lectureId;
 	}
          
