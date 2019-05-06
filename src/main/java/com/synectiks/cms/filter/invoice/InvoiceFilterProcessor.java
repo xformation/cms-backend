@@ -19,7 +19,6 @@ public class InvoiceFilterProcessor {
 	private Long totalPaidInvoice = 0L;
 	private Long totalUnPaidInvoice = 0L;
 	private Long totalCanceledInvoice = 0L;
-	
 	@Autowired
 	private CmsInvoiceService cmsInvoiceService;
 	
@@ -42,7 +41,7 @@ public class InvoiceFilterProcessor {
 	public Long getTotalCanceledInvoice(Long collegeId, Long branchId, Long academicYearId) {
 		return cmsInvoiceService.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
 	}
-	
+
 	public InvoiceFilterProcessor getInvoiceData(Long collegeId, Long branchId, Long academicYearId) {
 		InvoiceFilterProcessor ifp = new InvoiceFilterProcessor();
 		ifp.setTotalInvoice(this.getTotalInvoice(collegeId, branchId, academicYearId));
@@ -83,5 +82,16 @@ public class InvoiceFilterProcessor {
 	public void setTotalCanceledInvoice(Long totalCanceledInvoice) {
 		this.totalCanceledInvoice = totalCanceledInvoice;
 	}
-	
+
+    @Override
+    public String toString() {
+        return "InvoiceFilterProcessor{" +
+            "totalInvoice=" + totalInvoice +
+            ", totalPaidInvoice=" + totalPaidInvoice +
+            ", totalUnPaidInvoice=" + totalUnPaidInvoice +
+            ", totalCanceledInvoice=" + totalCanceledInvoice +
+            ", cmsInvoiceService=" + cmsInvoiceService +
+            '}';
+    }
 }
+

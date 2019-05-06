@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
+import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
@@ -125,6 +126,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
+
+    @Autowired
+    private InvoiceFilterProcessor invoiceFilterProcessor;
 
     public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
@@ -2599,6 +2603,28 @@ public class Mutation implements GraphQLMutationResolver {
     
     public List<DailyAttendanceVo> getDailyStudentAttendanceData(StudentAttendanceFilterInput filter) throws Exception {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
+    }
+    public List<Invoice> searchInvoice(String invoiceNumber, long studentId){
+        return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId));
+    }
+    public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public Long getTotalPaidInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalPaidInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public Long getTotalUnPaidInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalUnPaidInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public Long getTotalCanceledInvoice(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
+    }
+
+    public InvoiceFilterProcessor getInvoiceData(long collegeId, long branchId, long academicYearId) {
+        return invoiceFilterProcessor.getInvoiceData(collegeId, branchId, academicYearId);
     }
 
 }
