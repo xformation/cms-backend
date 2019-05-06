@@ -163,8 +163,7 @@ type Query {
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
   
-  getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
-  
+     getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
   subject(id: Long!): Subject!
   subjects: [Subject!]!
 
@@ -226,7 +225,7 @@ type Query {
   invoices:[Invoice!]!
 
 
-    
+
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
@@ -240,7 +239,8 @@ type Query {
     getSectionById(sectionId:Long): Section!
     getBatchById(batchId:Long): Batch!
 
-  searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
+
+    searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
   getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
@@ -920,6 +920,12 @@ type Mutation {
     addInvoice(input:AddInvoiceInput!):AddInvoicePayload!
     updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
     removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
+    searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
+    getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+    getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+    getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+    getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+    getInvoiceData(collegeId:Long, branchId:Long!, academicYearId:Long!): InvoiceFilterProcessor!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
@@ -946,6 +952,7 @@ addAdminAttendance(input:AddAdminAttendanceInput!):AddAdminAttendancePayload!
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+
 }
 
 input AddDocumentsInput{
