@@ -129,7 +129,7 @@ public class StudentAttendanceFilterImpl  {
 					sa.setStudent(st);
 					sa.setAttendanceStatus(AttendanceStatusEnum.PRESENT);
 					sa = this.studentAttendanceRepository.save(sa);
-					vo.setStudentId(String.valueOf(st.getId()));
+					vo.setStudentId(String.valueOf(st.getId())); 
 					vo.setStudentName(st.getStudentName() + " " + st.getStudentMiddleName() + " " +st.getStudentLastName());
 					vo.setCurrentDateStatus(sa.getAttendanceStatus().toString());
 				}
