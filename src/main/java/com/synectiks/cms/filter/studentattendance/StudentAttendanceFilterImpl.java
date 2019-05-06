@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,7 @@ import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentAttendance;
@@ -31,6 +34,7 @@ import com.synectiks.cms.service.util.DateFormatUtil;
 @Repository
 public class StudentAttendanceFilterImpl  {
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 //    @PersistenceContext
 //    private EntityManager entityManager;
     
@@ -117,6 +121,7 @@ public class StudentAttendanceFilterImpl  {
 				   	vo.setStudentId(String.valueOf(st.getId()));
 				   	vo.setStudentName(st.getStudentName() + " " + st.getStudentMiddleName() + " " +st.getStudentLastName());
 				   	vo.setCurrentDateStatus(sa.getAttendanceStatus().toString());
+				   	vo.setComments(sa.getComments());
 				}else {
 					// insert record in student_attendance table and mark the status as present by default.
 					sa = new StudentAttendance();
@@ -221,6 +226,54 @@ public class StudentAttendanceFilterImpl  {
     	return studentList;
     }
     
+    public QueryResult updateStudentStatus(List<StudentAttendanceUpdateFilter> list) {
+    	logger.info("Start updating student attendance data ");
+    	QueryResult result = new QueryResult();
+    	result.setStatusCode(0);
+    	result.setStatusDesc(CmsConstants.UPDATE_SUCCESS_MESSAGE);
+    	
+    	StudentAttendance stObj = new StudentAttendance();
+    	Student student = null;
+    	Lecture lecture = null;
+    	try {
+    		for(StudentAttendanceUpdateFilter sa: list) {
+        		String values = sa.getStudentIds();//.split("##delimline##");
+        		String lectureId = sa.getLectureId();
+        		if(lecture == null) {
+    				lecture = this.lectureRepository.findById(Long.valueOf(lectureId)).get();
+    			}
+//        		for(String val: values) {
+    			String data[] = values.split("#~#");
+    			student = this.studentRepository.findById(Long.valueOf(data[0])).get();
+    			
+    			stObj.setStudent(student);
+    			stObj.setLecture(lecture);
+    			Example<StudentAttendance> example = Example.of(stObj);
+    			Optional<StudentAttendance> osa = this.studentAttendanceRepository.findOne((example));
+    			if(osa.isPresent()) {
+    				stObj.setId(osa.get().getId());
+    				stObj.setAttendanceStatus(data[1].equalsIgnoreCase("PRESENT") ? AttendanceStatusEnum.PRESENT : AttendanceStatusEnum.ABSENT);
+        			if(data.length > 2) {
+        				stObj.setComments(data[2]);
+        			}else {
+        				stObj.setComments(null);
+        			}
+    				logger.debug("Updating student attendance id : "+osa.get().getId());
+    				this.studentAttendanceRepository.save(stObj);
+    				stObj.setId(null);
+    				stObj.setAttendanceStatus(null);
+    				stObj.setComments(null);
+    			}
+//        		}
+        	}
+    	}catch(Exception e) {
+    		logger.error("Method updateStudentStatus. "+CmsConstants.UPDATE_FAILURE_MESSAGE, e);
+    		result.setStatusCode(1);
+    		result.setStatusDesc(CmsConstants.UPDATE_FAILURE_MESSAGE);
+    	}
+    	
+    	return result;
+    }
     
 //    private List<DailyAttendanceVo> executeSelectQuery(Query query) {
 //        List<DailyAttendanceVo> resultList = new ArrayList<DailyAttendanceVo>();

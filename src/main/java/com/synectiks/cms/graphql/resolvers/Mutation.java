@@ -2600,5 +2600,5 @@ public class Mutation implements GraphQLMutationResolver {
     public List<DailyAttendanceVo> getDailyStudentAttendanceData(StudentAttendanceFilterInput filter) throws Exception {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
-    
+
 }

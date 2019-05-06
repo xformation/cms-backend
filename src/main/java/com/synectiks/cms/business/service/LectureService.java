@@ -67,7 +67,7 @@ public class LectureService {
 	
 	private Batch bth = null;
 	private Section sec = null;
-	private Map<String, Object> map = new HashMap<String, Object>();
+	private Map<Object, Object> map = new HashMap<Object, Object>();
 	
 	@Transactional(propagation=Propagation.REQUIRED)
 	public QueryResult updateLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) {
@@ -233,7 +233,7 @@ public class LectureService {
 		
 //		Batch bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
 //		Section sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
-		Lecture lecture = new Lecture();
+		
 		JSONObject jsonObj;
 		
 		Teach th = null;
@@ -250,34 +250,37 @@ public class LectureService {
 				if(!dayName.equalsIgnoreCase(jsonObj.getString(WEEKDAY))) {
 					continue;
 				}else {
-					if(this.map.get("Teach") != null) {
-						th = (Teach)this.map.get("Teach");
-					}else {
+//					if(this.map.get(th) != null) {
+//						th = (Teach)this.map.get(th);
+//					}else {
+//						if(null == jsonObj.getString("teacherId") || null == jsonObj.getString("subjectId")) {
+//							continue;
+//						}
 						th = commonService.getTeachBySubjectAndTeacherId(Long.parseLong(jsonObj.getString("teacherId")), 
 								Long.parseLong(jsonObj.getString("subjectId")));
-						this.map.put("Teach", th);
-					}
-					if(this.map.get("AttendanceMaster") != null) {
-						am = (AttendanceMaster)this.map.get("AttendanceMaster");
-					}else {
+//						this.map.put(th, th);
+//					}
+//					if(this.map.get(am) != null) {
+//						am = (AttendanceMaster)this.map.get(am);
+//					}else {
 						am = commonService.getAttendanceMasterByBatchSectionTeach(this.bth, this.sec, th);
-						this.map.put("AttendanceMaster", am);
-					}
-					
-					lecture.setId(null);
+//						this.map.put(am, am);
+//					}
+					Lecture lecture = new Lecture();
+//					lecture.setId(null);
 					lecture.setAttendancemaster(am);
 					lecture.setLecDate(getDate(dt));
 					lecture.setStartTime(jsonObj.getString("startTime"));
 					lecture.setEndTime(jsonObj.getString("endTime"));
 					lecture.setLastUpdatedBy(getLoggedInUser());
 					lecture.setLastUpdatedOn(new java.sql.Date(System.currentTimeMillis()));
-					lectureRepository.save(lecture);
+					this.lectureRepository.save(lecture);
 //					insertLecture(dt, jsonObj, filter);
 				}
 			}
 		}
-		this.map.remove("Teach");
-		this.map.remove("AttendanceMaster");
+//		this.map.remove("Teach");
+//		this.map.remove("AttendanceMaster");
 	}
 	
 	public void createLectureSchedule(Date dt, String[] values, String dayName, LectureScheduleFilter filter)

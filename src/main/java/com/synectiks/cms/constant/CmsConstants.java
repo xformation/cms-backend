@@ -12,4 +12,9 @@ public interface CmsConstants {
 	String DATE_FORMAT_dd_MM_yyyy = "dd-MM-yyyy";
 	
 	String LECTURE_NOT_SCHEDULED = "LECTURE_NOT_SCHEDULED";
+	
+	String ADD_SUCCESS_MESSAGE = "Records added successfully";
+	String ADD_FAILURE_MESSAGE = "Due to some exception, records could no be added.";
+	String UPDATE_SUCCESS_MESSAGE = "Records updated successfully";
+	String UPDATE_FAILURE_MESSAGE = "Due to some exception, records could no be updated.";
 }
