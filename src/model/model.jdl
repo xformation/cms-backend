@@ -1,3 +1,9 @@
+entity MetaLecture{
+	weekDay String
+  	startTime String
+  	endTime String
+}
+
 entity College { 
 shortName String required
 logoPath String
@@ -542,8 +548,15 @@ AdminAttendance{section} to Section,
 AdminAttendance{student} to Student,
 AcademicExamSetting{department} to Department,
 AcademicExamSetting{academicYear} to AcademicYear,
-AcademicExamSetting{section} to Section
-
+AcademicExamSetting{section} to Section,
+MetaLecture{branch} to Branch,
+MetaLecture{department} to Department,
+MetaLecture{subject} to Subject,
+MetaLecture{teacher} to Teacher,
+MetaLecture{term} to Term,
+MetaLecture{academicyear} to AcademicYear,
+MetaLecture{section} to Section,
+MetaLecture{batch} to Batch
 }
 
 dto * with mapstruct

@@ -246,7 +246,18 @@ type Query {
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getInvoiceData(collegeId:Long, branchId:Long!, academicYearId:Long!): InvoiceFilterProcessor!
+  
+  createStudentAttendanceCache: StudentAttendanceCache!
 }
+
+type StudentAttendanceCache{
+	departments: [Department]
+	batches: [Batch]
+	subjects: [Subject]
+	sections: [Section]
+	lectures: [Lecture]
+}
+
 
 type InvoiceFilterProcessor{
 	totalInvoice: Long

@@ -26,19 +26,27 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.MetaLecture;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleVo;
 import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.MetaLectureRepository;
+import com.synectiks.cms.service.dto.LectureScheduleDTO;
 import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
@@ -51,6 +59,9 @@ public class LectureService {
 	
 	@Autowired
 	private LectureRepository lectureRepository;
+	
+	@Autowired
+	private MetaLectureRepository metaLectureRepository;
 	
 	@Autowired
 	private CommonService commonService;
@@ -416,4 +427,39 @@ public class LectureService {
 		return ls;
 	}
 	
+	public boolean addMetaLectureData(LectureScheduleDTO dto, LectureScheduleFilter filter){
+		MetaLecture metaLecture = new MetaLecture();
+		
+		Branch branch = this.commonService.getBranchById(CommonUtil.isNullOrEmpty(filter.getBranchId()) ? null : Long.valueOf(filter.getBranchId().trim()));
+        Department department = this.commonService.getDepartmentById(CommonUtil.isNullOrEmpty(filter.getDepartmentId()) ? null : Long.valueOf(filter.getDepartmentId().trim()));
+     
+        Term term = this.commonService.getTermById(CommonUtil.isNullOrEmpty(filter.getTermId()) ? null : Long.valueOf(filter.getTermId().trim()));
+        AcademicYear academicYear = this.commonService.findAcademicYearByYear(CommonUtil.isNullOrEmpty(filter.getAcademicYear()) ? null : filter.getAcademicYear().trim());
+        Section section = this.commonService.getSectionById(CommonUtil.isNullOrEmpty(filter.getSectionId()) ? null : Long.valueOf(filter.getSectionId().trim()));
+        Batch batch = this.commonService.getBatchById(Long.valueOf(CommonUtil.isNullOrEmpty(filter.getBatchId()) ? null : filter.getBatchId().trim()));
+        
+        String weekDay = dto.getWeekDay();
+        String startTime = dto.getStartTime();
+        String endTime = dto.getEndTime();
+        Subject subject = this.commonService.getSubjectById(Long.valueOf(dto.getSubjectId()));
+        Teacher teacher = this.commonService.getTeacherById(Long.valueOf(dto.getTeacherId()));
+        if(branch != null && department != null && term != null && academicYear != null && section != null && batch != null && weekDay != null && startTime != null 
+        		&& endTime != null && subject != null && teacher != null) {
+        	metaLecture.setBranch(branch);
+        	metaLecture.setDepartment(department);
+        	metaLecture.setTerm(term);
+        	metaLecture.academicyear(academicYear);
+        	metaLecture.setSection(section);
+        	metaLecture.setBatch(batch);
+        	metaLecture.setWeekDay(weekDay);
+        	metaLecture.setStartTime(startTime);
+        	metaLecture.setEndTime(endTime);
+        	metaLecture.setSubject(subject);
+        	metaLecture.setTeacher(teacher);
+        	logger.debug("Saving data in metalecture table.");
+        	this.metaLectureRepository.save(metaLecture);
+        	return true;
+        }
+		return false;
+	}
 }

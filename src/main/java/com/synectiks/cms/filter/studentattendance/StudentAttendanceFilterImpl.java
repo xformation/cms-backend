@@ -51,41 +51,6 @@ public class StudentAttendanceFilterImpl  {
     private LectureRepository lectureRepository;
     
     public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) throws Exception {
-//    	String selectQry = "select st.id, st.student_name, sa.attendance_status as current_date_status, " + 
-//    			"(select a.attendance_status as prev1_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 1)),  " + 
-//    			"(select a.attendance_status as prev2_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 2)),  " + 
-//    			"(select a.attendance_status as prev3_day_status from student_attendance a where a.student_id = st.id and a.lecture_id = (select b.id from lecture b where b.attendancemaster_id = (select c.attendancemaster_id from lecture c where c.id = ?) and b.lec_date = date(lc.lec_date) - 3)),  " +
-//    			"sa.comments "+
-//    			"from student st, student_attendance sa, lecture lc " + 
-//    			"where st.id = sa.student_id and sa.lecture_id = lc.id  and " + 
-//    			"st.branch_id = ? and st.department_id = ? and st.batch_id = ? and st.section_id = ? and sa.lecture_id = ? and lc.lec_date = date(?) ";
-//        if(filter.getStudentName() != null) {
-//            selectQry = selectQry + " and st.student_name = ? ";
-//        }
-//        Query query = this.entityManager.createNativeQuery(selectQry);
-//        if(filter != null) {
-//            query.setParameter(1, Integer.parseInt(filter.getLectureId()));
-//            query.setParameter(2, Integer.parseInt(filter.getLectureId()));
-//            query.setParameter(3, Integer.parseInt(filter.getLectureId()));
-//            query.setParameter(4, Integer.parseInt(filter.getBranchId()));
-//            query.setParameter(5, Integer.parseInt(filter.getDepartmentId()));
-//            query.setParameter(6, Integer.parseInt(filter.getBatchId()));
-//            query.setParameter(7, Integer.parseInt(filter.getSectionId()));
-//            query.setParameter(8, Integer.parseInt(filter.getLectureId()));
-//            if(filter.getAttendanceDate() != null) {
-//            	query.setParameter(9, filter.getAttendanceDate());
-//            }else {
-//            	String today = DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, new Date(System.currentTimeMillis()));
-//            	query.setParameter(9, today);
-//            }
-//            
-//            if(filter.getStudentName() != null) {
-//                query.setParameter(10, filter.getStudentName());
-//            }
-//        }
-//
-//        List<DailyAttendanceVo> resultList = executeSelectQuery(query);
-        
         
         Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
     	Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));

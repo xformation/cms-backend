@@ -1,12 +1,15 @@
 package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.*;
+import com.synectiks.cms.service.util.CommonUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +68,9 @@ public class CommonService {
 //    private StudentRepository studentRepository;
 	
 	public AcademicYear findAcademicYearByYear(String academicYear) {
+		if(CommonUtil.isNullOrEmpty(academicYear)) {
+			return null;
+		}
 		AcademicYear ay = new AcademicYear();
 		ay.setYear(academicYear);
 		Example<AcademicYear> example = Example.of(ay);
@@ -75,10 +81,21 @@ public class CommonService {
 		return null;
 	}
 	
+	public AcademicYear getAcademicYearById(Long academicYearId) {
+		if(academicYearId == null) {
+			return null;
+		}
+		Optional<AcademicYear> newAy = this.academicYearRepository.findById(academicYearId);
+		if(newAy.isPresent()) {
+			return newAy.get();
+		}
+		return null;
+	}
+	
 	public Department getDepartmentById(Long departmentId) {
-//		Department dept = new Department();
-//		dept.setId(departmentId);
-//		Example<Department> example = Example.of(dept);
+		if(departmentId == null) {
+			return null;
+		}
 		Optional<Department> newDt = this.departmentRepository.findById(departmentId);
 		if(newDt.isPresent()) {
 			return newDt.get();
@@ -87,9 +104,9 @@ public class CommonService {
 	}
 	
 	public Batch getBatchById(Long batchId) {
-//		Batch batch = new Batch();
-//		batch.setId(batchId);
-//		Example<Batch> example = Example.of(batch);
+		if(batchId == null) {
+			return null;
+		}
 		Optional<Batch> newBt = this.batchRepository.findById(batchId);
 		if(newBt.isPresent()) {
 			return newBt.get();
@@ -98,9 +115,9 @@ public class CommonService {
 	}
 	
 	public Teacher getTeacherById(Long teacherId) {
-//		Teacher tchr = new Teacher();
-//		tchr.setId(teacherId);
-//		Example<Teacher> example = Example.of(tchr);
+		if(teacherId == null) {
+			return null;
+		}
 		Optional<Teacher> newTh = this.teacherRepository.findById(teacherId);
 		if(newTh.isPresent()) {
 			return newTh.get();
@@ -109,9 +126,9 @@ public class CommonService {
 	}
 
 	public Section getSectionById(Long secId) {
-//		Section sc = new Section();
-//		sc.setId(secId);
-//		Example<Section> example = Example.of(sc);
+		if(secId == null) {
+			return null;
+		}
 		Optional<Section> newSc = this.sectionRepository.findById(secId);
 		if(newSc.isPresent()) {
 			return newSc.get();
@@ -120,9 +137,9 @@ public class CommonService {
 	}
 	
 	public Subject getSubjectById(Long subId) {
-//		Subject sb = new Subject();
-//		sb.setId(subId);
-//		Example<Subject> example = Example.of(sb);
+		if(subId == null) {
+			return null;
+		}
 		Optional<Subject> newSb = this.subjectRepository.findById(subId);
 		if(newSb.isPresent()) {
 			return newSb.get();
@@ -131,6 +148,9 @@ public class CommonService {
 	}
 	
 	public Teach getTeachBySubjectAndTeacherId(Long thrId, Long subId) {
+		if(thrId == null || subId == null) {
+			return null;
+		}
 		Teach th = new Teach();
 		Subject s = getSubjectById(subId);
 		Teacher t = getTeacherById(thrId);
@@ -167,6 +187,9 @@ public class CommonService {
 	}
 	
 	public AttendanceMaster getAttendanceMasterById(Long id) {
+		if(id == null) {
+			return null;
+		}
 		Optional<AttendanceMaster> newAm = this.attendanceMasterRepository.findById(id);
 		if(newAm.isPresent()) {
 			return newAm.get();
@@ -176,6 +199,10 @@ public class CommonService {
 	
 	public List<Holiday> getHolidayList(String academicYear) throws ParseException {
 		AcademicYear acd = findAcademicYearByYear(academicYear);
+		if(acd == null) {
+			logger.warn("Academic Year is null. Returning empty holiday list.");
+			return Collections.emptyList();
+		}
 		Holiday hl = new Holiday();
 		hl.setHolidayStatus(Status.ACTIVE);
 		hl.setAcademicyear(acd);
@@ -185,6 +212,9 @@ public class CommonService {
 	} 
 	
 	public Term getTermById(Long termId) {
+		if(termId == null) {
+			return null;
+		}
 		Term tm = new Term();
 		tm.setTermStatus(Status.ACTIVE);
 		tm.setId(termId);
@@ -197,6 +227,9 @@ public class CommonService {
 	}
 	
 	public College getCollegeById(Long id) {
+		if(id == null) {
+			return null;
+		}
 		Optional<College> clg =  this.collegeRepository.findById(id);
 		if(clg.isPresent()) {
 			return clg.get();
@@ -205,6 +238,9 @@ public class CommonService {
 	}
 	
 	public State getStateById(Long id) {
+		if(id == null) {
+			return null;
+		}
 		Optional<State> st =  this.stateRepository.findById(id);
 		if(st.isPresent()) {
 			return st.get();
@@ -213,6 +249,9 @@ public class CommonService {
 	}
 	
 	public City getCityById(Long id) {
+		if(id == null) {
+			return null;
+		}
 		Optional<City> ct =  this.cityRepository.findById(id);
 		if(ct.isPresent()) {
 			return ct.get();
@@ -220,6 +259,9 @@ public class CommonService {
 		return null;
 	}
 	public Branch getBranchById(Long id) {
+		if(id == null) {
+			return null;
+		}
 		Optional<Branch> bt =  this.branchRepository.findById(id);
 		if(bt.isPresent()) {
 			return bt.get();
@@ -227,10 +269,29 @@ public class CommonService {
 		return null;
 	}
 	public Teach getTeachById(Long id) {
+		if(id == null) {
+			return null;
+		}
 		Optional<Teach> th =  this.teachRepository.findById(id);
 		if(th.isPresent()) {
 			return th.get();
 		}
 		return null;
+	}
+	
+	
+	
+	public List<Department> getDepartmentsByBranchAndAcademicYear(Long branchId, Long academicYearId){
+		if(branchId == null || academicYearId == null) {
+			return null;
+		}
+		Department department = new Department();
+		Branch branch = this.getBranchById(branchId);
+		AcademicYear ay = this.getAcademicYearById(academicYearId);
+		department.setBranch(branch);
+		department.setAcademicyear(ay);
+		Example<Department> example = Example.of(department);
+		List<Department> list = this.departmentRepository.findAll(example);
+		return list;
 	}
 } 

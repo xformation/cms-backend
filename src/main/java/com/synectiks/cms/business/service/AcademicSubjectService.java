@@ -156,7 +156,7 @@ public class AcademicSubjectService {
         return subjectList;
     }
 
-    private List<Subject> getSubjectList(Long departmentId, Long batchId)  {
+    public List<Subject> getSubjectList(Long departmentId, Long batchId)  {
 		Department department = this.commonService.getDepartmentById(departmentId);
 		Batch batch = this.commonService.getBatchById(batchId);
 		Subject sub = new Subject();

@@ -2,6 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -106,7 +107,27 @@ public class SubjectRestController {
     	return HttpStatus.OK.value();
     }
     
-    
+    @RequestMapping(method = RequestMethod.GET, value = "/cmssubjects-bydepartment-batchid")
+    public List<Subject> getSubjectsByDepartmentBatchId(@RequestParam Map<String, String> dataMap) {
+    	Long departmentId =0L;
+    	Long batchId = 0L;
+    	if(dataMap.containsKey("departmentId")) {
+    		departmentId = Long.valueOf(dataMap.get("departmentId"));
+    	}else {
+    		logger.warn("Department id not provided. Returning empty list.");
+    		return Collections.emptyList();
+    	}
+    	if(dataMap.containsKey("batchId")) {
+    		batchId = Long.valueOf(dataMap.get("batchId"));
+    	}else {
+    		logger.warn("Batch id not provided. Returning empty list.");
+    		return Collections.emptyList();
+    	}
+    	logger.debug(String.format("Retrieving subject based on department id: %d and batch id: %d", departmentId, batchId));
+    	List<Subject> list = this.academicSubjectService.getSubjectList(departmentId, batchId);
+    	logger.debug(String.format("Totale subjects retrieved %d", list.size()));
+    	return list;
+    }
     
     
 }

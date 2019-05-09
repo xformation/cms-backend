@@ -1870,7 +1870,53 @@ query{
 
 }
 
+--------------------------------------------------------------------------------------------
+cache for student attendance 
 
-
-
-
+query {
+  createStudentAttendanceCache{
+    departments{
+      id,
+      academicyear{
+        id,
+        year
+      }
+    },
+    batches{
+      id,
+      batch,
+      department{
+        id
+      }
+    },
+    subjects{
+      id,
+      subjectType,
+      subjectCode,
+      subjectDesc,
+      status,
+      department{
+        id
+      },
+      batch{
+        id
+      }
+    },
+    sections{
+      id,
+      section,
+      batch{
+        id
+      }
+    },
+    lectures{
+      id
+      lecDate,
+      startTime,
+      endTime,
+      attendancemaster{
+        id
+      }
+    }
+  } 
+}

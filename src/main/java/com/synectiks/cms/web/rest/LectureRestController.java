@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,9 +43,17 @@ public class LectureRestController {
 	private LectureService lectureService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmslectures")
+	@Transactional(propagation=Propagation.REQUIRED)
 	public ResponseEntity<QueryResult> addLectures(@RequestBody List<LectureScheduleDTO> list, @RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
 		LectureScheduleInput lectureScheduleInput = new LectureScheduleInput();
+		
 		LectureScheduleFilter filter = new LectureScheduleFilter();
+		filter.setBranchId(dataMap.get("branchId") != null ? dataMap.get("branchId").trim() : dataMap.get("branchId"));
+		filter.setDepartmentId(dataMap.get("departmentId") != null ? dataMap.get("departmentId").trim() : dataMap.get("departmentId"));
+		filter.setTermId(dataMap.get("termId") != null ? dataMap.get("termId").trim() : dataMap.get("termId") );
+		filter.setAcademicYear(dataMap.get("academicYear") != null ? dataMap.get("academicYear").trim() : dataMap.get("academicYear"));
+		filter.setSectionId(dataMap.get("sectionId") != null ? dataMap.get("sectionId").trim() : dataMap.get("sectionId"));
+		filter.setBatchId(dataMap.get("batchId") != null ? dataMap.get("batchId").trim() : dataMap.get("batchId") );
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String values[] = new String[list.size()];
@@ -52,14 +62,12 @@ public class LectureRestController {
 			LectureScheduleDTO dto = iterator.next();
 			values[i] = mapper.writeValueAsString(dto);
 			i++;
+			logger.debug("Going in addMetaLectureData.");
+			this.lectureService.addMetaLectureData(dto, filter);
 		}
 		lectureScheduleInput.setValues(values);
 		
-		filter.setTermId(dataMap.get("termId"));
-		filter.setAcademicYear(dataMap.get("academicYear"));
-		filter.setSectionId(dataMap.get("sectionId"));
-		filter.setBatchId(dataMap.get("batchId"));
-		
+		logger.debug("Saving data in lecture table.");
 		QueryResult res = this.lectureService.addLectureSchedule(lectureScheduleInput, filter);
 		Optional<QueryResult> r = Optional.of(res);
 		logger.info("Lecture data created successfully.");
@@ -80,11 +88,12 @@ public class LectureRestController {
 			i++;
 		}
 		lectureScheduleInput.setValues(values);
-		filter.setTermId(dataMap.get("termId"));
-		filter.setAcademicYear(dataMap.get("academicYear"));
-		filter.setSectionId(dataMap.get("sectionId"));
-		filter.setBatchId(dataMap.get("batchId"));
-		filter.setDepartmentId(dataMap.get("departmentId"));
+		filter.setBranchId(dataMap.get("branchId") != null ? dataMap.get("branchId").trim() : dataMap.get("branchId"));
+		filter.setDepartmentId(dataMap.get("departmentId") != null ? dataMap.get("departmentId").trim() : dataMap.get("departmentId"));
+		filter.setTermId(dataMap.get("termId") != null ? dataMap.get("termId").trim() : dataMap.get("termId") );
+		filter.setAcademicYear(dataMap.get("academicYear") != null ? dataMap.get("academicYear").trim() : dataMap.get("academicYear"));
+		filter.setSectionId(dataMap.get("sectionId") != null ? dataMap.get("sectionId").trim() : dataMap.get("sectionId"));
+		filter.setBatchId(dataMap.get("batchId") != null ? dataMap.get("batchId").trim() : dataMap.get("batchId") );
 		
 		QueryResult res = this.lectureService.updateLectureSchedule(lectureScheduleInput, filter);
 		Optional<QueryResult> r = Optional.of(res);
