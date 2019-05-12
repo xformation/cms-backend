@@ -1,12 +1,14 @@
 package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.repository.*;
 import com.synectiks.cms.service.util.CommonUtil;
 
@@ -279,8 +281,6 @@ public class CommonService {
 		return null;
 	}
 	
-	
-	
 	public List<Department> getDepartmentsByBranchAndAcademicYear(Long branchId, Long academicYearId){
 		if(branchId == null || academicYearId == null) {
 			return null;
@@ -293,5 +293,25 @@ public class CommonService {
 		Example<Department> example = Example.of(department);
 		List<Department> list = this.departmentRepository.findAll(example);
 		return list;
+	}
+	
+	public List<CmsSemesterVo> getAllSemesters() {
+        logger.debug("Retrieving all semesters");
+        List<CmsSemesterVo> ls = new ArrayList<>();
+        for(Semester sm: Semester.values()) {
+        	CmsSemesterVo vo = new CmsSemesterVo();
+        	vo.setId(sm.value());
+        	vo.setDescription(sm.getDescription());
+        	ls.add(vo);
+        }
+        return ls;
+    }
+	
+	public CmsSemesterVo getSemester(Long id) {
+		Semester sm = Semester.valueOf(id.intValue());
+        CmsSemesterVo vo = new CmsSemesterVo();
+        vo.setId(sm.value());
+        vo.setDescription(sm.getDescription());
+        return vo;
 	}
 } 

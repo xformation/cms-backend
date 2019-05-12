@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
@@ -191,6 +192,7 @@ public class StudentAttendanceFilterImpl  {
     	return studentList;
     }
     
+    @Transactional
     public QueryResult updateStudentStatus(List<StudentAttendanceUpdateFilter> list) {
     	logger.info("Start updating student attendance data ");
     	QueryResult result = new QueryResult();

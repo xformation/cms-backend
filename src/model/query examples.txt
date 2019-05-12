@@ -1877,9 +1877,15 @@ query {
   createStudentAttendanceCache{
     departments{
       id,
+      name,
+      description,
       academicyear{
         id,
         year
+      },
+      branch{
+        id,
+        branchName
       }
     },
     batches{
@@ -1900,7 +1906,8 @@ query {
       },
       batch{
         id
-      }
+      },
+      
     },
     sections{
       id,
@@ -1909,13 +1916,75 @@ query {
         id
       }
     },
+    semesters{
+      id,
+      description
+    },
+    teaches{
+      id,
+      desc,
+      teacher{
+        id
+      }
+      subject{
+        id,
+        subjectDesc
+      }
+    },
+    attendanceMasters{
+      id,
+      teach{
+        id,
+        teacher{
+          id
+        },
+        subject{
+          id,
+          subjectDesc
+        }
+      },
+      batch{
+        id
+      },
+      section{
+        id
+      }
+    },
     lectures{
       id
       lecDate,
       startTime,
       endTime,
+      strLecDate,
       attendancemaster{
-        id
+        id,
+        desc,
+        batch{
+          id,
+          batch,
+          department{
+            id
+          }
+        },
+        section{
+          id,
+          section,
+          batch{
+            id
+          }
+        },
+        teach{
+          id,
+          subject{
+            id,
+            subjectDesc
+          },
+          teacher{
+            id,
+            teacherName,
+            
+          }
+        }
       }
     }
   } 

@@ -2555,30 +2555,24 @@ public class Mutation implements GraphQLMutationResolver {
         invoiceRepository.delete(invoice);
         return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
     }
-    @Transactional
-    public QueryResult updateStudentAttendanceData(StudentAttendanceUpdateFilter filter) throws JSONException, ParseException {
-        System.out.println("Input contents : " + filter.getStudentIds());
-        String sql = "update student_attendance set attendance_status= ? where student_id  = ?  and lecture_id = ? ";
-        Query query1 = this.entityManager.createNativeQuery(sql);
-        StringTokenizer token = new StringTokenizer(filter.getStudentIds(), ",");
-        QueryResult res = new QueryResult();
-        res.setStatusCode(0);
-        res.setStatusDesc("Records updated successfully.");
-        try {
-            while (token.hasMoreTokens()) {
-                query1.setParameter(1, "ABSENT");
-                query1.setParameter(2, Integer.parseInt(token.nextToken()));
-                query1.setParameter(3, filter.getLectureId());
-                query1.executeUpdate();
-            }
-        } catch (Exception e) {
-            logger.error("Exception. There is some error in updating the student attendance records. ", e);
-            res.setStatusCode(1);
-            res.setStatusDesc("There is some error in updating the student attendance records.");
-        }
-
+    
+    /**
+     * Method to update student attendance data. It accepts a list of objects containing student attendance ids and lecture id.
+     * It returns the status as zero (0) if method completes successfully or non zero (>0) if execution fails due to any reason.
+     * @param list
+     * @return QueryResult
+     * @throws JSONException
+     * @throws ParseException
+     */
+    public QueryResult updateStudentAttendanceData(List<StudentAttendanceUpdateFilter> list) throws JSONException, ParseException {
+        logger.debug("Mutation to update student attendance data " + list.toString());
+    	QueryResult res = this.studentAttendanceFilterImpl.updateStudentStatus(list);
+    	if(res.getStatusCode() == 0) {
+    		logger.info("Student attendance data updated successfully.");
+    	}else {
+    		logger.info("Due to some error student attendance data could not be updated successfully.");
+    	}
         return res;
-
     }
 
     public QueryResult updateAcademicSubjects(AcademicSubjectMutationPayload academicSubjectMutationPayload) throws JSONException, ParseException {

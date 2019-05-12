@@ -255,9 +255,27 @@ type StudentAttendanceCache{
 	batches: [Batch]
 	subjects: [Subject]
 	sections: [Section]
-	lectures: [Lecture]
+	lectures: [CmsLectureVo]
+	semesters: [CmsSemesterVo]
+	teaches: [Teach]
+	attendanceMasters: [AttendanceMaster]
 }
 
+type CmsLectureVo{
+	id: Long!
+	lecDate: Date!
+    lastUpdatedBy: String!
+    lastUpdatedOn: Date!
+    startTime: String!
+	endTime: String!
+	attendancemaster: AttendanceMaster!
+	strLecDate: String
+}
+
+type CmsSemesterVo{
+	id: Int
+	description: String
+}
 
 type InvoiceFilterProcessor{
 	totalInvoice: Long
@@ -907,7 +925,7 @@ type Mutation {
     updateFeeDetails(input: UpdateFeeDetailsInput!): UpdateFeeDetailsPayload!
     removeFeeDetails(input: RemoveFeeDetailsInput!): RemoveFeeDetailsPayload!
 
-    updateStudentAttendanceData(input: StudentAttendanceUpdateFilter!): QueryResult!
+    updateStudentAttendanceData(input: [StudentAttendanceUpdateFilter!]!): QueryResult!
 
    addAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
    updateAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!

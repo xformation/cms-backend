@@ -6,12 +6,14 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.domain.CmsSemesterVo;
 import com.synectiks.cms.graphql.types.Student.Semester;
 
@@ -26,29 +28,23 @@ public class SemesterRestController {
 
     private final Logger logger = LoggerFactory.getLogger(SemesterRestController.class);
 
-    private static final String ENTITY_NAME = "Semester";
+    private static final String ENTITY_NAME = "semester";
 
+    @Autowired
+    private CommonService commonService;
+    
+    
     @RequestMapping(method = RequestMethod.GET, value = "/cmssemesters")
-    public List<CmsSemesterVo> getAllSemesterss() throws Exception {
+    public List<CmsSemesterVo> getAllSemesters() throws Exception {
         logger.debug("REST request to get all the "+ENTITY_NAME);
-        List<CmsSemesterVo> ls = new ArrayList<>();
-        for(Semester sm: Semester.values()) {
-        	CmsSemesterVo vo = new CmsSemesterVo();
-        	vo.setId(sm.value());
-        	vo.setDescription(sm.getDescription());
-        	ls.add(vo);
-        }
-        return ls;
+        return this.commonService.getAllSemesters();
     }
 
     
     @RequestMapping(method = RequestMethod.GET, value = "/cmssemesters/{id}")
     public ResponseEntity<CmsSemesterVo> getSemester(@PathVariable Long id) throws Exception {
-        logger.debug("REST request to get an Semester : {}", id);
-        Semester sm = Semester.valueOf(id.intValue());
-        CmsSemesterVo vo = new CmsSemesterVo();
-        vo.setId(sm.value());
-        vo.setDescription(sm.getDescription());
+        logger.debug("REST request to get a semester : {}", id);
+        CmsSemesterVo vo = this.commonService.getSemester(id);
         return ResponseUtil.wrapOrNotFound(Optional.of(vo));
     }
 

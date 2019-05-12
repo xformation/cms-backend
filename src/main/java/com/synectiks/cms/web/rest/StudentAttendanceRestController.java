@@ -141,7 +141,11 @@ public class StudentAttendanceRestController {
     public ResponseEntity<QueryResult> updateStudentAttendance(@RequestBody List<StudentAttendanceUpdateFilter> list) throws URISyntaxException {
     	QueryResult result = this.studentAttendanceFilterImpl.updateStudentStatus(list);
     	Optional<QueryResult> r = Optional.of(result);
-		logger.info("Student attendance data updated successfully.");
+    	if(result.getStatusCode() == 0) {
+    		logger.info("Student attendance data updated successfully.");
+    	}else {
+    		logger.info("Due to some error student attendance data could not be updated successfully.");
+    	}
 		return ResponseUtil.wrapOrNotFound(r);
     }
 

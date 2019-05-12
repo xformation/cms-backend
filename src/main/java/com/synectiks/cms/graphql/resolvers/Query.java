@@ -15,11 +15,56 @@
  */
 package com.synectiks.cms.graphql.resolvers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.*;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AdminAttendance;
+import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.cms.domain.AdmissionEnquiry;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.CompetitiveExam;
+import com.synectiks.cms.domain.Country;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Documents;
+import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.domain.LateFee;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntityAuthSignatoryLink;
+import com.synectiks.cms.domain.PaymentRemainder;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.StudentAttendanceCache;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
@@ -30,13 +75,45 @@ import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
-import com.synectiks.cms.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import com.synectiks.cms.repository.AcademicExamSettingRepository;
+import com.synectiks.cms.repository.AcademicHistoryRepository;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AdminAttendanceRepository;
+import com.synectiks.cms.repository.AdmissionApplicationRepository;
+import com.synectiks.cms.repository.AdmissionEnquiryRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CityRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.CompetitiveExamRepository;
+import com.synectiks.cms.repository.CountryRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.DocumentsRepository;
+import com.synectiks.cms.repository.DueDateRepository;
+import com.synectiks.cms.repository.FacilityRepository;
+import com.synectiks.cms.repository.FeeCategoryRepository;
+import com.synectiks.cms.repository.FeeDetailsRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.repository.LateFeeRepository;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.LegalEntitySelectRepository;
+import com.synectiks.cms.repository.PaymentRemainderRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
+import com.synectiks.cms.repository.TransportRouteRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 /**
  * Query Resolver for CMS Queries
@@ -500,19 +577,32 @@ public class Query implements GraphQLQueryResolver {
     public Section getSectionById(Long sectionId){return commonGraphiqlFilter.getSectionById(sectionId);}
     public Batch getBatchById(Long batchId){return commonGraphiqlFilter.getBatchById(batchId);}
 
-    public StudentAttendanceCache createStudentAttendanceCache(){
-    	List<Department> dept = this.departmentRepository.findAll();//this.commonService.getDepartmentsByBranchAndAcademicYear(branchId, academicYearId);
+    public StudentAttendanceCache createStudentAttendanceCache() throws Exception{
     	
+    	List<Department> dept = departments();//this.commonService.getDepartmentsByBranchAndAcademicYear(branchId, academicYearId);
     	List<Batch> bth = batches();
     	List<Subject> sub = subjects();
     	List<Section> sec = sections();
     	List<Lecture> lec = lectures();
+    	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
+    	List<Teach> teach = teaches();
+    	List<AttendanceMaster> attendanceMaster = attendanceMasters();
+    	List<CmsLectureVo> cmsLec = new ArrayList<>();
+    	for(Lecture lecture : lec) {
+    		CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
+    		String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecture.getLecDate());
+    		vo.setStrLecDate(stDt);
+    		cmsLec.add(vo);
+    	}
     	StudentAttendanceCache cache = new StudentAttendanceCache();
     	cache.setDepartments(dept);
     	cache.setBatches(bth);
     	cache.setSubjects(sub);
     	cache.setSections(sec);
-    	cache.setLectures(lec);
+    	cache.setLectures(cmsLec);
+    	cache.setSemesters(sem);
+    	cache.setTeaches(teach);
+    	cache.setAttendanceMasters(attendanceMaster);
     	return cache;
     }
     
