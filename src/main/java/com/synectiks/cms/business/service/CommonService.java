@@ -3,20 +3,59 @@ package com.synectiks.cms.business.service;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.graphql.types.Student.Semester;
-import com.synectiks.cms.repository.*;
-import com.synectiks.cms.service.util.CommonUtil;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
+
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.graphql.types.Student.Semester;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CityRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 @Component
 public class CommonService {
@@ -65,6 +104,8 @@ public class CommonService {
 	@Autowired
 	private BranchRepository branchRepository;
 	
+	@PersistenceContext
+    private EntityManager entityManager;
 	
 //    @Autowired
 //    private StudentRepository studentRepository;
@@ -314,4 +355,125 @@ public class CommonService {
         vo.setDescription(sm.getDescription());
         return vo;
 	}
+	
+	public List<Batch> getBatchForCriteria(List<Department> dept) {
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Batch> query = cb.createQuery(Batch.class);
+    	Root<Batch> root = query.from(Batch.class);
+    	In<Long> inClause = cb.in(root.get("department"));
+    	for (Department dt : dept) {
+    	    inClause.value(dt.getId());
+    	}
+    	CriteriaQuery<Batch> select = query.select(root).where(inClause);
+    	TypedQuery<Batch> typedQuery = this.entityManager.createQuery(select);
+    	List<Batch> bth = typedQuery.getResultList();
+    	logger.debug("Returning list of years (batch) from JPA criteria query. Total records : "+bth.size());
+		return bth;
+	}
+	
+	public List<Subject> getSubjectForCriteria(List<Department> dept, List<Batch> batch, Long teacherId){
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Subject> query = cb.createQuery(Subject.class);
+    	Root<Subject> root = query.from(Subject.class);
+    	In<Long> inDepartment = cb.in(root.get("department"));
+    	for (Department dt : dept) {
+    	    inDepartment.value(dt.getId());
+    	}
+    	In<Long> inBatch = cb.in(root.get("batch"));
+    	for (Batch bth : batch) {
+    		inBatch.value(bth.getId());
+    	}
+    	List<Teach> teach = getTeachForCriteria(teacherId);
+    	In<Long> inSbId = cb.in(root.get("id"));
+    	for (Teach th : teach) {
+    		inSbId.value(th.getSubject().getId());
+    	}
+    	
+    	CriteriaQuery<Subject> select = query.select(root).where(cb.and(inDepartment),cb.and(inBatch), cb.and(inSbId), cb.and(cb.equal(root.get("status"), Status.ACTIVE)));
+    	TypedQuery<Subject> typedQuery = this.entityManager.createQuery(select);
+    	List<Subject> subList = typedQuery.getResultList();
+    	logger.debug("Returning list of subjects from JPA criteria query. Total records : "+subList.size());
+		return subList;
+	}
+	
+	public List<Section> getSectionForCriteria(List<Batch> batch){
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Section> query = cb.createQuery(Section.class);
+    	Root<Section> root = query.from(Section.class);
+    	In<Long> inBatch = cb.in(root.get("batch"));
+    	for (Batch bth : batch) {
+    		inBatch.value(bth.getId());
+    	}
+    	CriteriaQuery<Section> select = query.select(root).where(inBatch);
+    	TypedQuery<Section> typedQuery = this.entityManager.createQuery(select);
+    	List<Section> secList = typedQuery.getResultList();
+    	logger.debug("Returning list of sections from JPA criteria query. Total records : "+secList.size());
+		return secList;
+	}
+	
+	public List<Teach> getTeachForCriteria(List<Subject> subjectList, Long teacherId){
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Teach> query = cb.createQuery(Teach.class);
+    	Root<Teach> root = query.from(Teach.class);
+    	In<Long> inSubject = cb.in(root.get("subject"));
+    	for (Subject sub : subjectList) {
+    		inSubject.value(sub.getId());
+    	}
+    	CriteriaQuery<Teach> select = query.select(root).where(cb.and(inSubject), cb.and(cb.equal(root.get("teacher"), teacherId)));
+    	TypedQuery<Teach> typedQuery = this.entityManager.createQuery(select);
+    	List<Teach> teachList = typedQuery.getResultList();
+    	logger.debug("Returning list of teach from JPA criteria query. Total records : "+teachList.size());
+		return teachList;
+	}
+	
+	public List<Teach> getTeachForCriteria(Long teacherId){
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Teach> query = cb.createQuery(Teach.class);
+    	Root<Teach> root = query.from(Teach.class);
+    	CriteriaQuery<Teach> select = query.select(root).where(cb.and(cb.equal(root.get("teacher"), teacherId)));
+    	TypedQuery<Teach> typedQuery = this.entityManager.createQuery(select);
+    	List<Teach> teachList = typedQuery.getResultList();
+    	logger.debug("Returning list of teach based on teacher id from JPA criteria query. Total records : "+teachList.size());
+		return teachList;
+	}
+	
+	public List<AttendanceMaster> getAttendanceMasterForCriteria(List<Batch> batchList, List<Section> secList, List<Teach> teachList){
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<AttendanceMaster> query = cb.createQuery(AttendanceMaster.class);
+    	Root<AttendanceMaster> root = query.from(AttendanceMaster.class);
+    	In<Long> inBatch = cb.in(root.get("batch"));
+    	for (Batch bth : batchList) {
+    		inBatch.value(bth.getId());
+    	}
+    	In<Long> inSection = cb.in(root.get("section"));
+    	for (Section sec : secList) {
+    		inSection.value(sec.getId());
+    	}
+    	In<Long> inTeach = cb.in(root.get("teach"));
+    	for (Teach tch : teachList) {
+    		inTeach.value(tch.getId());
+    	}
+    	CriteriaQuery<AttendanceMaster> select = query.select(root).where(cb.and(inBatch),cb.and(inSection), cb.and(inTeach));
+    	TypedQuery<AttendanceMaster> typedQuery = this.entityManager.createQuery(select);
+    	List<AttendanceMaster> atndMstrList = typedQuery.getResultList();
+    	logger.debug("Returning list of attendance master from JPA criteria query. Total records : "+atndMstrList.size());
+		return atndMstrList;
+	}
+	
+	public List<Lecture> getLectureForCriteria(List<AttendanceMaster> atndMstrList) throws Exception{
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Lecture> query = cb.createQuery(Lecture.class);
+    	Root<Lecture> root = query.from(Lecture.class);
+    	In<Long> inAtndMstr = cb.in(root.get("attendancemaster"));
+    	for (AttendanceMaster am : atndMstrList) {
+    		inAtndMstr.value(am.getId());
+    	}
+    	Date dt = DateFormatUtil.getUtilDate(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, new Date()));
+    	CriteriaQuery<Lecture> select = query.select(root).where(cb.and(inAtndMstr), cb.and(cb.equal(root.get("lecDate"), dt)));
+    	TypedQuery<Lecture> typedQuery = this.entityManager.createQuery(select);
+    	List<Lecture> lectureList = typedQuery.getResultList();
+    	logger.debug("Returning list of lectures from JPA criteria query. Total records : "+lectureList.size());
+		return lectureList;
+	}
+	
 } 

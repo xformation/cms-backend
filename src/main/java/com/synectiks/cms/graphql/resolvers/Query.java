@@ -18,6 +18,14 @@ package com.synectiks.cms.graphql.resolvers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -577,16 +585,15 @@ public class Query implements GraphQLQueryResolver {
     public Section getSectionById(Long sectionId){return commonGraphiqlFilter.getSectionById(sectionId);}
     public Batch getBatchById(Long batchId){return commonGraphiqlFilter.getBatchById(batchId);}
 
-    public StudentAttendanceCache createStudentAttendanceCache() throws Exception{
+    public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId) throws Exception{
     	
-    	List<Department> dept = departments();//this.commonService.getDepartmentsByBranchAndAcademicYear(branchId, academicYearId);
-    	List<Batch> bth = batches();
-    	List<Subject> sub = subjects();
-    	List<Section> sec = sections();
-    	List<Lecture> lec = lectures();
-    	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
-    	List<Teach> teach = teaches();
-    	List<AttendanceMaster> attendanceMaster = attendanceMasters();
+    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.valueOf(branchId), Long.valueOf(academicYearId));
+    	List<Batch> bth = this.commonService.getBatchForCriteria(dept); //batches();
+    	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth, Long.valueOf(teacherId)); //subjects();
+    	List<Section> sec = this.commonService.getSectionForCriteria(bth); //sections();
+    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.valueOf(teacherId)); //teaches();
+    	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec, teach);// attendanceMasters();
+    	List<Lecture> lec =  this.commonService.getLectureForCriteria(attendanceMaster); //lectures();
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
     	for(Lecture lecture : lec) {
     		CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
@@ -594,6 +601,9 @@ public class Query implements GraphQLQueryResolver {
     		vo.setStrLecDate(stDt);
     		cmsLec.add(vo);
     	}
+    	
+    	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
+    	
     	StudentAttendanceCache cache = new StudentAttendanceCache();
     	cache.setDepartments(dept);
     	cache.setBatches(bth);
