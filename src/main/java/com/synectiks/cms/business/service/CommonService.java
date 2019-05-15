@@ -60,7 +60,7 @@ import com.synectiks.cms.service.util.DateFormatUtil;
 @Component
 public class CommonService {
 
-	private final static Logger logger = LoggerFactory.getLogger(Class.class);
+	private final static Logger logger = LoggerFactory.getLogger(CommonService.class);
 	
 	@Autowired
 	private AcademicYearRepository academicYearRepository;

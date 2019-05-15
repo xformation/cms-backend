@@ -26,6 +26,8 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -130,6 +132,7 @@ import com.synectiks.cms.service.util.DateFormatUtil;
 @Component
 public class Query implements GraphQLQueryResolver {
 
+	private final static Logger logger = LoggerFactory.getLogger(Query.class);
     private final AcademicYearRepository academicYearRepository;
     private final AttendanceMasterRepository attendanceMasterRepository;
     private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
@@ -597,8 +600,8 @@ public class Query implements GraphQLQueryResolver {
     	
     	for(Subject subject: sub) {
     		for(Teach th: teach) {
-    			if(subject.getId() == th.getSubject().getId() && subject.getDepartment().getId() == th.getSubject().getDepartment().getId()
-    					&& subject.getBatch().getId() == th.getSubject().getBatch().getId()) {
+    			if(subject.getId() == th.getSubject().getId()) {
+    				logger.debug("Selected subject id : "+subject.toString());
     				selectedSubjectList.add(subject);
     			}
     				
