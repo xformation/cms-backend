@@ -386,10 +386,11 @@ public class CommonService {
     	List<Teach> teach = getTeachForCriteria(teacherId);
     	In<Long> inSbId = cb.in(root.get("id"));
     	for (Teach th : teach) {
+    		logger.debug("Subjects from teach mappings : "+th.getSubject().getId());
     		inSbId.value(th.getSubject().getId());
     	}
     	
-    	CriteriaQuery<Subject> select = query.select(root).where(cb.and(inDepartment),cb.and(inBatch), cb.and(inSbId), cb.and(cb.equal(root.get("status"), Status.ACTIVE)));
+    	CriteriaQuery<Subject> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch), cb.and(inSbId), cb.and(cb.equal(root.get("status"), Status.ACTIVE)));
     	TypedQuery<Subject> typedQuery = this.entityManager.createQuery(select);
     	List<Subject> subList = typedQuery.getResultList();
     	logger.debug("Returning list of subjects from JPA criteria query. Total records : "+subList.size());
@@ -430,7 +431,7 @@ public class CommonService {
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
     	CriteriaQuery<Teach> query = cb.createQuery(Teach.class);
     	Root<Teach> root = query.from(Teach.class);
-    	CriteriaQuery<Teach> select = query.select(root).where(cb.and(cb.equal(root.get("teacher"), teacherId)));
+    	CriteriaQuery<Teach> select = query.select(root).where(cb.equal(root.get("teacher"), teacherId));
     	TypedQuery<Teach> typedQuery = this.entityManager.createQuery(select);
     	List<Teach> teachList = typedQuery.getResultList();
     	logger.debug("Returning list of teach based on teacher id from JPA criteria query. Total records : "+teachList.size());
