@@ -478,7 +478,7 @@ public class CommonService {
 		return atndMstrList;
 	}
 	
-	public List<Lecture> getLectureForCriteria(List<AttendanceMaster> atndMstrList) throws Exception{
+	public List<Lecture> getLectureForCriteria(List<AttendanceMaster> atndMstrList, String lectureDate) throws Exception{
 		if(atndMstrList.size() == 0) {
 			logger.warn("Attendance master list is empty. Returning empty lecture list.");
 			return Collections.emptyList();
@@ -490,7 +490,7 @@ public class CommonService {
     	for (AttendanceMaster am : atndMstrList) {
     		inAtndMstr.value(am.getId());
     	}
-    	Date dt = DateFormatUtil.getUtilDate(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, new Date()));
+    	Date dt = DateFormatUtil.getUtilDate(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, lectureDate);
     	CriteriaQuery<Lecture> select = query.select(root).where(cb.and(inAtndMstr), cb.and(cb.equal(root.get("lecDate"), dt)));
     	TypedQuery<Lecture> typedQuery = this.entityManager.createQuery(select);
     	List<Lecture> lectureList = typedQuery.getResultList();

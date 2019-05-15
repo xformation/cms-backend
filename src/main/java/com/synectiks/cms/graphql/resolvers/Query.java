@@ -588,7 +588,7 @@ public class Query implements GraphQLQueryResolver {
     public Section getSectionById(Long sectionId){return commonGraphiqlFilter.getSectionById(sectionId);}
     public Batch getBatchById(Long batchId){return commonGraphiqlFilter.getBatchById(batchId);}
 
-    public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId) throws Exception{
+    public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId, String lectureDate) throws Exception{
     	
     	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.valueOf(branchId), Long.valueOf(academicYearId));
     	List<Batch> bth = this.commonService.getBatchForCriteria(dept); //batches();
@@ -609,7 +609,7 @@ public class Query implements GraphQLQueryResolver {
     		}
     	}
     	
-    	List<Lecture> lec =  this.commonService.getLectureForCriteria(attendanceMaster); //lectures();
+    	List<Lecture> lec =  this.commonService.getLectureForCriteria(attendanceMaster, lectureDate); //lectures();
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
     	for(Lecture lecture : lec) {
     		CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);

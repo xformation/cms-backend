@@ -247,7 +247,7 @@ type Query {
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getInvoiceData(collegeId:Long, branchId:Long!, academicYearId:Long!): InvoiceFilterProcessor!
   
-  createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String ): StudentAttendanceCache!
+  createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
 }
 
 type StudentAttendanceCache{
