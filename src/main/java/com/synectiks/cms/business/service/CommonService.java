@@ -490,7 +490,7 @@ public class CommonService {
     	for (AttendanceMaster am : atndMstrList) {
     		inAtndMstr.value(am.getId());
     	}
-    	Date dt = DateFormatUtil.getUtilDate(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, lectureDate);
+    	Date dt = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
     	CriteriaQuery<Lecture> select = query.select(root).where(cb.and(inAtndMstr), cb.and(cb.equal(root.get("lecDate"), dt)));
     	TypedQuery<Lecture> typedQuery = this.entityManager.createQuery(select);
     	List<Lecture> lectureList = typedQuery.getResultList();
