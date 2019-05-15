@@ -600,6 +600,7 @@ public class Query implements GraphQLQueryResolver {
     	
     	for(Subject subject: sub) {
     		for(Teach th: teach) {
+    			logger.debug("Subject id : "+subject.getId()+", teach-subject id : "+th.getSubject().getId());
     			if(subject.getId() == th.getSubject().getId()) {
     				logger.debug("Selected subject id : "+subject.toString());
     				selectedSubjectList.add(subject);
