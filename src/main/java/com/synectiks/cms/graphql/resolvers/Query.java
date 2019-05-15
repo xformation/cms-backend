@@ -589,10 +589,22 @@ public class Query implements GraphQLQueryResolver {
     	
     	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.valueOf(branchId), Long.valueOf(academicYearId));
     	List<Batch> bth = this.commonService.getBatchForCriteria(dept); //batches();
-    	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth, Long.valueOf(teacherId)); //subjects();
+    	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth); //subjects();
     	List<Section> sec = this.commonService.getSectionForCriteria(bth); //sections();
     	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.valueOf(teacherId)); //teaches();
     	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec, teach);// attendanceMasters();
+    	List<Subject> selectedSubjectList = new ArrayList<>();
+    	
+    	for(Subject subject: sub) {
+    		for(Teach th: teach) {
+    			if(subject.getId() == th.getSubject().getId() && subject.getDepartment().getId() == th.getSubject().getDepartment().getId()
+    					&& subject.getBatch().getId() == th.getSubject().getBatch().getId()) {
+    				selectedSubjectList.add(subject);
+    			}
+    				
+    		}
+    	}
+    	
     	List<Lecture> lec =  this.commonService.getLectureForCriteria(attendanceMaster); //lectures();
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
     	for(Lecture lecture : lec) {
@@ -607,7 +619,7 @@ public class Query implements GraphQLQueryResolver {
     	StudentAttendanceCache cache = new StudentAttendanceCache();
     	cache.setDepartments(dept);
     	cache.setBatches(bth);
-    	cache.setSubjects(sub);
+    	cache.setSubjects(selectedSubjectList);
     	cache.setSections(sec);
     	cache.setLectures(cmsLec);
     	cache.setSemesters(sem);

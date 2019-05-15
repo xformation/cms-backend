@@ -324,7 +324,7 @@ public class CommonService {
 	
 	public List<Department> getDepartmentsByBranchAndAcademicYear(Long branchId, Long academicYearId){
 		if(branchId == null || academicYearId == null) {
-			return null;
+			Collections.emptyList();
 		}
 		Department department = new Department();
 		Branch branch = this.getBranchById(branchId);
@@ -357,6 +357,10 @@ public class CommonService {
 	}
 	
 	public List<Batch> getBatchForCriteria(List<Department> dept) {
+		if(dept.size() == 0) {
+			logger.warn("Department list is empty. Returning empty batch list.");
+			return Collections.emptyList();
+		}
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
     	CriteriaQuery<Batch> query = cb.createQuery(Batch.class);
     	Root<Batch> root = query.from(Batch.class);
@@ -371,7 +375,13 @@ public class CommonService {
 		return bth;
 	}
 	
-	public List<Subject> getSubjectForCriteria(List<Department> dept, List<Batch> batch, Long teacherId){
+	public List<Subject> getSubjectForCriteria(List<Department> dept, List<Batch> batch){
+		if(dept.size() == 0 || batch.size() == 0) {
+			logger.warn("Either department or batch list is empty. Returning empty subject list.");
+			logger.warn("Total records in department list: "+dept.size()+", total records in batch list: "+batch.size());
+			return Collections.emptyList();
+		}
+
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
     	CriteriaQuery<Subject> query = cb.createQuery(Subject.class);
     	Root<Subject> root = query.from(Subject.class);
@@ -383,14 +393,8 @@ public class CommonService {
     	for (Batch bth : batch) {
     		inBatch.value(bth.getId());
     	}
-    	List<Teach> teach = getTeachForCriteria(teacherId);
-    	In<Long> inSbId = cb.in(root.get("id"));
-    	for (Teach th : teach) {
-    		logger.debug("Subjects from teach mappings : "+th.getSubject().getId());
-    		inSbId.value(th.getSubject().getId());
-    	}
     	
-    	CriteriaQuery<Subject> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch), cb.and(inSbId), cb.and(cb.equal(root.get("status"), Status.ACTIVE)));
+    	CriteriaQuery<Subject> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch), cb.and(cb.equal(root.get("status"), Status.ACTIVE)));
     	TypedQuery<Subject> typedQuery = this.entityManager.createQuery(select);
     	List<Subject> subList = typedQuery.getResultList();
     	logger.debug("Returning list of subjects from JPA criteria query. Total records : "+subList.size());
@@ -398,6 +402,10 @@ public class CommonService {
 	}
 	
 	public List<Section> getSectionForCriteria(List<Batch> batch){
+		if(batch.size() == 0) {
+			logger.warn("Batch list is empty. Returning empty section list.");
+			return Collections.emptyList();
+		}
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
     	CriteriaQuery<Section> query = cb.createQuery(Section.class);
     	Root<Section> root = query.from(Section.class);
@@ -413,6 +421,10 @@ public class CommonService {
 	}
 	
 	public List<Teach> getTeachForCriteria(List<Subject> subjectList, Long teacherId){
+		if(subjectList.size() == 0) {
+			logger.warn("Subject list is empty. Returning empty teach list.");
+			return Collections.emptyList();
+		}
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
     	CriteriaQuery<Teach> query = cb.createQuery(Teach.class);
     	Root<Teach> root = query.from(Teach.class);
@@ -439,6 +451,11 @@ public class CommonService {
 	}
 	
 	public List<AttendanceMaster> getAttendanceMasterForCriteria(List<Batch> batchList, List<Section> secList, List<Teach> teachList){
+		if(batchList.size() == 0 || secList.size() == 0 || teachList.size() == 0) {
+			logger.warn("Either batch, section or teach list is empty. Returning empty attendance master list.");
+			logger.warn("Total records in batch list: "+batchList.size()+", total records in section list: "+secList.size()	+", total records in teach list: "+teachList.size());
+			return Collections.emptyList();
+		}
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
     	CriteriaQuery<AttendanceMaster> query = cb.createQuery(AttendanceMaster.class);
     	Root<AttendanceMaster> root = query.from(AttendanceMaster.class);
@@ -462,6 +479,10 @@ public class CommonService {
 	}
 	
 	public List<Lecture> getLectureForCriteria(List<AttendanceMaster> atndMstrList) throws Exception{
+		if(atndMstrList.size() == 0) {
+			logger.warn("Attendance master list is empty. Returning empty lecture list.");
+			return Collections.emptyList();
+		}
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
     	CriteriaQuery<Lecture> query = cb.createQuery(Lecture.class);
     	Root<Lecture> root = query.from(Lecture.class);
