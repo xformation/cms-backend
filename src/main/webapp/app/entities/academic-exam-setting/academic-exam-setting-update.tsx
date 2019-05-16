@@ -17,7 +17,7 @@ import { getEntities as getSections } from 'app/entities/section/section.reducer
 import { getEntity, updateEntity, createEntity, reset } from './academic-exam-setting.reducer';
 import { IAcademicExamSetting } from 'app/shared/model/academic-exam-setting.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAcademicExamSettingUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -25,7 +25,7 @@ export interface IAcademicExamSettingUpdateProps extends StateProps, DispatchPro
 export interface IAcademicExamSettingUpdateState {
   isNew: boolean;
   departmentId: string;
-  academicYearId: string;
+  academicyearId: string;
   sectionId: string;
 }
 
@@ -34,7 +34,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
     super(props);
     this.state = {
       departmentId: '0',
-      academicYearId: '0',
+      academicyearId: '0',
       sectionId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -255,8 +255,8 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="academicYear.id">Academic Year</Label>
-                  <AvInput id="academic-exam-setting-academicYear" type="select" className="form-control" name="academicYearId">
+                  <Label for="academicyear.id">Academicyear</Label>
+                  <AvInput id="academic-exam-setting-academicyear" type="select" className="form-control" name="academicyearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (

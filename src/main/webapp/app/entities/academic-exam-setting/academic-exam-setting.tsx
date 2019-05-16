@@ -35,8 +35,9 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
@@ -86,7 +87,7 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                 <th>Passing</th>
                 <th>Actions</th>
                 <th>Department</th>
-                <th>Academic Year</th>
+                <th>Academicyear</th>
                 <th>Section</th>
                 <th />
               </tr>
@@ -120,8 +121,8 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                     )}
                   </td>
                   <td>
-                    {academicExamSetting.academicYearId ? (
-                      <Link to={`academic-year/${academicExamSetting.academicYearId}`}>{academicExamSetting.academicYearId}</Link>
+                    {academicExamSetting.academicyearId ? (
+                      <Link to={`academic-year/${academicExamSetting.academicyearId}`}>{academicExamSetting.academicyearId}</Link>
                     ) : (
                       ''
                     )}

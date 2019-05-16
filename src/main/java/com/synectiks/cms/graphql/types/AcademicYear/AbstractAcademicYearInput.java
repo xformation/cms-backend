@@ -1,5 +1,7 @@
 package com.synectiks.cms.graphql.types.AcademicYear;
 
+import com.synectiks.cms.domain.enumeration.Status;
+
 import java.util.Date;
 
 public class AbstractAcademicYearInput {
@@ -7,6 +9,7 @@ public class AbstractAcademicYearInput {
     private String year;
     private Date startDate;
     private Date endDate;
+    private Status status;
     
     public Long getId() {
         return id;
@@ -40,14 +43,22 @@ public class AbstractAcademicYearInput {
         this.endDate = endDate;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "AbstractAcademicYearInput{" +
             "id=" + id +
-            ", year=" + year +
+            ", year='" + year + '\'' +
             ", startDate=" + startDate +
             ", endDate=" + endDate +
+            ", status=" + status +
             '}';
     }
-
 }

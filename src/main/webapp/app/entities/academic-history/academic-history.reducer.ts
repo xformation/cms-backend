@@ -63,6 +63,11 @@ export default (state: AcademicHistoryState = initialState, action): AcademicHis
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ACADEMICHISTORIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_ACADEMICHISTORY_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/academic-histories';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IAcademicHistory> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<IAcademicHistory> = query => ({
   type: ACTION_TYPES.SEARCH_ACADEMICHISTORIES,
-  payload: axios.get<IAcademicHistory>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<IAcademicHistory>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<IAcademicHistory> = (page, size, sort) => ({

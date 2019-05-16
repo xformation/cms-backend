@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -10,7 +9,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,7 +24,7 @@ import com.synectiks.cms.domain.enumeration.SemesterEnum;
 public class AcademicExamSetting implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -76,15 +74,15 @@ public class AcademicExamSetting implements Serializable {
     private String actions;
 
     @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
+    @JsonIgnoreProperties("")
     private Department department;
 
     @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private AcademicYear academicYear;
+    @JsonIgnoreProperties("")
+    private AcademicYear academicyear;
 
     @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
+    @JsonIgnoreProperties("")
     private Section section;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -252,17 +250,17 @@ public class AcademicExamSetting implements Serializable {
         this.department = department;
     }
 
-    public AcademicYear getAcademicYear() {
-        return academicYear;
+    public AcademicYear getAcademicyear() {
+        return academicyear;
     }
 
-    public AcademicExamSetting academicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public AcademicExamSetting academicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
         return this;
     }
 
-    public void setAcademicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public void setAcademicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
     }
 
     public Section getSection() {

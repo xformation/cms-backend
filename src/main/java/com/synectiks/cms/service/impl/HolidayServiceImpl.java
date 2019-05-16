@@ -50,6 +50,7 @@ public class HolidayServiceImpl implements HolidayService {
     @Override
     public HolidayDTO save(HolidayDTO holidayDTO) {
         log.debug("Request to save Holiday : {}", holidayDTO);
+
         Holiday holiday = holidayMapper.toEntity(holidayDTO);
         holiday = holidayRepository.save(holiday);
         HolidayDTO result = holidayMapper.toDto(holiday);

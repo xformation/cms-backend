@@ -48,16 +48,14 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "branch",
-            "otherEntityRelationshipName": "bankAccounts",
             "relationshipName": "branch",
+            "otherEntityName": "branch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "college",
-            "otherEntityRelationshipName": "bankAccounts",
             "relationshipName": "college",
+            "otherEntityName": "college",
             "otherEntityField": "id"
         }
     ],

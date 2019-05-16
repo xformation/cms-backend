@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity MetaLecture.
     -->
-    <changeSet id="20190509045109-2" author="jhipster">
+    <changeSet id="20190515094044-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="branch_id"
                                  baseTableName="meta_lecture"

@@ -35,8 +35,9 @@ export class Holiday extends React.Component<IHolidayProps, IHolidayState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

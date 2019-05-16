@@ -14,38 +14,66 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity PaymentRemainder.
+        Added the entity AcademicExamSetting.
     -->
-    <changeSet id="20190307052143-1" author="jhipster">
-        <createTable tableName="payment_remainder">
+    <changeSet id="20190515094121-1" author="jhipster">
+        <createTable tableName="academic_exam_setting">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="fee_remainder" type="varchar(255)">
+            <column name="exam_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="notice_day" type="integer">
+            <column name="semester" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="over_due_remainder" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="remainder_recipients" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="due_date_id" type="bigint">
+            <column name="subject" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="college_id" type="bigint">
+            <column name="jhi_date" type="date">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="day" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="duration" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="start_time" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="end_time" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="total" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="passing" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="actions" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="branch_id" type="bigint">
+            <column name="department_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="academicyear_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="section_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

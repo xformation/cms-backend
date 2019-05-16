@@ -16,7 +16,7 @@ export default class AcademicExamSettingUpdatePage {
   passingInput: ElementFinder = element(by.css('input#academic-exam-setting-passing'));
   actionsInput: ElementFinder = element(by.css('input#academic-exam-setting-actions'));
   departmentSelect: ElementFinder = element(by.css('select#academic-exam-setting-department'));
-  academicYearSelect: ElementFinder = element(by.css('select#academic-exam-setting-academicYear'));
+  academicyearSelect: ElementFinder = element(by.css('select#academic-exam-setting-academicyear'));
   sectionSelect: ElementFinder = element(by.css('select#academic-exam-setting-section'));
 
   getPageTitle() {
@@ -136,23 +136,23 @@ export default class AcademicExamSettingUpdatePage {
     return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
-  async academicYearSelectLastOption() {
-    await this.academicYearSelect
+  async academicyearSelectLastOption() {
+    await this.academicyearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  async academicYearSelectOption(option) {
-    await this.academicYearSelect.sendKeys(option);
+  async academicyearSelectOption(option) {
+    await this.academicyearSelect.sendKeys(option);
   }
 
-  getAcademicYearSelect() {
-    return this.academicYearSelect;
+  getAcademicyearSelect() {
+    return this.academicyearSelect;
   }
 
-  async getAcademicYearSelectedOption() {
-    return this.academicYearSelect.element(by.css('option:checked')).getText();
+  async getAcademicyearSelectedOption() {
+    return this.academicyearSelect.element(by.css('option:checked')).getText();
   }
 
   async sectionSelectLastOption() {

@@ -63,6 +63,11 @@ export default (state: PaymentRemainderState = initialState, action): PaymentRem
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_PAYMENTREMAINDERS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_PAYMENTREMAINDER_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/payment-remainders';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IPaymentRemainder> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<IPaymentRemainder> = query => ({
   type: ACTION_TYPES.SEARCH_PAYMENTREMAINDERS,
-  payload: axios.get<IPaymentRemainder>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<IPaymentRemainder>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<IPaymentRemainder> = (page, size, sort) => ({

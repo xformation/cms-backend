@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.InvoiceService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class InvoiceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/invoices")
+    @Timed
     public ResponseEntity<InvoiceDTO> createInvoice(@Valid @RequestBody InvoiceDTO invoiceDTO) throws URISyntaxException {
         log.debug("REST request to save Invoice : {}", invoiceDTO);
         if (invoiceDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class InvoiceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/invoices")
+    @Timed
     public ResponseEntity<InvoiceDTO> updateInvoice(@Valid @RequestBody InvoiceDTO invoiceDTO) throws URISyntaxException {
         log.debug("REST request to update Invoice : {}", invoiceDTO);
         if (invoiceDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class InvoiceResource {
      * @return the ResponseEntity with status 200 (OK) and the list of invoices in body
      */
     @GetMapping("/invoices")
+    @Timed
     public List<InvoiceDTO> getAllInvoices() {
         log.debug("REST request to get all Invoices");
         return invoiceService.findAll();
@@ -94,6 +99,7 @@ public class InvoiceResource {
      * @return the ResponseEntity with status 200 (OK) and with body the invoiceDTO, or with status 404 (Not Found)
      */
     @GetMapping("/invoices/{id}")
+    @Timed
     public ResponseEntity<InvoiceDTO> getInvoice(@PathVariable Long id) {
         log.debug("REST request to get Invoice : {}", id);
         Optional<InvoiceDTO> invoiceDTO = invoiceService.findOne(id);
@@ -107,6 +113,7 @@ public class InvoiceResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/invoices/{id}")
+    @Timed
     public ResponseEntity<Void> deleteInvoice(@PathVariable Long id) {
         log.debug("REST request to delete Invoice : {}", id);
         invoiceService.delete(id);
@@ -121,6 +128,7 @@ public class InvoiceResource {
      * @return the result of the search
      */
     @GetMapping("/_search/invoices")
+    @Timed
     public List<InvoiceDTO> searchInvoices(@RequestParam String query) {
         log.debug("REST request to search Invoices for query {}", query);
         return invoiceService.search(query);

@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import com.synectiks.cms.domain.enumeration.Status;
+
 /**
  * A AcademicYear.
  */
@@ -38,6 +40,11 @@ public class AcademicYear implements Serializable {
     @NotNull
     @Column(name = "end_date", nullable = false)
     private Date endDate;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private Status status;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -86,6 +93,19 @@ public class AcademicYear implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public AcademicYear status(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -115,6 +135,7 @@ public class AcademicYear implements Serializable {
             ", year='" + getYear() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

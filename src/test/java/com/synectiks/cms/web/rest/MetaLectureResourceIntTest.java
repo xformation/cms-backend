@@ -58,10 +58,8 @@ public class MetaLectureResourceIntTest {
     @Autowired
     private MetaLectureRepository metaLectureRepository;
 
-
     @Autowired
     private MetaLectureMapper metaLectureMapper;
-    
 
     @Autowired
     private MetaLectureService metaLectureService;
@@ -183,7 +181,6 @@ public class MetaLectureResourceIntTest {
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
     
-
     @Test
     @Transactional
     public void getMetaLecture() throws Exception {
@@ -199,6 +196,7 @@ public class MetaLectureResourceIntTest {
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
             .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingMetaLecture() throws Exception {
@@ -250,7 +248,7 @@ public class MetaLectureResourceIntTest {
         // Create the MetaLecture
         MetaLectureDTO metaLectureDTO = metaLectureMapper.toDto(metaLecture);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restMetaLectureMockMvc.perform(put("/api/meta-lectures")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(metaLectureDTO)))
@@ -297,9 +295,9 @@ public class MetaLectureResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(metaLecture.getId().intValue())))
-            .andExpect(jsonPath("$.[*].weekDay").value(hasItem(DEFAULT_WEEK_DAY.toString())))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
+            .andExpect(jsonPath("$.[*].weekDay").value(hasItem(DEFAULT_WEEK_DAY)))
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME)))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME)));
     }
 
     @Test

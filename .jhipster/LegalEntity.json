@@ -167,30 +167,26 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "branch",
-            "otherEntityRelationshipName": "legalEntity",
             "relationshipName": "branch",
+            "otherEntityName": "branch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "college",
-            "otherEntityRelationshipName": "legalEntity",
             "relationshipName": "college",
+            "otherEntityName": "college",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "state",
-            "otherEntityRelationshipName": "legalEntity",
             "relationshipName": "state",
+            "otherEntityName": "state",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "city",
-            "otherEntityRelationshipName": "legalEntity",
             "relationshipName": "city",
+            "otherEntityName": "city",
             "otherEntityField": "id"
         }
     ],

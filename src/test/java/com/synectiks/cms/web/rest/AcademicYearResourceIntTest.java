@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
@@ -40,6 +40,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.Status;
 /**
  * Test class for the AcademicYearResource REST controller.
  *
@@ -57,6 +58,9 @@ public class AcademicYearResourceIntTest {
 
     private static final Date DEFAULT_END_DATE = new Date();
     private static final Date UPDATED_END_DATE = new Date();
+
+    private static final Status DEFAULT_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_STATUS = Status.DEACTIVE;
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -112,7 +116,8 @@ public class AcademicYearResourceIntTest {
         AcademicYear academicYear = new AcademicYear()
             .year(DEFAULT_YEAR)
             .startDate(DEFAULT_START_DATE)
-            .endDate(DEFAULT_END_DATE);
+            .endDate(DEFAULT_END_DATE)
+            .status(DEFAULT_STATUS);
         return academicYear;
     }
 
@@ -140,6 +145,7 @@ public class AcademicYearResourceIntTest {
         assertThat(testAcademicYear.getYear()).isEqualTo(DEFAULT_YEAR);
         assertThat(testAcademicYear.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testAcademicYear.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testAcademicYear.getStatus()).isEqualTo(DEFAULT_STATUS);
 
         // Validate the AcademicYear in Elasticsearch
         verify(mockAcademicYearSearchRepository, times(1)).save(testAcademicYear);
@@ -227,6 +233,25 @@ public class AcademicYearResourceIntTest {
 
     @Test
     @Transactional
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = academicYearRepository.findAll().size();
+        // set the field null
+        academicYear.setStatus(null);
+
+        // Create the AcademicYear, which fails.
+        AcademicYearDTO academicYearDTO = academicYearMapper.toDto(academicYear);
+
+        restAcademicYearMockMvc.perform(post("/api/academic-years")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(academicYearDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AcademicYear> academicYearList = academicYearRepository.findAll();
+        assertThat(academicYearList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllAcademicYears() throws Exception {
         // Initialize the database
         academicYearRepository.saveAndFlush(academicYear);
@@ -238,7 +263,8 @@ public class AcademicYearResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(academicYear.getId().intValue())))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -254,7 +280,8 @@ public class AcademicYearResourceIntTest {
             .andExpect(jsonPath("$.id").value(academicYear.getId().intValue()))
             .andExpect(jsonPath("$.year").value(DEFAULT_YEAR.toString()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
-            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -280,7 +307,8 @@ public class AcademicYearResourceIntTest {
         updatedAcademicYear
             .year(UPDATED_YEAR)
             .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE);
+            .endDate(UPDATED_END_DATE)
+            .status(UPDATED_STATUS);
         AcademicYearDTO academicYearDTO = academicYearMapper.toDto(updatedAcademicYear);
 
         restAcademicYearMockMvc.perform(put("/api/academic-years")
@@ -295,6 +323,7 @@ public class AcademicYearResourceIntTest {
         assertThat(testAcademicYear.getYear()).isEqualTo(UPDATED_YEAR);
         assertThat(testAcademicYear.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testAcademicYear.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testAcademicYear.getStatus()).isEqualTo(UPDATED_STATUS);
 
         // Validate the AcademicYear in Elasticsearch
         verify(mockAcademicYearSearchRepository, times(1)).save(testAcademicYear);
@@ -357,7 +386,8 @@ public class AcademicYearResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(academicYear.getId().intValue())))
             .andExpect(jsonPath("$.[*].year").value(hasItem(DEFAULT_YEAR)))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
 
     @Test

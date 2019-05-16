@@ -50,6 +50,7 @@ public class TeachServiceImpl implements TeachService {
     @Override
     public TeachDTO save(TeachDTO teachDTO) {
         log.debug("Request to save Teach : {}", teachDTO);
+
         Teach teach = teachMapper.toEntity(teachDTO);
         teach = teachRepository.save(teach);
         TeachDTO result = teachMapper.toDto(teach);

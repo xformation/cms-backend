@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -106,9 +105,6 @@ public class AuthorizedSignatoryResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAuthorizedSignatoryMockMvc;
 
     private AuthorizedSignatory authorizedSignatory;
@@ -121,8 +117,7 @@ public class AuthorizedSignatoryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -452,7 +447,7 @@ public class AuthorizedSignatoryResourceIntTest {
 
         int databaseSizeBeforeDelete = authorizedSignatoryRepository.findAll().size();
 
-        // Delete the authorizedSignatory
+        // Get the authorizedSignatory
         restAuthorizedSignatoryMockMvc.perform(delete("/api/authorized-signatories/{id}", authorizedSignatory.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

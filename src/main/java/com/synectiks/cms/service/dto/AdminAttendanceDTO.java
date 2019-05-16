@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,7 +14,6 @@ public class AdminAttendanceDTO implements Serializable {
     private LocalDate updatedOn;
 
     private String updatedBy;
-
 
     private Long lectureId;
 

@@ -50,6 +50,7 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     @Override
     public AcademicExamSettingDTO save(AcademicExamSettingDTO academicExamSettingDTO) {
         log.debug("Request to save AcademicExamSetting : {}", academicExamSettingDTO);
+
         AcademicExamSetting academicExamSetting = academicExamSettingMapper.toEntity(academicExamSettingDTO);
         academicExamSetting = academicExamSettingRepository.save(academicExamSetting);
         AcademicExamSettingDTO result = academicExamSettingMapper.toDto(academicExamSetting);

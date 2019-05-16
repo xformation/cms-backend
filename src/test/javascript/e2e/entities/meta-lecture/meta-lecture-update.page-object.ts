@@ -20,188 +20,188 @@ export default class MetaLectureUpdatePage {
     return this.pageTitle;
   }
 
-  setWeekDayInput(weekDay) {
-    this.weekDayInput.sendKeys(weekDay);
+  async setWeekDayInput(weekDay) {
+    await this.weekDayInput.sendKeys(weekDay);
   }
 
-  getWeekDayInput() {
+  async getWeekDayInput() {
     return this.weekDayInput.getAttribute('value');
   }
 
-  setStartTimeInput(startTime) {
-    this.startTimeInput.sendKeys(startTime);
+  async setStartTimeInput(startTime) {
+    await this.startTimeInput.sendKeys(startTime);
   }
 
-  getStartTimeInput() {
+  async getStartTimeInput() {
     return this.startTimeInput.getAttribute('value');
   }
 
-  setEndTimeInput(endTime) {
-    this.endTimeInput.sendKeys(endTime);
+  async setEndTimeInput(endTime) {
+    await this.endTimeInput.sendKeys(endTime);
   }
 
-  getEndTimeInput() {
+  async getEndTimeInput() {
     return this.endTimeInput.getAttribute('value');
   }
 
-  branchSelectLastOption() {
-    this.branchSelect
+  async branchSelectLastOption() {
+    await this.branchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  branchSelectOption(option) {
-    this.branchSelect.sendKeys(option);
+  async branchSelectOption(option) {
+    await this.branchSelect.sendKeys(option);
   }
 
   getBranchSelect() {
     return this.branchSelect;
   }
 
-  getBranchSelectedOption() {
+  async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
-  departmentSelectLastOption() {
-    this.departmentSelect
+  async departmentSelectLastOption() {
+    await this.departmentSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  departmentSelectOption(option) {
-    this.departmentSelect.sendKeys(option);
+  async departmentSelectOption(option) {
+    await this.departmentSelect.sendKeys(option);
   }
 
   getDepartmentSelect() {
     return this.departmentSelect;
   }
 
-  getDepartmentSelectedOption() {
+  async getDepartmentSelectedOption() {
     return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
-  subjectSelectLastOption() {
-    this.subjectSelect
+  async subjectSelectLastOption() {
+    await this.subjectSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  subjectSelectOption(option) {
-    this.subjectSelect.sendKeys(option);
+  async subjectSelectOption(option) {
+    await this.subjectSelect.sendKeys(option);
   }
 
   getSubjectSelect() {
     return this.subjectSelect;
   }
 
-  getSubjectSelectedOption() {
+  async getSubjectSelectedOption() {
     return this.subjectSelect.element(by.css('option:checked')).getText();
   }
 
-  teacherSelectLastOption() {
-    this.teacherSelect
+  async teacherSelectLastOption() {
+    await this.teacherSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  teacherSelectOption(option) {
-    this.teacherSelect.sendKeys(option);
+  async teacherSelectOption(option) {
+    await this.teacherSelect.sendKeys(option);
   }
 
   getTeacherSelect() {
     return this.teacherSelect;
   }
 
-  getTeacherSelectedOption() {
+  async getTeacherSelectedOption() {
     return this.teacherSelect.element(by.css('option:checked')).getText();
   }
 
-  termSelectLastOption() {
-    this.termSelect
+  async termSelectLastOption() {
+    await this.termSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  termSelectOption(option) {
-    this.termSelect.sendKeys(option);
+  async termSelectOption(option) {
+    await this.termSelect.sendKeys(option);
   }
 
   getTermSelect() {
     return this.termSelect;
   }
 
-  getTermSelectedOption() {
+  async getTermSelectedOption() {
     return this.termSelect.element(by.css('option:checked')).getText();
   }
 
-  academicyearSelectLastOption() {
-    this.academicyearSelect
+  async academicyearSelectLastOption() {
+    await this.academicyearSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  academicyearSelectOption(option) {
-    this.academicyearSelect.sendKeys(option);
+  async academicyearSelectOption(option) {
+    await this.academicyearSelect.sendKeys(option);
   }
 
   getAcademicyearSelect() {
     return this.academicyearSelect;
   }
 
-  getAcademicyearSelectedOption() {
+  async getAcademicyearSelectedOption() {
     return this.academicyearSelect.element(by.css('option:checked')).getText();
   }
 
-  sectionSelectLastOption() {
-    this.sectionSelect
+  async sectionSelectLastOption() {
+    await this.sectionSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  sectionSelectOption(option) {
-    this.sectionSelect.sendKeys(option);
+  async sectionSelectOption(option) {
+    await this.sectionSelect.sendKeys(option);
   }
 
   getSectionSelect() {
     return this.sectionSelect;
   }
 
-  getSectionSelectedOption() {
+  async getSectionSelectedOption() {
     return this.sectionSelect.element(by.css('option:checked')).getText();
   }
 
-  batchSelectLastOption() {
-    this.batchSelect
+  async batchSelectLastOption() {
+    await this.batchSelect
       .all(by.tagName('option'))
       .last()
       .click();
   }
 
-  batchSelectOption(option) {
-    this.batchSelect.sendKeys(option);
+  async batchSelectOption(option) {
+    await this.batchSelect.sendKeys(option);
   }
 
   getBatchSelect() {
     return this.batchSelect;
   }
 
-  getBatchSelectedOption() {
+  async getBatchSelectedOption() {
     return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
-  save() {
-    return this.saveButton.click();
+  async save() {
+    await this.saveButton.click();
   }
 
-  cancel() {
-    this.cancelButton.click();
+  async cancel() {
+    await this.cancelButton.click();
   }
 
   getSaveButton() {

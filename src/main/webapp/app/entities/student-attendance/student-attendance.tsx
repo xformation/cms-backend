@@ -35,8 +35,9 @@ export class StudentAttendance extends React.Component<IStudentAttendanceProps, 
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

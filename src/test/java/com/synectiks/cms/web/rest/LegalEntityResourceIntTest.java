@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -158,9 +157,6 @@ public class LegalEntityResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restLegalEntityMockMvc;
 
     private LegalEntity legalEntity;
@@ -173,8 +169,7 @@ public class LegalEntityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -847,7 +842,7 @@ public class LegalEntityResourceIntTest {
 
         int databaseSizeBeforeDelete = legalEntityRepository.findAll().size();
 
-        // Delete the legalEntity
+        // Get the legalEntity
         restLegalEntityMockMvc.perform(delete("/api/legal-entities/{id}", legalEntity.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

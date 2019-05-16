@@ -195,6 +195,7 @@ entity AcademicYear{
 year String required
 startDate LocalDate required
 endDate LocalDate required
+status Status required
 }
 
 entity Holiday{

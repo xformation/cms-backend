@@ -50,6 +50,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDTO save(CityDTO cityDTO) {
         log.debug("Request to save City : {}", cityDTO);
+
         City city = cityMapper.toEntity(cityDTO);
         city = cityRepository.save(city);
         CityDTO result = cityMapper.toDto(city);

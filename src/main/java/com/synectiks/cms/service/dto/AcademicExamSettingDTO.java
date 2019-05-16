@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -43,10 +44,9 @@ public class AcademicExamSettingDTO implements Serializable {
 
     private String actions;
 
-
     private Long departmentId;
 
-    private Long academicYearId;
+    private Long academicyearId;
 
     private Long sectionId;
 
@@ -154,12 +154,12 @@ public class AcademicExamSettingDTO implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Long getAcademicYearId() {
-        return academicYearId;
+    public Long getAcademicyearId() {
+        return academicyearId;
     }
 
-    public void setAcademicYearId(Long academicYearId) {
-        this.academicYearId = academicYearId;
+    public void setAcademicyearId(Long academicYearId) {
+        this.academicyearId = academicYearId;
     }
 
     public Long getSectionId() {
@@ -207,7 +207,7 @@ public class AcademicExamSettingDTO implements Serializable {
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
             ", department=" + getDepartmentId() +
-            ", academicYear=" + getAcademicYearId() +
+            ", academicyear=" + getAcademicyearId() +
             ", section=" + getSectionId() +
             "}";
     }

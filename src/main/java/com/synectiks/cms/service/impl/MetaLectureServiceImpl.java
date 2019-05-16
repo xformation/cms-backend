@@ -50,6 +50,7 @@ public class MetaLectureServiceImpl implements MetaLectureService {
     @Override
     public MetaLectureDTO save(MetaLectureDTO metaLectureDTO) {
         log.debug("Request to save MetaLecture : {}", metaLectureDTO);
+
         MetaLecture metaLecture = metaLectureMapper.toEntity(metaLectureDTO);
         metaLecture = metaLectureRepository.save(metaLecture);
         MetaLectureDTO result = metaLectureMapper.toDto(metaLecture);

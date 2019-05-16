@@ -33,23 +33,20 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "college",
-            "otherEntityRelationshipName": "branch",
             "relationshipName": "college",
+            "otherEntityName": "college",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "city",
-            "otherEntityRelationshipName": "branch",
             "relationshipName": "city",
+            "otherEntityName": "city",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "state",
-            "otherEntityRelationshipName": "branch",
             "relationshipName": "state",
+            "otherEntityName": "state",
             "otherEntityField": "id"
         }
     ],

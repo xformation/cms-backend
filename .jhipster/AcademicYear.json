@@ -21,10 +21,18 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [],
-    "changelogDate": "20190222065258",
+    "changelogDate": "20190515094054",
     "entityTableName": "academic_year",
     "dto": "mapstruct",
     "pagination": "no",

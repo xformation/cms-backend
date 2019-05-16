@@ -10,7 +10,6 @@ import reducer, {
   createEntity,
   deleteEntity,
   getEntities,
-  getSearchEntities,
   getEntity,
   updateEntity,
   reset
@@ -63,11 +62,7 @@ describe('Entities reducer tests', () => {
   describe('Requests', () => {
     it('should set state to loading', () => {
       testMultipleTypes(
-        [
-          REQUEST(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY_LIST),
-          REQUEST(ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES),
-          REQUEST(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY)
-        ],
+        [REQUEST(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY_LIST), REQUEST(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY)],
         {},
         state => {
           expect(state).toMatchObject({
@@ -116,7 +111,6 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY_LIST),
-          FAILURE(ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES),
           FAILURE(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY),
           FAILURE(ACTION_TYPES.CREATE_AUTHORIZEDSIGNATORY),
           FAILURE(ACTION_TYPES.UPDATE_AUTHORIZEDSIGNATORY),
@@ -140,19 +134,6 @@ describe('Entities reducer tests', () => {
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY_LIST),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entities: payload.data
-      });
-    });
-    it('should search all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES),
           payload
         })
       ).toEqual({
@@ -228,18 +209,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-    it('dispatches ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.SEARCH_AUTHORIZEDSIGNATORIES),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_AUTHORIZEDSIGNATORY actions', async () => {

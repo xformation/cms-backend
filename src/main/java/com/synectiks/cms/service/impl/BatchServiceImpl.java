@@ -50,6 +50,7 @@ public class BatchServiceImpl implements BatchService {
     @Override
     public BatchDTO save(BatchDTO batchDTO) {
         log.debug("Request to save Batch : {}", batchDTO);
+
         Batch batch = batchMapper.toEntity(batchDTO);
         batch = batchRepository.save(batch);
         BatchDTO result = batchMapper.toDto(batch);

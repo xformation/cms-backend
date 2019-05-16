@@ -52,6 +52,7 @@ describe('AcademicYear e2e test', () => {
     expect(await academicYearUpdatePage.getStartDateInput()).to.eq('2001-01-01');
     await academicYearUpdatePage.setEndDateInput('01-01-2001');
     expect(await academicYearUpdatePage.getEndDateInput()).to.eq('2001-01-01');
+    await academicYearUpdatePage.statusSelectLastOption();
     await waitUntilDisplayed(academicYearUpdatePage.getSaveButton());
     await academicYearUpdatePage.save();
     await waitUntilHidden(academicYearUpdatePage.getSaveButton());

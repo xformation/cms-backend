@@ -35,8 +35,9 @@ export class Currency extends React.Component<ICurrencyProps, ICurrencyState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

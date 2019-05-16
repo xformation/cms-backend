@@ -50,6 +50,7 @@ public class StateServiceImpl implements StateService {
     @Override
     public StateDTO save(StateDTO stateDTO) {
         log.debug("Request to save State : {}", stateDTO);
+
         State state = stateMapper.toEntity(stateDTO);
         state = stateRepository.save(state);
         StateDTO result = stateMapper.toDto(state);

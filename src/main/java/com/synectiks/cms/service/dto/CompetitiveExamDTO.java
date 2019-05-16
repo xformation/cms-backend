@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -21,7 +22,6 @@ public class CompetitiveExamDTO implements Serializable {
 
     @NotNull
     private Long rank;
-
 
     private Long studentId;
 

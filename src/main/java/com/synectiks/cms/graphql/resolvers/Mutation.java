@@ -339,7 +339,7 @@ public class Mutation implements GraphQLMutationResolver {
         AcademicYear academicYear = academicYearRepository.findById(addAcademicExamSettingInput.getAcademicYearId()).get();
         Section section = sectionRepository.findById(addAcademicExamSettingInput.getSectionId()).get();
         academicExamSetting.setDepartment(department);
-        academicExamSetting.setAcademicYear(academicYear);
+        academicExamSetting.setAcademicyear(academicYear);
         academicExamSetting.setSection(section);
         academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
         academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
@@ -399,7 +399,7 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateAcademicExamSettingInput.getAcademicYearId() != null) {
             final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicYearId()).get();
-            academicExamSetting.setAcademicYear(academicYear);
+            academicExamSetting.setAcademicyear(academicYear);
         }
         if (updateAcademicExamSettingInput.getSectionId() != null) {
             final Section section = sectionRepository.findById(updateAcademicExamSettingInput.getSectionId()).get();
@@ -1717,6 +1717,7 @@ public class Mutation implements GraphQLMutationResolver {
         academicYear.setYear(addAcademicYearInput.getYear());
         academicYear.setStartDate(addAcademicYearInput.getStartDate());
         academicYear.setEndDate(addAcademicYearInput.getEndDate());
+        academicYear.setStatus(addAcademicYearInput.getStatus());
         academicYearRepository.save(academicYear);
         return new AddAcademicYearPayload(academicYear);
     }
@@ -1807,6 +1808,10 @@ public class Mutation implements GraphQLMutationResolver {
 
         if (updateAcademicYearInput.getEndDate() != null) {
             academicYear.setEndDate(updateAcademicYearInput.getEndDate());
+        }
+
+        if (updateAcademicYearInput.getStatus() != null){
+            academicYear.setStatus(updateAcademicYearInput.getStatus());
         }
 
         academicYearRepository.save(academicYear);

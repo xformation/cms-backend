@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -22,7 +21,7 @@ import java.util.Objects;
 public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -41,7 +40,7 @@ public class State implements Serializable {
     private String stateCode;
 
     @ManyToOne
-    @JsonIgnoreProperties("states")
+    @JsonIgnoreProperties("")
     private Country country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

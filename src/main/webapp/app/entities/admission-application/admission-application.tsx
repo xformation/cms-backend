@@ -35,8 +35,9 @@ export class AdmissionApplication extends React.Component<IAdmissionApplicationP
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
