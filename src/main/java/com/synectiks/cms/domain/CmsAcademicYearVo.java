@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.synectiks.cms.domain.enumeration.Status;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -13,10 +15,11 @@ public class CmsAcademicYearVo implements Serializable {
     private String year;
     private Date startDate;
     private Date endDate;
+    private Status status;
 
     private String strStartDate;
     private String strEndDate;
-    
+
     public Long getId() {
         return id;
     }
@@ -49,72 +52,59 @@ public class CmsAcademicYearVo implements Serializable {
         this.endDate = endDate;
     }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime * result + ((year == null) ? 0 : year.hashCode());
-		return result;
-	}
+    public Status getStatus() {
+        return status;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CmsAcademicYearVo other = (CmsAcademicYearVo) obj;
-		if (endDate == null) {
-			if (other.endDate != null)
-				return false;
-		} else if (!endDate.equals(other.endDate))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (startDate == null) {
-			if (other.startDate != null)
-				return false;
-		} else if (!startDate.equals(other.startDate))
-			return false;
-		if (year == null) {
-			if (other.year != null)
-				return false;
-		} else if (!year.equals(other.year))
-			return false;
-		return true;
-	}
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
-	@Override
-	public String toString() {
-		return "CmsAcademicYearVo [id=" + id + ", year=" + year + ", startDate=" + startDate + ", endDate=" + endDate
-				+ "]";
-	}
+    public String getStrStartDate() {
+        return strStartDate;
+    }
 
-	public String getStrStartDate() {
-		return strStartDate;
-	}
+    public void setStrStartDate(String strStartDate) {
+        this.strStartDate = strStartDate;
+    }
 
-	public void setStrStartDate(String strStartDate) {
-		this.strStartDate = strStartDate;
-	}
+    public String getStrEndDate() {
+        return strEndDate;
+    }
 
-	public String getStrEndDate() {
-		return strEndDate;
-	}
+    public void setStrEndDate(String strEndDate) {
+        this.strEndDate = strEndDate;
+    }
 
-	public void setStrEndDate(String strEndDate) {
-		this.strEndDate = strEndDate;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CmsAcademicYearVo that = (CmsAcademicYearVo) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(year, that.year) &&
+            Objects.equals(startDate, that.startDate) &&
+            Objects.equals(endDate, that.endDate) &&
+            status == that.status &&
+            Objects.equals(strStartDate, that.strStartDate) &&
+            Objects.equals(strEndDate, that.strEndDate);
+    }
 
-    
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, year, startDate, endDate, status, strStartDate, strEndDate);
+    }
 
-    
+    @Override
+    public String toString() {
+        return "CmsAcademicYearVo{" +
+            "id=" + id +
+            ", year='" + year + '\'' +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
+            ", status=" + status +
+            ", strStartDate='" + strStartDate + '\'' +
+            ", strEndDate='" + strEndDate + '\'' +
+            '}';
+    }
 }
