@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -129,7 +130,6 @@ public class StudentDTO implements Serializable {
 
     @NotNull
     private StudentTypeEnum studentType;
-
 
     private Long departmentId;
 

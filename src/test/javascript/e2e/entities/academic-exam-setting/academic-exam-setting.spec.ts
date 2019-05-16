@@ -27,6 +27,7 @@ describe('AcademicExamSetting e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
+
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
@@ -67,7 +68,7 @@ describe('AcademicExamSetting e2e test', () => {
     await academicExamSettingUpdatePage.setActionsInput('actions');
     expect(await academicExamSettingUpdatePage.getActionsInput()).to.match(/actions/);
     await academicExamSettingUpdatePage.departmentSelectLastOption();
-    await academicExamSettingUpdatePage.academicYearSelectLastOption();
+    await academicExamSettingUpdatePage.academicyearSelectLastOption();
     await academicExamSettingUpdatePage.sectionSelectLastOption();
     await waitUntilDisplayed(academicExamSettingUpdatePage.getSaveButton());
     await academicExamSettingUpdatePage.save();

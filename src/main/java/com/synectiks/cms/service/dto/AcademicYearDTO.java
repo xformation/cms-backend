@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the AcademicYear entity.
@@ -20,6 +21,9 @@ public class AcademicYearDTO implements Serializable {
 
     @NotNull
     private LocalDate endDate;
+
+    @NotNull
+    private Status status;
 
     public Long getId() {
         return id;
@@ -53,6 +57,14 @@ public class AcademicYearDTO implements Serializable {
         this.endDate = endDate;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,6 +93,7 @@ public class AcademicYearDTO implements Serializable {
             ", year='" + getYear() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
 import { ICrudGetAction } from 'react-jhipster';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './meta-lecture.reducer';
@@ -12,7 +12,7 @@ import { IMetaLecture } from 'app/shared/model/meta-lecture.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IMetaLectureDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IMetaLectureDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export class MetaLectureDetail extends React.Component<IMetaLectureDetailProps> {
   componentDidMount() {
@@ -78,4 +78,7 @@ const mapDispatchToProps = { getEntity };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(MetaLectureDetail);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MetaLectureDetail);

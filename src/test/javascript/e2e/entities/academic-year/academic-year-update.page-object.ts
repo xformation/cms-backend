@@ -7,6 +7,7 @@ export default class AcademicYearUpdatePage {
   yearInput: ElementFinder = element(by.css('input#academic-year-year'));
   startDateInput: ElementFinder = element(by.css('input#academic-year-startDate'));
   endDateInput: ElementFinder = element(by.css('input#academic-year-endDate'));
+  statusSelect: ElementFinder = element(by.css('select#academic-year-status'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -36,6 +37,20 @@ export default class AcademicYearUpdatePage {
     return this.endDateInput.getAttribute('value');
   }
 
+  async setStatusSelect(status) {
+    await this.statusSelect.sendKeys(status);
+  }
+
+  async getStatusSelect() {
+    return this.statusSelect.element(by.css('option:checked')).getText();
+  }
+
+  async statusSelectLastOption() {
+    await this.statusSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async save() {
     await this.saveButton.click();
   }

@@ -63,6 +63,11 @@ export default (state: CompetitiveExamState = initialState, action): Competitive
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_COMPETITIVEEXAMS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_COMPETITIVEEXAM_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/competitive-exams';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ICompetitiveExam> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ICompetitiveExam> = query => ({
   type: ACTION_TYPES.SEARCH_COMPETITIVEEXAMS,
-  payload: axios.get<ICompetitiveExam>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ICompetitiveExam>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ICompetitiveExam> = (page, size, sort) => ({

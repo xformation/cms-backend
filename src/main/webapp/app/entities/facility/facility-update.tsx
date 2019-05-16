@@ -17,7 +17,7 @@ import { getEntities as getStudents } from 'app/entities/student/student.reducer
 import { getEntity, updateEntity, createEntity, reset } from './facility.reducer';
 import { IFacility } from 'app/shared/model/facility.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IFacilityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

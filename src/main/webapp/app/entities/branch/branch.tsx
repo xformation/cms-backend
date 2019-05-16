@@ -35,8 +35,9 @@ export class Branch extends React.Component<IBranchProps, IBranchState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

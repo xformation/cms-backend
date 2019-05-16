@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getSearchEntities, getEntities } from './meta-lecture.reducer';
@@ -109,7 +109,7 @@ export class MetaLecture extends React.Component<IMetaLectureProps, IMetaLecture
                   <td>{metaLecture.termId ? <Link to={`term/${metaLecture.termId}`}>{metaLecture.termId}</Link> : ''}</td>
                   <td>
                     {metaLecture.academicyearId ? (
-                      <Link to={`academicYear/${metaLecture.academicyearId}`}>{metaLecture.academicyearId}</Link>
+                      <Link to={`academic-year/${metaLecture.academicyearId}`}>{metaLecture.academicyearId}</Link>
                     ) : (
                       ''
                     )}
@@ -151,4 +151,7 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(MetaLecture);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MetaLecture);

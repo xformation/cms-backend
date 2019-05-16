@@ -50,6 +50,7 @@ public class AdminAttendanceServiceImpl implements AdminAttendanceService {
     @Override
     public AdminAttendanceDTO save(AdminAttendanceDTO adminAttendanceDTO) {
         log.debug("Request to save AdminAttendance : {}", adminAttendanceDTO);
+
         AdminAttendance adminAttendance = adminAttendanceMapper.toEntity(adminAttendanceDTO);
         adminAttendance = adminAttendanceRepository.save(adminAttendance);
         AdminAttendanceDTO result = adminAttendanceMapper.toDto(adminAttendance);

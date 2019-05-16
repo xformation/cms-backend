@@ -35,8 +35,9 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

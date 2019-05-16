@@ -12,12 +12,12 @@ import org.mapstruct.*;
 public interface AcademicExamSettingMapper extends EntityMapper<AcademicExamSettingDTO, AcademicExamSetting> {
 
     @Mapping(source = "department.id", target = "departmentId")
-    @Mapping(source = "academicYear.id", target = "academicYearId")
+    @Mapping(source = "academicyear.id", target = "academicyearId")
     @Mapping(source = "section.id", target = "sectionId")
     AcademicExamSettingDTO toDto(AcademicExamSetting academicExamSetting);
 
     @Mapping(source = "departmentId", target = "department")
-    @Mapping(source = "academicYearId", target = "academicYear")
+    @Mapping(source = "academicyearId", target = "academicyear")
     @Mapping(source = "sectionId", target = "section")
     AcademicExamSetting toEntity(AcademicExamSettingDTO academicExamSettingDTO);
 

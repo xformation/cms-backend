@@ -23,10 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.util.Date;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
@@ -85,9 +84,6 @@ public class AdminAttendanceResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAdminAttendanceMockMvc;
 
     private AdminAttendance adminAttendance;
@@ -100,8 +96,7 @@ public class AdminAttendanceResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -269,7 +264,7 @@ public class AdminAttendanceResourceIntTest {
 
         int databaseSizeBeforeDelete = adminAttendanceRepository.findAll().size();
 
-        // Delete the adminAttendance
+        // Get the adminAttendance
         restAdminAttendanceMockMvc.perform(delete("/api/admin-attendances/{id}", adminAttendance.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

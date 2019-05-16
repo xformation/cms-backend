@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -60,6 +59,7 @@ public class AdmissionApplicationResourceIntTest {
 
     private static final Date DEFAULT_DATE = new Date();
     private static final Date UPDATED_DATE = new Date();
+
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
 
@@ -92,9 +92,6 @@ public class AdmissionApplicationResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAdmissionApplicationMockMvc;
 
     private AdmissionApplication admissionApplication;
@@ -107,8 +104,7 @@ public class AdmissionApplicationResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -364,7 +360,7 @@ public class AdmissionApplicationResourceIntTest {
 
         int databaseSizeBeforeDelete = admissionApplicationRepository.findAll().size();
 
-        // Delete the admissionApplication
+        // Get the admissionApplication
         restAdmissionApplicationMockMvc.perform(delete("/api/admission-applications/{id}", admissionApplication.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

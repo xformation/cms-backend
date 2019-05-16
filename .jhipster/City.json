@@ -20,9 +20,8 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "state",
-            "otherEntityRelationshipName": "city",
             "relationshipName": "state",
+            "otherEntityName": "state",
             "otherEntityField": "id"
         }
     ],

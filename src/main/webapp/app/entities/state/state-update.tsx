@@ -13,7 +13,7 @@ import { getEntities as getCountries } from 'app/entities/country/country.reduce
 import { getEntity, updateEntity, createEntity, reset } from './state.reducer';
 import { IState } from 'app/shared/model/state.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IStateUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

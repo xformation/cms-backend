@@ -35,8 +35,9 @@ export class State extends React.Component<IStateProps, IStateState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

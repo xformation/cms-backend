@@ -35,8 +35,9 @@ export class LegalEntity extends React.Component<ILegalEntityProps, ILegalEntity
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

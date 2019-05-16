@@ -35,8 +35,9 @@ export class AdminAttendance extends React.Component<IAdminAttendanceProps, IAdm
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

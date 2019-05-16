@@ -50,6 +50,7 @@ public class AcademicHistoryServiceImpl implements AcademicHistoryService {
     @Override
     public AcademicHistoryDTO save(AcademicHistoryDTO academicHistoryDTO) {
         log.debug("Request to save AcademicHistory : {}", academicHistoryDTO);
+
         AcademicHistory academicHistory = academicHistoryMapper.toEntity(academicHistoryDTO);
         academicHistory = academicHistoryRepository.save(academicHistory);
         AcademicHistoryDTO result = academicHistoryMapper.toDto(academicHistory);

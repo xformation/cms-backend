@@ -489,6 +489,7 @@ type AcademicYear{
     year: String!
     startDate: Date!
     endDate: Date!
+    status: Status!
 }
 
 type AdmissionApplication{
@@ -583,8 +584,8 @@ type AcademicExamSetting{
     passing: Int!
     actions: String!
     department: Department!
-    academicYear: AcademicYear!
     section: Section!
+    academicyear: AcademicYear!
 }
 
 enum Gender {
@@ -976,7 +977,7 @@ type Mutation {
     updateAdmissionEnquiry(input: UpdateAdmissionEnquiryInput!): UpdateAdmissionEnquiryPayload!
     removeAdmissionEnquiry(input: RemoveAdmissionEnquiryInput!): RemoveAdmissionEnquiryPayload!
 
-addAdminAttendance(input:AddAdminAttendanceInput!):AddAdminAttendancePayload!
+    addAdminAttendance(input:AddAdminAttendanceInput!):AddAdminAttendancePayload!
     updateAdminAttendance(input:UpdateAdminAttendanceInput!):UpdateAdminAttendancePayload!
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
 
@@ -1053,8 +1054,8 @@ input AddAcademicExamSettingInput{
     passing: Int!
     actions: String!
     department: Long!
-    academicYear: Long!
     section: Long!
+    academicYear: Long!
 }
 
 type AddAcademicExamSettingPayload {
@@ -1074,8 +1075,8 @@ input UpdateAcademicExamSettingInput {
     passing: Int!
     actions: String!
     department: Long!
-    academicYear: Long!
     section: Long!
+    academicYear: Long!
 }
 
 type UpdateAcademicExamSettingPayload {
@@ -1566,16 +1567,11 @@ type RemoveAdminAttendancePayload {
     adminAttendance: [AdminAttendance!]!
 }
 
-type AcademicYear{
-    id: Long!
-    year: String!
-    startDate: Date!
-    endDate: Date!
-}
 input AddAcademicYearInput {
     year: String!
     startDate: Date!
     endDate: Date!
+    status:Status!
 }
 type AddAcademicYearPayload {
     academicYear: AcademicYear!
@@ -1585,6 +1581,7 @@ input UpdateAcademicYearInput {
     year: String!
     startDate: Date!
     endDate: Date!
+    status:Status!
 }
 type UpdateAcademicYearPayload {
     academicYear: AcademicYear!

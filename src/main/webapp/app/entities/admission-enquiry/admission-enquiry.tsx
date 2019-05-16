@@ -35,8 +35,9 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

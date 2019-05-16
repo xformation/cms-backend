@@ -50,6 +50,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public InvoiceDTO save(InvoiceDTO invoiceDTO) {
         log.debug("Request to save Invoice : {}", invoiceDTO);
+
         Invoice invoice = invoiceMapper.toEntity(invoiceDTO);
         invoice = invoiceRepository.save(invoice);
         InvoiceDTO result = invoiceMapper.toDto(invoice);

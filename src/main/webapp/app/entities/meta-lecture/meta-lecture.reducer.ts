@@ -3,7 +3,6 @@ import { ICrudSearchAction, ICrudGetAction, ICrudGetAllAction, ICrudPutAction, I
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { SERVER_API_URL } from 'app/config/constants';
 
 import { IMetaLecture, defaultValue } from 'app/shared/model/meta-lecture.model';
 
@@ -105,8 +104,8 @@ export default (state: MetaLectureState = initialState, action): MetaLectureStat
   }
 };
 
-const apiUrl = SERVER_API_URL + '/api/meta-lectures';
-const apiSearchUrl = SERVER_API_URL + '/api/_search/meta-lectures';
+const apiUrl = 'api/meta-lectures';
+const apiSearchUrl = 'api/_search/meta-lectures';
 
 // Actions
 

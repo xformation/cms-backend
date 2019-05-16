@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
 import { AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
 import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { IBranch } from 'app/shared/model/branch.model';
@@ -28,36 +28,42 @@ import { getEntity, updateEntity, createEntity, reset } from './meta-lecture.red
 import { IMetaLecture } from 'app/shared/model/meta-lecture.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
-import { keysToValues } from 'app/shared/util/entity-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface IMetaLectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IMetaLectureUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export interface IMetaLectureUpdateState {
   isNew: boolean;
-  branchId: number;
-  departmentId: number;
-  subjectId: number;
-  teacherId: number;
-  termId: number;
-  academicyearId: number;
-  sectionId: number;
-  batchId: number;
+  branchId: string;
+  departmentId: string;
+  subjectId: string;
+  teacherId: string;
+  termId: string;
+  academicyearId: string;
+  sectionId: string;
+  batchId: string;
 }
 
 export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, IMetaLectureUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      branchId: 0,
-      departmentId: 0,
-      subjectId: 0,
-      teacherId: 0,
-      termId: 0,
-      academicyearId: 0,
-      sectionId: 0,
-      batchId: 0,
+      branchId: '0',
+      departmentId: '0',
+      subjectId: '0',
+      teacherId: '0',
+      termId: '0',
+      academicyearId: '0',
+      sectionId: '0',
+      batchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.updateSuccess !== this.props.updateSuccess && nextProps.updateSuccess) {
+      this.handleClose();
+    }
   }
 
   componentDidMount() {
@@ -90,7 +96,6 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
       } else {
         this.props.updateEntity(entity);
       }
-      this.handleClose();
     }
   };
 
@@ -98,144 +103,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
     this.props.history.push('/entity/meta-lecture');
   };
 
-  branchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        branchId: -1
-      });
-    } else {
-      for (const i in this.props.branches) {
-        if (id === this.props.branches[i].id.toString()) {
-          this.setState({
-            branchId: this.props.branches[i].id
-          });
-        }
-      }
-    }
-  };
-
-  departmentUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        departmentId: -1
-      });
-    } else {
-      for (const i in this.props.departments) {
-        if (id === this.props.departments[i].id.toString()) {
-          this.setState({
-            departmentId: this.props.departments[i].id
-          });
-        }
-      }
-    }
-  };
-
-  subjectUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        subjectId: -1
-      });
-    } else {
-      for (const i in this.props.subjects) {
-        if (id === this.props.subjects[i].id.toString()) {
-          this.setState({
-            subjectId: this.props.subjects[i].id
-          });
-        }
-      }
-    }
-  };
-
-  teacherUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        teacherId: -1
-      });
-    } else {
-      for (const i in this.props.teachers) {
-        if (id === this.props.teachers[i].id.toString()) {
-          this.setState({
-            teacherId: this.props.teachers[i].id
-          });
-        }
-      }
-    }
-  };
-
-  termUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        termId: -1
-      });
-    } else {
-      for (const i in this.props.terms) {
-        if (id === this.props.terms[i].id.toString()) {
-          this.setState({
-            termId: this.props.terms[i].id
-          });
-        }
-      }
-    }
-  };
-
-  academicyearUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        academicyearId: -1
-      });
-    } else {
-      for (const i in this.props.academicYears) {
-        if (id === this.props.academicYears[i].id.toString()) {
-          this.setState({
-            academicyearId: this.props.academicYears[i].id
-          });
-        }
-      }
-    }
-  };
-
-  sectionUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        sectionId: -1
-      });
-    } else {
-      for (const i in this.props.sections) {
-        if (id === this.props.sections[i].id.toString()) {
-          this.setState({
-            sectionId: this.props.sections[i].id
-          });
-        }
-      }
-    }
-  };
-
-  batchUpdate = element => {
-    const id = element.target.value.toString();
-    if (id === '') {
-      this.setState({
-        batchId: -1
-      });
-    } else {
-      for (const i in this.props.batches) {
-        if (id === this.props.batches[i].id.toString()) {
-          this.setState({
-            batchId: this.props.batches[i].id
-          });
-        }
-      }
-    }
-  };
-
   render() {
-    const isInvalid = false;
     const {
       metaLectureEntity,
       branches,
@@ -290,7 +158,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="branch.id">Branch</Label>
-                  <AvInput id="meta-lecture-branch" type="select" className="form-control" name="branchId" onChange={this.branchUpdate}>
+                  <AvInput id="meta-lecture-branch" type="select" className="form-control" name="branchId">
                     <option value="" key="0" />
                     {branches
                       ? branches.map(otherEntity => (
@@ -303,13 +171,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="department.id">Department</Label>
-                  <AvInput
-                    id="meta-lecture-department"
-                    type="select"
-                    className="form-control"
-                    name="departmentId"
-                    onChange={this.departmentUpdate}
-                  >
+                  <AvInput id="meta-lecture-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
                     {departments
                       ? departments.map(otherEntity => (
@@ -322,7 +184,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="subject.id">Subject</Label>
-                  <AvInput id="meta-lecture-subject" type="select" className="form-control" name="subjectId" onChange={this.subjectUpdate}>
+                  <AvInput id="meta-lecture-subject" type="select" className="form-control" name="subjectId">
                     <option value="" key="0" />
                     {subjects
                       ? subjects.map(otherEntity => (
@@ -335,7 +197,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="teacher.id">Teacher</Label>
-                  <AvInput id="meta-lecture-teacher" type="select" className="form-control" name="teacherId" onChange={this.teacherUpdate}>
+                  <AvInput id="meta-lecture-teacher" type="select" className="form-control" name="teacherId">
                     <option value="" key="0" />
                     {teachers
                       ? teachers.map(otherEntity => (
@@ -348,7 +210,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="term.id">Term</Label>
-                  <AvInput id="meta-lecture-term" type="select" className="form-control" name="termId" onChange={this.termUpdate}>
+                  <AvInput id="meta-lecture-term" type="select" className="form-control" name="termId">
                     <option value="" key="0" />
                     {terms
                       ? terms.map(otherEntity => (
@@ -361,13 +223,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="academicyear.id">Academicyear</Label>
-                  <AvInput
-                    id="meta-lecture-academicyear"
-                    type="select"
-                    className="form-control"
-                    name="academicyearId"
-                    onChange={this.academicyearUpdate}
-                  >
+                  <AvInput id="meta-lecture-academicyear" type="select" className="form-control" name="academicyearId">
                     <option value="" key="0" />
                     {academicYears
                       ? academicYears.map(otherEntity => (
@@ -380,7 +236,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="section.id">Section</Label>
-                  <AvInput id="meta-lecture-section" type="select" className="form-control" name="sectionId" onChange={this.sectionUpdate}>
+                  <AvInput id="meta-lecture-section" type="select" className="form-control" name="sectionId">
                     <option value="" key="0" />
                     {sections
                       ? sections.map(otherEntity => (
@@ -393,7 +249,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
-                  <AvInput id="meta-lecture-batch" type="select" className="form-control" name="batchId" onChange={this.batchUpdate}>
+                  <AvInput id="meta-lecture-batch" type="select" className="form-control" name="batchId">
                     <option value="" key="0" />
                     {batches
                       ? batches.map(otherEntity => (
@@ -409,7 +265,7 @@ export class MetaLectureUpdate extends React.Component<IMetaLectureUpdateProps, 
                   <span className="d-none d-md-inline">Back</span>
                 </Button>
                 &nbsp;
-                <Button color="primary" id="save-entity" type="submit" disabled={isInvalid || updating}>
+                <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                   <FontAwesomeIcon icon="save" />&nbsp; Save
                 </Button>
               </AvForm>
@@ -432,7 +288,8 @@ const mapStateToProps = (storeState: IRootState) => ({
   batches: storeState.batch.entities,
   metaLectureEntity: storeState.metaLecture.entity,
   loading: storeState.metaLecture.loading,
-  updating: storeState.metaLecture.updating
+  updating: storeState.metaLecture.updating,
+  updateSuccess: storeState.metaLecture.updateSuccess
 });
 
 const mapDispatchToProps = {
@@ -453,4 +310,7 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(MetaLectureUpdate);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MetaLectureUpdate);

@@ -35,16 +35,14 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "department",
-            "otherEntityRelationshipName": "subject",
             "relationshipName": "department",
+            "otherEntityName": "department",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "batch",
-            "otherEntityRelationshipName": "subject",
             "relationshipName": "batch",
+            "otherEntityName": "batch",
             "otherEntityField": "id"
         }
     ],

@@ -63,6 +63,11 @@ export default (state: CityState = initialState, action): CityState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_CITIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_CITY_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/cities';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ICity> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ICity> = query => ({
   type: ACTION_TYPES.SEARCH_CITIES,
-  payload: axios.get<ICity>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ICity>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ICity> = (page, size, sort) => ({

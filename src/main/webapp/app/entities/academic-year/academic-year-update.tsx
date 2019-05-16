@@ -12,6 +12,7 @@ import { getEntity, updateEntity, createEntity, reset } from './academic-year.re
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAcademicYearUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -124,6 +125,19 @@ export class AcademicYearUpdate extends React.Component<IAcademicYearUpdateProps
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="statusLabel">Status</Label>
+                  <AvInput
+                    id="academic-year-status"
+                    type="select"
+                    className="form-control"
+                    name="status"
+                    value={(!isNew && academicYearEntity.status) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/academic-year" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;

@@ -56,7 +56,7 @@ public class BranchRestController {
 	private CollegeRepository collegeRepository;
 	
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/cmsbranches")
+	@RequestMapping(method = RequestMethod.POST, value = "/C")
 	public ResponseEntity<CmsBranchVo> createBranch(@Valid @RequestBody CmsBranchVo cmsBranchVo) throws URISyntaxException {
 		logger.info("REST request to create a new branch.", cmsBranchVo);
         if (cmsBranchVo.getId() != null) {

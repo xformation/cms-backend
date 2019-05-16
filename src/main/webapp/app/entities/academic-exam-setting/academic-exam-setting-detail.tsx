@@ -76,8 +76,8 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
             <dd>{academicExamSettingEntity.actions}</dd>
             <dt>Department</dt>
             <dd>{academicExamSettingEntity.departmentId ? academicExamSettingEntity.departmentId : ''}</dd>
-            <dt>Academic Year</dt>
-            <dd>{academicExamSettingEntity.academicYearId ? academicExamSettingEntity.academicYearId : ''}</dd>
+            <dt>Academicyear</dt>
+            <dd>{academicExamSettingEntity.academicyearId ? academicExamSettingEntity.academicyearId : ''}</dd>
             <dt>Section</dt>
             <dd>{academicExamSettingEntity.sectionId ? academicExamSettingEntity.sectionId : ''}</dd>
           </dl>

@@ -35,8 +35,9 @@ export class BankAccounts extends React.Component<IBankAccountsProps, IBankAccou
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

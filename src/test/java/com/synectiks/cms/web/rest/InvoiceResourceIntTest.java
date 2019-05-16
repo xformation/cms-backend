@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -120,9 +119,6 @@ public class InvoiceResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restInvoiceMockMvc;
 
     private Invoice invoice;
@@ -135,8 +131,7 @@ public class InvoiceResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -560,7 +555,7 @@ public class InvoiceResourceIntTest {
 
         int databaseSizeBeforeDelete = invoiceRepository.findAll().size();
 
-        // Delete the invoice
+        // Get the invoice
         restInvoiceMockMvc.perform(delete("/api/invoices/{id}", invoice.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

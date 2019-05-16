@@ -15,7 +15,7 @@ import { getEntities as getAdmissionApplications } from 'app/entities/admission-
 import { getEntity, updateEntity, createEntity, reset } from './admission-enquiry.reducer';
 import { IAdmissionEnquiry } from 'app/shared/model/admission-enquiry.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAdmissionEnquiryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

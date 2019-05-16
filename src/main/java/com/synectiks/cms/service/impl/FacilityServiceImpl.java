@@ -50,6 +50,7 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     public FacilityDTO save(FacilityDTO facilityDTO) {
         log.debug("Request to save Facility : {}", facilityDTO);
+
         Facility facility = facilityMapper.toEntity(facilityDTO);
         facility = facilityRepository.save(facility);
         FacilityDTO result = facilityMapper.toDto(facility);

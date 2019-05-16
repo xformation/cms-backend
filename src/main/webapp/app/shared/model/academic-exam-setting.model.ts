@@ -25,7 +25,7 @@ export interface IAcademicExamSetting {
   passing?: number;
   actions?: string;
   departmentId?: number;
-  academicYearId?: number;
+  academicyearId?: number;
   sectionId?: number;
 }
 

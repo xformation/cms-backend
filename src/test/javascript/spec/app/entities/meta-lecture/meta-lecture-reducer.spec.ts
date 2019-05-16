@@ -3,7 +3,7 @@ import axios from 'axios';
 import configureStore from 'redux-mock-store';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 
 import reducer, {
   ACTION_TYPES,
@@ -11,7 +11,8 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity
+  updateEntity,
+  reset
 } from 'app/entities/meta-lecture/meta-lecture.reducer';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { IMetaLecture, defaultValue } from 'app/shared/model/meta-lecture.model';
@@ -82,6 +83,19 @@ describe('Entities reducer tests', () => {
         }
       );
     });
+
+    it('should reset the state', () => {
+      expect(
+        reducer(
+          { ...initialState, loading: true },
+          {
+            type: ACTION_TYPES.RESET
+          }
+        )
+      ).toEqual({
+        ...initialState
+      });
+    });
   });
 
   describe('Failures', () => {
@@ -108,7 +122,7 @@ describe('Entities reducer tests', () => {
 
   describe('Successes', () => {
     it('should fetch all entities', () => {
-      const payload = { data: { 1: 'fake1', 2: 'fake2' } };
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_METALECTURE_LIST),
@@ -118,6 +132,20 @@ describe('Entities reducer tests', () => {
         ...initialState,
         loading: false,
         entities: payload.data
+      });
+    });
+
+    it('should fetch a single entity', () => {
+      const payload = { data: { 1: 'fake1' } };
+      expect(
+        reducer(undefined, {
+          type: SUCCESS(ACTION_TYPES.FETCH_METALECTURE),
+          payload
+        })
+      ).toEqual({
+        ...initialState,
+        loading: false,
+        entity: payload.data
       });
     });
 
@@ -246,6 +274,16 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(deleteEntity(42666)).then(() => expect(store.getActions()).toEqual(expectedActions));
+    });
+
+    it('dispatches ACTION_TYPES.RESET actions', async () => {
+      const expectedActions = [
+        {
+          type: ACTION_TYPES.RESET
+        }
+      ];
+      await store.dispatch(reset());
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });
