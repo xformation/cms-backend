@@ -34,7 +34,7 @@ import com.synectiks.cms.service.util.CommonUtil;
 @Component
 public class AcademicSubjectService {
 
-	private final static Logger logger = LoggerFactory.getLogger(Class.class);
+	private final static Logger logger = LoggerFactory.getLogger(AcademicSubjectService.class);
 	
     @Autowired
 	private SubjectRepository subjectRepository;
@@ -171,8 +171,9 @@ public class AcademicSubjectService {
     	List<Teach> teachList = this.teachRepository.findAll();
     	List<CmsSubjectVo> ls = new ArrayList<>();
     	for(Teach th: teachList ) {
-    		Department dp = this.commonService.getDepartmentById(th.getSubject().getDepartment().getId());
-    		Batch bt = this.commonService.getBatchById(th.getSubject().getBatch().getId());
+    		Department dp = th.getSubject().getDepartment();// this.commonService.getDepartmentById(th.getSubject().getDepartment().getId());
+    		Batch bt = th.getSubject().getBatch(); //this.commonService.getBatchById(th.getSubject().getBatch().getId());
+    		logger.debug("Department : "+dp+", Batch: "+bt);
     		CmsSubjectVo vo = new CmsSubjectVo();
     		vo.setDepartment(dp);
     		vo.setBatch(bt);
