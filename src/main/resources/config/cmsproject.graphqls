@@ -245,11 +245,17 @@ type Query {
   getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
-  getInvoiceData(collegeId:Long, branchId:Long!, academicYearId:Long!): InvoiceFilterProcessor!
+  getInvoiceData(collegeId:String, branchId:String, academicYearId:String): CmsInvoice
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
 }
 
+type CmsInvoice {
+	totalInvoice: Long;
+	totalPaidInvoice: Long;
+	totalUnPaidInvoice: Long;
+	totalCanceledInvoice: Long;
+}
 type StudentAttendanceCache{
 	departments: [Department]
 	batches: [Batch]
@@ -955,7 +961,6 @@ type Mutation {
     getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
-    getInvoiceData(collegeId:Long, branchId:Long!, academicYearId:Long!): InvoiceFilterProcessor!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!

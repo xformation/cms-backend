@@ -48,6 +48,7 @@ import com.synectiks.cms.domain.BankAccounts;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.CmsSemesterVo;
 import com.synectiks.cms.domain.College;
@@ -564,8 +565,8 @@ public class Query implements GraphQLQueryResolver {
         return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
     }
 
-    public InvoiceFilterProcessor getInvoiceData(long collegeId, long branchId, long academicYearId) {
-        return invoiceFilterProcessor.getInvoiceData(collegeId, branchId, academicYearId);
+    public CmsInvoice getInvoiceData(String collegeId, String branchId, String academicYearId) {
+        return invoiceFilterProcessor.getInvoiceData(Long.valueOf(collegeId), Long.valueOf(branchId), Long.valueOf(academicYearId));
     }
 
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName){

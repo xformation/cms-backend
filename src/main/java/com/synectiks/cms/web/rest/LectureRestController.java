@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synectiks.cms.business.service.LectureService;
+import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
+import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -42,6 +44,9 @@ public class LectureRestController {
 	@Autowired
 	private LectureService lectureService;
 	
+	@Autowired
+    private AcademicYearRepository academicYearRepository;
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmslectures")
 	@Transactional(propagation=Propagation.REQUIRED)
 	public ResponseEntity<QueryResult> addLectures(@RequestBody List<LectureScheduleDTO> list, @RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
@@ -51,10 +56,13 @@ public class LectureRestController {
 		filter.setBranchId(dataMap.get("branchId") != null ? dataMap.get("branchId").trim() : dataMap.get("branchId"));
 		filter.setDepartmentId(dataMap.get("departmentId") != null ? dataMap.get("departmentId").trim() : dataMap.get("departmentId"));
 		filter.setTermId(dataMap.get("termId") != null ? dataMap.get("termId").trim() : dataMap.get("termId") );
-		filter.setAcademicYear(dataMap.get("academicYear") != null ? dataMap.get("academicYear").trim() : dataMap.get("academicYear"));
+//		filter.setAcademicYear(dataMap.get("academicYear") != null ? dataMap.get("academicYear").trim() : dataMap.get("academicYear"));
 		filter.setSectionId(dataMap.get("sectionId") != null ? dataMap.get("sectionId").trim() : dataMap.get("sectionId"));
 		filter.setBatchId(dataMap.get("batchId") != null ? dataMap.get("batchId").trim() : dataMap.get("batchId") );
 		
+		Long id = Long.valueOf(dataMap.get("academicYearId"));
+		Optional<AcademicYear> oay = this.academicYearRepository.findById(id);
+
 		ObjectMapper mapper = new ObjectMapper();
 		String values[] = new String[list.size()];
 		int i=0;
@@ -63,12 +71,12 @@ public class LectureRestController {
 			values[i] = mapper.writeValueAsString(dto);
 			i++;
 			logger.debug("Going in addMetaLectureData.");
-			this.lectureService.addMetaLectureData(dto, filter);
+			this.lectureService.addMetaLectureData(dto, filter, oay);
 		}
 		lectureScheduleInput.setValues(values);
 		
 		logger.debug("Saving data in lecture table.");
-		QueryResult res = this.lectureService.addLectureSchedule(lectureScheduleInput, filter);
+		QueryResult res = this.lectureService.addLectureSchedule(lectureScheduleInput, filter, oay);
 		Optional<QueryResult> r = Optional.of(res);
 		logger.info("Lecture data created successfully.");
 		return ResponseUtil.wrapOrNotFound(r);

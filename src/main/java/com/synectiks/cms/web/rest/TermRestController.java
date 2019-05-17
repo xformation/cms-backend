@@ -1,26 +1,39 @@
 package com.synectiks.cms.web.rest;
 
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.CmsTermVo;
 import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -33,7 +46,9 @@ public class TermRestController {
     @Autowired
     private TermRepository termRepository;
 
-
+    @Autowired
+    private AcademicYearRepository academicYearRepository;
+    
     @RequestMapping(method = RequestMethod.POST, value = "/cmsterms")
     public ResponseEntity<CmsTermVo> createTerm(@Valid @RequestBody CmsTermVo cmsTermVo) throws Exception {
         logger.debug("REST request to save an Term : {}", cmsTermVo);
@@ -105,6 +120,36 @@ public class TermRestController {
         return ResponseUtil.wrapOrNotFound(Optional.of(ctm));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/cmsterms-by_academicyearid")
+    public List<CmsTermVo> getTermByAcademicYearId(@RequestParam Map<String, String> dataMap) throws Exception{
+    	if(!dataMap.containsKey("academicYearId")) {
+    		logger.warn("Academic year id is not provided. Returning empty terms list");
+    		return Collections.emptyList();
+    	}
+    	List<CmsTermVo> ls = new ArrayList<>();
+    	Long id = Long.valueOf(dataMap.get("academicYearId"));
+    	Optional<AcademicYear> oay = this.academicYearRepository.findById(id);
+    	
+    	if(oay.isPresent()) {
+//    		AcademicYear ay = this.academicYearRepository.findById(id).get();
+    		logger.debug("Terms based on academic year. AcademicYear :"+oay.get());
+    		Term term = new Term();
+    		term.setAcademicyear(oay.get());
+    		Example<Term> exm = Example.of(term);
+    		List<Term> list = this.termRepository.findAll(exm);
+    		for(Term tm: list) {
+                String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getStartDate());
+                String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getEndDate());
+                CmsTermVo ctm = CommonUtil.createCopyProperties(tm, CmsTermVo.class);
+                ctm.setStrStartDate(stDt);
+                ctm.setStrEndDate(enDt);
+                ls.add(ctm);
+            }
+    	}
+    	logger.debug("Total terms retrieved: "+ls);
+    	return ls;
+    	
+    }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/cmsterms/{id}")
     public ResponseEntity<Void> deleteTerm(@PathVariable Long id) {

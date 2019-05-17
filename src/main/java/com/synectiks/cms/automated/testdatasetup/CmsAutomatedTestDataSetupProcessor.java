@@ -1340,7 +1340,7 @@ public class CmsAutomatedTestDataSetupProcessor {
 
     private List<Date> filterDates(int day) throws ParseException {
         List<Date> dateList = this.lectureService.createDates(this.term);
-        List<Holiday> holidayList = this.commonService.getHolidayList(this.academicYear.getYear());
+        List<Holiday> holidayList = this.commonService.getHolidayList(Optional.of(this.academicYear));
         this.lectureService.filterHolidays(holidayList, dateList);
         this.lectureService.filterSundays(dateList);
         List<Date> list = this.lectureService.filterDateListOnDayOfweek(dateList, day);

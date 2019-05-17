@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CmsInvoiceService;
+import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.Invoice;
 
 @Component
@@ -42,13 +43,14 @@ public class InvoiceFilterProcessor {
 		return cmsInvoiceService.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
 	}
 
-	public InvoiceFilterProcessor getInvoiceData(Long collegeId, Long branchId, Long academicYearId) {
-		InvoiceFilterProcessor ifp = new InvoiceFilterProcessor();
-		ifp.setTotalInvoice(this.getTotalInvoice(collegeId, branchId, academicYearId));
-		ifp.setTotalPaidInvoice(this.getTotalPaidInvoice(collegeId, branchId, academicYearId));
-		ifp.setTotalUnPaidInvoice(this.getTotalUnPaidInvoice(collegeId, branchId, academicYearId));
-		ifp.setTotalCanceledInvoice(this.getTotalCanceledInvoice(collegeId, branchId, academicYearId));
-		return ifp;
+	public CmsInvoice getInvoiceData(Long collegeId, Long branchId, Long academicYearId) {
+//		InvoiceFilterProcessor ifp = new InvoiceFilterProcessor();
+		CmsInvoice inv = new CmsInvoice();
+		inv.setTotalInvoice(this.getTotalInvoice(collegeId, branchId, academicYearId));
+		inv.setTotalPaidInvoice(this.getTotalPaidInvoice(collegeId, branchId, academicYearId));
+		inv.setTotalUnPaidInvoice(this.getTotalUnPaidInvoice(collegeId, branchId, academicYearId));
+		inv.setTotalCanceledInvoice(this.getTotalCanceledInvoice(collegeId, branchId, academicYearId));
+		return inv;
 	}
 
 	public Long getTotalInvoice() {

@@ -240,15 +240,15 @@ public class CommonService {
 		return null;
 	}
 	
-	public List<Holiday> getHolidayList(String academicYear) throws ParseException {
-		AcademicYear acd = findAcademicYearByYear(academicYear);
-		if(acd == null) {
+	public List<Holiday> getHolidayList(Optional<AcademicYear> oay) throws ParseException {
+//		AcademicYear acd = findAcademicYearByYear(academicYear);
+		if(!oay.isPresent()) {
 			logger.warn("Academic Year is null. Returning empty holiday list.");
 			return Collections.emptyList();
 		}
 		Holiday hl = new Holiday();
 		hl.setHolidayStatus(Status.ACTIVE);
-		hl.setAcademicyear(acd);
+		hl.setAcademicyear(oay.get());
 		Example<Holiday> example = Example.of(hl);
 		List<Holiday> list = this.holidayRepository.findAll(example);
 		return list;

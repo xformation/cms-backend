@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -197,7 +198,7 @@ public class LectureService {
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRED)
-	public QueryResult addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter) throws JSONException, ParseException {
+	public QueryResult addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter, Optional<AcademicYear> oay) throws JSONException, ParseException {
 		QueryResult res = new QueryResult();
 		res.setStatusCode(0);
     	res.setStatusDesc("Records inserted successfully.");
@@ -206,7 +207,7 @@ public class LectureService {
 		logger.debug("Term data retrieved.");
 		List<Date> dateList = createDates(tr);
 		logger.debug("Date list created.");
-		List<Holiday> holidayList = commonService.getHolidayList(filter.getAcademicYear());
+		List<Holiday> holidayList = commonService.getHolidayList(oay);
 		logger.debug("Holiday data retrieved.");
 		filterHolidays (holidayList,dateList);
 		logger.debug("Holiday data filtered.");
@@ -220,7 +221,6 @@ public class LectureService {
 		List<Date> fridayList = filterDateListOnDayOfweek(dateList, Calendar.FRIDAY);
 		List<Date> saturdayList = filterDateListOnDayOfweek(dateList, Calendar.SATURDAY);
     	String[] values = lectureScheduleInput.getValues();
-//    	this.query = this.entityManager.createNativeQuery(INSERT_SQL);
     	this.bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
 		this.sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
 		try {
@@ -427,17 +427,22 @@ public class LectureService {
 		return ls;
 	}
 	
-	public boolean addMetaLectureData(LectureScheduleDTO dto, LectureScheduleFilter filter){
+	public boolean addMetaLectureData(LectureScheduleDTO dto, LectureScheduleFilter filter, Optional<AcademicYear> oay){
 		MetaLecture metaLecture = new MetaLecture();
 		
 		Branch branch = this.commonService.getBranchById(CommonUtil.isNullOrEmpty(filter.getBranchId()) ? null : Long.valueOf(filter.getBranchId().trim()));
         Department department = this.commonService.getDepartmentById(CommonUtil.isNullOrEmpty(filter.getDepartmentId()) ? null : Long.valueOf(filter.getDepartmentId().trim()));
      
         Term term = this.commonService.getTermById(CommonUtil.isNullOrEmpty(filter.getTermId()) ? null : Long.valueOf(filter.getTermId().trim()));
-        AcademicYear academicYear = this.commonService.findAcademicYearByYear(CommonUtil.isNullOrEmpty(filter.getAcademicYear()) ? null : filter.getAcademicYear().trim());
+//        AcademicYear academicYear = this.commonService.findAcademicYearByYear(CommonUtil.isNullOrEmpty(filter.getAcademicYear()) ? null : filter.getAcademicYear().trim());
         Section section = this.commonService.getSectionById(CommonUtil.isNullOrEmpty(filter.getSectionId()) ? null : Long.valueOf(filter.getSectionId().trim()));
         Batch batch = this.commonService.getBatchById(Long.valueOf(CommonUtil.isNullOrEmpty(filter.getBatchId()) ? null : filter.getBatchId().trim()));
-        
+        AcademicYear academicYear = null;
+        if(oay.isPresent()) {
+        	academicYear = oay.get();
+        }
+        		
+        		
         String weekDay = dto.getWeekDay();
         String startTime = dto.getStartTime();
         String endTime = dto.getEndTime();
