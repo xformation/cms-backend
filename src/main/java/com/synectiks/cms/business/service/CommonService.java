@@ -240,7 +240,7 @@ public class CommonService {
 		return null;
 	}
 	
-	public List<Holiday> getHolidayList(Optional<AcademicYear> oay) throws ParseException {
+	public List<Holiday> getHolidayList(Optional<AcademicYear> oay) throws ParseException  {
 //		AcademicYear acd = findAcademicYearByYear(academicYear);
 		if(!oay.isPresent()) {
 			logger.warn("Academic Year is null. Returning empty holiday list.");

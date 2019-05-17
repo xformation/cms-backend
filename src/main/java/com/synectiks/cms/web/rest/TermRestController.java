@@ -128,7 +128,7 @@ public class TermRestController {
     	}
     	List<CmsTermVo> ls = new ArrayList<>();
     	Long id = Long.valueOf(dataMap.get("academicYearId"));
-    	Optional<AcademicYear> oay = this.academicYearRepository.findById(id);
+    	Optional<AcademicYear> oay = this.academicYearRepository.findById(id); 
     	
     	if(oay.isPresent()) {
 //    		AcademicYear ay = this.academicYearRepository.findById(id).get();

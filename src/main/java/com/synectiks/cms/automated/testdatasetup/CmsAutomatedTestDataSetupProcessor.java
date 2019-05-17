@@ -1349,7 +1349,7 @@ public class CmsAutomatedTestDataSetupProcessor {
 
     private void saveStudentAttendanceData() {
         List<Lecture> lcList = this.testDataPojoBuilder.findLectureByAttendanceMaster(this.lectureRepository, this.attendanceMaster);
-
+        
         StudentAttendance sa = new StudentAttendance();
         sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
         sa.setStudent(student);

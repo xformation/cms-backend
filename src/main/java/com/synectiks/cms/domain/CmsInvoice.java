@@ -5,7 +5,7 @@ public class CmsInvoice {
 	private Long totalInvoice = 0L;
 	private Long totalPaidInvoice = 0L;
 	private Long totalUnPaidInvoice = 0L;
-	private Long totalCanceledInvoice = 0L;
+	private Long totalCanceledInvoice = 0L; 
 	public Long getTotalInvoice() {
 		return totalInvoice;
 	}

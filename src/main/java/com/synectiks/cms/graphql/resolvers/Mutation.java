@@ -2622,6 +2622,6 @@ public class Mutation implements GraphQLMutationResolver {
         return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
     }
 
-    
+     
 
 }

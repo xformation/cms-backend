@@ -79,7 +79,7 @@ public class LectureRestController {
 		QueryResult res = this.lectureService.addLectureSchedule(lectureScheduleInput, filter, oay);
 		Optional<QueryResult> r = Optional.of(res);
 		logger.info("Lecture data created successfully.");
-		return ResponseUtil.wrapOrNotFound(r);
+		return ResponseUtil.wrapOrNotFound(r); 
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/cmslectures")

@@ -235,7 +235,7 @@ public class LectureService {
     		res.setStatusCode(1);
         	res.setStatusDesc("There is some error in inserting lecture records.");
     	}
-    	return res;
+    	return res; 
 	}
 
 	public void createLectureSchedule(List<Date> dataList, String[] values, String dayName, LectureScheduleFilter filter)

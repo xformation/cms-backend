@@ -50,7 +50,7 @@ public class InvoiceFilterProcessor {
 		inv.setTotalPaidInvoice(this.getTotalPaidInvoice(collegeId, branchId, academicYearId));
 		inv.setTotalUnPaidInvoice(this.getTotalUnPaidInvoice(collegeId, branchId, academicYearId));
 		inv.setTotalCanceledInvoice(this.getTotalCanceledInvoice(collegeId, branchId, academicYearId));
-		return inv;
+		return inv; 
 	}
 
 	public Long getTotalInvoice() {

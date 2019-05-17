@@ -566,7 +566,7 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public CmsInvoice getInvoiceData(String collegeId, String branchId, String academicYearId) {
-        return invoiceFilterProcessor.getInvoiceData(Long.valueOf(collegeId), Long.valueOf(branchId), Long.valueOf(academicYearId));
+        return invoiceFilterProcessor.getInvoiceData(Long.valueOf(collegeId), Long.valueOf(branchId), Long.valueOf(academicYearId)); 
     }
 
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName){

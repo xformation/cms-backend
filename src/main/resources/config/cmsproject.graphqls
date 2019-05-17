@@ -250,7 +250,7 @@ type Query {
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
 }
 
-type CmsInvoice {
+type CmsInvoice { 
 	totalInvoice: Long;
 	totalPaidInvoice: Long;
 	totalUnPaidInvoice: Long;
