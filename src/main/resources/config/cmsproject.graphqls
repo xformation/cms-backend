@@ -251,10 +251,10 @@ type Query {
 }
 
 type CmsInvoice { 
-	totalInvoice: Long;
-	totalPaidInvoice: Long;
-	totalUnPaidInvoice: Long;
-	totalCanceledInvoice: Long;
+	totalInvoice: Long!
+	totalPaidInvoice: Long!
+	totalUnPaidInvoice: Long!
+	totalCanceledInvoice: Long!
 }
 type StudentAttendanceCache{
 	departments: [Department]
@@ -1058,9 +1058,9 @@ input AddAcademicExamSettingInput{
     total: Int!
     passing: Int!
     actions: String!
-    department: Long!
-    section: Long!
-    academicYear: Long!
+    departmentId: Long!
+    sectionId: Long!
+    academicyearId: Long!
 }
 
 type AddAcademicExamSettingPayload {
@@ -1079,9 +1079,9 @@ input UpdateAcademicExamSettingInput {
     total: Int!
     passing: Int!
     actions: String!
-    department: Long!
-    section: Long!
-    academicYear: Long!
+    departmentId: Long!
+    sectionId: Long!
+    academicyearId: Long!
 }
 
 type UpdateAcademicExamSettingPayload {

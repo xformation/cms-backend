@@ -391,6 +391,58 @@ mutation updateAdmissionEnquiry($input: UpdateAdmissionEnquiryInput!) {
 }
 
 -----------------
+AcademicExamSetting:
+
+
+mutation addAcademicEamSetting($input: AddAcademicExamSettingInput!) {
+  addAcademicExamSetting(input: $input) {
+   academicExamSetting {
+      id
+      examType
+    semester
+    subject
+    date
+    day
+    duration
+    startTime
+    endTime
+    total
+    passing
+    actions
+    department{
+      id
+    }
+    section{
+      id
+    }
+    academicyear{
+      id
+    }
+  }
+}
+}
+
+
+{
+ "input":{
+  "examType": "midterm1",
+  "semester": "SEMESTER2",
+  "subject": "VDMS",
+  "date": "2019-04-26",
+  "day": "FRIDAY",
+  "duration": "3HRS",
+  "startTime": "7:30:00Am",
+  "endTime": "10:30:00Am",
+  "total": 100,
+  "passing": 35,
+  "actions": "ACTIVE",
+  "departmentId": 1101,
+  "sectionId":  1201,
+  "academicyearId":  1051
+}
+}
+
+-------------------------
 Academic Year:
 
 mutation addAcademicYear($input: AddAcademicYearInput!){

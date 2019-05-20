@@ -1,8 +1,10 @@
 package com.synectiks.cms.graphql.types.AcademicExamSetting;
 
+import java.util.Objects;
+
 public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInput {
     private Long departmentId;
-    private Long academicYearId;
+    private Long academicyearId;
     private Long sectionId;
 
     public Long getDepartmentId() {
@@ -13,12 +15,12 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         this.departmentId = departmentId;
     }
 
-    public Long getAcademicYearId() {
-        return academicYearId;
+    public Long getAcademicyearId() {
+        return academicyearId;
     }
 
-    public void setAcademicYearId(Long academicYearId) {
-        this.academicYearId = academicYearId;
+    public void setAcademicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
     }
 
     public Long getSectionId() {
@@ -30,10 +32,26 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AddAcademicExamSettingInput that = (AddAcademicExamSettingInput) o;
+        return Objects.equals(departmentId, that.departmentId) &&
+            Objects.equals(academicyearId, that.academicyearId) &&
+            Objects.equals(sectionId, that.sectionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), departmentId, academicyearId, sectionId);
+    }
+
+    @Override
     public String toString() {
         return "AddAcademicExamSettingInput{" +
             "departmentId=" + departmentId +
-            ", academicYearId=" + academicYearId +
+            ", academicyearId=" + academicyearId +
             ", sectionId=" + sectionId +
             '}';
     }
