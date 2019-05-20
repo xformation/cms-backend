@@ -3,6 +3,7 @@ package com.synectiks.cms.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.filter.AdmissionEnquiry.AdmissionEnquiryProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
@@ -55,18 +56,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.StringTokenizer;
 
 
 @Component
@@ -129,6 +123,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private InvoiceFilterProcessor invoiceFilterProcessor;
+
+    @Autowired
+    private AdmissionEnquiryProcessor admissionEnquiryProcessor;
 
     public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
@@ -2626,4 +2623,22 @@ public class Mutation implements GraphQLMutationResolver {
         return invoiceFilterProcessor.getInvoiceData(collegeId, branchId, academicYearId);
     }
 
+    public Long getTotalAdmissions( long branchId, long admissionApplicationId) {
+        return admissionEnquiryProcessor.getTotalAdmissions( branchId, admissionApplicationId);
+    }
+
+    public Long getTotalFollowup( long branchId, long admissionApplicationId) {
+        return admissionEnquiryProcessor.getTotalFollowup( branchId, admissionApplicationId);
+    }
+    public Long getTotalDeclined(long branchId, long admissionApplicationId) {
+        return admissionEnquiryProcessor.getTotalDeclined( branchId, admissionApplicationId);
+    }
+
+    public Long getTotalConverted( long branchId, long admissionApplicationId) {
+        return admissionEnquiryProcessor.getTotalConverted(branchId, admissionApplicationId);
+    }
+
+    public AdmissionEnquiryProcessor getAdmissionData(long branchId, long admissionApplicationId) {
+        return admissionEnquiryProcessor.getAdmissionData(branchId, admissionApplicationId);
+    }
 }
