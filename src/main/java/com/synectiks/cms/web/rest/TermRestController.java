@@ -26,6 +26,7 @@ import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.CmsTermVo;
 import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.service.util.CommonUtil;
@@ -54,6 +55,9 @@ public class TermRestController {
         logger.debug("REST request to save an Term : {}", cmsTermVo);
         if (cmsTermVo.getId() != null) {
             throw new BadRequestAlertException("A new term cannot have an ID which already exists.", ENTITY_NAME, "idexists");
+        }
+        if(cmsTermVo.getTermStatus() == null) {
+        	cmsTermVo.setTermStatus(Status.DEACTIVE);
         }
         Term tm = CommonUtil.createCopyProperties(cmsTermVo, Term.class);
 
@@ -121,7 +125,7 @@ public class TermRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cmsterms-by_academicyearid")
-    public List<CmsTermVo> getTermByAcademicYearId(@RequestParam Map<String, String> dataMap) throws Exception{
+    public List<CmsTermVo> getAllTermsByAcademicYearId(@RequestParam Map<String, String> dataMap) throws Exception{
     	if(!dataMap.containsKey("academicYearId")) {
     		logger.warn("Academic year id is not provided. Returning empty terms list");
     		return Collections.emptyList();
