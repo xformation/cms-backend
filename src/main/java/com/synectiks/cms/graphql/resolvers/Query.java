@@ -18,6 +18,8 @@ package com.synectiks.cms.graphql.resolvers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
+import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryFilterProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -178,10 +180,16 @@ public class Query implements GraphQLQueryResolver {
     private StudentFilterProcessor studentFilterProcessor;
 
     @Autowired
+    private AdmissionEnquiryFilterProcessor admissionEnquiryFilterProcessor;
+
+    @Autowired
     private CommonGraphiqlFilter commonGraphiqlFilter;
     
     @Autowired
     private CmsInvoiceService cmsInvoiceService;
+
+    @Autowired
+    private CmsAdmissionEnquiryService cmsAdmissionEnquiryService;
 
     @Autowired
     private CommonService commonService;
@@ -400,6 +408,27 @@ public class Query implements GraphQLQueryResolver {
     public List<AdmissionEnquiry> admissionEnquiries() {
         return Lists.newArrayList(admissionEnquiryRepository.findAll());
     }
+
+    public Long getTotalAdmissionEnquiry(long branchId, long admissionApplicationId) {
+        return admissionEnquiryFilterProcessor.getTotalAdmissionEnquiry(branchId, admissionApplicationId);
+    }
+
+    public Long getTotalFollowupAdmissionEnquiry(long branchId, long admissionApplicationId) {
+        return admissionEnquiryFilterProcessor.getTotalFollowupAdmissionEnquiry(branchId, admissionApplicationId);
+    }
+
+    public Long getTotalConvertedAdmissionEnquiry(long branchId, long admissionApplicationId) {
+        return admissionEnquiryFilterProcessor.getTotalConvertedAdmissionEnquiry(branchId, admissionApplicationId);
+    }
+
+    public Long getTotalDeclinedAdmissionEnquiry(long branchId, long admissionApplicationId) {
+        return admissionEnquiryFilterProcessor.getTotalDeclinedAdmissionEnquiry(branchId, admissionApplicationId);
+    }
+
+    public AdmissionEnquiryFilterProcessor getAdmissionEnquiryData(long branchId, long admissionApplicationId) {
+        return admissionEnquiryFilterProcessor.getAdmissionEnquiryData(branchId, admissionApplicationId);
+    }
+
 
 
     public List<AcademicYear> academicYears() {

@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
+import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryFilterProcessor;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
@@ -129,6 +130,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private InvoiceFilterProcessor invoiceFilterProcessor;
+
+    @Autowired
+    private AdmissionEnquiryFilterProcessor admissionEnquiryFilterProcessor;
 
     public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
@@ -2621,4 +2625,18 @@ public class Mutation implements GraphQLMutationResolver {
         return invoiceFilterProcessor.getInvoiceData(collegeId, branchId, academicYearId);
     }
 
+    public long getTotalAdmissionEnquiry(long branchId, Long admissionApplicationId){
+        return admissionEnquiryFilterProcessor.getTotalAdmissionEnquiry(branchId, admissionApplicationId);
+    }
+    public long getTotalFollowupAdmissionEnquiry(long branchId, Long admissionApplicationId){
+        return admissionEnquiryFilterProcessor.getTotalFollowupAdmissionEnquiry(branchId, admissionApplicationId);
+    }
+
+    public long getTotalDeclinedAdmissionEnquiry(long branchId, Long admissionApplicationId){
+        return  admissionEnquiryFilterProcessor.getTotalDeclinedAdmissionEnquiry(branchId, admissionApplicationId);
+    }
+
+    public long getTotalConvertedAdmissionEnquiry(long branchId, long admissionApplicationId){
+        return admissionEnquiryFilterProcessor.getTotalConvertedAdmissionEnquiry(branchId, admissionApplicationId);
+    }
 }

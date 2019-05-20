@@ -261,6 +261,10 @@ mutation addAdmissionApplication($input: AddAdmissionApplicationInput!){
       }
 
     }
+   }
+  }
+
+
 
 {
   "input": {
@@ -389,6 +393,27 @@ mutation updateAdmissionEnquiry($input: UpdateAdmissionEnquiryInput!) {
     "admissionApplicationId": 1051
   }
 }
+
+AdmissionEnquiryTotalCountMutation:
+
+ mutation{
+   getTotalAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+ }
+
+
+ mutation{
+   getTotalFollowupAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+ }
+
+
+ mutation{
+   getTotalConvertedAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+ }
+
+
+ mutation{
+   getTotalDeclinedAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+ }
 
 -----------------
 Academic Year:

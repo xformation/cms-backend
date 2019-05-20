@@ -1786,6 +1786,26 @@ Admission Enquiry:
 	}
 }
 
+--------AdmissionEnquiryTotalCountQueries
+
+query{
+  getTotalAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+}
+
+query{
+  getTotalFollowupAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+}
+
+query{
+  getTotalConvertedAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+}
+
+query{
+  getTotalDeclinedAdmissionEnquiry(branchId:1751,admissionApplicationId:2251)
+}
+
+
+
 ---- invoice filter queries
 
 query{

@@ -246,6 +246,12 @@ type Query {
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getInvoiceData(collegeId:Long, branchId:Long!, academicYearId:Long!): InvoiceFilterProcessor!
+
+    getTotalAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
+    getTotalFollowupAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
+    getTotalConvertedAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
+    getTotalDeclinedAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
+    getAdmissionEnquiryData(branchId:Long!, admissionApplicationId:Long! ): AdmissionEnquiryFilterProcessor!
   
   createStudentAttendanceCache: StudentAttendanceCache!
 }
@@ -282,6 +288,14 @@ type InvoiceFilterProcessor{
 	totalPaidInvoice: Long
 	totalUnPaidInvoice: Long
 	totalCanceledInvoice: Long
+}
+
+
+type AdmissionEnquiryFilterProcessor{
+    totalAdmissionEnquiry: Long
+    totalFollowupAdmissionEnquiry: Long
+    totalConvertedAdmissionEnquiry: Long
+    totalDeclinedAdmissionEnquiry: Long
 }
 
 type City{
@@ -973,6 +987,10 @@ type Mutation {
     removeAcademicHistory(input: RemoveAcademicHistoryInput!): RemoveAcademicHistoryPayload!
 
     addAdmissionEnquiry(input: AddAdmissionEnquiryInput!): AddAdmissionEnquiryPayload!
+    getTotalAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
+    getTotalFollowupAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
+    getTotalConvertedAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
+    getTotalDeclinedAdmissionEnquiry(branchId:Long!, admissionApplicationId:Long! ): Long!
     updateAdmissionEnquiry(input: UpdateAdmissionEnquiryInput!): UpdateAdmissionEnquiryPayload!
     removeAdmissionEnquiry(input: RemoveAdmissionEnquiryInput!): RemoveAdmissionEnquiryPayload!
 
