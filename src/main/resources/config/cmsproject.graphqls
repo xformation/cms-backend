@@ -246,6 +246,12 @@ type Query {
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getInvoiceData(collegeId:String, branchId:String, academicYearId:String): CmsInvoice
+
+    getTotalAdmissions(branchId:Long, admissionApplicationId:Long! ): Long!
+    getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
+    getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
+    getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
+    getAdmissionData(branchId:Long, admissionApplicationId:Long!): CmsAdmissionEnquiry!
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
 }
@@ -255,6 +261,13 @@ type CmsInvoice {
 	totalPaidInvoice: Long!
 	totalUnPaidInvoice: Long!
 	totalCanceledInvoice: Long!
+}
+
+type CmsAdmissionEnquiry {
+	totalAdmissions: Long!
+    totalFollowup: Long
+    totalDeclined: Long
+    totalConverted: Long
 }
 type StudentAttendanceCache{
 	departments: [Department]
@@ -288,6 +301,13 @@ type InvoiceFilterProcessor{
 	totalPaidInvoice: Long
 	totalUnPaidInvoice: Long
 	totalCanceledInvoice: Long
+}
+
+type AdmissionEnquiryProcessor{
+   totalAdmissions: Long
+   totalFollowup: Long
+   totalDeclined: Long
+   totalConverted: Long
 }
 
 type City{
@@ -961,6 +981,11 @@ type Mutation {
     getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
+
+     getTotalAdmissions(branchId:Long, admissionApplicationId:Long! ): Long!
+     getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
+     getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
+     getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
