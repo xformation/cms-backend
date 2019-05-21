@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.repository.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -29,51 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.LectureService;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.FeeCategoryRepository;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
 
 @RestController
@@ -104,6 +63,7 @@ public class CmsAutomatedTestDataSetupProcessor {
     private Facility facility = null;
     private TransportRoute transportRoute=null;
     private FeeDetails feeDetails=null;
+    private AcademicExamSetting academicExamSetting = null;
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -171,6 +131,9 @@ public class CmsAutomatedTestDataSetupProcessor {
     private TransportRouteRepository transportRouteRepository;
     @Autowired
     private FeeDetailsRepository feeDetailsRepository;
+
+    @Autowired
+    private AcademicExamSettingRepository academicExamSettingRepository;
 
     private ObjectMapper mapper = new ObjectMapper();
     String values[] = new String[1];
@@ -316,6 +279,29 @@ public class CmsAutomatedTestDataSetupProcessor {
             executeFeeDetails();
         } catch (Exception e) {
             logger.error("Exception in creating CMS  FeeDetails test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAcademicExamSetting")
+    public void createCmsTestAcademicExamSettingData() throws IOException, ParseException {
+        try {
+            executeAcademicExamSetting();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  AcademicExamSetting test data ", e);
+        }
+    }
+
+    private void executeAcademicExamSetting() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAcademicExamSettingData(wb);
+            logger.info("AcademicExamSetting TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
         }
     }
 
@@ -664,6 +650,26 @@ public class CmsAutomatedTestDataSetupProcessor {
             }
         }
         logger.debug("Saving city data completed.");
+    }
+
+    private void saveCmsAcademicExamSettingData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 0) {
+                    saveAcademicExamSetting(cell);
+                }
+            }
+        }
     }
 
     private void saveCmsData(Workbook workbook) throws ParseException, InterruptedException {
@@ -1432,5 +1438,22 @@ public class CmsAutomatedTestDataSetupProcessor {
             logger.warn("Exception in saving transportRoute data. "+e.getMessage());
         }
         logger.debug("Saving transportRoute data completed.");
+    }
+
+    private void saveAcademicExamSetting(Cell cell) {
+        logger.debug("Saving AcademicExamSetting data started.");
+        this.academicExamSetting = this.testDataPojoBuilder.createAcademicExamSettingPojo(cell,this.department,this.academicYear,this.section);
+
+        try {
+            Example<AcademicExamSetting> example = Example.of(this.academicExamSetting);
+            if (this.academicExamSettingRepository.exists(example) == false) {
+                this.academicExamSetting = this.academicExamSettingRepository.save(this.academicExamSetting);
+            } else {
+                this.academicExamSetting = this.academicExamSettingRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving AcademicExamSetting data. " + e.getMessage());
+        }
+        logger.debug("Saving AcademicExamSetting data completed.");
     }
 }
