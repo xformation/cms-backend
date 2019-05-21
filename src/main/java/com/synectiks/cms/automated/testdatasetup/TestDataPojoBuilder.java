@@ -8,44 +8,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.data.domain.Example;
 
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.enumeration.BatchEnum;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.domain.enumeration.StaffType;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StateRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
+
+import static org.elasticsearch.search.rescore.QueryRescoreMode.Total;
 
 public class TestDataPojoBuilder {
 	SimpleDateFormat ddMMyyyyDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -409,6 +382,25 @@ public class TestDataPojoBuilder {
         feeDetails.setAcademicYear(academicYear);
 
         return feeDetails ;
+    }
+
+    public AcademicExamSetting createAcademicExamSettingPojo(Cell cell,Department department,AcademicYear academicYear,Section section) {
+        AcademicExamSetting academicExamSetting  = new AcademicExamSetting();
+        academicExamSetting.setExamType(cell.getStringCellValue());
+        academicExamSetting.setSemester(SemesterEnum.SEMESTER4);
+        academicExamSetting.setSubject(cell.getStringCellValue());
+        academicExamSetting.setDate(new Date());
+        academicExamSetting.setDay(cell.getStringCellValue());
+        academicExamSetting.setDuration(cell.getStringCellValue());
+        academicExamSetting.setStartTime(cell.getStringCellValue());
+        academicExamSetting.setEndTime(cell.getStringCellValue());
+        academicExamSetting.setTotal(60);
+        academicExamSetting.setPassing(55);
+        academicExamSetting.setActions(cell.getStringCellValue());
+        academicExamSetting.setDepartment(department);
+        academicExamSetting.setAcademicyear(academicYear);
+
+        return academicExamSetting ;
     }
 
 
