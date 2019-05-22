@@ -35,9 +35,8 @@ export class Lecture extends React.Component<ILectureProps, ILectureState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

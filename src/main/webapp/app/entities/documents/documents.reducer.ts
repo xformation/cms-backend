@@ -63,11 +63,6 @@ export default (state: DocumentsState = initialState, action): DocumentsState =>
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_DOCUMENTS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_DOCUMENTS_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/documents';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IDocuments> = query => ({
+export const getSearchEntities: ICrudSearchAction<IDocuments> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_DOCUMENTS,
-  payload: axios.get<IDocuments>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IDocuments>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IDocuments> = (page, size, sort) => ({

@@ -242,7 +242,6 @@ enum TypeOfCollege{
 PRIVATE, PUBLIC
 }
 
-
 entity LegalEntity{
 logoPath String
 logoFileName String
@@ -427,6 +426,11 @@ enum ModeOfEnquiry{
     INPERSON, TELEPHONE, EMAIL
 }
 
+enum GradesEnum{
+    Aplus,A,Bplus,B,Cplus,C
+}
+
+
 entity AdmissionApplication{
     admissionStatus AdmissionStatusEnum required
     course CourseEnum required
@@ -447,6 +451,7 @@ entity AdmissionEnquiry {
     updatedOn LocalDate
     updatedBy String
 }
+
 
 entity AdminAttendance{
     updatedOn LocalDate
@@ -469,6 +474,12 @@ entity AcademicExamSetting {
     total Integer required
     passing Integer required
     actions String
+}
+
+entity TypeOfGrading{
+    minMarks  Integer required
+    maxMarks Integer required
+    grades GradesEnum required
 }
 
 relationship ManyToOne {
@@ -537,6 +548,7 @@ Invoice{academicYear} to AcademicYear
 CompetitiveExam{student} to Student,
 Documents{student} to Student,
 AcademicHistory{student} to Student,
+TypeOfGrading{academicExamSetting} to AcademicExamSetting,
 AdmissionApplication{student} to Student,
 AdmissionEnquiry{branch} to Branch,
 AdmissionEnquiry{admissionApplication} to AdmissionApplication,

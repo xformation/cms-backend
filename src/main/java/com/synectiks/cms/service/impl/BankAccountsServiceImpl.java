@@ -50,7 +50,6 @@ public class BankAccountsServiceImpl implements BankAccountsService {
     @Override
     public BankAccountsDTO save(BankAccountsDTO bankAccountsDTO) {
         log.debug("Request to save BankAccounts : {}", bankAccountsDTO);
-
         BankAccounts bankAccounts = bankAccountsMapper.toEntity(bankAccountsDTO);
         bankAccounts = bankAccountsRepository.save(bankAccounts);
         BankAccountsDTO result = bankAccountsMapper.toDto(bankAccounts);

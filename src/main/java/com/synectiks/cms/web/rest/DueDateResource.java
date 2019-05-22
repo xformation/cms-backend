@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.DueDateService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class DueDateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/due-dates")
-    @Timed
     public ResponseEntity<DueDateDTO> createDueDate(@Valid @RequestBody DueDateDTO dueDateDTO) throws URISyntaxException {
         log.debug("REST request to save DueDate : {}", dueDateDTO);
         if (dueDateDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class DueDateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/due-dates")
-    @Timed
     public ResponseEntity<DueDateDTO> updateDueDate(@Valid @RequestBody DueDateDTO dueDateDTO) throws URISyntaxException {
         log.debug("REST request to update DueDate : {}", dueDateDTO);
         if (dueDateDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class DueDateResource {
      * @return the ResponseEntity with status 200 (OK) and the list of dueDates in body
      */
     @GetMapping("/due-dates")
-    @Timed
     public List<DueDateDTO> getAllDueDates() {
         log.debug("REST request to get all DueDates");
         return dueDateService.findAll();
@@ -99,7 +94,6 @@ public class DueDateResource {
      * @return the ResponseEntity with status 200 (OK) and with body the dueDateDTO, or with status 404 (Not Found)
      */
     @GetMapping("/due-dates/{id}")
-    @Timed
     public ResponseEntity<DueDateDTO> getDueDate(@PathVariable Long id) {
         log.debug("REST request to get DueDate : {}", id);
         Optional<DueDateDTO> dueDateDTO = dueDateService.findOne(id);
@@ -113,7 +107,6 @@ public class DueDateResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/due-dates/{id}")
-    @Timed
     public ResponseEntity<Void> deleteDueDate(@PathVariable Long id) {
         log.debug("REST request to delete DueDate : {}", id);
         dueDateService.delete(id);
@@ -128,7 +121,6 @@ public class DueDateResource {
      * @return the result of the search
      */
     @GetMapping("/_search/due-dates")
-    @Timed
     public List<DueDateDTO> searchDueDates(@RequestParam String query) {
         log.debug("REST request to search DueDates for query {}", query);
         return dueDateService.search(query);

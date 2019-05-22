@@ -50,20 +50,23 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicYear",
             "otherEntityName": "academicYear",
+            "otherEntityRelationshipName": "facility",
+            "relationshipName": "academicYear",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "branch",
             "otherEntityName": "branch",
+            "otherEntityRelationshipName": "facility",
+            "relationshipName": "branch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "student",
             "otherEntityName": "student",
+            "otherEntityRelationshipName": "facility",
+            "relationshipName": "student",
             "otherEntityField": "id"
         }
     ],

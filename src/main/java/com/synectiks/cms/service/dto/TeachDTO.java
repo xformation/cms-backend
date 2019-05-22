@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,6 +10,7 @@ public class TeachDTO implements Serializable {
     private Long id;
 
     private String desc;
+
 
     private Long subjectId;
 

@@ -50,7 +50,6 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public BranchDTO save(BranchDTO branchDTO) {
         log.debug("Request to save Branch : {}", branchDTO);
-
         Branch branch = branchMapper.toEntity(branchDTO);
         branch = branchRepository.save(branch);
         BranchDTO result = branchMapper.toDto(branch);

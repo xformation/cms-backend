@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.AdmissionApplicationService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class AdmissionApplicationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/admission-applications")
-    @Timed
     public ResponseEntity<AdmissionApplicationDTO> createAdmissionApplication(@Valid @RequestBody AdmissionApplicationDTO admissionApplicationDTO) throws URISyntaxException {
         log.debug("REST request to save AdmissionApplication : {}", admissionApplicationDTO);
         if (admissionApplicationDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class AdmissionApplicationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/admission-applications")
-    @Timed
     public ResponseEntity<AdmissionApplicationDTO> updateAdmissionApplication(@Valid @RequestBody AdmissionApplicationDTO admissionApplicationDTO) throws URISyntaxException {
         log.debug("REST request to update AdmissionApplication : {}", admissionApplicationDTO);
         if (admissionApplicationDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class AdmissionApplicationResource {
      * @return the ResponseEntity with status 200 (OK) and the list of admissionApplications in body
      */
     @GetMapping("/admission-applications")
-    @Timed
     public List<AdmissionApplicationDTO> getAllAdmissionApplications() {
         log.debug("REST request to get all AdmissionApplications");
         return admissionApplicationService.findAll();
@@ -99,7 +94,6 @@ public class AdmissionApplicationResource {
      * @return the ResponseEntity with status 200 (OK) and with body the admissionApplicationDTO, or with status 404 (Not Found)
      */
     @GetMapping("/admission-applications/{id}")
-    @Timed
     public ResponseEntity<AdmissionApplicationDTO> getAdmissionApplication(@PathVariable Long id) {
         log.debug("REST request to get AdmissionApplication : {}", id);
         Optional<AdmissionApplicationDTO> admissionApplicationDTO = admissionApplicationService.findOne(id);
@@ -113,7 +107,6 @@ public class AdmissionApplicationResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/admission-applications/{id}")
-    @Timed
     public ResponseEntity<Void> deleteAdmissionApplication(@PathVariable Long id) {
         log.debug("REST request to delete AdmissionApplication : {}", id);
         admissionApplicationService.delete(id);
@@ -128,7 +121,6 @@ public class AdmissionApplicationResource {
      * @return the result of the search
      */
     @GetMapping("/_search/admission-applications")
-    @Timed
     public List<AdmissionApplicationDTO> searchAdmissionApplications(@RequestParam String query) {
         log.debug("REST request to search AdmissionApplications for query {}", query);
         return admissionApplicationService.search(query);

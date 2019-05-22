@@ -48,12 +48,12 @@ State:
 AcademicExamSetting:
 
  {
-  academicExamSetting(id: "1490329") {
+  academicExamSetting(id: "951") {
     id
     examType
     semester
     subject
-    date
+    examDate
     day
     duration
     startTime
@@ -150,7 +150,7 @@ competitiveExams:
   competitiveExam(id:1001) {
   
     testName
-    testScore
+    testScor
     enrollmentNo
     rank
     student {
@@ -182,7 +182,36 @@ Documents:
     }
   }
 }
+
 ----------------------
+TypeOfGrading
+{
+  typeOfGradings{
+    id
+  minMarks
+    maxMarks
+    grades
+    academicExamSetting{
+      id
+    }
+  }
+}
+
+
+{
+  typeOfGrading(id:1002) {
+
+    id
+    minMarks
+    grades
+    academicExamSetting{
+      id
+    }
+  }
+}
+----------------------
+
+department:
 
 {
   department(id: 1101){

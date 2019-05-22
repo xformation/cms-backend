@@ -50,7 +50,6 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
     @Override
     public PaymentRemainderDTO save(PaymentRemainderDTO paymentRemainderDTO) {
         log.debug("Request to save PaymentRemainder : {}", paymentRemainderDTO);
-
         PaymentRemainder paymentRemainder = paymentRemainderMapper.toEntity(paymentRemainderDTO);
         paymentRemainder = paymentRemainderRepository.save(paymentRemainder);
         PaymentRemainderDTO result = paymentRemainderMapper.toDto(paymentRemainder);

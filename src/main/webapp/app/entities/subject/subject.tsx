@@ -35,9 +35,8 @@ export class Subject extends React.Component<ISubjectProps, ISubjectState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

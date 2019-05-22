@@ -63,11 +63,6 @@ export default (state: BatchState = initialState, action): BatchState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_BATCHES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_BATCH_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/batches';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IBatch> = query => ({
+export const getSearchEntities: ICrudSearchAction<IBatch> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_BATCHES,
-  payload: axios.get<IBatch>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IBatch>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IBatch> = (page, size, sort) => ({

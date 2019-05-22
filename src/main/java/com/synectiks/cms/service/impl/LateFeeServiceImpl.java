@@ -50,7 +50,6 @@ public class LateFeeServiceImpl implements LateFeeService {
     @Override
     public LateFeeDTO save(LateFeeDTO lateFeeDTO) {
         log.debug("Request to save LateFee : {}", lateFeeDTO);
-
         LateFee lateFee = lateFeeMapper.toEntity(lateFeeDTO);
         lateFee = lateFeeRepository.save(lateFee);
         LateFeeDTO result = lateFeeMapper.toDto(lateFee);

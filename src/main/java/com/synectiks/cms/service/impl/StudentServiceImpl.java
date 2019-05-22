@@ -50,7 +50,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDTO save(StudentDTO studentDTO) {
         log.debug("Request to save Student : {}", studentDTO);
-
         Student student = studentMapper.toEntity(studentDTO);
         student = studentRepository.save(student);
         StudentDTO result = studentMapper.toDto(student);

@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.CompetitiveExamService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class CompetitiveExamResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/competitive-exams")
-    @Timed
     public ResponseEntity<CompetitiveExamDTO> createCompetitiveExam(@Valid @RequestBody CompetitiveExamDTO competitiveExamDTO) throws URISyntaxException {
         log.debug("REST request to save CompetitiveExam : {}", competitiveExamDTO);
         if (competitiveExamDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class CompetitiveExamResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/competitive-exams")
-    @Timed
     public ResponseEntity<CompetitiveExamDTO> updateCompetitiveExam(@Valid @RequestBody CompetitiveExamDTO competitiveExamDTO) throws URISyntaxException {
         log.debug("REST request to update CompetitiveExam : {}", competitiveExamDTO);
         if (competitiveExamDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class CompetitiveExamResource {
      * @return the ResponseEntity with status 200 (OK) and the list of competitiveExams in body
      */
     @GetMapping("/competitive-exams")
-    @Timed
     public List<CompetitiveExamDTO> getAllCompetitiveExams() {
         log.debug("REST request to get all CompetitiveExams");
         return competitiveExamService.findAll();
@@ -99,7 +94,6 @@ public class CompetitiveExamResource {
      * @return the ResponseEntity with status 200 (OK) and with body the competitiveExamDTO, or with status 404 (Not Found)
      */
     @GetMapping("/competitive-exams/{id}")
-    @Timed
     public ResponseEntity<CompetitiveExamDTO> getCompetitiveExam(@PathVariable Long id) {
         log.debug("REST request to get CompetitiveExam : {}", id);
         Optional<CompetitiveExamDTO> competitiveExamDTO = competitiveExamService.findOne(id);
@@ -113,7 +107,6 @@ public class CompetitiveExamResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/competitive-exams/{id}")
-    @Timed
     public ResponseEntity<Void> deleteCompetitiveExam(@PathVariable Long id) {
         log.debug("REST request to delete CompetitiveExam : {}", id);
         competitiveExamService.delete(id);
@@ -128,7 +121,6 @@ public class CompetitiveExamResource {
      * @return the result of the search
      */
     @GetMapping("/_search/competitive-exams")
-    @Timed
     public List<CompetitiveExamDTO> searchCompetitiveExams(@RequestParam String query) {
         log.debug("REST request to search CompetitiveExams for query {}", query);
         return competitiveExamService.search(query);

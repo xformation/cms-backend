@@ -115,6 +115,14 @@ enum SemesterEnum{
     SEMESTER7
     SEMESTER8
 }
+enum GradesEnum{
+    Aplus
+    A
+    Bplus
+    B
+    Cplus
+    C
+     }
 
 type Query {
 
@@ -150,6 +158,8 @@ type Query {
 
   lecture(id: Long!): Lecture!
   lectures: [Lecture!]!
+
+  typeOfGrading(id: Int!): TypeOfGrading!
 
   holiday(id: Long!): Holiday!
   holidays: [Holiday!]!
@@ -327,6 +337,14 @@ type AdmissionEnquiryProcessor{
    totalFollowup: Long
    totalDeclined: Long
    totalConverted: Long
+}
+
+type TypeOfGrading{
+    id: Long!
+    minMarks: Int!
+    maxMarks: Int!
+    grades: GradesEnum!
+    academicExamSetting: AcademicExamSetting!
 }
 
 type City{
@@ -1010,6 +1028,10 @@ type Mutation {
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
     removeCompetitiveExam(input:RemoveCompetitiveExamInput!):RemoveCompetitiveExamPayload!
 
+    addTypeOfGrading(input: AddTypeOfGradingInput!): AddTypeOfGradingPayload!
+    updateTypeOfGrading(input: UpdateTypeOfGradingInput!): UpdateTypeOfGradingPayload!
+    removeTypeOfGrading(input: RemoveTypeOfGradingInput!): RemoveTypeOfGradingPayload!
+
     addDocuments(input:AddDocumentsInput!):AddDocumentsPayload!
     updateDocuments(input:UpdateDocumentsInput!):UpdateDocumentsPayload!
     removeDocuments(input:RemoveDocumentsInput!):RemoveDocumentsPayload!
@@ -1099,6 +1121,33 @@ type RemoveCompetitiveExamPayload {
     competitiveExam: [ CompetitiveExam!]!
 }
 
+input AddTypeOfGradingInput{
+    minMarks: Int!
+    maxMarks: Int!
+    grades: GradesEnum!
+    academicExamSettingId: Long!
+}
+
+type AddTypeOfGradingPayload {
+    typeOfGrading: TypeOfGrading!
+}
+input UpdateTypeOfGradingInput {
+    id: Long!
+    minMarks: Int!
+    maxMarks: Int!
+    grades: GradesEnum!
+    academicExamSettingId: Long!
+}
+
+type UpdateTypeOfGradingPayload {
+    typeOfGrading: TypeOfGrading!
+}
+input RemoveTypeOfGradingInput {
+   typeOfGradingId: Long!
+}
+type RemoveTypeOfGradingPayload {
+    typeOfGradings: [ TypeOfGrading!]!
+}
 
 input AddAcademicExamSettingInput{
     examType: String!
