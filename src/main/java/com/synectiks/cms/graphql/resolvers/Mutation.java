@@ -438,8 +438,8 @@ public class Mutation implements GraphQLMutationResolver {
             final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();
             academicExamSetting.setDepartment(department);
         }
-        if (updateAcademicExamSettingInput.getAcademicYearId() != null) {
-            final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicYearId()).get();
+        if (updateAcademicExamSettingInput.getAcademicyearId() != null) {
+            final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicyearId()).get();
             academicExamSetting.setAcademicyear(academicYear);
         }
         if (updateAcademicExamSettingInput.getSectionId() != null) {
