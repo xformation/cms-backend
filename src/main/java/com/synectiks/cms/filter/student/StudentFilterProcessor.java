@@ -20,5 +20,9 @@ public class StudentFilterProcessor {
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName){
         return studentService.searchStudent(departmentId, batchId, sectionId, branchId, gender, studentType, studentName);
     }
+    
+    public List<Student> searchStudent(StudentListFilterInput filter){
+        return studentService.searchStudent(filter);
+    }
 }
 

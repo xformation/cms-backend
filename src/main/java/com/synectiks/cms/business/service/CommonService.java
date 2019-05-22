@@ -27,7 +27,9 @@ import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsGenderVo;
 import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.CmsStudentTypeVo;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Holiday;
@@ -40,6 +42,8 @@ import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
+import com.synectiks.cms.graphql.types.Student.StudentType;
+import com.synectiks.cms.graphql.types.gender.Gender;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.BatchRepository;
@@ -336,6 +340,34 @@ public class CommonService {
 		return list;
 	}
 	
+	public List<CmsStudentTypeVo> getAllStudentTypes() {
+        logger.debug("Retrieving all student types");
+        List<CmsStudentTypeVo> ls = new ArrayList<>();
+        for(StudentType sm: StudentType.values()) {
+        	CmsStudentTypeVo vo = new CmsStudentTypeVo();
+        	vo.setId(sm.value());
+        	vo.setDescription(sm.getDescription());
+        	ls.add(vo);
+        }
+        return ls;
+    }
+	
+	public CmsStudentTypeVo getStudentType(Long id) {
+		StudentType sm = StudentType.valueOf(id.intValue());
+		CmsStudentTypeVo vo = new CmsStudentTypeVo();
+        vo.setId(sm.value());
+        vo.setDescription(sm.getDescription());
+        return vo;
+	}
+	
+	public CmsStudentTypeVo getStudentTypeByDescription(String studentTypeDescription) {
+		StudentType sm = StudentType.getStudentTypeOnDescription(studentTypeDescription);
+		CmsStudentTypeVo vo = new CmsStudentTypeVo();
+        vo.setId(sm.value());
+        vo.setDescription(sm.getDescription());
+        return vo;
+	}
+	
 	public List<CmsSemesterVo> getAllSemesters() {
         logger.debug("Retrieving all semesters");
         List<CmsSemesterVo> ls = new ArrayList<>();
@@ -354,6 +386,41 @@ public class CommonService {
         vo.setId(sm.value());
         vo.setDescription(sm.getDescription());
         return vo;
+	}
+	
+	public List<Branch> getBranchForCriteria(Long collegeId){
+		if(collegeId == null) {
+			logger.warn("College id is null. Returning empty branch list.");
+			return Collections.emptyList();
+		}
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Branch> query = cb.createQuery(Branch.class);
+    	Root<Branch> root = query.from(Branch.class);
+    	CriteriaQuery<Branch> select = query.select(root).where(cb.equal(root.get("college"), collegeId));
+    	TypedQuery<Branch> typedQuery = this.entityManager.createQuery(select);
+    	List<Branch> branchList = typedQuery.getResultList();
+    	logger.debug("Returning list of branches from JPA criteria query. Total records : "+branchList.size());
+		return branchList;
+	}
+	
+	public List<Department> getDepartmentForCriteria(List<Branch> branchList, Long academicYearId){
+		if(branchList.size() == 0 || academicYearId == null) {
+			logger.warn("Either branch list is empty or academic year id is null. Returning empty subject list.");
+			logger.warn("Total records in branchList list: "+branchList.size());
+			return Collections.emptyList();
+		}
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Department> query = cb.createQuery(Department.class);
+    	Root<Department> root = query.from(Department.class);
+    	In<Long> inBranch = cb.in(root.get("branch"));
+    	for (Branch bt : branchList) {
+    		inBranch.value(bt.getId());
+    	}
+    	CriteriaQuery<Department> select = query.select(root).where(cb.and(inBranch), cb.and(cb.equal(root.get("academicyear"), academicYearId)));
+    	TypedQuery<Department> typedQuery = this.entityManager.createQuery(select);
+    	List<Department> departmentList = typedQuery.getResultList();
+    	logger.debug("Returning list of departments from JPA criteria query. Total records : "+departmentList.size());
+		return departmentList;
 	}
 	
 	public List<Batch> getBatchForCriteria(List<Department> dept) {
@@ -496,6 +563,34 @@ public class CommonService {
     	List<Lecture> lectureList = typedQuery.getResultList();
     	logger.debug("Returning list of lectures from JPA criteria query. Total records : "+lectureList.size());
 		return lectureList;
+	}
+	
+	public List<CmsGenderVo> getAllGenders() {
+        logger.debug("Retrieving all genders types");
+        List<CmsGenderVo> ls = new ArrayList<>();
+        for(Gender sm: Gender.values()) {
+        	CmsGenderVo vo = new CmsGenderVo();
+        	vo.setId(sm.value());
+        	vo.setDescription(sm.getDescription());
+        	ls.add(vo);
+        }
+        return ls;
+    }
+	
+	public CmsGenderVo getGender(Long id) {
+		Gender sm = Gender.valueOf(id.intValue());
+		CmsGenderVo vo = new CmsGenderVo();
+        vo.setId(sm.value());
+        vo.setDescription(sm.getDescription());
+        return vo;
+	}
+	
+	public CmsGenderVo getGenderByDescription(String genderDescription) {
+		Gender sm = Gender.getGenderOnDescription(genderDescription);
+		CmsGenderVo vo = new CmsGenderVo();
+        vo.setId(sm.value());
+        vo.setDescription(sm.getDescription());
+        return vo;
 	}
 	
 } 

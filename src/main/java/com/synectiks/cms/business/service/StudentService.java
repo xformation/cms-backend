@@ -1,14 +1,22 @@
 package com.synectiks.cms.business.service;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.repository.StudentRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.filter.student.StudentListFilterInput;
+import com.synectiks.cms.graphql.types.Student.StudentType;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
 public class StudentService {
@@ -16,6 +24,9 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    private CommonService commonService;
+    
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName) {
         Student std = new Student();
 
@@ -56,4 +67,61 @@ public class StudentService {
         List<Student> list = this.studentRepository.findAll(example);
         return list;
     }
+    
+    
+    public List<Student> searchStudent(StudentListFilterInput filter) {
+        Student student = new Student();
+        if(!CommonUtil.isNullOrEmpty(filter.getBranchId())) {
+        	Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
+        	if(branch != null) {
+        		student.setBranch(branch);
+        	}
+        }
+        if(!CommonUtil.isNullOrEmpty(filter.getDepartmentId())) {
+        	Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+        	if(department != null) {
+        		student.setDepartment(department);
+        	}
+        }
+        if(!CommonUtil.isNullOrEmpty(filter.getBatchId())) {
+        	Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+        	if(batch != null) {
+        		student.setBatch(batch);
+        	}
+        }
+        if(!CommonUtil.isNullOrEmpty(filter.getSectionId())) {
+        	Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+        	if(section != null) {
+        		student.setSection(section);
+        	}
+        }
+        if(!CommonUtil.isNullOrEmpty(filter.getGender())) {
+        	if(filter.getGender().equalsIgnoreCase(Gender.MALE.toString())) {
+        		student.setSex(Gender.MALE);
+        	}else if(filter.getGender().equalsIgnoreCase(Gender.FEMALE.toString())) {
+        		student.setSex(Gender.FEMALE);
+        	}else if(filter.getGender().equalsIgnoreCase(Gender.OTHER.toString())) {
+        		student.setSex(Gender.OTHER);
+        	}
+        }
+        
+        if(!CommonUtil.isNullOrEmpty(filter.getStudentType())) {
+        	if(filter.getStudentType().equalsIgnoreCase(StudentTypeEnum.REGULAR.toString())) {
+        		student.setStudentType(StudentTypeEnum.REGULAR);
+        	}else if(filter.getStudentType().equalsIgnoreCase(StudentTypeEnum.STAFF_CONCESSION.toString())) {
+        		student.setStudentType(StudentTypeEnum.STAFF_CONCESSION);
+        	}else if(filter.getStudentType().equalsIgnoreCase(StudentTypeEnum.BENEFITS.toString())) {
+        		student.setStudentType(StudentTypeEnum.BENEFITS);
+        	}else if(filter.getStudentType().equalsIgnoreCase(StudentTypeEnum.SCHOLARSHIP.toString())) {
+        		student.setStudentType(StudentTypeEnum.SCHOLARSHIP);
+        	}else if(filter.getStudentType().equalsIgnoreCase(StudentTypeEnum.OTHER_BENEFITS.toString())) {
+        		student.setStudentType(StudentTypeEnum.OTHER_BENEFITS);
+        	}
+        }
+        
+        Example<Student> example = Example.of(student);
+        List<Student> list = this.studentRepository.findAll(example);
+        return list;
+    }
+    
 }

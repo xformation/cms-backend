@@ -163,7 +163,7 @@ type Query {
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
   
-     getDailyStudentAttendance(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+    
   subject(id: Long!): Subject!
   subjects: [Subject!]!
 
@@ -254,8 +254,27 @@ type Query {
     getAdmissionData(branchId:String, admissionApplicationId:String!): CmsAdmissionEnquiry
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
+  createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
 }
 
+type StudentFilterDataCache {
+	branches: [Branch]
+	departments: [Department]
+	batches: [Batch]
+	sections: [Section]
+	studentTypes: [CmsStudentTypeVo]
+	genders: [CmsGenderVo]
+}
+
+type CmsStudentTypeVo{
+	id: Int
+	description: String
+}
+
+type CmsGenderVo{
+	id: Int
+	description: String
+}
 type CmsInvoice { 
 	totalInvoice: Long!
 	totalPaidInvoice: Long!
@@ -1012,7 +1031,17 @@ type Mutation {
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+	getStudentList(filter: StudentListFilterInput!): [Student]!
 
+}
+
+input StudentListFilterInput {
+	branchId: String
+	departmentId: String
+	batchId: String
+	sectionId: String
+	gender: String
+	studentType: String
 }
 
 input AddDocumentsInput{
