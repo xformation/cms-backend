@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -21,6 +20,7 @@ public class HolidayDTO implements Serializable {
 
     @NotNull
     private Status holidayStatus;
+
 
     private Long academicyearId;
 

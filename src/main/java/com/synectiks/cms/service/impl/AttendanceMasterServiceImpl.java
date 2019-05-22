@@ -50,7 +50,6 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
     @Override
     public AttendanceMasterDTO save(AttendanceMasterDTO attendanceMasterDTO) {
         log.debug("Request to save AttendanceMaster : {}", attendanceMasterDTO);
-
         AttendanceMaster attendanceMaster = attendanceMasterMapper.toEntity(attendanceMasterDTO);
         attendanceMaster = attendanceMasterRepository.save(attendanceMaster);
         AttendanceMasterDTO result = attendanceMasterMapper.toDto(attendanceMaster);

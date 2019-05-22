@@ -63,11 +63,6 @@ export default (state: AcademicExamSettingState = initialState, action): Academi
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/academic-exam-settings';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IAcademicExamSetting> = query => ({
+export const getSearchEntities: ICrudSearchAction<IAcademicExamSetting> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS,
-  payload: axios.get<IAcademicExamSetting>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IAcademicExamSetting>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IAcademicExamSetting> = (page, size, sort) => ({

@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.PaymentRemainderService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class PaymentRemainderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/payment-remainders")
-    @Timed
     public ResponseEntity<PaymentRemainderDTO> createPaymentRemainder(@Valid @RequestBody PaymentRemainderDTO paymentRemainderDTO) throws URISyntaxException {
         log.debug("REST request to save PaymentRemainder : {}", paymentRemainderDTO);
         if (paymentRemainderDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class PaymentRemainderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/payment-remainders")
-    @Timed
     public ResponseEntity<PaymentRemainderDTO> updatePaymentRemainder(@Valid @RequestBody PaymentRemainderDTO paymentRemainderDTO) throws URISyntaxException {
         log.debug("REST request to update PaymentRemainder : {}", paymentRemainderDTO);
         if (paymentRemainderDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class PaymentRemainderResource {
      * @return the ResponseEntity with status 200 (OK) and the list of paymentRemainders in body
      */
     @GetMapping("/payment-remainders")
-    @Timed
     public List<PaymentRemainderDTO> getAllPaymentRemainders() {
         log.debug("REST request to get all PaymentRemainders");
         return paymentRemainderService.findAll();
@@ -99,7 +94,6 @@ public class PaymentRemainderResource {
      * @return the ResponseEntity with status 200 (OK) and with body the paymentRemainderDTO, or with status 404 (Not Found)
      */
     @GetMapping("/payment-remainders/{id}")
-    @Timed
     public ResponseEntity<PaymentRemainderDTO> getPaymentRemainder(@PathVariable Long id) {
         log.debug("REST request to get PaymentRemainder : {}", id);
         Optional<PaymentRemainderDTO> paymentRemainderDTO = paymentRemainderService.findOne(id);
@@ -113,7 +107,6 @@ public class PaymentRemainderResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/payment-remainders/{id}")
-    @Timed
     public ResponseEntity<Void> deletePaymentRemainder(@PathVariable Long id) {
         log.debug("REST request to delete PaymentRemainder : {}", id);
         paymentRemainderService.delete(id);
@@ -128,7 +121,6 @@ public class PaymentRemainderResource {
      * @return the result of the search
      */
     @GetMapping("/_search/payment-remainders")
-    @Timed
     public List<PaymentRemainderDTO> searchPaymentRemainders(@RequestParam String query) {
         log.debug("REST request to search PaymentRemainders for query {}", query);
         return paymentRemainderService.search(query);

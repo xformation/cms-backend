@@ -50,6 +50,7 @@ import com.synectiks.cms.graphql.types.Teach.*;
 import com.synectiks.cms.graphql.types.Teacher.*;
 import com.synectiks.cms.graphql.types.Term.*;
 import com.synectiks.cms.graphql.types.TransportRoute.*;
+import com.synectiks.cms.graphql.types.TypeOfGrading.*;
 import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -105,6 +106,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final CompetitiveExamRepository competitiveExamRepository;
     private final DocumentsRepository documentsRepository;
     private final AdminAttendanceRepository adminAttendanceRepository;
+    private final TypeOfGradingRepository typeOfGradingRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -127,7 +129,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private AdmissionEnquiryProcessor admissionEnquiryProcessor;
 
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -168,6 +170,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.competitiveExamRepository = competitiveExamRepository;
         this.documentsRepository = documentsRepository;
         this.adminAttendanceRepository = adminAttendanceRepository;
+        this.typeOfGradingRepository = typeOfGradingRepository;
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -280,6 +283,47 @@ public class Mutation implements GraphQLMutationResolver {
         stateRepository.delete(state);
         return new RemoveStatePayload(Lists.newArrayList(stateRepository.findAll()));
     }
+
+    public AddTypeOfGradingPayload addTypeOfGrading(AddTypeOfGradingInput addTypeOfGradingInput) {
+        final TypeOfGrading typeOfGrading = new TypeOfGrading();
+        typeOfGrading.setMinMarks(addTypeOfGradingInput.getMinMarks());
+        typeOfGrading.setMaxMarks(addTypeOfGradingInput.getMaxMarks());
+        typeOfGrading.setGrades(addTypeOfGradingInput.getGrades());
+        AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(addTypeOfGradingInput.getAcademicExamSettingId()).get();
+        typeOfGrading.setAcademicExamSetting(academicExamSetting);
+        typeOfGradingRepository.save(typeOfGrading);
+
+        return new AddTypeOfGradingPayload(typeOfGrading);
+    }
+
+    public UpdateTypeOfGradingPayload updateTypeOfGrading(UpdateTypeOfGradingInput updateTypeOfGradingInput) {
+        TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateTypeOfGradingInput.getId()).get();
+        if (updateTypeOfGradingInput.getMinMarks() != null) {
+            typeOfGrading.setMinMarks(updateTypeOfGradingInput.getMinMarks());
+        }
+        if (updateTypeOfGradingInput.getMaxMarks() != null) {
+            typeOfGrading.setMaxMarks(updateTypeOfGradingInput.getMaxMarks());
+        }
+        if (updateTypeOfGradingInput.getGrades() != null) {
+            typeOfGrading.setGrades(updateTypeOfGradingInput.getGrades());
+        }
+        if (updateTypeOfGradingInput.getAcademicExamSettingId() != null) {
+            final AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(updateTypeOfGradingInput.getAcademicExamSettingId()).get();
+            typeOfGrading.setAcademicExamSetting(academicExamSetting);
+        }
+
+        typeOfGradingRepository.save(typeOfGrading);
+
+        return new UpdateTypeOfGradingPayload(typeOfGrading);
+
+    }
+
+    public RemoveTypeOfGradingPayload removeTypeOfGrading(RemoveTypeOfGradingInput removeTypeOfGradingInput) {
+        TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(removeTypeOfGradingInput.getTypeOfGradingId()).get();
+        typeOfGradingRepository.delete(typeOfGrading);
+        return new RemoveTypeOfGradingPayload(Lists.newArrayList(typeOfGradingRepository.findAll()));
+    }
+
 
     public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput addAdmissionApplicationInput) {
         Student student = studentRepository.findById(addAdmissionApplicationInput.getStudentId()).get();
@@ -394,8 +438,8 @@ public class Mutation implements GraphQLMutationResolver {
             final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();
             academicExamSetting.setDepartment(department);
         }
-        if (updateAcademicExamSettingInput.getAcademicYearId() != null) {
-            final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicYearId()).get();
+        if (updateAcademicExamSettingInput.getAcademicyearId() != null) {
+            final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicyearId()).get();
             academicExamSetting.setAcademicyear(academicYear);
         }
         if (updateAcademicExamSettingInput.getSectionId() != null) {

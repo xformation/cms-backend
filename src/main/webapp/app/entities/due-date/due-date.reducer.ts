@@ -63,11 +63,6 @@ export default (state: DueDateState = initialState, action): DueDateState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_DUEDATES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_DUEDATE_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/due-dates';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IDueDate> = query => ({
+export const getSearchEntities: ICrudSearchAction<IDueDate> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_DUEDATES,
-  payload: axios.get<IDueDate>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IDueDate>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IDueDate> = (page, size, sort) => ({

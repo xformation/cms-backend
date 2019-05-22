@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.CityService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class CityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/cities")
-    @Timed
     public ResponseEntity<CityDTO> createCity(@Valid @RequestBody CityDTO cityDTO) throws URISyntaxException {
         log.debug("REST request to save City : {}", cityDTO);
         if (cityDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class CityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/cities")
-    @Timed
     public ResponseEntity<CityDTO> updateCity(@Valid @RequestBody CityDTO cityDTO) throws URISyntaxException {
         log.debug("REST request to update City : {}", cityDTO);
         if (cityDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class CityResource {
      * @return the ResponseEntity with status 200 (OK) and the list of cities in body
      */
     @GetMapping("/cities")
-    @Timed
     public List<CityDTO> getAllCities() {
         log.debug("REST request to get all Cities");
         return cityService.findAll();
@@ -99,7 +94,6 @@ public class CityResource {
      * @return the ResponseEntity with status 200 (OK) and with body the cityDTO, or with status 404 (Not Found)
      */
     @GetMapping("/cities/{id}")
-    @Timed
     public ResponseEntity<CityDTO> getCity(@PathVariable Long id) {
         log.debug("REST request to get City : {}", id);
         Optional<CityDTO> cityDTO = cityService.findOne(id);
@@ -113,7 +107,6 @@ public class CityResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/cities/{id}")
-    @Timed
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
         cityService.delete(id);
@@ -128,7 +121,6 @@ public class CityResource {
      * @return the result of the search
      */
     @GetMapping("/_search/cities")
-    @Timed
     public List<CityDTO> searchCities(@RequestParam String query) {
         log.debug("REST request to search Cities for query {}", query);
         return cityService.search(query);

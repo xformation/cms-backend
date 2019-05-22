@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -36,6 +35,7 @@ public class AuthorizedSignatoryDTO implements Serializable {
 
     @NotNull
     private String panCardNumber;
+
 
     private Long branchId;
 
