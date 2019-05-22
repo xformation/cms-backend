@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity AdminAttendance.
     -->
-    <changeSet id="20190515094120-2" author="jhipster">
+    <changeSet id="20190522035241-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="lecture_id"
                                  baseTableName="admin_attendance"

@@ -16,7 +16,7 @@ export interface IAcademicExamSetting {
   examType?: string;
   semester?: SemesterEnum;
   subject?: string;
-  date?: Moment;
+  examDate?: Moment;
   day?: string;
   duration?: string;
   startTime?: string;

@@ -10,7 +10,7 @@ public class AbstractAcademicExamSettingInput {
     private String examType;
     private SemesterEnum semester;
     private String subject;
-    private Date date;
+    private Date examDate;
     private String day;
     private String duration;
     private String startTime;
@@ -51,12 +51,12 @@ public class AbstractAcademicExamSettingInput {
         this.subject = subject;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getExamDate() {
+        return examDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setExamDate(Date examDate) {
+        this.examDate = examDate;
     }
 
     public String getDay() {
@@ -124,7 +124,7 @@ public class AbstractAcademicExamSettingInput {
             Objects.equals(examType, that.examType) &&
             semester == that.semester &&
             Objects.equals(subject, that.subject) &&
-            Objects.equals(date, that.date) &&
+            Objects.equals(examDate, that.examDate) &&
             Objects.equals(day, that.day) &&
             Objects.equals(duration, that.duration) &&
             Objects.equals(startTime, that.startTime) &&
@@ -136,7 +136,7 @@ public class AbstractAcademicExamSettingInput {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examType, semester, subject, date, day, duration, startTime, endTime, total, passing, actions);
+        return Objects.hash(id, examType, semester, subject, examDate, day, duration, startTime, endTime, total, passing, actions);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class AbstractAcademicExamSettingInput {
             ", examType='" + examType + '\'' +
             ", semester=" + semester +
             ", subject='" + subject + '\'' +
-            ", date=" + date +
+            ", examDate=" + examDate +
             ", day='" + day + '\'' +
             ", duration='" + duration + '\'' +
             ", startTime='" + startTime + '\'' +

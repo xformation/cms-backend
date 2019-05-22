@@ -582,6 +582,22 @@ import adminAttendance, {
 import academicExamSetting, {
   AcademicExamSettingState
 } from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
+// prettier-ignore
+import metaLecture, {
+  MetaLectureState
+} from 'app/entities/meta-lecture/meta-lecture.reducer';
+// prettier-ignore
+import admissionEnquiry, {
+  AdmissionEnquiryState
+} from 'app/entities/admission-enquiry/admission-enquiry.reducer';
+// prettier-ignore
+import adminAttendance, {
+  AdminAttendanceState
+} from 'app/entities/admin-attendance/admin-attendance.reducer';
+// prettier-ignore
+import academicExamSetting, {
+  AcademicExamSettingState
+} from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

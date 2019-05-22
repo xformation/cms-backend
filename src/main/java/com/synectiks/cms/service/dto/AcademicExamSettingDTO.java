@@ -22,7 +22,7 @@ public class AcademicExamSettingDTO implements Serializable {
     private String subject;
 
     @NotNull
-    private LocalDate date;
+    private LocalDate examDate;
 
     @NotNull
     private String day;
@@ -82,12 +82,12 @@ public class AcademicExamSettingDTO implements Serializable {
         this.subject = subject;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getExamDate() {
+        return examDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setExamDate(LocalDate examDate) {
+        this.examDate = examDate;
     }
 
     public String getDay() {
@@ -198,7 +198,7 @@ public class AcademicExamSettingDTO implements Serializable {
             ", examType='" + getExamType() + "'" +
             ", semester='" + getSemester() + "'" +
             ", subject='" + getSubject() + "'" +
-            ", date='" + getDate() + "'" +
+            ", examDate='" + getExamDate() + "'" +
             ", day='" + getDay() + "'" +
             ", duration='" + getDuration() + "'" +
             ", startTime='" + getStartTime() + "'" +

@@ -78,7 +78,7 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                 <th>Exam Type</th>
                 <th>Semester</th>
                 <th>Subject</th>
-                <th>Date</th>
+                <th>Exam Date</th>
                 <th>Day</th>
                 <th>Duration</th>
                 <th>Start Time</th>
@@ -104,7 +104,7 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                   <td>{academicExamSetting.semester}</td>
                   <td>{academicExamSetting.subject}</td>
                   <td>
-                    <TextFormat type="date" value={academicExamSetting.date} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={academicExamSetting.examDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{academicExamSetting.day}</td>
                   <td>{academicExamSetting.duration}</td>

@@ -41,10 +41,10 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
             </dt>
             <dd>{academicExamSettingEntity.subject}</dd>
             <dt>
-              <span id="date">Date</span>
+              <span id="examDate">Exam Date</span>
             </dt>
             <dd>
-              <TextFormat value={academicExamSettingEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={academicExamSettingEntity.examDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="day">Day</span>

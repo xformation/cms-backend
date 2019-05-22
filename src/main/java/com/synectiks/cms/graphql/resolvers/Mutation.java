@@ -341,7 +341,7 @@ public class Mutation implements GraphQLMutationResolver {
         academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
         academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
         academicExamSetting.setSubject(addAcademicExamSettingInput.getSubject());
-        academicExamSetting.setDate(addAcademicExamSettingInput.getDate());
+        academicExamSetting.setExamDate(addAcademicExamSettingInput.getExamDate());
         academicExamSetting.setDay(addAcademicExamSettingInput.getDay());
         academicExamSetting.setDuration(addAcademicExamSettingInput.getDuration());
         academicExamSetting.setStartTime(addAcademicExamSettingInput.getStartTime());
@@ -366,8 +366,8 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicExamSettingInput.getSubject() != null) {
             academicExamSetting.setSubject(updateAcademicExamSettingInput.getSubject());
         }
-        if (updateAcademicExamSettingInput.getDate() != null) {
-            academicExamSetting.setDate(updateAcademicExamSettingInput.getDate());
+        if (updateAcademicExamSettingInput.getExamDate() != null) {
+            academicExamSetting.setExamDate(updateAcademicExamSettingInput.getExamDate());
         }
         if (updateAcademicExamSettingInput.getDay() != null) {
             academicExamSetting.setDay(updateAcademicExamSettingInput.getDay());

@@ -59,8 +59,8 @@ public class AcademicExamSettingResourceIntTest {
     private static final String DEFAULT_SUBJECT = "AAAAAAAAAA";
     private static final String UPDATED_SUBJECT = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_DATE = new Date();
-    private static final Date UPDATED_DATE = new Date();
+    private static final Date DEFAULT_EXAM_DATE = new Date();
+    private static final Date UPDATED_EXAM_DATE = new Date();
 
     private static final String DEFAULT_DAY = "AAAAAAAAAA";
     private static final String UPDATED_DAY = "BBBBBBBBBB";
@@ -138,7 +138,7 @@ public class AcademicExamSettingResourceIntTest {
             .examType(DEFAULT_EXAM_TYPE)
             .semester(DEFAULT_SEMESTER)
             .subject(DEFAULT_SUBJECT)
-            .date(DEFAULT_DATE)
+            .examDate(DEFAULT_EXAM_DATE)
             .day(DEFAULT_DAY)
             .duration(DEFAULT_DURATION)
             .startTime(DEFAULT_START_TIME)
@@ -173,7 +173,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getExamType()).isEqualTo(DEFAULT_EXAM_TYPE);
         assertThat(testAcademicExamSetting.getSemester()).isEqualTo(DEFAULT_SEMESTER);
         assertThat(testAcademicExamSetting.getSubject()).isEqualTo(DEFAULT_SUBJECT);
-        assertThat(testAcademicExamSetting.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testAcademicExamSetting.getExamDate()).isEqualTo(DEFAULT_EXAM_DATE);
         assertThat(testAcademicExamSetting.getDay()).isEqualTo(DEFAULT_DAY);
         assertThat(testAcademicExamSetting.getDuration()).isEqualTo(DEFAULT_DURATION);
         assertThat(testAcademicExamSetting.getStartTime()).isEqualTo(DEFAULT_START_TIME);
@@ -249,10 +249,10 @@ public class AcademicExamSettingResourceIntTest {
 
     @Test
     @Transactional
-    public void checkDateIsRequired() throws Exception {
+    public void checkExamDateIsRequired() throws Exception {
         int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
         // set the field null
-        academicExamSetting.setDate(null);
+        academicExamSetting.setExamDate(null);
 
         // Create the AcademicExamSetting, which fails.
         AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(academicExamSetting);
@@ -394,7 +394,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].examType").value(hasItem(DEFAULT_EXAM_TYPE.toString())))
             .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
             .andExpect(jsonPath("$.[*].subject").value(hasItem(DEFAULT_SUBJECT.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].examDate").value(hasItem(DEFAULT_EXAM_DATE.toString())))
             .andExpect(jsonPath("$.[*].day").value(hasItem(DEFAULT_DAY.toString())))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION.toString())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
@@ -418,7 +418,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.examType").value(DEFAULT_EXAM_TYPE.toString()))
             .andExpect(jsonPath("$.semester").value(DEFAULT_SEMESTER.toString()))
             .andExpect(jsonPath("$.subject").value(DEFAULT_SUBJECT.toString()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.examDate").value(DEFAULT_EXAM_DATE.toString()))
             .andExpect(jsonPath("$.day").value(DEFAULT_DAY.toString()))
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION.toString()))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
@@ -452,7 +452,7 @@ public class AcademicExamSettingResourceIntTest {
             .examType(UPDATED_EXAM_TYPE)
             .semester(UPDATED_SEMESTER)
             .subject(UPDATED_SUBJECT)
-            .date(UPDATED_DATE)
+            .examDate(UPDATED_EXAM_DATE)
             .day(UPDATED_DAY)
             .duration(UPDATED_DURATION)
             .startTime(UPDATED_START_TIME)
@@ -474,7 +474,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getExamType()).isEqualTo(UPDATED_EXAM_TYPE);
         assertThat(testAcademicExamSetting.getSemester()).isEqualTo(UPDATED_SEMESTER);
         assertThat(testAcademicExamSetting.getSubject()).isEqualTo(UPDATED_SUBJECT);
-        assertThat(testAcademicExamSetting.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testAcademicExamSetting.getExamDate()).isEqualTo(UPDATED_EXAM_DATE);
         assertThat(testAcademicExamSetting.getDay()).isEqualTo(UPDATED_DAY);
         assertThat(testAcademicExamSetting.getDuration()).isEqualTo(UPDATED_DURATION);
         assertThat(testAcademicExamSetting.getStartTime()).isEqualTo(UPDATED_START_TIME);
@@ -545,7 +545,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].examType").value(hasItem(DEFAULT_EXAM_TYPE)))
             .andExpect(jsonPath("$.[*].semester").value(hasItem(DEFAULT_SEMESTER.toString())))
             .andExpect(jsonPath("$.[*].subject").value(hasItem(DEFAULT_SUBJECT)))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].examDate").value(hasItem(DEFAULT_EXAM_DATE.toString())))
             .andExpect(jsonPath("$.[*].day").value(hasItem(DEFAULT_DAY)))
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME)))

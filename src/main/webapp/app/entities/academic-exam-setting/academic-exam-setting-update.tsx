@@ -140,14 +140,14 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                   <AvField id="academic-exam-setting-subject" type="text" name="subject" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="dateLabel" for="date">
-                    Date
+                  <Label id="examDateLabel" for="examDate">
+                    Exam Date
                   </Label>
                   <AvField
-                    id="academic-exam-setting-date"
+                    id="academic-exam-setting-examDate"
                     type="date"
                     className="form-control"
-                    name="date"
+                    name="examDate"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}

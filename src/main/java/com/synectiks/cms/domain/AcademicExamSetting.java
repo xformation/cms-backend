@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -43,8 +44,8 @@ public class AcademicExamSetting implements Serializable {
     private String subject;
 
     @NotNull
-    @Column(name = "jhi_date", nullable = false)
-    private Date date;
+    @Column(name = "exam_date", nullable = false)
+    private Date examDate;
 
     @NotNull
     @Column(name = "day", nullable = false)
@@ -133,17 +134,17 @@ public class AcademicExamSetting implements Serializable {
         this.subject = subject;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getExamDate() {
+        return examDate;
     }
 
-    public AcademicExamSetting date(Date date) {
-        this.date = date;
+    public AcademicExamSetting examDate(Date examDate) {
+        this.examDate = examDate;
         return this;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setExamDate(Date examDate) {
+        this.examDate = examDate;
     }
 
     public String getDay() {
@@ -304,7 +305,7 @@ public class AcademicExamSetting implements Serializable {
             ", examType='" + getExamType() + "'" +
             ", semester='" + getSemester() + "'" +
             ", subject='" + getSubject() + "'" +
-            ", date='" + getDate() + "'" +
+            ", examDate='" + getExamDate() + "'" +
             ", day='" + getDay() + "'" +
             ", duration='" + getDuration() + "'" +
             ", startTime='" + getStartTime() + "'" +

@@ -7,7 +7,7 @@ export default class AcademicExamSettingUpdatePage {
   examTypeInput: ElementFinder = element(by.css('input#academic-exam-setting-examType'));
   semesterSelect: ElementFinder = element(by.css('select#academic-exam-setting-semester'));
   subjectInput: ElementFinder = element(by.css('input#academic-exam-setting-subject'));
-  dateInput: ElementFinder = element(by.css('input#academic-exam-setting-date'));
+  examDateInput: ElementFinder = element(by.css('input#academic-exam-setting-examDate'));
   dayInput: ElementFinder = element(by.css('input#academic-exam-setting-day'));
   durationInput: ElementFinder = element(by.css('input#academic-exam-setting-duration'));
   startTimeInput: ElementFinder = element(by.css('input#academic-exam-setting-startTime'));
@@ -53,12 +53,12 @@ export default class AcademicExamSettingUpdatePage {
     return this.subjectInput.getAttribute('value');
   }
 
-  async setDateInput(date) {
-    await this.dateInput.sendKeys(date);
+  async setExamDateInput(examDate) {
+    await this.examDateInput.sendKeys(examDate);
   }
 
-  async getDateInput() {
-    return this.dateInput.getAttribute('value');
+  async getExamDateInput() {
+    return this.examDateInput.getAttribute('value');
   }
 
   async setDayInput(day) {

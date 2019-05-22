@@ -75,7 +75,7 @@ class AcademicExamSettingGatlingTest extends Simulation {
                 , "examType":"SAMPLE_TEXT"
                 , "semester":"SEMESTER1"
                 , "subject":"SAMPLE_TEXT"
-                , "date":"2020-01-01T00:00:00.000Z"
+                , "examDate":"2020-01-01T00:00:00.000Z"
                 , "day":"SAMPLE_TEXT"
                 , "duration":"SAMPLE_TEXT"
                 , "startTime":"SAMPLE_TEXT"

@@ -601,7 +601,7 @@ type AcademicExamSetting{
     examType: String!
     semester: SemesterEnum!
     subject: String!
-    date: Date!
+    examDate: Date!
     day: String!
     duration: String!
     startTime: String!
@@ -1075,7 +1075,7 @@ input AddAcademicExamSettingInput{
     examType: String!
     semester: SemesterEnum!
     subject: String!
-    date: Date!
+    examDate: Date!
     day: String!
     duration: String!
     startTime: String!
@@ -1096,7 +1096,7 @@ input UpdateAcademicExamSettingInput {
     examType: String!
     semester: SemesterEnum!
     subject: String!
-    date: Date!
+    examDate: Date!
     day: String!
     duration: String!
     startTime: String!
