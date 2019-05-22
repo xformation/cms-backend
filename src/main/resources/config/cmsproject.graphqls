@@ -251,7 +251,7 @@ type Query {
     getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
     getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
     getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
-    getAdmissionData(branchId:Long, admissionApplicationId:Long!): CmsAdmissionEnquiry!
+    getAdmissionData(branchId:String, admissionApplicationId:String!): CmsAdmissionEnquiry
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
 }
