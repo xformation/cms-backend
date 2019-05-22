@@ -160,6 +160,7 @@ type Query {
   lectures: [Lecture!]!
 
   typeOfGrading(id: Int!): TypeOfGrading!
+  typeOfGradings:[TypeOfGrading!]!
 
   holiday(id: Long!): Holiday!
   holidays: [Holiday!]!
