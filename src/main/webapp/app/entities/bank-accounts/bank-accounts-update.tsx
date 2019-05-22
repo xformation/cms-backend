@@ -15,7 +15,7 @@ import { getEntities as getColleges } from 'app/entities/college/college.reducer
 import { getEntity, updateEntity, createEntity, reset } from './bank-accounts.reducer';
 import { IBankAccounts } from 'app/shared/model/bank-accounts.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IBankAccountsUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

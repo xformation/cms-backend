@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -113,9 +112,6 @@ public class AcademicExamSettingResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAcademicExamSettingMockMvc;
 
     private AcademicExamSetting academicExamSetting;
@@ -128,8 +124,7 @@ public class AcademicExamSettingResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -522,7 +517,7 @@ public class AcademicExamSettingResourceIntTest {
 
         int databaseSizeBeforeDelete = academicExamSettingRepository.findAll().size();
 
-        // Delete the academicExamSetting
+        // Get the academicExamSetting
         restAcademicExamSettingMockMvc.perform(delete("/api/academic-exam-settings/{id}", academicExamSetting.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.StateService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class StateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/states")
+    @Timed
     public ResponseEntity<StateDTO> createState(@Valid @RequestBody StateDTO stateDTO) throws URISyntaxException {
         log.debug("REST request to save State : {}", stateDTO);
         if (stateDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class StateResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/states")
+    @Timed
     public ResponseEntity<StateDTO> updateState(@Valid @RequestBody StateDTO stateDTO) throws URISyntaxException {
         log.debug("REST request to update State : {}", stateDTO);
         if (stateDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class StateResource {
      * @return the ResponseEntity with status 200 (OK) and the list of states in body
      */
     @GetMapping("/states")
+    @Timed
     public List<StateDTO> getAllStates() {
         log.debug("REST request to get all States");
         return stateService.findAll();
@@ -94,6 +99,7 @@ public class StateResource {
      * @return the ResponseEntity with status 200 (OK) and with body the stateDTO, or with status 404 (Not Found)
      */
     @GetMapping("/states/{id}")
+    @Timed
     public ResponseEntity<StateDTO> getState(@PathVariable Long id) {
         log.debug("REST request to get State : {}", id);
         Optional<StateDTO> stateDTO = stateService.findOne(id);
@@ -107,6 +113,7 @@ public class StateResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/states/{id}")
+    @Timed
     public ResponseEntity<Void> deleteState(@PathVariable Long id) {
         log.debug("REST request to delete State : {}", id);
         stateService.delete(id);
@@ -121,6 +128,7 @@ public class StateResource {
      * @return the result of the search
      */
     @GetMapping("/_search/states")
+    @Timed
     public List<StateDTO> searchStates(@RequestParam String query) {
         log.debug("REST request to search States for query {}", query);
         return stateService.search(query);

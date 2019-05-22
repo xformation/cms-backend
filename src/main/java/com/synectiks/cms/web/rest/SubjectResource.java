@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.SubjectService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class SubjectResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/subjects")
+    @Timed
     public ResponseEntity<SubjectDTO> createSubject(@Valid @RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
         log.debug("REST request to save Subject : {}", subjectDTO);
         if (subjectDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class SubjectResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/subjects")
+    @Timed
     public ResponseEntity<SubjectDTO> updateSubject(@Valid @RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
         log.debug("REST request to update Subject : {}", subjectDTO);
         if (subjectDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class SubjectResource {
      * @return the ResponseEntity with status 200 (OK) and the list of subjects in body
      */
     @GetMapping("/subjects")
+    @Timed
     public List<SubjectDTO> getAllSubjects() {
         log.debug("REST request to get all Subjects");
         return subjectService.findAll();
@@ -94,6 +99,7 @@ public class SubjectResource {
      * @return the ResponseEntity with status 200 (OK) and with body the subjectDTO, or with status 404 (Not Found)
      */
     @GetMapping("/subjects/{id}")
+    @Timed
     public ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
         Optional<SubjectDTO> subjectDTO = subjectService.findOne(id);
@@ -107,6 +113,7 @@ public class SubjectResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/subjects/{id}")
+    @Timed
     public ResponseEntity<Void> deleteSubject(@PathVariable Long id) {
         log.debug("REST request to delete Subject : {}", id);
         subjectService.delete(id);
@@ -121,6 +128,7 @@ public class SubjectResource {
      * @return the result of the search
      */
     @GetMapping("/_search/subjects")
+    @Timed
     public List<SubjectDTO> searchSubjects(@RequestParam String query) {
         log.debug("REST request to search Subjects for query {}", query);
         return subjectService.search(query);

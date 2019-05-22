@@ -401,7 +401,7 @@ mutation addAcademicEamSetting($input: AddAcademicExamSettingInput!) {
       examType
     semester
     subject
-    examDate
+    date
     day
     duration
     startTime
@@ -422,13 +422,13 @@ mutation addAcademicEamSetting($input: AddAcademicExamSettingInput!) {
 }
 }
 
-------
+
 {
  "input":{
   "examType": "midterm1",
   "semester": "SEMESTER2",
   "subject": "VDMS",
-  "examDate": "2019-04-26",
+  "date": "2019-04-26",
   "day": "FRIDAY",
   "duration": "3HRS",
   "startTime": "7:30:00Am",
@@ -442,53 +442,6 @@ mutation addAcademicEamSetting($input: AddAcademicExamSettingInput!) {
 }
 }
 
-mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
-  updateAcademicExamSetting(input: $input) {
-   academicExamSetting {
-      id
-      examType
-    semester
-    subject
-    examDate
-    day
-    duration
-    startTime
-    endTime
-    total
-    passing
-    actions
-    department{
-      id
-    }
-    section{
-      id
-    }
-    academicyear{
-      id
-    }
-  }
-}
-}
-
-{
- "input":{
-  "id": 1003,
-  "examType": "midterm1",
-  "semester": "SEMESTER2",
-  "subject": "VDMS",
-  "examDate": "2019-04-26",
-  "day": "FRIDAY",
-  "duration": "2HRS",
-  "startTime": "08:00:00Am",
-  "endTime": "10:30:00Am",
-  "total": 100,
-  "passing": 35,
-  "actions": "ACTIVE",
-  "departmentId": 1101,
-  "sectionId":  1201,
-  "academicyearId":  1051
-}
-}
 -------------------------
 Academic Year:
 
@@ -524,54 +477,6 @@ mutation updateAcademicYear($input: UpdateAcademicYearInput!){
     desc
   }
  }
-}
------------------------
-TypeOfGrading:
-
-mutation addTypeOfGrading($input:AddTypeOfGradingInput!){
-  addTypeOfGrading(input: $input) {
-    typeOfGrading{
-      id
-      minMarks
-      maxMarks
-      grades
-      academicExamSetting{
-        id
-      }
-    }
-  }
-}
-
-{
-  "input": {
-    "minMarks": 91,
-    "maxMarks": 100,
-    "grades": "Aplus",
-    "academicExamSettingId": 1490329
-  }
-}
-
-mutation updateTypeOfGrading($input: UpdateTypeOfGradingInput!){
-  updateTypeOfGrading(input: $input) {
-    typeOfGrading{
-      id
-      minMarks
-      maxMarks
-      grades
-      academicExamSetting{
-        id
-      }
-    }
-  }
-}
-{
-  "input": {
-    "id": 951,
-    "minMarks": 92,
-    "maxMarks": 100,
-    "grades": "Aplus",
-    "academicExamSettingId": 1490329
-  }
 }
 -----------------------
 Competitive Exam:

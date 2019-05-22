@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.Status;
@@ -35,7 +36,6 @@ public class FacilityDTO implements Serializable {
     private Status extraClass;
 
     private Status handicrafts;
-
 
     private Long academicYearId;
 

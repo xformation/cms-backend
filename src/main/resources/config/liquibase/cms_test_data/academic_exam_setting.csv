@@ -1,4 +1,4 @@
-id;exam_type;semester;subject;exam_date;day;duration;start_time;end_time;total;passing;actions;department_id;academicyear_id;section_id
+id;exam_type;semester;subject;jhi_date;day;duration;start_time;end_time;total;passing;actions;department_id;academicyear_id;section_id
 1490329;midterm1;SEMESTER1;DBMS;2019-04-23;TUESDAY;3HRS;7:30:00Am;10:30:00Am;100;35;ACTIVE;1101;1051;1201
 1490356;midterm1;SEMESTER1;OS;2019-05-21;TUESDAY;3HRS;7:30:00Am;10:30:00Am;100;35;ACTIVE;1101;1051;1201
 1490398;midterm1;SEMESTER1;EDC;2019-06-17;MONDAY;3HRS;7:30:00Am;10:30:00Am;100;35;ACTIVE;1101;1051;1201

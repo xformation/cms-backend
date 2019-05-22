@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -95,9 +94,6 @@ public class DueDateResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restDueDateMockMvc;
 
     private DueDate dueDate;
@@ -110,8 +106,7 @@ public class DueDateResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -392,7 +387,7 @@ public class DueDateResourceIntTest {
 
         int databaseSizeBeforeDelete = dueDateRepository.findAll().size();
 
-        // Delete the dueDate
+        // Get the dueDate
         restDueDateMockMvc.perform(delete("/api/due-dates/{id}", dueDate.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

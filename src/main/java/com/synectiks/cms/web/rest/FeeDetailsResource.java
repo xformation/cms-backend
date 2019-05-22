@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.FeeDetailsService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class FeeDetailsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/fee-details")
+    @Timed
     public ResponseEntity<FeeDetailsDTO> createFeeDetails(@Valid @RequestBody FeeDetailsDTO feeDetailsDTO) throws URISyntaxException {
         log.debug("REST request to save FeeDetails : {}", feeDetailsDTO);
         if (feeDetailsDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class FeeDetailsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/fee-details")
+    @Timed
     public ResponseEntity<FeeDetailsDTO> updateFeeDetails(@Valid @RequestBody FeeDetailsDTO feeDetailsDTO) throws URISyntaxException {
         log.debug("REST request to update FeeDetails : {}", feeDetailsDTO);
         if (feeDetailsDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class FeeDetailsResource {
      * @return the ResponseEntity with status 200 (OK) and the list of feeDetails in body
      */
     @GetMapping("/fee-details")
+    @Timed
     public List<FeeDetailsDTO> getAllFeeDetails() {
         log.debug("REST request to get all FeeDetails");
         return feeDetailsService.findAll();
@@ -94,6 +99,7 @@ public class FeeDetailsResource {
      * @return the ResponseEntity with status 200 (OK) and with body the feeDetailsDTO, or with status 404 (Not Found)
      */
     @GetMapping("/fee-details/{id}")
+    @Timed
     public ResponseEntity<FeeDetailsDTO> getFeeDetails(@PathVariable Long id) {
         log.debug("REST request to get FeeDetails : {}", id);
         Optional<FeeDetailsDTO> feeDetailsDTO = feeDetailsService.findOne(id);
@@ -107,6 +113,7 @@ public class FeeDetailsResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/fee-details/{id}")
+    @Timed
     public ResponseEntity<Void> deleteFeeDetails(@PathVariable Long id) {
         log.debug("REST request to delete FeeDetails : {}", id);
         feeDetailsService.delete(id);
@@ -121,6 +128,7 @@ public class FeeDetailsResource {
      * @return the result of the search
      */
     @GetMapping("/_search/fee-details")
+    @Timed
     public List<FeeDetailsDTO> searchFeeDetails(@RequestParam String query) {
         log.debug("REST request to search FeeDetails for query {}", query);
         return feeDetailsService.search(query);

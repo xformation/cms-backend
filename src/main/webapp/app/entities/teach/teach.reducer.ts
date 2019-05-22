@@ -63,6 +63,11 @@ export default (state: TeachState = initialState, action): TeachState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_TEACHES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_TEACH_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/teaches';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ITeach> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ITeach> = query => ({
   type: ACTION_TYPES.SEARCH_TEACHES,
-  payload: axios.get<ITeach>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ITeach>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ITeach> = (page, size, sort) => ({

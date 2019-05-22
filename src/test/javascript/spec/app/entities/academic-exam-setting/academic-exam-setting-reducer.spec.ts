@@ -10,7 +10,6 @@ import reducer, {
   createEntity,
   deleteEntity,
   getEntities,
-  getSearchEntities,
   getEntity,
   updateEntity,
   reset
@@ -63,11 +62,7 @@ describe('Entities reducer tests', () => {
   describe('Requests', () => {
     it('should set state to loading', () => {
       testMultipleTypes(
-        [
-          REQUEST(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING_LIST),
-          REQUEST(ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS),
-          REQUEST(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING)
-        ],
+        [REQUEST(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING_LIST), REQUEST(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING)],
         {},
         state => {
           expect(state).toMatchObject({
@@ -116,7 +111,6 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING_LIST),
-          FAILURE(ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS),
           FAILURE(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING),
           FAILURE(ACTION_TYPES.CREATE_ACADEMICEXAMSETTING),
           FAILURE(ACTION_TYPES.UPDATE_ACADEMICEXAMSETTING),
@@ -140,19 +134,6 @@ describe('Entities reducer tests', () => {
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_ACADEMICEXAMSETTING_LIST),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entities: payload.data
-      });
-    });
-    it('should search all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS),
           payload
         })
       ).toEqual({
@@ -228,18 +209,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-    it('dispatches ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.SEARCH_ACADEMICEXAMSETTINGS),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_ACADEMICEXAMSETTING actions', async () => {

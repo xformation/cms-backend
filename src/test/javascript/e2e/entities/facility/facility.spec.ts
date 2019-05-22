@@ -27,6 +27,7 @@ describe('Facility e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
+
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 

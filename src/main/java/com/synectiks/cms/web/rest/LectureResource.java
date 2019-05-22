@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.LectureService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class LectureResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/lectures")
+    @Timed
     public ResponseEntity<LectureDTO> createLecture(@Valid @RequestBody LectureDTO lectureDTO) throws URISyntaxException {
         log.debug("REST request to save Lecture : {}", lectureDTO);
         if (lectureDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class LectureResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/lectures")
+    @Timed
     public ResponseEntity<LectureDTO> updateLecture(@Valid @RequestBody LectureDTO lectureDTO) throws URISyntaxException {
         log.debug("REST request to update Lecture : {}", lectureDTO);
         if (lectureDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class LectureResource {
      * @return the ResponseEntity with status 200 (OK) and the list of lectures in body
      */
     @GetMapping("/lectures")
+    @Timed
     public List<LectureDTO> getAllLectures() {
         log.debug("REST request to get all Lectures");
         return lectureService.findAll();
@@ -94,6 +99,7 @@ public class LectureResource {
      * @return the ResponseEntity with status 200 (OK) and with body the lectureDTO, or with status 404 (Not Found)
      */
     @GetMapping("/lectures/{id}")
+    @Timed
     public ResponseEntity<LectureDTO> getLecture(@PathVariable Long id) {
         log.debug("REST request to get Lecture : {}", id);
         Optional<LectureDTO> lectureDTO = lectureService.findOne(id);
@@ -107,6 +113,7 @@ public class LectureResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/lectures/{id}")
+    @Timed
     public ResponseEntity<Void> deleteLecture(@PathVariable Long id) {
         log.debug("REST request to delete Lecture : {}", id);
         lectureService.delete(id);
@@ -121,6 +128,7 @@ public class LectureResource {
      * @return the result of the search
      */
     @GetMapping("/_search/lectures")
+    @Timed
     public List<LectureDTO> searchLectures(@RequestParam String query) {
         log.debug("REST request to search Lectures for query {}", query);
         return lectureService.search(query);

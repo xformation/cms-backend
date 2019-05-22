@@ -17,7 +17,7 @@ import { getEntities as getSections } from 'app/entities/section/section.reducer
 import { getEntity, updateEntity, createEntity, reset } from './academic-exam-setting.reducer';
 import { IAcademicExamSetting } from 'app/shared/model/academic-exam-setting.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAcademicExamSettingUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

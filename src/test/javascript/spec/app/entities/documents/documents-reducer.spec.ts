@@ -10,7 +10,6 @@ import reducer, {
   createEntity,
   deleteEntity,
   getEntities,
-  getSearchEntities,
   getEntity,
   updateEntity,
   reset
@@ -62,17 +61,13 @@ describe('Entities reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes(
-        [REQUEST(ACTION_TYPES.FETCH_DOCUMENTS_LIST), REQUEST(ACTION_TYPES.SEARCH_DOCUMENTS), REQUEST(ACTION_TYPES.FETCH_DOCUMENTS)],
-        {},
-        state => {
-          expect(state).toMatchObject({
-            errorMessage: null,
-            updateSuccess: false,
-            loading: true
-          });
-        }
-      );
+      testMultipleTypes([REQUEST(ACTION_TYPES.FETCH_DOCUMENTS_LIST), REQUEST(ACTION_TYPES.FETCH_DOCUMENTS)], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          loading: true
+        });
+      });
     });
 
     it('should set state to updating', () => {
@@ -108,7 +103,6 @@ describe('Entities reducer tests', () => {
       testMultipleTypes(
         [
           FAILURE(ACTION_TYPES.FETCH_DOCUMENTS_LIST),
-          FAILURE(ACTION_TYPES.SEARCH_DOCUMENTS),
           FAILURE(ACTION_TYPES.FETCH_DOCUMENTS),
           FAILURE(ACTION_TYPES.CREATE_DOCUMENTS),
           FAILURE(ACTION_TYPES.UPDATE_DOCUMENTS),
@@ -132,19 +126,6 @@ describe('Entities reducer tests', () => {
       expect(
         reducer(undefined, {
           type: SUCCESS(ACTION_TYPES.FETCH_DOCUMENTS_LIST),
-          payload
-        })
-      ).toEqual({
-        ...initialState,
-        loading: false,
-        entities: payload.data
-      });
-    });
-    it('should search all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
-      expect(
-        reducer(undefined, {
-          type: SUCCESS(ACTION_TYPES.SEARCH_DOCUMENTS),
           payload
         })
       ).toEqual({
@@ -220,18 +201,6 @@ describe('Entities reducer tests', () => {
         }
       ];
       await store.dispatch(getEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
-    });
-    it('dispatches ACTION_TYPES.SEARCH_DOCUMENTS actions', async () => {
-      const expectedActions = [
-        {
-          type: REQUEST(ACTION_TYPES.SEARCH_DOCUMENTS)
-        },
-        {
-          type: SUCCESS(ACTION_TYPES.SEARCH_DOCUMENTS),
-          payload: resolvedObject
-        }
-      ];
-      await store.dispatch(getSearchEntities()).then(() => expect(store.getActions()).toEqual(expectedActions));
     });
 
     it('dispatches ACTION_TYPES.FETCH_DOCUMENTS actions', async () => {

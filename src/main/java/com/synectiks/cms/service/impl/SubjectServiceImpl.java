@@ -50,6 +50,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public SubjectDTO save(SubjectDTO subjectDTO) {
         log.debug("Request to save Subject : {}", subjectDTO);
+
         Subject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
         SubjectDTO result = subjectMapper.toDto(subject);

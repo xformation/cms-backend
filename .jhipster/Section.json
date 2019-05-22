@@ -13,9 +13,8 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "batch",
-            "otherEntityRelationshipName": "section",
             "relationshipName": "batch",
+            "otherEntityName": "batch",
             "otherEntityField": "id"
         }
     ],

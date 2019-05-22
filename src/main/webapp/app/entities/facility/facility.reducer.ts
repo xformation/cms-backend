@@ -63,6 +63,11 @@ export default (state: FacilityState = initialState, action): FacilityState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_FACILITIES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_FACILITY_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/facilities';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IFacility> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<IFacility> = query => ({
   type: ACTION_TYPES.SEARCH_FACILITIES,
-  payload: axios.get<IFacility>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<IFacility>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<IFacility> = (page, size, sort) => ({

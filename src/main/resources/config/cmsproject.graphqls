@@ -115,19 +115,8 @@ enum SemesterEnum{
     SEMESTER7
     SEMESTER8
 }
-enum GradesEnum{
-    Aplus
-    A
-    Bplus
-    B
-    Cplus
-    C
-     }
 
 type Query {
-
-  typeOfGrading(id: Int!): TypeOfGrading!
-  typeOfGradings:[TypeOfGrading!]!
 
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
@@ -776,15 +765,6 @@ type Teacher{
                  branch: Branch!
                department: Department!
 }
-
-type TypeOfGrading{
-    id: Long!
-    minMarks: Int!
-    maxMarks: Int!
-    grades: GradesEnum!
-    academicExamSetting: AcademicExamSetting!
-}
-
 type Term{
     id: Long!
     termsDesc: String!
@@ -1027,10 +1007,6 @@ type Mutation {
     updateAdmissionEnquiry(input: UpdateAdmissionEnquiryInput!): UpdateAdmissionEnquiryPayload!
     removeAdmissionEnquiry(input: RemoveAdmissionEnquiryInput!): RemoveAdmissionEnquiryPayload!
 
-    addTypeOfGrading(input: AddTypeOfGradingInput!): AddTypeOfGradingPayload!
-    updateTypeOfGrading(input: UpdateTypeOfGradingInput!): UpdateTypeOfGradingPayload!
-    removeTypeOfGrading(input: RemoveTypeOfGradingInput!): RemoveTypeOfGradingPayload!
-
     addAdminAttendance(input:AddAdminAttendanceInput!):AddAdminAttendancePayload!
     updateAdminAttendance(input:UpdateAdminAttendanceInput!):UpdateAdminAttendancePayload!
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
@@ -1210,34 +1186,6 @@ input RemoveAuthorizedSignatoryInput {
 }
 type RemoveAuthorizedSignatoryPayload {
     authorizedSignatories: [ AuthorizedSignatory!]!
-}
-
-input AddTypeOfGradingInput{
-    minMarks: Int!
-    maxMarks: Int!
-    grades: GradesEnum!
-    academicExamSettingId: Long!
-}
-
-type AddTypeOfGradingPayload {
-    typeOfGrading: TypeOfGrading!
-}
-input UpdateTypeOfGradingInput {
-    id: Long!
-    minMarks: Int!
-    maxMarks: Int!
-    grades: GradesEnum!
-    academicExamSettingId: Long!
-}
-
-type UpdateTypeOfGradingPayload {
-    typeOfGrading: TypeOfGrading!
-}
-input RemoveTypeOfGradingInput {
-   typeOfGradingId: Long!
-}
-type RemoveTypeOfGradingPayload {
-    typeOfGradings: [ TypeOfGrading!]!
 }
 
 

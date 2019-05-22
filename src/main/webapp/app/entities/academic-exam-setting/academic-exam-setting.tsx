@@ -35,8 +35,9 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

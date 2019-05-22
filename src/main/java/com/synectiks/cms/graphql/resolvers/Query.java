@@ -91,7 +91,6 @@ public class Query implements GraphQLQueryResolver {
     private final CompetitiveExamRepository competitiveExamRepository;
     private final DocumentsRepository documentsRepository;
     private final AdminAttendanceRepository adminAttendanceRepository;
-    private final TypeOfGradingRepository typeOfGradingRepository;
 
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
@@ -123,7 +122,7 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     private CommonService commonService;
     
-    public Query(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository) {
+    public Query(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -163,7 +162,6 @@ public class Query implements GraphQLQueryResolver {
         this.competitiveExamRepository = competitiveExamRepository;
         this.documentsRepository = documentsRepository;
         this.adminAttendanceRepository = adminAttendanceRepository;
-        this.typeOfGradingRepository = typeOfGradingRepository;
     }
 
     public Student student(long id) {
@@ -222,7 +220,6 @@ public class Query implements GraphQLQueryResolver {
     public List<CompetitiveExam> competitiveExams() {
         return Lists.newArrayList(competitiveExamRepository.findAll());
     }
-
     public Documents document(long id) {
         return documentsRepository.findById(id).get();
     }
@@ -266,14 +263,6 @@ public class Query implements GraphQLQueryResolver {
     {
         return Lists.newArrayList(semesterRepository.findAll());
     }*/
-
-    public List<TypeOfGrading> typeOfGradings() {
-        return Lists.newArrayList(typeOfGradingRepository.findAll());
-    }
-
-    public TypeOfGrading typeOfGrading(long id) {
-        return typeOfGradingRepository.findById(id).get();
-    }
 
     public Section section(long id) {
         return sectionRepository.findById(id).get();

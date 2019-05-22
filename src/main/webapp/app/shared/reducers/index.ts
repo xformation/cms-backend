@@ -598,130 +598,6 @@ import adminAttendance, {
 import academicExamSetting, {
   AcademicExamSettingState
 } from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
-// prettier-ignore
-import branch, {
-  BranchState
-} from 'app/entities/branch/branch.reducer';
-// prettier-ignore
-import department, {
-  DepartmentState
-} from 'app/entities/department/department.reducer';
-// prettier-ignore
-import batch, {
-  BatchState
-} from 'app/entities/batch/batch.reducer';
-// prettier-ignore
-import subject, {
-  SubjectState
-} from 'app/entities/subject/subject.reducer';
-// prettier-ignore
-import section, {
-  SectionState
-} from 'app/entities/section/section.reducer';
-// prettier-ignore
-import term, {
-  TermState
-} from 'app/entities/term/term.reducer';
-// prettier-ignore
-import student, {
-  StudentState
-} from 'app/entities/student/student.reducer';
-// prettier-ignore
-import teacher, {
-  TeacherState
-} from 'app/entities/teacher/teacher.reducer';
-// prettier-ignore
-import holiday, {
-  HolidayState
-} from 'app/entities/holiday/holiday.reducer';
-// prettier-ignore
-import teach, {
-  TeachState
-} from 'app/entities/teach/teach.reducer';
-// prettier-ignore
-import attendanceMaster, {
-  AttendanceMasterState
-} from 'app/entities/attendance-master/attendance-master.reducer';
-// prettier-ignore
-import lecture, {
-  LectureState
-} from 'app/entities/lecture/lecture.reducer';
-// prettier-ignore
-import studentAttendance, {
-  StudentAttendanceState
-} from 'app/entities/student-attendance/student-attendance.reducer';
-// prettier-ignore
-import legalEntity, {
-  LegalEntityState
-} from 'app/entities/legal-entity/legal-entity.reducer';
-// prettier-ignore
-import authorizedSignatory, {
-  AuthorizedSignatoryState
-} from 'app/entities/authorized-signatory/authorized-signatory.reducer';
-// prettier-ignore
-import bankAccounts, {
-  BankAccountsState
-} from 'app/entities/bank-accounts/bank-accounts.reducer';
-// prettier-ignore
-import currency, {
-  CurrencyState
-} from 'app/entities/currency/currency.reducer';
-// prettier-ignore
-import state, {
-  StateState
-} from 'app/entities/state/state.reducer';
-// prettier-ignore
-import city, {
-  CityState
-} from 'app/entities/city/city.reducer';
-// prettier-ignore
-import facility, {
-  FacilityState
-} from 'app/entities/facility/facility.reducer';
-// prettier-ignore
-import feeDetails, {
-  FeeDetailsState
-} from 'app/entities/fee-details/fee-details.reducer';
-// prettier-ignore
-import dueDate, {
-  DueDateState
-} from 'app/entities/due-date/due-date.reducer';
-// prettier-ignore
-import paymentRemainder, {
-  PaymentRemainderState
-} from 'app/entities/payment-remainder/payment-remainder.reducer';
-// prettier-ignore
-import lateFee, {
-  LateFeeState
-} from 'app/entities/late-fee/late-fee.reducer';
-// prettier-ignore
-import invoice, {
-  InvoiceState
-} from 'app/entities/invoice/invoice.reducer';
-// prettier-ignore
-import competitiveExam, {
-  CompetitiveExamState
-} from 'app/entities/competitive-exam/competitive-exam.reducer';
-// prettier-ignore
-import documents, {
-  DocumentsState
-} from 'app/entities/documents/documents.reducer';
-// prettier-ignore
-import academicHistory, {
-  AcademicHistoryState
-} from 'app/entities/academic-history/academic-history.reducer';
-// prettier-ignore
-import admissionApplication, {
-  AdmissionApplicationState
-} from 'app/entities/admission-application/admission-application.reducer';
-// prettier-ignore
-import academicExamSetting, {
-  AcademicExamSettingState
-} from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
-// prettier-ignore
-import typeOfGrading, {
-  TypeOfGradingState
-} from 'app/entities/type-of-grading/type-of-grading.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -778,7 +654,6 @@ export interface IRootState {
   readonly admissionEnquiry: AdmissionEnquiryState;
   readonly academicExamSetting: AcademicExamSettingState;
   readonly metaLecture: MetaLectureState;
-  readonly typeOfGrading: TypeOfGradingState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -837,7 +712,6 @@ const rootReducer = combineReducers<IRootState>({
   admissionEnquiry,
   academicExamSetting,
   metaLecture,
-  typeOfGrading,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

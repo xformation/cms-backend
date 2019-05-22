@@ -50,6 +50,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public CurrencyDTO save(CurrencyDTO currencyDTO) {
         log.debug("Request to save Currency : {}", currencyDTO);
+
         Currency currency = currencyMapper.toEntity(currencyDTO);
         currency = currencyRepository.save(currency);
         CurrencyDTO result = currencyMapper.toDto(currency);

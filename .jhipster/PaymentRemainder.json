@@ -35,23 +35,20 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "dueDate",
-            "otherEntityRelationshipName": "paymentRemainder",
             "relationshipName": "dueDate",
+            "otherEntityName": "dueDate",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "college",
-            "otherEntityRelationshipName": "paymentRemainder",
             "relationshipName": "college",
+            "otherEntityName": "college",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "branch",
-            "otherEntityRelationshipName": "paymentRemainder",
             "relationshipName": "branch",
+            "otherEntityName": "branch",
             "otherEntityField": "id"
         }
     ],

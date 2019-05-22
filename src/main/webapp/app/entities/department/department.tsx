@@ -35,8 +35,9 @@ export class Department extends React.Component<IDepartmentProps, IDepartmentSta
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

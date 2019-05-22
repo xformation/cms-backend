@@ -41,16 +41,14 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "college",
-            "otherEntityRelationshipName": "dueDate",
             "relationshipName": "college",
+            "otherEntityName": "college",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "branch",
-            "otherEntityRelationshipName": "dueDate",
             "relationshipName": "branch",
+            "otherEntityName": "branch",
             "otherEntityField": "id"
         }
     ],

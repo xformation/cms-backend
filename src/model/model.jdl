@@ -471,16 +471,6 @@ entity AcademicExamSetting {
     actions String
 }
 
-entity TypeOfGrading{
-    minMarks  Integer required
-    maxMarks Integer required
-    grades GradesEnum required
-}
-
-enum GradesEnum{
-    Aplus,A,Bplus,B,Cplus,C
-}
-
 relationship ManyToOne {
 Student{department required} to Department ,
 Student{batch required} to Batch ,
@@ -546,7 +536,6 @@ Invoice{student} to Student,
 Invoice{academicYear} to AcademicYear
 CompetitiveExam{student} to Student,
 Documents{student} to Student,
-TypeOfGrading{academicExamSetting} to AcademicExamSetting,
 AcademicHistory{student} to Student,
 AdmissionApplication{student} to Student,
 AdmissionEnquiry{branch} to Branch,

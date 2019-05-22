@@ -19,7 +19,7 @@ import { getEntities as getCities } from 'app/entities/city/city.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './legal-entity.reducer';
 import { ILegalEntity } from 'app/shared/model/legal-entity.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ILegalEntityUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

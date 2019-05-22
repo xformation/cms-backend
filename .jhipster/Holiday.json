@@ -27,9 +27,8 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "academicYear",
-            "otherEntityRelationshipName": "holiday",
             "relationshipName": "academicyear",
+            "otherEntityName": "academicYear",
             "otherEntityField": "id"
         }
     ],
