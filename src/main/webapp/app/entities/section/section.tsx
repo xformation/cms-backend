@@ -35,9 +35,8 @@ export class Section extends React.Component<ISectionProps, ISectionState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -87,6 +88,9 @@ public class CompetitiveExamResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restCompetitiveExamMockMvc;
 
     private CompetitiveExam competitiveExam;
@@ -99,7 +103,8 @@ public class CompetitiveExamResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -355,7 +360,7 @@ public class CompetitiveExamResourceIntTest {
 
         int databaseSizeBeforeDelete = competitiveExamRepository.findAll().size();
 
-        // Get the competitiveExam
+        // Delete the competitiveExam
         restCompetitiveExamMockMvc.perform(delete("/api/competitive-exams/{id}", competitiveExam.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

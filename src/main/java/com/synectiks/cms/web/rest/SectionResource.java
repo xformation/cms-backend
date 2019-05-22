@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.SectionService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class SectionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/sections")
-    @Timed
     public ResponseEntity<SectionDTO> createSection(@Valid @RequestBody SectionDTO sectionDTO) throws URISyntaxException {
         log.debug("REST request to save Section : {}", sectionDTO);
         if (sectionDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class SectionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/sections")
-    @Timed
     public ResponseEntity<SectionDTO> updateSection(@Valid @RequestBody SectionDTO sectionDTO) throws URISyntaxException {
         log.debug("REST request to update Section : {}", sectionDTO);
         if (sectionDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class SectionResource {
      * @return the ResponseEntity with status 200 (OK) and the list of sections in body
      */
     @GetMapping("/sections")
-    @Timed
     public List<SectionDTO> getAllSections() {
         log.debug("REST request to get all Sections");
         return sectionService.findAll();
@@ -99,7 +94,6 @@ public class SectionResource {
      * @return the ResponseEntity with status 200 (OK) and with body the sectionDTO, or with status 404 (Not Found)
      */
     @GetMapping("/sections/{id}")
-    @Timed
     public ResponseEntity<SectionDTO> getSection(@PathVariable Long id) {
         log.debug("REST request to get Section : {}", id);
         Optional<SectionDTO> sectionDTO = sectionService.findOne(id);
@@ -113,7 +107,6 @@ public class SectionResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/sections/{id}")
-    @Timed
     public ResponseEntity<Void> deleteSection(@PathVariable Long id) {
         log.debug("REST request to delete Section : {}", id);
         sectionService.delete(id);
@@ -128,7 +121,6 @@ public class SectionResource {
      * @return the result of the search
      */
     @GetMapping("/_search/sections")
-    @Timed
     public List<SectionDTO> searchSections(@RequestParam String query) {
         log.debug("REST request to search Sections for query {}", query);
         return sectionService.search(query);

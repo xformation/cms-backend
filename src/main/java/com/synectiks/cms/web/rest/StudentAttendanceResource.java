@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.StudentAttendanceService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class StudentAttendanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/student-attendances")
-    @Timed
     public ResponseEntity<StudentAttendanceDTO> createStudentAttendance(@Valid @RequestBody StudentAttendanceDTO studentAttendanceDTO) throws URISyntaxException {
         log.debug("REST request to save StudentAttendance : {}", studentAttendanceDTO);
         if (studentAttendanceDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class StudentAttendanceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/student-attendances")
-    @Timed
     public ResponseEntity<StudentAttendanceDTO> updateStudentAttendance(@Valid @RequestBody StudentAttendanceDTO studentAttendanceDTO) throws URISyntaxException {
         log.debug("REST request to update StudentAttendance : {}", studentAttendanceDTO);
         if (studentAttendanceDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class StudentAttendanceResource {
      * @return the ResponseEntity with status 200 (OK) and the list of studentAttendances in body
      */
     @GetMapping("/student-attendances")
-    @Timed
     public List<StudentAttendanceDTO> getAllStudentAttendances() {
         log.debug("REST request to get all StudentAttendances");
         return studentAttendanceService.findAll();
@@ -99,7 +94,6 @@ public class StudentAttendanceResource {
      * @return the ResponseEntity with status 200 (OK) and with body the studentAttendanceDTO, or with status 404 (Not Found)
      */
     @GetMapping("/student-attendances/{id}")
-    @Timed
     public ResponseEntity<StudentAttendanceDTO> getStudentAttendance(@PathVariable Long id) {
         log.debug("REST request to get StudentAttendance : {}", id);
         Optional<StudentAttendanceDTO> studentAttendanceDTO = studentAttendanceService.findOne(id);
@@ -113,7 +107,6 @@ public class StudentAttendanceResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/student-attendances/{id}")
-    @Timed
     public ResponseEntity<Void> deleteStudentAttendance(@PathVariable Long id) {
         log.debug("REST request to delete StudentAttendance : {}", id);
         studentAttendanceService.delete(id);
@@ -128,7 +121,6 @@ public class StudentAttendanceResource {
      * @return the result of the search
      */
     @GetMapping("/_search/student-attendances")
-    @Timed
     public List<StudentAttendanceDTO> searchStudentAttendances(@RequestParam String query) {
         log.debug("REST request to search StudentAttendances for query {}", query);
         return studentAttendanceService.search(query);

@@ -46,14 +46,16 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "college",
             "otherEntityName": "college",
+            "otherEntityRelationshipName": "lateFee",
+            "relationshipName": "college",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "branch",
             "otherEntityName": "branch",
+            "otherEntityRelationshipName": "lateFee",
+            "relationshipName": "branch",
             "otherEntityField": "id"
         }
     ],

@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -43,6 +42,7 @@ public class AcademicExamSettingDTO implements Serializable {
     private Integer passing;
 
     private String actions;
+
 
     private Long departmentId;
 

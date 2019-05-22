@@ -401,7 +401,7 @@ mutation addAcademicEamSetting($input: AddAcademicExamSettingInput!) {
       examType
     semester
     subject
-    date
+    examDate
     day
     duration
     startTime
@@ -428,7 +428,7 @@ mutation addAcademicEamSetting($input: AddAcademicExamSettingInput!) {
   "examType": "midterm1",
   "semester": "SEMESTER2",
   "subject": "VDMS",
-  "date": "2019-04-26",
+  "examDate": "2019-04-26",
   "day": "FRIDAY",
   "duration": "3HRS",
   "startTime": "7:30:00Am",
@@ -441,7 +441,6 @@ mutation addAcademicEamSetting($input: AddAcademicExamSettingInput!) {
   "academicyearId":  1051
 }
 }
-
 -------------------------
 Academic Year:
 
@@ -477,6 +476,54 @@ mutation updateAcademicYear($input: UpdateAcademicYearInput!){
     desc
   }
  }
+}
+-----------------------
+TypeOfGrading:
+
+mutation addTypeOfGrading($input:AddTypeOfGradingInput!){
+  addTypeOfGrading(input: $input) {
+    typeOfGrading{
+      id
+      minMarks
+      maxMarks
+      grades
+      academicExamSetting{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+    "minMarks": 91,
+    "maxMarks": 100,
+    "grades": "Aplus",
+    "academicExamSettingId": 1490329
+  }
+}
+
+mutation updateTypeOfGrading($input: UpdateTypeOfGradingInput!){
+  updateTypeOfGrading(input: $input) {
+    typeOfGrading{
+      id
+      minMarks
+      maxMarks
+      grades
+      academicExamSetting{
+        id
+      }
+    }
+  }
+}
+{
+  "input": {
+    "id": 951,
+    "minMarks": 92,
+    "maxMarks": 100,
+    "grades": "Aplus",
+    "academicExamSettingId": 1490329
+  }
 }
 -----------------------
 Competitive Exam:

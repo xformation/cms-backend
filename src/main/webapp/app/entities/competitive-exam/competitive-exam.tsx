@@ -35,9 +35,8 @@ export class CompetitiveExam extends React.Component<ICompetitiveExamProps, ICom
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

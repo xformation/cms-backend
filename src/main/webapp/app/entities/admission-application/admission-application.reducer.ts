@@ -63,11 +63,6 @@ export default (state: AdmissionApplicationState = initialState, action): Admiss
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_ADMISSIONAPPLICATION_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/admission-applications';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IAdmissionApplication> = query => ({
+export const getSearchEntities: ICrudSearchAction<IAdmissionApplication> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_ADMISSIONAPPLICATIONS,
-  payload: axios.get<IAdmissionApplication>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IAdmissionApplication>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IAdmissionApplication> = (page, size, sort) => ({

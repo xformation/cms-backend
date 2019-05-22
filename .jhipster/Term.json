@@ -34,8 +34,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "academicyear",
             "otherEntityName": "academicYear",
+            "otherEntityRelationshipName": "term",
+            "relationshipName": "academicyear",
             "otherEntityField": "id"
         }
     ],

@@ -272,30 +272,34 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
+            "otherEntityName": "department",
+            "otherEntityRelationshipName": "student",
             "relationshipValidateRules": "required",
             "relationshipName": "department",
-            "otherEntityName": "department",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
+            "otherEntityName": "batch",
+            "otherEntityRelationshipName": "student",
             "relationshipValidateRules": "required",
             "relationshipName": "batch",
-            "otherEntityName": "batch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
+            "otherEntityName": "section",
+            "otherEntityRelationshipName": "student",
             "relationshipValidateRules": "required",
             "relationshipName": "section",
-            "otherEntityName": "section",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
+            "otherEntityName": "branch",
+            "otherEntityRelationshipName": "student",
             "relationshipValidateRules": "required",
             "relationshipName": "branch",
-            "otherEntityName": "branch",
             "otherEntityField": "id"
         }
     ],

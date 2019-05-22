@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -31,6 +30,7 @@ public class AcademicHistoryDTO implements Serializable {
 
     @NotNull
     private Integer percentage;
+
 
     private Long studentId;
 

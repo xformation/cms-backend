@@ -35,9 +35,8 @@ export class AcademicHistory extends React.Component<IAcademicHistoryProps, IAca
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
