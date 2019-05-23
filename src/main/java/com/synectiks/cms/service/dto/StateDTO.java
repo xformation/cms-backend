@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,7 +19,6 @@ public class StateDTO implements Serializable {
 
     @NotNull
     private String stateCode;
-
 
     private Long countryId;
 

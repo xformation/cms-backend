@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.AcademicHistoryService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class AcademicHistoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/academic-histories")
+    @Timed
     public ResponseEntity<AcademicHistoryDTO> createAcademicHistory(@Valid @RequestBody AcademicHistoryDTO academicHistoryDTO) throws URISyntaxException {
         log.debug("REST request to save AcademicHistory : {}", academicHistoryDTO);
         if (academicHistoryDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class AcademicHistoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/academic-histories")
+    @Timed
     public ResponseEntity<AcademicHistoryDTO> updateAcademicHistory(@Valid @RequestBody AcademicHistoryDTO academicHistoryDTO) throws URISyntaxException {
         log.debug("REST request to update AcademicHistory : {}", academicHistoryDTO);
         if (academicHistoryDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class AcademicHistoryResource {
      * @return the ResponseEntity with status 200 (OK) and the list of academicHistories in body
      */
     @GetMapping("/academic-histories")
+    @Timed
     public List<AcademicHistoryDTO> getAllAcademicHistories() {
         log.debug("REST request to get all AcademicHistories");
         return academicHistoryService.findAll();
@@ -94,6 +99,7 @@ public class AcademicHistoryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the academicHistoryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/academic-histories/{id}")
+    @Timed
     public ResponseEntity<AcademicHistoryDTO> getAcademicHistory(@PathVariable Long id) {
         log.debug("REST request to get AcademicHistory : {}", id);
         Optional<AcademicHistoryDTO> academicHistoryDTO = academicHistoryService.findOne(id);
@@ -107,6 +113,7 @@ public class AcademicHistoryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/academic-histories/{id}")
+    @Timed
     public ResponseEntity<Void> deleteAcademicHistory(@PathVariable Long id) {
         log.debug("REST request to delete AcademicHistory : {}", id);
         academicHistoryService.delete(id);
@@ -121,6 +128,7 @@ public class AcademicHistoryResource {
      * @return the result of the search
      */
     @GetMapping("/_search/academic-histories")
+    @Timed
     public List<AcademicHistoryDTO> searchAcademicHistories(@RequestParam String query) {
         log.debug("REST request to search AcademicHistories for query {}", query);
         return academicHistoryService.search(query);

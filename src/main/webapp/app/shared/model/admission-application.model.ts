@@ -18,7 +18,7 @@ export interface IAdmissionApplication {
   id?: number;
   admissionStatus?: AdmissionStatusEnum;
   course?: CourseEnum;
-  date?: Moment;
+  admissionDate?: Moment;
   comments?: string;
   studentId?: number;
 }

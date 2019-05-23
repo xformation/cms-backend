@@ -50,6 +50,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
     @Override
     public StudentAttendanceDTO save(StudentAttendanceDTO studentAttendanceDTO) {
         log.debug("Request to save StudentAttendance : {}", studentAttendanceDTO);
+
         StudentAttendance studentAttendance = studentAttendanceMapper.toEntity(studentAttendanceDTO);
         studentAttendance = studentAttendanceRepository.save(studentAttendance);
         StudentAttendanceDTO result = studentAttendanceMapper.toDto(studentAttendance);

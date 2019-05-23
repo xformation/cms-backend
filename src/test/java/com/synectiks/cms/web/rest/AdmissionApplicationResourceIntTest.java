@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -58,8 +57,8 @@ public class AdmissionApplicationResourceIntTest {
     private static final CourseEnum DEFAULT_COURSE = CourseEnum.BTECH;
     private static final CourseEnum UPDATED_COURSE = CourseEnum.MTECH;
 
-    private static final Date DEFAULT_DATE = new Date();
-    private static final Date UPDATED_DATE = new Date();
+    private static final Date DEFAULT_ADMISSION_DATE = new Date();
+    private static final Date UPDATED_ADMISSION_DATE = new Date();
 
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
@@ -93,9 +92,6 @@ public class AdmissionApplicationResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restAdmissionApplicationMockMvc;
 
     private AdmissionApplication admissionApplication;
@@ -108,8 +104,7 @@ public class AdmissionApplicationResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -122,7 +117,7 @@ public class AdmissionApplicationResourceIntTest {
         AdmissionApplication admissionApplication = new AdmissionApplication()
             .admissionStatus(DEFAULT_ADMISSION_STATUS)
             .course(DEFAULT_COURSE)
-            .date(DEFAULT_DATE)
+            .admissionDate(DEFAULT_ADMISSION_DATE)
             .comments(DEFAULT_COMMENTS);
         return admissionApplication;
     }
@@ -150,7 +145,7 @@ public class AdmissionApplicationResourceIntTest {
         AdmissionApplication testAdmissionApplication = admissionApplicationList.get(admissionApplicationList.size() - 1);
         assertThat(testAdmissionApplication.getAdmissionStatus()).isEqualTo(DEFAULT_ADMISSION_STATUS);
         assertThat(testAdmissionApplication.getCourse()).isEqualTo(DEFAULT_COURSE);
-        assertThat(testAdmissionApplication.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testAdmissionApplication.getAdmissionDate()).isEqualTo(DEFAULT_ADMISSION_DATE);
         assertThat(testAdmissionApplication.getComments()).isEqualTo(DEFAULT_COMMENTS);
 
         // Validate the AdmissionApplication in Elasticsearch
@@ -220,10 +215,10 @@ public class AdmissionApplicationResourceIntTest {
 
     @Test
     @Transactional
-    public void checkDateIsRequired() throws Exception {
+    public void checkAdmissionDateIsRequired() throws Exception {
         int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
         // set the field null
-        admissionApplication.setDate(null);
+        admissionApplication.setAdmissionDate(null);
 
         // Create the AdmissionApplication, which fails.
         AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
@@ -269,7 +264,7 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(admissionApplication.getId().intValue())))
             .andExpect(jsonPath("$.[*].admissionStatus").value(hasItem(DEFAULT_ADMISSION_STATUS.toString())))
             .andExpect(jsonPath("$.[*].course").value(hasItem(DEFAULT_COURSE.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
     
@@ -286,7 +281,7 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.id").value(admissionApplication.getId().intValue()))
             .andExpect(jsonPath("$.admissionStatus").value(DEFAULT_ADMISSION_STATUS.toString()))
             .andExpect(jsonPath("$.course").value(DEFAULT_COURSE.toString()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.admissionDate").value(DEFAULT_ADMISSION_DATE.toString()))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
     }
 
@@ -313,7 +308,7 @@ public class AdmissionApplicationResourceIntTest {
         updatedAdmissionApplication
             .admissionStatus(UPDATED_ADMISSION_STATUS)
             .course(UPDATED_COURSE)
-            .date(UPDATED_DATE)
+            .admissionDate(UPDATED_ADMISSION_DATE)
             .comments(UPDATED_COMMENTS);
         AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(updatedAdmissionApplication);
 
@@ -328,7 +323,7 @@ public class AdmissionApplicationResourceIntTest {
         AdmissionApplication testAdmissionApplication = admissionApplicationList.get(admissionApplicationList.size() - 1);
         assertThat(testAdmissionApplication.getAdmissionStatus()).isEqualTo(UPDATED_ADMISSION_STATUS);
         assertThat(testAdmissionApplication.getCourse()).isEqualTo(UPDATED_COURSE);
-        assertThat(testAdmissionApplication.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testAdmissionApplication.getAdmissionDate()).isEqualTo(UPDATED_ADMISSION_DATE);
         assertThat(testAdmissionApplication.getComments()).isEqualTo(UPDATED_COMMENTS);
 
         // Validate the AdmissionApplication in Elasticsearch
@@ -365,7 +360,7 @@ public class AdmissionApplicationResourceIntTest {
 
         int databaseSizeBeforeDelete = admissionApplicationRepository.findAll().size();
 
-        // Delete the admissionApplication
+        // Get the admissionApplication
         restAdmissionApplicationMockMvc.perform(delete("/api/admission-applications/{id}", admissionApplication.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -392,7 +387,7 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(admissionApplication.getId().intValue())))
             .andExpect(jsonPath("$.[*].admissionStatus").value(hasItem(DEFAULT_ADMISSION_STATUS.toString())))
             .andExpect(jsonPath("$.[*].course").value(hasItem(DEFAULT_COURSE.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)));
     }
 

@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.TermService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class TermResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/terms")
+    @Timed
     public ResponseEntity<TermDTO> createTerm(@Valid @RequestBody TermDTO termDTO) throws URISyntaxException {
         log.debug("REST request to save Term : {}", termDTO);
         if (termDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class TermResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/terms")
+    @Timed
     public ResponseEntity<TermDTO> updateTerm(@Valid @RequestBody TermDTO termDTO) throws URISyntaxException {
         log.debug("REST request to update Term : {}", termDTO);
         if (termDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class TermResource {
      * @return the ResponseEntity with status 200 (OK) and the list of terms in body
      */
     @GetMapping("/terms")
+    @Timed
     public List<TermDTO> getAllTerms() {
         log.debug("REST request to get all Terms");
         return termService.findAll();
@@ -94,6 +99,7 @@ public class TermResource {
      * @return the ResponseEntity with status 200 (OK) and with body the termDTO, or with status 404 (Not Found)
      */
     @GetMapping("/terms/{id}")
+    @Timed
     public ResponseEntity<TermDTO> getTerm(@PathVariable Long id) {
         log.debug("REST request to get Term : {}", id);
         Optional<TermDTO> termDTO = termService.findOne(id);
@@ -107,6 +113,7 @@ public class TermResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/terms/{id}")
+    @Timed
     public ResponseEntity<Void> deleteTerm(@PathVariable Long id) {
         log.debug("REST request to delete Term : {}", id);
         termService.delete(id);
@@ -121,6 +128,7 @@ public class TermResource {
      * @return the result of the search
      */
     @GetMapping("/_search/terms")
+    @Timed
     public List<TermDTO> searchTerms(@RequestParam String query) {
         log.debug("REST request to search Terms for query {}", query);
         return termService.search(query);

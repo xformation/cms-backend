@@ -50,6 +50,7 @@ public class TermServiceImpl implements TermService {
     @Override
     public TermDTO save(TermDTO termDTO) {
         log.debug("Request to save Term : {}", termDTO);
+
         Term term = termMapper.toEntity(termDTO);
         term = termRepository.save(term);
         TermDTO result = termMapper.toDto(term);

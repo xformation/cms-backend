@@ -560,7 +560,7 @@ type AdmissionApplication{
      id: Long!
      admissionStatus: AdmissionStatusEnum!
      course:CourseEnum!
-     date: Date!
+     admissionDate: Date!
      comments: String!
      student:Student!
 }
@@ -1535,7 +1535,7 @@ type RemoveAcademicHistoryPayload {
 input AddAdmissionApplicationInput {
         admissionStatus: AdmissionStatusEnum!
         course:CourseEnum!
-        date: Date!
+        admissionDate: Date!
         comments: String!
         studentId: Long!
 }
@@ -1546,7 +1546,7 @@ input UpdateAdmissionApplicationInput {
     id: Long!
     admissionStatus: AdmissionStatusEnum!
     course:CourseEnum!
-    date: Date!
+    admissionDate: Date!
     comments: String!
     studentId: Long!
 }

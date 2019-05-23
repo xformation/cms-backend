@@ -89,58 +89,50 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "feeCategory",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "feeCategory",
+            "otherEntityName": "feeCategory",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "feeDetails",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "feeDetails",
+            "otherEntityName": "feeDetails",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "dueDate",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "dueDate",
+            "otherEntityName": "dueDate",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "paymentRemainder",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "paymentRemainder",
+            "otherEntityName": "paymentRemainder",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "college",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "college",
+            "otherEntityName": "college",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "branch",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "branch",
+            "otherEntityName": "branch",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "student",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "student",
+            "otherEntityName": "student",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "academicYear",
-            "otherEntityRelationshipName": "invoice",
             "relationshipName": "academicYear",
+            "otherEntityName": "academicYear",
             "otherEntityField": "id"
         }
     ],

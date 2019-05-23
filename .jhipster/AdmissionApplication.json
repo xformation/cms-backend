@@ -18,7 +18,7 @@
             ]
         },
         {
-            "fieldName": "date",
+            "fieldName": "admissionDate",
             "fieldType": "LocalDate",
             "fieldValidateRules": [
                 "required"
@@ -35,9 +35,8 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "student",
-            "otherEntityRelationshipName": "admissionApplication",
             "relationshipName": "student",
+            "otherEntityName": "student",
             "otherEntityField": "id"
         }
     ],

@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.AttendanceMasterService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -43,6 +45,7 @@ public class AttendanceMasterResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/attendance-masters")
+    @Timed
     public ResponseEntity<AttendanceMasterDTO> createAttendanceMaster(@RequestBody AttendanceMasterDTO attendanceMasterDTO) throws URISyntaxException {
         log.debug("REST request to save AttendanceMaster : {}", attendanceMasterDTO);
         if (attendanceMasterDTO.getId() != null) {
@@ -64,6 +67,7 @@ public class AttendanceMasterResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/attendance-masters")
+    @Timed
     public ResponseEntity<AttendanceMasterDTO> updateAttendanceMaster(@RequestBody AttendanceMasterDTO attendanceMasterDTO) throws URISyntaxException {
         log.debug("REST request to update AttendanceMaster : {}", attendanceMasterDTO);
         if (attendanceMasterDTO.getId() == null) {
@@ -81,6 +85,7 @@ public class AttendanceMasterResource {
      * @return the ResponseEntity with status 200 (OK) and the list of attendanceMasters in body
      */
     @GetMapping("/attendance-masters")
+    @Timed
     public List<AttendanceMasterDTO> getAllAttendanceMasters() {
         log.debug("REST request to get all AttendanceMasters");
         return attendanceMasterService.findAll();
@@ -93,6 +98,7 @@ public class AttendanceMasterResource {
      * @return the ResponseEntity with status 200 (OK) and with body the attendanceMasterDTO, or with status 404 (Not Found)
      */
     @GetMapping("/attendance-masters/{id}")
+    @Timed
     public ResponseEntity<AttendanceMasterDTO> getAttendanceMaster(@PathVariable Long id) {
         log.debug("REST request to get AttendanceMaster : {}", id);
         Optional<AttendanceMasterDTO> attendanceMasterDTO = attendanceMasterService.findOne(id);
@@ -106,6 +112,7 @@ public class AttendanceMasterResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/attendance-masters/{id}")
+    @Timed
     public ResponseEntity<Void> deleteAttendanceMaster(@PathVariable Long id) {
         log.debug("REST request to delete AttendanceMaster : {}", id);
         attendanceMasterService.delete(id);
@@ -120,6 +127,7 @@ public class AttendanceMasterResource {
      * @return the result of the search
      */
     @GetMapping("/_search/attendance-masters")
+    @Timed
     public List<AttendanceMasterDTO> searchAttendanceMasters(@RequestParam String query) {
         log.debug("REST request to search AttendanceMasters for query {}", query);
         return attendanceMasterService.search(query);

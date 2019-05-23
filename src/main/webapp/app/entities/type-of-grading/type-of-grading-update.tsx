@@ -13,7 +13,7 @@ import { getEntities as getAcademicExamSettings } from 'app/entities/academic-ex
 import { getEntity, updateEntity, createEntity, reset } from './type-of-grading.reducer';
 import { ITypeOfGrading } from 'app/shared/model/type-of-grading.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITypeOfGradingUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

@@ -63,6 +63,11 @@ export default (state: TypeOfGradingState = initialState, action): TypeOfGrading
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_TYPEOFGRADINGS):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_TYPEOFGRADING_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/type-of-gradings';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ITypeOfGrading> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ITypeOfGrading> = query => ({
   type: ACTION_TYPES.SEARCH_TYPEOFGRADINGS,
-  payload: axios.get<ITypeOfGrading>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ITypeOfGrading>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ITypeOfGrading> = (page, size, sort) => ({

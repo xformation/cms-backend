@@ -63,6 +63,11 @@ export default (state: LateFeeState = initialState, action): LateFeeState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_LATEFEES):
+      return {
+        ...state,
+        loading: false,
+        entities: action.payload.data
+      };
     case SUCCESS(ACTION_TYPES.FETCH_LATEFEE_LIST):
       return {
         ...state,
@@ -104,9 +109,9 @@ const apiSearchUrl = 'api/_search/late-fees';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ILateFee> = (query, page, size, sort) => ({
+export const getSearchEntities: ICrudSearchAction<ILateFee> = query => ({
   type: ACTION_TYPES.SEARCH_LATEFEES,
-  payload: axios.get<ILateFee>(`${apiSearchUrl}?query=${query}`)
+  payload: axios.get<ILateFee>(`${apiSearchUrl}?query=` + query)
 });
 
 export const getEntities: ICrudGetAllAction<ILateFee> = (page, size, sort) => ({

@@ -37,10 +37,10 @@ export class AdmissionApplicationDetail extends React.Component<IAdmissionApplic
             </dt>
             <dd>{admissionApplicationEntity.course}</dd>
             <dt>
-              <span id="date">Date</span>
+              <span id="admissionDate">Admission Date</span>
             </dt>
             <dd>
-              <TextFormat value={admissionApplicationEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} />
+              <TextFormat value={admissionApplicationEntity.admissionDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="comments">Comments</span>

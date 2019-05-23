@@ -35,8 +35,9 @@ export class Documents extends React.Component<IDocumentsProps, IDocumentsState>
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

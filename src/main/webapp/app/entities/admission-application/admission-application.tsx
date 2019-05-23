@@ -35,8 +35,9 @@ export class AdmissionApplication extends React.Component<IAdmissionApplicationP
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
@@ -76,7 +77,7 @@ export class AdmissionApplication extends React.Component<IAdmissionApplicationP
                 <th>ID</th>
                 <th>Admission Status</th>
                 <th>Course</th>
-                <th>Date</th>
+                <th>Admission Date</th>
                 <th>Comments</th>
                 <th>Student</th>
                 <th />
@@ -93,7 +94,7 @@ export class AdmissionApplication extends React.Component<IAdmissionApplicationP
                   <td>{admissionApplication.admissionStatus}</td>
                   <td>{admissionApplication.course}</td>
                   <td>
-                    <TextFormat type="date" value={admissionApplication.date} format={APP_LOCAL_DATE_FORMAT} />
+                    <TextFormat type="date" value={admissionApplication.admissionDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{admissionApplication.comments}</td>
                   <td>

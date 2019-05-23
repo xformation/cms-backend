@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.DocumentsService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class DocumentsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/documents")
+    @Timed
     public ResponseEntity<DocumentsDTO> createDocuments(@Valid @RequestBody DocumentsDTO documentsDTO) throws URISyntaxException {
         log.debug("REST request to save Documents : {}", documentsDTO);
         if (documentsDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class DocumentsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/documents")
+    @Timed
     public ResponseEntity<DocumentsDTO> updateDocuments(@Valid @RequestBody DocumentsDTO documentsDTO) throws URISyntaxException {
         log.debug("REST request to update Documents : {}", documentsDTO);
         if (documentsDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class DocumentsResource {
      * @return the ResponseEntity with status 200 (OK) and the list of documents in body
      */
     @GetMapping("/documents")
+    @Timed
     public List<DocumentsDTO> getAllDocuments() {
         log.debug("REST request to get all Documents");
         return documentsService.findAll();
@@ -94,6 +99,7 @@ public class DocumentsResource {
      * @return the ResponseEntity with status 200 (OK) and with body the documentsDTO, or with status 404 (Not Found)
      */
     @GetMapping("/documents/{id}")
+    @Timed
     public ResponseEntity<DocumentsDTO> getDocuments(@PathVariable Long id) {
         log.debug("REST request to get Documents : {}", id);
         Optional<DocumentsDTO> documentsDTO = documentsService.findOne(id);
@@ -107,6 +113,7 @@ public class DocumentsResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/documents/{id}")
+    @Timed
     public ResponseEntity<Void> deleteDocuments(@PathVariable Long id) {
         log.debug("REST request to delete Documents : {}", id);
         documentsService.delete(id);
@@ -121,6 +128,7 @@ public class DocumentsResource {
      * @return the result of the search
      */
     @GetMapping("/_search/documents")
+    @Timed
     public List<DocumentsDTO> searchDocuments(@RequestParam String query) {
         log.debug("REST request to search Documents for query {}", query);
         return documentsService.search(query);

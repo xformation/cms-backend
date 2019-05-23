@@ -35,8 +35,9 @@ export class TypeOfGrading extends React.Component<ITypeOfGradingProps, ITypeOfG
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

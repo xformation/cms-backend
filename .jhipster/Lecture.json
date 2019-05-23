@@ -40,9 +40,8 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "attendanceMaster",
-            "otherEntityRelationshipName": "lecture",
             "relationshipName": "attendancemaster",
+            "otherEntityName": "attendanceMaster",
             "otherEntityField": "id"
         }
     ],

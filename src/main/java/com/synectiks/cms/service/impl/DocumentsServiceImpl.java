@@ -50,6 +50,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     @Override
     public DocumentsDTO save(DocumentsDTO documentsDTO) {
         log.debug("Request to save Documents : {}", documentsDTO);
+
         Documents documents = documentsMapper.toEntity(documentsDTO);
         documents = documentsRepository.save(documents);
         DocumentsDTO result = documentsMapper.toDto(documents);

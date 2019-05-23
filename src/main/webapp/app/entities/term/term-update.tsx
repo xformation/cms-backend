@@ -13,7 +13,7 @@ import { getEntities as getAcademicYears } from 'app/entities/academic-year/acad
 import { getEntity, updateEntity, createEntity, reset } from './term.reducer';
 import { ITerm } from 'app/shared/model/term.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ITermUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

@@ -6,7 +6,7 @@ export default class AdmissionApplicationUpdatePage {
   cancelButton: ElementFinder = element(by.id('cancel-save'));
   admissionStatusSelect: ElementFinder = element(by.css('select#admission-application-admissionStatus'));
   courseSelect: ElementFinder = element(by.css('select#admission-application-course'));
-  dateInput: ElementFinder = element(by.css('input#admission-application-date'));
+  admissionDateInput: ElementFinder = element(by.css('input#admission-application-admissionDate'));
   commentsInput: ElementFinder = element(by.css('input#admission-application-comments'));
   studentSelect: ElementFinder = element(by.css('select#admission-application-student'));
 
@@ -42,12 +42,12 @@ export default class AdmissionApplicationUpdatePage {
       .last()
       .click();
   }
-  async setDateInput(date) {
-    await this.dateInput.sendKeys(date);
+  async setAdmissionDateInput(admissionDate) {
+    await this.admissionDateInput.sendKeys(admissionDate);
   }
 
-  async getDateInput() {
-    return this.dateInput.getAttribute('value');
+  async getAdmissionDateInput() {
+    return this.admissionDateInput.getAttribute('value');
   }
 
   async setCommentsInput(comments) {

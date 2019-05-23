@@ -9,16 +9,14 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "subject",
-            "otherEntityRelationshipName": "teach",
             "relationshipName": "subject",
+            "otherEntityName": "subject",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "teacher",
-            "otherEntityRelationshipName": "teach",
             "relationshipName": "teacher",
+            "otherEntityName": "teacher",
             "otherEntityField": "id"
         }
     ],

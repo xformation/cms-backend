@@ -27,6 +27,7 @@ describe('AdmissionApplication e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
+
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
@@ -47,8 +48,8 @@ describe('AdmissionApplication e2e test', () => {
 
     await admissionApplicationUpdatePage.admissionStatusSelectLastOption();
     await admissionApplicationUpdatePage.courseSelectLastOption();
-    await admissionApplicationUpdatePage.setDateInput('01-01-2001');
-    expect(await admissionApplicationUpdatePage.getDateInput()).to.eq('2001-01-01');
+    await admissionApplicationUpdatePage.setAdmissionDateInput('01-01-2001');
+    expect(await admissionApplicationUpdatePage.getAdmissionDateInput()).to.eq('2001-01-01');
     await admissionApplicationUpdatePage.setCommentsInput('comments');
     expect(await admissionApplicationUpdatePage.getCommentsInput()).to.match(/comments/);
     await admissionApplicationUpdatePage.studentSelectLastOption();

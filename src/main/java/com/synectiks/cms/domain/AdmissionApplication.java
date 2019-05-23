@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -10,7 +9,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -28,7 +26,7 @@ import com.synectiks.cms.domain.enumeration.CourseEnum;
 public class AdmissionApplication implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -45,15 +43,15 @@ public class AdmissionApplication implements Serializable {
     private CourseEnum course;
 
     @NotNull
-    @Column(name = "jhi_date", nullable = false)
-    private Date date;
+    @Column(name = "admission_date", nullable = false)
+    private Date admissionDate;
 
     @NotNull
     @Column(name = "comments", nullable = false)
     private String comments;
 
     @ManyToOne
-    @JsonIgnoreProperties("admissionApplications")
+    @JsonIgnoreProperties("")
     private Student student;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -91,17 +89,17 @@ public class AdmissionApplication implements Serializable {
         this.course = course;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getAdmissionDate() {
+        return admissionDate;
     }
 
-    public AdmissionApplication date(Date date) {
-        this.date = date;
+    public AdmissionApplication admissionDate(Date admissionDate) {
+        this.admissionDate = admissionDate;
         return this;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setAdmissionDate(Date admissionDate) {
+        this.admissionDate = admissionDate;
     }
 
     public String getComments() {
@@ -157,7 +155,7 @@ public class AdmissionApplication implements Serializable {
             "id=" + getId() +
             ", admissionStatus='" + getAdmissionStatus() + "'" +
             ", course='" + getCourse() + "'" +
-            ", date='" + getDate() + "'" +
+            ", admissionDate='" + getAdmissionDate() + "'" +
             ", comments='" + getComments() + "'" +
             "}";
     }

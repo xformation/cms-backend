@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -86,9 +85,6 @@ public class TypeOfGradingResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restTypeOfGradingMockMvc;
 
     private TypeOfGrading typeOfGrading;
@@ -101,8 +97,7 @@ public class TypeOfGradingResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -333,7 +328,7 @@ public class TypeOfGradingResourceIntTest {
 
         int databaseSizeBeforeDelete = typeOfGradingRepository.findAll().size();
 
-        // Delete the typeOfGrading
+        // Get the typeOfGrading
         restTypeOfGradingMockMvc.perform(delete("/api/type-of-gradings/{id}", typeOfGrading.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

@@ -50,6 +50,7 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public LectureDTO save(LectureDTO lectureDTO) {
         log.debug("Request to save Lecture : {}", lectureDTO);
+
         Lecture lecture = lectureMapper.toEntity(lectureDTO);
         lecture = lectureRepository.save(lecture);
         LectureDTO result = lectureMapper.toDto(lecture);

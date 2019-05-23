@@ -50,6 +50,7 @@ public class SectionServiceImpl implements SectionService {
     @Override
     public SectionDTO save(SectionDTO sectionDTO) {
         log.debug("Request to save Section : {}", sectionDTO);
+
         Section section = sectionMapper.toEntity(sectionDTO);
         section = sectionRepository.save(section);
         SectionDTO result = sectionMapper.toDto(section);

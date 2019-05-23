@@ -35,8 +35,9 @@ export class LateFee extends React.Component<ILateFeeProps, ILateFeeState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

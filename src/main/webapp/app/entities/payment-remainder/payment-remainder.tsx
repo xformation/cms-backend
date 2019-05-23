@@ -35,8 +35,9 @@ export class PaymentRemainder extends React.Component<IPaymentRemainderProps, IP
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 

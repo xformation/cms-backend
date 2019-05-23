@@ -13,7 +13,7 @@ import { getEntities as getStudents } from 'app/entities/student/student.reducer
 import { getEntity, updateEntity, createEntity, reset } from './admission-application.reducer';
 import { IAdmissionApplication } from 'app/shared/model/admission-application.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAdmissionApplicationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -122,14 +122,14 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="dateLabel" for="date">
-                    Date
+                  <Label id="admissionDateLabel" for="admissionDate">
+                    Admission Date
                   </Label>
                   <AvField
-                    id="admission-application-date"
+                    id="admission-application-admissionDate"
                     type="date"
                     className="form-control"
-                    name="date"
+                    name="admissionDate"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}

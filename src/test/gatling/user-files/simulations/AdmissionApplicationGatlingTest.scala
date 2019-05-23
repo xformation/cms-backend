@@ -74,7 +74,7 @@ class AdmissionApplicationGatlingTest extends Simulation {
                 "id":null
                 , "admissionStatus":"RECEIVED"
                 , "course":"BTECH"
-                , "date":"2020-01-01T00:00:00.000Z"
+                , "admissionDate":"2020-01-01T00:00:00.000Z"
                 , "comments":"SAMPLE_TEXT"
                 }""")).asJSON
             .check(status.is(201))

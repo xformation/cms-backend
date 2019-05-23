@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-    
+
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
@@ -16,7 +16,7 @@
     <!--
         Added the entity TypeOfGrading.
     -->
-    <changeSet id="20190515121013-1" author="jhipster">
+    <changeSet id="20190523041000-1" author="jhipster">
         <createTable tableName="type_of_grading">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>

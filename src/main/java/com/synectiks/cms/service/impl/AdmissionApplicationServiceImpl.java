@@ -50,6 +50,7 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
     @Override
     public AdmissionApplicationDTO save(AdmissionApplicationDTO admissionApplicationDTO) {
         log.debug("Request to save AdmissionApplication : {}", admissionApplicationDTO);
+
         AdmissionApplication admissionApplication = admissionApplicationMapper.toEntity(admissionApplicationDTO);
         admissionApplication = admissionApplicationRepository.save(admissionApplication);
         AdmissionApplicationDTO result = admissionApplicationMapper.toDto(admissionApplication);

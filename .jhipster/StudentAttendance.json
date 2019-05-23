@@ -17,16 +17,14 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "student",
-            "otherEntityRelationshipName": "studentAttendance",
             "relationshipName": "student",
+            "otherEntityName": "student",
             "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-one",
-            "otherEntityName": "lecture",
-            "otherEntityRelationshipName": "studentAttendance",
             "relationshipName": "lecture",
+            "otherEntityName": "lecture",
             "otherEntityField": "id"
         }
     ],

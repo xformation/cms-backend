@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -26,7 +27,6 @@ public class DueDateDTO implements Serializable {
 
     @NotNull
     private Frequency frequency;
-
 
     private Long collegeId;
 

@@ -434,7 +434,7 @@ enum GradesEnum{
 entity AdmissionApplication{
     admissionStatus AdmissionStatusEnum required
     course CourseEnum required
-    date LocalDate required
+    admissionDate LocalDate required
     comments String required
 }
 

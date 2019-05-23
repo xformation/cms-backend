@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -82,7 +83,6 @@ public class LegalEntityDTO implements Serializable {
 
     @NotNull
     private Long ptSignatory;
-
 
     private Long branchId;
 

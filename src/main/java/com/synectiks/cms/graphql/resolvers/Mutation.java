@@ -519,7 +519,7 @@ public class Mutation implements GraphQLMutationResolver {
 
         admissionApplication.setAdmissionStatus(addAdmissionApplicationInput.getAdmissionStatus());
         admissionApplication.setCourse(addAdmissionApplicationInput.getCourse());
-        admissionApplication.setDate(addAdmissionApplicationInput.getDate());
+        admissionApplication.setAdmissionDate(addAdmissionApplicationInput.getAdmissionDate());
         admissionApplication.setComments(addAdmissionApplicationInput.getComments());
         admissionApplicationRepository.save(admissionApplication);
         return new AddAdmissionApplicationPayload(admissionApplication);
@@ -535,8 +535,8 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAdmissionApplicationInput.getCourse() != null) {
             admissionApplication.setCourse(updateAdmissionApplicationInput.getCourse());
         }
-        if (updateAdmissionApplicationInput.getDate() != null) {
-            admissionApplication.setDate(updateAdmissionApplicationInput.getDate());
+        if (updateAdmissionApplicationInput.getAdmissionDate() != null) {
+            admissionApplication.setAdmissionDate(updateAdmissionApplicationInput.getAdmissionDate());
         }
         if (updateAdmissionApplicationInput.getComments() != null) {
             admissionApplication.setComments(updateAdmissionApplicationInput.getComments());
