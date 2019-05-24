@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.AcademicExamSettingService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class AcademicExamSettingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/academic-exam-settings")
-    @Timed
     public ResponseEntity<AcademicExamSettingDTO> createAcademicExamSetting(@Valid @RequestBody AcademicExamSettingDTO academicExamSettingDTO) throws URISyntaxException {
         log.debug("REST request to save AcademicExamSetting : {}", academicExamSettingDTO);
         if (academicExamSettingDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class AcademicExamSettingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/academic-exam-settings")
-    @Timed
     public ResponseEntity<AcademicExamSettingDTO> updateAcademicExamSetting(@Valid @RequestBody AcademicExamSettingDTO academicExamSettingDTO) throws URISyntaxException {
         log.debug("REST request to update AcademicExamSetting : {}", academicExamSettingDTO);
         if (academicExamSettingDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class AcademicExamSettingResource {
      * @return the ResponseEntity with status 200 (OK) and the list of academicExamSettings in body
      */
     @GetMapping("/academic-exam-settings")
-    @Timed
     public List<AcademicExamSettingDTO> getAllAcademicExamSettings() {
         log.debug("REST request to get all AcademicExamSettings");
         return academicExamSettingService.findAll();
@@ -99,7 +94,6 @@ public class AcademicExamSettingResource {
      * @return the ResponseEntity with status 200 (OK) and with body the academicExamSettingDTO, or with status 404 (Not Found)
      */
     @GetMapping("/academic-exam-settings/{id}")
-    @Timed
     public ResponseEntity<AcademicExamSettingDTO> getAcademicExamSetting(@PathVariable Long id) {
         log.debug("REST request to get AcademicExamSetting : {}", id);
         Optional<AcademicExamSettingDTO> academicExamSettingDTO = academicExamSettingService.findOne(id);
@@ -113,7 +107,6 @@ public class AcademicExamSettingResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/academic-exam-settings/{id}")
-    @Timed
     public ResponseEntity<Void> deleteAcademicExamSetting(@PathVariable Long id) {
         log.debug("REST request to delete AcademicExamSetting : {}", id);
         academicExamSettingService.delete(id);
@@ -128,7 +121,6 @@ public class AcademicExamSettingResource {
      * @return the result of the search
      */
     @GetMapping("/_search/academic-exam-settings")
-    @Timed
     public List<AcademicExamSettingDTO> searchAcademicExamSettings(@RequestParam String query) {
         log.debug("REST request to search AcademicExamSettings for query {}", query);
         return academicExamSettingService.search(query);

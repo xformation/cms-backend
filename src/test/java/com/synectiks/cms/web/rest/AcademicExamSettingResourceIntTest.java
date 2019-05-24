@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.cms.domain.enumeration.GradeType;
 /**
  * Test class for the AcademicExamSettingResource REST controller.
  *
@@ -73,6 +75,9 @@ public class AcademicExamSettingResourceIntTest {
 
     private static final String DEFAULT_END_TIME = "AAAAAAAAAA";
     private static final String UPDATED_END_TIME = "BBBBBBBBBB";
+
+    private static final GradeType DEFAULT_GRADE_TYPE = GradeType.PERCENTAGE;
+    private static final GradeType UPDATED_GRADE_TYPE = GradeType.GRADE;
 
     private static final Integer DEFAULT_TOTAL = 1;
     private static final Integer UPDATED_TOTAL = 2;
@@ -112,6 +117,9 @@ public class AcademicExamSettingResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restAcademicExamSettingMockMvc;
 
     private AcademicExamSetting academicExamSetting;
@@ -124,7 +132,8 @@ public class AcademicExamSettingResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -143,6 +152,7 @@ public class AcademicExamSettingResourceIntTest {
             .duration(DEFAULT_DURATION)
             .startTime(DEFAULT_START_TIME)
             .endTime(DEFAULT_END_TIME)
+            .gradeType(DEFAULT_GRADE_TYPE)
             .total(DEFAULT_TOTAL)
             .passing(DEFAULT_PASSING)
             .actions(DEFAULT_ACTIONS);
@@ -178,6 +188,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getDuration()).isEqualTo(DEFAULT_DURATION);
         assertThat(testAcademicExamSetting.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testAcademicExamSetting.getEndTime()).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testAcademicExamSetting.getGradeType()).isEqualTo(DEFAULT_GRADE_TYPE);
         assertThat(testAcademicExamSetting.getTotal()).isEqualTo(DEFAULT_TOTAL);
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(DEFAULT_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(DEFAULT_ACTIONS);
@@ -344,6 +355,25 @@ public class AcademicExamSettingResourceIntTest {
 
     @Test
     @Transactional
+    public void checkGradeTypeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
+        // set the field null
+        academicExamSetting.setGradeType(null);
+
+        // Create the AcademicExamSetting, which fails.
+        AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(academicExamSetting);
+
+        restAcademicExamSettingMockMvc.perform(post("/api/academic-exam-settings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(academicExamSettingDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
+        assertThat(academicExamSettingList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkTotalIsRequired() throws Exception {
         int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
         // set the field null
@@ -399,6 +429,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION.toString())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
+            .andExpect(jsonPath("$.[*].gradeType").value(hasItem(DEFAULT_GRADE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
             .andExpect(jsonPath("$.[*].passing").value(hasItem(DEFAULT_PASSING)))
             .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS.toString())));
@@ -423,6 +454,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION.toString()))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
             .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()))
+            .andExpect(jsonPath("$.gradeType").value(DEFAULT_GRADE_TYPE.toString()))
             .andExpect(jsonPath("$.total").value(DEFAULT_TOTAL))
             .andExpect(jsonPath("$.passing").value(DEFAULT_PASSING))
             .andExpect(jsonPath("$.actions").value(DEFAULT_ACTIONS.toString()));
@@ -457,6 +489,7 @@ public class AcademicExamSettingResourceIntTest {
             .duration(UPDATED_DURATION)
             .startTime(UPDATED_START_TIME)
             .endTime(UPDATED_END_TIME)
+            .gradeType(UPDATED_GRADE_TYPE)
             .total(UPDATED_TOTAL)
             .passing(UPDATED_PASSING)
             .actions(UPDATED_ACTIONS);
@@ -479,6 +512,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getDuration()).isEqualTo(UPDATED_DURATION);
         assertThat(testAcademicExamSetting.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testAcademicExamSetting.getEndTime()).isEqualTo(UPDATED_END_TIME);
+        assertThat(testAcademicExamSetting.getGradeType()).isEqualTo(UPDATED_GRADE_TYPE);
         assertThat(testAcademicExamSetting.getTotal()).isEqualTo(UPDATED_TOTAL);
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(UPDATED_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(UPDATED_ACTIONS);
@@ -517,7 +551,7 @@ public class AcademicExamSettingResourceIntTest {
 
         int databaseSizeBeforeDelete = academicExamSettingRepository.findAll().size();
 
-        // Get the academicExamSetting
+        // Delete the academicExamSetting
         restAcademicExamSettingMockMvc.perform(delete("/api/academic-exam-settings/{id}", academicExamSetting.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -550,6 +584,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME)))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME)))
+            .andExpect(jsonPath("$.[*].gradeType").value(hasItem(DEFAULT_GRADE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
             .andExpect(jsonPath("$.[*].passing").value(hasItem(DEFAULT_PASSING)))
             .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS)));

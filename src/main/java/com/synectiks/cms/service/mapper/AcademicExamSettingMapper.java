@@ -8,17 +8,19 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity AcademicExamSetting and its DTO AcademicExamSettingDTO.
  */
-@Mapper(componentModel = "spring", uses = {DepartmentMapper.class, AcademicYearMapper.class, SectionMapper.class})
+@Mapper(componentModel = "spring", uses = {DepartmentMapper.class, AcademicYearMapper.class, SectionMapper.class, BatchMapper.class})
 public interface AcademicExamSettingMapper extends EntityMapper<AcademicExamSettingDTO, AcademicExamSetting> {
 
     @Mapping(source = "department.id", target = "departmentId")
     @Mapping(source = "academicyear.id", target = "academicyearId")
     @Mapping(source = "section.id", target = "sectionId")
+    @Mapping(source = "batch.id", target = "batchId")
     AcademicExamSettingDTO toDto(AcademicExamSetting academicExamSetting);
 
     @Mapping(source = "departmentId", target = "department")
     @Mapping(source = "academicyearId", target = "academicyear")
     @Mapping(source = "sectionId", target = "section")
+    @Mapping(source = "batchId", target = "batch")
     AcademicExamSetting toEntity(AcademicExamSettingDTO academicExamSettingDTO);
 
     default AcademicExamSetting fromId(Long id) {

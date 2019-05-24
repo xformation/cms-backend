@@ -26,8 +26,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "country",
             "otherEntityName": "country",
+            "otherEntityRelationshipName": "state",
+            "relationshipName": "country",
             "otherEntityField": "id"
         }
     ],

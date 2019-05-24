@@ -14,10 +14,12 @@ import { IAcademicYear } from 'app/shared/model/academic-year.model';
 import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
 import { ISection } from 'app/shared/model/section.model';
 import { getEntities as getSections } from 'app/entities/section/section.reducer';
+import { IBatch } from 'app/shared/model/batch.model';
+import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './academic-exam-setting.reducer';
 import { IAcademicExamSetting } from 'app/shared/model/academic-exam-setting.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAcademicExamSettingUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -27,6 +29,7 @@ export interface IAcademicExamSettingUpdateState {
   departmentId: string;
   academicyearId: string;
   sectionId: string;
+  batchId: string;
 }
 
 export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSettingUpdateProps, IAcademicExamSettingUpdateState> {
@@ -36,6 +39,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
       departmentId: '0',
       academicyearId: '0',
       sectionId: '0',
+      batchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -56,6 +60,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
     this.props.getDepartments();
     this.props.getAcademicYears();
     this.props.getSections();
+    this.props.getBatches();
   }
 
   saveEntity = (event, errors, values) => {
@@ -79,7 +84,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
   };
 
   render() {
-    const { academicExamSettingEntity, departments, academicYears, sections, loading, updating } = this.props;
+    const { academicExamSettingEntity, departments, academicYears, sections, batches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -206,6 +211,19 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="gradeTypeLabel">Grade Type</Label>
+                  <AvInput
+                    id="academic-exam-setting-gradeType"
+                    type="select"
+                    className="form-control"
+                    name="gradeType"
+                    value={(!isNew && academicExamSettingEntity.gradeType) || 'PERCENTAGE'}
+                  >
+                    <option value="PERCENTAGE">PERCENTAGE</option>
+                    <option value="GRADE">GRADE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label id="totalLabel" for="total">
                     Total
                   </Label>
@@ -280,6 +298,19 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="batch.id">Batch</Label>
+                  <AvInput id="academic-exam-setting-batch" type="select" className="form-control" name="batchId">
+                    <option value="" key="0" />
+                    {batches
+                      ? batches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/academic-exam-setting" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -301,6 +332,7 @@ const mapStateToProps = (storeState: IRootState) => ({
   departments: storeState.department.entities,
   academicYears: storeState.academicYear.entities,
   sections: storeState.section.entities,
+  batches: storeState.batch.entities,
   academicExamSettingEntity: storeState.academicExamSetting.entity,
   loading: storeState.academicExamSetting.loading,
   updating: storeState.academicExamSetting.updating,
@@ -311,6 +343,7 @@ const mapDispatchToProps = {
   getDepartments,
   getAcademicYears,
   getSections,
+  getBatches,
   getEntity,
   updateEntity,
   createEntity,

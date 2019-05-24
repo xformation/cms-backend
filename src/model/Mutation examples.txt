@@ -406,6 +406,7 @@ mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
     duration
     startTime
     endTime
+    gradeType
     total
     passing
     actions
@@ -418,10 +419,12 @@ mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
     academicyear{
       id
     }
+    batch{
+      id
+    }
   }
 }
 }
-
 
 {
  "input":{
@@ -433,15 +436,17 @@ mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
   "duration": "3HRS",
   "startTime": "7:30:00Am",
   "endTime": "10:30:00Am",
+  "gradeType": "GRADE",
   "total": 100,
   "passing": 35,
   "actions": "ACTIVE",
   "departmentId": 1101,
   "sectionId":  1201,
-  "academicyearId":  1051
+  "academicyearId":  1051,
+  "batchId": 11350
 }
 }
-
+-------
 mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
   updateAcademicExamSetting(input: $input) {
    academicExamSetting {
@@ -454,6 +459,7 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
     duration
     startTime
     endTime
+    gradeType
     total
     passing
     actions
@@ -464,6 +470,9 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
       id
     }
     academicyear{
+      id
+    }
+    batch{
       id
     }
   }
@@ -481,12 +490,14 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
   "duration": "2HRS",
   "startTime": "8:00:00Am",
   "endTime": "10:30:00Am",
+  "gradeType": "GRADE",
   "total": 100,
   "passing": 35,
   "actions": "ACTIVE",
   "departmentId": 1101,
   "sectionId":  1201,
-  "academicyearId":  1051
+  "academicyearId":  1051,
+  "batchId": 11350
 }
 }
 

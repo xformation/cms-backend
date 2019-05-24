@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -9,10 +10,13 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
+
+import com.synectiks.cms.domain.enumeration.GradeType;
 
 /**
  * A AcademicExamSetting.
@@ -24,7 +28,7 @@ import com.synectiks.cms.domain.enumeration.SemesterEnum;
 public class AcademicExamSetting implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -63,6 +67,11 @@ public class AcademicExamSetting implements Serializable {
     private String endTime;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "grade_type", nullable = false)
+    private GradeType gradeType;
+
+    @NotNull
     @Column(name = "total", nullable = false)
     private Integer total;
 
@@ -74,16 +83,20 @@ public class AcademicExamSetting implements Serializable {
     private String actions;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("academicExamSettings")
     private Department department;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("academicExamSettings")
     private AcademicYear academicyear;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("academicExamSettings")
     private Section section;
+
+    @ManyToOne
+    @JsonIgnoreProperties("academicExamSettings")
+    private Batch batch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -198,6 +211,19 @@ public class AcademicExamSetting implements Serializable {
         this.endTime = endTime;
     }
 
+    public GradeType getGradeType() {
+        return gradeType;
+    }
+
+    public AcademicExamSetting gradeType(GradeType gradeType) {
+        this.gradeType = gradeType;
+        return this;
+    }
+
+    public void setGradeType(GradeType gradeType) {
+        this.gradeType = gradeType;
+    }
+
     public Integer getTotal() {
         return total;
     }
@@ -275,6 +301,19 @@ public class AcademicExamSetting implements Serializable {
     public void setSection(Section section) {
         this.section = section;
     }
+
+    public Batch getBatch() {
+        return batch;
+    }
+
+    public AcademicExamSetting batch(Batch batch) {
+        this.batch = batch;
+        return this;
+    }
+
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -309,6 +348,7 @@ public class AcademicExamSetting implements Serializable {
             ", duration='" + getDuration() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
+            ", gradeType='" + getGradeType() + "'" +
             ", total=" + getTotal() +
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +

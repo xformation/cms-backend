@@ -19,8 +19,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "student",
             "otherEntityName": "student",
+            "otherEntityRelationshipName": "documents",
+            "relationshipName": "student",
             "otherEntityField": "id"
         }
     ],

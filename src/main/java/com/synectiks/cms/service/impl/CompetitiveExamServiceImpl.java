@@ -50,7 +50,6 @@ public class CompetitiveExamServiceImpl implements CompetitiveExamService {
     @Override
     public CompetitiveExamDTO save(CompetitiveExamDTO competitiveExamDTO) {
         log.debug("Request to save CompetitiveExam : {}", competitiveExamDTO);
-
         CompetitiveExam competitiveExam = competitiveExamMapper.toEntity(competitiveExamDTO);
         competitiveExam = competitiveExamRepository.save(competitiveExam);
         CompetitiveExamDTO result = competitiveExamMapper.toDto(competitiveExam);

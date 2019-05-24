@@ -80,6 +80,7 @@ class AcademicExamSettingGatlingTest extends Simulation {
                 , "duration":"SAMPLE_TEXT"
                 , "startTime":"SAMPLE_TEXT"
                 , "endTime":"SAMPLE_TEXT"
+                , "gradeType":"PERCENTAGE"
                 , "total":"0"
                 , "passing":"0"
                 , "actions":"SAMPLE_TEXT"

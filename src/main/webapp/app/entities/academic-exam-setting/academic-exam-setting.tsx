@@ -35,9 +35,8 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -83,12 +82,14 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                 <th>Duration</th>
                 <th>Start Time</th>
                 <th>End Time</th>
+                <th>Grade Type</th>
                 <th>Total</th>
                 <th>Passing</th>
                 <th>Actions</th>
                 <th>Department</th>
                 <th>Academicyear</th>
                 <th>Section</th>
+                <th>Batch</th>
                 <th />
               </tr>
             </thead>
@@ -110,6 +111,7 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                   <td>{academicExamSetting.duration}</td>
                   <td>{academicExamSetting.startTime}</td>
                   <td>{academicExamSetting.endTime}</td>
+                  <td>{academicExamSetting.gradeType}</td>
                   <td>{academicExamSetting.total}</td>
                   <td>{academicExamSetting.passing}</td>
                   <td>{academicExamSetting.actions}</td>
@@ -130,6 +132,13 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                   <td>
                     {academicExamSetting.sectionId ? (
                       <Link to={`section/${academicExamSetting.sectionId}`}>{academicExamSetting.sectionId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {academicExamSetting.batchId ? (
+                      <Link to={`batch/${academicExamSetting.batchId}`}>{academicExamSetting.batchId}</Link>
                     ) : (
                       ''
                     )}

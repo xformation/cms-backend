@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity AcademicExamSetting.
     -->
-    <changeSet id="20190522035242-2" author="jhipster">
+    <changeSet id="20190408064825-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="department_id"
                                  baseTableName="academic_exam_setting"
@@ -25,6 +25,12 @@
                                  constraintName="fk_academic_exam_setting_section_id"
                                  referencedColumnNames="id"
                                  referencedTableName="section"/>
+
+        <addForeignKeyConstraint baseColumnNames="batch_id"
+                                 baseTableName="academic_exam_setting"
+                                 constraintName="fk_academic_exam_setting_batch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="batch"/>
 
     </changeSet>
 </databaseChangeLog>

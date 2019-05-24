@@ -63,6 +63,10 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
             </dt>
             <dd>{academicExamSettingEntity.endTime}</dd>
             <dt>
+              <span id="gradeType">Grade Type</span>
+            </dt>
+            <dd>{academicExamSettingEntity.gradeType}</dd>
+            <dt>
               <span id="total">Total</span>
             </dt>
             <dd>{academicExamSettingEntity.total}</dd>
@@ -80,6 +84,8 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
             <dd>{academicExamSettingEntity.academicyearId ? academicExamSettingEntity.academicyearId : ''}</dd>
             <dt>Section</dt>
             <dd>{academicExamSettingEntity.sectionId ? academicExamSettingEntity.sectionId : ''}</dd>
+            <dt>Batch</dt>
+            <dd>{academicExamSettingEntity.batchId ? academicExamSettingEntity.batchId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/academic-exam-setting" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

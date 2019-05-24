@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -105,7 +106,7 @@ public class LegalEntityResourceIntTest {
     private static final String UPDATED_PF_NUMBER = "BBBBBBBBBB";
 
     private static final Date DEFAULT_PF_REGISTRATION_DATE = new Date();
-    private static final Date UPDATED_PF_REGISTRATION_DATE =new Date();
+    private static final Date UPDATED_PF_REGISTRATION_DATE = new Date();
 
     private static final Long DEFAULT_PF_SIGNATORY = 1L;
     private static final Long UPDATED_PF_SIGNATORY = 2L;
@@ -114,7 +115,7 @@ public class LegalEntityResourceIntTest {
     private static final String UPDATED_ESI_NUMBER = "BBBBBBBBBB";
 
     private static final Date DEFAULT_ESI_REGISTRATION_DATE = new Date();
-    private static final Date UPDATED_ESI_REGISTRATION_DATE =new Date();
+    private static final Date UPDATED_ESI_REGISTRATION_DATE = new Date();
 
     private static final Long DEFAULT_ESI_SIGNATORY = 1L;
     private static final Long UPDATED_ESI_SIGNATORY = 2L;
@@ -123,7 +124,7 @@ public class LegalEntityResourceIntTest {
     private static final String UPDATED_PT_NUMBER = "BBBBBBBBBB";
 
     private static final Date DEFAULT_PT_REGISTRATION_DATE = new Date();
-    private static final Date UPDATED_PT_REGISTRATION_DATE =new Date();
+    private static final Date UPDATED_PT_REGISTRATION_DATE = new Date();
 
     private static final Long DEFAULT_PT_SIGNATORY = 1L;
     private static final Long UPDATED_PT_SIGNATORY = 2L;
@@ -157,6 +158,9 @@ public class LegalEntityResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restLegalEntityMockMvc;
 
     private LegalEntity legalEntity;
@@ -169,7 +173,8 @@ public class LegalEntityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -842,7 +847,7 @@ public class LegalEntityResourceIntTest {
 
         int databaseSizeBeforeDelete = legalEntityRepository.findAll().size();
 
-        // Get the legalEntity
+        // Delete the legalEntity
         restLegalEntityMockMvc.perform(delete("/api/legal-entities/{id}", legalEntity.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

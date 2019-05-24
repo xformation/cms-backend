@@ -13,7 +13,7 @@ import { getEntities as getStudents } from 'app/entities/student/student.reducer
 import { getEntity, updateEntity, createEntity, reset } from './admission-application.reducer';
 import { IAdmissionApplication } from 'app/shared/model/admission-application.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAdmissionApplicationUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

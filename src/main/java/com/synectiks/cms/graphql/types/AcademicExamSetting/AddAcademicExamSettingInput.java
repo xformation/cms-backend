@@ -6,6 +6,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
     private Long departmentId;
     private Long academicyearId;
     private Long sectionId;
+    private Long batchId;
 
     public Long getDepartmentId() {
         return departmentId;
@@ -31,6 +32,14 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         this.sectionId = sectionId;
     }
 
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,12 +48,13 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         AddAcademicExamSettingInput that = (AddAcademicExamSettingInput) o;
         return Objects.equals(departmentId, that.departmentId) &&
             Objects.equals(academicyearId, that.academicyearId) &&
-            Objects.equals(sectionId, that.sectionId);
+            Objects.equals(sectionId, that.sectionId) &&
+            Objects.equals(batchId, that.batchId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), departmentId, academicyearId, sectionId);
+        return Objects.hash(super.hashCode(), departmentId, academicyearId, sectionId, batchId);
     }
 
     @Override
@@ -53,6 +63,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
             "departmentId=" + departmentId +
             ", academicyearId=" + academicyearId +
             ", sectionId=" + sectionId +
+            ", batchId=" + batchId +
             '}';
     }
 }

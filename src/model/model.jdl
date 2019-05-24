@@ -430,6 +430,10 @@ enum GradesEnum{
     Aplus,A,Bplus,B,Cplus,C
 }
 
+enum GradeType{
+    PERCENTAGE, GRADE
+}
+
 
 entity AdmissionApplication{
     admissionStatus AdmissionStatusEnum required
@@ -462,6 +466,12 @@ enum SemesterEnum{
     SEMESTER1,SEMESTER2,SEMESTER3,SEMESTER4,SEMESTER5,SEMESTER6,SEMESTER7,SEMESTER8
 }
 
+entity TypeOfGrading{
+    minMarks  Integer required
+    maxMarks Integer required
+    grades GradesEnum required
+}
+
 entity AcademicExamSetting {
     examType String required
     semester SemesterEnum required
@@ -471,15 +481,10 @@ entity AcademicExamSetting {
     duration String required
     startTime String required
     endTime String required
+    gradeType GradeType required
     total Integer required
     passing Integer required
     actions String
-}
-
-entity TypeOfGrading{
-    minMarks  Integer required
-    maxMarks Integer required
-    grades GradesEnum required
 }
 
 relationship ManyToOne {
@@ -562,6 +567,7 @@ AdminAttendance{student} to Student,
 AcademicExamSetting{department} to Department,
 AcademicExamSetting{academicyear} to AcademicYear,
 AcademicExamSetting{section} to Section,
+AcademicExamSetting{batch} to Batch,
 MetaLecture{branch} to Branch,
 MetaLecture{department} to Department,
 MetaLecture{subject} to Subject,

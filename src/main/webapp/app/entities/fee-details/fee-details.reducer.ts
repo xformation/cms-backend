@@ -63,11 +63,6 @@ export default (state: FeeDetailsState = initialState, action): FeeDetailsState 
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_FEEDETAILS):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_FEEDETAILS_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/fee-details';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IFeeDetails> = query => ({
+export const getSearchEntities: ICrudSearchAction<IFeeDetails> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_FEEDETAILS,
-  payload: axios.get<IFeeDetails>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IFeeDetails>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IFeeDetails> = (page, size, sort) => ({

@@ -35,8 +35,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "student",
             "otherEntityName": "student",
+            "otherEntityRelationshipName": "admissionApplication",
+            "relationshipName": "student",
             "otherEntityField": "id"
         }
     ],

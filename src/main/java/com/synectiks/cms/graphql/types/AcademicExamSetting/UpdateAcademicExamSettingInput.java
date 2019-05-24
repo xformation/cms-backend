@@ -4,6 +4,7 @@ public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingI
     private Long departmentId;
     private Long academicyearId;
     private Long sectionId;
+    private Long batchId;
 
     public Long getDepartmentId() {
         return departmentId;
@@ -27,5 +28,13 @@ public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingI
 
     public void setSectionId(Long sectionId) {
         this.sectionId = sectionId;
+    }
+
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 }

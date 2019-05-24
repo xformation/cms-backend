@@ -11,6 +11,11 @@ export const enum SemesterEnum {
   SEMESTER8 = 'SEMESTER8'
 }
 
+export const enum GradeType {
+  PERCENTAGE = 'PERCENTAGE',
+  GRADE = 'GRADE'
+}
+
 export interface IAcademicExamSetting {
   id?: number;
   examType?: string;
@@ -21,12 +26,14 @@ export interface IAcademicExamSetting {
   duration?: string;
   startTime?: string;
   endTime?: string;
+  gradeType?: GradeType;
   total?: number;
   passing?: number;
   actions?: string;
   departmentId?: number;
   academicyearId?: number;
   sectionId?: number;
+  batchId?: number;
 }
 
 export const defaultValue: Readonly<IAcademicExamSetting> = {};

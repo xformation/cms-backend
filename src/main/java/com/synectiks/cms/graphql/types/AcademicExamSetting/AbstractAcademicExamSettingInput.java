@@ -1,5 +1,7 @@
 package com.synectiks.cms.graphql.types.AcademicExamSetting;
 
+import com.synectiks.cms.domain.enumeration.GradeType;
+import com.synectiks.cms.domain.enumeration.GradesEnum;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
 
 import java.util.Date;
@@ -15,6 +17,7 @@ public class AbstractAcademicExamSettingInput {
     private String duration;
     private String startTime;
     private String endTime;
+    private GradeType gradeType;
     private Integer total;
     private Integer passing;
     private String actions;
@@ -91,6 +94,14 @@ public class AbstractAcademicExamSettingInput {
         this.endTime = endTime;
     }
 
+    public GradeType getGradeType() {
+        return gradeType;
+    }
+
+    public void setGradeType(GradeType gradeType) {
+        this.gradeType = gradeType;
+    }
+
     public Integer getTotal() {
         return total;
     }
@@ -129,6 +140,7 @@ public class AbstractAcademicExamSettingInput {
             Objects.equals(duration, that.duration) &&
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
+            gradeType == that.gradeType &&
             Objects.equals(total, that.total) &&
             Objects.equals(passing, that.passing) &&
             Objects.equals(actions, that.actions);
@@ -136,7 +148,7 @@ public class AbstractAcademicExamSettingInput {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examType, semester, subject, examDate, day, duration, startTime, endTime, total, passing, actions);
+        return Objects.hash(id, examType, semester, subject, examDate, day, duration, startTime, endTime, gradeType, total, passing, actions);
     }
 
     @Override
@@ -151,6 +163,7 @@ public class AbstractAcademicExamSettingInput {
             ", duration='" + duration + '\'' +
             ", startTime='" + startTime + '\'' +
             ", endTime='" + endTime + '\'' +
+            ", gradeType=" + gradeType +
             ", total=" + total +
             ", passing=" + passing +
             ", actions='" + actions + '\'' +

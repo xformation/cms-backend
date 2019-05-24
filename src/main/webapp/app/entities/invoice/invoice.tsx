@@ -35,9 +35,8 @@ export class Invoice extends React.Component<IInvoiceProps, IInvoiceState> {
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

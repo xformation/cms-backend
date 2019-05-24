@@ -122,7 +122,11 @@ enum GradesEnum{
     B
     Cplus
     C
-     }
+}
+enum GradeType{
+    PERCENTAGE
+    GRADE
+}
 
 type Query {
 
@@ -644,12 +648,14 @@ type AcademicExamSetting{
     duration: String!
     startTime: String!
     endTime: String!
+    gradeType: GradeType!
     total: Int!
     passing: Int!
     actions: String!
     department: Department!
     section: Section!
     academicyear: AcademicYear!
+    batch: Batch!
 }
 
 enum Gender {
@@ -1159,12 +1165,14 @@ input AddAcademicExamSettingInput{
     duration: String!
     startTime: String!
     endTime: String!
+    gradeType: GradeType!
     total: Int!
     passing: Int!
     actions: String!
     departmentId: Long!
     sectionId: Long!
     academicyearId: Long!
+    batchId: Long!
 }
 
 type AddAcademicExamSettingPayload {
@@ -1180,12 +1188,14 @@ input UpdateAcademicExamSettingInput {
     duration: String!
     startTime: String!
     endTime: String!
+    gradeType: GradeType!
     total: Int!
     passing: Int!
     actions: String!
     departmentId: Long!
     sectionId: Long!
     academicyearId: Long!
+    batchId: Long!
 }
 
 type UpdateAcademicExamSettingPayload {
@@ -1222,8 +1232,6 @@ input StudentAttendanceUpdateFilter {
 	studentIds: String!
 	lectureId: String!
 }
-
-
 
 input AddAuthorizedSignatoryInput {
     signatoryName: String!

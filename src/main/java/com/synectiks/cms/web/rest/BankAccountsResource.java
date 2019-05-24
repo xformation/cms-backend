@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.BankAccountsService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class BankAccountsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/bank-accounts")
-    @Timed
     public ResponseEntity<BankAccountsDTO> createBankAccounts(@Valid @RequestBody BankAccountsDTO bankAccountsDTO) throws URISyntaxException {
         log.debug("REST request to save BankAccounts : {}", bankAccountsDTO);
         if (bankAccountsDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class BankAccountsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/bank-accounts")
-    @Timed
     public ResponseEntity<BankAccountsDTO> updateBankAccounts(@Valid @RequestBody BankAccountsDTO bankAccountsDTO) throws URISyntaxException {
         log.debug("REST request to update BankAccounts : {}", bankAccountsDTO);
         if (bankAccountsDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class BankAccountsResource {
      * @return the ResponseEntity with status 200 (OK) and the list of bankAccounts in body
      */
     @GetMapping("/bank-accounts")
-    @Timed
     public List<BankAccountsDTO> getAllBankAccounts() {
         log.debug("REST request to get all BankAccounts");
         return bankAccountsService.findAll();
@@ -99,7 +94,6 @@ public class BankAccountsResource {
      * @return the ResponseEntity with status 200 (OK) and with body the bankAccountsDTO, or with status 404 (Not Found)
      */
     @GetMapping("/bank-accounts/{id}")
-    @Timed
     public ResponseEntity<BankAccountsDTO> getBankAccounts(@PathVariable Long id) {
         log.debug("REST request to get BankAccounts : {}", id);
         Optional<BankAccountsDTO> bankAccountsDTO = bankAccountsService.findOne(id);
@@ -113,7 +107,6 @@ public class BankAccountsResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/bank-accounts/{id}")
-    @Timed
     public ResponseEntity<Void> deleteBankAccounts(@PathVariable Long id) {
         log.debug("REST request to delete BankAccounts : {}", id);
         bankAccountsService.delete(id);
@@ -128,7 +121,6 @@ public class BankAccountsResource {
      * @return the result of the search
      */
     @GetMapping("/_search/bank-accounts")
-    @Timed
     public List<BankAccountsDTO> searchBankAccounts(@RequestParam String query) {
         log.debug("REST request to search BankAccounts for query {}", query);
         return bankAccountsService.search(query);

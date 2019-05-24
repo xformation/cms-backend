@@ -12,12 +12,14 @@ export default class AcademicExamSettingUpdatePage {
   durationInput: ElementFinder = element(by.css('input#academic-exam-setting-duration'));
   startTimeInput: ElementFinder = element(by.css('input#academic-exam-setting-startTime'));
   endTimeInput: ElementFinder = element(by.css('input#academic-exam-setting-endTime'));
+  gradeTypeSelect: ElementFinder = element(by.css('select#academic-exam-setting-gradeType'));
   totalInput: ElementFinder = element(by.css('input#academic-exam-setting-total'));
   passingInput: ElementFinder = element(by.css('input#academic-exam-setting-passing'));
   actionsInput: ElementFinder = element(by.css('input#academic-exam-setting-actions'));
   departmentSelect: ElementFinder = element(by.css('select#academic-exam-setting-department'));
   academicyearSelect: ElementFinder = element(by.css('select#academic-exam-setting-academicyear'));
   sectionSelect: ElementFinder = element(by.css('select#academic-exam-setting-section'));
+  batchSelect: ElementFinder = element(by.css('select#academic-exam-setting-batch'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -93,6 +95,20 @@ export default class AcademicExamSettingUpdatePage {
     return this.endTimeInput.getAttribute('value');
   }
 
+  async setGradeTypeSelect(gradeType) {
+    await this.gradeTypeSelect.sendKeys(gradeType);
+  }
+
+  async getGradeTypeSelect() {
+    return this.gradeTypeSelect.element(by.css('option:checked')).getText();
+  }
+
+  async gradeTypeSelectLastOption() {
+    await this.gradeTypeSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setTotalInput(total) {
     await this.totalInput.sendKeys(total);
   }
@@ -172,6 +188,25 @@ export default class AcademicExamSettingUpdatePage {
 
   async getSectionSelectedOption() {
     return this.sectionSelect.element(by.css('option:checked')).getText();
+  }
+
+  async batchSelectLastOption() {
+    await this.batchSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async batchSelectOption(option) {
+    await this.batchSelect.sendKeys(option);
+  }
+
+  getBatchSelect() {
+    return this.batchSelect;
+  }
+
+  async getBatchSelectedOption() {
+    return this.batchSelect.element(by.css('option:checked')).getText();
   }
 
   async save() {

@@ -1,10 +1,10 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.cms.domain.enumeration.GradeType;
 
 /**
  * A DTO for the AcademicExamSetting entity.
@@ -37,6 +37,9 @@ public class AcademicExamSettingDTO implements Serializable {
     private String endTime;
 
     @NotNull
+    private GradeType gradeType;
+
+    @NotNull
     private Integer total;
 
     @NotNull
@@ -44,11 +47,14 @@ public class AcademicExamSettingDTO implements Serializable {
 
     private String actions;
 
+
     private Long departmentId;
 
     private Long academicyearId;
 
     private Long sectionId;
+
+    private Long batchId;
 
     public Long getId() {
         return id;
@@ -122,6 +128,14 @@ public class AcademicExamSettingDTO implements Serializable {
         this.endTime = endTime;
     }
 
+    public GradeType getGradeType() {
+        return gradeType;
+    }
+
+    public void setGradeType(GradeType gradeType) {
+        this.gradeType = gradeType;
+    }
+
     public Integer getTotal() {
         return total;
     }
@@ -170,6 +184,14 @@ public class AcademicExamSettingDTO implements Serializable {
         this.sectionId = sectionId;
     }
 
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -203,12 +225,14 @@ public class AcademicExamSettingDTO implements Serializable {
             ", duration='" + getDuration() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
+            ", gradeType='" + getGradeType() + "'" +
             ", total=" + getTotal() +
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
             ", department=" + getDepartmentId() +
             ", academicyear=" + getAcademicyearId() +
             ", section=" + getSectionId() +
+            ", batch=" + getBatchId() +
             "}";
     }
 }

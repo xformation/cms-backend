@@ -35,9 +35,8 @@ export class FeeDetails extends React.Component<IFeeDetailsProps, IFeeDetailsSta
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 

@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -89,6 +90,9 @@ public class SubjectResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restSubjectMockMvc;
 
     private Subject subject;
@@ -101,7 +105,8 @@ public class SubjectResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -357,7 +362,7 @@ public class SubjectResourceIntTest {
 
         int databaseSizeBeforeDelete = subjectRepository.findAll().size();
 
-        // Get the subject
+        // Delete the subject
         restSubjectMockMvc.perform(delete("/api/subjects/{id}", subject.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
