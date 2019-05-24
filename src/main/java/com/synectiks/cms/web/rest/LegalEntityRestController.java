@@ -90,7 +90,7 @@ public class LegalEntityRestController {
         
         if(cmsLegalEntityVo.getLogoFile() != null) {
         	try {
-	        		base64FileProcessor.createFileFromBase64String(cmsLegalEntityVo.getLogoFile(), CmsConstants.CMS_IMAGE_FILE_PATH, fileName, null);
+	        		base64FileProcessor.createFileFromBase64String(cmsLegalEntityVo.getLogoFile(), CmsConstants.CMS_IMAGE_FILE_PATH, fileName, null, null);
         	}catch(Exception e) {
         		logger.error("Some error in saving legal entity logo file on disk. Rolling back the transaction.",e);
         		legalEntityRepository.deleteById(legalEntity.getId());

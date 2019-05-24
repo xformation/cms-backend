@@ -2010,6 +2010,8 @@ input AddStudentInput {
          sectionId: Long!
          branchId: Long!
          departmentId: Long!
+         fileName: String
+         academicYearId: Long
 }
 type AddStudentPayload {
    student: Student!
@@ -2059,6 +2061,8 @@ input UpdateStudentInput {
              sectionId: Long
              branchId: Long
              departmentId: Long
+             fileName: String
+         	 academicYearId: Long
 }
 type UpdateStudentPayload {
    student: Student!

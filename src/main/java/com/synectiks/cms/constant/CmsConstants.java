@@ -1,5 +1,8 @@
 package com.synectiks.cms.constant;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 public interface CmsConstants {
 	
 	String CMS_IMAGE_FILE_PATH = "college_images/";
@@ -17,4 +20,12 @@ public interface CmsConstants {
 	String ADD_FAILURE_MESSAGE = "Due to some exception, records could no be added.";
 	String UPDATE_SUCCESS_MESSAGE = "Records updated successfully";
 	String UPDATE_FAILURE_MESSAGE = "Due to some exception, records could no be updated.";
+	
+	String OS_WINDOWS = "windows";
+	String OS_UNIX = "unix";
+	String OS_MAC = "mac";
+	String OS_SOLARIS = "solaris";
+	String COLLEGE_ID_PLACEHOLDER_REPLACER = "college_id_";
+	String BRANCH_ID_PLACEHOLDER_REPLACER = "branch_id_";
+	String STUDENT_IMAGE_FILE_PATH = CMS_IMAGE_FILE_PATH+File.separator+"COLLEGE_ID"+File.separator+"student_images";
 }

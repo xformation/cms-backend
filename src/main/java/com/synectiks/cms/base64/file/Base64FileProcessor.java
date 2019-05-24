@@ -22,6 +22,7 @@ import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
 import com.synectiks.cms.exceptions.FilePathNotFoundException;
 import com.synectiks.cms.exceptions.UnSupportedFileTypeException;
+import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
 public class Base64FileProcessor  {
@@ -47,7 +48,7 @@ public class Base64FileProcessor  {
 		return base64EncodedString;
 	}
 	
-	public QueryResult createFileFromBase64String(String base64EncodeStr, String filePath, String fileName, String branchId) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+	public QueryResult createFileFromBase64String(String base64EncodeStr, String filePath, String fileName, String branchId, String fileExt) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
 		logger.info("Start creating file from base64 encoded string.");
 		
 		if(filePath == null) {
@@ -59,7 +60,7 @@ public class Base64FileProcessor  {
 		
 		String completeFilePath = filePath;
 		if(branchId != null) {
-			completeFilePath = filePath+File.separator+branchId;
+			completeFilePath = filePath+File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+branchId;
 		}
 		
 		File f = new File(completeFilePath);
@@ -71,11 +72,21 @@ public class Base64FileProcessor  {
 		res.setStatusCode(0);
 		res.setStatusDesc("File created successfully from base64 encoded string.");
 		
-		String[] strings = base64EncodeStr.split(",");
-		String extension =	  getFileExtensionFromBase64Srting(strings[0]);
+		String[] strings = null;
+		String extension = null;
+		String base64Str = null;
+		if(CommonUtil.isNullOrEmpty(fileExt)) {
+			strings = base64EncodeStr.split(",");
+			extension =	  getFileExtensionFromBase64Srting(strings[0]);
+			base64Str = strings[1];
+		}else {
+			extension = fileExt;
+			base64Str = base64EncodeStr;
+		}
+		
 		String absFileName = completeFilePath+File.separator+fileName+"."+extension;
 		
-		byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
+		byte[] data = DatatypeConverter.parseBase64Binary(base64Str);
 		f = new File(absFileName);
 		
 		logger.debug("Starting file creation from base64 encoded string.");
@@ -94,6 +105,10 @@ public class Base64FileProcessor  {
 		String systemGeneratedFileName = RandomStringUtils.random(12, true, true);
 		logger.debug("Random file name : "+systemGeneratedFileName);
 		return systemGeneratedFileName;
+	}
+	
+	public String getFileExtensionFromFileName(String fileName) {
+		return fileName.substring(fileName.lastIndexOf(".")+1);
 	}
 	
 	public String getFileExtensionFromBase64Srting(String str) {
@@ -134,4 +149,5 @@ public class Base64FileProcessor  {
 		return extension;
 	}
 
+	
 }

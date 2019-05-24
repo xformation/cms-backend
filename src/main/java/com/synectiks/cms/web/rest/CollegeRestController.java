@@ -1,5 +1,6 @@
 package com.synectiks.cms.web.rest;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -37,28 +38,29 @@ public class CollegeRestController {
 		logger.info("REST request to create a new college.");
 		int status = 400;
 		College college = new College();
+		college.setShortName(cmsCollegeVo.getShortName());
+        college.setInstructionInformation(cmsCollegeVo.getInstructionInformation());
+        college = collegeRepository.save(college);
 		try {
 			if(cmsCollegeVo.getBgImage() != null) {
-				college.setBackgroundImagePath(CmsConstants.CMS_IMAGE_FILE_PATH);
-				String filePath = Paths.get("", CmsConstants.CMS_IMAGE_FILE_PATH).toString();
+				String filePath = Paths.get("", CmsConstants.CMS_IMAGE_FILE_PATH+File.separator+college.getId()).toString();
+				college.setBackgroundImagePath(filePath);
 				String fileName = CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_NAME;
 				String branchId = null;
 				String ext = base64FileProcessor.getFileExtensionFromBase64Srting(cmsCollegeVo.getBgImage().split(",")[0]);
 				college.setBackgroundImageFileName(CmsConstants.CMS_COLLEGE_BACKGROUND_IMAGE_FILE_NAME+"."+ext);
-				base64FileProcessor.createFileFromBase64String(cmsCollegeVo.getBgImage(), filePath, fileName, branchId);
+				base64FileProcessor.createFileFromBase64String(cmsCollegeVo.getBgImage(), filePath, fileName, branchId, null);
 			}
 			if(cmsCollegeVo.getLogoImage() != null) {
-				college.setLogoPath(CmsConstants.CMS_IMAGE_FILE_PATH);
-				String filePath = Paths.get("", CmsConstants.CMS_IMAGE_FILE_PATH).toString();
+				String filePath = Paths.get("", CmsConstants.CMS_IMAGE_FILE_PATH+File.separator+college.getId()).toString();
+				college.setLogoPath(filePath);
 				String fileName = CmsConstants.CMS_COLLEGE_LOGO_FILE_NAME;
 				String branchId = null;
 				String ext = base64FileProcessor.getFileExtensionFromBase64Srting(cmsCollegeVo.getLogoImage().split(",")[0]);
 				college.setLogoFileName(CmsConstants.CMS_COLLEGE_LOGO_FILE_NAME+"."+ext);
-				base64FileProcessor.createFileFromBase64String(cmsCollegeVo.getLogoImage(), filePath, fileName, branchId);
+				base64FileProcessor.createFileFromBase64String(cmsCollegeVo.getLogoImage(), filePath, fileName, branchId, null);
 			}
-			college.setShortName(cmsCollegeVo.getShortName());
-	        college.setInstructionInformation(cmsCollegeVo.getInstructionInformation());
-	        collegeRepository.save(college);
+			
 	        logger.info("REST request to create a new college completed successfully.");
 	        status = 200;
 		}catch(Exception e) {

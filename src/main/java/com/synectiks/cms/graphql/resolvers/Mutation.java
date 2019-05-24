@@ -354,6 +354,9 @@ public class Mutation implements GraphQLMutationResolver {
 	@Autowired
     private StudentFilterProcessor studentFilterProcessor;
     
+    @Autowired
+	private Base64FileProcessor base64FileProcessor;
+	
     public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
@@ -833,60 +836,38 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveAdmissionEnquiryPayload(Lists.newArrayList(admissionEnquiryRepository.findAll()));
     }
 
-    public AddStudentPayload addStudent(AddStudentInput addStudentInput) {
+    public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
         final Section section = sectionRepository.findById(addStudentInput.getSectionId()).get();
         final Branch branch = branchRepository.findById(addStudentInput.getBranchId()).get();
         final Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
         final Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
-        final Student student = new Student();
-        student.setStudentName(addStudentInput.getStudentName());
-        student.setStudentMiddleName(addStudentInput.getStudentMiddleName());
-        student.setStudentLastName(addStudentInput.getStudentLastName());
-        student.setFatherName(addStudentInput.getFatherName());
-        student.setFatherMiddleName(addStudentInput.getFatherMiddleName());
-        student.setFatherLastName(addStudentInput.getFatherLastName());
-        student.setMotherName(addStudentInput.getMotherName());
-        student.setMotherMiddleName(addStudentInput.getMotherMiddleName());
-        student.setMotherLastName(addStudentInput.getMotherLastName());
-        student.setAadharNo(addStudentInput.getAadharNo());
-        student.setDateOfBirth(addStudentInput.getDateOfBirth());
-        student.setPlaceOfBirth(addStudentInput.getPlaceOfBirth());
-        student.setReligion(addStudentInput.getReligion());
-        student.setCaste(addStudentInput.getCaste());
-        student.setSubCaste(addStudentInput.getSubCaste());
-        student.setAge(addStudentInput.getAge());
-        student.setSex(addStudentInput.getSex());
-        student.setBloodGroup(addStudentInput.getBloodGroup());
-        student.setAddressLineOne(addStudentInput.getAddressLineOne());
-        student.setAddressLineTwo(addStudentInput.getAddressLineTwo());
-        student.setAddressLineThree(addStudentInput.getAddressLineThree());
-        student.setTown(addStudentInput.getTown());
-        student.setState(addStudentInput.getState());
-        student.setCountry(addStudentInput.getCountry());
-        student.setPincode(addStudentInput.getPincode());
-        student.setStudentContactNumber(addStudentInput.getStudentContactNumber());
-        student.setAlternateContactNumber(addStudentInput.getAlternateContactNumber());
-        student.setStudentEmailAddress(addStudentInput.getStudentEmailAddress());
-        student.setAlternateEmailAddress(addStudentInput.getAlternateEmailAddress());
-        student.setRelationWithStudent(addStudentInput.getRelationWithStudent());
-        student.setEmergencyContactName(addStudentInput.getEmergencyContactName());
-        student.setEmergencyContactMiddleName(addStudentInput.getEmergencyContactMiddleName());
-        student.setEmergencyContactLastName(addStudentInput.getEmergencyContactLastName());
-        student.setEmergencyContactNo(addStudentInput.getEmergencyContactNo());
-        student.setEmergencyContactEmailAddress(addStudentInput.getEmergencyContactEmailAddress());
-        student.setUploadPhoto(addStudentInput.getUploadPhoto());
-        student.setAdmissionNo(addStudentInput.getAdmissionNo());
-        student.setRollNo(addStudentInput.getRollNo());
-        student.setStudentType(addStudentInput.getStudentType());
+        Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
+        student.setUploadPhoto("");
         student.setBatch(batch);
         student.setSection(section);
         student.setBranch(branch);
         student.setDepartment(department);
-        studentRepository.save(student);
+        logger.info("Saving student record.");
+        student = studentRepository.save(student);
+        saveStudentImage(addStudentInput, student, branch);
         return new AddStudentPayload(student);
     }
-
-    public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) {
+    
+    private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
+    	String filePath = Paths.get("", temp).toString();
+    	String fileName = String.valueOf(student.getId());
+    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
+    	String absFilePath = filePath+File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
+    	student.setUploadPhoto(absFilePath);
+    	logger.info("Saving student image. File path: "+absFilePath);
+    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, String.valueOf(branch.getId()), null);
+    	logger.info("Updating student record with image file path: "+absFilePath);
+    	this.studentRepository.save(student);
+    }
+    
+    
+    public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
         Student student = studentRepository.findById(updateStudentInput.getId()).get();
         if (updateStudentInput.getStudentName() != null) {
             student.setStudentName(updateStudentInput.getStudentName());
@@ -994,9 +975,10 @@ public class Mutation implements GraphQLMutationResolver {
             student.setEmergencyContactEmailAddress(updateStudentInput.getEmergencyContactEmailAddress());
         }
 
-        if (updateStudentInput.getUploadPhoto() != null) {
-            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
-        }
+//        if (updateStudentInput.getUploadPhoto() != null) {
+//            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
+//        }
+        
         if (updateStudentInput.getAdmissionNo() != null) {
             student.setAdmissionNo(updateStudentInput.getAdmissionNo());
         }
@@ -1022,8 +1004,11 @@ public class Mutation implements GraphQLMutationResolver {
             final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
             student.setDepartment(department);
         }
+        
+        saveStudentImage(updateStudentInput, student, student.getBranch());
+        
         studentRepository.save(student);
-
+        
         return new UpdateStudentPayload(student);
     }
 

@@ -46,7 +46,9 @@ public class AbstractStudentInput {
     private Long admissionNo;
     private String rollNo;
     private StudentTypeEnum studentType;
-
+    private String fileName;
+    private Long academicYearId;
+    
     public Long getId() {
         return id;
     }
@@ -408,7 +410,7 @@ public class AbstractStudentInput {
             Objects.equals(emergencyContactLastName, that.emergencyContactLastName) &&
             Objects.equals(emergencyContactNo, that.emergencyContactNo) &&
             Objects.equals(emergencyContactEmailAddress, that.emergencyContactEmailAddress) &&
-            Objects.equals(uploadPhoto, that.uploadPhoto) &&
+//            Objects.equals(uploadPhoto, that.uploadPhoto) &&
             Objects.equals(admissionNo, that.admissionNo) &&
             Objects.equals(rollNo, that.rollNo) &&
             studentType == that.studentType;
@@ -416,7 +418,7 @@ public class AbstractStudentInput {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, studentName, studentMiddleName, studentLastName, fatherName, fatherMiddleName, fatherLastName, motherName, motherMiddleName, motherLastName, aadharNo, dateOfBirth, placeOfBirth, religion, caste, subCaste, age, sex, bloodGroup, addressLineOne, addressLineTwo, addressLineThree, town, state, country, pincode, studentContactNumber, alternateContactNumber, studentEmailAddress, alternateEmailAddress, relationWithStudent, emergencyContactName, emergencyContactMiddleName, emergencyContactLastName, emergencyContactNo, emergencyContactEmailAddress, uploadPhoto, admissionNo, rollNo, studentType);
+        return Objects.hash(id, studentName, studentMiddleName, studentLastName, fatherName, fatherMiddleName, fatherLastName, motherName, motherMiddleName, motherLastName, aadharNo, dateOfBirth, placeOfBirth, religion, caste, subCaste, age, sex, bloodGroup, addressLineOne, addressLineTwo, addressLineThree, town, state, country, pincode, studentContactNumber, alternateContactNumber, studentEmailAddress, alternateEmailAddress, relationWithStudent, emergencyContactName, emergencyContactMiddleName, emergencyContactLastName, emergencyContactNo, emergencyContactEmailAddress, admissionNo, rollNo, studentType);
     }
 
     @Override
@@ -458,10 +460,26 @@ public class AbstractStudentInput {
             ", emergencyContactLastName='" + emergencyContactLastName + '\'' +
             ", emergencyContactNo='" + emergencyContactNo + '\'' +
             ", emergencyContactEmailAddress='" + emergencyContactEmailAddress + '\'' +
-            ", uploadPhoto=" + uploadPhoto +
+//            ", uploadPhoto=" + uploadPhoto +
             ", admissionNo=" + admissionNo +
             ", rollNo='" + rollNo + '\'' +
             ", studentType=" + studentType +
             '}';
     }
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public Long getAcademicYearId() {
+		return academicYearId;
+	}
+
+	public void setAcademicYearId(Long academicYearId) {
+		this.academicYearId = academicYearId;
+	}
 }
