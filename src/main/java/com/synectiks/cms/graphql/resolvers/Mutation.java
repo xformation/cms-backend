@@ -1,12 +1,21 @@
 package com.synectiks.cms.graphql.resolvers;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.base64.file.Base64FileProcessor;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.exceptions.BranchIdNotFoundException;
+import com.synectiks.cms.exceptions.FileNameNotFoundException;
+import com.synectiks.cms.exceptions.FilePathNotFoundException;
+import com.synectiks.cms.graphql.types.Student.*;
 import com.synectiks.cms.repository.*;
+import com.synectiks.cms.service.util.CommonUtil;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -240,12 +249,6 @@ import com.synectiks.cms.graphql.types.State.RemoveStateInput;
 import com.synectiks.cms.graphql.types.State.RemoveStatePayload;
 import com.synectiks.cms.graphql.types.State.UpdateStateInput;
 import com.synectiks.cms.graphql.types.State.UpdateStatePayload;
-import com.synectiks.cms.graphql.types.Student.AddStudentInput;
-import com.synectiks.cms.graphql.types.Student.AddStudentPayload;
-import com.synectiks.cms.graphql.types.Student.RemoveStudentInput;
-import com.synectiks.cms.graphql.types.Student.RemoveStudentPayload;
-import com.synectiks.cms.graphql.types.Student.UpdateStudentInput;
-import com.synectiks.cms.graphql.types.Student.UpdateStudentPayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendanceInput;
 import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendancePayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendanceInput;
@@ -858,7 +861,7 @@ public class Mutation implements GraphQLMutationResolver {
     	String filePath = Paths.get("", temp).toString();
     	String fileName = String.valueOf(student.getId());
     	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
-    	String absFilePath = filePath+File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
+    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
     	student.setUploadPhoto(absFilePath);
     	logger.info("Saving student image. File path: "+absFilePath);
     	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, String.valueOf(branch.getId()), null);
