@@ -1,5 +1,6 @@
 package com.synectiks.cms.business.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +8,17 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 @Service
 @Transactional
@@ -103,20 +108,37 @@ public class CmsInvoiceService {
     	return cnt;
     }
     
-    public List<Invoice> searchInvoice(String invoiceNumber, Long studentId) {
+    public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception {
     	Invoice inv = new Invoice();
+    	College college = new College();
+    	college.setId(collegeId);
+    	Branch branch = new Branch();
+    	branch.setId(branchId);
+    	AcademicYear ay  = new AcademicYear();
+    	ay.setId(academicYearId);
     	
-    	if(invoiceNumber != null) {
+    	inv.setCollege(college);
+    	inv.setBranch(branch);
+    	inv.setAcademicYear(ay);
+    	
+    	if(!CommonUtil.isNullOrEmpty(invoiceNumber)) {
     		inv.setInvoiceNumber(invoiceNumber);
     	}
-    	if(studentId != null) {
+    	if(studentId != null && studentId >= 0) {
     		Student student = new Student();
     		student.setId(studentId);
     		inv.setStudent(student);
     	}
     	Example<Invoice> example = Example.of(inv);
     	List<Invoice> list = this.invoiceRepository.findAll(example);
-    	return list;
+    	List<CmsInvoice> ls = new ArrayList<>();
+    	for(Invoice temp: list) {
+            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
+            CmsInvoice ctm = CommonUtil.createCopyProperties(temp, CmsInvoice.class);
+            ctm.setStrPaymentDate(stDt);
+            ls.add(ctm);
+        }
+    	return ls;
     }
     
 }

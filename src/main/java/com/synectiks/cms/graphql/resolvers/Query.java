@@ -476,9 +476,9 @@ public class Query implements GraphQLQueryResolver {
     }
 
 
-    public List<Invoice> searchInvoice(String invoiceNumber, long studentId){
-        return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId));
-    }
+//    public List<Invoice> searchInvoice(String invoiceNumber, long studentId){
+//        return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId));
+//    }
 
     public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
         return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);

@@ -255,7 +255,7 @@ type Query {
     getBatchById(batchId:Long): Batch!
 
 
-    searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
+    
   getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
@@ -295,6 +295,32 @@ type CmsInvoice {
 	totalPaidInvoice: Long!
 	totalUnPaidInvoice: Long!
 	totalCanceledInvoice: Long!
+	id: Long
+    invoiceNumber: String
+    amountPaid: Long
+    paymentDate: Date
+    nextPaymentDate: Date
+    outStandingAmount: Long
+    modeOfPayment: ModeOfPayment
+    chequeNumber: Long
+    demandDraftNumber: Long
+    onlineTxnRefNumber: String
+    paymentStatus: InvoicePaymentStatus
+    comments: String
+    updatedBy: String
+    updatedOn: Date
+    feeCategory: FeeCategory
+    feeDetails: FeeDetails
+    dueDate: DueDate
+    paymentRemainder: PaymentRemainder
+    college: College
+    branch: Branch
+    student: Student
+    academicYear: AcademicYear
+    strPaymentDate: String
+    strNextPaymentDate: String
+    strUpdatedOn: String
+    
 }
 
 type CmsAdmissionEnquiry {
@@ -1020,7 +1046,7 @@ type Mutation {
     addInvoice(input:AddInvoiceInput!):AddInvoicePayload!
     updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
     removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
-    searchInvoice(invoiceNumber:String, studentId:Long): [Invoice!]!
+    searchInvoice(invoiceNumber:String, studentId:Long, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
     getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!

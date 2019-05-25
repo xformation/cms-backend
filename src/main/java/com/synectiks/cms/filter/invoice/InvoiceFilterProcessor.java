@@ -23,8 +23,8 @@ public class InvoiceFilterProcessor {
 	@Autowired
 	private CmsInvoiceService cmsInvoiceService;
 	
-	public List<Invoice> searchInvoice(String invoiceNumber, Long studentId){
-		return cmsInvoiceService.searchInvoice(invoiceNumber, studentId);
+	public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception{
+		return cmsInvoiceService.searchInvoice(invoiceNumber, studentId, collegeId, branchId, academicYearId);
 	}
 	
 	public Long getTotalInvoice(Long collegeId, Long branchId, Long academicYearId) {
