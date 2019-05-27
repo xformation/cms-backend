@@ -467,4 +467,56 @@ public class LectureService {
         }
 		return false;
 	}
+	
+	public Department getDepartment(Long departmentId) {
+		return this.commonService.getDepartmentById(departmentId);
+	}
+	
+	public Batch getBatch(Long batchId) {
+		return this.commonService.getBatchById(batchId);
+	}
+//	public void getLectureList(LectureScheduleFilter filter, Optional<AcademicYear> oay) {
+//		MetaLecture metaLecture = new MetaLecture();
+//		AcademicYear academicYear = oay.get();
+//		Term term = new Term();
+//		Branch branch = new Branch();
+//		Department department = new Department();
+//		
+//		term.setId(Long.valueOf(filter.getTermId()));
+//		branch.setId(Long.valueOf(filter.getBranchId()));
+//		department.setId(Long.valueOf(filter.getDepartmentId()));
+//		
+//		metaLecture.setAcademicyear(academicYear);
+//		metaLecture.setTerm(term);
+//		metaLecture.setBranch(branch);
+//		metaLecture.setDepartment(department);
+//		
+//		Example<MetaLecture> example = Example.of(metaLecture);
+//		List<LectureReport> ls = new ArrayList<>();
+//		List<MetaLecture> list = this.metaLectureRepository.findAll(example);
+//		LectureReport lr = new LectureReport();
+//		Long deptId = 0L;
+//		String deptName = null;
+//		String year = null;
+//		int prCnt = 0;
+//		
+//		for(MetaLecture ml : list) {
+//			int cnt = Integer.parseInt(lr.getNumberOfPeriods() == null ? "0" : lr.getNumberOfPeriods()) + 1;
+//			
+//			LectureReport lrNew =  new LectureReport(String.valueOf(ml.getDepartment().getId()), ml.getDepartment().getName(), 
+//					ml.getBatch().getBatch().toString(), String.valueOf(cnt));
+//			
+//			if(lrNew.equals(lr)) {
+//				lr = lrNew;
+//			}else {
+//				ls.add(lrNew);
+//			}
+//			
+//		}
+//		
+//	}
+	
+	
+	
 }
+

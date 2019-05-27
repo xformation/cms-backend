@@ -1,6 +1,7 @@
 package com.synectiks.cms.web.rest;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.synectiks.cms.business.service.LectureReport;
 import com.synectiks.cms.business.service.LectureService;
 import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
+import com.synectiks.cms.service.util.CommonUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -49,17 +54,17 @@ public class LectureRestController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmslectures")
 	@Transactional(propagation=Propagation.REQUIRED)
-	public ResponseEntity<QueryResult> addLectures(@RequestBody List<LectureScheduleDTO> list, @RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
+	public List<LectureReport> addLectures(@RequestBody List<LectureScheduleDTO> list, @RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
 		LectureScheduleInput lectureScheduleInput = new LectureScheduleInput();
 		
 		LectureScheduleFilter filter = new LectureScheduleFilter();
-		filter.setBranchId(dataMap.get("branchId") != null ? dataMap.get("branchId").trim() : dataMap.get("branchId"));
-		filter.setDepartmentId(dataMap.get("departmentId") != null ? dataMap.get("departmentId").trim() : dataMap.get("departmentId"));
 		filter.setTermId(dataMap.get("termId") != null ? dataMap.get("termId").trim() : dataMap.get("termId") );
-//		filter.setAcademicYear(dataMap.get("academicYear") != null ? dataMap.get("academicYear").trim() : dataMap.get("academicYear"));
 		filter.setSectionId(dataMap.get("sectionId") != null ? dataMap.get("sectionId").trim() : dataMap.get("sectionId"));
 		filter.setBatchId(dataMap.get("batchId") != null ? dataMap.get("batchId").trim() : dataMap.get("batchId") );
+		filter.setBranchId(dataMap.get("branchId") != null ? dataMap.get("branchId").trim() : dataMap.get("branchId"));
+		filter.setDepartmentId(dataMap.get("departmentId") != null ? dataMap.get("departmentId").trim() : dataMap.get("departmentId"));
 		
+//		filter.setAcademicYear(dataMap.get("academicYear") != null ? dataMap.get("academicYear").trim() : dataMap.get("academicYear"));
 		Long id = Long.valueOf(dataMap.get("academicYearId"));
 		Optional<AcademicYear> oay = this.academicYearRepository.findById(id);
 
@@ -77,10 +82,22 @@ public class LectureRestController {
 		
 		logger.debug("Saving data in lecture table.");
 		QueryResult res = this.lectureService.addLectureSchedule(lectureScheduleInput, filter, oay);
-		Optional<QueryResult> r = Optional.of(res);
+		LectureReport lr = CommonUtil.createCopyProperties(filter, LectureReport.class);
+		lr.setAcademicYear(String.valueOf(oay.get().getId()));
+		
+		Department dt = this.lectureService.getDepartment(Long.valueOf(filter.getDepartmentId()));
+		Batch bt = this.lectureService.getBatch(Long.valueOf(filter.getBatchId()));
+		lr.setDepartmentName(dt.getName());
+		lr.setYear(bt.getBatch().toString());
+		
 		logger.info("Lecture data created successfully.");
-		return ResponseUtil.wrapOrNotFound(r); 
+		List<LectureReport> ls = new ArrayList<>();
+		ls.add(lr);
+		
+		return ls; 
 	}
+	
+	
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/cmslectures")
 	public ResponseEntity<QueryResult> updateLectures(@RequestBody List<LectureScheduleDTO> list, @RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
