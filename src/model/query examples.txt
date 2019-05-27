@@ -210,6 +210,35 @@ TypeOfGrading
   }
 }
 ----------------------
+StudentExamReport:
+
+{
+  studentExamReport(id:"958736"){
+    id
+    marksObtained
+    comments
+    createdOn
+    createdBy
+    updatedOn
+    updatedBy
+    student{
+      id
+    }
+    academicExamSetting{
+      id
+    }
+    typeOfGrading{
+      id
+    }
+    academicyear{
+      id
+    }
+    batch{
+      id
+    }
+  }
+}
+---------------------
 
 department:
 

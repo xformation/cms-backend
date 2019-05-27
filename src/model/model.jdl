@@ -12,6 +12,15 @@ instructionInformation String
 logoFileName String
 backgroundImageFileName String
 }
+entity StudentExamReport{
+	marksObtained Integer required
+	comments String required
+	createdOn LocalDate required
+	createdBy String required
+	updatedOn LocalDate required
+    updatedBy String required
+}
+
 entity Branch{
 branchName String required
 address1 String required
@@ -513,6 +522,11 @@ Teach{subject} to Subject,
 Teach{teacher} to Teacher,
 Teacher {department} to Department,
 Teacher{branch} to Branch,
+StudentExamReport{academicExamSetting} to AcademicExamSetting,
+StudentExamReport{student} to Student,
+StudentExamReport{typeOfGrading} to TypeOfGrading,
+StudentExamReport{batch} to Batch
+StudentExamReport{academicyear} to AcademicYear,
 AuthorizedSignatory{branch} to Branch,
 AuthorizedSignatory{college} to College,
 BankAccounts{branch} to Branch,

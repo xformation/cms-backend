@@ -1554,6 +1554,99 @@ mutation updateTeacher($input: UpdateTeacherInput!){
 }
 
 ----------------
+StudentExamReport:
+
+mutation addStudentExamReport($input: AddStudentExamReportInput!){
+  addStudentExamReport(input: $input) {
+    studentExamReport{
+      id
+      marksObtained
+      comments
+      createdOn
+      createdBy
+      updatedOn
+      updatedBy
+      student{
+        id
+      }
+      academicExamSetting{
+        id
+      }
+      typeOfGrading{
+        id
+      }
+      academicyear{
+        id
+      }
+      batch{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+    "marksObtained": 89,
+    "comments": "good",
+    "createdOn": "2019-05-25",
+    "createdBy": "Mounika",
+    "updatedOn": "2019-05-26",
+    "updatedBy": "john",
+    "studentId": 1251,
+    "academicExamSettingId": 1490329,
+    "typeOfGradingId": 753896,
+    "academicyearId": 1051,
+    "batchId": 11350
+  }
+}
+
+mutation updateStudentExamReport($input: UpdateStudentExamReportInput!){
+  updateStudentExamReport(input: $input) {
+    studentExamReport{
+      id
+      marksObtained
+      comments
+      createdOn
+      createdBy
+      updatedOn
+      updatedBy
+      student{
+        id
+      }
+      academicExamSetting{
+        id
+      }
+      typeOfGrading{
+        id
+      }
+      academicyear{
+        id
+      }
+      batch{
+        id
+      }
+    }
+  }
+}
+
+{
+  "input": {
+    "id": 951,
+    "marksObtained": 89,
+    "comments": "good",
+    "createdOn": "2019-05-24",
+    "createdBy": "Monica",
+    "updatedOn": "2019-05-25",
+    "updatedBy": "mark",
+    "studentId": 1251,
+    "academicExamSettingId": 1490329,
+    "typeOfGradingId": 753896,
+    "academicyearId": 1051,
+    "batchId": 11350
+  }
+}
+-----------------------
 Subject:
 
 mutation addSubject($input: AddSubjectInput!){

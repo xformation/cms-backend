@@ -962,6 +962,10 @@ import admissionApplication, {
 import academicExamSetting, {
   AcademicExamSettingState
 } from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
+// prettier-ignore
+import studentExamReport, {
+  StudentExamReportState
+} from 'app/entities/student-exam-report/student-exam-report.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -1019,6 +1023,7 @@ export interface IRootState {
   readonly academicExamSetting: AcademicExamSettingState;
   readonly metaLecture: MetaLectureState;
   readonly typeOfGrading: TypeOfGradingState;
+  readonly studentExamReport: StudentExamReportState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -1078,6 +1083,7 @@ const rootReducer = combineReducers<IRootState>({
   academicExamSetting,
   metaLecture,
   typeOfGrading,
+  studentExamReport,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

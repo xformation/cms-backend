@@ -239,7 +239,8 @@ type Query {
   invoice(id:Long!):Invoice!
   invoices:[Invoice!]!
 
-
+  studentExamReport(id: Long!): StudentExamReport!
+  studentExamReports: [StudentExamReport!]!
 
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
@@ -431,6 +432,21 @@ type Facility{
      branch: Branch!
      student: Student!
  }
+
+type StudentExamReport{
+    id: Long!
+    marksObtained: Int!
+    comments: String!
+    createdOn: Date!
+    createdBy: String!
+    updatedOn: Date!
+    updatedBy: String!
+    student: Student!
+    academicExamSetting: AcademicExamSetting!
+    typeOfGrading: TypeOfGrading!
+    academicyear: AcademicYear!
+    batch: Batch!
+}
 
   type TransportRoute{
     id: Long!
@@ -1034,6 +1050,10 @@ type Mutation {
     updateDueDate(input:UpdateDueDateInput!):UpdateDueDatePayload!
     removeDueDate(input:RemoveDueDateInput!):RemoveDueDatePayload!
 
+    addStudentExamReport(input: AddStudentExamReportInput!): AddStudentExamReportPayload!
+    updateStudentExamReport(input: UpdateStudentExamReportInput!): UpdateStudentExamReportPayload!
+    removeStudentExamReport(input: RemoveStudentExamReportInput!): RemoveStudentExamReportPayload!
+
     addLateFee(input:AddLateFeeInput!):AddLateFeePayload!
     updateLateFee(input:UpdateLateFeeInput!):UpdateLateFeePayload!
     removeLateFee(input:RemoveLateFeeInput!):RemoveLateFeePayload!
@@ -1301,7 +1321,47 @@ type RemoveAuthorizedSignatoryPayload {
     authorizedSignatories: [ AuthorizedSignatory!]!
 }
 
+input AddStudentExamReportInput{
+        marksObtained: Int!
+        comments: String!
+        createdOn: Date!
+        createdBy: String!
+        updatedOn: Date!
+        updatedBy: String!
+        studentId: Long!
+        academicExamSettingId: Long!
+        typeOfGradingId: Long!
+        academicyearId: Long!
+        batchId: Long!
+}
 
+type AddStudentExamReportPayload {
+    studentExamReport: StudentExamReport!
+}
+input UpdateStudentExamReportInput {
+    id: Long!
+    marksObtained: Int!
+    comments: String!
+    createdOn: Date!
+    createdBy: String!
+    updatedOn: Date!
+    updatedBy: String!
+    studentId: Long!
+    academicExamSettingId: Long!
+    typeOfGradingId: Long!
+    academicyearId: Long!
+    batchId: Long!
+}
+
+type UpdateStudentExamReportPayload {
+    studentExamReport: StudentExamReport!
+}
+input RemoveStudentExamReportInput {
+   studentExamReportId: Long!
+}
+type RemoveStudentExamReportPayload {
+    studentExamReports: [ StudentExamReport!]!
+}
 
 input AddBankAccountsInput {
    nameOfBank: NameOfBank!

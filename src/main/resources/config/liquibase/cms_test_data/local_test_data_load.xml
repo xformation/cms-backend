@@ -165,6 +165,10 @@
                   file="config/liquibase/cms_test_data/type_of_grading.csv"
                   separator=";"
                   tableName="type_of_grading"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/student_exam_report.csv"
+                  separator=";"
+                  tableName="student_exam_report"/>
 
     </changeSet>
 </databaseChangeLog>

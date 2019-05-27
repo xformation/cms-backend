@@ -44,6 +44,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190307052145_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190523041000_added_entity_TypeOfGrading.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190408064825_added_entity_AcademicExamSetting.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190523093814_added_entity_StudentExamReport.xml" relativeToChangelogFile="false"/>
 <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
 <include file="config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>
@@ -79,6 +80,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liqui
 <include file="config/liquibase/changelog/20190523041000_added_entity_constraints_TypeOfGrading.xml" relativeToChangelogFile="false"/>
 <!--<include file="config/liquibase/cms_test_data/local_test_data_load.xml" relativeToChangelogFile="false"/>-->
 <include file="config/liquibase/changelog/20190408064825_added_entity_constraints_AcademicExamSetting.xml" relativeToChangelogFile="false"/>
+<include file="config/liquibase/changelog/20190523093814_added_entity_constraints_StudentExamReport.xml" relativeToChangelogFile="false"/>
 <!--jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here-->
 
 </databaseChangeLog>

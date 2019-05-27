@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,7 @@ import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.domain.StudentExamReport;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
 import com.synectiks.cms.exceptions.FilePathNotFoundException;
@@ -296,44 +298,7 @@ import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingPayload;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AcademicHistoryRepository;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AdminAttendanceRepository;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.CompetitiveExamRepository;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.repository.DueDateRepository;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.FeeCategoryRepository;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.LateFeeRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.PaymentRemainderRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
+import com.synectiks.cms.graphql.types.StudentExamReport.*;
 import com.synectiks.cms.service.util.CommonUtil;
 
 
@@ -381,6 +346,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final DocumentsRepository documentsRepository;
     private final AdminAttendanceRepository adminAttendanceRepository;
     private final TypeOfGradingRepository typeOfGradingRepository;
+    private final StudentExamReportRepository studentExamReportRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -409,7 +375,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
 	private Base64FileProcessor base64FileProcessor;
 	
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -451,6 +417,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.documentsRepository = documentsRepository;
         this.adminAttendanceRepository = adminAttendanceRepository;
         this.typeOfGradingRepository = typeOfGradingRepository;
+        this.studentExamReportRepository = studentExamReportRepository;
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -2024,6 +1991,86 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntityRepository.save(legalEntity);
 
         return new UpdateLegalEntityPayload(legalEntity);
+    }
+
+    public AddStudentExamReportPayload addStudentExamReport(AddStudentExamReportInput addStudentExamReportInput) {
+        final StudentExamReport studentExamReport = new StudentExamReport();
+
+        TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(addStudentExamReportInput.getTypeOfGradingId()).get();
+        AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(addStudentExamReportInput.getAcademicExamSettingId()).get();
+        AcademicYear academicYear = academicYearRepository.findById(addStudentExamReportInput.getAcademicyearId()).get();
+        Student student = studentRepository.findById(addStudentExamReportInput.getStudentId()).get();
+        Batch batch = batchRepository.findById(addStudentExamReportInput.getBatchId()).get();
+
+        studentExamReport.setTypeOfGrading(typeOfGrading);
+        studentExamReport.setAcademicyear(academicYear);
+        studentExamReport.setAcademicExamSetting(academicExamSetting);
+        studentExamReport.setBatch(batch);
+        studentExamReport.setStudent(student);
+        studentExamReport.setMarksObtained(addStudentExamReportInput.getMarksObtained());
+        studentExamReport.setComments(addStudentExamReportInput.getComments());
+        studentExamReport.setCreatedOn(addStudentExamReportInput.getCreatedOn());
+        studentExamReport.setCreatedBy(addStudentExamReportInput.getCreatedBy());
+        studentExamReport.setUpdatedOn(addStudentExamReportInput.getUpdatedOn());
+        studentExamReport.setUpdatedBy(addStudentExamReportInput.getUpdatedBy());
+
+        studentExamReportRepository.save(studentExamReport);
+        return new AddStudentExamReportPayload(studentExamReport);
+    }
+
+    public UpdateStudentExamReportPayload updateStudentExamReport(UpdateStudentExamReportInput updateStudentExamReportInput) {
+        StudentExamReport studentExamReport = studentExamReportRepository.findById(updateStudentExamReportInput.getId()).get();
+
+
+        if (updateStudentExamReportInput.getMarksObtained() != null) {
+            studentExamReport.setMarksObtained(updateStudentExamReportInput.getMarksObtained());
+        }
+        if (updateStudentExamReportInput.getComments() != null) {
+            studentExamReport.setComments(updateStudentExamReportInput.getComments());
+        }
+        if (updateStudentExamReportInput.getCreatedOn() != null) {
+            studentExamReport.setCreatedOn(updateStudentExamReportInput.getCreatedOn());
+        }
+        if (updateStudentExamReportInput.getCreatedBy() != null) {
+            studentExamReport.setCreatedBy(updateStudentExamReportInput.getCreatedBy());
+        }
+        if (updateStudentExamReportInput.getUpdatedOn() != null) {
+            studentExamReport.setUpdatedOn(updateStudentExamReportInput.getUpdatedOn());
+        }
+        if (updateStudentExamReportInput.getUpdatedBy() != null) {
+            studentExamReport.setUpdatedBy(updateStudentExamReportInput.getUpdatedBy());
+        }
+
+        if (updateStudentExamReportInput.getAcademicExamSettingId() != null) {
+            final AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(updateStudentExamReportInput.getAcademicExamSettingId()).get();
+            studentExamReport.setAcademicExamSetting(academicExamSetting);
+        }
+        if (updateStudentExamReportInput.getAcademicyearId() != null) {
+            final AcademicYear academicYear = academicYearRepository.findById(updateStudentExamReportInput.getAcademicyearId()).get();
+            studentExamReport.setAcademicyear(academicYear);
+        }
+        if (updateStudentExamReportInput.getStudentId() != null) {
+            final Student student = studentRepository.findById(updateStudentExamReportInput.getStudentId()).get();
+            studentExamReport.setStudent(student);
+        }
+        if (updateStudentExamReportInput.getBatchId() != null) {
+            final Batch batch = batchRepository.findById(updateStudentExamReportInput.getBatchId()).get();
+            studentExamReport.setBatch(batch);
+        }
+        if (updateStudentExamReportInput.getTypeOfGradingId() != null) {
+            final TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateStudentExamReportInput.getTypeOfGradingId()).get();
+            studentExamReport.setTypeOfGrading(typeOfGrading);
+        }
+
+        studentExamReportRepository.save(studentExamReport);
+
+        return new UpdateStudentExamReportPayload(studentExamReport);
+    }
+
+    public RemoveStudentExamReportPayload removeStudentExamReport(RemoveStudentExamReportInput removeStudentExamReportsInput) {
+        StudentExamReport studentExamReport = studentExamReportRepository.findById(removeStudentExamReportsInput.getStudentExamReportId()).get();
+        studentExamReportRepository.delete(studentExamReport);
+        return new RemoveStudentExamReportPayload(Lists.newArrayList(studentExamReportRepository.findAll()));
     }
 
     public AddAcademicYearPayload addAcademicYear(AddAcademicYearInput addAcademicYearInput) {
