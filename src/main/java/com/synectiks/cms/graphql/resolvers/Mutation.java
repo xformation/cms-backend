@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.domain.*;
 import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -19,46 +20,6 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicHistory;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.domain.StudentExamReport;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
 import com.synectiks.cms.exceptions.FilePathNotFoundException;
@@ -2997,8 +2958,14 @@ public class Mutation implements GraphQLMutationResolver {
     public Long getTotalConverted( long branchId, long admissionApplicationId) {
         return admissionEnquiryProcessor.getTotalConverted(branchId, admissionApplicationId);
     }
-	
-	public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {
+
+
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId, Long admissionApplicationId) throws Exception{
+        return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId, admissionApplicationId));
+    }
+
+
+    public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {
     	List<Student> list = this.studentFilterProcessor.searchStudent(filter);
     	logger.debug("Total students retrieved. "+list.size());
     	return list;

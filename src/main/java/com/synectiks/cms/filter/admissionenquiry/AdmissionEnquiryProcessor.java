@@ -1,11 +1,13 @@
 package com.synectiks.cms.filter.admissionenquiry;
 
 import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
-import com.synectiks.cms.domain.CmsAdmissionEnquiry;
+import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class AdmissionEnquiryProcessor {
@@ -36,13 +38,17 @@ public class AdmissionEnquiryProcessor {
         return cmsAdmissionEnquiryService.getTotalConverted( branchId, admissionApplicationId);
     }
 
-    public CmsAdmissionEnquiry getAdmissionData(Long branchId, Long admissionApplicationId) {
-        CmsAdmissionEnquiry cmsAdmissionEnquiry = new CmsAdmissionEnquiry();
-        cmsAdmissionEnquiry.setTotalAdmissions(this.getTotalAdmissions(branchId, admissionApplicationId));
-        cmsAdmissionEnquiry.setTotalFollowup(this.getTotalFollowup(branchId, admissionApplicationId));
-        cmsAdmissionEnquiry.setTotalDeclined(this.getTotalDeclined(branchId, admissionApplicationId));
-        cmsAdmissionEnquiry.setTotalConverted(this.getTotalConverted(branchId, admissionApplicationId));
-        return cmsAdmissionEnquiry;
+    public CmsAdmissionEnquiryVo getAdmissionData(Long branchId, Long admissionApplicationId) {
+        CmsAdmissionEnquiryVo cmsAdmissionEnquiryVo = new CmsAdmissionEnquiryVo();
+        cmsAdmissionEnquiryVo.setTotalAdmissions(this.getTotalAdmissions(branchId, admissionApplicationId));
+        cmsAdmissionEnquiryVo.setTotalFollowup(this.getTotalFollowup(branchId, admissionApplicationId));
+        cmsAdmissionEnquiryVo.setTotalDeclined(this.getTotalDeclined(branchId, admissionApplicationId));
+        cmsAdmissionEnquiryVo.setTotalConverted(this.getTotalConverted(branchId, admissionApplicationId));
+        return cmsAdmissionEnquiryVo;
+    }
+
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId, Long admissionApplicationId) throws Exception{
+        return cmsAdmissionEnquiryService.admissionEnquiryList( branchId, admissionApplicationId);
     }
 
     public Long getTotalAdmissions() {

@@ -525,7 +525,7 @@ public class Query implements GraphQLQueryResolver {
         return admissionEnquiryProcessor.getTotalConverted(branchId, admissionApplicationId);
     }
 
-    public CmsAdmissionEnquiry getAdmissionData( String branchId, String admissionApplicationId) {
+    public CmsAdmissionEnquiryVo getAdmissionData( String branchId, String admissionApplicationId) {
         return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId), Long.valueOf(admissionApplicationId));
     }
 

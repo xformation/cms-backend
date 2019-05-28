@@ -1,14 +1,21 @@
 package com.synectiks.cms.business.service;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AdmissionApplication;
 import com.synectiks.cms.domain.AdmissionEnquiry;
 import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 import com.synectiks.cms.repository.AdmissionEnquiryRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -85,4 +92,28 @@ public class CmsAdmissionEnquiryService {
         Long cnt = this.admissionEnquiryRepository.count(example);
         return cnt;
     }
+
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId, Long admissionApplicationId) throws Exception {
+        AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
+        Branch branch = new Branch();
+        branch.setId(branchId);
+        AdmissionApplication aa  = new AdmissionApplication();
+        aa.setId(admissionApplicationId);
+        admissionEnquiry.setBranch(branch);
+        admissionEnquiry.setAdmissionApplication(aa);
+
+        Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
+        List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
+        List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
+        for(AdmissionEnquiry temp: list) {
+            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
+            CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
+            cae.setStrEnquiryDate(stDt);
+            ls.add(cae);
+        }
+        return ls;
+    }
+
 }
+
+

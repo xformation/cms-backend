@@ -267,7 +267,7 @@ type Query {
     getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
     getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
     getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
-    getAdmissionData(branchId:String, admissionApplicationId:String!): CmsAdmissionEnquiry
+    getAdmissionData(branchId:String, admissionApplicationId:String!): CmsAdmissionEnquiryVo
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
@@ -324,11 +324,28 @@ type CmsInvoice {
     
 }
 
-type CmsAdmissionEnquiry {
+type CmsAdmissionEnquiryVo {
 	totalAdmissions: Long!
-    totalFollowup: Long
-    totalDeclined: Long
-    totalConverted: Long
+    totalFollowup: Long!
+    totalDeclined: Long!
+    totalConverted: Long!
+    id: Long
+    studentName: String
+    mobileNumber: String
+    alternateMobileNumber:  String
+    email:  String
+    courseApplyingFor:  CourseEnum
+    modeOfEnquiry:  ModeOfEnquiry
+    status:  EnquiryStatus
+    description:  String
+    enquiryDate:Date
+    updatedOn:Date
+    updatedBy:String
+    branch:  Branch
+    admissionApplication: AdmissionApplication
+    strEnquiryDate:String
+    strUpdatedOn:String
+
 }
 type StudentAttendanceCache{
 	departments: [Department]
@@ -1076,6 +1093,7 @@ type Mutation {
      getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
      getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
      getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
+     admissionEnquiryList(branchId:Long, admissionApplicationId:Long ): [CmsAdmissionEnquiryVo!]!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!

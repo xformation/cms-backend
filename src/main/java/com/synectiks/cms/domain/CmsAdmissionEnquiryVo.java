@@ -10,6 +10,10 @@ import java.util.Objects;
 
 public class CmsAdmissionEnquiryVo implements Serializable {
 
+    private Long totalAdmissions = 0L;
+    private Long totalFollowup = 0L;
+    private Long totalDeclined = 0L;
+    private Long totalConverted = 0L;
     private Long id;
     private String studentName;
     private String mobileNumber;
@@ -27,6 +31,38 @@ public class CmsAdmissionEnquiryVo implements Serializable {
 
     private String strEnquiryDate;
     private String strUpdatedOn;
+
+    public Long getTotalAdmissions() {
+        return totalAdmissions;
+    }
+
+    public void setTotalAdmissions(Long totalAdmissions) {
+        this.totalAdmissions = totalAdmissions;
+    }
+
+    public Long getTotalFollowup() {
+        return totalFollowup;
+    }
+
+    public void setTotalFollowup(Long totalFollowup) {
+        this.totalFollowup = totalFollowup;
+    }
+
+    public Long getTotalDeclined() {
+        return totalDeclined;
+    }
+
+    public void setTotalDeclined(Long totalDeclined) {
+        this.totalDeclined = totalDeclined;
+    }
+
+    public Long getTotalConverted() {
+        return totalConverted;
+    }
+
+    public void setTotalConverted(Long totalConverted) {
+        this.totalConverted = totalConverted;
+    }
 
     public Long getId() {
         return id;
@@ -159,29 +195,29 @@ public class CmsAdmissionEnquiryVo implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CmsAdmissionEnquiryVo)) return false;
         CmsAdmissionEnquiryVo that = (CmsAdmissionEnquiryVo) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(studentName, that.studentName) &&
-            Objects.equals(mobileNumber, that.mobileNumber) &&
-            Objects.equals(alternateMobileNumber, that.alternateMobileNumber) &&
-            Objects.equals(email, that.email) &&
-            courseApplyingFor == that.courseApplyingFor &&
-            modeOfEnquiry == that.modeOfEnquiry &&
-            status == that.status &&
-            Objects.equals(description, that.description) &&
-            Objects.equals(enquiryDate, that.enquiryDate) &&
-            Objects.equals(updatedOn, that.updatedOn) &&
-            Objects.equals(updatedBy, that.updatedBy) &&
-            Objects.equals(branch, that.branch) &&
-            Objects.equals(admissionApplication, that.admissionApplication) &&
-            Objects.equals(strEnquiryDate, that.strEnquiryDate) &&
-            Objects.equals(strUpdatedOn, that.strUpdatedOn);
+        return Objects.equals(getId(), that.getId()) &&
+            Objects.equals(getStudentName(), that.getStudentName()) &&
+            Objects.equals(getMobileNumber(), that.getMobileNumber()) &&
+            Objects.equals(getAlternateMobileNumber(), that.getAlternateMobileNumber()) &&
+            Objects.equals(getEmail(), that.getEmail()) &&
+            getCourseApplyingFor() == that.getCourseApplyingFor() &&
+            getModeOfEnquiry() == that.getModeOfEnquiry() &&
+            getStatus() == that.getStatus() &&
+            Objects.equals(getDescription(), that.getDescription()) &&
+            Objects.equals(getEnquiryDate(), that.getEnquiryDate()) &&
+            Objects.equals(getUpdatedOn(), that.getUpdatedOn()) &&
+            Objects.equals(getUpdatedBy(), that.getUpdatedBy()) &&
+            Objects.equals(getBranch(), that.getBranch()) &&
+            Objects.equals(getAdmissionApplication(), that.getAdmissionApplication()) &&
+            Objects.equals(getStrEnquiryDate(), that.getStrEnquiryDate()) &&
+            Objects.equals(getStrUpdatedOn(), that.getStrUpdatedOn());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, studentName, mobileNumber, alternateMobileNumber, email, courseApplyingFor, modeOfEnquiry, status, description, enquiryDate, updatedOn, updatedBy, branch, admissionApplication, strEnquiryDate, strUpdatedOn);
+        return Objects.hash(getId(), getStudentName(), getMobileNumber(), getAlternateMobileNumber(), getEmail(), getCourseApplyingFor(), getModeOfEnquiry(), getStatus(), getDescription(), getEnquiryDate(), getUpdatedOn(), getUpdatedBy(), getBranch(), getAdmissionApplication(), getStrEnquiryDate(), getStrUpdatedOn());
     }
 
     @Override
@@ -206,3 +242,4 @@ public class CmsAdmissionEnquiryVo implements Serializable {
             '}';
     }
 }
+
