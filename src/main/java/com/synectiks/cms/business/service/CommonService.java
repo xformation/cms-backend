@@ -30,6 +30,7 @@ import com.synectiks.cms.domain.City;
 import com.synectiks.cms.domain.CmsGenderVo;
 import com.synectiks.cms.domain.CmsSemesterVo;
 import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.domain.CmsTermVo;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Holiday;
@@ -517,6 +518,13 @@ public class CommonService {
 		return teachList;
 	}
 	
+	/**
+	 * AttendanceMaster for teacher attendance
+	 * @param batchList
+	 * @param secList
+	 * @param teachList
+	 * @return
+	 */
 	public List<AttendanceMaster> getAttendanceMasterForCriteria(List<Batch> batchList, List<Section> secList, List<Teach> teachList){
 		if(batchList.size() == 0 || secList.size() == 0 || teachList.size() == 0) {
 			logger.warn("Either batch, section or teach list is empty. Returning empty attendance master list.");
@@ -542,6 +550,37 @@ public class CommonService {
     	TypedQuery<AttendanceMaster> typedQuery = this.entityManager.createQuery(select);
     	List<AttendanceMaster> atndMstrList = typedQuery.getResultList();
     	logger.debug("Returning list of attendance master from JPA criteria query. Total records : "+atndMstrList.size());
+		return atndMstrList;
+	}
+	
+	/**
+	 * AttendanceMaster for admin attendance
+	 * @param batchList
+	 * @param secList
+	 * @return
+	 */
+	public List<AttendanceMaster> getAttendanceMasterForCriteria(List<Batch> batchList, List<Section> secList){
+		if(batchList.size() == 0 || secList.size() == 0 ) {
+			logger.warn("Either batch or section. Returning empty attendance master list.");
+			logger.warn("Total records in batch list: "+batchList.size()+" and total records in section list: "+secList.size());
+			return Collections.emptyList();
+		}
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<AttendanceMaster> query = cb.createQuery(AttendanceMaster.class);
+    	Root<AttendanceMaster> root = query.from(AttendanceMaster.class);
+    	In<Long> inBatch = cb.in(root.get("batch"));
+    	for (Batch bth : batchList) {
+    		inBatch.value(bth.getId());
+    	}
+    	In<Long> inSection = cb.in(root.get("section"));
+    	for (Section sec : secList) {
+    		inSection.value(sec.getId());
+    	}
+    	
+    	CriteriaQuery<AttendanceMaster> select = query.select(root).where(cb.and(inBatch),cb.and(inSection));
+    	TypedQuery<AttendanceMaster> typedQuery = this.entityManager.createQuery(select);
+    	List<AttendanceMaster> atndMstrList = typedQuery.getResultList();
+    	logger.debug("Returning list of attendance master for admin attendance from JPA criteria query. Total records : "+atndMstrList.size());
 		return atndMstrList;
 	}
 	
@@ -593,4 +632,25 @@ public class CommonService {
         return vo;
 	}
 	
+	public List<CmsTermVo> getTermsByAcademicYear(Long academicYearId) throws Exception{
+		if(academicYearId == null) {
+			Collections.emptyList();
+		}
+		Term term = new Term();
+		AcademicYear ay = this.getAcademicYearById(academicYearId);
+		term.setAcademicyear(ay);
+		term.setTermStatus(Status.ACTIVE);
+		Example<Term> example = Example.of(term);
+		List<Term> list = this.termRepository.findAll(example);
+		List<CmsTermVo> ls = new ArrayList<>();
+		for(Term tm: list) {
+            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getStartDate());
+            String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getEndDate());
+            CmsTermVo ctm = CommonUtil.createCopyProperties(tm, CmsTermVo.class);
+            ctm.setStrStartDate(stDt);
+            ctm.setStrEndDate(enDt);
+            ls.add(ctm);
+        }
+		return ls;
+	}
 } 

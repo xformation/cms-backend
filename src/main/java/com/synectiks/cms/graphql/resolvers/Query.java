@@ -594,6 +594,59 @@ public class Query implements GraphQLQueryResolver {
     }
     
     
+    /**
+     * Cache for admin attendance
+     * @param branchId
+     * @param academicYearId
+     * @param lectureDate
+     * @return
+     * @throws Exception
+     */
+    public StudentAttendanceCache createStudentAttendanceCacheForAdmin(String branchId, String academicYearId, String lectureDate) throws Exception{
+    	
+    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.valueOf(branchId), Long.valueOf(academicYearId));
+    	List<Batch> bth = this.commonService.getBatchForCriteria(dept); 
+    	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth); 
+    	List<Section> sec = this.commonService.getSectionForCriteria(bth); 
+//    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.valueOf(teacherId)); 
+    	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec);
+//    	List<Subject> selectedSubjectList = new ArrayList<>();
+    	
+//    	for(Subject subject: sub) {
+//    		for(Teach th: teach) {
+//    			logger.debug("Subject id : "+subject.getId()+", teach-subject id : "+th.getSubject().getId());
+//    			if(subject.getId().compareTo(th.getSubject().getId()) == 0 ) {
+//    				logger.debug("Selected subject id : "+subject.toString());
+//    				selectedSubjectList.add(subject);
+//    			}
+//    				
+//    		}
+//    	}
+    	List<CmsTermVo> term = this.commonService.getTermsByAcademicYear(Long.valueOf(academicYearId));
+    	List<Lecture> lec =  this.commonService.getLectureForCriteria(attendanceMaster, lectureDate); 
+    	List<CmsLectureVo> cmsLec = new ArrayList<>();
+    	for(Lecture lecture : lec) {
+    		CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
+    		String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecture.getLecDate());
+    		vo.setStrLecDate(stDt);
+    		cmsLec.add(vo);
+    	}
+    	
+    	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
+    	
+    	StudentAttendanceCache cache = new StudentAttendanceCache();
+    	cache.setDepartments(dept);
+    	cache.setBatches(bth);
+    	cache.setSubjects(sub);
+    	cache.setSections(sec);
+    	cache.setLectures(cmsLec);
+    	cache.setSemesters(sem);
+//    	cache.setTeaches(teach);
+    	cache.setTerms(term);
+    	cache.setAttendanceMasters(attendanceMaster);
+    	return cache;
+    }
+
     public StudentFilterDataCache createStudentFilterDataCache(String collegeId, String academicYearId) throws Exception{
     	
     	List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));

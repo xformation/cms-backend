@@ -12,6 +12,7 @@ public class StudentAttendanceCache {
 	private List<CmsSemesterVo> semesters;
 	private List<Teach> teaches;
 	private List<AttendanceMaster> attendanceMasters;
+	private List<CmsTermVo> terms;
 	
 	public List<Department> getDepartments() {
 		return departments;
@@ -61,6 +62,14 @@ public class StudentAttendanceCache {
 	public void setAttendanceMasters(List<AttendanceMaster> attendanceMasters) {
 		this.attendanceMasters = attendanceMasters;
 	}
+	public List<CmsTermVo> getTerms() {
+		return terms;
+	}
+	public void setTerms(List<CmsTermVo> terms) {
+		this.terms = terms;
+	}
+	
+	
 	
 	
 	

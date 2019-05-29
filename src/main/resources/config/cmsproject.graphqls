@@ -271,6 +271,7 @@ type Query {
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
+  createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
 }
 
 type StudentFilterDataCache {
@@ -356,8 +357,18 @@ type StudentAttendanceCache{
 	semesters: [CmsSemesterVo]
 	teaches: [Teach]
 	attendanceMasters: [AttendanceMaster]
+	terms: [CmsTermVo]
 }
-
+type CmsTermVo {
+	id: Long
+    termsDesc: String
+    startDate: Date
+    endDate: Date
+    termStatus: Status
+    academicyear: AcademicYear
+    strStartDate: String
+    strEndDate: String
+}
 type CmsLectureVo{
 	id: Long!
 	lecDate: Date!
@@ -900,8 +911,9 @@ input StudentAttendanceFilterInput {
 	studentId: String
 	studentName: String
 	lectureId: String!
-	teacherId: String!
+	teacherId: String
 	academicYearId: String
+	termId: String
 }
 
 type AcademicSubjectVo{
@@ -1125,6 +1137,7 @@ type Mutation {
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [Student]!
+	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 
 }
 

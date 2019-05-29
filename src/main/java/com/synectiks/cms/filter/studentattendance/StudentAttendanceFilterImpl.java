@@ -51,6 +51,12 @@ public class StudentAttendanceFilterImpl  {
     @Autowired
     private LectureRepository lectureRepository;
     
+    /**
+     * Student attendance data for a teacher role end user
+     * @param filter
+     * @return
+     * @throws Exception
+     */
     public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) throws Exception {
         
         Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
@@ -77,6 +83,39 @@ public class StudentAttendanceFilterImpl  {
         return voList;
     }
 
+    
+    /**
+     * Student attendance data for admin role end user
+     * @param filter
+     * @return
+     * @throws Exception
+     */
+    public List<DailyAttendanceVo> getStudenceAttendanceDataForAdmin(StudentAttendanceFilterInput filter) throws Exception {
+        
+        Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
+    	Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+    	Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+    	Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+//    	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(Long.valueOf(filter.getTeacherId()), Long.valueOf(filter.getSubjectId()));
+//    	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
+    	
+    	List<DailyAttendanceVo> voList = new ArrayList<>();
+        List<Student> studentList = getStudentList(branch, department, batch, section);
+        
+        Lecture lecture = lectureScheduleStatus(filter);
+//        Lecture oneDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 1);
+//        Lecture twoDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 2);
+//        Lecture threeDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 3);
+        
+        // lecture schedule on current date insert/update all the students in student_attendance table.
+        setCurrentDateStatus(voList, studentList, lecture);
+//        setHistoryDateStatus(voList, oneDayPrevLecture, 1);
+//        setHistoryDateStatus(voList, twoDayPrevLecture, 2);
+//        setHistoryDateStatus(voList, threeDayPrevLecture, 3);
+        
+        return voList;
+    }
+ 
 	private void setCurrentDateStatus(List<DailyAttendanceVo> voList, List<Student> studentList,
 			Lecture currentDateLecture) {
 		if(currentDateLecture != null) {
@@ -163,6 +202,15 @@ public class StudentAttendanceFilterImpl  {
     	return null;
     }
     
+    /**
+     * Lecture schedule for teacher role end user
+     * @param lectureDate
+     * @param attendanceMaster
+     * @param days
+     * @return
+     * @throws ParseException
+     * @throws Exception
+     */
     private Lecture lectureScheduleStatus(String lectureDate, AttendanceMaster attendanceMaster, int days) throws ParseException, Exception {
     	Lecture lec = new Lecture();
     	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
@@ -173,6 +221,37 @@ public class StudentAttendanceFilterImpl  {
     	}
     	lec.setLecDate(lecDate);
     	lec.setAttendancemaster(attendanceMaster);
+    	Example<Lecture> example = Example.of(lec);
+    	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
+    	if(nlec.isPresent()) {
+    		return nlec.get();
+    	}
+    	return null;
+    }
+    
+    /**
+     * Lecture schedule for admin role end user
+     * @param lectureDate
+     * @return
+     * @throws ParseException
+     * @throws Exception
+     */
+
+    private Lecture lectureScheduleStatus(StudentAttendanceFilterInput filter) throws ParseException, Exception {
+    	Lecture lec = new Lecture();
+    	String dt = filter.getAttendanceDate();
+    	if(dt.contains("/")) {
+    		dt = dt.replaceAll("/", "-");
+    	}
+    	Date lecDate =  DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, dt);
+    	
+//    	if(days > 0) {
+//    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
+//    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
+//    	}
+    	lec.setLecDate(lecDate);
+    	lec.setId(Long.valueOf(filter.getLectureId()));
+//    	lec.setAttendancemaster(attendanceMaster);
     	Example<Lecture> example = Example.of(lec);
     	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
     	if(nlec.isPresent()) {

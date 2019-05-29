@@ -2922,6 +2922,13 @@ public class Mutation implements GraphQLMutationResolver {
         return res;
     }
     
+    /**
+     * getDailyStudentAttendanceData(StudentAttendanceFilterInput filter)
+     * Retrieves student attendance data for teacher role end user
+     * @param filter
+     * @return
+     * @throws Exception
+     */
     public List<DailyAttendanceVo> getDailyStudentAttendanceData(StudentAttendanceFilterInput filter) throws Exception {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
     }
@@ -2969,5 +2976,15 @@ public class Mutation implements GraphQLMutationResolver {
     	List<Student> list = this.studentFilterProcessor.searchStudent(filter);
     	logger.debug("Total students retrieved. "+list.size());
     	return list;
+    }
+    /**
+	 * getStudentAttendanceDataForAdmin(StudentAttendanceFilterInput filter)
+	 * Retrieves student attendance data for admin role end user
+	 * @param filter
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DailyAttendanceVo> getStudentAttendanceDataForAdmin(StudentAttendanceFilterInput filter) throws Exception {
+        return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendanceDataForAdmin(filter));
     }
 }

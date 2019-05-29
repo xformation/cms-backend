@@ -16,6 +16,7 @@ public class StudentAttendanceFilterInput {
     private String lectureId;
     private String teacherId;
     private String academicYearId;
+    private String termId;
     
     @JsonProperty("branchId")
 	public String getBranchId() {
@@ -103,6 +104,14 @@ public class StudentAttendanceFilterInput {
 	}
 	public void setAcademicYearId(String academicYearId) {
 		this.academicYearId = academicYearId;
+	}
+	
+	@JsonProperty("termId")
+	public String getTermId() {
+		return termId;
+	}
+	public void setTermId(String termId) {
+		this.termId = termId;
 	}
 
         
