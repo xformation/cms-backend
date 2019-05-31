@@ -122,12 +122,12 @@ public  class ExamSettingPojo implements Serializable{
         return new ExamSettingPojo(
             this.examType,
             this.departmentId,
-            this.sectionId=this.sectionId+","+other.sectionId ,
+            this.sectionId+","+other.sectionId ,
             this.action,
             this.subject + "," + other.subject,
             this.examDate,
-            this.endDate= new Date(Long.MIN_VALUE),
-            this.startDate=new Date(Long.MIN_VALUE)
+            this.endDate,
+            this.startDate
 
         );
     }
