@@ -539,7 +539,7 @@ public class Query implements GraphQLQueryResolver {
         return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId), Long.valueOf(admissionApplicationId));
     }
 
-    public List<AdmissionEnquiry> admissionViewInfo(EnquiryStatus status){
+    public List<CmsAdmissionEnquiryVo> admissionViewInfo(EnquiryStatus status) throws Exception {
         return Lists.newArrayList(admissionEnquiryProcessor.admissionViewInfo(status));
     }
     

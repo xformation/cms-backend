@@ -53,11 +53,11 @@ public class AdmissionEnquiryProcessor {
         return cmsAdmissionEnquiryService.admissionEnquiryList( branchId, admissionApplicationId);
     }
 
-    public List<AdmissionEnquiry> admissionViewInfo(EnquiryStatus status){
+    public List<CmsAdmissionEnquiryVo> admissionViewInfo(EnquiryStatus status) throws Exception {
         return cmsAdmissionEnquiryService.admissionViewInfo(status);
     }
 
-    public List<AdmissionEnquiry> admissionViewInfo(AdmissionListFilterInput filter){
+    public List<CmsAdmissionEnquiryVo> admissionViewInfo(AdmissionListFilterInput filter) throws Exception {
         return cmsAdmissionEnquiryService.admissionViewInfo(filter);
     }
 

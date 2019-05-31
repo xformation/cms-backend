@@ -2981,9 +2981,8 @@ public class Mutation implements GraphQLMutationResolver {
         return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId, admissionApplicationId));
     }
 
-    public List<AdmissionEnquiry> getAdmissionViewInfo(AdmissionListFilterInput filter){
-       List<AdmissionEnquiry> list = this.admissionEnquiryProcessor.admissionViewInfo(filter);
-       return list;
+    public List<CmsAdmissionEnquiryVo> getAdmissionViewInfo(AdmissionListFilterInput filter) throws Exception {
+        return Lists.newArrayList(admissionEnquiryProcessor.admissionViewInfo(filter));
     }
 
 

@@ -115,7 +115,7 @@ public class CmsAdmissionEnquiryService {
         return ls;
     }
 
-    public List<AdmissionEnquiry> admissionViewInfo(EnquiryStatus status) {
+    public List<CmsAdmissionEnquiryVo> admissionViewInfo(EnquiryStatus status) throws Exception {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
 
         if (status != null) {
@@ -125,11 +125,18 @@ public class CmsAdmissionEnquiryService {
 
         Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
         List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
-        return list;
+        List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
+        for (AdmissionEnquiry temp : list) {
+            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
+            CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
+            cae.setStrEnquiryDate(stDt);
+            ls.add(cae);
+        }
+        return ls;
     }
 
 
-    public List<AdmissionEnquiry> admissionViewInfo(AdmissionListFilterInput filter) {
+    public List<CmsAdmissionEnquiryVo> admissionViewInfo(AdmissionListFilterInput filter) throws Exception {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
 
         if (!CommonUtil.isNullOrEmpty(filter.getStatus())) {
@@ -146,7 +153,14 @@ public class CmsAdmissionEnquiryService {
         }
             Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
             List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
-            return list;
+        List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
+        for (AdmissionEnquiry temp : list) {
+            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
+            CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
+            cae.setStrEnquiryDate(stDt);
+            ls.add(cae);
+        }
+        return ls;
         }
 }
 
