@@ -239,6 +239,8 @@ type Query {
   invoice(id:Long!):Invoice!
   invoices:[Invoice!]!
 
+  getExams:[ExamSettingPojo!]!
+
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
 
@@ -276,6 +278,19 @@ type Query {
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
 }
+
+type ExamSettingPojo{
+
+    examType: String!
+    departmentId: Long!
+    sectionId: String!
+    action: String!
+    subject: String!
+    endDate: Date!
+    startDate: Date!
+    examDate: Date!
+   }
+
 
 type StudentFilterDataCache {
 	branches: [Branch]
