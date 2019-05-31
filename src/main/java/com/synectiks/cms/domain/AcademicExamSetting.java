@@ -82,6 +82,14 @@ public class AcademicExamSetting implements Serializable {
     @Column(name = "actions")
     private String actions;
 
+    @NotNull
+    @Column(name = "start_date", nullable = false)
+    private Date startDate;
+
+    @NotNull
+    @Column(name = "end_date", nullable = false)
+    private Date endDate;
+
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
     private Department department;
@@ -263,6 +271,32 @@ public class AcademicExamSetting implements Serializable {
         this.actions = actions;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public AcademicExamSetting startDate(Date startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public AcademicExamSetting endDate(Date endDate) {
+        this.endDate = endDate;
+        return this;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public Department getDepartment() {
         return department;
     }
@@ -352,6 +386,8 @@ public class AcademicExamSetting implements Serializable {
             ", total=" + getTotal() +
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
+            ", startDate='" + getStartDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
             "}";
     }
 }

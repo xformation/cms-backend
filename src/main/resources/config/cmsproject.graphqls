@@ -725,6 +725,8 @@ type AcademicExamSetting{
     total: Int!
     passing: Int!
     actions: String!
+    startDate: Date
+    endDate: Date
     department: Department!
     section: Section!
     academicyear: AcademicYear!
@@ -1250,6 +1252,8 @@ input AddAcademicExamSettingInput{
     total: Int!
     passing: Int!
     actions: String!
+    startDate: Date
+    endDate: Date
     departmentId: Long!
     sectionId: Long!
     academicyearId: Long!
@@ -1273,6 +1277,8 @@ input UpdateAcademicExamSettingInput {
     total: Int!
     passing: Int!
     actions: String!
+    startDate: Date
+    endDate: Date
     departmentId: Long!
     sectionId: Long!
     academicyearId: Long!

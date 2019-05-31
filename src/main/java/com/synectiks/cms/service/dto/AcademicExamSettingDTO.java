@@ -47,6 +47,12 @@ public class AcademicExamSettingDTO implements Serializable {
 
     private String actions;
 
+    @NotNull
+    private LocalDate startDate;
+
+    @NotNull
+    private LocalDate endDate;
+
 
     private Long departmentId;
 
@@ -160,6 +166,22 @@ public class AcademicExamSettingDTO implements Serializable {
         this.actions = actions;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     public Long getDepartmentId() {
         return departmentId;
     }
@@ -229,6 +251,8 @@ public class AcademicExamSettingDTO implements Serializable {
             ", total=" + getTotal() +
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
+            ", startDate='" + getStartDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
             ", department=" + getDepartmentId() +
             ", academicyear=" + getAcademicyearId() +
             ", section=" + getSectionId() +

@@ -564,6 +564,8 @@ public class Mutation implements GraphQLMutationResolver {
         academicExamSetting.setTotal(addAcademicExamSettingInput.getTotal());
         academicExamSetting.setPassing(addAcademicExamSettingInput.getPassing());
         academicExamSetting.setActions(addAcademicExamSettingInput.getActions());
+        academicExamSetting.setStartDate(addAcademicExamSettingInput.getStartDate());
+        academicExamSetting.setEndDate(addAcademicExamSettingInput.getEndDate());
         academicExamSettingRepository.save(academicExamSetting);
         return new AddAcademicExamSettingPayload(academicExamSetting);
     }
@@ -607,6 +609,12 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateAcademicExamSettingInput.getActions() != null) {
             academicExamSetting.setActions(updateAcademicExamSettingInput.getActions());
+        }
+        if (updateAcademicExamSettingInput.getStartDate() != null) {
+            academicExamSetting.setStartDate(updateAcademicExamSettingInput.getStartDate());
+        }
+        if (updateAcademicExamSettingInput.getEndDate() != null) {
+            academicExamSetting.setEndDate(updateAcademicExamSettingInput.getEndDate());
         }
         if (updateAcademicExamSettingInput.getDepartmentId() != null) {
             final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();

@@ -61,6 +61,8 @@ AcademicExamSetting:
     total
     passing
     actions
+    startDate
+    endDate
     department {
       name
     }

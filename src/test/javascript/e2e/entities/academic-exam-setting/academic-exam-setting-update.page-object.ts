@@ -16,6 +16,8 @@ export default class AcademicExamSettingUpdatePage {
   totalInput: ElementFinder = element(by.css('input#academic-exam-setting-total'));
   passingInput: ElementFinder = element(by.css('input#academic-exam-setting-passing'));
   actionsInput: ElementFinder = element(by.css('input#academic-exam-setting-actions'));
+  startDateInput: ElementFinder = element(by.css('input#academic-exam-setting-startDate'));
+  endDateInput: ElementFinder = element(by.css('input#academic-exam-setting-endDate'));
   departmentSelect: ElementFinder = element(by.css('select#academic-exam-setting-department'));
   academicyearSelect: ElementFinder = element(by.css('select#academic-exam-setting-academicyear'));
   sectionSelect: ElementFinder = element(by.css('select#academic-exam-setting-section'));
@@ -131,6 +133,22 @@ export default class AcademicExamSettingUpdatePage {
 
   async getActionsInput() {
     return this.actionsInput.getAttribute('value');
+  }
+
+  async setStartDateInput(startDate) {
+    await this.startDateInput.sendKeys(startDate);
+  }
+
+  async getStartDateInput() {
+    return this.startDateInput.getAttribute('value');
+  }
+
+  async setEndDateInput(endDate) {
+    await this.endDateInput.sendKeys(endDate);
+  }
+
+  async getEndDateInput() {
+    return this.endDateInput.getAttribute('value');
   }
 
   async departmentSelectLastOption() {

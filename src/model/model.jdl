@@ -338,6 +338,23 @@ extraClass Status
 handicrafts Status
 }
 
+entity AcademicExamSetting {
+    examType String required
+    semester SemesterEnum required
+    subject String
+    examDate LocalDate required
+    day String required
+    duration String required
+    startTime String required
+    endTime String required
+    gradeType GradeType required
+    total Integer required
+    passing Integer required
+    actions String
+    startDate LocalDate required
+    endDate LocalDate required
+}
+
 entity FeeCategory {
 categoryName String required
 description String required
@@ -481,20 +498,6 @@ entity TypeOfGrading{
     grades GradesEnum required
 }
 
-entity AcademicExamSetting {
-    examType String required
-    semester SemesterEnum required
-    subject String
-    examDate LocalDate required
-    day String required
-    duration String required
-    startTime String required
-    endTime String required
-    gradeType GradeType required
-    total Integer required
-    passing Integer required
-    actions String
-}
 
 relationship ManyToOne {
 Student{department required} to Department ,

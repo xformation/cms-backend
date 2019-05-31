@@ -69,6 +69,14 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="start_date" type="date">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="end_date" type="date">
+                <constraints nullable="false" />
+            </column>
+
             <column name="department_id" type="bigint">
                 <constraints nullable="true" />
             </column>

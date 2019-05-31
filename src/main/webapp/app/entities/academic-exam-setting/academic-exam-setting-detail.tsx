@@ -78,6 +78,18 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
               <span id="actions">Actions</span>
             </dt>
             <dd>{academicExamSettingEntity.actions}</dd>
+            <dt>
+              <span id="startDate">Start Date</span>
+            </dt>
+            <dd>
+              <TextFormat value={academicExamSettingEntity.startDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
+            <dt>
+              <span id="endDate">End Date</span>
+            </dt>
+            <dd>
+              <TextFormat value={academicExamSettingEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>Department</dt>
             <dd>{academicExamSettingEntity.departmentId ? academicExamSettingEntity.departmentId : ''}</dd>
             <dt>Academicyear</dt>

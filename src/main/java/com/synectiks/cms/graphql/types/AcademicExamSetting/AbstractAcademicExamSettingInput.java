@@ -21,6 +21,8 @@ public class AbstractAcademicExamSettingInput {
     private Integer total;
     private Integer passing;
     private String actions;
+    private Date startDate;
+    private Date endDate;
 
     public Long getId() {
         return id;
@@ -126,6 +128,22 @@ public class AbstractAcademicExamSettingInput {
         this.actions = actions;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -143,12 +161,14 @@ public class AbstractAcademicExamSettingInput {
             gradeType == that.gradeType &&
             Objects.equals(total, that.total) &&
             Objects.equals(passing, that.passing) &&
-            Objects.equals(actions, that.actions);
+            Objects.equals(actions, that.actions) &&
+            Objects.equals(startDate, that.startDate) &&
+            Objects.equals(endDate, that.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examType, semester, subject, examDate, day, duration, startTime, endTime, gradeType, total, passing, actions);
+        return Objects.hash(id, examType, semester, subject, examDate, day, duration, startTime, endTime, gradeType, total, passing, actions, startDate, endDate);
     }
 
     @Override
@@ -167,6 +187,8 @@ public class AbstractAcademicExamSettingInput {
             ", total=" + total +
             ", passing=" + passing +
             ", actions='" + actions + '\'' +
+            ", startDate=" + startDate +
+            ", endDate=" + endDate +
             '}';
     }
 }

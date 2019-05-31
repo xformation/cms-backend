@@ -260,6 +260,34 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                   <AvField id="academic-exam-setting-actions" type="text" name="actions" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="startDateLabel" for="startDate">
+                    Start Date
+                  </Label>
+                  <AvField
+                    id="academic-exam-setting-startDate"
+                    type="date"
+                    className="form-control"
+                    name="startDate"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="endDateLabel" for="endDate">
+                    End Date
+                  </Label>
+                  <AvField
+                    id="academic-exam-setting-endDate"
+                    type="date"
+                    className="form-control"
+                    name="endDate"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
                   <Label for="department.id">Department</Label>
                   <AvInput id="academic-exam-setting-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />

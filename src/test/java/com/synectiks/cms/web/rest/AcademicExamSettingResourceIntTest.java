@@ -88,6 +88,12 @@ public class AcademicExamSettingResourceIntTest {
     private static final String DEFAULT_ACTIONS = "AAAAAAAAAA";
     private static final String UPDATED_ACTIONS = "BBBBBBBBBB";
 
+    private static final Date DEFAULT_START_DATE = new Date();
+    private static final Date UPDATED_START_DATE = new Date();
+
+    private static final Date DEFAULT_END_DATE = new Date();
+    private static final Date UPDATED_END_DATE = new Date();
+
     @Autowired
     private AcademicExamSettingRepository academicExamSettingRepository;
 
@@ -155,7 +161,9 @@ public class AcademicExamSettingResourceIntTest {
             .gradeType(DEFAULT_GRADE_TYPE)
             .total(DEFAULT_TOTAL)
             .passing(DEFAULT_PASSING)
-            .actions(DEFAULT_ACTIONS);
+            .actions(DEFAULT_ACTIONS)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE);
         return academicExamSetting;
     }
 
@@ -192,6 +200,8 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getTotal()).isEqualTo(DEFAULT_TOTAL);
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(DEFAULT_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(DEFAULT_ACTIONS);
+        assertThat(testAcademicExamSetting.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testAcademicExamSetting.getEndDate()).isEqualTo(DEFAULT_END_DATE);
 
         // Validate the AcademicExamSetting in Elasticsearch
         verify(mockAcademicExamSettingSearchRepository, times(1)).save(testAcademicExamSetting);
@@ -412,6 +422,44 @@ public class AcademicExamSettingResourceIntTest {
 
     @Test
     @Transactional
+    public void checkStartDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
+        // set the field null
+        academicExamSetting.setStartDate(null);
+
+        // Create the AcademicExamSetting, which fails.
+        AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(academicExamSetting);
+
+        restAcademicExamSettingMockMvc.perform(post("/api/academic-exam-settings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(academicExamSettingDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
+        assertThat(academicExamSettingList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkEndDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = academicExamSettingRepository.findAll().size();
+        // set the field null
+        academicExamSetting.setEndDate(null);
+
+        // Create the AcademicExamSetting, which fails.
+        AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(academicExamSetting);
+
+        restAcademicExamSettingMockMvc.perform(post("/api/academic-exam-settings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(academicExamSettingDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
+        assertThat(academicExamSettingList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllAcademicExamSettings() throws Exception {
         // Initialize the database
         academicExamSettingRepository.saveAndFlush(academicExamSetting);
@@ -432,7 +480,9 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].gradeType").value(hasItem(DEFAULT_GRADE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
             .andExpect(jsonPath("$.[*].passing").value(hasItem(DEFAULT_PASSING)))
-            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS.toString())));
+            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
     
     @Test
@@ -457,7 +507,9 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.gradeType").value(DEFAULT_GRADE_TYPE.toString()))
             .andExpect(jsonPath("$.total").value(DEFAULT_TOTAL))
             .andExpect(jsonPath("$.passing").value(DEFAULT_PASSING))
-            .andExpect(jsonPath("$.actions").value(DEFAULT_ACTIONS.toString()));
+            .andExpect(jsonPath("$.actions").value(DEFAULT_ACTIONS.toString()))
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
     }
 
     @Test
@@ -492,7 +544,9 @@ public class AcademicExamSettingResourceIntTest {
             .gradeType(UPDATED_GRADE_TYPE)
             .total(UPDATED_TOTAL)
             .passing(UPDATED_PASSING)
-            .actions(UPDATED_ACTIONS);
+            .actions(UPDATED_ACTIONS)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE);
         AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(updatedAcademicExamSetting);
 
         restAcademicExamSettingMockMvc.perform(put("/api/academic-exam-settings")
@@ -516,6 +570,8 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getTotal()).isEqualTo(UPDATED_TOTAL);
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(UPDATED_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(UPDATED_ACTIONS);
+        assertThat(testAcademicExamSetting.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertThat(testAcademicExamSetting.getEndDate()).isEqualTo(UPDATED_END_DATE);
 
         // Validate the AcademicExamSetting in Elasticsearch
         verify(mockAcademicExamSettingSearchRepository, times(1)).save(testAcademicExamSetting);
@@ -587,7 +643,9 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].gradeType").value(hasItem(DEFAULT_GRADE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
             .andExpect(jsonPath("$.[*].passing").value(hasItem(DEFAULT_PASSING)))
-            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS)));
+            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS)))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
 
     @Test
