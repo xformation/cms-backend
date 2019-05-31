@@ -1,7 +1,9 @@
 package com.synectiks.cms.filter.admissionenquiry;
 
 import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
+import com.synectiks.cms.domain.AdmissionEnquiry;
 import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,14 @@ public class AdmissionEnquiryProcessor {
 
     public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId, Long admissionApplicationId) throws Exception{
         return cmsAdmissionEnquiryService.admissionEnquiryList( branchId, admissionApplicationId);
+    }
+
+    public List<AdmissionEnquiry> admissionViewInfo(EnquiryStatus status){
+        return cmsAdmissionEnquiryService.admissionViewInfo(status);
+    }
+
+    public List<AdmissionEnquiry> admissionViewInfo(AdmissionListFilterInput filter){
+        return cmsAdmissionEnquiryService.admissionViewInfo(filter);
     }
 
     public Long getTotalAdmissions() {

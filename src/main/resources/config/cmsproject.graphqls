@@ -247,6 +247,7 @@ type Query {
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
 
+
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
     getBranchById(branchId:Long): Branch!
@@ -268,6 +269,8 @@ type Query {
     getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
     getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
     getAdmissionData(branchId:String, admissionApplicationId:String!): CmsAdmissionEnquiryVo
+     admissionViewInfo( status: EnquiryStatus): [AdmissionEnquiry!]!
+
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
@@ -1106,6 +1109,7 @@ type Mutation {
      getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
      getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
      admissionEnquiryList(branchId:Long, admissionApplicationId:Long ): [CmsAdmissionEnquiryVo!]!
+      admissionViewInfo( status: EnquiryStatus): [AdmissionEnquiry!]!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!

@@ -22,6 +22,7 @@ import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
@@ -529,6 +530,10 @@ public class Query implements GraphQLQueryResolver {
         return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId), Long.valueOf(admissionApplicationId));
     }
 
+    public List<AdmissionEnquiry> admissionViewInfo(EnquiryStatus status){
+        return Lists.newArrayList(admissionEnquiryProcessor.admissionViewInfo(status));
+    }
+    
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName){
         return Lists.newArrayList(studentFilterProcessor.searchStudent(departmentId, batchId, sectionId, branchId, gender, studentType, studentName));
     }

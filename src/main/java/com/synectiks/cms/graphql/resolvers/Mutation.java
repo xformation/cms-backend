@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -2971,11 +2972,15 @@ public class Mutation implements GraphQLMutationResolver {
         return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId, admissionApplicationId));
     }
 
+    public List<AdmissionEnquiry> admissionViewInfo(EnquiryStatus status){
+        return Lists.newArrayList(admissionEnquiryProcessor.admissionViewInfo(status));
+    }
+
 
     public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {
-    	List<Student> list = this.studentFilterProcessor.searchStudent(filter);
-    	logger.debug("Total students retrieved. "+list.size());
-    	return list;
+        List<Student> list = this.studentFilterProcessor.searchStudent(filter);
+        logger.debug("Total students retrieved. " + list.size());
+        return list;
     }
     /**
 	 * getStudentAttendanceDataForAdmin(StudentAttendanceFilterInput filter)
