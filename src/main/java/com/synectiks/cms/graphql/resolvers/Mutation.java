@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
+import com.synectiks.cms.filter.admissionenquiry.AdmissionListFilterInput;
 import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -2980,8 +2981,9 @@ public class Mutation implements GraphQLMutationResolver {
         return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId, admissionApplicationId));
     }
 
-    public List<AdmissionEnquiry> admissionViewInfo(EnquiryStatus status){
-        return Lists.newArrayList(admissionEnquiryProcessor.admissionViewInfo(status));
+    public List<AdmissionEnquiry> getAdmissionViewInfo(AdmissionListFilterInput filter){
+       List<AdmissionEnquiry> list = this.admissionEnquiryProcessor.admissionViewInfo(filter);
+       return list;
     }
 
 

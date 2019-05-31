@@ -1126,7 +1126,7 @@ type Mutation {
      getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
      getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
      admissionEnquiryList(branchId:Long, admissionApplicationId:Long ): [CmsAdmissionEnquiryVo!]!
-      admissionViewInfo( status: EnquiryStatus): [AdmissionEnquiry!]!
+     getAdmissionViewInfo(filter: AdmissionListFilterInput!): [AdmissionEnquiry]!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
@@ -1169,6 +1169,10 @@ input StudentListFilterInput {
 	sectionId: String
 	gender: String
 	studentType: String
+}
+
+input AdmissionListFilterInput {
+	status: String
 }
 
 input AddDocumentsInput{
