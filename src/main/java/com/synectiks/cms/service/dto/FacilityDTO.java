@@ -1,14 +1,9 @@
 package com.synectiks.cms.service.dto;
+
+import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.Status;
 
 /**
@@ -18,30 +13,23 @@ public class FacilityDTO implements Serializable {
 
     private Long id;
 
-    private Status transport;
+    @NotNull
+    private String name;
 
-    private Status mess;
+    @NotNull
+    private Status status;
 
-    private Status gym;
+    private LocalDate startDate;
 
-    private Status culturalClass;
+    private LocalDate endDate;
 
-    private Status library;
+    private LocalDate suspandStartDate;
 
-    private Status sports;
-
-    private Status swimming;
-
-    private Status extraClass;
-
-    private Status handicrafts;
-
+    private LocalDate suspandEndDate;
 
     private Long academicYearId;
 
     private Long branchId;
-
-    private Long studentId;
 
     public Long getId() {
         return id;
@@ -51,76 +39,52 @@ public class FacilityDTO implements Serializable {
         this.id = id;
     }
 
-    public Status getTransport() {
-        return transport;
+    public String getName() {
+        return name;
     }
 
-    public void setTransport(Status transport) {
-        this.transport = transport;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Status getMess() {
-        return mess;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setMess(Status mess) {
-        this.mess = mess;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public Status getGym() {
-        return gym;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setGym(Status gym) {
-        this.gym = gym;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public Status getCulturalClass() {
-        return culturalClass;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setCulturalClass(Status culturalClass) {
-        this.culturalClass = culturalClass;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public Status getLibrary() {
-        return library;
+    public LocalDate getSuspandStartDate() {
+        return suspandStartDate;
     }
 
-    public void setLibrary(Status library) {
-        this.library = library;
+    public void setSuspandStartDate(LocalDate suspandStartDate) {
+        this.suspandStartDate = suspandStartDate;
     }
 
-    public Status getSports() {
-        return sports;
+    public LocalDate getSuspandEndDate() {
+        return suspandEndDate;
     }
 
-    public void setSports(Status sports) {
-        this.sports = sports;
-    }
-
-    public Status getSwimming() {
-        return swimming;
-    }
-
-    public void setSwimming(Status swimming) {
-        this.swimming = swimming;
-    }
-
-    public Status getExtraClass() {
-        return extraClass;
-    }
-
-    public void setExtraClass(Status extraClass) {
-        this.extraClass = extraClass;
-    }
-
-    public Status getHandicrafts() {
-        return handicrafts;
-    }
-
-    public void setHandicrafts(Status handicrafts) {
-        this.handicrafts = handicrafts;
+    public void setSuspandEndDate(LocalDate suspandEndDate) {
+        this.suspandEndDate = suspandEndDate;
     }
 
     public Long getAcademicYearId() {
@@ -137,14 +101,6 @@ public class FacilityDTO implements Serializable {
 
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
     }
 
     @Override
@@ -172,18 +128,14 @@ public class FacilityDTO implements Serializable {
     public String toString() {
         return "FacilityDTO{" +
             "id=" + getId() +
-            ", transport='" + getTransport() + "'" +
-            ", mess='" + getMess() + "'" +
-            ", gym='" + getGym() + "'" +
-            ", culturalClass='" + getCulturalClass() + "'" +
-            ", library='" + getLibrary() + "'" +
-            ", sports='" + getSports() + "'" +
-            ", swimming='" + getSwimming() + "'" +
-            ", extraClass='" + getExtraClass() + "'" +
-            ", handicrafts='" + getHandicrafts() + "'" +
+            ", name='" + getName() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", startDate='" + getStartDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", suspandStartDate='" + getSuspandStartDate() + "'" +
+            ", suspandEndDate='" + getSuspandEndDate() + "'" +
             ", academicYear=" + getAcademicYearId() +
             ", branch=" + getBranchId() +
-            ", student=" + getStudentId() +
             "}";
     }
 }

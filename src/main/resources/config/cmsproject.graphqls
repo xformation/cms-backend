@@ -464,19 +464,15 @@ type FeeCategory{
    }
 
 type Facility{
-      id: Long!
-    transport: Status!
-    mess: Status!
-    gym: Status!
-    culturalClass: Status!
-    library: Status!
-    sports: Status!
-    swimming: Status!
-    extraClass: Status!
-    handicrafts: Status!
+     id: Long
+     name: String
+     status: Status
+     startDate: Date
+     endDate: Date
+     suspandStartDate: Date
+     suspandEndDate: Date
      academicYear: AcademicYear!
      branch: Branch!
-     student: Student!
  }
 
 type StudentExamReport{
@@ -1524,36 +1520,29 @@ type RemoveFeeDetailsPayload {
 }
 
 input AddFacilityInput {
-    transport: Status!
-    gym: Status!
-    mess: Status!
-    culturalClass: Status!
-    library: Status!
-    sports: Status!
-    swimming: Status!
-    extraClass: Status!
-    handicrafts: Status!
-    academicyearId: Long!
-    branchId: Long!
-    studentId: Long!
+    name: String
+    status: Status
+    startDate: Date
+    endDate: Date
+    suspandStartDate: Date
+    suspandEndDate: Date
+    academicyearId: Long
+    branchId: Long
+    
 }
 type AddFacilityPayload {
     facility: Facility!
 }
 input UpdateFacilityInput {
      id: Long!
-    transport: Status!
-    gym: Status!
-    mess: Status!
-    culturalClass: Status!
-    library: Status!
-    sports: Status!
-    swimming: Status!
-    extraClass: Status!
-    handicrafts: Status!
-     academicyearId: Long!
-     branchId: Long!
-     studentId: Long!
+	 name: String
+     status: Status
+     startDate: Date
+     endDate: Date
+     suspandStartDate: Date
+     suspandEndDate: Date
+     academicyearId: Long
+     branchId: Long
 }
 type UpdateFacilityPayload {
     facility: Facility!

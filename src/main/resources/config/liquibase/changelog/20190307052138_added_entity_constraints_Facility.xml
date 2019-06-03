@@ -20,11 +20,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="branch"/>
 
-        <addForeignKeyConstraint baseColumnNames="student_id"
-                                 baseTableName="facility"
-                                 constraintName="fk_facility_student_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="student"/>
-
     </changeSet>
 </databaseChangeLog>

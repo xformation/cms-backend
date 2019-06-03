@@ -1,14 +1,25 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.search.FacilitySearchRepository;
-import com.synectiks.cms.service.FacilityService;
-import com.synectiks.cms.service.dto.FacilityDTO;
-import com.synectiks.cms.service.mapper.FacilityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,30 +34,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Facility;
 import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.FacilityRepository;
+import com.synectiks.cms.repository.search.FacilitySearchRepository;
+import com.synectiks.cms.service.FacilityService;
+import com.synectiks.cms.service.dto.FacilityDTO;
+import com.synectiks.cms.service.mapper.FacilityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the FacilityResource REST controller.
  *
@@ -56,38 +53,31 @@ import com.synectiks.cms.domain.enumeration.Status;
 @SpringBootTest(classes = CmsApp.class)
 public class FacilityResourceIntTest {
 
-    private static final Status DEFAULT_TRANSPORT = Status.ACTIVE;
-    private static final Status UPDATED_TRANSPORT = Status.DEACTIVE;
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Status DEFAULT_MESS = Status.ACTIVE;
-    private static final Status UPDATED_MESS = Status.DEACTIVE;
+    private static final Status DEFAULT_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_STATUS = Status.DEACTIVE;
 
-    private static final Status DEFAULT_GYM = Status.ACTIVE;
-    private static final Status UPDATED_GYM = Status.DEACTIVE;
+    private static final Date DEFAULT_START_DATE = new Date();
+    private static final Date UPDATED_START_DATE = new Date();
 
-    private static final Status DEFAULT_CULTURAL_CLASS = Status.ACTIVE;
-    private static final Status UPDATED_CULTURAL_CLASS = Status.DEACTIVE;
+    private static final Date DEFAULT_END_DATE = new Date();
+    private static final Date UPDATED_END_DATE = new Date();
 
-    private static final Status DEFAULT_LIBRARY = Status.ACTIVE;
-    private static final Status UPDATED_LIBRARY = Status.DEACTIVE;
+    private static final Date DEFAULT_SUSPAND_START_DATE = new Date();
+    private static final Date UPDATED_SUSPAND_START_DATE = new Date();
 
-    private static final Status DEFAULT_SPORTS = Status.ACTIVE;
-    private static final Status UPDATED_SPORTS = Status.DEACTIVE;
-
-    private static final Status DEFAULT_SWIMMING = Status.ACTIVE;
-    private static final Status UPDATED_SWIMMING = Status.DEACTIVE;
-
-    private static final Status DEFAULT_EXTRA_CLASS = Status.ACTIVE;
-    private static final Status UPDATED_EXTRA_CLASS = Status.DEACTIVE;
-
-    private static final Status DEFAULT_HANDICRAFTS = Status.ACTIVE;
-    private static final Status UPDATED_HANDICRAFTS = Status.DEACTIVE;
+    private static final Date DEFAULT_SUSPAND_END_DATE = new Date();
+    private static final Date UPDATED_SUSPAND_END_DATE = new Date();
 
     @Autowired
     private FacilityRepository facilityRepository;
 
+
     @Autowired
     private FacilityMapper facilityMapper;
+    
 
     @Autowired
     private FacilityService facilityService;
@@ -112,9 +102,6 @@ public class FacilityResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restFacilityMockMvc;
 
     private Facility facility;
@@ -127,8 +114,7 @@ public class FacilityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -139,15 +125,12 @@ public class FacilityResourceIntTest {
      */
     public static Facility createEntity(EntityManager em) {
         Facility facility = new Facility()
-            .transport(DEFAULT_TRANSPORT)
-            .mess(DEFAULT_MESS)
-            .gym(DEFAULT_GYM)
-            .culturalClass(DEFAULT_CULTURAL_CLASS)
-            .library(DEFAULT_LIBRARY)
-            .sports(DEFAULT_SPORTS)
-            .swimming(DEFAULT_SWIMMING)
-            .extraClass(DEFAULT_EXTRA_CLASS)
-            .handicrafts(DEFAULT_HANDICRAFTS);
+            .name(DEFAULT_NAME)
+            .status(DEFAULT_STATUS)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE)
+            .suspandStartDate(DEFAULT_SUSPAND_START_DATE)
+            .suspandEndDate(DEFAULT_SUSPAND_END_DATE);
         return facility;
     }
 
@@ -172,15 +155,12 @@ public class FacilityResourceIntTest {
         List<Facility> facilityList = facilityRepository.findAll();
         assertThat(facilityList).hasSize(databaseSizeBeforeCreate + 1);
         Facility testFacility = facilityList.get(facilityList.size() - 1);
-        assertThat(testFacility.getTransport()).isEqualTo(DEFAULT_TRANSPORT);
-        assertThat(testFacility.getMess()).isEqualTo(DEFAULT_MESS);
-        assertThat(testFacility.getGym()).isEqualTo(DEFAULT_GYM);
-        assertThat(testFacility.getCulturalClass()).isEqualTo(DEFAULT_CULTURAL_CLASS);
-        assertThat(testFacility.getLibrary()).isEqualTo(DEFAULT_LIBRARY);
-        assertThat(testFacility.getSports()).isEqualTo(DEFAULT_SPORTS);
-        assertThat(testFacility.getSwimming()).isEqualTo(DEFAULT_SWIMMING);
-        assertThat(testFacility.getExtraClass()).isEqualTo(DEFAULT_EXTRA_CLASS);
-        assertThat(testFacility.getHandicrafts()).isEqualTo(DEFAULT_HANDICRAFTS);
+        assertThat(testFacility.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testFacility.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testFacility.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testFacility.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testFacility.getSuspandStartDate()).isEqualTo(DEFAULT_SUSPAND_START_DATE);
+        assertThat(testFacility.getSuspandEndDate()).isEqualTo(DEFAULT_SUSPAND_END_DATE);
 
         // Validate the Facility in Elasticsearch
         verify(mockFacilitySearchRepository, times(1)).save(testFacility);
@@ -211,6 +191,44 @@ public class FacilityResourceIntTest {
 
     @Test
     @Transactional
+    public void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = facilityRepository.findAll().size();
+        // set the field null
+        facility.setName(null);
+
+        // Create the Facility, which fails.
+        FacilityDTO facilityDTO = facilityMapper.toDto(facility);
+
+        restFacilityMockMvc.perform(post("/api/facilities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Facility> facilityList = facilityRepository.findAll();
+        assertThat(facilityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = facilityRepository.findAll().size();
+        // set the field null
+        facility.setStatus(null);
+
+        // Create the Facility, which fails.
+        FacilityDTO facilityDTO = facilityMapper.toDto(facility);
+
+        restFacilityMockMvc.perform(post("/api/facilities")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Facility> facilityList = facilityRepository.findAll();
+        assertThat(facilityList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllFacilities() throws Exception {
         // Initialize the database
         facilityRepository.saveAndFlush(facility);
@@ -220,17 +238,15 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(facility.getId().intValue())))
-            .andExpect(jsonPath("$.[*].transport").value(hasItem(DEFAULT_TRANSPORT.toString())))
-            .andExpect(jsonPath("$.[*].mess").value(hasItem(DEFAULT_MESS.toString())))
-            .andExpect(jsonPath("$.[*].gym").value(hasItem(DEFAULT_GYM.toString())))
-            .andExpect(jsonPath("$.[*].culturalClass").value(hasItem(DEFAULT_CULTURAL_CLASS.toString())))
-            .andExpect(jsonPath("$.[*].library").value(hasItem(DEFAULT_LIBRARY.toString())))
-            .andExpect(jsonPath("$.[*].sports").value(hasItem(DEFAULT_SPORTS.toString())))
-            .andExpect(jsonPath("$.[*].swimming").value(hasItem(DEFAULT_SWIMMING.toString())))
-            .andExpect(jsonPath("$.[*].extraClass").value(hasItem(DEFAULT_EXTRA_CLASS.toString())))
-            .andExpect(jsonPath("$.[*].handicrafts").value(hasItem(DEFAULT_HANDICRAFTS.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].suspandStartDate").value(hasItem(DEFAULT_SUSPAND_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())));
     }
     
+
     @Test
     @Transactional
     public void getFacility() throws Exception {
@@ -242,17 +258,13 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(facility.getId().intValue()))
-            .andExpect(jsonPath("$.transport").value(DEFAULT_TRANSPORT.toString()))
-            .andExpect(jsonPath("$.mess").value(DEFAULT_MESS.toString()))
-            .andExpect(jsonPath("$.gym").value(DEFAULT_GYM.toString()))
-            .andExpect(jsonPath("$.culturalClass").value(DEFAULT_CULTURAL_CLASS.toString()))
-            .andExpect(jsonPath("$.library").value(DEFAULT_LIBRARY.toString()))
-            .andExpect(jsonPath("$.sports").value(DEFAULT_SPORTS.toString()))
-            .andExpect(jsonPath("$.swimming").value(DEFAULT_SWIMMING.toString()))
-            .andExpect(jsonPath("$.extraClass").value(DEFAULT_EXTRA_CLASS.toString()))
-            .andExpect(jsonPath("$.handicrafts").value(DEFAULT_HANDICRAFTS.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.suspandStartDate").value(DEFAULT_SUSPAND_START_DATE.toString()))
+            .andExpect(jsonPath("$.suspandEndDate").value(DEFAULT_SUSPAND_END_DATE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingFacility() throws Exception {
@@ -274,15 +286,12 @@ public class FacilityResourceIntTest {
         // Disconnect from session so that the updates on updatedFacility are not directly saved in db
         em.detach(updatedFacility);
         updatedFacility
-            .transport(UPDATED_TRANSPORT)
-            .mess(UPDATED_MESS)
-            .gym(UPDATED_GYM)
-            .culturalClass(UPDATED_CULTURAL_CLASS)
-            .library(UPDATED_LIBRARY)
-            .sports(UPDATED_SPORTS)
-            .swimming(UPDATED_SWIMMING)
-            .extraClass(UPDATED_EXTRA_CLASS)
-            .handicrafts(UPDATED_HANDICRAFTS);
+            .name(UPDATED_NAME)
+            .status(UPDATED_STATUS)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE)
+            .suspandStartDate(UPDATED_SUSPAND_START_DATE)
+            .suspandEndDate(UPDATED_SUSPAND_END_DATE);
         FacilityDTO facilityDTO = facilityMapper.toDto(updatedFacility);
 
         restFacilityMockMvc.perform(put("/api/facilities")
@@ -294,15 +303,12 @@ public class FacilityResourceIntTest {
         List<Facility> facilityList = facilityRepository.findAll();
         assertThat(facilityList).hasSize(databaseSizeBeforeUpdate);
         Facility testFacility = facilityList.get(facilityList.size() - 1);
-        assertThat(testFacility.getTransport()).isEqualTo(UPDATED_TRANSPORT);
-        assertThat(testFacility.getMess()).isEqualTo(UPDATED_MESS);
-        assertThat(testFacility.getGym()).isEqualTo(UPDATED_GYM);
-        assertThat(testFacility.getCulturalClass()).isEqualTo(UPDATED_CULTURAL_CLASS);
-        assertThat(testFacility.getLibrary()).isEqualTo(UPDATED_LIBRARY);
-        assertThat(testFacility.getSports()).isEqualTo(UPDATED_SPORTS);
-        assertThat(testFacility.getSwimming()).isEqualTo(UPDATED_SWIMMING);
-        assertThat(testFacility.getExtraClass()).isEqualTo(UPDATED_EXTRA_CLASS);
-        assertThat(testFacility.getHandicrafts()).isEqualTo(UPDATED_HANDICRAFTS);
+        assertThat(testFacility.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testFacility.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testFacility.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertThat(testFacility.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testFacility.getSuspandStartDate()).isEqualTo(UPDATED_SUSPAND_START_DATE);
+        assertThat(testFacility.getSuspandEndDate()).isEqualTo(UPDATED_SUSPAND_END_DATE);
 
         // Validate the Facility in Elasticsearch
         verify(mockFacilitySearchRepository, times(1)).save(testFacility);
@@ -316,7 +322,7 @@ public class FacilityResourceIntTest {
         // Create the Facility
         FacilityDTO facilityDTO = facilityMapper.toDto(facility);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restFacilityMockMvc.perform(put("/api/facilities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
@@ -338,7 +344,7 @@ public class FacilityResourceIntTest {
 
         int databaseSizeBeforeDelete = facilityRepository.findAll().size();
 
-        // Delete the facility
+        // Get the facility
         restFacilityMockMvc.perform(delete("/api/facilities/{id}", facility.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -363,15 +369,12 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(facility.getId().intValue())))
-            .andExpect(jsonPath("$.[*].transport").value(hasItem(DEFAULT_TRANSPORT.toString())))
-            .andExpect(jsonPath("$.[*].mess").value(hasItem(DEFAULT_MESS.toString())))
-            .andExpect(jsonPath("$.[*].gym").value(hasItem(DEFAULT_GYM.toString())))
-            .andExpect(jsonPath("$.[*].culturalClass").value(hasItem(DEFAULT_CULTURAL_CLASS.toString())))
-            .andExpect(jsonPath("$.[*].library").value(hasItem(DEFAULT_LIBRARY.toString())))
-            .andExpect(jsonPath("$.[*].sports").value(hasItem(DEFAULT_SPORTS.toString())))
-            .andExpect(jsonPath("$.[*].swimming").value(hasItem(DEFAULT_SWIMMING.toString())))
-            .andExpect(jsonPath("$.[*].extraClass").value(hasItem(DEFAULT_EXTRA_CLASS.toString())))
-            .andExpect(jsonPath("$.[*].handicrafts").value(hasItem(DEFAULT_HANDICRAFTS.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].suspandStartDate").value(hasItem(DEFAULT_SUSPAND_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())));
     }
 
     @Test

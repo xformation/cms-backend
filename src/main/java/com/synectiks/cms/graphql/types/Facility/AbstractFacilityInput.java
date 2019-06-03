@@ -1,21 +1,18 @@
 package com.synectiks.cms.graphql.types.Facility;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import java.util.Date;
 
-import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.Status;
 
 public class AbstractFacilityInput {
     private Long id;
-    private Status transport;
-    private Status mess;
-    private Status gym;
-    private Status culturalClass;
-    private Status library;
-    private Status sports;
-    private Status swimming;
-    private Status extraClass;
-    private Status handicrafts;
-
+    private String name;
+    private Status status;
+    private Date startDate;
+    private Date endDate;
+    private Date suspandStartDate;
+    private Date suspandEndDate;
+    
     public Long getId() {
         return id;
     }
@@ -24,113 +21,118 @@ public class AbstractFacilityInput {
         this.id = id;
     }
 
-    public Status getTransport() {
-        return transport;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setTransport(Status transport) {
-        this.transport = transport;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Status getMess() {
-        return mess;
-    }
+	public Status getStatus() {
+		return status;
+	}
 
-    public void setMess(Status mess) {
-        this.mess = mess;
-    }
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
-    public Status getGym() {
-        return gym;
-    }
+	public Date getStartDate() {
+		return startDate;
+	}
 
-    public void setGym(Status gym) {
-        this.gym = gym;
-    }
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    public Status getCulturalClass() {
-        return culturalClass;
-    }
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    public void setCulturalClass(Status culturalClass) {
-        this.culturalClass = culturalClass;
-    }
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-    public Status getLibrary() {
-        return library;
-    }
+	public Date getSuspandStartDate() {
+		return suspandStartDate;
+	}
 
-    public void setLibrary(Status library) {
-        this.library = library;
-    }
+	public void setSuspandStartDate(Date suspandStartDate) {
+		this.suspandStartDate = suspandStartDate;
+	}
 
-    public Status getSports() {
-        return sports;
-    }
+	public Date getSuspandEndDate() {
+		return suspandEndDate;
+	}
 
-    public void setSports(Status sports) {
-        this.sports = sports;
-    }
+	public void setSuspandEndDate(Date suspandEndDate) {
+		this.suspandEndDate = suspandEndDate;
+	}
 
-    public Status getSwimming() {
-        return swimming;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((suspandEndDate == null) ? 0 : suspandEndDate.hashCode());
+		result = prime * result + ((suspandStartDate == null) ? 0 : suspandStartDate.hashCode());
+		return result;
+	}
 
-    public void setSwimming(Status swimming) {
-        this.swimming = swimming;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractFacilityInput other = (AbstractFacilityInput) obj;
+		if (endDate == null) {
+			if (other.endDate != null)
+				return false;
+		} else if (!endDate.equals(other.endDate))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (startDate == null) {
+			if (other.startDate != null)
+				return false;
+		} else if (!startDate.equals(other.startDate))
+			return false;
+		if (status != other.status)
+			return false;
+		if (suspandEndDate == null) {
+			if (other.suspandEndDate != null)
+				return false;
+		} else if (!suspandEndDate.equals(other.suspandEndDate))
+			return false;
+		if (suspandStartDate == null) {
+			if (other.suspandStartDate != null)
+				return false;
+		} else if (!suspandStartDate.equals(other.suspandStartDate))
+			return false;
+		return true;
+	}
 
-    public Status getExtraClass() {
-        return extraClass;
-    }
+	@Override
+	public String toString() {
+		return "AbstractFacilityInput [id=" + id + ", name=" + name + ", status=" + status + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", suspandStartDate=" + suspandStartDate + ", suspandEndDate="
+				+ suspandEndDate + "]";
+	}
 
-    public void setExtraClass(Status extraClass) {
-        this.extraClass = extraClass;
-    }
-
-    public Status getHandicrafts() {
-        return handicrafts;
-    }
-
-    public void setHandicrafts(Status handicrafts) {
-        this.handicrafts = handicrafts;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractFacilityInput that = (AbstractFacilityInput) o;
-        return Objects.equals(id, that.id) &&
-            transport == that.transport &&
-            mess == that.mess &&
-            gym == that.gym &&
-            culturalClass == that.culturalClass &&
-            library == that.library &&
-            sports == that.sports &&
-            swimming == that.swimming &&
-            extraClass == that.extraClass &&
-            handicrafts == that.handicrafts;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, transport, mess, gym, culturalClass, library, sports, swimming, extraClass, handicrafts);
-    }
-
-    @Override
-    public String toString() {
-        return "AbstractFacilityInput{" +
-            "id=" + id +
-            ", transport=" + transport +
-            ", mess=" + mess +
-            ", gym=" + gym +
-            ", culturalClass=" + culturalClass +
-            ", library=" + library +
-            ", sports=" + sports +
-            ", swimming=" + swimming +
-            ", extraClass=" + extraClass +
-            ", handicrafts=" + handicrafts +
-            '}';
-    }
+    
 }

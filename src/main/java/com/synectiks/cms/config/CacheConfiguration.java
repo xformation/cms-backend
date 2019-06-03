@@ -85,6 +85,7 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.MetaLecture.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.TypeOfGrading.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.StudentExamReport.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.StudentFacilityLink.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

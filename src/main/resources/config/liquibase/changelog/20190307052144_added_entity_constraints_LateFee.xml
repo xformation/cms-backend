@@ -20,5 +20,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="branch"/>
 
+        <addForeignKeyConstraint baseColumnNames="academic_year_id"
+                                 baseTableName="late_fee"
+                                 constraintName="fk_late_fee_academic_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_year"/>
+
+        <addForeignKeyConstraint baseColumnNames="term_id"
+                                 baseTableName="late_fee"
+                                 constraintName="fk_late_fee_term_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="term"/>
+
     </changeSet>
 </databaseChangeLog>

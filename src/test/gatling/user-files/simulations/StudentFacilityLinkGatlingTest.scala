@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory
 import scala.concurrent.duration._
 
 /**
- * Performance test for the FeeDetails entity.
+ * Performance test for the StudentFacilityLink entity.
  */
-class FeeDetailsGatlingTest extends Simulation {
+class StudentFacilityLinkGatlingTest extends Simulation {
 
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     // Log all HTTP requests
@@ -42,7 +42,7 @@ class FeeDetailsGatlingTest extends Simulation {
         "Authorization" -> "${access_token}"
     )
 
-    val scn = scenario("Test the FeeDetails entity")
+    val scn = scenario("Test the StudentFacilityLink entity")
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
@@ -60,26 +60,26 @@ class FeeDetailsGatlingTest extends Simulation {
         .check(status.is(200)))
         .pause(10)
         .repeat(2) {
-            exec(http("Get all feeDetails")
-            .get("/api/fee-details")
+            exec(http("Get all studentFacilityLinks")
+            .get("/api/student-facility-links")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
-            .exec(http("Create new feeDetails")
-            .post("/api/fee-details")
+            .exec(http("Create new studentFacilityLink")
+            .post("/api/student-facility-links")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "feeParticularsName":"SAMPLE_TEXT", "feeParticularDesc":"SAMPLE_TEXT", "studentType":null, "gender":null, "amount":null}""")).asJSON
+            .body(StringBody("""{"id":null, "linkDesc":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))
-            .check(headerRegex("Location", "(.*)").saveAs("new_feeDetails_url"))).exitHereIfFailed
+            .check(headerRegex("Location", "(.*)").saveAs("new_studentFacilityLink_url"))).exitHereIfFailed
             .pause(10)
             .repeat(5) {
-                exec(http("Get created feeDetails")
-                .get("${new_feeDetails_url}")
+                exec(http("Get created studentFacilityLink")
+                .get("${new_studentFacilityLink_url}")
                 .headers(headers_http_authenticated))
                 .pause(10)
             }
-            .exec(http("Delete created feeDetails")
-            .delete("${new_feeDetails_url}")
+            .exec(http("Delete created studentFacilityLink")
+            .delete("${new_studentFacilityLink_url}")
             .headers(headers_http_authenticated))
             .pause(10)
         }

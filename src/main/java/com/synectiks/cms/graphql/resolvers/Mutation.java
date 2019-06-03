@@ -8,10 +8,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.EnquiryStatus;
-import com.synectiks.cms.filter.admissionenquiry.AdmissionListFilterInput;
-import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +18,55 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AdminAttendance;
+import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.cms.domain.AdmissionEnquiry;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.domain.CmsInvoice;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.CompetitiveExam;
+import com.synectiks.cms.domain.Country;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Documents;
+import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.domain.LateFee;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.domain.PaymentRemainder;
+import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.StudentExamReport;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
 import com.synectiks.cms.exceptions.FilePathNotFoundException;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
+import com.synectiks.cms.filter.admissionenquiry.AdmissionListFilterInput;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
@@ -225,6 +264,12 @@ import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendance
 import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendancePayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendanceInput;
 import com.synectiks.cms.graphql.types.StudentAttendance.UpdateStudentAttendancePayload;
+import com.synectiks.cms.graphql.types.StudentExamReport.AddStudentExamReportInput;
+import com.synectiks.cms.graphql.types.StudentExamReport.AddStudentExamReportPayload;
+import com.synectiks.cms.graphql.types.StudentExamReport.RemoveStudentExamReportInput;
+import com.synectiks.cms.graphql.types.StudentExamReport.RemoveStudentExamReportPayload;
+import com.synectiks.cms.graphql.types.StudentExamReport.UpdateStudentExamReportInput;
+import com.synectiks.cms.graphql.types.StudentExamReport.UpdateStudentExamReportPayload;
 import com.synectiks.cms.graphql.types.Subject.AddSubjectInput;
 import com.synectiks.cms.graphql.types.Subject.AddSubjectPayload;
 import com.synectiks.cms.graphql.types.Subject.RemoveSubjectInput;
@@ -261,7 +306,45 @@ import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingPayload;
-import com.synectiks.cms.graphql.types.StudentExamReport.*;
+import com.synectiks.cms.repository.AcademicExamSettingRepository;
+import com.synectiks.cms.repository.AcademicHistoryRepository;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AdminAttendanceRepository;
+import com.synectiks.cms.repository.AdmissionApplicationRepository;
+import com.synectiks.cms.repository.AdmissionEnquiryRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CityRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.CompetitiveExamRepository;
+import com.synectiks.cms.repository.CountryRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.DocumentsRepository;
+import com.synectiks.cms.repository.DueDateRepository;
+import com.synectiks.cms.repository.FacilityRepository;
+import com.synectiks.cms.repository.FeeCategoryRepository;
+import com.synectiks.cms.repository.FeeDetailsRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.repository.LateFeeRepository;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.PaymentRemainderRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentExamReportRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
+import com.synectiks.cms.repository.TransportRouteRepository;
+import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 
 
@@ -2487,21 +2570,16 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddFacilityPayload addFacility(AddFacilityInput addFacilityInput) {
         final Branch branch = branchRepository.findById(addFacilityInput.getBranchId()).get();
-        final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
+//        final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
         AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
-        final Facility facility = new Facility();
-        facility.setTransport(addFacilityInput.getTransport());
-        facility.setMess(addFacilityInput.getMess());
-        facility.setGym(addFacilityInput.getGym());
-        facility.setCulturalClass(addFacilityInput.getCulturalClass());
-        facility.setLibrary(addFacilityInput.getLibrary());
-        facility.setSports(addFacilityInput.getSports());
-        facility.setSwimming(addFacilityInput.getSwimming());
-        facility.setExtraClass(addFacilityInput.getExtraClass());
-        facility.setHandicrafts(addFacilityInput.getHandicrafts());
+        Facility facility = new Facility();
+        
         facility.setAcademicYear(academicYear);
-        facility.setStudent(student);
         facility.setBranch(branch);
+        facility.setName(addFacilityInput.getName());
+        facility.setStatus(Status.ACTIVE);
+        facility.setStartDate(addFacilityInput.getStartDate());
+        
         facilityRepository.save(facility);
 
         return new AddFacilityPayload(facility);
@@ -2510,38 +2588,25 @@ public class Mutation implements GraphQLMutationResolver {
     public UpdateFacilityPayload updateFacility(UpdateFacilityInput updateFacilityInput) {
         Facility facility = facilityRepository.findById(updateFacilityInput.getId()).get();
 
-        if (updateFacilityInput.getTransport() != null) {
-            facility.setTransport(updateFacilityInput.getTransport());
+        if (updateFacilityInput.getName() != null) {
+            facility.setName(updateFacilityInput.getName());
         }
-        if (updateFacilityInput.getMess() != null) {
-            facility.setMess(updateFacilityInput.getMess());
+        if (updateFacilityInput.getStatus() != null) {
+            facility.setStatus(updateFacilityInput.getStatus());
         }
-        if (updateFacilityInput.getGym() != null) {
-            facility.setGym(updateFacilityInput.getGym());
+        if (updateFacilityInput.getStartDate() != null) {
+            facility.setStartDate(updateFacilityInput.getStartDate());
         }
-        if (updateFacilityInput.getCulturalClass() != null) {
-            facility.setCulturalClass(updateFacilityInput.getCulturalClass());
+        if (updateFacilityInput.getEndDate() != null) {
+            facility.setEndDate(updateFacilityInput.getEndDate());
         }
-        if (updateFacilityInput.getLibrary() != null) {
-            facility.setLibrary(updateFacilityInput.getLibrary());
+        if (updateFacilityInput.getSuspandStartDate() != null) {
+            facility.setSuspandStartDate(updateFacilityInput.getSuspandStartDate());
         }
-        if (updateFacilityInput.getSports() != null) {
-            facility.setSports(updateFacilityInput.getSports());
+        if (updateFacilityInput.getSuspandEndDate() != null) {
+            facility.setSuspandEndDate(updateFacilityInput.getSuspandEndDate());
         }
-        if (updateFacilityInput.getSwimming() != null) {
-            facility.setSwimming(updateFacilityInput.getSwimming());
-        }
-        if (updateFacilityInput.getExtraClass() != null) {
-            facility.setExtraClass(updateFacilityInput.getExtraClass());
-        }
-        if (updateFacilityInput.getHandicrafts() != null) {
-            facility.setHandicrafts(updateFacilityInput.getHandicrafts());
-        }
-
-        if(updateFacilityInput.getStudentId() != null) {
-            Student student = studentRepository.findById(updateFacilityInput.getStudentId()).get();
-            facility.setStudent(student);
-        }
+        
         if (updateFacilityInput.getBranchId() != null) {
             Branch branch = branchRepository.findById(updateFacilityInput.getBranchId()).get();
             facility.setBranch(branch);
@@ -2987,9 +3052,9 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {
-        List<Student> list = this.studentFilterProcessor.searchStudent(filter);
-        logger.debug("Total students retrieved. " + list.size());
-        return list;
+    	List<Student> list = this.studentFilterProcessor.searchStudent(filter);
+    	logger.debug("Total students retrieved. "+list.size());
+    	return list;
     }
     /**
 	 * getStudentAttendanceDataForAdmin(StudentAttendanceFilterInput filter)

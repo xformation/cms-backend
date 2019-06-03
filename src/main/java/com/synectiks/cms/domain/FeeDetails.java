@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -26,7 +25,7 @@ import com.synectiks.cms.domain.enumeration.Gender;
 public class FeeDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -40,14 +39,12 @@ public class FeeDetails implements Serializable {
     @Column(name = "fee_particular_desc", nullable = false)
     private String feeParticularDesc;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "student_type", nullable = false)
+    @Column(name = "student_type")
     private StudentTypeEnum studentType;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private Gender gender;
 
     @NotNull
@@ -55,35 +52,35 @@ public class FeeDetails implements Serializable {
     private Long amount;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private FeeCategory feeCategory;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private Batch batch;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private Facility facility;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private TransportRoute transportRoute;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private College college;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private Department department;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private Branch branch;
 
     @ManyToOne
-    @JsonIgnoreProperties("feeDetails")
+    @JsonIgnoreProperties("")
     private AcademicYear academicYear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

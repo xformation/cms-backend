@@ -327,17 +327,17 @@ entity City{
 }
 
 entity Facility {
-transport Status
-mess Status
-gym Status
-culturalClass Status
-library Status
-sports Status
-swimming Status
-extraClass Status
-handicrafts Status
+name String required
+status Status required
+startDate LocalDate 
+endDate LocalDate
+suspandStartDate LocalDate
+suspandEndDate LocalDate
 }
 
+entity StudentFacilityLink{
+	linkDesc String
+}
 entity AcademicExamSetting {
     examType String required
     semester SemesterEnum required
@@ -369,8 +369,8 @@ routeMapUrl String required
 entity FeeDetails {
 feeParticularsName String required
 feeParticularDesc  String required
-studentType StudentTypeEnum required
-gender Gender required
+studentType StudentTypeEnum 
+gender Gender
 amount Long required
 }
 
@@ -556,9 +556,10 @@ PaymentRemainder{college} to College,
 PaymentRemainder{branch} to Branch,
 LateFee{college} to College,
 LateFee{branch} to Branch,
+LateFee{academicYear} to AcademicYear,
+LateFee{term} to Term,
 Facility{academicYear} to AcademicYear,
 Facility{branch} to Branch,
-Facility{student} to Student,
 Invoice{feeCategory} to FeeCategory,
 Invoice{feeDetails} to FeeDetails,
 Invoice{dueDate} to DueDate,
@@ -592,7 +593,9 @@ MetaLecture{teacher} to Teacher,
 MetaLecture{term} to Term,
 MetaLecture{academicyear} to AcademicYear,
 MetaLecture{section} to Section,
-MetaLecture{batch} to Batch
+MetaLecture{batch} to Batch,
+StudentFacilityLink{student} to Student,
+StudentFacilityLink{facility} to Facility
 }
 
 dto * with mapstruct

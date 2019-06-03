@@ -344,17 +344,19 @@ public class TestDataPojoBuilder {
 
     public Facility createFacilityPojo(Cell cell, AcademicYear academicYear,Branch branch,Student student) {
         Facility facility = new Facility();
-        facility.setTransport(Status.ACTIVE);
-        facility.setMess(Status.ACTIVE);
-        facility.setGym(Status.ACTIVE);
-        facility.setCulturalClass(Status.DEACTIVE);
-        facility.setSports(Status.DEACTIVE);
-        facility.setSwimming(Status.ACTIVE);
-        facility.setExtraClass(Status.DEACTIVE);
-        facility.setHandicrafts(Status.ACTIVE);
+        facility.setName("Gym");
+        facility.setStatus(Status.ACTIVE);
+//        facility.setTransport(Status.ACTIVE);
+//        facility.setMess(Status.ACTIVE);
+//        facility.setGym(Status.ACTIVE);
+//        facility.setCulturalClass(Status.DEACTIVE);
+//        facility.setSports(Status.DEACTIVE);
+//        facility.setSwimming(Status.ACTIVE);
+//        facility.setExtraClass(Status.DEACTIVE);
+//        facility.setHandicrafts(Status.ACTIVE);
         facility.setAcademicYear(academicYear );
         facility.setBranch(branch);
-        facility.setStudent(student);
+//        facility.setStudent(student);
         return facility;
     }
 
