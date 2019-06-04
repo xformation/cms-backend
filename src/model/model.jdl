@@ -377,9 +377,9 @@ amount Long required
 entity DueDate {
 paymentMethod String required
 installments Integer required
-dayDesc String required
-paymentDate LocalDate required
-frequency Frequency required
+dayDesc String 
+paymentDay Integer
+frequency Frequency
 }
 
 entity PaymentRemainder {

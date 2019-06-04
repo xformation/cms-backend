@@ -10,7 +10,7 @@ public class AbstractDueDateInput {
     private String paymentMethod;
     private Integer installments;
     private String dayDesc;
-    private Date paymentDate;
+    private Integer paymentDay;
     private Frequency frequency;
 
 
@@ -47,49 +47,78 @@ public class AbstractDueDateInput {
         this.dayDesc = dayDesc;
     }
 
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
+    
     public Frequency getFrequency() {
         return frequency;
     }
 
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
-     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractDueDateInput that = (AbstractDueDateInput) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(paymentMethod, that.paymentMethod) &&
-            Objects.equals(installments, that.installments) &&
-            Objects.equals(dayDesc, that.dayDesc) &&
-            frequency == that.frequency;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, paymentMethod, installments, dayDesc, frequency);
-    }
+	public Integer getPaymentDay() {
+		return paymentDay;
+	}
 
+	public void setPaymentDay(Integer paymentDay) {
+		this.paymentDay = paymentDay;
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dayDesc == null) ? 0 : dayDesc.hashCode());
+		result = prime * result + ((frequency == null) ? 0 : frequency.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((installments == null) ? 0 : installments.hashCode());
+		result = prime * result + ((paymentDay == null) ? 0 : paymentDay.hashCode());
+		result = prime * result + ((paymentMethod == null) ? 0 : paymentMethod.hashCode());
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        return "AbstractDueDateInput{" +
-            "id=" + id +
-            ", paymentMethod='" + paymentMethod + '\'' +
-            ", installments=" + installments +
-            ", dayDesc='" + dayDesc + '\'' +
-            ", paymentDate=" + paymentDate +
-            ", frequency=" + frequency +
-            '}';
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractDueDateInput other = (AbstractDueDateInput) obj;
+		if (dayDesc == null) {
+			if (other.dayDesc != null)
+				return false;
+		} else if (!dayDesc.equals(other.dayDesc))
+			return false;
+		if (frequency != other.frequency)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (installments == null) {
+			if (other.installments != null)
+				return false;
+		} else if (!installments.equals(other.installments))
+			return false;
+		if (paymentDay == null) {
+			if (other.paymentDay != null)
+				return false;
+		} else if (!paymentDay.equals(other.paymentDay))
+			return false;
+		if (paymentMethod == null) {
+			if (other.paymentMethod != null)
+				return false;
+		} else if (!paymentMethod.equals(other.paymentMethod))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AbstractDueDateInput [id=" + id + ", paymentMethod=" + paymentMethod + ", installments=" + installments
+				+ ", dayDesc=" + dayDesc + ", paymentDay=" + paymentDay + ", frequency=" + frequency + "]";
+	}
 }

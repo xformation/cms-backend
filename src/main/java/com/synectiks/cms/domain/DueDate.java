@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -10,8 +9,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Frequency;
@@ -26,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.Frequency;
 public class DueDate implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -40,25 +37,22 @@ public class DueDate implements Serializable {
     @Column(name = "installments", nullable = false)
     private Integer installments;
 
-    @NotNull
-    @Column(name = "day_desc", nullable = false)
+    @Column(name = "day_desc")
     private String dayDesc;
 
-    @NotNull
-    @Column(name = "payment_date", nullable = false)
-    private Date paymentDate;
+    @Column(name = "payment_day")
+    private Integer paymentDay;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "frequency", nullable = false)
+    @Column(name = "frequency")
     private Frequency frequency;
 
     @ManyToOne
-    @JsonIgnoreProperties("dueDates")
+    @JsonIgnoreProperties("")
     private College college;
 
     @ManyToOne
-    @JsonIgnoreProperties("dueDates")
+    @JsonIgnoreProperties("")
     private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -109,17 +103,17 @@ public class DueDate implements Serializable {
         this.dayDesc = dayDesc;
     }
 
-    public Date getPaymentDate() {
-        return paymentDate;
+    public Integer getPaymentDay() {
+        return paymentDay;
     }
 
-    public DueDate paymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
+    public DueDate paymentDay(Integer paymentDay) {
+        this.paymentDay = paymentDay;
         return this;
     }
 
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setPaymentDay(Integer paymentDay) {
+        this.paymentDay = paymentDay;
     }
 
     public Frequency getFrequency() {
@@ -189,7 +183,7 @@ public class DueDate implements Serializable {
             ", paymentMethod='" + getPaymentMethod() + "'" +
             ", installments=" + getInstallments() +
             ", dayDesc='" + getDayDesc() + "'" +
-            ", paymentDate='" + getPaymentDate() + "'" +
+            ", paymentDay=" + getPaymentDay() +
             ", frequency='" + getFrequency() + "'" +
             "}";
     }

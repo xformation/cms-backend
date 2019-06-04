@@ -527,10 +527,10 @@ type DueDate{
     id:Long!
     paymentMethod: String!
     installments:Int!
-    dayDesc:String!
-    paymentDate:Date!
-    frequency:Frequency!
-    college:College!
+    dayDesc:String
+    paymentDay:Int!
+    frequency:Frequency
+    college:College
     branch:Branch!
 }
 type LateFee{
@@ -2489,10 +2489,10 @@ type RemoveCountryPayload {
 input AddDueDateInput{
     paymentMethod: String!
     installments:Int!
-    dayDesc:String!
-    paymentDate:Date!
-    frequency:Frequency!
-    collegeId:Long!
+    dayDesc:String
+    paymentDay:Int!
+    frequency:Frequency
+    collegeId:Long
     branchId:Long!
 
 }
@@ -2504,10 +2504,10 @@ input UpdateDueDateInput{
     id :Long!
     paymentMethod: String!
     installments:Int!
-    dayDesc:String!
-    paymentDate:Date!
-    frequency:Frequency!
-    collegeId:Long!
+    dayDesc:String
+    paymentDay:Int!
+    frequency:Frequency
+    collegeId:Long
     branchId:Long!
 }
 type UpdateDueDatePayload{

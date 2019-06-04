@@ -1,5 +1,5 @@
 package com.synectiks.cms.service.dto;
-import java.time.LocalDate;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,15 +18,11 @@ public class DueDateDTO implements Serializable {
     @NotNull
     private Integer installments;
 
-    @NotNull
     private String dayDesc;
 
-    @NotNull
-    private LocalDate paymentDate;
+    private Integer paymentDay;
 
-    @NotNull
     private Frequency frequency;
-
 
     private Long collegeId;
 
@@ -64,12 +60,12 @@ public class DueDateDTO implements Serializable {
         this.dayDesc = dayDesc;
     }
 
-    public LocalDate getPaymentDate() {
-        return paymentDate;
+    public Integer getPaymentDay() {
+        return paymentDay;
     }
 
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
+    public void setPaymentDay(Integer paymentDay) {
+        this.paymentDay = paymentDay;
     }
 
     public Frequency getFrequency() {
@@ -124,7 +120,7 @@ public class DueDateDTO implements Serializable {
             ", paymentMethod='" + getPaymentMethod() + "'" +
             ", installments=" + getInstallments() +
             ", dayDesc='" + getDayDesc() + "'" +
-            ", paymentDate='" + getPaymentDate() + "'" +
+            ", paymentDay=" + getPaymentDay() +
             ", frequency='" + getFrequency() + "'" +
             ", college=" + getCollegeId() +
             ", branch=" + getBranchId() +
