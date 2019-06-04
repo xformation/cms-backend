@@ -59,6 +59,7 @@ import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
@@ -2668,13 +2669,28 @@ public class Mutation implements GraphQLMutationResolver {
         dueDate.setInstallments(addDueDateInput.getInstallments());
         dueDate.setDayDesc(addDueDateInput.getDayDesc());
         dueDate.setPaymentDay(addDueDateInput.getPaymentDay());
-        dueDate.setFrequency(addDueDateInput.getFrequency());
+        dueDate.setFrequency(findFrequency(addDueDateInput.getFrequency()));
         dueDate.setCollege(college);
         dueDate.setBranch(branch);
         dueDateRepository.save(dueDate);
         return new AddDueDatePayload(dueDate);
     }
-
+    
+    private Frequency findFrequency(Frequency frequency) {
+    	if(Frequency.WEEKLY.equals(frequency)) {
+    		return Frequency.WEEKLY;
+    	}else if(Frequency.MONTHLY.equals(frequency)) {
+    		return Frequency.MONTHLY;
+    	}else if(Frequency.QUARTERLY.equals(frequency)) {
+    		return Frequency.QUARTERLY;
+    	}else if(Frequency.HALFYEARLY.equals(frequency)) {
+    		return Frequency.HALFYEARLY;
+    	}else if(Frequency.ANNUALLY.equals(frequency)) {
+    		return Frequency.ANNUALLY;
+    	}
+    	return null;
+    }
+    
     public UpdateDueDatePayload updateDueDate(UpdateDueDateInput updateDueDateInput) {
         DueDate dueDate = dueDateRepository.findById(updateDueDateInput.getId()).get();
         if (updateDueDateInput.getPaymentMethod() != null) {

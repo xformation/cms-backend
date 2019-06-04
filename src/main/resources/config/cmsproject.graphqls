@@ -526,9 +526,9 @@ type Country{
 type DueDate{
     id:Long!
     paymentMethod: String!
-    installments:Int!
+    installments:Int
     dayDesc:String
-    paymentDay:Int!
+    paymentDay:Int
     frequency:Frequency
     college:College
     branch:Branch!
@@ -2488,9 +2488,9 @@ type RemoveCountryPayload {
 }
 input AddDueDateInput{
     paymentMethod: String!
-    installments:Int!
+    installments:Int
     dayDesc:String
-    paymentDay:Int!
+    paymentDay:Int
     frequency:Frequency
     collegeId:Long
     branchId:Long!
@@ -2502,10 +2502,10 @@ type AddDueDatePayload{
 
 input UpdateDueDateInput{
     id :Long!
-    paymentMethod: String!
-    installments:Int!
+    paymentMethod: String
+    installments:Int
     dayDesc:String
-    paymentDay:Int!
+    paymentDay:Int
     frequency:Frequency
     collegeId:Long
     branchId:Long!
