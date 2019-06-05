@@ -141,10 +141,10 @@
                   file="config/liquibase/cms_test_data/due_date.csv"
                   separator=";"
                   tableName="due_date"/>
-        <loadData encoding="UTF-8"
+        <!-- <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/payment_remainder.csv"
                   separator=";"
-                  tableName="payment_remainder"/>
+                  tableName="payment_remainder"/> -->
         <!-- <loadData encoding="UTF-8"
                   file="config/liquibase/cms_test_data/invoice.csv"
                   separator=";"

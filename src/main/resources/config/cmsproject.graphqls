@@ -548,12 +548,18 @@ type LateFee{
 }
 type PaymentRemainder{
     id:Long!
-    feeRemainder: Status!
-    noticeDay:Int!
-    overDueRemainder:Status!
-    remainderRecipients:String!
+    isAutoRemainder: String
+    isFirstPaymentRemainder: String
+    firstPaymentRemainderDays: Int
+    isSecondPaymentRemainder: String
+    secondPaymentRemainderDays: Int
+    isOverDuePaymentRemainder: String
+    overDuePaymentRemainderAfterDueDateOrUntilPaid: String
+    overDuePaymentRemainderDays: Int
+    isRemainderRecipients: String
+    remainderRecipients: String
     dueDate:DueDate!
-    college:College!
+    college:College
     branch:Branch!
 }
 
@@ -2488,7 +2494,7 @@ type RemoveCountryPayload {
 }
 input AddDueDateInput{
     paymentMethod: String!
-    installments:Int
+    installments:Int 
     dayDesc:String
     paymentDay:Int
     frequency:Frequency
@@ -2559,12 +2565,18 @@ type RemoveLateFeePayload{
 
 }
 input AddPaymentRemainderInput{
-    feeRemainder: Status!
-    noticeDay:Int!
-    overDueRemainder:Status!
-    remainderRecipients:String!
+    isAutoRemainder: String
+    isFirstPaymentRemainder: String
+    firstPaymentRemainderDays: Int
+    isSecondPaymentRemainder: String
+    secondPaymentRemainderDays: Int
+    isOverDuePaymentRemainder: String
+    overDuePaymentRemainderAfterDueDateOrUntilPaid: String
+    overDuePaymentRemainderDays: Int
+    isRemainderRecipients: String
+    remainderRecipients: String
     dueDateId:Long!
-    collegeId:Long!
+    collegeId:Long
     branchId:Long!
 }
 type AddPaymentRemainderPayload{
@@ -2572,12 +2584,18 @@ type AddPaymentRemainderPayload{
 }
 input UpdatePaymentRemainderInput{
     id:Long!
-    feeRemainder: Status!
-    noticeDay:Int!
-    overDueRemainder:Status!
-    remainderRecipients:String!
+    isAutoRemainder: String
+    isFirstPaymentRemainder: String
+    firstPaymentRemainderDays: Int
+    isSecondPaymentRemainder: String
+    secondPaymentRemainderDays: Int
+    isOverDuePaymentRemainder: String
+    overDuePaymentRemainderAfterDueDateOrUntilPaid: String
+    overDuePaymentRemainderDays: Int
+    isRemainderRecipients: String
+    remainderRecipients: String
     dueDateId:Long!
-    collegeId:Long!
+    collegeId:Long
     branchId:Long!
 }
 type UpdatePaymentRemainderPayload{

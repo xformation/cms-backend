@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -12,8 +11,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.Status;
-
 /**
  * A PaymentRemainder.
  */
@@ -24,40 +21,53 @@ import com.synectiks.cms.domain.enumeration.Status;
 public class PaymentRemainder implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "fee_remainder", nullable = false)
-    private Status feeRemainder;
+    @Column(name = "is_auto_remainder", nullable = false)
+    private String isAutoRemainder;
 
-    @NotNull
-    @Column(name = "notice_day", nullable = false)
-    private Integer noticeDay;
+    @Column(name = "is_first_payment_remainder")
+    private String isFirstPaymentRemainder;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "over_due_remainder", nullable = false)
-    private Status overDueRemainder;
+    @Column(name = "first_payment_remainder_days")
+    private Integer firstPaymentRemainderDays;
 
-    @NotNull
-    @Column(name = "remainder_recipients", nullable = false)
+    @Column(name = "is_second_payment_remainder")
+    private String isSecondPaymentRemainder;
+
+    @Column(name = "second_payment_remainder_days")
+    private Integer secondPaymentRemainderDays;
+
+    @Column(name = "is_over_due_payment_remainder")
+    private String isOverDuePaymentRemainder;
+
+    @Column(name = "over_due_payment_remainder_after_due_date_or_until_paid")
+    private String overDuePaymentRemainderAfterDueDateOrUntilPaid;
+
+    @Column(name = "over_due_payment_remainder_days")
+    private Integer overDuePaymentRemainderDays;
+
+    @Column(name = "is_remainder_recipients")
+    private String isRemainderRecipients;
+
+    @Column(name = "remainder_recipients")
     private String remainderRecipients;
 
     @ManyToOne
-    @JsonIgnoreProperties("paymentRemainders")
+    @JsonIgnoreProperties("")
     private DueDate dueDate;
 
     @ManyToOne
-    @JsonIgnoreProperties("paymentRemainders")
+    @JsonIgnoreProperties("")
     private College college;
 
     @ManyToOne
-    @JsonIgnoreProperties("paymentRemainders")
+    @JsonIgnoreProperties("")
     private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -69,43 +79,121 @@ public class PaymentRemainder implements Serializable {
         this.id = id;
     }
 
-    public Status getFeeRemainder() {
-        return feeRemainder;
+    public String getIsAutoRemainder() {
+        return isAutoRemainder;
     }
 
-    public PaymentRemainder feeRemainder(Status feeRemainder) {
-        this.feeRemainder = feeRemainder;
+    public PaymentRemainder isAutoRemainder(String isAutoRemainder) {
+        this.isAutoRemainder = isAutoRemainder;
         return this;
     }
 
-    public void setFeeRemainder(Status feeRemainder) {
-        this.feeRemainder = feeRemainder;
+    public void setIsAutoRemainder(String isAutoRemainder) {
+        this.isAutoRemainder = isAutoRemainder;
     }
 
-    public Integer getNoticeDay() {
-        return noticeDay;
+    public String getIsFirstPaymentRemainder() {
+        return isFirstPaymentRemainder;
     }
 
-    public PaymentRemainder noticeDay(Integer noticeDay) {
-        this.noticeDay = noticeDay;
+    public PaymentRemainder isFirstPaymentRemainder(String isFirstPaymentRemainder) {
+        this.isFirstPaymentRemainder = isFirstPaymentRemainder;
         return this;
     }
 
-    public void setNoticeDay(Integer noticeDay) {
-        this.noticeDay = noticeDay;
+    public void setIsFirstPaymentRemainder(String isFirstPaymentRemainder) {
+        this.isFirstPaymentRemainder = isFirstPaymentRemainder;
     }
 
-    public Status getOverDueRemainder() {
-        return overDueRemainder;
+    public Integer getFirstPaymentRemainderDays() {
+        return firstPaymentRemainderDays;
     }
 
-    public PaymentRemainder overDueRemainder(Status overDueRemainder) {
-        this.overDueRemainder = overDueRemainder;
+    public PaymentRemainder firstPaymentRemainderDays(Integer firstPaymentRemainderDays) {
+        this.firstPaymentRemainderDays = firstPaymentRemainderDays;
         return this;
     }
 
-    public void setOverDueRemainder(Status overDueRemainder) {
-        this.overDueRemainder = overDueRemainder;
+    public void setFirstPaymentRemainderDays(Integer firstPaymentRemainderDays) {
+        this.firstPaymentRemainderDays = firstPaymentRemainderDays;
+    }
+
+    public String getIsSecondPaymentRemainder() {
+        return isSecondPaymentRemainder;
+    }
+
+    public PaymentRemainder isSecondPaymentRemainder(String isSecondPaymentRemainder) {
+        this.isSecondPaymentRemainder = isSecondPaymentRemainder;
+        return this;
+    }
+
+    public void setIsSecondPaymentRemainder(String isSecondPaymentRemainder) {
+        this.isSecondPaymentRemainder = isSecondPaymentRemainder;
+    }
+
+    public Integer getSecondPaymentRemainderDays() {
+        return secondPaymentRemainderDays;
+    }
+
+    public PaymentRemainder secondPaymentRemainderDays(Integer secondPaymentRemainderDays) {
+        this.secondPaymentRemainderDays = secondPaymentRemainderDays;
+        return this;
+    }
+
+    public void setSecondPaymentRemainderDays(Integer secondPaymentRemainderDays) {
+        this.secondPaymentRemainderDays = secondPaymentRemainderDays;
+    }
+
+    public String getIsOverDuePaymentRemainder() {
+        return isOverDuePaymentRemainder;
+    }
+
+    public PaymentRemainder isOverDuePaymentRemainder(String isOverDuePaymentRemainder) {
+        this.isOverDuePaymentRemainder = isOverDuePaymentRemainder;
+        return this;
+    }
+
+    public void setIsOverDuePaymentRemainder(String isOverDuePaymentRemainder) {
+        this.isOverDuePaymentRemainder = isOverDuePaymentRemainder;
+    }
+
+    public String getOverDuePaymentRemainderAfterDueDateOrUntilPaid() {
+        return overDuePaymentRemainderAfterDueDateOrUntilPaid;
+    }
+
+    public PaymentRemainder overDuePaymentRemainderAfterDueDateOrUntilPaid(String overDuePaymentRemainderAfterDueDateOrUntilPaid) {
+        this.overDuePaymentRemainderAfterDueDateOrUntilPaid = overDuePaymentRemainderAfterDueDateOrUntilPaid;
+        return this;
+    }
+
+    public void setOverDuePaymentRemainderAfterDueDateOrUntilPaid(String overDuePaymentRemainderAfterDueDateOrUntilPaid) {
+        this.overDuePaymentRemainderAfterDueDateOrUntilPaid = overDuePaymentRemainderAfterDueDateOrUntilPaid;
+    }
+
+    public Integer getOverDuePaymentRemainderDays() {
+        return overDuePaymentRemainderDays;
+    }
+
+    public PaymentRemainder overDuePaymentRemainderDays(Integer overDuePaymentRemainderDays) {
+        this.overDuePaymentRemainderDays = overDuePaymentRemainderDays;
+        return this;
+    }
+
+    public void setOverDuePaymentRemainderDays(Integer overDuePaymentRemainderDays) {
+        this.overDuePaymentRemainderDays = overDuePaymentRemainderDays;
+    }
+
+    public String getIsRemainderRecipients() {
+        return isRemainderRecipients;
+    }
+
+    public PaymentRemainder isRemainderRecipients(String isRemainderRecipients) {
+        this.isRemainderRecipients = isRemainderRecipients;
+        return this;
+    }
+
+    public void setIsRemainderRecipients(String isRemainderRecipients) {
+        this.isRemainderRecipients = isRemainderRecipients;
     }
 
     public String getRemainderRecipients() {
@@ -185,9 +273,15 @@ public class PaymentRemainder implements Serializable {
     public String toString() {
         return "PaymentRemainder{" +
             "id=" + getId() +
-            ", feeRemainder='" + getFeeRemainder() + "'" +
-            ", noticeDay=" + getNoticeDay() +
-            ", overDueRemainder='" + getOverDueRemainder() + "'" +
+            ", isAutoRemainder='" + getIsAutoRemainder() + "'" +
+            ", isFirstPaymentRemainder='" + getIsFirstPaymentRemainder() + "'" +
+            ", firstPaymentRemainderDays=" + getFirstPaymentRemainderDays() +
+            ", isSecondPaymentRemainder='" + getIsSecondPaymentRemainder() + "'" +
+            ", secondPaymentRemainderDays=" + getSecondPaymentRemainderDays() +
+            ", isOverDuePaymentRemainder='" + getIsOverDuePaymentRemainder() + "'" +
+            ", overDuePaymentRemainderAfterDueDateOrUntilPaid='" + getOverDuePaymentRemainderAfterDueDateOrUntilPaid() + "'" +
+            ", overDuePaymentRemainderDays=" + getOverDuePaymentRemainderDays() +
+            ", isRemainderRecipients='" + getIsRemainderRecipients() + "'" +
             ", remainderRecipients='" + getRemainderRecipients() + "'" +
             "}";
     }

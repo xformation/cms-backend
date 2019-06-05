@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -38,8 +37,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
 /**
  * Test class for the PaymentRemainderResource REST controller.
  *
@@ -49,14 +46,32 @@ import com.synectiks.cms.domain.enumeration.Status;
 @SpringBootTest(classes = CmsApp.class)
 public class PaymentRemainderResourceIntTest {
 
-    private static final Status DEFAULT_FEE_REMAINDER = Status.ACTIVE;
-    private static final Status UPDATED_FEE_REMAINDER = Status.DEACTIVE;
+    private static final String DEFAULT_IS_AUTO_REMAINDER = "AAAAAAAAAA";
+    private static final String UPDATED_IS_AUTO_REMAINDER = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_NOTICE_DAY = 1;
-    private static final Integer UPDATED_NOTICE_DAY = 2;
+    private static final String DEFAULT_IS_FIRST_PAYMENT_REMAINDER = "AAAAAAAAAA";
+    private static final String UPDATED_IS_FIRST_PAYMENT_REMAINDER = "BBBBBBBBBB";
 
-    private static final Status DEFAULT_OVER_DUE_REMAINDER = Status.ACTIVE;
-    private static final Status UPDATED_OVER_DUE_REMAINDER = Status.DEACTIVE;
+    private static final Integer DEFAULT_FIRST_PAYMENT_REMAINDER_DAYS = 1;
+    private static final Integer UPDATED_FIRST_PAYMENT_REMAINDER_DAYS = 2;
+
+    private static final String DEFAULT_IS_SECOND_PAYMENT_REMAINDER = "AAAAAAAAAA";
+    private static final String UPDATED_IS_SECOND_PAYMENT_REMAINDER = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_SECOND_PAYMENT_REMAINDER_DAYS = 1;
+    private static final Integer UPDATED_SECOND_PAYMENT_REMAINDER_DAYS = 2;
+
+    private static final String DEFAULT_IS_OVER_DUE_PAYMENT_REMAINDER = "AAAAAAAAAA";
+    private static final String UPDATED_IS_OVER_DUE_PAYMENT_REMAINDER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID = "AAAAAAAAAA";
+    private static final String UPDATED_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS = 1;
+    private static final Integer UPDATED_OVER_DUE_PAYMENT_REMAINDER_DAYS = 2;
+
+    private static final String DEFAULT_IS_REMAINDER_RECIPIENTS = "AAAAAAAAAA";
+    private static final String UPDATED_IS_REMAINDER_RECIPIENTS = "BBBBBBBBBB";
 
     private static final String DEFAULT_REMAINDER_RECIPIENTS = "AAAAAAAAAA";
     private static final String UPDATED_REMAINDER_RECIPIENTS = "BBBBBBBBBB";
@@ -64,8 +79,10 @@ public class PaymentRemainderResourceIntTest {
     @Autowired
     private PaymentRemainderRepository paymentRemainderRepository;
 
+
     @Autowired
     private PaymentRemainderMapper paymentRemainderMapper;
+    
 
     @Autowired
     private PaymentRemainderService paymentRemainderService;
@@ -90,9 +107,6 @@ public class PaymentRemainderResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restPaymentRemainderMockMvc;
 
     private PaymentRemainder paymentRemainder;
@@ -105,8 +119,7 @@ public class PaymentRemainderResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -117,9 +130,15 @@ public class PaymentRemainderResourceIntTest {
      */
     public static PaymentRemainder createEntity(EntityManager em) {
         PaymentRemainder paymentRemainder = new PaymentRemainder()
-            .feeRemainder(DEFAULT_FEE_REMAINDER)
-            .noticeDay(DEFAULT_NOTICE_DAY)
-            .overDueRemainder(DEFAULT_OVER_DUE_REMAINDER)
+            .isAutoRemainder(DEFAULT_IS_AUTO_REMAINDER)
+            .isFirstPaymentRemainder(DEFAULT_IS_FIRST_PAYMENT_REMAINDER)
+            .firstPaymentRemainderDays(DEFAULT_FIRST_PAYMENT_REMAINDER_DAYS)
+            .isSecondPaymentRemainder(DEFAULT_IS_SECOND_PAYMENT_REMAINDER)
+            .secondPaymentRemainderDays(DEFAULT_SECOND_PAYMENT_REMAINDER_DAYS)
+            .isOverDuePaymentRemainder(DEFAULT_IS_OVER_DUE_PAYMENT_REMAINDER)
+            .overDuePaymentRemainderAfterDueDateOrUntilPaid(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID)
+            .overDuePaymentRemainderDays(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS)
+            .isRemainderRecipients(DEFAULT_IS_REMAINDER_RECIPIENTS)
             .remainderRecipients(DEFAULT_REMAINDER_RECIPIENTS);
         return paymentRemainder;
     }
@@ -145,9 +164,15 @@ public class PaymentRemainderResourceIntTest {
         List<PaymentRemainder> paymentRemainderList = paymentRemainderRepository.findAll();
         assertThat(paymentRemainderList).hasSize(databaseSizeBeforeCreate + 1);
         PaymentRemainder testPaymentRemainder = paymentRemainderList.get(paymentRemainderList.size() - 1);
-        assertThat(testPaymentRemainder.getFeeRemainder()).isEqualTo(DEFAULT_FEE_REMAINDER);
-        assertThat(testPaymentRemainder.getNoticeDay()).isEqualTo(DEFAULT_NOTICE_DAY);
-        assertThat(testPaymentRemainder.getOverDueRemainder()).isEqualTo(DEFAULT_OVER_DUE_REMAINDER);
+        assertThat(testPaymentRemainder.getIsAutoRemainder()).isEqualTo(DEFAULT_IS_AUTO_REMAINDER);
+        assertThat(testPaymentRemainder.getIsFirstPaymentRemainder()).isEqualTo(DEFAULT_IS_FIRST_PAYMENT_REMAINDER);
+        assertThat(testPaymentRemainder.getFirstPaymentRemainderDays()).isEqualTo(DEFAULT_FIRST_PAYMENT_REMAINDER_DAYS);
+        assertThat(testPaymentRemainder.getIsSecondPaymentRemainder()).isEqualTo(DEFAULT_IS_SECOND_PAYMENT_REMAINDER);
+        assertThat(testPaymentRemainder.getSecondPaymentRemainderDays()).isEqualTo(DEFAULT_SECOND_PAYMENT_REMAINDER_DAYS);
+        assertThat(testPaymentRemainder.getIsOverDuePaymentRemainder()).isEqualTo(DEFAULT_IS_OVER_DUE_PAYMENT_REMAINDER);
+        assertThat(testPaymentRemainder.getOverDuePaymentRemainderAfterDueDateOrUntilPaid()).isEqualTo(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID);
+        assertThat(testPaymentRemainder.getOverDuePaymentRemainderDays()).isEqualTo(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS);
+        assertThat(testPaymentRemainder.getIsRemainderRecipients()).isEqualTo(DEFAULT_IS_REMAINDER_RECIPIENTS);
         assertThat(testPaymentRemainder.getRemainderRecipients()).isEqualTo(DEFAULT_REMAINDER_RECIPIENTS);
 
         // Validate the PaymentRemainder in Elasticsearch
@@ -179,67 +204,10 @@ public class PaymentRemainderResourceIntTest {
 
     @Test
     @Transactional
-    public void checkFeeRemainderIsRequired() throws Exception {
+    public void checkIsAutoRemainderIsRequired() throws Exception {
         int databaseSizeBeforeTest = paymentRemainderRepository.findAll().size();
         // set the field null
-        paymentRemainder.setFeeRemainder(null);
-
-        // Create the PaymentRemainder, which fails.
-        PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(paymentRemainder);
-
-        restPaymentRemainderMockMvc.perform(post("/api/payment-remainders")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(paymentRemainderDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<PaymentRemainder> paymentRemainderList = paymentRemainderRepository.findAll();
-        assertThat(paymentRemainderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkNoticeDayIsRequired() throws Exception {
-        int databaseSizeBeforeTest = paymentRemainderRepository.findAll().size();
-        // set the field null
-        paymentRemainder.setNoticeDay(null);
-
-        // Create the PaymentRemainder, which fails.
-        PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(paymentRemainder);
-
-        restPaymentRemainderMockMvc.perform(post("/api/payment-remainders")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(paymentRemainderDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<PaymentRemainder> paymentRemainderList = paymentRemainderRepository.findAll();
-        assertThat(paymentRemainderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkOverDueRemainderIsRequired() throws Exception {
-        int databaseSizeBeforeTest = paymentRemainderRepository.findAll().size();
-        // set the field null
-        paymentRemainder.setOverDueRemainder(null);
-
-        // Create the PaymentRemainder, which fails.
-        PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(paymentRemainder);
-
-        restPaymentRemainderMockMvc.perform(post("/api/payment-remainders")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(paymentRemainderDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<PaymentRemainder> paymentRemainderList = paymentRemainderRepository.findAll();
-        assertThat(paymentRemainderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkRemainderRecipientsIsRequired() throws Exception {
-        int databaseSizeBeforeTest = paymentRemainderRepository.findAll().size();
-        // set the field null
-        paymentRemainder.setRemainderRecipients(null);
+        paymentRemainder.setIsAutoRemainder(null);
 
         // Create the PaymentRemainder, which fails.
         PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(paymentRemainder);
@@ -264,12 +232,19 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(paymentRemainder.getId().intValue())))
-            .andExpect(jsonPath("$.[*].feeRemainder").value(hasItem(DEFAULT_FEE_REMAINDER.toString())))
-            .andExpect(jsonPath("$.[*].noticeDay").value(hasItem(DEFAULT_NOTICE_DAY)))
-            .andExpect(jsonPath("$.[*].overDueRemainder").value(hasItem(DEFAULT_OVER_DUE_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].isAutoRemainder").value(hasItem(DEFAULT_IS_AUTO_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].isFirstPaymentRemainder").value(hasItem(DEFAULT_IS_FIRST_PAYMENT_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].firstPaymentRemainderDays").value(hasItem(DEFAULT_FIRST_PAYMENT_REMAINDER_DAYS)))
+            .andExpect(jsonPath("$.[*].isSecondPaymentRemainder").value(hasItem(DEFAULT_IS_SECOND_PAYMENT_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].secondPaymentRemainderDays").value(hasItem(DEFAULT_SECOND_PAYMENT_REMAINDER_DAYS)))
+            .andExpect(jsonPath("$.[*].isOverDuePaymentRemainder").value(hasItem(DEFAULT_IS_OVER_DUE_PAYMENT_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].overDuePaymentRemainderAfterDueDateOrUntilPaid").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID.toString())))
+            .andExpect(jsonPath("$.[*].overDuePaymentRemainderDays").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS)))
+            .andExpect(jsonPath("$.[*].isRemainderRecipients").value(hasItem(DEFAULT_IS_REMAINDER_RECIPIENTS.toString())))
             .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS.toString())));
     }
     
+
     @Test
     @Transactional
     public void getPaymentRemainder() throws Exception {
@@ -281,12 +256,17 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(paymentRemainder.getId().intValue()))
-            .andExpect(jsonPath("$.feeRemainder").value(DEFAULT_FEE_REMAINDER.toString()))
-            .andExpect(jsonPath("$.noticeDay").value(DEFAULT_NOTICE_DAY))
-            .andExpect(jsonPath("$.overDueRemainder").value(DEFAULT_OVER_DUE_REMAINDER.toString()))
+            .andExpect(jsonPath("$.isAutoRemainder").value(DEFAULT_IS_AUTO_REMAINDER.toString()))
+            .andExpect(jsonPath("$.isFirstPaymentRemainder").value(DEFAULT_IS_FIRST_PAYMENT_REMAINDER.toString()))
+            .andExpect(jsonPath("$.firstPaymentRemainderDays").value(DEFAULT_FIRST_PAYMENT_REMAINDER_DAYS))
+            .andExpect(jsonPath("$.isSecondPaymentRemainder").value(DEFAULT_IS_SECOND_PAYMENT_REMAINDER.toString()))
+            .andExpect(jsonPath("$.secondPaymentRemainderDays").value(DEFAULT_SECOND_PAYMENT_REMAINDER_DAYS))
+            .andExpect(jsonPath("$.isOverDuePaymentRemainder").value(DEFAULT_IS_OVER_DUE_PAYMENT_REMAINDER.toString()))
+            .andExpect(jsonPath("$.overDuePaymentRemainderAfterDueDateOrUntilPaid").value(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID.toString()))
+            .andExpect(jsonPath("$.overDuePaymentRemainderDays").value(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS))
+            .andExpect(jsonPath("$.isRemainderRecipients").value(DEFAULT_IS_REMAINDER_RECIPIENTS.toString()))
             .andExpect(jsonPath("$.remainderRecipients").value(DEFAULT_REMAINDER_RECIPIENTS.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingPaymentRemainder() throws Exception {
@@ -308,9 +288,15 @@ public class PaymentRemainderResourceIntTest {
         // Disconnect from session so that the updates on updatedPaymentRemainder are not directly saved in db
         em.detach(updatedPaymentRemainder);
         updatedPaymentRemainder
-            .feeRemainder(UPDATED_FEE_REMAINDER)
-            .noticeDay(UPDATED_NOTICE_DAY)
-            .overDueRemainder(UPDATED_OVER_DUE_REMAINDER)
+            .isAutoRemainder(UPDATED_IS_AUTO_REMAINDER)
+            .isFirstPaymentRemainder(UPDATED_IS_FIRST_PAYMENT_REMAINDER)
+            .firstPaymentRemainderDays(UPDATED_FIRST_PAYMENT_REMAINDER_DAYS)
+            .isSecondPaymentRemainder(UPDATED_IS_SECOND_PAYMENT_REMAINDER)
+            .secondPaymentRemainderDays(UPDATED_SECOND_PAYMENT_REMAINDER_DAYS)
+            .isOverDuePaymentRemainder(UPDATED_IS_OVER_DUE_PAYMENT_REMAINDER)
+            .overDuePaymentRemainderAfterDueDateOrUntilPaid(UPDATED_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID)
+            .overDuePaymentRemainderDays(UPDATED_OVER_DUE_PAYMENT_REMAINDER_DAYS)
+            .isRemainderRecipients(UPDATED_IS_REMAINDER_RECIPIENTS)
             .remainderRecipients(UPDATED_REMAINDER_RECIPIENTS);
         PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(updatedPaymentRemainder);
 
@@ -323,9 +309,15 @@ public class PaymentRemainderResourceIntTest {
         List<PaymentRemainder> paymentRemainderList = paymentRemainderRepository.findAll();
         assertThat(paymentRemainderList).hasSize(databaseSizeBeforeUpdate);
         PaymentRemainder testPaymentRemainder = paymentRemainderList.get(paymentRemainderList.size() - 1);
-        assertThat(testPaymentRemainder.getFeeRemainder()).isEqualTo(UPDATED_FEE_REMAINDER);
-        assertThat(testPaymentRemainder.getNoticeDay()).isEqualTo(UPDATED_NOTICE_DAY);
-        assertThat(testPaymentRemainder.getOverDueRemainder()).isEqualTo(UPDATED_OVER_DUE_REMAINDER);
+        assertThat(testPaymentRemainder.getIsAutoRemainder()).isEqualTo(UPDATED_IS_AUTO_REMAINDER);
+        assertThat(testPaymentRemainder.getIsFirstPaymentRemainder()).isEqualTo(UPDATED_IS_FIRST_PAYMENT_REMAINDER);
+        assertThat(testPaymentRemainder.getFirstPaymentRemainderDays()).isEqualTo(UPDATED_FIRST_PAYMENT_REMAINDER_DAYS);
+        assertThat(testPaymentRemainder.getIsSecondPaymentRemainder()).isEqualTo(UPDATED_IS_SECOND_PAYMENT_REMAINDER);
+        assertThat(testPaymentRemainder.getSecondPaymentRemainderDays()).isEqualTo(UPDATED_SECOND_PAYMENT_REMAINDER_DAYS);
+        assertThat(testPaymentRemainder.getIsOverDuePaymentRemainder()).isEqualTo(UPDATED_IS_OVER_DUE_PAYMENT_REMAINDER);
+        assertThat(testPaymentRemainder.getOverDuePaymentRemainderAfterDueDateOrUntilPaid()).isEqualTo(UPDATED_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID);
+        assertThat(testPaymentRemainder.getOverDuePaymentRemainderDays()).isEqualTo(UPDATED_OVER_DUE_PAYMENT_REMAINDER_DAYS);
+        assertThat(testPaymentRemainder.getIsRemainderRecipients()).isEqualTo(UPDATED_IS_REMAINDER_RECIPIENTS);
         assertThat(testPaymentRemainder.getRemainderRecipients()).isEqualTo(UPDATED_REMAINDER_RECIPIENTS);
 
         // Validate the PaymentRemainder in Elasticsearch
@@ -340,7 +332,7 @@ public class PaymentRemainderResourceIntTest {
         // Create the PaymentRemainder
         PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(paymentRemainder);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restPaymentRemainderMockMvc.perform(put("/api/payment-remainders")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(paymentRemainderDTO)))
@@ -362,7 +354,7 @@ public class PaymentRemainderResourceIntTest {
 
         int databaseSizeBeforeDelete = paymentRemainderRepository.findAll().size();
 
-        // Delete the paymentRemainder
+        // Get the paymentRemainder
         restPaymentRemainderMockMvc.perform(delete("/api/payment-remainders/{id}", paymentRemainder.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -387,10 +379,16 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(paymentRemainder.getId().intValue())))
-            .andExpect(jsonPath("$.[*].feeRemainder").value(hasItem(DEFAULT_FEE_REMAINDER.toString())))
-            .andExpect(jsonPath("$.[*].noticeDay").value(hasItem(DEFAULT_NOTICE_DAY)))
-            .andExpect(jsonPath("$.[*].overDueRemainder").value(hasItem(DEFAULT_OVER_DUE_REMAINDER.toString())))
-            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS)));
+            .andExpect(jsonPath("$.[*].isAutoRemainder").value(hasItem(DEFAULT_IS_AUTO_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].isFirstPaymentRemainder").value(hasItem(DEFAULT_IS_FIRST_PAYMENT_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].firstPaymentRemainderDays").value(hasItem(DEFAULT_FIRST_PAYMENT_REMAINDER_DAYS)))
+            .andExpect(jsonPath("$.[*].isSecondPaymentRemainder").value(hasItem(DEFAULT_IS_SECOND_PAYMENT_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].secondPaymentRemainderDays").value(hasItem(DEFAULT_SECOND_PAYMENT_REMAINDER_DAYS)))
+            .andExpect(jsonPath("$.[*].isOverDuePaymentRemainder").value(hasItem(DEFAULT_IS_OVER_DUE_PAYMENT_REMAINDER.toString())))
+            .andExpect(jsonPath("$.[*].overDuePaymentRemainderAfterDueDateOrUntilPaid").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID.toString())))
+            .andExpect(jsonPath("$.[*].overDuePaymentRemainderDays").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS)))
+            .andExpect(jsonPath("$.[*].isRemainderRecipients").value(hasItem(DEFAULT_IS_REMAINDER_RECIPIENTS.toString())))
+            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS.toString())));
     }
 
     @Test

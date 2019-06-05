@@ -2677,7 +2677,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
     
     private Frequency findFrequency(Frequency frequency) {
-    	if(Frequency.WEEKLY.equals(frequency)) {
+    	if(Frequency.WEEKLY.equals(frequency)) { 
     		return Frequency.WEEKLY;
     	}else if(Frequency.MONTHLY.equals(frequency)) {
     		return Frequency.MONTHLY;
@@ -2791,48 +2791,83 @@ public class Mutation implements GraphQLMutationResolver {
         final DueDate dueDate = dueDateRepository.findById(addPaymentRemainderInput.getDueDateId()).get();
         final College college = collegeRepository.findById(addPaymentRemainderInput.getCollegeId()).get();
         final Branch branch = branchRepository.findById(addPaymentRemainderInput.getBranchId()).get();
-        final PaymentRemainder paymentRemainder = new PaymentRemainder();
-        paymentRemainder.setFeeRemainder(addPaymentRemainderInput.getFeeRemainder());
-        paymentRemainder.setNoticeDay(addPaymentRemainderInput.getNoticeDay());
-        paymentRemainder.setOverDueRemainder(addPaymentRemainderInput.getOverDueRemainder());
-        paymentRemainder.setRemainderRecipients(addPaymentRemainderInput.getRemainderRecipients());
-        paymentRemainder.setDueDate(dueDate);
-        paymentRemainder.setCollege(college);
-        paymentRemainder.setBranch(branch);
-        paymentRemainderRepository.save(paymentRemainder);
-        return new AddPaymentRemainderPayload(paymentRemainder);
+//        PaymentRemainder pr = new PaymentRemainder();
+        PaymentRemainder pr = CommonUtil.createCopyProperties(addPaymentRemainderInput, PaymentRemainder.class);
+        
+//        pr.setIsAutoRemainder(addPaymentRemainderInput.getIsAutoRemainder());
+//        pr.setIsFirstPaymentRemainder(addPaymentRemainderInput.getIsFirstPaymentRemainder());
+//        pr.setFirstPaymentRemainderDays(addPaymentRemainderInput.getFirstPaymentRemainderDays());
+//        pr.setIsSecondPaymentRemainder(addPaymentRemainderInput.getIsSecondPaymentRemainder());
+//        pr.setSecondPaymentRemainderDays(addPaymentRemainderInput.getSecondPaymentRemainderDays());
+//        pr.setIsOverDuePaymentRemainder(addPaymentRemainderInput.getIsOverDuePaymentRemainder());
+//        pr.setOverDuePaymentRemainderAfterDueDateOrUntilPaid(addPaymentRemainderInput.getOverDuePaymentRemainderAfterDueDateOrUntilPaid());
+//        pr.setOverDuePaymentRemainderDays(addPaymentRemainderInput.getOverDuePaymentRemainderDays());
+//        pr.setIsRemainderRecipients(addPaymentRemainderInput.getIsRemainderRecipients());
+//        pr.setRemainderRecipients(addPaymentRemainderInput.getRemainderRecipients());
+        pr.setDueDate(dueDate);
+        pr.setCollege(college);
+        pr.setBranch(branch);
+        paymentRemainderRepository.save(pr);
+        return new AddPaymentRemainderPayload(pr);
 
     }
 
     public UpdatePaymentRemainderPayload updatePaymentRemainder(UpdatePaymentRemainderInput updatePaymentRemainderInput) {
-        PaymentRemainder paymentRemainder = paymentRemainderRepository.findById(updatePaymentRemainderInput.getId()).get();
-        if (updatePaymentRemainderInput.getFeeRemainder() != null) {
-            paymentRemainder.setFeeRemainder((updatePaymentRemainderInput.getFeeRemainder()));
+        PaymentRemainder pr = paymentRemainderRepository.findById(updatePaymentRemainderInput.getId()).get();
+//        if (updatePaymentRemainderInput.getFeeRemainder() != null) {
+//            paymentRemainder.setFeeRemainder((updatePaymentRemainderInput.getFeeRemainder()));
+//        }
+//        if (updatePaymentRemainderInput.getNoticeDay() != null) {
+//            paymentRemainder.setNoticeDay((updatePaymentRemainderInput.getNoticeDay()));
+//        }
+//        if (updatePaymentRemainderInput.getOverDueRemainder() != null) {
+//            paymentRemainder.setOverDueRemainder((updatePaymentRemainderInput.getOverDueRemainder()));
+//        }
+        if(updatePaymentRemainderInput.getIsAutoRemainder() != null) {
+        	pr.setIsAutoRemainder(updatePaymentRemainderInput.getIsAutoRemainder());
         }
-        if (updatePaymentRemainderInput.getNoticeDay() != null) {
-            paymentRemainder.setNoticeDay((updatePaymentRemainderInput.getNoticeDay()));
+        if(updatePaymentRemainderInput.getIsFirstPaymentRemainder() != null) {
+        	pr.setIsFirstPaymentRemainder(updatePaymentRemainderInput.getIsFirstPaymentRemainder());
         }
-        if (updatePaymentRemainderInput.getOverDueRemainder() != null) {
-            paymentRemainder.setOverDueRemainder((updatePaymentRemainderInput.getOverDueRemainder()));
+        if(updatePaymentRemainderInput.getFirstPaymentRemainderDays() != null) {
+        	pr.setFirstPaymentRemainderDays(updatePaymentRemainderInput.getFirstPaymentRemainderDays());
         }
-        if (updatePaymentRemainderInput.getRemainderRecipients() != null) {
-            paymentRemainder.setRemainderRecipients((updatePaymentRemainderInput.getRemainderRecipients()));
+        if(updatePaymentRemainderInput.getIsSecondPaymentRemainder() != null) {
+        	pr.setIsSecondPaymentRemainder(updatePaymentRemainderInput.getIsSecondPaymentRemainder());
+        }
+        if(updatePaymentRemainderInput.getSecondPaymentRemainderDays() != null) {
+        	pr.setSecondPaymentRemainderDays(updatePaymentRemainderInput.getSecondPaymentRemainderDays());
+        }
+        if(updatePaymentRemainderInput.getIsOverDuePaymentRemainder() != null) {
+        	pr.setIsOverDuePaymentRemainder(updatePaymentRemainderInput.getIsOverDuePaymentRemainder());
+        }
+        if(updatePaymentRemainderInput.getOverDuePaymentRemainderAfterDueDateOrUntilPaid() != null) {
+        	pr.setOverDuePaymentRemainderAfterDueDateOrUntilPaid(updatePaymentRemainderInput.getOverDuePaymentRemainderAfterDueDateOrUntilPaid());
+        }
+        if(updatePaymentRemainderInput.getOverDuePaymentRemainderDays() != null) {
+        	pr.setOverDuePaymentRemainderDays(updatePaymentRemainderInput.getOverDuePaymentRemainderDays());
+        }
+        if(updatePaymentRemainderInput.getIsRemainderRecipients() != null) {
+        	pr.setIsRemainderRecipients(updatePaymentRemainderInput.getIsRemainderRecipients());
+        }
+        if(updatePaymentRemainderInput.getRemainderRecipients() != null) {
+        	pr.setRemainderRecipients(updatePaymentRemainderInput.getRemainderRecipients());
         }
 
         if (updatePaymentRemainderInput.getDueDateId() != null) {
             final DueDate dueDate = dueDateRepository.findById(updatePaymentRemainderInput.getDueDateId()).get();
-            paymentRemainder.setDueDate(dueDate);
+            pr.setDueDate(dueDate);
         }
         if (updatePaymentRemainderInput.getCollegeId() != null) {
             final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
-            paymentRemainder.setCollege(college);
+            pr.setCollege(college);
         }
         if (updatePaymentRemainderInput.getBranchId() != null) {
             final Branch branch = branchRepository.findById(updatePaymentRemainderInput.getBranchId()).get();
-            paymentRemainder.setBranch(branch);
+            pr.setBranch(branch);
         }
-        paymentRemainderRepository.save(paymentRemainder);
-        return new UpdatePaymentRemainderPayload(paymentRemainder);
+        paymentRemainderRepository.save(pr);
+        return new UpdatePaymentRemainderPayload(pr);
     }
 
     public RemovePaymentRemainderPayload removePaymentRemainder(RemovePaymentRemainderInput removePaymentRemainderInput) {

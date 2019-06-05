@@ -383,10 +383,16 @@ frequency Frequency
 }
 
 entity PaymentRemainder {
-feeRemainder Status required
-noticeDay Integer required
-overDueRemainder Status required
-remainderRecipients String required
+isAutoRemainder String required
+isFirstPaymentRemainder String
+firstPaymentRemainderDays Integer
+isSecondPaymentRemainder String
+secondPaymentRemainderDays Integer
+isOverDuePaymentRemainder String
+overDuePaymentRemainderAfterDueDateOrUntilPaid String
+overDuePaymentRemainderDays Integer
+isRemainderRecipients String
+remainderRecipients String
 }
 
 entity LateFee {

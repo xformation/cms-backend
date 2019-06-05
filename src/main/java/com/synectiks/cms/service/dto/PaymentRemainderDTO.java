@@ -1,9 +1,8 @@
 package com.synectiks.cms.service.dto;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the PaymentRemainder entity.
@@ -13,17 +12,25 @@ public class PaymentRemainderDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Status feeRemainder;
+    private String isAutoRemainder;
 
-    @NotNull
-    private Integer noticeDay;
+    private String isFirstPaymentRemainder;
 
-    @NotNull
-    private Status overDueRemainder;
+    private Integer firstPaymentRemainderDays;
 
-    @NotNull
+    private String isSecondPaymentRemainder;
+
+    private Integer secondPaymentRemainderDays;
+
+    private String isOverDuePaymentRemainder;
+
+    private String overDuePaymentRemainderAfterDueDateOrUntilPaid;
+
+    private Integer overDuePaymentRemainderDays;
+
+    private String isRemainderRecipients;
+
     private String remainderRecipients;
-
 
     private Long dueDateId;
 
@@ -39,28 +46,76 @@ public class PaymentRemainderDTO implements Serializable {
         this.id = id;
     }
 
-    public Status getFeeRemainder() {
-        return feeRemainder;
+    public String getIsAutoRemainder() {
+        return isAutoRemainder;
     }
 
-    public void setFeeRemainder(Status feeRemainder) {
-        this.feeRemainder = feeRemainder;
+    public void setIsAutoRemainder(String isAutoRemainder) {
+        this.isAutoRemainder = isAutoRemainder;
     }
 
-    public Integer getNoticeDay() {
-        return noticeDay;
+    public String getIsFirstPaymentRemainder() {
+        return isFirstPaymentRemainder;
     }
 
-    public void setNoticeDay(Integer noticeDay) {
-        this.noticeDay = noticeDay;
+    public void setIsFirstPaymentRemainder(String isFirstPaymentRemainder) {
+        this.isFirstPaymentRemainder = isFirstPaymentRemainder;
     }
 
-    public Status getOverDueRemainder() {
-        return overDueRemainder;
+    public Integer getFirstPaymentRemainderDays() {
+        return firstPaymentRemainderDays;
     }
 
-    public void setOverDueRemainder(Status overDueRemainder) {
-        this.overDueRemainder = overDueRemainder;
+    public void setFirstPaymentRemainderDays(Integer firstPaymentRemainderDays) {
+        this.firstPaymentRemainderDays = firstPaymentRemainderDays;
+    }
+
+    public String getIsSecondPaymentRemainder() {
+        return isSecondPaymentRemainder;
+    }
+
+    public void setIsSecondPaymentRemainder(String isSecondPaymentRemainder) {
+        this.isSecondPaymentRemainder = isSecondPaymentRemainder;
+    }
+
+    public Integer getSecondPaymentRemainderDays() {
+        return secondPaymentRemainderDays;
+    }
+
+    public void setSecondPaymentRemainderDays(Integer secondPaymentRemainderDays) {
+        this.secondPaymentRemainderDays = secondPaymentRemainderDays;
+    }
+
+    public String getIsOverDuePaymentRemainder() {
+        return isOverDuePaymentRemainder;
+    }
+
+    public void setIsOverDuePaymentRemainder(String isOverDuePaymentRemainder) {
+        this.isOverDuePaymentRemainder = isOverDuePaymentRemainder;
+    }
+
+    public String getOverDuePaymentRemainderAfterDueDateOrUntilPaid() {
+        return overDuePaymentRemainderAfterDueDateOrUntilPaid;
+    }
+
+    public void setOverDuePaymentRemainderAfterDueDateOrUntilPaid(String overDuePaymentRemainderAfterDueDateOrUntilPaid) {
+        this.overDuePaymentRemainderAfterDueDateOrUntilPaid = overDuePaymentRemainderAfterDueDateOrUntilPaid;
+    }
+
+    public Integer getOverDuePaymentRemainderDays() {
+        return overDuePaymentRemainderDays;
+    }
+
+    public void setOverDuePaymentRemainderDays(Integer overDuePaymentRemainderDays) {
+        this.overDuePaymentRemainderDays = overDuePaymentRemainderDays;
+    }
+
+    public String getIsRemainderRecipients() {
+        return isRemainderRecipients;
+    }
+
+    public void setIsRemainderRecipients(String isRemainderRecipients) {
+        this.isRemainderRecipients = isRemainderRecipients;
     }
 
     public String getRemainderRecipients() {
@@ -120,9 +175,15 @@ public class PaymentRemainderDTO implements Serializable {
     public String toString() {
         return "PaymentRemainderDTO{" +
             "id=" + getId() +
-            ", feeRemainder='" + getFeeRemainder() + "'" +
-            ", noticeDay=" + getNoticeDay() +
-            ", overDueRemainder='" + getOverDueRemainder() + "'" +
+            ", isAutoRemainder='" + getIsAutoRemainder() + "'" +
+            ", isFirstPaymentRemainder='" + getIsFirstPaymentRemainder() + "'" +
+            ", firstPaymentRemainderDays=" + getFirstPaymentRemainderDays() +
+            ", isSecondPaymentRemainder='" + getIsSecondPaymentRemainder() + "'" +
+            ", secondPaymentRemainderDays=" + getSecondPaymentRemainderDays() +
+            ", isOverDuePaymentRemainder='" + getIsOverDuePaymentRemainder() + "'" +
+            ", overDuePaymentRemainderAfterDueDateOrUntilPaid='" + getOverDuePaymentRemainderAfterDueDateOrUntilPaid() + "'" +
+            ", overDuePaymentRemainderDays=" + getOverDuePaymentRemainderDays() +
+            ", isRemainderRecipients='" + getIsRemainderRecipients() + "'" +
             ", remainderRecipients='" + getRemainderRecipients() + "'" +
             ", dueDate=" + getDueDateId() +
             ", college=" + getCollegeId() +
