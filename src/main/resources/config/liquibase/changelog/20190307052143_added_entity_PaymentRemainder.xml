@@ -61,10 +61,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="due_date_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="college_id" type="bigint">
                 <constraints nullable="true" />
             </column>

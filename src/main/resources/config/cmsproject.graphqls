@@ -547,7 +547,7 @@ type LateFee{
 
 }
 type PaymentRemainder{
-    id:Long!
+    id: Long!
     isAutoRemainder: String
     isFirstPaymentRemainder: String
     firstPaymentRemainderDays: Int
@@ -558,9 +558,8 @@ type PaymentRemainder{
     overDuePaymentRemainderDays: Int
     isRemainderRecipients: String
     remainderRecipients: String
-    dueDate:DueDate!
-    college:College
-    branch:Branch!
+    college: College
+    branch: Branch!
 }
 
 
@@ -2576,7 +2575,6 @@ input AddPaymentRemainderInput{
     overDuePaymentRemainderDays: Int
     isRemainderRecipients: String
     remainderRecipients: String
-    dueDateId:Long!
     collegeId:Long
     branchId:Long!
 }
@@ -2595,7 +2593,6 @@ input UpdatePaymentRemainderInput{
     overDuePaymentRemainderDays: Int
     isRemainderRecipients: String
     remainderRecipients: String
-    dueDateId:Long!
     collegeId:Long
     branchId:Long!
 }

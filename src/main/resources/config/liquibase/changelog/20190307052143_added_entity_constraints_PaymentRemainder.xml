@@ -8,12 +8,6 @@
     -->
     <changeSet id="20190307052143-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="due_date_id"
-                                 baseTableName="payment_remainder"
-                                 constraintName="fk_payment_remainder_due_date_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="due_date"/>
-
         <addForeignKeyConstraint baseColumnNames="college_id"
                                  baseTableName="payment_remainder"
                                  constraintName="fk_payment_remainder_college_id"

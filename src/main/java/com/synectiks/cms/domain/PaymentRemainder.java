@@ -60,10 +60,6 @@ public class PaymentRemainder implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private DueDate dueDate;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private College college;
 
     @ManyToOne
@@ -207,19 +203,6 @@ public class PaymentRemainder implements Serializable {
 
     public void setRemainderRecipients(String remainderRecipients) {
         this.remainderRecipients = remainderRecipients;
-    }
-
-    public DueDate getDueDate() {
-        return dueDate;
-    }
-
-    public PaymentRemainder dueDate(DueDate dueDate) {
-        this.dueDate = dueDate;
-        return this;
-    }
-
-    public void setDueDate(DueDate dueDate) {
-        this.dueDate = dueDate;
     }
 
     public College getCollege() {

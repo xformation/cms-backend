@@ -2782,28 +2782,13 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddPaymentRemainderPayload addPaymentRemainder(AddPaymentRemainderInput addPaymentRemainderInput) {
-        final DueDate dueDate = dueDateRepository.findById(addPaymentRemainderInput.getDueDateId()).get();
         final College college = collegeRepository.findById(addPaymentRemainderInput.getCollegeId()).get();
         final Branch branch = branchRepository.findById(addPaymentRemainderInput.getBranchId()).get();
-//        PaymentRemainder pr = new PaymentRemainder();
         PaymentRemainder pr = CommonUtil.createCopyProperties(addPaymentRemainderInput, PaymentRemainder.class);
-        
-//        pr.setIsAutoRemainder(addPaymentRemainderInput.getIsAutoRemainder());
-//        pr.setIsFirstPaymentRemainder(addPaymentRemainderInput.getIsFirstPaymentRemainder());
-//        pr.setFirstPaymentRemainderDays(addPaymentRemainderInput.getFirstPaymentRemainderDays());
-//        pr.setIsSecondPaymentRemainder(addPaymentRemainderInput.getIsSecondPaymentRemainder());
-//        pr.setSecondPaymentRemainderDays(addPaymentRemainderInput.getSecondPaymentRemainderDays());
-//        pr.setIsOverDuePaymentRemainder(addPaymentRemainderInput.getIsOverDuePaymentRemainder());
-//        pr.setOverDuePaymentRemainderAfterDueDateOrUntilPaid(addPaymentRemainderInput.getOverDuePaymentRemainderAfterDueDateOrUntilPaid());
-//        pr.setOverDuePaymentRemainderDays(addPaymentRemainderInput.getOverDuePaymentRemainderDays());
-//        pr.setIsRemainderRecipients(addPaymentRemainderInput.getIsRemainderRecipients());
-//        pr.setRemainderRecipients(addPaymentRemainderInput.getRemainderRecipients());
-        pr.setDueDate(dueDate);
         pr.setCollege(college);
         pr.setBranch(branch);
-        paymentRemainderRepository.save(pr);
+        pr = paymentRemainderRepository.save(pr);
         return new AddPaymentRemainderPayload(pr);
-
     }
 
     public UpdatePaymentRemainderPayload updatePaymentRemainder(UpdatePaymentRemainderInput updatePaymentRemainderInput) {
@@ -2848,10 +2833,6 @@ public class Mutation implements GraphQLMutationResolver {
         	pr.setRemainderRecipients(updatePaymentRemainderInput.getRemainderRecipients());
         }
 
-        if (updatePaymentRemainderInput.getDueDateId() != null) {
-            final DueDate dueDate = dueDateRepository.findById(updatePaymentRemainderInput.getDueDateId()).get();
-            pr.setDueDate(dueDate);
-        }
         if (updatePaymentRemainderInput.getCollegeId() != null) {
             final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
             pr.setCollege(college);

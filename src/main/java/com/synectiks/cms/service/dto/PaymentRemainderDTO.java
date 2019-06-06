@@ -32,8 +32,6 @@ public class PaymentRemainderDTO implements Serializable {
 
     private String remainderRecipients;
 
-    private Long dueDateId;
-
     private Long collegeId;
 
     private Long branchId;
@@ -126,14 +124,6 @@ public class PaymentRemainderDTO implements Serializable {
         this.remainderRecipients = remainderRecipients;
     }
 
-    public Long getDueDateId() {
-        return dueDateId;
-    }
-
-    public void setDueDateId(Long dueDateId) {
-        this.dueDateId = dueDateId;
-    }
-
     public Long getCollegeId() {
         return collegeId;
     }
@@ -185,7 +175,6 @@ public class PaymentRemainderDTO implements Serializable {
             ", overDuePaymentRemainderDays=" + getOverDuePaymentRemainderDays() +
             ", isRemainderRecipients='" + getIsRemainderRecipients() + "'" +
             ", remainderRecipients='" + getRemainderRecipients() + "'" +
-            ", dueDate=" + getDueDateId() +
             ", college=" + getCollegeId() +
             ", branch=" + getBranchId() +
             "}";
