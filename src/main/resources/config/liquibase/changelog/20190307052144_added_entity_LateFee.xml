@@ -21,19 +21,15 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="assign_late_fee" type="varchar(255)">
+            <column name="is_auto_late_fee" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
             <column name="late_fee_days" type="integer">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="fixed" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="percentage" type="varchar(255)">
+            <column name="charge_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -45,7 +41,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="late_fee_one_time" type="varchar(255)">
+            <column name="late_fee_frequency" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

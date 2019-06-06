@@ -2731,44 +2731,32 @@ public class Mutation implements GraphQLMutationResolver {
         final College college = collegeRepository.findById(addLateFeeInput.getCollegeId()).get();
         final Branch branch = branchRepository.findById(addLateFeeInput.getBranchId()).get();
         LateFee lateFee = CommonUtil.createCopyProperties(addLateFeeInput, LateFee.class);
-        
-        
-//        lateFee.setAssignLateFee(addLateFeeInput.getAssignLateFee());
-//        lateFee.setLateFeeDays(addLateFeeInput.getLateFeeDays());
-//        lateFee.setFixed(addLateFeeInput.getFixed());
-//        lateFee.setPercentage(addLateFeeInput.getPercentage());
-//        lateFee.setFixedCharges(addLateFeeInput.getFixedCharges());
-//        lateFee.setPercentCharges(addLateFeeInput.getPercentCharges());
-//        lateFee.setLateFeeOneTime(addLateFeeInput.getLateFeeOneTime());
-//        lateFee.setLateFeeRepeatDays(addLateFeeInput.getLateFeeRepeatDays());
         lateFee.setCollege(college);
         lateFee.setBranch(branch);
-        lateFeeRepository.save(lateFee);
+        lateFee = lateFeeRepository.save(lateFee);
         return new AddLateFeePayload(lateFee);
     }
 
     public UpdateLateFeePayload updateLateFee(UpdateLateFeeInput updateLateFeeInput) {
         LateFee lateFee = lateFeeRepository.findById(updateLateFeeInput.getId()).get();
-        if (updateLateFeeInput.getAssignLateFee() != null) {
-            lateFee.setAssignLateFee(updateLateFeeInput.getAssignLateFee());
+        if (updateLateFeeInput.getIsAutoLateFee() != null) {
+            lateFee.setIsAutoLateFee(updateLateFeeInput.getIsAutoLateFee());
         }
         if (updateLateFeeInput.getLateFeeDays() != null) {
             lateFee.setLateFeeDays(updateLateFeeInput.getLateFeeDays());
         }
-        if (updateLateFeeInput.getFixed() != null) {
-            lateFee.setFixed(updateLateFeeInput.getFixed());
+        if (updateLateFeeInput.getChargeType() != null) {
+            lateFee.setChargeType(updateLateFeeInput.getChargeType());
         }
-        if (updateLateFeeInput.getPercentage() != null) {
-            lateFee.setPercentage(updateLateFeeInput.getPercentage());
-        }
+       
         if (updateLateFeeInput.getFixedCharges() != null) {
             lateFee.setFixedCharges(updateLateFeeInput.getFixedCharges());
         }
         if (updateLateFeeInput.getPercentCharges() != null) {
             lateFee.setPercentCharges(updateLateFeeInput.getPercentCharges());
         }
-        if (updateLateFeeInput.getLateFeeOneTime() != null) {
-        	lateFee.setLateFeeOneTime(updateLateFeeInput.getLateFeeOneTime());
+        if (updateLateFeeInput.getLateFeeFrequency() != null) {
+        	lateFee.setLateFeeFrequency(updateLateFeeInput.getLateFeeFrequency());
         }
         if (updateLateFeeInput.getLateFeeRepeatDays() != null) {
         	lateFee.setLateFeeRepeatDays(updateLateFeeInput.getLateFeeRepeatDays());

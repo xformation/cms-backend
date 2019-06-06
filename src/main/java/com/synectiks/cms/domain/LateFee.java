@@ -28,18 +28,14 @@ public class LateFee implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "assign_late_fee", nullable = false)
-    private String assignLateFee;
+    @Column(name = "is_auto_late_fee", nullable = false)
+    private String isAutoLateFee;
 
-    @NotNull
-    @Column(name = "late_fee_days", nullable = false)
+    @Column(name = "late_fee_days")
     private Integer lateFeeDays;
 
-    @Column(name = "fixed")
-    private String fixed;
-
-    @Column(name = "percentage")
-    private String percentage;
+    @Column(name = "charge_type")
+    private String chargeType;
 
     @Column(name = "fixed_charges")
     private Long fixedCharges;
@@ -47,8 +43,8 @@ public class LateFee implements Serializable {
     @Column(name = "percent_charges")
     private String percentCharges;
 
-    @Column(name = "late_fee_one_time")
-    private String lateFeeOneTime;
+    @Column(name = "late_fee_frequency")
+    private String lateFeeFrequency;
 
     @Column(name = "late_fee_repeat_days")
     private Integer lateFeeRepeatDays;
@@ -78,17 +74,17 @@ public class LateFee implements Serializable {
         this.id = id;
     }
 
-    public String getAssignLateFee() {
-        return assignLateFee;
+    public String getIsAutoLateFee() {
+        return isAutoLateFee;
     }
 
-    public LateFee assignLateFee(String assignLateFee) {
-        this.assignLateFee = assignLateFee;
+    public LateFee isAutoLateFee(String isAutoLateFee) {
+        this.isAutoLateFee = isAutoLateFee;
         return this;
     }
 
-    public void setAssignLateFee(String assignLateFee) {
-        this.assignLateFee = assignLateFee;
+    public void setIsAutoLateFee(String isAutoLateFee) {
+        this.isAutoLateFee = isAutoLateFee;
     }
 
     public Integer getLateFeeDays() {
@@ -104,30 +100,17 @@ public class LateFee implements Serializable {
         this.lateFeeDays = lateFeeDays;
     }
 
-    public String getFixed() {
-        return fixed;
+    public String getChargeType() {
+        return chargeType;
     }
 
-    public LateFee fixed(String fixed) {
-        this.fixed = fixed;
+    public LateFee chargeType(String chargeType) {
+        this.chargeType = chargeType;
         return this;
     }
 
-    public void setFixed(String fixed) {
-        this.fixed = fixed;
-    }
-
-    public String getPercentage() {
-        return percentage;
-    }
-
-    public LateFee percentage(String percentage) {
-        this.percentage = percentage;
-        return this;
-    }
-
-    public void setPercentage(String percentage) {
-        this.percentage = percentage;
+    public void setChargeType(String chargeType) {
+        this.chargeType = chargeType;
     }
 
     public Long getFixedCharges() {
@@ -156,17 +139,17 @@ public class LateFee implements Serializable {
         this.percentCharges = percentCharges;
     }
 
-    public String getLateFeeOneTime() {
-        return lateFeeOneTime;
+    public String getLateFeeFrequency() {
+        return lateFeeFrequency;
     }
 
-    public LateFee lateFeeOneTime(String lateFeeOneTime) {
-        this.lateFeeOneTime = lateFeeOneTime;
+    public LateFee lateFeeFrequency(String lateFeeFrequency) {
+        this.lateFeeFrequency = lateFeeFrequency;
         return this;
     }
 
-    public void setLateFeeOneTime(String lateFeeOneTime) {
-        this.lateFeeOneTime = lateFeeOneTime;
+    public void setLateFeeFrequency(String lateFeeFrequency) {
+        this.lateFeeFrequency = lateFeeFrequency;
     }
 
     public Integer getLateFeeRepeatDays() {
@@ -259,13 +242,12 @@ public class LateFee implements Serializable {
     public String toString() {
         return "LateFee{" +
             "id=" + getId() +
-            ", assignLateFee='" + getAssignLateFee() + "'" +
+            ", isAutoLateFee='" + getIsAutoLateFee() + "'" +
             ", lateFeeDays=" + getLateFeeDays() +
-            ", fixed='" + getFixed() + "'" +
-            ", percentage='" + getPercentage() + "'" +
+            ", chargeType='" + getChargeType() + "'" +
             ", fixedCharges=" + getFixedCharges() +
             ", percentCharges='" + getPercentCharges() + "'" +
-            ", lateFeeOneTime='" + getLateFeeOneTime() + "'" +
+            ", lateFeeFrequency='" + getLateFeeFrequency() + "'" +
             ", lateFeeRepeatDays=" + getLateFeeRepeatDays() +
             "}";
     }

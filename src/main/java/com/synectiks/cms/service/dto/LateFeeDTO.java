@@ -12,20 +12,17 @@ public class LateFeeDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String assignLateFee;
+    private String isAutoLateFee;
 
-    @NotNull
     private Integer lateFeeDays;
 
-    private String fixed;
-
-    private String percentage;
+    private String chargeType;
 
     private Long fixedCharges;
 
     private String percentCharges;
 
-    private String lateFeeOneTime;
+    private String lateFeeFrequency;
 
     private Integer lateFeeRepeatDays;
 
@@ -45,12 +42,12 @@ public class LateFeeDTO implements Serializable {
         this.id = id;
     }
 
-    public String getAssignLateFee() {
-        return assignLateFee;
+    public String getIsAutoLateFee() {
+        return isAutoLateFee;
     }
 
-    public void setAssignLateFee(String assignLateFee) {
-        this.assignLateFee = assignLateFee;
+    public void setIsAutoLateFee(String isAutoLateFee) {
+        this.isAutoLateFee = isAutoLateFee;
     }
 
     public Integer getLateFeeDays() {
@@ -61,20 +58,12 @@ public class LateFeeDTO implements Serializable {
         this.lateFeeDays = lateFeeDays;
     }
 
-    public String getFixed() {
-        return fixed;
+    public String getChargeType() {
+        return chargeType;
     }
 
-    public void setFixed(String fixed) {
-        this.fixed = fixed;
-    }
-
-    public String getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(String percentage) {
-        this.percentage = percentage;
+    public void setChargeType(String chargeType) {
+        this.chargeType = chargeType;
     }
 
     public Long getFixedCharges() {
@@ -93,12 +82,12 @@ public class LateFeeDTO implements Serializable {
         this.percentCharges = percentCharges;
     }
 
-    public String getLateFeeOneTime() {
-        return lateFeeOneTime;
+    public String getLateFeeFrequency() {
+        return lateFeeFrequency;
     }
 
-    public void setLateFeeOneTime(String lateFeeOneTime) {
-        this.lateFeeOneTime = lateFeeOneTime;
+    public void setLateFeeFrequency(String lateFeeFrequency) {
+        this.lateFeeFrequency = lateFeeFrequency;
     }
 
     public Integer getLateFeeRepeatDays() {
@@ -166,13 +155,12 @@ public class LateFeeDTO implements Serializable {
     public String toString() {
         return "LateFeeDTO{" +
             "id=" + getId() +
-            ", assignLateFee='" + getAssignLateFee() + "'" +
+            ", isAutoLateFee='" + getIsAutoLateFee() + "'" +
             ", lateFeeDays=" + getLateFeeDays() +
-            ", fixed='" + getFixed() + "'" +
-            ", percentage='" + getPercentage() + "'" +
+            ", chargeType='" + getChargeType() + "'" +
             ", fixedCharges=" + getFixedCharges() +
             ", percentCharges='" + getPercentCharges() + "'" +
-            ", lateFeeOneTime='" + getLateFeeOneTime() + "'" +
+            ", lateFeeFrequency='" + getLateFeeFrequency() + "'" +
             ", lateFeeRepeatDays=" + getLateFeeRepeatDays() +
             ", college=" + getCollegeId() +
             ", branch=" + getBranchId() +

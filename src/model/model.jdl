@@ -396,13 +396,12 @@ remainderRecipients String
 }
 
 entity LateFee {
-assignLateFee String required
-lateFeeDays Integer required
-fixed String
-percentage String
+isAutoLateFee String required
+lateFeeDays Integer
+chargeType String
 fixedCharges Long
 percentCharges String
-lateFeeOneTime String
+lateFeeFrequency String
 lateFeeRepeatDays Integer
 }
 

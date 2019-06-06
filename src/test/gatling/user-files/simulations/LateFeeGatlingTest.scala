@@ -68,7 +68,7 @@ class LateFeeGatlingTest extends Simulation {
             .exec(http("Create new lateFee")
             .post("/api/late-fees")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "assignLateFee":"SAMPLE_TEXT", "lateFeeDays":"0", "fixed":"SAMPLE_TEXT", "percentage":"SAMPLE_TEXT", "fixedCharges":null, "percentCharges":"SAMPLE_TEXT", "lateFeeOneTime":"SAMPLE_TEXT", "lateFeeRepeatDays":"0"}""")).asJSON
+            .body(StringBody("""{"id":null, "isAutoLateFee":"SAMPLE_TEXT", "lateFeeDays":"0", "chargeType":"SAMPLE_TEXT", "fixedCharges":null, "percentCharges":"SAMPLE_TEXT", "lateFeeFrequency":"SAMPLE_TEXT", "lateFeeRepeatDays":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_lateFee_url"))).exitHereIfFailed
             .pause(10)

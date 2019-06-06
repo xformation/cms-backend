@@ -534,17 +534,16 @@ type DueDate{
     branch:Branch!
 }
 type LateFee{
-    id :Long!
-    assignLateFee:String!
-    lateFeeDays:Int!
-    fixed:String
-    percentage:String
-    fixedCharges:Long
-    percentCharges:String
-    lateFeeOneTime: String
+    id: Long!
+    isAutoLateFee: String!
+    lateFeeDays: Int
+    chargeType: String
+    fixedCharges: Long
+    percentCharges: String
+    lateFeeFrequency: String
 	lateFeeRepeatDays: Int
-    college:College
-    branch:Branch!
+    college: College
+    branch: Branch!
 
 }
 type PaymentRemainder{
@@ -2526,17 +2525,17 @@ input RemoveDueDateInput{
 type RemoveDueDatePayload{
     dueDates:[DueDate]!
 }
+
 input AddLateFeeInput{
-    assignLateFee:String!
-    lateFeeDays:Int!
-    fixed:String
-    percentage:String
-    fixedCharges:Long
-    percentCharges:String
-    lateFeeOneTime: String
+    isAutoLateFee: String!
+    lateFeeDays: Int
+    chargeType: String
+    fixedCharges: Long
+    percentCharges: String
+    lateFeeFrequency: String
 	lateFeeRepeatDays: Int
-    collegeId:Long
-    branchId:Long!
+    collegeId: Long
+    branchId: Long!
 
 }
 type AddLateFeePayload{
@@ -2544,16 +2543,15 @@ type AddLateFeePayload{
 }
 input UpdateLateFeeInput{
     id :Long!
-    assignLateFee:String!
-    lateFeeDays:Int!
-    fixed:String
-    percentage:String
-    fixedCharges:Long
-    percentCharges:String
-    lateFeeOneTime: String
+    isAutoLateFee: String!
+    lateFeeDays: Int
+    chargeType: String
+    fixedCharges: Long
+    percentCharges: String
+    lateFeeFrequency: String
 	lateFeeRepeatDays: Int
-    collegeId:Long
-    branchId:Long!
+    collegeId: Long
+    branchId: Long!
 
 }
 type UpdateLateFeePayload{
