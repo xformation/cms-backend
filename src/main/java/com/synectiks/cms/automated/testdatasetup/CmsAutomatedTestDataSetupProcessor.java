@@ -64,6 +64,15 @@ public class CmsAutomatedTestDataSetupProcessor {
     private TransportRoute transportRoute=null;
     private FeeDetails feeDetails=null;
     private AcademicExamSetting academicExamSetting = null;
+    private AcademicHistory academicHistory = null;
+    private AdmissionApplication admissionApplication = null;
+    private AdmissionEnquiry admissionEnquiry = null;
+    private DueDate dueDate = null;
+    private PaymentRemainder paymentRemainder = null;
+    private Holiday holiday = null;
+    private Invoice invoice = null;
+    private TypeOfGrading typeOfGrading = null;
+    private StudentExamReport studentExamReport = null;
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -135,6 +144,33 @@ public class CmsAutomatedTestDataSetupProcessor {
     @Autowired
     private AcademicExamSettingRepository academicExamSettingRepository;
 
+    @Autowired
+    private AcademicHistoryRepository academicHistoryRepository;
+
+    @Autowired
+    private AdmissionApplicationRepository admissionApplicationRepository;
+
+    @Autowired
+    private AdmissionEnquiryRepository admissionEnquiryRepository;
+
+    @Autowired
+    private DueDateRepository dueDateRepository;
+
+    @Autowired
+    private PaymentRemainderRepository paymentRemainderRepository;
+
+    @Autowired
+    private HolidayRepository holidayRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private TypeOfGradingRepository typeOfGradingRepository;
+
+    @Autowired
+    private StudentExamReportRepository studentExamReportRepository;
+
     private ObjectMapper mapper = new ObjectMapper();
     String values[] = new String[1];
     LectureScheduleFilter filter = new LectureScheduleFilter();
@@ -145,6 +181,15 @@ public class CmsAutomatedTestDataSetupProcessor {
             execute();
         } catch (Exception e) {
             logger.error("Exception in creating CMS test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createDueDate")
+    public void createCmsTestDueDateData() throws IOException, ParseException {
+        try {
+            executeDueDate();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  DueDate test data ", e);
         }
     }
 
@@ -291,6 +336,195 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAcademicHistory")
+    public void createCmsTestAcademicHistoryData() throws IOException, ParseException {
+        try {
+            executeAcademicHistory();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  AcademicHistory test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAdmissionApplication")
+    public void createCmsTestAdmissionApplicationData() throws IOException, ParseException {
+        try {
+            executeAdmissionApplication();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  AdmissionApplication test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAdmissionEnquiry")
+    public void createCmsTestAdmissionEnquiryData() throws IOException, ParseException {
+        try {
+            executeAdmissionEnquiry();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  AdmissionEnquiry test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createPaymentRemainder")
+    public void createCmsTestPaymentRemainderData() throws IOException, ParseException {
+        try {
+            executePaymentRemainder();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  PaymentRemainder test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createHoliday")
+    public void createCmsTestHolidayData() throws IOException, ParseException {
+        try {
+            executeHoliday();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  Holiday test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createInvoice")
+    public void createCmsTestInvoiceData() throws IOException, ParseException {
+        try {
+            executeInvoice();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  Invoice test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createTypeOfGrading")
+    public void createCmsTestTypeOfGradingData() throws IOException, ParseException {
+        try {
+            executeTypeOfGrading();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  TypeOfGrading test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createStudentExamReport")
+    public void createCmsTestStudentExamReportData() throws IOException, ParseException {
+        try {
+            executeStudentExamReport();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  StudentExamReport test data ", e);
+        }
+    }
+
+
+
+    private void executeInvoice() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsInvoiceData(wb);
+            logger.info("Invoice TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+    private void executeStudentExamReport() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsStudentExamReportData(wb);
+            logger.info("StudentExamReport TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+
+    private void executeTypeOfGrading() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsTypeOfGradingData(wb);
+            logger.info("TypeOfGrading TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+    private void executeHoliday() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsHolidayData(wb);
+            logger.info("Holiday TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+    private void executePaymentRemainder() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsPaymentRemainderData(wb);
+            logger.info("PaymentRemainder TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+    private void executeAdmissionEnquiry() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAdmissionEnquiryData(wb);
+            logger.info("AdmissionEnquiry TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+
+    private void executeAdmissionApplication() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAdmissionApplicationData(wb);
+            logger.info("AdmissionApplication TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+    private void executeAcademicHistory() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAcademicHistoryData(wb);
+            logger.info("AcademicHistory TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+
     private void executeAcademicExamSetting() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
         FileInputStream fis = null;
@@ -300,6 +534,20 @@ public class CmsAutomatedTestDataSetupProcessor {
             Workbook wb = getWorkbook(fis);
             saveCmsAcademicExamSettingData(wb);
             logger.info("AcademicExamSetting TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+    private void executeDueDate() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsDueDateData(wb);
+            logger.info("DueDate TEST DATA LOADING COMPLETED......");
         } finally {
             if (fis != null) fis.close();
         }
@@ -665,7 +913,7 @@ public class CmsAutomatedTestDataSetupProcessor {
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 0) {
+                if (cell.getColumnIndex() == 21) {
                     saveAcademicExamSetting(cell);
                 }
             }
@@ -747,6 +995,56 @@ public class CmsAutomatedTestDataSetupProcessor {
                 }
                 if (cell.getColumnIndex()==20){
                     saveFeeDetails(cell);
+                }
+                if (cell.getColumnIndex()==21){
+                    saveAcademicExamSetting(cell);
+                }
+                if (cell.getColumnIndex() == 22){
+                    saveAcademicHistory(cell);
+                }
+                if (cell.getColumnIndex() == 23){
+                    saveAdmissionApplication(cell);
+                }
+                if (cell.getColumnIndex() == 24){
+                    saveAdmissionEnquiry(cell);
+                }
+                if (cell.getColumnIndex() == 25){
+                    saveDueDate(cell);
+                }
+                if (cell.getColumnIndex() == 26){
+                    savePaymentRemainder(cell);
+                }
+                if (cell.getColumnIndex() == 27){
+                    saveHoliday(cell);
+                }
+                if (cell.getColumnIndex() == 28){
+                    saveInvoice(cell);
+                }
+                if (cell.getColumnIndex() == 29){
+                    saveTypeOfGrading(cell);
+                }
+                if (cell.getColumnIndex() == 30){
+                    saveStudentExamReport(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsDueDateData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 24) {
+                    saveDueDate(cell);
                 }
             }
         }
@@ -1046,6 +1344,166 @@ public class CmsAutomatedTestDataSetupProcessor {
 
                 if (cell.getColumnIndex() == 19) {
                     saveTransportRoute(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsAdmissionApplicationData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 23) {
+                    saveAdmissionApplication(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsAdmissionEnquiryData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 25) {
+                    saveAdmissionEnquiry(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsPaymentRemainderData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 26) {
+                    savePaymentRemainder(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsInvoiceData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 28) {
+                    saveInvoice(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsTypeOfGradingData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 29) {
+                    saveTypeOfGrading(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsStudentExamReportData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 30) {
+                    saveStudentExamReport(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsHolidayData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 27) {
+                    saveHoliday(cell);
+                }
+            }
+        }
+    }
+
+    private void saveCmsAcademicHistoryData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 22) {
+                    saveAcademicHistory(cell);
                 }
             }
         }
@@ -1442,7 +1900,7 @@ public class CmsAutomatedTestDataSetupProcessor {
 
     private void saveAcademicExamSetting(Cell cell) {
         logger.debug("Saving AcademicExamSetting data started.");
-        this.academicExamSetting = this.testDataPojoBuilder.createAcademicExamSettingPojo(cell,this.department,this.academicYear,this.section);
+        this.academicExamSetting = this.testDataPojoBuilder.createAcademicExamSettingPojo(cell,this.department,this.academicYear,this.section,this.batch);
 
         try {
             Example<AcademicExamSetting> example = Example.of(this.academicExamSetting);
@@ -1456,4 +1914,158 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
         logger.debug("Saving AcademicExamSetting data completed.");
     }
+
+    private void saveAcademicHistory(Cell cell) {
+        logger.debug("Saving AcademicHistory data started.");
+        this.academicHistory = this.testDataPojoBuilder.createAcademicHistoryPojo(cell,this.student);
+
+        try {
+            Example<AcademicHistory> example = Example.of(this.academicHistory);
+            if (this.academicHistoryRepository.exists(example) == false) {
+                this.academicHistory = this.academicHistoryRepository.save(this.academicHistory);
+            } else {
+                this.academicHistory = this.academicHistoryRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving AcademicHistory data. " + e.getMessage());
+        }
+        logger.debug("Saving AcademicHistory data completed.");
+    }
+
+    private void saveAdmissionApplication(Cell cell) {
+        logger.debug("Saving AdmissionApplication data started.");
+        this.admissionApplication = this.testDataPojoBuilder.createAdmissionApplicationPojo(cell,this.student);
+
+        try {
+            Example<AdmissionApplication> example = Example.of(this.admissionApplication);
+            if (this.admissionApplicationRepository.exists(example) == false) {
+                this.admissionApplication = this.admissionApplicationRepository.save(this.admissionApplication);
+            } else {
+                this.admissionApplication = this.admissionApplicationRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving AdmissionApplication data. " + e.getMessage());
+        }
+        logger.debug("Saving AdmissionApplication data completed.");
+    }
+
+    private void saveAdmissionEnquiry(Cell cell) {
+        logger.debug("Saving AdmissionEnquiry data started.");
+        this.admissionEnquiry = this.testDataPojoBuilder.createAdmissionEnquiryPojo(cell,this.branch, this.admissionApplication);
+
+        try {
+            Example<AdmissionEnquiry> example = Example.of(this.admissionEnquiry);
+            if (this.admissionEnquiryRepository.exists(example) == false) {
+                this.admissionEnquiry = this.admissionEnquiryRepository.save(this.admissionEnquiry);
+            } else {
+                this.admissionEnquiry = this.admissionEnquiryRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving AdmissionEnquiry data. " + e.getMessage());
+        }
+        logger.debug("Saving AdmissionEnquiry data completed.");
+    }
+
+    private void saveDueDate(Cell cell) {
+        logger.debug("Saving DueDate data started.");
+        this.dueDate = this.testDataPojoBuilder.createDueDatePojo(cell,this.college, this.branch);
+
+        try {
+            Example<DueDate> example = Example.of(this.dueDate);
+            if (this.dueDateRepository.exists(example) == false) {
+                this.dueDate = this.dueDateRepository.save(this.dueDate);
+            } else {
+                this.dueDate = this.dueDateRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving DueDate data. " + e.getMessage());
+        }
+        logger.debug("Saving DueDate data completed.");
+    }
+
+    private void savePaymentRemainder(Cell cell) {
+        logger.debug("Saving PaymentRemainder data started.");
+        this.paymentRemainder = this.testDataPojoBuilder.createPaymentRemainderPojo(cell,this.dueDate, this.college,this.branch);
+
+        try {
+            Example<PaymentRemainder> example = Example.of(this.paymentRemainder);
+            if (this.paymentRemainderRepository.exists(example) == false) {
+                this.paymentRemainder = this.paymentRemainderRepository.save(this.paymentRemainder);
+            } else {
+                this.paymentRemainder = this.paymentRemainderRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving PaymentRemainder data. " + e.getMessage());
+        }
+        logger.debug("Saving PaymentRemainder data completed.");
+    }
+
+    private void saveHoliday(Cell cell) {
+        logger.debug("Saving Holiday data started.");
+        this.holiday = this.testDataPojoBuilder.createHolidayPojo(cell,this.academicYear);
+
+        try {
+            Example<Holiday> example = Example.of(this.holiday);
+            if (this.holidayRepository.exists(example) == false) {
+                this.holiday = this.holidayRepository.save(this.holiday);
+            } else {
+                this.holiday = this.holidayRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving Holiday data. " + e.getMessage());
+        }
+        logger.debug("Saving Holiday data completed.");
+    }
+
+    private void saveInvoice(Cell cell) {
+        logger.debug("Saving Invoice data started.");
+        this.invoice = this.testDataPojoBuilder.createInvoicePojo(cell,this.feeCategory, this.feeDetails,this.dueDate,this.paymentRemainder, this.college, this.branch, this.student, this.academicYear);
+
+        try {
+            Example<Invoice> example = Example.of(this.invoice);
+            if (this.invoiceRepository.exists(example) == false) {
+                this.invoice = this.invoiceRepository.save(this.invoice);
+            } else {
+                this.invoice = this.invoiceRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving Invoice data. " + e.getMessage());
+        }
+        logger.debug("Saving Invoice data completed.");
+    }
+
+    private void saveTypeOfGrading(Cell cell) {
+        logger.debug("Saving TypeOfGrading data started.");
+        this.typeOfGrading = this.testDataPojoBuilder.createTypeOfGradingPojo(cell,this.academicExamSetting);
+
+        try {
+            Example<TypeOfGrading> example = Example.of(this.typeOfGrading);
+            if (this.typeOfGradingRepository.exists(example) == false) {
+                this.typeOfGrading = this.typeOfGradingRepository.save(this.typeOfGrading);
+            } else {
+                this.typeOfGrading = this.typeOfGradingRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving TypeOfGrading data. " + e.getMessage());
+        }
+        logger.debug("Saving TypeOfGrading data completed.");
+    }
+
+    private void saveStudentExamReport(Cell cell) {
+        logger.debug("Saving StudentExamReport data started.");
+        this.studentExamReport = this.testDataPojoBuilder.createStudentExamReportPojo(cell,this.academicExamSetting, this.student,this. typeOfGrading, this.batch, this.academicYear);
+
+        try {
+            Example<StudentExamReport> example = Example.of(this.studentExamReport);
+            if (this.studentExamReportRepository.exists(example) == false) {
+                this.studentExamReport = this.studentExamReportRepository.save(this.studentExamReport);
+            } else {
+                this.studentExamReport = this.studentExamReportRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving StudentExamReport data. " + e.getMessage());
+        }
+        logger.debug("Saving StudentExamReport data completed.");
+    }
+
 }

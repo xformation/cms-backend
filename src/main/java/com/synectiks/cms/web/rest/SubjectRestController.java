@@ -98,7 +98,7 @@ public class SubjectRestController {
     	try {
     		logger.debug("REST request to delete a subject. Deactivating the subject : {}", id);
     		Subject sub = new Subject();
-    		sub.setStatus(Status.DEACTIVE);
+    		sub.setStatus(Status.ACTIVE);
     		sub.setId(id);
         	this.subjectRepository.save(sub);
     	}catch(Exception e) {

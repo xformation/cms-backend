@@ -108,6 +108,7 @@ public class TestDataPojoBuilder {
 		ay.setStartDate(new Date(cal.getTimeInMillis()));
 		cal.set(Integer.parseInt(jhiYear), 12, 31);
 		ay.setEndDate(new Date(cal.getTimeInMillis()));
+		ay.setStatus(Status.ACTIVE);
 		System.out.println(ay.toString());
 		return ay;
 	}
@@ -384,25 +385,170 @@ public class TestDataPojoBuilder {
         return feeDetails ;
     }
 
-    public AcademicExamSetting createAcademicExamSettingPojo(Cell cell,Department department,AcademicYear academicYear,Section section) {
-        AcademicExamSetting academicExamSetting  = new AcademicExamSetting();
-        academicExamSetting.setExamType(cell.getStringCellValue());
-        academicExamSetting.setSemester(SemesterEnum.SEMESTER4);
-        academicExamSetting.setSubject(cell.getStringCellValue());
-        academicExamSetting.setExamDate(new Date());
-        academicExamSetting.setDay(cell.getStringCellValue());
-        academicExamSetting.setDuration(cell.getStringCellValue());
-        academicExamSetting.setStartTime(cell.getStringCellValue());
-        academicExamSetting.setEndTime(cell.getStringCellValue());
-        academicExamSetting.setTotal(60);
-        academicExamSetting.setPassing(55);
-        academicExamSetting.setActions(cell.getStringCellValue());
-        academicExamSetting.setDepartment(department);
-        academicExamSetting.setAcademicyear(academicYear);
+    public AcademicExamSetting createAcademicExamSettingPojo(Cell cell,Department department,AcademicYear academicYear,Section section, Batch batch) {
+        AcademicExamSetting aes  = new AcademicExamSetting();
+        aes.setExamType(cell.getStringCellValue());
+        aes.setSemester(SemesterEnum.SEMESTER4);
+        aes.setSubject("");
+        aes.setExamDate(new Date());
+        aes.setDay("");
+        aes.setDuration("");
+        aes.setStartTime("");
+        aes.setEndTime("");
+        aes.setGradeType(GradeType.GRADE);
+        aes.setTotal(100);
+        aes.setPassing(35);
+        aes.setActions("");
+        aes.setDepartment(department);
+        aes.setAcademicyear(academicYear);
+        aes.setSection(section);
+        aes.setBatch(batch);
 
-        return academicExamSetting ;
+        return aes ;
     }
 
+    public AcademicHistory createAcademicHistoryPojo(Cell cell,Student student) {
+        AcademicHistory ah  = new AcademicHistory();
+        ah.setQualification(cell.getStringCellValue());
+        ah.setYearOfPassing("");
+        ah.setInstitution("");
+        ah.setUniversity("");
+        ah.setEnrollmentNo(20312L);
+        ah.setScore(86L);
+        ah.setPercentage(83);
+        ah.setStudent(student);
+
+        return ah ;
+    }
+
+    public AdmissionApplication createAdmissionApplicationPojo(Cell cell,Student student) {
+        AdmissionApplication aap  = new AdmissionApplication();
+        aap.setAdmissionStatus(AdmissionStatusEnum.ACCEPTED);
+        aap.setCourse(CourseEnum.BTECH);
+        aap.setAdmissionDate(new Date());
+        aap.setComments("");
+        aap.setStudent(student);
+
+        return aap ;
+    }
+
+    public AdmissionEnquiry createAdmissionEnquiryPojo(Cell cell,Branch branch, AdmissionApplication admissionApplication) {
+        AdmissionEnquiry ae  = new AdmissionEnquiry();
+        ae.setStudentName(cell.getStringCellValue());
+        ae.setMobileNumber("");
+        ae.setAlternateMobileNumber("");
+        ae.setEmail("");
+        ae.setCourseApplyingFor(CourseEnum.BTECH);
+        ae.setModeOfEnquiry(ModeOfEnquiry.TELEPHONE);
+        ae.setStatus(EnquiryStatus.RECEIVED);
+        ae.setDescription("");
+        ae.setEnquiryDate(new Date());
+        ae.setUpdatedOn(new Date());
+        ae.setUpdatedBy("");
+        ae.setBranch(branch);
+        ae.setAdmissionApplication(admissionApplication);
+
+
+        return ae ;
+    }
+
+    public DueDate createDueDatePojo(Cell cell,College college,Branch branch) {
+        DueDate ddt  = new DueDate();
+        ddt.setPaymentMethod(cell.getStringCellValue());
+        ddt.setInstallments(3);
+        ddt.setDayDesc("");
+        ddt.setPaymentDate(new Date());
+        ddt.setFrequency(Frequency.ANNUALLY);
+        ddt.setCollege(college);
+        ddt.setBranch(branch);
+
+        return ddt ;
+    }
+
+    public PaymentRemainder createPaymentRemainderPojo(Cell cell,DueDate dueDate,College college,Branch branch) {
+        PaymentRemainder pr  = new PaymentRemainder();
+        pr.setFeeRemainder(Status.ACTIVE);
+        pr.setNoticeDay(3);
+        pr.setOverDueRemainder(Status.DEACTIVE);
+        pr.setRemainderRecipients("");
+        pr.setDueDate(dueDate);
+        pr.setCollege(college);
+        pr.setBranch(branch);
+
+        return pr ;
+    }
+
+    public Holiday createHolidayPojo(Cell cell,AcademicYear academicYear) {
+        Holiday hy  = new Holiday();
+        hy.setHolidayDesc(cell.getStringCellValue());
+        hy.setHolidayDate(new Date());
+        hy.setHolidayStatus(Status.ACTIVE);
+        hy.setAcademicyear(academicYear);
+
+        return hy ;
+    }
+
+    public Invoice createInvoicePojo(Cell cell,FeeCategory feeCategory,FeeDetails feeDetails,DueDate dueDate, PaymentRemainder paymentRemainder, College college,Branch branch,Student student,AcademicYear academicYear) {
+        Invoice inv  = new Invoice();
+        inv.setInvoiceNumber(cell.getStringCellValue());
+        inv.setAmountPaid(142512L);
+        inv.setPaymentDate(new Date());
+        inv.setNextPaymentDate(new Date());
+        inv.setOutStandingAmount (14252L);
+        inv.setModeOfPayment(ModeOfPayment.CARD);
+        inv.setChequeNumber (51241254L);
+        inv.setDemandDraftNumber (12541251L);
+        inv.setOnlineTxnRefNumber ("");
+        inv.setPaymentStatus (InvoicePaymentStatus.PAID);
+        inv.setComments ("");
+        inv.setUpdatedBy ("");
+        inv.setUpdatedOn (new Date());
+        inv.setFeeCategory (feeCategory);
+        inv.setFeeDetails (feeDetails);
+        inv.setDueDate(dueDate);
+        inv.setPaymentRemainder(paymentRemainder);
+        inv.setCollege(college);
+        inv.setBranch(branch);
+        inv.setStudent(student);
+        inv.setAcademicYear(academicYear);
+
+        return inv ;
+    }
+
+    public StudentExamReport createStudentExamReportPojo(Cell cell,AcademicExamSetting academicExamSetting,Student student,TypeOfGrading typeOfGrading, Batch batch, AcademicYear academicYear) {
+        StudentExamReport sep  = new StudentExamReport();
+        sep.setMarksObtained(78);
+        sep.setComments("");
+        sep.setCreatedOn(new Date());
+        sep.setCreatedBy("");
+        sep.setUpdatedOn(new Date());
+        sep.setUpdatedBy("");
+        sep.setAcademicExamSetting(academicExamSetting);
+        sep.setStudent(student);
+        sep.setTypeOfGrading(typeOfGrading);
+        sep.setBatch(batch);
+        sep.setAcademicyear(academicYear);
+
+        return sep ;
+    }
+
+    public TypeOfGrading createTypeOfGradingPojo(Cell cell,AcademicExamSetting academicExamSetting) {
+        TypeOfGrading tog  = new TypeOfGrading();
+        tog.setMinMarks(78);
+        tog.setMaxMarks(100);
+        tog.setGrades(GradesEnum.A);
+        tog.setAcademicExamSetting(academicExamSetting);
+
+        return tog ;
+    }
+
+//    public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
+//        StudentAttendance sa = new StudentAttendance();
+//        sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
+//        sa.setStudent(student);
+//        sa.setLecture(lecture);
+//        return sa;
+//	}
 
 
 }
@@ -413,11 +559,3 @@ public class TestDataPojoBuilder {
 
 
 
-
-    //	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
-//		StudentAttendance sa = new StudentAttendance(); 
-//		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
-//		sa.setStudent(student);
-//		sa.setLecture(lecture);
-//		return sa;
-//
