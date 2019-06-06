@@ -535,14 +535,15 @@ type DueDate{
 }
 type LateFee{
     id :Long!
-    assignLateFee:Status!
+    assignLateFee:String!
     lateFeeDays:Int!
-    fixed:Status!
-    percentage:Status!
-    fixedCharges:Long!
-    percentCharges:Long!
-    lateFeeAssignmentFrequency:Frequency!
-    college:College!
+    fixed:String
+    percentage:String
+    fixedCharges:Long
+    percentCharges:String
+    lateFeeOneTime: String
+	lateFeeRepeatDays: Int
+    college:College
     branch:Branch!
 
 }
@@ -2526,14 +2527,15 @@ type RemoveDueDatePayload{
     dueDates:[DueDate]!
 }
 input AddLateFeeInput{
-    assignLateFee:Status!
+    assignLateFee:String!
     lateFeeDays:Int!
-    fixed:Status!
-    percentage:Status!
-    fixedCharges:Long!
-    percentCharges:Long!
-    lateFeeAssignmentFrequency:Frequency!
-    collegeId:Long!
+    fixed:String
+    percentage:String
+    fixedCharges:Long
+    percentCharges:String
+    lateFeeOneTime: String
+	lateFeeRepeatDays: Int
+    collegeId:Long
     branchId:Long!
 
 }
@@ -2542,14 +2544,15 @@ type AddLateFeePayload{
 }
 input UpdateLateFeeInput{
     id :Long!
-    assignLateFee:Status!
+    assignLateFee:String!
     lateFeeDays:Int!
-    fixed:Status!
-    percentage:Status!
-    fixedCharges:Long!
-    percentCharges:Long!
-    lateFeeAssignmentFrequency:Frequency!
-    collegeId:Long!
+    fixed:String
+    percentage:String
+    fixedCharges:Long
+    percentCharges:String
+    lateFeeOneTime: String
+	lateFeeRepeatDays: Int
+    collegeId:Long
     branchId:Long!
 
 }

@@ -11,10 +11,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.Status;
-
-import com.synectiks.cms.domain.enumeration.Frequency;
-
 /**
  * A LateFee.
  */
@@ -32,32 +28,30 @@ public class LateFee implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "assign_late_fee", nullable = false)
-    private Status assignLateFee;
+    private String assignLateFee;
 
     @NotNull
     @Column(name = "late_fee_days", nullable = false)
     private Integer lateFeeDays;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "fixed")
-    private Status fixed;
+    private String fixed;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "percentage")
-    private Status percentage;
+    private String percentage;
 
     @Column(name = "fixed_charges")
     private Long fixedCharges;
 
     @Column(name = "percent_charges")
-    private Long percentCharges;
+    private String percentCharges;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "late_fee_assignment_frequency", nullable = false)
-    private Frequency lateFeeAssignmentFrequency;
+    @Column(name = "late_fee_one_time")
+    private String lateFeeOneTime;
+
+    @Column(name = "late_fee_repeat_days")
+    private Integer lateFeeRepeatDays;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -84,16 +78,16 @@ public class LateFee implements Serializable {
         this.id = id;
     }
 
-    public Status getAssignLateFee() {
+    public String getAssignLateFee() {
         return assignLateFee;
     }
 
-    public LateFee assignLateFee(Status assignLateFee) {
+    public LateFee assignLateFee(String assignLateFee) {
         this.assignLateFee = assignLateFee;
         return this;
     }
 
-    public void setAssignLateFee(Status assignLateFee) {
+    public void setAssignLateFee(String assignLateFee) {
         this.assignLateFee = assignLateFee;
     }
 
@@ -110,29 +104,29 @@ public class LateFee implements Serializable {
         this.lateFeeDays = lateFeeDays;
     }
 
-    public Status getFixed() {
+    public String getFixed() {
         return fixed;
     }
 
-    public LateFee fixed(Status fixed) {
+    public LateFee fixed(String fixed) {
         this.fixed = fixed;
         return this;
     }
 
-    public void setFixed(Status fixed) {
+    public void setFixed(String fixed) {
         this.fixed = fixed;
     }
 
-    public Status getPercentage() {
+    public String getPercentage() {
         return percentage;
     }
 
-    public LateFee percentage(Status percentage) {
+    public LateFee percentage(String percentage) {
         this.percentage = percentage;
         return this;
     }
 
-    public void setPercentage(Status percentage) {
+    public void setPercentage(String percentage) {
         this.percentage = percentage;
     }
 
@@ -149,30 +143,43 @@ public class LateFee implements Serializable {
         this.fixedCharges = fixedCharges;
     }
 
-    public Long getPercentCharges() {
+    public String getPercentCharges() {
         return percentCharges;
     }
 
-    public LateFee percentCharges(Long percentCharges) {
+    public LateFee percentCharges(String percentCharges) {
         this.percentCharges = percentCharges;
         return this;
     }
 
-    public void setPercentCharges(Long percentCharges) {
+    public void setPercentCharges(String percentCharges) {
         this.percentCharges = percentCharges;
     }
 
-    public Frequency getLateFeeAssignmentFrequency() {
-        return lateFeeAssignmentFrequency;
+    public String getLateFeeOneTime() {
+        return lateFeeOneTime;
     }
 
-    public LateFee lateFeeAssignmentFrequency(Frequency lateFeeAssignmentFrequency) {
-        this.lateFeeAssignmentFrequency = lateFeeAssignmentFrequency;
+    public LateFee lateFeeOneTime(String lateFeeOneTime) {
+        this.lateFeeOneTime = lateFeeOneTime;
         return this;
     }
 
-    public void setLateFeeAssignmentFrequency(Frequency lateFeeAssignmentFrequency) {
-        this.lateFeeAssignmentFrequency = lateFeeAssignmentFrequency;
+    public void setLateFeeOneTime(String lateFeeOneTime) {
+        this.lateFeeOneTime = lateFeeOneTime;
+    }
+
+    public Integer getLateFeeRepeatDays() {
+        return lateFeeRepeatDays;
+    }
+
+    public LateFee lateFeeRepeatDays(Integer lateFeeRepeatDays) {
+        this.lateFeeRepeatDays = lateFeeRepeatDays;
+        return this;
+    }
+
+    public void setLateFeeRepeatDays(Integer lateFeeRepeatDays) {
+        this.lateFeeRepeatDays = lateFeeRepeatDays;
     }
 
     public College getCollege() {
@@ -257,8 +264,9 @@ public class LateFee implements Serializable {
             ", fixed='" + getFixed() + "'" +
             ", percentage='" + getPercentage() + "'" +
             ", fixedCharges=" + getFixedCharges() +
-            ", percentCharges=" + getPercentCharges() +
-            ", lateFeeAssignmentFrequency='" + getLateFeeAssignmentFrequency() + "'" +
+            ", percentCharges='" + getPercentCharges() + "'" +
+            ", lateFeeOneTime='" + getLateFeeOneTime() + "'" +
+            ", lateFeeRepeatDays=" + getLateFeeRepeatDays() +
             "}";
     }
 }

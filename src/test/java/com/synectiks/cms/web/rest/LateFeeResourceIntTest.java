@@ -37,10 +37,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Frequency;
 /**
  * Test class for the LateFeeResource REST controller.
  *
@@ -50,26 +46,29 @@ import com.synectiks.cms.domain.enumeration.Frequency;
 @SpringBootTest(classes = CmsApp.class)
 public class LateFeeResourceIntTest {
 
-    private static final Status DEFAULT_ASSIGN_LATE_FEE = Status.ACTIVE;
-    private static final Status UPDATED_ASSIGN_LATE_FEE = Status.DEACTIVE;
+    private static final String DEFAULT_ASSIGN_LATE_FEE = "AAAAAAAAAA";
+    private static final String UPDATED_ASSIGN_LATE_FEE = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_LATE_FEE_DAYS = 1;
     private static final Integer UPDATED_LATE_FEE_DAYS = 2;
 
-    private static final Status DEFAULT_FIXED = Status.ACTIVE;
-    private static final Status UPDATED_FIXED = Status.DEACTIVE;
+    private static final String DEFAULT_FIXED = "AAAAAAAAAA";
+    private static final String UPDATED_FIXED = "BBBBBBBBBB";
 
-    private static final Status DEFAULT_PERCENTAGE = Status.ACTIVE;
-    private static final Status UPDATED_PERCENTAGE = Status.DEACTIVE;
+    private static final String DEFAULT_PERCENTAGE = "AAAAAAAAAA";
+    private static final String UPDATED_PERCENTAGE = "BBBBBBBBBB";
 
     private static final Long DEFAULT_FIXED_CHARGES = 1L;
     private static final Long UPDATED_FIXED_CHARGES = 2L;
 
-    private static final Long DEFAULT_PERCENT_CHARGES = 1L;
-    private static final Long UPDATED_PERCENT_CHARGES = 2L;
+    private static final String DEFAULT_PERCENT_CHARGES = "AAAAAAAAAA";
+    private static final String UPDATED_PERCENT_CHARGES = "BBBBBBBBBB";
 
-    private static final Frequency DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY = Frequency.WEEKLY;
-    private static final Frequency UPDATED_LATE_FEE_ASSIGNMENT_FREQUENCY = Frequency.MONTHLY;
+    private static final String DEFAULT_LATE_FEE_ONE_TIME = "AAAAAAAAAA";
+    private static final String UPDATED_LATE_FEE_ONE_TIME = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_LATE_FEE_REPEAT_DAYS = 1;
+    private static final Integer UPDATED_LATE_FEE_REPEAT_DAYS = 2;
 
     @Autowired
     private LateFeeRepository lateFeeRepository;
@@ -131,7 +130,8 @@ public class LateFeeResourceIntTest {
             .percentage(DEFAULT_PERCENTAGE)
             .fixedCharges(DEFAULT_FIXED_CHARGES)
             .percentCharges(DEFAULT_PERCENT_CHARGES)
-            .lateFeeAssignmentFrequency(DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY);
+            .lateFeeOneTime(DEFAULT_LATE_FEE_ONE_TIME)
+            .lateFeeRepeatDays(DEFAULT_LATE_FEE_REPEAT_DAYS);
         return lateFee;
     }
 
@@ -162,7 +162,8 @@ public class LateFeeResourceIntTest {
         assertThat(testLateFee.getPercentage()).isEqualTo(DEFAULT_PERCENTAGE);
         assertThat(testLateFee.getFixedCharges()).isEqualTo(DEFAULT_FIXED_CHARGES);
         assertThat(testLateFee.getPercentCharges()).isEqualTo(DEFAULT_PERCENT_CHARGES);
-        assertThat(testLateFee.getLateFeeAssignmentFrequency()).isEqualTo(DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY);
+        assertThat(testLateFee.getLateFeeOneTime()).isEqualTo(DEFAULT_LATE_FEE_ONE_TIME);
+        assertThat(testLateFee.getLateFeeRepeatDays()).isEqualTo(DEFAULT_LATE_FEE_REPEAT_DAYS);
 
         // Validate the LateFee in Elasticsearch
         verify(mockLateFeeSearchRepository, times(1)).save(testLateFee);
@@ -231,25 +232,6 @@ public class LateFeeResourceIntTest {
 
     @Test
     @Transactional
-    public void checkLateFeeAssignmentFrequencyIsRequired() throws Exception {
-        int databaseSizeBeforeTest = lateFeeRepository.findAll().size();
-        // set the field null
-        lateFee.setLateFeeAssignmentFrequency(null);
-
-        // Create the LateFee, which fails.
-        LateFeeDTO lateFeeDTO = lateFeeMapper.toDto(lateFee);
-
-        restLateFeeMockMvc.perform(post("/api/late-fees")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(lateFeeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<LateFee> lateFeeList = lateFeeRepository.findAll();
-        assertThat(lateFeeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllLateFees() throws Exception {
         // Initialize the database
         lateFeeRepository.saveAndFlush(lateFee);
@@ -264,8 +246,9 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.[*].fixed").value(hasItem(DEFAULT_FIXED.toString())))
             .andExpect(jsonPath("$.[*].percentage").value(hasItem(DEFAULT_PERCENTAGE.toString())))
             .andExpect(jsonPath("$.[*].fixedCharges").value(hasItem(DEFAULT_FIXED_CHARGES.intValue())))
-            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES.intValue())))
-            .andExpect(jsonPath("$.[*].lateFeeAssignmentFrequency").value(hasItem(DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY.toString())));
+            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES.toString())))
+            .andExpect(jsonPath("$.[*].lateFeeOneTime").value(hasItem(DEFAULT_LATE_FEE_ONE_TIME.toString())))
+            .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)));
     }
     
 
@@ -285,8 +268,9 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.fixed").value(DEFAULT_FIXED.toString()))
             .andExpect(jsonPath("$.percentage").value(DEFAULT_PERCENTAGE.toString()))
             .andExpect(jsonPath("$.fixedCharges").value(DEFAULT_FIXED_CHARGES.intValue()))
-            .andExpect(jsonPath("$.percentCharges").value(DEFAULT_PERCENT_CHARGES.intValue()))
-            .andExpect(jsonPath("$.lateFeeAssignmentFrequency").value(DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY.toString()));
+            .andExpect(jsonPath("$.percentCharges").value(DEFAULT_PERCENT_CHARGES.toString()))
+            .andExpect(jsonPath("$.lateFeeOneTime").value(DEFAULT_LATE_FEE_ONE_TIME.toString()))
+            .andExpect(jsonPath("$.lateFeeRepeatDays").value(DEFAULT_LATE_FEE_REPEAT_DAYS));
     }
     @Test
     @Transactional
@@ -315,7 +299,8 @@ public class LateFeeResourceIntTest {
             .percentage(UPDATED_PERCENTAGE)
             .fixedCharges(UPDATED_FIXED_CHARGES)
             .percentCharges(UPDATED_PERCENT_CHARGES)
-            .lateFeeAssignmentFrequency(UPDATED_LATE_FEE_ASSIGNMENT_FREQUENCY);
+            .lateFeeOneTime(UPDATED_LATE_FEE_ONE_TIME)
+            .lateFeeRepeatDays(UPDATED_LATE_FEE_REPEAT_DAYS);
         LateFeeDTO lateFeeDTO = lateFeeMapper.toDto(updatedLateFee);
 
         restLateFeeMockMvc.perform(put("/api/late-fees")
@@ -333,7 +318,8 @@ public class LateFeeResourceIntTest {
         assertThat(testLateFee.getPercentage()).isEqualTo(UPDATED_PERCENTAGE);
         assertThat(testLateFee.getFixedCharges()).isEqualTo(UPDATED_FIXED_CHARGES);
         assertThat(testLateFee.getPercentCharges()).isEqualTo(UPDATED_PERCENT_CHARGES);
-        assertThat(testLateFee.getLateFeeAssignmentFrequency()).isEqualTo(UPDATED_LATE_FEE_ASSIGNMENT_FREQUENCY);
+        assertThat(testLateFee.getLateFeeOneTime()).isEqualTo(UPDATED_LATE_FEE_ONE_TIME);
+        assertThat(testLateFee.getLateFeeRepeatDays()).isEqualTo(UPDATED_LATE_FEE_REPEAT_DAYS);
 
         // Validate the LateFee in Elasticsearch
         verify(mockLateFeeSearchRepository, times(1)).save(testLateFee);
@@ -399,8 +385,9 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.[*].fixed").value(hasItem(DEFAULT_FIXED.toString())))
             .andExpect(jsonPath("$.[*].percentage").value(hasItem(DEFAULT_PERCENTAGE.toString())))
             .andExpect(jsonPath("$.[*].fixedCharges").value(hasItem(DEFAULT_FIXED_CHARGES.intValue())))
-            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES.intValue())))
-            .andExpect(jsonPath("$.[*].lateFeeAssignmentFrequency").value(hasItem(DEFAULT_LATE_FEE_ASSIGNMENT_FREQUENCY.toString())));
+            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES.toString())))
+            .andExpect(jsonPath("$.[*].lateFeeOneTime").value(hasItem(DEFAULT_LATE_FEE_ONE_TIME.toString())))
+            .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)));
     }
 
     @Test

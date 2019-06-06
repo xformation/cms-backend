@@ -2730,14 +2730,17 @@ public class Mutation implements GraphQLMutationResolver {
     public AddLateFeePayload addLateFee(AddLateFeeInput addLateFeeInput) {
         final College college = collegeRepository.findById(addLateFeeInput.getCollegeId()).get();
         final Branch branch = branchRepository.findById(addLateFeeInput.getBranchId()).get();
-        final LateFee lateFee = new LateFee();
-        lateFee.setAssignLateFee(addLateFeeInput.getAssignLateFee());
-        lateFee.setLateFeeDays(addLateFeeInput.getLateFeeDays());
-        lateFee.setFixed(addLateFeeInput.getFixed());
-        lateFee.setPercentage(addLateFeeInput.getPercentage());
-        lateFee.setFixedCharges(addLateFeeInput.getFixedCharges());
-        lateFee.setPercentCharges(addLateFeeInput.getPercentCharges());
-        lateFee.setLateFeeAssignmentFrequency(addLateFeeInput.getLateFeeAssignmentFrequency());
+        LateFee lateFee = CommonUtil.createCopyProperties(addLateFeeInput, LateFee.class);
+        
+        
+//        lateFee.setAssignLateFee(addLateFeeInput.getAssignLateFee());
+//        lateFee.setLateFeeDays(addLateFeeInput.getLateFeeDays());
+//        lateFee.setFixed(addLateFeeInput.getFixed());
+//        lateFee.setPercentage(addLateFeeInput.getPercentage());
+//        lateFee.setFixedCharges(addLateFeeInput.getFixedCharges());
+//        lateFee.setPercentCharges(addLateFeeInput.getPercentCharges());
+//        lateFee.setLateFeeOneTime(addLateFeeInput.getLateFeeOneTime());
+//        lateFee.setLateFeeRepeatDays(addLateFeeInput.getLateFeeRepeatDays());
         lateFee.setCollege(college);
         lateFee.setBranch(branch);
         lateFeeRepository.save(lateFee);
@@ -2764,10 +2767,13 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateLateFeeInput.getPercentCharges() != null) {
             lateFee.setPercentCharges(updateLateFeeInput.getPercentCharges());
         }
-        if (updateLateFeeInput.getLateFeeAssignmentFrequency() != null) {
-            lateFee.setLateFeeAssignmentFrequency(updateLateFeeInput.getLateFeeAssignmentFrequency());
+        if (updateLateFeeInput.getLateFeeOneTime() != null) {
+        	lateFee.setLateFeeOneTime(updateLateFeeInput.getLateFeeOneTime());
         }
-
+        if (updateLateFeeInput.getLateFeeRepeatDays() != null) {
+        	lateFee.setLateFeeRepeatDays(updateLateFeeInput.getLateFeeRepeatDays());
+        }
+        
         if (updateLateFeeInput.getCollegeId() != null) {
             final College college = collegeRepository.findById(updateLateFeeInput.getCollegeId()).get();
             lateFee.setCollege(college);

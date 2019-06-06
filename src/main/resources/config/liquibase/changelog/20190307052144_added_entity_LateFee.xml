@@ -41,12 +41,16 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="percent_charges" type="bigint">
+            <column name="percent_charges" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="late_fee_assignment_frequency" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="late_fee_one_time" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="late_fee_repeat_days" type="integer">
+                <constraints nullable="true" />
             </column>
 
             <column name="college_id" type="bigint">

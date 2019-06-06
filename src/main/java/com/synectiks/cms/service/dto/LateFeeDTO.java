@@ -1,11 +1,8 @@
 package com.synectiks.cms.service.dto;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.Frequency;
 
 /**
  * A DTO for the LateFee entity.
@@ -15,26 +12,30 @@ public class LateFeeDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Status assignLateFee;
+    private String assignLateFee;
 
     @NotNull
     private Integer lateFeeDays;
 
-    private Status fixed;
+    private String fixed;
 
-    private Status percentage;
+    private String percentage;
 
     private Long fixedCharges;
 
-    private Long percentCharges;
+    private String percentCharges;
 
-    @NotNull
-    private Frequency lateFeeAssignmentFrequency;
+    private String lateFeeOneTime;
 
+    private Integer lateFeeRepeatDays;
 
     private Long collegeId;
 
     private Long branchId;
+
+    private Long academicYearId;
+
+    private Long termId;
 
     public Long getId() {
         return id;
@@ -44,11 +45,11 @@ public class LateFeeDTO implements Serializable {
         this.id = id;
     }
 
-    public Status getAssignLateFee() {
+    public String getAssignLateFee() {
         return assignLateFee;
     }
 
-    public void setAssignLateFee(Status assignLateFee) {
+    public void setAssignLateFee(String assignLateFee) {
         this.assignLateFee = assignLateFee;
     }
 
@@ -60,19 +61,19 @@ public class LateFeeDTO implements Serializable {
         this.lateFeeDays = lateFeeDays;
     }
 
-    public Status getFixed() {
+    public String getFixed() {
         return fixed;
     }
 
-    public void setFixed(Status fixed) {
+    public void setFixed(String fixed) {
         this.fixed = fixed;
     }
 
-    public Status getPercentage() {
+    public String getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Status percentage) {
+    public void setPercentage(String percentage) {
         this.percentage = percentage;
     }
 
@@ -84,20 +85,28 @@ public class LateFeeDTO implements Serializable {
         this.fixedCharges = fixedCharges;
     }
 
-    public Long getPercentCharges() {
+    public String getPercentCharges() {
         return percentCharges;
     }
 
-    public void setPercentCharges(Long percentCharges) {
+    public void setPercentCharges(String percentCharges) {
         this.percentCharges = percentCharges;
     }
 
-    public Frequency getLateFeeAssignmentFrequency() {
-        return lateFeeAssignmentFrequency;
+    public String getLateFeeOneTime() {
+        return lateFeeOneTime;
     }
 
-    public void setLateFeeAssignmentFrequency(Frequency lateFeeAssignmentFrequency) {
-        this.lateFeeAssignmentFrequency = lateFeeAssignmentFrequency;
+    public void setLateFeeOneTime(String lateFeeOneTime) {
+        this.lateFeeOneTime = lateFeeOneTime;
+    }
+
+    public Integer getLateFeeRepeatDays() {
+        return lateFeeRepeatDays;
+    }
+
+    public void setLateFeeRepeatDays(Integer lateFeeRepeatDays) {
+        this.lateFeeRepeatDays = lateFeeRepeatDays;
     }
 
     public Long getCollegeId() {
@@ -114,6 +123,22 @@ public class LateFeeDTO implements Serializable {
 
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
+    }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
     }
 
     @Override
@@ -146,10 +171,13 @@ public class LateFeeDTO implements Serializable {
             ", fixed='" + getFixed() + "'" +
             ", percentage='" + getPercentage() + "'" +
             ", fixedCharges=" + getFixedCharges() +
-            ", percentCharges=" + getPercentCharges() +
-            ", lateFeeAssignmentFrequency='" + getLateFeeAssignmentFrequency() + "'" +
+            ", percentCharges='" + getPercentCharges() + "'" +
+            ", lateFeeOneTime='" + getLateFeeOneTime() + "'" +
+            ", lateFeeRepeatDays=" + getLateFeeRepeatDays() +
             ", college=" + getCollegeId() +
             ", branch=" + getBranchId() +
+            ", academicYear=" + getAcademicYearId() +
+            ", term=" + getTermId() +
             "}";
     }
 }

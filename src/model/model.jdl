@@ -396,13 +396,14 @@ remainderRecipients String
 }
 
 entity LateFee {
-assignLateFee Status required
+assignLateFee String required
 lateFeeDays Integer required
-fixed Status
-percentage Status
+fixed String
+percentage String
 fixedCharges Long
-percentCharges Long
-lateFeeAssignmentFrequency Frequency required
+percentCharges String
+lateFeeOneTime String
+lateFeeRepeatDays Integer
 }
 
 entity Invoice {
