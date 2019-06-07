@@ -1,5 +1,6 @@
 package com.synectiks.cms.business.service;
 
+import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import org.springframework.beans.BeanUtils;
@@ -22,29 +23,27 @@ public class SummaryDataService {
     Date date = new Date();
     private SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 
-    public List<ExamSettingPojo> getExams() {
-        List<ExamSettingPojo> original = new ArrayList<>();
+    public List<AcExamSetting> acExamSettings() {
+        List<AcExamSetting> original = new ArrayList<>();
         examSettingRepo.findAll().forEach(examsetting -> {
 
-            ExamSettingPojo settingModel = new ExamSettingPojo();
+            AcExamSetting settingModel = new AcExamSetting();
             BeanUtils.copyProperties(examsetting, settingModel);
-            settingModel.setDepartmentId(examsetting.getDepartment().getId());
-            settingModel.setSectionId(examsetting.getSection().getSection().name());
+            settingModel.setDepartmnt(examsetting.getDepartment().getName());
+            settingModel.setSectn(examsetting.getSection().getSection().name());
             settingModel.setSubject(examsetting.getSubject());
             settingModel.setAction(examsetting.getActions());
-            settingModel.setExamDate(examsetting.getExamDate());
             settingModel.setEndDate(examsetting.getEndDate());
             settingModel.setStartDate(examsetting.getStartDate());
+            settingModel.setEndDate(examsetting.getExamDate());
 
             original.add(settingModel);
 
-            Date endDate = original.stream().map(ExamSettingPojo::getExamDate).max(Date::compareTo).get();
-//            ExamSettingPojo ae = Collections.max(original, Comparator.comparing(ExamSettingPojo::getDate));
 
         });
 
-        List<ExamSettingPojo> mergedList = new ArrayList<ExamSettingPojo>();
-        for(ExamSettingPojo p : original) {
+        List<AcExamSetting> mergedList = new ArrayList<AcExamSetting>();
+        for(AcExamSetting p : original) {
             int index = mergedList.indexOf(p);
             if(index != -1) {
                 mergedList.set(index, mergedList.get(index).merge(p));
@@ -52,9 +51,27 @@ public class SummaryDataService {
                 mergedList.add(p);
             }
         }
-        System.out.println(mergedList);
+        
         return  mergedList;
     }
+
+
+
+    public AcExamSetting acExamSetting(Long id) {
+
+        Optional<AcademicExamSetting> ain = examSettingRepo.findById(id);
+        AcExamSetting aimodel = new AcExamSetting();
+        BeanUtils.copyProperties(ain, aimodel);
+
+        aimodel.setDepartmnt(ain.get().getDepartment().getName());
+        aimodel.setAction(ain.get().getActions());
+
+        return aimodel;
+
+
+    }
+
+
 
 
 }

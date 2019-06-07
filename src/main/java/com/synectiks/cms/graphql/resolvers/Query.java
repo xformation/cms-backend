@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
 import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.business.service.ExamSettingPojo;
+import com.synectiks.cms.business.service.AcExamSetting;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
@@ -198,13 +198,7 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(collegeRepository.findAll());
     }
 
-    public AcademicExamSetting academicExamSetting (long id) {
-        return academicExamSettingRepository.findById(id).get();
-    }
 
-    public List<AcademicExamSetting> academicExamSettings() {
-        return Lists.newArrayList(academicExamSettingRepository.findAll());
-    }
 
     public Branch branch(long id) {
         return branchRepository.findById(id).get();
@@ -280,9 +274,25 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(semesterRepository.findAll());
     }*/
 
-    public List<ExamSettingPojo> getExams(){
-        return  Lists.newArrayList(summaryFilter.getExams());
+    public AcademicExamSetting academicExamSetting (long id) {
+        return academicExamSettingRepository.findById(id).get();
     }
+
+    public List<AcademicExamSetting> academicExamSettings() {
+        return Lists.newArrayList(academicExamSettingRepository.findAll());
+    }
+
+   public AcExamSetting acExamSetting(Long id){
+        return summaryFilter.acExamSetting(id);
+   }
+   public List<AcExamSetting> acExamSettings(){
+
+        return  Lists.newArrayList(summaryFilter.acExamSettings());
+    }
+
+
+
+
     public List<TypeOfGrading> typeOfGradings() {
         return Lists.newArrayList(typeOfGradingRepository.findAll());
     }

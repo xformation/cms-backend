@@ -1,24 +1,26 @@
 package com.synectiks.cms.business.service;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.*;
 
-public  class ExamSettingPojo implements Serializable{
+public  class AcExamSetting implements Serializable{
 
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    private Long id;
     private String examType;
-    private Long departmentId;
-    private String sectionId;
+    private String departmnt;
+    private String sectn;
     private String action;
     private String subject;
     private Date startDate;
     private Date endDate;
     private Date examDate;
 
-    public ExamSettingPojo() { }
+    public AcExamSetting() { }
 
     public String getExamType() {
         return examType;
@@ -28,12 +30,20 @@ public  class ExamSettingPojo implements Serializable{
         this.examType = examType;
     }
 
-    public Long getDepartmentId() {
-        return departmentId;
+    public String getDepartmnt() {
+        return departmnt;
     }
 
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmnt(String departmnt) {
+        this.departmnt = departmnt;
+    }
+
+    public String getSectn() {
+        return sectn;
+    }
+
+    public void setSectn(String sectn) {
+        this.sectn = sectn;
     }
 
     public String getAction() {
@@ -44,13 +54,6 @@ public  class ExamSettingPojo implements Serializable{
         this.action = action;
     }
 
-    public String getSectionId() {
-        return sectionId;
-    }
-
-    public void setSectionId(String sectionId) {
-        this.sectionId = sectionId;
-    }
 
     public String getSubject() {
         return subject;
@@ -60,6 +63,13 @@ public  class ExamSettingPojo implements Serializable{
         this.subject = subject;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Date getExamDate() {
         return examDate;
@@ -89,23 +99,23 @@ public  class ExamSettingPojo implements Serializable{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExamSettingPojo that = (ExamSettingPojo) o;
+        AcExamSetting that = (AcExamSetting) o;
         return examType.equals(that.examType) &&
-            departmentId.equals(that.departmentId);
+            departmnt.equals(that.departmnt);
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(examType, departmentId);
+        return Objects.hash(examType, departmnt);
     }
 
 
-    public ExamSettingPojo(String examType, Long departmentId, String sectionId, String action, String subject, Date examDate, Date startDate, Date endDate) {
+    public AcExamSetting(String examType, String departmnt, String sectn, String action, String subject, Date examDate, Date startDate, Date endDate) {
         this.examType = examType;
-        this.departmentId = departmentId;
+        this.departmnt = departmnt;
         this.examDate= examDate;
-        this.sectionId = sectionId;
+        this.sectn = sectn;
         this.action = action;
         this.subject = subject;
         this.startDate = startDate;
@@ -114,7 +124,7 @@ public  class ExamSettingPojo implements Serializable{
 
 
 
-    public ExamSettingPojo merge(ExamSettingPojo other) {
+    public AcExamSetting merge(AcExamSetting other) {
         assert (this.equals(other));
 
         String str =this.subject+","+other.subject;
@@ -138,7 +148,7 @@ public  class ExamSettingPojo implements Serializable{
         str = sbTemp.toString();
 
 
-        String str1 =this.sectionId+","+other.sectionId;
+        String str1 =this.sectn+","+other.sectn;
         String[] strWords1 = str1.split("\\,+");
 
         LinkedHashSet<String> lhSetWords1
@@ -157,10 +167,10 @@ public  class ExamSettingPojo implements Serializable{
         }
         str1 = sbTemp1.toString();
 
-        return new ExamSettingPojo(
+        return new AcExamSetting(
             this.examType,
-            this.departmentId,
-            sectionId=str1,
+            this.departmnt,
+            sectn=str1,
             this.action,
             subject=str,
             this.examDate,

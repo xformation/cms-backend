@@ -239,7 +239,9 @@ type Query {
   invoice(id:Long!):Invoice!
   invoices:[Invoice!]!
 
-  getExams:[ExamSettingPojo!]!
+  acExamSetting(id:Long!):AcExamSetting!
+  acExamSettings:[AcExamSetting!]!
+
 
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
@@ -279,16 +281,16 @@ type Query {
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
 }
 
-type ExamSettingPojo{
-
+type AcExamSetting{
+    id:Long!
     examType: String!
-    departmentId: Long!
-    sectionId: String!
     action: String!
     subject: String!
     endDate: Date!
     startDate: Date!
     examDate: Date!
+    departmnt: String!
+    sectn: String!
    }
 
 
