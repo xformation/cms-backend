@@ -2633,3 +2633,31 @@ mutation updateAcademicSubjects($input:AcademicSubjectMutationPayload!){
 
   }
 }
+
+----------------------------------------------------------------------------------------------------------
+
+mutation updatePaymentRemainder($input: UpdatePaymentRemainderInput!){
+    updatePaymentRemainder(input: $input){
+      paymentRemainder{
+        id
+      }
+    }
+}
+
+{
+  "input": {
+    "id": 1501,
+    "isAutoRemainder": "NO",
+    "isFirstPaymentRemainder": null,
+    "firstPaymentRemainderDays": null,
+    "isSecondPaymentRemainder": null,
+    "secondPaymentRemainderDays": null,
+    "isOverDuePaymentRemainder": null,
+    "overDuePaymentRemainderAfterDueDateOrUntilPaid": null,
+    "overDuePaymentRemainderDays": null,
+    "isRemainderRecipients": null,
+    "remainderRecipients": null,
+    "collegeId": 951,
+    "branchId": 1001
+  }
+}

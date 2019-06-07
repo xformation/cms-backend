@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
@@ -2664,7 +2666,7 @@ public class Mutation implements GraphQLMutationResolver {
     public AddDueDatePayload addDueDate(AddDueDateInput addDueDateInput) {
         College college = collegeRepository.findById(addDueDateInput.getCollegeId()).get();
         Branch branch = branchRepository.findById((addDueDateInput.getBranchId())).get();
-        final DueDate dueDate = new DueDate();
+        DueDate dueDate = new DueDate();
         dueDate.setPaymentMethod(addDueDateInput.getPaymentMethod());
         dueDate.setInstallments(addDueDateInput.getInstallments());
         dueDate.setDayDesc(addDueDateInput.getDayDesc());
@@ -2672,7 +2674,7 @@ public class Mutation implements GraphQLMutationResolver {
         dueDate.setFrequency(findFrequency(addDueDateInput.getFrequency()));
         dueDate.setCollege(college);
         dueDate.setBranch(branch);
-        dueDateRepository.save(dueDate);
+        dueDate = dueDateRepository.save(dueDate);
         return new AddDueDatePayload(dueDate);
     }
     
@@ -2793,15 +2795,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdatePaymentRemainderPayload updatePaymentRemainder(UpdatePaymentRemainderInput updatePaymentRemainderInput) {
         PaymentRemainder pr = paymentRemainderRepository.findById(updatePaymentRemainderInput.getId()).get();
-//        if (updatePaymentRemainderInput.getFeeRemainder() != null) {
-//            paymentRemainder.setFeeRemainder((updatePaymentRemainderInput.getFeeRemainder()));
-//        }
-//        if (updatePaymentRemainderInput.getNoticeDay() != null) {
-//            paymentRemainder.setNoticeDay((updatePaymentRemainderInput.getNoticeDay()));
-//        }
-//        if (updatePaymentRemainderInput.getOverDueRemainder() != null) {
-//            paymentRemainder.setOverDueRemainder((updatePaymentRemainderInput.getOverDueRemainder()));
-//        }
+
         if(updatePaymentRemainderInput.getIsAutoRemainder() != null) {
         	pr.setIsAutoRemainder(updatePaymentRemainderInput.getIsAutoRemainder());
         }
@@ -3092,4 +3086,24 @@ public class Mutation implements GraphQLMutationResolver {
 	public List<DailyAttendanceVo> getStudentAttendanceDataForAdmin(StudentAttendanceFilterInput filter) throws Exception {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendanceDataForAdmin(filter));
     }
+	
+	@Transactional(propagation=Propagation.REQUIRED)
+	public QueryResult addDueDatePaymentRemLateFee(AddDueDateInput addDueDateInput, AddPaymentRemainderInput addPaymentRemainderInput,
+			AddLateFeeInput addLateFeeInput) {
+		QueryResult qr = new QueryResult();
+		qr.setStatusCode(0);
+		qr.setStatusDesc("DueDateId: #ddid#, PaymentRemainderId: #prid#, LateFeeId: #lfid#");
+		try {
+			AddDueDatePayload ddpl = addDueDate(addDueDateInput);
+			AddPaymentRemainderPayload prpl = addPaymentRemainder(addPaymentRemainderInput);
+			AddLateFeePayload lfpl = addLateFee(addLateFeeInput);
+			qr.getStatusDesc().replaceAll("#ddid#", String.valueOf(ddpl.getId()));
+			qr.getStatusDesc().replaceAll("#prid#", String.valueOf(prpl.getPaymentRemainder().getId()));
+			qr.getStatusDesc().replaceAll("#lfid#", String.valueOf(lfpl.getLateFee().getId()));
+		}catch(Exception e) {
+			qr.setStatusCode(1);
+			qr.setStatusDesc("Due to some error due date, payment remainder and late fee could not be saved");
+		}
+		return qr;
+	}
 }
