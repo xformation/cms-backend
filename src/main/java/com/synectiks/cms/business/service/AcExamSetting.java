@@ -129,7 +129,7 @@ public  class AcExamSetting implements Serializable{
 
         String str =this.subject+","+other.subject;
         String[] strWords = str.split("\\,+");
-
+        Arrays.sort(strWords);
         LinkedHashSet<String> lhSetWords
             = new LinkedHashSet<String>( Arrays.asList(strWords) );
 
@@ -150,7 +150,7 @@ public  class AcExamSetting implements Serializable{
 
         String str1 =this.sectn+","+other.sectn;
         String[] strWords1 = str1.split("\\,+");
-
+        Arrays.sort(strWords1);
         LinkedHashSet<String> lhSetWords1
             = new LinkedHashSet<String>( Arrays.asList(strWords1) );
 
