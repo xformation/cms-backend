@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,7 @@ import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.City;
 import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.domain.CmsFeeSettingsVo;
 import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.CompetitiveExam;
@@ -182,6 +185,7 @@ import com.synectiks.cms.graphql.types.Documents.RemoveDocumentsInput;
 import com.synectiks.cms.graphql.types.Documents.RemoveDocumentsPayload;
 import com.synectiks.cms.graphql.types.Documents.UpdateDocumentsInput;
 import com.synectiks.cms.graphql.types.Documents.UpdateDocumentsPayload;
+import com.synectiks.cms.graphql.types.DueDate.AbstractDueDatePayload;
 import com.synectiks.cms.graphql.types.DueDate.AddDueDateInput;
 import com.synectiks.cms.graphql.types.DueDate.AddDueDatePayload;
 import com.synectiks.cms.graphql.types.DueDate.RemoveDueDateInput;
@@ -218,6 +222,7 @@ import com.synectiks.cms.graphql.types.Invoice.RemoveInvoiceInput;
 import com.synectiks.cms.graphql.types.Invoice.RemoveInvoicePayload;
 import com.synectiks.cms.graphql.types.Invoice.UpdateInvoiceInput;
 import com.synectiks.cms.graphql.types.Invoice.UpdateInvoicePayload;
+import com.synectiks.cms.graphql.types.LateFee.AbstractLateFeePayload;
 import com.synectiks.cms.graphql.types.LateFee.AddLateFeeInput;
 import com.synectiks.cms.graphql.types.LateFee.AddLateFeePayload;
 import com.synectiks.cms.graphql.types.LateFee.RemoveLateFeeInput;
@@ -236,6 +241,7 @@ import com.synectiks.cms.graphql.types.LegalEntity.RemoveLegalEntityInput;
 import com.synectiks.cms.graphql.types.LegalEntity.RemoveLegalEntityPayload;
 import com.synectiks.cms.graphql.types.LegalEntity.UpdateLegalEntityInput;
 import com.synectiks.cms.graphql.types.LegalEntity.UpdateLegalEntityPayload;
+import com.synectiks.cms.graphql.types.PaymentRemainder.AbstractPaymentRemainderPayload;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AddPaymentRemainderInput;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AddPaymentRemainderPayload;
 import com.synectiks.cms.graphql.types.PaymentRemainder.RemovePaymentRemainderInput;
@@ -2740,29 +2746,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public UpdateLateFeePayload updateLateFee(UpdateLateFeeInput updateLateFeeInput) {
-        LateFee lateFee = lateFeeRepository.findById(updateLateFeeInput.getId()).get();
-        if (updateLateFeeInput.getIsAutoLateFee() != null) {
-            lateFee.setIsAutoLateFee(updateLateFeeInput.getIsAutoLateFee());
-        }
-        if (updateLateFeeInput.getLateFeeDays() != null) {
-            lateFee.setLateFeeDays(updateLateFeeInput.getLateFeeDays());
-        }
-        if (updateLateFeeInput.getChargeType() != null) {
-            lateFee.setChargeType(updateLateFeeInput.getChargeType());
-        }
-       
-        if (updateLateFeeInput.getFixedCharges() != null) {
-            lateFee.setFixedCharges(updateLateFeeInput.getFixedCharges());
-        }
-        if (updateLateFeeInput.getPercentCharges() != null) {
-            lateFee.setPercentCharges(updateLateFeeInput.getPercentCharges());
-        }
-        if (updateLateFeeInput.getLateFeeFrequency() != null) {
-        	lateFee.setLateFeeFrequency(updateLateFeeInput.getLateFeeFrequency());
-        }
-        if (updateLateFeeInput.getLateFeeRepeatDays() != null) {
-        	lateFee.setLateFeeRepeatDays(updateLateFeeInput.getLateFeeRepeatDays());
-        }
+        LateFee lateFee = CommonUtil.createCopyProperties(updateLateFeeInput, LateFee.class);
         
         if (updateLateFeeInput.getCollegeId() != null) {
             final College college = collegeRepository.findById(updateLateFeeInput.getCollegeId()).get();
@@ -3088,22 +3072,68 @@ public class Mutation implements GraphQLMutationResolver {
     }
 	
 	@Transactional(propagation=Propagation.REQUIRED)
-	public QueryResult addDueDatePaymentRemLateFee(AddDueDateInput addDueDateInput, AddPaymentRemainderInput addPaymentRemainderInput,
-			AddLateFeeInput addLateFeeInput) {
+	public QueryResult saveDueDatePaymentRemLateFee(UpdateDueDateInput udd, UpdatePaymentRemainderInput upr, UpdateLateFeeInput ulf) {
 		QueryResult qr = new QueryResult();
 		qr.setStatusCode(0);
 		qr.setStatusDesc("DueDateId: #ddid#, PaymentRemainderId: #prid#, LateFeeId: #lfid#");
+		AbstractDueDatePayload ddpl = null;
+		AbstractPaymentRemainderPayload prpl = null;
+		AbstractLateFeePayload lfpl = null;
 		try {
-			AddDueDatePayload ddpl = addDueDate(addDueDateInput);
-			AddPaymentRemainderPayload prpl = addPaymentRemainder(addPaymentRemainderInput);
-			AddLateFeePayload lfpl = addLateFee(addLateFeeInput);
-			qr.getStatusDesc().replaceAll("#ddid#", String.valueOf(ddpl.getId()));
-			qr.getStatusDesc().replaceAll("#prid#", String.valueOf(prpl.getPaymentRemainder().getId()));
-			qr.getStatusDesc().replaceAll("#lfid#", String.valueOf(lfpl.getLateFee().getId()));
+			if(udd.getId() == -1) {
+				logger.debug("Its a new record for due date. Adding due date.");
+				AddDueDateInput add = CommonUtil.createCopyProperties(udd, AddDueDateInput.class);
+				add.setId(null);
+				ddpl = addDueDate(add);
+			}else {
+				logger.debug("Its an existing record for due date. Updating due date.");
+				ddpl = updateDueDate(udd);
+			}
+			
+			if(upr.getId() == -1) {
+				logger.debug("Its a new record for payment remainder. Adding payment remainder.");
+				AddPaymentRemainderInput apr = CommonUtil.createCopyProperties(upr, AddPaymentRemainderInput.class);
+				apr.setId(null);
+				prpl = addPaymentRemainder(apr);
+			}else {
+				logger.debug("Its an existing record for payment remainder. Updating payment remainder.");
+				prpl = updatePaymentRemainder(upr);
+			}
+			
+			if(ulf.getId() == -1) {
+				logger.debug("Its a new record for late fee. Adding late fee.");
+				AddLateFeeInput alf = CommonUtil.createCopyProperties(ulf, AddLateFeeInput.class);
+				alf.setId(null);
+				lfpl = addLateFee(alf);
+			}else {
+				logger.debug("Its an existing record for late fee. Updating late fee.");
+				lfpl = updateLateFee(ulf);
+			}
+			
+			qr.setStatusDesc(qr.getStatusDesc().replaceAll("#ddid#", String.valueOf(ddpl.getDueDate().getId())));
+			qr.setStatusDesc(qr.getStatusDesc().replaceAll("#prid#", String.valueOf(prpl.getPaymentRemainder().getId())));
+			qr.setStatusDesc(qr.getStatusDesc().replaceAll("#lfid#", String.valueOf(lfpl.getLateFee().getId())));
 		}catch(Exception e) {
 			qr.setStatusCode(1);
 			qr.setStatusDesc("Due to some error due date, payment remainder and late fee could not be saved");
 		}
+		logger.debug("Success message : "+qr.getStatusDesc());
 		return qr;
+	}
+	
+	
+	public CmsFeeSettingsVo getFeeSettingData(Long branchId) {
+		LateFee lf = new LateFee();
+		Branch branch = new Branch();
+		branch.setId(branchId);
+		lf.setBranch(branch);
+		Example<LateFee> example = Example.of(lf);
+		Optional<LateFee> olf = this.lateFeeRepository.findOne(example);
+		CmsFeeSettingsVo vo = new CmsFeeSettingsVo();
+		if(olf.isPresent()) {
+			vo = CommonUtil.createCopyProperties(olf.get(), CmsFeeSettingsVo.class);
+			vo.setLateFeeId(olf.get().getId());		
+		}
+		return vo;
 	}
 }
