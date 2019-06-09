@@ -2778,39 +2778,8 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public UpdatePaymentRemainderPayload updatePaymentRemainder(UpdatePaymentRemainderInput updatePaymentRemainderInput) {
-        PaymentRemainder pr = paymentRemainderRepository.findById(updatePaymentRemainderInput.getId()).get();
-
-        if(updatePaymentRemainderInput.getIsAutoRemainder() != null) {
-        	pr.setIsAutoRemainder(updatePaymentRemainderInput.getIsAutoRemainder());
-        }
-        if(updatePaymentRemainderInput.getIsFirstPaymentRemainder() != null) {
-        	pr.setIsFirstPaymentRemainder(updatePaymentRemainderInput.getIsFirstPaymentRemainder());
-        }
-        if(updatePaymentRemainderInput.getFirstPaymentRemainderDays() != null) {
-        	pr.setFirstPaymentRemainderDays(updatePaymentRemainderInput.getFirstPaymentRemainderDays());
-        }
-        if(updatePaymentRemainderInput.getIsSecondPaymentRemainder() != null) {
-        	pr.setIsSecondPaymentRemainder(updatePaymentRemainderInput.getIsSecondPaymentRemainder());
-        }
-        if(updatePaymentRemainderInput.getSecondPaymentRemainderDays() != null) {
-        	pr.setSecondPaymentRemainderDays(updatePaymentRemainderInput.getSecondPaymentRemainderDays());
-        }
-        if(updatePaymentRemainderInput.getIsOverDuePaymentRemainder() != null) {
-        	pr.setIsOverDuePaymentRemainder(updatePaymentRemainderInput.getIsOverDuePaymentRemainder());
-        }
-        if(updatePaymentRemainderInput.getOverDuePaymentRemainderAfterDueDateOrUntilPaid() != null) {
-        	pr.setOverDuePaymentRemainderAfterDueDateOrUntilPaid(updatePaymentRemainderInput.getOverDuePaymentRemainderAfterDueDateOrUntilPaid());
-        }
-        if(updatePaymentRemainderInput.getOverDuePaymentRemainderDays() != null) {
-        	pr.setOverDuePaymentRemainderDays(updatePaymentRemainderInput.getOverDuePaymentRemainderDays());
-        }
-        if(updatePaymentRemainderInput.getIsRemainderRecipients() != null) {
-        	pr.setIsRemainderRecipients(updatePaymentRemainderInput.getIsRemainderRecipients());
-        }
-        if(updatePaymentRemainderInput.getRemainderRecipients() != null) {
-        	pr.setRemainderRecipients(updatePaymentRemainderInput.getRemainderRecipients());
-        }
-
+        PaymentRemainder pr = CommonUtil.createCopyProperties(updatePaymentRemainderInput, PaymentRemainder.class);
+        
         if (updatePaymentRemainderInput.getCollegeId() != null) {
             final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
             pr.setCollege(college);
@@ -3124,15 +3093,36 @@ public class Mutation implements GraphQLMutationResolver {
 	
 	public CmsFeeSettingsVo getFeeSettingData(Long branchId) {
 		LateFee lf = new LateFee();
+		PaymentRemainder pr = new PaymentRemainder();
 		Branch branch = new Branch();
 		branch.setId(branchId);
+		
 		lf.setBranch(branch);
 		Example<LateFee> example = Example.of(lf);
 		Optional<LateFee> olf = this.lateFeeRepository.findOne(example);
 		CmsFeeSettingsVo vo = new CmsFeeSettingsVo();
 		if(olf.isPresent()) {
+			logger.debug("Getting data for late fee");
 			vo = CommonUtil.createCopyProperties(olf.get(), CmsFeeSettingsVo.class);
 			vo.setLateFeeId(olf.get().getId());		
+		}
+		
+		pr.setBranch(branch);
+		Example<PaymentRemainder> exPr = Example.of(pr);
+		Optional<PaymentRemainder> opr = this.paymentRemainderRepository.findOne(exPr);
+		if(opr.isPresent()) {
+			logger.debug("Getting data for payment remainder");
+			vo.setPrId(opr.get().getId());
+			vo.setIsAutoRemainder(opr.get().getIsAutoRemainder());
+			vo.setIsFirstPaymentRemainder(opr.get().getIsFirstPaymentRemainder());
+			vo.setFirstPaymentRemainderDays(opr.get().getFirstPaymentRemainderDays());
+			vo.setIsSecondPaymentRemainder(opr.get().getIsSecondPaymentRemainder());
+			vo.setSecondPaymentRemainderDays(opr.get().getSecondPaymentRemainderDays());
+			vo.setIsOverDuePaymentRemainder(opr.get().getIsOverDuePaymentRemainder());
+			vo.setOverDuePaymentRemainderAfterDueDateOrUntilPaid(opr.get().getOverDuePaymentRemainderAfterDueDateOrUntilPaid());
+			vo.setOverDuePaymentRemainderDays(opr.get().getOverDuePaymentRemainderDays());
+			vo.setIsRemainderRecipients(opr.get().getIsRemainderRecipients());
+			vo.setRemainderRecipients(opr.get().getRemainderRecipients());
 		}
 		return vo;
 	}

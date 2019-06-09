@@ -1175,6 +1175,18 @@ type CmsFeeSettingsVo {
 	percentCharges: String
 	lateFeeFrequency: String
 	lateFeeRepeatDays: Int
+	
+	prId: Long
+    isAutoRemainder: String
+    isFirstPaymentRemainder: String
+    firstPaymentRemainderDays: Int
+    isSecondPaymentRemainder: String
+    secondPaymentRemainderDays: Int
+    isOverDuePaymentRemainder: String
+    overDuePaymentRemainderAfterDueDateOrUntilPaid: String
+    overDuePaymentRemainderDays: Int
+    isRemainderRecipients: String
+    remainderRecipients: String
 }
 
 input StudentListFilterInput {

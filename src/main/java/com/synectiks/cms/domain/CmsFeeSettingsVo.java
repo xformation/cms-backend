@@ -10,6 +10,21 @@ public class CmsFeeSettingsVo {
     private String lateFeeFrequency;
     private Integer lateFeeRepeatDays;
 	
+    
+    private Long prId;
+    private String isAutoRemainder;
+    private String isFirstPaymentRemainder;
+    private Integer firstPaymentRemainderDays;
+    private String isSecondPaymentRemainder;
+    private Integer secondPaymentRemainderDays;
+    private String isOverDuePaymentRemainder;
+    private String overDuePaymentRemainderAfterDueDateOrUntilPaid;
+    private Integer overDuePaymentRemainderDays;
+    private String isRemainderRecipients;
+    private String remainderRecipients;
+    
+    
+    
 	public String getIsAutoLateFee() {
 		return isAutoLateFee;
 	}
@@ -52,78 +67,79 @@ public class CmsFeeSettingsVo {
 	public void setLateFeeRepeatDays(Integer lateFeeRepeatDays) {
 		this.lateFeeRepeatDays = lateFeeRepeatDays;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((chargeType == null) ? 0 : chargeType.hashCode());
-		result = prime * result + ((fixedCharges == null) ? 0 : fixedCharges.hashCode());
-		
-		result = prime * result + ((isAutoLateFee == null) ? 0 : isAutoLateFee.hashCode());
-		result = prime * result + ((lateFeeDays == null) ? 0 : lateFeeDays.hashCode());
-		result = prime * result + ((lateFeeFrequency == null) ? 0 : lateFeeFrequency.hashCode());
-		result = prime * result + ((lateFeeRepeatDays == null) ? 0 : lateFeeRepeatDays.hashCode());
-		result = prime * result + ((percentCharges == null) ? 0 : percentCharges.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CmsFeeSettingsVo other = (CmsFeeSettingsVo) obj;
-		if (chargeType == null) {
-			if (other.chargeType != null)
-				return false;
-		} else if (!chargeType.equals(other.chargeType))
-			return false;
-		if (fixedCharges == null) {
-			if (other.fixedCharges != null)
-				return false;
-		} else if (!fixedCharges.equals(other.fixedCharges))
-			return false;
-		
-		if (isAutoLateFee == null) {
-			if (other.isAutoLateFee != null)
-				return false;
-		} else if (!isAutoLateFee.equals(other.isAutoLateFee))
-			return false;
-		if (lateFeeDays == null) {
-			if (other.lateFeeDays != null)
-				return false;
-		} else if (!lateFeeDays.equals(other.lateFeeDays))
-			return false;
-		if (lateFeeFrequency == null) {
-			if (other.lateFeeFrequency != null)
-				return false;
-		} else if (!lateFeeFrequency.equals(other.lateFeeFrequency))
-			return false;
-		if (lateFeeRepeatDays == null) {
-			if (other.lateFeeRepeatDays != null)
-				return false;
-		} else if (!lateFeeRepeatDays.equals(other.lateFeeRepeatDays))
-			return false;
-		if (percentCharges == null) {
-			if (other.percentCharges != null)
-				return false;
-		} else if (!percentCharges.equals(other.percentCharges))
-			return false;
-		return true;
-	}
-	@Override
-	public String toString() {
-		return "AbstractLateFeeInput [lateFeeId=" + lateFeeId + ", isAutoLateFee=" + isAutoLateFee + ", lateFeeDays=" + lateFeeDays
-				+ ", chargeType=" + chargeType + ", fixedCharges=" + fixedCharges + ", percentCharges=" + percentCharges
-				+ ", lateFeeFrequency=" + lateFeeFrequency + ", lateFeeRepeatDays=" + lateFeeRepeatDays + "]";
-	}
+
+	
 	public Long getLateFeeId() {
 		return lateFeeId;
 	}
 	public void setLateFeeId(Long lateFeeId) {
 		this.lateFeeId = lateFeeId;
+	}
+	public Long getPrId() {
+		return prId;
+	}
+	public void setPrId(Long prId) {
+		this.prId = prId;
+	}
+	public String getIsAutoRemainder() {
+		return isAutoRemainder;
+	}
+	public void setIsAutoRemainder(String isAutoRemainder) {
+		this.isAutoRemainder = isAutoRemainder;
+	}
+	public String getIsFirstPaymentRemainder() {
+		return isFirstPaymentRemainder;
+	}
+	public void setIsFirstPaymentRemainder(String isFirstPaymentRemainder) {
+		this.isFirstPaymentRemainder = isFirstPaymentRemainder;
+	}
+	public Integer getFirstPaymentRemainderDays() {
+		return firstPaymentRemainderDays;
+	}
+	public void setFirstPaymentRemainderDays(Integer firstPaymentRemainderDays) {
+		this.firstPaymentRemainderDays = firstPaymentRemainderDays;
+	}
+	public String getIsSecondPaymentRemainder() {
+		return isSecondPaymentRemainder;
+	}
+	public void setIsSecondPaymentRemainder(String isSecondPaymentRemainder) {
+		this.isSecondPaymentRemainder = isSecondPaymentRemainder;
+	}
+	public Integer getSecondPaymentRemainderDays() {
+		return secondPaymentRemainderDays;
+	}
+	public void setSecondPaymentRemainderDays(Integer secondPaymentRemainderDays) {
+		this.secondPaymentRemainderDays = secondPaymentRemainderDays;
+	}
+	public String getIsOverDuePaymentRemainder() {
+		return isOverDuePaymentRemainder;
+	}
+	public void setIsOverDuePaymentRemainder(String isOverDuePaymentRemainder) {
+		this.isOverDuePaymentRemainder = isOverDuePaymentRemainder;
+	}
+	public String getOverDuePaymentRemainderAfterDueDateOrUntilPaid() {
+		return overDuePaymentRemainderAfterDueDateOrUntilPaid;
+	}
+	public void setOverDuePaymentRemainderAfterDueDateOrUntilPaid(String overDuePaymentRemainderAfterDueDateOrUntilPaid) {
+		this.overDuePaymentRemainderAfterDueDateOrUntilPaid = overDuePaymentRemainderAfterDueDateOrUntilPaid;
+	}
+	public Integer getOverDuePaymentRemainderDays() {
+		return overDuePaymentRemainderDays;
+	}
+	public void setOverDuePaymentRemainderDays(Integer overDuePaymentRemainderDays) {
+		this.overDuePaymentRemainderDays = overDuePaymentRemainderDays;
+	}
+	public String getIsRemainderRecipients() {
+		return isRemainderRecipients;
+	}
+	public void setIsRemainderRecipients(String isRemainderRecipients) {
+		this.isRemainderRecipients = isRemainderRecipients;
+	}
+	public String getRemainderRecipients() {
+		return remainderRecipients;
+	}
+	public void setRemainderRecipients(String remainderRecipients) {
+		this.remainderRecipients = remainderRecipients;
 	}
     
     
