@@ -2998,7 +2998,11 @@ public class Mutation implements GraphQLMutationResolver {
     public Long getTotalCanceledInvoice(long collegeId, long branchId, long academicYearId) {
         return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
     }
-
+    
+    public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
+        return Lists.newArrayList(invoiceFilterProcessor.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId));
+    }
+    
     public Long getTotalAdmissions( long branchId, long admissionApplicationId) {
         return admissionEnquiryProcessor.getTotalAdmissions( branchId, admissionApplicationId);
     }

@@ -27,6 +27,10 @@ public class InvoiceFilterProcessor {
 		return cmsInvoiceService.searchInvoice(invoiceNumber, studentId, collegeId, branchId, academicYearId);
 	}
 	
+	public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
+		return cmsInvoiceService.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId);
+	}
+	
 	public Long getTotalInvoice(Long collegeId, Long branchId, Long academicYearId) {
 		return cmsInvoiceService.getTotalInvoice(collegeId, branchId, academicYearId);
 	}

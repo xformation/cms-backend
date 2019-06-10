@@ -1122,6 +1122,7 @@ type Mutation {
     updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
     removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
     searchInvoice(invoiceNumber:String, studentId:Long, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
+    searchInvoiceOnType(invoiceType:String, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
     getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!

@@ -108,6 +108,8 @@ public class CmsInvoiceService {
     	return cnt;
     }
     
+    
+    
     public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception {
     	Invoice inv = new Invoice();
     	College college = new College();
@@ -129,6 +131,41 @@ public class CmsInvoiceService {
     		student.setId(studentId);
     		inv.setStudent(student);
     	}
+    	Example<Invoice> example = Example.of(inv);
+    	List<Invoice> list = this.invoiceRepository.findAll(example);
+    	List<CmsInvoice> ls = new ArrayList<>();
+    	for(Invoice temp: list) {
+            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
+            CmsInvoice ctm = CommonUtil.createCopyProperties(temp, CmsInvoice.class);
+            ctm.setStrPaymentDate(stDt);
+            ls.add(ctm);
+        }
+    	return ls;
+    }
+    
+    public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception {
+    	Invoice inv = new Invoice();
+    	College college = new College();
+    	college.setId(collegeId);
+    	Branch branch = new Branch();
+    	branch.setId(branchId);
+    	AcademicYear ay  = new AcademicYear();
+    	ay.setId(academicYearId);
+    	
+    	inv.setCollege(college);
+    	inv.setBranch(branch);
+    	inv.setAcademicYear(ay);
+    	
+    	if(!invoiceType.equalsIgnoreCase("TOTAL")) {
+    		if(invoiceType.equalsIgnoreCase("PAID")) {
+    			inv.setPaymentStatus(InvoicePaymentStatus.PAID);
+    		}else if(invoiceType.equalsIgnoreCase("UNPAID")) {
+    			inv.setPaymentStatus(InvoicePaymentStatus.UNPAID);
+    		}else if(invoiceType.equalsIgnoreCase("CANCELED")) {
+    			inv.setPaymentStatus(InvoicePaymentStatus.CANCELED);
+    		}
+    	}
+    	
     	Example<Invoice> example = Example.of(inv);
     	List<Invoice> list = this.invoiceRepository.findAll(example);
     	List<CmsInvoice> ls = new ArrayList<>();
