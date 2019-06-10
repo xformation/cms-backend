@@ -1,5 +1,7 @@
 package com.synectiks.cms.business.service;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -8,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 
-public  class AcExamSetting implements Serializable{
-    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
+    DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final long serialVersionUID = 1L;
 
@@ -24,6 +26,8 @@ public  class AcExamSetting implements Serializable{
     private Date startDate;
     private Date endDate;
     private Date examDate;
+    private String st;
+    private String ed;
 
     public AcExamSetting() { }
 
@@ -109,6 +113,21 @@ public  class AcExamSetting implements Serializable{
     }
 
 
+    public String getSt() {
+        return st;
+    }
+
+    public void setSt(String st) {
+        this.st = st;
+    }
+
+    public String getEd() {
+        return ed;
+    }
+
+    public void setEd(String ed) {
+        this.ed = ed;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -126,19 +145,27 @@ public  class AcExamSetting implements Serializable{
     }
 
 
-    public AcExamSetting(String examType, String departmnt,String bctch, String sectn, String action, String subject, Date examDate, Date startDate, Date endDate) {
+    public AcExamSetting(String examType, String departmnt, String bctch, String sectn, String action, String subject, Date startDate, Date endDate, Date examDate, String st, String ed) {
         this.examType = examType;
         this.departmnt = departmnt;
         this.bctch = bctch;
-        this.examDate= examDate;
         this.sectn = sectn;
         this.action = action;
         this.subject = subject;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.examDate = examDate;
+        this.st = st;
+        this.ed = ed;
     }
 
-
+    @Override
+    public int compareTo(AcExamSetting u) {
+        if (getExamDate() == null || u.getExamDate() == null) {
+            return 0;
+        }
+        return getExamDate().compareTo(u.getExamDate());
+    }
 
     public AcExamSetting merge(AcExamSetting other) {
         assert (this.equals(other));
@@ -184,30 +211,11 @@ public  class AcExamSetting implements Serializable{
         str1 = sbTemp1.toString();
 
 
+if(this.examDate.equals(other.examDate)){
+    ed=sdf.format(this.examDate);
+    st=sdf.format(this.examDate);
+}
 
-
-
-
-//        action=this.examDate+","+other.examDate;
-//        String[] strWords2 = action.split("\\,+");
-//        Arrays.sort(strWords2);
-//        LinkedHashSet<String> lhSetWords2
-//            = new LinkedHashSet<String>( Arrays.asList(strWords2) );
-//       String a =Collections.max(lhSetWords2);
-//        StringBuilder sbTemp2 = new StringBuilder();
-//        int index2 = 0;
-//
-//        for(String s2 : lhSetWords2){
-//
-//            if(index2 > 0)
-//                sbTemp2.append(",");
-//
-//            sbTemp2.append(s2);
-//            index2++;
-//        }
-//        action = sbTemp2.toString();
-//
-//
 
         return new AcExamSetting(
             this.examType,
@@ -215,12 +223,16 @@ public  class AcExamSetting implements Serializable{
             this.bctch,
             sectn=str1,
            this.action,
+               //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
             subject=str,
             this.examDate,
-            this.endDate=other.examDate,
-            this.startDate
+            this.endDate,
+            this.startDate,
+            this.st=sdf.format(this.examDate),
+            this.ed=sdf.format(other.examDate)
 
         );
     }
+
 
 }

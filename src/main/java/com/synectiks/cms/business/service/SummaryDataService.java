@@ -7,8 +7,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class SummaryDataService {
@@ -36,14 +38,14 @@ public class SummaryDataService {
             settingModel.setAction(examsetting.getActions());
             settingModel.setEndDate(examsetting.getEndDate());
             settingModel.setStartDate(examsetting.getStartDate());
-            settingModel.setEndDate(examsetting.getExamDate());
-
+            settingModel.setExamDate(examsetting.getExamDate());
+            settingModel.setSt(examsetting.getExamDate().toString());
+            settingModel.setEd(examsetting.getExamDate().toString());
+            Collections.sort(original);
             original.add(settingModel);
 
 
         });
-
-
         List<AcExamSetting> mergedList = new ArrayList<AcExamSetting>();
         for (AcExamSetting p : original) {
             int index = mergedList.indexOf(p);
@@ -54,7 +56,8 @@ public class SummaryDataService {
                 mergedList.add(p);
             }
         }
-        Collections.sort(mergedList, new CustomComparator());
+
+
         return mergedList;
     }
 
