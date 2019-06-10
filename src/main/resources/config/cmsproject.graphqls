@@ -290,6 +290,7 @@ type AcExamSetting{
     startDate: Date!
     examDate: Date!
     departmnt: String!
+    bctch: String!
     sectn: String!
    }
 

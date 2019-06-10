@@ -30,6 +30,7 @@ public class SummaryDataService {
             AcExamSetting settingModel = new AcExamSetting();
             BeanUtils.copyProperties(examsetting, settingModel);
             settingModel.setDepartmnt(examsetting.getDepartment().getName());
+            settingModel.setBctch(examsetting.getBatch().getBatch().name());
             settingModel.setSectn(examsetting.getSection().getSection().name());
             settingModel.setSubject(examsetting.getSubject());
             settingModel.setAction(examsetting.getActions());
@@ -42,20 +43,20 @@ public class SummaryDataService {
 
         });
 
+
         List<AcExamSetting> mergedList = new ArrayList<AcExamSetting>();
-        for(AcExamSetting p : original) {
+        for (AcExamSetting p : original) {
             int index = mergedList.indexOf(p);
-            if(index != -1) {
+
+            if (index != -1) {
                 mergedList.set(index, mergedList.get(index).merge(p));
             } else {
                 mergedList.add(p);
             }
         }
-        
-        return  mergedList;
+        Collections.sort(mergedList, new CustomComparator());
+        return mergedList;
     }
-
-
 
     public AcExamSetting acExamSetting(Long id) {
 
