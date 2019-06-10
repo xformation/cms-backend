@@ -3126,4 +3126,22 @@ public class Mutation implements GraphQLMutationResolver {
 		}
 		return vo;
 	}
+	
+	public CmsFeeSettingsVo getFeeSettingDueDateData(Long branchId, String paymentType) {
+		Branch branch = new Branch();
+		branch.setId(branchId);
+		DueDate dueDate = new DueDate();
+		dueDate.setBranch(branch);
+		dueDate.setPaymentMethod(paymentType);
+		
+		CmsFeeSettingsVo vo = new CmsFeeSettingsVo();
+		Example<DueDate> example = Example.of(dueDate);
+		Optional<DueDate> odd = this.dueDateRepository.findOne(example);
+		if(odd.isPresent()) {
+			logger.debug("Getting data for due date");
+			vo = CommonUtil.createCopyProperties(odd.get(), CmsFeeSettingsVo.class);
+			vo.setDueDateId(odd.get().getId());	
+		}
+		return vo;
+	}
 }

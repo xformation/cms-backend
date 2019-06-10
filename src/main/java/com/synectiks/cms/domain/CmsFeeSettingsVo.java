@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.synectiks.cms.domain.enumeration.Frequency;
+
 public class CmsFeeSettingsVo {
     private Long lateFeeId;
     private String isAutoLateFee;
@@ -23,7 +25,11 @@ public class CmsFeeSettingsVo {
     private String isRemainderRecipients;
     private String remainderRecipients;
     
-    
+    private Long dueDateId;
+    private String paymentMethod;
+    private Integer installments;
+    private Integer paymentDay;
+    private Frequency frequency;
     
 	public String getIsAutoLateFee() {
 		return isAutoLateFee;
@@ -140,6 +146,36 @@ public class CmsFeeSettingsVo {
 	}
 	public void setRemainderRecipients(String remainderRecipients) {
 		this.remainderRecipients = remainderRecipients;
+	}
+	public Long getDueDateId() {
+		return dueDateId;
+	}
+	public void setDueDateId(Long dueDateId) {
+		this.dueDateId = dueDateId;
+	}
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	public Integer getInstallments() {
+		return installments;
+	}
+	public void setInstallments(Integer installments) {
+		this.installments = installments;
+	}
+	public Integer getPaymentDay() {
+		return paymentDay;
+	}
+	public void setPaymentDay(Integer paymentDay) {
+		this.paymentDay = paymentDay;
+	}
+	public Frequency getFrequency() {
+		return frequency;
+	}
+	public void setFrequency(Frequency frequency) {
+		this.frequency = frequency;
 	}
     
     

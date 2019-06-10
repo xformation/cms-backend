@@ -1164,6 +1164,7 @@ type Mutation {
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	saveDueDatePaymentRemLateFee(inputd: UpdateDueDateInput, inputp: UpdatePaymentRemainderInput, inputl: UpdateLateFeeInput): QueryResult!
 	getFeeSettingData(branchId: Long): CmsFeeSettingsVo!
+	getFeeSettingDueDateData(branchId: Long, paymentType: String): CmsFeeSettingsVo!
 }
 
 type CmsFeeSettingsVo {
@@ -1187,6 +1188,12 @@ type CmsFeeSettingsVo {
     overDuePaymentRemainderDays: Int
     isRemainderRecipients: String
     remainderRecipients: String
+    
+    dueDateId: Long
+    paymentMethod: String
+    installments: Int
+    paymentDay: Int
+    frequency: Frequency
 }
 
 input StudentListFilterInput {
