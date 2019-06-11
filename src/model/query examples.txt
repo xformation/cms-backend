@@ -2076,3 +2076,21 @@ query {
     }
   } 
 }
+
+
+{
+  acExamSettings {
+    examType
+    action
+    subject
+    endDate
+    startDate
+    examDate
+    departmnt
+    bctch
+    sectn
+    st
+    ed
+
+  }
+}

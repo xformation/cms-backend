@@ -1,5 +1,6 @@
-package com.synectiks.cms.business.service;
+package com.synectiks.cms.business.service.exam;
 
+import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
@@ -7,23 +8,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class SummaryDataService {
-
 
     @Autowired
     AcademicExamSettingRepository examSettingRepo;
 
     @Autowired
     AcademicYearRepository academicYearRepository;
-
-    Date date = new Date();
-    private SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
 
     public List<AcExamSetting> acExamSettings() {
         List<AcExamSetting> original = new ArrayList<>();
@@ -43,9 +37,8 @@ public class SummaryDataService {
             settingModel.setEd(examsetting.getExamDate().toString());
             original.add(settingModel);
             original.sort(Comparator.comparing(AcExamSetting::getExamDate));
+ });
 
-
-        });
         List<AcExamSetting> mergedList = new ArrayList<AcExamSetting>();
         for (AcExamSetting p : original) {
             int index = mergedList.indexOf(p);
@@ -56,10 +49,9 @@ public class SummaryDataService {
                 mergedList.add(p);
             }
         }
-
-
         return mergedList;
     }
+
 
     public AcExamSetting acExamSetting(Long id) {
 
@@ -68,10 +60,16 @@ public class SummaryDataService {
         BeanUtils.copyProperties(ain, aimodel);
 
         aimodel.setDepartmnt(ain.get().getDepartment().getName());
+        aimodel.setExamDate(ain.get().getExamDate());
+        aimodel.setBctch(ain.get().getBatch().getBatch().name());
+        aimodel.setSectn(ain.get().getSection().getSection().name());
+        aimodel.setExamType(ain.get().getExamType());
+        aimodel.setEd(ain.get().getActions());
+        aimodel.setSt(ain.get().getActions());
         aimodel.setAction(ain.get().getActions());
-
+        aimodel.setStartDate(ain.get().getStartDate());
+        aimodel.setEndDate(ain.get().getEndDate());
         return aimodel;
-
 
     }
 
