@@ -273,7 +273,7 @@ type Query {
     getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
     getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
     getAdmissionData(branchId:String, admissionApplicationId:String!): CmsAdmissionEnquiryVo
-     admissionViewInfo( status: EnquiryStatus): [CmsAdmissionEnquiryVo!]!
+
 
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
@@ -1132,8 +1132,7 @@ type Mutation {
      getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
      getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
      getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
-     admissionEnquiryList(branchId:Long, admissionApplicationId:Long ): [CmsAdmissionEnquiryVo!]!
-     getAdmissionViewInfo(filter: AdmissionListFilterInput!): [CmsAdmissionEnquiryVo]!
+     searchAdmissionOnType(admissionEnquiryType:String branchId:Long, admissionApplicationId:Long ): [CmsAdmissionEnquiryVo!]!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
@@ -1209,9 +1208,6 @@ input StudentListFilterInput {
 	studentType: String
 }
 
-input AdmissionListFilterInput {
-	status: String
-}
 
 input AddDocumentsInput{
     documentName: String!

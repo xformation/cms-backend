@@ -49,16 +49,8 @@ public class AdmissionEnquiryProcessor {
         return cmsAdmissionEnquiryVo;
     }
 
-    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId, Long admissionApplicationId) throws Exception{
-        return cmsAdmissionEnquiryService.admissionEnquiryList( branchId, admissionApplicationId);
-    }
-
-    public List<CmsAdmissionEnquiryVo> admissionViewInfo(EnquiryStatus status) throws Exception {
-        return cmsAdmissionEnquiryService.admissionViewInfo(status);
-    }
-
-    public List<CmsAdmissionEnquiryVo> admissionViewInfo(AdmissionListFilterInput filter) throws Exception {
-        return cmsAdmissionEnquiryService.admissionViewInfo(filter);
+    public List<CmsAdmissionEnquiryVo> searchAdmissionOnType(String admissionEnquiryType,Long branchId, Long admissionApplicationId) throws Exception{
+        return cmsAdmissionEnquiryService.searchAdmissionOnType(admissionEnquiryType, branchId, admissionApplicationId);
     }
 
     public Long getTotalAdmissions() {

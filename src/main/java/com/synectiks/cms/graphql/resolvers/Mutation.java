@@ -72,7 +72,6 @@ import com.synectiks.cms.exceptions.FilePathNotFoundException;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
-import com.synectiks.cms.filter.admissionenquiry.AdmissionListFilterInput;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
@@ -3019,13 +3018,10 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId, Long admissionApplicationId) throws Exception{
-        return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId, admissionApplicationId));
+    public List<CmsAdmissionEnquiryVo> searchAdmissionOnType(String admissionEnquiryType,Long branchId, Long admissionApplicationId) throws Exception{
+        return Lists.newArrayList(admissionEnquiryProcessor.searchAdmissionOnType(admissionEnquiryType, branchId, admissionApplicationId));
     }
 
-    public List<CmsAdmissionEnquiryVo> getAdmissionViewInfo(AdmissionListFilterInput filter) throws Exception {
-        return Lists.newArrayList(admissionEnquiryProcessor.admissionViewInfo(filter));
-    }
 
 
     public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {

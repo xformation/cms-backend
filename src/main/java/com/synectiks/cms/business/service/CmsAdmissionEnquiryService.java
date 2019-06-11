@@ -6,7 +6,6 @@ import com.synectiks.cms.domain.AdmissionEnquiry;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
-import com.synectiks.cms.filter.admissionenquiry.AdmissionListFilterInput;
 import com.synectiks.cms.repository.AdmissionEnquiryRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
@@ -94,74 +93,38 @@ public class CmsAdmissionEnquiryService {
         return cnt;
     }
 
-    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId, Long admissionApplicationId) throws Exception {
+    public List<CmsAdmissionEnquiryVo> searchAdmissionOnType(String admissionEnquiryType,Long branchId, Long admissionApplicationId) throws Exception {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
         Branch branch = new Branch();
         branch.setId(branchId);
-        AdmissionApplication aa = new AdmissionApplication();
+        AdmissionApplication aa  = new AdmissionApplication();
         aa.setId(admissionApplicationId);
+
         admissionEnquiry.setBranch(branch);
         admissionEnquiry.setAdmissionApplication(aa);
 
-        Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
-        List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
-        List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
-        for (AdmissionEnquiry temp : list) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
-            CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
-            cae.setStrEnquiryDate(stDt);
-            ls.add(cae);
-        }
-        return ls;
-    }
-
-    public List<CmsAdmissionEnquiryVo> admissionViewInfo(EnquiryStatus status) throws Exception {
-        AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
-
-        if (status != null) {
-            admissionEnquiry.setStatus(status);
-        }
-
-
-        Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
-        List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
-        List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
-        for (AdmissionEnquiry temp : list) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
-            CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
-            cae.setStrEnquiryDate(stDt);
-            ls.add(cae);
-        }
-        return ls;
-    }
-
-
-    public List<CmsAdmissionEnquiryVo> admissionViewInfo(AdmissionListFilterInput filter) throws Exception {
-        AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
-
-        if (!CommonUtil.isNullOrEmpty(filter.getStatus())) {
-            if (filter.getStatus().equalsIgnoreCase(EnquiryStatus.RECEIVED.toString())) {
-                admissionEnquiry.setStatus(EnquiryStatus.RECEIVED);
-            } else if (filter.getStatus().equalsIgnoreCase(EnquiryStatus.FOLLOWUP.toString())) {
+        if(!admissionEnquiryType.equalsIgnoreCase("RECEIVED")) {
+            if(admissionEnquiryType.equalsIgnoreCase("FOLLOWUP")) {
                 admissionEnquiry.setStatus(EnquiryStatus.FOLLOWUP);
-            } else if (filter.getStatus().equalsIgnoreCase(EnquiryStatus.DECLINED.toString())) {
+            }else if(admissionEnquiryType.equalsIgnoreCase("DECLINED")) {
                 admissionEnquiry.setStatus(EnquiryStatus.DECLINED);
-            } else if (filter.getStatus().equalsIgnoreCase(EnquiryStatus.CONVERTED.toString())) {
+            }else if(admissionEnquiryType.equalsIgnoreCase("CONVERTED")) {
                 admissionEnquiry.setStatus(EnquiryStatus.CONVERTED);
             }
-
         }
-            Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
-            List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
+
+        Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
+        List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
         List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
-        for (AdmissionEnquiry temp : list) {
+        for(AdmissionEnquiry temp: list) {
             String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
             CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
             cae.setStrEnquiryDate(stDt);
             ls.add(cae);
         }
         return ls;
-        }
+    }
+
 }
 
 
