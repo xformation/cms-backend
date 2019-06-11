@@ -41,8 +41,8 @@ public class SummaryDataService {
             settingModel.setExamDate(examsetting.getExamDate());
             settingModel.setSt(examsetting.getExamDate().toString());
             settingModel.setEd(examsetting.getExamDate().toString());
-            Collections.sort(original);
             original.add(settingModel);
+            original.sort(Comparator.comparing(AcExamSetting::getExamDate));
 
 
         });

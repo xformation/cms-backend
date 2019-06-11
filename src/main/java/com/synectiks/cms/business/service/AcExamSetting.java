@@ -211,10 +211,10 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         str1 = sbTemp1.toString();
 
 
-if(this.examDate.equals(other.examDate)){
-    ed=sdf.format(this.examDate);
-    st=sdf.format(this.examDate);
-}
+//if(this.examDate.equals(other.examDate)){
+//    ed=sdf.format(this.examDate);
+//    st=sdf.format(this.examDate);
+//}
 
 
         return new AcExamSetting(
@@ -222,8 +222,8 @@ if(this.examDate.equals(other.examDate)){
             this.departmnt,
             this.bctch,
             sectn=str1,
-           this.action,
-               //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
+            this.action,
+            //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
             subject=str,
             this.examDate,
             this.endDate,
