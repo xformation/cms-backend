@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.*;
+import jdk.net.SocketFlow;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.data.domain.Example;
@@ -404,6 +405,46 @@ public class TestDataPojoBuilder {
 
         return academicExamSetting ;
     }
+    public AcademicHistory createAcademicHistoryPojo(Cell cell, Student student) {
+        AcademicHistory ah = new AcademicHistory();
+        ah.setQualification(cell.getStringCellValue());
+        ah.setYearOfPassing(cell.getStringCellValue());
+        ah.setInstitution(cell.getStringCellValue());
+        ah.setUniversity(cell.getStringCellValue());
+        ah.setEnrollmentNo(45L);
+        ah.setScore(90L);
+        ah.setPercentage(90);
+        ah.setStudent(student);
+        return ah;
+    }
+    public AdmissionApplication createAdmissionApplicationPojo(Cell cell,Student student) {
+        AdmissionApplication aa = new AdmissionApplication();
+        aa.setId(342l);
+        aa.setAdmissionStatus(AdmissionStatusEnum.ACCEPTED);
+        aa.setCourse(CourseEnum.BTECH);
+        aa.setAdmissionDate(new Date());
+        aa.setComments(cell.getStringCellValue());
+        aa.setStudent(student);
+        return aa;
+    }
+    public AdmissionEnquiry createAdmissionEnquiryPojo(Cell cell,Branch branch) {
+        AdmissionEnquiry ae = new AdmissionEnquiry();
+        ae.setId(3420l);
+        ae.setStudentName(cell.getStringCellValue());
+        ae.setMobileNumber(cell.getStringCellValue());
+        ae.setAlternateMobileNumber(cell.getStringCellValue());
+        ae.setEmail(cell.getStringCellValue());
+        ae.setCourseApplyingFor(CourseEnum.BTECH);
+        ae.setModeOfEnquiry( ModeOfEnquiry.TELEPHONE);
+        ae.setStatus(EnquiryStatus.DECLINED);
+        ae.setDescription(cell.getStringCellValue());
+        ae.setEnquiryDate(new Date());
+        ae.setUpdatedOn(new Date());
+        ae.setUpdatedBy(cell.getStringCellValue());
+        return ae;
+    }
+
+
 
 
 

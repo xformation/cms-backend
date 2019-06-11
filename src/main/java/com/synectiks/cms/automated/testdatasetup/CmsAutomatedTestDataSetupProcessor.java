@@ -64,6 +64,10 @@ public class CmsAutomatedTestDataSetupProcessor {
     private TransportRoute transportRoute=null;
     private FeeDetails feeDetails=null;
     private AcademicExamSetting academicExamSetting = null;
+    private AcademicHistory academicHistory = null;
+    private AdmissionApplication admissionApplication = null;
+    private AdmissionEnquiry admissionEnquiry = null;
+
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -134,6 +138,14 @@ public class CmsAutomatedTestDataSetupProcessor {
 
     @Autowired
     private AcademicExamSettingRepository academicExamSettingRepository;
+    @Autowired
+    private AcademicHistoryRepository academicHistoryRepository;
+    @Autowired
+    private AdmissionApplicationRepository admissionApplicationRepository;
+    @Autowired
+    private AdmissionEnquiryRepository admissionEnquiryRepository;
+
+
 
     private ObjectMapper mapper = new ObjectMapper();
     String values[] = new String[1];
@@ -157,6 +169,32 @@ public class CmsAutomatedTestDataSetupProcessor {
             logger.error("Exception in creating CMS AcademicYear test data ", e);
         }
     }
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAcademicHistory")
+    public void createCmsTestAcademicHistoryData() throws IOException, ParseException {
+        try {
+            executeAcademicHistory();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS AcademicHistory test data ", e);
+        }
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAdmissionApplication")
+    public void createCmsTestAdmissionApplicationData() throws IOException, ParseException {
+        try {
+            executeAdmissionApplication();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  AdmissionApplication test data ", e);
+        }
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createAdmissionEnquiry")
+    public void createCmsTestAdmissionEnquiryData() throws IOException, ParseException {
+        try {
+            executeAdmissionEnquiry();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS   AdmissionEnquiry test data ", e);
+        }
+    }
+
+
 
     @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createTerm")
     public void createCmsTestTermData() throws IOException, ParseException {
@@ -318,8 +356,45 @@ public class CmsAutomatedTestDataSetupProcessor {
             if (fis != null) fis.close();
         }
     }
-
-
+    private void executeAcademicHistory() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAcademicHistoryData(wb);
+            logger.info("AcademicHistory TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+    private void executeAdmissionApplication() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAdmissionApplication(wb);
+            logger.info(" AdmissionApplication TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+    private void executeAdmissionEnquiry() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsAdmissionEnquiry(wb);
+            logger.info("  AdmissionEnquiry TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
     private void executeTerm() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
         FileInputStream fis = null;
@@ -672,6 +747,65 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+    private void saveCmsAcademicHistoryData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 22) {
+                    saveAcademicHistory(cell);
+                }
+            }
+        }
+    }
+    private void saveCmsAdmissionApplication(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 23) {
+                    saveAdmissionApplication(cell);
+                }
+            }
+        }
+    }
+    private void saveCmsAdmissionEnquiry(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 23) {
+                    saveAdmissionEnquiry(cell);
+                }
+            }
+        }
+    }
+
+
     private void saveCmsData(Workbook workbook) throws ParseException, InterruptedException {
         Sheet sheet = getSheet(workbook, "cmstestdata");
         logger.debug(sheet.getSheetName());
@@ -748,6 +882,16 @@ public class CmsAutomatedTestDataSetupProcessor {
                 if (cell.getColumnIndex()==20){
                     saveFeeDetails(cell);
                 }
+                if (cell.getColumnIndex()==22){
+                    saveAcademicHistory(cell);
+                }
+                if (cell.getColumnIndex()==23){
+                    saveAdmissionApplication(cell);
+                }
+                if (cell.getColumnIndex()==24){
+                    saveAdmissionEnquiry(cell);
+                }
+
             }
         }
     }
@@ -1456,4 +1600,53 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
         logger.debug("Saving AcademicExamSetting data completed.");
     }
+
+    private void saveAcademicHistory(Cell cell) {
+        logger.debug("Saving AcademicHistory data started.");
+        this.academicHistory = this.testDataPojoBuilder.createAcademicHistoryPojo(cell,this.student);
+        try {
+            Example<AcademicHistory> example = Example.of(this.academicHistory);
+            if (this.academicHistoryRepository.exists(example) == false) {
+                this.academicHistory = this.academicHistoryRepository.save(this.academicHistory);
+            } else {
+                this.academicHistory = this.academicHistoryRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving academichistory data. " + e.getMessage());
+        }
+        logger.debug("Saving AcademicHistory data completed.");
+    }
+
+    private void saveAdmissionApplication(Cell cell) {
+        logger.debug("Saving AdmissionApplication data started.");
+        this.admissionApplication = this.testDataPojoBuilder.createAdmissionApplicationPojo(cell,this.student);
+        try {
+            Example<AdmissionApplication> example = Example.of(this.admissionApplication);
+            if (this.admissionApplicationRepository.exists(example) == false) {
+                this.admissionApplication = this.admissionApplicationRepository.save(this.admissionApplication);
+            } else {
+                this.admissionApplication = this.admissionApplicationRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving admissionApplication data. " + e.getMessage());
+        }
+        logger.debug("Saving AdmissionApplication data completed.");
+    }
+    private void saveAdmissionEnquiry(Cell cell) {
+        logger.debug("Saving  AdmissionEnquiry data started.");
+        this.admissionEnquiry = this.testDataPojoBuilder.createAdmissionEnquiryPojo(cell,this.branch);
+        try {
+            Example< AdmissionEnquiry> example = Example.of(this. admissionEnquiry);
+            if (this. admissionEnquiryRepository.exists(example) == false) {
+                this. admissionEnquiry = this. admissionEnquiryRepository.save(this. admissionEnquiry);
+            } else {
+                this. admissionEnquiry = this. admissionEnquiryRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving  admissionEnquiry data. " + e.getMessage());
+        }
+        logger.debug("Saving AdmissionEnquiry data completed.");
+    }
 }
+
+
