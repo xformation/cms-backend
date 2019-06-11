@@ -404,19 +404,98 @@ public class TestDataPojoBuilder {
 
         return academicExamSetting ;
     }
-
-
-
+    public DueDate createDueDatePojo(Cell cell,Branch branch,College college) {
+        DueDate dueDate  = new DueDate();
+        dueDate.setId(1234l);
+        dueDate.setPaymentMethod(cell.getStringCellValue());
+        dueDate.setInstallments(3243);
+        dueDate.setDayDesc(cell.getStringCellValue());
+        dueDate.setPaymentDay(4);
+        dueDate.setFrequency(Frequency.WEEKLY);
+        dueDate.setCollege (college );
+        dueDate.setBranch (branch );
+        return dueDate ;
+    }
+    public PaymentRemainder createPaymentRemainderPojo(Cell cell,College college,Branch branch ) {
+        PaymentRemainder paymentRemainder  = new PaymentRemainder();
+        paymentRemainder.setId(1234l);
+        paymentRemainder.setIsAutoRemainder(cell.getStringCellValue());
+        paymentRemainder.setIsFirstPaymentRemainder(cell.getStringCellValue());
+        paymentRemainder.setFirstPaymentRemainderDays(21);
+        paymentRemainder.setIsSecondPaymentRemainder(cell.getStringCellValue());
+        paymentRemainder.setSecondPaymentRemainderDays(21);
+        paymentRemainder.setIsOverDuePaymentRemainder (cell.getStringCellValue());
+        paymentRemainder.setOverDuePaymentRemainderAfterDueDateOrUntilPaid(cell.getStringCellValue());
+        paymentRemainder.setOverDuePaymentRemainderDays(22);
+        paymentRemainder.setIsRemainderRecipients(cell.getStringCellValue());
+        paymentRemainder.setRemainderRecipients(cell.getStringCellValue());
+        paymentRemainder.setCollege(college);
+        paymentRemainder.setBranch(branch);
+        return paymentRemainder ;
+    }
+    public Holiday createHolidayPojo(Cell cell,AcademicYear academicYear) {
+        Holiday holiday  = new Holiday();
+        holiday.setId(1234l);
+        holiday.setHolidayDesc(cell.getStringCellValue());
+        holiday.setHolidayDate(new Date());
+        holiday.setHolidayStatus(Status.ACTIVE);
+        holiday.setAcademicyear(academicYear);
+        return holiday ;
+    }
+    public Invoice createInvoicePojo(Cell cell,FeeCategory feeCategory,AcademicYear academicYear,Student student,Branch branch,College college,FeeDetails feeDetails,DueDate dueDate,PaymentRemainder paymentRemainder) {
+        Invoice invoice  = new Invoice();
+        invoice.setId(1234l);
+        invoice.setInvoiceNumber(cell.getStringCellValue());
+        invoice.setAmountPaid(3342l);
+        invoice.setPaymentDate(new Date());
+        invoice.setNextPaymentDate(new Date());
+        invoice.setOutStandingAmount(345l);
+        invoice.setModeOfPayment(ModeOfPayment.CARD);
+        invoice.setChequeNumber(543l);
+        invoice.setDemandDraftNumber(556l);
+        invoice.setOnlineTxnRefNumber(cell.getStringCellValue());
+        invoice.setPaymentStatus(InvoicePaymentStatus.PAID);
+        invoice.setComments(cell.getStringCellValue());
+        invoice.setUpdatedBy(cell.getStringCellValue());
+        invoice.setUpdatedOn(new Date());
+        invoice.setFeeCategory(feeCategory);
+        invoice.setFeeDetails(feeDetails);
+        invoice.setDueDate(dueDate);
+        invoice.setPaymentRemainder(paymentRemainder);
+        invoice.setCollege(college);
+        invoice.setBranch(branch);
+        invoice.setStudent(student);
+        invoice.setAcademicYear(academicYear);
+        return invoice ;
+    }
+    public TypeOfGrading createTypeOfGradingPojo(Cell cell,AcademicExamSetting academicExamSetting) {
+        TypeOfGrading typeOfGrading  = new TypeOfGrading();
+        typeOfGrading.setId(1234l);
+        typeOfGrading.setMinMarks(35);
+        typeOfGrading.setMaxMarks(95);
+        typeOfGrading.setGrades(GradesEnum.A);
+        typeOfGrading.setAcademicExamSetting(academicExamSetting);
+        return typeOfGrading ;
+    }
+    public StudentExamReport createStudentExamReportPojo(Cell cell,AcademicExamSetting academicExamSetting,Student student,Batch batch,TypeOfGrading typeofGrading,AcademicYear academicYear) {
+        StudentExamReport studentExamReport  = new StudentExamReport();
+        studentExamReport.setId(1234l);
+        studentExamReport.setMarksObtained(35);
+        studentExamReport.setComments(cell.getStringCellValue());
+        studentExamReport.setCreatedOn(new Date());
+        studentExamReport.setCreatedBy(cell.getStringCellValue());
+        studentExamReport.setUpdatedOn(new Date());
+        studentExamReport.setUpdatedBy(cell.getStringCellValue());
+        studentExamReport.setAcademicExamSetting(academicExamSetting);
+        studentExamReport.setStudent(student);
+        studentExamReport.setTypeOfGrading(typeofGrading);
+        studentExamReport.setBatch(batch);
+        studentExamReport.setAcademicyear(academicYear);
+        return studentExamReport ;
+    }
 }
 
-
-
-
-
-
-
-
-    //	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
+//	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
 //		StudentAttendance sa = new StudentAttendance(); 
 //		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
 //		sa.setStudent(student);
