@@ -62,15 +62,23 @@ public class CmsAutomatedTestDataSetupProcessor {
     private FeeCategory feeCategory = null;
     private Facility facility = null;
     private TransportRoute transportRoute=null;
+    private AcademicYearRepository academicYearRepository;
     private FeeDetails feeDetails=null;
     private AcademicExamSetting academicExamSetting = null;
+
+    private DueDate dueDate=null;
+    private PaymentRemainder paymentRemainder=null;
+    private Holiday holiday=null;
+    private Invoice invoice=null;
+    private TypeOfGrading typeOfGrading=null;
+    private StudentExamReport studentExamReport=null;
+
     private AcademicHistory academicHistory = null;
     private AdmissionApplication admissionApplication = null;
     private AdmissionEnquiry admissionEnquiry = null;
 
 
-    @Autowired
-    private AcademicYearRepository academicYearRepository;
+
 
     @Autowired
     private TermRepository termRepository;
@@ -145,6 +153,25 @@ public class CmsAutomatedTestDataSetupProcessor {
     @Autowired
     private AdmissionEnquiryRepository admissionEnquiryRepository;
 
+
+
+    @Autowired
+    private DueDateRepository dueDateRepository;
+
+    @Autowired
+    private PaymentRemainderRepository paymentRemainderRepository;
+
+    @Autowired
+    private HolidayRepository holidayRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private TypeOfGradingRepository typeOfGradingRepository;
+
+    @Autowired
+    private StudentExamReportRepository studentExamReportRepository;
 
 
     private ObjectMapper mapper = new ObjectMapper();
@@ -329,6 +356,63 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createDueDate")
+    public void createCmsTestDueDate() throws IOException, ParseException {
+        try {
+            executeDueDate();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  DueDate test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createPaymentRemainder")
+    public void createCmsTestPaymentRemainderData() throws IOException, ParseException {
+        try {
+            executePaymentRemainder();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  PaymentRemainder test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createHoliday")
+    public void createCmsTestHolidayData() throws IOException, ParseException {
+        try {
+            executeHoliday();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  Holiday test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createInvoice")
+    public void createCmsTestInvoiceData() throws IOException, ParseException {
+        try {
+            executeInvoice();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  Invoice test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createTypeOfGrading")
+    public void createCmsTestTypeOfGradingData() throws IOException, ParseException {
+        try {
+            executeTypeOfGrading();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  TypeOfGrading test data ", e);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createStudentExamReport")
+    public void createCmsTestStudentExamReportData() throws IOException, ParseException {
+        try {
+            executeStudentExamReport();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  StudentExamReport test data ", e);
+        }
+    }
+
+
+
+
     private void executeAcademicExamSetting() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
         FileInputStream fis = null;
@@ -338,6 +422,20 @@ public class CmsAutomatedTestDataSetupProcessor {
             Workbook wb = getWorkbook(fis);
             saveCmsAcademicExamSettingData(wb);
             logger.info("AcademicExamSetting TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+    private void executeDueDate() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsDueDate(wb);
+            logger.info("DueDate TEST DATA LOADING COMPLETED......");
         } finally {
             if (fis != null) fis.close();
         }
@@ -628,6 +726,76 @@ public class CmsAutomatedTestDataSetupProcessor {
             if (fis != null) fis.close();
         }
     }
+    private void executePaymentRemainder() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsPaymentRemainderData(wb);
+            logger.info("PaymentRemainder TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+    private void executeHoliday() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsHoliday(wb);
+            logger.info("Holiday TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+    private void executeInvoice() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsInvoice(wb);
+            logger.info("Invoice TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+    private void executeTypeOfGrading() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsTypeOfGrading(wb);
+            logger.info("TypeOfGrading TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+    private void executeStudentExamReport() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsStudentExamReport(wb);
+            logger.info("StudentExamReport TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+
+
+
+
     private void execute() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
         FileInputStream fis = null;
@@ -746,6 +914,26 @@ public class CmsAutomatedTestDataSetupProcessor {
             }
         }
     }
+    private void saveCmsPaymentRemainderData(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 0) {
+                    savePaymentRemainder(cell);
+                }
+            }
+        }
+    }
+
 
     private void saveCmsAcademicHistoryData(Workbook workbook) throws ParseException, InterruptedException {
         Sheet sheet = getSheet(workbook, "cmstestdata");
@@ -882,6 +1070,25 @@ public class CmsAutomatedTestDataSetupProcessor {
                 if (cell.getColumnIndex()==20){
                     saveFeeDetails(cell);
                 }
+
+                if (cell.getColumnIndex()==25){
+                    saveDueDate(cell);
+                }
+                if (cell.getColumnIndex()==26){
+                    savePaymentRemainder(cell);
+                }
+                if (cell.getColumnIndex()==27){
+                    saveHoliday(cell);
+                }
+                if (cell.getColumnIndex()==28){
+                    saveInvoice(cell);
+                }
+                if (cell.getColumnIndex()==29){
+                    saveTypeOfGrading(cell);
+                }
+                if (cell.getColumnIndex()==30) {
+                    saveStudentExamReport ( cell );
+                }
                 if (cell.getColumnIndex()==22){
                     saveAcademicHistory(cell);
                 }
@@ -891,715 +1098,905 @@ public class CmsAutomatedTestDataSetupProcessor {
                 if (cell.getColumnIndex()==24){
                     saveAdmissionEnquiry(cell);
                 }
-
             }
         }
     }
 
 
-    private void saveCmsAcademicYearData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsAcademicYearData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 0) {
-                    saveAcademicYear(cell);
+                    if (cell.getColumnIndex() == 0) {
+                        saveAcademicYear(cell);
+                    }
                 }
             }
         }
-    }
+        private void saveCmsDueDate(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-    private void saveCmsTermData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-
-                if (cell.getColumnIndex() == 1) {
-                    saveTermData(cell);
+                    if (cell.getColumnIndex() == 0) {
+                        saveDueDate(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsCollegeData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsTermData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 2) {
-                    saveCollegeData(cell);
+                    if (cell.getColumnIndex() == 1) {
+                        saveTermData(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsBranchData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsCollegeData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 3) {
-                    saveBranchData(cell);
+                    if (cell.getColumnIndex() == 2) {
+                        saveCollegeData(cell);
+                    }
                 }
             }
         }
-    }
 
+        private void saveCmsBranchData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-    private void saveCmsDepartmentData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-
-                if (cell.getColumnIndex() == 4) {
-                    saveDepartmentData(cell);
+                    if (cell.getColumnIndex() == 3) {
+                        saveBranchData(cell);
+                    }
                 }
             }
         }
-    }
 
 
-    private void saveCmsBatchData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsDepartmentData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 5) {
-                    saveBatchData(cell);
+                    if (cell.getColumnIndex() == 4) {
+                        saveDepartmentData(cell);
+                    }
                 }
             }
         }
-    }
 
 
-    private void saveCmsSectionData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsBatchData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 6) {
-                    saveSectionData(cell);
+                    if (cell.getColumnIndex() == 5) {
+                        saveBatchData(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsStudentData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                if (cell.getColumnIndex() == 7) {
-                    saveStudentData(cell);
+        private void saveCmsSectionData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    if (cell.getColumnIndex() == 6) {
+                        saveSectionData(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsSubjectData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsStudentData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                if (cell.getColumnIndex() == 8) {
-                    saveSubjectData(cell);
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (cell.getColumnIndex() == 7) {
+                        saveStudentData(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsTeacherTeachAttendanceMaster(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsSubjectData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-
-                if (cell.getColumnIndex() == 9) {
-                    saveTeacherTeachAttendanceMasterData(cell);
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    if (cell.getColumnIndex() == 8) {
+                        saveSubjectData(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsLecture(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsTeacherTeachAttendanceMaster(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 10) {
-                    saveLectureSchedule("MONDAY", cell, Calendar.MONDAY);
-                }
-                if (cell.getColumnIndex() == 11) {
-                    saveLectureSchedule("TUESDAY", cell, Calendar.TUESDAY);
-                }
-                if (cell.getColumnIndex() == 12) {
-                    saveLectureSchedule("WEDNESDAY", cell, Calendar.WEDNESDAY);
-                }
-                if (cell.getColumnIndex() == 13) {
-                    saveLectureSchedule("THURSDAY", cell, Calendar.THURSDAY);
-                }
-                if (cell.getColumnIndex() == 14) {
-                    saveLectureSchedule("FRIDAY", cell, Calendar.FRIDAY);
-                }
-                if (cell.getColumnIndex() == 15) {
-                    saveLectureSchedule("SATURDAY", cell, Calendar.SATURDAY);
-
-                }
-
-            }
-        }
-    }
-
-    private void saveCmsFeeCategory(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
-
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-
-                if (cell.getColumnIndex() == 17) {
-                    saveFeeCategory(cell);
+                    if (cell.getColumnIndex() == 9) {
+                        saveTeacherTeachAttendanceMasterData(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsFacilityData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsLecture(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 18) {
-                    saveFacility(cell);
+                    if (cell.getColumnIndex() == 10) {
+                        saveLectureSchedule("MONDAY", cell, Calendar.MONDAY);
+                    }
+                    if (cell.getColumnIndex() == 11) {
+                        saveLectureSchedule("TUESDAY", cell, Calendar.TUESDAY);
+                    }
+                    if (cell.getColumnIndex() == 12) {
+                        saveLectureSchedule("WEDNESDAY", cell, Calendar.WEDNESDAY);
+                    }
+                    if (cell.getColumnIndex() == 13) {
+                        saveLectureSchedule("THURSDAY", cell, Calendar.THURSDAY);
+                    }
+                    if (cell.getColumnIndex() == 14) {
+                        saveLectureSchedule("FRIDAY", cell, Calendar.FRIDAY);
+                    }
+                    if (cell.getColumnIndex() == 15) {
+                        saveLectureSchedule("SATURDAY", cell, Calendar.SATURDAY);
+
+                    }
+
                 }
             }
         }
-    }
 
-    private void saveCmsTransportRouteData(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsFeeCategory(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 19) {
-                    saveTransportRoute(cell);
+                    if (cell.getColumnIndex() == 17) {
+                        saveFeeCategory(cell);
+                    }
                 }
             }
         }
-    }
 
-    private void saveCmsFeeDetails(Workbook workbook) throws ParseException, InterruptedException {
-        Sheet sheet = getSheet(workbook, "cmstestdata");
-        logger.debug(sheet.getSheetName());
-        Iterator<Row> rowIterator = sheet.iterator();
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            logger.debug("Row number : " + row.getRowNum());
-            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+        private void saveCmsFacilityData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-            Iterator<Cell> cellIterator = row.cellIterator();
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 20) {
-                    saveFeeDetails(cell);
+                    if (cell.getColumnIndex() == 18) {
+                        saveFacility(cell);
+                    }
                 }
             }
         }
-    }
 
+        private void saveCmsTransportRouteData(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-    private void saveAcademicYear(Cell cell) {
-        logger.debug("Saving academic year data started.");
-        this.academicYear = this.testDataPojoBuilder.createAcademicYearPojo(cell);
-        try {
-            Example<AcademicYear> example = Example.of(this.academicYear);
-            if (this.academicYearRepository.exists(example) == false) {
-                this.academicYear = this.academicYearRepository.save(this.academicYear);
-            } else {
-                this.academicYear = this.academicYearRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving academic year data. " + e.getMessage());
-        }
-        logger.debug("Saving academic year data completed.");
-    }
-
-    private void saveTermData(Cell cell) throws ParseException {
-        logger.debug("Saving term data started.");
-        this.term = this.testDataPojoBuilder.createTermPojo(cell, this.academicYear);
-        try {
-            Example<Term> example = Example.of(this.term);
-            if (this.termRepository.exists(example) == false) {
-                this.term = this.termRepository.save(this.term);
-            } else {
-                this.term = this.termRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving term data. " + e.getMessage());
-        }
-        logger.debug("Saving term data completed.");
-    }
-
-    private void saveCollegeData(Cell cell) {
-        logger.debug("Saving college data started.");
-        this.college = this.testDataPojoBuilder.createCollegePojo(cell);
-        try {
-            Example<College> example = Example.of(this.college);
-            if (this.collegeRepository.exists(example) == false) {
-                this.college = this.collegeRepository.save(this.college);
-            } else {
-                this.college = this.collegeRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving college data. " + e.getMessage());
-        }
-        logger.debug("Saving college data completed.");
-    }
-
-    private void saveBranchData(Cell cell) {
-        logger.debug("Saving branch data started.");
-        State st = findStateWithStateName("Telangana");
-        City ct = findCiyt(st, "Hyderabad");
-        this.branch = this.testDataPojoBuilder.createBranchPojo(cell, this.college, st, ct);
-        try {
-            Example<Branch> example = Example.of(this.branch);
-            if (this.branchRepository.exists(example) == false) {
-                this.branch = this.branchRepository.save(this.branch);
-            } else {
-                this.branch = this.branchRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving branch data. " + e.getMessage());
-        }
-        logger.debug("Saving branch data completed.");
-    }
-
-    private State findStateWithStateName(String stateName) {
-        State st = new State();
-        st.setStateName(stateName);
-        Example<State> example = Example.of(st);
-        Optional<State> newTh = this.stateRepository.findOne(example);
-        if (newTh.isPresent()) {
-            return newTh.get();
-        }
-        return null;
-    }
-
-    private City findCiyt(State st, String cityName) {
-        City ct = new City();
-        ct.setState(st);
-        ct.setCityName(cityName);
-        Example<City> example = Example.of(ct);
-        Optional<City> newTh = this.cityRepository.findOne(example);
-        if (newTh.isPresent()) {
-            return newTh.get();
-        }
-        return null;
-    }
-
-    private void saveDepartmentData(Cell cell) {
-        logger.debug("Saving department data started.");
-        this.department = this.testDataPojoBuilder.createDepartmentPojo(cell, this.branch, this.academicYear);
-        try {
-            Example<Department> example = Example.of(this.department);
-            if (this.departmentRepository.exists(example) == false) {
-                this.department = this.departmentRepository.save(this.department);
-            } else {
-                this.department = this.departmentRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving department data. " + e.getMessage());
-        }
-        logger.debug("Saving department data completed.");
-    }
-
-    private void saveBatchData(Cell cell) {
-        logger.debug("Saving batch data started.");
-        this.batch = this.testDataPojoBuilder.createBatchPojo(cell, this.department);
-        try {
-            Example<Batch> example = Example.of(this.batch);
-            if (this.batchRepository.exists(example) == false) {
-                this.batch = this.batchRepository.save(this.batch);
-            } else {
-                this.batch = this.batchRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving batch data. " + e.getMessage());
-        }
-        logger.debug("Saving batch data completed.");
-    }
-
-    private void saveSectionData(Cell cell) {
-        logger.debug("Saving section data started.");
-        this.section = this.testDataPojoBuilder.createSectionPojo(cell, this.batch);
-        try {
-            Example<Section> example = Example.of(this.section);
-            if (this.sectionRepository.exists(example) == false) {
-                this.section = this.sectionRepository.save(this.section);
-            } else {
-                this.section = this.sectionRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving section data. " + e.getMessage());
-        }
-        logger.debug("Saving section data completed.");
-    }
-
-    private void saveStudentData(Cell cell) {
-        logger.debug("Saving student data started.");
-        State st = findStateWithStateName("Telangana");
-        City ct = findCiyt(st, "Hyderabad");
-        this.student = this.testDataPojoBuilder.createStudentPojo(cell,this.department, this.batch, this.section, this.branch, st, ct, this.country);
-        try {
-            Example<Student> example = Example.of(this.student);
-            if (this.studentRepository.exists(example) == false) {
-                this.student = this.studentRepository.save(this.student);
-            } else {
-                this.student = this.studentRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving student data. " + e.getMessage());
-        }
-        logger.debug("Saving student data completed.");
-    }
-
-    private void saveSubjectData(Cell cell) {
-        logger.debug("Saving subject data object started.");
-        this.subject = this.testDataPojoBuilder.createSubjectPojo(cell, this.department, this.batch);
-        try {
-            Example<Subject> example = Example.of(this.subject);
-            if (this.subjectRepository.exists(example) == false) {
-                this.subject = this.subjectRepository.save(this.subject);
-            } else {
-                this.subject = this.subjectRepository.findOne(example).get();
-            }
-        } catch (Exception e) {
-            logger.warn("Exception in saving subject data. " + e.getMessage());
-        }
-        logger.debug("Saving subject data object completed.");
-    }
-
-    private void saveTeacherTeachAttendanceMasterData(Cell cell) {
-        logger.debug("Saving teacher, teach and attendance_master data started.");
-        State st = findStateWithStateName("Telangana");
-        City ct = findCiyt(st, "Hyderabad");
-
-        try {
-            this.teacher = this.testDataPojoBuilder.createTeacherPojo(cell, this.department, this.branch, st, ct, this.country);
-            Example<Teacher> thrExample = Example.of(this.teacher);
-            if (this.teacherRepository.exists(thrExample) == false) {
-                this.teacher = this.teacherRepository.save(this.teacher);
-            } else {
-                this.teacher = this.teacherRepository.findOne(thrExample).get();
-            }
-
-            this.teach = this.testDataPojoBuilder.createTeachPojo(cell, this.subject, this.teacher);
-            Example<Teach> thExample = Example.of(this.teach);
-            if (this.teachRepository.exists(thExample) == false) {
-                this.teach = this.teachRepository.save(this.teach);
-            } else {
-                this.teach = this.teachRepository.findOne(thExample).get();
-            }
-
-            this.attendanceMaster = this.testDataPojoBuilder.createAttendanceMasterPojo(cell, this.batch, this.section, this.teach, this.subject, this.teacher);
-            Example<AttendanceMaster> amExample = Example.of(this.attendanceMaster);
-            if (this.attendanceMasterRepository.exists(amExample) == false) {
-                this.attendanceMaster = this.attendanceMasterRepository.save(this.attendanceMaster);
-            } else {
-                this.attendanceMaster = this.attendanceMasterRepository.findOne(amExample).get();
-            }
-
-
-        } catch (Exception e) {
-            logger.warn("Exception in saving teacher, teach and attendance_master data. " + e.getMessage());
-        }
-        logger.debug("Saving teacher, teach and attendance_master data completed.");
-    }
-
-    private void saveLectureSchedule(String day, Cell cell, int intDay) {
-        boolean isGoAhead = false;
-        switch (cell.getCellTypeEnum()) {
-            case BLANK:
-                logger.warn("Blank cell. No lecture record will be created.");
-                break;
-            case BOOLEAN:
-                logger.warn("Boolean cell. No lecture record will be created.");
-                break;
-            case ERROR:
-                logger.warn("Error cell. No lecture record will be created.");
-                break;
-            case FORMULA:
-                logger.warn("Formula cell. lecture No record will be created.");
-                break;
-            case NUMERIC:
-                logger.warn("Numeric cell. lecture No record will be created.");
-                break;
-            case STRING:
-                isGoAhead = true;
-                break;
-            case _NONE:
-                logger.warn("_None cell. No lecture record will be created.");
-                break;
-            default:
-                logger.warn("Blank or _None cell. lecture No record will be created.");
-                break;
-        }
-        if (isGoAhead == false) {
-            return;
-        }
-        logger.debug("Saving lecture data for " + day + " started.");
-        try {
-            LectureScheduleDTO dto = this.testDataPojoBuilder.getDto(day, cell, this.subject, this.teacher);
-            values[0] = this.mapper.writeValueAsString(dto);
-            filter.setTermId(String.valueOf(this.term.getId()));
-            filter.setAcademicYear(this.academicYear.getYear());
-            filter.setSectionId(String.valueOf(this.section.getId()));
-            filter.setBatchId(String.valueOf(this.batch.getId()));
-
-            List<Date> dtList = filterDates(intDay);
-
-            Lecture lc = new Lecture();
-            lc.setAttendancemaster(this.attendanceMaster);
-            lc.setStartTime(dto.getStartTime());
-            lc.setEndTime(dto.getEndTime());
-            Example<Lecture> example = Example.of(lc);
-            ;
-
-            for (Date dt : dtList) {
-                lc.setId(null);
-                lc.setLecDate(dt);
-                if (this.lectureRepository.exists(example) == false) {
-                    this.lectureService.createLectureSchedule(dt, values, day, filter);
+                    if (cell.getColumnIndex() == 19) {
+                        saveTransportRoute(cell);
+                    }
                 }
             }
-        } catch (Exception e) {
-            logger.warn("Lecture data for " + day + " could not be saved in DB due the below exception.");
-            logger.warn("Exception. " + e.getMessage());
         }
-        logger.debug("Saving lecture data for " + day + " completed.");
-    }
 
-    private List<Date> filterDates(int day) throws ParseException {
-        List<Date> dateList = this.lectureService.createDates(this.term);
-        List<Holiday> holidayList = this.commonService.getHolidayList(Optional.of(this.academicYear));
-        this.lectureService.filterHolidays(holidayList, dateList);
-        this.lectureService.filterSundays(dateList);
-        List<Date> list = this.lectureService.filterDateListOnDayOfweek(dateList, day);
-        return list;
-    }
+        private void saveCmsFeeDetails(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
 
-    private void saveStudentAttendanceData() {
-        List<Lecture> lcList = this.testDataPojoBuilder.findLectureByAttendanceMaster(this.lectureRepository, this.attendanceMaster);
-        
-        StudentAttendance sa = new StudentAttendance();
-        sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
-        sa.setStudent(student);
-        Example<StudentAttendance> example = Example.of(sa);
-        for (Lecture lecture : lcList) {
-            sa.setId(null);
-            sa.setLecture(lecture);
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    if (cell.getColumnIndex() == 20) {
+                        saveFeeDetails(cell);
+                    }
+                }
+            }
+        }
+        private void saveCmsHoliday(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    if (cell.getColumnIndex() == 27) {
+                        saveHoliday(cell);
+                    }
+                }
+            }
+        }
+        private void saveCmsInvoice(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    if (cell.getColumnIndex() == 28) {
+                        saveInvoice(cell);
+                    }
+                }
+            }
+        }
+
+        private void saveCmsTypeOfGrading(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    if (cell.getColumnIndex() == 29) {
+                        saveTypeOfGrading(cell);
+                    }
+                }
+            }
+        }
+
+
+        private void saveCmsStudentExamReport(Workbook workbook) throws ParseException, InterruptedException {
+            Sheet sheet = getSheet(workbook, "cmstestdata");
+            logger.debug(sheet.getSheetName());
+            Iterator<Row> rowIterator = sheet.iterator();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                logger.debug("Row number : " + row.getRowNum());
+                if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+                Iterator<Cell> cellIterator = row.cellIterator();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    if (cell.getColumnIndex() == 30) {
+                        saveStudentExamReport(cell);
+                    }
+                }
+            }
+        }
+        private void saveDueDate(Cell cell) {
+            logger.debug("Saving due date data started.");
+            this.dueDate = this.testDataPojoBuilder.createDueDatePojo(cell,this.branch,this.college);
             try {
-                if (this.studentAttendanceRepository.exists(example) == false) {
-                    this.studentAttendanceRepository.save(sa);
+                Example<DueDate> example = Example.of(this.dueDate);
+                if (this.dueDateRepository.exists(example) == false) {
+                    this.dueDate = this.dueDateRepository.save(this.dueDate);
+                } else {
+                    this.dueDate = this.dueDateRepository.findOne(example).get();
                 }
             } catch (Exception e) {
-                logger.warn("Exception in saving studentAttendance data. " + e.getMessage());
+                logger.warn("Exception in saving due date data. " + e.getMessage());
+            }
+            logger.debug("Saving due date data completed.");
+        }
+
+        private void saveAcademicYear(Cell cell) {
+            logger.debug("Saving academic year data started.");
+            this.academicYear = this.testDataPojoBuilder.createAcademicYearPojo(cell);
+            try {
+                Example<AcademicYear> example = Example.of(this.academicYear);
+                if (this.academicYearRepository.exists(example) == false) {
+                    this.academicYear = this.academicYearRepository.save(this.academicYear);
+                } else {
+                    this.academicYear = this.academicYearRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving academic year data. " + e.getMessage());
+            }
+            logger.debug("Saving academic year data completed.");
+        }
+
+        private void saveTermData(Cell cell) throws ParseException {
+            logger.debug("Saving term data started.");
+            this.term = this.testDataPojoBuilder.createTermPojo(cell, this.academicYear);
+            try {
+                Example<Term> example = Example.of(this.term);
+                if (this.termRepository.exists(example) == false) {
+                    this.term = this.termRepository.save(this.term);
+                } else {
+                    this.term = this.termRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving term data. " + e.getMessage());
+            }
+            logger.debug("Saving term data completed.");
+        }
+
+        private void saveCollegeData(Cell cell) {
+            logger.debug("Saving college data started.");
+            this.college = this.testDataPojoBuilder.createCollegePojo(cell);
+            try {
+                Example<College> example = Example.of(this.college);
+                if (this.collegeRepository.exists(example) == false) {
+                    this.college = this.collegeRepository.save(this.college);
+                } else {
+                    this.college = this.collegeRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving college data. " + e.getMessage());
+            }
+            logger.debug("Saving college data completed.");
+        }
+
+        private void saveBranchData(Cell cell) {
+            logger.debug("Saving branch data started.");
+            State st = findStateWithStateName("Telangana");
+            City ct = findCiyt(st, "Hyderabad");
+            this.branch = this.testDataPojoBuilder.createBranchPojo(cell, this.college, st, ct);
+            try {
+                Example<Branch> example = Example.of(this.branch);
+                if (this.branchRepository.exists(example) == false) {
+                    this.branch = this.branchRepository.save(this.branch);
+                } else {
+                    this.branch = this.branchRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving branch data. " + e.getMessage());
+            }
+            logger.debug("Saving branch data completed.");
+        }
+
+        private State findStateWithStateName(String stateName) {
+            State st = new State();
+            st.setStateName(stateName);
+            Example<State> example = Example.of(st);
+            Optional<State> newTh = this.stateRepository.findOne(example);
+            if (newTh.isPresent()) {
+                return newTh.get();
+            }
+            return null;
+        }
+
+        private City findCiyt(State st, String cityName) {
+            City ct = new City();
+            ct.setState(st);
+            ct.setCityName(cityName);
+            Example<City> example = Example.of(ct);
+            Optional<City> newTh = this.cityRepository.findOne(example);
+            if (newTh.isPresent()) {
+                return newTh.get();
+            }
+            return null;
+        }
+
+        private void saveDepartmentData(Cell cell) {
+            logger.debug("Saving department data started.");
+            this.department = this.testDataPojoBuilder.createDepartmentPojo(cell, this.branch, this.academicYear);
+            try {
+                Example<Department> example = Example.of(this.department);
+                if (this.departmentRepository.exists(example) == false) {
+                    this.department = this.departmentRepository.save(this.department);
+                } else {
+                    this.department = this.departmentRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving department data. " + e.getMessage());
+            }
+            logger.debug("Saving department data completed.");
+        }
+
+        private void saveBatchData(Cell cell) {
+            logger.debug("Saving batch data started.");
+            this.batch = this.testDataPojoBuilder.createBatchPojo(cell, this.department);
+            try {
+                Example<Batch> example = Example.of(this.batch);
+                if (this.batchRepository.exists(example) == false) {
+                    this.batch = this.batchRepository.save(this.batch);
+                } else {
+                    this.batch = this.batchRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving batch data. " + e.getMessage());
+            }
+            logger.debug("Saving batch data completed.");
+        }
+
+        private void saveSectionData(Cell cell) {
+            logger.debug("Saving section data started.");
+            this.section = this.testDataPojoBuilder.createSectionPojo(cell, this.batch);
+            try {
+                Example<Section> example = Example.of(this.section);
+                if (this.sectionRepository.exists(example) == false) {
+                    this.section = this.sectionRepository.save(this.section);
+                } else {
+                    this.section = this.sectionRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving section data. " + e.getMessage());
+            }
+            logger.debug("Saving section data completed.");
+        }
+
+        private void saveStudentData(Cell cell) {
+            logger.debug("Saving student data started.");
+            State st = findStateWithStateName("Telangana");
+            City ct = findCiyt(st, "Hyderabad");
+            this.student = this.testDataPojoBuilder.createStudentPojo(cell,this.department, this.batch, this.section, this.branch, st, ct, this.country);
+            try {
+                Example<Student> example = Example.of(this.student);
+                if (this.studentRepository.exists(example) == false) {
+                    this.student = this.studentRepository.save(this.student);
+                } else {
+                    this.student = this.studentRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving student data. " + e.getMessage());
+            }
+            logger.debug("Saving student data completed.");
+        }
+
+        private void saveSubjectData(Cell cell) {
+            logger.debug("Saving subject data object started.");
+            this.subject = this.testDataPojoBuilder.createSubjectPojo(cell, this.department, this.batch);
+            try {
+                Example<Subject> example = Example.of(this.subject);
+                if (this.subjectRepository.exists(example) == false) {
+                    this.subject = this.subjectRepository.save(this.subject);
+                } else {
+                    this.subject = this.subjectRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving subject data. " + e.getMessage());
+            }
+            logger.debug("Saving subject data object completed.");
+        }
+
+        private void saveTeacherTeachAttendanceMasterData(Cell cell) {
+            logger.debug("Saving teacher, teach and attendance_master data started.");
+            State st = findStateWithStateName("Telangana");
+            City ct = findCiyt(st, "Hyderabad");
+
+            try {
+                this.teacher = this.testDataPojoBuilder.createTeacherPojo(cell, this.department, this.branch, st, ct, this.country);
+                Example<Teacher> thrExample = Example.of(this.teacher);
+                if (this.teacherRepository.exists(thrExample) == false) {
+                    this.teacher = this.teacherRepository.save(this.teacher);
+                } else {
+                    this.teacher = this.teacherRepository.findOne(thrExample).get();
+                }
+
+                this.teach = this.testDataPojoBuilder.createTeachPojo(cell, this.subject, this.teacher);
+                Example<Teach> thExample = Example.of(this.teach);
+                if (this.teachRepository.exists(thExample) == false) {
+                    this.teach = this.teachRepository.save(this.teach);
+                } else {
+                    this.teach = this.teachRepository.findOne(thExample).get();
+                }
+
+                this.attendanceMaster = this.testDataPojoBuilder.createAttendanceMasterPojo(cell, this.batch, this.section, this.teach, this.subject, this.teacher);
+                Example<AttendanceMaster> amExample = Example.of(this.attendanceMaster);
+                if (this.attendanceMasterRepository.exists(amExample) == false) {
+                    this.attendanceMaster = this.attendanceMasterRepository.save(this.attendanceMaster);
+                } else {
+                    this.attendanceMaster = this.attendanceMasterRepository.findOne(amExample).get();
+                }
+
+
+            } catch (Exception e) {
+                logger.warn("Exception in saving teacher, teach and attendance_master data. " + e.getMessage());
+            }
+            logger.debug("Saving teacher, teach and attendance_master data completed.");
+        }
+
+        private void saveLectureSchedule(String day, Cell cell, int intDay) {
+            boolean isGoAhead = false;
+            switch (cell.getCellTypeEnum()) {
+                case BLANK:
+                    logger.warn("Blank cell. No lecture record will be created.");
+                    break;
+                case BOOLEAN:
+                    logger.warn("Boolean cell. No lecture record will be created.");
+                    break;
+                case ERROR:
+                    logger.warn("Error cell. No lecture record will be created.");
+                    break;
+                case FORMULA:
+                    logger.warn("Formula cell. lecture No record will be created.");
+                    break;
+                case NUMERIC:
+                    logger.warn("Numeric cell. lecture No record will be created.");
+                    break;
+                case STRING:
+                    isGoAhead = true;
+                    break;
+                case _NONE:
+                    logger.warn("_None cell. No lecture record will be created.");
+                    break;
+                default:
+                    logger.warn("Blank or _None cell. lecture No record will be created.");
+                    break;
+            }
+            if (isGoAhead == false) {
+                return;
+            }
+            logger.debug("Saving lecture data for " + day + " started.");
+            try {
+                LectureScheduleDTO dto = this.testDataPojoBuilder.getDto(day, cell, this.subject, this.teacher);
+                values[0] = this.mapper.writeValueAsString(dto);
+                filter.setTermId(String.valueOf(this.term.getId()));
+                filter.setAcademicYear(this.academicYear.getYear());
+                filter.setSectionId(String.valueOf(this.section.getId()));
+                filter.setBatchId(String.valueOf(this.batch.getId()));
+
+                List<Date> dtList = filterDates(intDay);
+
+                Lecture lc = new Lecture();
+                lc.setAttendancemaster(this.attendanceMaster);
+                lc.setStartTime(dto.getStartTime());
+                lc.setEndTime(dto.getEndTime());
+                Example<Lecture> example = Example.of(lc);
+                ;
+
+                for (Date dt : dtList) {
+                    lc.setId(null);
+                    lc.setLecDate(dt);
+                    if (this.lectureRepository.exists(example) == false) {
+                        this.lectureService.createLectureSchedule(dt, values, day, filter);
+                    }
+                }
+            } catch (Exception e) {
+                logger.warn("Lecture data for " + day + " could not be saved in DB due the below exception.");
+                logger.warn("Exception. " + e.getMessage());
+            }
+            logger.debug("Saving lecture data for " + day + " completed.");
+        }
+
+        private List<Date> filterDates(int day) throws ParseException {
+            List<Date> dateList = this.lectureService.createDates(this.term);
+            List<Holiday> holidayList = this.commonService.getHolidayList(Optional.of(this.academicYear));
+            this.lectureService.filterHolidays(holidayList, dateList);
+            this.lectureService.filterSundays(dateList);
+            List<Date> list = this.lectureService.filterDateListOnDayOfweek(dateList, day);
+            return list;
+        }
+
+        private void saveStudentAttendanceData() {
+            List<Lecture> lcList = this.testDataPojoBuilder.findLectureByAttendanceMaster(this.lectureRepository, this.attendanceMaster);
+
+            StudentAttendance sa = new StudentAttendance();
+            sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
+            sa.setStudent(student);
+            Example<StudentAttendance> example = Example.of(sa);
+            for (Lecture lecture : lcList) {
+                sa.setId(null);
+                sa.setLecture(lecture);
+                try {
+                    if (this.studentAttendanceRepository.exists(example) == false) {
+                        this.studentAttendanceRepository.save(sa);
+                    }
+                } catch (Exception e) {
+                    logger.warn("Exception in saving studentAttendance data. " + e.getMessage());
+                }
             }
         }
-    }
 
-    private void saveFeeCategory(Cell cell) {
-        logger.debug("Saving feecategory data started.");
-        this.feeCategory = this.testDataPojoBuilder.createFeeCategoryPojo(cell);
-        try {
-            Example<FeeCategory> example = Example.of(this.feeCategory);
-            if (this.feeCategoryRepository.exists(example) == false) {
-                this.feeCategory = this.feeCategoryRepository.save(this.feeCategory);
-            } else {
-                this.feeCategory = this.feeCategoryRepository.findOne(example).get();
+        private void saveFeeCategory(Cell cell) {
+            logger.debug("Saving feecategory data started.");
+            this.feeCategory = this.testDataPojoBuilder.createFeeCategoryPojo(cell);
+            try {
+                Example<FeeCategory> example = Example.of(this.feeCategory);
+                if (this.feeCategoryRepository.exists(example) == false) {
+                    this.feeCategory = this.feeCategoryRepository.save(this.feeCategory);
+                } else {
+                    this.feeCategory = this.feeCategoryRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving feeCategory data. " + e.getMessage());
             }
-        } catch (Exception e) {
-            logger.warn("Exception in saving feeCategory data. " + e.getMessage());
+            logger.debug("Saving feeCategory data completed.");
         }
-        logger.debug("Saving feeCategory data completed.");
-    }
 
 
-    private void saveFacility(Cell cell) {
-        logger.debug("Saving facility data started.");
-        this.facility = this.testDataPojoBuilder.createFacilityPojo(cell,this.academicYear,this.branch,this.student);
-        try {
-            Example<Facility> example = Example.of(this.facility);
-            if(this.facilityRepository.exists(example) == false) {
-                this.facility = this.facilityRepository.save(this.facility);
-            }else {
-                this.facility = this.facilityRepository.findOne(example).get();
+        private void saveFacility(Cell cell) {
+            logger.debug("Saving facility data started.");
+            this.facility = this.testDataPojoBuilder.createFacilityPojo(cell,this.academicYear,this.branch,this.student);
+            try {
+                Example<Facility> example = Example.of(this.facility);
+                if(this.facilityRepository.exists(example) == false) {
+                    this.facility = this.facilityRepository.save(this.facility);
+                }else {
+                    this.facility = this.facilityRepository.findOne(example).get();
+                }
+            }catch(Exception e) {
+                logger.warn("Exception in saving facility data. "+e.getMessage());
             }
-        }catch(Exception e) {
-            logger.warn("Exception in saving facility data. "+e.getMessage());
+            logger.debug("Saving facility data completed.");
         }
-        logger.debug("Saving facility data completed.");
-    }
 
 
-    private void saveTransportRoute(Cell cell) {
-        logger.debug("Saving transportRoute data started.");
-        this.transportRoute = this.testDataPojoBuilder.createTransportRoutePojo(cell);
-        try {
-            Example<TransportRoute> example = Example.of(this.transportRoute);
-            if(this.transportRouteRepository.exists(example) == false) {
-                this.transportRoute = this.transportRouteRepository.save(this.transportRoute);
-            }else {
-                this.transportRoute = this.transportRouteRepository.findOne(example).get();
+        private void saveTransportRoute(Cell cell) {
+            logger.debug("Saving transportRoute data started.");
+            this.transportRoute = this.testDataPojoBuilder.createTransportRoutePojo(cell);
+            try {
+                Example<TransportRoute> example = Example.of(this.transportRoute);
+                if(this.transportRouteRepository.exists(example) == false) {
+                    this.transportRoute = this.transportRouteRepository.save(this.transportRoute);
+                }else {
+                    this.transportRoute = this.transportRouteRepository.findOne(example).get();
+                }
+            }catch(Exception e) {
+                logger.warn("Exception in saving transportRoute data. "+e.getMessage());
             }
-        }catch(Exception e) {
-            logger.warn("Exception in saving transportRoute data. "+e.getMessage());
+            logger.debug("Saving transportRoute data completed.");
         }
-        logger.debug("Saving transportRoute data completed.");
-    }
 
 
-    private void saveFeeDetails(Cell cell) {
-        logger.debug("Saving feeDetails data started.");
-        this.feeDetails = this.testDataPojoBuilder.createFeeDetailsPojo(cell,this.feeCategory,this.batch,this.facility,this.transportRoute,this.college,this.department,this.branch,this.academicYear);
-        try {
-            Example<FeeDetails> example = Example.of(this.feeDetails);
-            if(this.feeDetailsRepository.exists(example) == false) {
-                this.feeDetails = this.feeDetailsRepository.save(this.feeDetails);
-            }else {
-                this.feeDetails = this.feeDetailsRepository.findOne(example).get();
+        private void saveFeeDetails(Cell cell) {
+            logger.debug("Saving feeDetails data started.");
+            this.feeDetails = this.testDataPojoBuilder.createFeeDetailsPojo(cell,this.feeCategory,this.batch,this.facility,this.transportRoute,this.college,this.department,this.branch,this.academicYear);
+            try {
+                Example<FeeDetails> example = Example.of(this.feeDetails);
+                if(this.feeDetailsRepository.exists(example) == false) {
+                    this.feeDetails = this.feeDetailsRepository.save(this.feeDetails);
+                }else {
+                    this.feeDetails = this.feeDetailsRepository.findOne(example).get();
+                }
+            }catch(Exception e) {
+                logger.warn("Exception in saving transportRoute data. "+e.getMessage());
             }
-        }catch(Exception e) {
-            logger.warn("Exception in saving transportRoute data. "+e.getMessage());
+            logger.debug("Saving transportRoute data completed.");
         }
-        logger.debug("Saving transportRoute data completed.");
-    }
 
-    private void saveAcademicExamSetting(Cell cell) {
-        logger.debug("Saving AcademicExamSetting data started.");
-        this.academicExamSetting = this.testDataPojoBuilder.createAcademicExamSettingPojo(cell,this.department,this.academicYear,this.section);
+        private void saveAcademicExamSetting(Cell cell) {
+            logger.debug("Saving AcademicExamSetting data started.");
+            this.academicExamSetting = this.testDataPojoBuilder.createAcademicExamSettingPojo(cell,this.department,this.academicYear,this.section);
 
-        try {
-            Example<AcademicExamSetting> example = Example.of(this.academicExamSetting);
-            if (this.academicExamSettingRepository.exists(example) == false) {
-                this.academicExamSetting = this.academicExamSettingRepository.save(this.academicExamSetting);
-            } else {
-                this.academicExamSetting = this.academicExamSettingRepository.findOne(example).get();
+            try {
+                Example<AcademicExamSetting> example = Example.of(this.academicExamSetting);
+                if (this.academicExamSettingRepository.exists(example) == false) {
+                    this.academicExamSetting = this.academicExamSettingRepository.save(this.academicExamSetting);
+                } else {
+                    this.academicExamSetting = this.academicExamSettingRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving AcademicExamSetting data. " + e.getMessage());
             }
-        } catch (Exception e) {
-            logger.warn("Exception in saving AcademicExamSetting data. " + e.getMessage());
+            logger.debug("Saving AcademicExamSetting data completed.");
         }
-        logger.debug("Saving AcademicExamSetting data completed.");
-    }
+
+
+
+        private void savePaymentRemainder(Cell cell) {
+            logger.debug("Saving payment remainder data started.");
+            this.paymentRemainder = this.testDataPojoBuilder.createPaymentRemainderPojo ( cell,this.college,this.branch);
+            try {
+                Example<PaymentRemainder> example = Example.of(this.paymentRemainder);
+                if (this.paymentRemainderRepository.exists(example) == false) {
+                    this.paymentRemainder = this.paymentRemainderRepository.save(this.paymentRemainder);
+                } else {
+                    this.paymentRemainder = this.paymentRemainderRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving payment remainder data. " + e.getMessage());
+            }
+            logger.debug("Saving payment remainder data completed.");
+        }
+        private void saveHoliday(Cell cell) {
+            logger.debug("Saving holidaydata started.");
+            this.holiday = this.testDataPojoBuilder.createHolidayPojo(cell,this.academicYear);
+            try {
+                Example<Holiday> example = Example.of(this.holiday);
+                if (this.holidayRepository.exists(example) == false) {
+                    this.holiday = this.holidayRepository.save(this.holiday);
+                } else {
+                    this.holiday = this.holidayRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving holiday data. " + e.getMessage());
+            }
+            logger.debug("Saving holiday data completed.");
+        }
+        private void saveInvoice(Cell cell) {
+            logger.debug("Saving invoicedata started.");
+            this.invoice = this.testDataPojoBuilder.createInvoicePojo(cell,this.feeCategory,this.academicYear,this.student,this.branch,this.college,this.feeDetails,this.dueDate,this.paymentRemainder);
+            try {
+                Example<Invoice> example = Example.of(this.invoice);
+                if (this.invoiceRepository.exists(example) == false) {
+                    this.invoice = this.invoiceRepository.save(this.invoice);
+                } else {
+                    this.invoice = this.invoiceRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving invoice data. " + e.getMessage());
+            }
+            logger.debug("Saving invoice data completed.");
+        }
+        private void saveTypeOfGrading(Cell cell) {
+            logger.debug("Saving typeOfGradingdata started.");
+            this.typeOfGrading = this.testDataPojoBuilder.createTypeOfGradingPojo(cell,this.academicExamSetting);
+            try {
+                Example<TypeOfGrading> example = Example.of(this.typeOfGrading);
+                if (this.typeOfGradingRepository.exists(example) == false) {
+                    this.typeOfGrading = this.typeOfGradingRepository.save(this.typeOfGrading);
+                } else {
+                    this.typeOfGrading = this.typeOfGradingRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving type of grading data. " + e.getMessage());
+            }
+            logger.debug("Saving type of grading data completed.");
+        }
+
+        private void saveStudentExamReport(Cell cell) {
+            logger.debug("Saving studentExamReport started.");
+            this.studentExamReport = this.testDataPojoBuilder.createStudentExamReportPojo(cell,this.academicExamSetting,this.student,this.batch,this.typeOfGrading,this.academicYear);
+            try {
+                Example<StudentExamReport> example = Example.of(this.studentExamReport);
+                if (this.studentExamReportRepository.exists(example) == false) {
+                    this.studentExamReport = this.studentExamReportRepository.save(this.studentExamReport);
+                } else {
+                    this.studentExamReport = this.studentExamReportRepository.findOne(example).get();
+                }
+            } catch (Exception e) {
+                logger.warn("Exception in saving student exam report data. " + e.getMessage());
+            }
+            logger.debug("Saving student exam report data completed.");
+        }
+
 
     private void saveAcademicHistory(Cell cell) {
         logger.debug("Saving AcademicHistory data started.");
@@ -1648,5 +2045,6 @@ public class CmsAutomatedTestDataSetupProcessor {
         logger.debug("Saving AdmissionEnquiry data completed.");
     }
 }
+
 
 
