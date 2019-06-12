@@ -948,7 +948,7 @@ public class CmsAutomatedTestDataSetupProcessor {
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 0) {
+                if (cell.getColumnIndex() == 26) {
                     savePaymentRemainder(cell);
                 }
             }
@@ -1183,7 +1183,7 @@ public class CmsAutomatedTestDataSetupProcessor {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
 
-                    if (cell.getColumnIndex() == 0) {
+                    if (cell.getColumnIndex() == 25) {
                         saveDueDate(cell);
                     }
                 }
