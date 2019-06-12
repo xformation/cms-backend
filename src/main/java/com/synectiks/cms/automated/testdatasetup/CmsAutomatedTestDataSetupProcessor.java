@@ -415,6 +415,15 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/cmstestdata/createStudentFacilityLink")
+    public void createCmsTestStudentFacilityLinkReportData() throws IOException, ParseException {
+        try {
+            executeStudentFacilityLink();
+        } catch (Exception e) {
+            logger.error("Exception in creating CMS  StudentFacilityLink test data ", e);
+        }
+    }
+
 
 
 
