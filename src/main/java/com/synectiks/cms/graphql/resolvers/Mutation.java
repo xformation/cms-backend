@@ -9,6 +9,8 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.filter.exam.ExamFilterProcessor;
+import com.synectiks.cms.filter.exam.ExamListFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -422,6 +424,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private AdmissionEnquiryProcessor admissionEnquiryProcessor;
+
+    @Autowired
+    private ExamFilterProcessor examFilterProcessor;
 
 	@Autowired
     private StudentFilterProcessor studentFilterProcessor;
@@ -3029,6 +3034,16 @@ public class Mutation implements GraphQLMutationResolver {
     	logger.debug("Total students retrieved. "+list.size());
     	return list;
     }
+    public List<AcademicExamSetting> getSubjectList(ExamListFilterInput filter) throws Exception {
+        List<AcademicExamSetting> list = this.examFilterProcessor.searchSubject(filter);
+        logger.debug("Total Subjects retrieved. "+list.size());
+        return list;
+    }
+
+
+
+
+
     /**
 	 * getStudentAttendanceDataForAdmin(StudentAttendanceFilterInput filter)
 	 * Retrieves student attendance data for admin role end user

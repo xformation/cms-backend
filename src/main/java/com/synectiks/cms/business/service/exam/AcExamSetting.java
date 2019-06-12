@@ -1,10 +1,7 @@
-package com.synectiks.cms.business.service;
-
-import org.jetbrains.annotations.NotNull;
+package com.synectiks.cms.business.service.exam;
 
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,7 +68,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.action = action;
     }
 
-
     public String getSubject() {
         return subject;
     }
@@ -111,7 +107,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
 
     public String getSt() {
         return st;
@@ -189,8 +184,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         }
 
         str = sbTemp.toString();
-
-
         String str1 =this.sectn+","+other.sectn;
         String[] strWords1 = str1.split("\\,+");
         Arrays.sort(strWords1);
@@ -209,13 +202,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             index1++;
         }
         str1 = sbTemp1.toString();
-
-
-//if(this.examDate.equals(other.examDate)){
-//    ed=sdf.format(this.examDate);
-//    st=sdf.format(this.examDate);
-//}
-
 
         return new AcExamSetting(
             this.examType,

@@ -2661,3 +2661,35 @@ mutation updatePaymentRemainder($input: UpdatePaymentRemainderInput!){
     "branchId": 1001
   }
 }
+
+=========================================
+
+mutation getSubjectList($filter: ExamListFilterInput!) {
+  getSubjectList(filter: $filter) {
+    department {
+      id
+    }
+    batch {
+      id
+    }
+    semester
+    section {
+      id
+    }
+    examType
+    subject
+  }
+
+}
+---------input---------------------
+{
+      "filter": {
+        "departmentId": "1101",
+        "batchId": "1151",
+        "semester": "SEMESTER1",
+        "sectionId": "1201",
+        "examType": "midterm1"
+  }
+}
+
+===================================================

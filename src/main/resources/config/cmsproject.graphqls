@@ -1164,6 +1164,7 @@ type Mutation {
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [Student]!
+	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	saveDueDatePaymentRemLateFee(inputd: UpdateDueDateInput, inputp: UpdatePaymentRemainderInput, inputl: UpdateLateFeeInput): QueryResult!
 	getFeeSettingData(branchId: Long): CmsFeeSettingsVo!
@@ -1206,6 +1207,14 @@ input StudentListFilterInput {
 	sectionId: String
 	gender: String
 	studentType: String
+}
+
+input ExamListFilterInput {
+	departmentId: String
+	batchId: String
+	semester: String
+	sectionId: String
+	examType: String
 }
 
 
