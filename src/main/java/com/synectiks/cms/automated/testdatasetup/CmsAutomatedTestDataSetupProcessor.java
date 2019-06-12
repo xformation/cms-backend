@@ -1008,7 +1008,7 @@ public class CmsAutomatedTestDataSetupProcessor {
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 23) {
+                if (cell.getColumnIndex() == 31) {
                     saveStudentFacilityLink(cell);
                 }
             }
@@ -1029,7 +1029,7 @@ public class CmsAutomatedTestDataSetupProcessor {
             while (cellIterator.hasNext()) {
                 Cell cell = cellIterator.next();
 
-                if (cell.getColumnIndex() == 23) {
+                if (cell.getColumnIndex() == 24) {
                     saveAdmissionEnquiry(cell);
                 }
             }
