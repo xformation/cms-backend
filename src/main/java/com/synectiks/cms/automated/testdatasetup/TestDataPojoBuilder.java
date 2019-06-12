@@ -411,7 +411,7 @@ public class TestDataPojoBuilder {
         dueDate.setId(1234l);
         dueDate.setPaymentMethod(cell.getStringCellValue());
         dueDate.setInstallments(3243);
-        dueDate.setDayDesc(cell.getStringCellValue());
+        dueDate.setDayDesc("");
         dueDate.setPaymentDay(4);
         dueDate.setFrequency(Frequency.WEEKLY);
         dueDate.setCollege (college );
@@ -420,25 +420,23 @@ public class TestDataPojoBuilder {
     }
     public PaymentRemainder createPaymentRemainderPojo(Cell cell,College college,Branch branch ) {
         PaymentRemainder paymentRemainder  = new PaymentRemainder();
-        paymentRemainder.setId(1234l);
         paymentRemainder.setIsAutoRemainder(cell.getStringCellValue());
-        paymentRemainder.setIsFirstPaymentRemainder(cell.getStringCellValue());
+        paymentRemainder.setIsFirstPaymentRemainder("");
         paymentRemainder.setFirstPaymentRemainderDays(21);
-        paymentRemainder.setIsSecondPaymentRemainder(cell.getStringCellValue());
+        paymentRemainder.setIsSecondPaymentRemainder("");
         paymentRemainder.setSecondPaymentRemainderDays(21);
-        paymentRemainder.setIsOverDuePaymentRemainder (cell.getStringCellValue());
-        paymentRemainder.setOverDuePaymentRemainderAfterDueDateOrUntilPaid(cell.getStringCellValue());
+        paymentRemainder.setIsOverDuePaymentRemainder ("");
+        paymentRemainder.setOverDuePaymentRemainderAfterDueDateOrUntilPaid("");
         paymentRemainder.setOverDuePaymentRemainderDays(22);
-        paymentRemainder.setIsRemainderRecipients(cell.getStringCellValue());
-        paymentRemainder.setRemainderRecipients(cell.getStringCellValue());
+        paymentRemainder.setIsRemainderRecipients("");
+        paymentRemainder.setRemainderRecipients("");
         paymentRemainder.setCollege(college);
         paymentRemainder.setBranch(branch);
         return paymentRemainder ;
     }
     public Holiday createHolidayPojo(Cell cell,AcademicYear academicYear) {
         Holiday holiday  = new Holiday();
-        holiday.setId(1234l);
-        holiday.setHolidayDesc(cell.getStringCellValue());
+        holiday.setHolidayDesc("");
         holiday.setHolidayDate(new Date());
         holiday.setHolidayStatus(Status.ACTIVE);
         holiday.setAcademicyear(academicYear);
@@ -446,7 +444,6 @@ public class TestDataPojoBuilder {
     }
     public Invoice createInvoicePojo(Cell cell,FeeCategory feeCategory,AcademicYear academicYear,Student student,Branch branch,College college,FeeDetails feeDetails,DueDate dueDate,PaymentRemainder paymentRemainder) {
         Invoice invoice  = new Invoice();
-        invoice.setId(1234l);
         invoice.setInvoiceNumber(cell.getStringCellValue());
         invoice.setAmountPaid(3342l);
         invoice.setPaymentDate(new Date());
@@ -455,10 +452,10 @@ public class TestDataPojoBuilder {
         invoice.setModeOfPayment(ModeOfPayment.CARD);
         invoice.setChequeNumber(543l);
         invoice.setDemandDraftNumber(556l);
-        invoice.setOnlineTxnRefNumber(cell.getStringCellValue());
+        invoice.setOnlineTxnRefNumber("");
         invoice.setPaymentStatus(InvoicePaymentStatus.PAID);
-        invoice.setComments(cell.getStringCellValue());
-        invoice.setUpdatedBy(cell.getStringCellValue());
+        invoice.setComments("");
+        invoice.setUpdatedBy("");
         invoice.setUpdatedOn(new Date());
         invoice.setFeeCategory(feeCategory);
         invoice.setFeeDetails(feeDetails);
@@ -481,13 +478,12 @@ public class TestDataPojoBuilder {
     }
     public StudentExamReport createStudentExamReportPojo(Cell cell,AcademicExamSetting academicExamSetting,Student student,Batch batch,TypeOfGrading typeofGrading,AcademicYear academicYear) {
         StudentExamReport studentExamReport  = new StudentExamReport();
-        studentExamReport.setId(1234l);
         studentExamReport.setMarksObtained(35);
-        studentExamReport.setComments(cell.getStringCellValue());
+        studentExamReport.setComments("");
         studentExamReport.setCreatedOn(new Date());
-        studentExamReport.setCreatedBy(cell.getStringCellValue());
+        studentExamReport.setCreatedBy("");
         studentExamReport.setUpdatedOn(new Date());
-        studentExamReport.setUpdatedBy(cell.getStringCellValue());
+        studentExamReport.setUpdatedBy("");
         studentExamReport.setAcademicExamSetting(academicExamSetting);
         studentExamReport.setStudent(student);
         studentExamReport.setTypeOfGrading(typeofGrading);
@@ -500,8 +496,8 @@ public class TestDataPojoBuilder {
         AcademicHistory ah = new AcademicHistory();
         ah.setQualification(cell.getStringCellValue());
         ah.setYearOfPassing(cell.getStringCellValue());
-        ah.setInstitution(cell.getStringCellValue());
-        ah.setUniversity(cell.getStringCellValue());
+        ah.setInstitution("");
+        ah.setUniversity("");
         ah.setEnrollmentNo(45L);
         ah.setScore(90L);
         ah.setPercentage(90);
@@ -510,33 +506,30 @@ public class TestDataPojoBuilder {
     }
     public AdmissionApplication createAdmissionApplicationPojo(Cell cell,Student student) {
         AdmissionApplication aa = new AdmissionApplication();
-        aa.setId(342l);
         aa.setAdmissionStatus(AdmissionStatusEnum.ACCEPTED);
         aa.setCourse(CourseEnum.BTECH);
         aa.setAdmissionDate(new Date());
-        aa.setComments(cell.getStringCellValue());
+        aa.setComments("");
         aa.setStudent(student);
         return aa;
     }
     public AdmissionEnquiry createAdmissionEnquiryPojo(Cell cell,Branch branch) {
         AdmissionEnquiry ae = new AdmissionEnquiry();
-        ae.setId(3420l);
         ae.setStudentName(cell.getStringCellValue());
-        ae.setMobileNumber(cell.getStringCellValue());
-        ae.setAlternateMobileNumber(cell.getStringCellValue());
-        ae.setEmail(cell.getStringCellValue());
+        ae.setMobileNumber("");
+        ae.setAlternateMobileNumber("");
+        ae.setEmail("");
         ae.setCourseApplyingFor(CourseEnum.BTECH);
         ae.setModeOfEnquiry( ModeOfEnquiry.TELEPHONE);
         ae.setStatus(EnquiryStatus.DECLINED);
-        ae.setDescription(cell.getStringCellValue());
+        ae.setDescription("");
         ae.setEnquiryDate(new Date());
         ae.setUpdatedOn(new Date());
-        ae.setUpdatedBy(cell.getStringCellValue());
+        ae.setUpdatedBy("");
         return ae;
     }
     public StudentFacilityLink createStudentFacilityLinkPojo(Cell cell,Student student,Facility facility) {
         StudentFacilityLink sfl = new StudentFacilityLink();
-        sfl.setId(3420l);
         sfl.setLinkDesc(cell.getStringCellValue());
         sfl.setStudent(student);
         sfl.setFacility(facility);
