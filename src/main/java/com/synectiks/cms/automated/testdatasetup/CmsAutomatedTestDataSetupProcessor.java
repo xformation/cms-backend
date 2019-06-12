@@ -77,6 +77,8 @@ public class CmsAutomatedTestDataSetupProcessor {
     private AdmissionApplication admissionApplication = null;
     private AdmissionEnquiry admissionEnquiry = null;
 
+    private StudentFacilityLink studentFacilityLink = null;
+
 
 
 
@@ -152,6 +154,9 @@ public class CmsAutomatedTestDataSetupProcessor {
     private AdmissionApplicationRepository admissionApplicationRepository;
     @Autowired
     private AdmissionEnquiryRepository admissionEnquiryRepository;
+
+    @Autowired
+    private StudentFacilityLinkRepository studentFacilityLinkRepository;
 
 
 
@@ -480,6 +485,22 @@ public class CmsAutomatedTestDataSetupProcessor {
             if (fis != null) fis.close();
         }
     }
+
+    private void executeStudentFacilityLink() throws IOException, ParseException, InterruptedException {
+        this.testDataPojoBuilder = new TestDataPojoBuilder();
+        FileInputStream fis = null;
+        try {
+            File f = getFile();
+            fis = loadFile(f);
+            Workbook wb = getWorkbook(fis);
+            saveCmsStudentFacilityLink(wb);
+            logger.info("  StudentFacilityLink TEST DATA LOADING COMPLETED......");
+        } finally {
+            if (fis != null) fis.close();
+        }
+    }
+
+
     private void executeAdmissionEnquiry() throws IOException, ParseException, InterruptedException {
         this.testDataPojoBuilder = new TestDataPojoBuilder();
         FileInputStream fis = null;
@@ -973,6 +994,28 @@ public class CmsAutomatedTestDataSetupProcessor {
             }
         }
     }
+
+    private void saveCmsStudentFacilityLink(Workbook workbook) throws ParseException, InterruptedException {
+        Sheet sheet = getSheet(workbook, "cmstestdata");
+        logger.debug(sheet.getSheetName());
+        Iterator<Row> rowIterator = sheet.iterator();
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+            logger.debug("Row number : " + row.getRowNum());
+            if (row.getRowNum() <= 0) continue; // First row is a header row. skipping it.
+
+            Iterator<Cell> cellIterator = row.cellIterator();
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                if (cell.getColumnIndex() == 23) {
+                    saveStudentFacilityLink(cell);
+                }
+            }
+        }
+    }
+
+
     private void saveCmsAdmissionEnquiry(Workbook workbook) throws ParseException, InterruptedException {
         Sheet sheet = getSheet(workbook, "cmstestdata");
         logger.debug(sheet.getSheetName());
@@ -1098,6 +1141,11 @@ public class CmsAutomatedTestDataSetupProcessor {
                 if (cell.getColumnIndex()==24){
                     saveAdmissionEnquiry(cell);
                 }
+
+                if (cell.getColumnIndex()==31){
+                    saveStudentFacilityLink(cell);
+                }
+
             }
         }
     }
@@ -2044,6 +2092,25 @@ public class CmsAutomatedTestDataSetupProcessor {
         }
         logger.debug("Saving AdmissionEnquiry data completed.");
     }
+
+
+    private void saveStudentFacilityLink(Cell cell) {
+        logger.debug("Saving  StudentFacilityLink data started.");
+        this.studentFacilityLink = this.testDataPojoBuilder.createStudentFacilityLinkPojo(cell,this.student,this.facility);
+        try {
+            Example< StudentFacilityLink> example = Example.of(this. studentFacilityLink);
+            if (this. studentFacilityLinkRepository.exists(example) == false) {
+                this. studentFacilityLink = this. studentFacilityLinkRepository.save(this. studentFacilityLink);
+            } else {
+                this. studentFacilityLink = this. studentFacilityLinkRepository.findOne(example).get();
+            }
+        } catch (Exception e) {
+            logger.warn("Exception in saving  studentFacilityLink data. " + e.getMessage());
+        }
+        logger.debug("Saving StudentFacilityLink data completed.");
+    }
+
+
 }
 
 

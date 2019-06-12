@@ -534,6 +534,16 @@ public class TestDataPojoBuilder {
         ae.setUpdatedBy(cell.getStringCellValue());
         return ae;
     }
+    public StudentFacilityLink createStudentFacilityLinkPojo(Cell cell,Student student,Facility facility) {
+        StudentFacilityLink sfl = new StudentFacilityLink();
+        sfl.setId(3420l);
+        sfl.setLinkDesc(cell.getStringCellValue());
+        sfl.setStudent(student);
+        sfl.setFacility(facility);
+        return sfl;
+    }
+
+
 }
 
 //	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
