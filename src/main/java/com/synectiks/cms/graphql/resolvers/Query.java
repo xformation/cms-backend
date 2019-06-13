@@ -667,9 +667,9 @@ public class Query implements GraphQLQueryResolver {
     	return cache;
     }
 
-    public StudentFilterDataCache createStudentFilterDataCache(String collegeId, String academicYearId) throws Exception{
+    public StudentFilterDataCache createStudentFilterDataCache(String collegeId,List<State> stateList, List<City> cityList, String academicYearId) throws Exception{
     	
-    	List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
+    	List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId),stateList,cityList);
     	List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
     	List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList); 
     	List<Section> sectionList = this.commonService.getSectionForCriteria(batchList); 
@@ -684,6 +684,20 @@ public class Query implements GraphQLQueryResolver {
     	cache.setStudentTypes(studentTypeList);
     	cache.setGenders(genderList);
     	return cache;
+    }
+
+    public  AdmissionDataCache createAdmissionDataCache(String collegeId,List<State> stateList, List<City> cityList,String academicYearId) throws Exception{
+        List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId),stateList,cityList);
+        List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+        List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
+        List<CmsCourseEnumVo> courseEnumVoList = this.commonService.getAllCourses();
+
+        AdmissionDataCache cache = new AdmissionDataCache();
+        cache.setBranches(branchList);
+        cache.setDepartments(departmentList);
+        cache.setBatches(batchList);
+        cache.setCourseEnums(courseEnumVoList);
+        return cache;
     }
 
     

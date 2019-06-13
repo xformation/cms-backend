@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.course.Course;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +24,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsGenderVo;
-import com.synectiks.cms.domain.CmsSemesterVo;
-import com.synectiks.cms.domain.CmsStudentTypeVo;
-import com.synectiks.cms.domain.CmsTermVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
@@ -403,6 +386,67 @@ public class CommonService {
     	logger.debug("Returning list of branches from JPA criteria query. Total records : "+branchList.size());
 		return branchList;
 	}
+
+    public List<State> getStateForCriteria(Long countryId){
+        if(countryId == null) {
+            logger.warn("country id is null. Returning empty state list.");
+            return Collections.emptyList();
+        }
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<State> query = cb.createQuery(State.class);
+        Root<State> root = query.from(State.class);
+        CriteriaQuery<State> select = query.select(root).where(cb.equal(root.get("country"), countryId));
+        TypedQuery<State> typedQuery = this.entityManager.createQuery(select);
+        List<State> stateList = typedQuery.getResultList();
+        logger.debug("Returning list of states from JPA criteria query. Total records : "+stateList.size());
+        return stateList;
+    }
+
+
+    public List<City> getCityForCriteria(List<State> stateList){
+        if(stateList.size() == 0 ) {
+            logger.warn("Either state list is empty . Returning empty city list.");
+            logger.warn("Total records in stateList list: "+stateList.size());
+            return Collections.emptyList();
+        }
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<City> query = cb.createQuery(City.class);
+        Root<City> root = query.from(City.class);
+        In<Long> inState = cb.in(root.get("state"));
+        for (State st : stateList) {
+            inState.value(st.getId());
+        }
+        CriteriaQuery<City> select = query.select(root).where(cb.and(inState));
+        TypedQuery<City> typedQuery = this.entityManager.createQuery(select);
+        List<City> cityList = typedQuery.getResultList();
+        logger.debug("Returning list of cities from JPA criteria query. Total records : "+cityList.size());
+        return cityList;
+    }
+
+    public List<Branch> getBranchForCriteria(Long collegeId,List<State> stateList,List<City> cityList){
+        if(collegeId == null || stateList.size() == 0 || cityList.size() == 0) {
+            logger.warn("Either state, city  list is empty or college id is null. Returning empty branch list.");
+            logger.warn("Total records in state list: "+stateList.size()+", total records in city list: "+cityList.size());
+            return Collections.emptyList();
+        }
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Branch> query = cb.createQuery(Branch.class);
+        Root<Branch> root = query.from(Branch.class);
+        In<Long> inState = cb.in(root.get("state"));
+        for (State st : stateList) {
+            inState.value(st.getId());
+        }
+        In<Long> inCity = cb.in(root.get("city"));
+        for (City ct : cityList) {
+            inCity.value(ct.getId());
+        }
+
+        CriteriaQuery<Branch> select = query.select(root).where(cb.and(inState), cb.and(inCity), cb.and(cb.equal(root.get("college"), collegeId)));
+        TypedQuery<Branch> typedQuery = this.entityManager.createQuery(select);
+        List<Branch> branchList = typedQuery.getResultList();
+        logger.debug("Returning list of branches from JPA criteria query. Total records : "+branchList.size());
+        return branchList;
+    }
 	
 	public List<Department> getDepartmentForCriteria(List<Branch> branchList, Long academicYearId){
 		if(branchList.size() == 0 || academicYearId == null) {
@@ -631,6 +675,34 @@ public class CommonService {
         vo.setDescription(sm.getDescription());
         return vo;
 	}
+
+    public List<CmsCourseEnumVo> getAllCourses() {
+        logger.debug("Retrieving all courses types");
+        List<CmsCourseEnumVo> ls = new ArrayList<>();
+        for(Course cr: Course.values()) {
+            CmsCourseEnumVo vo = new CmsCourseEnumVo();
+            vo.setId(cr.value());
+            vo.setDescription(cr.getDescription());
+            ls.add(vo);
+        }
+        return ls;
+    }
+
+    public CmsCourseEnumVo getCourse(Long id) {
+        Course cr = Course.valueOf(id.intValue());
+        CmsCourseEnumVo vo = new CmsCourseEnumVo();
+        vo.setId(cr.value());
+        vo.setDescription(cr.getDescription());
+        return vo;
+    }
+
+    public CmsCourseEnumVo getCourseByDescription(String courseDescription) {
+        Course cr = Course.getCourseOnDescription(courseDescription);
+        CmsCourseEnumVo vo = new CmsCourseEnumVo();
+        vo.setId(cr.value());
+        vo.setDescription(cr.getDescription());
+        return vo;
+    }
 	
 	public List<CmsTermVo> getTermsByAcademicYear(Long academicYearId) throws Exception{
 		if(academicYearId == null) {

@@ -279,6 +279,7 @@ type Query {
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
+    createAdmissionDataCache(branchId:String , academicYearId:String): AdmissionDataCache!
 }
 
 type AcExamSetting{
@@ -306,10 +307,25 @@ type StudentFilterDataCache {
 	genders: [CmsGenderVo]
 }
 
+type AdmissionDataCache{
+    branches: [Branch]
+    departments: [Department]
+    batches: [Batch]
+    states: [State]
+    cities: [City]
+    courses: [CmsCourseEnumVo]
+}
+
 type CmsStudentTypeVo{
 	id: Int
 	description: String
 }
+
+type CmsCourseEnumVo{
+    id: Int
+    description: String
+}
+
 
 type CmsGenderVo{
 	id: Int
