@@ -2,9 +2,18 @@ package com.synectiks.cms.filter.studentattendance;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.CriteriaBuilder.In;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +33,9 @@ import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
@@ -51,6 +62,8 @@ public class StudentAttendanceFilterImpl  {
     @Autowired
     private LectureRepository lectureRepository;
     
+    @PersistenceContext
+    private EntityManager entityManager;
     /**
      * Student attendance data for a teacher role end user
      * @param filter
@@ -59,15 +72,28 @@ public class StudentAttendanceFilterImpl  {
      */
     public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) throws Exception {
         
-        Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
-    	Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
-    	Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
-    	Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+//      Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
+    	Branch branch = new Branch();
+    	branch.setId(Long.valueOf(filter.getBranchId()));
+    	Department department = new Department(); //this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+    	department.setId(Long.valueOf(filter.getDepartmentId()));
+    	Batch batch = new Batch(); //this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+    	batch.setId(Long.valueOf(filter.getBatchId()));
+    	Section section = new Section(); //this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+    	section.setId(Long.valueOf(filter.getSectionId()));
     	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(Long.valueOf(filter.getTeacherId()), Long.valueOf(filter.getSubjectId()));
+//    	Subject subject = new Subject();
+//    	subject.setId(Long.valueOf(filter.getSubjectId()));
+//    	Teacher teacher = new Teacher();
+//    	teacher.setId(Long.valueOf(filter.getTeacherId()));
+//    	teach.setSubject(subject);
+//    	teach.setTeacher(teacher);
     	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
     	
     	List<DailyAttendanceVo> voList = new ArrayList<>();
-        List<Student> studentList = getStudentList(branch, department, batch, section);
+//        List<Student> studentList = getStudentList(branch, department, batch, section);
+    	List<Student> studentList = getStudentList(branch, department, batch, section);
+        
         
         Lecture currentDateLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 0);
         Lecture oneDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 1);
@@ -270,6 +296,30 @@ public class StudentAttendanceFilterImpl  {
     	List<Student> studentList = this.studentRepository.findAll(example);
     	return studentList;
     }
+    
+   
+    
+    public List<Student> getStudentListByJpql(Branch branch, Department department, Batch batch, Section section){
+		
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Student> query = cb.createQuery(Student.class);
+    	Root<Student> root = query.from(Student.class);
+//    	In<Long> inBatch = cb.in(root.get("batch"));
+//    	for (Batch bth : batchList) {
+//    		inBatch.value(bth.getId());
+//    	}
+//    	In<Long> inSection = cb.in(root.get("section"));
+//    	for (Section sec : secList) {
+//    		inSection.value(sec.getId());
+//    	}
+    	
+    	CriteriaQuery<Student> select = query.select(root).where(cb.and(cb.equal(root.get("branch"), branch.getId())),cb.and(cb.equal(root.get("department"), department.getId())), 
+    			cb.and(cb.equal(root.get("batch"), batch.getId())), cb.and(cb.equal(root.get("section"), section.getId())));
+    	TypedQuery<Student> typedQuery = this.entityManager.createQuery(select);
+    	List<Student> stList = typedQuery.getResultList();
+    	logger.debug("Returning list of student for teacher attendance from JPA criteria query. Total records : "+stList.size());
+		return stList;
+	}
     
     @Transactional
     public QueryResult updateStudentStatus(List<StudentAttendanceUpdateFilter> list) {

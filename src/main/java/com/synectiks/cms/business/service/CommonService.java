@@ -604,6 +604,26 @@ public class CommonService {
 		return lectureList;
 	}
 	
+	public List<Lecture> getLectureForAdminCriteria(List<AttendanceMaster> atndMstrList) throws Exception{
+		if(atndMstrList.size() == 0) {
+			logger.warn("Attendance master list is empty. Returning empty lecture list.");
+			return Collections.emptyList();
+		}
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Lecture> query = cb.createQuery(Lecture.class);
+    	Root<Lecture> root = query.from(Lecture.class);
+    	In<Long> inAtndMstr = cb.in(root.get("attendancemaster"));
+    	for (AttendanceMaster am : atndMstrList) {
+    		inAtndMstr.value(am.getId());
+    	}
+//    	Date dt = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
+    	CriteriaQuery<Lecture> select = query.select(root).where(inAtndMstr);
+    	TypedQuery<Lecture> typedQuery = this.entityManager.createQuery(select);
+    	List<Lecture> lectureList = typedQuery.getResultList();
+    	logger.debug("Returning list of lectures from JPA criteria query. Total records : "+lectureList.size());
+		return lectureList;
+	}
+	
 	public List<CmsGenderVo> getAllGenders() {
         logger.debug("Retrieving all genders types");
         List<CmsGenderVo> ls = new ArrayList<>();

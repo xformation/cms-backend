@@ -643,7 +643,7 @@ public class Query implements GraphQLQueryResolver {
 //    		}
 //    	}
     	List<CmsTermVo> term = this.commonService.getTermsByAcademicYear(Long.valueOf(academicYearId));
-    	List<Lecture> lec =  this.commonService.getLectureForCriteria(attendanceMaster, lectureDate); 
+    	List<Lecture> lec =  this.commonService.getLectureForAdminCriteria(attendanceMaster); 
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
     	for(Lecture lecture : lec) {
     		CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
