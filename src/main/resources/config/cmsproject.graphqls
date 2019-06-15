@@ -277,9 +277,9 @@ type Query {
 
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
-  createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
+  createStudentFilterDataCache(collegeId:String!, academicYearId:String!,stateList:List<State>, cityList: List<City>): StudentFilterDataCache!
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
-    createAdmissionDataCache(branchId:String , academicYearId:String): AdmissionDataCache!
+    createAdmissionDataCache(branchId:String , academicYearId:String!, stateList:List<State>, cityList: List<City>): AdmissionDataCache!
 }
 
 type AcExamSetting{
