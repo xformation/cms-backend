@@ -23,26 +23,20 @@ public class CmsAdmissionEnquiryService {
     @Autowired
     private AdmissionEnquiryRepository admissionEnquiryRepository;
 
-    public Long getTotalAdmissions(Long branchId, Long admissionApplicationId) {
-        Long a = getTotalFollowup(branchId, admissionApplicationId);
-        Long b = getTotalDeclined(branchId, admissionApplicationId);
-        Long c = getTotalConverted(branchId, admissionApplicationId);
+    public Long getTotalAdmissions(Long branchId) {
+        Long a = getTotalFollowup(branchId);
+        Long b = getTotalDeclined(branchId);
+        Long c = getTotalConverted(branchId);
         return a + b + c;
     }
 
-    public Long getTotalFollowup(Long branchId, Long admissionApplicationId) {
+    public Long getTotalFollowup(Long branchId) {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
 
         if (branchId != null) {
             Branch branch = new Branch();
             branch.setId(branchId);
             admissionEnquiry.setBranch(branch);
-        }
-
-        if (admissionApplicationId != null) {
-            AdmissionApplication admissionApplication = new AdmissionApplication();
-            admissionApplication.setId(admissionApplicationId);
-            admissionEnquiry.setAdmissionApplication(admissionApplication);
         }
 
         admissionEnquiry.setStatus(EnquiryStatus.FOLLOWUP);
@@ -51,7 +45,7 @@ public class CmsAdmissionEnquiryService {
         return cnt;
     }
 
-    public Long getTotalDeclined(Long branchId, Long admissionApplicationId) {
+    public Long getTotalDeclined(Long branchId) {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
 
         if (branchId != null) {
@@ -60,11 +54,7 @@ public class CmsAdmissionEnquiryService {
             admissionEnquiry.setBranch(branch);
         }
 
-        if (admissionApplicationId != null) {
-            AdmissionApplication admissionApplication = new AdmissionApplication();
-            admissionApplication.setId(admissionApplicationId);
-            admissionEnquiry.setAdmissionApplication(admissionApplication);
-        }
+
 
         admissionEnquiry.setStatus(EnquiryStatus.DECLINED);
         Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
@@ -72,19 +62,13 @@ public class CmsAdmissionEnquiryService {
         return cnt;
     }
 
-    public Long getTotalConverted(Long branchId, Long admissionApplicationId) {
+    public Long getTotalConverted(Long branchId) {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
 
         if (branchId != null) {
             Branch branch = new Branch();
             branch.setId(branchId);
             admissionEnquiry.setBranch(branch);
-        }
-
-        if (admissionApplicationId != null) {
-            AdmissionApplication admissionApplication = new AdmissionApplication();
-            admissionApplication.setId(admissionApplicationId);
-            admissionEnquiry.setAdmissionApplication(admissionApplication);
         }
 
         admissionEnquiry.setStatus(EnquiryStatus.CONVERTED);
@@ -93,15 +77,11 @@ public class CmsAdmissionEnquiryService {
         return cnt;
     }
 
-    public List<CmsAdmissionEnquiryVo> searchAdmissionOnType(String admissionEnquiryType,Long branchId, Long admissionApplicationId) throws Exception {
+    public List<CmsAdmissionEnquiryVo> searchAdmissionOnType(String admissionEnquiryType,Long branchId) throws Exception {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
         Branch branch = new Branch();
         branch.setId(branchId);
-        AdmissionApplication aa  = new AdmissionApplication();
-        aa.setId(admissionApplicationId);
-
         admissionEnquiry.setBranch(branch);
-        admissionEnquiry.setAdmissionApplication(aa);
 
         if(!admissionEnquiryType.equalsIgnoreCase("RECEIVED")) {
             if(admissionEnquiryType.equalsIgnoreCase("FOLLOWUP")) {
@@ -124,6 +104,25 @@ public class CmsAdmissionEnquiryService {
         }
         return ls;
     }
+
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId) throws Exception {
+        AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
+        Branch branch = new Branch();
+        branch.setId(branchId);
+        admissionEnquiry.setBranch(branch);
+
+        Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
+        List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
+        List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
+        for(AdmissionEnquiry temp: list) {
+            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
+            CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
+            cae.setStrEnquiryDate(stDt);
+            ls.add(cae);
+        }
+        return ls;
+    }
+
 
 }
 

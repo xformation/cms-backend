@@ -24,33 +24,37 @@ public class AdmissionEnquiryProcessor {
     private CmsAdmissionEnquiryService cmsAdmissionEnquiryService;
 
 
-    public Long getTotalAdmissions( Long branchId, Long admissionApplicationId ) {
-        return cmsAdmissionEnquiryService.getTotalAdmissions(branchId, admissionApplicationId);
+    public Long getTotalAdmissions( Long branchId ) {
+        return cmsAdmissionEnquiryService.getTotalAdmissions(branchId);
     }
 
-    public Long getTotalFollowup(Long branchId, Long admissionApplicationId) {
-        return cmsAdmissionEnquiryService.getTotalFollowup(branchId, admissionApplicationId);
+    public Long getTotalFollowup(Long branchId) {
+        return cmsAdmissionEnquiryService.getTotalFollowup(branchId);
     }
 
-    public Long getTotalDeclined(Long branchId, Long admissionApplicationId) {
-        return cmsAdmissionEnquiryService.getTotalDeclined(branchId, admissionApplicationId);
+    public Long getTotalDeclined(Long branchId) {
+        return cmsAdmissionEnquiryService.getTotalDeclined(branchId);
     }
 
-    public Long getTotalConverted(Long branchId, Long admissionApplicationId) {
-        return cmsAdmissionEnquiryService.getTotalConverted( branchId, admissionApplicationId);
+    public Long getTotalConverted(Long branchId) {
+        return cmsAdmissionEnquiryService.getTotalConverted( branchId);
     }
 
-    public CmsAdmissionEnquiryVo getAdmissionData(Long branchId, Long admissionApplicationId) {
+    public CmsAdmissionEnquiryVo getAdmissionData(Long branchId) {
         CmsAdmissionEnquiryVo cmsAdmissionEnquiryVo = new CmsAdmissionEnquiryVo();
-        cmsAdmissionEnquiryVo.setTotalAdmissions(this.getTotalAdmissions(branchId, admissionApplicationId));
-        cmsAdmissionEnquiryVo.setTotalFollowup(this.getTotalFollowup(branchId, admissionApplicationId));
-        cmsAdmissionEnquiryVo.setTotalDeclined(this.getTotalDeclined(branchId, admissionApplicationId));
-        cmsAdmissionEnquiryVo.setTotalConverted(this.getTotalConverted(branchId, admissionApplicationId));
+        cmsAdmissionEnquiryVo.setTotalAdmissions(this.getTotalAdmissions(branchId));
+        cmsAdmissionEnquiryVo.setTotalFollowup(this.getTotalFollowup(branchId));
+        cmsAdmissionEnquiryVo.setTotalDeclined(this.getTotalDeclined(branchId));
+        cmsAdmissionEnquiryVo.setTotalConverted(this.getTotalConverted(branchId));
         return cmsAdmissionEnquiryVo;
     }
 
-    public List<CmsAdmissionEnquiryVo> searchAdmissionOnType(String admissionEnquiryType,Long branchId, Long admissionApplicationId) throws Exception{
-        return cmsAdmissionEnquiryService.searchAdmissionOnType(admissionEnquiryType, branchId, admissionApplicationId);
+    public List<CmsAdmissionEnquiryVo> searchAdmissionOnType(String admissionEnquiryType,Long branchId) throws Exception{
+        return cmsAdmissionEnquiryService.searchAdmissionOnType(admissionEnquiryType, branchId);
+    }
+
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId) throws Exception{
+        return cmsAdmissionEnquiryService.admissionEnquiryList( branchId);
     }
 
     public Long getTotalAdmissions() {

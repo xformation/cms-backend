@@ -529,23 +529,23 @@ public class Query implements GraphQLQueryResolver {
     }
 
 
-    public Long getTotalAdmissions( long branchId, long admissionApplicationId) {
-        return admissionEnquiryProcessor.getTotalAdmissions( branchId, admissionApplicationId);
+    public Long getTotalAdmissions( long branchId) {
+        return admissionEnquiryProcessor.getTotalAdmissions( branchId);
     }
 
-    public Long getTotalFollowup( long branchId, long admissionApplicationId) {
-        return admissionEnquiryProcessor.getTotalFollowup( branchId, admissionApplicationId);
+    public Long getTotalFollowup( long branchId) {
+        return admissionEnquiryProcessor.getTotalFollowup( branchId);
     }
-    public Long getTotalDeclined(long branchId, long admissionApplicationId) {
-        return admissionEnquiryProcessor.getTotalDeclined( branchId, admissionApplicationId);
-    }
-
-    public Long getTotalConverted( long branchId, long admissionApplicationId) {
-        return admissionEnquiryProcessor.getTotalConverted(branchId, admissionApplicationId);
+    public Long getTotalDeclined(long branchId) {
+        return admissionEnquiryProcessor.getTotalDeclined( branchId);
     }
 
-    public CmsAdmissionEnquiryVo getAdmissionData( String branchId, String admissionApplicationId) {
-        return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId), Long.valueOf(admissionApplicationId));
+    public Long getTotalConverted( long branchId) {
+        return admissionEnquiryProcessor.getTotalConverted(branchId);
+    }
+
+    public CmsAdmissionEnquiryVo getAdmissionData( String branchId) {
+        return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId));
     }
 
     

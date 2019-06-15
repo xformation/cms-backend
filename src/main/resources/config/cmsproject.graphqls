@@ -268,11 +268,11 @@ type Query {
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getInvoiceData(collegeId:String, branchId:String, academicYearId:String): CmsInvoice
 
-    getTotalAdmissions(branchId:Long, admissionApplicationId:Long! ): Long!
-    getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
-    getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
-    getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
-    getAdmissionData(branchId:String, admissionApplicationId:String!): CmsAdmissionEnquiryVo
+    getTotalAdmissions(branchId:Long): Long!
+    getTotalFollowup(branchId:Long ): Long!
+    getTotalDeclined(branchId:Long ): Long!
+    getTotalConverted(branchId:Long): Long!
+    getAdmissionData(branchId:String): CmsAdmissionEnquiryVo
 
 
   
@@ -1128,11 +1128,12 @@ type Mutation {
     getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
 
-     getTotalAdmissions(branchId:Long, admissionApplicationId:Long! ): Long!
-     getTotalFollowup(branchId:Long, admissionApplicationId:Long! ): Long!
-     getTotalDeclined(branchId:Long, admissionApplicationId:Long! ): Long!
-     getTotalConverted(branchId:Long, admissionApplicationId:Long!): Long!
-     searchAdmissionOnType(admissionEnquiryType:String branchId:Long, admissionApplicationId:Long ): [CmsAdmissionEnquiryVo!]!
+     getTotalAdmissions(branchId:Long ): Long!
+     getTotalFollowup(branchId:Long ): Long!
+     getTotalDeclined(branchId:Long ): Long!
+     getTotalConverted(branchId:Long): Long!
+     searchAdmissionOnType(admissionEnquiryType:String branchId:Long): [CmsAdmissionEnquiryVo!]!
+     admissionEnquiryList(branchId:Long ): [CmsAdmissionEnquiryVo!]!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
