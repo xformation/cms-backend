@@ -687,4 +687,13 @@ public class Query implements GraphQLQueryResolver {
     }
 
     
+    public FeeDataCache createFeeDataCache() throws Exception{
+    	List<College> collegeList = this.collegeRepository.findAll();
+    	List<Branch> branchList = this.branchRepository.findAll();
+    	FeeDataCache cache = new FeeDataCache();
+    	cache.setColleges(collegeList);
+    	cache.setBranches(branchList);
+    	
+    	return cache;
+    }
 }

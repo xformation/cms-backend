@@ -279,6 +279,12 @@ type Query {
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
+  createFeeDataCache: FeeDataCache!
+}
+
+type FeeDataCache {
+	colleges: [College]
+	branches: [Branch]	
 }
 
 type AcExamSetting{
