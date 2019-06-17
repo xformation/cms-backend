@@ -429,7 +429,7 @@ public class LectureService {
 	
 	public boolean addMetaLectureData(LectureScheduleDTO dto, LectureScheduleFilter filter, Optional<AcademicYear> oay){
 		MetaLecture metaLecture = new MetaLecture();
-		
+		boolean isFound = false;
 		Branch branch = this.commonService.getBranchById(CommonUtil.isNullOrEmpty(filter.getBranchId()) ? null : Long.valueOf(filter.getBranchId().trim()));
         Department department = this.commonService.getDepartmentById(CommonUtil.isNullOrEmpty(filter.getDepartmentId()) ? null : Long.valueOf(filter.getDepartmentId().trim()));
      
@@ -461,11 +461,16 @@ public class LectureService {
         	metaLecture.setEndTime(endTime);
         	metaLecture.setSubject(subject);
         	metaLecture.setTeacher(teacher);
-        	logger.debug("Saving data in metalecture table.");
-        	this.metaLectureRepository.save(metaLecture);
-        	return true;
+        	logger.debug("Checking for existing data");
+        	Example<MetaLecture> example = Example.of(metaLecture);
+        	isFound = this.metaLectureRepository.exists(example);
+        	if(isFound == false) {
+        		logger.debug("Record not found. Saving data in metalecture table.");
+        		this.metaLectureRepository.save(metaLecture);
+        	}
         }
-		return false;
+        logger.debug("Record already exists. So not storing this record in DB.");
+        return isFound;
 	}
 	
 	public Department getDepartment(Long departmentId) {
@@ -475,46 +480,48 @@ public class LectureService {
 	public Batch getBatch(Long batchId) {
 		return this.commonService.getBatchById(batchId);
 	}
-//	public void getLectureList(LectureScheduleFilter filter, Optional<AcademicYear> oay) {
-//		MetaLecture metaLecture = new MetaLecture();
-//		AcademicYear academicYear = oay.get();
-//		Term term = new Term();
-//		Branch branch = new Branch();
-//		Department department = new Department();
-//		
-//		term.setId(Long.valueOf(filter.getTermId()));
-//		branch.setId(Long.valueOf(filter.getBranchId()));
-//		department.setId(Long.valueOf(filter.getDepartmentId()));
-//		
-//		metaLecture.setAcademicyear(academicYear);
-//		metaLecture.setTerm(term);
-//		metaLecture.setBranch(branch);
-//		metaLecture.setDepartment(department);
-//		
-//		Example<MetaLecture> example = Example.of(metaLecture);
-//		List<LectureReport> ls = new ArrayList<>();
-//		List<MetaLecture> list = this.metaLectureRepository.findAll(example);
-//		LectureReport lr = new LectureReport();
-//		Long deptId = 0L;
-//		String deptName = null;
-//		String year = null;
-//		int prCnt = 0;
-//		
-//		for(MetaLecture ml : list) {
-//			int cnt = Integer.parseInt(lr.getNumberOfPeriods() == null ? "0" : lr.getNumberOfPeriods()) + 1;
-//			
-//			LectureReport lrNew =  new LectureReport(String.valueOf(ml.getDepartment().getId()), ml.getDepartment().getName(), 
-//					ml.getBatch().getBatch().toString(), String.valueOf(cnt));
-//			
-//			if(lrNew.equals(lr)) {
-//				lr = lrNew;
-//			}else {
-//				ls.add(lrNew);
-//			}
-//			
-//		}
-//		
-//	}
+	
+	public List<MetaLecture> checkLectureForAddOrEdit(LectureScheduleDTO dto, LectureScheduleFilter filter, Optional<AcademicYear> oay){
+		MetaLecture metaLecture = new MetaLecture();
+		
+		Branch branch = this.commonService.getBranchById(CommonUtil.isNullOrEmpty(filter.getBranchId()) ? null : Long.valueOf(filter.getBranchId().trim()));
+        Department department = this.commonService.getDepartmentById(CommonUtil.isNullOrEmpty(filter.getDepartmentId()) ? null : Long.valueOf(filter.getDepartmentId().trim()));
+     
+        Term term = this.commonService.getTermById(CommonUtil.isNullOrEmpty(filter.getTermId()) ? null : Long.valueOf(filter.getTermId().trim()));
+        Section section = this.commonService.getSectionById(CommonUtil.isNullOrEmpty(filter.getSectionId()) ? null : Long.valueOf(filter.getSectionId().trim()));
+        Batch batch = this.commonService.getBatchById(Long.valueOf(CommonUtil.isNullOrEmpty(filter.getBatchId()) ? null : filter.getBatchId().trim()));
+        AcademicYear academicYear = null;
+        if(oay.isPresent()) {
+        	academicYear = oay.get();
+        }
+        		
+        String weekDay = dto.getWeekDay();
+        String startTime = dto.getStartTime();
+        String endTime = dto.getEndTime();
+//        Subject subject = this.commonService.getSubjectById(Long.valueOf(dto.getSubjectId()));
+        Teacher teacher = this.commonService.getTeacherById(Long.valueOf(dto.getTeacherId()));
+        List<MetaLecture> list = new ArrayList<>();
+        if(branch != null && department != null && term != null && academicYear != null && section != null && batch != null && weekDay != null && startTime != null 
+        		&& endTime != null) {
+        	metaLecture.setBranch(branch);
+        	metaLecture.setDepartment(department);
+        	metaLecture.setTerm(term);
+        	metaLecture.academicyear(academicYear);
+        	metaLecture.setSection(section);
+        	metaLecture.setBatch(batch);
+        	
+//        	metaLecture.setWeekDay(weekDay);
+//        	metaLecture.setStartTime(startTime);
+//        	metaLecture.setEndTime(endTime);
+//        	metaLecture.setSubject(subject);
+//        	metaLecture.setTeacher(teacher);
+        	logger.debug("Checking lecture exists");
+        	Example<MetaLecture> example = Example.of(metaLecture);
+        	list = this.metaLectureRepository.findAll(example);
+        }
+        
+        return list;
+	}
 	
 	
 	

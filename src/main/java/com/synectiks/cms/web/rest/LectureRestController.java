@@ -69,14 +69,24 @@ public class LectureRestController {
 		Optional<AcademicYear> oay = this.academicYearRepository.findById(id);
 
 		ObjectMapper mapper = new ObjectMapper();
-		String values[] = new String[list.size()];
+//		String values[] = new String[list.size()];
+		List<String> addList = new ArrayList<String>();
 		int i=0;
 		for (Iterator<LectureScheduleDTO> iterator = list.iterator(); iterator.hasNext();) {
 			LectureScheduleDTO dto = iterator.next();
-			values[i] = mapper.writeValueAsString(dto);
+//			values[i] = mapper.writeValueAsString(dto);
 			i++;
 			logger.debug("Going in addMetaLectureData.");
-			this.lectureService.addMetaLectureData(dto, filter, oay);
+			boolean isFound = this.lectureService.addMetaLectureData(dto, filter, oay);
+			if(isFound == false) {
+				addList.add(mapper.writeValueAsString(dto));
+			}
+		}
+		String values[] = new String[addList.size()];
+		int index=0;
+		for(String str: addList) {
+			values[index] = str;
+			index++;
 		}
 		lectureScheduleInput.setValues(values);
 		
