@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -70,10 +71,8 @@ public class LateFeeResourceIntTest {
     @Autowired
     private LateFeeRepository lateFeeRepository;
 
-
     @Autowired
     private LateFeeMapper lateFeeMapper;
-    
 
     @Autowired
     private LateFeeService lateFeeService;
@@ -98,6 +97,9 @@ public class LateFeeResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restLateFeeMockMvc;
 
     private LateFee lateFee;
@@ -110,7 +112,8 @@ public class LateFeeResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -226,7 +229,6 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)));
     }
     
-
     @Test
     @Transactional
     public void getLateFee() throws Exception {
@@ -246,6 +248,7 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.lateFeeFrequency").value(DEFAULT_LATE_FEE_FREQUENCY.toString()))
             .andExpect(jsonPath("$.lateFeeRepeatDays").value(DEFAULT_LATE_FEE_REPEAT_DAYS));
     }
+
     @Test
     @Transactional
     public void getNonExistingLateFee() throws Exception {
@@ -305,7 +308,7 @@ public class LateFeeResourceIntTest {
         // Create the LateFee
         LateFeeDTO lateFeeDTO = lateFeeMapper.toDto(lateFee);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLateFeeMockMvc.perform(put("/api/late-fees")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lateFeeDTO)))
@@ -327,7 +330,7 @@ public class LateFeeResourceIntTest {
 
         int databaseSizeBeforeDelete = lateFeeRepository.findAll().size();
 
-        // Get the lateFee
+        // Delete the lateFee
         restLateFeeMockMvc.perform(delete("/api/late-fees/{id}", lateFee.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -352,12 +355,12 @@ public class LateFeeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lateFee.getId().intValue())))
-            .andExpect(jsonPath("$.[*].isAutoLateFee").value(hasItem(DEFAULT_IS_AUTO_LATE_FEE.toString())))
+            .andExpect(jsonPath("$.[*].isAutoLateFee").value(hasItem(DEFAULT_IS_AUTO_LATE_FEE)))
             .andExpect(jsonPath("$.[*].lateFeeDays").value(hasItem(DEFAULT_LATE_FEE_DAYS)))
-            .andExpect(jsonPath("$.[*].chargeType").value(hasItem(DEFAULT_CHARGE_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].chargeType").value(hasItem(DEFAULT_CHARGE_TYPE)))
             .andExpect(jsonPath("$.[*].fixedCharges").value(hasItem(DEFAULT_FIXED_CHARGES.intValue())))
-            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES.toString())))
-            .andExpect(jsonPath("$.[*].lateFeeFrequency").value(hasItem(DEFAULT_LATE_FEE_FREQUENCY.toString())))
+            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES)))
+            .andExpect(jsonPath("$.[*].lateFeeFrequency").value(hasItem(DEFAULT_LATE_FEE_FREQUENCY)))
             .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)));
     }
 

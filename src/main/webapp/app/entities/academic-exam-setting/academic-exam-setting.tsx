@@ -88,6 +88,7 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                 <th>Actions</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Branch</th>
                 <th>Department</th>
                 <th>Academicyear</th>
                 <th>Section</th>
@@ -122,6 +123,13 @@ export class AcademicExamSetting extends React.Component<IAcademicExamSettingPro
                   </td>
                   <td>
                     <TextFormat type="date" value={academicExamSetting.endDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>
+                    {academicExamSetting.branchId ? (
+                      <Link to={`branch/${academicExamSetting.branchId}`}>{academicExamSetting.branchId}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td>
                     {academicExamSetting.departmentId ? (

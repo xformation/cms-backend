@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -74,18 +74,14 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Transport</th>
-                <th>Mess</th>
-                <th>Gym</th>
-                <th>Cultural Class</th>
-                <th>Library</th>
-                <th>Sports</th>
-                <th>Swimming</th>
-                <th>Extra Class</th>
-                <th>Handicrafts</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Suspand Start Date</th>
+                <th>Suspand End Date</th>
                 <th>Academic Year</th>
                 <th>Branch</th>
-                <th>Student</th>
                 <th />
               </tr>
             </thead>
@@ -97,20 +93,24 @@ export class Facility extends React.Component<IFacilityProps, IFacilityState> {
                       {facility.id}
                     </Button>
                   </td>
-                  <td>{facility.transport}</td>
-                  <td>{facility.mess}</td>
-                  <td>{facility.gym}</td>
-                  <td>{facility.culturalClass}</td>
-                  <td>{facility.library}</td>
-                  <td>{facility.sports}</td>
-                  <td>{facility.swimming}</td>
-                  <td>{facility.extraClass}</td>
-                  <td>{facility.handicrafts}</td>
+                  <td>{facility.name}</td>
+                  <td>{facility.status}</td>
+                  <td>
+                    <TextFormat type="date" value={facility.startDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>
+                    <TextFormat type="date" value={facility.endDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>
+                    <TextFormat type="date" value={facility.suspandStartDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>
+                    <TextFormat type="date" value={facility.suspandEndDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
                   <td>
                     {facility.academicYearId ? <Link to={`academic-year/${facility.academicYearId}`}>{facility.academicYearId}</Link> : ''}
                   </td>
                   <td>{facility.branchId ? <Link to={`branch/${facility.branchId}`}>{facility.branchId}</Link> : ''}</td>
-                  <td>{facility.studentId ? <Link to={`student/${facility.studentId}`}>{facility.studentId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${facility.id}`} color="info" size="sm">
