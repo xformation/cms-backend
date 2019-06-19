@@ -4,3 +4,5 @@ node_modules
 .settings
 *.class
 **/.jhipster/**
+/.classpath
+/.factorypath

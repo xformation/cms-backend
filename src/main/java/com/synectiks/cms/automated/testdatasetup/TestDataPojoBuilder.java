@@ -4,545 +4,488 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.*;
-import jdk.net.SocketFlow;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import org.dhatim.fastexcel.reader.Cell;
+import org.dhatim.fastexcel.reader.CellType;
 import org.springframework.data.domain.Example;
 
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.cms.domain.AdmissionEnquiry;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Country;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.PaymentRemainder;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentExamReport;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.Caste;
+import com.synectiks.cms.domain.enumeration.CourseEnum;
+import com.synectiks.cms.domain.enumeration.EnquiryStatus;
+import com.synectiks.cms.domain.enumeration.Frequency;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.GradesEnum;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
+import com.synectiks.cms.domain.enumeration.ModeOfPayment;
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.cms.domain.enumeration.StaffType;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StateRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
 
-import static org.elasticsearch.search.rescore.QueryRescoreMode.Total;
-
 public class TestDataPojoBuilder {
-    SimpleDateFormat ddMMyyyyDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat ddMMyyyyDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-    public Country createCountryPojo() {
-        Country ct = new Country();
-        ct.setCountryName("India");
-        ct.setCountryCode("IND");
-        ct.setIsdCode("+91");
-        return ct;
-    }
+	public Country createCountryPojo() {
+		Country ct = new Country();
+		ct.setCountryName("India");
+		ct.setCountryCode("IND");
+		ct.setIsdCode("+91");
+		return ct;
+	}
 
-    public State createStatePojo(Row row, Country country) {
-        State state = new State();
-        Iterator<Cell> cellIterator = row.cellIterator();
-        while (cellIterator.hasNext()) {
-            Cell cell = cellIterator.next();
-            if(cell.getColumnIndex() ==0 ) {
-                state.setStateName(cell.getStringCellValue());
-            }
-            if(cell.getColumnIndex() ==1 ) {
-                state.setDivisionType(cell.getStringCellValue());
-            }
-            if(cell.getColumnIndex() ==2 ) {
-                state.setStateCode(cell.getStringCellValue());
-            }
-        }
-        state.setCountry(country);
-        return state;
-    }
+	State findStateByStateCode(String stateCode, StateRepository stateRepository) {
+		State st = new State();
+		st.setStateCode(stateCode);
+		Example<State> example = Example.of(st);
+		Optional<State> newSt = stateRepository.findOne(example);
+		if (newSt.isPresent()) {
+			return newSt.get();
+		}
+		return null;
+	}
 
-    public City createCityPojo(Row row, StateRepository stateRepository) {
-        City city = new City();
-        Iterator<Cell> cellIterator = row.cellIterator();
-        while (cellIterator.hasNext()) {
-            Cell cell = cellIterator.next();
-            if(cell.getColumnIndex() ==0 ) {
-                city.setCityName(cell.getStringCellValue());
-            }
-            if(cell.getColumnIndex() ==1 ) {
-                city.setCityCode(cell.getStringCellValue());
-            }
-            if(cell.getColumnIndex() ==2 ) {
-                city.setStdCode(cell.getStringCellValue());
-            }
-            if(cell.getColumnIndex() == 3 ) {
-                String stateCode = cell.getStringCellValue();
-                State st = findStateByStateCode(stateCode, stateRepository);
-                city.setState(st);
-            }
-        }
-        return city;
-    }
+	public AcademicYear createAcademicYearPojo(Cell cell) {
+		if (cell != null) {
+			AcademicYear aYear = new AcademicYear();
+			Calendar cal = Calendar.getInstance();
+			int year = cal.get(Calendar.YEAR);
+			if (cell != null && cell.getType() == CellType.NUMBER) {
+				year = cell.asNumber().intValue();
+			}
+			aYear.setYear(String.valueOf(year));
+			cal.set(year, 1, 1);
+			aYear.setStartDate(cal.getTime());
+			cal.set(year, 12, 31);
+			aYear.setEndDate(cal.getTime());
+			return aYear;
+		}
+		return null;
+	}
 
-    private State findStateByStateCode(String stateCode, StateRepository stateRepository) {
-        State st = new State();
-        st.setStateCode(stateCode);
-        Example<State> example = Example.of(st);
-        Optional<State> newSt = stateRepository.findOne(example);
-        if(newSt.isPresent()) {
-            return newSt.get();
-        }
-        return null;
-    }
+	public Term createTermPojo(Cell cell) {
+		Term tm = new Term();
+		String dt[] = cell.asString().split("to");
+		try {
+			tm.setStartDate(this.ddMMyyyyDateFormat.parse(dt[0].trim()));
+			tm.setEndDate(this.ddMMyyyyDateFormat.parse(dt[1].trim()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		tm.setTermsDesc("From " + dt[0].trim() + " to " + dt[1].trim());
+		tm.setTermStatus(Status.ACTIVE);
+		System.out.println(tm.toString());
+		return tm;
+	}
 
-    public AcademicYear createAcademicYearPojo(Cell cell) {
-        AcademicYear ay = new AcademicYear();
-        String jhiYear = null;
-        switch(cell.getCellTypeEnum()) {
-            case NUMERIC:
-                jhiYear = String.valueOf(cell.getNumericCellValue()).substring(0, String.valueOf(cell.getNumericCellValue()).indexOf("."));
-//				System.out.println("Row index : "+cell.getRowIndex()+", cell index : "+cell.getColumnIndex()+", NUMERIC CELL, Cell value : "+jhiYear);
-                break;
-            case STRING:
-                jhiYear = cell.getStringCellValue();
-//				System.out.println("Row index : "+cell.getRowIndex()+", cell index : "+cell.getColumnIndex()+", STRING CELL, Cell value : "+jhiYear);
-                break;
-            default:
-                jhiYear = "2019";
-//				System.out.println("Row index : "+cell.getRowIndex()+", cell index : "+cell.getColumnIndex()+", DEFAULT CELL");
-                break;
-        }
+	public College createCollegePojo(Cell cell) {
+		College college = new College();
+		college.setShortName(cell.asString());
+		college.setInstructionInformation(cell.asString());
+		college.setLogoPath("");
+		college.setBackgroundImagePath("");
+		college.setLogoFileName("");
+		college.backgroundImageFileName("");
+		return college;
+	}
 
-        ay.setYear(jhiYear);
-        Calendar cal = Calendar.getInstance();
-        cal.set(Integer.parseInt(jhiYear), 01, 01);
-        ay.setStartDate(new Date(cal.getTimeInMillis()));
-        cal.set(Integer.parseInt(jhiYear), 12, 31);
-        ay.setEndDate(new Date(cal.getTimeInMillis()));
-        System.out.println(ay.toString());
-        return ay;
-    }
+	public Branch createBranchPojo(Cell cell) {
+		Branch branch = new Branch();
+		branch.setBranchName(cell.asString());
+		branch.setAddress1("Address 1");
+		branch.setAddress2("Address 2");
+		branch.setBranchHead("Kriss");
+		return branch;
+	}
 
-    public Term createTermPojo(Cell cell, AcademicYear ay) throws ParseException {
-        Term tm = new Term();
-        String dt [] = cell.getStringCellValue().split("to");
-        tm.setStartDate(this.ddMMyyyyDateFormat.parse(dt[0].trim()));
-        tm.setEndDate(this.ddMMyyyyDateFormat.parse(dt[1].trim()));
-        tm.setTermsDesc("From "+dt[0].trim()+" to "+dt[1].trim());
-        tm.setTermStatus(Status.ACTIVE);
-        tm.setAcademicyear(ay);
-        System.out.println(tm.toString());
-        return tm;
-    }
+	public Department createDepartmentPojo(Cell cell) {
+		Department dt = new Department();
+		dt.setName(cell.asString());
+		dt.setDescription(cell.asString());
+		dt.setDeptHead("Paul");
+		return dt;
+	}
 
-    public College createCollegePojo(Cell cell) {
-        College college = new College();
-        college.setShortName(cell.getStringCellValue());
-        college.setInstructionInformation(cell.getStringCellValue());
-        college.setLogoPath("");
-        college.setBackgroundImagePath("");
-        college.setLogoFileName("");
-        college.backgroundImageFileName("");
-        System.out.println(college.toString());
-        return college;
-    }
+	public Batch createBatchPojo(Cell cell) {
+		Batch bt = new Batch();
+		if (cell.asString().equalsIgnoreCase("FIRSTYEAR")) {
+			bt.setBatch(BatchEnum.FIRSTYEAR);
+		} else if (cell.asString().equalsIgnoreCase("SECONDYEAR")) {
+			bt.setBatch(BatchEnum.SECONDYEAR);
+		} else if (cell.asString().equalsIgnoreCase("THIRDYEAR")) {
+			bt.setBatch(BatchEnum.THIRDYEAR);
+		} else if (cell.asString().equalsIgnoreCase("FOURTHYEAR")) {
+			bt.setBatch(BatchEnum.FOURTHYEAR);
+		}
+		return bt;
+	}
 
-    public Branch createBranchPojo(Cell cell, College college, State state, City city) {
-        Branch branch = new Branch();
-        branch.setBranchName(cell.getStringCellValue());
-        branch.setAddress1("Address 1");
-        branch.setAddress2("Address 2");
-        branch.setBranchHead("Kriss");
-        branch.setCollege(college);
-        branch.setState(state);
-        branch.setCity(city);
-        return branch;
-    }
+	public Section createSectionPojo(Cell cell) {
+		Section sec = new Section();
+		if (cell.asString().equalsIgnoreCase("A")) {
+			sec.setSection(SectionEnum.A);
+		} else if (cell.asString().equalsIgnoreCase("B")) {
+			sec.setSection(SectionEnum.B);
+		} else if (cell.asString().equalsIgnoreCase("C")) {
+			sec.setSection(SectionEnum.C);
+		} else if (cell.asString().equalsIgnoreCase("D")) {
+			sec.setSection(SectionEnum.D);
+		}
+		return sec;
+	}
 
-    public Department createDepartmentPojo(Cell cell, Branch branch, AcademicYear academicYear) {
-        Department dt = new Department();
-        dt.setName(cell.getStringCellValue());
-        dt.setDescription(cell.getStringCellValue());
-        dt.setDeptHead("Paul");
-        dt.setBranch(branch);
-        dt.setAcademicyear(academicYear);
-        return dt;
-    }
+	public Student createStudentPojo(Cell cell) {
+		Student st = new Student();
+		st.setStudentName(cell.asString());
+		st.setStudentMiddleName("");
+		st.setStudentLastName("");
+		st.setFatherName("F" + cell.asString());
+		st.setFatherMiddleName("");
+		st.setFatherLastName("");
+		st.setMotherName("M" + cell.asString());
+		st.setMotherMiddleName("");
+		st.setMotherLastName("");
+		st.setAadharNo(1234L);
+		st.setDateOfBirth(new Date());
+		st.setPlaceOfBirth("");
+		st.setReligion(Religion.HINDU);
+		st.setCaste(Caste.OC);
+		st.setSubCaste("");
+		st.setAge(25);
+		st.setSex(Gender.MALE);
+		st.setBloodGroup(Bloodgroup.OPOSITIVE);
+		st.setAddressLineOne("address one");
+		st.setAddressLineTwo("address two");
+		st.setAddressLineThree("address three");
+		st.setPincode(123456L);
+		st.setStudentContactNumber("123456789");
+		st.setAlternateContactNumber("123456789");
+		st.setStudentEmailAddress("");
+		st.setAlternateEmailAddress("");
+		st.setRelationWithStudent(RelationWithStudentEnum.FATHER);
+		st.setEmergencyContactName("");
+		st.setEmergencyContactMiddleName("");
+		st.setEmergencyContactLastName("");
+		st.setEmergencyContactNo("123456789");
+		st.setEmergencyContactEmailAddress("");
+		st.setUploadPhoto("");
+		st.setAdmissionNo(123456L);
+		st.setRollNo("");
+		st.setStudentType(StudentTypeEnum.REGULAR);
+		return st;
+	}
 
-    public Batch createBatchPojo(Cell cell,  Department department) {
-        Batch bt = new Batch();
-        if(cell.getStringCellValue().equalsIgnoreCase("FIRSTYEAR")) {
-            bt.setBatch(BatchEnum.FIRSTYEAR);
-        }else if(cell.getStringCellValue().equalsIgnoreCase("SECONDYEAR")) {
-            bt.setBatch(BatchEnum.SECONDYEAR);
-        }else if(cell.getStringCellValue().equalsIgnoreCase("THIRDYEAR")) {
-            bt.setBatch(BatchEnum.THIRDYEAR);
-        }else if(cell.getStringCellValue().equalsIgnoreCase("FOURTHYEAR")) {
-            bt.setBatch(BatchEnum.FOURTHYEAR);
-        }
-        bt.setDepartment(department);
-        return bt;
-    }
+	public Subject createSubjectPojo(Cell cell) {
+		Subject sb = new Subject();
+		sb.setSubjectCode(cell.asString());
+		sb.setSubjectType(SubTypeEnum.COMMON);
+		sb.setSubjectDesc(cell.asString());
+		sb.setStatus(Status.ACTIVE);
+		return sb;
+	}
 
-    public Section createSectionPojo(Cell cell, Batch batch) {
-        Section sec = new Section();
-        if(cell.getStringCellValue().equalsIgnoreCase("A")) {
-            sec.setSection(SectionEnum.A);
-        }else if(cell.getStringCellValue().equalsIgnoreCase("B")) {
-            sec.setSection(SectionEnum.B);
-        }else if(cell.getStringCellValue().equalsIgnoreCase("C")) {
-            sec.setSection(SectionEnum.C);
-        }else if(cell.getStringCellValue().equalsIgnoreCase("D")) {
-            sec.setSection(SectionEnum.D);
-        }
-        sec.batch(batch);
-        return sec;
-    }
+	public Teacher createTeacherPojo(Cell cell) {
+		Teacher thr = new Teacher();
+		thr.setTeacherName(cell.asString());
+		thr.setTeacherMiddleName("M" + cell.asString());
+		thr.setTeacherLastName("");
+		thr.setFatherName("F" + cell.asString());
+		thr.setFatherMiddleName("");
+		thr.setFatherLastName("");
+		thr.setMotherName("M" + cell.asString());
+		thr.setMotherMiddleName("");
+		thr.setMotherLastName("");
+		thr.setAadharNo(1234L);
+		thr.setDateOfBirth(new Date());
+		thr.setPlaceOfBirth("");
+		thr.setReligion(Religion.HINDU);
+		thr.setCaste(Caste.OC);
+		thr.setSubCaste("");
+		thr.setAge(25);
+		thr.setSex(Gender.MALE);
+		thr.setBloodGroup(Bloodgroup.OPOSITIVE);
+		thr.setAddressLineOne("address one");
+		thr.setAddressLineTwo("address two");
+		thr.setAddressLineThree("address three");
+		thr.setPincode(123456L);
+		thr.setTeacherContactNumber("123456789");
+		thr.setAlternateContactNumber("123456789");
+		thr.setTeacherEmailAddress("");
+		thr.setAlternateEmailAddress("");
+		thr.setRelationWithStaff(RelationWithStudentEnum.FATHER);
+		thr.setEmergencyContactName("");
+		thr.setEmergencyContactMiddleName("");
+		thr.setEmergencyContactLastName("");
+		thr.setEmergencyContactNo("123456789");
+		thr.setEmergencyContactEmailAddress("");
+		thr.setUploadPhoto("");
+		thr.setStatus(Status.ACTIVE);
+		thr.setEmployeeId(123456L);
+		thr.setDesignation("");
+		thr.setStaffType(StaffType.TEACHING);
+		return thr;
+	}
 
-    public Student createStudentPojo(Cell cell, Department department, Batch batch,
-                                     Section section, Branch branch, State state, City city, Country country) {
-        Student st = new Student();
-        st.setStudentName(cell.getStringCellValue());
-        st.setStudentMiddleName("");
-        st.setStudentLastName("");
-        st.setFatherName("F"+cell.getStringCellValue());
-        st.setFatherMiddleName("");
-        st.setFatherLastName("");
-        st.setMotherName("M"+cell.getStringCellValue());
-        st.setMotherMiddleName("");
-        st.setMotherLastName("");
-        st.setAadharNo(1234L);
-        st.setDateOfBirth(new Date());
-        st.setPlaceOfBirth("");
-        st.setReligion(Religion.HINDU);
-        st.setCaste(Caste.OC);
-        st.setSubCaste("");
-        st.setAge(25);
-        st.setSex(Gender.MALE);
-        st.setBloodGroup(Bloodgroup.OPOSITIVE);
-        st.setAddressLineOne("address one");
-        st.setAddressLineTwo("address two");
-        st.setAddressLineThree("address three");
-        st.setTown(city.getCityName());
-        st.setState(state.getStateName());
-        st.setCountry(country.getCountryName());
-        st.setPincode(123456L);
-        st.setStudentContactNumber("123456789");
-        st.setAlternateContactNumber("123456789");
-        st.setStudentEmailAddress("");
-        st.setAlternateEmailAddress("");
-        st.setRelationWithStudent(RelationWithStudentEnum.FATHER);
-        st.setEmergencyContactName("");
-        st.setEmergencyContactMiddleName("");
-        st.setEmergencyContactLastName("");
-        st.setEmergencyContactNo("123456789");
-        st.setEmergencyContactEmailAddress("");
-        st.setUploadPhoto("");
-        st.setAdmissionNo(123456L);
-        st.setRollNo("");
-        st.setStudentType(StudentTypeEnum.REGULAR);
-        st.setDepartment(department);
-        st.setBatch(batch);
-        st.setSection(section);
-        st.setBranch(branch);
-        return st;
-    }
+	public Teach createTeachPojo(Cell cell, Subject subject, Teacher teacher) {
+		Teach th = new Teach();
+		th.setDesc("Subject " + subject.getSubjectCode() + " and teacher "
+				+ teacher.getTeacherName());
+		th.setSubject(subject);
+		th.setTeacher(teacher);
+		return th;
+	}
 
-    public Subject createSubjectPojo(Cell cell, Department department, Batch batch) {
-        Subject sb = new Subject();
-        sb.setSubjectCode(cell.getStringCellValue());
-        sb.setSubjectType(SubTypeEnum.COMMON);
-        sb.setSubjectDesc(cell.getStringCellValue());
-        sb.setStatus(Status.ACTIVE);
-        sb.setDepartment(department);
-        sb.setBatch(batch);
-        return sb;
-    }
+	public AttendanceMaster createAttendanceMasterPojo(Cell cell, Batch batch,
+			Section section, Teach teach, Subject subject, Teacher teacher) {
+		AttendanceMaster am = new AttendanceMaster();
+		am.setId(null);
+		am.setDesc("Teacher " + teacher.getTeacherName()
+				+ " is the attendance master of section " + section.getSection()
+				+ " and subject " + subject.getSubjectCode());
+		am.setBatch(batch);
+		am.setSection(section);
+		am.setTeach(teach);
+		return am;
+	}
 
-    public Teacher createTeacherPojo(Cell cell, Department department, Branch branch, State state, City city, Country country) {
-        Teacher thr = new Teacher();
-        thr.setTeacherName(cell.getStringCellValue());
-        thr.setTeacherMiddleName("M"+cell.getStringCellValue());
-        thr.setTeacherLastName("");
-        thr.setFatherName("F"+cell.getStringCellValue());
-        thr.setFatherMiddleName("");
-        thr.setFatherLastName("");
-        thr.setMotherName("M"+cell.getStringCellValue());
-        thr.setMotherMiddleName("");
-        thr.setMotherLastName("");
-        thr.setAadharNo(1234L);
-        thr.setDateOfBirth(new Date());
-        thr.setPlaceOfBirth("");
-        thr.setReligion(Religion.HINDU);
-        thr.setCaste(Caste.OC);
-        thr.setSubCaste("");
-        thr.setAge(25);
-        thr.setSex(Gender.MALE);
-        thr.setBloodGroup(Bloodgroup.OPOSITIVE);
-        thr.setAddressLineOne("address one");
-        thr.setAddressLineTwo("address two");
-        thr.setAddressLineThree("address three");
-        thr.setTown(city.getCityName());
-        thr.setState(state.getStateName());
-        thr.setCountry(country.getCountryName());
-        thr.setPincode(123456L);
-        thr.setTeacherContactNumber("123456789");
-        thr.setAlternateContactNumber("123456789");
-        thr.setTeacherEmailAddress("");
-        thr.setAlternateEmailAddress("");
-        thr.setRelationWithStaff(RelationWithStudentEnum.FATHER);
-        thr.setEmergencyContactName("");
-        thr.setEmergencyContactMiddleName("");
-        thr.setEmergencyContactLastName("");
-        thr.setEmergencyContactNo("123456789");
-        thr.setEmergencyContactEmailAddress("");
-        thr.setUploadPhoto("");
-        thr.setStatus(Status.ACTIVE);
-        thr.setEmployeeId(123456L);
-        thr.setDesignation("");
-        thr.setStaffType(StaffType.TEACHING);
-        thr.setDepartment(department);
-        thr.setBranch(branch);
-        return thr;
-    }
+	public LectureScheduleDTO getDto(String weekDay, Cell cell) {
+		String time[] = cell.asString().split("-");
 
-    public Teach createTeachPojo(Cell cell, Subject subject, Teacher teacher) {
-        Teach th = new Teach();
-        th.setDesc("Subject "+subject.getSubjectCode()+" and teacher "+teacher.getTeacherName());
-        th.setSubject(subject);
-        th.setTeacher(teacher);
-        return th;
-    }
+		LectureScheduleDTO dto = new LectureScheduleDTO();
+		dto.setWeekDay(weekDay);
+		dto.setStartTime(time[0].trim());
+		dto.setEndTime(time[1].trim());
 
-    public AttendanceMaster createAttendanceMasterPojo(Cell cell,Batch batch, Section section, Teach teach, Subject subject, Teacher teacher) {
-        AttendanceMaster am = new AttendanceMaster();
-        am.setId(null);
-        am.setDesc("Teacher "+teacher.getTeacherName()+ " is the attendance master of section "+section.getSection()+" and subject "+subject.getSubjectCode());
-        am.setBatch(batch);
-        am.setSection(section);
-        am.setTeach(teach);
-        return am;
-    }
+		return dto;
+	}
 
-    public LectureScheduleDTO getDto(String weekDay, Cell cell, Subject sub, Teacher thr) {
-        String time[] = cell.getStringCellValue().split("-");
+	public List<Lecture> findLectureByAttendanceMaster(
+			LectureRepository lectureRepository, AttendanceMaster am) {
+		Lecture lc = new Lecture();
+		lc.setAttendancemaster(am);
+		Example<Lecture> example = Example.of(lc);
+		List<Lecture> list = lectureRepository.findAll(example);
+		return list;
+	}
 
-        LectureScheduleDTO dto = new LectureScheduleDTO();
-        dto.setWeekDay(weekDay);
-        dto.setStartTime(time[0].trim());
-        dto.setEndTime(time[1].trim());
-        dto.setSubjectId(String.valueOf(sub.getId()));
-        dto.setTeacherId(String.valueOf(thr.getId()));
+	public FeeCategory createFeeCategoryPojo(Cell cell) {
+		FeeCategory feeCategory = new FeeCategory();
+		feeCategory.setCategoryName(cell.asString());
+		feeCategory.setDescription(" ");
+		return feeCategory;
+	}
 
-        return dto;
-    }
+	public Facility createFacilityPojo(Cell cell) {
+		Facility facility = new Facility();
+		facility.setName("Gym");
+		facility.setStatus(Status.ACTIVE);
+		// facility.setTransport(Status.ACTIVE);
+		// facility.setMess(Status.ACTIVE);
+		// facility.setGym(Status.ACTIVE);
+		// facility.setCulturalClass(Status.DEACTIVE);
+		// facility.setSports(Status.DEACTIVE);
+		// facility.setSwimming(Status.ACTIVE);
+		// facility.setExtraClass(Status.DEACTIVE);
+		// facility.setHandicrafts(Status.ACTIVE);
+		// facility.setStudent(student);
+		return facility;
+	}
 
-    public List<Lecture> findLectureByAttendanceMaster(LectureRepository lectureRepository, AttendanceMaster am) {
-        Lecture lc = new Lecture();
-        lc.setAttendancemaster(am);
-        Example<Lecture> example = Example.of(lc);
-        List<Lecture> list = lectureRepository.findAll(example);
-        return list;
-    }
+	public TransportRoute createTransportRoutePojo(Cell cell) {
+		TransportRoute transportRoute = new TransportRoute();
+		transportRoute.setRouteName(cell.asString());
+		transportRoute.setRouteDetails(cell.asString());
+		transportRoute.setRouteMapUrl(" ");
+		return transportRoute;
+	}
 
+	public FeeDetails createFeeDetailsPojo(Cell cell) {
+		FeeDetails feeDetails = new FeeDetails();
+		feeDetails.setFeeParticularsName(cell.asString());
+		feeDetails.setFeeParticularDesc(cell.asString());
+		feeDetails.setStudentType(StudentTypeEnum.REGULAR);
+		feeDetails.setGender(Gender.MALE);
+		feeDetails.setAmount(1234l);
+		return feeDetails;
+	}
 
-    public FeeCategory createFeeCategoryPojo(Cell cell) {
-        FeeCategory feeCategory = new FeeCategory();
-        feeCategory.setCategoryName(cell.getStringCellValue());
-        feeCategory.setDescription(" ");
-        return feeCategory;
-    }
+	public AcademicExamSetting createAcademicExamSettingPojo(Cell cell,
+			Department department, AcademicYear academicYear, Section section) {
+		AcademicExamSetting academicExamSetting = new AcademicExamSetting();
+		academicExamSetting.setExamType(cell.asString());
+		academicExamSetting.setSemester(SemesterEnum.SEMESTER4);
+		academicExamSetting.setSubject(cell.asString());
+		academicExamSetting.setExamDate(new Date());
+		academicExamSetting.setDay(cell.asString());
+		academicExamSetting.setDuration(cell.asString());
+		academicExamSetting.setStartTime(cell.asString());
+		academicExamSetting.setEndTime(cell.asString());
+		academicExamSetting.setTotal(60);
+		academicExamSetting.setPassing(55);
+		academicExamSetting.setActions(cell.asString());
+		academicExamSetting.setDepartment(department);
+		academicExamSetting.setAcademicyear(academicYear);
 
-    public Facility createFacilityPojo(Cell cell, AcademicYear academicYear,Branch branch,Student student) {
-        Facility facility = new Facility();
-        facility.setName("Gym");
-        facility.setStatus(Status.ACTIVE);
-//        facility.setTransport(Status.ACTIVE);
-//        facility.setMess(Status.ACTIVE);
-//        facility.setGym(Status.ACTIVE);
-//        facility.setCulturalClass(Status.DEACTIVE);
-//        facility.setSports(Status.DEACTIVE);
-//        facility.setSwimming(Status.ACTIVE);
-//        facility.setExtraClass(Status.DEACTIVE);
-//        facility.setHandicrafts(Status.ACTIVE);
-        facility.setAcademicYear(academicYear );
-        facility.setBranch(branch);
-//        facility.setStudent(student);
-        return facility;
-    }
+		return academicExamSetting;
+	}
 
-    public TransportRoute createTransportRoutePojo(Cell cell) {
-        TransportRoute transportRoute = new TransportRoute();
-        transportRoute.setRouteName(cell.getStringCellValue());
-        transportRoute.setRouteDetails(cell.getStringCellValue());
-        transportRoute.setRouteMapUrl(" ");
-        return transportRoute;
-    }
-    public FeeDetails createFeeDetailsPojo(Cell cell,FeeCategory feeCategory,Batch batch,Facility facility, TransportRoute transportRoute,College college,Department department,Branch branch,AcademicYear academicYear) {
-        FeeDetails feeDetails  = new FeeDetails();
-        feeDetails.setFeeParticularsName(cell.getStringCellValue());
-        feeDetails.setFeeParticularDesc(cell.getStringCellValue());
-        feeDetails.setStudentType(StudentTypeEnum.REGULAR);
-        feeDetails.setGender(Gender.MALE);
-        feeDetails.setAmount(1234l);
-        feeDetails.setFeeCategory(feeCategory);
-        feeDetails.setBatch(batch);
-        feeDetails.setFacility(facility);
-        feeDetails.setTransportRoute(transportRoute);
-        feeDetails.setCollege(college);
-        feeDetails.setDepartment(department);
-        feeDetails.setBranch(branch);
-        feeDetails.setAcademicYear(academicYear);
+	public DueDate createDueDatePojo(Cell cell) {
+		DueDate dueDate = new DueDate();
+		dueDate.setId(1234l);
+		dueDate.setPaymentMethod(cell.asString());
+		dueDate.setInstallments(3243);
+		dueDate.setDayDesc("");
+		dueDate.setPaymentDay(4);
+		dueDate.setFrequency(Frequency.WEEKLY);
+		return dueDate;
+	}
 
-        return feeDetails ;
-    }
+	public PaymentRemainder createPaymentRemainder(Cell cell) {
+		PaymentRemainder paymentRemainder = new PaymentRemainder();
+		paymentRemainder.setIsAutoRemainder(cell.asString());
+		paymentRemainder.setIsFirstPaymentRemainder("");
+		paymentRemainder.setFirstPaymentRemainderDays(21);
+		paymentRemainder.setIsSecondPaymentRemainder("");
+		paymentRemainder.setSecondPaymentRemainderDays(21);
+		paymentRemainder.setIsOverDuePaymentRemainder("");
+		paymentRemainder.setOverDuePaymentRemainderAfterDueDateOrUntilPaid("");
+		paymentRemainder.setOverDuePaymentRemainderDays(22);
+		paymentRemainder.setIsRemainderRecipients("");
+		paymentRemainder.setRemainderRecipients("");
+		return paymentRemainder;
+	}
 
-    public AcademicExamSetting createAcademicExamSettingPojo(Cell cell,Department department,AcademicYear academicYear,Section section) {
-        AcademicExamSetting academicExamSetting  = new AcademicExamSetting();
-        academicExamSetting.setExamType(cell.getStringCellValue());
-        academicExamSetting.setSemester(SemesterEnum.SEMESTER4);
-        academicExamSetting.setSubject(cell.getStringCellValue());
-        academicExamSetting.setExamDate(new Date());
-        academicExamSetting.setDay(cell.getStringCellValue());
-        academicExamSetting.setDuration(cell.getStringCellValue());
-        academicExamSetting.setStartTime(cell.getStringCellValue());
-        academicExamSetting.setEndTime(cell.getStringCellValue());
-        academicExamSetting.setTotal(60);
-        academicExamSetting.setPassing(55);
-        academicExamSetting.setActions(cell.getStringCellValue());
-        academicExamSetting.setDepartment(department);
-        academicExamSetting.setAcademicyear(academicYear);
+	public Holiday createHolidayPojo(Cell cell, AcademicYear academicYear) {
+		Holiday holiday = new Holiday();
+		holiday.setHolidayDesc(cell.asString());
+		holiday.setHolidayDate(new Date());
+		holiday.setHolidayStatus(Status.ACTIVE);
+		holiday.setAcademicyear(academicYear);
+		return holiday;
+	}
 
-        return academicExamSetting ;
-    }
+	public Invoice createInvoicePojo() {
+		Invoice invoice = new Invoice();
+		invoice.setAmountPaid(3342l);
+		invoice.setPaymentDate(new Date());
+		invoice.setNextPaymentDate(new Date());
+		invoice.setOutStandingAmount(345l);
+		invoice.setModeOfPayment(ModeOfPayment.CARD);
+		invoice.setChequeNumber(543l);
+		invoice.setDemandDraftNumber(556l);
+		invoice.setOnlineTxnRefNumber("");
+		invoice.setPaymentStatus(InvoicePaymentStatus.PAID);
+		invoice.setComments("");
+		invoice.setUpdatedBy("");
+		invoice.setUpdatedOn(new Date());
+		return invoice;
+	}
 
-    public DueDate createDueDatePojo(Cell cell,Branch branch,College college) {
-        DueDate dueDate  = new DueDate();
-        dueDate.setId(1234l);
-        dueDate.setPaymentMethod(cell.getStringCellValue());
-        dueDate.setInstallments(3243);
-        dueDate.setDayDesc("");
-        dueDate.setPaymentDay(4);
-        dueDate.setFrequency(Frequency.WEEKLY);
-        dueDate.setCollege (college );
-        dueDate.setBranch (branch );
-        return dueDate ;
-    }
-    public PaymentRemainder createPaymentRemainderPojo(Cell cell,College college,Branch branch ) {
-        PaymentRemainder paymentRemainder  = new PaymentRemainder();
-        paymentRemainder.setIsAutoRemainder(cell.getStringCellValue());
-        paymentRemainder.setIsFirstPaymentRemainder("");
-        paymentRemainder.setFirstPaymentRemainderDays(21);
-        paymentRemainder.setIsSecondPaymentRemainder("");
-        paymentRemainder.setSecondPaymentRemainderDays(21);
-        paymentRemainder.setIsOverDuePaymentRemainder ("");
-        paymentRemainder.setOverDuePaymentRemainderAfterDueDateOrUntilPaid("");
-        paymentRemainder.setOverDuePaymentRemainderDays(22);
-        paymentRemainder.setIsRemainderRecipients("");
-        paymentRemainder.setRemainderRecipients("");
-        paymentRemainder.setCollege(college);
-        paymentRemainder.setBranch(branch);
-        return paymentRemainder ;
-    }
-    public Holiday createHolidayPojo(Cell cell,AcademicYear academicYear) {
-        Holiday holiday  = new Holiday();
-        holiday.setHolidayDesc("");
-        holiday.setHolidayDate(new Date());
-        holiday.setHolidayStatus(Status.ACTIVE);
-        holiday.setAcademicyear(academicYear);
-        return holiday ;
-    }
-    public Invoice createInvoicePojo(Cell cell,FeeCategory feeCategory,AcademicYear academicYear,Student student,Branch branch,College college,FeeDetails feeDetails,DueDate dueDate,PaymentRemainder paymentRemainder) {
-        Invoice invoice  = new Invoice();
-        invoice.setInvoiceNumber(cell.getStringCellValue());
-        invoice.setAmountPaid(3342l);
-        invoice.setPaymentDate(new Date());
-        invoice.setNextPaymentDate(new Date());
-        invoice.setOutStandingAmount(345l);
-        invoice.setModeOfPayment(ModeOfPayment.CARD);
-        invoice.setChequeNumber(543l);
-        invoice.setDemandDraftNumber(556l);
-        invoice.setOnlineTxnRefNumber("");
-        invoice.setPaymentStatus(InvoicePaymentStatus.PAID);
-        invoice.setComments("");
-        invoice.setUpdatedBy("");
-        invoice.setUpdatedOn(new Date());
-        invoice.setFeeCategory(feeCategory);
-        invoice.setFeeDetails(feeDetails);
-        invoice.setDueDate(dueDate);
-        invoice.setPaymentRemainder(paymentRemainder);
-        invoice.setCollege(college);
-        invoice.setBranch(branch);
-        invoice.setStudent(student);
-        invoice.setAcademicYear(academicYear);
-        return invoice ;
-    }
-    public TypeOfGrading createTypeOfGradingPojo(Cell cell,AcademicExamSetting academicExamSetting) {
-        TypeOfGrading typeOfGrading  = new TypeOfGrading();
-        typeOfGrading.setId(1234l);
-        typeOfGrading.setMinMarks(35);
-        typeOfGrading.setMaxMarks(95);
-        typeOfGrading.setGrades(GradesEnum.A);
-        typeOfGrading.setAcademicExamSetting(academicExamSetting);
-        return typeOfGrading ;
-    }
-    public StudentExamReport createStudentExamReportPojo(Cell cell,AcademicExamSetting academicExamSetting,Student student,Batch batch,TypeOfGrading typeofGrading,AcademicYear academicYear) {
-        StudentExamReport studentExamReport  = new StudentExamReport();
-        studentExamReport.setMarksObtained(35);
-        studentExamReport.setComments("");
-        studentExamReport.setCreatedOn(new Date());
-        studentExamReport.setCreatedBy("");
-        studentExamReport.setUpdatedOn(new Date());
-        studentExamReport.setUpdatedBy("");
-        studentExamReport.setAcademicExamSetting(academicExamSetting);
-        studentExamReport.setStudent(student);
-        studentExamReport.setTypeOfGrading(typeofGrading);
-        studentExamReport.setBatch(batch);
-        studentExamReport.setAcademicyear(academicYear);
-        return studentExamReport ;
-    }
+	public TypeOfGrading createTypeOfGradingPojo(Cell cell,
+			AcademicExamSetting academicExamSetting) {
+		TypeOfGrading typeOfGrading = new TypeOfGrading();
+		typeOfGrading.setId(1234l);
+		typeOfGrading.setMinMarks(35);
+		typeOfGrading.setMaxMarks(95);
+		typeOfGrading.setGrades(GradesEnum.A);
+		typeOfGrading.setAcademicExamSetting(academicExamSetting);
+		return typeOfGrading;
+	}
 
-    public AcademicHistory createAcademicHistoryPojo(Cell cell, Student student) {
-        AcademicHistory ah = new AcademicHistory();
-        ah.setQualification(cell.getStringCellValue());
-        ah.setYearOfPassing(cell.getStringCellValue());
-        ah.setInstitution("");
-        ah.setUniversity("");
-        ah.setEnrollmentNo(45L);
-        ah.setScore(90L);
-        ah.setPercentage(90);
-        ah.setStudent(student);
-        return ah;
-    }
-    public AdmissionApplication createAdmissionApplicationPojo(Cell cell,Student student) {
-        AdmissionApplication aa = new AdmissionApplication();
-        aa.setAdmissionStatus(AdmissionStatusEnum.ACCEPTED);
-        aa.setCourse(CourseEnum.BTECH);
-        aa.setAdmissionDate(new Date());
-        aa.setComments("");
-        aa.setStudent(student);
-        return aa;
-    }
-    public AdmissionEnquiry createAdmissionEnquiryPojo(Cell cell,Branch branch) {
-        AdmissionEnquiry ae = new AdmissionEnquiry();
-        ae.setStudentName(cell.getStringCellValue());
-        ae.setMobileNumber("");
-        ae.setAlternateMobileNumber("");
-        ae.setEmail("");
-        ae.setCourseApplyingFor(CourseEnum.BTECH);
-        ae.setModeOfEnquiry( ModeOfEnquiry.TELEPHONE);
-        ae.setStatus(EnquiryStatus.DECLINED);
-        ae.setDescription("");
-        ae.setEnquiryDate(new Date());
-        ae.setUpdatedOn(new Date());
-        ae.setUpdatedBy("");
-        return ae;
-    }
-    public StudentFacilityLink createStudentFacilityLinkPojo(Cell cell,Student student,Facility facility) {
-        StudentFacilityLink sfl = new StudentFacilityLink();
-        sfl.setLinkDesc(cell.getStringCellValue());
-        sfl.setStudent(student);
-        sfl.setFacility(facility);
-        return sfl;
-    }
+	public StudentExamReport createStudentExamReportPojo(Cell cell,
+			AcademicExamSetting academicExamSetting, Student student, Batch batch,
+			TypeOfGrading typeofGrading, AcademicYear academicYear) {
+		StudentExamReport studentExamReport = new StudentExamReport();
+		studentExamReport.setMarksObtained(35);
+		studentExamReport.setComments("");
+		studentExamReport.setCreatedOn(new Date());
+		studentExamReport.setCreatedBy("");
+		studentExamReport.setUpdatedOn(new Date());
+		studentExamReport.setUpdatedBy("");
+		studentExamReport.setAcademicExamSetting(academicExamSetting);
+		studentExamReport.setStudent(student);
+		studentExamReport.setTypeOfGrading(typeofGrading);
+		studentExamReport.setBatch(batch);
+		studentExamReport.setAcademicyear(academicYear);
+		return studentExamReport;
+	}
 
+	public AcademicHistory createAcademicHistoryPojo(Cell cell) {
+		AcademicHistory ah = new AcademicHistory();
+		ah.setQualification(cell.asString());
+		ah.setYearOfPassing(cell.asString());
+		ah.setInstitution("");
+		ah.setUniversity("");
+		ah.setEnrollmentNo(45L);
+		ah.setScore(90L);
+		ah.setPercentage(90);
+		return ah;
+	}
+
+	public AdmissionApplication createAdmissionApplicationPojo(Cell cell) {
+		AdmissionApplication aa = new AdmissionApplication();
+		aa.setAdmissionStatus(AdmissionStatusEnum.ACCEPTED);
+		aa.setCourse(CourseEnum.BTECH);
+		aa.setAdmissionDate(new Date());
+		aa.setComments("");
+		return aa;
+	}
+
+	public AdmissionEnquiry createAdmissionEnquiryPojo(Cell cell) {
+		AdmissionEnquiry ae = new AdmissionEnquiry();
+		ae.setStudentName(cell.asString());
+		ae.setMobileNumber("");
+		ae.setAlternateMobileNumber("");
+		ae.setEmail("");
+		ae.setCourseApplyingFor(CourseEnum.BTECH);
+		ae.setModeOfEnquiry(ModeOfEnquiry.TELEPHONE);
+		ae.setStatus(EnquiryStatus.DECLINED);
+		ae.setDescription("");
+		ae.setEnquiryDate(new Date());
+		ae.setUpdatedOn(new Date());
+		ae.setUpdatedBy("");
+		return ae;
+	}
 
 }
-
-//	public StudentAttendance createStudentAttendanceData (Student student, Lecture lecture) {
-//		StudentAttendance sa = new StudentAttendance(); 
-//		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
-//		sa.setStudent(student);
-//		sa.setLecture(lecture);
-//		return sa;
-//
