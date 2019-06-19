@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,7 +44,7 @@ public class FacilityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/facilities")
-    public ResponseEntity<FacilityDTO> createFacility(@RequestBody FacilityDTO facilityDTO) throws URISyntaxException {
+    public ResponseEntity<FacilityDTO> createFacility(@Valid @RequestBody FacilityDTO facilityDTO) throws URISyntaxException {
         log.debug("REST request to save Facility : {}", facilityDTO);
         if (facilityDTO.getId() != null) {
             throw new BadRequestAlertException("A new facility cannot already have an ID", ENTITY_NAME, "idexists");
@@ -64,7 +65,7 @@ public class FacilityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/facilities")
-    public ResponseEntity<FacilityDTO> updateFacility(@RequestBody FacilityDTO facilityDTO) throws URISyntaxException {
+    public ResponseEntity<FacilityDTO> updateFacility(@Valid @RequestBody FacilityDTO facilityDTO) throws URISyntaxException {
         log.debug("REST request to update Facility : {}", facilityDTO);
         if (facilityDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

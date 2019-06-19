@@ -74,15 +74,17 @@ export class LateFee extends React.Component<ILateFeeProps, ILateFeeState> {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Assign Late Fee</th>
+                <th>Is Auto Late Fee</th>
                 <th>Late Fee Days</th>
-                <th>Fixed</th>
-                <th>Percentage</th>
+                <th>Charge Type</th>
                 <th>Fixed Charges</th>
                 <th>Percent Charges</th>
-                <th>Late Fee Assignment Frequency</th>
+                <th>Late Fee Frequency</th>
+                <th>Late Fee Repeat Days</th>
                 <th>College</th>
                 <th>Branch</th>
+                <th>Academic Year</th>
+                <th>Term</th>
                 <th />
               </tr>
             </thead>
@@ -94,15 +96,19 @@ export class LateFee extends React.Component<ILateFeeProps, ILateFeeState> {
                       {lateFee.id}
                     </Button>
                   </td>
-                  <td>{lateFee.assignLateFee}</td>
+                  <td>{lateFee.isAutoLateFee}</td>
                   <td>{lateFee.lateFeeDays}</td>
-                  <td>{lateFee.fixed}</td>
-                  <td>{lateFee.percentage}</td>
+                  <td>{lateFee.chargeType}</td>
                   <td>{lateFee.fixedCharges}</td>
                   <td>{lateFee.percentCharges}</td>
-                  <td>{lateFee.lateFeeAssignmentFrequency}</td>
+                  <td>{lateFee.lateFeeFrequency}</td>
+                  <td>{lateFee.lateFeeRepeatDays}</td>
                   <td>{lateFee.collegeId ? <Link to={`college/${lateFee.collegeId}`}>{lateFee.collegeId}</Link> : ''}</td>
                   <td>{lateFee.branchId ? <Link to={`branch/${lateFee.branchId}`}>{lateFee.branchId}</Link> : ''}</td>
+                  <td>
+                    {lateFee.academicYearId ? <Link to={`academic-year/${lateFee.academicYearId}`}>{lateFee.academicYearId}</Link> : ''}
+                  </td>
+                  <td>{lateFee.termId ? <Link to={`term/${lateFee.termId}`}>{lateFee.termId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${lateFee.id}`} color="info" size="sm">

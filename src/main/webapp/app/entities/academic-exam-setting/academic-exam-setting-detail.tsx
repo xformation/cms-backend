@@ -90,6 +90,8 @@ export class AcademicExamSettingDetail extends React.Component<IAcademicExamSett
             <dd>
               <TextFormat value={academicExamSettingEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
+            <dt>Branch</dt>
+            <dd>{academicExamSettingEntity.branchId ? academicExamSettingEntity.branchId : ''}</dd>
             <dt>Department</dt>
             <dd>{academicExamSettingEntity.departmentId ? academicExamSettingEntity.departmentId : ''}</dd>
             <dt>Academicyear</dt>

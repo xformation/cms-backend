@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -25,6 +24,7 @@ public class LateFeeDTO implements Serializable {
     private String lateFeeFrequency;
 
     private Integer lateFeeRepeatDays;
+
 
     private Long collegeId;
 

@@ -645,10 +645,12 @@ public class Mutation implements GraphQLMutationResolver {
         AcademicYear academicYear = academicYearRepository.findById(addAcademicExamSettingInput.getAcademicyearId()).get();
         Section section = sectionRepository.findById(addAcademicExamSettingInput.getSectionId()).get();
         Batch batch = batchRepository.findById(addAcademicExamSettingInput.getBatchId()).get();
+        Branch branch = branchRepository.findById(addAcademicExamSettingInput.getBranchId()).get();
         academicExamSetting.setDepartment(department);
         academicExamSetting.setAcademicyear(academicYear);
         academicExamSetting.setSection(section);
         academicExamSetting.setBatch(batch);
+        academicExamSetting.setBranch(branch);
         academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
         academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
         academicExamSetting.setSubject(addAcademicExamSettingInput.getSubject());
@@ -728,6 +730,10 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicExamSettingInput.getBatchId() != null) {
             final Batch batch = batchRepository.findById(updateAcademicExamSettingInput.getBatchId()).get();
             academicExamSetting.setBatch(batch);
+        }
+        if (updateAcademicExamSettingInput.getBranchId() != null) {
+            final Branch branch = branchRepository.findById(updateAcademicExamSettingInput.getBranchId()).get();
+            academicExamSetting.setBranch(branch);
         }
 
 
@@ -3027,8 +3033,8 @@ public class Mutation implements GraphQLMutationResolver {
         return Lists.newArrayList(admissionEnquiryProcessor.searchAdmissionOnType(admissionEnquiryType, branchId));
     }
 
-    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId) throws Exception{
-        return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId));
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId,Long admissionApplicationId) throws Exception{
+        return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId,admissionApplicationId));
     }
 
     public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {
