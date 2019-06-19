@@ -1157,7 +1157,7 @@ type Mutation {
      getTotalDeclined(branchId:Long ): Long!
      getTotalConverted(branchId:Long): Long!
      searchAdmissionOnType(admissionEnquiryType:String branchId:Long): [CmsAdmissionEnquiryVo!]!
-     admissionEnquiryList(branchId:Long ): [CmsAdmissionEnquiryVo!]!
+     admissionEnquiryList(branchId:Long,admissionApplicationId: Long! ): [CmsAdmissionEnquiryVo!]!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!

@@ -3033,8 +3033,8 @@ public class Mutation implements GraphQLMutationResolver {
         return Lists.newArrayList(admissionEnquiryProcessor.searchAdmissionOnType(admissionEnquiryType, branchId));
     }
 
-    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId) throws Exception{
-        return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId));
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId,Long admissionApplicationId) throws Exception{
+        return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId,admissionApplicationId));
     }
 
     public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {
