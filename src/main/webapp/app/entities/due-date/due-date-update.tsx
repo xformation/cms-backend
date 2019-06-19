@@ -128,13 +128,28 @@ export class DueDateUpdate extends React.Component<IDueDateUpdateProps, IDueDate
                   <Label id="dayDescLabel" for="dayDesc">
                     Day Desc
                   </Label>
-                  <AvField id="due-date-dayDesc" type="text" name="dayDesc" />
+                  <AvField
+                    id="due-date-dayDesc"
+                    type="text"
+                    name="dayDesc"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="paymentDayLabel" for="paymentDay">
-                    Payment Day
+                  <Label id="paymentDateLabel" for="paymentDate">
+                    Payment Date
                   </Label>
-                  <AvField id="due-date-paymentDay" type="string" className="form-control" name="paymentDay" />
+                  <AvField
+                    id="due-date-paymentDate"
+                    type="date"
+                    className="form-control"
+                    name="paymentDate"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="frequencyLabel">Frequency</Label>

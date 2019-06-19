@@ -74,16 +74,11 @@ export class PaymentRemainder extends React.Component<IPaymentRemainderProps, IP
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Is Auto Remainder</th>
-                <th>Is First Payment Remainder</th>
-                <th>First Payment Remainder Days</th>
-                <th>Is Second Payment Remainder</th>
-                <th>Second Payment Remainder Days</th>
-                <th>Is Over Due Payment Remainder</th>
-                <th>Over Due Payment Remainder After Due Date Or Until Paid</th>
-                <th>Over Due Payment Remainder Days</th>
-                <th>Is Remainder Recipients</th>
+                <th>Fee Remainder</th>
+                <th>Notice Day</th>
+                <th>Over Due Remainder</th>
                 <th>Remainder Recipients</th>
+                <th>Due Date</th>
                 <th>College</th>
                 <th>Branch</th>
                 <th />
@@ -97,16 +92,17 @@ export class PaymentRemainder extends React.Component<IPaymentRemainderProps, IP
                       {paymentRemainder.id}
                     </Button>
                   </td>
-                  <td>{paymentRemainder.isAutoRemainder}</td>
-                  <td>{paymentRemainder.isFirstPaymentRemainder}</td>
-                  <td>{paymentRemainder.firstPaymentRemainderDays}</td>
-                  <td>{paymentRemainder.isSecondPaymentRemainder}</td>
-                  <td>{paymentRemainder.secondPaymentRemainderDays}</td>
-                  <td>{paymentRemainder.isOverDuePaymentRemainder}</td>
-                  <td>{paymentRemainder.overDuePaymentRemainderAfterDueDateOrUntilPaid}</td>
-                  <td>{paymentRemainder.overDuePaymentRemainderDays}</td>
-                  <td>{paymentRemainder.isRemainderRecipients}</td>
+                  <td>{paymentRemainder.feeRemainder}</td>
+                  <td>{paymentRemainder.noticeDay}</td>
+                  <td>{paymentRemainder.overDueRemainder}</td>
                   <td>{paymentRemainder.remainderRecipients}</td>
+                  <td>
+                    {paymentRemainder.dueDateId ? (
+                      <Link to={`due-date/${paymentRemainder.dueDateId}`}>{paymentRemainder.dueDateId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td>
                     {paymentRemainder.collegeId ? (
                       <Link to={`college/${paymentRemainder.collegeId}`}>{paymentRemainder.collegeId}</Link>

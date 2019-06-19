@@ -105,14 +105,12 @@ public class CmsAdmissionEnquiryService {
         return ls;
     }
 
-    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId,Long admissionApplicationId) throws Exception {
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId) throws Exception {
         AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
         Branch branch = new Branch();
         branch.setId(branchId);
         admissionEnquiry.setBranch(branch);
-        AdmissionApplication aa = new AdmissionApplication();
-        aa.setId(admissionApplicationId);
-        admissionEnquiry.setAdmissionApplication(aa);
+
         Example<AdmissionEnquiry> example = Example.of(admissionEnquiry);
         List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
         List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();

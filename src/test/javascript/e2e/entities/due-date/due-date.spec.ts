@@ -51,8 +51,8 @@ describe('DueDate e2e test', () => {
     expect(await dueDateUpdatePage.getInstallmentsInput()).to.eq('5');
     await dueDateUpdatePage.setDayDescInput('dayDesc');
     expect(await dueDateUpdatePage.getDayDescInput()).to.match(/dayDesc/);
-    await dueDateUpdatePage.setPaymentDayInput('5');
-    expect(await dueDateUpdatePage.getPaymentDayInput()).to.eq('5');
+    await dueDateUpdatePage.setPaymentDateInput('01-01-2001');
+    expect(await dueDateUpdatePage.getPaymentDateInput()).to.eq('2001-01-01');
     await dueDateUpdatePage.frequencySelectLastOption();
     await dueDateUpdatePage.collegeSelectLastOption();
     await dueDateUpdatePage.branchSelectLastOption();

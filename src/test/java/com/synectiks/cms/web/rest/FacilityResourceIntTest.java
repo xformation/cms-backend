@@ -1,14 +1,25 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.search.FacilitySearchRepository;
-import com.synectiks.cms.service.FacilityService;
-import com.synectiks.cms.service.dto.FacilityDTO;
-import com.synectiks.cms.service.mapper.FacilityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,25 +34,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Facility;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.FacilityRepository;
+import com.synectiks.cms.repository.search.FacilitySearchRepository;
+import com.synectiks.cms.service.FacilityService;
+import com.synectiks.cms.service.dto.FacilityDTO;
+import com.synectiks.cms.service.mapper.FacilityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the FacilityResource REST controller.
  *
@@ -72,8 +74,10 @@ public class FacilityResourceIntTest {
     @Autowired
     private FacilityRepository facilityRepository;
 
+
     @Autowired
     private FacilityMapper facilityMapper;
+    
 
     @Autowired
     private FacilityService facilityService;
@@ -98,9 +102,6 @@ public class FacilityResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restFacilityMockMvc;
 
     private Facility facility;
@@ -113,8 +114,7 @@ public class FacilityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -246,6 +246,7 @@ public class FacilityResourceIntTest {
             .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())));
     }
     
+
     @Test
     @Transactional
     public void getFacility() throws Exception {
@@ -264,7 +265,6 @@ public class FacilityResourceIntTest {
             .andExpect(jsonPath("$.suspandStartDate").value(DEFAULT_SUSPAND_START_DATE.toString()))
             .andExpect(jsonPath("$.suspandEndDate").value(DEFAULT_SUSPAND_END_DATE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingFacility() throws Exception {
@@ -322,7 +322,7 @@ public class FacilityResourceIntTest {
         // Create the Facility
         FacilityDTO facilityDTO = facilityMapper.toDto(facility);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restFacilityMockMvc.perform(put("/api/facilities")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(facilityDTO)))
@@ -344,7 +344,7 @@ public class FacilityResourceIntTest {
 
         int databaseSizeBeforeDelete = facilityRepository.findAll().size();
 
-        // Delete the facility
+        // Get the facility
         restFacilityMockMvc.perform(delete("/api/facilities/{id}", facility.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -369,7 +369,7 @@ public class FacilityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(facility.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))

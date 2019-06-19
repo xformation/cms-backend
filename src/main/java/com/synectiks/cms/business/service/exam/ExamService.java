@@ -32,12 +32,6 @@ public class ExamService {
 
     public List<AcademicExamSetting> searchSubject(ExamListFilterInput filter) {
         AcademicExamSetting academicExamSetting = new AcademicExamSetting();
-        if (!CommonUtil.isNullOrEmpty(filter.getBranchId())) {
-            Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
-            if (branch != null) {
-                academicExamSetting.setBranch(branch);
-            }
-        }
 
         if (!CommonUtil.isNullOrEmpty(filter.getDepartmentId())) {
             Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));

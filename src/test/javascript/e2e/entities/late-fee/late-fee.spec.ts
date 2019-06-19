@@ -45,24 +45,18 @@ describe('LateFee e2e test', () => {
   it('should create and save LateFees', async () => {
     const nbButtonsBeforeCreate = await lateFeeComponentsPage.countDeleteButtons();
 
-    await lateFeeUpdatePage.setIsAutoLateFeeInput('isAutoLateFee');
-    expect(await lateFeeUpdatePage.getIsAutoLateFeeInput()).to.match(/isAutoLateFee/);
+    await lateFeeUpdatePage.assignLateFeeSelectLastOption();
     await lateFeeUpdatePage.setLateFeeDaysInput('5');
     expect(await lateFeeUpdatePage.getLateFeeDaysInput()).to.eq('5');
-    await lateFeeUpdatePage.setChargeTypeInput('chargeType');
-    expect(await lateFeeUpdatePage.getChargeTypeInput()).to.match(/chargeType/);
+    await lateFeeUpdatePage.fixedSelectLastOption();
+    await lateFeeUpdatePage.percentageSelectLastOption();
     await lateFeeUpdatePage.setFixedChargesInput('5');
     expect(await lateFeeUpdatePage.getFixedChargesInput()).to.eq('5');
-    await lateFeeUpdatePage.setPercentChargesInput('percentCharges');
-    expect(await lateFeeUpdatePage.getPercentChargesInput()).to.match(/percentCharges/);
-    await lateFeeUpdatePage.setLateFeeFrequencyInput('lateFeeFrequency');
-    expect(await lateFeeUpdatePage.getLateFeeFrequencyInput()).to.match(/lateFeeFrequency/);
-    await lateFeeUpdatePage.setLateFeeRepeatDaysInput('5');
-    expect(await lateFeeUpdatePage.getLateFeeRepeatDaysInput()).to.eq('5');
+    await lateFeeUpdatePage.setPercentChargesInput('5');
+    expect(await lateFeeUpdatePage.getPercentChargesInput()).to.eq('5');
+    await lateFeeUpdatePage.lateFeeAssignmentFrequencySelectLastOption();
     await lateFeeUpdatePage.collegeSelectLastOption();
     await lateFeeUpdatePage.branchSelectLastOption();
-    await lateFeeUpdatePage.academicYearSelectLastOption();
-    await lateFeeUpdatePage.termSelectLastOption();
     await waitUntilDisplayed(lateFeeUpdatePage.getSaveButton());
     await lateFeeUpdatePage.save();
     await waitUntilHidden(lateFeeUpdatePage.getSaveButton());

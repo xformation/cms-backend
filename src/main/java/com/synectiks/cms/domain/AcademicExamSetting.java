@@ -92,10 +92,6 @@ public class AcademicExamSetting implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
-    private Branch branch;
-
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
     private Department department;
 
     @ManyToOne
@@ -299,19 +295,6 @@ public class AcademicExamSetting implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public AcademicExamSetting branch(Branch branch) {
-        this.branch = branch;
-        return this;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
     }
 
     public Department getDepartment() {

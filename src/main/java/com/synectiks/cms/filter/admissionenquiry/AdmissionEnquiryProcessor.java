@@ -53,8 +53,8 @@ public class AdmissionEnquiryProcessor {
         return cmsAdmissionEnquiryService.searchAdmissionOnType(admissionEnquiryType, branchId);
     }
 
-    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId,Long admissionApplicationId) throws Exception{
-        return cmsAdmissionEnquiryService.admissionEnquiryList( branchId,admissionApplicationId);
+    public List<CmsAdmissionEnquiryVo> admissionEnquiryList(Long branchId) throws Exception{
+        return cmsAdmissionEnquiryService.admissionEnquiryList( branchId);
     }
 
     public Long getTotalAdmissions() {

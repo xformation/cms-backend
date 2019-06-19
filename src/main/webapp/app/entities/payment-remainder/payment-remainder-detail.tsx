@@ -29,45 +29,23 @@ export class PaymentRemainderDetail extends React.Component<IPaymentRemainderDet
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="isAutoRemainder">Is Auto Remainder</span>
+              <span id="feeRemainder">Fee Remainder</span>
             </dt>
-            <dd>{paymentRemainderEntity.isAutoRemainder}</dd>
+            <dd>{paymentRemainderEntity.feeRemainder}</dd>
             <dt>
-              <span id="isFirstPaymentRemainder">Is First Payment Remainder</span>
+              <span id="noticeDay">Notice Day</span>
             </dt>
-            <dd>{paymentRemainderEntity.isFirstPaymentRemainder}</dd>
+            <dd>{paymentRemainderEntity.noticeDay}</dd>
             <dt>
-              <span id="firstPaymentRemainderDays">First Payment Remainder Days</span>
+              <span id="overDueRemainder">Over Due Remainder</span>
             </dt>
-            <dd>{paymentRemainderEntity.firstPaymentRemainderDays}</dd>
-            <dt>
-              <span id="isSecondPaymentRemainder">Is Second Payment Remainder</span>
-            </dt>
-            <dd>{paymentRemainderEntity.isSecondPaymentRemainder}</dd>
-            <dt>
-              <span id="secondPaymentRemainderDays">Second Payment Remainder Days</span>
-            </dt>
-            <dd>{paymentRemainderEntity.secondPaymentRemainderDays}</dd>
-            <dt>
-              <span id="isOverDuePaymentRemainder">Is Over Due Payment Remainder</span>
-            </dt>
-            <dd>{paymentRemainderEntity.isOverDuePaymentRemainder}</dd>
-            <dt>
-              <span id="overDuePaymentRemainderAfterDueDateOrUntilPaid">Over Due Payment Remainder After Due Date Or Until Paid</span>
-            </dt>
-            <dd>{paymentRemainderEntity.overDuePaymentRemainderAfterDueDateOrUntilPaid}</dd>
-            <dt>
-              <span id="overDuePaymentRemainderDays">Over Due Payment Remainder Days</span>
-            </dt>
-            <dd>{paymentRemainderEntity.overDuePaymentRemainderDays}</dd>
-            <dt>
-              <span id="isRemainderRecipients">Is Remainder Recipients</span>
-            </dt>
-            <dd>{paymentRemainderEntity.isRemainderRecipients}</dd>
+            <dd>{paymentRemainderEntity.overDueRemainder}</dd>
             <dt>
               <span id="remainderRecipients">Remainder Recipients</span>
             </dt>
             <dd>{paymentRemainderEntity.remainderRecipients}</dd>
+            <dt>Due Date</dt>
+            <dd>{paymentRemainderEntity.dueDateId ? paymentRemainderEntity.dueDateId : ''}</dd>
             <dt>College</dt>
             <dd>{paymentRemainderEntity.collegeId ? paymentRemainderEntity.collegeId : ''}</dd>
             <dt>Branch</dt>

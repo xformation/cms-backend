@@ -1,11 +1,10 @@
 package com.synectiks.cms.graphql.types.AcademicExamSetting;
 
-public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingInput {
+public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingInput{
     private Long departmentId;
     private Long academicyearId;
     private Long sectionId;
     private Long batchId;
-    private Long branchId;
 
     public Long getDepartmentId() {
         return departmentId;
@@ -37,13 +36,5 @@ public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingI
 
     public void setBatchId(Long batchId) {
         this.batchId = batchId;
-    }
-
-    public Long getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
     }
 }

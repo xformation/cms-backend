@@ -970,30 +970,6 @@ import studentExamReport, {
 import academicExamSetting, {
   AcademicExamSettingState
 } from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
-// prettier-ignore
-import facility, {
-  FacilityState
-} from 'app/entities/facility/facility.reducer';
-// prettier-ignore
-import academicExamSetting, {
-  AcademicExamSettingState
-} from 'app/entities/academic-exam-setting/academic-exam-setting.reducer';
-// prettier-ignore
-import feeDetails, {
-  FeeDetailsState
-} from 'app/entities/fee-details/fee-details.reducer';
-// prettier-ignore
-import dueDate, {
-  DueDateState
-} from 'app/entities/due-date/due-date.reducer';
-// prettier-ignore
-import paymentRemainder, {
-  PaymentRemainderState
-} from 'app/entities/payment-remainder/payment-remainder.reducer';
-// prettier-ignore
-import lateFee, {
-  LateFeeState
-} from 'app/entities/late-fee/late-fee.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {

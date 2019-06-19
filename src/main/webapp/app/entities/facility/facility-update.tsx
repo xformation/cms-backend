@@ -12,6 +12,8 @@ import { IAcademicYear } from 'app/shared/model/academic-year.model';
 import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
+import { IStudent } from 'app/shared/model/student.model';
+import { getEntities as getStudents } from 'app/entities/student/student.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './facility.reducer';
 import { IFacility } from 'app/shared/model/facility.model';
 // tslint:disable-next-line:no-unused-variable
@@ -24,6 +26,7 @@ export interface IFacilityUpdateState {
   isNew: boolean;
   academicYearId: string;
   branchId: string;
+  studentId: string;
 }
 
 export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacilityUpdateState> {
@@ -32,6 +35,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
     this.state = {
       academicYearId: '0',
       branchId: '0',
+      studentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -51,6 +55,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
 
     this.props.getAcademicYears();
     this.props.getBranches();
+    this.props.getStudents();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +79,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
   };
 
   render() {
-    const { facilityEntity, academicYears, branches, loading, updating } = this.props;
+    const { facilityEntity, academicYears, branches, students, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -97,54 +102,121 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="nameLabel" for="name">
-                    Name
-                  </Label>
-                  <AvField
-                    id="facility-name"
-                    type="text"
-                    name="name"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="statusLabel">Status</Label>
+                  <Label id="transportLabel">Transport</Label>
                   <AvInput
-                    id="facility-status"
+                    id="facility-transport"
                     type="select"
                     className="form-control"
-                    name="status"
-                    value={(!isNew && facilityEntity.status) || 'ACTIVE'}
+                    name="transport"
+                    value={(!isNew && facilityEntity.transport) || 'ACTIVE'}
                   >
                     <option value="ACTIVE">ACTIVE</option>
                     <option value="DEACTIVE">DEACTIVE</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="startDateLabel" for="startDate">
-                    Start Date
-                  </Label>
-                  <AvField id="facility-startDate" type="date" className="form-control" name="startDate" />
+                  <Label id="messLabel">Mess</Label>
+                  <AvInput
+                    id="facility-mess"
+                    type="select"
+                    className="form-control"
+                    name="mess"
+                    value={(!isNew && facilityEntity.mess) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="endDateLabel" for="endDate">
-                    End Date
-                  </Label>
-                  <AvField id="facility-endDate" type="date" className="form-control" name="endDate" />
+                  <Label id="gymLabel">Gym</Label>
+                  <AvInput
+                    id="facility-gym"
+                    type="select"
+                    className="form-control"
+                    name="gym"
+                    value={(!isNew && facilityEntity.gym) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="suspandStartDateLabel" for="suspandStartDate">
-                    Suspand Start Date
-                  </Label>
-                  <AvField id="facility-suspandStartDate" type="date" className="form-control" name="suspandStartDate" />
+                  <Label id="culturalClassLabel">Cultural Class</Label>
+                  <AvInput
+                    id="facility-culturalClass"
+                    type="select"
+                    className="form-control"
+                    name="culturalClass"
+                    value={(!isNew && facilityEntity.culturalClass) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="suspandEndDateLabel" for="suspandEndDate">
-                    Suspand End Date
-                  </Label>
-                  <AvField id="facility-suspandEndDate" type="date" className="form-control" name="suspandEndDate" />
+                  <Label id="libraryLabel">Library</Label>
+                  <AvInput
+                    id="facility-library"
+                    type="select"
+                    className="form-control"
+                    name="library"
+                    value={(!isNew && facilityEntity.library) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="sportsLabel">Sports</Label>
+                  <AvInput
+                    id="facility-sports"
+                    type="select"
+                    className="form-control"
+                    name="sports"
+                    value={(!isNew && facilityEntity.sports) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="swimmingLabel">Swimming</Label>
+                  <AvInput
+                    id="facility-swimming"
+                    type="select"
+                    className="form-control"
+                    name="swimming"
+                    value={(!isNew && facilityEntity.swimming) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="extraClassLabel">Extra Class</Label>
+                  <AvInput
+                    id="facility-extraClass"
+                    type="select"
+                    className="form-control"
+                    name="extraClass"
+                    value={(!isNew && facilityEntity.extraClass) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="handicraftsLabel">Handicrafts</Label>
+                  <AvInput
+                    id="facility-handicrafts"
+                    type="select"
+                    className="form-control"
+                    name="handicrafts"
+                    value={(!isNew && facilityEntity.handicrafts) || 'ACTIVE'}
+                  >
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DEACTIVE">DEACTIVE</option>
+                  </AvInput>
                 </AvGroup>
                 <AvGroup>
                   <Label for="academicYear.id">Academic Year</Label>
@@ -172,6 +244,19 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="student.id">Student</Label>
+                  <AvInput id="facility-student" type="select" className="form-control" name="studentId">
+                    <option value="" key="0" />
+                    {students
+                      ? students.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/facility" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -192,6 +277,7 @@ export class FacilityUpdate extends React.Component<IFacilityUpdateProps, IFacil
 const mapStateToProps = (storeState: IRootState) => ({
   academicYears: storeState.academicYear.entities,
   branches: storeState.branch.entities,
+  students: storeState.student.entities,
   facilityEntity: storeState.facility.entity,
   loading: storeState.facility.loading,
   updating: storeState.facility.updating,
@@ -201,6 +287,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getAcademicYears,
   getBranches,
+  getStudents,
   getEntity,
   updateEntity,
   createEntity,

@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, InputGroup, Col, Row, Table } from 'reactstrap';
 import { AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudSearchAction, ICrudGetAllAction } from 'react-jhipster';
+import { ICrudSearchAction, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -77,7 +77,7 @@ export class DueDate extends React.Component<IDueDateProps, IDueDateState> {
                 <th>Payment Method</th>
                 <th>Installments</th>
                 <th>Day Desc</th>
-                <th>Payment Day</th>
+                <th>Payment Date</th>
                 <th>Frequency</th>
                 <th>College</th>
                 <th>Branch</th>
@@ -95,7 +95,9 @@ export class DueDate extends React.Component<IDueDateProps, IDueDateState> {
                   <td>{dueDate.paymentMethod}</td>
                   <td>{dueDate.installments}</td>
                   <td>{dueDate.dayDesc}</td>
-                  <td>{dueDate.paymentDay}</td>
+                  <td>
+                    <TextFormat type="date" value={dueDate.paymentDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
                   <td>{dueDate.frequency}</td>
                   <td>{dueDate.collegeId ? <Link to={`college/${dueDate.collegeId}`}>{dueDate.collegeId}</Link> : ''}</td>
                   <td>{dueDate.branchId ? <Link to={`branch/${dueDate.branchId}`}>{dueDate.branchId}</Link> : ''}</td>

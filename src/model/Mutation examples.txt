@@ -396,41 +396,37 @@ AcademicExamSetting:
 
 mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
   addAcademicExamSetting(input: $input) {
-    academicExamSetting {
+   academicExamSetting {
       id
       examType
-      semester
-      subject
-      examDate
-      day
-      duration
-      startTime
-      endTime
-      gradeType
-      total
-      passing
-      actions
-      startDate
-      endDate
-      department {
-        id
-      }
-      section {
-        id
-      }
-      academicyear {
-        id
-      }
-      batch {
-        id
-      }
-      branch {
-        id
-      }
+    semester
+    subject
+    examDate
+    day
+    duration
+    startTime
+    endTime
+    gradeType
+    total
+    passing
+    actions
+    startDate
+    endDate
+    department{
+      id
+    }
+    section{
+      id
+    }
+    academicyear{
+      id
+    }
+    batch{
+      id
     }
   }
 }
-
+}
 
 {
  "input":{
@@ -451,8 +447,7 @@ mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
   "departmentId": 1101,
   "sectionId":  1201,
   "academicyearId":  1051,
-  "batchId": 11350,
-  "branchId": 11150
+  "batchId": 11350
 }
 }
 -------
@@ -486,16 +481,13 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
     batch{
       id
     }
-    branch{
-      id
-    }
   }
 }
 }
 
 {
  "input":{
-  "id": 953,
+  "id": 951,
   "examType": "midterm1",
   "semester": "SEMESTER2",
   "subject": "VDMS",
@@ -513,8 +505,7 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
   "departmentId": 1101,
   "sectionId":  1201,
   "academicyearId":  1051,
-  "batchId": 11350,
-  "branchId": 11150
+  "batchId": 11350
 }
 }
 

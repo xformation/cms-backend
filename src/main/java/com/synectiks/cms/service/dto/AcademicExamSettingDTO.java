@@ -54,8 +54,6 @@ public class AcademicExamSettingDTO implements Serializable {
     private LocalDate endDate;
 
 
-    private Long branchId;
-
     private Long departmentId;
 
     private Long academicyearId;
@@ -184,14 +182,6 @@ public class AcademicExamSettingDTO implements Serializable {
         this.endDate = endDate;
     }
 
-    public Long getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
-    }
-
     public Long getDepartmentId() {
         return departmentId;
     }
@@ -263,7 +253,6 @@ public class AcademicExamSettingDTO implements Serializable {
             ", actions='" + getActions() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", branch=" + getBranchId() +
             ", department=" + getDepartmentId() +
             ", academicyear=" + getAcademicyearId() +
             ", section=" + getSectionId() +

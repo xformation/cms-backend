@@ -280,21 +280,11 @@ type Query {
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
   createFeeDataCache: FeeDataCache!
-    createAdmissionDataCache: AdmissionDataCache!
 }
 
 type FeeDataCache {
 	colleges: [College]
 	branches: [Branch]	
-}
-
-type AdmissionDataCache {
-    branches: [Branch]
-    departments: [Department]
-    states: [State]
-    cities: [City]
-    batches: [Batch]
-    courses: [CmsCourseEnumVo]
 }
 
 type AcExamSetting{
@@ -308,7 +298,6 @@ type AcExamSetting{
     departmnt: String!
     bctch: String!
     sectn: String!
-    brnch: String!
     st: String!
     ed: String!
    }
@@ -332,12 +321,6 @@ type CmsGenderVo{
 	id: Int
 	description: String
 }
-
-type CmsCourseEnumVo{
-    id: Int
-    description: String
-}
-
 type CmsInvoice { 
 	totalInvoice: Long!
 	totalPaidInvoice: Long!
@@ -775,7 +758,6 @@ type AcademicExamSetting{
     section: Section!
     academicyear: AcademicYear!
     batch: Batch!
-    branch: Branch!
 }
 
 enum Gender {
@@ -1157,7 +1139,7 @@ type Mutation {
      getTotalDeclined(branchId:Long ): Long!
      getTotalConverted(branchId:Long): Long!
      searchAdmissionOnType(admissionEnquiryType:String branchId:Long): [CmsAdmissionEnquiryVo!]!
-     admissionEnquiryList(branchId:Long,admissionApplicationId: Long! ): [CmsAdmissionEnquiryVo!]!
+     admissionEnquiryList(branchId:Long ): [CmsAdmissionEnquiryVo!]!
 
     addCompetitiveExam(input:AddCompetitiveExamInput!):AddCompetitiveExamPayload!
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
@@ -1345,7 +1327,6 @@ input AddAcademicExamSettingInput{
     sectionId: Long!
     academicyearId: Long!
     batchId: Long!
-    branchId: Long!
 }
 
 type AddAcademicExamSettingPayload {
@@ -1371,7 +1352,6 @@ input UpdateAcademicExamSettingInput {
     sectionId: Long!
     academicyearId: Long!
     batchId: Long!
-    branchId: Long!
 }
 
 type UpdateAcademicExamSettingPayload {

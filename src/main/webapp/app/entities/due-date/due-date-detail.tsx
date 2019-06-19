@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -41,9 +41,11 @@ export class DueDateDetail extends React.Component<IDueDateDetailProps> {
             </dt>
             <dd>{dueDateEntity.dayDesc}</dd>
             <dt>
-              <span id="paymentDay">Payment Day</span>
+              <span id="paymentDate">Payment Date</span>
             </dt>
-            <dd>{dueDateEntity.paymentDay}</dd>
+            <dd>
+              <TextFormat value={dueDateEntity.paymentDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>
               <span id="frequency">Frequency</span>
             </dt>

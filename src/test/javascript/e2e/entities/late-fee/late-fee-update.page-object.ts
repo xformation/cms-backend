@@ -4,30 +4,34 @@ export default class LateFeeUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.lateFee.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  isAutoLateFeeInput: ElementFinder = element(by.css('input#late-fee-isAutoLateFee'));
+  assignLateFeeSelect: ElementFinder = element(by.css('select#late-fee-assignLateFee'));
   lateFeeDaysInput: ElementFinder = element(by.css('input#late-fee-lateFeeDays'));
-  chargeTypeInput: ElementFinder = element(by.css('input#late-fee-chargeType'));
+  fixedSelect: ElementFinder = element(by.css('select#late-fee-fixed'));
+  percentageSelect: ElementFinder = element(by.css('select#late-fee-percentage'));
   fixedChargesInput: ElementFinder = element(by.css('input#late-fee-fixedCharges'));
   percentChargesInput: ElementFinder = element(by.css('input#late-fee-percentCharges'));
-  lateFeeFrequencyInput: ElementFinder = element(by.css('input#late-fee-lateFeeFrequency'));
-  lateFeeRepeatDaysInput: ElementFinder = element(by.css('input#late-fee-lateFeeRepeatDays'));
+  lateFeeAssignmentFrequencySelect: ElementFinder = element(by.css('select#late-fee-lateFeeAssignmentFrequency'));
   collegeSelect: ElementFinder = element(by.css('select#late-fee-college'));
   branchSelect: ElementFinder = element(by.css('select#late-fee-branch'));
-  academicYearSelect: ElementFinder = element(by.css('select#late-fee-academicYear'));
-  termSelect: ElementFinder = element(by.css('select#late-fee-term'));
 
   getPageTitle() {
     return this.pageTitle;
   }
 
-  async setIsAutoLateFeeInput(isAutoLateFee) {
-    await this.isAutoLateFeeInput.sendKeys(isAutoLateFee);
+  async setAssignLateFeeSelect(assignLateFee) {
+    await this.assignLateFeeSelect.sendKeys(assignLateFee);
   }
 
-  async getIsAutoLateFeeInput() {
-    return this.isAutoLateFeeInput.getAttribute('value');
+  async getAssignLateFeeSelect() {
+    return this.assignLateFeeSelect.element(by.css('option:checked')).getText();
   }
 
+  async assignLateFeeSelectLastOption() {
+    await this.assignLateFeeSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setLateFeeDaysInput(lateFeeDays) {
     await this.lateFeeDaysInput.sendKeys(lateFeeDays);
   }
@@ -36,14 +40,34 @@ export default class LateFeeUpdatePage {
     return this.lateFeeDaysInput.getAttribute('value');
   }
 
-  async setChargeTypeInput(chargeType) {
-    await this.chargeTypeInput.sendKeys(chargeType);
+  async setFixedSelect(fixed) {
+    await this.fixedSelect.sendKeys(fixed);
   }
 
-  async getChargeTypeInput() {
-    return this.chargeTypeInput.getAttribute('value');
+  async getFixedSelect() {
+    return this.fixedSelect.element(by.css('option:checked')).getText();
   }
 
+  async fixedSelectLastOption() {
+    await this.fixedSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+  async setPercentageSelect(percentage) {
+    await this.percentageSelect.sendKeys(percentage);
+  }
+
+  async getPercentageSelect() {
+    return this.percentageSelect.element(by.css('option:checked')).getText();
+  }
+
+  async percentageSelectLastOption() {
+    await this.percentageSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
   async setFixedChargesInput(fixedCharges) {
     await this.fixedChargesInput.sendKeys(fixedCharges);
   }
@@ -60,22 +84,20 @@ export default class LateFeeUpdatePage {
     return this.percentChargesInput.getAttribute('value');
   }
 
-  async setLateFeeFrequencyInput(lateFeeFrequency) {
-    await this.lateFeeFrequencyInput.sendKeys(lateFeeFrequency);
+  async setLateFeeAssignmentFrequencySelect(lateFeeAssignmentFrequency) {
+    await this.lateFeeAssignmentFrequencySelect.sendKeys(lateFeeAssignmentFrequency);
   }
 
-  async getLateFeeFrequencyInput() {
-    return this.lateFeeFrequencyInput.getAttribute('value');
+  async getLateFeeAssignmentFrequencySelect() {
+    return this.lateFeeAssignmentFrequencySelect.element(by.css('option:checked')).getText();
   }
 
-  async setLateFeeRepeatDaysInput(lateFeeRepeatDays) {
-    await this.lateFeeRepeatDaysInput.sendKeys(lateFeeRepeatDays);
+  async lateFeeAssignmentFrequencySelectLastOption() {
+    await this.lateFeeAssignmentFrequencySelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
   }
-
-  async getLateFeeRepeatDaysInput() {
-    return this.lateFeeRepeatDaysInput.getAttribute('value');
-  }
-
   async collegeSelectLastOption() {
     await this.collegeSelect
       .all(by.tagName('option'))
@@ -112,44 +134,6 @@ export default class LateFeeUpdatePage {
 
   async getBranchSelectedOption() {
     return this.branchSelect.element(by.css('option:checked')).getText();
-  }
-
-  async academicYearSelectLastOption() {
-    await this.academicYearSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async academicYearSelectOption(option) {
-    await this.academicYearSelect.sendKeys(option);
-  }
-
-  getAcademicYearSelect() {
-    return this.academicYearSelect;
-  }
-
-  async getAcademicYearSelectedOption() {
-    return this.academicYearSelect.element(by.css('option:checked')).getText();
-  }
-
-  async termSelectLastOption() {
-    await this.termSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async termSelectOption(option) {
-    await this.termSelect.sendKeys(option);
-  }
-
-  getTermSelect() {
-    return this.termSelect;
-  }
-
-  async getTermSelectedOption() {
-    return this.termSelect.element(by.css('option:checked')).getText();
   }
 
   async save() {

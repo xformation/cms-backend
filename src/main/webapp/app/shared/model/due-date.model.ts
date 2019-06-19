@@ -1,3 +1,5 @@
+import { Moment } from 'moment';
+
 export const enum Frequency {
   WEEKLY = 'WEEKLY',
   MONTHLY = 'MONTHLY',
@@ -11,7 +13,7 @@ export interface IDueDate {
   paymentMethod?: string;
   installments?: number;
   dayDesc?: string;
-  paymentDay?: number;
+  paymentDate?: Moment;
   frequency?: Frequency;
   collegeId?: number;
   branchId?: number;

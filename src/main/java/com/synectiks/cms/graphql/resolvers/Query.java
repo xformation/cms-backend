@@ -23,7 +23,6 @@ import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.CourseEnum;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
@@ -34,7 +33,6 @@ import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.summary.SummaryFilter;
-import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.repository.*;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
@@ -697,23 +695,5 @@ public class Query implements GraphQLQueryResolver {
     	cache.setBranches(branchList);
     	
     	return cache;
-    }
-
-    public AdmissionDataCache createAdmissionDataCache() throws  Exception{
-        List<Department> departmentList = this.departmentRepository.findAll();
-        List<Branch> branchList = this.branchRepository.findAll();
-        List<Batch> batchList = this.batchRepository.findAll();
-        List<State> stateList = this.stateRepository.findAll();
-        List<City> cityList = this.cityRepository.findAll();
-        List<CmsCourseEnumVo> courseEnumList = this.commonService.getAllCourses();
-        AdmissionDataCache cache = new AdmissionDataCache();
-        cache.setBatches(batchList);
-        cache.setBranches(branchList);
-        cache.setDepartments(departmentList);
-        cache.setCities(cityList);
-        cache.setStates(stateList);
-        cache.setCourses(courseEnumList);
-
-        return cache;
     }
 }

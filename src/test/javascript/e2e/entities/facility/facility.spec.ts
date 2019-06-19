@@ -45,19 +45,18 @@ describe('Facility e2e test', () => {
   it('should create and save Facilities', async () => {
     const nbButtonsBeforeCreate = await facilityComponentsPage.countDeleteButtons();
 
-    await facilityUpdatePage.setNameInput('name');
-    expect(await facilityUpdatePage.getNameInput()).to.match(/name/);
-    await facilityUpdatePage.statusSelectLastOption();
-    await facilityUpdatePage.setStartDateInput('01-01-2001');
-    expect(await facilityUpdatePage.getStartDateInput()).to.eq('2001-01-01');
-    await facilityUpdatePage.setEndDateInput('01-01-2001');
-    expect(await facilityUpdatePage.getEndDateInput()).to.eq('2001-01-01');
-    await facilityUpdatePage.setSuspandStartDateInput('01-01-2001');
-    expect(await facilityUpdatePage.getSuspandStartDateInput()).to.eq('2001-01-01');
-    await facilityUpdatePage.setSuspandEndDateInput('01-01-2001');
-    expect(await facilityUpdatePage.getSuspandEndDateInput()).to.eq('2001-01-01');
+    await facilityUpdatePage.transportSelectLastOption();
+    await facilityUpdatePage.messSelectLastOption();
+    await facilityUpdatePage.gymSelectLastOption();
+    await facilityUpdatePage.culturalClassSelectLastOption();
+    await facilityUpdatePage.librarySelectLastOption();
+    await facilityUpdatePage.sportsSelectLastOption();
+    await facilityUpdatePage.swimmingSelectLastOption();
+    await facilityUpdatePage.extraClassSelectLastOption();
+    await facilityUpdatePage.handicraftsSelectLastOption();
     await facilityUpdatePage.academicYearSelectLastOption();
     await facilityUpdatePage.branchSelectLastOption();
+    await facilityUpdatePage.studentSelectLastOption();
     await waitUntilDisplayed(facilityUpdatePage.getSaveButton());
     await facilityUpdatePage.save();
     await waitUntilHidden(facilityUpdatePage.getSaveButton());

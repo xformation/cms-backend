@@ -7,7 +7,7 @@ export default class DueDateUpdatePage {
   paymentMethodInput: ElementFinder = element(by.css('input#due-date-paymentMethod'));
   installmentsInput: ElementFinder = element(by.css('input#due-date-installments'));
   dayDescInput: ElementFinder = element(by.css('input#due-date-dayDesc'));
-  paymentDayInput: ElementFinder = element(by.css('input#due-date-paymentDay'));
+  paymentDateInput: ElementFinder = element(by.css('input#due-date-paymentDate'));
   frequencySelect: ElementFinder = element(by.css('select#due-date-frequency'));
   collegeSelect: ElementFinder = element(by.css('select#due-date-college'));
   branchSelect: ElementFinder = element(by.css('select#due-date-branch'));
@@ -40,12 +40,12 @@ export default class DueDateUpdatePage {
     return this.dayDescInput.getAttribute('value');
   }
 
-  async setPaymentDayInput(paymentDay) {
-    await this.paymentDayInput.sendKeys(paymentDay);
+  async setPaymentDateInput(paymentDate) {
+    await this.paymentDateInput.sendKeys(paymentDate);
   }
 
-  async getPaymentDayInput() {
-    return this.paymentDayInput.getAttribute('value');
+  async getPaymentDateInput() {
+    return this.paymentDateInput.getAttribute('value');
   }
 
   async setFrequencySelect(frequency) {

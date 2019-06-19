@@ -1,16 +1,27 @@
+export const enum Status {
+  ACTIVE = 'ACTIVE',
+  DEACTIVE = 'DEACTIVE'
+}
+
+export const enum Frequency {
+  WEEKLY = 'WEEKLY',
+  MONTHLY = 'MONTHLY',
+  QUARTERLY = 'QUARTERLY',
+  HALFYEARLY = 'HALFYEARLY',
+  ANNUALLY = 'ANNUALLY'
+}
+
 export interface ILateFee {
   id?: number;
-  isAutoLateFee?: string;
+  assignLateFee?: Status;
   lateFeeDays?: number;
-  chargeType?: string;
+  fixed?: Status;
+  percentage?: Status;
   fixedCharges?: number;
-  percentCharges?: string;
-  lateFeeFrequency?: string;
-  lateFeeRepeatDays?: number;
+  percentCharges?: number;
+  lateFeeAssignmentFrequency?: Frequency;
   collegeId?: number;
   branchId?: number;
-  academicYearId?: number;
-  termId?: number;
 }
 
 export const defaultValue: Readonly<ILateFee> = {};

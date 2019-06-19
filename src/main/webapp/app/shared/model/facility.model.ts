@@ -1,5 +1,3 @@
-import { Moment } from 'moment';
-
 export const enum Status {
   ACTIVE = 'ACTIVE',
   DEACTIVE = 'DEACTIVE'
@@ -7,14 +5,18 @@ export const enum Status {
 
 export interface IFacility {
   id?: number;
-  name?: string;
-  status?: Status;
-  startDate?: Moment;
-  endDate?: Moment;
-  suspandStartDate?: Moment;
-  suspandEndDate?: Moment;
+  transport?: Status;
+  mess?: Status;
+  gym?: Status;
+  culturalClass?: Status;
+  library?: Status;
+  sports?: Status;
+  swimming?: Status;
+  extraClass?: Status;
+  handicrafts?: Status;
   academicYearId?: number;
   branchId?: number;
+  studentId?: number;
 }
 
 export const defaultValue: Readonly<IFacility> = {};

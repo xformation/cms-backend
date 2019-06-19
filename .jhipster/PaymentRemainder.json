@@ -2,50 +2,44 @@
     "name": "PaymentRemainder",
     "fields": [
         {
-            "fieldName": "isAutoRemainder",
-            "fieldType": "String",
+            "fieldName": "feeRemainder",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "isFirstPaymentRemainder",
-            "fieldType": "String"
+            "fieldName": "noticeDay",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "firstPaymentRemainderDays",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "isSecondPaymentRemainder",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "secondPaymentRemainderDays",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "isOverDuePaymentRemainder",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "overDuePaymentRemainderAfterDueDateOrUntilPaid",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "overDuePaymentRemainderDays",
-            "fieldType": "Integer"
-        },
-        {
-            "fieldName": "isRemainderRecipients",
-            "fieldType": "String"
+            "fieldName": "overDueRemainder",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldName": "remainderRecipients",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "dueDate",
+            "otherEntityRelationshipName": "paymentRemainder",
+            "relationshipName": "dueDate",
+            "otherEntityField": "id"
+        },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "college",

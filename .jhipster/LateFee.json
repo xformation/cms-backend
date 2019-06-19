@@ -2,19 +2,29 @@
     "name": "LateFee",
     "fields": [
         {
-            "fieldName": "isAutoLateFee",
-            "fieldType": "String",
+            "fieldName": "assignLateFee",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
             "fieldName": "lateFeeDays",
-            "fieldType": "Integer"
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "chargeType",
-            "fieldType": "String"
+            "fieldName": "fixed",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE"
+        },
+        {
+            "fieldName": "percentage",
+            "fieldType": "Status",
+            "fieldValues": "ACTIVE,DEACTIVE"
         },
         {
             "fieldName": "fixedCharges",
@@ -22,15 +32,15 @@
         },
         {
             "fieldName": "percentCharges",
-            "fieldType": "String"
+            "fieldType": "Long"
         },
         {
-            "fieldName": "lateFeeFrequency",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "lateFeeRepeatDays",
-            "fieldType": "Integer"
+            "fieldName": "lateFeeAssignmentFrequency",
+            "fieldType": "Frequency",
+            "fieldValues": "WEEKLY,MONTHLY,QUARTERLY,HALFYEARLY,ANNUALLY",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -46,20 +56,6 @@
             "otherEntityName": "branch",
             "otherEntityRelationshipName": "lateFee",
             "relationshipName": "branch",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "academicYear",
-            "otherEntityRelationshipName": "lateFee",
-            "relationshipName": "academicYear",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "term",
-            "otherEntityRelationshipName": "lateFee",
-            "relationshipName": "term",
             "otherEntityField": "id"
         }
     ],

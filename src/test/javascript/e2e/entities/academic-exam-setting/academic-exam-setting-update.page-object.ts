@@ -18,7 +18,6 @@ export default class AcademicExamSettingUpdatePage {
   actionsInput: ElementFinder = element(by.css('input#academic-exam-setting-actions'));
   startDateInput: ElementFinder = element(by.css('input#academic-exam-setting-startDate'));
   endDateInput: ElementFinder = element(by.css('input#academic-exam-setting-endDate'));
-  branchSelect: ElementFinder = element(by.css('select#academic-exam-setting-branch'));
   departmentSelect: ElementFinder = element(by.css('select#academic-exam-setting-department'));
   academicyearSelect: ElementFinder = element(by.css('select#academic-exam-setting-academicyear'));
   sectionSelect: ElementFinder = element(by.css('select#academic-exam-setting-section'));
@@ -150,25 +149,6 @@ export default class AcademicExamSettingUpdatePage {
 
   async getEndDateInput() {
     return this.endDateInput.getAttribute('value');
-  }
-
-  async branchSelectLastOption() {
-    await this.branchSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async branchSelectOption(option) {
-    await this.branchSelect.sendKeys(option);
-  }
-
-  getBranchSelect() {
-    return this.branchSelect;
-  }
-
-  async getBranchSelectedOption() {
-    return this.branchSelect.element(by.css('option:checked')).getText();
   }
 
   async departmentSelectLastOption() {

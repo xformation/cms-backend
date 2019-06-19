@@ -25,7 +25,6 @@ public class SummaryDataService {
 
             AcExamSetting settingModel = new AcExamSetting();
             BeanUtils.copyProperties(examsetting, settingModel);
-            settingModel.setBrnch(examsetting.getBranch().getBranchName());
             settingModel.setDepartmnt(examsetting.getDepartment().getName());
             settingModel.setBctch(examsetting.getBatch().getBatch().name());
             settingModel.setSectn(examsetting.getSection().getSection().name());
@@ -70,7 +69,6 @@ public class SummaryDataService {
         aimodel.setAction(ain.get().getActions());
         aimodel.setStartDate(ain.get().getStartDate());
         aimodel.setEndDate(ain.get().getEndDate());
-        aimodel.setBrnch(ain.get().getBranch().getBranchName());
         return aimodel;
 
     }
