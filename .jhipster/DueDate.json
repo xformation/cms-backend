@@ -17,25 +17,16 @@
         },
         {
             "fieldName": "dayDesc",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
-            "fieldName": "paymentDate",
-            "fieldType": "LocalDate",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldName": "paymentDay",
+            "fieldType": "Integer"
         },
         {
             "fieldName": "frequency",
             "fieldType": "Frequency",
-            "fieldValues": "WEEKLY,MONTHLY,QUARTERLY,HALFYEARLY,ANNUALLY",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldValues": "WEEKLY,MONTHLY,QUARTERLY,HALFYEARLY,ANNUALLY"
         }
     ],
     "relationships": [

@@ -12,6 +12,10 @@ import { ICollege } from 'app/shared/model/college.model';
 import { getEntities as getColleges } from 'app/entities/college/college.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
+import { IAcademicYear } from 'app/shared/model/academic-year.model';
+import { getEntities as getAcademicYears } from 'app/entities/academic-year/academic-year.reducer';
+import { ITerm } from 'app/shared/model/term.model';
+import { getEntities as getTerms } from 'app/entities/term/term.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './late-fee.reducer';
 import { ILateFee } from 'app/shared/model/late-fee.model';
 // tslint:disable-next-line:no-unused-variable
@@ -24,6 +28,8 @@ export interface ILateFeeUpdateState {
   isNew: boolean;
   collegeId: string;
   branchId: string;
+  academicYearId: string;
+  termId: string;
 }
 
 export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFeeUpdateState> {
@@ -32,6 +38,8 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
     this.state = {
       collegeId: '0',
       branchId: '0',
+      academicYearId: '0',
+      termId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -51,6 +59,8 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
 
     this.props.getColleges();
     this.props.getBranches();
+    this.props.getAcademicYears();
+    this.props.getTerms();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +84,7 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
   };
 
   render() {
-    const { lateFeeEntity, colleges, branches, loading, updating } = this.props;
+    const { lateFeeEntity, colleges, branches, academicYears, terms, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -97,58 +107,29 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="assignLateFeeLabel">Assign Late Fee</Label>
-                  <AvInput
-                    id="late-fee-assignLateFee"
-                    type="select"
-                    className="form-control"
-                    name="assignLateFee"
-                    value={(!isNew && lateFeeEntity.assignLateFee) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
+                  <Label id="isAutoLateFeeLabel" for="isAutoLateFee">
+                    Is Auto Late Fee
+                  </Label>
+                  <AvField
+                    id="late-fee-isAutoLateFee"
+                    type="text"
+                    name="isAutoLateFee"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="lateFeeDaysLabel" for="lateFeeDays">
                     Late Fee Days
                   </Label>
-                  <AvField
-                    id="late-fee-lateFeeDays"
-                    type="string"
-                    className="form-control"
-                    name="lateFeeDays"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
+                  <AvField id="late-fee-lateFeeDays" type="string" className="form-control" name="lateFeeDays" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="fixedLabel">Fixed</Label>
-                  <AvInput
-                    id="late-fee-fixed"
-                    type="select"
-                    className="form-control"
-                    name="fixed"
-                    value={(!isNew && lateFeeEntity.fixed) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="percentageLabel">Percentage</Label>
-                  <AvInput
-                    id="late-fee-percentage"
-                    type="select"
-                    className="form-control"
-                    name="percentage"
-                    value={(!isNew && lateFeeEntity.percentage) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
+                  <Label id="chargeTypeLabel" for="chargeType">
+                    Charge Type
+                  </Label>
+                  <AvField id="late-fee-chargeType" type="text" name="chargeType" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="fixedChargesLabel" for="fixedCharges">
@@ -160,23 +141,19 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
                   <Label id="percentChargesLabel" for="percentCharges">
                     Percent Charges
                   </Label>
-                  <AvField id="late-fee-percentCharges" type="string" className="form-control" name="percentCharges" />
+                  <AvField id="late-fee-percentCharges" type="text" name="percentCharges" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="lateFeeAssignmentFrequencyLabel">Late Fee Assignment Frequency</Label>
-                  <AvInput
-                    id="late-fee-lateFeeAssignmentFrequency"
-                    type="select"
-                    className="form-control"
-                    name="lateFeeAssignmentFrequency"
-                    value={(!isNew && lateFeeEntity.lateFeeAssignmentFrequency) || 'WEEKLY'}
-                  >
-                    <option value="WEEKLY">WEEKLY</option>
-                    <option value="MONTHLY">MONTHLY</option>
-                    <option value="QUARTERLY">QUARTERLY</option>
-                    <option value="HALFYEARLY">HALFYEARLY</option>
-                    <option value="ANNUALLY">ANNUALLY</option>
-                  </AvInput>
+                  <Label id="lateFeeFrequencyLabel" for="lateFeeFrequency">
+                    Late Fee Frequency
+                  </Label>
+                  <AvField id="late-fee-lateFeeFrequency" type="text" name="lateFeeFrequency" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="lateFeeRepeatDaysLabel" for="lateFeeRepeatDays">
+                    Late Fee Repeat Days
+                  </Label>
+                  <AvField id="late-fee-lateFeeRepeatDays" type="string" className="form-control" name="lateFeeRepeatDays" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
@@ -204,6 +181,32 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="academicYear.id">Academic Year</Label>
+                  <AvInput id="late-fee-academicYear" type="select" className="form-control" name="academicYearId">
+                    <option value="" key="0" />
+                    {academicYears
+                      ? academicYears.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="term.id">Term</Label>
+                  <AvInput id="late-fee-term" type="select" className="form-control" name="termId">
+                    <option value="" key="0" />
+                    {terms
+                      ? terms.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/late-fee" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -224,6 +227,8 @@ export class LateFeeUpdate extends React.Component<ILateFeeUpdateProps, ILateFee
 const mapStateToProps = (storeState: IRootState) => ({
   colleges: storeState.college.entities,
   branches: storeState.branch.entities,
+  academicYears: storeState.academicYear.entities,
+  terms: storeState.term.entities,
   lateFeeEntity: storeState.lateFee.entity,
   loading: storeState.lateFee.loading,
   updating: storeState.lateFee.updating,
@@ -233,6 +238,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getColleges,
   getBranches,
+  getAcademicYears,
+  getTerms,
   getEntity,
   updateEntity,
   createEntity,

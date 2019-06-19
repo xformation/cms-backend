@@ -29,21 +29,17 @@ export class LateFeeDetail extends React.Component<ILateFeeDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="assignLateFee">Assign Late Fee</span>
+              <span id="isAutoLateFee">Is Auto Late Fee</span>
             </dt>
-            <dd>{lateFeeEntity.assignLateFee}</dd>
+            <dd>{lateFeeEntity.isAutoLateFee}</dd>
             <dt>
               <span id="lateFeeDays">Late Fee Days</span>
             </dt>
             <dd>{lateFeeEntity.lateFeeDays}</dd>
             <dt>
-              <span id="fixed">Fixed</span>
+              <span id="chargeType">Charge Type</span>
             </dt>
-            <dd>{lateFeeEntity.fixed}</dd>
-            <dt>
-              <span id="percentage">Percentage</span>
-            </dt>
-            <dd>{lateFeeEntity.percentage}</dd>
+            <dd>{lateFeeEntity.chargeType}</dd>
             <dt>
               <span id="fixedCharges">Fixed Charges</span>
             </dt>
@@ -53,13 +49,21 @@ export class LateFeeDetail extends React.Component<ILateFeeDetailProps> {
             </dt>
             <dd>{lateFeeEntity.percentCharges}</dd>
             <dt>
-              <span id="lateFeeAssignmentFrequency">Late Fee Assignment Frequency</span>
+              <span id="lateFeeFrequency">Late Fee Frequency</span>
             </dt>
-            <dd>{lateFeeEntity.lateFeeAssignmentFrequency}</dd>
+            <dd>{lateFeeEntity.lateFeeFrequency}</dd>
+            <dt>
+              <span id="lateFeeRepeatDays">Late Fee Repeat Days</span>
+            </dt>
+            <dd>{lateFeeEntity.lateFeeRepeatDays}</dd>
             <dt>College</dt>
             <dd>{lateFeeEntity.collegeId ? lateFeeEntity.collegeId : ''}</dd>
             <dt>Branch</dt>
             <dd>{lateFeeEntity.branchId ? lateFeeEntity.branchId : ''}</dd>
+            <dt>Academic Year</dt>
+            <dd>{lateFeeEntity.academicYearId ? lateFeeEntity.academicYearId : ''}</dd>
+            <dt>Term</dt>
+            <dd>{lateFeeEntity.termId ? lateFeeEntity.termId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/late-fee" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

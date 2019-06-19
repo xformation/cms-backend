@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -29,47 +29,41 @@ export class FacilityDetail extends React.Component<IFacilityDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="transport">Transport</span>
+              <span id="name">Name</span>
             </dt>
-            <dd>{facilityEntity.transport}</dd>
+            <dd>{facilityEntity.name}</dd>
             <dt>
-              <span id="mess">Mess</span>
+              <span id="status">Status</span>
             </dt>
-            <dd>{facilityEntity.mess}</dd>
+            <dd>{facilityEntity.status}</dd>
             <dt>
-              <span id="gym">Gym</span>
+              <span id="startDate">Start Date</span>
             </dt>
-            <dd>{facilityEntity.gym}</dd>
+            <dd>
+              <TextFormat value={facilityEntity.startDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>
-              <span id="culturalClass">Cultural Class</span>
+              <span id="endDate">End Date</span>
             </dt>
-            <dd>{facilityEntity.culturalClass}</dd>
+            <dd>
+              <TextFormat value={facilityEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>
-              <span id="library">Library</span>
+              <span id="suspandStartDate">Suspand Start Date</span>
             </dt>
-            <dd>{facilityEntity.library}</dd>
+            <dd>
+              <TextFormat value={facilityEntity.suspandStartDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>
-              <span id="sports">Sports</span>
+              <span id="suspandEndDate">Suspand End Date</span>
             </dt>
-            <dd>{facilityEntity.sports}</dd>
-            <dt>
-              <span id="swimming">Swimming</span>
-            </dt>
-            <dd>{facilityEntity.swimming}</dd>
-            <dt>
-              <span id="extraClass">Extra Class</span>
-            </dt>
-            <dd>{facilityEntity.extraClass}</dd>
-            <dt>
-              <span id="handicrafts">Handicrafts</span>
-            </dt>
-            <dd>{facilityEntity.handicrafts}</dd>
+            <dd>
+              <TextFormat value={facilityEntity.suspandEndDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>Academic Year</dt>
             <dd>{facilityEntity.academicYearId ? facilityEntity.academicYearId : ''}</dd>
             <dt>Branch</dt>
             <dd>{facilityEntity.branchId ? facilityEntity.branchId : ''}</dd>
-            <dt>Student</dt>
-            <dd>{facilityEntity.studentId ? facilityEntity.studentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/facility" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -308,6 +308,7 @@ type AcExamSetting{
     departmnt: String!
     bctch: String!
     sectn: String!
+    brnch: String!
     st: String!
     ed: String!
    }
@@ -774,6 +775,7 @@ type AcademicExamSetting{
     section: Section!
     academicyear: AcademicYear!
     batch: Batch!
+    branch: Branch!
 }
 
 enum Gender {
@@ -1343,6 +1345,7 @@ input AddAcademicExamSettingInput{
     sectionId: Long!
     academicyearId: Long!
     batchId: Long!
+    branchId: Long!
 }
 
 type AddAcademicExamSettingPayload {
@@ -1368,6 +1371,7 @@ input UpdateAcademicExamSettingInput {
     sectionId: Long!
     academicyearId: Long!
     batchId: Long!
+    branchId: Long!
 }
 
 type UpdateAcademicExamSettingPayload {

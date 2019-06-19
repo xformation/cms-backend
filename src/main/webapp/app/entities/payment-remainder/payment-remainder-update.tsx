@@ -8,8 +8,6 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IDueDate } from 'app/shared/model/due-date.model';
-import { getEntities as getDueDates } from 'app/entities/due-date/due-date.reducer';
 import { ICollege } from 'app/shared/model/college.model';
 import { getEntities as getColleges } from 'app/entities/college/college.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
@@ -24,7 +22,6 @@ export interface IPaymentRemainderUpdateProps extends StateProps, DispatchProps,
 
 export interface IPaymentRemainderUpdateState {
   isNew: boolean;
-  dueDateId: string;
   collegeId: string;
   branchId: string;
 }
@@ -33,7 +30,6 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
   constructor(props) {
     super(props);
     this.state = {
-      dueDateId: '0',
       collegeId: '0',
       branchId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
@@ -53,7 +49,6 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getDueDates();
     this.props.getColleges();
     this.props.getBranches();
   }
@@ -79,7 +74,7 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
   };
 
   render() {
-    const { paymentRemainderEntity, dueDates, colleges, branches, loading, updating } = this.props;
+    const { paymentRemainderEntity, colleges, branches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -102,71 +97,90 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="feeRemainderLabel">Fee Remainder</Label>
-                  <AvInput
-                    id="payment-remainder-feeRemainder"
-                    type="select"
-                    className="form-control"
-                    name="feeRemainder"
-                    value={(!isNew && paymentRemainderEntity.feeRemainder) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="noticeDayLabel" for="noticeDay">
-                    Notice Day
+                  <Label id="isAutoRemainderLabel" for="isAutoRemainder">
+                    Is Auto Remainder
                   </Label>
                   <AvField
-                    id="payment-remainder-noticeDay"
-                    type="string"
-                    className="form-control"
-                    name="noticeDay"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="overDueRemainderLabel">Over Due Remainder</Label>
-                  <AvInput
-                    id="payment-remainder-overDueRemainder"
-                    type="select"
-                    className="form-control"
-                    name="overDueRemainder"
-                    value={(!isNew && paymentRemainderEntity.overDueRemainder) || 'ACTIVE'}
-                  >
-                    <option value="ACTIVE">ACTIVE</option>
-                    <option value="DEACTIVE">DEACTIVE</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="remainderRecipientsLabel" for="remainderRecipients">
-                    Remainder Recipients
-                  </Label>
-                  <AvField
-                    id="payment-remainder-remainderRecipients"
+                    id="payment-remainder-isAutoRemainder"
                     type="text"
-                    name="remainderRecipients"
+                    name="isAutoRemainder"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="dueDate.id">Due Date</Label>
-                  <AvInput id="payment-remainder-dueDate" type="select" className="form-control" name="dueDateId">
-                    <option value="" key="0" />
-                    {dueDates
-                      ? dueDates.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
+                  <Label id="isFirstPaymentRemainderLabel" for="isFirstPaymentRemainder">
+                    Is First Payment Remainder
+                  </Label>
+                  <AvField id="payment-remainder-isFirstPaymentRemainder" type="text" name="isFirstPaymentRemainder" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="firstPaymentRemainderDaysLabel" for="firstPaymentRemainderDays">
+                    First Payment Remainder Days
+                  </Label>
+                  <AvField
+                    id="payment-remainder-firstPaymentRemainderDays"
+                    type="string"
+                    className="form-control"
+                    name="firstPaymentRemainderDays"
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="isSecondPaymentRemainderLabel" for="isSecondPaymentRemainder">
+                    Is Second Payment Remainder
+                  </Label>
+                  <AvField id="payment-remainder-isSecondPaymentRemainder" type="text" name="isSecondPaymentRemainder" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="secondPaymentRemainderDaysLabel" for="secondPaymentRemainderDays">
+                    Second Payment Remainder Days
+                  </Label>
+                  <AvField
+                    id="payment-remainder-secondPaymentRemainderDays"
+                    type="string"
+                    className="form-control"
+                    name="secondPaymentRemainderDays"
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="isOverDuePaymentRemainderLabel" for="isOverDuePaymentRemainder">
+                    Is Over Due Payment Remainder
+                  </Label>
+                  <AvField id="payment-remainder-isOverDuePaymentRemainder" type="text" name="isOverDuePaymentRemainder" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="overDuePaymentRemainderAfterDueDateOrUntilPaidLabel" for="overDuePaymentRemainderAfterDueDateOrUntilPaid">
+                    Over Due Payment Remainder After Due Date Or Until Paid
+                  </Label>
+                  <AvField
+                    id="payment-remainder-overDuePaymentRemainderAfterDueDateOrUntilPaid"
+                    type="text"
+                    name="overDuePaymentRemainderAfterDueDateOrUntilPaid"
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="overDuePaymentRemainderDaysLabel" for="overDuePaymentRemainderDays">
+                    Over Due Payment Remainder Days
+                  </Label>
+                  <AvField
+                    id="payment-remainder-overDuePaymentRemainderDays"
+                    type="string"
+                    className="form-control"
+                    name="overDuePaymentRemainderDays"
+                  />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="isRemainderRecipientsLabel" for="isRemainderRecipients">
+                    Is Remainder Recipients
+                  </Label>
+                  <AvField id="payment-remainder-isRemainderRecipients" type="text" name="isRemainderRecipients" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="remainderRecipientsLabel" for="remainderRecipients">
+                    Remainder Recipients
+                  </Label>
+                  <AvField id="payment-remainder-remainderRecipients" type="text" name="remainderRecipients" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="college.id">College</Label>
@@ -212,7 +226,6 @@ export class PaymentRemainderUpdate extends React.Component<IPaymentRemainderUpd
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  dueDates: storeState.dueDate.entities,
   colleges: storeState.college.entities,
   branches: storeState.branch.entities,
   paymentRemainderEntity: storeState.paymentRemainder.entity,
@@ -222,7 +235,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getDueDates,
   getColleges,
   getBranches,
   getEntity,

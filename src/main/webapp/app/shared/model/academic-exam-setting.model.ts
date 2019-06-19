@@ -32,6 +32,7 @@ export interface IAcademicExamSetting {
   actions?: string;
   startDate?: Moment;
   endDate?: Moment;
+  branchId?: number;
   departmentId?: number;
   academicyearId?: number;
   sectionId?: number;

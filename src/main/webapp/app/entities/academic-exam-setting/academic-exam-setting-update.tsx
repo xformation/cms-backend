@@ -8,6 +8,8 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { IDepartment } from 'app/shared/model/department.model';
 import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { IAcademicYear } from 'app/shared/model/academic-year.model';
@@ -26,6 +28,7 @@ export interface IAcademicExamSettingUpdateProps extends StateProps, DispatchPro
 
 export interface IAcademicExamSettingUpdateState {
   isNew: boolean;
+  branchId: string;
   departmentId: string;
   academicyearId: string;
   sectionId: string;
@@ -36,6 +39,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
   constructor(props) {
     super(props);
     this.state = {
+      branchId: '0',
       departmentId: '0',
       academicyearId: '0',
       sectionId: '0',
@@ -57,6 +61,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getBranches();
     this.props.getDepartments();
     this.props.getAcademicYears();
     this.props.getSections();
@@ -84,7 +89,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
   };
 
   render() {
-    const { academicExamSettingEntity, departments, academicYears, sections, batches, loading, updating } = this.props;
+    const { academicExamSettingEntity, branches, departments, academicYears, sections, batches, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -288,6 +293,19 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label for="branch.id">Branch</Label>
+                  <AvInput id="academic-exam-setting-branch" type="select" className="form-control" name="branchId">
+                    <option value="" key="0" />
+                    {branches
+                      ? branches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label for="department.id">Department</Label>
                   <AvInput id="academic-exam-setting-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
@@ -357,6 +375,7 @@ export class AcademicExamSettingUpdate extends React.Component<IAcademicExamSett
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  branches: storeState.branch.entities,
   departments: storeState.department.entities,
   academicYears: storeState.academicYear.entities,
   sections: storeState.section.entities,
@@ -368,6 +387,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getBranches,
   getDepartments,
   getAcademicYears,
   getSections,

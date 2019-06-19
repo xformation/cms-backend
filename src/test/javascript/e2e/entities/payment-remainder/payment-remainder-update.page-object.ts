@@ -4,11 +4,18 @@ export default class PaymentRemainderUpdatePage {
   pageTitle: ElementFinder = element(by.id('cmsApp.paymentRemainder.home.createOrEditLabel'));
   saveButton: ElementFinder = element(by.id('save-entity'));
   cancelButton: ElementFinder = element(by.id('cancel-save'));
-  feeRemainderSelect: ElementFinder = element(by.css('select#payment-remainder-feeRemainder'));
-  noticeDayInput: ElementFinder = element(by.css('input#payment-remainder-noticeDay'));
-  overDueRemainderSelect: ElementFinder = element(by.css('select#payment-remainder-overDueRemainder'));
+  isAutoRemainderInput: ElementFinder = element(by.css('input#payment-remainder-isAutoRemainder'));
+  isFirstPaymentRemainderInput: ElementFinder = element(by.css('input#payment-remainder-isFirstPaymentRemainder'));
+  firstPaymentRemainderDaysInput: ElementFinder = element(by.css('input#payment-remainder-firstPaymentRemainderDays'));
+  isSecondPaymentRemainderInput: ElementFinder = element(by.css('input#payment-remainder-isSecondPaymentRemainder'));
+  secondPaymentRemainderDaysInput: ElementFinder = element(by.css('input#payment-remainder-secondPaymentRemainderDays'));
+  isOverDuePaymentRemainderInput: ElementFinder = element(by.css('input#payment-remainder-isOverDuePaymentRemainder'));
+  overDuePaymentRemainderAfterDueDateOrUntilPaidInput: ElementFinder = element(
+    by.css('input#payment-remainder-overDuePaymentRemainderAfterDueDateOrUntilPaid')
+  );
+  overDuePaymentRemainderDaysInput: ElementFinder = element(by.css('input#payment-remainder-overDuePaymentRemainderDays'));
+  isRemainderRecipientsInput: ElementFinder = element(by.css('input#payment-remainder-isRemainderRecipients'));
   remainderRecipientsInput: ElementFinder = element(by.css('input#payment-remainder-remainderRecipients'));
-  dueDateSelect: ElementFinder = element(by.css('select#payment-remainder-dueDate'));
   collegeSelect: ElementFinder = element(by.css('select#payment-remainder-college'));
   branchSelect: ElementFinder = element(by.css('select#payment-remainder-branch'));
 
@@ -16,67 +23,84 @@ export default class PaymentRemainderUpdatePage {
     return this.pageTitle;
   }
 
-  async setFeeRemainderSelect(feeRemainder) {
-    await this.feeRemainderSelect.sendKeys(feeRemainder);
+  async setIsAutoRemainderInput(isAutoRemainder) {
+    await this.isAutoRemainderInput.sendKeys(isAutoRemainder);
   }
 
-  async getFeeRemainderSelect() {
-    return this.feeRemainderSelect.element(by.css('option:checked')).getText();
+  async getIsAutoRemainderInput() {
+    return this.isAutoRemainderInput.getAttribute('value');
   }
 
-  async feeRemainderSelectLastOption() {
-    await this.feeRemainderSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-  async setNoticeDayInput(noticeDay) {
-    await this.noticeDayInput.sendKeys(noticeDay);
+  async setIsFirstPaymentRemainderInput(isFirstPaymentRemainder) {
+    await this.isFirstPaymentRemainderInput.sendKeys(isFirstPaymentRemainder);
   }
 
-  async getNoticeDayInput() {
-    return this.noticeDayInput.getAttribute('value');
+  async getIsFirstPaymentRemainderInput() {
+    return this.isFirstPaymentRemainderInput.getAttribute('value');
   }
 
-  async setOverDueRemainderSelect(overDueRemainder) {
-    await this.overDueRemainderSelect.sendKeys(overDueRemainder);
+  async setFirstPaymentRemainderDaysInput(firstPaymentRemainderDays) {
+    await this.firstPaymentRemainderDaysInput.sendKeys(firstPaymentRemainderDays);
   }
 
-  async getOverDueRemainderSelect() {
-    return this.overDueRemainderSelect.element(by.css('option:checked')).getText();
+  async getFirstPaymentRemainderDaysInput() {
+    return this.firstPaymentRemainderDaysInput.getAttribute('value');
   }
 
-  async overDueRemainderSelectLastOption() {
-    await this.overDueRemainderSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
+  async setIsSecondPaymentRemainderInput(isSecondPaymentRemainder) {
+    await this.isSecondPaymentRemainderInput.sendKeys(isSecondPaymentRemainder);
   }
+
+  async getIsSecondPaymentRemainderInput() {
+    return this.isSecondPaymentRemainderInput.getAttribute('value');
+  }
+
+  async setSecondPaymentRemainderDaysInput(secondPaymentRemainderDays) {
+    await this.secondPaymentRemainderDaysInput.sendKeys(secondPaymentRemainderDays);
+  }
+
+  async getSecondPaymentRemainderDaysInput() {
+    return this.secondPaymentRemainderDaysInput.getAttribute('value');
+  }
+
+  async setIsOverDuePaymentRemainderInput(isOverDuePaymentRemainder) {
+    await this.isOverDuePaymentRemainderInput.sendKeys(isOverDuePaymentRemainder);
+  }
+
+  async getIsOverDuePaymentRemainderInput() {
+    return this.isOverDuePaymentRemainderInput.getAttribute('value');
+  }
+
+  async setOverDuePaymentRemainderAfterDueDateOrUntilPaidInput(overDuePaymentRemainderAfterDueDateOrUntilPaid) {
+    await this.overDuePaymentRemainderAfterDueDateOrUntilPaidInput.sendKeys(overDuePaymentRemainderAfterDueDateOrUntilPaid);
+  }
+
+  async getOverDuePaymentRemainderAfterDueDateOrUntilPaidInput() {
+    return this.overDuePaymentRemainderAfterDueDateOrUntilPaidInput.getAttribute('value');
+  }
+
+  async setOverDuePaymentRemainderDaysInput(overDuePaymentRemainderDays) {
+    await this.overDuePaymentRemainderDaysInput.sendKeys(overDuePaymentRemainderDays);
+  }
+
+  async getOverDuePaymentRemainderDaysInput() {
+    return this.overDuePaymentRemainderDaysInput.getAttribute('value');
+  }
+
+  async setIsRemainderRecipientsInput(isRemainderRecipients) {
+    await this.isRemainderRecipientsInput.sendKeys(isRemainderRecipients);
+  }
+
+  async getIsRemainderRecipientsInput() {
+    return this.isRemainderRecipientsInput.getAttribute('value');
+  }
+
   async setRemainderRecipientsInput(remainderRecipients) {
     await this.remainderRecipientsInput.sendKeys(remainderRecipients);
   }
 
   async getRemainderRecipientsInput() {
     return this.remainderRecipientsInput.getAttribute('value');
-  }
-
-  async dueDateSelectLastOption() {
-    await this.dueDateSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async dueDateSelectOption(option) {
-    await this.dueDateSelect.sendKeys(option);
-  }
-
-  getDueDateSelect() {
-    return this.dueDateSelect;
-  }
-
-  async getDueDateSelectedOption() {
-    return this.dueDateSelect.element(by.css('option:checked')).getText();
   }
 
   async collegeSelectLastOption() {

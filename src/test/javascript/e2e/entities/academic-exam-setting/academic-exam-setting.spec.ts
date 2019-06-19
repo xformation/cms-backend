@@ -71,6 +71,7 @@ describe('AcademicExamSetting e2e test', () => {
     expect(await academicExamSettingUpdatePage.getStartDateInput()).to.eq('2001-01-01');
     await academicExamSettingUpdatePage.setEndDateInput('01-01-2001');
     expect(await academicExamSettingUpdatePage.getEndDateInput()).to.eq('2001-01-01');
+    await academicExamSettingUpdatePage.branchSelectLastOption();
     await academicExamSettingUpdatePage.departmentSelectLastOption();
     await academicExamSettingUpdatePage.academicyearSelectLastOption();
     await academicExamSettingUpdatePage.sectionSelectLastOption();

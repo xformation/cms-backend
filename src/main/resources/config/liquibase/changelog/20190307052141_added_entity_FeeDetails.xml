@@ -30,11 +30,11 @@
             </column>
 
             <column name="student_type" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="gender" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="amount" type="bigint">

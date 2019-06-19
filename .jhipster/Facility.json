@@ -2,49 +2,35 @@
     "name": "Facility",
     "fields": [
         {
-            "fieldName": "transport",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "mess",
+            "fieldName": "status",
             "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
+            "fieldValues": "ACTIVE,DEACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
-            "fieldName": "gym",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
+            "fieldName": "startDate",
+            "fieldType": "LocalDate"
         },
         {
-            "fieldName": "culturalClass",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
         },
         {
-            "fieldName": "library",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
+            "fieldName": "suspandStartDate",
+            "fieldType": "LocalDate"
         },
         {
-            "fieldName": "sports",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
-        },
-        {
-            "fieldName": "swimming",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
-        },
-        {
-            "fieldName": "extraClass",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
-        },
-        {
-            "fieldName": "handicrafts",
-            "fieldType": "Status",
-            "fieldValues": "ACTIVE,DEACTIVE"
+            "fieldName": "suspandEndDate",
+            "fieldType": "LocalDate"
         }
     ],
     "relationships": [
@@ -60,13 +46,6 @@
             "otherEntityName": "branch",
             "otherEntityRelationshipName": "facility",
             "relationshipName": "branch",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "student",
-            "otherEntityRelationshipName": "facility",
-            "relationshipName": "student",
             "otherEntityField": "id"
         }
     ],

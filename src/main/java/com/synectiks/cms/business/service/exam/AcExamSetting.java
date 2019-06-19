@@ -18,6 +18,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     private String departmnt;
     private String bctch;
     private String sectn;
+    private String brnch;
     private String action;
     private String subject;
     private Date startDate;
@@ -124,6 +125,15 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.ed = ed;
     }
 
+
+    public String getBrnch() {
+        return brnch;
+    }
+
+    public void setBrnch(String brnch) {
+        this.brnch = brnch;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -140,8 +150,9 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     }
 
 
-    public AcExamSetting(String examType, String departmnt, String bctch, String sectn, String action, String subject, Date startDate, Date endDate, Date examDate, String st, String ed) {
+    public AcExamSetting(String examType,String brnch, String departmnt, String bctch, String sectn, String action, String subject, Date startDate, Date endDate, Date examDate, String st, String ed) {
         this.examType = examType;
+        this.brnch = brnch;
         this.departmnt = departmnt;
         this.bctch = bctch;
         this.sectn = sectn;
@@ -152,6 +163,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.examDate = examDate;
         this.st = st;
         this.ed = ed;
+
     }
 
     @Override
@@ -205,6 +217,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
 
         return new AcExamSetting(
             this.examType,
+            this.brnch,
             this.departmnt,
             this.bctch,
             sectn=str1,

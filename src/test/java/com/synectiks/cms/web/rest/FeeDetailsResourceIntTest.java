@@ -222,44 +222,6 @@ public class FeeDetailsResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStudentTypeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = feeDetailsRepository.findAll().size();
-        // set the field null
-        feeDetails.setStudentType(null);
-
-        // Create the FeeDetails, which fails.
-        FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
-
-        restFeeDetailsMockMvc.perform(post("/api/fee-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
-        assertThat(feeDetailsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkGenderIsRequired() throws Exception {
-        int databaseSizeBeforeTest = feeDetailsRepository.findAll().size();
-        // set the field null
-        feeDetails.setGender(null);
-
-        // Create the FeeDetails, which fails.
-        FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
-
-        restFeeDetailsMockMvc.perform(post("/api/fee-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
-        assertThat(feeDetailsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkAmountIsRequired() throws Exception {
         int databaseSizeBeforeTest = feeDetailsRepository.findAll().size();
         // set the field null

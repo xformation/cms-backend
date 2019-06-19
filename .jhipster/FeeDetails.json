@@ -18,18 +18,12 @@
         {
             "fieldName": "studentType",
             "fieldType": "StudentTypeEnum",
-            "fieldValues": "REGULAR,STAFF_CONCESSION,BENEFITS,SCHOLARSHIP,OTHER_BENEFITS",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldValues": "REGULAR,STAFF_CONCESSION,BENEFITS,SCHOLARSHIP,OTHER_BENEFITS"
         },
         {
             "fieldName": "gender",
             "fieldType": "Gender",
-            "fieldValues": "MALE,FEMALE,OTHER",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldValues": "MALE,FEMALE,OTHER"
         },
         {
             "fieldName": "amount",

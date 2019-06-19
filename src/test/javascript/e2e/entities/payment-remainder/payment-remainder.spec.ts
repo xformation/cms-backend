@@ -45,13 +45,30 @@ describe('PaymentRemainder e2e test', () => {
   it('should create and save PaymentRemainders', async () => {
     const nbButtonsBeforeCreate = await paymentRemainderComponentsPage.countDeleteButtons();
 
-    await paymentRemainderUpdatePage.feeRemainderSelectLastOption();
-    await paymentRemainderUpdatePage.setNoticeDayInput('5');
-    expect(await paymentRemainderUpdatePage.getNoticeDayInput()).to.eq('5');
-    await paymentRemainderUpdatePage.overDueRemainderSelectLastOption();
+    await paymentRemainderUpdatePage.setIsAutoRemainderInput('isAutoRemainder');
+    expect(await paymentRemainderUpdatePage.getIsAutoRemainderInput()).to.match(/isAutoRemainder/);
+    await paymentRemainderUpdatePage.setIsFirstPaymentRemainderInput('isFirstPaymentRemainder');
+    expect(await paymentRemainderUpdatePage.getIsFirstPaymentRemainderInput()).to.match(/isFirstPaymentRemainder/);
+    await paymentRemainderUpdatePage.setFirstPaymentRemainderDaysInput('5');
+    expect(await paymentRemainderUpdatePage.getFirstPaymentRemainderDaysInput()).to.eq('5');
+    await paymentRemainderUpdatePage.setIsSecondPaymentRemainderInput('isSecondPaymentRemainder');
+    expect(await paymentRemainderUpdatePage.getIsSecondPaymentRemainderInput()).to.match(/isSecondPaymentRemainder/);
+    await paymentRemainderUpdatePage.setSecondPaymentRemainderDaysInput('5');
+    expect(await paymentRemainderUpdatePage.getSecondPaymentRemainderDaysInput()).to.eq('5');
+    await paymentRemainderUpdatePage.setIsOverDuePaymentRemainderInput('isOverDuePaymentRemainder');
+    expect(await paymentRemainderUpdatePage.getIsOverDuePaymentRemainderInput()).to.match(/isOverDuePaymentRemainder/);
+    await paymentRemainderUpdatePage.setOverDuePaymentRemainderAfterDueDateOrUntilPaidInput(
+      'overDuePaymentRemainderAfterDueDateOrUntilPaid'
+    );
+    expect(await paymentRemainderUpdatePage.getOverDuePaymentRemainderAfterDueDateOrUntilPaidInput()).to.match(
+      /overDuePaymentRemainderAfterDueDateOrUntilPaid/
+    );
+    await paymentRemainderUpdatePage.setOverDuePaymentRemainderDaysInput('5');
+    expect(await paymentRemainderUpdatePage.getOverDuePaymentRemainderDaysInput()).to.eq('5');
+    await paymentRemainderUpdatePage.setIsRemainderRecipientsInput('isRemainderRecipients');
+    expect(await paymentRemainderUpdatePage.getIsRemainderRecipientsInput()).to.match(/isRemainderRecipients/);
     await paymentRemainderUpdatePage.setRemainderRecipientsInput('remainderRecipients');
     expect(await paymentRemainderUpdatePage.getRemainderRecipientsInput()).to.match(/remainderRecipients/);
-    await paymentRemainderUpdatePage.dueDateSelectLastOption();
     await paymentRemainderUpdatePage.collegeSelectLastOption();
     await paymentRemainderUpdatePage.branchSelectLastOption();
     await waitUntilDisplayed(paymentRemainderUpdatePage.getSaveButton());
