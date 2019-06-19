@@ -696,4 +696,23 @@ public class Query implements GraphQLQueryResolver {
     	
     	return cache;
     }
+
+    public AdmissionDataCache createAdmissionDataCache() throws  Exception{
+        List<Department> departmentList = this.departmentRepository.findAll();
+        List<Branch> branchList = this.branchRepository.findAll();
+        List<Batch> batchList = this.batchRepository.findAll();
+        List<State> stateList = this.stateRepository.findAll();
+        List<City> cityList = this.cityRepository.findAll();
+        List<CmsCourseEnumVo> courseEnumList = this.commonService.getAllCourses();
+        AdmissionDataCache cache = new AdmissionDataCache();
+        cache.setBatches(batchList);
+        cache.setBranches(branchList);
+        cache.setDepartments(departmentList);
+        cache.setCities(cityList);
+        cache.setStates(stateList);
+        cache.setCourses(courseEnumList);
+
+        return cache;
+    }
+
 }

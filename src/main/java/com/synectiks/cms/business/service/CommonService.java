@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.course.Course;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +24,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsGenderVo;
-import com.synectiks.cms.domain.CmsSemesterVo;
-import com.synectiks.cms.domain.CmsStudentTypeVo;
-import com.synectiks.cms.domain.CmsTermVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
@@ -651,6 +634,34 @@ public class CommonService {
         vo.setDescription(sm.getDescription());
         return vo;
 	}
+
+    public List<CmsCourseEnumVo> getAllCourses() {
+        logger.debug("Retrieving all courses types");
+        List<CmsCourseEnumVo> ls = new ArrayList<>();
+        for(Course cr: Course.values()) {
+            CmsCourseEnumVo vo = new CmsCourseEnumVo();
+            vo.setId(cr.value());
+            vo.setDescription(cr.getDescription());
+            ls.add(vo);
+        }
+        return ls;
+    }
+
+    public CmsCourseEnumVo getCourse(Long id) {
+        Course cr = Course.valueOf(id.intValue());
+        CmsCourseEnumVo vo = new CmsCourseEnumVo();
+        vo.setId(cr.value());
+        vo.setDescription(cr.getDescription());
+        return vo;
+    }
+
+    public CmsCourseEnumVo getCourseByDescription(String courseDescription) {
+        Course cr = Course.getCourseOnDescription(courseDescription);
+        CmsCourseEnumVo vo = new CmsCourseEnumVo();
+        vo.setId(cr.value());
+        vo.setDescription(cr.getDescription());
+        return vo;
+    }
 	
 	public List<CmsTermVo> getTermsByAcademicYear(Long academicYearId) throws Exception{
 		if(academicYearId == null) {
