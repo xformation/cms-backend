@@ -2,6 +2,10 @@ package com.synectiks.cms.service.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -79,8 +83,26 @@ public final class DateFormatUtil {
       cal.add(Calendar.DATE, -days);
       String newDt = new SimpleDateFormat(dtFormat).format(cal.getTime());
       return newDt;
-  }
+   }
 	
+	public final static Date converUtilDateFromLocaDate(LocalDate localDate) {
+		if(localDate == null) return null;
+	    return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+	}
+	public final static java.sql.Date converSqlDateFromLocaDate(LocalDate localDate) {
+		if(localDate == null) return null;
+	    long dt =  Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime();
+	    return new java.sql.Date(dt);
+	}
+	public final static Date convertUtilDateFromLocalDateTime(LocalDateTime localDateTime) {
+		if(localDateTime == null) return null;
+	    return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+	}
+	public final static LocalDate convertLocalDateFromUtilDate(Date date) {
+		if(date == null) return null;
+	   return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+	  
 	public static void main(String a[]) throws Exception {
 		String dt = changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", "29/04/2019");
 		Date d = getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,dt);
