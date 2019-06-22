@@ -275,7 +275,8 @@ public class CmsDataRowProcessor {
 		this.process(row, cntry, state, city, -1, null);
 	}
 
-	public void process(Row row, Country cntry, State state, City city, int col, CallbackHandler handler) {
+	public void process(Row row, Country cntry, State state,
+			City city, int col, CallbackHandler handler) {
 		logger.info("Process row with: " + cntry + ", " + state + ", " + city + ", " + col);
 		this.country = cntry;
 		this.state = state;
@@ -624,7 +625,8 @@ public class CmsDataRowProcessor {
 	}
 
 	private void saveHoliday(Cell cell) {
-		this.holiday = pojoBuilder.createHolidayPojo(cell, this.aYear);
+		this.holiday = pojoBuilder.createHolidayPojo(cell);
+		this.holiday.setAcademicyear(aYear);
 		this.holiday = saveOrGet(this.holidayRepo, this.holiday);
 	}
 

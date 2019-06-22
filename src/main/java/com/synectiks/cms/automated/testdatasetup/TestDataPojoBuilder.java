@@ -35,7 +35,6 @@ import com.synectiks.cms.domain.State;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentExamReport;
 import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.TransportRoute;
@@ -267,28 +266,6 @@ public class TestDataPojoBuilder {
 		return thr;
 	}
 
-	public Teach createTeachPojo(Cell cell, Subject subject, Teacher teacher) {
-		Teach th = new Teach();
-		th.setDesc("Subject " + subject.getSubjectCode() + " and teacher "
-				+ teacher.getTeacherName());
-		th.setSubject(subject);
-		th.setTeacher(teacher);
-		return th;
-	}
-
-	public AttendanceMaster createAttendanceMasterPojo(Cell cell, Batch batch,
-			Section section, Teach teach, Subject subject, Teacher teacher) {
-		AttendanceMaster am = new AttendanceMaster();
-		am.setId(null);
-		am.setDesc("Teacher " + teacher.getTeacherName()
-				+ " is the attendance master of section " + section.getSection()
-				+ " and subject " + subject.getSubjectCode());
-		am.setBatch(batch);
-		am.setSection(section);
-		am.setTeach(teach);
-		return am;
-	}
-
 	public LectureScheduleDTO getDto(String weekDay, Cell cell) {
 		String time[] = cell.asString().split("-");
 
@@ -396,12 +373,11 @@ public class TestDataPojoBuilder {
 		return paymentRemainder;
 	}
 
-	public Holiday createHolidayPojo(Cell cell, AcademicYear academicYear) {
+	public Holiday createHolidayPojo(Cell cell) {
 		Holiday holiday = new Holiday();
 		holiday.setHolidayDesc(cell.asString());
 		holiday.setHolidayDate(new Date());
 		holiday.setHolidayStatus(Status.ACTIVE);
-		holiday.setAcademicyear(academicYear);
 		return holiday;
 	}
 
