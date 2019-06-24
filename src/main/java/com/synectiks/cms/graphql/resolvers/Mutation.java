@@ -645,10 +645,12 @@ public class Mutation implements GraphQLMutationResolver {
         AcademicYear academicYear = academicYearRepository.findById(addAcademicExamSettingInput.getAcademicyearId()).get();
         Section section = sectionRepository.findById(addAcademicExamSettingInput.getSectionId()).get();
         Batch batch = batchRepository.findById(addAcademicExamSettingInput.getBatchId()).get();
+        Branch branch = branchRepository.findById(addAcademicExamSettingInput.getBranchId()).get();
         academicExamSetting.setDepartment(department);
         academicExamSetting.setAcademicyear(academicYear);
         academicExamSetting.setSection(section);
         academicExamSetting.setBatch(batch);
+        academicExamSetting.setBranch(branch);
         academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
         academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
         academicExamSetting.setSubject(addAcademicExamSettingInput.getSubject());
@@ -729,7 +731,10 @@ public class Mutation implements GraphQLMutationResolver {
             final Batch batch = batchRepository.findById(updateAcademicExamSettingInput.getBatchId()).get();
             academicExamSetting.setBatch(batch);
         }
-
+        if (updateAcademicExamSettingInput.getBranchId() != null) {
+            final Branch branch = branchRepository.findById(updateAcademicExamSettingInput.getBranchId()).get();
+            academicExamSetting.setBranch(branch);
+        }
 
         academicExamSettingRepository.save(academicExamSetting);
 

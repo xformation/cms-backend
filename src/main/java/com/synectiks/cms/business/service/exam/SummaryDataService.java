@@ -28,6 +28,7 @@ public class SummaryDataService {
             settingModel.setDepartmnt(examsetting.getDepartment().getName());
             settingModel.setBctch(examsetting.getBatch().getBatch().name());
             settingModel.setSectn(examsetting.getSection().getSection().name());
+            settingModel.setBrnch(examsetting.getBranch().getBranchName());
             settingModel.setSubject(examsetting.getSubject());
             settingModel.setAction(examsetting.getActions());
             settingModel.setEndDate(examsetting.getEndDate());
@@ -63,6 +64,7 @@ public class SummaryDataService {
         aimodel.setExamDate(ain.get().getExamDate());
         aimodel.setBctch(ain.get().getBatch().getBatch().name());
         aimodel.setSectn(ain.get().getSection().getSection().name());
+        aimodel.setBrnch(ain.get().getBranch().getBranchName());
         aimodel.setExamType(ain.get().getExamType());
         aimodel.setEd(ain.get().getActions());
         aimodel.setSt(ain.get().getActions());

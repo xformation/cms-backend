@@ -52,6 +52,13 @@ public class ExamService {
             }
         }
 
+        if (!CommonUtil.isNullOrEmpty(filter.getBranchId())) {
+            Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
+            if (branch != null) {
+                academicExamSetting.setBranch(branch);
+            }
+        }
+
         if (!CommonUtil.isNullOrEmpty(filter.getSemester())) {
             if (filter.getSemester().equalsIgnoreCase(SemesterEnum.SEMESTER1.toString())) {
                 academicExamSetting.setSemester(SemesterEnum.SEMESTER1);
