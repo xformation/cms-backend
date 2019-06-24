@@ -281,8 +281,21 @@ type Query {
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
   createFeeDataCache: FeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
+  createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
+
+
 }
 
+
+type ExamFilterDataCache {
+    branches: [Branch]
+	departments: [Department]
+	batches: [Batch]
+	sections: [Section]
+	semesters: [CmsSemesterVo]
+	subjects: [Subject]
+
+}
 type FeeDataCache {
 	colleges: [College]
 	branches: [Branch]	
@@ -948,8 +961,6 @@ type DailyAttendanceVo {
 	comments: String
 	student: Student
 }
-
-
 
 input StudentAttendanceFilterInput {
 	branchId: String!

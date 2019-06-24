@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.filter.exam.AcademicExamSettingFilterImpl;
 import com.synectiks.cms.filter.exam.ExamFilterProcessor;
 import com.synectiks.cms.filter.exam.ExamListFilterInput;
 import org.json.JSONException;
@@ -153,6 +154,7 @@ import com.synectiks.cms.graphql.types.Branch.UpdateBranchPayload;
 import com.synectiks.cms.graphql.types.City.AddCityInput;
 import com.synectiks.cms.graphql.types.City.AddCityPayload;
 import com.synectiks.cms.graphql.types.City.RemoveCityInput;
+import com.synectiks.cms.filter.exam.AcademicExamSettingUpdateFilter;
 import com.synectiks.cms.graphql.types.City.RemoveCityPayload;
 import com.synectiks.cms.graphql.types.City.UpdateCityInput;
 import com.synectiks.cms.graphql.types.City.UpdateCityPayload;
@@ -404,14 +406,15 @@ public class Mutation implements GraphQLMutationResolver {
     private final TypeOfGradingRepository typeOfGradingRepository;
     private final StudentExamReportRepository studentExamReportRepository;
 
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
     
-//    @Autowired
-//    private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
+    @Autowired
+    private AcademicExamSettingFilterImpl academicExamSettingFilterImpl;
 
     @Autowired
     private LectureScheduleProcessor lectureScheduleProcessor;
@@ -2958,7 +2961,16 @@ public class Mutation implements GraphQLMutationResolver {
     	}
         return res;
     }
-
+    public QueryResult updateExamData(List<AcademicExamSettingUpdateFilter> list) throws JSONException, ParseException {
+        logger.debug("Mutation to update exam data " + list.toString());
+        QueryResult res = this.academicExamSettingFilterImpl.updateExamStatus(list);
+        if(res.getStatusCode() == 0) {
+            logger.info("exam data updated successfully.");
+        }else {
+            logger.info("Due to some error exam data could not be updated successfully.");
+        }
+        return res;
+    }
     public QueryResult updateAcademicSubjects(AcademicSubjectMutationPayload academicSubjectMutationPayload) throws JSONException, ParseException {
         QueryResult res = this.academicSubjectProcessor.updateAcademicSubjects(academicSubjectMutationPayload);
         return res;

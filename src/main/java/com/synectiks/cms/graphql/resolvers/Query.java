@@ -685,7 +685,23 @@ public class Query implements GraphQLQueryResolver {
     	cache.setGenders(genderList);
     	return cache;
     }
+    public ExamFilterDataCache createExamFilterDataCache(String collegeId, String academicYearId) throws Exception{
+        List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
+        List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+        List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
+        List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
+        List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
+        List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
 
+        ExamFilterDataCache cache = new ExamFilterDataCache();
+        cache.setDepartments(departmentList);
+        cache.setBatches(batchList);
+        cache.setBranches(branchList);
+        cache.setSections(sectionList);
+        cache.setSemesters(sem);
+        cache.setSubjects(sub);
+        return cache;
+    }
     
     public FeeDataCache createFeeDataCache() throws Exception{
     	List<College> collegeList = this.collegeRepository.findAll();
