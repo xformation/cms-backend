@@ -1,6 +1,8 @@
 package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -13,10 +15,10 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.graphql.types.course.Course;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,36 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsCourseEnumVo;
+import com.synectiks.cms.domain.CmsFacility;
+import com.synectiks.cms.domain.CmsFeeCategory;
+import com.synectiks.cms.domain.CmsFeeDetails;
+import com.synectiks.cms.domain.CmsGenderVo;
+import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.domain.CmsTermVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
+import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.graphql.types.gender.Gender;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
@@ -683,5 +712,118 @@ public class CommonService {
             ls.add(ctm);
         }
 		return ls;
+	}
+	
+	public List<CmsFeeCategory> getFeeCategoryForCriteria(List<Branch> branchList) throws ParseException, Exception{
+		if(branchList.size() == 0 ) {
+			logger.warn("Branch list is empty. Returning empty fee category list.");
+			logger.warn("Total records in branchList list: "+branchList.size());
+			return Collections.emptyList();
+		}
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<FeeCategory> query = cb.createQuery(FeeCategory.class);
+    	Root<FeeCategory> root = query.from(FeeCategory.class);
+    	In<Long> inBranch = cb.in(root.get("branch"));
+    	for (Branch bt : branchList) {
+    		inBranch.value(bt.getId());
+    	}
+    	CriteriaQuery<FeeCategory> select = query.select(root).where(inBranch);
+    	TypedQuery<FeeCategory> typedQuery = this.entityManager.createQuery(select);
+    	List<FeeCategory> feeCategoryList = typedQuery.getResultList();
+    	List<CmsFeeCategory> ls = new ArrayList<>();
+    	for(FeeCategory ff: feeCategoryList) {
+    		CmsFeeCategory cfc = CommonUtil.createCopyProperties(ff, CmsFeeCategory.class);
+        	if(ff.getStartDate() != null) {
+        		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, DateFormatUtil.converUtilDateFromLocaDate(ff.getStartDate())));
+//        		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, ff.getStartDate())));
+        	}
+        	if(ff.getEndDate() != null) {
+        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate())));
+//        		ff.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, ff.getEndDate())));	
+        	}
+            ls.add(cfc);
+        }
+    	Collections.sort(ls, Collections.reverseOrder());
+    	logger.debug("Returning list of fee category from JPA criteria query. Total records : "+feeCategoryList.size());
+		return ls;
+	}
+	
+	public List<CmsFeeDetails> getFeeDetailsForCriteria(List<CmsFeeCategory> feeCategoryList) throws ParseException, Exception{
+		if(feeCategoryList.size() == 0 ) {
+			logger.warn("FeeCategory list is empty. Returning empty fee details list.");
+			logger.warn("Total records in branchList list: "+feeCategoryList.size());
+			return Collections.emptyList();
+		}
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<FeeDetails> query = cb.createQuery(FeeDetails.class);
+    	Root<FeeDetails> root = query.from(FeeDetails.class);
+    	In<Long> inFeeCat = cb.in(root.get("feeCategory"));
+    	for (CmsFeeCategory fc : feeCategoryList) {
+    		inFeeCat.value(fc.getId());
+    	}
+    	CriteriaQuery<FeeDetails> select = query.select(root).where(inFeeCat);
+    	TypedQuery<FeeDetails> typedQuery = this.entityManager.createQuery(select);
+    	List<FeeDetails> feeDetailsList = typedQuery.getResultList();
+    	DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    	List<CmsFeeDetails> ls = new ArrayList<>();
+    	for(FeeDetails ff: feeDetailsList) {
+    		CmsFeeDetails cfd = CommonUtil.createCopyProperties(ff, CmsFeeDetails.class);
+        	if(ff.getStartDate() != null) {
+        		cfd.setStrStartDate(ff.getStartDate().format(dateFormatter));
+        	}
+        	if(ff.getEndDate() != null) {
+        		cfd.setStrEndDate(ff.getEndDate().format(dateFormatter));	
+        	}
+            ls.add(cfd);
+        }
+    	logger.debug("Returning list of fee details from JPA criteria query. Total records : "+feeDetailsList.size());
+		return ls;
+	}
+	
+	public List<CmsFacility> getFacilityForCriteria(List<Branch> branchList, Long academicYearId) throws Exception{
+		if(branchList.size() == 0 || academicYearId == null) {
+			logger.warn("Either branch list or academic year id is null. Returning empty facility list.");
+			logger.warn("Total records in branchList list: "+branchList.size());
+			return Collections.emptyList();
+		}
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+    	CriteriaQuery<Facility> query = cb.createQuery(Facility.class);
+    	Root<Facility> root = query.from(Facility.class);
+    	In<Long> inBranch = cb.in(root.get("branch"));
+    	for (Branch bt : branchList) {
+    		inBranch.value(bt.getId());
+    	}
+    	CriteriaQuery<Facility> select = query.select(root).where(cb.and(inBranch), cb.and(cb.equal(root.get("academicYear"), academicYearId)));
+    	TypedQuery<Facility> typedQuery = this.entityManager.createQuery(select);
+    	List<Facility> facilityList = typedQuery.getResultList();
+    	DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    	List<CmsFacility> ls = new ArrayList<>();
+    	for(Facility ff: facilityList) {
+    		CmsFacility cf = CommonUtil.createCopyProperties(ff, CmsFacility.class);
+        	if(ff.getStartDate() != null) {
+        		cf.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ff.getStartDate()));
+        	}
+        	if(ff.getEndDate() != null) {
+        		cf.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ff.getEndDate()));
+        	}
+            if(ff.getSuspandStartDate() != null) {
+            	cf.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ff.getSuspandStartDate()));
+            }
+            if(ff.getSuspandEndDate() != null) {
+            	cf.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ff.getSuspandEndDate()));
+            }
+            ls.add(cf);
+        }
+    	logger.debug("Returning list of facilities from JPA criteria query. Total records : "+facilityList.size());
+		return ls;
+	}
+	
+	public static void main(String a[]) {
+		LocalDate ld = LocalDate.now();
+		System.out.println(ld);
+		
+		String strLd =  ld.format(DateTimeFormatter.ofPattern("d-MM-yyyy"));
+		LocalDate localDate = LocalDate.parse(strLd, DateTimeFormatter.ofPattern("d-MM-yyyy"));
+		System.out.println(localDate);
 	}
 } 

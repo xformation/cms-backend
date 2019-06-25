@@ -18,83 +18,34 @@ import com.synectiks.cms.domain.enumeration.Gender;
 
 import com.synectiks.cms.domain.enumeration.Status;
 
-/**
- * A FeeDetails.
- */
-@Entity
-@Table(name = "fee_details")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "feedetails")
-public class FeeDetails implements Serializable {
+
+public class CmsFeeDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
-    @NotNull
-    @Column(name = "fee_particulars_name", nullable = false)
     private String feeParticularsName;
-
-    @NotNull
-    @Column(name = "fee_particular_desc", nullable = false)
     private String feeParticularDesc;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "student_type")
     private StudentTypeEnum studentType;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
     private Gender gender;
-
-    @Column(name = "amount")
     private Long amount;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
     private Status status;
-
-    @Column(name = "created_by")
     private String createdBy;
-
-    @Column(name = "created_on")
     private LocalDate createdOn;
-
-    @Column(name = "updated_by")
     private String updatedBy;
-
-    @Column(name = "updated_on")
     private LocalDate updatedOn;
-
-    @Column(name = "start_date")
     private LocalDate startDate;
-
-    @Column(name = "end_date")
     private LocalDate endDate;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private FeeCategory feeCategory;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private Batch batch;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private Facility facility;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private TransportRoute transportRoute;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
     private Department department;
 
+    private String strCreatedOn;
+    private String strUpdatedOn;
+    private String strStartDate;
+    private String strEndDate;
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -108,7 +59,7 @@ public class FeeDetails implements Serializable {
         return feeParticularsName;
     }
 
-    public FeeDetails feeParticularsName(String feeParticularsName) {
+    public CmsFeeDetails feeParticularsName(String feeParticularsName) {
         this.feeParticularsName = feeParticularsName;
         return this;
     }
@@ -121,7 +72,7 @@ public class FeeDetails implements Serializable {
         return feeParticularDesc;
     }
 
-    public FeeDetails feeParticularDesc(String feeParticularDesc) {
+    public CmsFeeDetails feeParticularDesc(String feeParticularDesc) {
         this.feeParticularDesc = feeParticularDesc;
         return this;
     }
@@ -134,7 +85,7 @@ public class FeeDetails implements Serializable {
         return studentType;
     }
 
-    public FeeDetails studentType(StudentTypeEnum studentType) {
+    public CmsFeeDetails studentType(StudentTypeEnum studentType) {
         this.studentType = studentType;
         return this;
     }
@@ -147,7 +98,7 @@ public class FeeDetails implements Serializable {
         return gender;
     }
 
-    public FeeDetails gender(Gender gender) {
+    public CmsFeeDetails gender(Gender gender) {
         this.gender = gender;
         return this;
     }
@@ -160,7 +111,7 @@ public class FeeDetails implements Serializable {
         return amount;
     }
 
-    public FeeDetails amount(Long amount) {
+    public CmsFeeDetails amount(Long amount) {
         this.amount = amount;
         return this;
     }
@@ -173,7 +124,7 @@ public class FeeDetails implements Serializable {
         return status;
     }
 
-    public FeeDetails status(Status status) {
+    public CmsFeeDetails status(Status status) {
         this.status = status;
         return this;
     }
@@ -186,7 +137,7 @@ public class FeeDetails implements Serializable {
         return createdBy;
     }
 
-    public FeeDetails createdBy(String createdBy) {
+    public CmsFeeDetails createdBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -199,7 +150,7 @@ public class FeeDetails implements Serializable {
         return createdOn;
     }
 
-    public FeeDetails createdOn(LocalDate createdOn) {
+    public CmsFeeDetails createdOn(LocalDate createdOn) {
         this.createdOn = createdOn;
         return this;
     }
@@ -212,7 +163,7 @@ public class FeeDetails implements Serializable {
         return updatedBy;
     }
 
-    public FeeDetails updatedBy(String updatedBy) {
+    public CmsFeeDetails updatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
         return this;
     }
@@ -225,7 +176,7 @@ public class FeeDetails implements Serializable {
         return updatedOn;
     }
 
-    public FeeDetails updatedOn(LocalDate updatedOn) {
+    public CmsFeeDetails updatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
         return this;
     }
@@ -238,7 +189,7 @@ public class FeeDetails implements Serializable {
         return startDate;
     }
 
-    public FeeDetails startDate(LocalDate startDate) {
+    public CmsFeeDetails startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
@@ -251,7 +202,7 @@ public class FeeDetails implements Serializable {
         return endDate;
     }
 
-    public FeeDetails endDate(LocalDate endDate) {
+    public CmsFeeDetails endDate(LocalDate endDate) {
         this.endDate = endDate;
         return this;
     }
@@ -264,7 +215,7 @@ public class FeeDetails implements Serializable {
         return feeCategory;
     }
 
-    public FeeDetails feeCategory(FeeCategory feeCategory) {
+    public CmsFeeDetails feeCategory(FeeCategory feeCategory) {
         this.feeCategory = feeCategory;
         return this;
     }
@@ -277,7 +228,7 @@ public class FeeDetails implements Serializable {
         return batch;
     }
 
-    public FeeDetails batch(Batch batch) {
+    public CmsFeeDetails batch(Batch batch) {
         this.batch = batch;
         return this;
     }
@@ -290,7 +241,7 @@ public class FeeDetails implements Serializable {
         return facility;
     }
 
-    public FeeDetails facility(Facility facility) {
+    public CmsFeeDetails facility(Facility facility) {
         this.facility = facility;
         return this;
     }
@@ -303,7 +254,7 @@ public class FeeDetails implements Serializable {
         return transportRoute;
     }
 
-    public FeeDetails transportRoute(TransportRoute transportRoute) {
+    public CmsFeeDetails transportRoute(TransportRoute transportRoute) {
         this.transportRoute = transportRoute;
         return this;
     }
@@ -316,7 +267,7 @@ public class FeeDetails implements Serializable {
         return department;
     }
 
-    public FeeDetails department(Department department) {
+    public CmsFeeDetails department(Department department) {
         this.department = department;
         return this;
     }
@@ -334,7 +285,7 @@ public class FeeDetails implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        FeeDetails feeDetails = (FeeDetails) o;
+        CmsFeeDetails feeDetails = (CmsFeeDetails) o;
         if (feeDetails.getId() == null || getId() == null) {
             return false;
         }
@@ -364,4 +315,36 @@ public class FeeDetails implements Serializable {
             ", endDate='" + getEndDate() + "'" +
             "}";
     }
+
+	public String getStrCreatedOn() {
+		return strCreatedOn;
+	}
+
+	public void setStrCreatedOn(String strCreatedOn) {
+		this.strCreatedOn = strCreatedOn;
+	}
+
+	public String getStrUpdatedOn() {
+		return strUpdatedOn;
+	}
+
+	public void setStrUpdatedOn(String strUpdatedOn) {
+		this.strUpdatedOn = strUpdatedOn;
+	}
+
+	public String getStrStartDate() {
+		return strStartDate;
+	}
+
+	public void setStrStartDate(String strStartDate) {
+		this.strStartDate = strStartDate;
+	}
+
+	public String getStrEndDate() {
+		return strEndDate;
+	}
+
+	public void setStrEndDate(String strEndDate) {
+		this.strEndDate = strEndDate;
+	}
 }

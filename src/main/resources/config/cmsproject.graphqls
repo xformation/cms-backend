@@ -282,10 +282,81 @@ type Query {
   createFeeDataCache: FeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
   createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
-
+  createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
 
 }
 
+type FeeSetupDataCache {
+	departments: [Department]
+	batches: [Batch]
+	studentTypes: [CmsStudentTypeVo]
+	genders: [CmsGenderVo]
+	feeDetails: [CmsFeeDetails]
+	feeCategory: [CmsFeeCategory]
+	facility: [CmsFacility]
+	transportRoute: [TransportRoute]
+}
+
+type CmsFacility {
+	id: Long	
+	name: String	
+	status: Status	
+    startDate: Date
+    endDate: Date
+    suspandStartDate: Date
+    suspandEndDate: Date
+	academicYear: AcademicYear
+    branch: Branch
+	strStartDate: String 
+	strEndDate: String 
+	strSuspandStartDate: String 
+	strSuspandEndDate: String 
+}
+
+type CmsFeeCategory{
+	id: Long   
+    categoryName: String 
+    description: String 
+    status: Status 
+    createdBy:	  String 
+    createdOn:	  Date   
+    updatedBy:	  String 
+    updatedOn:	  Date   
+    startDate:	  Date   
+    endDate:	  Date   
+    branchId:	  Long   
+    strCreatedOn: String 
+    strUpdatedOn: String 
+    strStartDate: String 
+    strEndDate:	  String 
+    branch:	  Branch 
+}
+
+type CmsFeeDetails {
+    id: Long 
+    feeParticularsName: String 
+    feeParticularDesc:	String 
+    studentType: StudentTypeEnum
+    gender: Gender
+    amount: Long
+    status: Status 
+    createdBy: String 
+    createdOn: Date
+    updatedBy: String
+    updatedOn: Date 
+    startDate: Date 
+    endDate:   Date 
+    feeCategory: FeeCategory
+    batch: Batch
+    facility: Facility
+    transportRoute: TransportRoute
+    department: Department
+
+    strCreatedOn: String 
+    strUpdatedOn: String 
+    strStartDate: String 
+    strEndDate:	  String  
+}
 
 type ExamFilterDataCache {
     branches: [Branch]
@@ -502,6 +573,14 @@ type FeeCategory{
     id: Long!
     categoryName: String!
     description: String!
+    status: Status
+    createdBy: String
+    createdOn: Date
+    updatedBy: String
+    updatedOn: Date
+    startDate: Date
+    endDate: Date
+    branch: Branch
    }
 
 type Facility{
@@ -542,17 +621,22 @@ type StudentExamReport{
        id: Long!
        feeParticularsName: String!
        feeParticularDesc: String!
-       studentType: StudentTypeEnum !
-       gender: Gender!
-       amount: Long!
-       feeCategory: FeeCategory!
-       batch: Batch!
-       facility: Facility!
-       transportRoute: TransportRoute!
-       college: College!
-       department: Department!
-       branch: Branch!
-       academicYear: AcademicYear!
+       studentType: StudentTypeEnum 
+       gender: Gender
+       amount: Long
+       status: Status
+       createdBy: String
+       createdOn: Date
+       updatedBy: String
+       updatedOn: Date
+       startDate: Date
+       endDate: Date
+       feeCategory: FeeCategory
+       batch: Batch
+       facility: Facility
+       transportRoute: TransportRoute
+       department: Department
+       
       }
 
 type Country{
@@ -1112,8 +1196,8 @@ type Mutation {
    updateCountry(input: UpdateCountryInput!): UpdateCountryPayload!
    removeCountry(input: RemoveCountryInput!): RemoveCountryPayload!
 
-   addFeeCategory(input: AddFeeCategoryInput!): AddFeeCategoryPayload!
-   updateFeeCategory(input: UpdateFeeCategoryInput!): UpdateFeeCategoryPayload!
+   addFeeCategory(input: AddFeeCategoryInput!): [CmsFeeCategory!]!
+   updateFeeCategory(input: UpdateFeeCategoryInput!): [CmsFeeCategory!]!
    removeFeeCategory(input: RemoveFeeCategoryInput!): RemoveFeeCategoryPayload!
 
    addFacility(input: AddFacilityInput!): AddFacilityPayload!
@@ -1205,6 +1289,25 @@ type Mutation {
 	saveDueDatePaymentRemLateFee(inputd: UpdateDueDateInput, inputp: UpdatePaymentRemainderInput, inputl: UpdateLateFeeInput): QueryResult!
 	getFeeSettingData(branchId: Long): CmsFeeSettingsVo!
 	getFeeSettingDueDateData(branchId: Long, paymentType: String): CmsFeeSettingsVo!
+}
+
+type CmsFeeCategory {
+	 id: Long
+	 categoryName: String
+     description: String
+     status: Status
+     createdBy: String
+     createdOn: Date
+     updatedBy: String
+     updatedOn: Date
+     startDate: Date
+     endDate: Date
+     branchId: Long
+     strCreatedOn: String
+     strUpdatedOn: String
+     strStartDate: String
+     strEndDate: String
+     branch: Branch
 }
 
 type CmsFeeSettingsVo {
@@ -1541,14 +1644,38 @@ type RemoveBankAccountsPayload {
 input AddFeeCategoryInput {
      categoryName: String!
      description: String!
+     status: Status
+     createdBy: String
+     createdOn: Date
+     updatedBy: String
+     updatedOn: Date
+     startDate: Date
+     endDate: Date
+     branchId: Long
+     strCreatedOn: String
+     strUpdatedOn: String
+     strStartDate: String
+     strEndDate: String
 }
 type AddFeeCategoryPayload {
     feeCategory: FeeCategory!
 }
 input UpdateFeeCategoryInput {
-    id: Long!
-    categoryName: String!
-    description: String!
+     id: Long!
+     categoryName: String!
+     description: String!
+     status: Status
+     createdBy: String
+     createdOn: Date
+     updatedBy: String
+     updatedOn: Date
+     startDate: Date
+     endDate: Date
+     branchId: Long
+     strCreatedOn: String
+     strUpdatedOn: String
+     strStartDate: String
+     strEndDate: String
 }
 type UpdateFeeCategoryPayload {
     feeCategory: FeeCategory!
@@ -1562,37 +1689,47 @@ type RemoveFeeCategoryPayload {
 
 input AddFeeDetailsInput {
      feeParticularsName: String!
-     feeParticularDesc: String!
-     studentType: StudentTypeEnum !
-     gender: Gender!
-     amount: Long!
-     feeCategoryId: Long!
-     batchId: Long!
-     facilityId: Long!
-     transportRouteId: Long!
-     collegeId: Long!
-     departmentId: Long!
-     branchId: Long!
-     academicyearId: Long!
+   	 feeParticularDesc: String!
+   	 studentType: StudentTypeEnum 
+   	 gender: Gender
+   	 amount: Long
+   	 status: Status
+   	 createdBy: String
+     createdOn: Date
+     updatedBy: String
+     updatedOn: Date
+     startDate: Date
+     endDate: Date
+     feeCategoryId: Long
+     batchId: Long
+     facilityId: Long
+     transportRouteId: Long
+     departmentId: Long
+     
+     
 }
 type AddFeeDetailsPayload {
     feeDetails: FeeDetails!
 }
 input UpdateFeeDetailsInput {
-    id: Long!
-    feeParticularsName: String!
-    feeParticularDesc: String!
-    studentType: StudentTypeEnum !
-    gender: Gender!
-    amount: Long!
-    feeCategoryId: Long!
-    batchId: Long!
-    facilityId: Long!
-    transportRouteId: Long!
-    collegeId: Long!
-    departmentId: Long!
-    branchId: Long!
-    academicyearId: Long!
+     id: Long!
+     feeParticularsName: String!
+   	 feeParticularDesc: String!
+   	 studentType: StudentTypeEnum 
+   	 gender: Gender
+   	 amount: Long
+   	 status: Status
+   	 createdBy: String
+     createdOn: Date
+     updatedBy: String
+     updatedOn: Date
+     startDate: Date
+     endDate: Date
+     feeCategoryId: Long
+     batchId: Long
+     facilityId: Long
+     transportRouteId: Long
+     departmentId: Long
 }
 type UpdateFeeDetailsPayload {
    feeDetails: FeeDetails!

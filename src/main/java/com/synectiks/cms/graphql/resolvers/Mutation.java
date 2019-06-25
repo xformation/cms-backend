@@ -3,20 +3,21 @@ package com.synectiks.cms.graphql.resolvers;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.synectiks.cms.filter.exam.AcademicExamSettingFilterImpl;
-import com.synectiks.cms.filter.exam.ExamFilterProcessor;
-import com.synectiks.cms.filter.exam.ExamListFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +39,7 @@ import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.City;
 import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.domain.CmsFeeCategory;
 import com.synectiks.cms.domain.CmsFeeSettingsVo;
 import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.College;
@@ -75,6 +77,10 @@ import com.synectiks.cms.exceptions.FilePathNotFoundException;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
+import com.synectiks.cms.filter.exam.AcademicExamSettingFilterImpl;
+import com.synectiks.cms.filter.exam.AcademicExamSettingUpdateFilter;
+import com.synectiks.cms.filter.exam.ExamFilterProcessor;
+import com.synectiks.cms.filter.exam.ExamListFilterInput;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
@@ -154,7 +160,6 @@ import com.synectiks.cms.graphql.types.Branch.UpdateBranchPayload;
 import com.synectiks.cms.graphql.types.City.AddCityInput;
 import com.synectiks.cms.graphql.types.City.AddCityPayload;
 import com.synectiks.cms.graphql.types.City.RemoveCityInput;
-import com.synectiks.cms.filter.exam.AcademicExamSettingUpdateFilter;
 import com.synectiks.cms.graphql.types.City.RemoveCityPayload;
 import com.synectiks.cms.graphql.types.City.UpdateCityInput;
 import com.synectiks.cms.graphql.types.City.UpdateCityPayload;
@@ -202,11 +207,9 @@ import com.synectiks.cms.graphql.types.Facility.RemoveFacilityPayload;
 import com.synectiks.cms.graphql.types.Facility.UpdateFacilityInput;
 import com.synectiks.cms.graphql.types.Facility.UpdateFacilityPayload;
 import com.synectiks.cms.graphql.types.FeeCategory.AddFeeCategoryInput;
-import com.synectiks.cms.graphql.types.FeeCategory.AddFeeCategoryPayload;
 import com.synectiks.cms.graphql.types.FeeCategory.RemoveFeeCategoryInput;
 import com.synectiks.cms.graphql.types.FeeCategory.RemoveFeeCategoryPayload;
 import com.synectiks.cms.graphql.types.FeeCategory.UpdateFeeCategoryInput;
-import com.synectiks.cms.graphql.types.FeeCategory.UpdateFeeCategoryPayload;
 import com.synectiks.cms.graphql.types.FeeDetails.AddFeeDetailsInput;
 import com.synectiks.cms.graphql.types.FeeDetails.AddFeeDetailsPayload;
 import com.synectiks.cms.graphql.types.FeeDetails.RemoveFeeDetailsInput;
@@ -358,6 +361,7 @@ import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 
 
@@ -2467,26 +2471,62 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveLecturePayload(Lists.newArrayList(lectureRepository.findAll()));
     }
 
-    public AddFeeCategoryPayload addFeeCategory(AddFeeCategoryInput addFeeCategoryInput) {
-        final FeeCategory feeCategory = new FeeCategory();
-        feeCategory.setCategoryName(addFeeCategoryInput.getCategoryName());
-        feeCategory.setDescription(addFeeCategoryInput.getDescription());
-        FeeCategory fe = feeCategoryRepository.save(feeCategory);
-        return new AddFeeCategoryPayload(fe);
+    public List<CmsFeeCategory> addFeeCategory(AddFeeCategoryInput addFeeCategoryInput) throws Exception {
+        FeeCategory fc = CommonUtil.createCopyProperties(addFeeCategoryInput, FeeCategory.class);
+        fc.setCreatedOn(LocalDate.now());
+        fc.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addFeeCategoryInput.getStartDate()));
+        fc.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addFeeCategoryInput.getEndDate()));
+        Branch branch = new Branch();
+        branch.setId(addFeeCategoryInput.getBranchId());
+        fc.setBranch(branch);
+        fc = feeCategoryRepository.save(fc);
+        
+        FeeCategory f = new FeeCategory();
+        f.setBranch(branch);
+        Example<FeeCategory> example = Example.of(f);
+        List<FeeCategory> list = this.feeCategoryRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsFeeCategory> ls = new ArrayList<>();
+        for(FeeCategory ff: list) {
+        	CmsFeeCategory cfc = CommonUtil.createCopyProperties(ff, CmsFeeCategory.class);
+        	if(ff.getStartDate() != null) {
+        		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getStartDate()))));
+        	}
+        	if(ff.getEndDate() != null) {
+        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate()))));	
+        	}
+            ls.add(cfc);
+        }
+        return ls;
     }
 
-    public UpdateFeeCategoryPayload updateFeeCategory(UpdateFeeCategoryInput updateFeeCategoryInput) {
-        FeeCategory feeCategory = feeCategoryRepository.findById(updateFeeCategoryInput.getId()).get();
-        if (updateFeeCategoryInput.getCategoryName() != null) {
-            feeCategory.setCategoryName(updateFeeCategoryInput.getCategoryName());
+    public List<CmsFeeCategory> updateFeeCategory(UpdateFeeCategoryInput updateFeeCategoryInput) throws ParseException, Exception {
+//        FeeCategory feeCategory = feeCategoryRepository.findById(updateFeeCategoryInput.getId()).get();
+        FeeCategory fc = CommonUtil.createCopyProperties(updateFeeCategoryInput, FeeCategory.class);
+        fc.setUpdatedOn(LocalDate.now());
+        fc.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateFeeCategoryInput.getStartDate()));
+        fc.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateFeeCategoryInput.getEndDate()));
+        Branch branch = new Branch();
+        branch.setId(updateFeeCategoryInput.getBranchId());
+        fc.setBranch(branch);
+        fc = feeCategoryRepository.save(fc);
+        
+        FeeCategory f = new FeeCategory();
+        f.setBranch(branch);
+        Example<FeeCategory> example = Example.of(f);
+        List<FeeCategory> list = this.feeCategoryRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsFeeCategory> ls = new ArrayList<>();
+        for(FeeCategory ff: list) {
+        	CmsFeeCategory cfc = CommonUtil.createCopyProperties(ff, CmsFeeCategory.class);
+        	if(ff.getStartDate() != null) {
+        		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getStartDate()))));
+        	}
+        	if(ff.getEndDate() != null) {
+        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate()))));	
+        	}
+            ls.add(cfc);
         }
-        if (updateFeeCategoryInput.getDescription() != null) {
-            feeCategory.setDescription(updateFeeCategoryInput.getDescription());
-        }
-
-        feeCategoryRepository.save(feeCategory);
-
-        return new UpdateFeeCategoryPayload(feeCategory);
+        return ls;
+        
     }
 
     public RemoveFeeCategoryPayload removeFeeCategory(RemoveFeeCategoryInput removeFeeCategoryInput) {
@@ -2501,9 +2541,9 @@ public class Mutation implements GraphQLMutationResolver {
         Facility facility = facilityRepository.findById(addFeeDetailsInput.getFacilityId()).get();
         TransportRoute transportRoute = transportRouteRepository.findById(addFeeDetailsInput.getTransportRouteId()).get();
         Department department = departmentRepository.findById(addFeeDetailsInput.getDepartmentId()).get();
-        Branch branch = branchRepository.findById(addFeeDetailsInput.getBranchId()).get();
-        College college = collegeRepository.findById(addFeeDetailsInput.getCollegeId()).get();
-        AcademicYear academicYear = academicYearRepository.findById(addFeeDetailsInput.getAcademicyearId()).get();
+//        Branch branch = branchRepository.findById(addFeeDetailsInput.getBranchId()).get();
+//        College college = collegeRepository.findById(addFeeDetailsInput.getCollegeId()).get();
+//        AcademicYear academicYear = academicYearRepository.findById(addFeeDetailsInput.getAcademicyearId()).get();
         final FeeDetails feeDetails = new FeeDetails();
         feeDetails.setFeeParticularsName(addFeeDetailsInput.getFeeParticularsName());
         feeDetails.setFeeParticularDesc(addFeeDetailsInput.getFeeParticularDesc());
@@ -2515,9 +2555,9 @@ public class Mutation implements GraphQLMutationResolver {
         feeDetails.setFacility(facility);
         feeDetails.setTransportRoute(transportRoute);
         feeDetails.setDepartment(department);
-        feeDetails.setBranch(branch);
-        feeDetails.setAcademicYear(academicYear);
-        feeDetails.setCollege(college);
+//        feeDetails.setBranch(branch);
+//        feeDetails.setAcademicYear(academicYear);
+//        feeDetails.setCollege(college);
         feeDetailsRepository.save(feeDetails);
 
         return new AddFeeDetailsPayload(feeDetails);
@@ -2548,18 +2588,18 @@ public class Mutation implements GraphQLMutationResolver {
             Department department = departmentRepository.findById(updateFeeDetailsInput.getDepartmentId()).get();
             feeDetails.setDepartment(department);
         }
-        if (updateFeeDetailsInput.getBranchId() != null) {
-            Branch branch = branchRepository.findById(updateFeeDetailsInput.getBranchId()).get();
-            feeDetails.setBranch(branch);
-        }
-        if (updateFeeDetailsInput.getCollegeId() != null) {
-            College college = collegeRepository.findById(updateFeeDetailsInput.getCollegeId()).get();
-            feeDetails.setCollege(college);
-        }
-        if (updateFeeDetailsInput.getAcademicyearId() != null) {
-            AcademicYear academicYear = academicYearRepository.findById(updateFeeDetailsInput.getAcademicyearId()).get();
-            feeDetails.setAcademicYear(academicYear);
-        }
+//        if (updateFeeDetailsInput.getBranchId() != null) {
+//            Branch branch = branchRepository.findById(updateFeeDetailsInput.getBranchId()).get();
+//            feeDetails.setBranch(branch);
+//        }
+//        if (updateFeeDetailsInput.getCollegeId() != null) {
+//            College college = collegeRepository.findById(updateFeeDetailsInput.getCollegeId()).get();
+//            feeDetails.setCollege(college);
+//        }
+//        if (updateFeeDetailsInput.getAcademicyearId() != null) {
+//            AcademicYear academicYear = academicYearRepository.findById(updateFeeDetailsInput.getAcademicyearId()).get();
+//            feeDetails.setAcademicYear(academicYear);
+//        }
         if (updateFeeDetailsInput.getFeeCategoryId() != null) {
             FeeCategory feeCategory = feeCategoryRepository.findById(updateFeeDetailsInput.getFeeCategoryId()).get();
             feeDetails.setFeeCategory(feeCategory);

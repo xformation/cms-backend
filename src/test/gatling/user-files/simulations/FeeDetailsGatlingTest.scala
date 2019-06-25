@@ -68,7 +68,7 @@ class FeeDetailsGatlingTest extends Simulation {
             .exec(http("Create new feeDetails")
             .post("/api/fee-details")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "feeParticularsName":"SAMPLE_TEXT", "feeParticularDesc":"SAMPLE_TEXT", "studentType":null, "gender":null, "amount":null}""")).asJSON
+            .body(StringBody("""{"id":null, "feeParticularsName":"SAMPLE_TEXT", "feeParticularDesc":"SAMPLE_TEXT", "studentType":null, "gender":null, "amount":null, "status":null, "createdBy":"SAMPLE_TEXT", "createdOn":"2020-01-01T00:00:00.000Z", "updatedBy":"SAMPLE_TEXT", "updatedOn":"2020-01-01T00:00:00.000Z", "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_feeDetails_url"))).exitHereIfFailed
             .pause(10)

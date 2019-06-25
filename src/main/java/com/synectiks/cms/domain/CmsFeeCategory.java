@@ -1,10 +1,10 @@
-package com.synectiks.cms.graphql.types.FeeCategory;
+package com.synectiks.cms.domain;
 
 import java.util.Date;
 
 import com.synectiks.cms.domain.enumeration.Status;
 
-public class AbstractFeeCategoryInput {
+public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
     private Long id;
     private String categoryName;
     private String description;
@@ -21,6 +21,7 @@ public class AbstractFeeCategoryInput {
     private String strUpdatedOn;
     private String strStartDate;
     private String strEndDate;
+    private Branch branch;
     
 	public Long getId() {
 		return id;
@@ -112,6 +113,18 @@ public class AbstractFeeCategoryInput {
 	public void setStrEndDate(String strEndDate) {
 		this.strEndDate = strEndDate;
 	}
+	public Branch getBranch() {
+		return branch;
+	}
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+	@Override
+	public int compareTo(CmsFeeCategory o) {
+		return this.id.compareTo(o.getId());
+	}
+	
+	
 
 
     

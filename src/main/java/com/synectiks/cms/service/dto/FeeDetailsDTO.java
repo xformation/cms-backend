@@ -1,10 +1,12 @@
 package com.synectiks.cms.service.dto;
 
+import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the FeeDetails entity.
@@ -23,8 +25,21 @@ public class FeeDetailsDTO implements Serializable {
 
     private Gender gender;
 
-    @NotNull
     private Long amount;
+
+    private Status status;
+
+    private String createdBy;
+
+    private LocalDate createdOn;
+
+    private String updatedBy;
+
+    private LocalDate updatedOn;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 
     private Long feeCategoryId;
 
@@ -34,13 +49,7 @@ public class FeeDetailsDTO implements Serializable {
 
     private Long transportRouteId;
 
-    private Long collegeId;
-
     private Long departmentId;
-
-    private Long branchId;
-
-    private Long academicYearId;
 
     public Long getId() {
         return id;
@@ -90,6 +99,62 @@ public class FeeDetailsDTO implements Serializable {
         this.amount = amount;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDate getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDate createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public LocalDate getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(LocalDate updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     public Long getFeeCategoryId() {
         return feeCategoryId;
     }
@@ -122,36 +187,12 @@ public class FeeDetailsDTO implements Serializable {
         this.transportRouteId = transportRouteId;
     }
 
-    public Long getCollegeId() {
-        return collegeId;
-    }
-
-    public void setCollegeId(Long collegeId) {
-        this.collegeId = collegeId;
-    }
-
     public Long getDepartmentId() {
         return departmentId;
     }
 
     public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
-    }
-
-    public Long getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
-    }
-
-    public Long getAcademicYearId() {
-        return academicYearId;
-    }
-
-    public void setAcademicYearId(Long academicYearId) {
-        this.academicYearId = academicYearId;
     }
 
     @Override
@@ -184,14 +225,18 @@ public class FeeDetailsDTO implements Serializable {
             ", studentType='" + getStudentType() + "'" +
             ", gender='" + getGender() + "'" +
             ", amount=" + getAmount() +
+            ", status='" + getStatus() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", createdOn='" + getCreatedOn() + "'" +
+            ", updatedBy='" + getUpdatedBy() + "'" +
+            ", updatedOn='" + getUpdatedOn() + "'" +
+            ", startDate='" + getStartDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
             ", feeCategory=" + getFeeCategoryId() +
             ", batch=" + getBatchId() +
             ", facility=" + getFacilityId() +
             ", transportRoute=" + getTransportRouteId() +
-            ", college=" + getCollegeId() +
             ", department=" + getDepartmentId() +
-            ", branch=" + getBranchId() +
-            ", academicYear=" + getAcademicYearId() +
             "}";
     }
 }

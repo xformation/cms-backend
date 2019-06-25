@@ -585,10 +585,10 @@ public class CmsDataRowProcessor {
 		this.feeDetail.setBatch(this.batch);
 		this.feeDetail.setFacility(this.facility);
 		this.feeDetail.setTransportRoute(this.transRoute);
-		this.feeDetail.setCollege(this.college);
+//		this.feeDetail.setCollege(this.college);
 		this.feeDetail.setDepartment(this.department);
-		this.feeDetail.setBranch(this.branch);
-		this.feeDetail.setAcademicYear(this.aYear);
+//		this.feeDetail.setBranch(this.branch);
+//		this.feeDetail.setAcademicYear(this.aYear);
 		this.feeDetail = saveOrGet(this.feeDetailRepo, this.feeDetail);
 	}
 
