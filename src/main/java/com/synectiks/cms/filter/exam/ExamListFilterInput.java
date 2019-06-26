@@ -9,6 +9,7 @@ public class ExamListFilterInput {
 	private String departmentId;
 	private String batchId;
 	private String sectionId;
+	private String subjectId;
     private String semester;
     private String examType;
     
@@ -60,7 +61,13 @@ public class ExamListFilterInput {
 	public void setExamType(String examType) {
 		this.examType = examType;
 	}
-	
 
-        
+    @JsonProperty("subjectId")
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
+    }
 }
