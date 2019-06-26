@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.FeeCategoryService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class FeeCategoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/fee-categories")
+    @Timed
     public ResponseEntity<FeeCategoryDTO> createFeeCategory(@Valid @RequestBody FeeCategoryDTO feeCategoryDTO) throws URISyntaxException {
         log.debug("REST request to save FeeCategory : {}", feeCategoryDTO);
         if (feeCategoryDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class FeeCategoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/fee-categories")
+    @Timed
     public ResponseEntity<FeeCategoryDTO> updateFeeCategory(@Valid @RequestBody FeeCategoryDTO feeCategoryDTO) throws URISyntaxException {
         log.debug("REST request to update FeeCategory : {}", feeCategoryDTO);
         if (feeCategoryDTO.getId() == null) {
@@ -82,6 +86,7 @@ public class FeeCategoryResource {
      * @return the ResponseEntity with status 200 (OK) and the list of feeCategories in body
      */
     @GetMapping("/fee-categories")
+    @Timed
     public List<FeeCategoryDTO> getAllFeeCategories() {
         log.debug("REST request to get all FeeCategories");
         return feeCategoryService.findAll();
@@ -94,6 +99,7 @@ public class FeeCategoryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the feeCategoryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/fee-categories/{id}")
+    @Timed
     public ResponseEntity<FeeCategoryDTO> getFeeCategory(@PathVariable Long id) {
         log.debug("REST request to get FeeCategory : {}", id);
         Optional<FeeCategoryDTO> feeCategoryDTO = feeCategoryService.findOne(id);
@@ -107,6 +113,7 @@ public class FeeCategoryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/fee-categories/{id}")
+    @Timed
     public ResponseEntity<Void> deleteFeeCategory(@PathVariable Long id) {
         log.debug("REST request to delete FeeCategory : {}", id);
         feeCategoryService.delete(id);
@@ -121,6 +128,7 @@ public class FeeCategoryResource {
      * @return the result of the search
      */
     @GetMapping("/_search/fee-categories")
+    @Timed
     public List<FeeCategoryDTO> searchFeeCategories(@RequestParam String query) {
         log.debug("REST request to search FeeCategories for query {}", query);
         return feeCategoryService.search(query);

@@ -358,6 +358,13 @@ entity AcademicExamSetting {
 entity FeeCategory {
 categoryName String required
 description String required
+status Status required
+createdBy String
+createdOn LocalDate
+updatedBy String
+updatedOn LocalDate
+startDate LocalDate
+endDate LocalDate
 }
 
 entity TransportRoute {
@@ -371,7 +378,14 @@ feeParticularsName String required
 feeParticularDesc  String required
 studentType StudentTypeEnum 
 gender Gender
-amount Long required
+amount Long
+status Status
+createdBy String
+createdOn LocalDate
+updatedBy String
+updatedOn LocalDate
+startDate LocalDate
+endDate LocalDate
 }
 
 entity DueDate {
@@ -551,10 +565,8 @@ FeeDetails{feeCategory} to FeeCategory ,
 FeeDetails{batch} to Batch ,
 FeeDetails{facility} to Facility,
 FeeDetails{transportRoute} to TransportRoute,
-FeeDetails{college} to College,
 FeeDetails{department} to Department,
-FeeDetails{branch} to Branch,
-FeeDetails{academicYear} to AcademicYear,
+FeeCategory{branch} to Branch,
 DueDate{college} to College,
 DueDate{branch} to Branch,
 PaymentRemainder{college} to College,

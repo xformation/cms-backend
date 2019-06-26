@@ -23,9 +23,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +39,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.Status;
 /**
  * Test class for the FeeCategoryResource REST controller.
  *
@@ -53,11 +55,34 @@ public class FeeCategoryResourceIntTest {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final Status DEFAULT_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_STATUS = Status.DEACTIVE;
+
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_CREATED_ON = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_CREATED_ON = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_UPDATED_ON = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
+
     @Autowired
     private FeeCategoryRepository feeCategoryRepository;
 
+
     @Autowired
     private FeeCategoryMapper feeCategoryMapper;
+    
 
     @Autowired
     private FeeCategoryService feeCategoryService;
@@ -82,9 +107,6 @@ public class FeeCategoryResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restFeeCategoryMockMvc;
 
     private FeeCategory feeCategory;
@@ -97,8 +119,7 @@ public class FeeCategoryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -110,7 +131,14 @@ public class FeeCategoryResourceIntTest {
     public static FeeCategory createEntity(EntityManager em) {
         FeeCategory feeCategory = new FeeCategory()
             .categoryName(DEFAULT_CATEGORY_NAME)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .status(DEFAULT_STATUS)
+            .createdBy(DEFAULT_CREATED_BY)
+            .createdOn(DEFAULT_CREATED_ON)
+            .updatedBy(DEFAULT_UPDATED_BY)
+            .updatedOn(DEFAULT_UPDATED_ON)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE);
         return feeCategory;
     }
 
@@ -137,6 +165,13 @@ public class FeeCategoryResourceIntTest {
         FeeCategory testFeeCategory = feeCategoryList.get(feeCategoryList.size() - 1);
         assertThat(testFeeCategory.getCategoryName()).isEqualTo(DEFAULT_CATEGORY_NAME);
         assertThat(testFeeCategory.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testFeeCategory.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testFeeCategory.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testFeeCategory.getCreatedOn()).isEqualTo(DEFAULT_CREATED_ON);
+        assertThat(testFeeCategory.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
+        assertThat(testFeeCategory.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
+        assertThat(testFeeCategory.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testFeeCategory.getEndDate()).isEqualTo(DEFAULT_END_DATE);
 
         // Validate the FeeCategory in Elasticsearch
         verify(mockFeeCategorySearchRepository, times(1)).save(testFeeCategory);
@@ -205,6 +240,25 @@ public class FeeCategoryResourceIntTest {
 
     @Test
     @Transactional
+    public void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = feeCategoryRepository.findAll().size();
+        // set the field null
+        feeCategory.setStatus(null);
+
+        // Create the FeeCategory, which fails.
+        FeeCategoryDTO feeCategoryDTO = feeCategoryMapper.toDto(feeCategory);
+
+        restFeeCategoryMockMvc.perform(post("/api/fee-categories")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(feeCategoryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<FeeCategory> feeCategoryList = feeCategoryRepository.findAll();
+        assertThat(feeCategoryList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllFeeCategories() throws Exception {
         // Initialize the database
         feeCategoryRepository.saveAndFlush(feeCategory);
@@ -215,9 +269,17 @@ public class FeeCategoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(feeCategory.getId().intValue())))
             .andExpect(jsonPath("$.[*].categoryName").value(hasItem(DEFAULT_CATEGORY_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
     
+
     @Test
     @Transactional
     public void getFeeCategory() throws Exception {
@@ -230,9 +292,15 @@ public class FeeCategoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(feeCategory.getId().intValue()))
             .andExpect(jsonPath("$.categoryName").value(DEFAULT_CATEGORY_NAME.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
+            .andExpect(jsonPath("$.createdOn").value(DEFAULT_CREATED_ON.toString()))
+            .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()))
+            .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingFeeCategory() throws Exception {
@@ -255,7 +323,14 @@ public class FeeCategoryResourceIntTest {
         em.detach(updatedFeeCategory);
         updatedFeeCategory
             .categoryName(UPDATED_CATEGORY_NAME)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .status(UPDATED_STATUS)
+            .createdBy(UPDATED_CREATED_BY)
+            .createdOn(UPDATED_CREATED_ON)
+            .updatedBy(UPDATED_UPDATED_BY)
+            .updatedOn(UPDATED_UPDATED_ON)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE);
         FeeCategoryDTO feeCategoryDTO = feeCategoryMapper.toDto(updatedFeeCategory);
 
         restFeeCategoryMockMvc.perform(put("/api/fee-categories")
@@ -269,6 +344,13 @@ public class FeeCategoryResourceIntTest {
         FeeCategory testFeeCategory = feeCategoryList.get(feeCategoryList.size() - 1);
         assertThat(testFeeCategory.getCategoryName()).isEqualTo(UPDATED_CATEGORY_NAME);
         assertThat(testFeeCategory.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testFeeCategory.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testFeeCategory.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testFeeCategory.getCreatedOn()).isEqualTo(UPDATED_CREATED_ON);
+        assertThat(testFeeCategory.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
+        assertThat(testFeeCategory.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
+        assertThat(testFeeCategory.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertThat(testFeeCategory.getEndDate()).isEqualTo(UPDATED_END_DATE);
 
         // Validate the FeeCategory in Elasticsearch
         verify(mockFeeCategorySearchRepository, times(1)).save(testFeeCategory);
@@ -282,7 +364,7 @@ public class FeeCategoryResourceIntTest {
         // Create the FeeCategory
         FeeCategoryDTO feeCategoryDTO = feeCategoryMapper.toDto(feeCategory);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restFeeCategoryMockMvc.perform(put("/api/fee-categories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(feeCategoryDTO)))
@@ -304,7 +386,7 @@ public class FeeCategoryResourceIntTest {
 
         int databaseSizeBeforeDelete = feeCategoryRepository.findAll().size();
 
-        // Delete the feeCategory
+        // Get the feeCategory
         restFeeCategoryMockMvc.perform(delete("/api/fee-categories/{id}", feeCategory.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -329,8 +411,15 @@ public class FeeCategoryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(feeCategory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].categoryName").value(hasItem(DEFAULT_CATEGORY_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].categoryName").value(hasItem(DEFAULT_CATEGORY_NAME.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
 
     @Test

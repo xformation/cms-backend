@@ -23,9 +23,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Status;
 /**
  * Test class for the FeeDetailsResource REST controller.
  *
@@ -64,11 +66,34 @@ public class FeeDetailsResourceIntTest {
     private static final Long DEFAULT_AMOUNT = 1L;
     private static final Long UPDATED_AMOUNT = 2L;
 
+    private static final Status DEFAULT_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_STATUS = Status.DEACTIVE;
+
+    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_CREATED_ON = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_CREATED_ON = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
+    private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_UPDATED_ON = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
+
     @Autowired
     private FeeDetailsRepository feeDetailsRepository;
 
+
     @Autowired
     private FeeDetailsMapper feeDetailsMapper;
+    
 
     @Autowired
     private FeeDetailsService feeDetailsService;
@@ -93,9 +118,6 @@ public class FeeDetailsResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restFeeDetailsMockMvc;
 
     private FeeDetails feeDetails;
@@ -108,8 +130,7 @@ public class FeeDetailsResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -124,7 +145,14 @@ public class FeeDetailsResourceIntTest {
             .feeParticularDesc(DEFAULT_FEE_PARTICULAR_DESC)
             .studentType(DEFAULT_STUDENT_TYPE)
             .gender(DEFAULT_GENDER)
-            .amount(DEFAULT_AMOUNT);
+            .amount(DEFAULT_AMOUNT)
+            .status(DEFAULT_STATUS)
+            .createdBy(DEFAULT_CREATED_BY)
+            .createdOn(DEFAULT_CREATED_ON)
+            .updatedBy(DEFAULT_UPDATED_BY)
+            .updatedOn(DEFAULT_UPDATED_ON)
+            .startDate(DEFAULT_START_DATE)
+            .endDate(DEFAULT_END_DATE);
         return feeDetails;
     }
 
@@ -154,6 +182,13 @@ public class FeeDetailsResourceIntTest {
         assertThat(testFeeDetails.getStudentType()).isEqualTo(DEFAULT_STUDENT_TYPE);
         assertThat(testFeeDetails.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testFeeDetails.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testFeeDetails.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testFeeDetails.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
+        assertThat(testFeeDetails.getCreatedOn()).isEqualTo(DEFAULT_CREATED_ON);
+        assertThat(testFeeDetails.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
+        assertThat(testFeeDetails.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
+        assertThat(testFeeDetails.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testFeeDetails.getEndDate()).isEqualTo(DEFAULT_END_DATE);
 
         // Validate the FeeDetails in Elasticsearch
         verify(mockFeeDetailsSearchRepository, times(1)).save(testFeeDetails);
@@ -222,63 +257,6 @@ public class FeeDetailsResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStudentTypeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = feeDetailsRepository.findAll().size();
-        // set the field null
-        feeDetails.setStudentType(null);
-
-        // Create the FeeDetails, which fails.
-        FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
-
-        restFeeDetailsMockMvc.perform(post("/api/fee-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
-        assertThat(feeDetailsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkGenderIsRequired() throws Exception {
-        int databaseSizeBeforeTest = feeDetailsRepository.findAll().size();
-        // set the field null
-        feeDetails.setGender(null);
-
-        // Create the FeeDetails, which fails.
-        FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
-
-        restFeeDetailsMockMvc.perform(post("/api/fee-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
-        assertThat(feeDetailsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkAmountIsRequired() throws Exception {
-        int databaseSizeBeforeTest = feeDetailsRepository.findAll().size();
-        // set the field null
-        feeDetails.setAmount(null);
-
-        // Create the FeeDetails, which fails.
-        FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
-
-        restFeeDetailsMockMvc.perform(post("/api/fee-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
-        assertThat(feeDetailsList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllFeeDetails() throws Exception {
         // Initialize the database
         feeDetailsRepository.saveAndFlush(feeDetails);
@@ -292,9 +270,17 @@ public class FeeDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].feeParticularDesc").value(hasItem(DEFAULT_FEE_PARTICULAR_DESC.toString())))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
-            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())));
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
     
+
     @Test
     @Transactional
     public void getFeeDetails() throws Exception {
@@ -310,9 +296,15 @@ public class FeeDetailsResourceIntTest {
             .andExpect(jsonPath("$.feeParticularDesc").value(DEFAULT_FEE_PARTICULAR_DESC.toString()))
             .andExpect(jsonPath("$.studentType").value(DEFAULT_STUDENT_TYPE.toString()))
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
-            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()));
+            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
+            .andExpect(jsonPath("$.createdOn").value(DEFAULT_CREATED_ON.toString()))
+            .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()))
+            .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingFeeDetails() throws Exception {
@@ -338,7 +330,14 @@ public class FeeDetailsResourceIntTest {
             .feeParticularDesc(UPDATED_FEE_PARTICULAR_DESC)
             .studentType(UPDATED_STUDENT_TYPE)
             .gender(UPDATED_GENDER)
-            .amount(UPDATED_AMOUNT);
+            .amount(UPDATED_AMOUNT)
+            .status(UPDATED_STATUS)
+            .createdBy(UPDATED_CREATED_BY)
+            .createdOn(UPDATED_CREATED_ON)
+            .updatedBy(UPDATED_UPDATED_BY)
+            .updatedOn(UPDATED_UPDATED_ON)
+            .startDate(UPDATED_START_DATE)
+            .endDate(UPDATED_END_DATE);
         FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(updatedFeeDetails);
 
         restFeeDetailsMockMvc.perform(put("/api/fee-details")
@@ -355,6 +354,13 @@ public class FeeDetailsResourceIntTest {
         assertThat(testFeeDetails.getStudentType()).isEqualTo(UPDATED_STUDENT_TYPE);
         assertThat(testFeeDetails.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testFeeDetails.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testFeeDetails.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testFeeDetails.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
+        assertThat(testFeeDetails.getCreatedOn()).isEqualTo(UPDATED_CREATED_ON);
+        assertThat(testFeeDetails.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
+        assertThat(testFeeDetails.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
+        assertThat(testFeeDetails.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertThat(testFeeDetails.getEndDate()).isEqualTo(UPDATED_END_DATE);
 
         // Validate the FeeDetails in Elasticsearch
         verify(mockFeeDetailsSearchRepository, times(1)).save(testFeeDetails);
@@ -368,7 +374,7 @@ public class FeeDetailsResourceIntTest {
         // Create the FeeDetails
         FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restFeeDetailsMockMvc.perform(put("/api/fee-details")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
@@ -390,7 +396,7 @@ public class FeeDetailsResourceIntTest {
 
         int databaseSizeBeforeDelete = feeDetailsRepository.findAll().size();
 
-        // Delete the feeDetails
+        // Get the feeDetails
         restFeeDetailsMockMvc.perform(delete("/api/fee-details/{id}", feeDetails.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -415,11 +421,18 @@ public class FeeDetailsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(feeDetails.getId().intValue())))
-            .andExpect(jsonPath("$.[*].feeParticularsName").value(hasItem(DEFAULT_FEE_PARTICULARS_NAME)))
-            .andExpect(jsonPath("$.[*].feeParticularDesc").value(hasItem(DEFAULT_FEE_PARTICULAR_DESC)))
+            .andExpect(jsonPath("$.[*].feeParticularsName").value(hasItem(DEFAULT_FEE_PARTICULARS_NAME.toString())))
+            .andExpect(jsonPath("$.[*].feeParticularDesc").value(hasItem(DEFAULT_FEE_PARTICULAR_DESC.toString())))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
-            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())));
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
 
     @Test
