@@ -781,10 +781,10 @@ public class Query implements GraphQLQueryResolver {
     public ExamFilterDataCache createExamFilterDataCache(String collegeId, String academicYearId) throws Exception{
         List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
         List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+        List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
         List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
         List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
-        List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
 
         ExamFilterDataCache cache = new ExamFilterDataCache();
         cache.setDepartments(departmentList);

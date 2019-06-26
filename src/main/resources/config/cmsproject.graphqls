@@ -364,7 +364,6 @@ type ExamFilterDataCache {
 	batches: [Batch]
 	sections: [Section]
 	semesters: [CmsSemesterVo]
-	
 	subjects: [Subject]
 
 }
