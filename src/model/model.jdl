@@ -378,7 +378,7 @@ feeParticularsName String required
 feeParticularDesc  String required
 studentType StudentTypeEnum 
 gender Gender
-amount Long
+amount Float
 status Status
 createdBy String
 createdOn LocalDate

@@ -323,7 +323,7 @@ public class TestDataPojoBuilder {
 		feeDetails.setFeeParticularDesc(cell.asString());
 		feeDetails.setStudentType(StudentTypeEnum.REGULAR);
 		feeDetails.setGender(Gender.MALE);
-		feeDetails.setAmount(1234l);
+		feeDetails.setAmount(1234f);
 		return feeDetails;
 	}
 

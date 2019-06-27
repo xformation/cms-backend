@@ -28,7 +28,7 @@ public class CmsFeeDetails implements Serializable {
     private String feeParticularDesc;
     private StudentTypeEnum studentType;
     private Gender gender;
-    private Long amount;
+    private Float amount;
     private Status status;
     private String createdBy;
     private LocalDate createdOn;
@@ -107,16 +107,16 @@ public class CmsFeeDetails implements Serializable {
         this.gender = gender;
     }
 
-    public Long getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public CmsFeeDetails amount(Long amount) {
+    public CmsFeeDetails amount(Float amount) {
         this.amount = amount;
         return this;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 

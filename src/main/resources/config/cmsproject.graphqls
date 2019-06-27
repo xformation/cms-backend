@@ -338,7 +338,7 @@ type CmsFeeDetails {
     feeParticularDesc:	String 
     studentType: StudentTypeEnum
     gender: Gender
-    amount: Long
+    amount: Float
     status: Status 
     createdBy: String 
     createdOn: Date
@@ -1208,7 +1208,7 @@ type Mutation {
     updateTransportRoute(input: UpdateTransportRouteInput!): UpdateTransportRoutePayload!
     removeTransportRoute(input: RemoveTransportRouteInput!): RemoveTransportRoutePayload!
 
-    addFeeDetails(input: AddFeeDetailsInput!): AddFeeDetailsPayload!
+    addFeeDetails(input: AddFeeDetailsInput!): CmsFeeDetails!
     updateFeeDetails(input: UpdateFeeDetailsInput!): UpdateFeeDetailsPayload!
     removeFeeDetails(input: RemoveFeeDetailsInput!): RemoveFeeDetailsPayload!
 
@@ -1692,7 +1692,7 @@ input AddFeeDetailsInput {
    	 feeParticularDesc: String!
    	 studentType: StudentTypeEnum 
    	 gender: Gender
-   	 amount: Long
+   	 amount: Float
    	 status: Status
    	 createdBy: String
      createdOn: Date

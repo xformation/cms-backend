@@ -37,7 +37,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="amount" type="bigint">
+            <column name="amount" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 

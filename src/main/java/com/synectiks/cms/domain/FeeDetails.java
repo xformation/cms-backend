@@ -51,7 +51,7 @@ public class FeeDetails implements Serializable {
     private Gender gender;
 
     @Column(name = "amount")
-    private Long amount;
+    private Float amount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -156,16 +156,16 @@ public class FeeDetails implements Serializable {
         this.gender = gender;
     }
 
-    public Long getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public FeeDetails amount(Long amount) {
+    public FeeDetails amount(Float amount) {
         this.amount = amount;
         return this;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 

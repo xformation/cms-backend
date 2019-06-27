@@ -12,7 +12,7 @@ public class AbstractFeeDetailsInput {
     private String feeParticularDesc;
     private StudentTypeEnum studentType;
     private Gender gender;
-    private Long amount;
+    private Float amount;
     private Status status;
     private String createdBy;
     private LocalDate createdOn;
@@ -50,10 +50,10 @@ public class AbstractFeeDetailsInput {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-	public Long getAmount() {
+	public Float getAmount() {
 		return amount;
 	}
-	public void setAmount(Long amount) {
+	public void setAmount(Float amount) {
 		this.amount = amount;
 	}
 	public Status getStatus() {

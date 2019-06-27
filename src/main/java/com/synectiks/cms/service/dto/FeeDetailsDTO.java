@@ -25,7 +25,7 @@ public class FeeDetailsDTO implements Serializable {
 
     private Gender gender;
 
-    private Long amount;
+    private Float amount;
 
     private Status status;
 
@@ -91,11 +91,11 @@ public class FeeDetailsDTO implements Serializable {
         this.gender = gender;
     }
 
-    public Long getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 
