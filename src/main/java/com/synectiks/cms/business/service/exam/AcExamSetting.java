@@ -11,8 +11,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final long serialVersionUID = 1L;
-
-    @Id
     private Long id;
     private String examType;
     private String departmnt;
@@ -149,7 +147,8 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     }
 
 
-    public AcExamSetting(String examType, String departmnt, String brnch, String bctch, String sectn, String action, String subject, Date startDate, Date endDate, Date examDate, String st, String ed) {
+    public AcExamSetting(Long id, String examType, String departmnt, String brnch, String bctch, String sectn, String action, String subject, Date startDate, Date endDate, Date examDate, String st, String ed) {
+        this.id=id;
         this.examType = examType;
         this.departmnt = departmnt;
         this.bctch = bctch;
@@ -214,6 +213,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         str1 = sbTemp1.toString();
 
         return new AcExamSetting(
+            this.id,
             this.examType,
             this.departmnt,
             this.brnch,

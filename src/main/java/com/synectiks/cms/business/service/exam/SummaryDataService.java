@@ -25,6 +25,8 @@ public class SummaryDataService {
 
             AcExamSetting settingModel = new AcExamSetting();
             BeanUtils.copyProperties(examsetting, settingModel);
+            System.out.println("ONE : "+ examsetting.getId());
+            System.out.println("TWO : "+ settingModel.getId());
             settingModel.setDepartmnt(examsetting.getDepartment().getName());
             settingModel.setBctch(examsetting.getBatch().getBatch().name());
             settingModel.setSectn(examsetting.getSection().getSection().name());
