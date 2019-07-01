@@ -859,7 +859,7 @@ type AcademicExamSetting{
     subject: String!
     examDate: Date!
     day: String!
-    duration: String!
+    duration: Int!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
@@ -1446,7 +1446,7 @@ input AddAcademicExamSettingInput{
     subject: String!
     examDate: Date!
     day: String!
-    duration: String!
+    duration: Int!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
@@ -1472,7 +1472,7 @@ input UpdateAcademicExamSettingInput {
     subject: String!
     examDate: Date!
     day: String!
-    duration: String!
+    duration: Int!
     startTime: String!
     endTime: String!
     gradeType: GradeType!

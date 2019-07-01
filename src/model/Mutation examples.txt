@@ -424,9 +424,13 @@ mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
     batch{
       id
     }
+    branch{
+      id
+    }
   }
 }
 }
+
 
 {
  "input":{
@@ -435,7 +439,7 @@ mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
   "subject": "VDMS",
   "examDate": "2019-04-26",
   "day": "FRIDAY",
-  "duration": "3HRS",
+  "duration": 3,
   "startTime": "7:30:00Am",
   "endTime": "10:30:00Am",
   "gradeType": "GRADE",
@@ -447,7 +451,8 @@ mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
   "departmentId": 1101,
   "sectionId":  1201,
   "academicyearId":  1051,
-  "batchId": 11350
+  "batchId": 11350,
+  "branchId": 11150
 }
 }
 -------
@@ -481,6 +486,9 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
     batch{
       id
     }
+    branch{
+      id
+    }
   }
 }
 }
@@ -493,7 +501,7 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
   "subject": "VDMS",
   "examDate": "2019-04-26",
   "day": "FRIDAY",
-  "duration": "2HRS",
+  "duration": 2,
   "startTime": "8:00:00Am",
   "endTime": "10:30:00Am",
   "gradeType": "GRADE",
@@ -505,9 +513,11 @@ mutation updateAcademicExamSetting($input: UpdateAcademicExamSettingInput!) {
   "departmentId": 1101,
   "sectionId":  1201,
   "academicyearId":  1051,
-  "batchId": 11350
+  "batchId": 11350,
+  "branchId": 11150
 }
 }
+
 
 -------------------------
 Academic Year:

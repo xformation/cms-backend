@@ -343,8 +343,8 @@ entity AcademicExamSetting {
     semester SemesterEnum required
     subject String
     examDate LocalDate required
+    duration Integer required
     day String required
-    duration String required
     startTime String required
     endTime String required
     gradeType GradeType required

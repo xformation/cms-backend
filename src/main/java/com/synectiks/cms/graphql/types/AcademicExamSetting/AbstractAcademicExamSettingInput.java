@@ -14,7 +14,7 @@ public class AbstractAcademicExamSettingInput {
     private String subject;
     private Date examDate;
     private String day;
-    private String duration;
+    private Integer duration;
     private String startTime;
     private String endTime;
     private GradeType gradeType;
@@ -72,11 +72,11 @@ public class AbstractAcademicExamSettingInput {
         this.day = day;
     }
 
-    public String getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
