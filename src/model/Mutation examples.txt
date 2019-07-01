@@ -396,7 +396,7 @@ AcademicExamSetting:
 
 mutation addAcademicExamSetting($input: AddAcademicExamSettingInput!) {
   addAcademicExamSetting(input: $input) {
-   academicExamSetting {
+       academicExamSetting {
       id
       examType
     semester

@@ -56,7 +56,7 @@ public class AcademicExamSetting implements Serializable {
 
     @NotNull
     @Column(name = "duration", nullable = false)
-    private String duration;
+    private Integer duration;
 
     @NotNull
     @Column(name = "start_time", nullable = false)
@@ -184,16 +184,17 @@ public class AcademicExamSetting implements Serializable {
         this.day = day;
     }
 
-    public String getDuration() {
-        return duration;
-    }
 
-    public AcademicExamSetting duration(String duration) {
+    public AcademicExamSetting duration(Integer duration) {
         this.duration = duration;
         return this;
     }
 
-    public void setDuration(String duration) {
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

@@ -163,7 +163,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.ed = ed;
     }
 
-    @Override
+       @Override
     public int compareTo(AcExamSetting u) {
         if (getExamDate() == null || u.getExamDate() == null) {
             return 0;
@@ -174,25 +174,26 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     public AcExamSetting merge(AcExamSetting other) {
         assert (this.equals(other));
 
-        String str =this.subject+","+other.subject;
-        String[] strWords = str.split("\\,+");
-        Arrays.sort(strWords);
-        LinkedHashSet<String> lhSetWords
-            = new LinkedHashSet<String>( Arrays.asList(strWords) );
+//        String str =this.subject+","+other.subject;
+//        String[] strWords = str.split("\\,+");
+//        Arrays.sort(strWords);
+//        LinkedHashSet<String> lhSetWords
+//            = new LinkedHashSet<String>( Arrays.asList(strWords) );
+//
+//        StringBuilder sbTemp = new StringBuilder();
+//        int index = 0;
+//
+//        for(String s : lhSetWords){
+//
+//            if(index > 0)
+//                sbTemp.append(",");
+//
+//            sbTemp.append(s);
+//            index++;
+//        }
+//
+//        str = sbTemp.toString();
 
-        StringBuilder sbTemp = new StringBuilder();
-        int index = 0;
-
-        for(String s : lhSetWords){
-
-            if(index > 0)
-                sbTemp.append(",");
-
-            sbTemp.append(s);
-            index++;
-        }
-
-        str = sbTemp.toString();
         String str1 =this.sectn+","+other.sectn;
         String[] strWords1 = str1.split("\\,+");
         Arrays.sort(strWords1);
@@ -221,7 +222,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             sectn=str1,
             this.action,
             //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
-            subject=str,
+            this.subject,
             this.examDate,
             this.endDate,
             this.startDate,

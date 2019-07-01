@@ -73,6 +73,7 @@ public class SummaryDataService {
         aimodel.setAction(ain.get().getActions());
         aimodel.setStartDate(ain.get().getStartDate());
         aimodel.setEndDate(ain.get().getEndDate());
+        aimodel.setSubject(ain.get().getSubject());
         return aimodel;
 
     }
