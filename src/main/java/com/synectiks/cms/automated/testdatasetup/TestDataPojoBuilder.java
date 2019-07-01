@@ -335,7 +335,7 @@ public class TestDataPojoBuilder {
 		academicExamSetting.setSubject(cell.asString());
 		academicExamSetting.setExamDate(new Date());
 		academicExamSetting.setDay(cell.asString());
-		academicExamSetting.setDuration(cell.asString());
+		academicExamSetting.setDuration(55);
 		academicExamSetting.setStartTime(cell.asString());
 		academicExamSetting.setEndTime(cell.asString());
 		academicExamSetting.setTotal(60);

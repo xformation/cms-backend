@@ -67,8 +67,8 @@ public class AcademicExamSettingResourceIntTest {
     private static final String DEFAULT_DAY = "AAAAAAAAAA";
     private static final String UPDATED_DAY = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DURATION = "AAAAAAAAAA";
-    private static final String UPDATED_DURATION = "BBBBBBBBBB";
+    private static final Integer DEFAULT_DURATION = 1;
+    private static final Integer UPDATED_DURATION = 2;
 
     private static final String DEFAULT_START_TIME = "AAAAAAAAAA";
     private static final String UPDATED_START_TIME = "BBBBBBBBBB";
