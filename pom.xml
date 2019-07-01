@@ -674,7 +674,7 @@
 				<configuration>
 					<mainClass>${start-class}</mainClass>
 					<executable>true</executable>
-                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
+                    <!--<jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>-->
 					<fork>true</fork>
 					<!-- Enable the line below to have remote debugging of your application
 						on port 5005 <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments> -->
@@ -1037,7 +1037,7 @@
 							<mainClass>${start-class}</mainClass>
 							<executable>true</executable>
 							<fork>true</fork>
-                            <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
+                            <!--<jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>-->
 							<addResources>true</addResources>
 							<!-- Enable the line below to have remote debugging of your application 
 								on port 5005 <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments> -->
