@@ -200,6 +200,12 @@ designation String required
 staffType StaffType required
 }
 
+entity AddNewBook{
+    bookTitle String required
+    author String required
+    bookId Long required
+}
+
 entity AcademicYear{
 year String required
 startDate LocalDate required
@@ -320,6 +326,8 @@ entity State{
 	StateCode String required
 }
 
+
+
 entity City{
 	CityName String required
 	CityCode String
@@ -367,6 +375,7 @@ startDate LocalDate
 endDate LocalDate
 }
 
+
 entity TransportRoute {
 routeName String required
 routeDetails String required
@@ -395,6 +404,8 @@ dayDesc String
 paymentDay Integer
 frequency Frequency
 }
+
+
 
 entity PaymentRemainder {
 isAutoRemainder String required
@@ -554,6 +565,8 @@ AuthorizedSignatory{branch} to Branch,
 AuthorizedSignatory{college} to College,
 BankAccounts{branch} to Branch,
 BankAccounts{college} to College,
+AddNewBook{batch} to Batch,
+AddNewBook{subject} to Subject,
 LegalEntity{branch} to Branch,
 LegalEntity{college} to College,
 LegalEntity{state} to State,
@@ -580,11 +593,11 @@ Facility{branch} to Branch,
 Invoice{feeCategory} to FeeCategory,
 Invoice{feeDetails} to FeeDetails,
 Invoice{dueDate} to DueDate,
-Invoice{paymentRemainder} to PaymentRemainder,
+Invoice{paymentRemainder} to PaymentRemainder
 Invoice{college} to College,
 Invoice{branch} to Branch,
 Invoice{student} to Student,
-Invoice{academicYear} to AcademicYear
+Invoice{academicYear} to AcademicYear,
 CompetitiveExam{student} to Student,
 Documents{student} to Student,
 AcademicHistory{student} to Student,

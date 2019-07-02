@@ -1,5 +1,6 @@
 package com.synectiks.cms.graphql.resolvers;
 
+import java.awt.print.Book;
 import java.io.File;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -11,6 +12,8 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.AddNewBook.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -361,6 +364,7 @@ import com.synectiks.cms.repository.TeacherRepository;
 import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.TypeOfGradingRepository;
+import com.synectiks.cms.repository.AddNewBookRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -410,7 +414,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final AdminAttendanceRepository adminAttendanceRepository;
     private final TypeOfGradingRepository typeOfGradingRepository;
     private final StudentExamReportRepository studentExamReportRepository;
-
+    private final AddNewBookRepository addNewBookRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -442,7 +446,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
 	private Base64FileProcessor base64FileProcessor;
 	
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, EntityManager entityManager) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -485,6 +489,8 @@ public class Mutation implements GraphQLMutationResolver {
         this.adminAttendanceRepository = adminAttendanceRepository;
         this.typeOfGradingRepository = typeOfGradingRepository;
         this.studentExamReportRepository = studentExamReportRepository;
+        this.addNewBookRepository = addNewBookRepository;
+        this.entityManager = entityManager;
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -2999,7 +3005,48 @@ public class Mutation implements GraphQLMutationResolver {
         invoiceRepository.delete(invoice);
         return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
     }
-    
+
+    public AddAddNewBookPayload addAddNewBook(AddAddNewBookInput addNewBookInput){
+        Batch batch = batchRepository.findById(addNewBookInput.getBatchId()).get();
+        Subject subject = subjectRepository.findById(addNewBookInput.getSubjectId()).get();
+        final AddNewBook book = new AddNewBook ();
+        book.setBookTitle(addNewBookInput.getBookTitle());
+        book.setAuthor(addNewBookInput.getAuthor());
+        book.setBookId(addNewBookInput.getBookId());
+        book.setBatch(batch);
+        book.setSubject(subject);
+        addNewBookRepository.save(book);
+        return new AddAddNewBookPayload(book);
+    }
+    public UpdateAddNewBookPayload updateAddNewBook(UpdateAddNewBookInput updateNewBookInput) {
+        AddNewBook book = addNewBookRepository.findById(updateNewBookInput.getId()).get();
+        if(updateNewBookInput.getBookTitle()!=null) {
+            book.setBookTitle(updateNewBookInput.getBookTitle());
+        }
+        if (updateNewBookInput.getAuthor() != null){
+            book.setAuthor(updateNewBookInput.getAuthor());
+        }
+        if(updateNewBookInput.getBookId()!=null){
+            book.setBookId(updateNewBookInput.getBookId());
+        }
+
+        if(updateNewBookInput.getBatchId()!=null){
+            Batch batch =batchRepository.findById(updateNewBookInput.getBatchId()).get();
+            book.setBatch(batch);
+        }
+        if(updateNewBookInput.getSubjectId()!=null){
+            Subject subject =subjectRepository.findById(updateNewBookInput.getSubjectId()).get();
+        }
+
+        addNewBookRepository.save(book);
+        return new UpdateAddNewBookPayload(book);
+
+    }
+    public RemoveAddNewBookPayload removeAddNewBook(RemoveAddNewBookInput removeNewBookInput){
+        AddNewBook book =addNewBookRepository.findById(removeNewBookInput.getAddBookId()).get();
+        addNewBookRepository.delete(book);
+        return new RemoveAddNewBookPayload((Lists.newArrayList(addNewBookRepository.findAll())));
+    }
     /**
      * Method to update student attendance data. It accepts a list of objects containing student attendance ids and lecture id.
      * It returns the status as zero (0) if method completes successfully or non zero (>0) if execution fails due to any reason.

@@ -2481,6 +2481,67 @@ studentSubject{
 	"subjectId": 1351
   }
 }
+-------
+AddNewBook
+
+mutation addAddNewBook($input:AddAddNewBookInput!){
+addAddNewBook(input:$input){
+  addNewBook{
+    id
+    bookTitle
+    author
+    bookId
+    batch{
+      id
+    }
+    subject
+    {
+      id
+    }
+  }
+}
+}
+
+
+
+{
+  "input": {
+    "bookTitle": "General Knowledge",
+    "author": "V Shankar",
+    "bookId": 452,
+    "batchId": 1151,
+    "subjectId": 1351
+  }
+}
+
+mutation updateAddNewBook($input:UpdateAddNewBookInput!){
+updateAddNewBook(input:$input){
+  addNewBook{
+    id
+    bookTitle
+    author
+    bookId
+    batch{
+      id
+    }
+    subject
+    {
+      id
+    }
+  }
+}
+
+{
+  "input": {
+    "id": 951,
+    "bookTitle": "General Knowledge",
+    "author": "Kiran",
+    "bookId": 452,
+    "batchId": 1151,
+    "subjectId": 1351
+  }
+}
+
 
 ----- Get Student attendance data ----------------
 

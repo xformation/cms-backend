@@ -246,6 +246,9 @@ type Query {
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
 
+    addNewBook(id: Long!): AddNewBook
+    addNewBooks: [AddNewBook!]!
+
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
@@ -616,6 +619,14 @@ type StudentExamReport{
     routeDetails: String!
     routeMapUrl: String!
   }
+type  AddNewBook{
+    id:Long!
+    bookTitle:String!
+    author:String!
+    bookId: Long!
+    batch: Batch!
+    subject:Subject!
+}
 
   type FeeDetails{
        id: Long!
@@ -1281,6 +1292,11 @@ type Mutation {
     addAdminAttendance(input:AddAdminAttendanceInput!):AddAdminAttendancePayload!
     updateAdminAttendance(input:UpdateAdminAttendanceInput!):UpdateAdminAttendancePayload!
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
+
+    addAddNewBook(input:AddAddNewBookInput!):AddAddNewBookPayload!
+    updateAddNewBook(input:UpdateAddNewBookInput!):UpdateAddNewBookPayload!
+    removeAddNewBook(input:RemoveAddNewBookInput!):RemoveAddNewBookPayload!
+
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [Student]!
@@ -2882,4 +2898,32 @@ input RemoveInvoiceInput{
 }
 type RemoveInvoicePayload{
     invoices:[Invoice]!
+}
+
+input AddAddNewBookInput{
+    bookTitle:String!
+    author:String!
+    bookId:Long!
+    batchId:Long!
+    subjectId:Long!
+}
+type AddAddNewBookPayload {
+    addNewBook:AddNewBook!
+}
+input UpdateAddNewBookInput {
+    id:Long!
+    bookTitle:String!
+    author:String!
+    bookId:Long!
+    batchId:Long!
+    subjectId:Long!
+}
+type UpdateAddNewBookPayload{
+    addNewBook:AddNewBook!
+}
+input RemoveAddNewBookInput {
+    addBookId:Long!
+}
+type RemoveAddNewBookPayload{
+    addNewBooks:[AddNewBook]!
 }
