@@ -135,9 +135,9 @@ public class CmsInvoiceService {
     	List<Invoice> list = this.invoiceRepository.findAll(example);
     	List<CmsInvoice> ls = new ArrayList<>();
     	for(Invoice temp: list) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
+//            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
             CmsInvoice ctm = CommonUtil.createCopyProperties(temp, CmsInvoice.class);
-            ctm.setStrPaymentDate(stDt);
+            ctm.setStrPaymentDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getPaymentDate()))));
             ls.add(ctm);
         }
     	return ls;
@@ -170,9 +170,9 @@ public class CmsInvoiceService {
     	List<Invoice> list = this.invoiceRepository.findAll(example);
     	List<CmsInvoice> ls = new ArrayList<>();
     	for(Invoice temp: list) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
+//            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
             CmsInvoice ctm = CommonUtil.createCopyProperties(temp, CmsInvoice.class);
-            ctm.setStrPaymentDate(stDt);
+            ctm.setStrPaymentDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getPaymentDate()))));
             ls.add(ctm);
         }
     	return ls;

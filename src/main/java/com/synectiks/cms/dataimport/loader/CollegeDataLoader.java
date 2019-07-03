@@ -1,4 +1,4 @@
-package com.synectiks.cms.dataimport;
+package com.synectiks.cms.dataimport.loader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.dataimport.DataLoader;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.repository.CollegeRepository;
 
@@ -21,16 +22,17 @@ public class CollegeDataLoader extends DataLoader {
 	
 	
 	private CollegeRepository collegeRepository;
-	
-	public CollegeDataLoader(CollegeRepository collegeRepository) {
+	private String sheetName;
+	public CollegeDataLoader(CollegeRepository collegeRepository, String sheetName) {
 		this.collegeRepository = collegeRepository;
+		this.sheetName = sheetName;
 	}
 	
 	@Override
 	public void saveCmsData(ReadableWorkbook wb) {
 		logger.debug("Saving college data started.");
 
-		Sheet sheet = wb.findSheet("college").orElse(null);
+		Sheet sheet = wb.findSheet(this.sheetName).orElse(null);
 		try {
 			try (Stream<Row> rows = sheet.openStream()) {
 				List<College> collegeList = new ArrayList<>();

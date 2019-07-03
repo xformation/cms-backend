@@ -2886,8 +2886,8 @@ public class Mutation implements GraphQLMutationResolver {
         final Invoice invoice   = new Invoice();
         invoice.setInvoiceNumber(addInvoiceInput.getInvoiceNumber());
         invoice.setAmountPaid(addInvoiceInput.getAmountPaid());
-        invoice.setPaymentDate(addInvoiceInput.getPaymentDate());
-        invoice.setNextPaymentDate(addInvoiceInput.getNextPaymentDate());
+        invoice.setPaymentDate(DateFormatUtil.convertLocalDateFromUtilDate(addInvoiceInput.getPaymentDate()));
+        invoice.setNextPaymentDate(DateFormatUtil.convertLocalDateFromUtilDate(addInvoiceInput.getNextPaymentDate()));
         invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
         invoice.setModeOfPayment(addInvoiceInput.getModeOfPayment());
         invoice.setChequeNumber(addInvoiceInput.getChequeNumber());
@@ -2896,7 +2896,7 @@ public class Mutation implements GraphQLMutationResolver {
         invoice.setPaymentStatus(addInvoiceInput.getPaymentStatus());
         invoice.setComments(addInvoiceInput.getComments());
         invoice.setUpdatedBy(addInvoiceInput.getUpdatedBy());
-        invoice.setUpdatedOn(addInvoiceInput.getUpdatedOn());
+        invoice.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addInvoiceInput.getUpdatedOn()));
         invoice.setFeeCategory(feeCategory);
         invoice.setFeeDetails(feeDetails);
         invoice.setDueDate(dueDate);
@@ -2920,11 +2920,11 @@ public class Mutation implements GraphQLMutationResolver {
         }
 
         if (updateInvoiceInput.getPaymentDate() != null) {
-            invoice.setPaymentDate(updateInvoiceInput.getPaymentDate());
+            invoice.setPaymentDate(DateFormatUtil.convertLocalDateFromUtilDate(updateInvoiceInput.getPaymentDate()));
         }
 
         if (updateInvoiceInput.getNextPaymentDate() != null) {
-            invoice.setNextPaymentDate(updateInvoiceInput.getNextPaymentDate());
+            invoice.setNextPaymentDate(DateFormatUtil.convertLocalDateFromUtilDate(updateInvoiceInput.getNextPaymentDate()));
         }
         if (updateInvoiceInput.getOutStandingAmount() != null) {
             invoice.setOutStandingAmount(updateInvoiceInput.getOutStandingAmount());
@@ -2958,7 +2958,7 @@ public class Mutation implements GraphQLMutationResolver {
         }
 
         if (updateInvoiceInput.getUpdatedOn() != null) {
-            invoice.setUpdatedOn(updateInvoiceInput.getUpdatedOn());
+            invoice.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateInvoiceInput.getUpdatedOn()));
         }
 
 

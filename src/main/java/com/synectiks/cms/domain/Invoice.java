@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -11,7 +10,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
@@ -28,7 +26,7 @@ import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -44,11 +42,11 @@ public class Invoice implements Serializable {
 
     @NotNull
     @Column(name = "payment_date", nullable = false)
-    private Date paymentDate;
+    private LocalDate paymentDate;
 
     @NotNull
     @Column(name = "next_payment_date", nullable = false)
-    private Date nextPaymentDate;
+    private LocalDate nextPaymentDate;
 
     @NotNull
     @Column(name = "out_standing_amount", nullable = false)
@@ -83,38 +81,38 @@ public class Invoice implements Serializable {
 
     @NotNull
     @Column(name = "updated_on", nullable = false)
-    private Date updatedOn;
+    private LocalDate updatedOn;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private FeeCategory feeCategory;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private FeeDetails feeDetails;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private DueDate dueDate;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private PaymentRemainder paymentRemainder;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private College college;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private Branch branch;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private Student student;
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties("")
     private AcademicYear academicYear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -152,29 +150,29 @@ public class Invoice implements Serializable {
         this.amountPaid = amountPaid;
     }
 
-    public Date getPaymentDate() {
+    public LocalDate getPaymentDate() {
         return paymentDate;
     }
 
-    public Invoice paymentDate(Date paymentDate) {
+    public Invoice paymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
         return this;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
 
-    public Date getNextPaymentDate() {
+    public LocalDate getNextPaymentDate() {
         return nextPaymentDate;
     }
 
-    public Invoice nextPaymentDate(Date nextPaymentDate) {
+    public Invoice nextPaymentDate(LocalDate nextPaymentDate) {
         this.nextPaymentDate = nextPaymentDate;
         return this;
     }
 
-    public void setNextPaymentDate(Date nextPaymentDate) {
+    public void setNextPaymentDate(LocalDate nextPaymentDate) {
         this.nextPaymentDate = nextPaymentDate;
     }
 
@@ -282,16 +280,16 @@ public class Invoice implements Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public Date getUpdatedOn() {
+    public LocalDate getUpdatedOn() {
         return updatedOn;
     }
 
-    public Invoice updatedOn(Date updatedOn) {
+    public Invoice updatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
         return this;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
+    public void setUpdatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
     }
 

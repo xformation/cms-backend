@@ -3,6 +3,8 @@ package com.synectiks.cms.dataimport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.synectiks.cms.dataimport.loader.CollegeDataLoader;
+import com.synectiks.cms.dataimport.loader.StudentDataLoader;
 import com.synectiks.cms.repository.CollegeRepository;
 import com.synectiks.cms.repository.StudentRepository;
 
@@ -21,10 +23,10 @@ public class DataLoaderFactory {
         	return null;  
         }  
         if(tableName.equalsIgnoreCase("STUDENT")) {  
-            return new StudentDataLoader(this.studentRepository);  
+            return new StudentDataLoader(this.studentRepository, tableName);  
         }   
         if(tableName.equalsIgnoreCase("COLLEGE")) {  
-            return new CollegeDataLoader(this.collegeRepository);  
+            return new CollegeDataLoader(this.collegeRepository, tableName);  
         }
         return null;  
 	}

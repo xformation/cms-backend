@@ -1,5 +1,7 @@
 package com.synectiks.cms.dataimport;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,8 @@ import com.synectiks.cms.service.util.CommonUtil;
 
 @RestController
 @RequestMapping("/api")
-public class CmsExcelDataImport {
-	private final Logger logger = LoggerFactory.getLogger(CmsExcelDataImport.class);
+public class CmsExcelDataImportRestController {
+	private final Logger logger = LoggerFactory.getLogger(CmsExcelDataImportRestController.class);
 	
 	@Autowired
 	DataLoaderFactory dataLoaderFactory;
@@ -44,5 +46,8 @@ public class CmsExcelDataImport {
 		dataLoader.load(file);
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.GET, value = "/cmsdataimport/")
+	public List<String> getTableLilst(){
+		return CmsConstants.tabelName;
+	}
 }

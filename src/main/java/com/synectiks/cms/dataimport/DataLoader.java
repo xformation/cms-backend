@@ -11,9 +11,9 @@ public abstract class DataLoader {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	abstract void saveCmsData(ReadableWorkbook wb);
+	public abstract void saveCmsData(ReadableWorkbook wb);
 	
-	void load(MultipartFile f) {
+	public void load(MultipartFile f) {
 		try (InputStream is = f.getInputStream();
 				ReadableWorkbook wb = new ReadableWorkbook(is)) {
 			saveCmsData(wb);

@@ -384,8 +384,8 @@ public class TestDataPojoBuilder {
 	public Invoice createInvoicePojo() {
 		Invoice invoice = new Invoice();
 		invoice.setAmountPaid(3342l);
-		invoice.setPaymentDate(new Date());
-		invoice.setNextPaymentDate(new Date());
+		invoice.setPaymentDate(LocalDate.now());
+		invoice.setNextPaymentDate(LocalDate.now());
 		invoice.setOutStandingAmount(345l);
 		invoice.setModeOfPayment(ModeOfPayment.CARD);
 		invoice.setChequeNumber(543l);
@@ -394,7 +394,7 @@ public class TestDataPojoBuilder {
 		invoice.setPaymentStatus(InvoicePaymentStatus.PAID);
 		invoice.setComments("");
 		invoice.setUpdatedBy("");
-		invoice.setUpdatedOn(new Date());
+		invoice.setUpdatedOn(LocalDate.now());
 		return invoice;
 	}
 

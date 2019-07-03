@@ -23,13 +23,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -58,11 +56,11 @@ public class InvoiceResourceIntTest {
     private static final Long DEFAULT_AMOUNT_PAID = 1L;
     private static final Long UPDATED_AMOUNT_PAID = 2L;
 
-    private static final Date DEFAULT_PAYMENT_DATE = new Date();
-    private static final Date UPDATED_PAYMENT_DATE = new Date();
+    private static final LocalDate DEFAULT_PAYMENT_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_PAYMENT_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_NEXT_PAYMENT_DATE = new Date();
-    private static final Date UPDATED_NEXT_PAYMENT_DATE = new Date();
+    private static final LocalDate DEFAULT_NEXT_PAYMENT_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_NEXT_PAYMENT_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final Long DEFAULT_OUT_STANDING_AMOUNT = 1L;
     private static final Long UPDATED_OUT_STANDING_AMOUNT = 2L;
@@ -88,14 +86,16 @@ public class InvoiceResourceIntTest {
     private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_UPDATED_ON = new Date();
-    private static final Date UPDATED_UPDATED_ON = new Date();
+    private static final LocalDate DEFAULT_UPDATED_ON = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private InvoiceRepository invoiceRepository;
 
+
     @Autowired
     private InvoiceMapper invoiceMapper;
+    
 
     @Autowired
     private InvoiceService invoiceService;
@@ -120,9 +120,6 @@ public class InvoiceResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restInvoiceMockMvc;
 
     private Invoice invoice;
@@ -135,8 +132,7 @@ public class InvoiceResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -441,6 +437,7 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())));
     }
     
+
     @Test
     @Transactional
     public void getInvoice() throws Exception {
@@ -466,7 +463,6 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()))
             .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()));
     }
-
     @Test
     @Transactional
     public void getNonExistingInvoice() throws Exception {
@@ -538,7 +534,7 @@ public class InvoiceResourceIntTest {
         // Create the Invoice
         InvoiceDTO invoiceDTO = invoiceMapper.toDto(invoice);
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        // If the entity doesn't have an ID, it will be created instead of just being updated
         restInvoiceMockMvc.perform(put("/api/invoices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(invoiceDTO)))
@@ -560,7 +556,7 @@ public class InvoiceResourceIntTest {
 
         int databaseSizeBeforeDelete = invoiceRepository.findAll().size();
 
-        // Delete the invoice
+        // Get the invoice
         restInvoiceMockMvc.perform(delete("/api/invoices/{id}", invoice.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -585,7 +581,7 @@ public class InvoiceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(invoice.getId().intValue())))
-            .andExpect(jsonPath("$.[*].invoiceNumber").value(hasItem(DEFAULT_INVOICE_NUMBER)))
+            .andExpect(jsonPath("$.[*].invoiceNumber").value(hasItem(DEFAULT_INVOICE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].amountPaid").value(hasItem(DEFAULT_AMOUNT_PAID.intValue())))
             .andExpect(jsonPath("$.[*].paymentDate").value(hasItem(DEFAULT_PAYMENT_DATE.toString())))
             .andExpect(jsonPath("$.[*].nextPaymentDate").value(hasItem(DEFAULT_NEXT_PAYMENT_DATE.toString())))
@@ -593,10 +589,10 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.[*].modeOfPayment").value(hasItem(DEFAULT_MODE_OF_PAYMENT.toString())))
             .andExpect(jsonPath("$.[*].chequeNumber").value(hasItem(DEFAULT_CHEQUE_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].demandDraftNumber").value(hasItem(DEFAULT_DEMAND_DRAFT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].onlineTxnRefNumber").value(hasItem(DEFAULT_ONLINE_TXN_REF_NUMBER)))
+            .andExpect(jsonPath("$.[*].onlineTxnRefNumber").value(hasItem(DEFAULT_ONLINE_TXN_REF_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].paymentStatus").value(hasItem(DEFAULT_PAYMENT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)))
-            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY)))
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())));
     }
 
