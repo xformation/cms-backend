@@ -67,8 +67,8 @@ public class AcademicExamSettingResourceIntTest {
     private static final String DEFAULT_DAY = "AAAAAAAAAA";
     private static final String UPDATED_DAY = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_DURATION = 1;
-    private static final Integer UPDATED_DURATION = 2;
+    private static final String DEFAULT_DURATION = "1";
+    private static final String UPDATED_DURATION = "2";
 
     private static final String DEFAULT_START_TIME = "AAAAAAAAAA";
     private static final String UPDATED_START_TIME = "BBBBBBBBBB";
@@ -152,7 +152,6 @@ public class AcademicExamSettingResourceIntTest {
         AcademicExamSetting academicExamSetting = new AcademicExamSetting()
             .examType(DEFAULT_EXAM_TYPE)
             .semester(DEFAULT_SEMESTER)
-            .subject(DEFAULT_SUBJECT)
             .examDate(DEFAULT_EXAM_DATE)
             .day(DEFAULT_DAY)
             .duration(DEFAULT_DURATION)
@@ -535,7 +534,6 @@ public class AcademicExamSettingResourceIntTest {
         updatedAcademicExamSetting
             .examType(UPDATED_EXAM_TYPE)
             .semester(UPDATED_SEMESTER)
-            .subject(UPDATED_SUBJECT)
             .examDate(UPDATED_EXAM_DATE)
             .day(UPDATED_DAY)
             .duration(UPDATED_DURATION)
