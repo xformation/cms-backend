@@ -697,9 +697,6 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicExamSettingInput.getSemester() != null) {
             academicExamSetting.setSemester(updateAcademicExamSettingInput.getSemester());
         }
-        if (updateAcademicExamSettingInput.getSubject() != null) {
-            academicExamSetting.setSubject(updateAcademicExamSettingInput.getSubject());
-        }
         if (updateAcademicExamSettingInput.getExamDate() != null) {
             academicExamSetting.setExamDate(updateAcademicExamSettingInput.getExamDate());
         }
