@@ -43,20 +43,17 @@ public class AcademicExamSetting implements Serializable {
     @Column(name = "semester", nullable = false)
     private SemesterEnum semester;
 
-    @Column(name = "subject")
-    private String subject;
-
     @NotNull
     @Column(name = "exam_date", nullable = false)
     private Date examDate;
 
     @NotNull
-    @Column(name = "day", nullable = false)
-    private String day;
+    @Column(name = "duration", nullable = false)
+    private String duration;
 
     @NotNull
-    @Column(name = "duration", nullable = false)
-    private Integer duration;
+    @Column(name = "day", nullable = false)
+    private String day;
 
     @NotNull
     @Column(name = "start_time", nullable = false)
@@ -93,6 +90,10 @@ public class AcademicExamSetting implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
     private Branch branch;
+
+    @ManyToOne
+    @JsonIgnoreProperties("academicExamSettings")
+    private Subject subject;
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
@@ -145,19 +146,6 @@ public class AcademicExamSetting implements Serializable {
         this.semester = semester;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public AcademicExamSetting subject(String subject) {
-        this.subject = subject;
-        return this;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public Date getExamDate() {
         return examDate;
     }
@@ -171,6 +159,19 @@ public class AcademicExamSetting implements Serializable {
         this.examDate = examDate;
     }
 
+    public String getDuration() {
+        return duration;
+    }
+
+    public AcademicExamSetting duration(String duration) {
+        this.duration = duration;
+        return this;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
     public String getDay() {
         return day;
     }
@@ -182,20 +183,6 @@ public class AcademicExamSetting implements Serializable {
 
     public void setDay(String day) {
         this.day = day;
-    }
-
-
-    public AcademicExamSetting duration(Integer duration) {
-        this.duration = duration;
-        return this;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
     }
 
     public String getStartTime() {
@@ -315,6 +302,19 @@ public class AcademicExamSetting implements Serializable {
         this.branch = branch;
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public AcademicExamSetting subject(Subject subject) {
+        this.subject = subject;
+        return this;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
     public Department getDepartment() {
         return department;
     }
@@ -394,10 +394,9 @@ public class AcademicExamSetting implements Serializable {
             "id=" + getId() +
             ", examType='" + getExamType() + "'" +
             ", semester='" + getSemester() + "'" +
-            ", subject='" + getSubject() + "'" +
             ", examDate='" + getExamDate() + "'" +
-            ", day='" + getDay() + "'" +
             ", duration='" + getDuration() + "'" +
+            ", day='" + getDay() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", gradeType='" + getGradeType() + "'" +

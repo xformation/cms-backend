@@ -5,6 +5,7 @@ import java.util.Objects;
 public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInput {
     private Long departmentId;
     private Long academicyearId;
+    private Long subjectId;
     private Long sectionId;
     private Long batchId;
     private Long branchId;
@@ -49,6 +50,14 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         this.branchId = branchId;
     }
 
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,6 +66,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         AddAcademicExamSettingInput that = (AddAcademicExamSettingInput) o;
         return Objects.equals(departmentId, that.departmentId) &&
             Objects.equals(academicyearId, that.academicyearId) &&
+            Objects.equals(subjectId, that.subjectId) &&
             Objects.equals(sectionId, that.sectionId) &&
             Objects.equals(batchId, that.batchId) &&
             Objects.equals(branchId, that.branchId);
@@ -64,7 +74,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), departmentId, academicyearId, sectionId, batchId, branchId);
+        return Objects.hash(super.hashCode(), departmentId, academicyearId, subjectId, sectionId, batchId, branchId);
     }
 
     @Override
@@ -72,6 +82,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         return "AddAcademicExamSettingInput{" +
             "departmentId=" + departmentId +
             ", academicyearId=" + academicyearId +
+            ", subjectId=" + subjectId +
             ", sectionId=" + sectionId +
             ", batchId=" + batchId +
             ", branchId=" + branchId +

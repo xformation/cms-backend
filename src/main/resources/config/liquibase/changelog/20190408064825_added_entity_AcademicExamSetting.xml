@@ -29,19 +29,15 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="subject" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="exam_date" type="date">
                 <constraints nullable="false" />
             </column>
 
-            <column name="day" type="varchar(255)">
+            <column name="duration" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="duration" type="varchar(255)">
+            <column name="day" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
@@ -75,6 +71,14 @@
 
             <column name="end_date" type="date">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="subject_id" type="bigint">
+                <constraints nullable="true" />
             </column>
 
             <column name="department_id" type="bigint">

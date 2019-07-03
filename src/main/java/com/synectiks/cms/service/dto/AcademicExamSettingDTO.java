@@ -19,16 +19,14 @@ public class AcademicExamSettingDTO implements Serializable {
     @NotNull
     private SemesterEnum semester;
 
-    private String subject;
-
     @NotNull
     private LocalDate examDate;
 
     @NotNull
-    private String day;
+    private String duration;
 
     @NotNull
-    private String duration;
+    private String day;
 
     @NotNull
     private String startTime;
@@ -55,6 +53,8 @@ public class AcademicExamSettingDTO implements Serializable {
 
 
     private Long branchId;
+
+    private Long subjectId;
 
     private Long departmentId;
 
@@ -88,14 +88,6 @@ public class AcademicExamSettingDTO implements Serializable {
         this.semester = semester;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public LocalDate getExamDate() {
         return examDate;
     }
@@ -104,20 +96,20 @@ public class AcademicExamSettingDTO implements Serializable {
         this.examDate = examDate;
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
     public String getDuration() {
         return duration;
     }
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public String getStartTime() {
@@ -192,6 +184,14 @@ public class AcademicExamSettingDTO implements Serializable {
         this.branchId = branchId;
     }
 
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
+
     public Long getDepartmentId() {
         return departmentId;
     }
@@ -251,10 +251,9 @@ public class AcademicExamSettingDTO implements Serializable {
             "id=" + getId() +
             ", examType='" + getExamType() + "'" +
             ", semester='" + getSemester() + "'" +
-            ", subject='" + getSubject() + "'" +
             ", examDate='" + getExamDate() + "'" +
-            ", day='" + getDay() + "'" +
             ", duration='" + getDuration() + "'" +
+            ", day='" + getDay() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", gradeType='" + getGradeType() + "'" +
@@ -264,6 +263,7 @@ public class AcademicExamSettingDTO implements Serializable {
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", branch=" + getBranchId() +
+            ", subject=" + getSubjectId() +
             ", department=" + getDepartmentId() +
             ", academicyear=" + getAcademicyearId() +
             ", section=" + getSectionId() +

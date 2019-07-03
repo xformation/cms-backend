@@ -868,10 +868,9 @@ type AcademicExamSetting{
     id: Long!
     examType: String!
     semester: SemesterEnum!
-    subject: String!
     examDate: Date!
     day: String!
-    duration: Int!
+    duration: String!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
@@ -882,6 +881,7 @@ type AcademicExamSetting{
     endDate: Date
     department: Department!
     section: Section!
+    subject: Subject!
     academicyear: AcademicYear!
     batch: Batch!
     branch: Branch!
@@ -1460,10 +1460,9 @@ type RemoveTypeOfGradingPayload {
 input AddAcademicExamSettingInput{
     examType: String!
     semester: SemesterEnum!
-    subject: String!
     examDate: Date!
     day: String!
-    duration: Int!
+    duration: String!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
@@ -1474,6 +1473,7 @@ input AddAcademicExamSettingInput{
     endDate: Date
     departmentId: Long!
     sectionId: Long!
+    subjectId: Long!
     academicyearId: Long!
     batchId: Long!
     branchId: Long!
@@ -1486,10 +1486,9 @@ input UpdateAcademicExamSettingInput {
     id: Long!
     examType: String!
     semester: SemesterEnum!
-    subject: String!
     examDate: Date!
     day: String!
-    duration: Int!
+    duration: String!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
@@ -1500,6 +1499,7 @@ input UpdateAcademicExamSettingInput {
     endDate: Date
     departmentId: Long!
     sectionId: Long!
+    subjectId: Long!
     academicyearId: Long!
     batchId: Long!
     branchId: Long!

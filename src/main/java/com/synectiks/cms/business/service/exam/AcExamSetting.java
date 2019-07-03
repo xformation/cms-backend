@@ -17,6 +17,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     private String bctch;
     private String sectn;
     private String brnch;
+    private String sbjct;
     private String action;
     private String subject;
     private Date startDate;
@@ -131,6 +132,14 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.brnch = brnch;
     }
 
+    public String getSbjct() {
+        return sbjct;
+    }
+
+    public void setSbjct(String sbjct) {
+        this.sbjct = sbjct;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -147,7 +156,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     }
 
 
-    public AcExamSetting(Long id, String examType, String departmnt, String brnch, String bctch, String sectn, String action, String subject, Date startDate, Date endDate, Date examDate, String st, String ed) {
+    public AcExamSetting(Long id, String examType, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action, Date startDate, Date endDate, Date examDate, String st, String ed) {
         this.id=id;
         this.examType = examType;
         this.departmnt = departmnt;
@@ -155,7 +164,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.sectn = sectn;
         this.brnch = brnch;
         this.action = action;
-        this.subject = subject;
+        this.sbjct = sbjct;
         this.startDate = startDate;
         this.endDate = endDate;
         this.examDate = examDate;
@@ -222,7 +231,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             sectn=str1,
             this.action,
             //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
-            this.subject,
+            this.sbjct,
             this.examDate,
             this.endDate,
             this.startDate,

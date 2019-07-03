@@ -11,10 +11,9 @@ public class AbstractAcademicExamSettingInput {
     private Long id;
     private String examType;
     private SemesterEnum semester;
-    private String subject;
     private Date examDate;
     private String day;
-    private Integer duration;
+    private String duration;
     private String startTime;
     private String endTime;
     private GradeType gradeType;
@@ -48,14 +47,6 @@ public class AbstractAcademicExamSettingInput {
         this.semester = semester;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public Date getExamDate() {
         return examDate;
     }
@@ -72,11 +63,11 @@ public class AbstractAcademicExamSettingInput {
         this.day = day;
     }
 
-    public Integer getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
@@ -152,7 +143,6 @@ public class AbstractAcademicExamSettingInput {
         return Objects.equals(id, that.id) &&
             Objects.equals(examType, that.examType) &&
             semester == that.semester &&
-            Objects.equals(subject, that.subject) &&
             Objects.equals(examDate, that.examDate) &&
             Objects.equals(day, that.day) &&
             Objects.equals(duration, that.duration) &&
@@ -168,7 +158,7 @@ public class AbstractAcademicExamSettingInput {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examType, semester, subject, examDate, day, duration, startTime, endTime, gradeType, total, passing, actions, startDate, endDate);
+        return Objects.hash(id, examType, semester, examDate, day, duration, startTime, endTime, gradeType, total, passing, actions, startDate, endDate);
     }
 
     @Override
@@ -177,7 +167,6 @@ public class AbstractAcademicExamSettingInput {
             "id=" + id +
             ", examType='" + examType + '\'' +
             ", semester=" + semester +
-            ", subject='" + subject + '\'' +
             ", examDate=" + examDate +
             ", day='" + day + '\'' +
             ", duration='" + duration + '\'' +
