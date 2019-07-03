@@ -529,6 +529,90 @@ entity TypeOfGrading{
     grades GradesEnum required
 }
 
+entity TransportRoute {
+routeName String required
+routeDetails String required
+routeMapUrl String
+noOfStops Integer required
+routeFrequency RouteFrequency required
+}
+
+enum RouteFrequency{
+MORNINGPICKUP, AFTERNOONDROPANDPICKUP, AFTERNOONDROP, EVENINGDROP
+}
+
+enum Disability{
+YES, NO
+}
+
+entity Vehicle{
+vehicleNumber Integer required
+vehicleType String required
+capacity Long required
+ownerShip String required
+dateOfRegistration LocalDate
+yearOfManufacturing String
+manufacturingCompany String
+model String
+chasisNo String
+rcNo String required
+contactNumber String required
+status Status required
+}
+
+enum TypeOfOwnerShip{
+COMPANYOWNED, CONTRACTUAL
+}
+
+entity ContractDetails{
+vendorName String required
+typeOfOwnerShip TypeOfOwnerShip required
+durationOfContract String required
+startDate LocalDate required
+endDate LocalDate required
+}
+
+enum TypeOfInsurance{
+LIABILITY, COLLISION, COMPREHENSIVE
+}
+
+entity Insurance{
+insuranceCompany String required
+typeOfInsurance TypeOfInsurance required
+dateOfInsurance LocalDate required
+validTill LocalDate required
+}
+
+entity VehicleDocuments{
+documentsUpload String required
+description String
+}
+
+entity Employee{
+employeeName String required
+designation String
+joiningDate LocalDate required
+jobEndDate LocalDate
+resignationDate LocalDate
+resignationAcceptanceDate LocalDate
+aadharNo String
+panNo String
+passportNo String
+primaryContactNo String
+secondaryContactNo String
+employeeFatherName String required
+employeeMotherName String required
+primaryAddress String required
+secondaryAddress String required
+employeeAddress String
+personalMailId String
+officialMailId String
+disability Disability
+drivingLicenceNo String
+drivingLicenceValidity LocalDate
+gender String
+}
+
 
 relationship ManyToOne {
 Student{department required} to Department ,
@@ -626,8 +710,14 @@ MetaLecture{academicyear} to AcademicYear,
 MetaLecture{section} to Section,
 MetaLecture{batch} to Batch,
 StudentFacilityLink{student} to Student,
-StudentFacilityLink{facility} to Facility
+StudentFacilityLink{facility} to Facility,
+VehicleDocuments{vehicle} to Vehicle
 }
+
+relationship OneToOne {
+Insurance{vehicle} to Vehicle{insurance}
+}
+
 
 dto * with mapstruct
 service all with serviceImpl
