@@ -1,7 +1,7 @@
 package com.synectiks.cms.constant;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public interface CmsConstants {
@@ -31,47 +31,49 @@ public interface CmsConstants {
 	String STUDENT_IMAGE_FILE_PATH = CMS_IMAGE_FILE_PATH+File.separator+"COLLEGE_ID"+File.separator+"student_images";
 	
 	List<String> tabelName = initTableList();
+	
 	public static List<String> initTableList() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new LinkedList<String>();
+		list.add("All");
+		list.add("country");
+		list.add("state");  
+		list.add("city");   
+		list.add("currency");             
+		list.add("college");
+		list.add("branch"); 
+		list.add("authorized_signatory"); 
+	    list.add("bank_accounts");
+	    list.add("legal_entity");         
+	    list.add("academic_year");
+	    list.add("holiday");              
+	    list.add("term");                 
+	    list.add("department");           
+	    list.add("batch");                
+	    list.add("teacher");              
+	    list.add("subject");              
+	    list.add("teach");                
+	    list.add("attendance_master");    
+	    list.add("invoice");              
+	    list.add("due_date");             
+	    list.add("payment_remainder");    
+	    list.add("late_fee");             
+	    list.add("fee_category");         
+	    list.add("fee_details");          
 	    list.add("academic_exam_setting"); 
 	    list.add("academic_history");
-	    list.add("academic_year");
 	    list.add("admin_attendance");
 	    list.add("admission_application"); 
 	    list.add("admission_enquiry");   
-	    list.add("attendance_master");    
-	    list.add("authorized_signatory"); 
-	    list.add("bank_accounts");        
-	    list.add("batch");                
-	    list.add("branch");               
-	    list.add("city");                 
-	    list.add("college");              
 	    list.add("competitive_exam");     
-	    list.add("country");              
-	    list.add("currency");             
-	    list.add("department");           
 	    list.add("documents");            
-	    list.add("due_date");             
 	    list.add("facility");             
-	    list.add("fee_category");         
-	    list.add("fee_details");          
-	    list.add("holiday");              
-	    list.add("invoice");              
-	    list.add("late_fee");             
-	    list.add("lecture");              
-	    list.add("legal_entity");         
 	    list.add("meta_lecture");         
-	    list.add("payment_remainder");    
+	    list.add("lecture");              
 	    list.add("section");              
-	    list.add("state");                
 	    list.add("student");              
 	    list.add("student_attendance");   
 	    list.add("student_exam_report");  
 	    list.add("student_facility_link"); 
-	    list.add("subject");              
-	    list.add("teach");                
-	    list.add("teacher");              
-	    list.add("term");                 
 	    list.add("transport_route");      
 	    list.add("type_of_grading");      
 
