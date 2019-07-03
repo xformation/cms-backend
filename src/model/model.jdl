@@ -349,9 +349,8 @@ entity StudentFacilityLink{
 entity AcademicExamSetting {
     examType String required
     semester SemesterEnum required
-    subject String
     examDate LocalDate required
-    duration Integer required
+    duration String required
     day String required
     startTime String required
     endTime String required
@@ -614,6 +613,7 @@ AdminAttendance{academicyear} to AcademicYear,
 AdminAttendance{section} to Section,
 AdminAttendance{student} to Student,
 AcademicExamSetting{branch} to Branch,
+AcademicExamSetting{subject} to Subject,
 AcademicExamSetting{department} to Department,
 AcademicExamSetting{academicyear} to AcademicYear,
 AcademicExamSetting{section} to Section,
