@@ -7,6 +7,7 @@ import java.util.Objects;
 public class AddAddNewBookInput extends AbstractAddNewBookInput {
     private Long batchId;
     private Long subjectId;
+    private Long departmentId;
 
     public Long getBatchId() {
         return batchId;
@@ -24,6 +25,14 @@ public class AddAddNewBookInput extends AbstractAddNewBookInput {
         this.subjectId = subjectId;
     }
 
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,11 +47,14 @@ public class AddAddNewBookInput extends AbstractAddNewBookInput {
         return Objects.hash(batchId, subjectId);
     }
 
+
+
     @Override
     public String toString() {
-        return "AddNewBookInput{" +
+        return "AddAddNewBookInput{" +
             "batchId=" + batchId +
             ", subjectId=" + subjectId +
+            ", departmentId=" + departmentId +
             '}';
     }
 }

@@ -349,8 +349,9 @@ entity StudentFacilityLink{
 entity AcademicExamSetting {
     examType String required
     semester SemesterEnum required
+    subject String
     examDate LocalDate required
-    duration String required
+    duration Integer required
     day String required
     startTime String required
     endTime String required
@@ -566,6 +567,7 @@ BankAccounts{branch} to Branch,
 BankAccounts{college} to College,
 AddNewBook{batch} to Batch,
 AddNewBook{subject} to Subject,
+AddNewBook{department} to Department,
 LegalEntity{branch} to Branch,
 LegalEntity{college} to College,
 LegalEntity{state} to State,
@@ -612,7 +614,6 @@ AdminAttendance{academicyear} to AcademicYear,
 AdminAttendance{section} to Section,
 AdminAttendance{student} to Student,
 AcademicExamSetting{branch} to Branch,
-AcademicExamSetting{subject} to Subject,
 AcademicExamSetting{department} to Department,
 AcademicExamSetting{academicyear} to AcademicYear,
 AcademicExamSetting{section} to Section,

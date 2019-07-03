@@ -660,18 +660,17 @@ public class Mutation implements GraphQLMutationResolver {
 
         Department department = departmentRepository.findById(addAcademicExamSettingInput.getDepartmentId()).get();
         AcademicYear academicYear = academicYearRepository.findById(addAcademicExamSettingInput.getAcademicyearId()).get();
-        Subject subject = subjectRepository.findById(addAcademicExamSettingInput.getSubjectId()).get();
         Section section = sectionRepository.findById(addAcademicExamSettingInput.getSectionId()).get();
         Batch batch = batchRepository.findById(addAcademicExamSettingInput.getBatchId()).get();
         Branch branch = branchRepository.findById(addAcademicExamSettingInput.getBranchId()).get();
         academicExamSetting.setDepartment(department);
         academicExamSetting.setAcademicyear(academicYear);
         academicExamSetting.setSection(section);
-        academicExamSetting.setSubject(subject);
         academicExamSetting.setBatch(batch);
         academicExamSetting.setBranch(branch);
         academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
         academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
+        academicExamSetting.setSubject(addAcademicExamSettingInput.getSubject());
         academicExamSetting.setExamDate(addAcademicExamSettingInput.getExamDate());
         academicExamSetting.setDay(addAcademicExamSettingInput.getDay());
         academicExamSetting.setDuration(addAcademicExamSettingInput.getDuration());
@@ -696,6 +695,9 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateAcademicExamSettingInput.getSemester() != null) {
             academicExamSetting.setSemester(updateAcademicExamSettingInput.getSemester());
+        }
+        if (updateAcademicExamSettingInput.getSubject() != null) {
+            academicExamSetting.setSubject(updateAcademicExamSettingInput.getSubject());
         }
         if (updateAcademicExamSettingInput.getExamDate() != null) {
             academicExamSetting.setExamDate(updateAcademicExamSettingInput.getExamDate());
@@ -737,10 +739,6 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicExamSettingInput.getAcademicyearId() != null) {
             final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicyearId()).get();
             academicExamSetting.setAcademicyear(academicYear);
-        }
-        if (updateAcademicExamSettingInput.getSubjectId() != null) {
-            final Subject subject = subjectRepository.findById(updateAcademicExamSettingInput.getSubjectId()).get();
-            academicExamSetting.setSubject(subject);
         }
         if (updateAcademicExamSettingInput.getSectionId() != null) {
             final Section section = sectionRepository.findById(updateAcademicExamSettingInput.getSectionId()).get();
@@ -3014,12 +3012,14 @@ public class Mutation implements GraphQLMutationResolver {
     public AddAddNewBookPayload addAddNewBook(AddAddNewBookInput addNewBookInput){
         Batch batch = batchRepository.findById(addNewBookInput.getBatchId()).get();
         Subject subject = subjectRepository.findById(addNewBookInput.getSubjectId()).get();
+        Department department =departmentRepository.findById(addNewBookInput.getDepartmentId()).get();
         final AddNewBook book = new AddNewBook ();
         book.setBookTitle(addNewBookInput.getBookTitle());
         book.setAuthor(addNewBookInput.getAuthor());
         book.setBookId(addNewBookInput.getBookId());
         book.setBatch(batch);
         book.setSubject(subject);
+        book.setDepartment(department);
         addNewBookRepository.save(book);
         return new AddAddNewBookPayload(book);
     }
@@ -3041,6 +3041,9 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if(updateNewBookInput.getSubjectId()!=null){
             Subject subject =subjectRepository.findById(updateNewBookInput.getSubjectId()).get();
+        }
+        if(updateNewBookInput.getDepartmentId()!= null){
+            Department department =departmentRepository.findById(updateNewBookInput.getDepartmentId()).get();
         }
 
         addNewBookRepository.save(book);

@@ -658,6 +658,7 @@ public class Query implements GraphQLQueryResolver {
 
     public List<AddNewBook>searchBook(String bookTitle,String author,Long departmentId,Long batchId,Long subjectId){
         return Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,departmentId,batchId,subjectId));
+
     }
 
     public List<Branch> getAllBranches(String branchName, Long collegeId){

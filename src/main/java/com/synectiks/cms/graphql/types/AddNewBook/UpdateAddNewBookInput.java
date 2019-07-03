@@ -4,6 +4,7 @@ import java.util.Objects;
 public class UpdateAddNewBookInput extends AbstractAddNewBookInput {
     private Long batchId;
     private Long subjectId;
+    private Long departmentId;
 
     public Long getBatchId() {
         return batchId;
@@ -19,5 +20,13 @@ public class UpdateAddNewBookInput extends AbstractAddNewBookInput {
 
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 }

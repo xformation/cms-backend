@@ -47,6 +47,10 @@ public class AddNewBook implements Serializable {
     @JsonIgnoreProperties("")
     private Subject subject;
 
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Department department;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -119,6 +123,19 @@ public class AddNewBook implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public AddNewBook department(Department department) {
+        this.department = department;
+        return this;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

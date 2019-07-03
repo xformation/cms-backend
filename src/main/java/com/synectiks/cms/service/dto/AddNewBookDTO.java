@@ -24,6 +24,8 @@ public class AddNewBookDTO implements Serializable {
 
     private Long subjectId;
 
+    private Long departmentId;
+
     public Long getId() {
         return id;
     }
@@ -72,6 +74,14 @@ public class AddNewBookDTO implements Serializable {
         this.subjectId = subjectId;
     }
 
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,6 +112,7 @@ public class AddNewBookDTO implements Serializable {
             ", bookId=" + getBookId() +
             ", batch=" + getBatchId() +
             ", subject=" + getSubjectId() +
+            ", department=" + getDepartmentId() +
             "}";
     }
 }
