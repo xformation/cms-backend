@@ -18,6 +18,7 @@ package com.synectiks.cms.graphql.resolvers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.synectiks.cms.filter.Book.BookfilterProcessor;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,6 +209,9 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private StudentFilterProcessor studentFilterProcessor;
+
+    @Autowired
+    private BookfilterProcessor bookfilterProcessor;
 
     @Autowired
     private CommonGraphiqlFilter commonGraphiqlFilter;
@@ -650,6 +654,10 @@ public class Query implements GraphQLQueryResolver {
     
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName){
         return Lists.newArrayList(studentFilterProcessor.searchStudent(departmentId, batchId, sectionId, branchId, gender, studentType, studentName));
+    }
+
+    public List<AddNewBook>searchBook(String bookTitle,String author,Long departmentId,Long batchId,Long subjectId){
+        return Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,departmentId,batchId,subjectId));
     }
 
     public List<Branch> getAllBranches(String branchName, Long collegeId){

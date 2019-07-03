@@ -253,7 +253,7 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
-
+    searchBook (bookTitle:String,author:String,departmentId:Long,batchId:Long,subjectId:Long):[AddNewBook!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
@@ -626,6 +626,7 @@ type  AddNewBook{
     bookId: Long!
     batch: Batch!
     subject:Subject!
+    department:Department!
 }
 
   type FeeDetails{
@@ -2906,6 +2907,7 @@ input AddAddNewBookInput{
     bookId:Long!
     batchId:Long!
     subjectId:Long!
+    departmentId:Long!
 }
 type AddAddNewBookPayload {
     addNewBook:AddNewBook!
@@ -2917,6 +2919,7 @@ input UpdateAddNewBookInput {
     bookId:Long!
     batchId:Long!
     subjectId:Long!
+    departmentId:Long!
 }
 type UpdateAddNewBookPayload{
     addNewBook:AddNewBook!
