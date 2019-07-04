@@ -25,6 +25,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     private Date examDate;
     private String st;
     private String ed;
+    private String subExamDate;
 
     public AcExamSetting() { }
 
@@ -140,6 +141,10 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.sbjct = sbjct;
     }
 
+    public String getSubExamDate() {return subExamDate;}
+
+    public void setSubExamDate(String subExamDate) {this.subExamDate = subExamDate;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -156,7 +161,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     }
 
 
-    public AcExamSetting(Long id, String examType, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action, Date startDate, Date endDate, Date examDate, String st, String ed) {
+    public AcExamSetting(Long id, String examType, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action, Date startDate, Date endDate, Date examDate, String st, String ed, String subExamDate) {
         this.id=id;
         this.examType = examType;
         this.departmnt = departmnt;
@@ -170,6 +175,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.examDate = examDate;
         this.st = st;
         this.ed = ed;
+        this.subExamDate= subExamDate;
     }
 
        @Override
@@ -241,6 +247,24 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         }
         ids = idsbTemp.toString();
 
+        String strSubExam =this.subExamDate+","+other.subExamDate;
+        String[] strSubExamWords = strSubExam.split("\\,+");
+        Arrays.sort(strSubExamWords);
+        LinkedHashSet<String> lhSubExamSetWords
+            = new LinkedHashSet<String>( Arrays.asList(strSubExamWords) );
+
+        StringBuilder sbstrSubExamWordsTemp = new StringBuilder();
+        int indexstrSubExamWords = 0;
+
+        for(String sstrSubExam : lhSubExamSetWords){
+
+            if(indexstrSubExamWords > 0)
+                sbstrSubExamWordsTemp.append(",");
+
+            sbstrSubExamWordsTemp.append(sstrSubExam);
+            indexstrSubExamWords++;
+        }
+        strSubExam = sbstrSubExamWordsTemp.toString();
         return new AcExamSetting(
             this.id,
             this.examType,
@@ -254,7 +278,8 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             this.endDate,
             this.startDate,
             this.st=sdf.format(this.examDate),
-            this.ed=sdf.format(other.examDate)
+            this.ed=sdf.format(other.examDate),
+            this.subExamDate=strSubExam
 
 
             //=sdf.format(this.examDate)+","+sdf.format(other.examDate),

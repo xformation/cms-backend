@@ -398,6 +398,7 @@ type AcExamSetting{
     sectn: String!
     st: String!
     ed: String!
+    subExamDate: String!
    }
 
 

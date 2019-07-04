@@ -37,6 +37,7 @@ public class SummaryDataService {
             settingModel.setEndDate(examsetting.getEndDate());
             settingModel.setStartDate(examsetting.getStartDate());
             settingModel.setExamDate(examsetting.getExamDate());
+            settingModel.setSubExamDate(examsetting.getExamDate().toString());
             settingModel.setSt(examsetting.getExamDate().toString());
             settingModel.setEd(examsetting.getExamDate().toString());
             original.add(settingModel);
