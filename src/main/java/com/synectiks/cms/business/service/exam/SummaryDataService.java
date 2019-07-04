@@ -32,7 +32,8 @@ public class SummaryDataService {
             settingModel.setSectn(examsetting.getSection().getSection().name());
             settingModel.setBrnch(examsetting.getBranch().getBranchName());
             settingModel.setSbjct(examsetting.getSubject().getSubjectDesc());
-            settingModel.setAction(examsetting.getActions());
+            //settingModel.setId(examsetting.getSubject().getId());
+            settingModel.setAction(examsetting.getSubject().getId().toString());
             settingModel.setEndDate(examsetting.getEndDate());
             settingModel.setStartDate(examsetting.getStartDate());
             settingModel.setExamDate(examsetting.getExamDate());

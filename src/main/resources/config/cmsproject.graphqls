@@ -388,7 +388,7 @@ type AcExamSetting{
     id:Long!
     examType: String!
     action: String!
-    subject: String!
+    sbjct: String!
     endDate: Date!
     startDate: Date!
     examDate: Date!

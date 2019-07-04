@@ -183,25 +183,25 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     public AcExamSetting merge(AcExamSetting other) {
         assert (this.equals(other));
 
-//        String str =this.subject+","+other.subject;
-//        String[] strWords = str.split("\\,+");
-//        Arrays.sort(strWords);
-//        LinkedHashSet<String> lhSetWords
-//            = new LinkedHashSet<String>( Arrays.asList(strWords) );
-//
-//        StringBuilder sbTemp = new StringBuilder();
-//        int index = 0;
-//
-//        for(String s : lhSetWords){
-//
-//            if(index > 0)
-//                sbTemp.append(",");
-//
-//            sbTemp.append(s);
-//            index++;
-//        }
-//
-//        str = sbTemp.toString();
+        String str =this.sbjct+","+other.sbjct;
+        String[] strWords = str.split("\\,+");
+        Arrays.sort(strWords);
+        LinkedHashSet<String> lhSetWords
+            = new LinkedHashSet<String>( Arrays.asList(strWords) );
+
+        StringBuilder sbTemp = new StringBuilder();
+        int index = 0;
+
+        for(String s : lhSetWords){
+
+            if(index > 0)
+                sbTemp.append(",");
+
+            sbTemp.append(s);
+            index++;
+        }
+        str = sbTemp.toString();
+
 
         String str1 =this.sectn+","+other.sectn;
         String[] strWords1 = str1.split("\\,+");
@@ -222,6 +222,25 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         }
         str1 = sbTemp1.toString();
 
+        String ids =this.action+","+other.action;
+        String[] idsWords = ids.split("\\,+");
+        Arrays.sort(idsWords);
+        LinkedHashSet<String> idslhSetWords
+            = new LinkedHashSet<String>( Arrays.asList(idsWords) );
+
+        StringBuilder idsbTemp = new StringBuilder();
+        int idsindex = 0;
+
+        for(String sids : idslhSetWords){
+
+            if(idsindex > 0)
+                idsbTemp.append(",");
+
+            idsbTemp.append(sids);
+            idsindex++;
+        }
+        ids = idsbTemp.toString();
+
         return new AcExamSetting(
             this.id,
             this.examType,
@@ -229,14 +248,18 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             this.brnch,
             this.bctch,
             sectn=str1,
-            this.action,
-            //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
-            this.sbjct,
+            this.sbjct=str,
+            this.action=ids,
             this.examDate,
             this.endDate,
             this.startDate,
             this.st=sdf.format(this.examDate),
             this.ed=sdf.format(other.examDate)
+
+
+            //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
+
+
 
         );
     }
