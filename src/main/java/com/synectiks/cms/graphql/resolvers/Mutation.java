@@ -11,6 +11,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.filter.exam.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,10 +80,6 @@ import com.synectiks.cms.exceptions.FilePathNotFoundException;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
-import com.synectiks.cms.filter.exam.AcademicExamSettingFilterImpl;
-import com.synectiks.cms.filter.exam.AcademicExamSettingUpdateFilter;
-import com.synectiks.cms.filter.exam.ExamFilterProcessor;
-import com.synectiks.cms.filter.exam.ExamListFilterInput;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
@@ -3075,9 +3072,9 @@ public class Mutation implements GraphQLMutationResolver {
     	}
         return res;
     }
-    public QueryResult updateExamData(List<AcademicExamSettingUpdateFilter> list) throws JSONException, ParseException {
+    public QueryResult updateAcademicExamSettingData(List<AcademicExamSettingUpdateFilter> list) throws JSONException, ParseException {
         logger.debug("Mutation to update exam data " + list.toString());
-        QueryResult res = this.academicExamSettingFilterImpl.updateExamStatus(list);
+        QueryResult res = this.academicExamSettingFilterImpl.updateExam(list);
         if(res.getStatusCode() == 0) {
             logger.info("exam data updated successfully.");
         }else {
@@ -3167,11 +3164,7 @@ public class Mutation implements GraphQLMutationResolver {
     	logger.debug("Total students retrieved. "+list.size());
     	return list;
     }
-    public List<AcademicExamSetting> getSubjectList(ExamListFilterInput filter) throws Exception {
-        List<AcademicExamSetting> list = this.examFilterProcessor.searchSubject(filter);
-        logger.debug("Total Subjects retrieved. "+list.size());
-        return list;
-    }
+
 
 
 
@@ -3187,7 +3180,15 @@ public class Mutation implements GraphQLMutationResolver {
 	public List<DailyAttendanceVo> getStudentAttendanceDataForAdmin(StudentAttendanceFilterInput filter) throws Exception {
         return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendanceDataForAdmin(filter));
     }
-	
+    public List<DailyExamVo> getExamDataForAdmin(ExamListFilterInput filter) throws Exception {
+        return Lists.newArrayList(academicExamSettingFilterImpl.getExamDataForAdmin(filter));
+    }
+
+    public List<AcademicExamSetting> getSubjectList(ExamListFilterInput filter) throws Exception {
+        List<AcademicExamSetting> list = this.examFilterProcessor.searchSubject(filter);
+        logger.debug("Total Subjects retrieved. "+list.size());
+        return list;
+    }
 	@Transactional(propagation=Propagation.REQUIRED)
 	public QueryResult saveDueDatePaymentRemLateFee(UpdateDueDateInput udd, UpdatePaymentRemainderInput upr, UpdateLateFeeInput ulf) {
 		QueryResult qr = new QueryResult();

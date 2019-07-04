@@ -2571,8 +2571,9 @@ comments
 }
 
 ----------------- update Student Attendance data -------------------
-mutation updateStudentAttendanceData($input:StudentAttendanceUpdateFilter!){
-  updateStudenceAttendanceData(input:$input){
+
+mutation updateStudentAttendanceData($input: [StudentAttendanceUpdateFilter!]!){
+  updateStudentAttendanceData(input:$input){
     statusCode
     statusDesc
  }

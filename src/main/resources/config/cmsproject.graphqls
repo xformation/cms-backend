@@ -1058,6 +1058,18 @@ type DailyAttendanceVo {
 	comments: String
 	student: Student
 }
+type DailyExamVo{
+    subjectId: String
+    subjectDesc: String
+    examDate: String
+    day: String
+    startTime: String
+    endTime: String
+    total: String
+    passing: String
+    academicExamSetting:  AcademicExamSetting
+
+}
 
 input StudentAttendanceFilterInput {
 	branchId: String!
@@ -1073,6 +1085,9 @@ input StudentAttendanceFilterInput {
 	academicYearId: String
 	termId: String
 }
+
+
+
 
 type AcademicSubjectVo{
     subjectCode: String!
@@ -1225,7 +1240,8 @@ type Mutation {
     updateFeeDetails(input: UpdateFeeDetailsInput!): UpdateFeeDetailsPayload!
     removeFeeDetails(input: RemoveFeeDetailsInput!): RemoveFeeDetailsPayload!
 
-    updateStudentAttendanceData(input: [StudentAttendanceUpdateFilter!]!): QueryResult!
+   updateStudentAttendanceData(input: [StudentAttendanceUpdateFilter!]!): QueryResult!
+   updateAcademicExamSettingData(input: [AcademicExamSettingUpdateFilter!]!): QueryResult!
 
    addAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
    updateAcademicSubjects(input: AcademicSubjectMutationPayload!): QueryResult!
@@ -1304,6 +1320,7 @@ type Mutation {
 	getStudentList(filter: StudentListFilterInput!): [Student]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
+	getExamDataForAdmin(filter: ExamListFilterInput!): [DailyExamVo!]!
 	saveDueDatePaymentRemLateFee(inputd: UpdateDueDateInput, inputp: UpdatePaymentRemainderInput, inputl: UpdateLateFeeInput): QueryResult!
 	getFeeSettingData(branchId: Long): CmsFeeSettingsVo!
 	getFeeSettingDueDateData(branchId: Long, paymentType: String): CmsFeeSettingsVo!
@@ -1372,6 +1389,10 @@ input ExamListFilterInput {
 	semester: String
 	sectionId: String
 	examType: String
+	subjectId: String
+	branchId: String
+    subjectDesc: String
+
 }
 
 
@@ -1541,6 +1562,9 @@ input StudentAttendanceUpdateFilter {
 	lectureId: String!
 }
 
+input AcademicExamSettingUpdateFilter{
+    subjectIds: String!
+}
 input AddAuthorizedSignatoryInput {
     signatoryName: String!
     signatoryFatherName: String!

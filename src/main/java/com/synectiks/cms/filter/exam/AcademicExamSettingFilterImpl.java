@@ -1,10 +1,21 @@
 package com.synectiks.cms.filter.exam;
 
-import com.synectiks.cms.constant.CmsConstants;
+import java.math.BigInteger;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
-import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +24,12 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.service.util.DateFormatUtil;
+
+
 
 @Repository
 public class AcademicExamSettingFilterImpl {
@@ -36,62 +51,44 @@ public class AcademicExamSettingFilterImpl {
     @Autowired
     AcademicExamSettingRepository academicExamSettingRepository;
 
+    @Autowired
+    SubjectRepository subjectRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Transactional
-    public QueryResult updateExamStatus(List<AcademicExamSettingUpdateFilter> list) {
-        logger.info("Start updating student attendance data ");
+    public QueryResult updateExam(List<AcademicExamSettingUpdateFilter> list) {
+        logger.info("Start updating Exam  data ");
         QueryResult result = new QueryResult();
         result.setStatusCode(0);
         result.setStatusDesc(CmsConstants.UPDATE_SUCCESS_MESSAGE);
 
         AcademicExamSetting stObj = new AcademicExamSetting();
-        Department department = null;
-        AcademicYear academicyear = null;
-        Section section = null;
-        Batch batch = null;
+        Subject subject = null;
         try {
             for(AcademicExamSettingUpdateFilter sa: list) {
-                String dep = sa.getDepartmentId();//.split("##delimline##");
-                String acyear = sa.getAcademicyearId();
-                String sc = sa.getSectionId();
-                String batches = sa.getBatchId();
-                if(academicyear == null) {
-                    academicyear = this.academicYearRepository.findById(Long.valueOf(acyear)).get();
-                }
-                if(department == null){
-                    department = this.departmentRepository.findById(Long.valueOf(dep)).get();
-                }
-                if(section == null){
-                    section= this.sectionRepository.findById(Long.valueOf(sc)).get();
-                }
-                if(batch == null){
-                    batch= this.batchRepository.findById(Long.valueOf(batches)).get();
-                }
+                String values = sa.getSubjectIds();//.split("##delimline##");
 
-                String data[] = dep.split("#~#");
-                department = this.departmentRepository.findById(Long.valueOf(data[0])).get();
 
-                stObj.setDepartment(department);
-                stObj.setAcademicyear(academicyear);
-                stObj.setSection(section);
-                stObj.setBatch(batch);
+                String data[] = values.split("#~#");
+                subject = this.subjectRepository.findById(Long.valueOf(data[0])).get();
+
+                stObj.setSubject(subject);
+
                 Example<AcademicExamSetting> example = Example.of(stObj);
                 Optional<AcademicExamSetting> osa = this.academicExamSettingRepository.findOne((example));
                 if(osa.isPresent()) {
                     stObj.setId(osa.get().getId());
-                    stObj.setSemester(data[1].equalsIgnoreCase("SEMESTER1") ? SemesterEnum.SEMESTER1 : SemesterEnum.SEMESTER2);
-                    if(data.length > 2) {
-                        stObj.day(data[2]);
-                    }else {
-                        stObj.startTime(null);
-                    }
-                    logger.debug("Updating exam id : "+osa.get().getId());
-                    this.academicExamSettingRepository.save(stObj);
-                    stObj.setId(null);
-                    stObj.setSemester(null);
-                    stObj.setStartTime(null);
+                    stObj.setExamType(osa.get().getExamType());
+                    stObj.setSubject(osa.get().getSubject());
+                    stObj.setDay(osa.get().getDay());
+                    stObj.setStartTime(osa.get().getStartTime());
+                    stObj.setEndTime(osa.get().getEndTime());
+                    stObj.setTotal(osa.get().getTotal());
+                    stObj.setPassing(osa.get().getPassing());
                 }
-//        		}
+//
             }
         }catch(Exception e) {
             logger.error("Method updateExamStatus. "+CmsConstants.UPDATE_FAILURE_MESSAGE, e);
@@ -101,5 +98,43 @@ public class AcademicExamSettingFilterImpl {
 
         return result;
     }
+
+    public List<DailyExamVo> getExamDataForAdmin(ExamListFilterInput filter) throws Exception {
+
+        Branch branch = new Branch();
+        branch.setId(Long.valueOf(filter.getBranchId()));
+        Department department = new Department();
+        department.setId(Long.valueOf(filter.getDepartmentId()));
+        Batch batch = new Batch();
+        batch.setId(Long.valueOf(filter.getBatchId()));
+        Section section = new Section();
+        section.setId(Long.valueOf(filter.getSectionId()));
+
+        List<DailyExamVo> voList = new ArrayList<>();
+        List<Subject> subjectList = getSubjectListByNativeQuery(department, batch);
+
+        return voList;
+    }
+    private List<Subject> getSubjectListByNativeQuery(Department department, Batch batch){
+        String sql = "select id, subject_code, subject_desc from subject where department_id = ? and batch_id = ?  ";
+        Query query = this.entityManager.createNativeQuery(sql);
+
+        query.setParameter(1, department.getId());
+        query.setParameter(2, batch.getId());
+
+        List<Object[]> ls = query.getResultList();
+
+        List<Subject> subjecttList = new ArrayList<>();
+        for (Object[] result : ls){
+            Subject subject = new Subject();
+            subject.setId(((BigInteger)result[0]).longValue() );
+            subject.setSubjectCode((String)result[1]);
+            subject.setSubjectDesc((String)result[2]);
+            subjecttList.add(subject);
+        }
+
+        return subjecttList;
+    }
+
 
 }
