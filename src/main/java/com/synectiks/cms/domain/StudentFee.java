@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -41,7 +41,7 @@ public class StudentFee implements Serializable {
 
     @NotNull
     @Column(name = "due_date", nullable = false)
-    private Date dueDate;
+    private LocalDate dueDate;
 
     @NotNull
     @Column(name = "total_remaining", nullable = false)
@@ -95,16 +95,16 @@ public class StudentFee implements Serializable {
         this.feesDue = feesDue;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public StudentFee dueDate(Date dueDate) {
+    public StudentFee dueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
         return this;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 

@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Religion;
@@ -84,7 +83,7 @@ public class Student implements Serializable {
 
     @NotNull
     @Column(name = "date_of_birth", nullable = false)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @NotNull
     @Column(name = "place_of_birth", nullable = false)
@@ -359,16 +358,16 @@ public class Student implements Serializable {
         this.aadharNo = aadharNo;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public Student dateOfBirth(Date dateOfBirth) {
+    public Student dateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
         return this;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

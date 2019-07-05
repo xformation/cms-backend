@@ -4,6 +4,7 @@ import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,9 +35,9 @@ public class SummaryDataService {
             settingModel.setSbjct(examsetting.getSubject().getSubjectDesc());
             //settingModel.setId(examsetting.getSubject().getId());
             settingModel.setAction(examsetting.getSubject().getId().toString());
-            settingModel.setEndDate(examsetting.getEndDate());
-            settingModel.setStartDate(examsetting.getStartDate());
-            settingModel.setExamDate(examsetting.getExamDate());
+            settingModel.setEndDate(DateFormatUtil.converUtilDateFromLocaDate(examsetting.getEndDate()));
+            settingModel.setStartDate(DateFormatUtil.converUtilDateFromLocaDate(examsetting.getStartDate()));
+            settingModel.setExamDate(DateFormatUtil.converUtilDateFromLocaDate(examsetting.getExamDate()));
             settingModel.setSubExamDate(examsetting.getExamDate().toString());
             settingModel.setSt(examsetting.getExamDate().toString());
             settingModel.setEd(examsetting.getExamDate().toString());
@@ -65,7 +66,7 @@ public class SummaryDataService {
         BeanUtils.copyProperties(ain, aimodel);
 
         aimodel.setDepartmnt(ain.get().getDepartment().getName());
-        aimodel.setExamDate(ain.get().getExamDate());
+        aimodel.setExamDate(DateFormatUtil.converUtilDateFromLocaDate(ain.get().getExamDate()));
         aimodel.setBctch(ain.get().getBatch().getBatch().name());
         aimodel.setSectn(ain.get().getSection().getSection().name());
         aimodel.setBrnch(ain.get().getBranch().getBranchName());
@@ -74,8 +75,8 @@ public class SummaryDataService {
         aimodel.setEd(ain.get().getActions());
         aimodel.setSt(ain.get().getActions());
         aimodel.setAction(ain.get().getActions());
-        aimodel.setStartDate(ain.get().getStartDate());
-        aimodel.setEndDate(ain.get().getEndDate());
+        aimodel.setStartDate(DateFormatUtil.converUtilDateFromLocaDate(ain.get().getStartDate()));
+        aimodel.setEndDate(DateFormatUtil.converUtilDateFromLocaDate(ain.get().getEndDate()));
         return aimodel;
 
     }

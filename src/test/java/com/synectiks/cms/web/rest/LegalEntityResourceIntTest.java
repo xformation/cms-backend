@@ -66,8 +66,8 @@ public class LegalEntityResourceIntTest {
     private static final TypeOfCollege DEFAULT_TYPE_OF_COLLEGE = TypeOfCollege.PRIVATE;
     private static final TypeOfCollege UPDATED_TYPE_OF_COLLEGE = TypeOfCollege.PUBLIC;
 
-    private static final Date DEFAULT_DATE_OF_INCORPORATION = new Date();
-    private static final Date UPDATED_DATE_OF_INCORPORATION = new Date();
+    private static final LocalDate DEFAULT_DATE_OF_INCORPORATION =  LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_OF_INCORPORATION = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_REGISTERED_OFFICE_ADDRESS_1 = "AAAAAAAAAA";
     private static final String UPDATED_REGISTERED_OFFICE_ADDRESS_1 = "BBBBBBBBBB";
@@ -105,8 +105,8 @@ public class LegalEntityResourceIntTest {
     private static final String DEFAULT_PF_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PF_NUMBER = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_PF_REGISTRATION_DATE = new Date();
-    private static final Date UPDATED_PF_REGISTRATION_DATE = new Date();
+    private static final LocalDate DEFAULT_PF_REGISTRATION_DATE =LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_PF_REGISTRATION_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final Long DEFAULT_PF_SIGNATORY = 1L;
     private static final Long UPDATED_PF_SIGNATORY = 2L;
@@ -114,8 +114,8 @@ public class LegalEntityResourceIntTest {
     private static final String DEFAULT_ESI_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_ESI_NUMBER = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_ESI_REGISTRATION_DATE = new Date();
-    private static final Date UPDATED_ESI_REGISTRATION_DATE = new Date();
+    private static final LocalDate DEFAULT_ESI_REGISTRATION_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_ESI_REGISTRATION_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final Long DEFAULT_ESI_SIGNATORY = 1L;
     private static final Long UPDATED_ESI_SIGNATORY = 2L;
@@ -123,8 +123,8 @@ public class LegalEntityResourceIntTest {
     private static final String DEFAULT_PT_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PT_NUMBER = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_PT_REGISTRATION_DATE = new Date();
-    private static final Date UPDATED_PT_REGISTRATION_DATE = new Date();
+    private static final LocalDate DEFAULT_PT_REGISTRATION_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_PT_REGISTRATION_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final Long DEFAULT_PT_SIGNATORY = 1L;
     private static final Long UPDATED_PT_SIGNATORY = 2L;
@@ -158,8 +158,6 @@ public class LegalEntityResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restLegalEntityMockMvc;
 
@@ -173,8 +171,7 @@ public class LegalEntityResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -688,7 +685,7 @@ public class LegalEntityResourceIntTest {
             .andExpect(jsonPath("$.[*].ptRegistrationDate").value(hasItem(DEFAULT_PT_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getLegalEntity() throws Exception {

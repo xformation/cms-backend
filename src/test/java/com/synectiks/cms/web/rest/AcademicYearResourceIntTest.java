@@ -53,11 +53,11 @@ public class AcademicYearResourceIntTest {
     private static final String DEFAULT_YEAR = "AAAAAAAAAA";
     private static final String UPDATED_YEAR = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_START_DATE = new Date();
-    private static final Date UPDATED_START_DATE = new Date();
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_END_DATE = new Date();
-    private static final Date UPDATED_END_DATE = new Date();
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE =LocalDate.now(ZoneId.systemDefault());
 
     private static final Status DEFAULT_STATUS = Status.ACTIVE;
     private static final Status UPDATED_STATUS = Status.DEACTIVE;
@@ -266,7 +266,7 @@ public class AcademicYearResourceIntTest {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAcademicYear() throws Exception {

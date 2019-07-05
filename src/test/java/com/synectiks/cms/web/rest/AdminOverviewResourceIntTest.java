@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
@@ -58,8 +59,8 @@ import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
 @SpringBootTest(classes = CmsApp.class)
 public class AdminOverviewResourceIntTest {
 
-    private static final Date DEFAULT_CHOOSE_DATE = new Date();
-    private static final Date UPDATED_CHOOSE_DATE = new Date();
+    private static final LocalDate DEFAULT_CHOOSE_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_CHOOSE_DATE =  LocalDate.now(ZoneId.systemDefault());
 
     private static final SectionEnum DEFAULT_SECTION = SectionEnum.A;
     private static final SectionEnum UPDATED_SECTION = SectionEnum.B;
@@ -94,7 +95,7 @@ public class AdminOverviewResourceIntTest {
 
     @Autowired
     private AdminOverviewMapper adminOverviewMapper;
-    
+
 
     @Autowired
     private AdminOverviewService adminOverviewService;
@@ -426,7 +427,7 @@ public class AdminOverviewResourceIntTest {
             .andExpect(jsonPath("$.[*].lectureSeven").value(hasItem(DEFAULT_LECTURE_SEVEN.toString())))
             .andExpect(jsonPath("$.[*].lectureEight").value(hasItem(DEFAULT_LECTURE_EIGHT.toString())));
     }
-    
+
 
     @Test
     @Transactional

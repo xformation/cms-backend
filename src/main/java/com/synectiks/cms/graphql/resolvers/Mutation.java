@@ -614,7 +614,7 @@ public class Mutation implements GraphQLMutationResolver {
 
         admissionApplication.setAdmissionStatus(addAdmissionApplicationInput.getAdmissionStatus());
         admissionApplication.setCourse(addAdmissionApplicationInput.getCourse());
-        admissionApplication.setAdmissionDate(addAdmissionApplicationInput.getAdmissionDate());
+        admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getAdmissionDate()));
         admissionApplication.setComments(addAdmissionApplicationInput.getComments());
         admissionApplicationRepository.save(admissionApplication);
         return new AddAdmissionApplicationPayload(admissionApplication);
@@ -631,7 +631,7 @@ public class Mutation implements GraphQLMutationResolver {
             admissionApplication.setCourse(updateAdmissionApplicationInput.getCourse());
         }
         if (updateAdmissionApplicationInput.getAdmissionDate() != null) {
-            admissionApplication.setAdmissionDate(updateAdmissionApplicationInput.getAdmissionDate());
+            admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionApplicationInput.getAdmissionDate()));
         }
         if (updateAdmissionApplicationInput.getComments() != null) {
             admissionApplication.setComments(updateAdmissionApplicationInput.getComments());
@@ -669,7 +669,7 @@ public class Mutation implements GraphQLMutationResolver {
         academicExamSetting.setBranch(branch);
         academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
         academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
-        academicExamSetting.setExamDate(addAcademicExamSettingInput.getExamDate());
+        academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicExamSettingInput.getExamDate()));
         academicExamSetting.setDay(addAcademicExamSettingInput.getDay());
         academicExamSetting.setDuration(addAcademicExamSettingInput.getDuration());
         academicExamSetting.setStartTime(addAcademicExamSettingInput.getStartTime());
@@ -678,8 +678,8 @@ public class Mutation implements GraphQLMutationResolver {
         academicExamSetting.setTotal(addAcademicExamSettingInput.getTotal());
         academicExamSetting.setPassing(addAcademicExamSettingInput.getPassing());
         academicExamSetting.setActions(addAcademicExamSettingInput.getActions());
-        academicExamSetting.setStartDate(addAcademicExamSettingInput.getStartDate());
-        academicExamSetting.setEndDate(addAcademicExamSettingInput.getEndDate());
+        academicExamSetting.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicExamSettingInput.getStartDate()));
+        academicExamSetting.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicExamSettingInput.getEndDate()));
         academicExamSettingRepository.save(academicExamSetting);
         return new AddAcademicExamSettingPayload(academicExamSetting);
     }
@@ -695,7 +695,7 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setSemester(updateAcademicExamSettingInput.getSemester());
         }
         if (updateAcademicExamSettingInput.getExamDate() != null) {
-            academicExamSetting.setExamDate(updateAcademicExamSettingInput.getExamDate());
+            academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicExamSettingInput.getExamDate()));
         }
         if (updateAcademicExamSettingInput.getDay() != null) {
             academicExamSetting.setDay(updateAcademicExamSettingInput.getDay());
@@ -722,10 +722,10 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setActions(updateAcademicExamSettingInput.getActions());
         }
         if (updateAcademicExamSettingInput.getStartDate() != null) {
-            academicExamSetting.setStartDate(updateAcademicExamSettingInput.getStartDate());
+            academicExamSetting.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicExamSettingInput.getStartDate()));
         }
         if (updateAcademicExamSettingInput.getEndDate() != null) {
-            academicExamSetting.setEndDate(updateAcademicExamSettingInput.getEndDate());
+            academicExamSetting.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicExamSettingInput.getEndDate()));
         }
         if (updateAcademicExamSettingInput.getDepartmentId() != null) {
             final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();
@@ -860,11 +860,7 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public AddAdmissionEnquiryPayload addAdmissionEnquiry(AddAdmissionEnquiryInput addAdmissionEnquiryInput) {
-
-
         final AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
-
-
         admissionEnquiry.setStudentName(addAdmissionEnquiryInput.getStudentName());
         admissionEnquiry.setMobileNumber(addAdmissionEnquiryInput.getMobileNumber());
         admissionEnquiry.setAlternateMobileNumber(addAdmissionEnquiryInput.getAlternateMobileNumber());
@@ -873,17 +869,17 @@ public class Mutation implements GraphQLMutationResolver {
         admissionEnquiry.setModeOfEnquiry(addAdmissionEnquiryInput.getModeOfEnquiry());
         admissionEnquiry.setStatus(addAdmissionEnquiryInput.getStatus());
         admissionEnquiry.setDescription(addAdmissionEnquiryInput.getDescription());
-        admissionEnquiry.setEnquiryDate(addAdmissionEnquiryInput.getEnquiryDate());
-        admissionEnquiry.setUpdatedOn(addAdmissionEnquiryInput.getUpdatedOn());
+        admissionEnquiry.setEnquiryDate(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionEnquiryInput.getEnquiryDate()));
+        admissionEnquiry.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionEnquiryInput.getUpdatedOn()));
         admissionEnquiry.setUpdatedBy(addAdmissionEnquiryInput.getUpdatedBy());
         Branch branch = branchRepository.findById(addAdmissionEnquiryInput.getBranchId()).get();
         AdmissionApplication admissionApplication = admissionApplicationRepository.findById(addAdmissionEnquiryInput.getAdmissionApplicationId()).get();
         admissionEnquiry.setBranch(branch);
         admissionEnquiry.setAdmissionApplication(admissionApplication);
-
         admissionEnquiryRepository.save(admissionEnquiry);
         return new AddAdmissionEnquiryPayload(admissionEnquiry);
     }
+
 
     public UpdateAdmissionEnquiryPayload updateAdmissionEnquiry(UpdateAdmissionEnquiryInput updateAdmissionEnquiryInput) {
         AdmissionEnquiry admissionEnquiry = admissionEnquiryRepository.findById(updateAdmissionEnquiryInput.getId()).get();
@@ -915,10 +911,10 @@ public class Mutation implements GraphQLMutationResolver {
             admissionEnquiry.setDescription(updateAdmissionEnquiryInput.getDescription());
         }
         if (updateAdmissionEnquiryInput.getEnquiryDate() != null) {
-            admissionEnquiry.setEnquiryDate(updateAdmissionEnquiryInput.getEnquiryDate());
+            admissionEnquiry.setEnquiryDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionEnquiryInput.getEnquiryDate()));
         }
         if (updateAdmissionEnquiryInput.getUpdatedOn() != null) {
-            admissionEnquiry.setUpdatedOn(updateAdmissionEnquiryInput.getUpdatedOn());
+            admissionEnquiry.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionEnquiryInput.getUpdatedOn()));
         }
         if (updateAdmissionEnquiryInput.getUpdatedBy() != null) {
             admissionEnquiry.setUpdatedBy(updateAdmissionEnquiryInput.getUpdatedBy());
@@ -931,9 +927,7 @@ public class Mutation implements GraphQLMutationResolver {
             final AdmissionApplication admissionApplication = admissionApplicationRepository.findById(updateAdmissionEnquiryInput.getAdmissionApplicationId()).get();
             admissionEnquiry.setAdmissionApplication(admissionApplication);
         }
-
         admissionEnquiryRepository.save(admissionEnquiry);
-
         return new UpdateAdmissionEnquiryPayload(admissionEnquiry);
     }
 
@@ -1007,7 +1001,7 @@ public class Mutation implements GraphQLMutationResolver {
             student.setAadharNo(updateStudentInput.getAadharNo());
         }
         if (updateStudentInput.getDateOfBirth() != null) {
-            student.setDateOfBirth(updateStudentInput.getDateOfBirth());
+            student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentInput.getDateOfBirth()));
         }
         if (updateStudentInput.getPlaceOfBirth() != null) {
             student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
@@ -1672,7 +1666,7 @@ public class Mutation implements GraphQLMutationResolver {
         teacher.setMotherMiddleName(addTeacherInput.getMotherMiddleName());
         teacher.setMotherLastName(addTeacherInput.getMotherLastName());
         teacher.setAadharNo(addTeacherInput.getAadharNo());
-        teacher.setDateOfBirth(addTeacherInput.getDateOfBirth());
+        teacher.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addTeacherInput.getDateOfBirth()));
         teacher.setPlaceOfBirth(addTeacherInput.getPlaceOfBirth());
         teacher.setReligion(addTeacherInput.getReligion());
         teacher.setCaste(addTeacherInput.getCaste());
@@ -1754,7 +1748,7 @@ public class Mutation implements GraphQLMutationResolver {
             teacher.setAadharNo(updateTeacherInput.getAadharNo());
         }
         if (updateTeacherInput.getDateOfBirth() != null) {
-            teacher.setDateOfBirth(updateTeacherInput.getDateOfBirth());
+            teacher.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateTeacherInput.getDateOfBirth()));
         }
         if (updateTeacherInput.getPlaceOfBirth() != null) {
             teacher.setPlaceOfBirth(updateTeacherInput.getPlaceOfBirth());
@@ -1949,7 +1943,7 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setRegisteredOfficeAddress3(addLegalEntityInput.getRegisteredOfficeAddress3());
         legalEntity.setRegisteredOfficeAddress4(addLegalEntityInput.getRegisteredOfficeAddress4());
         legalEntity.setRegisteredOfficeAddress5(addLegalEntityInput.getRegisteredOfficeAddress5());
-        legalEntity.setDateOfIncorporation(addLegalEntityInput.getDateOfIncorporation());
+        legalEntity.setDateOfIncorporation(DateFormatUtil.convertLocalDateFromUtilDate(addLegalEntityInput.getDateOfIncorporation()));
         legalEntity.setCollegeIdentificationNumber(addLegalEntityInput.getCollegeIdentificationNumber());
         legalEntity.setPan(addLegalEntityInput.getPan());
         legalEntity.setTan(addLegalEntityInput.getTan());
@@ -1957,13 +1951,13 @@ public class Mutation implements GraphQLMutationResolver {
         legalEntity.setCitTdsLocation(addLegalEntityInput.getCitTdsLocation());
         legalEntity.setFormSignatory(addLegalEntityInput.getFormSignatory());
         legalEntity.setPfNumber(addLegalEntityInput.getPfNumber());
-        legalEntity.setPfRegistrationDate(addLegalEntityInput.getPfRegistrationDate());
+        legalEntity.setPfRegistrationDate(DateFormatUtil.convertLocalDateFromUtilDate(addLegalEntityInput.getPfRegistrationDate()));
         legalEntity.setPfSignatory(addLegalEntityInput.getPfSignatory());
         legalEntity.setEsiNumber(addLegalEntityInput.getEsiNumber());
-        legalEntity.setEsiRegistrationDate(addLegalEntityInput.getEsiRegistrationDate());
+        legalEntity.setEsiRegistrationDate(DateFormatUtil.convertLocalDateFromUtilDate(addLegalEntityInput.getEsiRegistrationDate()));
         legalEntity.setEsiSignatory(addLegalEntityInput.getEsiSignatory());
         legalEntity.setPtNumber(addLegalEntityInput.getPtNumber());
-        legalEntity.setPtRegistrationDate(addLegalEntityInput.getPtRegistrationDate());
+        legalEntity.setPtRegistrationDate(DateFormatUtil.convertLocalDateFromUtilDate(addLegalEntityInput.getPtRegistrationDate()));
         legalEntity.setPtSignatory(addLegalEntityInput.getPtSignatory());
         Branch branch = branchRepository.findById(addLegalEntityInput.getBranchId()).get();
         College college = collegeRepository.findById(addLegalEntityInput.getCollegeId()).get();
@@ -2008,7 +2002,7 @@ public class Mutation implements GraphQLMutationResolver {
             legalEntity.setRegisteredOfficeAddress5(updateLegalEntityInput.getRegisteredOfficeAddress5());
         }
         if (updateLegalEntityInput.getDateOfIncorporation() != null) {
-            legalEntity.setDateOfIncorporation(updateLegalEntityInput.getDateOfIncorporation());
+            legalEntity.setDateOfIncorporation(DateFormatUtil.convertLocalDateFromUtilDate(updateLegalEntityInput.getDateOfIncorporation()));
         }
 
         if (updateLegalEntityInput.getCollegeIdentificationNumber() != null) {
@@ -2033,7 +2027,7 @@ public class Mutation implements GraphQLMutationResolver {
             legalEntity.setPfNumber(updateLegalEntityInput.getPfNumber());
         }
         if (updateLegalEntityInput.getPfRegistrationDate() != null) {
-            legalEntity.setPfRegistrationDate(updateLegalEntityInput.getPfRegistrationDate());
+            legalEntity.setPfRegistrationDate(DateFormatUtil.convertLocalDateFromUtilDate(updateLegalEntityInput.getPfRegistrationDate()));
         }
         if (updateLegalEntityInput.getPfSignatory() != null) {
             legalEntity.setPfSignatory(updateLegalEntityInput.getPfSignatory());
@@ -2043,14 +2037,14 @@ public class Mutation implements GraphQLMutationResolver {
             legalEntity.setEsiNumber(updateLegalEntityInput.getEsiNumber());
         }
         if (updateLegalEntityInput.getEsiRegistrationDate() != null) {
-            legalEntity.setEsiRegistrationDate(updateLegalEntityInput.getEsiRegistrationDate());
+            legalEntity.setEsiRegistrationDate(DateFormatUtil.convertLocalDateFromUtilDate(updateLegalEntityInput.getEsiRegistrationDate()));
         }
         if (updateLegalEntityInput.getEsiSignatory() != null) {
             legalEntity.setEsiSignatory(updateLegalEntityInput.getEsiSignatory());
         }
 
         if (updateLegalEntityInput.getPtRegistrationDate() != null) {
-            legalEntity.setPtRegistrationDate(updateLegalEntityInput.getPtRegistrationDate());
+            legalEntity.setPtRegistrationDate(DateFormatUtil.convertLocalDateFromUtilDate(updateLegalEntityInput.getPtRegistrationDate()));
         }
         if (updateLegalEntityInput.getPtSignatory() != null) {
             legalEntity.setPtSignatory(updateLegalEntityInput.getPtSignatory());
@@ -2081,6 +2075,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new UpdateLegalEntityPayload(legalEntity);
     }
 
+
     public AddStudentExamReportPayload addStudentExamReport(AddStudentExamReportInput addStudentExamReportInput) {
         final StudentExamReport studentExamReport = new StudentExamReport();
 
@@ -2097,9 +2092,9 @@ public class Mutation implements GraphQLMutationResolver {
         studentExamReport.setStudent(student);
         studentExamReport.setMarksObtained(addStudentExamReportInput.getMarksObtained());
         studentExamReport.setComments(addStudentExamReportInput.getComments());
-        studentExamReport.setCreatedOn(addStudentExamReportInput.getCreatedOn());
+        studentExamReport.setCreatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addStudentExamReportInput.getCreatedOn()));
         studentExamReport.setCreatedBy(addStudentExamReportInput.getCreatedBy());
-        studentExamReport.setUpdatedOn(addStudentExamReportInput.getUpdatedOn());
+        studentExamReport.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addStudentExamReportInput.getUpdatedOn()));
         studentExamReport.setUpdatedBy(addStudentExamReportInput.getUpdatedBy());
 
         studentExamReportRepository.save(studentExamReport);
@@ -2117,13 +2112,13 @@ public class Mutation implements GraphQLMutationResolver {
             studentExamReport.setComments(updateStudentExamReportInput.getComments());
         }
         if (updateStudentExamReportInput.getCreatedOn() != null) {
-            studentExamReport.setCreatedOn(updateStudentExamReportInput.getCreatedOn());
+            studentExamReport.setCreatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentExamReportInput.getCreatedOn()));
         }
         if (updateStudentExamReportInput.getCreatedBy() != null) {
             studentExamReport.setCreatedBy(updateStudentExamReportInput.getCreatedBy());
         }
         if (updateStudentExamReportInput.getUpdatedOn() != null) {
-            studentExamReport.setUpdatedOn(updateStudentExamReportInput.getUpdatedOn());
+            studentExamReport.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentExamReportInput.getUpdatedOn()));
         }
         if (updateStudentExamReportInput.getUpdatedBy() != null) {
             studentExamReport.setUpdatedBy(updateStudentExamReportInput.getUpdatedBy());
@@ -2164,8 +2159,8 @@ public class Mutation implements GraphQLMutationResolver {
     public AddAcademicYearPayload addAcademicYear(AddAcademicYearInput addAcademicYearInput) {
         final AcademicYear academicYear = new AcademicYear();
         academicYear.setYear(addAcademicYearInput.getYear());
-        academicYear.setStartDate(addAcademicYearInput.getStartDate());
-        academicYear.setEndDate(addAcademicYearInput.getEndDate());
+        academicYear.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicYearInput.getStartDate()));
+        academicYear.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicYearInput.getEndDate()));
         academicYear.setStatus(addAcademicYearInput.getStatus());
         academicYearRepository.save(academicYear);
         return new AddAcademicYearPayload(academicYear);
@@ -2174,7 +2169,7 @@ public class Mutation implements GraphQLMutationResolver {
     public AddAdminAttendancePayLoad addAdminAttendance(AddAdminAttendanceInput addAdminAttendanceInput) {
         final AdminAttendance adminAttendance = new AdminAttendance();
         adminAttendance.setUpdatedBy(addAdminAttendanceInput.getUpdatedBy());
-        adminAttendance.setUpdatedOn(addAdminAttendanceInput.getUpdatedOn());
+        adminAttendance.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addAdminAttendanceInput.getUpdatedOn()));
         Branch branch = branchRepository.findById(addAdminAttendanceInput.getBranchId()).get();
         final College college = collegeRepository.findById(addAdminAttendanceInput.getCollegeId()).get();
         final Lecture lecture = lectureRepository.findById(addAdminAttendanceInput.getLectureId()).get();
@@ -2199,7 +2194,7 @@ public class Mutation implements GraphQLMutationResolver {
             adminAttendance.setUpdatedBy(updateAdminAttendanceInput.getUpdatedBy());
         }
         if (updateAdminAttendanceInput.getUpdatedOn() != null) {
-            adminAttendance.setUpdatedOn(updateAdminAttendanceInput.getUpdatedOn());
+            adminAttendance.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateAdminAttendanceInput.getUpdatedOn()));
         }
         if (updateAdminAttendanceInput.getSectionId() != null) {
             final Section section = sectionRepository.findById(updateAdminAttendanceInput.getSectionId()).get();
@@ -2252,11 +2247,10 @@ public class Mutation implements GraphQLMutationResolver {
             academicYear.setYear(updateAcademicYearInput.getYear());
         }
         if (updateAcademicYearInput.getStartDate() != null) {
-            academicYear.setStartDate(updateAcademicYearInput.getStartDate());
+            academicYear.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicYearInput.getStartDate()));
         }
-
         if (updateAcademicYearInput.getEndDate() != null) {
-            academicYear.setEndDate(updateAcademicYearInput.getEndDate());
+            academicYear.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicYearInput.getEndDate()));
         }
 
         if (updateAcademicYearInput.getStatus() != null){
@@ -2278,7 +2272,7 @@ public class Mutation implements GraphQLMutationResolver {
         final AcademicYear academicYear = academicYearRepository.findById(addHolidayInput.getAcademicYearId()).get();
         final Holiday holiday = new Holiday();
         holiday.setHolidayDesc(addHolidayInput.getHolidayDesc());
-        holiday.setHolidayDate(addHolidayInput.getHolidayDate());
+        holiday.setHolidayDate(DateFormatUtil.convertLocalDateFromUtilDate(addHolidayInput.getHolidayDate()));
         holiday.setHolidayStatus(addHolidayInput.getHolidayStatus());
         holiday.setAcademicyear(academicYear);
         holidayRepository.save(holiday);
@@ -2291,7 +2285,7 @@ public class Mutation implements GraphQLMutationResolver {
             holiday.setHolidayDesc(updateHolidayInput.getHolidayDesc());
         }
         if (updateHolidayInput.getHolidayDate() != null) {
-            holiday.setHolidayDate(updateHolidayInput.getHolidayDate());
+            holiday.setHolidayDate(DateFormatUtil.convertLocalDateFromUtilDate(updateHolidayInput.getHolidayDate()));
         }
 
         if (updateHolidayInput.getHolidayStatus() != null) {
@@ -2316,8 +2310,8 @@ public class Mutation implements GraphQLMutationResolver {
         final AcademicYear academicYear = academicYearRepository.findById(addTermInput.getAcademicYearId()).get();
         final Term term = new Term();
         term.setTermsDesc(addTermInput.getTermsDesc());
-        term.setStartDate(addTermInput.getStartDate());
-        term.setEndDate(addTermInput.getEndDate());
+        term.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addTermInput.getStartDate()));
+        term.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addTermInput.getEndDate()));
         term.setTermStatus(addTermInput.getTermStatus());
         term.setAcademicyear(academicYear);
         termRepository.save(term);
@@ -2332,13 +2326,11 @@ public class Mutation implements GraphQLMutationResolver {
             term.setTermsDesc(updateTermInput.getTermsDesc());
         }
         if (updateTermInput.getStartDate() != null) {
-            term.setStartDate(updateTermInput.getStartDate());
+            term.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateTermInput.getStartDate()));
         }
-
         if (updateTermInput.getEndDate() != null) {
-            term.setEndDate(updateTermInput.getEndDate());
+            term.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateTermInput.getEndDate()));
         }
-
         if (updateTermInput.getTermStatus() != null) {
             term.setTermStatus(updateTermInput.getTermStatus());
         }
@@ -2438,8 +2430,8 @@ public class Mutation implements GraphQLMutationResolver {
     public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
         final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
         final Lecture lecture = new Lecture();
-        lecture.setLecDate(addLectureInput.getLecDate());
-        lecture.setLastUpdatedOn(addLectureInput.getLastUpdatedOn());
+        lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLecDate()));
+        lecture.setLastUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLastUpdatedOn()));
         lecture.setLastUpdatedBy(addLectureInput.getLastUpdatedBy());
         lecture.setStartTime(addLectureInput.getStartTime());
         lecture.setEndTime(addLectureInput.getEndTime());
@@ -2452,13 +2444,13 @@ public class Mutation implements GraphQLMutationResolver {
         Lecture lecture = lectureRepository.findById(updateLectureInput.getId()).get();
 
         if (updateLectureInput.getLecDate() != null) {
-            lecture.setLecDate(updateLectureInput.getLecDate());
+            lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(updateLectureInput.getLecDate()));
         }
         if (updateLectureInput.getLastUpdatedBy() != null) {
             lecture.setLastUpdatedBy(updateLectureInput.getLastUpdatedBy());
         }
         if (updateLectureInput.getLastUpdatedOn() != null) {
-            lecture.setLastUpdatedOn(updateLectureInput.getLastUpdatedOn());
+            lecture.setLastUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateLectureInput.getLastUpdatedOn()));
         }
         if (updateLectureInput.getStartTime() != null) {
             lecture.setStartTime(updateLectureInput.getStartTime());
@@ -2664,7 +2656,7 @@ public class Mutation implements GraphQLMutationResolver {
         facility.setBranch(branch);
         facility.setName(addFacilityInput.getName());
         facility.setStatus(Status.ACTIVE);
-        facility.setStartDate(addFacilityInput.getStartDate());
+        facility.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addFacilityInput.getStartDate()));
         
         facilityRepository.save(facility);
 
@@ -2681,18 +2673,19 @@ public class Mutation implements GraphQLMutationResolver {
             facility.setStatus(updateFacilityInput.getStatus());
         }
         if (updateFacilityInput.getStartDate() != null) {
-            facility.setStartDate(updateFacilityInput.getStartDate());
+            facility.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateFacilityInput.getStartDate()));
         }
         if (updateFacilityInput.getEndDate() != null) {
-            facility.setEndDate(updateFacilityInput.getEndDate());
+            facility.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateFacilityInput.getEndDate()));
         }
         if (updateFacilityInput.getSuspandStartDate() != null) {
-            facility.setSuspandStartDate(updateFacilityInput.getSuspandStartDate());
+            facility.setSuspandStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateFacilityInput.getSuspandStartDate()));
         }
         if (updateFacilityInput.getSuspandEndDate() != null) {
-            facility.setSuspandEndDate(updateFacilityInput.getSuspandEndDate());
+            facility.setSuspandEndDate(DateFormatUtil.convertLocalDateFromUtilDate (updateFacilityInput.getSuspandEndDate()));
         }
-        
+
+
         if (updateFacilityInput.getBranchId() != null) {
             Branch branch = branchRepository.findById(updateFacilityInput.getBranchId()).get();
             facility.setBranch(branch);

@@ -54,8 +54,8 @@ public class HolidayResourceIntTest {
     private static final String DEFAULT_HOLIDAY_DESC = "AAAAAAAAAA";
     private static final String UPDATED_HOLIDAY_DESC = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_HOLIDAY_DATE = new Date();
-    private static final Date UPDATED_HOLIDAY_DATE = new Date();
+    private static final LocalDate DEFAULT_HOLIDAY_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_HOLIDAY_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final Status DEFAULT_HOLIDAY_STATUS = Status.ACTIVE;
     private static final Status UPDATED_HOLIDAY_STATUS = Status.DEACTIVE;
@@ -89,8 +89,6 @@ public class HolidayResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restHolidayMockMvc;
 
@@ -104,8 +102,7 @@ public class HolidayResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -246,7 +243,7 @@ public class HolidayResourceIntTest {
             .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].holidayStatus").value(hasItem(DEFAULT_HOLIDAY_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getHoliday() throws Exception {

@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
@@ -57,8 +58,8 @@ public class StudentFeeResourceIntTest {
     private static final String DEFAULT_FEES_DUE = "AAAAAAAAAA";
     private static final String UPDATED_FEES_DUE = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_DUE_DATE = new Date();
-    private static final Date UPDATED_DUE_DATE = new Date();
+    private static final LocalDate DEFAULT_DUE_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DUE_DATE =  LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_TOTAL_REMAINING = "AAAAAAAAAA";
     private static final String UPDATED_TOTAL_REMAINING = "BBBBBBBBBB";
@@ -289,7 +290,7 @@ public class StudentFeeResourceIntTest {
             .andExpect(jsonPath("$.[*].dueDate").value(hasItem(DEFAULT_DUE_DATE.toString())))
             .andExpect(jsonPath("$.[*].totalRemaining").value(hasItem(DEFAULT_TOTAL_REMAINING.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getStudentFee() throws Exception {

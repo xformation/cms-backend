@@ -49,8 +49,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CmsApp.class)
 public class AdminAttendanceResourceIntTest {
 
-    private static final Date DEFAULT_UPDATED_ON = new Date();
-    private static final Date UPDATED_UPDATED_ON = new Date();
+    private static final LocalDate DEFAULT_UPDATED_ON = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
@@ -177,7 +177,7 @@ public class AdminAttendanceResourceIntTest {
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAdminAttendance() throws Exception {

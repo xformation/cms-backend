@@ -366,7 +366,7 @@ public class StudentAttendanceFilterImpl  {
     		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
     		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
     	}
-    	lec.setLecDate(lecDate);
+    	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
     	lec.setAttendancemaster(attendanceMaster);
     	Example<Lecture> example = Example.of(lec);
     	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
@@ -396,7 +396,7 @@ public class StudentAttendanceFilterImpl  {
 //    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
 //    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
 //    	}
-    	lec.setLecDate(lecDate);
+    	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
     	lec.setId(Long.valueOf(filter.getLectureId()));
 //    	lec.setAttendancemaster(attendanceMaster);
     	Example<Lecture> example = Example.of(lec);

@@ -61,8 +61,8 @@ public class AcademicExamSettingResourceIntTest {
     private static final String DEFAULT_SUBJECT = "AAAAAAAAAA";
     private static final String UPDATED_SUBJECT = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_EXAM_DATE = new Date();
-    private static final Date UPDATED_EXAM_DATE = new Date();
+    private static final LocalDate DEFAULT_EXAM_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_EXAM_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_DAY = "AAAAAAAAAA";
     private static final String UPDATED_DAY = "BBBBBBBBBB";
@@ -88,11 +88,11 @@ public class AcademicExamSettingResourceIntTest {
     private static final String DEFAULT_ACTIONS = "AAAAAAAAAA";
     private static final String UPDATED_ACTIONS = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_START_DATE = new Date();
-    private static final Date UPDATED_START_DATE = new Date();
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_END_DATE = new Date();
-    private static final Date UPDATED_END_DATE = new Date();
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private AcademicExamSettingRepository academicExamSettingRepository;
@@ -123,8 +123,6 @@ public class AcademicExamSettingResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restAcademicExamSettingMockMvc;
 
@@ -138,8 +136,8 @@ public class AcademicExamSettingResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
+
     }
 
     /**
@@ -483,7 +481,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAcademicExamSetting() throws Exception {

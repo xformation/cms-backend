@@ -15,6 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -59,17 +61,17 @@ public class FacilityResourceIntTest {
     private static final Status DEFAULT_STATUS = Status.ACTIVE;
     private static final Status UPDATED_STATUS = Status.DEACTIVE;
 
-    private static final Date DEFAULT_START_DATE = new Date();
-    private static final Date UPDATED_START_DATE = new Date();
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_END_DATE = new Date();
-    private static final Date UPDATED_END_DATE = new Date();
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_SUSPAND_START_DATE = new Date();
-    private static final Date UPDATED_SUSPAND_START_DATE = new Date();
+    private static final LocalDate DEFAULT_SUSPAND_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_SUSPAND_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_SUSPAND_END_DATE = new Date();
-    private static final Date UPDATED_SUSPAND_END_DATE = new Date();
+    private static final LocalDate DEFAULT_SUSPAND_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_SUSPAND_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private FacilityRepository facilityRepository;
@@ -77,7 +79,7 @@ public class FacilityResourceIntTest {
 
     @Autowired
     private FacilityMapper facilityMapper;
-    
+
 
     @Autowired
     private FacilityService facilityService;
@@ -245,7 +247,7 @@ public class FacilityResourceIntTest {
             .andExpect(jsonPath("$.[*].suspandStartDate").value(hasItem(DEFAULT_SUSPAND_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())));
     }
-    
+
 
     @Test
     @Transactional

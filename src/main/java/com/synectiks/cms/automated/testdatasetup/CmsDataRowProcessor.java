@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.synectiks.cms.service.util.DateFormatUtil;
 import org.dhatim.fastexcel.reader.Cell;
 import org.dhatim.fastexcel.reader.CellType;
 import org.dhatim.fastexcel.reader.Row;
@@ -509,7 +510,7 @@ public class CmsDataRowProcessor {
 			List<Date> dtList = filterDates(day);
 
 			dtList.forEach(dt -> {
-				lectue.setLecDate(dt);
+				lectue.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(dt));
 				if (!this.lectureRepository.exists(Example.of(lectue))) {
 					try {
 						this.lectureService.createLectureSchedule(

@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
@@ -46,7 +45,7 @@ public class AdmissionApplication implements Serializable {
 
     @NotNull
     @Column(name = "admission_date", nullable = false)
-    private Date admissionDate;
+    private LocalDate admissionDate;
 
     @NotNull
     @Column(name = "comments", nullable = false)
@@ -91,16 +90,16 @@ public class AdmissionApplication implements Serializable {
         this.course = course;
     }
 
-    public Date getAdmissionDate() {
+    public LocalDate getAdmissionDate() {
         return admissionDate;
     }
 
-    public AdmissionApplication admissionDate(Date admissionDate) {
+    public AdmissionApplication admissionDate(LocalDate admissionDate) {
         this.admissionDate = admissionDate;
         return this;
     }
 
-    public void setAdmissionDate(Date admissionDate) {
+    public void setAdmissionDate(LocalDate admissionDate) {
         this.admissionDate = admissionDate;
     }
 

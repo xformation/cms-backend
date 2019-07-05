@@ -54,11 +54,11 @@ public class TermResourceIntTest {
     private static final String DEFAULT_TERMS_DESC = "AAAAAAAAAA";
     private static final String UPDATED_TERMS_DESC = "BBBBBBBBBB";
 
-    private static final Date DEFAULT_START_DATE = new Date();
-    private static final Date UPDATED_START_DATE = new Date();
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_END_DATE = new Date();
-    private static final Date UPDATED_END_DATE = new Date();
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final Status DEFAULT_TERM_STATUS = Status.ACTIVE;
     private static final Status UPDATED_TERM_STATUS = Status.DEACTIVE;
@@ -92,8 +92,6 @@ public class TermResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restTermMockMvc;
 
@@ -107,8 +105,7 @@ public class TermResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -271,7 +268,7 @@ public class TermResourceIntTest {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].termStatus").value(hasItem(DEFAULT_TERM_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTerm() throws Exception {

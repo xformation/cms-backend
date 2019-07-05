@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
@@ -45,7 +44,7 @@ public class AcademicExamSetting implements Serializable {
 
     @NotNull
     @Column(name = "exam_date", nullable = false)
-    private Date examDate;
+    private LocalDate examDate;
 
     @NotNull
     @Column(name = "duration", nullable = false)
@@ -81,11 +80,11 @@ public class AcademicExamSetting implements Serializable {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
@@ -146,16 +145,16 @@ public class AcademicExamSetting implements Serializable {
         this.semester = semester;
     }
 
-    public Date getExamDate() {
+    public LocalDate getExamDate() {
         return examDate;
     }
 
-    public AcademicExamSetting examDate(Date examDate) {
+    public AcademicExamSetting examDate(LocalDate examDate) {
         this.examDate = examDate;
         return this;
     }
 
-    public void setExamDate(Date examDate) {
+    public void setExamDate(LocalDate examDate) {
         this.examDate = examDate;
     }
 
@@ -263,29 +262,29 @@ public class AcademicExamSetting implements Serializable {
         this.actions = actions;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public AcademicExamSetting startDate(Date startDate) {
+    public AcademicExamSetting startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public AcademicExamSetting endDate(Date endDate) {
+    public AcademicExamSetting endDate(LocalDate endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

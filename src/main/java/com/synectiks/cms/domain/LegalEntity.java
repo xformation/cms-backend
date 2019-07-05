@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
@@ -52,7 +51,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "date_of_incorporation", nullable = false)
-    private Date dateOfIncorporation;
+    private LocalDate dateOfIncorporation;
 
     @NotNull
     @Column(name = "registered_office_address_1", nullable = false)
@@ -100,7 +99,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "pf_registration_date", nullable = false)
-    private Date pfRegistrationDate;
+    private LocalDate pfRegistrationDate;
 
     @NotNull
     @Column(name = "pf_signatory", nullable = false)
@@ -112,7 +111,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "esi_registration_date", nullable = false)
-    private Date esiRegistrationDate;
+    private LocalDate esiRegistrationDate;
 
     @NotNull
     @Column(name = "esi_signatory", nullable = false)
@@ -124,7 +123,7 @@ public class LegalEntity implements Serializable {
 
     @NotNull
     @Column(name = "pt_registration_date", nullable = false)
-    private Date ptRegistrationDate;
+    private LocalDate ptRegistrationDate;
 
     @NotNull
     @Column(name = "pt_signatory", nullable = false)
@@ -220,16 +219,16 @@ public class LegalEntity implements Serializable {
         this.typeOfCollege = typeOfCollege;
     }
 
-    public Date getDateOfIncorporation() {
+    public LocalDate getDateOfIncorporation() {
         return dateOfIncorporation;
     }
 
-    public LegalEntity dateOfIncorporation(Date dateOfIncorporation) {
+    public LegalEntity dateOfIncorporation(LocalDate dateOfIncorporation) {
         this.dateOfIncorporation = dateOfIncorporation;
         return this;
     }
 
-    public void setDateOfIncorporation(Date dateOfIncorporation) {
+    public void setDateOfIncorporation(LocalDate dateOfIncorporation) {
         this.dateOfIncorporation = dateOfIncorporation;
     }
 
@@ -389,16 +388,16 @@ public class LegalEntity implements Serializable {
         this.pfNumber = pfNumber;
     }
 
-    public Date getPfRegistrationDate() {
+    public LocalDate getPfRegistrationDate() {
         return pfRegistrationDate;
     }
 
-    public LegalEntity pfRegistrationDate(Date pfRegistrationDate) {
+    public LegalEntity pfRegistrationDate(LocalDate pfRegistrationDate) {
         this.pfRegistrationDate = pfRegistrationDate;
         return this;
     }
 
-    public void setPfRegistrationDate(Date pfRegistrationDate) {
+    public void setPfRegistrationDate(LocalDate pfRegistrationDate) {
         this.pfRegistrationDate = pfRegistrationDate;
     }
 
@@ -428,16 +427,16 @@ public class LegalEntity implements Serializable {
         this.esiNumber = esiNumber;
     }
 
-    public Date getEsiRegistrationDate() {
+    public LocalDate getEsiRegistrationDate() {
         return esiRegistrationDate;
     }
 
-    public LegalEntity esiRegistrationDate(Date esiRegistrationDate) {
+    public LegalEntity esiRegistrationDate(LocalDate esiRegistrationDate) {
         this.esiRegistrationDate = esiRegistrationDate;
         return this;
     }
 
-    public void setEsiRegistrationDate(Date esiRegistrationDate) {
+    public void setEsiRegistrationDate(LocalDate esiRegistrationDate) {
         this.esiRegistrationDate = esiRegistrationDate;
     }
 
@@ -467,16 +466,16 @@ public class LegalEntity implements Serializable {
         this.ptNumber = ptNumber;
     }
 
-    public Date getPtRegistrationDate() {
+    public LocalDate getPtRegistrationDate() {
         return ptRegistrationDate;
     }
 
-    public LegalEntity ptRegistrationDate(Date ptRegistrationDate) {
+    public LegalEntity ptRegistrationDate(LocalDate ptRegistrationDate) {
         this.ptRegistrationDate = ptRegistrationDate;
         return this;
     }
 
-    public void setPtRegistrationDate(Date ptRegistrationDate) {
+    public void setPtRegistrationDate(LocalDate ptRegistrationDate) {
         this.ptRegistrationDate = ptRegistrationDate;
     }
 

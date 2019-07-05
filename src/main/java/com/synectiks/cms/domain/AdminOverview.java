@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.SectionEnum;
@@ -34,7 +34,7 @@ public class AdminOverview implements Serializable {
 
     @NotNull
     @Column(name = "choose_date", nullable = false)
-    private Date chooseDate;
+    private LocalDate chooseDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -98,16 +98,16 @@ public class AdminOverview implements Serializable {
         this.id = id;
     }
 
-    public Date getChooseDate() {
+    public LocalDate getChooseDate() {
         return chooseDate;
     }
 
-    public AdminOverview chooseDate(Date chooseDate) {
+    public AdminOverview chooseDate(LocalDate chooseDate) {
         this.chooseDate = chooseDate;
         return this;
     }
 
-    public void setChooseDate(Date chooseDate) {
+    public void setChooseDate(LocalDate chooseDate) {
         this.chooseDate = chooseDate;
     }
 

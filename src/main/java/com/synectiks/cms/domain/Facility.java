@@ -1,7 +1,7 @@
 package com.synectiks.cms.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -49,16 +49,16 @@ public class Facility implements Serializable {
     private Status status;
 
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private LocalDate endDate;
 
     @Column(name = "suspand_start_date")
-    private Date suspandStartDate;
+    private LocalDate suspandStartDate;
 
     @Column(name = "suspand_end_date")
-    private Date suspandEndDate;
+    private LocalDate suspandEndDate;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -103,55 +103,55 @@ public class Facility implements Serializable {
         this.status = status;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Facility startDate(Date startDate) {
+    public Facility startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public Facility endDate(Date endDate) {
+    public Facility endDate(LocalDate endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public Date getSuspandStartDate() {
+    public LocalDate getSuspandStartDate() {
         return suspandStartDate;
     }
 
-    public Facility suspandStartDate(Date suspandStartDate) {
+    public Facility suspandStartDate(LocalDate suspandStartDate) {
         this.suspandStartDate = suspandStartDate;
         return this;
     }
 
-    public void setSuspandStartDate(Date suspandStartDate) {
+    public void setSuspandStartDate(LocalDate suspandStartDate) {
         this.suspandStartDate = suspandStartDate;
     }
 
-    public Date getSuspandEndDate() {
+    public LocalDate getSuspandEndDate() {
         return suspandEndDate;
     }
 
-    public Facility suspandEndDate(Date suspandEndDate) {
+    public Facility suspandEndDate(LocalDate suspandEndDate) {
         this.suspandEndDate = suspandEndDate;
         return this;
     }
 
-    public void setSuspandEndDate(Date suspandEndDate) {
+    public void setSuspandEndDate(LocalDate suspandEndDate) {
         this.suspandEndDate = suspandEndDate;
     }
 

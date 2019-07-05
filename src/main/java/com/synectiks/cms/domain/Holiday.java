@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Status;
@@ -38,7 +37,7 @@ public class Holiday implements Serializable {
 
     @NotNull
     @Column(name = "holiday_date", nullable = false)
-    private Date holidayDate;
+    private LocalDate holidayDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -71,16 +70,16 @@ public class Holiday implements Serializable {
         this.holidayDesc = holidayDesc;
     }
 
-    public Date getHolidayDate() {
+    public LocalDate getHolidayDate() {
         return holidayDate;
     }
 
-    public Holiday holidayDate(Date holidayDate) {
+    public Holiday holidayDate(LocalDate holidayDate) {
         this.holidayDate = holidayDate;
         return this;
     }
 
-    public void setHolidayDate(Date holidayDate) {
+    public void setHolidayDate(LocalDate holidayDate) {
         this.holidayDate = holidayDate;
     }
 

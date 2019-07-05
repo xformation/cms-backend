@@ -11,7 +11,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -40,7 +39,7 @@ public class StudentExamReport implements Serializable {
 
     @NotNull
     @Column(name = "created_on", nullable = false)
-    private Date createdOn;
+    private LocalDate createdOn;
 
     @NotNull
     @Column(name = "created_by", nullable = false)
@@ -48,7 +47,7 @@ public class StudentExamReport implements Serializable {
 
     @NotNull
     @Column(name = "updated_on", nullable = false)
-    private Date updatedOn;
+    private LocalDate updatedOn;
 
     @NotNull
     @Column(name = "updated_by", nullable = false)
@@ -109,16 +108,16 @@ public class StudentExamReport implements Serializable {
         this.comments = comments;
     }
 
-    public Date getCreatedOn() {
+    public LocalDate getCreatedOn() {
         return createdOn;
     }
 
-    public StudentExamReport createdOn(Date createdOn) {
+    public StudentExamReport createdOn(LocalDate createdOn) {
         this.createdOn = createdOn;
         return this;
     }
 
-    public void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(LocalDate createdOn) {
         this.createdOn = createdOn;
     }
 
@@ -135,16 +134,16 @@ public class StudentExamReport implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Date getUpdatedOn() {
+    public LocalDate getUpdatedOn() {
         return updatedOn;
     }
 
-    public StudentExamReport updatedOn(Date updatedOn) {
+    public StudentExamReport updatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
         return this;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
+    public void setUpdatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
     }
 

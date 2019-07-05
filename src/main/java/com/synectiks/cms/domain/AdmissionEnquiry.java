@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.CourseEnum;
@@ -69,10 +69,10 @@ public class AdmissionEnquiry implements Serializable {
 
     @NotNull
     @Column(name = "enquiry_date", nullable = false)
-    private Date enquiryDate;
+    private LocalDate enquiryDate;
 
     @Column(name = "updated_on")
-    private Date updatedOn;
+    private LocalDate updatedOn;
 
     @Column(name = "updated_by")
     private String updatedBy;
@@ -198,29 +198,29 @@ public class AdmissionEnquiry implements Serializable {
         this.description = description;
     }
 
-    public Date getEnquiryDate() {
+    public LocalDate getEnquiryDate() {
         return enquiryDate;
     }
 
-    public AdmissionEnquiry enquiryDate(Date enquiryDate) {
+    public AdmissionEnquiry enquiryDate(LocalDate enquiryDate) {
         this.enquiryDate = enquiryDate;
         return this;
     }
 
-    public void setEnquiryDate(Date enquiryDate) {
+    public void setEnquiryDate(LocalDate enquiryDate) {
         this.enquiryDate = enquiryDate;
     }
 
-    public Date getUpdatedOn() {
+    public LocalDate getUpdatedOn() {
         return updatedOn;
     }
 
-    public AdmissionEnquiry updatedOn(Date updatedOn) {
+    public AdmissionEnquiry updatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
         return this;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
+    public void setUpdatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
     }
 

@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.service.util.DateFormatUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -61,7 +62,8 @@ public class LectureScheduleProcessor {
     	try {
 
         	Term tr = getTermById(Long.parseLong(filter.getTermId()));
-        	List<LectureScheduleVo> lectureList = getLectureRecords(tr.getStartDate(), tr.getEndDate());
+        	List<LectureScheduleVo> lectureList = getLectureRecords(DateFormatUtil.converUtilDateFromLocaDate(tr.getStartDate()),
+                DateFormatUtil.converUtilDateFromLocaDate(tr.getEndDate()));
         	List<LectureScheduleVo> mondayList = filterDataOnDayOfweek(lectureList, Calendar.MONDAY);
         	List<LectureScheduleVo> tuesdayList = filterDataOnDayOfweek(lectureList, Calendar.TUESDAY);
         	List<LectureScheduleVo> wednesdayList = filterDataOnDayOfweek(lectureList, Calendar.WEDNESDAY);
@@ -476,8 +478,8 @@ public class LectureScheduleProcessor {
 //		for(Iterator<Term> itr = tr.iterator(); itr.hasNext();) {
 //			Term trm = itr.next();
 			Calendar cal = Calendar.getInstance();
-			cal.setTime(tr.getStartDate());
-			while(cal.getTime().compareTo(tr.getEndDate()) <1) {
+        cal.setTime(DateFormatUtil.converUtilDateFromLocaDate(tr.getStartDate()));
+        while(cal.getTime().compareTo(DateFormatUtil.converUtilDateFromLocaDate(tr.getEndDate())) <1) {
 				Date dt = cal.getTime();
 				dateList.add(dt);
 				cal.add(Calendar.DATE, 1);
@@ -490,7 +492,7 @@ public class LectureScheduleProcessor {
 		List<Date> hlList = new ArrayList<>();
 		for(Iterator<Holiday> itrHoliday = holidayList.iterator(); itrHoliday.hasNext();) {
 			Holiday hl = itrHoliday.next();
-			hlList.add(hl.getHolidayDate());
+            hlList.add(DateFormatUtil.converUtilDateFromLocaDate(hl.getHolidayDate()) );
 		}
 		dateList.removeAll(hlList);
 	}

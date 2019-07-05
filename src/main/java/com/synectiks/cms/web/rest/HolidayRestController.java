@@ -42,7 +42,7 @@ public class HolidayRestController {
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/cmsholidays")
     public ResponseEntity<CmsHolidayVo> createHoliday(@Valid @RequestBody CmsHolidayVo cmsHolidayVo) throws Exception {
         logger.debug("REST request to save an Holiday : {}", cmsHolidayVo);
@@ -50,15 +50,15 @@ public class HolidayRestController {
             throw new BadRequestAlertException("A new holiday cannot have an ID which already exists.", ENTITY_NAME, "idexists");
         }
         if(cmsHolidayVo.getHolidayStatus() == null) {
-        	cmsHolidayVo.setHolidayStatus(Status.DEACTIVE);
+            cmsHolidayVo.setHolidayStatus(Status.DEACTIVE);
         }
         Holiday hd = CommonUtil.createCopyProperties(cmsHolidayVo, Holiday.class);
 
         hd = holidayRepository.save(hd);
-        String hdDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, hd.getHolidayDate());
 
         cmsHolidayVo.setId(hd.getId());
-        cmsHolidayVo.setStrHolidayDate(hdDt);
+        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+
         return ResponseEntity.created(new URI("/api/holidays/" + cmsHolidayVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsHolidayVo.getId().toString()))
             .body(cmsHolidayVo);
@@ -72,10 +72,9 @@ public class HolidayRestController {
         }
         Holiday hd = CommonUtil.createCopyProperties(cmsHolidayVo, Holiday.class);
         hd = holidayRepository.save(hd);
-        String hdDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, hd.getHolidayDate());
 
+        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
 
-        cmsHolidayVo.setStrHolidayDate(hdDt);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsHolidayVo.getId().toString()))
             .body(cmsHolidayVo);
@@ -87,9 +86,9 @@ public class HolidayRestController {
         List<Holiday> list = holidayRepository.findAll();
         List<CmsHolidayVo> ls = new ArrayList<>();
         for(Holiday hd: list) {
-            String hdDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, hd.getHolidayDate());
             CmsHolidayVo chd = CommonUtil.createCopyProperties(hd, CmsHolidayVo.class);
-            chd.setStrHolidayDate(hdDt);
+            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+
             ls.add(chd);
         }
         return ls;
@@ -101,10 +100,11 @@ public class HolidayRestController {
         Optional<Holiday> hd = holidayRepository.findById(id);
         CmsHolidayVo chd = new CmsHolidayVo();
         if(hd.isPresent()) {
-            String hdDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, hd.get().getHolidayDate());
+
 
             chd = CommonUtil.createCopyProperties(hd.get(), CmsHolidayVo.class);
-            chd.setStrHolidayDate(hdDt);
+            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.get().getHolidayDate()))));
+
 
         }
         return ResponseUtil.wrapOrNotFound(Optional.of(chd));
@@ -112,32 +112,32 @@ public class HolidayRestController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cmsholidays-by_academicyearid")
     public List<CmsHolidayVo> getAllHolidaysByAcademicYearId(@RequestParam Map<String, String> dataMap) throws Exception{
-    	if(!dataMap.containsKey("academicYearId")) {
-    		logger.warn("Academic year id is not provided. Returning empty holiday list");
-    		return Collections.emptyList();
-    	}
-    	List<CmsHolidayVo> ls = new ArrayList<>();
-    	Long id = Long.valueOf(dataMap.get("academicYearId"));
-    	Optional<AcademicYear> oay = this.academicYearRepository.findById(id); 
-    	
-    	if(oay.isPresent()) {
-    		logger.debug("Holidays based on academic year. AcademicYear :"+oay.get());
-    		Holiday holiday = new Holiday();
-    		holiday.setAcademicyear(oay.get());
-    		Example<Holiday> exm = Example.of(holiday);
-    		List<Holiday> list = this.holidayRepository.findAll(exm);
-    		for(Holiday hd: list) {
-    			String hdDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, hd.getHolidayDate());
-    			CmsHolidayVo chd = CommonUtil.createCopyProperties(hd, CmsHolidayVo.class);
-    			chd.setStrHolidayDate(hdDt);
+        if(!dataMap.containsKey("academicYearId")) {
+            logger.warn("Academic year id is not provided. Returning empty holiday list");
+            return Collections.emptyList();
+        }
+        List<CmsHolidayVo> ls = new ArrayList<>();
+        Long id = Long.valueOf(dataMap.get("academicYearId"));
+        Optional<AcademicYear> oay = this.academicYearRepository.findById(id);
+
+        if(oay.isPresent()) {
+            logger.debug("Holidays based on academic year. AcademicYear :"+oay.get());
+            Holiday holiday = new Holiday();
+            holiday.setAcademicyear(oay.get());
+            Example<Holiday> exm = Example.of(holiday);
+            List<Holiday> list = this.holidayRepository.findAll(exm);
+            for(Holiday hd: list) {
+                CmsHolidayVo chd = CommonUtil.createCopyProperties(hd, CmsHolidayVo.class);
+                chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+
                 ls.add(chd);
             }
-    	}
-    	logger.debug("Total holidays retrieved: "+ls);
-    	return ls;
-    	
+        }
+        logger.debug("Total holidays retrieved: "+ls);
+        return ls;
+
     }
-    
+
     @RequestMapping(method = RequestMethod.DELETE, value = "/cmsholidays/{id}")
     public ResponseEntity<Void> deleteHoliday(@PathVariable Long id) {
         logger.debug("REST request to delete an Holiday : {}", id);

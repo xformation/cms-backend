@@ -49,7 +49,7 @@ public class TermRestController {
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/cmsterms")
     public ResponseEntity<CmsTermVo> createTerm(@Valid @RequestBody CmsTermVo cmsTermVo) throws Exception {
         logger.debug("REST request to save an Term : {}", cmsTermVo);
@@ -57,17 +57,15 @@ public class TermRestController {
             throw new BadRequestAlertException("A new term cannot have an ID which already exists.", ENTITY_NAME, "idexists");
         }
         if(cmsTermVo.getTermStatus() == null) {
-        	cmsTermVo.setTermStatus(Status.DEACTIVE);
+            cmsTermVo.setTermStatus(Status.DEACTIVE);
         }
         Term tm = CommonUtil.createCopyProperties(cmsTermVo, Term.class);
 
         tm = termRepository.save(tm);
-        String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getStartDate());
-        String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getEndDate());
 
         cmsTermVo.setId(tm.getId());
-        cmsTermVo.setStrStartDate(stDt);
-        cmsTermVo.setStrEndDate(enDt);
+        cmsTermVo.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getStartDate()))));
+        cmsTermVo.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getEndDate()))));
         return ResponseEntity.created(new URI("/api/terms/" + cmsTermVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsTermVo.getId().toString()))
             .body(cmsTermVo);
@@ -81,11 +79,9 @@ public class TermRestController {
         }
         Term tm = CommonUtil.createCopyProperties(cmsTermVo, Term.class);
         tm = termRepository.save(tm);
-        String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getStartDate());
-        String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getEndDate());
 
-        cmsTermVo.setStrStartDate(stDt);
-        cmsTermVo.setStrEndDate(enDt);
+        cmsTermVo.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getStartDate()))));
+        cmsTermVo.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getEndDate()))));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsTermVo.getId().toString()))
             .body(cmsTermVo);
@@ -98,11 +94,9 @@ public class TermRestController {
         List<Term> list = termRepository.findAll();
         List<CmsTermVo> ls = new ArrayList<>();
         for(Term tm: list) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getStartDate());
-            String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getEndDate());
             CmsTermVo ctm = CommonUtil.createCopyProperties(tm, CmsTermVo.class);
-            ctm.setStrStartDate(stDt);
-            ctm.setStrEndDate(enDt);
+            ctm.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getStartDate()))));
+            ctm.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getEndDate()))));
             ls.add(ctm);
         }
         return ls;
@@ -115,44 +109,40 @@ public class TermRestController {
         Optional<Term> tm = termRepository.findById(id);
         CmsTermVo ctm = new CmsTermVo();
         if(tm.isPresent()) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.get().getStartDate());
-            String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.get().getEndDate());
             ctm = CommonUtil.createCopyProperties(tm.get(), CmsTermVo.class);
-            ctm.setStrStartDate(stDt);
-            ctm.setStrEndDate(enDt);
+            ctm.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.get().getStartDate()))));
+            ctm.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.get().getEndDate()))));
         }
         return ResponseUtil.wrapOrNotFound(Optional.of(ctm));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cmsterms-by_academicyearid")
     public List<CmsTermVo> getAllTermsByAcademicYearId(@RequestParam Map<String, String> dataMap) throws Exception{
-    	if(!dataMap.containsKey("academicYearId")) {
-    		logger.warn("Academic year id is not provided. Returning empty terms list");
-    		return Collections.emptyList();
-    	}
-    	List<CmsTermVo> ls = new ArrayList<>();
-    	Long id = Long.valueOf(dataMap.get("academicYearId"));
-    	Optional<AcademicYear> oay = this.academicYearRepository.findById(id); 
-    	
-    	if(oay.isPresent()) {
+        if(!dataMap.containsKey("academicYearId")) {
+            logger.warn("Academic year id is not provided. Returning empty terms list");
+            return Collections.emptyList();
+        }
+        List<CmsTermVo> ls = new ArrayList<>();
+        Long id = Long.valueOf(dataMap.get("academicYearId"));
+        Optional<AcademicYear> oay = this.academicYearRepository.findById(id);
+
+        if(oay.isPresent()) {
 //    		AcademicYear ay = this.academicYearRepository.findById(id).get();
-    		logger.debug("Terms based on academic year. AcademicYear :"+oay.get());
-    		Term term = new Term();
-    		term.setAcademicyear(oay.get());
-    		Example<Term> exm = Example.of(term);
-    		List<Term> list = this.termRepository.findAll(exm);
-    		for(Term tm: list) {
-                String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getStartDate());
-                String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, tm.getEndDate());
+            logger.debug("Terms based on academic year. AcademicYear :"+oay.get());
+            Term term = new Term();
+            term.setAcademicyear(oay.get());
+            Example<Term> exm = Example.of(term);
+            List<Term> list = this.termRepository.findAll(exm);
+            for(Term tm: list) {
                 CmsTermVo ctm = CommonUtil.createCopyProperties(tm, CmsTermVo.class);
-                ctm.setStrStartDate(stDt);
-                ctm.setStrEndDate(enDt);
+                ctm.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getStartDate()))));
+                ctm.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getEndDate()))));
                 ls.add(ctm);
             }
-    	}
-    	logger.debug("Total terms retrieved: "+ls);
-    	return ls;
-    	
+        }
+        logger.debug("Total terms retrieved: "+ls);
+        return ls;
+
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/cmsterms/{id}")

@@ -86,38 +86,35 @@ public class TestDataPojoBuilder {
 		return null;
 	}
 
-	public AcademicYear createAcademicYearPojo(Cell cell) {
-		if (cell != null) {
-			AcademicYear aYear = new AcademicYear();
-			Calendar cal = Calendar.getInstance();
-			int year = cal.get(Calendar.YEAR);
-			if (cell != null && cell.getType() == CellType.NUMBER) {
-				year = cell.asNumber().intValue();
-			}
-			aYear.setYear(String.valueOf(year));
-			cal.set(year, 1, 1);
-			aYear.setStartDate(cal.getTime());
-			cal.set(year, 12, 31);
-			aYear.setEndDate(cal.getTime());
-			return aYear;
-		}
-		return null;
-	}
+    public AcademicYear createAcademicYearPojo(Cell cell) {
+        if (cell != null) {
+            AcademicYear aYear = new AcademicYear();
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            if (cell != null && cell.getType() == CellType.NUMBER) {
+                year = cell.asNumber().intValue();
+            }
+            aYear.setYear(String.valueOf(year));
+            cal.set(year, 1, 1);
+            aYear.setStartDate(LocalDate.now());
+            cal.set(year, 12, 31);
+            aYear.setEndDate(LocalDate.now());
+            return aYear;
+        }
+        return null;
+    }
 
-	public Term createTermPojo(Cell cell) {
-		Term tm = new Term();
-		String dt[] = cell.asString().split("to");
-		try {
-			tm.setStartDate(this.ddMMyyyyDateFormat.parse(dt[0].trim()));
-			tm.setEndDate(this.ddMMyyyyDateFormat.parse(dt[1].trim()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		tm.setTermsDesc("From " + dt[0].trim() + " to " + dt[1].trim());
-		tm.setTermStatus(Status.ACTIVE);
-		System.out.println(tm.toString());
-		return tm;
-	}
+    public Term createTermPojo(Cell cell) {
+        Term tm = new Term();
+        String dt[] = cell.asString().split("to");
+        tm.setStartDate(LocalDate.now());
+        tm.setEndDate(LocalDate.now());
+
+        tm.setTermsDesc("" );
+        tm.setTermStatus(Status.ACTIVE);
+        System.out.println(tm.toString());
+        return tm;
+    }
 
 	public College createCollegePojo(Cell cell) {
 		College college = new College();
@@ -187,7 +184,7 @@ public class TestDataPojoBuilder {
 		st.setMotherMiddleName("");
 		st.setMotherLastName("");
 		st.setAadharNo(1234L);
-		st.setDateOfBirth(new Date());
+		st.setDateOfBirth(LocalDate.now());
 		st.setPlaceOfBirth("");
 		st.setReligion(Religion.HINDU);
 		st.setCaste(Caste.OC);
@@ -237,7 +234,7 @@ public class TestDataPojoBuilder {
 		thr.setMotherMiddleName("");
 		thr.setMotherLastName("");
 		thr.setAadharNo(1234L);
-		thr.setDateOfBirth(new Date());
+		thr.setDateOfBirth(LocalDate.now());
 		thr.setPlaceOfBirth("");
 		thr.setReligion(Religion.HINDU);
 		thr.setCaste(Caste.OC);
@@ -334,7 +331,7 @@ public class TestDataPojoBuilder {
 		academicExamSetting.setExamType(cell.asString());
 		academicExamSetting.setSemester(SemesterEnum.SEMESTER4);
 //		academicExamSetting.setSubject(cell.asString());
-		academicExamSetting.setExamDate(new Date());
+		academicExamSetting.setExamDate(LocalDate.now());
 		academicExamSetting.setDay(cell.asString());
 		academicExamSetting.setDuration("55");
 		academicExamSetting.setStartTime(cell.asString());
@@ -377,7 +374,7 @@ public class TestDataPojoBuilder {
 	public Holiday createHolidayPojo(Cell cell) {
 		Holiday holiday = new Holiday();
 		holiday.setHolidayDesc(cell.asString());
-		holiday.setHolidayDate(new Date());
+		holiday.setHolidayDate(LocalDate.now());
 		holiday.setHolidayStatus(Status.ACTIVE);
 		return holiday;
 	}
@@ -416,9 +413,9 @@ public class TestDataPojoBuilder {
 		StudentExamReport studentExamReport = new StudentExamReport();
 		studentExamReport.setMarksObtained(35);
 		studentExamReport.setComments("");
-		studentExamReport.setCreatedOn(new Date());
+		studentExamReport.setCreatedOn(LocalDate.now());
 		studentExamReport.setCreatedBy("");
-		studentExamReport.setUpdatedOn(new Date());
+		studentExamReport.setUpdatedOn(LocalDate.now());
 		studentExamReport.setUpdatedBy("");
 		studentExamReport.setAcademicExamSetting(academicExamSetting);
 		studentExamReport.setStudent(student);
@@ -444,7 +441,7 @@ public class TestDataPojoBuilder {
 		AdmissionApplication aa = new AdmissionApplication();
 		aa.setAdmissionStatus(AdmissionStatusEnum.ACCEPTED);
 		aa.setCourse(CourseEnum.BTECH);
-		aa.setAdmissionDate(new Date());
+		aa.setAdmissionDate(LocalDate.now());
 		aa.setComments("");
 		return aa;
 	}
@@ -459,8 +456,8 @@ public class TestDataPojoBuilder {
 		ae.setModeOfEnquiry(ModeOfEnquiry.TELEPHONE);
 		ae.setStatus(EnquiryStatus.DECLINED);
 		ae.setDescription("");
-		ae.setEnquiryDate(new Date());
-		ae.setUpdatedOn(new Date());
+		ae.setEnquiryDate(LocalDate.now());
+		ae.setUpdatedOn(LocalDate.now());
 		ae.setUpdatedBy("");
 		return ae;
 	}

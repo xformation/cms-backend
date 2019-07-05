@@ -48,7 +48,7 @@ public class AcademicYearRestController {
      *
      * @param cmsAcademicYearVo the cmsAcademicYearVo to create
      * @return the ResponseEntity with status 201 (Created) and with body the new cmsAcademicYearVo, or with status 400 (Bad Request) if the academicYear has already an ID
-     * @throws Exception 
+     * @throws Exception
      */
     @RequestMapping(method = RequestMethod.POST, value = "/cmsacademic-years")
     public ResponseEntity<CmsAcademicYearVo> createAcademicYear(@Valid @RequestBody CmsAcademicYearVo cmsAcademicYearVo) throws Exception {
@@ -57,14 +57,12 @@ public class AcademicYearRestController {
             throw new BadRequestAlertException("A new academicYear cannot have an ID which already exists.", ENTITY_NAME, "idexists");
         }
         AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
-        
+
         ay = academicYearRepository.save(ay);
-        String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getStartDate());
-    	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getEndDate());
-    	
+
         cmsAcademicYearVo.setId(ay.getId());
-        cmsAcademicYearVo.setStrStartDate(stDt);
-        cmsAcademicYearVo.setStrEndDate(enDt);
+        cmsAcademicYearVo.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getStartDate()))));
+        cmsAcademicYearVo.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getEndDate()))));
         return ResponseEntity.created(new URI("/api/academic-years/" + cmsAcademicYearVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsAcademicYearVo.getId().toString()))
             .body(cmsAcademicYearVo);
@@ -77,7 +75,7 @@ public class AcademicYearRestController {
      * @return the ResponseEntity with status 200 (OK) and with body the updated cmsAcademicYearVo,
      * or with status 400 (Bad Request) if the cmsAcademicYearVo is not valid,
      * or with status 500 (Internal Server Error) if the cmsAcademicYearVo couldn't be updated
-     * @throws Exception 
+     * @throws Exception
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/cmsacademic-years")
     public ResponseEntity<CmsAcademicYearVo> updateAcademicYear(@Valid @RequestBody CmsAcademicYearVo cmsAcademicYearVo) throws Exception {
@@ -87,11 +85,9 @@ public class AcademicYearRestController {
         }
         AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
         ay = academicYearRepository.save(ay);
-        String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getStartDate());
-    	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getEndDate());
-    	
-        cmsAcademicYearVo.setStrStartDate(stDt);
-        cmsAcademicYearVo.setStrEndDate(enDt);
+
+        cmsAcademicYearVo.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getStartDate()))));
+        cmsAcademicYearVo.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getEndDate()))));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsAcademicYearVo.getId().toString()))
             .body(cmsAcademicYearVo);
@@ -101,7 +97,7 @@ public class AcademicYearRestController {
      * GET  /cmsacademic-years : get all the academicYears.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of academicYears in body
-     * @throws Exception 
+     * @throws Exception
      */
     @RequestMapping(method = RequestMethod.GET, value = "/cmsacademic-years")
     public List<CmsAcademicYearVo> getAllAcademicYears() throws Exception {
@@ -109,12 +105,10 @@ public class AcademicYearRestController {
         List<AcademicYear> list = academicYearRepository.findAll();
         List<CmsAcademicYearVo> ls = new ArrayList<>();
         for(AcademicYear ay: list) {
-        	String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getStartDate());
-        	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.getEndDate());
-        	CmsAcademicYearVo cay = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
-        	cay.setStrStartDate(stDt);
-        	cay.setStrEndDate(enDt);
-        	ls.add(cay);
+            CmsAcademicYearVo cay = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+            cay.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getStartDate()))));
+            cay.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getEndDate()))));
+            ls.add(cay);
         }
         return ls;
     }
@@ -124,7 +118,7 @@ public class AcademicYearRestController {
      *
      * @param id the id of the cmsAcademicYearVo to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the cmsAcademicYearVo, or with status 404 (Not Found)
-     * @throws Exception 
+     * @throws Exception
      */
     @RequestMapping(method = RequestMethod.GET, value = "/cmsacademic-years/{id}")
     public ResponseEntity<CmsAcademicYearVo> getAcademicYear(@PathVariable Long id) throws Exception {
@@ -132,11 +126,9 @@ public class AcademicYearRestController {
         Optional<AcademicYear> ay = academicYearRepository.findById(id);
         CmsAcademicYearVo cay = new CmsAcademicYearVo();
         if(ay.isPresent()) {
-        	String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.get().getStartDate());
-        	String enDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, ay.get().getEndDate());
-        	cay = CommonUtil.createCopyProperties(ay.get(), CmsAcademicYearVo.class);
-        	cay.setStrStartDate(stDt);
-        	cay.setStrEndDate(enDt);
+            cay = CommonUtil.createCopyProperties(ay.get(), CmsAcademicYearVo.class);
+            cay.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.get().getStartDate()))));
+            cay.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.get().getEndDate()))));
         }
         return ResponseUtil.wrapOrNotFound(Optional.of(cay));
     }

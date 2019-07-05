@@ -50,11 +50,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = CmsApp.class)
 public class LectureResourceIntTest {
 
-    private static final Date DEFAULT_LEC_DATE = new Date();
-    private static final Date UPDATED_LEC_DATE = new Date();
+    private static final LocalDate DEFAULT_LEC_DATE =  LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_LEC_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Date DEFAULT_LAST_UPDATED_ON = new Date();
-    private static final Date UPDATED_LAST_UPDATED_ON = new Date();
+    private static final LocalDate DEFAULT_LAST_UPDATED_ON = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_LAST_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_LAST_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_LAST_UPDATED_BY = "BBBBBBBBBB";
@@ -94,8 +94,6 @@ public class LectureResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restLectureMockMvc;
 
@@ -109,8 +107,7 @@ public class LectureResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -295,7 +292,7 @@ public class LectureResourceIntTest {
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getLecture() throws Exception {

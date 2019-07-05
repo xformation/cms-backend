@@ -90,8 +90,8 @@ public class StudentResourceIntTest {
     private static final Long DEFAULT_AADHAR_NO = 1L;
     private static final Long UPDATED_AADHAR_NO = 2L;
 
-    private static final Date DEFAULT_DATE_OF_BIRTH = new Date();
-    private static final Date UPDATED_DATE_OF_BIRTH = new Date();
+    private static final LocalDate DEFAULT_DATE_OF_BIRTH =  LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_OF_BIRTH = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_PLACE_OF_BIRTH = "AAAAAAAAAA";
     private static final String UPDATED_PLACE_OF_BIRTH = "BBBBBBBBBB";
@@ -206,8 +206,6 @@ public class StudentResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restStudentMockMvc;
 
@@ -221,8 +219,7 @@ public class StudentResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -1099,7 +1096,7 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].rollNo").value(hasItem(DEFAULT_ROLL_NO.toString())))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getStudent() throws Exception {

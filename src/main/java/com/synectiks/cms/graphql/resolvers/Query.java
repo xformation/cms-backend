@@ -702,8 +702,7 @@ public class Query implements GraphQLQueryResolver {
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
     	for(Lecture lecture : lec) {
     		CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
-    		String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecture.getLecDate());
-    		vo.setStrLecDate(stDt);
+            vo.setStrLecDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(lecture.getLecDate()))));
     		cmsLec.add(vo);
     	}
     	
@@ -755,8 +754,7 @@ public class Query implements GraphQLQueryResolver {
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
     	for(Lecture lecture : lec) {
     		CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
-    		String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecture.getLecDate());
-    		vo.setStrLecDate(stDt);
+            vo.setStrLecDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(lecture.getLecDate()))));
     		cmsLec.add(vo);
     	}
     	

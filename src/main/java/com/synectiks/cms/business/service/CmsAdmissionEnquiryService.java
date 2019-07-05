@@ -97,9 +97,9 @@ public class CmsAdmissionEnquiryService {
         List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
         List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
         for(AdmissionEnquiry temp: list) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
             CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
-            cae.setStrEnquiryDate(stDt);
+            cae.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getEnquiryDate()))));
+
             ls.add(cae);
         }
         return ls;
@@ -115,9 +115,8 @@ public class CmsAdmissionEnquiryService {
         List<AdmissionEnquiry> list = this.admissionEnquiryRepository.findAll(example);
         List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
         for(AdmissionEnquiry temp: list) {
-            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getEnquiryDate());
             CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionEnquiryVo.class);
-            cae.setStrEnquiryDate(stDt);
+            cae.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getEnquiryDate()))));
             ls.add(cae);
         }
         return ls;

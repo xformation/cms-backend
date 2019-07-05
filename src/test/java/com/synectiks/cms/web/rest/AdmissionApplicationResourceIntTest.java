@@ -58,8 +58,8 @@ public class AdmissionApplicationResourceIntTest {
     private static final CourseEnum DEFAULT_COURSE = CourseEnum.BTECH;
     private static final CourseEnum UPDATED_COURSE = CourseEnum.MTECH;
 
-    private static final Date DEFAULT_ADMISSION_DATE = new Date();
-    private static final Date UPDATED_ADMISSION_DATE = new Date();
+    private static final LocalDate DEFAULT_ADMISSION_DATE =  LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_ADMISSION_DATE =  LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
@@ -93,8 +93,6 @@ public class AdmissionApplicationResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restAdmissionApplicationMockMvc;
 
@@ -108,8 +106,8 @@ public class AdmissionApplicationResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
+
     }
 
     /**
@@ -272,7 +270,7 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAdmissionApplication() throws Exception {

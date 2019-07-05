@@ -8,7 +8,8 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Status;
@@ -35,11 +36,11 @@ public class AcademicYear implements Serializable {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -68,29 +69,29 @@ public class AcademicYear implements Serializable {
         this.year = year;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public AcademicYear startDate(Date startDate) {
+    public AcademicYear startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public AcademicYear endDate(Date endDate) {
+    public AcademicYear endDate(LocalDate endDate) {
         this.endDate = endDate;
         return this;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

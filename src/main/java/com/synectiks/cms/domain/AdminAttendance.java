@@ -9,7 +9,6 @@ import javax.persistence.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -29,7 +28,7 @@ public class AdminAttendance implements Serializable {
     private Long id;
 
     @Column(name = "updated_on")
-    private Date updatedOn;
+    private LocalDate updatedOn;
 
     @Column(name = "updated_by")
     private String updatedBy;
@@ -71,16 +70,16 @@ public class AdminAttendance implements Serializable {
         this.id = id;
     }
 
-    public Date getUpdatedOn() {
+    public LocalDate getUpdatedOn() {
         return updatedOn;
     }
 
-    public AdminAttendance updatedOn(Date updatedOn) {
+    public AdminAttendance updatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
         return this;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
+    public void setUpdatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
     }
 

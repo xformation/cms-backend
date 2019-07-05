@@ -96,8 +96,8 @@ public class TeacherResourceIntTest {
     private static final Long DEFAULT_AADHAR_NO = 1L;
     private static final Long UPDATED_AADHAR_NO = 2L;
 
-    private static final Date DEFAULT_DATE_OF_BIRTH = new Date();
-    private static final Date UPDATED_DATE_OF_BIRTH = new Date();
+    private static final LocalDate DEFAULT_DATE_OF_BIRTH = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_OF_BIRTH = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_PLACE_OF_BIRTH = "AAAAAAAAAA";
     private static final String UPDATED_PLACE_OF_BIRTH = "BBBBBBBBBB";
@@ -215,8 +215,6 @@ public class TeacherResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
 
     private MockMvc restTeacherMockMvc;
 
@@ -230,8 +228,7 @@ public class TeacherResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -1119,7 +1116,7 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTeacher() throws Exception {
