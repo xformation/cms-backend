@@ -1,10 +1,10 @@
-id;book_title;author;book_id;batch_id;subject_id;department_id
-891;ComputerNetworking;Ruther;789;1151;1351;1101
-892;DesignLogic;Lisa;456;11350;1352;11200
-893;JavaFundamentals;John;780;1151;1351;1101
-894;CLanguage;mike;788;1151;1351;1101
-895;ProgramingFundamentals;Naresh;455;11350;1352;11200
-896;BigData;Martin;454;11350;1352;11200
+id;book_title;author;book_id;no_of_copies;batch_id;subject_id;department_id
+891;ComputerNetworking;Ruther;789;5;1151;1351;1101
+892;DesignLogic;Lisa;456;8;11350;1352;11200
+893;JavaFundamentals;John;780;10;1151;1351;1101
+894;CLanguage;mike;788;15;1151;1351;1101
+895;ProgramingFundamentals;Naresh;455;3;11350;1352;11200
+896;BigData;Martin;454;7;11350;1352;11200
 
 
 

@@ -128,6 +128,21 @@ export class AddNewBookUpdate extends React.Component<IAddNewBookUpdateProps, IA
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="noOfCopiesLabel" for="noOfCopies">
+                    No Of Copies
+                  </Label>
+                  <AvField
+                    id="add-new-book-noOfCopies"
+                    type="string"
+                    className="form-control"
+                    name="noOfCopies"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      number: { value: true, errorMessage: 'This field should be a number.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
                   <Label id="bookIdLabel" for="bookId">
                     Book Id
                   </Label>

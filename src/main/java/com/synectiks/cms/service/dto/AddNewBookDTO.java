@@ -18,6 +18,9 @@ public class AddNewBookDTO implements Serializable {
     private String author;
 
     @NotNull
+    private Long noOfCopies;
+
+    @NotNull
     private Long bookId;
 
     private Long batchId;
@@ -48,6 +51,14 @@ public class AddNewBookDTO implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Long getNoOfCopies() {
+        return noOfCopies;
+    }
+
+    public void setNoOfCopies(Long noOfCopies) {
+        this.noOfCopies = noOfCopies;
     }
 
     public Long getBookId() {
@@ -109,6 +120,7 @@ public class AddNewBookDTO implements Serializable {
             "id=" + getId() +
             ", bookTitle='" + getBookTitle() + "'" +
             ", author='" + getAuthor() + "'" +
+            ", noOfCopies=" + getNoOfCopies() +
             ", bookId=" + getBookId() +
             ", batch=" + getBatchId() +
             ", subject=" + getSubjectId() +

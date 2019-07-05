@@ -37,6 +37,10 @@ export class AddNewBookDetail extends React.Component<IAddNewBookDetailProps> {
             </dt>
             <dd>{addNewBookEntity.author}</dd>
             <dt>
+              <span id="noOfCopies">No Of Copies</span>
+            </dt>
+            <dd>{addNewBookEntity.noOfCopies}</dd>
+            <dt>
               <span id="bookId">Book Id</span>
             </dt>
             <dd>{addNewBookEntity.bookId}</dd>

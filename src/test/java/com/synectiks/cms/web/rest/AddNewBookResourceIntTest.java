@@ -52,6 +52,9 @@ public class AddNewBookResourceIntTest {
     private static final String DEFAULT_AUTHOR = "AAAAAAAAAA";
     private static final String UPDATED_AUTHOR = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_NO_OF_COPIES = 1L;
+    private static final Long UPDATED_NO_OF_COPIES = 2L;
+
     private static final Long DEFAULT_BOOK_ID = 1L;
     private static final Long UPDATED_BOOK_ID = 2L;
 
@@ -109,6 +112,7 @@ public class AddNewBookResourceIntTest {
         AddNewBook addNewBook = new AddNewBook()
             .bookTitle(DEFAULT_BOOK_TITLE)
             .author(DEFAULT_AUTHOR)
+            .noOfCopies(DEFAULT_NO_OF_COPIES)
             .bookId(DEFAULT_BOOK_ID);
         return addNewBook;
     }
@@ -136,6 +140,7 @@ public class AddNewBookResourceIntTest {
         AddNewBook testAddNewBook = addNewBookList.get(addNewBookList.size() - 1);
         assertThat(testAddNewBook.getBookTitle()).isEqualTo(DEFAULT_BOOK_TITLE);
         assertThat(testAddNewBook.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
+        assertThat(testAddNewBook.getNoOfCopies()).isEqualTo(DEFAULT_NO_OF_COPIES);
         assertThat(testAddNewBook.getBookId()).isEqualTo(DEFAULT_BOOK_ID);
 
         // Validate the AddNewBook in Elasticsearch
@@ -205,6 +210,25 @@ public class AddNewBookResourceIntTest {
 
     @Test
     @Transactional
+    public void checkNoOfCopiesIsRequired() throws Exception {
+        int databaseSizeBeforeTest = addNewBookRepository.findAll().size();
+        // set the field null
+        addNewBook.setNoOfCopies(null);
+
+        // Create the AddNewBook, which fails.
+        AddNewBookDTO addNewBookDTO = addNewBookMapper.toDto(addNewBook);
+
+        restAddNewBookMockMvc.perform(post("/api/add-new-books")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(addNewBookDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AddNewBook> addNewBookList = addNewBookRepository.findAll();
+        assertThat(addNewBookList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkBookIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = addNewBookRepository.findAll().size();
         // set the field null
@@ -235,6 +259,7 @@ public class AddNewBookResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(addNewBook.getId().intValue())))
             .andExpect(jsonPath("$.[*].bookTitle").value(hasItem(DEFAULT_BOOK_TITLE.toString())))
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())))
+            .andExpect(jsonPath("$.[*].noOfCopies").value(hasItem(DEFAULT_NO_OF_COPIES.intValue())))
             .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
     }
     
@@ -251,6 +276,7 @@ public class AddNewBookResourceIntTest {
             .andExpect(jsonPath("$.id").value(addNewBook.getId().intValue()))
             .andExpect(jsonPath("$.bookTitle").value(DEFAULT_BOOK_TITLE.toString()))
             .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
+            .andExpect(jsonPath("$.noOfCopies").value(DEFAULT_NO_OF_COPIES.intValue()))
             .andExpect(jsonPath("$.bookId").value(DEFAULT_BOOK_ID.intValue()));
     }
 
@@ -277,6 +303,7 @@ public class AddNewBookResourceIntTest {
         updatedAddNewBook
             .bookTitle(UPDATED_BOOK_TITLE)
             .author(UPDATED_AUTHOR)
+            .noOfCopies(UPDATED_NO_OF_COPIES)
             .bookId(UPDATED_BOOK_ID);
         AddNewBookDTO addNewBookDTO = addNewBookMapper.toDto(updatedAddNewBook);
 
@@ -291,6 +318,7 @@ public class AddNewBookResourceIntTest {
         AddNewBook testAddNewBook = addNewBookList.get(addNewBookList.size() - 1);
         assertThat(testAddNewBook.getBookTitle()).isEqualTo(UPDATED_BOOK_TITLE);
         assertThat(testAddNewBook.getAuthor()).isEqualTo(UPDATED_AUTHOR);
+        assertThat(testAddNewBook.getNoOfCopies()).isEqualTo(UPDATED_NO_OF_COPIES);
         assertThat(testAddNewBook.getBookId()).isEqualTo(UPDATED_BOOK_ID);
 
         // Validate the AddNewBook in Elasticsearch
@@ -354,6 +382,7 @@ public class AddNewBookResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(addNewBook.getId().intValue())))
             .andExpect(jsonPath("$.[*].bookTitle").value(hasItem(DEFAULT_BOOK_TITLE)))
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR)))
+            .andExpect(jsonPath("$.[*].noOfCopies").value(hasItem(DEFAULT_NO_OF_COPIES.intValue())))
             .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
     }
 

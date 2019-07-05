@@ -5,6 +5,7 @@ public class AbstractAddNewBookInput {
     private String bookTitle;
     private String author;
     private Long bookId;
+    private Long noOfCopies;
 
 
     public Long getId() {
@@ -39,13 +40,22 @@ public class AbstractAddNewBookInput {
         this.bookId = bookId;
     }
 
+    public Long getNoOfCopies() {
+        return noOfCopies;
+    }
+
+    public void setNoOfCopies(Long noOfCopies) {
+        this.noOfCopies = noOfCopies;
+    }
+
     @Override
     public String toString() {
-        return "AbstractNewBookInput{" +
+        return "AbstractAddNewBookInput{" +
             "id=" + id +
             ", bookTitle='" + bookTitle + '\'' +
             ", author='" + author + '\'' +
             ", bookId=" + bookId +
+            ", noOfCopies=" + noOfCopies +
             '}';
     }
 }

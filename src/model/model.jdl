@@ -32,6 +32,12 @@ name String required
 description String required
 deptHead String required
 }
+entity AddNewBook{
+    bookTitle String required
+    author String required
+    noOfCopies Long required
+    bookId Long required
+}
 
 entity Batch{
 batch BatchEnum required
@@ -200,11 +206,7 @@ designation String required
 staffType StaffType required
 }
 
-entity AddNewBook{
-    bookTitle String required
-    author String required
-    bookId Long required
-}
+
 
 entity AcademicYear{
 year String required

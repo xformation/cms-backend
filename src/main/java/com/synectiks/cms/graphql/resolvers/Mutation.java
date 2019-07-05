@@ -3016,6 +3016,7 @@ public class Mutation implements GraphQLMutationResolver {
         book.setBookTitle(addNewBookInput.getBookTitle());
         book.setAuthor(addNewBookInput.getAuthor());
         book.setBookId(addNewBookInput.getBookId());
+        book.setNoOfCopies(addNewBookInput.getNoOfCopies());
         book.setBatch(batch);
         book.setSubject(subject);
         book.setDepartment(department);
@@ -3032,6 +3033,9 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if(updateNewBookInput.getBookId()!=null){
             book.setBookId(updateNewBookInput.getBookId());
+        }
+        if (updateNewBookInput.getNoOfCopies() != null) {
+            book.setNoOfCopies(updateNewBookInput.getNoOfCopies());
         }
 
         if(updateNewBookInput.getBatchId()!=null){

@@ -625,6 +625,7 @@ type  AddNewBook{
     bookTitle:String!
     author:String!
     bookId: Long!
+    noOfCopies :Long!
     batch: Batch!
     subject:Subject!
     department:Department!
@@ -2930,6 +2931,7 @@ input AddAddNewBookInput{
     bookTitle:String!
     author:String!
     bookId:Long!
+    noOfCopies:Long!
     batchId:Long!
     subjectId:Long!
     departmentId:Long!
@@ -2942,6 +2944,7 @@ input UpdateAddNewBookInput {
     bookTitle:String!
     author:String!
     bookId:Long!
+    noOfCopies:Long!
     batchId:Long!
     subjectId:Long!
     departmentId:Long!

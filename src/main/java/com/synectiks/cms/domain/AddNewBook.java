@@ -36,6 +36,10 @@ public class AddNewBook implements Serializable {
     private String author;
 
     @NotNull
+    @Column(name = "no_of_copies", nullable = false)
+    private Long noOfCopies;
+
+    @NotNull
     @Column(name = "book_id", nullable = false)
     private Long bookId;
 
@@ -84,6 +88,19 @@ public class AddNewBook implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Long getNoOfCopies() {
+        return noOfCopies;
+    }
+
+    public AddNewBook noOfCopies(Long noOfCopies) {
+        this.noOfCopies = noOfCopies;
+        return this;
+    }
+
+    public void setNoOfCopies(Long noOfCopies) {
+        this.noOfCopies = noOfCopies;
     }
 
     public Long getBookId() {
@@ -165,6 +182,7 @@ public class AddNewBook implements Serializable {
             "id=" + getId() +
             ", bookTitle='" + getBookTitle() + "'" +
             ", author='" + getAuthor() + "'" +
+            ", noOfCopies=" + getNoOfCopies() +
             ", bookId=" + getBookId() +
             "}";
     }
