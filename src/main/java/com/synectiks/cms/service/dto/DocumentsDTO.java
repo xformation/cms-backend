@@ -14,10 +14,16 @@ public class DocumentsDTO implements Serializable {
     private String documentName;
 
     @NotNull
-    private String upload;
+    private String documentFilePath;
 
 
     private Long studentId;
+
+    private Long vehicleId;
+
+    private Long employeeId;
+
+    private Long contractId;
 
     public Long getId() {
         return id;
@@ -35,12 +41,12 @@ public class DocumentsDTO implements Serializable {
         this.documentName = documentName;
     }
 
-    public String getUpload() {
-        return upload;
+    public String getDocumentFilePath() {
+        return documentFilePath;
     }
 
-    public void setUpload(String upload) {
-        this.upload = upload;
+    public void setDocumentFilePath(String documentFilePath) {
+        this.documentFilePath = documentFilePath;
     }
 
     public Long getStudentId() {
@@ -49,6 +55,30 @@ public class DocumentsDTO implements Serializable {
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
+    }
+
+    public Long getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
     }
 
     @Override
@@ -77,8 +107,11 @@ public class DocumentsDTO implements Serializable {
         return "DocumentsDTO{" +
             "id=" + getId() +
             ", documentName='" + getDocumentName() + "'" +
-            ", upload='" + getUpload() + "'" +
+            ", documentFilePath='" + getDocumentFilePath() + "'" +
             ", student=" + getStudentId() +
+            ", vehicle=" + getVehicleId() +
+            ", employee=" + getEmployeeId() +
+            ", contract=" + getContractId() +
             "}";
     }
 }

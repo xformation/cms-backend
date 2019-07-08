@@ -38,6 +38,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.synectiks.cms.domain.enumeration.RouteFrequency;
 /**
  * Test class for the TransportRouteResource REST controller.
  *
@@ -55,6 +56,12 @@ public class TransportRouteResourceIntTest {
 
     private static final String DEFAULT_ROUTE_MAP_URL = "AAAAAAAAAA";
     private static final String UPDATED_ROUTE_MAP_URL = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_NO_OF_STOPS = 1;
+    private static final Integer UPDATED_NO_OF_STOPS = 2;
+
+    private static final RouteFrequency DEFAULT_ROUTE_FREQUENCY = RouteFrequency.MORNINGPICKUP;
+    private static final RouteFrequency UPDATED_ROUTE_FREQUENCY = RouteFrequency.AFTERNOONDROPANDPICKUP;
 
     @Autowired
     private TransportRouteRepository transportRouteRepository;
@@ -114,7 +121,9 @@ public class TransportRouteResourceIntTest {
         TransportRoute transportRoute = new TransportRoute()
             .routeName(DEFAULT_ROUTE_NAME)
             .routeDetails(DEFAULT_ROUTE_DETAILS)
-            .routeMapUrl(DEFAULT_ROUTE_MAP_URL);
+            .routeMapUrl(DEFAULT_ROUTE_MAP_URL)
+            .noOfStops(DEFAULT_NO_OF_STOPS)
+            .routeFrequency(DEFAULT_ROUTE_FREQUENCY);
         return transportRoute;
     }
 
@@ -142,6 +151,8 @@ public class TransportRouteResourceIntTest {
         assertThat(testTransportRoute.getRouteName()).isEqualTo(DEFAULT_ROUTE_NAME);
         assertThat(testTransportRoute.getRouteDetails()).isEqualTo(DEFAULT_ROUTE_DETAILS);
         assertThat(testTransportRoute.getRouteMapUrl()).isEqualTo(DEFAULT_ROUTE_MAP_URL);
+        assertThat(testTransportRoute.getNoOfStops()).isEqualTo(DEFAULT_NO_OF_STOPS);
+        assertThat(testTransportRoute.getRouteFrequency()).isEqualTo(DEFAULT_ROUTE_FREQUENCY);
 
         // Validate the TransportRoute in Elasticsearch
         verify(mockTransportRouteSearchRepository, times(1)).save(testTransportRoute);
@@ -210,10 +221,29 @@ public class TransportRouteResourceIntTest {
 
     @Test
     @Transactional
-    public void checkRouteMapUrlIsRequired() throws Exception {
+    public void checkNoOfStopsIsRequired() throws Exception {
         int databaseSizeBeforeTest = transportRouteRepository.findAll().size();
         // set the field null
-        transportRoute.setRouteMapUrl(null);
+        transportRoute.setNoOfStops(null);
+
+        // Create the TransportRoute, which fails.
+        TransportRouteDTO transportRouteDTO = transportRouteMapper.toDto(transportRoute);
+
+        restTransportRouteMockMvc.perform(post("/api/transport-routes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(transportRouteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
+        assertThat(transportRouteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRouteFrequencyIsRequired() throws Exception {
+        int databaseSizeBeforeTest = transportRouteRepository.findAll().size();
+        // set the field null
+        transportRoute.setRouteFrequency(null);
 
         // Create the TransportRoute, which fails.
         TransportRouteDTO transportRouteDTO = transportRouteMapper.toDto(transportRoute);
@@ -240,7 +270,9 @@ public class TransportRouteResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(transportRoute.getId().intValue())))
             .andExpect(jsonPath("$.[*].routeName").value(hasItem(DEFAULT_ROUTE_NAME.toString())))
             .andExpect(jsonPath("$.[*].routeDetails").value(hasItem(DEFAULT_ROUTE_DETAILS.toString())))
-            .andExpect(jsonPath("$.[*].routeMapUrl").value(hasItem(DEFAULT_ROUTE_MAP_URL.toString())));
+            .andExpect(jsonPath("$.[*].routeMapUrl").value(hasItem(DEFAULT_ROUTE_MAP_URL.toString())))
+            .andExpect(jsonPath("$.[*].noOfStops").value(hasItem(DEFAULT_NO_OF_STOPS)))
+            .andExpect(jsonPath("$.[*].routeFrequency").value(hasItem(DEFAULT_ROUTE_FREQUENCY.toString())));
     }
     
     @Test
@@ -256,7 +288,9 @@ public class TransportRouteResourceIntTest {
             .andExpect(jsonPath("$.id").value(transportRoute.getId().intValue()))
             .andExpect(jsonPath("$.routeName").value(DEFAULT_ROUTE_NAME.toString()))
             .andExpect(jsonPath("$.routeDetails").value(DEFAULT_ROUTE_DETAILS.toString()))
-            .andExpect(jsonPath("$.routeMapUrl").value(DEFAULT_ROUTE_MAP_URL.toString()));
+            .andExpect(jsonPath("$.routeMapUrl").value(DEFAULT_ROUTE_MAP_URL.toString()))
+            .andExpect(jsonPath("$.noOfStops").value(DEFAULT_NO_OF_STOPS))
+            .andExpect(jsonPath("$.routeFrequency").value(DEFAULT_ROUTE_FREQUENCY.toString()));
     }
 
     @Test
@@ -282,7 +316,9 @@ public class TransportRouteResourceIntTest {
         updatedTransportRoute
             .routeName(UPDATED_ROUTE_NAME)
             .routeDetails(UPDATED_ROUTE_DETAILS)
-            .routeMapUrl(UPDATED_ROUTE_MAP_URL);
+            .routeMapUrl(UPDATED_ROUTE_MAP_URL)
+            .noOfStops(UPDATED_NO_OF_STOPS)
+            .routeFrequency(UPDATED_ROUTE_FREQUENCY);
         TransportRouteDTO transportRouteDTO = transportRouteMapper.toDto(updatedTransportRoute);
 
         restTransportRouteMockMvc.perform(put("/api/transport-routes")
@@ -297,6 +333,8 @@ public class TransportRouteResourceIntTest {
         assertThat(testTransportRoute.getRouteName()).isEqualTo(UPDATED_ROUTE_NAME);
         assertThat(testTransportRoute.getRouteDetails()).isEqualTo(UPDATED_ROUTE_DETAILS);
         assertThat(testTransportRoute.getRouteMapUrl()).isEqualTo(UPDATED_ROUTE_MAP_URL);
+        assertThat(testTransportRoute.getNoOfStops()).isEqualTo(UPDATED_NO_OF_STOPS);
+        assertThat(testTransportRoute.getRouteFrequency()).isEqualTo(UPDATED_ROUTE_FREQUENCY);
 
         // Validate the TransportRoute in Elasticsearch
         verify(mockTransportRouteSearchRepository, times(1)).save(testTransportRoute);
@@ -359,7 +397,9 @@ public class TransportRouteResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(transportRoute.getId().intValue())))
             .andExpect(jsonPath("$.[*].routeName").value(hasItem(DEFAULT_ROUTE_NAME)))
             .andExpect(jsonPath("$.[*].routeDetails").value(hasItem(DEFAULT_ROUTE_DETAILS)))
-            .andExpect(jsonPath("$.[*].routeMapUrl").value(hasItem(DEFAULT_ROUTE_MAP_URL)));
+            .andExpect(jsonPath("$.[*].routeMapUrl").value(hasItem(DEFAULT_ROUTE_MAP_URL)))
+            .andExpect(jsonPath("$.[*].noOfStops").value(hasItem(DEFAULT_NO_OF_STOPS)))
+            .andExpect(jsonPath("$.[*].routeFrequency").value(hasItem(DEFAULT_ROUTE_FREQUENCY.toString())));
     }
 
     @Test

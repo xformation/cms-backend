@@ -28,6 +28,8 @@ public class AdmissionApplicationDTO implements Serializable {
 
     private Long studentId;
 
+    private Long academicyearId;
+
     public Long getId() {
         return id;
     }
@@ -76,6 +78,14 @@ public class AdmissionApplicationDTO implements Serializable {
         this.studentId = studentId;
     }
 
+    public Long getAcademicyearId() {
+        return academicyearId;
+    }
+
+    public void setAcademicyearId(Long academicYearId) {
+        this.academicyearId = academicYearId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -106,6 +116,7 @@ public class AdmissionApplicationDTO implements Serializable {
             ", admissionDate='" + getAdmissionDate() + "'" +
             ", comments='" + getComments() + "'" +
             ", student=" + getStudentId() +
+            ", academicyear=" + getAcademicyearId() +
             "}";
     }
 }

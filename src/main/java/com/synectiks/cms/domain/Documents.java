@@ -33,12 +33,24 @@ public class Documents implements Serializable {
     private String documentName;
 
     @NotNull
-    @Column(name = "upload", nullable = false)
-    private String upload;
+    @Column(name = "document_file_path", nullable = false)
+    private String documentFilePath;
 
     @ManyToOne
     @JsonIgnoreProperties("documents")
     private Student student;
+
+    @ManyToOne
+    @JsonIgnoreProperties("documents")
+    private Vehicle vehicle;
+
+    @ManyToOne
+    @JsonIgnoreProperties("documents")
+    private Employee employee;
+
+    @ManyToOne
+    @JsonIgnoreProperties("documents")
+    private Contract contract;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -62,17 +74,17 @@ public class Documents implements Serializable {
         this.documentName = documentName;
     }
 
-    public String getUpload() {
-        return upload;
+    public String getDocumentFilePath() {
+        return documentFilePath;
     }
 
-    public Documents upload(String upload) {
-        this.upload = upload;
+    public Documents documentFilePath(String documentFilePath) {
+        this.documentFilePath = documentFilePath;
         return this;
     }
 
-    public void setUpload(String upload) {
-        this.upload = upload;
+    public void setDocumentFilePath(String documentFilePath) {
+        this.documentFilePath = documentFilePath;
     }
 
     public Student getStudent() {
@@ -86,6 +98,45 @@ public class Documents implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public Documents vehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+        return this;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public Documents employee(Employee employee) {
+        this.employee = employee;
+        return this;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public Documents contract(Contract contract) {
+        this.contract = contract;
+        return this;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -114,7 +165,7 @@ public class Documents implements Serializable {
         return "Documents{" +
             "id=" + getId() +
             ", documentName='" + getDocumentName() + "'" +
-            ", upload='" + getUpload() + "'" +
+            ", documentFilePath='" + getDocumentFilePath() + "'" +
             "}";
     }
 }

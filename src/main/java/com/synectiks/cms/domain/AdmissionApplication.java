@@ -55,6 +55,10 @@ public class AdmissionApplication implements Serializable {
     @JsonIgnoreProperties("admissionApplications")
     private Student student;
 
+    @ManyToOne
+    @JsonIgnoreProperties("admissionApplications")
+    private AcademicYear academicyear;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -127,6 +131,19 @@ public class AdmissionApplication implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public AcademicYear getAcademicyear() {
+        return academicyear;
+    }
+
+    public AdmissionApplication academicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
+        return this;
+    }
+
+    public void setAcademicyear(AcademicYear academicYear) {
+        this.academicyear = academicYear;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

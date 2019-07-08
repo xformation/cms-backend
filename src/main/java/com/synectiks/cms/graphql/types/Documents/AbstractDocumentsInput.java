@@ -5,7 +5,7 @@ import java.util.Objects;
 public class AbstractDocumentsInput {
     private Long id;
     private String documentName;
-    private String upload;
+    private String documentFilePath;
 
     public Long getId() {
         return id;
@@ -23,12 +23,12 @@ public class AbstractDocumentsInput {
         this.documentName = documentName;
     }
 
-    public String getUpload() {
-        return upload;
+    public String getDocumentFilePath() {
+        return documentFilePath;
     }
 
-    public void setUpload(String upload) {
-        this.upload = upload;
+    public void setDocumentFilePath(String documentFilePath) {
+        this.documentFilePath = documentFilePath;
     }
 
     @Override
@@ -36,22 +36,22 @@ public class AbstractDocumentsInput {
         return "AbstractDocumentsInput{" +
             "id=" + id +
             ", documentName='" + documentName + '\'' +
-            ", upload='" + upload + '\'' +
+            ", documentFilePath='" + documentFilePath + '\'' +
             '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof AbstractDocumentsInput)) return false;
         AbstractDocumentsInput that = (AbstractDocumentsInput) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(documentName, that.documentName) &&
-            Objects.equals(upload, that.upload);
+        return Objects.equals(getId(), that.getId()) &&
+            Objects.equals(getDocumentName(), that.getDocumentName()) &&
+            Objects.equals(getDocumentFilePath(), that.getDocumentFilePath());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, documentName, upload);
+        return Objects.hash(getId(), getDocumentName(), getDocumentFilePath());
     }
 }

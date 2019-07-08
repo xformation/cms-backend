@@ -569,7 +569,7 @@ type CompetitiveExam{
 type Documents{
     id: Long!
     documentName: String!
-    upload: String!
+    documentFilePath: String!
     student: Student!
  }
 

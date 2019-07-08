@@ -11,7 +11,9 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.exam.*;
+import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,51 +29,6 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicHistory;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AddNewBook;
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.domain.CmsFeeCategory;
-import com.synectiks.cms.domain.CmsFeeDetails;
-import com.synectiks.cms.domain.CmsFeeSettingsVo;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.StudentExamReport;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.TypeOfGrading;
 import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
@@ -325,46 +282,6 @@ import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingPayload;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AcademicHistoryRepository;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AddNewBookRepository;
-import com.synectiks.cms.repository.AdminAttendanceRepository;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.CompetitiveExamRepository;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.repository.DueDateRepository;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.FeeCategoryRepository;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.LateFeeRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.PaymentRemainderRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentExamReportRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -415,6 +332,9 @@ public class Mutation implements GraphQLMutationResolver {
     private final TypeOfGradingRepository typeOfGradingRepository;
     private final StudentExamReportRepository studentExamReportRepository;
     private final AddNewBookRepository addNewBookRepository;
+    private final VehicleRepository vehicleRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ContractRepository contractRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -446,7 +366,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
 	private Base64FileProcessor base64FileProcessor;
 	
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, EntityManager entityManager) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, EntityManager entityManager) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -490,6 +410,9 @@ public class Mutation implements GraphQLMutationResolver {
         this.typeOfGradingRepository = typeOfGradingRepository;
         this.studentExamReportRepository = studentExamReportRepository;
         this.addNewBookRepository = addNewBookRepository;
+        this.vehicleRepository = vehicleRepository;
+        this.employeeRepository = employeeRepository;
+        this.contractRepository = contractRepository;
         this.entityManager = entityManager;
     }
 
@@ -1312,10 +1235,15 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddDocumentsPayload addDocuments(AddDocumentsInput addDocumentsInput) {
         final Student student = studentRepository.findById(addDocumentsInput.getStudentId()).get();
-
+        final Vehicle vehicle = vehicleRepository.findById(addDocumentsInput.getVehicleId()).get();
+        final Employee employee = employeeRepository.findById(addDocumentsInput.getEmployeeId()).get();
+        final Contract contract = contractRepository.findById(addDocumentsInput.getContractId()).get();
         final Documents documents = new Documents();
         documents.setStudent(student);
-        documents.setUpload(addDocumentsInput.getUpload());
+        documents.setVehicle(vehicle);
+        documents.setContract(contract);
+        documents.setEmployee(employee);
+        documents.setDocumentFilePath(addDocumentsInput.getDocumentFilePath());
         documents.setDocumentName(addDocumentsInput.getDocumentName());
         documentsRepository.save(documents);
         return new AddDocumentsPayload(documents);
@@ -1325,8 +1253,8 @@ public class Mutation implements GraphQLMutationResolver {
     public UpdateDocumentsPayload updateDocuments(UpdateDocumentsInput updateDocumentsInput) {
         final Documents documents = documentsRepository.findById(updateDocumentsInput.getId()).get();
 
-        if (updateDocumentsInput.getUpload() != null){
-            documents.setUpload(updateDocumentsInput.getUpload());
+        if (updateDocumentsInput.getDocumentFilePath() != null){
+            documents.setDocumentFilePath(updateDocumentsInput.getDocumentFilePath());
         }
         if(updateDocumentsInput.getDocumentName() != null){
             documents.setDocumentName(updateDocumentsInput.getDocumentName());
@@ -1336,6 +1264,20 @@ public class Mutation implements GraphQLMutationResolver {
             final Student student = studentRepository.findById(updateDocumentsInput.getStudentId()).get();
             documents.setStudent(student);
         }
+
+        if (updateDocumentsInput.getEmployeeId() != null) {
+            final Employee employee = employeeRepository.findById(updateDocumentsInput.getEmployeeId()).get();
+            documents.setEmployee(employee);
+        }
+        if (updateDocumentsInput.getVehicleId() != null) {
+            final Vehicle vehicle = vehicleRepository.findById(updateDocumentsInput.getVehicleId()).get();
+            documents.setVehicle(vehicle);
+        }
+        if (updateDocumentsInput.getContractId() != null) {
+            final Contract contract = contractRepository.findById(updateDocumentsInput.getContractId()).get();
+            documents.setContract(contract);
+        }
+
         documentsRepository.save(documents);
 
         return new UpdateDocumentsPayload(documents);

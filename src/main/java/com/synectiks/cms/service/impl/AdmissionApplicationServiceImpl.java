@@ -93,8 +93,7 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AdmissionApplication : {}", id);
-        admissionApplicationRepository.deleteById(id);
+        log.debug("Request to delete AdmissionApplication : {}", id);        admissionApplicationRepository.deleteById(id);
         admissionApplicationSearchRepository.deleteById(id);
     }
 

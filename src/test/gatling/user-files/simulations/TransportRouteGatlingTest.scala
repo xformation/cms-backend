@@ -75,6 +75,8 @@ class TransportRouteGatlingTest extends Simulation {
                 , "routeName":"SAMPLE_TEXT"
                 , "routeDetails":"SAMPLE_TEXT"
                 , "routeMapUrl":"SAMPLE_TEXT"
+                , "noOfStops":"0"
+                , "routeFrequency":"MORNINGPICKUP"
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_transportRoute_url"))).exitHereIfFailed

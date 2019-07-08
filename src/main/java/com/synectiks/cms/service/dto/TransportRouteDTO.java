@@ -2,6 +2,7 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.RouteFrequency;
 
 /**
  * A DTO for the TransportRoute entity.
@@ -16,8 +17,13 @@ public class TransportRouteDTO implements Serializable {
     @NotNull
     private String routeDetails;
 
-    @NotNull
     private String routeMapUrl;
+
+    @NotNull
+    private Integer noOfStops;
+
+    @NotNull
+    private RouteFrequency routeFrequency;
 
 
     public Long getId() {
@@ -52,6 +58,22 @@ public class TransportRouteDTO implements Serializable {
         this.routeMapUrl = routeMapUrl;
     }
 
+    public Integer getNoOfStops() {
+        return noOfStops;
+    }
+
+    public void setNoOfStops(Integer noOfStops) {
+        this.noOfStops = noOfStops;
+    }
+
+    public RouteFrequency getRouteFrequency() {
+        return routeFrequency;
+    }
+
+    public void setRouteFrequency(RouteFrequency routeFrequency) {
+        this.routeFrequency = routeFrequency;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -80,6 +102,8 @@ public class TransportRouteDTO implements Serializable {
             ", routeName='" + getRouteName() + "'" +
             ", routeDetails='" + getRouteDetails() + "'" +
             ", routeMapUrl='" + getRouteMapUrl() + "'" +
+            ", noOfStops=" + getNoOfStops() +
+            ", routeFrequency='" + getRouteFrequency() + "'" +
             "}";
     }
 }

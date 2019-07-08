@@ -11,6 +11,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.synectiks.cms.domain.enumeration.RouteFrequency;
+
 /**
  * A TransportRoute.
  */
@@ -35,9 +37,17 @@ public class TransportRoute implements Serializable {
     @Column(name = "route_details", nullable = false)
     private String routeDetails;
 
-    @NotNull
-    @Column(name = "route_map_url", nullable = false)
+    @Column(name = "route_map_url")
     private String routeMapUrl;
+
+    @NotNull
+    @Column(name = "no_of_stops", nullable = false)
+    private Integer noOfStops;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "route_frequency", nullable = false)
+    private RouteFrequency routeFrequency;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -86,6 +96,32 @@ public class TransportRoute implements Serializable {
     public void setRouteMapUrl(String routeMapUrl) {
         this.routeMapUrl = routeMapUrl;
     }
+
+    public Integer getNoOfStops() {
+        return noOfStops;
+    }
+
+    public TransportRoute noOfStops(Integer noOfStops) {
+        this.noOfStops = noOfStops;
+        return this;
+    }
+
+    public void setNoOfStops(Integer noOfStops) {
+        this.noOfStops = noOfStops;
+    }
+
+    public RouteFrequency getRouteFrequency() {
+        return routeFrequency;
+    }
+
+    public TransportRoute routeFrequency(RouteFrequency routeFrequency) {
+        this.routeFrequency = routeFrequency;
+        return this;
+    }
+
+    public void setRouteFrequency(RouteFrequency routeFrequency) {
+        this.routeFrequency = routeFrequency;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -115,6 +151,8 @@ public class TransportRoute implements Serializable {
             ", routeName='" + getRouteName() + "'" +
             ", routeDetails='" + getRouteDetails() + "'" +
             ", routeMapUrl='" + getRouteMapUrl() + "'" +
+            ", noOfStops=" + getNoOfStops() +
+            ", routeFrequency='" + getRouteFrequency() + "'" +
             "}";
     }
 }

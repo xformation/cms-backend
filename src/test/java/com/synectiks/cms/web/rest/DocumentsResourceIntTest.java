@@ -50,8 +50,8 @@ public class DocumentsResourceIntTest {
     private static final String DEFAULT_DOCUMENT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_DOCUMENT_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_UPLOAD = "AAAAAAAAAA";
-    private static final String UPDATED_UPLOAD = "BBBBBBBBBB";
+    private static final String DEFAULT_DOCUMENT_FILE_PATH = "AAAAAAAAAA";
+    private static final String UPDATED_DOCUMENT_FILE_PATH = "BBBBBBBBBB";
 
     @Autowired
     private DocumentsRepository documentsRepository;
@@ -110,7 +110,7 @@ public class DocumentsResourceIntTest {
     public static Documents createEntity(EntityManager em) {
         Documents documents = new Documents()
             .documentName(DEFAULT_DOCUMENT_NAME)
-            .upload(DEFAULT_UPLOAD);
+            .documentFilePath(DEFAULT_DOCUMENT_FILE_PATH);
         return documents;
     }
 
@@ -136,7 +136,7 @@ public class DocumentsResourceIntTest {
         assertThat(documentsList).hasSize(databaseSizeBeforeCreate + 1);
         Documents testDocuments = documentsList.get(documentsList.size() - 1);
         assertThat(testDocuments.getDocumentName()).isEqualTo(DEFAULT_DOCUMENT_NAME);
-        assertThat(testDocuments.getUpload()).isEqualTo(DEFAULT_UPLOAD);
+        assertThat(testDocuments.getDocumentFilePath()).isEqualTo(DEFAULT_DOCUMENT_FILE_PATH);
 
         // Validate the Documents in Elasticsearch
         verify(mockDocumentsSearchRepository, times(1)).save(testDocuments);
@@ -186,10 +186,10 @@ public class DocumentsResourceIntTest {
 
     @Test
     @Transactional
-    public void checkUploadIsRequired() throws Exception {
+    public void checkDocumentFilePathIsRequired() throws Exception {
         int databaseSizeBeforeTest = documentsRepository.findAll().size();
         // set the field null
-        documents.setUpload(null);
+        documents.setDocumentFilePath(null);
 
         // Create the Documents, which fails.
         DocumentsDTO documentsDTO = documentsMapper.toDto(documents);
@@ -215,7 +215,7 @@ public class DocumentsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documents.getId().intValue())))
             .andExpect(jsonPath("$.[*].documentName").value(hasItem(DEFAULT_DOCUMENT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].upload").value(hasItem(DEFAULT_UPLOAD.toString())));
+            .andExpect(jsonPath("$.[*].documentFilePath").value(hasItem(DEFAULT_DOCUMENT_FILE_PATH.toString())));
     }
     
     @Test
@@ -230,7 +230,7 @@ public class DocumentsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(documents.getId().intValue()))
             .andExpect(jsonPath("$.documentName").value(DEFAULT_DOCUMENT_NAME.toString()))
-            .andExpect(jsonPath("$.upload").value(DEFAULT_UPLOAD.toString()));
+            .andExpect(jsonPath("$.documentFilePath").value(DEFAULT_DOCUMENT_FILE_PATH.toString()));
     }
 
     @Test
@@ -255,7 +255,7 @@ public class DocumentsResourceIntTest {
         em.detach(updatedDocuments);
         updatedDocuments
             .documentName(UPDATED_DOCUMENT_NAME)
-            .upload(UPDATED_UPLOAD);
+            .documentFilePath(UPDATED_DOCUMENT_FILE_PATH);
         DocumentsDTO documentsDTO = documentsMapper.toDto(updatedDocuments);
 
         restDocumentsMockMvc.perform(put("/api/documents")
@@ -268,7 +268,7 @@ public class DocumentsResourceIntTest {
         assertThat(documentsList).hasSize(databaseSizeBeforeUpdate);
         Documents testDocuments = documentsList.get(documentsList.size() - 1);
         assertThat(testDocuments.getDocumentName()).isEqualTo(UPDATED_DOCUMENT_NAME);
-        assertThat(testDocuments.getUpload()).isEqualTo(UPDATED_UPLOAD);
+        assertThat(testDocuments.getDocumentFilePath()).isEqualTo(UPDATED_DOCUMENT_FILE_PATH);
 
         // Validate the Documents in Elasticsearch
         verify(mockDocumentsSearchRepository, times(1)).save(testDocuments);
@@ -330,7 +330,7 @@ public class DocumentsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documents.getId().intValue())))
             .andExpect(jsonPath("$.[*].documentName").value(hasItem(DEFAULT_DOCUMENT_NAME)))
-            .andExpect(jsonPath("$.[*].upload").value(hasItem(DEFAULT_UPLOAD)));
+            .andExpect(jsonPath("$.[*].documentFilePath").value(hasItem(DEFAULT_DOCUMENT_FILE_PATH)));
     }
 
     @Test
