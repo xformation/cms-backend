@@ -18,8 +18,10 @@ package com.synectiks.cms.graphql.resolvers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.synectiks.cms.business.service.CmsAdmissionApplicationService;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.Book.BookfilterProcessor;
+import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
 import com.synectiks.cms.repository.*;
 import io.swagger.models.auth.In;
 import org.slf4j.Logger;
@@ -177,6 +179,12 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private SummaryFilter summaryFilter;
+
+    @Autowired
+    private AdmissionApplicationProcessor admissionApplicationProcessor;
+
+    @Autowired
+    private CmsAdmissionApplicationService cmsAdmissionApplicationService;
     
     public Query(SummaryFilter summaryFilter, AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, ContractRepository contractRepository, EmployeeRepository employeeRepository, VehicleRepository vehicleRepository, InsuranceRepository insuranceRepository) {
        this.summaryFilter = summaryFilter;
@@ -633,6 +641,25 @@ public class Query implements GraphQLQueryResolver {
 
     public CmsAdmissionEnquiryVo getAdmissionData( String branchId) {
         return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId));
+    }
+
+    public Long getTotalReceived( long academicyearId) {
+        return admissionApplicationProcessor.getTotalReceived( academicyearId);
+    }
+
+    public Long getTotalInprocess( long academicyearId) {
+        return admissionApplicationProcessor.getTotalInprocess( academicyearId);
+    }
+    public Long getTotalDecline(long academicyearId) {
+        return admissionApplicationProcessor.getTotalDeclined( academicyearId);
+    }
+
+    public Long getTotalAccepted( long academicyearId) {
+        return admissionApplicationProcessor.getTotalAccepted(academicyearId);
+    }
+
+    public CmsAdmissionApplicationVo getAdmissionApplicationData( String academicyearId) {
+        return admissionApplicationProcessor.getAdmissionApplicationData( Long.valueOf(academicyearId));
     }
 
     

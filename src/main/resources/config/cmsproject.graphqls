@@ -311,6 +311,12 @@ type Query {
     getTotalConverted(branchId:Long): Long!
     getAdmissionData(branchId:String): CmsAdmissionEnquiryVo
 
+    getTotalReceived(academicyearId:Long): Long!
+    getTotalInprocess(academicyearId:Long ): Long!
+    getTotalDecline(academicyearId:Long ): Long!
+    getTotalAccepted(academicyearId:Long): Long!
+    getAdmissionApplicationData(academicyearId:String): CmsAdmissionApplicationVo
+
 
   
   createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
@@ -516,6 +522,21 @@ type CmsAdmissionEnquiryVo {
     strUpdatedOn:String
 
 }
+
+type CmsAdmissionApplicationVo {
+     totalReceived : Long!
+      totalInprocess : Long!
+      totalDeclined : Long!
+      totalAccepted : Long!
+      id: Long!
+      admissionStatus:AdmissionStatusEnum!
+      course:CourseEnum!
+      admissionDate: Date!
+      comments:String!
+      student: Student!
+      strAdmissionDate: String!
+}
+
 type StudentAttendanceCache{
 	departments: [Department]
 	batches: [Batch]
@@ -1391,6 +1412,11 @@ type Mutation {
     addAdmissionApplication(input: AddAdmissionApplicationInput!): AddAdmissionApplicationPayload!
     updateAdmissionApplication(input: UpdateAdmissionApplicationInput!): UpdateAdmissionApplicationPayload!
     removeAdmissionApplication(input: RemoveAdmissionApplicationInput!): RemoveAdmissionApplicationPayload!
+    getTotalReceived(academicyearId:Long ): Long!
+    getTotalInprocess(academicyearId:Long ): Long!
+    getTotalDecline(academicyearId:Long ): Long!
+    getTotalAccepted(academicyearId:Long): Long!
+    searchAdmissionApplicationOnType(admissionApplicationType:String academicyearId:Long): [CmsAdmissionApplicationVo!]!
 
     addAcademicHistory(input: AddAcademicHistoryInput!): AddAcademicHistoryPayload!
     updateAcademicHistory(input: UpdateAcademicHistoryInput!): UpdateAcademicHistoryPayload!

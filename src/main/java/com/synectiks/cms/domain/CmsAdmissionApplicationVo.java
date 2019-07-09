@@ -9,6 +9,10 @@ import java.util.Objects;
 
 public class CmsAdmissionApplicationVo implements Serializable {
 
+    private Long totalReceived = 0L;
+    private Long totalInprocess = 0L;
+    private Long totalDeclined = 0L;
+    private Long totalAccepted = 0L;
     private Long id;
     private AdmissionStatusEnum admissionStatus;
     private CourseEnum course;
@@ -16,6 +20,38 @@ public class CmsAdmissionApplicationVo implements Serializable {
     private String comments;
     private Student student;
     private String strAdmissionDate;
+
+    public Long getTotalReceived() {
+        return totalReceived;
+    }
+
+    public void setTotalReceived(Long totalReceived) {
+        this.totalReceived = totalReceived;
+    }
+
+    public Long getTotalInprocess() {
+        return totalInprocess;
+    }
+
+    public void setTotalInprocess(Long totalInprocess) {
+        this.totalInprocess = totalInprocess;
+    }
+
+    public Long getTotalDeclined() {
+        return totalDeclined;
+    }
+
+    public void setTotalDeclined(Long totalDeclined) {
+        this.totalDeclined = totalDeclined;
+    }
+
+    public Long getTotalAccepted() {
+        return totalAccepted;
+    }
+
+    public void setTotalAccepted(Long totalAccepted) {
+        this.totalAccepted = totalAccepted;
+    }
 
     public Long getId() {
         return id;

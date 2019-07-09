@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
 import com.synectiks.cms.filter.exam.*;
 import com.synectiks.cms.graphql.types.Contract.*;
 import com.synectiks.cms.graphql.types.Employee.*;
@@ -370,7 +371,10 @@ public class Mutation implements GraphQLMutationResolver {
     
     @Autowired
 	private Base64FileProcessor base64FileProcessor;
-	
+
+    @Autowired
+    private AdmissionApplicationProcessor admissionApplicationProcessor;
+
     public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
@@ -3400,6 +3404,25 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
+    public Long getTotalReceived( long academicyearId) {
+        return admissionApplicationProcessor.getTotalReceived( academicyearId);
+    }
+
+    public Long getTotalInprocess( long academicyearId) {
+        return admissionEnquiryProcessor.getTotalFollowup( academicyearId);
+    }
+    public Long getTotalDecline(long academicyearId) {
+        return admissionApplicationProcessor.getTotalDeclined( academicyearId);
+    }
+
+    public Long getTotalAccepted( long academicyearId) {
+        return admissionApplicationProcessor.getTotalAccepted(academicyearId);
+    }
+
+
+    public List<CmsAdmissionApplicationVo> searchAdmissionApplicationOnType(String admissionApplicationType,Long academicyearId) throws Exception{
+        return Lists.newArrayList(admissionApplicationProcessor.searchAdmissionApplicationOnType(admissionApplicationType, academicyearId));
+    }
 
 
 
