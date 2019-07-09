@@ -1,5 +1,7 @@
 package com.synectiks.cms.graphql.types.TransportRoute;
 
+import com.synectiks.cms.domain.enumeration.RouteFrequency;
+
 import java.util.Objects;
 
 public class AbstractTransportRouteInput {
@@ -7,6 +9,8 @@ public class AbstractTransportRouteInput {
     private String routeName;
     private String routeDetails;
     private String routeMapUrl;
+    private Integer noOfStops;
+    private RouteFrequency routeFrequency;
 
     public Long getId() {
         return id;
@@ -40,6 +44,22 @@ public class AbstractTransportRouteInput {
         this.routeMapUrl = routeMapUrl;
     }
 
+    public Integer getNoOfStops() {
+        return noOfStops;
+    }
+
+    public void setNoOfStops(Integer noOfStops) {
+        this.noOfStops = noOfStops;
+    }
+
+    public RouteFrequency getRouteFrequency() {
+        return routeFrequency;
+    }
+
+    public void setRouteFrequency(RouteFrequency routeFrequency) {
+        this.routeFrequency = routeFrequency;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,12 +68,14 @@ public class AbstractTransportRouteInput {
         return Objects.equals(getId(), that.getId()) &&
             Objects.equals(getRouteName(), that.getRouteName()) &&
             Objects.equals(getRouteDetails(), that.getRouteDetails()) &&
-            Objects.equals(getRouteMapUrl(), that.getRouteMapUrl());
+            Objects.equals(getRouteMapUrl(), that.getRouteMapUrl()) &&
+            Objects.equals(getNoOfStops(), that.getNoOfStops()) &&
+            getRouteFrequency() == that.getRouteFrequency();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRouteName(), getRouteDetails(), getRouteMapUrl());
+        return Objects.hash(getId(), getRouteName(), getRouteDetails(), getRouteMapUrl(), getNoOfStops(), getRouteFrequency());
     }
 
     @Override
@@ -63,6 +85,8 @@ public class AbstractTransportRouteInput {
             ", routeName='" + routeName + '\'' +
             ", routeDetails='" + routeDetails + '\'' +
             ", routeMapUrl='" + routeMapUrl + '\'' +
+            ", noOfStops=" + noOfStops +
+            ", routeFrequency=" + routeFrequency +
             '}';
     }
 }

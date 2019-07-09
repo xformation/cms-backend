@@ -15,6 +15,8 @@ import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.exam.*;
 import com.synectiks.cms.graphql.types.Contract.*;
 import com.synectiks.cms.graphql.types.Employee.*;
+import com.synectiks.cms.graphql.types.Insurance.*;
+import com.synectiks.cms.graphql.types.Vehicle.*;
 import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -337,6 +339,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final VehicleRepository vehicleRepository;
     private final EmployeeRepository employeeRepository;
     private final ContractRepository contractRepository;
+    private final InsuranceRepository insuranceRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -368,7 +371,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
 	private Base64FileProcessor base64FileProcessor;
 	
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, EntityManager entityManager) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -415,6 +418,7 @@ public class Mutation implements GraphQLMutationResolver {
         this.vehicleRepository = vehicleRepository;
         this.employeeRepository = employeeRepository;
         this.contractRepository = contractRepository;
+        this.insuranceRepository = insuranceRepository;
         this.entityManager = entityManager;
     }
 
@@ -531,12 +535,12 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput addAdmissionApplicationInput) {
         Student student = studentRepository.findById(addAdmissionApplicationInput.getStudentId()).get();
-
+        AcademicYear academicYear = academicYearRepository.findById(addAdmissionApplicationInput.getAcademicyearId()).get();
 
         final AdmissionApplication admissionApplication = new AdmissionApplication();
 
         admissionApplication.setStudent(student);
-
+        admissionApplication.setAcademicyear(academicYear);
         admissionApplication.setAdmissionStatus(addAdmissionApplicationInput.getAdmissionStatus());
         admissionApplication.setCourse(addAdmissionApplicationInput.getCourse());
         admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getAdmissionDate()));
@@ -564,6 +568,10 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAdmissionApplicationInput.getStudentId() != null) {
             Student student = studentRepository.findById(updateAdmissionApplicationInput.getStudentId()).get();
             admissionApplication.setStudent(student);
+        }
+        if (updateAdmissionApplicationInput.getAcademicyearId() != null) {
+            AcademicYear academicYear = academicYearRepository.findById(updateAdmissionApplicationInput.getAcademicyearId()).get();
+            admissionApplication.setAcademicyear(academicYear);
         }
 
         admissionApplicationRepository.save(admissionApplication);
@@ -2822,7 +2830,8 @@ public class Mutation implements GraphQLMutationResolver {
         transportRoute.setRouteDetails(addTransportRouteInput.getRouteDetails());
         transportRoute.setRouteName(addTransportRouteInput.getRouteName());
         transportRoute.setRouteMapUrl(addTransportRouteInput.getRouteMapUrl());
-
+        transportRoute.setNoOfStops(addTransportRouteInput.getNoOfStops());
+        transportRoute.setRouteFrequency(addTransportRouteInput.getRouteFrequency());
         transportRouteRepository.save(transportRoute);
 
         return new AddTransportRoutePayload(transportRoute);
@@ -2839,6 +2848,12 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateTransportRouteInput.getRouteMapUrl() != null) {
             transportRoute.setRouteMapUrl(updateTransportRouteInput.getRouteMapUrl());
+        }
+        if (updateTransportRouteInput.getNoOfStops() != null) {
+            transportRoute.setNoOfStops(updateTransportRouteInput.getNoOfStops());
+        }
+        if (updateTransportRouteInput.getRouteFrequency() != null) {
+            transportRoute.setRouteFrequency(updateTransportRouteInput.getRouteFrequency());
         }
         transportRouteRepository.save(transportRoute);
         return new UpdateTransportRoutePayload(transportRoute);
@@ -3161,6 +3176,118 @@ public class Mutation implements GraphQLMutationResolver {
         addNewBookRepository.delete(book);
         return new RemoveAddNewBookPayload((Lists.newArrayList(addNewBookRepository.findAll())));
     }
+
+    public AddInsurancePayload addInsurance(AddInsuranceInput addInsuranceInput) {
+        final Vehicle vehicle = vehicleRepository.findById(addInsuranceInput.getVehicleId()).get();
+        final Insurance insurance = new Insurance();
+        insurance.setInsuranceCompany(addInsuranceInput.getInsuranceCompany());
+        insurance.setTypeOfInsurance(addInsuranceInput.getTypeOfInsurance());
+        insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getDateOfInsurance()));
+        insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getValidTill()));
+        insurance.setVehicle(vehicle);
+        insuranceRepository.save(insurance);
+
+        return new AddInsurancePayload(insurance);
+    }
+
+    public UpdateInsurancePayload updateInsurance(UpdateInsuranceInput updateInsuranceInput) {
+        Insurance insurance = insuranceRepository.findById(updateInsuranceInput.getId()).get();
+
+        if (updateInsuranceInput.getInsuranceCompany() != null) {
+            insurance.setInsuranceCompany(updateInsuranceInput.getInsuranceCompany());
+        }
+        if (updateInsuranceInput.getTypeOfInsurance() != null) {
+            insurance.setInsuranceCompany(updateInsuranceInput.getInsuranceCompany());
+        }
+        if (updateInsuranceInput.getDateOfInsurance() != null) {
+            insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getDateOfInsurance()));
+        }
+        if (updateInsuranceInput.getValidTill() != null) {
+            insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getValidTill()));
+        }
+
+        if (updateInsuranceInput.getVehicleId() != null) {
+            final Vehicle vehicle = vehicleRepository.findById(updateInsuranceInput.getVehicleId()).get();
+            insurance.setVehicle(vehicle);
+        }
+        insuranceRepository.save(insurance);
+
+        return new UpdateInsurancePayload(insurance);
+    }
+
+    public RemoveInsurancePayload removeInsurance(RemoveInsuranceInput removeInsuranceInput) {
+        Insurance insurance = insuranceRepository.findById(removeInsuranceInput.getInsuranceId()).get();
+        insuranceRepository.delete(insurance);
+        return new RemoveInsurancePayload(Lists.newArrayList(insuranceRepository.findAll()));
+    }
+
+    public AddVehiclePayload addVehicle(AddVehicleInput addVehicleInput) {
+        final Vehicle vehicle = new Vehicle();
+        vehicle.setVehicleNumber(addVehicleInput.getVehicleNumber());
+        vehicle.setVehicleType(addVehicleInput.getVehicleType());
+        vehicle.setCapacity(addVehicleInput.getCapacity());
+        vehicle.setOwnerShip(addVehicleInput.getOwnerShip());
+        vehicle.setDateOfRegistration(DateFormatUtil.convertLocalDateFromUtilDate(addVehicleInput.getDateOfRegistration()));
+        vehicle.setYearOfManufacturing(addVehicleInput.getYearOfManufacturing());
+        vehicle.setManufacturingCompany(addVehicleInput.getManufacturingCompany());
+        vehicle.setModel(addVehicleInput.getModel());
+        vehicle.setChasisNo(addVehicleInput.getChasisNo());
+        vehicle.setRcNo(addVehicleInput.getRcNo());
+        vehicle.setContactNumber(addVehicleInput.getContactNumber());
+        vehicle.setStatus(addVehicleInput.getStatus());
+        vehicleRepository.save(vehicle);
+
+        return new AddVehiclePayload(vehicle);
+    }
+
+    public UpdateVehiclePayload updateVehicle(UpdateVehicleInput updateVehicleInput) {
+        Vehicle vehicle = vehicleRepository.findById(updateVehicleInput.getId()).get();
+
+        if (updateVehicleInput.getVehicleNumber() != null) {
+            vehicle.setVehicleNumber(updateVehicleInput.getVehicleNumber());
+        }
+        if (updateVehicleInput.getVehicleType() != null) {
+            vehicle.setVehicleType(updateVehicleInput.getVehicleType());
+        }
+        if (updateVehicleInput.getCapacity() != null) {
+            vehicle.setCapacity(updateVehicleInput.getCapacity());
+        }
+        if (updateVehicleInput.getOwnerShip() != null) {
+            vehicle.setOwnerShip(updateVehicleInput.getOwnerShip());
+        }
+        if (updateVehicleInput.getDateOfRegistration() != null) {
+            vehicle.setDateOfRegistration(DateFormatUtil.convertLocalDateFromUtilDate(updateVehicleInput.getDateOfRegistration()));
+        }
+        if (updateVehicleInput.getYearOfManufacturing() != null) {
+            vehicle.setYearOfManufacturing(updateVehicleInput.getYearOfManufacturing());
+        }
+        if (updateVehicleInput.getModel() != null) {
+            vehicle.setModel(updateVehicleInput.getModel());
+        }
+        if (updateVehicleInput.getChasisNo() != null) {
+            vehicle.setChasisNo(updateVehicleInput.getChasisNo());
+        }
+        if (updateVehicleInput.getRcNo() != null) {
+            vehicle.setRcNo(updateVehicleInput.getRcNo());
+        }
+        if (updateVehicleInput.getContactNumber() != null) {
+            vehicle.setContactNumber(updateVehicleInput.getContactNumber());
+        }
+        if (updateVehicleInput.getStatus() != null) {
+            vehicle.setStatus(updateVehicleInput.getStatus());
+        }
+
+        vehicleRepository.save(vehicle);
+
+        return new UpdateVehiclePayload(vehicle);
+    }
+
+    public RemoveVehiclePayload removeVehicle(RemoveVehicleInput removeVehicleInput) {
+        Vehicle vehicle = vehicleRepository.findById(removeVehicleInput.getVehicleId()).get();
+        vehicleRepository.delete(vehicle);
+        return new RemoveVehiclePayload(Lists.newArrayList(vehicleRepository.findAll()));
+    }
+
     /**
      * Method to update student attendance data. It accepts a list of objects containing student attendance ids and lecture id.
      * It returns the status as zero (0) if method completes successfully or non zero (>0) if execution fails due to any reason.
