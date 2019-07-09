@@ -13,6 +13,8 @@ import javax.persistence.PersistenceContext;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.exam.*;
+import com.synectiks.cms.graphql.types.Contract.*;
+import com.synectiks.cms.graphql.types.Employee.*;
 import com.synectiks.cms.repository.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -1273,6 +1275,7 @@ public class Mutation implements GraphQLMutationResolver {
             final Vehicle vehicle = vehicleRepository.findById(updateDocumentsInput.getVehicleId()).get();
             documents.setVehicle(vehicle);
         }
+
         if (updateDocumentsInput.getContractId() != null) {
             final Contract contract = contractRepository.findById(updateDocumentsInput.getContractId()).get();
             documents.setContract(contract);
@@ -1382,6 +1385,171 @@ public class Mutation implements GraphQLMutationResolver {
         collegeRepository.delete(college);
 
         return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
+    }
+
+    public AddContractPayload addContract(AddContractInput addContractInput) {
+        final Contract contract = new Contract();
+        contract.setVendorName(addContractInput.getVendorName());
+        contract.setTypeOfOwnerShip(addContractInput.getTypeOfOwnerShip());
+        contract.setDurationOfContract(addContractInput.getDurationOfContract());
+        contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getStartDate()));
+        contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getEndDate()));
+
+        contractRepository.save(contract);
+
+        return new AddContractPayload(contract);
+    }
+
+    public UpdateContractPayload updateContract(UpdateContractInput updateContractInput) {
+        Contract contract = contractRepository.findById(updateContractInput.getId()).get();
+        if (updateContractInput.getVendorName() != null) {
+            contract.setVendorName(updateContractInput.getVendorName());
+        }
+
+        if (updateContractInput.getTypeOfOwnerShip() != null) {
+            contract.setTypeOfOwnerShip(updateContractInput.getTypeOfOwnerShip());
+        }
+
+        if (updateContractInput.getDurationOfContract() != null) {
+            contract.setDurationOfContract(updateContractInput.getDurationOfContract());
+        }
+
+        if (updateContractInput.getStartDate() != null) {
+            contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getStartDate()));
+        }
+
+        if (updateContractInput.getEndDate() != null) {
+            contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getEndDate()));
+        }
+
+
+        contractRepository.save(contract);
+
+        return new UpdateContractPayload(contract);
+    }
+
+    public RemoveContractPayload removeContract(RemoveContractInput removeContractInput) {
+        Contract contract = contractRepository.getOne(removeContractInput.getContractId());
+        contractRepository.delete(contract);
+
+        return new RemoveContractPayload(Lists.newArrayList(contractRepository.findAll()));
+    }
+
+    public AddEmployeePayload addEmployee(AddEmployeeInput addEmployeeInput) {
+        final Employee employee = new Employee();
+        employee.setEmployeeName(addEmployeeInput.getEmployeeName());
+        employee.setDesignation(addEmployeeInput.getDesignation());
+        employee.setJoiningDate(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getJoiningDate()));
+        employee.setJobEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getJobEndDate()));
+        employee.setResignationDate(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getResignationDate()));
+        employee.setResignationAcceptanceDate(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getResignationAcceptanceDate()));
+        employee.setAadharNo(addEmployeeInput.getAadharNo());
+        employee.setPanNo(addEmployeeInput.getPanNo());
+        employee.setPassportNo(addEmployeeInput.getPassportNo());
+        employee.setPrimaryContactNo(addEmployeeInput.getPrimaryContactNo());
+        employee.setSecondaryContactNo(addEmployeeInput.getSecondaryContactNo());
+        employee.setEmployeeFatherName(addEmployeeInput.getEmployeeFatherName());
+        employee.setEmployeeMotherName(addEmployeeInput.getEmployeeMotherName());
+        employee.setPrimaryAddress(addEmployeeInput.getPrimaryAddress());
+        employee.setSecondaryAddress(addEmployeeInput.getSecondaryAddress());
+        employee.setEmployeeAddress(addEmployeeInput.getEmployeeAddress());
+        employee.setPersonalMailId(addEmployeeInput.getPersonalMailId());
+        employee.setOfficialMailId(addEmployeeInput.getOfficialMailId());
+        employee.setDisability(addEmployeeInput.getDisability());
+        employee.setDrivingLicenceNo(addEmployeeInput.getDrivingLicenceNo());
+        employee.setDrivingLicenceValidity(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getDrivingLicenceValidity()));
+        employee.setGender(addEmployeeInput.getGender());
+
+
+        employeeRepository.save(employee);
+
+        return new AddEmployeePayload(employee);
+
+    }
+
+    public UpdateEmployeePayload updateEmployee(UpdateEmployeeInput updateEmployeeInput) {
+        Employee employee = employeeRepository.findById(updateEmployeeInput.getId()).get();
+        if (updateEmployeeInput.getEmployeeName() != null) {
+            employee.setEmployeeName(updateEmployeeInput.getEmployeeName());
+        }
+
+        if (updateEmployeeInput.getDesignation() != null) {
+            employee.setDesignation(updateEmployeeInput.getDesignation());
+        }
+
+        if (updateEmployeeInput.getJoiningDate() != null) {
+            employee.setJoiningDate(DateFormatUtil.convertLocalDateFromUtilDate(updateEmployeeInput.getJoiningDate()));
+        }
+
+        if (updateEmployeeInput.getJobEndDate() != null) {
+            employee.setJobEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateEmployeeInput.getJobEndDate()));
+        }
+
+        if (updateEmployeeInput.getResignationDate() != null) {
+            employee.setResignationDate(DateFormatUtil.convertLocalDateFromUtilDate(updateEmployeeInput.getResignationDate()));
+        }
+
+        if (updateEmployeeInput.getResignationAcceptanceDate() != null) {
+            employee.setResignationAcceptanceDate(DateFormatUtil.convertLocalDateFromUtilDate(updateEmployeeInput.getResignationAcceptanceDate()));
+        }
+        if (updateEmployeeInput.getAadharNo() != null) {
+            employee.setAadharNo(updateEmployeeInput.getAadharNo());
+        }
+        if (updateEmployeeInput.getPanNo() != null) {
+            employee.setPanNo(updateEmployeeInput.getPanNo());
+        }
+        if (updateEmployeeInput.getPassportNo() != null) {
+            employee.setPassportNo(updateEmployeeInput.getPassportNo());
+        }
+        if (updateEmployeeInput.getPrimaryContactNo() != null) {
+            employee.setPrimaryContactNo(updateEmployeeInput.getPrimaryContactNo());
+        }
+        if (updateEmployeeInput.getSecondaryContactNo() != null) {
+            employee.setSecondaryContactNo(updateEmployeeInput.getSecondaryContactNo());
+        }
+        if (updateEmployeeInput.getEmployeeFatherName() != null) {
+            employee.setEmployeeFatherName(updateEmployeeInput.getEmployeeFatherName());
+        }
+        if (updateEmployeeInput.getEmployeeMotherName() != null) {
+            employee.setEmployeeMotherName(updateEmployeeInput.getEmployeeMotherName());
+        }
+        if (updateEmployeeInput.getPrimaryAddress() != null) {
+            employee.setPrimaryAddress(updateEmployeeInput.getPrimaryAddress());
+        }
+        if (updateEmployeeInput.getSecondaryAddress() != null) {
+            employee.setSecondaryAddress(updateEmployeeInput.getSecondaryAddress());
+        }
+        if (updateEmployeeInput.getEmployeeAddress() != null) {
+            employee.setEmployeeAddress(updateEmployeeInput.getEmployeeAddress());
+        }
+        if (updateEmployeeInput.getPersonalMailId() != null) {
+            employee.setPersonalMailId(updateEmployeeInput.getPersonalMailId());
+        }
+        if (updateEmployeeInput.getDisability() != null) {
+            employee.setDisability(updateEmployeeInput.getDisability());
+        }
+        if (updateEmployeeInput.getDrivingLicenceNo() != null) {
+            employee.setDrivingLicenceNo(updateEmployeeInput.getDrivingLicenceNo());
+        }
+        if (updateEmployeeInput.getDrivingLicenceValidity() != null) {
+            employee.setDrivingLicenceValidity(DateFormatUtil.convertLocalDateFromUtilDate(updateEmployeeInput.getDrivingLicenceValidity()));
+        }
+        if (updateEmployeeInput.getGender() != null) {
+            employee.setGender(updateEmployeeInput.getGender());
+        }
+
+
+
+        employeeRepository.save(employee);
+
+        return new UpdateEmployeePayload(employee);
+    }
+
+    public RemoveEmployeePayload removeEmployee(RemoveEmployeeInput removeEmployeeInput) {
+        Employee employee = employeeRepository.getOne(removeEmployeeInput.getEmployeeId());
+        employeeRepository.delete(employee);
+
+        return new RemoveEmployeePayload(Lists.newArrayList(employeeRepository.findAll()));
     }
 
     public AddBranchPayload addBranch(AddBranchInput addBranchInput) {

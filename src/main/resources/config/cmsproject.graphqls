@@ -17,6 +17,15 @@ enum AttendanceStatusEnum{
     ABSENT
 }
 
+enum TypeOfOwnerShip{
+    COMPANYOWNED
+    CONTRACTUAL
+}
+
+enum Disability{
+    YES
+    NO
+}
 enum SectionEnum {
     A
     B
@@ -248,6 +257,12 @@ type Query {
 
     addNewBook(id: Long!): AddNewBook
     addNewBooks: [AddNewBook!]!
+
+    contract(id: Long!): Contract!
+    contracts:[Contract!]!
+
+    employee(id: Long!): Employee!
+    employees:[Employee!]!
 
 
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
@@ -745,6 +760,46 @@ type Branch{
     city: City!
     state: State!
 }
+
+type Contract{
+    id: Long!
+    vendorName: String!
+    typeOfOwnerShip: TypeOfOwnerShip!
+    durationOfContract: String!
+    startDate: Date!
+    endDate: Date!
+}
+
+type Employee{
+    id: Long!
+    employeeName: String!
+    designation: String!
+    joiningDate: Date!
+    jobEndDate: Date!
+    resignationDate: Date!
+    resignationAcceptanceDate: Date!
+    aadharNo: String!
+    panNo: String!
+    passportNo: String!
+    primaryContactNo: String!
+    secondaryContactNo: String!
+    employeeFatherName: String!
+    employeeMotherName: String!
+    primaryAddress: String!
+    secondaryAddress: String!
+    employeeAddress: String!
+    personalMailId: String!
+    officialMailId: String!
+    disability: Disability!
+    drivingLicenceNo: String!
+    drivingLicenceValidity: Date!
+    gender: String!
+
+}
+
+
+
+
 type Batch{
 	id: Long!
     batch: BatchEnum!
@@ -1149,6 +1204,14 @@ type Mutation {
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
 
+    addContract(input: AddContractInput!): AddContractPayload!
+    updateContract(input: UpdateContractInput!): UpdateContractPayload!
+    removeContract(input: RemoveContractInput!): RemoveContractPayload!
+
+    addEmployee(input: AddEmployeeInput!): AddEmployeePayload!
+    updateEmployee(input: UpdateEmployeeInput!): UpdateEmployeePayload!
+    removeEmployee(input: RemoveEmployeeInput!): RemoveEmployeePayload!
+
    addBranch(input: AddBranchInput!): AddBranchPayload!
    updateBranch(input: UpdateBranchInput!): UpdateBranchPayload!
    removeBranch(input: RemoveBranchInput!): RemoveBranchPayload!
@@ -1420,6 +1483,106 @@ documentsId: Long!
 }
 type RemoveDocumentsPayload {
  documents: [ Documents!]!
+}
+
+input AddContractInput{
+    vendorName: String!
+    typeOfOwnerShip: TypeOfOwnerShip!
+    durationOfContract: String!
+    startDate: Date!
+    endDate: Date!
+}
+
+type AddContractPayload {
+    contract: Contract!
+}
+
+input UpdateContractInput {
+    id: Long!
+    vendorName: String!
+    typeOfOwnerShip: TypeOfOwnerShip!
+    durationOfContract: String!
+    startDate: Date!
+    endDate: Date!
+}
+
+
+
+type UpdateContractPayload {
+    contract: Contract!
+}
+
+input RemoveContractInput {
+    contractId: Long!
+}
+type RemoveContractPayload {
+    contracts: [ Contract!]!
+}
+
+input AddEmployeeInput{
+    employeeName: String!
+    designation: String!
+    joiningDate: Date!
+    jobEndDate: Date!
+    resignationDate: Date!
+    resignationAcceptanceDate: Date!
+    aadharNo: String!
+    panNo: String!
+    passportNo: String!
+    primaryContactNo: String!
+    secondaryContactNo: String!
+    employeeFatherName: String!
+    employeeMotherName: String!
+    primaryAddress: String!
+    secondaryAddress: String!
+    employeeAddress: String!
+    personalMailId: String!
+    officialMailId: String!
+    disability: Disability!
+    drivingLicenceNo: String!
+    drivingLicenceValidity: String!
+    gender: String!
+}
+
+type AddEmployeePayload {
+    employee: Employee!
+}
+
+input UpdateEmployeeInput {
+    id: Long!
+    employeeName: String!
+    designation: String!
+    joiningDate: Date!
+    jobEndDate: Date!
+    resignationDate: Date!
+    resignationAcceptanceDate: Date!
+    aadharNo: String!
+    panNo: String!
+    passportNo: String!
+    primaryContactNo: String!
+    secondaryContactNo: String!
+    employeeFatherName: String!
+    employeeMotherName: String!
+    primaryAddress: String!
+    secondaryAddress: String!
+    employeeAddress: String!
+    personalMailId: String!
+    officialMailId: String!
+    disability: Disability!
+    drivingLicenceNo: String!
+    drivingLicenceValidity: String!
+    gender: String!
+}
+
+type UpdateEmployeePayload {
+    employee: Employee!
+}
+
+input RemoveEmployeeInput {
+    employeeId: Long!
+}
+type RemoveEmployeePayload {
+    employees: [ Employee!]!
 }
 
 input AddCompetitiveExamInput{
