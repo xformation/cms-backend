@@ -35,8 +35,6 @@ public class SummaryDataService {
             settingModel.setSbjct(examsetting.getSubject().getSubjectDesc());
             //settingModel.setId(examsetting.getSubject().getId());
             settingModel.setAction(examsetting.getSubject().getId().toString());
-            settingModel.setEndDate(DateFormatUtil.converUtilDateFromLocaDate(examsetting.getEndDate()));
-            settingModel.setStartDate(DateFormatUtil.converUtilDateFromLocaDate(examsetting.getStartDate()));
             settingModel.setExamDate(DateFormatUtil.converUtilDateFromLocaDate(examsetting.getExamDate()));
             settingModel.setSubExamDate(examsetting.getExamDate().toString());
             settingModel.setSt(examsetting.getExamDate().toString());
@@ -71,12 +69,10 @@ public class SummaryDataService {
         aimodel.setSectn(ain.get().getSection().getSection().name());
         aimodel.setBrnch(ain.get().getBranch().getBranchName());
         aimodel.setSbjct(ain.get().getSubject().getSubjectDesc());
-        aimodel.setExamType(ain.get().getExamType());
+        aimodel.setExamName(ain.get().getExamName());
         aimodel.setEd(ain.get().getActions());
         aimodel.setSt(ain.get().getActions());
         aimodel.setAction(ain.get().getActions());
-        aimodel.setStartDate(DateFormatUtil.converUtilDateFromLocaDate(ain.get().getStartDate()));
-        aimodel.setEndDate(DateFormatUtil.converUtilDateFromLocaDate(ain.get().getEndDate()));
         return aimodel;
 
     }

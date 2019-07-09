@@ -12,7 +12,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
 
     private static final long serialVersionUID = 1L;
     private Long id;
-    private String examType;
+    private String examName;
     private String departmnt;
     private String bctch;
     private String sectn;
@@ -29,12 +29,12 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
 
     public AcExamSetting() { }
 
-    public String getExamType() {
-        return examType;
+    public String getExamName() {
+        return examName;
     }
 
-    public void setExamType(String examType) {
-        this.examType = examType;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     public String getDepartmnt() {
@@ -150,20 +150,20 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcExamSetting that = (AcExamSetting) o;
-        return examType.equals(that.examType) &&
+        return examName.equals(that.examName) &&
             departmnt.equals(that.departmnt) && bctch.equals(that.bctch);
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(examType, departmnt, bctch);
+        return Objects.hash(examName, departmnt, bctch);
     }
 
 
-    public AcExamSetting(Long id, String examType, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action, Date startDate, Date endDate, Date examDate, String st, String ed, String subExamDate) {
+    public AcExamSetting(Long id, String examName, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action, Date startDate, Date endDate, Date examDate, String st, String ed, String subExamDate) {
         this.id=id;
-        this.examType = examType;
+        this.examName = examName;
         this.departmnt = departmnt;
         this.bctch = bctch;
         this.sectn = sectn;
@@ -267,7 +267,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         strSubExam = sbstrSubExamWordsTemp.toString();
         return new AcExamSetting(
             this.id,
-            this.examType,
+            this.examName,
             this.departmnt,
             this.brnch,
             this.bctch,

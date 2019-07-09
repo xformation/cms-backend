@@ -426,7 +426,7 @@ type AdmissionDataCache {
 
 type AcExamSetting{
     id:Long!
-    examType: String!
+    examName: String!
     action: String!
     sbjct: String!
     endDate: Date!
@@ -973,19 +973,15 @@ type Section{
 
 type AcademicExamSetting{
     id: Long!
-    examType: String!
+    examName: String!
     semester: SemesterEnum!
     examDate: Date!
-    day: String!
-    duration: String!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
     total: Int!
     passing: Int!
     actions: String!
-    startDate: Date
-    endDate: Date
     department: Department!
     section: Section!
     subject: Subject!
@@ -1514,7 +1510,7 @@ input ExamListFilterInput {
 	batchId: String
 	semester: String
 	sectionId: String
-	examType: String
+	examName: String
 	subjectId: String
 	branchId: String
     subjectDesc: String
@@ -1712,19 +1708,15 @@ type RemoveTypeOfGradingPayload {
 }
 
 input AddAcademicExamSettingInput{
-    examType: String!
+    examName: String!
     semester: SemesterEnum!
     examDate: Date!
-    day: String!
-    duration: String!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
     total: Int!
     passing: Int!
     actions: String!
-    startDate: Date
-    endDate: Date
     departmentId: Long!
     sectionId: Long!
     subjectId: Long!
@@ -1738,19 +1730,15 @@ type AddAcademicExamSettingPayload {
 }
 input UpdateAcademicExamSettingInput {
     id: Long!
-    examType: String!
+    examName: String!
     semester: SemesterEnum!
     examDate: Date!
-    day: String!
-    duration: String!
     startTime: String!
     endTime: String!
     gradeType: GradeType!
     total: Int!
     passing: Int!
     actions: String!
-    startDate: Date
-    endDate: Date
     departmentId: Long!
     sectionId: Long!
     subjectId: Long!

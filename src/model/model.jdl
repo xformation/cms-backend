@@ -348,20 +348,17 @@ suspandEndDate LocalDate
 entity StudentFacilityLink{
 	linkDesc String
 }
+
 entity AcademicExamSetting {
-    examType String required
+    examName String required
     semester SemesterEnum required
     examDate LocalDate required
-    duration String required
-    day String required
     startTime String required
     endTime String required
-    gradeType GradeType required
+    gradeType GradeType
     total Integer required
     passing Integer required
     actions String
-    startDate LocalDate required
-    endDate LocalDate required
 }
 
 entity FeeCategory {

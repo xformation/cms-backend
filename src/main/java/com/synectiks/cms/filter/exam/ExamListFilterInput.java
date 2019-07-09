@@ -12,7 +12,7 @@ public class ExamListFilterInput {
 	private String subjectId;
 	private String subjectDesc;
     private String semester;
-    private String examType;
+    private String examName;
     
     @JsonProperty("branchId")
 	public String getBranchId() {
@@ -55,12 +55,12 @@ public class ExamListFilterInput {
         this.semester = semester;
     }
 
-    @JsonProperty("examType")
-	public String getExamType() {
-		return examType;
+    @JsonProperty("examName")
+	public String getExamName() {
+		return examName;
 	}
-	public void setExamType(String examType) {
-		this.examType = examType;
+	public void setExamName(String examName) {
+		this.examName = examName;
 	}
 
     @JsonProperty("subjectId")

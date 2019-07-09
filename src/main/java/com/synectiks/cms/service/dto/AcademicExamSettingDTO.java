@@ -14,7 +14,7 @@ public class AcademicExamSettingDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String examType;
+    private String examName;
 
     @NotNull
     private SemesterEnum semester;
@@ -23,18 +23,11 @@ public class AcademicExamSettingDTO implements Serializable {
     private LocalDate examDate;
 
     @NotNull
-    private String duration;
-
-    @NotNull
-    private String day;
-
-    @NotNull
     private String startTime;
 
     @NotNull
     private String endTime;
 
-    @NotNull
     private GradeType gradeType;
 
     @NotNull
@@ -44,12 +37,6 @@ public class AcademicExamSettingDTO implements Serializable {
     private Integer passing;
 
     private String actions;
-
-    @NotNull
-    private LocalDate startDate;
-
-    @NotNull
-    private LocalDate endDate;
 
 
     private Long branchId;
@@ -72,12 +59,12 @@ public class AcademicExamSettingDTO implements Serializable {
         this.id = id;
     }
 
-    public String getExamType() {
-        return examType;
+    public String getExamName() {
+        return examName;
     }
 
-    public void setExamType(String examType) {
-        this.examType = examType;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     public SemesterEnum getSemester() {
@@ -94,22 +81,6 @@ public class AcademicExamSettingDTO implements Serializable {
 
     public void setExamDate(LocalDate examDate) {
         this.examDate = examDate;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
     }
 
     public String getStartTime() {
@@ -158,22 +129,6 @@ public class AcademicExamSettingDTO implements Serializable {
 
     public void setActions(String actions) {
         this.actions = actions;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     public Long getBranchId() {
@@ -249,19 +204,15 @@ public class AcademicExamSettingDTO implements Serializable {
     public String toString() {
         return "AcademicExamSettingDTO{" +
             "id=" + getId() +
-            ", examType='" + getExamType() + "'" +
+            ", examName='" + getExamName() + "'" +
             ", semester='" + getSemester() + "'" +
             ", examDate='" + getExamDate() + "'" +
-            ", duration='" + getDuration() + "'" +
-            ", day='" + getDay() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", gradeType='" + getGradeType() + "'" +
             ", total=" + getTotal() +
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
-            ", startDate='" + getStartDate() + "'" +
-            ", endDate='" + getEndDate() + "'" +
             ", branch=" + getBranchId() +
             ", subject=" + getSubjectId() +
             ", department=" + getDepartmentId() +

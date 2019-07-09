@@ -328,12 +328,10 @@ public class TestDataPojoBuilder {
 	public AcademicExamSetting createAcademicExamSettingPojo(Cell cell,
 			Department department, AcademicYear academicYear, Section section) {
 		AcademicExamSetting academicExamSetting = new AcademicExamSetting();
-		academicExamSetting.setExamType(cell.asString());
+		academicExamSetting.setExamName(cell.asString());
 		academicExamSetting.setSemester(SemesterEnum.SEMESTER4);
 //		academicExamSetting.setSubject(cell.asString());
 		academicExamSetting.setExamDate(LocalDate.now());
-		academicExamSetting.setDay(cell.asString());
-		academicExamSetting.setDuration("55");
 		academicExamSetting.setStartTime(cell.asString());
 		academicExamSetting.setEndTime(cell.asString());
 		academicExamSetting.setTotal(60);

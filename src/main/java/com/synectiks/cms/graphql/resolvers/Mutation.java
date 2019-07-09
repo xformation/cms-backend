@@ -604,19 +604,15 @@ public class Mutation implements GraphQLMutationResolver {
         academicExamSetting.setSubject(subject);
         academicExamSetting.setBatch(batch);
         academicExamSetting.setBranch(branch);
-        academicExamSetting.setExamType(addAcademicExamSettingInput.getExamType());
+        academicExamSetting.setExamName(addAcademicExamSettingInput.getExamName());
         academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
         academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicExamSettingInput.getExamDate()));
-        academicExamSetting.setDay(addAcademicExamSettingInput.getDay());
-        academicExamSetting.setDuration(addAcademicExamSettingInput.getDuration());
         academicExamSetting.setStartTime(addAcademicExamSettingInput.getStartTime());
         academicExamSetting.setEndTime(addAcademicExamSettingInput.getEndTime());
         academicExamSetting.setGradeType(addAcademicExamSettingInput.getGradeType());
         academicExamSetting.setTotal(addAcademicExamSettingInput.getTotal());
         academicExamSetting.setPassing(addAcademicExamSettingInput.getPassing());
         academicExamSetting.setActions(addAcademicExamSettingInput.getActions());
-        academicExamSetting.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicExamSettingInput.getStartDate()));
-        academicExamSetting.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicExamSettingInput.getEndDate()));
         academicExamSettingRepository.save(academicExamSetting);
         return new AddAcademicExamSettingPayload(academicExamSetting);
     }
@@ -625,20 +621,14 @@ public class Mutation implements GraphQLMutationResolver {
         AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(updateAcademicExamSettingInput.getId()).get();
 
 
-        if (updateAcademicExamSettingInput.getExamType() != null) {
-            academicExamSetting.setExamType(updateAcademicExamSettingInput.getExamType());
+        if (updateAcademicExamSettingInput.getExamName() != null) {
+            academicExamSetting.setExamName(updateAcademicExamSettingInput.getExamName());
         }
         if (updateAcademicExamSettingInput.getSemester() != null) {
             academicExamSetting.setSemester(updateAcademicExamSettingInput.getSemester());
         }
         if (updateAcademicExamSettingInput.getExamDate() != null) {
             academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicExamSettingInput.getExamDate()));
-        }
-        if (updateAcademicExamSettingInput.getDay() != null) {
-            academicExamSetting.setDay(updateAcademicExamSettingInput.getDay());
-        }
-        if (updateAcademicExamSettingInput.getDuration() != null) {
-            academicExamSetting.setDuration(updateAcademicExamSettingInput.getDuration());
         }
         if (updateAcademicExamSettingInput.getStartTime() != null) {
             academicExamSetting.setStartTime(updateAcademicExamSettingInput.getStartTime());
@@ -657,12 +647,6 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateAcademicExamSettingInput.getActions() != null) {
             academicExamSetting.setActions(updateAcademicExamSettingInput.getActions());
-        }
-        if (updateAcademicExamSettingInput.getStartDate() != null) {
-            academicExamSetting.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicExamSettingInput.getStartDate()));
-        }
-        if (updateAcademicExamSettingInput.getEndDate() != null) {
-            academicExamSetting.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAcademicExamSettingInput.getEndDate()));
         }
         if (updateAcademicExamSettingInput.getDepartmentId() != null) {
             final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();

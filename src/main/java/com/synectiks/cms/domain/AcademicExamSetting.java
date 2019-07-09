@@ -34,8 +34,8 @@ public class AcademicExamSetting implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "exam_type", nullable = false)
-    private String examType;
+    @Column(name = "exam_name", nullable = false)
+    private String examName;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -47,14 +47,6 @@ public class AcademicExamSetting implements Serializable {
     private LocalDate examDate;
 
     @NotNull
-    @Column(name = "duration", nullable = false)
-    private String duration;
-
-    @NotNull
-    @Column(name = "day", nullable = false)
-    private String day;
-
-    @NotNull
     @Column(name = "start_time", nullable = false)
     private String startTime;
 
@@ -62,9 +54,8 @@ public class AcademicExamSetting implements Serializable {
     @Column(name = "end_time", nullable = false)
     private String endTime;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "grade_type", nullable = false)
+    @Column(name = "grade_type")
     private GradeType gradeType;
 
     @NotNull
@@ -77,14 +68,6 @@ public class AcademicExamSetting implements Serializable {
 
     @Column(name = "actions")
     private String actions;
-
-    @NotNull
-    @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
-
-    @NotNull
-    @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
@@ -119,17 +102,17 @@ public class AcademicExamSetting implements Serializable {
         this.id = id;
     }
 
-    public String getExamType() {
-        return examType;
+    public String getExamName() {
+        return examName;
     }
 
-    public AcademicExamSetting examType(String examType) {
-        this.examType = examType;
+    public AcademicExamSetting examName(String examName) {
+        this.examName = examName;
         return this;
     }
 
-    public void setExamType(String examType) {
-        this.examType = examType;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     public SemesterEnum getSemester() {
@@ -156,32 +139,6 @@ public class AcademicExamSetting implements Serializable {
 
     public void setExamDate(LocalDate examDate) {
         this.examDate = examDate;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public AcademicExamSetting duration(String duration) {
-        this.duration = duration;
-        return this;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public AcademicExamSetting day(String day) {
-        this.day = day;
-        return this;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
     }
 
     public String getStartTime() {
@@ -260,32 +217,6 @@ public class AcademicExamSetting implements Serializable {
 
     public void setActions(String actions) {
         this.actions = actions;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public AcademicExamSetting startDate(LocalDate startDate) {
-        this.startDate = startDate;
-        return this;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public AcademicExamSetting endDate(LocalDate endDate) {
-        this.endDate = endDate;
-        return this;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     public Branch getBranch() {
@@ -391,19 +322,15 @@ public class AcademicExamSetting implements Serializable {
     public String toString() {
         return "AcademicExamSetting{" +
             "id=" + getId() +
-            ", examType='" + getExamType() + "'" +
+            ", examName='" + getExamName() + "'" +
             ", semester='" + getSemester() + "'" +
             ", examDate='" + getExamDate() + "'" +
-            ", duration='" + getDuration() + "'" +
-            ", day='" + getDay() + "'" +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
             ", gradeType='" + getGradeType() + "'" +
             ", total=" + getTotal() +
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
-            ", startDate='" + getStartDate() + "'" +
-            ", endDate='" + getEndDate() + "'" +
             "}";
     }
 }

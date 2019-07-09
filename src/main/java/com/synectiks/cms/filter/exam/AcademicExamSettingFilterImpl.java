@@ -80,9 +80,8 @@ public class AcademicExamSettingFilterImpl {
                 Optional<AcademicExamSetting> osa = this.academicExamSettingRepository.findOne((example));
                 if(osa.isPresent()) {
                     stObj.setId(osa.get().getId());
-                    stObj.setExamType(osa.get().getExamType());
+                    stObj.setExamName(osa.get().getExamName());
                     stObj.setSubject(osa.get().getSubject());
-                    stObj.setDay(osa.get().getDay());
                     stObj.setStartTime(osa.get().getStartTime());
                     stObj.setEndTime(osa.get().getEndTime());
                     stObj.setTotal(osa.get().getTotal());

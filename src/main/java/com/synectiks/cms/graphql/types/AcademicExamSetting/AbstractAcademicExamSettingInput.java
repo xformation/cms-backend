@@ -9,19 +9,15 @@ import java.util.Objects;
 
 public class AbstractAcademicExamSettingInput {
     private Long id;
-    private String examType;
+    private String examName;
     private SemesterEnum semester;
     private Date examDate;
-    private String day;
-    private String duration;
     private String startTime;
     private String endTime;
     private GradeType gradeType;
     private Integer total;
     private Integer passing;
     private String actions;
-    private Date startDate;
-    private Date endDate;
 
     public Long getId() {
         return id;
@@ -29,14 +25,6 @@ public class AbstractAcademicExamSettingInput {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getExamType() {
-        return examType;
-    }
-
-    public void setExamType(String examType) {
-        this.examType = examType;
     }
 
     public SemesterEnum getSemester() {
@@ -53,22 +41,6 @@ public class AbstractAcademicExamSettingInput {
 
     public void setExamDate(Date examDate) {
         this.examDate = examDate;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public String getStartTime() {
@@ -119,20 +91,12 @@ public class AbstractAcademicExamSettingInput {
         this.actions = actions;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getExamName() {
+        return examName;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     @Override
@@ -141,43 +105,35 @@ public class AbstractAcademicExamSettingInput {
         if (o == null || getClass() != o.getClass()) return false;
         AbstractAcademicExamSettingInput that = (AbstractAcademicExamSettingInput) o;
         return Objects.equals(id, that.id) &&
-            Objects.equals(examType, that.examType) &&
+            Objects.equals(examName, that.examName) &&
             semester == that.semester &&
             Objects.equals(examDate, that.examDate) &&
-            Objects.equals(day, that.day) &&
-            Objects.equals(duration, that.duration) &&
             Objects.equals(startTime, that.startTime) &&
             Objects.equals(endTime, that.endTime) &&
             gradeType == that.gradeType &&
             Objects.equals(total, that.total) &&
             Objects.equals(passing, that.passing) &&
-            Objects.equals(actions, that.actions) &&
-            Objects.equals(startDate, that.startDate) &&
-            Objects.equals(endDate, that.endDate);
+            Objects.equals(actions, that.actions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examType, semester, examDate, day, duration, startTime, endTime, gradeType, total, passing, actions, startDate, endDate);
+        return Objects.hash(id, examName, semester, examDate, startTime, endTime, gradeType, total, passing, actions);
     }
 
     @Override
     public String toString() {
         return "AbstractAcademicExamSettingInput{" +
             "id=" + id +
-            ", examType='" + examType + '\'' +
+            ", examName='" + examName + '\'' +
             ", semester=" + semester +
             ", examDate=" + examDate +
-            ", day='" + day + '\'' +
-            ", duration='" + duration + '\'' +
             ", startTime='" + startTime + '\'' +
             ", endTime='" + endTime + '\'' +
             ", gradeType=" + gradeType +
             ", total=" + total +
             ", passing=" + passing +
             ", actions='" + actions + '\'' +
-            ", startDate=" + startDate +
-            ", endDate=" + endDate +
             '}';
     }
 }
