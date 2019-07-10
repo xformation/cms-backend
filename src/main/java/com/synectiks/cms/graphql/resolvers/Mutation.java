@@ -589,32 +589,28 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveAdmissionApplicationPayload(Lists.newArrayList(admissionApplicationRepository.findAll()));
     }
 
-    public AddAcademicExamSettingPayload addAcademicExamSetting(AddAcademicExamSettingInput addAcademicExamSettingInput) {
-        final AcademicExamSetting academicExamSetting = new AcademicExamSetting();
+    public AddAcademicExamSettingPayload addAcademicExamSetting(List<AddAcademicExamSettingInput> list) {
+        AcademicExamSetting academicExamSetting = null;
 
-        Department department = departmentRepository.findById(addAcademicExamSettingInput.getDepartmentId()).get();
-        AcademicYear academicYear = academicYearRepository.findById(addAcademicExamSettingInput.getAcademicyearId()).get();
-        Subject subject = subjectRepository.findById(addAcademicExamSettingInput.getSubjectId()).get();
-        Section section = sectionRepository.findById(addAcademicExamSettingInput.getSectionId()).get();
-        Batch batch = batchRepository.findById(addAcademicExamSettingInput.getBatchId()).get();
-        Branch branch = branchRepository.findById(addAcademicExamSettingInput.getBranchId()).get();
-        academicExamSetting.setDepartment(department);
-        academicExamSetting.setAcademicyear(academicYear);
-        academicExamSetting.setSection(section);
-        academicExamSetting.setSubject(subject);
-        academicExamSetting.setBatch(batch);
-        academicExamSetting.setBranch(branch);
-        academicExamSetting.setExamName(addAcademicExamSettingInput.getExamName());
-        academicExamSetting.setSemester(addAcademicExamSettingInput.getSemester());
-        academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(addAcademicExamSettingInput.getExamDate()));
-        academicExamSetting.setStartTime(addAcademicExamSettingInput.getStartTime());
-        academicExamSetting.setEndTime(addAcademicExamSettingInput.getEndTime());
-        academicExamSetting.setGradeType(addAcademicExamSettingInput.getGradeType());
-        academicExamSetting.setTotal(addAcademicExamSettingInput.getTotal());
-        academicExamSetting.setPassing(addAcademicExamSettingInput.getPassing());
-        academicExamSetting.setActions(addAcademicExamSettingInput.getActions());
-        academicExamSettingRepository.save(academicExamSetting);
-        return new AddAcademicExamSettingPayload(academicExamSetting);
+        for(AddAcademicExamSettingInput input: list ){
+
+            Branch branch = branchRepository.findById(input.getBranchId()).get();
+            Subject subject = subjectRepository.findById(input.getSubjectId()).get();
+            AcademicYear academicYear = academicYearRepository.findById(input.getAcademicyearId()).get();
+            Batch batch = batchRepository.findById(input.getBatchId()).get();
+            Section section = sectionRepository.findById(input.getSectionId()).get();
+            Department department = departmentRepository.findById(input.getDepartmentId()).get();
+
+            academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
+            academicExamSetting.setBranch(branch);
+            academicExamSetting.setSubject(subject);
+            academicExamSetting.setBatch(batch);
+            academicExamSetting.setAcademicyear(academicYear);
+            academicExamSetting.setSection(section);
+            academicExamSetting.setDepartment(department);
+            this.academicExamSettingRepository.save(academicExamSetting);
+        }
+        return  new AddAcademicExamSettingPayload(academicExamSetting);
     }
 
     public UpdateAcademicExamSettingPayload updateAcademicExamSetting(UpdateAcademicExamSettingInput updateAcademicExamSettingInput) {

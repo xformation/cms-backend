@@ -1262,7 +1262,7 @@ type Mutation {
    updateBranch(input: UpdateBranchInput!): UpdateBranchPayload!
    removeBranch(input: RemoveBranchInput!): RemoveBranchPayload!
 
-   addAcademicExamSetting(input: AddAcademicExamSettingInput!): AddAcademicExamSettingPayload!
+   addAcademicExamSetting(input: [AddAcademicExamSettingInput!]!): AddAcademicExamSettingPayload!
    updateAcademicExamSetting(input: UpdateAcademicExamSettingInput!): UpdateAcademicExamSettingPayload!
    removeAcademicExamSetting(input: RemoveAcademicExamSettingInput!): RemoveAcademicExamSettingPayload!
 
