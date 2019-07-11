@@ -429,8 +429,6 @@ type AcExamSetting{
     examName: String!
     action: String!
     sbjct: String!
-    endDate: Date!
-    startDate: Date!
     examDate: Date!
     departmnt: String!
     bctch: String!
@@ -1397,7 +1395,7 @@ type Mutation {
     updateCompetitiveExam(input:UpdateCompetitiveExamInput!):UpdateCompetitiveExamPayload!
     removeCompetitiveExam(input:RemoveCompetitiveExamInput!):RemoveCompetitiveExamPayload!
 
-    addTypeOfGrading(input: AddTypeOfGradingInput!): AddTypeOfGradingPayload!
+    addTypeOfGrading(input: [AddTypeOfGradingInput]!): AddTypeOfGradingPayload!
     updateTypeOfGrading(input: UpdateTypeOfGradingInput!): UpdateTypeOfGradingPayload!
     removeTypeOfGrading(input: RemoveTypeOfGradingInput!): RemoveTypeOfGradingPayload!
 

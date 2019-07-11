@@ -735,18 +735,17 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveAcademicHistoryPayload(Lists.newArrayList(academicHistoryRepository.findAll()));
     }
 
-    public AddTypeOfGradingPayload addTypeOfGrading(AddTypeOfGradingInput addTypeOfGradingInput) {
-        final TypeOfGrading typeOfGrading = new TypeOfGrading();
-        typeOfGrading.setMinMarks(addTypeOfGradingInput.getMinMarks());
-        typeOfGrading.setMaxMarks(addTypeOfGradingInput.getMaxMarks());
-        typeOfGrading.setGrades(addTypeOfGradingInput.getGrades());
-        AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(addTypeOfGradingInput.getAcademicExamSettingId()).get();
-        typeOfGrading.setAcademicExamSetting(academicExamSetting);
-        typeOfGradingRepository.save(typeOfGrading);
+    public AddTypeOfGradingPayload addTypeOfGrading(List<AddTypeOfGradingInput> list) {
+        TypeOfGrading typeOfGrading = null;
+        for (AddTypeOfGradingInput input : list) {
+            AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(input.getAcademicExamSettingId()).get();
+            typeOfGrading = CommonUtil.createCopyProperties(input, TypeOfGrading.class);
+            typeOfGrading.setAcademicExamSetting(academicExamSetting);
+            this.typeOfGradingRepository.save(typeOfGrading);
+        }
+            return new AddTypeOfGradingPayload(typeOfGrading);
 
-        return new AddTypeOfGradingPayload(typeOfGrading);
     }
-
     public UpdateTypeOfGradingPayload updateTypeOfGrading(UpdateTypeOfGradingInput updateTypeOfGradingInput) {
         TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateTypeOfGradingInput.getId()).get();
         if (updateTypeOfGradingInput.getMinMarks() != null) {

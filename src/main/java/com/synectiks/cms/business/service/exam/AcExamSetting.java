@@ -20,8 +20,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     private String sbjct;
     private String action;
     private String subject;
-    private Date startDate;
-    private Date endDate;
     private Date examDate;
     private String st;
     private String ed;
@@ -92,23 +90,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     public void setExamDate(Date examDate) {
         this.examDate = examDate;
     }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
     public String getSt() {
         return st;
     }
@@ -161,7 +142,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     }
 
 
-    public AcExamSetting(Long id, String examName, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action, Date startDate, Date endDate, Date examDate, String st, String ed, String subExamDate) {
+    public AcExamSetting(Long id, String examName, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action,  Date examDate, String st, String ed, String subExamDate) {
         this.id=id;
         this.examName = examName;
         this.departmnt = departmnt;
@@ -170,8 +151,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.brnch = brnch;
         this.action = action;
         this.sbjct = sbjct;
-        this.startDate = startDate;
-        this.endDate = endDate;
+
         this.examDate = examDate;
         this.st = st;
         this.ed = ed;
@@ -275,8 +255,6 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             this.sbjct=str,
             this.action=ids,
             this.examDate,
-            this.endDate,
-            this.startDate,
             this.st=sdf.format(this.examDate),
             this.ed=sdf.format(other.examDate),
             this.subExamDate=strSubExam
