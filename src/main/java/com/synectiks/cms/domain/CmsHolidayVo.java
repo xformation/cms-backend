@@ -2,6 +2,7 @@ package com.synectiks.cms.domain;
 
 import com.synectiks.cms.domain.enumeration.Status;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class CmsHolidayVo {
 
     private Long id;
     private String holidayDesc;
-    private Date holidayDate;
+    private LocalDate holidayDate;
     private Status holidayStatus;
     private AcademicYear academicyear;
 
@@ -31,11 +32,11 @@ public class CmsHolidayVo {
         this.holidayDesc = holidayDesc;
     }
 
-    public Date getHolidayDate() {
+    public LocalDate getHolidayDate() {
         return holidayDate;
     }
 
-    public void setHolidayDate(Date holidayDate) {
+    public void setHolidayDate(LocalDate holidayDate) {
         this.holidayDate = holidayDate;
     }
 

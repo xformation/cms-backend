@@ -3,7 +3,7 @@ package com.synectiks.cms.domain;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class CmsAcademicExamSettingVo implements Serializable {
@@ -12,7 +12,7 @@ public class CmsAcademicExamSettingVo implements Serializable {
     private String examType;
     private SemesterEnum semester;
     private String subject;
-    private Date examDate;
+    private LocalDate examDate;
     private String day;
     private String duration;
     private String startTime;
@@ -58,11 +58,11 @@ public class CmsAcademicExamSettingVo implements Serializable {
         this.subject = subject;
     }
 
-    public Date getExamDate() {
+    public LocalDate getExamDate() {
         return examDate;
     }
 
-    public void setExamDate(Date examDate) {
+    public void setExamDate(LocalDate examDate) {
         this.examDate = examDate;
     }
 

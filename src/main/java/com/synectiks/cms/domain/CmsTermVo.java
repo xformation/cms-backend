@@ -2,6 +2,7 @@ package com.synectiks.cms.domain;
 
 import com.synectiks.cms.domain.enumeration.Status;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -9,8 +10,8 @@ public class CmsTermVo {
 
     private Long id;
     private String termsDesc;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Status termStatus;
     private AcademicYear academicyear;
 
@@ -33,19 +34,19 @@ public class CmsTermVo {
         this.termsDesc = termsDesc;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

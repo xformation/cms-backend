@@ -1,6 +1,6 @@
 package com.synectiks.cms.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
@@ -15,8 +15,8 @@ public class CmsInvoice {
 	private Long id;
     private String invoiceNumber;
     private Long amountPaid;
-    private Date paymentDate;
-    private Date nextPaymentDate;
+    private LocalDate paymentDate;
+    private LocalDate nextPaymentDate;
     private Long outStandingAmount;
     private ModeOfPayment modeOfPayment;
     private Long chequeNumber;
@@ -25,7 +25,7 @@ public class CmsInvoice {
     private InvoicePaymentStatus paymentStatus;
     private String comments;
     private String updatedBy;
-    private Date updatedOn;
+    private LocalDate updatedOn;
     private FeeCategory feeCategory;
     private FeeDetails feeDetails;
     private DueDate dueDate;
@@ -80,16 +80,16 @@ public class CmsInvoice {
 	public void setAmountPaid(Long amountPaid) {
 		this.amountPaid = amountPaid;
 	}
-	public Date getPaymentDate() {
+	public LocalDate getPaymentDate() {
 		return paymentDate;
 	}
-	public void setPaymentDate(Date paymentDate) {
+	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-	public Date getNextPaymentDate() {
+	public LocalDate getNextPaymentDate() {
 		return nextPaymentDate;
 	}
-	public void setNextPaymentDate(Date nextPaymentDate) {
+	public void setNextPaymentDate(LocalDate nextPaymentDate) {
 		this.nextPaymentDate = nextPaymentDate;
 	}
 	public Long getOutStandingAmount() {
@@ -140,10 +140,10 @@ public class CmsInvoice {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	public Date getUpdatedOn() {
+	public LocalDate getUpdatedOn() {
 		return updatedOn;
 	}
-	public void setUpdatedOn(Date updatedOn) {
+	public void setUpdatedOn(LocalDate updatedOn) {
 		this.updatedOn = updatedOn;
 	}
 	public FeeCategory getFeeCategory() {

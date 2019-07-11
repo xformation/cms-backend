@@ -1,7 +1,7 @@
 package com.synectiks.cms.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * A Vo for the Lecture entity.
@@ -14,8 +14,8 @@ public class CmsLectureVo implements Serializable {
 	 */
 	private static final long serialVersionUID = 6029380770424642966L;
 	private Long id;
-    private Date lecDate;
-    private Date lastUpdatedOn;
+    private LocalDate lecDate;
+    private LocalDate lastUpdatedOn;
     private String lastUpdatedBy;
     private String startTime;
     private String endTime;
@@ -31,19 +31,19 @@ public class CmsLectureVo implements Serializable {
         this.id = id;
     }
 
-    public Date getLecDate() {
+    public LocalDate getLecDate() {
         return lecDate;
     }
 
-    public void setLecDate(Date lecDate) {
+    public void setLecDate(LocalDate lecDate) {
         this.lecDate = lecDate;
     }
 
-    public Date getLastUpdatedOn() {
+    public LocalDate getLastUpdatedOn() {
         return lastUpdatedOn;
     }
 
-    public void setLastUpdatedOn(Date lastUpdatedOn) {
+    public void setLastUpdatedOn(LocalDate lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
     }
 

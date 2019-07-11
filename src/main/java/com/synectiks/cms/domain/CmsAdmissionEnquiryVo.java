@@ -5,7 +5,7 @@ import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class CmsAdmissionEnquiryVo implements Serializable {
@@ -23,8 +23,8 @@ public class CmsAdmissionEnquiryVo implements Serializable {
     private ModeOfEnquiry modeOfEnquiry;
     private EnquiryStatus status;
     private String description;
-    private Date enquiryDate;
-    private Date updatedOn;
+    private LocalDate enquiryDate;
+    private LocalDate updatedOn;
     private String updatedBy;
     private Branch branch;
     private AdmissionApplication admissionApplication;
@@ -136,19 +136,19 @@ public class CmsAdmissionEnquiryVo implements Serializable {
         this.description = description;
     }
 
-    public Date getEnquiryDate() {
+    public LocalDate getEnquiryDate() {
         return enquiryDate;
     }
 
-    public void setEnquiryDate(Date enquiryDate) {
+    public void setEnquiryDate(LocalDate enquiryDate) {
         this.enquiryDate = enquiryDate;
     }
 
-    public Date getUpdatedOn() {
+    public LocalDate getUpdatedOn() {
         return updatedOn;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
+    public void setUpdatedOn(LocalDate updatedOn) {
         this.updatedOn = updatedOn;
     }
 

@@ -1,10 +1,9 @@
 package com.synectiks.cms.domain;
 
-import java.util.Date;
-
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.Caste;
@@ -59,7 +58,7 @@ public class CmsTeacherVo implements Serializable {
     private Long aadharNo;
 
     
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     
     private String placeOfBirth;
@@ -263,11 +262,11 @@ public class CmsTeacherVo implements Serializable {
         this.aadharNo = aadharNo;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

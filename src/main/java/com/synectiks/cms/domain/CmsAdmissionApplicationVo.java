@@ -4,7 +4,7 @@ import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class CmsAdmissionApplicationVo implements Serializable {
@@ -16,7 +16,7 @@ public class CmsAdmissionApplicationVo implements Serializable {
     private Long id;
     private AdmissionStatusEnum admissionStatus;
     private CourseEnum course;
-    private Date admissionDate;
+    private LocalDate admissionDate;
     private String comments;
     private Student student;
     private String strAdmissionDate;
@@ -77,11 +77,11 @@ public class CmsAdmissionApplicationVo implements Serializable {
         this.course = course;
     }
 
-    public Date getAdmissionDate() {
+    public LocalDate getAdmissionDate() {
         return admissionDate;
     }
 
-    public void setAdmissionDate(Date admissionDate) {
+    public void setAdmissionDate(LocalDate admissionDate) {
         this.admissionDate = admissionDate;
     }
 

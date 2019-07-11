@@ -1,7 +1,7 @@
 package com.synectiks.cms.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
@@ -23,7 +23,7 @@ public class CmsLegalEntityVo implements Serializable {
 
     private TypeOfCollege typeOfCollege;
 
-    private Date dateOfIncorporation;
+    private LocalDate dateOfIncorporation;
 
     private String registeredOfficeAddress1;
 
@@ -49,19 +49,19 @@ public class CmsLegalEntityVo implements Serializable {
 
     private String pfNumber;
 
-    private Date pfRegistrationDate;
+    private LocalDate pfRegistrationDate;
 
     private Long pfSignatory;
 
     private String esiNumber;
 
-    private Date esiRegistrationDate;
+    private LocalDate esiRegistrationDate;
 
     private Long esiSignatory;
 
     private String ptNumber;
 
-    private Date ptRegistrationDate;
+    private LocalDate ptRegistrationDate;
 
     private Long ptSignatory;
 
@@ -113,11 +113,11 @@ public class CmsLegalEntityVo implements Serializable {
         this.typeOfCollege = typeOfCollege;
     }
 
-    public Date getDateOfIncorporation() {
+    public LocalDate getDateOfIncorporation() {
         return dateOfIncorporation;
     }
 
-    public void setDateOfIncorporation(Date dateOfIncorporation) {
+    public void setDateOfIncorporation(LocalDate dateOfIncorporation) {
         this.dateOfIncorporation = dateOfIncorporation;
     }
 
@@ -217,11 +217,11 @@ public class CmsLegalEntityVo implements Serializable {
         this.pfNumber = pfNumber;
     }
 
-    public Date getPfRegistrationDate() {
+    public LocalDate getPfRegistrationDate() {
         return pfRegistrationDate;
     }
 
-    public void setPfRegistrationDate(Date pfRegistrationDate) {
+    public void setPfRegistrationDate(LocalDate pfRegistrationDate) {
         this.pfRegistrationDate = pfRegistrationDate;
     }
 
@@ -241,11 +241,11 @@ public class CmsLegalEntityVo implements Serializable {
         this.esiNumber = esiNumber;
     }
 
-    public Date getEsiRegistrationDate() {
+    public LocalDate getEsiRegistrationDate() {
         return esiRegistrationDate;
     }
 
-    public void setEsiRegistrationDate(Date esiRegistrationDate) {
+    public void setEsiRegistrationDate(LocalDate esiRegistrationDate) {
         this.esiRegistrationDate = esiRegistrationDate;
     }
 
@@ -265,11 +265,11 @@ public class CmsLegalEntityVo implements Serializable {
         this.ptNumber = ptNumber;
     }
 
-    public Date getPtRegistrationDate() {
+    public LocalDate getPtRegistrationDate() {
         return ptRegistrationDate;
     }
 
-    public void setPtRegistrationDate(Date ptRegistrationDate) {
+    public void setPtRegistrationDate(LocalDate ptRegistrationDate) {
         this.ptRegistrationDate = ptRegistrationDate;
     }
 

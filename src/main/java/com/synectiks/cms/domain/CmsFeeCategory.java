@@ -1,6 +1,6 @@
 package com.synectiks.cms.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.synectiks.cms.domain.enumeration.Status;
 
@@ -10,11 +10,11 @@ public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
     private String description;
     private Status status;
     private String createdBy;
-    private Date createdOn;
+    private LocalDate createdOn;
     private String updatedBy;
-    private Date updatedOn;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate updatedOn;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Long branchId;
     
     private String strCreatedOn;
@@ -53,10 +53,10 @@ public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public Date getCreatedOn() {
+	public LocalDate getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDate createdOn) {
 		this.createdOn = createdOn;
 	}
 	public String getUpdatedBy() {
@@ -65,22 +65,22 @@ public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	public Date getUpdatedOn() {
+	public LocalDate getUpdatedOn() {
 		return updatedOn;
 	}
-	public void setUpdatedOn(Date updatedOn) {
+	public void setUpdatedOn(LocalDate updatedOn) {
 		this.updatedOn = updatedOn;
 	}
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	public Long getBranchId() {
