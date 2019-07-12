@@ -8,14 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity TypeOfGrading and its DTO TypeOfGradingDTO.
  */
-@Mapper(componentModel = "spring", uses = {AcademicExamSettingMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface TypeOfGradingMapper extends EntityMapper<TypeOfGradingDTO, TypeOfGrading> {
 
-    @Mapping(source = "academicExamSetting.id", target = "academicExamSettingId")
-    TypeOfGradingDTO toDto(TypeOfGrading typeOfGrading);
 
-    @Mapping(source = "academicExamSettingId", target = "academicExamSetting")
-    TypeOfGrading toEntity(TypeOfGradingDTO typeOfGradingDTO);
 
     default TypeOfGrading fromId(Long id) {
         if (id == null) {

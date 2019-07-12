@@ -558,28 +558,29 @@ mutation updateAcademicYear($input: UpdateAcademicYearInput!){
 -----------------------
 TypeOfGrading:
 
-mutation addTypeOfGrading($input:AddTypeOfGradingInput!){
+
+mutation addTypeOfGrading($input: [AddTypeOfGradingInput!]!){
   addTypeOfGrading(input: $input) {
     typeOfGrading{
       id
+      grades
+      nextId
       minMarks
       maxMarks
-      grades
-      academicExamSetting{
-        id
-      }
-    }
-  }
-}
+    }}}
 
-{
-  "input": {
-    "minMarks": 91,
-    "maxMarks": 100,
-    "grades": "Aplus",
-    "academicExamSettingId": 1490329
-  }
-}
+{"input": {
+  "grades": "a",
+  "minMarks": 50,
+  "maxMarks": 60,
+  "nextId": "0"
+},
+"input": {
+  "grades": "b",
+  "minMarks": 30,
+  "maxMarks": 50,
+  "nextId": 1
+}}
 
 mutation updateTypeOfGrading($input: UpdateTypeOfGradingInput!){
   updateTypeOfGrading(input: $input) {

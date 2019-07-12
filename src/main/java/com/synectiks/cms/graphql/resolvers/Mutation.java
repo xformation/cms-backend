@@ -600,6 +600,7 @@ public class Mutation implements GraphQLMutationResolver {
             Batch batch = batchRepository.findById(input.getBatchId()).get();
             Section section = sectionRepository.findById(input.getSectionId()).get();
             Department department = departmentRepository.findById(input.getDepartmentId()).get();
+            TypeOfGrading typeOfGrading = typeOfGradingRepository.findById((input.getTypeOfGradingId())).get();
 
             academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
             academicExamSetting.setBranch(branch);
@@ -608,6 +609,7 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setAcademicyear(academicYear);
             academicExamSetting.setSection(section);
             academicExamSetting.setDepartment(department);
+            academicExamSetting.setTypeOfGrading(typeOfGrading);
             this.academicExamSettingRepository.save(academicExamSetting);
         }
         return  new AddAcademicExamSettingPayload(academicExamSetting);
@@ -667,6 +669,10 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAcademicExamSettingInput.getBranchId() != null) {
             final Branch branch = branchRepository.findById(updateAcademicExamSettingInput.getBranchId()).get();
             academicExamSetting.setBranch(branch);
+        }
+        if (updateAcademicExamSettingInput.getTypeOfGradingId() != null) {
+            final TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateAcademicExamSettingInput.getTypeOfGradingId()).get();
+            academicExamSetting.setTypeOfGrading(typeOfGrading);
         }
 
         academicExamSettingRepository.save(academicExamSetting);
@@ -738,13 +744,10 @@ public class Mutation implements GraphQLMutationResolver {
     public AddTypeOfGradingPayload addTypeOfGrading(List<AddTypeOfGradingInput> list) {
         TypeOfGrading typeOfGrading = null;
         for (AddTypeOfGradingInput input : list) {
-            AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(input.getAcademicExamSettingId()).get();
             typeOfGrading = CommonUtil.createCopyProperties(input, TypeOfGrading.class);
-            typeOfGrading.setAcademicExamSetting(academicExamSetting);
             this.typeOfGradingRepository.save(typeOfGrading);
         }
             return new AddTypeOfGradingPayload(typeOfGrading);
-
     }
     public UpdateTypeOfGradingPayload updateTypeOfGrading(UpdateTypeOfGradingInput updateTypeOfGradingInput) {
         TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateTypeOfGradingInput.getId()).get();
@@ -757,9 +760,8 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateTypeOfGradingInput.getGrades() != null) {
             typeOfGrading.setGrades(updateTypeOfGradingInput.getGrades());
         }
-        if (updateTypeOfGradingInput.getAcademicExamSettingId() != null) {
-            final AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(updateTypeOfGradingInput.getAcademicExamSettingId()).get();
-            typeOfGrading.setAcademicExamSetting(academicExamSetting);
+        if (updateTypeOfGradingInput.getNextId() != null) {
+            typeOfGrading.setNextId(updateTypeOfGradingInput.getNextId());
         }
 
         typeOfGradingRepository.save(typeOfGrading);

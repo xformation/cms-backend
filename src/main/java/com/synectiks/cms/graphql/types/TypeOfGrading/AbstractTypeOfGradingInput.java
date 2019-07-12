@@ -1,14 +1,13 @@
 package com.synectiks.cms.graphql.types.TypeOfGrading;
 
-import com.synectiks.cms.domain.enumeration.GradesEnum;
-
 import java.util.Objects;
 
 public class AbstractTypeOfGradingInput {
     private Long id;
     private Integer minMarks;
     private Integer maxMarks;
-    private GradesEnum grades;
+    private String grades;
+    private Long nextId;
 
     public Long getId() {
         return id;
@@ -34,12 +33,20 @@ public class AbstractTypeOfGradingInput {
         this.maxMarks = maxMarks;
     }
 
-    public GradesEnum getGrades() {
+    public String getGrades() {
         return grades;
     }
 
-    public void setGrades(GradesEnum grades) {
+    public void setGrades(String grades) {
         this.grades = grades;
+    }
+
+    public Long getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(Long nextId) {
+        this.nextId = nextId;
     }
 
     @Override
@@ -50,12 +57,13 @@ public class AbstractTypeOfGradingInput {
         return Objects.equals(id, that.id) &&
             Objects.equals(minMarks, that.minMarks) &&
             Objects.equals(maxMarks, that.maxMarks) &&
-            grades == that.grades;
+            Objects.equals(grades, that.grades) &&
+            Objects.equals(nextId, that.nextId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, minMarks, maxMarks, grades);
+        return Objects.hash(id, minMarks, maxMarks, grades, nextId);
     }
 
     @Override
@@ -64,7 +72,8 @@ public class AbstractTypeOfGradingInput {
             "id=" + id +
             ", minMarks=" + minMarks +
             ", maxMarks=" + maxMarks +
-            ", grades=" + grades +
+            ", grades='" + grades + '\'' +
+            ", nextId=" + nextId +
             '}';
     }
 }

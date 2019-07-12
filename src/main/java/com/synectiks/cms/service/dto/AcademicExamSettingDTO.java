@@ -45,6 +45,8 @@ public class AcademicExamSettingDTO implements Serializable {
 
     private Long departmentId;
 
+    private Long typeOfGradingId;
+
     private Long academicyearId;
 
     private Long sectionId;
@@ -155,6 +157,14 @@ public class AcademicExamSettingDTO implements Serializable {
         this.departmentId = departmentId;
     }
 
+    public Long getTypeOfGradingId() {
+        return typeOfGradingId;
+    }
+
+    public void setTypeOfGradingId(Long typeOfGradingId) {
+        this.typeOfGradingId = typeOfGradingId;
+    }
+
     public Long getAcademicyearId() {
         return academicyearId;
     }
@@ -216,6 +226,7 @@ public class AcademicExamSettingDTO implements Serializable {
             ", branch=" + getBranchId() +
             ", subject=" + getSubjectId() +
             ", department=" + getDepartmentId() +
+            ", typeOfGrading=" + getTypeOfGradingId() +
             ", academicyear=" + getAcademicyearId() +
             ", section=" + getSectionId() +
             ", batch=" + getBatchId() +

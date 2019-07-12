@@ -50,7 +50,6 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
     @Override
     public TypeOfGradingDTO save(TypeOfGradingDTO typeOfGradingDTO) {
         log.debug("Request to save TypeOfGrading : {}", typeOfGradingDTO);
-
         TypeOfGrading typeOfGrading = typeOfGradingMapper.toEntity(typeOfGradingDTO);
         typeOfGrading = typeOfGradingRepository.save(typeOfGrading);
         TypeOfGradingDTO result = typeOfGradingMapper.toDto(typeOfGrading);

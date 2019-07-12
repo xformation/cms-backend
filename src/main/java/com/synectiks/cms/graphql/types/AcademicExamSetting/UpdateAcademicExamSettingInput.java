@@ -7,6 +7,7 @@ public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingI
     private Long sectionId;
     private Long batchId;
     private Long branchId;
+    private Long typeOfGradingId;
 
     public Long getDepartmentId() {
         return departmentId;
@@ -54,5 +55,13 @@ public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingI
 
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public Long getTypeOfGradingId() {
+        return typeOfGradingId;
+    }
+
+    public void setTypeOfGradingId(Long typeOfGradingId) {
+        this.typeOfGradingId = typeOfGradingId;
     }
 }

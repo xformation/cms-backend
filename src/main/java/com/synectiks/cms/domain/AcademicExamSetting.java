@@ -83,6 +83,10 @@ public class AcademicExamSetting implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
+    private TypeOfGrading typeOfGrading;
+
+    @ManyToOne
+    @JsonIgnoreProperties("academicExamSettings")
     private AcademicYear academicyear;
 
     @ManyToOne
@@ -256,6 +260,19 @@ public class AcademicExamSetting implements Serializable {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public TypeOfGrading getTypeOfGrading() {
+        return typeOfGrading;
+    }
+
+    public AcademicExamSetting typeOfGrading(TypeOfGrading typeOfGrading) {
+        this.typeOfGrading = typeOfGrading;
+        return this;
+    }
+
+    public void setTypeOfGrading(TypeOfGrading typeOfGrading) {
+        this.typeOfGrading = typeOfGrading;
     }
 
     public AcademicYear getAcademicyear() {

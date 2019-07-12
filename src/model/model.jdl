@@ -301,6 +301,17 @@ email String required
 panCardNumber String required
 }
 
+entity AcademicExamSetting {
+    examName String required
+    semester SemesterEnum required
+    examDate LocalDate required
+    startTime String required
+    endTime String required
+    gradeType GradeType
+    total Integer required
+    passing Integer required
+    actions String
+}
 entity BankAccounts{
 nameOfBank NameOfBank required
 accountNumber Long required
@@ -349,17 +360,6 @@ entity StudentFacilityLink{
 	linkDesc String
 }
 
-entity AcademicExamSetting {
-    examName String required
-    semester SemesterEnum required
-    examDate LocalDate required
-    startTime String required
-    endTime String required
-    gradeType GradeType
-    total Integer required
-    passing Integer required
-    actions String
-}
 
 entity FeeCategory {
 categoryName String required
@@ -483,9 +483,6 @@ enum ModeOfEnquiry{
     INPERSON, TELEPHONE, EMAIL
 }
 
-enum GradesEnum{
-    Aplus,A,Bplus,B,Cplus,C
-}
 
 enum GradeType{
     PERCENTAGE, GRADE
@@ -526,7 +523,8 @@ enum SemesterEnum{
 entity TypeOfGrading{
     minMarks  Integer required
     maxMarks Integer required
-    grades GradesEnum required
+    grades String required
+    nextId Long required
 }
 
 enum RouteFrequency{
@@ -674,7 +672,6 @@ Invoice{academicYear} to AcademicYear,
 CompetitiveExam{student} to Student,
 Documents{student} to Student,
 AcademicHistory{student} to Student,
-TypeOfGrading{academicExamSetting} to AcademicExamSetting,
 AdmissionApplication{student} to Student,
 AdmissionEnquiry{branch} to Branch,
 AdmissionEnquiry{admissionApplication} to AdmissionApplication,
@@ -688,6 +685,7 @@ AdminAttendance{student} to Student,
 AcademicExamSetting{branch} to Branch,
 AcademicExamSetting{subject} to Subject,
 AcademicExamSetting{department} to Department,
+AcademicExamSetting{typeOfGrading} to TypeOfGrading,
 AcademicExamSetting{academicyear} to AcademicYear,
 AcademicExamSetting{section} to Section,
 AcademicExamSetting{batch} to Batch,

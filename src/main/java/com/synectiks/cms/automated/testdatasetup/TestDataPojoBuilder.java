@@ -1,10 +1,8 @@
 package com.synectiks.cms.automated.testdatasetup;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +46,6 @@ import com.synectiks.cms.domain.enumeration.CourseEnum;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.GradesEnum;
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
@@ -394,14 +391,14 @@ public class TestDataPojoBuilder {
 		return invoice;
 	}
 
-	public TypeOfGrading createTypeOfGradingPojo(Cell cell,
-			AcademicExamSetting academicExamSetting) {
+	public TypeOfGrading createTypeOfGradingPojo(Cell cell)
+        {
 		TypeOfGrading typeOfGrading = new TypeOfGrading();
 		typeOfGrading.setId(1234l);
 		typeOfGrading.setMinMarks(35);
 		typeOfGrading.setMaxMarks(95);
-		typeOfGrading.setGrades(GradesEnum.A);
-		typeOfGrading.setAcademicExamSetting(academicExamSetting);
+		typeOfGrading.setGrades("");
+		typeOfGrading.setNextId(3342l);
 		return typeOfGrading;
 	}
 

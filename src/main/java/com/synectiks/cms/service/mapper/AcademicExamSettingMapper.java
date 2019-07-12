@@ -8,12 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity AcademicExamSetting and its DTO AcademicExamSettingDTO.
  */
-@Mapper(componentModel = "spring", uses = {BranchMapper.class, SubjectMapper.class, DepartmentMapper.class, AcademicYearMapper.class, SectionMapper.class, BatchMapper.class})
+@Mapper(componentModel = "spring", uses = {BranchMapper.class, SubjectMapper.class, DepartmentMapper.class, TypeOfGradingMapper.class, AcademicYearMapper.class, SectionMapper.class, BatchMapper.class})
 public interface AcademicExamSettingMapper extends EntityMapper<AcademicExamSettingDTO, AcademicExamSetting> {
 
     @Mapping(source = "branch.id", target = "branchId")
     @Mapping(source = "subject.id", target = "subjectId")
     @Mapping(source = "department.id", target = "departmentId")
+    @Mapping(source = "typeOfGrading.id", target = "typeOfGradingId")
     @Mapping(source = "academicyear.id", target = "academicyearId")
     @Mapping(source = "section.id", target = "sectionId")
     @Mapping(source = "batch.id", target = "batchId")
@@ -22,6 +23,7 @@ public interface AcademicExamSettingMapper extends EntityMapper<AcademicExamSett
     @Mapping(source = "branchId", target = "branch")
     @Mapping(source = "subjectId", target = "subject")
     @Mapping(source = "departmentId", target = "department")
+    @Mapping(source = "typeOfGradingId", target = "typeOfGrading")
     @Mapping(source = "academicyearId", target = "academicyear")
     @Mapping(source = "sectionId", target = "section")
     @Mapping(source = "batchId", target = "batch")

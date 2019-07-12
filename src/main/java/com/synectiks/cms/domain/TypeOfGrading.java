@@ -1,6 +1,6 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,8 +10,6 @@ import javax.validation.constraints.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.synectiks.cms.domain.enumeration.GradesEnum;
 
 /**
  * A TypeOfGrading.
@@ -23,7 +21,7 @@ import com.synectiks.cms.domain.enumeration.GradesEnum;
 public class TypeOfGrading implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -38,13 +36,12 @@ public class TypeOfGrading implements Serializable {
     private Integer maxMarks;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "grades", nullable = false)
-    private GradesEnum grades;
+    private String grades;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private AcademicExamSetting academicExamSetting;
+    @NotNull
+    @Column(name = "next_id", nullable = false)
+    private Long nextId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -81,30 +78,30 @@ public class TypeOfGrading implements Serializable {
         this.maxMarks = maxMarks;
     }
 
-    public GradesEnum getGrades() {
+    public String getGrades() {
         return grades;
     }
 
-    public TypeOfGrading grades(GradesEnum grades) {
+    public TypeOfGrading grades(String grades) {
         this.grades = grades;
         return this;
     }
 
-    public void setGrades(GradesEnum grades) {
+    public void setGrades(String grades) {
         this.grades = grades;
     }
 
-    public AcademicExamSetting getAcademicExamSetting() {
-        return academicExamSetting;
+    public Long getNextId() {
+        return nextId;
     }
 
-    public TypeOfGrading academicExamSetting(AcademicExamSetting academicExamSetting) {
-        this.academicExamSetting = academicExamSetting;
+    public TypeOfGrading nextId(Long nextId) {
+        this.nextId = nextId;
         return this;
     }
 
-    public void setAcademicExamSetting(AcademicExamSetting academicExamSetting) {
-        this.academicExamSetting = academicExamSetting;
+    public void setNextId(Long nextId) {
+        this.nextId = nextId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -135,6 +132,7 @@ public class TypeOfGrading implements Serializable {
             ", minMarks=" + getMinMarks() +
             ", maxMarks=" + getMaxMarks() +
             ", grades='" + getGrades() + "'" +
+            ", nextId=" + getNextId() +
             "}";
     }
 }

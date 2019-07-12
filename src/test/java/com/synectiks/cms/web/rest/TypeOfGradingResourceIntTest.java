@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -37,7 +38,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.GradesEnum;
 /**
  * Test class for the TypeOfGradingResource REST controller.
  *
@@ -53,8 +53,11 @@ public class TypeOfGradingResourceIntTest {
     private static final Integer DEFAULT_MAX_MARKS = 1;
     private static final Integer UPDATED_MAX_MARKS = 2;
 
-    private static final GradesEnum DEFAULT_GRADES = GradesEnum.Aplus;
-    private static final GradesEnum UPDATED_GRADES = GradesEnum.A;
+    private static final String DEFAULT_GRADES = "AAAAAAAAAA";
+    private static final String UPDATED_GRADES = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_NEXT_ID = 1L;
+    private static final Long UPDATED_NEXT_ID = 2L;
 
     @Autowired
     private TypeOfGradingRepository typeOfGradingRepository;
@@ -85,6 +88,9 @@ public class TypeOfGradingResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restTypeOfGradingMockMvc;
 
     private TypeOfGrading typeOfGrading;
@@ -97,7 +103,8 @@ public class TypeOfGradingResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -110,7 +117,8 @@ public class TypeOfGradingResourceIntTest {
         TypeOfGrading typeOfGrading = new TypeOfGrading()
             .minMarks(DEFAULT_MIN_MARKS)
             .maxMarks(DEFAULT_MAX_MARKS)
-            .grades(DEFAULT_GRADES);
+            .grades(DEFAULT_GRADES)
+            .nextId(DEFAULT_NEXT_ID);
         return typeOfGrading;
     }
 
@@ -138,6 +146,7 @@ public class TypeOfGradingResourceIntTest {
         assertThat(testTypeOfGrading.getMinMarks()).isEqualTo(DEFAULT_MIN_MARKS);
         assertThat(testTypeOfGrading.getMaxMarks()).isEqualTo(DEFAULT_MAX_MARKS);
         assertThat(testTypeOfGrading.getGrades()).isEqualTo(DEFAULT_GRADES);
+        assertThat(testTypeOfGrading.getNextId()).isEqualTo(DEFAULT_NEXT_ID);
 
         // Validate the TypeOfGrading in Elasticsearch
         verify(mockTypeOfGradingSearchRepository, times(1)).save(testTypeOfGrading);
@@ -225,6 +234,25 @@ public class TypeOfGradingResourceIntTest {
 
     @Test
     @Transactional
+    public void checkNextIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = typeOfGradingRepository.findAll().size();
+        // set the field null
+        typeOfGrading.setNextId(null);
+
+        // Create the TypeOfGrading, which fails.
+        TypeOfGradingDTO typeOfGradingDTO = typeOfGradingMapper.toDto(typeOfGrading);
+
+        restTypeOfGradingMockMvc.perform(post("/api/type-of-gradings")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(typeOfGradingDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<TypeOfGrading> typeOfGradingList = typeOfGradingRepository.findAll();
+        assertThat(typeOfGradingList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllTypeOfGradings() throws Exception {
         // Initialize the database
         typeOfGradingRepository.saveAndFlush(typeOfGrading);
@@ -236,7 +264,8 @@ public class TypeOfGradingResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(typeOfGrading.getId().intValue())))
             .andExpect(jsonPath("$.[*].minMarks").value(hasItem(DEFAULT_MIN_MARKS)))
             .andExpect(jsonPath("$.[*].maxMarks").value(hasItem(DEFAULT_MAX_MARKS)))
-            .andExpect(jsonPath("$.[*].grades").value(hasItem(DEFAULT_GRADES.toString())));
+            .andExpect(jsonPath("$.[*].grades").value(hasItem(DEFAULT_GRADES.toString())))
+            .andExpect(jsonPath("$.[*].nextId").value(hasItem(DEFAULT_NEXT_ID.intValue())));
     }
     
     @Test
@@ -252,7 +281,8 @@ public class TypeOfGradingResourceIntTest {
             .andExpect(jsonPath("$.id").value(typeOfGrading.getId().intValue()))
             .andExpect(jsonPath("$.minMarks").value(DEFAULT_MIN_MARKS))
             .andExpect(jsonPath("$.maxMarks").value(DEFAULT_MAX_MARKS))
-            .andExpect(jsonPath("$.grades").value(DEFAULT_GRADES.toString()));
+            .andExpect(jsonPath("$.grades").value(DEFAULT_GRADES.toString()))
+            .andExpect(jsonPath("$.nextId").value(DEFAULT_NEXT_ID.intValue()));
     }
 
     @Test
@@ -278,7 +308,8 @@ public class TypeOfGradingResourceIntTest {
         updatedTypeOfGrading
             .minMarks(UPDATED_MIN_MARKS)
             .maxMarks(UPDATED_MAX_MARKS)
-            .grades(UPDATED_GRADES);
+            .grades(UPDATED_GRADES)
+            .nextId(UPDATED_NEXT_ID);
         TypeOfGradingDTO typeOfGradingDTO = typeOfGradingMapper.toDto(updatedTypeOfGrading);
 
         restTypeOfGradingMockMvc.perform(put("/api/type-of-gradings")
@@ -293,6 +324,7 @@ public class TypeOfGradingResourceIntTest {
         assertThat(testTypeOfGrading.getMinMarks()).isEqualTo(UPDATED_MIN_MARKS);
         assertThat(testTypeOfGrading.getMaxMarks()).isEqualTo(UPDATED_MAX_MARKS);
         assertThat(testTypeOfGrading.getGrades()).isEqualTo(UPDATED_GRADES);
+        assertThat(testTypeOfGrading.getNextId()).isEqualTo(UPDATED_NEXT_ID);
 
         // Validate the TypeOfGrading in Elasticsearch
         verify(mockTypeOfGradingSearchRepository, times(1)).save(testTypeOfGrading);
@@ -328,7 +360,7 @@ public class TypeOfGradingResourceIntTest {
 
         int databaseSizeBeforeDelete = typeOfGradingRepository.findAll().size();
 
-        // Get the typeOfGrading
+        // Delete the typeOfGrading
         restTypeOfGradingMockMvc.perform(delete("/api/type-of-gradings/{id}", typeOfGrading.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -355,7 +387,8 @@ public class TypeOfGradingResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(typeOfGrading.getId().intValue())))
             .andExpect(jsonPath("$.[*].minMarks").value(hasItem(DEFAULT_MIN_MARKS)))
             .andExpect(jsonPath("$.[*].maxMarks").value(hasItem(DEFAULT_MAX_MARKS)))
-            .andExpect(jsonPath("$.[*].grades").value(hasItem(DEFAULT_GRADES.toString())));
+            .andExpect(jsonPath("$.[*].grades").value(hasItem(DEFAULT_GRADES)))
+            .andExpect(jsonPath("$.[*].nextId").value(hasItem(DEFAULT_NEXT_ID.intValue())));
     }
 
     @Test

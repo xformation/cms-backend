@@ -590,8 +590,8 @@ type TypeOfGrading{
     id: Long!
     minMarks: Int!
     maxMarks: Int!
-    grades: GradesEnum!
-    academicExamSetting: AcademicExamSetting!
+    grades: String!
+    nextId: Long!
 }
 
 type City{
@@ -986,6 +986,7 @@ type AcademicExamSetting{
     academicyear: AcademicYear!
     batch: Batch!
     branch: Branch!
+    typeOfGrading: TypeOfGrading!
 }
 
 enum Gender {
@@ -1680,8 +1681,8 @@ type RemoveCompetitiveExamPayload {
 input AddTypeOfGradingInput{
     minMarks: Int!
     maxMarks: Int!
-    grades: GradesEnum!
-    academicExamSettingId: Long!
+    grades: String!
+    nextId: Long!
 }
 
 type AddTypeOfGradingPayload {
@@ -1691,8 +1692,8 @@ input UpdateTypeOfGradingInput {
     id: Long!
     minMarks: Int!
     maxMarks: Int!
-    grades: GradesEnum!
-    academicExamSettingId: Long!
+    grades: String!
+    nextId: Long!
 }
 
 type UpdateTypeOfGradingPayload {
@@ -1721,6 +1722,7 @@ input AddAcademicExamSettingInput{
     academicyearId: Long!
     batchId: Long!
     branchId: Long!
+    typeOfGradingId: Long!
 }
 
 type AddAcademicExamSettingPayload {
@@ -1743,6 +1745,7 @@ input UpdateAcademicExamSettingInput {
     academicyearId: Long!
     batchId: Long!
     branchId: Long!
+    typeOfGradingId: Long!
 }
 
 type UpdateAcademicExamSettingPayload {

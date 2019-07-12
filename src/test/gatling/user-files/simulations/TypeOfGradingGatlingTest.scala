@@ -74,7 +74,8 @@ class TypeOfGradingGatlingTest extends Simulation {
                 "id":null
                 , "minMarks":"0"
                 , "maxMarks":"0"
-                , "grades":"Aplus"
+                , "grades":"SAMPLE_TEXT"
+                , "nextId":null
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_typeOfGrading_url"))).exitHereIfFailed

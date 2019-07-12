@@ -1,13 +1,13 @@
 package com.synectiks.cms.graphql.types.TypeOfGrading;
 
 public class RemoveTypeOfGradingInput {
-    private Long TypeOfGradingId;
+    private Long typeOfGradingId;
 
     public Long getTypeOfGradingId() {
-        return TypeOfGradingId;
+        return typeOfGradingId;
     }
 
     public void setTypeOfGradingId(Long typeOfGradingId) {
-        this.TypeOfGradingId = typeOfGradingId;
+        this.typeOfGradingId = typeOfGradingId;
     }
 }

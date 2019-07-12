@@ -1,9 +1,7 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.GradesEnum;
 
 /**
  * A DTO for the TypeOfGrading entity.
@@ -19,9 +17,11 @@ public class TypeOfGradingDTO implements Serializable {
     private Integer maxMarks;
 
     @NotNull
-    private GradesEnum grades;
+    private String grades;
 
-    private Long academicExamSettingId;
+    @NotNull
+    private Long nextId;
+
 
     public Long getId() {
         return id;
@@ -47,20 +47,20 @@ public class TypeOfGradingDTO implements Serializable {
         this.maxMarks = maxMarks;
     }
 
-    public GradesEnum getGrades() {
+    public String getGrades() {
         return grades;
     }
 
-    public void setGrades(GradesEnum grades) {
+    public void setGrades(String grades) {
         this.grades = grades;
     }
 
-    public Long getAcademicExamSettingId() {
-        return academicExamSettingId;
+    public Long getNextId() {
+        return nextId;
     }
 
-    public void setAcademicExamSettingId(Long academicExamSettingId) {
-        this.academicExamSettingId = academicExamSettingId;
+    public void setNextId(Long nextId) {
+        this.nextId = nextId;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class TypeOfGradingDTO implements Serializable {
             ", minMarks=" + getMinMarks() +
             ", maxMarks=" + getMaxMarks() +
             ", grades='" + getGrades() + "'" +
-            ", academicExamSetting=" + getAcademicExamSettingId() +
+            ", nextId=" + getNextId() +
             "}";
     }
 }

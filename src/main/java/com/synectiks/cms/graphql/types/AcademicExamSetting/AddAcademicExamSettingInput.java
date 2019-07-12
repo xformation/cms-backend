@@ -9,6 +9,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
     private Long sectionId;
     private Long batchId;
     private Long branchId;
+    private Long typeOfGradingId;
 
     public Long getDepartmentId() {
         return departmentId;
@@ -58,6 +59,14 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         this.subjectId = subjectId;
     }
 
+    public Long getTypeOfGradingId() {
+        return typeOfGradingId;
+    }
+
+    public void setTypeOfGradingId(Long typeOfGradingId) {
+        this.typeOfGradingId = typeOfGradingId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,12 +78,13 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
             Objects.equals(subjectId, that.subjectId) &&
             Objects.equals(sectionId, that.sectionId) &&
             Objects.equals(batchId, that.batchId) &&
-            Objects.equals(branchId, that.branchId);
+            Objects.equals(branchId, that.branchId) &&
+            Objects.equals(typeOfGradingId, that.typeOfGradingId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), departmentId, academicyearId, subjectId, sectionId, batchId, branchId);
+        return Objects.hash(super.hashCode(), departmentId, academicyearId, subjectId, sectionId, batchId, branchId, typeOfGradingId);
     }
 
     @Override
@@ -86,6 +96,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
             ", sectionId=" + sectionId +
             ", batchId=" + batchId +
             ", branchId=" + branchId +
+            ", typeOfGradingId=" + typeOfGradingId +
             '}';
     }
 }

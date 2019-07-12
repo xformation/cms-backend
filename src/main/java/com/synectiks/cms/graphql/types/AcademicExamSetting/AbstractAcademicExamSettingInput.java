@@ -1,7 +1,6 @@
 package com.synectiks.cms.graphql.types.AcademicExamSetting;
 
 import com.synectiks.cms.domain.enumeration.GradeType;
-import com.synectiks.cms.domain.enumeration.GradesEnum;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
 
 import java.util.Date;

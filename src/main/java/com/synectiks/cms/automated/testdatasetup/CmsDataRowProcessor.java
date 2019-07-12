@@ -57,7 +57,6 @@ import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.TypeOfGrading;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
-import com.synectiks.cms.domain.enumeration.GradesEnum;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.repository.AcademicHistoryRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
@@ -650,8 +649,8 @@ public class CmsDataRowProcessor {
 		this.tpOfGrd.setId(1234l);
 		this.tpOfGrd.setMinMarks(35);
 		this.tpOfGrd.setMaxMarks(95);
-		this.tpOfGrd.setGrades(GradesEnum.A);
-		this.tpOfGrd.setAcademicExamSetting(this.acExSet);
+		this.tpOfGrd.setGrades(cell.asString());
+		this.tpOfGrd.setNextId(1234l);
 		this.tpOfGrd = saveOrGet(this.togRepo, this.tpOfGrd);
 	}
 

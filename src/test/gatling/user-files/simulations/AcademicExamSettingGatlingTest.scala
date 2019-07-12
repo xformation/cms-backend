@@ -72,20 +72,15 @@ class AcademicExamSettingGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "id":null
-                , "examType":"SAMPLE_TEXT"
+                , "examName":"SAMPLE_TEXT"
                 , "semester":"SEMESTER1"
-                , "subject":"SAMPLE_TEXT"
                 , "examDate":"2020-01-01T00:00:00.000Z"
-                , "day":"SAMPLE_TEXT"
-                , "duration":"SAMPLE_TEXT"
                 , "startTime":"SAMPLE_TEXT"
                 , "endTime":"SAMPLE_TEXT"
                 , "gradeType":"PERCENTAGE"
                 , "total":"0"
                 , "passing":"0"
                 , "actions":"SAMPLE_TEXT"
-                , "startDate":"2020-01-01T00:00:00.000Z"
-                , "endDate":"2020-01-01T00:00:00.000Z"
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_academicExamSetting_url"))).exitHereIfFailed
