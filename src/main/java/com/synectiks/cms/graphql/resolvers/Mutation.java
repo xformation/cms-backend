@@ -1,15 +1,23 @@
 package com.synectiks.cms.graphql.resolvers;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
@@ -742,12 +750,23 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddTypeOfGradingPayload addTypeOfGrading(List<AddTypeOfGradingInput> list) {
         TypeOfGrading typeOfGrading = null;
+        // get the max id from database.
+        int nextId = getNextGradeId()+1;
         for (AddTypeOfGradingInput input : list) {
             typeOfGrading = CommonUtil.createCopyProperties(input, TypeOfGrading.class);
+            typeOfGrading.setNextId(new Long(nextId));
             this.typeOfGradingRepository.save(typeOfGrading);
         }
             return new AddTypeOfGradingPayload(typeOfGrading);
     }
+
+    private int getNextGradeId(){
+        String sql = "select max(next_id) from type_of_grading";
+        Query query = this.entityManager.createNativeQuery(sql);
+        Object nextValue = query.getSingleResult();
+        return ((BigInteger)nextValue).intValue() ;
+    }
+
     public UpdateTypeOfGradingPayload updateTypeOfGrading(UpdateTypeOfGradingInput updateTypeOfGradingInput) {
         TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateTypeOfGradingInput.getId()).get();
         if (updateTypeOfGradingInput.getMinMarks() != null) {
@@ -759,10 +778,6 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateTypeOfGradingInput.getGrades() != null) {
             typeOfGrading.setGrades(updateTypeOfGradingInput.getGrades());
         }
-        if (updateTypeOfGradingInput.getNextId() != null) {
-            typeOfGrading.setNextId(updateTypeOfGradingInput.getNextId());
-        }
-
         typeOfGradingRepository.save(typeOfGrading);
 
         return new UpdateTypeOfGradingPayload(typeOfGrading);

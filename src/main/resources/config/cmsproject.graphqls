@@ -1693,7 +1693,6 @@ input AddTypeOfGradingInput{
     minMarks: Int!
     maxMarks: Int!
     grades: String!
-    nextId: Long!
 }
 
 type AddTypeOfGradingPayload {

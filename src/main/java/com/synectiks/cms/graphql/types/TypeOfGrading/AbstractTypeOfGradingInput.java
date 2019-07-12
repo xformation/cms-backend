@@ -7,7 +7,7 @@ public class AbstractTypeOfGradingInput {
     private Integer minMarks;
     private Integer maxMarks;
     private String grades;
-    private Long nextId;
+//    private Long nextId;
 
     public Long getId() {
         return id;
@@ -41,13 +41,7 @@ public class AbstractTypeOfGradingInput {
         this.grades = grades;
     }
 
-    public Long getNextId() {
-        return nextId;
-    }
 
-    public void setNextId(Long nextId) {
-        this.nextId = nextId;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -57,13 +51,12 @@ public class AbstractTypeOfGradingInput {
         return Objects.equals(id, that.id) &&
             Objects.equals(minMarks, that.minMarks) &&
             Objects.equals(maxMarks, that.maxMarks) &&
-            Objects.equals(grades, that.grades) &&
-            Objects.equals(nextId, that.nextId);
+            Objects.equals(grades, that.grades) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, minMarks, maxMarks, grades, nextId);
+        return Objects.hash(id, minMarks, maxMarks, grades);
     }
 
     @Override
@@ -72,8 +65,7 @@ public class AbstractTypeOfGradingInput {
             "id=" + id +
             ", minMarks=" + minMarks +
             ", maxMarks=" + maxMarks +
-            ", grades='" + grades + '\'' +
-            ", nextId=" + nextId +
+            ", grades='" + grades + '\''  +
             '}';
     }
 }
