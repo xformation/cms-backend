@@ -69,6 +69,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="type_of_grading_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="academicyear_id" type="bigint">
                 <constraints nullable="true" />
             </column>

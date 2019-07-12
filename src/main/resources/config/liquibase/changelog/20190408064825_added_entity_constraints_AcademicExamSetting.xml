@@ -26,6 +26,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="department"/>
 
+        <addForeignKeyConstraint baseColumnNames="type_of_grading_id"
+                                 baseTableName="academic_exam_setting"
+                                 constraintName="fk_academic_exam_setting_type_of_grading_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="type_of_grading"/>
+
         <addForeignKeyConstraint baseColumnNames="academicyear_id"
                                  baseTableName="academic_exam_setting"
                                  constraintName="fk_academic_exam_setting_academicyear_id"
