@@ -170,9 +170,8 @@
                   separator=";"
                   tableName="student_exam_report"/>
         <loadData encoding="UTF-8"
-                  file="config/liquibase/cms_test_data/add_new_book.csv"
+                  file="config/liquibase/cms_test_data/library.csv"
                   separator=";"
-                  tableName="add_new_book"/>
-
+                  tableName="library"/>
     </changeSet>
 </databaseChangeLog>

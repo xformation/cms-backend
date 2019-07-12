@@ -148,6 +148,11 @@
                   file="config/liquibase/cms_test_data/transport_route.csv"
                   separator=";"
                   tableName="transport_route"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cms_test_data/academic_exam_setting.csv"
+                  separator=";"
+                  tableName="transport_route"/>
+
                                                              
     </changeSet>
 </databaseChangeLog>

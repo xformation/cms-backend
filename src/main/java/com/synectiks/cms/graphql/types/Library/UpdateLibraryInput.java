@@ -1,7 +1,6 @@
-package com.synectiks.cms.graphql.types.AddNewBook;
+package com.synectiks.cms.graphql.types.Library;
 
-import java.util.Objects;
-public class UpdateAddNewBookInput extends AbstractAddNewBookInput {
+public class UpdateLibraryInput extends AbstractLibraryInput {
     private Long batchId;
     private Long subjectId;
     private Long departmentId;

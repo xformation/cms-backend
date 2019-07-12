@@ -12,13 +12,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A AddNewBook.
+ * A Library.
  */
 @Entity
-@Table(name = "add_new_book")
+@Table(name = "library")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "addnewbook")
-public class AddNewBook implements Serializable {
+@Document(indexName = "library")
+public class Library implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -68,7 +68,7 @@ public class AddNewBook implements Serializable {
         return bookTitle;
     }
 
-    public AddNewBook bookTitle(String bookTitle) {
+    public Library bookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
         return this;
     }
@@ -81,7 +81,7 @@ public class AddNewBook implements Serializable {
         return author;
     }
 
-    public AddNewBook author(String author) {
+    public Library author(String author) {
         this.author = author;
         return this;
     }
@@ -94,7 +94,7 @@ public class AddNewBook implements Serializable {
         return noOfCopies;
     }
 
-    public AddNewBook noOfCopies(Long noOfCopies) {
+    public Library noOfCopies(Long noOfCopies) {
         this.noOfCopies = noOfCopies;
         return this;
     }
@@ -107,7 +107,7 @@ public class AddNewBook implements Serializable {
         return bookId;
     }
 
-    public AddNewBook bookId(Long bookId) {
+    public Library bookId(Long bookId) {
         this.bookId = bookId;
         return this;
     }
@@ -120,7 +120,7 @@ public class AddNewBook implements Serializable {
         return batch;
     }
 
-    public AddNewBook batch(Batch batch) {
+    public Library batch(Batch batch) {
         this.batch = batch;
         return this;
     }
@@ -133,7 +133,7 @@ public class AddNewBook implements Serializable {
         return subject;
     }
 
-    public AddNewBook subject(Subject subject) {
+    public Library subject(Subject subject) {
         this.subject = subject;
         return this;
     }
@@ -146,7 +146,7 @@ public class AddNewBook implements Serializable {
         return department;
     }
 
-    public AddNewBook department(Department department) {
+    public Library department(Department department) {
         this.department = department;
         return this;
     }
@@ -164,11 +164,11 @@ public class AddNewBook implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AddNewBook addNewBook = (AddNewBook) o;
-        if (addNewBook.getId() == null || getId() == null) {
+        Library library = (Library) o;
+        if (library.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), addNewBook.getId());
+        return Objects.equals(getId(), library.getId());
     }
 
     @Override
@@ -178,7 +178,7 @@ public class AddNewBook implements Serializable {
 
     @Override
     public String toString() {
-        return "AddNewBook{" +
+        return "Library{" +
             "id=" + getId() +
             ", bookTitle='" + getBookTitle() + "'" +
             ", author='" + getAuthor() + "'" +

@@ -2,7 +2,7 @@ package com.synectiks.cms.business.service;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.Book.BookListFilterInput;
-import com.synectiks.cms.repository.AddNewBookRepository;
+import com.synectiks.cms.repository.LibraryRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -13,13 +13,13 @@ import java.util.List;
 @Component
 public class BookService {
     @Autowired
-    AddNewBookRepository addNewBookRepository;
+    LibraryRepository libraryRepository;
 
     @Autowired
     CommonService commonService;
 
-    public List<AddNewBook> searchBook(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId) {
-        AddNewBook book = new AddNewBook();
+    public List<Library> searchBook(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId) {
+        Library book = new Library();
 
         if (bookTitle != null) {
             book.setBookTitle(bookTitle);
@@ -43,13 +43,13 @@ public class BookService {
             subject.setId(subjectId);
             book.setSubject(subject);
         }
-        Example<AddNewBook> example = Example.of(book);
-        List<AddNewBook> list = this.addNewBookRepository.findAll(example);
+        Example<Library> example = Example.of(book);
+        List<Library> list = this.libraryRepository.findAll(example);
         return list;
     }
 
-    public List<AddNewBook> searchBook(BookListFilterInput filter) {
-        AddNewBook book = new AddNewBook();
+    public List<Library> searchBook(BookListFilterInput filter) {
+        Library book = new Library();
         if (!CommonUtil.isNullOrEmpty(filter.getDepartmentId())) {
             Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
             if (department != null) {
@@ -71,8 +71,8 @@ public class BookService {
 
             }
         }
-        Example<AddNewBook> example = Example.of(book);
-        List<AddNewBook> list = this.addNewBookRepository.findAll(example);
+        Example<Library> example = Example.of(book);
+        List<Library> list = this.libraryRepository.findAll(example);
         return list;
     }
 }

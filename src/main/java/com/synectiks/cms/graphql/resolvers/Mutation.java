@@ -14,9 +14,11 @@ import javax.persistence.PersistenceContext;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
 import com.synectiks.cms.filter.exam.*;
+import com.synectiks.cms.filter.library.LibraryFilterProcessor;
 import com.synectiks.cms.graphql.types.Contract.*;
 import com.synectiks.cms.graphql.types.Employee.*;
 import com.synectiks.cms.graphql.types.Insurance.*;
+import com.synectiks.cms.graphql.types.Library.*;
 import com.synectiks.cms.graphql.types.Vehicle.*;
 import com.synectiks.cms.repository.*;
 import org.json.JSONException;
@@ -70,12 +72,6 @@ import com.synectiks.cms.graphql.types.AcademicYear.RemoveAcademicYearInput;
 import com.synectiks.cms.graphql.types.AcademicYear.RemoveAcademicYearPayload;
 import com.synectiks.cms.graphql.types.AcademicYear.UpdateAcademicYearInput;
 import com.synectiks.cms.graphql.types.AcademicYear.UpdateAcademicYearPayload;
-import com.synectiks.cms.graphql.types.AddNewBook.AddAddNewBookInput;
-import com.synectiks.cms.graphql.types.AddNewBook.AddAddNewBookPayload;
-import com.synectiks.cms.graphql.types.AddNewBook.RemoveAddNewBookInput;
-import com.synectiks.cms.graphql.types.AddNewBook.RemoveAddNewBookPayload;
-import com.synectiks.cms.graphql.types.AddNewBook.UpdateAddNewBookInput;
-import com.synectiks.cms.graphql.types.AddNewBook.UpdateAddNewBookPayload;
 import com.synectiks.cms.graphql.types.AdminAttendance.AddAdminAttendanceInput;
 import com.synectiks.cms.graphql.types.AdminAttendance.AddAdminAttendancePayLoad;
 import com.synectiks.cms.graphql.types.AdminAttendance.RemoveAdminAttendanceInput;
@@ -336,7 +332,7 @@ public class Mutation implements GraphQLMutationResolver {
     private final AdminAttendanceRepository adminAttendanceRepository;
     private final TypeOfGradingRepository typeOfGradingRepository;
     private final StudentExamReportRepository studentExamReportRepository;
-    private final AddNewBookRepository addNewBookRepository;
+    private final LibraryRepository libraryRepository;
     private final VehicleRepository vehicleRepository;
     private final EmployeeRepository employeeRepository;
     private final ContractRepository contractRepository;
@@ -374,8 +370,10 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private AdmissionApplicationProcessor admissionApplicationProcessor;
+    @Autowired
+    private LibraryFilterProcessor libraryFilterProcessor;
 
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, AddNewBookRepository addNewBookRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -418,12 +416,13 @@ public class Mutation implements GraphQLMutationResolver {
         this.adminAttendanceRepository = adminAttendanceRepository;
         this.typeOfGradingRepository = typeOfGradingRepository;
         this.studentExamReportRepository = studentExamReportRepository;
-        this.addNewBookRepository = addNewBookRepository;
+        this.libraryRepository = libraryRepository;
         this.vehicleRepository = vehicleRepository;
         this.employeeRepository = employeeRepository;
         this.contractRepository = contractRepository;
         this.insuranceRepository = insuranceRepository;
         this.entityManager = entityManager;
+
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -3111,55 +3110,55 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
     }
 
-    public AddAddNewBookPayload addAddNewBook(AddAddNewBookInput addNewBookInput){
-        Batch batch = batchRepository.findById(addNewBookInput.getBatchId()).get();
-        Subject subject = subjectRepository.findById(addNewBookInput.getSubjectId()).get();
-        Department department =departmentRepository.findById(addNewBookInput.getDepartmentId()).get();
-        final AddNewBook book = new AddNewBook ();
-        book.setBookTitle(addNewBookInput.getBookTitle());
-        book.setAuthor(addNewBookInput.getAuthor());
-        book.setBookId(addNewBookInput.getBookId());
-        book.setNoOfCopies(addNewBookInput.getNoOfCopies());
+    public AddLibraryPayload addLibrary(AddLibraryInput libraryInput){
+        Batch batch = batchRepository.findById(libraryInput.getBatchId()).get();
+        Subject subject = subjectRepository.findById(libraryInput.getSubjectId()).get();
+        Department department =departmentRepository.findById(libraryInput.getDepartmentId()).get();
+        final Library book = new Library ();
+        book.setBookTitle(libraryInput.getBookTitle());
+        book.setAuthor(libraryInput.getAuthor());
+        book.setBookId(libraryInput.getBookId());
+        book.setNoOfCopies(libraryInput.getNoOfCopies());
         book.setBatch(batch);
         book.setSubject(subject);
         book.setDepartment(department);
-        addNewBookRepository.save(book);
-        return new AddAddNewBookPayload(book);
+        libraryRepository.save(book);
+        return new AddLibraryPayload(book);
     }
-    public UpdateAddNewBookPayload updateAddNewBook(UpdateAddNewBookInput updateNewBookInput) {
-        AddNewBook book = addNewBookRepository.findById(updateNewBookInput.getId()).get();
-        if(updateNewBookInput.getBookTitle()!=null) {
-            book.setBookTitle(updateNewBookInput.getBookTitle());
+    public UpdateLibraryPayload updateLibrary(UpdateLibraryInput updateLibraryInput) {
+        Library book = libraryRepository.findById(updateLibraryInput.getId()).get();
+        if(updateLibraryInput.getBookTitle()!=null) {
+            book.setBookTitle(updateLibraryInput.getBookTitle());
         }
-        if (updateNewBookInput.getAuthor() != null){
-            book.setAuthor(updateNewBookInput.getAuthor());
+        if (updateLibraryInput.getAuthor() != null){
+            book.setAuthor(updateLibraryInput.getAuthor());
         }
-        if(updateNewBookInput.getBookId()!=null){
-            book.setBookId(updateNewBookInput.getBookId());
+        if(updateLibraryInput.getBookId()!=null){
+            book.setBookId(updateLibraryInput.getBookId());
         }
-        if (updateNewBookInput.getNoOfCopies() != null) {
-            book.setNoOfCopies(updateNewBookInput.getNoOfCopies());
+        if (updateLibraryInput.getNoOfCopies() != null) {
+            book.setNoOfCopies(updateLibraryInput.getNoOfCopies());
         }
 
-        if(updateNewBookInput.getBatchId()!=null){
-            Batch batch =batchRepository.findById(updateNewBookInput.getBatchId()).get();
+        if(updateLibraryInput.getBatchId()!=null){
+            Batch batch =batchRepository.findById(updateLibraryInput.getBatchId()).get();
             book.setBatch(batch);
         }
-        if(updateNewBookInput.getSubjectId()!=null){
-            Subject subject =subjectRepository.findById(updateNewBookInput.getSubjectId()).get();
+        if(updateLibraryInput.getSubjectId()!=null){
+            Subject subject =subjectRepository.findById(updateLibraryInput.getSubjectId()).get();
         }
-        if(updateNewBookInput.getDepartmentId()!= null){
-            Department department =departmentRepository.findById(updateNewBookInput.getDepartmentId()).get();
+        if(updateLibraryInput.getDepartmentId()!= null){
+            Department department =departmentRepository.findById(updateLibraryInput.getDepartmentId()).get();
         }
 
-        addNewBookRepository.save(book);
-        return new UpdateAddNewBookPayload(book);
+        libraryRepository.save(book);
+        return new UpdateLibraryPayload(book);
 
     }
-    public RemoveAddNewBookPayload removeAddNewBook(RemoveAddNewBookInput removeNewBookInput){
-        AddNewBook book =addNewBookRepository.findById(removeNewBookInput.getAddBookId()).get();
-        addNewBookRepository.delete(book);
-        return new RemoveAddNewBookPayload((Lists.newArrayList(addNewBookRepository.findAll())));
+    public RemoveLibraryPayload removeLibrary(RemoveLibraryInput removeLibraryInput){
+        Library book =libraryRepository.findById(removeLibraryInput.getLibraryId()).get();
+        libraryRepository.delete(book);
+        return new RemoveLibraryPayload((Lists.newArrayList(libraryRepository.findAll())));
     }
 
     public AddInsurancePayload addInsurance(AddInsuranceInput addInsuranceInput) {
@@ -3333,6 +3332,9 @@ public class Mutation implements GraphQLMutationResolver {
     }
     public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception{
         return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId, collegeId, branchId, academicYearId));
+    }
+    public List<CmsLibrary>searchLib(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId)throws Exception{
+        return Lists.newArrayList(libraryFilterProcessor.searchLib( bookTitle,  author,  departmentId,  batchId, subjectId));
     }
     public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
         return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);

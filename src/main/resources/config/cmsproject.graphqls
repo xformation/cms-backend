@@ -274,8 +274,8 @@ type Query {
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
 
-    addNewBook(id: Long!): AddNewBook
-    addNewBooks: [AddNewBook!]!
+    library(id: Long!): Library
+    libraries: [Library!]!
 
     contract(id: Long!): Contract!
     contracts:[Contract!]!
@@ -287,7 +287,7 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
-    searchBook (bookTitle:String,author:String,departmentId:Long,batchId:Long,subjectId:Long):[AddNewBook!]!
+    searchBook (bookTitle:String,author:String,departmentId:Long,batchId:Long,subjectId:Long):[Library!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
@@ -497,6 +497,16 @@ type CmsInvoice {
     
 }
 
+type CmsLibrary {
+    library: Library
+    bookTitle:String
+    dateOfIssue:Date
+    dueDate:DueDate
+    student:Student
+    department:Department
+    noOfCopies:String
+    copiesAvailable:String
+}
 type CmsAdmissionEnquiryVo {
 	totalAdmissions: Long!
     totalFollowup: Long!
@@ -682,7 +692,7 @@ type StudentExamReport{
     routeFrequency: RouteFrequency!
   }
 
-type  AddNewBook{
+type  Library{
     id:Long!
     bookTitle:String!
     author:String!
@@ -1425,9 +1435,10 @@ type Mutation {
     updateAdminAttendance(input:UpdateAdminAttendanceInput!):UpdateAdminAttendancePayload!
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
 
-    addAddNewBook(input:AddAddNewBookInput!):AddAddNewBookPayload!
-    updateAddNewBook(input:UpdateAddNewBookInput!):UpdateAddNewBookPayload!
-    removeAddNewBook(input:RemoveAddNewBookInput!):RemoveAddNewBookPayload!
+    addLibrary(input:AddLibraryInput!):AddLibraryPayload!
+    updateLibrary(input:UpdateLibraryInput!):UpdateLibraryPayload!
+    removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
+    searchLib(bookTitle:String,author:String,departmentId:Long, batchId:Long, subjectId:Long):[CmsLibrary!]!
 
      addInsurance(input:AddInsuranceInput!):AddInsurancePayload!
      updateInsurance(input:UpdateInsuranceInput!):UpdateInsurancePayload!
@@ -3153,7 +3164,7 @@ type RemoveInvoicePayload{
     invoices:[Invoice]!
 }
 
-input AddAddNewBookInput{
+input AddLibraryInput{
     bookTitle:String!
     author:String!
     bookId:Long!
@@ -3162,10 +3173,10 @@ input AddAddNewBookInput{
     subjectId:Long!
     departmentId:Long!
 }
-type AddAddNewBookPayload {
-    addNewBook:AddNewBook!
+type AddLibraryPayload {
+    library:Library!
 }
-input UpdateAddNewBookInput {
+input UpdateLibraryInput {
     id:Long!
     bookTitle:String!
     author:String!
@@ -3175,14 +3186,14 @@ input UpdateAddNewBookInput {
     subjectId:Long!
     departmentId:Long!
 }
-type UpdateAddNewBookPayload{
-    addNewBook:AddNewBook!
+type UpdateLibraryPayload{
+    library:Library!
 }
-input RemoveAddNewBookInput {
+input RemoveLibraryInput {
     addBookId:Long!
 }
-type RemoveAddNewBookPayload{
-    addNewBooks:[AddNewBook]!
+type RemoveLibraryPayload{
+    libraries:[Library]!
 }
 
  type Vehicle{

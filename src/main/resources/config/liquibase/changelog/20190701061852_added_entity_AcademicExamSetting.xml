@@ -14,30 +14,70 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity AddNewBook.
+        Added the entity AcademicExamSetting.
     -->
-    <changeSet id="20190626111137-1" author="jhipster">
-        <createTable tableName="add_new_book">
+    <changeSet id="20190701061852-1" author="jhipster">
+        <createTable tableName="academic_exam_setting">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="book_title" type="varchar(255)">
+            <column name="exam_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="author" type="varchar(255)">
+            <column name="semester" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="book_id" type="bigint">
+            <column name="exam_date" type="date">
                 <constraints nullable="false" />
             </column>
 
-            <column name="batch_id" type="bigint">
+            <column name="start_time" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="end_time" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="grade_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="passing" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="actions" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="branch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <column name="subject_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="department_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="academicyear_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="section_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="batch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

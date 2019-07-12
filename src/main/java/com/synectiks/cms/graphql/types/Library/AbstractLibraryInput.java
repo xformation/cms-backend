@@ -1,12 +1,11 @@
-package com.synectiks.cms.graphql.types.AddNewBook;
+package com.synectiks.cms.graphql.types.Library;
 
-public class AbstractAddNewBookInput {
+public class AbstractLibraryInput {
     private Long id;
     private String bookTitle;
     private String author;
     private Long bookId;
     private Long noOfCopies;
-
 
     public Long getId() {
         return id;
@@ -50,7 +49,7 @@ public class AbstractAddNewBookInput {
 
     @Override
     public String toString() {
-        return "AbstractAddNewBookInput{" +
+        return "AbstractLibraryInput{" +
             "id=" + id +
             ", bookTitle='" + bookTitle + '\'' +
             ", author='" + author + '\'' +

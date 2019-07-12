@@ -32,7 +32,7 @@ name String required
 description String required
 deptHead String required
 }
-entity AddNewBook{
+entity Library{
     bookTitle String required
     author String required
     noOfCopies Long required
@@ -635,9 +635,9 @@ AuthorizedSignatory{branch} to Branch,
 AuthorizedSignatory{college} to College,
 BankAccounts{branch} to Branch,
 BankAccounts{college} to College,
-AddNewBook{batch} to Batch,
-AddNewBook{subject} to Subject,
-AddNewBook{department} to Department,
+Library{batch} to Batch,
+Library{subject} to Subject,
+Library{department} to Department,
 LegalEntity{branch} to Branch,
 LegalEntity{college} to College,
 LegalEntity{state} to State,

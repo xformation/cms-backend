@@ -1,10 +1,10 @@
-package com.synectiks.cms.graphql.types.AddNewBook;
+package com.synectiks.cms.graphql.types.Library;
 
 import com.synectiks.cms.domain.Batch;
 
 import java.util.Objects;
 
-public class AddAddNewBookInput extends AbstractAddNewBookInput {
+public class AddLibraryInput extends AbstractLibraryInput {
     private Long batchId;
     private Long subjectId;
     private Long departmentId;
@@ -36,10 +36,11 @@ public class AddAddNewBookInput extends AbstractAddNewBookInput {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AddAddNewBookInput that = (AddAddNewBookInput) o;
-        return Objects.equals(batchId, that.batchId) &&
-            Objects.equals(subjectId, that.subjectId);
+        if (!(o instanceof AddLibraryInput)) return false;
+        AddLibraryInput that = (AddLibraryInput) o;
+        return Objects.equals(getBatchId(), that.getBatchId()) &&
+            Objects.equals(getSubjectId(), that.getSubjectId()) &&
+            Objects.equals(getDepartmentId(), that.getDepartmentId());
     }
 
     @Override
@@ -48,10 +49,9 @@ public class AddAddNewBookInput extends AbstractAddNewBookInput {
     }
 
 
-
     @Override
     public String toString() {
-        return "AddAddNewBookInput{" +
+        return "AddLibraryInput{" +
             "batchId=" + batchId +
             ", subjectId=" + subjectId +
             ", departmentId=" + departmentId +
