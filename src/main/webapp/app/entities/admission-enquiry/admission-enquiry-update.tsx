@@ -10,12 +10,20 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
-import { IAdmissionApplication } from 'app/shared/model/admission-application.model';
-import { getEntities as getAdmissionApplications } from 'app/entities/admission-application/admission-application.reducer';
+import { IDepartment } from 'app/shared/model/department.model';
+import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
+import { IBatch } from 'app/shared/model/batch.model';
+import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
+import { IState } from 'app/shared/model/state.model';
+import { getEntities as getStates } from 'app/entities/state/state.reducer';
+import { ICity } from 'app/shared/model/city.model';
+import { getEntities as getCities } from 'app/entities/city/city.reducer';
+import { ICountry } from 'app/shared/model/country.model';
+import { getEntities as getCountries } from 'app/entities/country/country.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './admission-enquiry.reducer';
 import { IAdmissionEnquiry } from 'app/shared/model/admission-enquiry.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IAdmissionEnquiryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -23,7 +31,11 @@ export interface IAdmissionEnquiryUpdateProps extends StateProps, DispatchProps,
 export interface IAdmissionEnquiryUpdateState {
   isNew: boolean;
   branchId: string;
-  admissionApplicationId: string;
+  departmentId: string;
+  batchId: string;
+  stateId: string;
+  cityId: string;
+  countryId: string;
 }
 
 export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpdateProps, IAdmissionEnquiryUpdateState> {
@@ -31,7 +43,11 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
     super(props);
     this.state = {
       branchId: '0',
-      admissionApplicationId: '0',
+      departmentId: '0',
+      batchId: '0',
+      stateId: '0',
+      cityId: '0',
+      countryId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -50,7 +66,11 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
     }
 
     this.props.getBranches();
-    this.props.getAdmissionApplications();
+    this.props.getDepartments();
+    this.props.getBatches();
+    this.props.getStates();
+    this.props.getCities();
+    this.props.getCountries();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +94,7 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
   };
 
   render() {
-    const { admissionEnquiryEntity, branches, admissionApplications, loading, updating } = this.props;
+    const { admissionEnquiryEntity, branches, departments, batches, states, cities, countries, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -110,13 +130,61 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="mobileNumberLabel" for="mobileNumber">
-                    Mobile Number
+                  <Label id="studentMiddleNameLabel" for="studentMiddleName">
+                    Student Middle Name
+                  </Label>
+                  <AvField id="admission-enquiry-studentMiddleName" type="text" name="studentMiddleName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="studentLastNameLabel" for="studentLastName">
+                    Student Last Name
+                  </Label>
+                  <AvField id="admission-enquiry-studentLastName" type="text" name="studentLastName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="fatherNameLabel" for="fatherName">
+                    Father Name
+                  </Label>
+                  <AvField id="admission-enquiry-fatherName" type="text" name="fatherName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="fatherMiddleNameLabel" for="fatherMiddleName">
+                    Father Middle Name
+                  </Label>
+                  <AvField id="admission-enquiry-fatherMiddleName" type="text" name="fatherMiddleName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="fatherLastNameLabel" for="fatherLastName">
+                    Father Last Name
+                  </Label>
+                  <AvField id="admission-enquiry-fatherLastName" type="text" name="fatherLastName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="motherNameLabel" for="motherName">
+                    Mother Name
+                  </Label>
+                  <AvField id="admission-enquiry-motherName" type="text" name="motherName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="motherMiddleNameLabel" for="motherMiddleName">
+                    Mother Middle Name
+                  </Label>
+                  <AvField id="admission-enquiry-motherMiddleName" type="text" name="motherMiddleName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="motherLastNameLabel" for="motherLastName">
+                    Mother Last Name
+                  </Label>
+                  <AvField id="admission-enquiry-motherLastName" type="text" name="motherLastName" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="contactNumberLabel" for="contactNumber">
+                    Contact Number
                   </Label>
                   <AvField
-                    id="admission-enquiry-mobileNumber"
+                    id="admission-enquiry-contactNumber"
                     type="text"
-                    name="mobileNumber"
+                    name="contactNumber"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
@@ -129,10 +197,51 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                   <AvField id="admission-enquiry-alternateMobileNumber" type="text" name="alternateMobileNumber" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="dateOfBirthLabel" for="dateOfBirth">
+                    Date Of Birth
+                  </Label>
+                  <AvField
+                    id="admission-enquiry-dateOfBirth"
+                    type="date"
+                    className="form-control"
+                    name="dateOfBirth"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
                   <Label id="emailLabel" for="email">
                     Email
                   </Label>
                   <AvField id="admission-enquiry-email" type="text" name="email" />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="sexLabel">Sex</Label>
+                  <AvInput
+                    id="admission-enquiry-sex"
+                    type="select"
+                    className="form-control"
+                    name="sex"
+                    value={(!isNew && admissionEnquiryEntity.sex) || 'MALE'}
+                  >
+                    <option value="MALE">MALE</option>
+                    <option value="FEMALE">FEMALE</option>
+                    <option value="OTHER">OTHER</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="commentsLabel" for="comments">
+                    Comments
+                  </Label>
+                  <AvField
+                    id="admission-enquiry-comments"
+                    type="text"
+                    name="comments"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="courseApplyingForLabel">Course Applying For</Label>
@@ -148,6 +257,19 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                     <option value="BBA">BBA</option>
                     <option value="MBA">MBA</option>
                   </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="highestQualificationLabel" for="highestQualification">
+                    Highest Qualification
+                  </Label>
+                  <AvField
+                    id="admission-enquiry-highestQualification"
+                    type="text"
+                    name="highestQualification"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label id="modeOfEnquiryLabel">Mode Of Enquiry</Label>
@@ -170,9 +292,8 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                     type="select"
                     className="form-control"
                     name="status"
-                    value={(!isNew && admissionEnquiryEntity.status) || 'RECEIVED'}
+                    value={(!isNew && admissionEnquiryEntity.status) || 'FOLLOWUP'}
                   >
-                    <option value="RECEIVED">RECEIVED</option>
                     <option value="FOLLOWUP">FOLLOWUP</option>
                     <option value="DECLINED">DECLINED</option>
                     <option value="CONVERTED">CONVERTED</option>
@@ -231,11 +352,63 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="admissionApplication.id">Admission Application</Label>
-                  <AvInput id="admission-enquiry-admissionApplication" type="select" className="form-control" name="admissionApplicationId">
+                  <Label for="department.id">Department</Label>
+                  <AvInput id="admission-enquiry-department" type="select" className="form-control" name="departmentId">
                     <option value="" key="0" />
-                    {admissionApplications
-                      ? admissionApplications.map(otherEntity => (
+                    {departments
+                      ? departments.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="batch.id">Batch</Label>
+                  <AvInput id="admission-enquiry-batch" type="select" className="form-control" name="batchId">
+                    <option value="" key="0" />
+                    {batches
+                      ? batches.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="state.id">State</Label>
+                  <AvInput id="admission-enquiry-state" type="select" className="form-control" name="stateId">
+                    <option value="" key="0" />
+                    {states
+                      ? states.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="city.id">City</Label>
+                  <AvInput id="admission-enquiry-city" type="select" className="form-control" name="cityId">
+                    <option value="" key="0" />
+                    {cities
+                      ? cities.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="country.id">Country</Label>
+                  <AvInput id="admission-enquiry-country" type="select" className="form-control" name="countryId">
+                    <option value="" key="0" />
+                    {countries
+                      ? countries.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -262,7 +435,11 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
 
 const mapStateToProps = (storeState: IRootState) => ({
   branches: storeState.branch.entities,
-  admissionApplications: storeState.admissionApplication.entities,
+  departments: storeState.department.entities,
+  batches: storeState.batch.entities,
+  states: storeState.state.entities,
+  cities: storeState.city.entities,
+  countries: storeState.country.entities,
   admissionEnquiryEntity: storeState.admissionEnquiry.entity,
   loading: storeState.admissionEnquiry.loading,
   updating: storeState.admissionEnquiry.updating,
@@ -271,7 +448,11 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getBranches,
-  getAdmissionApplications,
+  getDepartments,
+  getBatches,
+  getStates,
+  getCities,
+  getCountries,
   getEntity,
   updateEntity,
   createEntity,

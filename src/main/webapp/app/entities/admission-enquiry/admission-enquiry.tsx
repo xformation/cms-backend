@@ -35,9 +35,8 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
   };
 
   clear = () => {
-    this.props.getEntities();
-    this.setState({
-      search: ''
+    this.setState({ search: '' }, () => {
+      this.props.getEntities();
     });
   };
 
@@ -76,10 +75,22 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
               <tr>
                 <th>ID</th>
                 <th>Student Name</th>
-                <th>Mobile Number</th>
+                <th>Student Middle Name</th>
+                <th>Student Last Name</th>
+                <th>Father Name</th>
+                <th>Father Middle Name</th>
+                <th>Father Last Name</th>
+                <th>Mother Name</th>
+                <th>Mother Middle Name</th>
+                <th>Mother Last Name</th>
+                <th>Contact Number</th>
                 <th>Alternate Mobile Number</th>
+                <th>Date Of Birth</th>
                 <th>Email</th>
+                <th>Sex</th>
+                <th>Comments</th>
                 <th>Course Applying For</th>
+                <th>Highest Qualification</th>
                 <th>Mode Of Enquiry</th>
                 <th>Status</th>
                 <th>Description</th>
@@ -87,7 +98,11 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
                 <th>Updated On</th>
                 <th>Updated By</th>
                 <th>Branch</th>
-                <th>Admission Application</th>
+                <th>Department</th>
+                <th>Batch</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Country</th>
                 <th />
               </tr>
             </thead>
@@ -100,10 +115,24 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
                     </Button>
                   </td>
                   <td>{admissionEnquiry.studentName}</td>
-                  <td>{admissionEnquiry.mobileNumber}</td>
+                  <td>{admissionEnquiry.studentMiddleName}</td>
+                  <td>{admissionEnquiry.studentLastName}</td>
+                  <td>{admissionEnquiry.fatherName}</td>
+                  <td>{admissionEnquiry.fatherMiddleName}</td>
+                  <td>{admissionEnquiry.fatherLastName}</td>
+                  <td>{admissionEnquiry.motherName}</td>
+                  <td>{admissionEnquiry.motherMiddleName}</td>
+                  <td>{admissionEnquiry.motherLastName}</td>
+                  <td>{admissionEnquiry.contactNumber}</td>
                   <td>{admissionEnquiry.alternateMobileNumber}</td>
+                  <td>
+                    <TextFormat type="date" value={admissionEnquiry.dateOfBirth} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
                   <td>{admissionEnquiry.email}</td>
+                  <td>{admissionEnquiry.sex}</td>
+                  <td>{admissionEnquiry.comments}</td>
                   <td>{admissionEnquiry.courseApplyingFor}</td>
+                  <td>{admissionEnquiry.highestQualification}</td>
                   <td>{admissionEnquiry.modeOfEnquiry}</td>
                   <td>{admissionEnquiry.status}</td>
                   <td>{admissionEnquiry.description}</td>
@@ -118,10 +147,22 @@ export class AdmissionEnquiry extends React.Component<IAdmissionEnquiryProps, IA
                     {admissionEnquiry.branchId ? <Link to={`branch/${admissionEnquiry.branchId}`}>{admissionEnquiry.branchId}</Link> : ''}
                   </td>
                   <td>
-                    {admissionEnquiry.admissionApplicationId ? (
-                      <Link to={`admission-application/${admissionEnquiry.admissionApplicationId}`}>
-                        {admissionEnquiry.admissionApplicationId}
-                      </Link>
+                    {admissionEnquiry.departmentId ? (
+                      <Link to={`department/${admissionEnquiry.departmentId}`}>{admissionEnquiry.departmentId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionEnquiry.batchId ? <Link to={`batch/${admissionEnquiry.batchId}`}>{admissionEnquiry.batchId}</Link> : ''}
+                  </td>
+                  <td>
+                    {admissionEnquiry.stateId ? <Link to={`state/${admissionEnquiry.stateId}`}>{admissionEnquiry.stateId}</Link> : ''}
+                  </td>
+                  <td>{admissionEnquiry.cityId ? <Link to={`city/${admissionEnquiry.cityId}`}>{admissionEnquiry.cityId}</Link> : ''}</td>
+                  <td>
+                    {admissionEnquiry.countryId ? (
+                      <Link to={`country/${admissionEnquiry.countryId}`}>{admissionEnquiry.countryId}</Link>
                     ) : (
                       ''
                     )}

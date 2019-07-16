@@ -27,7 +27,6 @@ describe('AdmissionEnquiry e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
-
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
@@ -48,13 +47,36 @@ describe('AdmissionEnquiry e2e test', () => {
 
     await admissionEnquiryUpdatePage.setStudentNameInput('studentName');
     expect(await admissionEnquiryUpdatePage.getStudentNameInput()).to.match(/studentName/);
-    await admissionEnquiryUpdatePage.setMobileNumberInput('mobileNumber');
-    expect(await admissionEnquiryUpdatePage.getMobileNumberInput()).to.match(/mobileNumber/);
+    await admissionEnquiryUpdatePage.setStudentMiddleNameInput('studentMiddleName');
+    expect(await admissionEnquiryUpdatePage.getStudentMiddleNameInput()).to.match(/studentMiddleName/);
+    await admissionEnquiryUpdatePage.setStudentLastNameInput('studentLastName');
+    expect(await admissionEnquiryUpdatePage.getStudentLastNameInput()).to.match(/studentLastName/);
+    await admissionEnquiryUpdatePage.setFatherNameInput('fatherName');
+    expect(await admissionEnquiryUpdatePage.getFatherNameInput()).to.match(/fatherName/);
+    await admissionEnquiryUpdatePage.setFatherMiddleNameInput('fatherMiddleName');
+    expect(await admissionEnquiryUpdatePage.getFatherMiddleNameInput()).to.match(/fatherMiddleName/);
+    await admissionEnquiryUpdatePage.setFatherLastNameInput('fatherLastName');
+    expect(await admissionEnquiryUpdatePage.getFatherLastNameInput()).to.match(/fatherLastName/);
+    await admissionEnquiryUpdatePage.setMotherNameInput('motherName');
+    expect(await admissionEnquiryUpdatePage.getMotherNameInput()).to.match(/motherName/);
+    await admissionEnquiryUpdatePage.setMotherMiddleNameInput('motherMiddleName');
+    expect(await admissionEnquiryUpdatePage.getMotherMiddleNameInput()).to.match(/motherMiddleName/);
+    await admissionEnquiryUpdatePage.setMotherLastNameInput('motherLastName');
+    expect(await admissionEnquiryUpdatePage.getMotherLastNameInput()).to.match(/motherLastName/);
+    await admissionEnquiryUpdatePage.setContactNumberInput('contactNumber');
+    expect(await admissionEnquiryUpdatePage.getContactNumberInput()).to.match(/contactNumber/);
     await admissionEnquiryUpdatePage.setAlternateMobileNumberInput('alternateMobileNumber');
     expect(await admissionEnquiryUpdatePage.getAlternateMobileNumberInput()).to.match(/alternateMobileNumber/);
+    await admissionEnquiryUpdatePage.setDateOfBirthInput('01-01-2001');
+    expect(await admissionEnquiryUpdatePage.getDateOfBirthInput()).to.eq('2001-01-01');
     await admissionEnquiryUpdatePage.setEmailInput('email');
     expect(await admissionEnquiryUpdatePage.getEmailInput()).to.match(/email/);
+    await admissionEnquiryUpdatePage.sexSelectLastOption();
+    await admissionEnquiryUpdatePage.setCommentsInput('comments');
+    expect(await admissionEnquiryUpdatePage.getCommentsInput()).to.match(/comments/);
     await admissionEnquiryUpdatePage.courseApplyingForSelectLastOption();
+    await admissionEnquiryUpdatePage.setHighestQualificationInput('highestQualification');
+    expect(await admissionEnquiryUpdatePage.getHighestQualificationInput()).to.match(/highestQualification/);
     await admissionEnquiryUpdatePage.modeOfEnquirySelectLastOption();
     await admissionEnquiryUpdatePage.statusSelectLastOption();
     await admissionEnquiryUpdatePage.setDescriptionInput('description');
@@ -66,7 +88,11 @@ describe('AdmissionEnquiry e2e test', () => {
     await admissionEnquiryUpdatePage.setUpdatedByInput('updatedBy');
     expect(await admissionEnquiryUpdatePage.getUpdatedByInput()).to.match(/updatedBy/);
     await admissionEnquiryUpdatePage.branchSelectLastOption();
-    await admissionEnquiryUpdatePage.admissionApplicationSelectLastOption();
+    await admissionEnquiryUpdatePage.departmentSelectLastOption();
+    await admissionEnquiryUpdatePage.batchSelectLastOption();
+    await admissionEnquiryUpdatePage.stateSelectLastOption();
+    await admissionEnquiryUpdatePage.citySelectLastOption();
+    await admissionEnquiryUpdatePage.countrySelectLastOption();
     await waitUntilDisplayed(admissionEnquiryUpdatePage.getSaveButton());
     await admissionEnquiryUpdatePage.save();
     await waitUntilHidden(admissionEnquiryUpdatePage.getSaveButton());

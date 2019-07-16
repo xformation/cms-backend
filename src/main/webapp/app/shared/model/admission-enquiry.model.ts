@@ -1,5 +1,11 @@
 import { Moment } from 'moment';
 
+export const enum Gender {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  OTHER = 'OTHER'
+}
+
 export const enum CourseEnum {
   BTECH = 'BTECH',
   MTECH = 'MTECH',
@@ -14,7 +20,6 @@ export const enum ModeOfEnquiry {
 }
 
 export const enum EnquiryStatus {
-  RECEIVED = 'RECEIVED',
   FOLLOWUP = 'FOLLOWUP',
   DECLINED = 'DECLINED',
   CONVERTED = 'CONVERTED'
@@ -23,10 +28,22 @@ export const enum EnquiryStatus {
 export interface IAdmissionEnquiry {
   id?: number;
   studentName?: string;
-  mobileNumber?: string;
+  studentMiddleName?: string;
+  studentLastName?: string;
+  fatherName?: string;
+  fatherMiddleName?: string;
+  fatherLastName?: string;
+  motherName?: string;
+  motherMiddleName?: string;
+  motherLastName?: string;
+  contactNumber?: string;
   alternateMobileNumber?: string;
+  dateOfBirth?: Moment;
   email?: string;
+  sex?: Gender;
+  comments?: string;
   courseApplyingFor?: CourseEnum;
+  highestQualification?: string;
   modeOfEnquiry?: ModeOfEnquiry;
   status?: EnquiryStatus;
   description?: string;
@@ -34,7 +51,11 @@ export interface IAdmissionEnquiry {
   updatedOn?: Moment;
   updatedBy?: string;
   branchId?: number;
-  admissionApplicationId?: number;
+  departmentId?: number;
+  batchId?: number;
+  stateId?: number;
+  cityId?: number;
+  countryId?: number;
 }
 
 export const defaultValue: Readonly<IAdmissionEnquiry> = {};

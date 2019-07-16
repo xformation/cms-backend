@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -11,6 +12,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import com.synectiks.cms.domain.enumeration.Gender;
 
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 
@@ -28,7 +31,7 @@ import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 public class AdmissionEnquiry implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -38,20 +41,61 @@ public class AdmissionEnquiry implements Serializable {
     @Column(name = "student_name", nullable = false)
     private String studentName;
 
+    @Column(name = "student_middle_name")
+    private String studentMiddleName;
+
+    @Column(name = "student_last_name")
+    private String studentLastName;
+
+    @Column(name = "father_name")
+    private String fatherName;
+
+    @Column(name = "father_middle_name")
+    private String fatherMiddleName;
+
+    @Column(name = "father_last_name")
+    private String fatherLastName;
+
+    @Column(name = "mother_name")
+    private String motherName;
+
+    @Column(name = "mother_middle_name")
+    private String motherMiddleName;
+
+    @Column(name = "mother_last_name")
+    private String motherLastName;
+
     @NotNull
-    @Column(name = "mobile_number", nullable = false)
-    private String mobileNumber;
+    @Column(name = "contact_number", nullable = false)
+    private String contactNumber;
 
     @Column(name = "alternate_mobile_number")
     private String alternateMobileNumber;
+
+    @NotNull
+    @Column(name = "date_of_birth", nullable = false)
+    private LocalDate dateOfBirth;
 
     @Column(name = "email")
     private String email;
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "sex", nullable = false)
+    private Gender sex;
+
+    @NotNull
+    @Column(name = "comments", nullable = false)
+    private String comments;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "course_applying_for", nullable = false)
     private CourseEnum courseApplyingFor;
+
+    @NotNull
+    @Column(name = "highest_qualification", nullable = false)
+    private String highestQualification;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -78,12 +122,28 @@ public class AdmissionEnquiry implements Serializable {
     private String updatedBy;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("admissionEnquiries")
     private Branch branch;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
-    private AdmissionApplication admissionApplication;
+    @JsonIgnoreProperties("admissionEnquiries")
+    private Department department;
+
+    @ManyToOne
+    @JsonIgnoreProperties("admissionEnquiries")
+    private Batch batch;
+
+    @ManyToOne
+    @JsonIgnoreProperties("admissionEnquiries")
+    private State state;
+
+    @ManyToOne
+    @JsonIgnoreProperties("admissionEnquiries")
+    private City city;
+
+    @ManyToOne
+    @JsonIgnoreProperties("admissionEnquiries")
+    private Country country;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -107,17 +167,121 @@ public class AdmissionEnquiry implements Serializable {
         this.studentName = studentName;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getStudentMiddleName() {
+        return studentMiddleName;
     }
 
-    public AdmissionEnquiry mobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public AdmissionEnquiry studentMiddleName(String studentMiddleName) {
+        this.studentMiddleName = studentMiddleName;
         return this;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setStudentMiddleName(String studentMiddleName) {
+        this.studentMiddleName = studentMiddleName;
+    }
+
+    public String getStudentLastName() {
+        return studentLastName;
+    }
+
+    public AdmissionEnquiry studentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
+        return this;
+    }
+
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public AdmissionEnquiry fatherName(String fatherName) {
+        this.fatherName = fatherName;
+        return this;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getFatherMiddleName() {
+        return fatherMiddleName;
+    }
+
+    public AdmissionEnquiry fatherMiddleName(String fatherMiddleName) {
+        this.fatherMiddleName = fatherMiddleName;
+        return this;
+    }
+
+    public void setFatherMiddleName(String fatherMiddleName) {
+        this.fatherMiddleName = fatherMiddleName;
+    }
+
+    public String getFatherLastName() {
+        return fatherLastName;
+    }
+
+    public AdmissionEnquiry fatherLastName(String fatherLastName) {
+        this.fatherLastName = fatherLastName;
+        return this;
+    }
+
+    public void setFatherLastName(String fatherLastName) {
+        this.fatherLastName = fatherLastName;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public AdmissionEnquiry motherName(String motherName) {
+        this.motherName = motherName;
+        return this;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
+
+    public String getMotherMiddleName() {
+        return motherMiddleName;
+    }
+
+    public AdmissionEnquiry motherMiddleName(String motherMiddleName) {
+        this.motherMiddleName = motherMiddleName;
+        return this;
+    }
+
+    public void setMotherMiddleName(String motherMiddleName) {
+        this.motherMiddleName = motherMiddleName;
+    }
+
+    public String getMotherLastName() {
+        return motherLastName;
+    }
+
+    public AdmissionEnquiry motherLastName(String motherLastName) {
+        this.motherLastName = motherLastName;
+        return this;
+    }
+
+    public void setMotherLastName(String motherLastName) {
+        this.motherLastName = motherLastName;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public AdmissionEnquiry contactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+        return this;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public String getAlternateMobileNumber() {
@@ -133,6 +297,19 @@ public class AdmissionEnquiry implements Serializable {
         this.alternateMobileNumber = alternateMobileNumber;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public AdmissionEnquiry dateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+        return this;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -146,6 +323,32 @@ public class AdmissionEnquiry implements Serializable {
         this.email = email;
     }
 
+    public Gender getSex() {
+        return sex;
+    }
+
+    public AdmissionEnquiry sex(Gender sex) {
+        this.sex = sex;
+        return this;
+    }
+
+    public void setSex(Gender sex) {
+        this.sex = sex;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public AdmissionEnquiry comments(String comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     public CourseEnum getCourseApplyingFor() {
         return courseApplyingFor;
     }
@@ -157,6 +360,19 @@ public class AdmissionEnquiry implements Serializable {
 
     public void setCourseApplyingFor(CourseEnum courseApplyingFor) {
         this.courseApplyingFor = courseApplyingFor;
+    }
+
+    public String getHighestQualification() {
+        return highestQualification;
+    }
+
+    public AdmissionEnquiry highestQualification(String highestQualification) {
+        this.highestQualification = highestQualification;
+        return this;
+    }
+
+    public void setHighestQualification(String highestQualification) {
+        this.highestQualification = highestQualification;
     }
 
     public ModeOfEnquiry getModeOfEnquiry() {
@@ -250,17 +466,69 @@ public class AdmissionEnquiry implements Serializable {
         this.branch = branch;
     }
 
-    public AdmissionApplication getAdmissionApplication() {
-        return admissionApplication;
+    public Department getDepartment() {
+        return department;
     }
 
-    public AdmissionEnquiry admissionApplication(AdmissionApplication admissionApplication) {
-        this.admissionApplication = admissionApplication;
+    public AdmissionEnquiry department(Department department) {
+        this.department = department;
         return this;
     }
 
-    public void setAdmissionApplication(AdmissionApplication admissionApplication) {
-        this.admissionApplication = admissionApplication;
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Batch getBatch() {
+        return batch;
+    }
+
+    public AdmissionEnquiry batch(Batch batch) {
+        this.batch = batch;
+        return this;
+    }
+
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public AdmissionEnquiry state(State state) {
+        this.state = state;
+        return this;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public AdmissionEnquiry city(City city) {
+        this.city = city;
+        return this;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public AdmissionEnquiry country(Country country) {
+        this.country = country;
+        return this;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -289,10 +557,22 @@ public class AdmissionEnquiry implements Serializable {
         return "AdmissionEnquiry{" +
             "id=" + getId() +
             ", studentName='" + getStudentName() + "'" +
-            ", mobileNumber='" + getMobileNumber() + "'" +
+            ", studentMiddleName='" + getStudentMiddleName() + "'" +
+            ", studentLastName='" + getStudentLastName() + "'" +
+            ", fatherName='" + getFatherName() + "'" +
+            ", fatherMiddleName='" + getFatherMiddleName() + "'" +
+            ", fatherLastName='" + getFatherLastName() + "'" +
+            ", motherName='" + getMotherName() + "'" +
+            ", motherMiddleName='" + getMotherMiddleName() + "'" +
+            ", motherLastName='" + getMotherLastName() + "'" +
+            ", contactNumber='" + getContactNumber() + "'" +
             ", alternateMobileNumber='" + getAlternateMobileNumber() + "'" +
+            ", dateOfBirth='" + getDateOfBirth() + "'" +
             ", email='" + getEmail() + "'" +
+            ", sex='" + getSex() + "'" +
+            ", comments='" + getComments() + "'" +
             ", courseApplyingFor='" + getCourseApplyingFor() + "'" +
+            ", highestQualification='" + getHighestQualification() + "'" +
             ", modeOfEnquiry='" + getModeOfEnquiry() + "'" +
             ", status='" + getStatus() + "'" +
             ", description='" + getDescription() + "'" +

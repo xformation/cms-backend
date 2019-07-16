@@ -33,21 +33,71 @@ export class AdmissionEnquiryDetail extends React.Component<IAdmissionEnquiryDet
             </dt>
             <dd>{admissionEnquiryEntity.studentName}</dd>
             <dt>
-              <span id="mobileNumber">Mobile Number</span>
+              <span id="studentMiddleName">Student Middle Name</span>
             </dt>
-            <dd>{admissionEnquiryEntity.mobileNumber}</dd>
+            <dd>{admissionEnquiryEntity.studentMiddleName}</dd>
+            <dt>
+              <span id="studentLastName">Student Last Name</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.studentLastName}</dd>
+            <dt>
+              <span id="fatherName">Father Name</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.fatherName}</dd>
+            <dt>
+              <span id="fatherMiddleName">Father Middle Name</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.fatherMiddleName}</dd>
+            <dt>
+              <span id="fatherLastName">Father Last Name</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.fatherLastName}</dd>
+            <dt>
+              <span id="motherName">Mother Name</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.motherName}</dd>
+            <dt>
+              <span id="motherMiddleName">Mother Middle Name</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.motherMiddleName}</dd>
+            <dt>
+              <span id="motherLastName">Mother Last Name</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.motherLastName}</dd>
+            <dt>
+              <span id="contactNumber">Contact Number</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.contactNumber}</dd>
             <dt>
               <span id="alternateMobileNumber">Alternate Mobile Number</span>
             </dt>
             <dd>{admissionEnquiryEntity.alternateMobileNumber}</dd>
             <dt>
+              <span id="dateOfBirth">Date Of Birth</span>
+            </dt>
+            <dd>
+              <TextFormat value={admissionEnquiryEntity.dateOfBirth} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
+            <dt>
               <span id="email">Email</span>
             </dt>
             <dd>{admissionEnquiryEntity.email}</dd>
             <dt>
+              <span id="sex">Sex</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.sex}</dd>
+            <dt>
+              <span id="comments">Comments</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.comments}</dd>
+            <dt>
               <span id="courseApplyingFor">Course Applying For</span>
             </dt>
             <dd>{admissionEnquiryEntity.courseApplyingFor}</dd>
+            <dt>
+              <span id="highestQualification">Highest Qualification</span>
+            </dt>
+            <dd>{admissionEnquiryEntity.highestQualification}</dd>
             <dt>
               <span id="modeOfEnquiry">Mode Of Enquiry</span>
             </dt>
@@ -78,8 +128,16 @@ export class AdmissionEnquiryDetail extends React.Component<IAdmissionEnquiryDet
             <dd>{admissionEnquiryEntity.updatedBy}</dd>
             <dt>Branch</dt>
             <dd>{admissionEnquiryEntity.branchId ? admissionEnquiryEntity.branchId : ''}</dd>
-            <dt>Admission Application</dt>
-            <dd>{admissionEnquiryEntity.admissionApplicationId ? admissionEnquiryEntity.admissionApplicationId : ''}</dd>
+            <dt>Department</dt>
+            <dd>{admissionEnquiryEntity.departmentId ? admissionEnquiryEntity.departmentId : ''}</dd>
+            <dt>Batch</dt>
+            <dd>{admissionEnquiryEntity.batchId ? admissionEnquiryEntity.batchId : ''}</dd>
+            <dt>State</dt>
+            <dd>{admissionEnquiryEntity.stateId ? admissionEnquiryEntity.stateId : ''}</dd>
+            <dt>City</dt>
+            <dd>{admissionEnquiryEntity.cityId ? admissionEnquiryEntity.cityId : ''}</dd>
+            <dt>Country</dt>
+            <dd>{admissionEnquiryEntity.countryId ? admissionEnquiryEntity.countryId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/admission-enquiry" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

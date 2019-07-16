@@ -550,7 +550,6 @@ public class Mutation implements GraphQLMutationResolver {
 
         final AdmissionApplication admissionApplication = new AdmissionApplication();
 
-        admissionApplication.setStudent(student);
         admissionApplication.setAcademicyear(academicYear);
         admissionApplication.setAdmissionStatus(addAdmissionApplicationInput.getAdmissionStatus());
         admissionApplication.setCourse(addAdmissionApplicationInput.getCourse());
@@ -575,10 +574,6 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateAdmissionApplicationInput.getComments() != null) {
             admissionApplication.setComments(updateAdmissionApplicationInput.getComments());
-        }
-        if (updateAdmissionApplicationInput.getStudentId() != null) {
-            Student student = studentRepository.findById(updateAdmissionApplicationInput.getStudentId()).get();
-            admissionApplication.setStudent(student);
         }
         if (updateAdmissionApplicationInput.getAcademicyearId() != null) {
             AcademicYear academicYear = academicYearRepository.findById(updateAdmissionApplicationInput.getAcademicyearId()).get();
@@ -794,7 +789,7 @@ public class Mutation implements GraphQLMutationResolver {
     public AddAdmissionEnquiryPayload addAdmissionEnquiry(AddAdmissionEnquiryInput addAdmissionEnquiryInput) {
         final AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
         admissionEnquiry.setStudentName(addAdmissionEnquiryInput.getStudentName());
-        admissionEnquiry.setMobileNumber(addAdmissionEnquiryInput.getMobileNumber());
+        admissionEnquiry.setContactNumber(addAdmissionEnquiryInput.getMobileNumber());
         admissionEnquiry.setAlternateMobileNumber(addAdmissionEnquiryInput.getAlternateMobileNumber());
         admissionEnquiry.setEmail(addAdmissionEnquiryInput.getEmail());
         admissionEnquiry.setCourseApplyingFor(addAdmissionEnquiryInput.getCourseApplyingFor());
@@ -807,7 +802,6 @@ public class Mutation implements GraphQLMutationResolver {
         Branch branch = branchRepository.findById(addAdmissionEnquiryInput.getBranchId()).get();
         AdmissionApplication admissionApplication = admissionApplicationRepository.findById(addAdmissionEnquiryInput.getAdmissionApplicationId()).get();
         admissionEnquiry.setBranch(branch);
-        admissionEnquiry.setAdmissionApplication(admissionApplication);
         admissionEnquiryRepository.save(admissionEnquiry);
         return new AddAdmissionEnquiryPayload(admissionEnquiry);
     }
@@ -820,7 +814,7 @@ public class Mutation implements GraphQLMutationResolver {
             admissionEnquiry.setStudentName(updateAdmissionEnquiryInput.getStudentName());
         }
         if (updateAdmissionEnquiryInput.getMobileNumber() != null) {
-            admissionEnquiry.setMobileNumber(updateAdmissionEnquiryInput.getMobileNumber());
+            admissionEnquiry.setContactNumber(updateAdmissionEnquiryInput.getMobileNumber());
         }
 
         if (updateAdmissionEnquiryInput.getAlternateMobileNumber() != null) {
@@ -854,10 +848,6 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAdmissionEnquiryInput.getBranchId() != null) {
             final Branch branch = branchRepository.findById(updateAdmissionEnquiryInput.getBranchId()).get();
             admissionEnquiry.setBranch(branch);
-        }
-        if (updateAdmissionEnquiryInput.getAdmissionApplicationId() != null) {
-            final AdmissionApplication admissionApplication = admissionApplicationRepository.findById(updateAdmissionEnquiryInput.getAdmissionApplicationId()).get();
-            admissionEnquiry.setAdmissionApplication(admissionApplication);
         }
         admissionEnquiryRepository.save(admissionEnquiry);
         return new UpdateAdmissionEnquiryPayload(admissionEnquiry);

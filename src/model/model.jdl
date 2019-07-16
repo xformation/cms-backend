@@ -472,12 +472,13 @@ enum CourseEnum {
 }
 
 enum AdmissionStatusEnum{
-    RECEIVED, INPROCESS, DECLINED, ACCEPTED
+     INPROCESS, DECLINED, ACCEPTED
 }
 
 enum EnquiryStatus{
-    RECEIVED, FOLLOWUP, DECLINED, CONVERTED
+   FOLLOWUP, DECLINED, CONVERTED
 }
+
 
 enum ModeOfEnquiry{
     INPERSON, TELEPHONE, EMAIL
@@ -491,17 +492,47 @@ enum GradeType{
 
 entity AdmissionApplication{
     admissionStatus AdmissionStatusEnum required
+    studentName String required
+    studentMiddleName String
+    studentLastName String
+    fatherName String
+    fatherMiddleName String
+    fatherLastName String
+    motherName String
+    motherMiddleName String
+    motherLastName String
+    contactNumber String required
+    alternateMobileNumber String
+    dateOfBirth LocalDate required
+    email String
+    sex Gender required
+    comments String
+    applicationId Integer required
+    uploadPhoto String required
     course CourseEnum required
     admissionDate LocalDate required
     comments String required
 }
 
+
 entity AdmissionEnquiry {
     studentName String required
-    mobileNumber String required
+    studentMiddleName String
+    studentLastName String
+    fatherName String
+    fatherMiddleName String
+    fatherLastName String
+    motherName String
+    motherMiddleName String
+    motherLastName String
+    contactNumber String required
     alternateMobileNumber String
+    dateOfBirth LocalDate required
     email String
+    sex Gender required
+    comments String required
     courseApplyingFor CourseEnum required
+    highestQualification String required
     modeOfEnquiry ModeOfEnquiry required
     status EnquiryStatus required
     description String required
@@ -509,6 +540,7 @@ entity AdmissionEnquiry {
     updatedOn LocalDate
     updatedBy String
 }
+
 
 
 entity AdminAttendance{
@@ -672,9 +704,21 @@ Invoice{academicYear} to AcademicYear,
 CompetitiveExam{student} to Student,
 Documents{student} to Student,
 AcademicHistory{student} to Student,
-AdmissionApplication{student} to Student,
+AdmissionApplication{admissionEnquiry} to AdmissionEnquiry,
+AdmissionApplication{academicHistory} to AcademicHistory,
+AdmissionApplication{documents} to Documents,
+AdmissionApplication{branch} to Branch,
+AdmissionApplication{batch} to Batch,
+AdmissionApplication{state} to State,
+AdmissionApplication{city} to City,
+AdmissionApplication{country} to Country,
+AdmissionApplication{department} to Department,
 AdmissionEnquiry{branch} to Branch,
-AdmissionEnquiry{admissionApplication} to AdmissionApplication,
+AdmissionEnquiry{department} to Department,
+AdmissionEnquiry{batch} to Batch,
+AdmissionEnquiry{state} to State,
+AdmissionEnquiry{city} to City,
+AdmissionEnquiry{country} to Country,
 AdminAttendance{lecture} to Lecture,
 AdminAttendance{branch} to Branch,
 AdminAttendance{college} to College,

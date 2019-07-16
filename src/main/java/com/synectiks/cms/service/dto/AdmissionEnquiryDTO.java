@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
@@ -18,15 +18,43 @@ public class AdmissionEnquiryDTO implements Serializable {
     @NotNull
     private String studentName;
 
+    private String studentMiddleName;
+
+    private String studentLastName;
+
+    private String fatherName;
+
+    private String fatherMiddleName;
+
+    private String fatherLastName;
+
+    private String motherName;
+
+    private String motherMiddleName;
+
+    private String motherLastName;
+
     @NotNull
-    private String mobileNumber;
+    private String contactNumber;
 
     private String alternateMobileNumber;
+
+    @NotNull
+    private LocalDate dateOfBirth;
 
     private String email;
 
     @NotNull
+    private Gender sex;
+
+    @NotNull
+    private String comments;
+
+    @NotNull
     private CourseEnum courseApplyingFor;
+
+    @NotNull
+    private String highestQualification;
 
     @NotNull
     private ModeOfEnquiry modeOfEnquiry;
@@ -44,9 +72,18 @@ public class AdmissionEnquiryDTO implements Serializable {
 
     private String updatedBy;
 
+
     private Long branchId;
 
-    private Long admissionApplicationId;
+    private Long departmentId;
+
+    private Long batchId;
+
+    private Long stateId;
+
+    private Long cityId;
+
+    private Long countryId;
 
     public Long getId() {
         return id;
@@ -64,12 +101,76 @@ public class AdmissionEnquiryDTO implements Serializable {
         this.studentName = studentName;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getStudentMiddleName() {
+        return studentMiddleName;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setStudentMiddleName(String studentMiddleName) {
+        this.studentMiddleName = studentMiddleName;
+    }
+
+    public String getStudentLastName() {
+        return studentLastName;
+    }
+
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+    public String getFatherMiddleName() {
+        return fatherMiddleName;
+    }
+
+    public void setFatherMiddleName(String fatherMiddleName) {
+        this.fatherMiddleName = fatherMiddleName;
+    }
+
+    public String getFatherLastName() {
+        return fatherLastName;
+    }
+
+    public void setFatherLastName(String fatherLastName) {
+        this.fatherLastName = fatherLastName;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
+
+    public String getMotherMiddleName() {
+        return motherMiddleName;
+    }
+
+    public void setMotherMiddleName(String motherMiddleName) {
+        this.motherMiddleName = motherMiddleName;
+    }
+
+    public String getMotherLastName() {
+        return motherLastName;
+    }
+
+    public void setMotherLastName(String motherLastName) {
+        this.motherLastName = motherLastName;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public String getAlternateMobileNumber() {
@@ -80,6 +181,14 @@ public class AdmissionEnquiryDTO implements Serializable {
         this.alternateMobileNumber = alternateMobileNumber;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -88,12 +197,36 @@ public class AdmissionEnquiryDTO implements Serializable {
         this.email = email;
     }
 
+    public Gender getSex() {
+        return sex;
+    }
+
+    public void setSex(Gender sex) {
+        this.sex = sex;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     public CourseEnum getCourseApplyingFor() {
         return courseApplyingFor;
     }
 
     public void setCourseApplyingFor(CourseEnum courseApplyingFor) {
         this.courseApplyingFor = courseApplyingFor;
+    }
+
+    public String getHighestQualification() {
+        return highestQualification;
+    }
+
+    public void setHighestQualification(String highestQualification) {
+        this.highestQualification = highestQualification;
     }
 
     public ModeOfEnquiry getModeOfEnquiry() {
@@ -152,12 +285,44 @@ public class AdmissionEnquiryDTO implements Serializable {
         this.branchId = branchId;
     }
 
-    public Long getAdmissionApplicationId() {
-        return admissionApplicationId;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setAdmissionApplicationId(Long admissionApplicationId) {
-        this.admissionApplicationId = admissionApplicationId;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
+    public Long getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Long stateId) {
+        this.stateId = stateId;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public Long getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Long countryId) {
+        this.countryId = countryId;
     }
 
     @Override
@@ -186,10 +351,22 @@ public class AdmissionEnquiryDTO implements Serializable {
         return "AdmissionEnquiryDTO{" +
             "id=" + getId() +
             ", studentName='" + getStudentName() + "'" +
-            ", mobileNumber='" + getMobileNumber() + "'" +
+            ", studentMiddleName='" + getStudentMiddleName() + "'" +
+            ", studentLastName='" + getStudentLastName() + "'" +
+            ", fatherName='" + getFatherName() + "'" +
+            ", fatherMiddleName='" + getFatherMiddleName() + "'" +
+            ", fatherLastName='" + getFatherLastName() + "'" +
+            ", motherName='" + getMotherName() + "'" +
+            ", motherMiddleName='" + getMotherMiddleName() + "'" +
+            ", motherLastName='" + getMotherLastName() + "'" +
+            ", contactNumber='" + getContactNumber() + "'" +
             ", alternateMobileNumber='" + getAlternateMobileNumber() + "'" +
+            ", dateOfBirth='" + getDateOfBirth() + "'" +
             ", email='" + getEmail() + "'" +
+            ", sex='" + getSex() + "'" +
+            ", comments='" + getComments() + "'" +
             ", courseApplyingFor='" + getCourseApplyingFor() + "'" +
+            ", highestQualification='" + getHighestQualification() + "'" +
             ", modeOfEnquiry='" + getModeOfEnquiry() + "'" +
             ", status='" + getStatus() + "'" +
             ", description='" + getDescription() + "'" +
@@ -197,7 +374,11 @@ public class AdmissionEnquiryDTO implements Serializable {
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +
             ", branch=" + getBranchId() +
-            ", admissionApplication=" + getAdmissionApplicationId() +
+            ", department=" + getDepartmentId() +
+            ", batch=" + getBatchId() +
+            ", state=" + getStateId() +
+            ", city=" + getCityId() +
+            ", country=" + getCountryId() +
             "}";
     }
 }

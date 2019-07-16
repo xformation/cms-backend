@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AdmissionApplication.
+    -->
+    <changeSet id="20190716091755-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="admission_enquiry_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_admission_enquiry_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="admission_enquiry"/>
+
+        <addForeignKeyConstraint baseColumnNames="academic_history_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_academic_history_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_history"/>
+
+        <addForeignKeyConstraint baseColumnNames="documents_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_documents_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="documents"/>
+
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
+        <addForeignKeyConstraint baseColumnNames="batch_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_batch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="batch"/>
+
+        <addForeignKeyConstraint baseColumnNames="state_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_state_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="state"/>
+
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_city_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_country_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="academicyear_id"
+                                 baseTableName="admission_application"
+                                 constraintName="fk_admission_application_academicyear_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_year"/>
+
+    </changeSet>
+</databaseChangeLog>

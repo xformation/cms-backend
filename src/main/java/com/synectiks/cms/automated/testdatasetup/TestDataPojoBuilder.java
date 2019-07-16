@@ -444,7 +444,7 @@ public class TestDataPojoBuilder {
 	public AdmissionEnquiry createAdmissionEnquiryPojo(Cell cell) {
 		AdmissionEnquiry ae = new AdmissionEnquiry();
 		ae.setStudentName(cell.asString());
-		ae.setMobileNumber("");
+		ae.setContactNumber("");
 		ae.setAlternateMobileNumber("");
 		ae.setEmail("");
 		ae.setCourseApplyingFor(CourseEnum.BTECH);

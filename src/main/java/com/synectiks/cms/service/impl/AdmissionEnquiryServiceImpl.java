@@ -50,7 +50,6 @@ public class AdmissionEnquiryServiceImpl implements AdmissionEnquiryService {
     @Override
     public AdmissionEnquiryDTO save(AdmissionEnquiryDTO admissionEnquiryDTO) {
         log.debug("Request to save AdmissionEnquiry : {}", admissionEnquiryDTO);
-
         AdmissionEnquiry admissionEnquiry = admissionEnquiryMapper.toEntity(admissionEnquiryDTO);
         admissionEnquiry = admissionEnquiryRepository.save(admissionEnquiry);
         AdmissionEnquiryDTO result = admissionEnquiryMapper.toDto(admissionEnquiry);
@@ -94,8 +93,7 @@ public class AdmissionEnquiryServiceImpl implements AdmissionEnquiryService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AdmissionEnquiry : {}", id);
-        admissionEnquiryRepository.deleteById(id);
+        log.debug("Request to delete AdmissionEnquiry : {}", id);        admissionEnquiryRepository.deleteById(id);
         admissionEnquirySearchRepository.deleteById(id);
     }
 

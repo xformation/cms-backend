@@ -75,10 +75,35 @@ export class AdmissionApplication extends React.Component<IAdmissionApplicationP
               <tr>
                 <th>ID</th>
                 <th>Admission Status</th>
+                <th>Student Name</th>
+                <th>Student Middle Name</th>
+                <th>Student Last Name</th>
+                <th>Father Name</th>
+                <th>Father Middle Name</th>
+                <th>Father Last Name</th>
+                <th>Mother Name</th>
+                <th>Mother Middle Name</th>
+                <th>Mother Last Name</th>
+                <th>Contact Number</th>
+                <th>Alternate Mobile Number</th>
+                <th>Date Of Birth</th>
+                <th>Email</th>
+                <th>Sex</th>
+                <th>Comments</th>
+                <th>Application Id</th>
+                <th>Upload Photo</th>
                 <th>Course</th>
                 <th>Admission Date</th>
-                <th>Comments</th>
-                <th>Student</th>
+                <th>Admission Enquiry</th>
+                <th>Academic History</th>
+                <th>Documents</th>
+                <th>Branch</th>
+                <th>Batch</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Department</th>
+                <th>Academicyear</th>
                 <th />
               </tr>
             </thead>
@@ -91,14 +116,99 @@ export class AdmissionApplication extends React.Component<IAdmissionApplicationP
                     </Button>
                   </td>
                   <td>{admissionApplication.admissionStatus}</td>
+                  <td>{admissionApplication.studentName}</td>
+                  <td>{admissionApplication.studentMiddleName}</td>
+                  <td>{admissionApplication.studentLastName}</td>
+                  <td>{admissionApplication.fatherName}</td>
+                  <td>{admissionApplication.fatherMiddleName}</td>
+                  <td>{admissionApplication.fatherLastName}</td>
+                  <td>{admissionApplication.motherName}</td>
+                  <td>{admissionApplication.motherMiddleName}</td>
+                  <td>{admissionApplication.motherLastName}</td>
+                  <td>{admissionApplication.contactNumber}</td>
+                  <td>{admissionApplication.alternateMobileNumber}</td>
+                  <td>
+                    <TextFormat type="date" value={admissionApplication.dateOfBirth} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>{admissionApplication.email}</td>
+                  <td>{admissionApplication.sex}</td>
+                  <td>{admissionApplication.comments}</td>
+                  <td>{admissionApplication.applicationId}</td>
+                  <td>{admissionApplication.uploadPhoto}</td>
                   <td>{admissionApplication.course}</td>
                   <td>
                     <TextFormat type="date" value={admissionApplication.admissionDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>{admissionApplication.comments}</td>
                   <td>
-                    {admissionApplication.studentId ? (
-                      <Link to={`student/${admissionApplication.studentId}`}>{admissionApplication.studentId}</Link>
+                    {admissionApplication.admissionEnquiryId ? (
+                      <Link to={`admission-enquiry/${admissionApplication.admissionEnquiryId}`}>
+                        {admissionApplication.admissionEnquiryId}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.academicHistoryId ? (
+                      <Link to={`academic-history/${admissionApplication.academicHistoryId}`}>
+                        {admissionApplication.academicHistoryId}
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.documentsId ? (
+                      <Link to={`documents/${admissionApplication.documentsId}`}>{admissionApplication.documentsId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.branchId ? (
+                      <Link to={`branch/${admissionApplication.branchId}`}>{admissionApplication.branchId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.batchId ? (
+                      <Link to={`batch/${admissionApplication.batchId}`}>{admissionApplication.batchId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.stateId ? (
+                      <Link to={`state/${admissionApplication.stateId}`}>{admissionApplication.stateId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.cityId ? (
+                      <Link to={`city/${admissionApplication.cityId}`}>{admissionApplication.cityId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.countryId ? (
+                      <Link to={`country/${admissionApplication.countryId}`}>{admissionApplication.countryId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.departmentId ? (
+                      <Link to={`department/${admissionApplication.departmentId}`}>{admissionApplication.departmentId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {admissionApplication.academicyearId ? (
+                      <Link to={`academic-year/${admissionApplication.academicyearId}`}>{admissionApplication.academicyearId}</Link>
                     ) : (
                       ''
                     )}

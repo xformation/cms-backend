@@ -72,10 +72,26 @@ class AdmissionApplicationGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "id":null
-                , "admissionStatus":"RECEIVED"
+                , "admissionStatus":"INPROCESS"
+                , "studentName":"SAMPLE_TEXT"
+                , "studentMiddleName":"SAMPLE_TEXT"
+                , "studentLastName":"SAMPLE_TEXT"
+                , "fatherName":"SAMPLE_TEXT"
+                , "fatherMiddleName":"SAMPLE_TEXT"
+                , "fatherLastName":"SAMPLE_TEXT"
+                , "motherName":"SAMPLE_TEXT"
+                , "motherMiddleName":"SAMPLE_TEXT"
+                , "motherLastName":"SAMPLE_TEXT"
+                , "contactNumber":"SAMPLE_TEXT"
+                , "alternateMobileNumber":"SAMPLE_TEXT"
+                , "dateOfBirth":"2020-01-01T00:00:00.000Z"
+                , "email":"SAMPLE_TEXT"
+                , "sex":"MALE"
+                , "comments":"SAMPLE_TEXT"
+                , "applicationId":"0"
+                , "uploadPhoto":"SAMPLE_TEXT"
                 , "course":"BTECH"
                 , "admissionDate":"2020-01-01T00:00:00.000Z"
-                , "comments":"SAMPLE_TEXT"
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_admissionApplication_url"))).exitHereIfFailed

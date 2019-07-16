@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity AdmissionEnquiry.
+    -->
+    <changeSet id="20190716091756-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="admission_enquiry"
+                                 constraintName="fk_admission_enquiry_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="admission_enquiry"
+                                 constraintName="fk_admission_enquiry_department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+
+        <addForeignKeyConstraint baseColumnNames="batch_id"
+                                 baseTableName="admission_enquiry"
+                                 constraintName="fk_admission_enquiry_batch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="batch"/>
+
+        <addForeignKeyConstraint baseColumnNames="state_id"
+                                 baseTableName="admission_enquiry"
+                                 constraintName="fk_admission_enquiry_state_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="state"/>
+
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="admission_enquiry"
+                                 constraintName="fk_admission_enquiry_city_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="admission_enquiry"
+                                 constraintName="fk_admission_enquiry_country_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1361,6 +1361,30 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/academic-exam-setting">
       <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Academic Exam Setting
     </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/facility">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Facility
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/fee-category">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Fee Category
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/fee-details">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Fee Details
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/due-date">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Due Date
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/payment-remainder">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Payment Remainder
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/late-fee">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Late Fee
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/admission-application">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Admission Application
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/admission-enquiry">
+      <FontAwesomeIcon icon="asterisk" fixedWidth />&nbsp;Admission Enquiry
+    </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

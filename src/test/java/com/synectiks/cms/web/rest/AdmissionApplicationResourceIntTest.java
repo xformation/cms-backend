@@ -41,6 +41,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
+import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 /**
  * Test class for the AdmissionApplicationResource REST controller.
@@ -51,17 +52,65 @@ import com.synectiks.cms.domain.enumeration.CourseEnum;
 @SpringBootTest(classes = CmsApp.class)
 public class AdmissionApplicationResourceIntTest {
 
-    private static final AdmissionStatusEnum DEFAULT_ADMISSION_STATUS = AdmissionStatusEnum.RECEIVED;
-    private static final AdmissionStatusEnum UPDATED_ADMISSION_STATUS = AdmissionStatusEnum.INPROCESS;
+    private static final AdmissionStatusEnum DEFAULT_ADMISSION_STATUS = AdmissionStatusEnum.INPROCESS;
+    private static final AdmissionStatusEnum UPDATED_ADMISSION_STATUS = AdmissionStatusEnum.DECLINED;
+
+    private static final String DEFAULT_STUDENT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_STUDENT_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_STUDENT_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_STUDENT_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_STUDENT_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_STUDENT_LAST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FATHER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FATHER_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FATHER_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FATHER_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FATHER_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FATHER_LAST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MOTHER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_MOTHER_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MOTHER_MIDDLE_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_MOTHER_MIDDLE_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MOTHER_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_MOTHER_LAST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CONTACT_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_CONTACT_NUMBER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_ALTERNATE_MOBILE_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_ALTERNATE_MOBILE_NUMBER = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_DATE_OF_BIRTH = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE_OF_BIRTH = LocalDate.now(ZoneId.systemDefault());
+
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
+    private static final Gender DEFAULT_SEX = Gender.MALE;
+    private static final Gender UPDATED_SEX = Gender.FEMALE;
+
+    private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
+    private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_APPLICATION_ID = 1;
+    private static final Integer UPDATED_APPLICATION_ID = 2;
+
+    private static final String DEFAULT_UPLOAD_PHOTO = "AAAAAAAAAA";
+    private static final String UPDATED_UPLOAD_PHOTO = "BBBBBBBBBB";
 
     private static final CourseEnum DEFAULT_COURSE = CourseEnum.BTECH;
     private static final CourseEnum UPDATED_COURSE = CourseEnum.MTECH;
 
     private static final LocalDate DEFAULT_ADMISSION_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_ADMISSION_DATE = LocalDate.now(ZoneId.systemDefault());
-
-    private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
-    private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
 
     @Autowired
     private AdmissionApplicationRepository admissionApplicationRepository;
@@ -120,9 +169,25 @@ public class AdmissionApplicationResourceIntTest {
     public static AdmissionApplication createEntity(EntityManager em) {
         AdmissionApplication admissionApplication = new AdmissionApplication()
             .admissionStatus(DEFAULT_ADMISSION_STATUS)
+            .studentName(DEFAULT_STUDENT_NAME)
+            .studentMiddleName(DEFAULT_STUDENT_MIDDLE_NAME)
+            .studentLastName(DEFAULT_STUDENT_LAST_NAME)
+            .fatherName(DEFAULT_FATHER_NAME)
+            .fatherMiddleName(DEFAULT_FATHER_MIDDLE_NAME)
+            .fatherLastName(DEFAULT_FATHER_LAST_NAME)
+            .motherName(DEFAULT_MOTHER_NAME)
+            .motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME)
+            .motherLastName(DEFAULT_MOTHER_LAST_NAME)
+            .contactNumber(DEFAULT_CONTACT_NUMBER)
+            .alternateMobileNumber(DEFAULT_ALTERNATE_MOBILE_NUMBER)
+            .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
+            .email(DEFAULT_EMAIL)
+            .sex(DEFAULT_SEX)
+            .comments(DEFAULT_COMMENTS)
+            .applicationId(DEFAULT_APPLICATION_ID)
+            .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
             .course(DEFAULT_COURSE)
-            .admissionDate(DEFAULT_ADMISSION_DATE)
-            .comments(DEFAULT_COMMENTS);
+            .admissionDate(DEFAULT_ADMISSION_DATE);
         return admissionApplication;
     }
 
@@ -148,9 +213,25 @@ public class AdmissionApplicationResourceIntTest {
         assertThat(admissionApplicationList).hasSize(databaseSizeBeforeCreate + 1);
         AdmissionApplication testAdmissionApplication = admissionApplicationList.get(admissionApplicationList.size() - 1);
         assertThat(testAdmissionApplication.getAdmissionStatus()).isEqualTo(DEFAULT_ADMISSION_STATUS);
+        assertThat(testAdmissionApplication.getStudentName()).isEqualTo(DEFAULT_STUDENT_NAME);
+        assertThat(testAdmissionApplication.getStudentMiddleName()).isEqualTo(DEFAULT_STUDENT_MIDDLE_NAME);
+        assertThat(testAdmissionApplication.getStudentLastName()).isEqualTo(DEFAULT_STUDENT_LAST_NAME);
+        assertThat(testAdmissionApplication.getFatherName()).isEqualTo(DEFAULT_FATHER_NAME);
+        assertThat(testAdmissionApplication.getFatherMiddleName()).isEqualTo(DEFAULT_FATHER_MIDDLE_NAME);
+        assertThat(testAdmissionApplication.getFatherLastName()).isEqualTo(DEFAULT_FATHER_LAST_NAME);
+        assertThat(testAdmissionApplication.getMotherName()).isEqualTo(DEFAULT_MOTHER_NAME);
+        assertThat(testAdmissionApplication.getMotherMiddleName()).isEqualTo(DEFAULT_MOTHER_MIDDLE_NAME);
+        assertThat(testAdmissionApplication.getMotherLastName()).isEqualTo(DEFAULT_MOTHER_LAST_NAME);
+        assertThat(testAdmissionApplication.getContactNumber()).isEqualTo(DEFAULT_CONTACT_NUMBER);
+        assertThat(testAdmissionApplication.getAlternateMobileNumber()).isEqualTo(DEFAULT_ALTERNATE_MOBILE_NUMBER);
+        assertThat(testAdmissionApplication.getDateOfBirth()).isEqualTo(DEFAULT_DATE_OF_BIRTH);
+        assertThat(testAdmissionApplication.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testAdmissionApplication.getSex()).isEqualTo(DEFAULT_SEX);
+        assertThat(testAdmissionApplication.getComments()).isEqualTo(DEFAULT_COMMENTS);
+        assertThat(testAdmissionApplication.getApplicationId()).isEqualTo(DEFAULT_APPLICATION_ID);
+        assertThat(testAdmissionApplication.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
         assertThat(testAdmissionApplication.getCourse()).isEqualTo(DEFAULT_COURSE);
         assertThat(testAdmissionApplication.getAdmissionDate()).isEqualTo(DEFAULT_ADMISSION_DATE);
-        assertThat(testAdmissionApplication.getComments()).isEqualTo(DEFAULT_COMMENTS);
 
         // Validate the AdmissionApplication in Elasticsearch
         verify(mockAdmissionApplicationSearchRepository, times(1)).save(testAdmissionApplication);
@@ -185,6 +266,139 @@ public class AdmissionApplicationResourceIntTest {
         int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
         // set the field null
         admissionApplication.setAdmissionStatus(null);
+
+        // Create the AdmissionApplication, which fails.
+        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
+
+        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
+        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkStudentNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
+        // set the field null
+        admissionApplication.setStudentName(null);
+
+        // Create the AdmissionApplication, which fails.
+        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
+
+        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
+        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkContactNumberIsRequired() throws Exception {
+        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
+        // set the field null
+        admissionApplication.setContactNumber(null);
+
+        // Create the AdmissionApplication, which fails.
+        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
+
+        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
+        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDateOfBirthIsRequired() throws Exception {
+        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
+        // set the field null
+        admissionApplication.setDateOfBirth(null);
+
+        // Create the AdmissionApplication, which fails.
+        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
+
+        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
+        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkSexIsRequired() throws Exception {
+        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
+        // set the field null
+        admissionApplication.setSex(null);
+
+        // Create the AdmissionApplication, which fails.
+        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
+
+        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
+        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCommentsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
+        // set the field null
+        admissionApplication.setComments(null);
+
+        // Create the AdmissionApplication, which fails.
+        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
+
+        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
+        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkApplicationIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
+        // set the field null
+        admissionApplication.setApplicationId(null);
+
+        // Create the AdmissionApplication, which fails.
+        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
+
+        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
+        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkUploadPhotoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
+        // set the field null
+        admissionApplication.setUploadPhoto(null);
 
         // Create the AdmissionApplication, which fails.
         AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
@@ -238,25 +452,6 @@ public class AdmissionApplicationResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCommentsIsRequired() throws Exception {
-        int databaseSizeBeforeTest = admissionApplicationRepository.findAll().size();
-        // set the field null
-        admissionApplication.setComments(null);
-
-        // Create the AdmissionApplication, which fails.
-        AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(admissionApplication);
-
-        restAdmissionApplicationMockMvc.perform(post("/api/admission-applications")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(admissionApplicationDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
-        assertThat(admissionApplicationList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllAdmissionApplications() throws Exception {
         // Initialize the database
         admissionApplicationRepository.saveAndFlush(admissionApplication);
@@ -267,9 +462,25 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(admissionApplication.getId().intValue())))
             .andExpect(jsonPath("$.[*].admissionStatus").value(hasItem(DEFAULT_ADMISSION_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].studentMiddleName").value(hasItem(DEFAULT_STUDENT_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].studentLastName").value(hasItem(DEFAULT_STUDENT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME.toString())))
+            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].contactNumber").value(hasItem(DEFAULT_CONTACT_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].alternateMobileNumber").value(hasItem(DEFAULT_ALTERNATE_MOBILE_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
+            .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
+            .andExpect(jsonPath("$.[*].applicationId").value(hasItem(DEFAULT_APPLICATION_ID)))
+            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO.toString())))
             .andExpect(jsonPath("$.[*].course").value(hasItem(DEFAULT_COURSE.toString())))
-            .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
+            .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())));
     }
     
     @Test
@@ -284,9 +495,25 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(admissionApplication.getId().intValue()))
             .andExpect(jsonPath("$.admissionStatus").value(DEFAULT_ADMISSION_STATUS.toString()))
+            .andExpect(jsonPath("$.studentName").value(DEFAULT_STUDENT_NAME.toString()))
+            .andExpect(jsonPath("$.studentMiddleName").value(DEFAULT_STUDENT_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.studentLastName").value(DEFAULT_STUDENT_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.fatherName").value(DEFAULT_FATHER_NAME.toString()))
+            .andExpect(jsonPath("$.fatherMiddleName").value(DEFAULT_FATHER_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.fatherLastName").value(DEFAULT_FATHER_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.motherName").value(DEFAULT_MOTHER_NAME.toString()))
+            .andExpect(jsonPath("$.motherMiddleName").value(DEFAULT_MOTHER_MIDDLE_NAME.toString()))
+            .andExpect(jsonPath("$.motherLastName").value(DEFAULT_MOTHER_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.contactNumber").value(DEFAULT_CONTACT_NUMBER.toString()))
+            .andExpect(jsonPath("$.alternateMobileNumber").value(DEFAULT_ALTERNATE_MOBILE_NUMBER.toString()))
+            .andExpect(jsonPath("$.dateOfBirth").value(DEFAULT_DATE_OF_BIRTH.toString()))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
+            .andExpect(jsonPath("$.sex").value(DEFAULT_SEX.toString()))
+            .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()))
+            .andExpect(jsonPath("$.applicationId").value(DEFAULT_APPLICATION_ID))
+            .andExpect(jsonPath("$.uploadPhoto").value(DEFAULT_UPLOAD_PHOTO.toString()))
             .andExpect(jsonPath("$.course").value(DEFAULT_COURSE.toString()))
-            .andExpect(jsonPath("$.admissionDate").value(DEFAULT_ADMISSION_DATE.toString()))
-            .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()));
+            .andExpect(jsonPath("$.admissionDate").value(DEFAULT_ADMISSION_DATE.toString()));
     }
 
     @Test
@@ -311,9 +538,25 @@ public class AdmissionApplicationResourceIntTest {
         em.detach(updatedAdmissionApplication);
         updatedAdmissionApplication
             .admissionStatus(UPDATED_ADMISSION_STATUS)
+            .studentName(UPDATED_STUDENT_NAME)
+            .studentMiddleName(UPDATED_STUDENT_MIDDLE_NAME)
+            .studentLastName(UPDATED_STUDENT_LAST_NAME)
+            .fatherName(UPDATED_FATHER_NAME)
+            .fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME)
+            .fatherLastName(UPDATED_FATHER_LAST_NAME)
+            .motherName(UPDATED_MOTHER_NAME)
+            .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
+            .motherLastName(UPDATED_MOTHER_LAST_NAME)
+            .contactNumber(UPDATED_CONTACT_NUMBER)
+            .alternateMobileNumber(UPDATED_ALTERNATE_MOBILE_NUMBER)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .email(UPDATED_EMAIL)
+            .sex(UPDATED_SEX)
+            .comments(UPDATED_COMMENTS)
+            .applicationId(UPDATED_APPLICATION_ID)
+            .uploadPhoto(UPDATED_UPLOAD_PHOTO)
             .course(UPDATED_COURSE)
-            .admissionDate(UPDATED_ADMISSION_DATE)
-            .comments(UPDATED_COMMENTS);
+            .admissionDate(UPDATED_ADMISSION_DATE);
         AdmissionApplicationDTO admissionApplicationDTO = admissionApplicationMapper.toDto(updatedAdmissionApplication);
 
         restAdmissionApplicationMockMvc.perform(put("/api/admission-applications")
@@ -326,9 +569,25 @@ public class AdmissionApplicationResourceIntTest {
         assertThat(admissionApplicationList).hasSize(databaseSizeBeforeUpdate);
         AdmissionApplication testAdmissionApplication = admissionApplicationList.get(admissionApplicationList.size() - 1);
         assertThat(testAdmissionApplication.getAdmissionStatus()).isEqualTo(UPDATED_ADMISSION_STATUS);
+        assertThat(testAdmissionApplication.getStudentName()).isEqualTo(UPDATED_STUDENT_NAME);
+        assertThat(testAdmissionApplication.getStudentMiddleName()).isEqualTo(UPDATED_STUDENT_MIDDLE_NAME);
+        assertThat(testAdmissionApplication.getStudentLastName()).isEqualTo(UPDATED_STUDENT_LAST_NAME);
+        assertThat(testAdmissionApplication.getFatherName()).isEqualTo(UPDATED_FATHER_NAME);
+        assertThat(testAdmissionApplication.getFatherMiddleName()).isEqualTo(UPDATED_FATHER_MIDDLE_NAME);
+        assertThat(testAdmissionApplication.getFatherLastName()).isEqualTo(UPDATED_FATHER_LAST_NAME);
+        assertThat(testAdmissionApplication.getMotherName()).isEqualTo(UPDATED_MOTHER_NAME);
+        assertThat(testAdmissionApplication.getMotherMiddleName()).isEqualTo(UPDATED_MOTHER_MIDDLE_NAME);
+        assertThat(testAdmissionApplication.getMotherLastName()).isEqualTo(UPDATED_MOTHER_LAST_NAME);
+        assertThat(testAdmissionApplication.getContactNumber()).isEqualTo(UPDATED_CONTACT_NUMBER);
+        assertThat(testAdmissionApplication.getAlternateMobileNumber()).isEqualTo(UPDATED_ALTERNATE_MOBILE_NUMBER);
+        assertThat(testAdmissionApplication.getDateOfBirth()).isEqualTo(UPDATED_DATE_OF_BIRTH);
+        assertThat(testAdmissionApplication.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testAdmissionApplication.getSex()).isEqualTo(UPDATED_SEX);
+        assertThat(testAdmissionApplication.getComments()).isEqualTo(UPDATED_COMMENTS);
+        assertThat(testAdmissionApplication.getApplicationId()).isEqualTo(UPDATED_APPLICATION_ID);
+        assertThat(testAdmissionApplication.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
         assertThat(testAdmissionApplication.getCourse()).isEqualTo(UPDATED_COURSE);
         assertThat(testAdmissionApplication.getAdmissionDate()).isEqualTo(UPDATED_ADMISSION_DATE);
-        assertThat(testAdmissionApplication.getComments()).isEqualTo(UPDATED_COMMENTS);
 
         // Validate the AdmissionApplication in Elasticsearch
         verify(mockAdmissionApplicationSearchRepository, times(1)).save(testAdmissionApplication);
@@ -390,9 +649,25 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(admissionApplication.getId().intValue())))
             .andExpect(jsonPath("$.[*].admissionStatus").value(hasItem(DEFAULT_ADMISSION_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].studentName").value(hasItem(DEFAULT_STUDENT_NAME)))
+            .andExpect(jsonPath("$.[*].studentMiddleName").value(hasItem(DEFAULT_STUDENT_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].studentLastName").value(hasItem(DEFAULT_STUDENT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].fatherName").value(hasItem(DEFAULT_FATHER_NAME)))
+            .andExpect(jsonPath("$.[*].fatherMiddleName").value(hasItem(DEFAULT_FATHER_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].fatherLastName").value(hasItem(DEFAULT_FATHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].motherName").value(hasItem(DEFAULT_MOTHER_NAME)))
+            .andExpect(jsonPath("$.[*].motherMiddleName").value(hasItem(DEFAULT_MOTHER_MIDDLE_NAME)))
+            .andExpect(jsonPath("$.[*].motherLastName").value(hasItem(DEFAULT_MOTHER_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].contactNumber").value(hasItem(DEFAULT_CONTACT_NUMBER)))
+            .andExpect(jsonPath("$.[*].alternateMobileNumber").value(hasItem(DEFAULT_ALTERNATE_MOBILE_NUMBER)))
+            .andExpect(jsonPath("$.[*].dateOfBirth").value(hasItem(DEFAULT_DATE_OF_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].sex").value(hasItem(DEFAULT_SEX.toString())))
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)))
+            .andExpect(jsonPath("$.[*].applicationId").value(hasItem(DEFAULT_APPLICATION_ID)))
+            .andExpect(jsonPath("$.[*].uploadPhoto").value(hasItem(DEFAULT_UPLOAD_PHOTO)))
             .andExpect(jsonPath("$.[*].course").value(hasItem(DEFAULT_COURSE.toString())))
-            .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)));
+            .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())));
     }
 
     @Test

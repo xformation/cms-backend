@@ -600,7 +600,7 @@ public class CmsDataRowProcessor {
 
 	private void saveAdmissionApplication(Cell cell) {
 		this.admApp = pojoBuilder.createAdmissionApplicationPojo(cell);
-		this.admApp.setStudent(this.student);
+		this.admApp.setAcademicyear(this.aYear);
 		this.admApp = saveOrGet(this.admAppRepo, this.admApp);
 	}
 

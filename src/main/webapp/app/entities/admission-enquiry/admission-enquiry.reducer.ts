@@ -63,11 +63,6 @@ export default (state: AdmissionEnquiryState = initialState, action): AdmissionE
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_ADMISSIONENQUIRIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_ADMISSIONENQUIRY_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/admission-enquiries';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<IAdmissionEnquiry> = query => ({
+export const getSearchEntities: ICrudSearchAction<IAdmissionEnquiry> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_ADMISSIONENQUIRIES,
-  payload: axios.get<IAdmissionEnquiry>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<IAdmissionEnquiry>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<IAdmissionEnquiry> = (page, size, sort) => ({
