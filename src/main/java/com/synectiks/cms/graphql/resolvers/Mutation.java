@@ -598,9 +598,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddAcademicExamSettingPayload addAcademicExamSetting(List<AddAcademicExamSettingInput> list) {
         AcademicExamSetting academicExamSetting = null;
-
         for(AddAcademicExamSettingInput input: list ){
-
             Branch branch = branchRepository.findById(input.getBranchId()).get();
             Subject subject = subjectRepository.findById(input.getSubjectId()).get();
             AcademicYear academicYear = academicYearRepository.findById(input.getAcademicyearId()).get();
@@ -617,7 +615,9 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setSection(section);
             academicExamSetting.setDepartment(department);
             academicExamSetting.setTypeOfGrading(typeOfGrading);
+            academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate()));
             this.academicExamSettingRepository.save(academicExamSetting);
+
         }
         return  new AddAcademicExamSettingPayload(academicExamSetting);
     }
