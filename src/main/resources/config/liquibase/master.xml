@@ -82,7 +82,7 @@
     <include file="config/liquibase/changelog/20190522035205_added_entity_constraints_MetaLecture.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190522035240_added_entity_constraints_AdmissionEnquiry.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190522035241_added_entity_constraints_AdminAttendance.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/cms_test_data/local_test_data_load.xml" relativeToChangelogFile="false"/>
+    <!--<include file="config/liquibase/cms_test_data/local_test_data_load.xml" relativeToChangelogFile="false"/>-->
     <include file="config/liquibase/changelog/20190408064825_added_entity_constraints_AcademicExamSetting.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190523093814_added_entity_constraints_StudentExamReport.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190529083914_added_entity_constraints_StudentFacilityLink.xml" relativeToChangelogFile="false"/>
