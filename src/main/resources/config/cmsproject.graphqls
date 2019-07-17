@@ -267,7 +267,7 @@ type Query {
 
   acExamSetting(id:Long!):AcExamSetting!
   acExamSettings:[AcExamSetting!]!
-
+  findTypeOfGradingOnNextId(nextId:Long!):[TypeOfGrading!]!
 
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
@@ -437,7 +437,12 @@ type AcExamSetting{
     subExamDate: String!
    }
 
-
+type TypeOfGradingPojo{
+    minMarks:Long!
+    maxMarks: String!
+    grades: String!
+    nextId: String!
+   }
 type StudentFilterDataCache {
 	branches: [Branch]
 	departments: [Department]
