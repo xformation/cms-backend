@@ -506,26 +506,43 @@ type CmsLibrary {
     copiesAvailable:String
 }
 type CmsAdmissionEnquiryVo {
-	totalAdmissions: Long!
-    totalFollowup: Long!
-    totalDeclined: Long!
-    totalConverted: Long!
-    id: Long
-    studentName: String
-    mobileNumber: String
-    alternateMobileNumber:  String
-    email:  String
-    courseApplyingFor:  CourseEnum
-    modeOfEnquiry:  ModeOfEnquiry
-    status:  EnquiryStatus
-    description:  String
-    enquiryDate:Date
-    updatedOn:Date
-    updatedBy:String
-    branch:  Branch
-    admissionApplication: AdmissionApplication
-    strEnquiryDate:String
-    strUpdatedOn:String
+	  totalAdmissions: Long!
+      totalFollowup: Long!
+      totalDeclined: Long!
+      totalConverted: Long!
+      id: Long
+      studentName: String
+      studentMiddleName: String
+      studentLastName: String
+      fatherName: String
+      fatherMiddleName: String
+      fatherLastName: String
+      motherName: String
+      motherMiddleName: String
+      motherLastName: String
+      contactNumber: String
+      alternateMobileNumber: String
+      dateOfBirth: Date
+      email: String
+      sex:  Gender
+      comments: String
+      courseApplyingFor: CourseEnum
+      highestQualification: String
+      modeOfEnquiry: ModeOfEnquiry
+      status: EnquiryStatus
+      description: String
+      enquiryDate: Date
+      updatedOn: Date
+      updatedBy: String
+      branch: Branch
+      batch: Batch
+      state: State
+      city: City
+      country: Country
+      department: Department
+      strDateOfBirth:String
+      strEnquiryDate:String
+      strUpdatedOn:String
 
 }
 
@@ -534,13 +551,38 @@ type CmsAdmissionApplicationVo {
       totalInprocess : Long!
       totalDeclined : Long!
       totalAccepted : Long!
-      id: Long!
-      admissionStatus:AdmissionStatusEnum!
-      course:CourseEnum!
-      admissionDate: Date!
-      comments:String!
-      student: Student!
-      strAdmissionDate: String!
+      id: Long
+      studentName: String
+      studentMiddleName: String
+      studentLastName: String
+      fatherName: String
+      fatherMiddleName: String
+      fatherLastName: String
+      motherName: String
+      motherMiddleName: String
+      motherLastName: String
+      contactNumber: String
+      alternateMobileNumber: String
+      dateOfBirth: Date
+      email: String
+      sex: Gender
+      comments: String
+      applicationId: Int
+      uploadPhoto: String
+      course: CourseEnum
+      admissionDate: Date
+      admissionEnquiry: AdmissionEnquiry
+      academicHistory: AcademicHistory
+      documents: Documents
+      branch: Branch
+      batch: Batch
+      state: State
+      city: City
+      country: Country
+      department: Department
+      academicyear: AcademicYear
+      strDateOfBirth: String
+      strAdmissionDate: String
 }
 
 type StudentAttendanceCache{
@@ -901,10 +943,36 @@ type AcademicYear{
 type AdmissionApplication{
      id: Long!
      admissionStatus: AdmissionStatusEnum!
+     studentName: String!
+     studentMiddleName: String!
+     studentLastName: String!
+     fatherName: String!
+     fatherMiddleName: String!
+     fatherLastName: String!
+     motherName: String!
+     motherMiddleName: String!
+     motherLastName: String!
+     contactNumber: String!
+     alternateMobileNumber: String!
+     dateOfBirth: Date!
+     email: String!
+     sex: Gender!
+     comments: String!
+     applicationId: Int!
+     uploadPhoto: String!
      course:CourseEnum!
      admissionDate: Date!
-     comments: String!
+     admissionEnquiry: AdmissionEnquiry!
+     academicHistory: AcademicHistory!
+     documents: Documents!
+     branch: Branch!
+     batch: Batch!
+     state: State!
+     city: City!
+     country: Country!
+     department: Department!
      academicyear: AcademicYear!
+
 }
 
 type AcademicHistory{
@@ -922,17 +990,34 @@ type AcademicHistory{
 type AdmissionEnquiry {
     id: Long!
     studentName: String!
+    studentMiddleName: String!
+    studentLastName: String!
+    fatherName: String!
+    fatherMiddleName: String!
+    fatherLastName: String!
+    motherName: String!
+    motherMiddleName: String!
+    motherLastName: String!
     contactNumber: String!
     alternateMobileNumber: String!
+    dateOfBirth: Date!
     email: String!
-    courseApplyingFor: CourseEnum!
+    sex:  Gender!
+    comments: String!
+    courseApplyingFor: CourseEnum
+    highestQualification: String!
     modeOfEnquiry: ModeOfEnquiry!
     status: EnquiryStatus!
     description: String!
     enquiryDate: Date!
     updatedOn: Date!
-    updatedBy: String!
+     updatedBy: String!
     branch: Branch!
+    batch: Batch!
+    state: State!
+    city: City!
+    country: Country!
+    department: Department!
 }
 
 type LegalEntity{
@@ -2171,22 +2256,72 @@ type RemoveAcademicHistoryPayload {
 
 
 input AddAdmissionApplicationInput {
-        admissionStatus: AdmissionStatusEnum!
-        course:CourseEnum!
-        admissionDate: Date!
-        comments: String!
-        academicyearId: Long!
+           admissionStatus: AdmissionStatusEnum!
+           studentName: String!
+           studentMiddleName: String!
+           studentLastName: String!
+           fatherName: String!
+           fatherMiddleName: String!
+           fatherLastName: String!
+           motherName: String!
+           motherMiddleName: String!
+           motherLastName: String!
+           contactNumber: String!
+           alternateMobileNumber: String!
+           dateOfBirth: Date!
+           email: String!
+           sex: Gender!
+           comments: String!
+           applicationId: Int!
+           uploadPhoto: String!
+           course:CourseEnum!
+           admissionDate: Date!
+           admissionEnquiryId: Long!
+           academicHistoryId: Long!
+           documentsId: Long!
+           branchId: Long!
+           batchId: Long!
+           stateId: Long!
+           cityId: Long!
+           countryId: Long!
+           departmentId: Long!
+           academicyearId: Long!
 }
 type AddAdmissionApplicationPayload {
     admissionApplication: AdmissionApplication!
 }
 input UpdateAdmissionApplicationInput {
-    id: Long!
-    admissionStatus: AdmissionStatusEnum!
-    course:CourseEnum!
-    admissionDate: Date!
-    comments: String!
-    academicyearId: Long!
+      id: Long!
+      admissionStatus: AdmissionStatusEnum!
+      studentName: String!
+      studentMiddleName: String!
+      studentLastName: String!
+      fatherName: String!
+      fatherMiddleName: String!
+      fatherLastName: String!
+      motherName: String!
+      motherMiddleName: String!
+      motherLastName: String!
+      contactNumber: String!
+      alternateMobileNumber: String!
+      dateOfBirth: Date!
+      email: String!
+      sex: Gender!
+      comments: String!
+      applicationId: Int!
+      uploadPhoto: String!
+      course:CourseEnum!
+      admissionDate: Date!
+      admissionEnquiryId: Long!
+      academicHistoryId: Long!
+      documentsId: Long!
+      branchId: Long!
+      batchId: Long!
+      stateId: Long!
+      cityId: Long!
+      countryId: Long!
+      departmentId: Long!
+      academicyearId: Long!
 }
 type UpdateAdmissionApplicationPayload {
     admissionApplication: AdmissionApplication!
@@ -2200,37 +2335,71 @@ type RemoveAdmissionApplicationPayload {
 
 
 input AddAdmissionEnquiryInput {
-        studentName: String!
-        mobileNumber: String!
-        alternateMobileNumber: String!
-        email: String!
-        courseApplyingFor: CourseEnum!
-        modeOfEnquiry: ModeOfEnquiry!
-        status: EnquiryStatus!
-        description: String!
-        enquiryDate: Date!
-        updatedOn: Date!
-        updatedBy: String!
-        branchId: Long!
+          studentName: String!
+          studentMiddleName: String!
+          studentLastName: String!
+          fatherName: String!
+          fatherMiddleName: String!
+          fatherLastName: String!
+          motherName: String!
+          motherMiddleName: String!
+          motherLastName: String!
+          contactNumber: String!
+          alternateMobileNumber: String!
+          dateOfBirth: Date!
+          email: String!
+          sex:  Gender!
+          comments: String!
+          courseApplyingFor: CourseEnum
+          highestQualification: String!
+          modeOfEnquiry: ModeOfEnquiry!
+          status: EnquiryStatus!
+          description: String!
+          enquiryDate: Date!
+          updatedOn: Date!
+          updatedBy: String!
+          branchId: Long!
+          batchId: Long!
+          stateId: Long!
+          cityId: Long!
+          countryId: Long!
+          departmentId: Long!
 }
 
 type AddAdmissionEnquiryPayload {
     admissionEnquiry: AdmissionEnquiry!
 }
 input UpdateAdmissionEnquiryInput {
-    id: Long!
-    studentName: String!
-    mobileNumber: String!
-    alternateMobileNumber: String
-    email: String!
-    courseApplyingFor: CourseEnum!
-    modeOfEnquiry: ModeOfEnquiry!
-    status: EnquiryStatus!
-    description: String!
-    enquiryDate: Date!
-    updatedOn: Date!
-    updatedBy: String!
-    branchId: Long!
+             id: Long!
+             studentName: String!
+             studentMiddleName: String!
+             studentLastName: String!
+             fatherName: String!
+             fatherMiddleName: String!
+             fatherLastName: String!
+             motherName: String!
+             motherMiddleName: String!
+             motherLastName: String!
+             contactNumber: String!
+             alternateMobileNumber: String!
+             dateOfBirth: Date!
+             email: String!
+             sex:  Gender!
+             comments: String!
+             courseApplyingFor: CourseEnum
+             highestQualification: String!
+             modeOfEnquiry: ModeOfEnquiry!
+             status: EnquiryStatus!
+             description: String!
+             enquiryDate: Date!
+             updatedOn: Date!
+             updatedBy: String!
+             branchId: Long!
+             batchId: Long!
+             stateId: Long!
+             cityId: Long!
+             countryId: Long!
+             departmentId: Long!
 }
 type UpdateAdmissionEnquiryPayload {
     admissionEnquiry: AdmissionEnquiry!

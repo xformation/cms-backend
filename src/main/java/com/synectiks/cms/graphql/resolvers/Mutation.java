@@ -351,7 +351,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
-    
+
     @Autowired
     private AcademicExamSettingFilterImpl academicExamSettingFilterImpl;
 
@@ -372,7 +372,7 @@ public class Mutation implements GraphQLMutationResolver {
 
 	@Autowired
     private StudentFilterProcessor studentFilterProcessor;
-    
+
     @Autowired
 	private Base64FileProcessor base64FileProcessor;
 
@@ -545,16 +545,48 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput addAdmissionApplicationInput) {
-        Student student = studentRepository.findById(addAdmissionApplicationInput.getStudentId()).get();
+        AdmissionEnquiry admissionEnquiry = admissionEnquiryRepository.findById(addAdmissionApplicationInput.getAdmissionEnquiryId()).get();
+        AcademicHistory academicHistory = academicHistoryRepository.findById(addAdmissionApplicationInput.getAcademicHistoryId()).get();
+        Documents documents = documentsRepository.findById(addAdmissionApplicationInput.getDocumentsId()).get();
+        Branch branch = branchRepository.findById(addAdmissionApplicationInput.getBranchId()).get();
+        Batch batch = batchRepository.findById(addAdmissionApplicationInput.getBatchId()).get();
+        State state = stateRepository.findById(addAdmissionApplicationInput.getStateId()).get();
+        City city = cityRepository.findById(addAdmissionApplicationInput.getCityId()).get();
+        Country country = countryRepository.findById(addAdmissionApplicationInput.getCountryId()).get();
+        Department department = departmentRepository.findById(addAdmissionApplicationInput.getDepartmentId()).get();
         AcademicYear academicYear = academicYearRepository.findById(addAdmissionApplicationInput.getAcademicyearId()).get();
 
         final AdmissionApplication admissionApplication = new AdmissionApplication();
-
-        admissionApplication.setAcademicyear(academicYear);
         admissionApplication.setAdmissionStatus(addAdmissionApplicationInput.getAdmissionStatus());
+        admissionApplication.setStudentName(addAdmissionApplicationInput.getStudentName());
+        admissionApplication.setStudentMiddleName(addAdmissionApplicationInput.getStudentMiddleName());
+        admissionApplication.setStudentLastName(addAdmissionApplicationInput.getStudentLastName());
+        admissionApplication.setFatherName(addAdmissionApplicationInput.getFatherName());
+        admissionApplication.setFatherMiddleName(addAdmissionApplicationInput.getFatherMiddleName());
+        admissionApplication.setFatherLastName(addAdmissionApplicationInput.getFatherLastName());
+        admissionApplication.setMotherName(addAdmissionApplicationInput.getMotherName());
+        admissionApplication.setMotherMiddleName(addAdmissionApplicationInput.getMotherMiddleName());
+        admissionApplication.setMotherLastName(addAdmissionApplicationInput.getMotherLastName());
+        admissionApplication.setContactNumber(addAdmissionApplicationInput.getContactNumber());
+        admissionApplication.setAlternateMobileNumber(addAdmissionApplicationInput.getAlternateMobileNumber());
+        admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getAdmissionDate()));
+        admissionApplication.setEmail(addAdmissionApplicationInput.getEmail());
+        admissionApplication.setSex(addAdmissionApplicationInput.getSex());
         admissionApplication.setCourse(addAdmissionApplicationInput.getCourse());
-        admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getAdmissionDate()));
         admissionApplication.setComments(addAdmissionApplicationInput.getComments());
+        admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getAdmissionDate()));
+        admissionApplication.setApplicationId(addAdmissionApplicationInput.getApplicationId());
+        admissionApplication.setUploadPhoto(addAdmissionApplicationInput.getUploadPhoto());
+        admissionApplication.setAcademicyear(academicYear);
+        admissionApplication.setAdmissionEnquiry(admissionEnquiry);
+        admissionApplication.setAcademicHistory(academicHistory);
+        admissionApplication.setDocuments(documents);
+        admissionApplication.setBranch(branch);
+        admissionApplication.setBatch(batch);
+        admissionApplication.setState(state);
+        admissionApplication.setCity(city);
+        admissionApplication.setCountry(country);
+        admissionApplication.setDepartment(department);
         admissionApplicationRepository.save(admissionApplication);
         return new AddAdmissionApplicationPayload(admissionApplication);
     }
@@ -566,14 +598,99 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAdmissionApplicationInput.getAdmissionStatus() != null) {
             admissionApplication.setAdmissionStatus(updateAdmissionApplicationInput.getAdmissionStatus());
         }
+        if (updateAdmissionApplicationInput.getStudentName() != null) {
+            admissionApplication.setStudentName(updateAdmissionApplicationInput.getStudentName());
+        }
+        if (updateAdmissionApplicationInput.getStudentMiddleName() != null) {
+            admissionApplication.setStudentMiddleName(updateAdmissionApplicationInput.getStudentMiddleName());
+        }
+        if (updateAdmissionApplicationInput.getStudentLastName() != null) {
+            admissionApplication.setStudentLastName(updateAdmissionApplicationInput.getStudentLastName());
+        }
+        if (updateAdmissionApplicationInput.getFatherName() != null) {
+            admissionApplication.setFatherName(updateAdmissionApplicationInput.getFatherName());
+        }
+        if (updateAdmissionApplicationInput.getFatherMiddleName() != null) {
+            admissionApplication.setFatherMiddleName(updateAdmissionApplicationInput.getFatherMiddleName());
+        }
+        if (updateAdmissionApplicationInput.getFatherLastName() != null) {
+            admissionApplication.setFatherLastName(updateAdmissionApplicationInput.getFatherLastName());
+        }
+        if (updateAdmissionApplicationInput.getMotherName() != null) {
+            admissionApplication.setMotherName(updateAdmissionApplicationInput.getMotherName());
+        }
+        if (updateAdmissionApplicationInput.getMotherMiddleName() != null) {
+            admissionApplication.setMotherMiddleName(updateAdmissionApplicationInput.getMotherMiddleName());
+        }
+        if (updateAdmissionApplicationInput.getMotherLastName() != null) {
+            admissionApplication.setMotherLastName(updateAdmissionApplicationInput.getMotherLastName());
+        }
+        if (updateAdmissionApplicationInput.getContactNumber() != null) {
+            admissionApplication.setContactNumber(updateAdmissionApplicationInput.getContactNumber());
+        }
+        if (updateAdmissionApplicationInput.getAlternateMobileNumber() != null) {
+            admissionApplication.setAlternateMobileNumber(updateAdmissionApplicationInput.getAlternateMobileNumber());
+        }
+        if (updateAdmissionApplicationInput.getDateOfBirth() != null) {
+            admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionApplicationInput.getDateOfBirth()));
+        }
+        if (updateAdmissionApplicationInput.getEmail() != null) {
+            admissionApplication.setEmail(updateAdmissionApplicationInput.getEmail());
+        }
+        if (updateAdmissionApplicationInput.getSex() != null) {
+            admissionApplication.setSex(updateAdmissionApplicationInput.getSex());
+        }
+        if (updateAdmissionApplicationInput.getComments() != null) {
+            admissionApplication.setComments(updateAdmissionApplicationInput.getComments());
+        }
+        if (updateAdmissionApplicationInput.getApplicationId() != null) {
+            admissionApplication.setApplicationId(updateAdmissionApplicationInput.getApplicationId());
+        }
+        if (updateAdmissionApplicationInput.getUploadPhoto() != null) {
+            admissionApplication.setUploadPhoto(updateAdmissionApplicationInput.getUploadPhoto());
+        }
+
         if (updateAdmissionApplicationInput.getCourse() != null) {
             admissionApplication.setCourse(updateAdmissionApplicationInput.getCourse());
         }
         if (updateAdmissionApplicationInput.getAdmissionDate() != null) {
             admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionApplicationInput.getAdmissionDate()));
         }
-        if (updateAdmissionApplicationInput.getComments() != null) {
-            admissionApplication.setComments(updateAdmissionApplicationInput.getComments());
+        if (updateAdmissionApplicationInput.getAdmissionEnquiryId() != null) {
+            AdmissionEnquiry admissionEnquiry = admissionEnquiryRepository.findById(updateAdmissionApplicationInput.getAdmissionEnquiryId()).get();
+            admissionApplication.setAdmissionEnquiry(admissionEnquiry);
+        }
+        if (updateAdmissionApplicationInput.getDocumentsId() != null) {
+            Documents documents = documentsRepository.findById(updateAdmissionApplicationInput.getDocumentsId()).get();
+            admissionApplication.setDocuments(documents);
+        }
+        if (updateAdmissionApplicationInput.getAcademicHistoryId() != null) {
+            AcademicHistory academicHistory = academicHistoryRepository.findById(updateAdmissionApplicationInput.getAcademicHistoryId()).get();
+            admissionApplication.setAcademicHistory(academicHistory);
+        }
+        if (updateAdmissionApplicationInput.getBranchId() != null) {
+            Branch branch = branchRepository.findById(updateAdmissionApplicationInput.getBranchId()).get();
+            admissionApplication.setBranch(branch);
+        }
+        if (updateAdmissionApplicationInput.getBatchId() != null) {
+            Batch batch = batchRepository.findById(updateAdmissionApplicationInput.getBatchId()).get();
+            admissionApplication.setBatch(batch);
+        }
+        if (updateAdmissionApplicationInput.getStateId() != null) {
+            State state = stateRepository.findById(updateAdmissionApplicationInput.getStateId()).get();
+            admissionApplication.setState(state);
+        }
+        if (updateAdmissionApplicationInput.getCityId() != null) {
+            City city = cityRepository.findById(updateAdmissionApplicationInput.getCityId()).get();
+            admissionApplication.setCity(city);
+        }
+        if (updateAdmissionApplicationInput.getCountryId() != null) {
+            Country country = countryRepository.findById(updateAdmissionApplicationInput.getCountryId()).get();
+            admissionApplication.setCountry(country);
+        }
+        if (updateAdmissionApplicationInput.getDepartmentId() != null) {
+            Department department = departmentRepository.findById(updateAdmissionApplicationInput.getDepartmentId()).get();
+            admissionApplication.setDepartment(department);
         }
         if (updateAdmissionApplicationInput.getAcademicyearId() != null) {
             AcademicYear academicYear = academicYearRepository.findById(updateAdmissionApplicationInput.getAcademicyearId()).get();
@@ -789,10 +906,22 @@ public class Mutation implements GraphQLMutationResolver {
     public AddAdmissionEnquiryPayload addAdmissionEnquiry(AddAdmissionEnquiryInput addAdmissionEnquiryInput) {
         final AdmissionEnquiry admissionEnquiry = new AdmissionEnquiry();
         admissionEnquiry.setStudentName(addAdmissionEnquiryInput.getStudentName());
-        admissionEnquiry.setContactNumber(addAdmissionEnquiryInput.getMobileNumber());
+        admissionEnquiry.setStudentMiddleName(addAdmissionEnquiryInput.getStudentMiddleName());
+        admissionEnquiry.setStudentLastName(addAdmissionEnquiryInput.getStudentLastName());
+        admissionEnquiry.setFatherName(addAdmissionEnquiryInput.getFatherName());
+        admissionEnquiry.setFatherMiddleName(addAdmissionEnquiryInput.getFatherMiddleName());
+        admissionEnquiry.setFatherLastName(addAdmissionEnquiryInput.getFatherLastName());
+        admissionEnquiry.setMotherName(addAdmissionEnquiryInput.getMotherName());
+        admissionEnquiry.setMotherMiddleName(addAdmissionEnquiryInput.getMotherMiddleName());
+        admissionEnquiry.setMotherLastName(addAdmissionEnquiryInput.getMotherLastName());
+        admissionEnquiry.setContactNumber(addAdmissionEnquiryInput.getContactNumber());
         admissionEnquiry.setAlternateMobileNumber(addAdmissionEnquiryInput.getAlternateMobileNumber());
+        admissionEnquiry.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionEnquiryInput.getDateOfBirth()));
         admissionEnquiry.setEmail(addAdmissionEnquiryInput.getEmail());
+        admissionEnquiry.setSex(addAdmissionEnquiryInput.getSex());
+        admissionEnquiry.setComments(addAdmissionEnquiryInput.getComments());
         admissionEnquiry.setCourseApplyingFor(addAdmissionEnquiryInput.getCourseApplyingFor());
+        admissionEnquiry.setHighestQualification(addAdmissionEnquiryInput.getHighestQualification());
         admissionEnquiry.setModeOfEnquiry(addAdmissionEnquiryInput.getModeOfEnquiry());
         admissionEnquiry.setStatus(addAdmissionEnquiryInput.getStatus());
         admissionEnquiry.setDescription(addAdmissionEnquiryInput.getDescription());
@@ -800,8 +929,17 @@ public class Mutation implements GraphQLMutationResolver {
         admissionEnquiry.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionEnquiryInput.getUpdatedOn()));
         admissionEnquiry.setUpdatedBy(addAdmissionEnquiryInput.getUpdatedBy());
         Branch branch = branchRepository.findById(addAdmissionEnquiryInput.getBranchId()).get();
-        AdmissionApplication admissionApplication = admissionApplicationRepository.findById(addAdmissionEnquiryInput.getAdmissionApplicationId()).get();
+        Department department = departmentRepository.findById(addAdmissionEnquiryInput.getDepartmentId()).get();
+        State state = stateRepository.findById(addAdmissionEnquiryInput.getStateId()).get();
+        City city = cityRepository.findById(addAdmissionEnquiryInput.getCityId()).get();
+        Country country = countryRepository.findById(addAdmissionEnquiryInput.getCountryId()).get();
+        Batch batch = batchRepository.findById(addAdmissionEnquiryInput.getBatchId()).get();
         admissionEnquiry.setBranch(branch);
+        admissionEnquiry.setDepartment(department);
+        admissionEnquiry.setBatch(batch);
+        admissionEnquiry.setState(state);
+        admissionEnquiry.setCity(city);
+        admissionEnquiry.setCountry(country);
         admissionEnquiryRepository.save(admissionEnquiry);
         return new AddAdmissionEnquiryPayload(admissionEnquiry);
     }
@@ -813,19 +951,53 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAdmissionEnquiryInput.getStudentName() != null) {
             admissionEnquiry.setStudentName(updateAdmissionEnquiryInput.getStudentName());
         }
-        if (updateAdmissionEnquiryInput.getMobileNumber() != null) {
-            admissionEnquiry.setContactNumber(updateAdmissionEnquiryInput.getMobileNumber());
+        if (updateAdmissionEnquiryInput.getStudentMiddleName() != null) {
+            admissionEnquiry.setStudentMiddleName(updateAdmissionEnquiryInput.getStudentMiddleName());
         }
-
+        if (updateAdmissionEnquiryInput.getStudentLastName() != null) {
+            admissionEnquiry.setStudentLastName(updateAdmissionEnquiryInput.getStudentLastName());
+        }
+        if (updateAdmissionEnquiryInput.getFatherName() != null) {
+            admissionEnquiry.setFatherName(updateAdmissionEnquiryInput.getFatherName());
+        }
+        if (updateAdmissionEnquiryInput.getFatherMiddleName() != null) {
+            admissionEnquiry.setFatherMiddleName(updateAdmissionEnquiryInput.getFatherMiddleName());
+        }
+        if (updateAdmissionEnquiryInput.getFatherLastName() != null) {
+            admissionEnquiry.setFatherLastName(updateAdmissionEnquiryInput.getFatherLastName());
+        }
+        if (updateAdmissionEnquiryInput.getMotherName() != null) {
+            admissionEnquiry.setMotherName(updateAdmissionEnquiryInput.getMotherName());
+        }
+        if (updateAdmissionEnquiryInput.getMotherMiddleName() != null) {
+            admissionEnquiry.setMotherMiddleName(updateAdmissionEnquiryInput.getMotherMiddleName());
+        }
+        if (updateAdmissionEnquiryInput.getMotherLastName() != null) {
+            admissionEnquiry.setMotherLastName(updateAdmissionEnquiryInput.getMotherLastName());
+        }
+        if (updateAdmissionEnquiryInput.getContactNumber() != null) {
+            admissionEnquiry.setContactNumber(updateAdmissionEnquiryInput.getContactNumber());
+        }
         if (updateAdmissionEnquiryInput.getAlternateMobileNumber() != null) {
             admissionEnquiry.setAlternateMobileNumber(updateAdmissionEnquiryInput.getAlternateMobileNumber());
         }
-
+        if (updateAdmissionEnquiryInput.getDateOfBirth() != null) {
+            admissionEnquiry.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionEnquiryInput.getDateOfBirth()));
+        }
         if (updateAdmissionEnquiryInput.getEmail() != null) {
             admissionEnquiry.setEmail(updateAdmissionEnquiryInput.getEmail());
         }
+        if (updateAdmissionEnquiryInput.getSex() != null) {
+            admissionEnquiry.setSex(updateAdmissionEnquiryInput.getSex());
+        }
+        if (updateAdmissionEnquiryInput.getComments() != null) {
+            admissionEnquiry.setComments(updateAdmissionEnquiryInput.getComments());
+        }
         if (updateAdmissionEnquiryInput.getCourseApplyingFor() != null) {
             admissionEnquiry.setCourseApplyingFor(updateAdmissionEnquiryInput.getCourseApplyingFor());
+        }
+        if (updateAdmissionEnquiryInput.getHighestQualification() != null) {
+            admissionEnquiry.setHighestQualification(updateAdmissionEnquiryInput.getHighestQualification());
         }
         if (updateAdmissionEnquiryInput.getModeOfEnquiry() != null) {
             admissionEnquiry.setModeOfEnquiry(updateAdmissionEnquiryInput.getModeOfEnquiry());
@@ -848,6 +1020,26 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateAdmissionEnquiryInput.getBranchId() != null) {
             final Branch branch = branchRepository.findById(updateAdmissionEnquiryInput.getBranchId()).get();
             admissionEnquiry.setBranch(branch);
+        }
+        if (updateAdmissionEnquiryInput.getBatchId() != null) {
+            Batch batch = batchRepository.findById(updateAdmissionEnquiryInput.getBatchId()).get();
+            admissionEnquiry.setBatch(batch);
+        }
+        if (updateAdmissionEnquiryInput.getStateId() != null) {
+            State state = stateRepository.findById(updateAdmissionEnquiryInput.getStateId()).get();
+            admissionEnquiry.setState(state);
+        }
+        if (updateAdmissionEnquiryInput.getCityId() != null) {
+            City city = cityRepository.findById(updateAdmissionEnquiryInput.getCityId()).get();
+            admissionEnquiry.setCity(city);
+        }
+        if (updateAdmissionEnquiryInput.getCountryId() != null) {
+            Country country = countryRepository.findById(updateAdmissionEnquiryInput.getCountryId()).get();
+            admissionEnquiry.setCountry(country);
+        }
+        if (updateAdmissionEnquiryInput.getDepartmentId() != null) {
+            Department department = departmentRepository.findById(updateAdmissionEnquiryInput.getDepartmentId()).get();
+            admissionEnquiry.setDepartment(department);
         }
         admissionEnquiryRepository.save(admissionEnquiry);
         return new UpdateAdmissionEnquiryPayload(admissionEnquiry);
@@ -875,7 +1067,7 @@ public class Mutation implements GraphQLMutationResolver {
         saveStudentImage(addStudentInput, student, branch);
         return new AddStudentPayload(student);
     }
-    
+
     private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
     	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
     	String filePath = Paths.get("", temp).toString();
@@ -888,8 +1080,8 @@ public class Mutation implements GraphQLMutationResolver {
     	logger.info("Updating student record with image file path: "+absFilePath);
     	this.studentRepository.save(student);
     }
-    
-    
+
+
     public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
         Student student = studentRepository.findById(updateStudentInput.getId()).get();
         if (updateStudentInput.getStudentName() != null) {
@@ -1001,7 +1193,7 @@ public class Mutation implements GraphQLMutationResolver {
 //        if (updateStudentInput.getUploadPhoto() != null) {
 //            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
 //        }
-        
+
         if (updateStudentInput.getAdmissionNo() != null) {
             student.setAdmissionNo(updateStudentInput.getAdmissionNo());
         }
@@ -1027,11 +1219,11 @@ public class Mutation implements GraphQLMutationResolver {
             final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
             student.setDepartment(department);
         }
-        
+
         saveStudentImage(updateStudentInput, student, student.getBranch());
-        
+
         studentRepository.save(student);
-        
+
         return new UpdateStudentPayload(student);
     }
 
@@ -2588,7 +2780,7 @@ public class Mutation implements GraphQLMutationResolver {
         branch.setId(addFeeCategoryInput.getBranchId());
         fc.setBranch(branch);
         fc = feeCategoryRepository.save(fc);
-        
+
         FeeCategory f = new FeeCategory();
         f.setBranch(branch);
         Example<FeeCategory> example = Example.of(f);
@@ -2600,7 +2792,7 @@ public class Mutation implements GraphQLMutationResolver {
         		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getStartDate()))));
         	}
         	if(ff.getEndDate() != null) {
-        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate()))));	
+        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate()))));
         	}
             ls.add(cfc);
         }
@@ -2617,7 +2809,7 @@ public class Mutation implements GraphQLMutationResolver {
         branch.setId(updateFeeCategoryInput.getBranchId());
         fc.setBranch(branch);
         fc = feeCategoryRepository.save(fc);
-        
+
         FeeCategory f = new FeeCategory();
         f.setBranch(branch);
         Example<FeeCategory> example = Example.of(f);
@@ -2629,12 +2821,12 @@ public class Mutation implements GraphQLMutationResolver {
         		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getStartDate()))));
         	}
         	if(ff.getEndDate() != null) {
-        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate()))));	
+        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate()))));
         	}
             ls.add(cfc);
         }
         return ls;
-        
+
     }
 
     public RemoveFeeCategoryPayload removeFeeCategory(RemoveFeeCategoryInput removeFeeCategoryInput) {
@@ -2644,30 +2836,30 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public CmsFeeDetails addFeeDetails(AddFeeDetailsInput addFeeDetailsInput) throws ParseException, Exception {
-        
+
     	FeeCategory feeCategory = feeCategoryRepository.findById(addFeeDetailsInput.getFeeCategoryId()).get();
-        
-        Batch batch = null; 
+
+        Batch batch = null;
         if(addFeeDetailsInput.getBatchId() != null) {
         	batch = batchRepository.findById(addFeeDetailsInput.getBatchId()).get();
         }
-       
-        Facility facility = null; 
+
+        Facility facility = null;
         if(addFeeDetailsInput.getFacilityId() != null) {
         	facility = facilityRepository.findById(addFeeDetailsInput.getFacilityId()).get();
         }
-        
-        TransportRoute transportRoute = null; 
+
+        TransportRoute transportRoute = null;
         if(addFeeDetailsInput.getTransportRouteId() != null) {
         	transportRoute = transportRouteRepository.findById(addFeeDetailsInput.getTransportRouteId()).get();
         }
-        
-        Department department = null; 
+
+        Department department = null;
         if(addFeeDetailsInput.getDepartmentId() != null) {
         	department = departmentRepository.findById(addFeeDetailsInput.getDepartmentId()).get();
         }
-        
-        FeeDetails feeDetails = CommonUtil.createCopyProperties(addFeeDetailsInput, FeeDetails.class); 
+
+        FeeDetails feeDetails = CommonUtil.createCopyProperties(addFeeDetailsInput, FeeDetails.class);
         feeDetails.setFeeCategory(feeCategory);
         feeDetails.setBatch(batch);
         feeDetails.setFacility(facility);
@@ -2681,7 +2873,7 @@ public class Mutation implements GraphQLMutationResolver {
     		cfd.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(feeDetails.getStartDate()))));
     	}
     	if(feeDetails.getCreatedOn() != null) {
-    		cfd.setStrCreatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(feeDetails.getCreatedOn()))));	
+    		cfd.setStrCreatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(feeDetails.getCreatedOn()))));
     	}
         return cfd;
     }
@@ -2758,13 +2950,13 @@ public class Mutation implements GraphQLMutationResolver {
 //        final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
         AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
         Facility facility = new Facility();
-        
+
         facility.setAcademicYear(academicYear);
         facility.setBranch(branch);
         facility.setName(addFacilityInput.getName());
         facility.setStatus(Status.ACTIVE);
         facility.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addFacilityInput.getStartDate()));
-        
+
         facilityRepository.save(facility);
 
         return new AddFacilityPayload(facility);
@@ -2867,9 +3059,9 @@ public class Mutation implements GraphQLMutationResolver {
         dueDate = dueDateRepository.save(dueDate);
         return new AddDueDatePayload(dueDate);
     }
-    
+
     private Frequency findFrequency(Frequency frequency) {
-    	if(Frequency.WEEKLY.equals(frequency)) { 
+    	if(Frequency.WEEKLY.equals(frequency)) {
     		return Frequency.WEEKLY;
     	}else if(Frequency.MONTHLY.equals(frequency)) {
     		return Frequency.MONTHLY;
@@ -2882,7 +3074,7 @@ public class Mutation implements GraphQLMutationResolver {
     	}
     	return null;
     }
-    
+
     public UpdateDueDatePayload updateDueDate(UpdateDueDateInput updateDueDateInput) {
         DueDate dueDate = dueDateRepository.findById(updateDueDateInput.getId()).get();
         if (updateDueDateInput.getPaymentMethod() != null) {
@@ -2931,7 +3123,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdateLateFeePayload updateLateFee(UpdateLateFeeInput updateLateFeeInput) {
         LateFee lateFee = CommonUtil.createCopyProperties(updateLateFeeInput, LateFee.class);
-        
+
         if (updateLateFeeInput.getCollegeId() != null) {
             final College college = collegeRepository.findById(updateLateFeeInput.getCollegeId()).get();
             lateFee.setCollege(college);
@@ -2963,7 +3155,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public UpdatePaymentRemainderPayload updatePaymentRemainder(UpdatePaymentRemainderInput updatePaymentRemainderInput) {
         PaymentRemainder pr = CommonUtil.createCopyProperties(updatePaymentRemainderInput, PaymentRemainder.class);
-        
+
         if (updatePaymentRemainderInput.getCollegeId() != null) {
             final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
             pr.setCollege(college);
@@ -3324,7 +3516,7 @@ public class Mutation implements GraphQLMutationResolver {
         QueryResult res = lectureScheduleProcessor.updateLectureSchedule(lectureScheduleInput, filter);
         return res;
     }
-    
+
     /**
      * getDailyStudentAttendanceData(StudentAttendanceFilterInput filter)
      * Retrieves student attendance data for teacher role end user
@@ -3356,11 +3548,11 @@ public class Mutation implements GraphQLMutationResolver {
     public Long getTotalCanceledInvoice(long collegeId, long branchId, long academicYearId) {
         return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
     }
-    
+
     public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
         return Lists.newArrayList(invoiceFilterProcessor.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId));
     }
-    
+
     public Long getTotalAdmissions( long branchId) {
         return admissionEnquiryProcessor.getTotalAdmissions( branchId);
     }
@@ -3452,7 +3644,7 @@ public class Mutation implements GraphQLMutationResolver {
 				logger.debug("Its an existing record for due date. Updating due date.");
 				ddpl = updateDueDate(udd);
 			}
-			
+
 			if(upr.getId() == -1) {
 				logger.debug("Its a new record for payment remainder. Adding payment remainder.");
 				AddPaymentRemainderInput apr = CommonUtil.createCopyProperties(upr, AddPaymentRemainderInput.class);
@@ -3462,7 +3654,7 @@ public class Mutation implements GraphQLMutationResolver {
 				logger.debug("Its an existing record for payment remainder. Updating payment remainder.");
 				prpl = updatePaymentRemainder(upr);
 			}
-			
+
 			if(ulf.getId() == -1) {
 				logger.debug("Its a new record for late fee. Adding late fee.");
 				AddLateFeeInput alf = CommonUtil.createCopyProperties(ulf, AddLateFeeInput.class);
@@ -3472,7 +3664,7 @@ public class Mutation implements GraphQLMutationResolver {
 				logger.debug("Its an existing record for late fee. Updating late fee.");
 				lfpl = updateLateFee(ulf);
 			}
-			
+
 			qr.setStatusDesc(qr.getStatusDesc().replaceAll("#ddid#", String.valueOf(ddpl.getDueDate().getId())));
 			qr.setStatusDesc(qr.getStatusDesc().replaceAll("#prid#", String.valueOf(prpl.getPaymentRemainder().getId())));
 			qr.setStatusDesc(qr.getStatusDesc().replaceAll("#lfid#", String.valueOf(lfpl.getLateFee().getId())));
@@ -3483,14 +3675,14 @@ public class Mutation implements GraphQLMutationResolver {
 		logger.debug("Success message : "+qr.getStatusDesc());
 		return qr;
 	}
-	
-	
+
+
 	public CmsFeeSettingsVo getFeeSettingData(Long branchId) {
 		LateFee lf = new LateFee();
 		PaymentRemainder pr = new PaymentRemainder();
 		Branch branch = new Branch();
 		branch.setId(branchId);
-		
+
 		lf.setBranch(branch);
 		Example<LateFee> example = Example.of(lf);
 		Optional<LateFee> olf = this.lateFeeRepository.findOne(example);
@@ -3498,9 +3690,9 @@ public class Mutation implements GraphQLMutationResolver {
 		if(olf.isPresent()) {
 			logger.debug("Getting data for late fee");
 			vo = CommonUtil.createCopyProperties(olf.get(), CmsFeeSettingsVo.class);
-			vo.setLateFeeId(olf.get().getId());		
+			vo.setLateFeeId(olf.get().getId());
 		}
-		
+
 		pr.setBranch(branch);
 		Example<PaymentRemainder> exPr = Example.of(pr);
 		Optional<PaymentRemainder> opr = this.paymentRemainderRepository.findOne(exPr);
@@ -3520,21 +3712,21 @@ public class Mutation implements GraphQLMutationResolver {
 		}
 		return vo;
 	}
-	
+
 	public CmsFeeSettingsVo getFeeSettingDueDateData(Long branchId, String paymentType) {
 		Branch branch = new Branch();
 		branch.setId(branchId);
 		DueDate dueDate = new DueDate();
 		dueDate.setBranch(branch);
 		dueDate.setPaymentMethod(paymentType);
-		
+
 		CmsFeeSettingsVo vo = new CmsFeeSettingsVo();
 		Example<DueDate> example = Example.of(dueDate);
 		Optional<DueDate> odd = this.dueDateRepository.findOne(example);
 		if(odd.isPresent()) {
 			logger.debug("Getting data for due date");
 			vo = CommonUtil.createCopyProperties(odd.get(), CmsFeeSettingsVo.class);
-			vo.setDueDateId(odd.get().getId());	
+			vo.setDueDateId(odd.get().getId());
 		}
 		return vo;
 	}
