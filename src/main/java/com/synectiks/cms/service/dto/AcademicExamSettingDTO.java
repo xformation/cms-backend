@@ -40,6 +40,9 @@ public class AcademicExamSettingDTO implements Serializable {
 
     private Long groupvalue;
 
+    @NotNull
+    private Long countvalue;
+
 
     private Long branchId;
 
@@ -143,6 +146,14 @@ public class AcademicExamSettingDTO implements Serializable {
         this.groupvalue = groupvalue;
     }
 
+    public Long getCountvalue() {
+        return countvalue;
+    }
+
+    public void setCountvalue(Long countvalue) {
+        this.countvalue = countvalue;
+    }
+
     public Long getBranchId() {
         return branchId;
     }
@@ -234,6 +245,7 @@ public class AcademicExamSettingDTO implements Serializable {
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
             ", groupvalue=" + getGroupvalue() +
+            ", countvalue=" + getCountvalue() +
             ", branch=" + getBranchId() +
             ", subject=" + getSubjectId() +
             ", department=" + getDepartmentId() +

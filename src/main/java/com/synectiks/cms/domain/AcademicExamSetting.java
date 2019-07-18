@@ -2,20 +2,17 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.synectiks.cms.domain.enumeration.GradeType;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
-
-import com.synectiks.cms.domain.enumeration.GradeType;
 
 /**
  * A AcademicExamSetting.
@@ -71,6 +68,10 @@ public class AcademicExamSetting implements Serializable {
 
     @Column(name = "groupvalue")
     private Long groupvalue;
+
+    @NotNull
+    @Column(name = "countvalue", nullable = false)
+    private Long countvalue;
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
@@ -239,6 +240,19 @@ public class AcademicExamSetting implements Serializable {
         this.groupvalue = groupvalue;
     }
 
+    public Long getCountvalue() {
+        return countvalue;
+    }
+
+    public AcademicExamSetting countvalue(Long countvalue) {
+        this.countvalue = countvalue;
+        return this;
+    }
+
+    public void setCountvalue(Long countvalue) {
+        this.countvalue = countvalue;
+    }
+
     public Branch getBranch() {
         return branch;
     }
@@ -365,6 +379,7 @@ public class AcademicExamSetting implements Serializable {
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
             ", groupvalue=" + getGroupvalue() +
+            ", countvalue=" + getCountvalue() +
             "}";
     }
 }

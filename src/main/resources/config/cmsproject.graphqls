@@ -1077,6 +1077,7 @@ type AcademicExamSetting{
     batch: Batch!
     branch: Branch!
     typeOfGrading: TypeOfGrading!
+    countvalue: Long!
 }
 
 enum Gender {
@@ -1814,6 +1815,7 @@ input AddAcademicExamSettingInput{
     batchId: Long!
     branchId: Long!
     typeOfGradingId: Long!
+    countvalue: Long!
 
 }
 
@@ -1839,6 +1841,7 @@ input UpdateAcademicExamSettingInput {
     batchId: Long!
     branchId: Long!
     typeOfGradingId: Long!
+    countvalue: Long!
 }
 
 type UpdateAcademicExamSettingPayload {

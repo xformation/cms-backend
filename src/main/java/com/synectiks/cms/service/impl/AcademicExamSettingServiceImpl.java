@@ -93,8 +93,7 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AcademicExamSetting : {}", id);
-        academicExamSettingRepository.deleteById(id);
+        log.debug("Request to delete AcademicExamSetting : {}", id);        academicExamSettingRepository.deleteById(id);
         academicExamSettingSearchRepository.deleteById(id);
     }
 

@@ -312,6 +312,8 @@ entity AcademicExamSetting {
     passing Integer required
     actions String
     groupvalue Long
+    countvalue Long required
+
 }
 entity BankAccounts{
 nameOfBank NameOfBank required
