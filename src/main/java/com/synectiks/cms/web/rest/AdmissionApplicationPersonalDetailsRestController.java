@@ -1,25 +1,34 @@
 package com.synectiks.cms.web.rest;
 
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.service.util.CommonUtil;
-import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.HeaderUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
+import com.synectiks.cms.domain.Country;
+import com.synectiks.cms.repository.AdmissionApplicationRepository;
+import com.synectiks.cms.repository.CountryRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
+import com.synectiks.cms.web.rest.util.HeaderUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -40,7 +49,8 @@ public class AdmissionApplicationPersonalDetailsRestController {
             throw new BadRequestAlertException("A new personal details cannot have an ID which already exits", ENTITY_NAME, "idexists");
         }
         AdmissionApplication a = new AdmissionApplication();
-        Country c = this.countryRepository.findById(cmsAdmissionApplicationVo.getCountryId()).get();
+        Optional<Country> c = this.countryRepository.findById(cmsAdmissionApplicationVo.getCountryId());
+        
         a.setStudentName(cmsAdmissionApplicationVo.getStudentName());
         a.setStudentMiddleName(cmsAdmissionApplicationVo.getStudentMiddleName());
         a.setStudentLastName(cmsAdmissionApplicationVo.getStudentLastName());
@@ -55,7 +65,7 @@ public class AdmissionApplicationPersonalDetailsRestController {
         a.setDateOfBirth(cmsAdmissionApplicationVo.getDateOfBirth());
         a.setEmail(cmsAdmissionApplicationVo.getEmail());
         a.setSex(cmsAdmissionApplicationVo.getSex());
-        a.setCountry(c);
+        a.setCountry(c.isPresent() ? c.get() : null);
         AdmissionApplication result = null;
         try {
             result = admissionApplicationRepository.save(a);
