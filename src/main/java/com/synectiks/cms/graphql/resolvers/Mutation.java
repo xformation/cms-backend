@@ -511,9 +511,38 @@ public class Mutation implements GraphQLMutationResolver {
         admissionApplicationRepository.delete(admissionApplication);
         return new RemoveAdmissionApplicationPayload(Lists.newArrayList(admissionApplicationRepository.findAll()));
     }
-
+//    public AddTypeOfGradingPayload addTypeOfGrading(List<AddTypeOfGradingInput> list) {
+//        TypeOfGrading typeOfGrading = null;
+//        // get the max id from database.
+//        int groupvalue = getNextGradeId()+1;
+//        for (AddTypeOfGradingInput input : list) {
+//            typeOfGrading = CommonUtil.createCopyProperties(input, TypeOfGrading.class);
+//            typeOfGrading.setGroupvalue(new Long(groupvalue));
+//            this.typeOfGradingRepository.save(typeOfGrading);
+//        }
+//        return new AddTypeOfGradingPayload(typeOfGrading);
+//    }
+//
+//    private int getNextGradeId(){
+//        String sql = "select max(groupvalue_id) from type_of_grading";
+//        Query query = this.entityManager.createNativeQuery(sql);
+//        Object groupValue = query.getSingleResult();
+//        return ((BigInteger)groupValue).intValue() ;
+//    }
+//public AddTypeOfGradingPayload addTypeOfGrading(List<AddTypeOfGradingInput> list) {
+//        TypeOfGrading typeOfGrading = null;
+//        // get the max id from database.
+//        int groupvalue = getNextGradeId()+1;
+//        for (AddTypeOfGradingInput input : list) {
+//            typeOfGrading = CommonUtil.createCopyProperties(input, TypeOfGrading.class);
+//            typeOfGrading.setGroupvalue(new Long(groupvalue));
+//            this.typeOfGradingRepository.save(typeOfGrading);
+//        }
+//        return new AddTypeOfGradingPayload(typeOfGrading);
+//    }
     public AddAcademicExamSettingPayload addAcademicExamSetting(List<AddAcademicExamSettingInput> list) {
         AcademicExamSetting academicExamSetting = null;
+        int countvalue = getCountvalueId()+1;
         for(AddAcademicExamSettingInput input: list ){
             Branch branch = branchRepository.findById(input.getBranchId()).get();
             Subject subject = subjectRepository.findById(input.getSubjectId()).get();
@@ -524,6 +553,7 @@ public class Mutation implements GraphQLMutationResolver {
             TypeOfGrading typeOfGrading = typeOfGradingRepository.findById((input.getTypeOfGradingId())).get();
 
             academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
+            academicExamSetting.setCountvalue(new Long(countvalue));
             academicExamSetting.setBranch(branch);
             academicExamSetting.setSubject(subject);
             academicExamSetting.setBatch(batch);
@@ -536,6 +566,12 @@ public class Mutation implements GraphQLMutationResolver {
 
         }
         return  new AddAcademicExamSettingPayload(academicExamSetting);
+    }
+    private int getCountvalueId(){
+        String sql = "select max(countvalue) from academic_exam_setting";
+        Query query = this.entityManager.createNativeQuery(sql);
+        Object countvalue = query.getSingleResult();
+        return ((BigInteger)countvalue).intValue() ;
     }
 
     public UpdateAcademicExamSettingPayload updateAcademicExamSetting(UpdateAcademicExamSettingInput updateAcademicExamSettingInput) {
@@ -598,9 +634,9 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setTypeOfGrading(typeOfGrading);
         }
 
-        if (updateAcademicExamSettingInput.getCountvalue() != null) {
-            academicExamSetting.setCountvalue(updateAcademicExamSettingInput.getCountvalue());
-        }
+//        if (updateAcademicExamSettingInput.getCountvalue() != null) {
+//            academicExamSetting.setCountvalue(updateAcademicExamSettingInput.getCountvalue());
+//        }
 
 
         academicExamSettingRepository.save(academicExamSetting);
@@ -682,7 +718,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     private int getNextGradeId(){
-        String sql = "select max(groupvalue_id) from type_of_grading";
+        String sql = "select max(groupvalue) from type_of_grading";
         Query query = this.entityManager.createNativeQuery(sql);
         Object groupValue = query.getSingleResult();
         return ((BigInteger)groupValue).intValue() ;

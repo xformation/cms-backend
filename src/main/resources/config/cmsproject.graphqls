@@ -1815,8 +1815,6 @@ input AddAcademicExamSettingInput{
     batchId: Long!
     branchId: Long!
     typeOfGradingId: Long!
-    countvalue: Long!
-
 }
 
 type AddAcademicExamSettingPayload {

@@ -18,7 +18,7 @@ public class AbstractAcademicExamSettingInput {
     private Integer passing;
     private String actions;
     private Long groupvalue;
-    private Long countvalue;
+//    private Long countvalue;
 
     public Long getId() {
         return id;
@@ -108,13 +108,13 @@ public class AbstractAcademicExamSettingInput {
         this.groupvalue = groupvalue;
     }
 
-    public Long getCountvalue() {
-        return countvalue;
-    }
-
-    public void setCountvalue(Long countvalue) {
-        this.countvalue = countvalue;
-    }
+//    public Long getCountvalue() {
+//        return countvalue;
+//    }
+//
+//    public void setCountvalue(Long countvalue) {
+//        this.countvalue = countvalue;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -131,13 +131,14 @@ public class AbstractAcademicExamSettingInput {
             Objects.equals(total, that.total) &&
             Objects.equals(passing, that.passing) &&
             Objects.equals(actions, that.actions) &&
-            Objects.equals(groupvalue, that.groupvalue) &&
-            Objects.equals(countvalue, that.countvalue);
+            Objects.equals(groupvalue, that.groupvalue);
+//            &&
+//            Objects.equals(countvalue, that.countvalue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examName, semester, examDate, startTime, endTime, gradeType, total, passing, actions, groupvalue, countvalue);
+        return Objects.hash(id, examName, semester, examDate, startTime, endTime, gradeType, total, passing, actions, groupvalue);
     }
 
     @Override
@@ -154,7 +155,7 @@ public class AbstractAcademicExamSettingInput {
             ", passing=" + passing +
             ", actions='" + actions + '\'' +
             ", groupvalue=" + groupvalue +
-            ", countvalue=" + countvalue +
+//            ", countvalue=" + countvalue +
             '}';
     }
 }
