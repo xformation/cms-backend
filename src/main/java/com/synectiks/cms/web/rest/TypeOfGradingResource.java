@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.TypeOfGradingService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class TypeOfGradingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/type-of-gradings")
-    @Timed
     public ResponseEntity<TypeOfGradingDTO> createTypeOfGrading(@Valid @RequestBody TypeOfGradingDTO typeOfGradingDTO) throws URISyntaxException {
         log.debug("REST request to save TypeOfGrading : {}", typeOfGradingDTO);
         if (typeOfGradingDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class TypeOfGradingResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/type-of-gradings")
-    @Timed
     public ResponseEntity<TypeOfGradingDTO> updateTypeOfGrading(@Valid @RequestBody TypeOfGradingDTO typeOfGradingDTO) throws URISyntaxException {
         log.debug("REST request to update TypeOfGrading : {}", typeOfGradingDTO);
         if (typeOfGradingDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class TypeOfGradingResource {
      * @return the ResponseEntity with status 200 (OK) and the list of typeOfGradings in body
      */
     @GetMapping("/type-of-gradings")
-    @Timed
     public List<TypeOfGradingDTO> getAllTypeOfGradings() {
         log.debug("REST request to get all TypeOfGradings");
         return typeOfGradingService.findAll();
@@ -99,7 +94,6 @@ public class TypeOfGradingResource {
      * @return the ResponseEntity with status 200 (OK) and with body the typeOfGradingDTO, or with status 404 (Not Found)
      */
     @GetMapping("/type-of-gradings/{id}")
-    @Timed
     public ResponseEntity<TypeOfGradingDTO> getTypeOfGrading(@PathVariable Long id) {
         log.debug("REST request to get TypeOfGrading : {}", id);
         Optional<TypeOfGradingDTO> typeOfGradingDTO = typeOfGradingService.findOne(id);
@@ -113,7 +107,6 @@ public class TypeOfGradingResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/type-of-gradings/{id}")
-    @Timed
     public ResponseEntity<Void> deleteTypeOfGrading(@PathVariable Long id) {
         log.debug("REST request to delete TypeOfGrading : {}", id);
         typeOfGradingService.delete(id);
@@ -128,7 +121,6 @@ public class TypeOfGradingResource {
      * @return the result of the search
      */
     @GetMapping("/_search/type-of-gradings")
-    @Timed
     public List<TypeOfGradingDTO> searchTypeOfGradings(@RequestParam String query) {
         log.debug("REST request to search TypeOfGradings for query {}", query);
         return typeOfGradingService.search(query);

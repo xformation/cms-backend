@@ -33,7 +33,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="next_id" type="bigint">
+            <column name="groupvalue" type="bigint">
                 <constraints nullable="false" />
             </column>
 

@@ -863,20 +863,20 @@ public class Mutation implements GraphQLMutationResolver {
     public AddTypeOfGradingPayload addTypeOfGrading(List<AddTypeOfGradingInput> list) {
         TypeOfGrading typeOfGrading = null;
         // get the max id from database.
-        int nextId = getNextGradeId()+1;
+        int groupvalue = getNextGradeId()+1;
         for (AddTypeOfGradingInput input : list) {
             typeOfGrading = CommonUtil.createCopyProperties(input, TypeOfGrading.class);
-            typeOfGrading.setNextId(new Long(nextId));
+            typeOfGrading.setGroupvalue(new Long(groupvalue));
             this.typeOfGradingRepository.save(typeOfGrading);
         }
             return new AddTypeOfGradingPayload(typeOfGrading);
     }
 
     private int getNextGradeId(){
-        String sql = "select max(next_id) from type_of_grading";
+        String sql = "select max(groupvalue_id) from type_of_grading";
         Query query = this.entityManager.createNativeQuery(sql);
-        Object nextValue = query.getSingleResult();
-        return ((BigInteger)nextValue).intValue() ;
+        Object groupValue = query.getSingleResult();
+        return ((BigInteger)groupValue).intValue() ;
     }
 
     public UpdateTypeOfGradingPayload updateTypeOfGrading(UpdateTypeOfGradingInput updateTypeOfGradingInput) {

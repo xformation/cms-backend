@@ -650,7 +650,7 @@ public class CmsDataRowProcessor {
 		this.tpOfGrd.setMinMarks(35);
 		this.tpOfGrd.setMaxMarks(95);
 		this.tpOfGrd.setGrades(cell.asString());
-		this.tpOfGrd.setNextId(1234l);
+		this.tpOfGrd.setGroupvalue(1234l);
 		this.tpOfGrd = saveOrGet(this.togRepo, this.tpOfGrd);
 	}
 

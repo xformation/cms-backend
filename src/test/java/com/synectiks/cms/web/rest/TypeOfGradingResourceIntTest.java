@@ -56,8 +56,8 @@ public class TypeOfGradingResourceIntTest {
     private static final String DEFAULT_GRADES = "AAAAAAAAAA";
     private static final String UPDATED_GRADES = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_NEXT_ID = 1L;
-    private static final Long UPDATED_NEXT_ID = 2L;
+    private static final Long DEFAULT_GROUPVALUE = 1L;
+    private static final Long UPDATED_GROUPVALUE = 2L;
 
     @Autowired
     private TypeOfGradingRepository typeOfGradingRepository;
@@ -118,7 +118,7 @@ public class TypeOfGradingResourceIntTest {
             .minMarks(DEFAULT_MIN_MARKS)
             .maxMarks(DEFAULT_MAX_MARKS)
             .grades(DEFAULT_GRADES)
-            .nextId(DEFAULT_NEXT_ID);
+            .groupvalue(DEFAULT_GROUPVALUE);
         return typeOfGrading;
     }
 
@@ -146,7 +146,7 @@ public class TypeOfGradingResourceIntTest {
         assertThat(testTypeOfGrading.getMinMarks()).isEqualTo(DEFAULT_MIN_MARKS);
         assertThat(testTypeOfGrading.getMaxMarks()).isEqualTo(DEFAULT_MAX_MARKS);
         assertThat(testTypeOfGrading.getGrades()).isEqualTo(DEFAULT_GRADES);
-        assertThat(testTypeOfGrading.getNextId()).isEqualTo(DEFAULT_NEXT_ID);
+        assertThat(testTypeOfGrading.getGroupvalue()).isEqualTo(DEFAULT_GROUPVALUE);
 
         // Validate the TypeOfGrading in Elasticsearch
         verify(mockTypeOfGradingSearchRepository, times(1)).save(testTypeOfGrading);
@@ -234,10 +234,10 @@ public class TypeOfGradingResourceIntTest {
 
     @Test
     @Transactional
-    public void checkNextIdIsRequired() throws Exception {
+    public void checkGroupvalueIsRequired() throws Exception {
         int databaseSizeBeforeTest = typeOfGradingRepository.findAll().size();
         // set the field null
-        typeOfGrading.setNextId(null);
+        typeOfGrading.setGroupvalue(null);
 
         // Create the TypeOfGrading, which fails.
         TypeOfGradingDTO typeOfGradingDTO = typeOfGradingMapper.toDto(typeOfGrading);
@@ -265,7 +265,7 @@ public class TypeOfGradingResourceIntTest {
             .andExpect(jsonPath("$.[*].minMarks").value(hasItem(DEFAULT_MIN_MARKS)))
             .andExpect(jsonPath("$.[*].maxMarks").value(hasItem(DEFAULT_MAX_MARKS)))
             .andExpect(jsonPath("$.[*].grades").value(hasItem(DEFAULT_GRADES.toString())))
-            .andExpect(jsonPath("$.[*].nextId").value(hasItem(DEFAULT_NEXT_ID.intValue())));
+            .andExpect(jsonPath("$.[*].groupvalue").value(hasItem(DEFAULT_GROUPVALUE.intValue())));
     }
     
     @Test
@@ -282,7 +282,7 @@ public class TypeOfGradingResourceIntTest {
             .andExpect(jsonPath("$.minMarks").value(DEFAULT_MIN_MARKS))
             .andExpect(jsonPath("$.maxMarks").value(DEFAULT_MAX_MARKS))
             .andExpect(jsonPath("$.grades").value(DEFAULT_GRADES.toString()))
-            .andExpect(jsonPath("$.nextId").value(DEFAULT_NEXT_ID.intValue()));
+            .andExpect(jsonPath("$.groupvalue").value(DEFAULT_GROUPVALUE.intValue()));
     }
 
     @Test
@@ -309,7 +309,7 @@ public class TypeOfGradingResourceIntTest {
             .minMarks(UPDATED_MIN_MARKS)
             .maxMarks(UPDATED_MAX_MARKS)
             .grades(UPDATED_GRADES)
-            .nextId(UPDATED_NEXT_ID);
+            .groupvalue(UPDATED_GROUPVALUE);
         TypeOfGradingDTO typeOfGradingDTO = typeOfGradingMapper.toDto(updatedTypeOfGrading);
 
         restTypeOfGradingMockMvc.perform(put("/api/type-of-gradings")
@@ -324,7 +324,7 @@ public class TypeOfGradingResourceIntTest {
         assertThat(testTypeOfGrading.getMinMarks()).isEqualTo(UPDATED_MIN_MARKS);
         assertThat(testTypeOfGrading.getMaxMarks()).isEqualTo(UPDATED_MAX_MARKS);
         assertThat(testTypeOfGrading.getGrades()).isEqualTo(UPDATED_GRADES);
-        assertThat(testTypeOfGrading.getNextId()).isEqualTo(UPDATED_NEXT_ID);
+        assertThat(testTypeOfGrading.getGroupvalue()).isEqualTo(UPDATED_GROUPVALUE);
 
         // Validate the TypeOfGrading in Elasticsearch
         verify(mockTypeOfGradingSearchRepository, times(1)).save(testTypeOfGrading);
@@ -388,7 +388,7 @@ public class TypeOfGradingResourceIntTest {
             .andExpect(jsonPath("$.[*].minMarks").value(hasItem(DEFAULT_MIN_MARKS)))
             .andExpect(jsonPath("$.[*].maxMarks").value(hasItem(DEFAULT_MAX_MARKS)))
             .andExpect(jsonPath("$.[*].grades").value(hasItem(DEFAULT_GRADES)))
-            .andExpect(jsonPath("$.[*].nextId").value(hasItem(DEFAULT_NEXT_ID.intValue())));
+            .andExpect(jsonPath("$.[*].groupvalue").value(hasItem(DEFAULT_GROUPVALUE.intValue())));
     }
 
     @Test

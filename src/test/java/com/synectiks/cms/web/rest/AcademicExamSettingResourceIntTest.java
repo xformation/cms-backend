@@ -78,6 +78,9 @@ public class AcademicExamSettingResourceIntTest {
     private static final String DEFAULT_ACTIONS = "AAAAAAAAAA";
     private static final String UPDATED_ACTIONS = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_GROUPVALUE = 1L;
+    private static final Long UPDATED_GROUPVALUE = 2L;
+
     @Autowired
     private AcademicExamSettingRepository academicExamSettingRepository;
 
@@ -142,7 +145,8 @@ public class AcademicExamSettingResourceIntTest {
             .gradeType(DEFAULT_GRADE_TYPE)
             .total(DEFAULT_TOTAL)
             .passing(DEFAULT_PASSING)
-            .actions(DEFAULT_ACTIONS);
+            .actions(DEFAULT_ACTIONS)
+            .groupvalue(DEFAULT_GROUPVALUE);
         return academicExamSetting;
     }
 
@@ -176,6 +180,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getTotal()).isEqualTo(DEFAULT_TOTAL);
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(DEFAULT_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(DEFAULT_ACTIONS);
+        assertThat(testAcademicExamSetting.getGroupvalue()).isEqualTo(DEFAULT_GROUPVALUE);
 
         // Validate the AcademicExamSetting in Elasticsearch
         verify(mockAcademicExamSettingSearchRepository, times(1)).save(testAcademicExamSetting);
@@ -356,7 +361,8 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].gradeType").value(hasItem(DEFAULT_GRADE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
             .andExpect(jsonPath("$.[*].passing").value(hasItem(DEFAULT_PASSING)))
-            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS.toString())));
+            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS.toString())))
+            .andExpect(jsonPath("$.[*].groupvalue").value(hasItem(DEFAULT_GROUPVALUE.intValue())));
     }
     
     @Test
@@ -378,7 +384,8 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.gradeType").value(DEFAULT_GRADE_TYPE.toString()))
             .andExpect(jsonPath("$.total").value(DEFAULT_TOTAL))
             .andExpect(jsonPath("$.passing").value(DEFAULT_PASSING))
-            .andExpect(jsonPath("$.actions").value(DEFAULT_ACTIONS.toString()));
+            .andExpect(jsonPath("$.actions").value(DEFAULT_ACTIONS.toString()))
+            .andExpect(jsonPath("$.groupvalue").value(DEFAULT_GROUPVALUE.intValue()));
     }
 
     @Test
@@ -410,7 +417,8 @@ public class AcademicExamSettingResourceIntTest {
             .gradeType(UPDATED_GRADE_TYPE)
             .total(UPDATED_TOTAL)
             .passing(UPDATED_PASSING)
-            .actions(UPDATED_ACTIONS);
+            .actions(UPDATED_ACTIONS)
+            .groupvalue(UPDATED_GROUPVALUE);
         AcademicExamSettingDTO academicExamSettingDTO = academicExamSettingMapper.toDto(updatedAcademicExamSetting);
 
         restAcademicExamSettingMockMvc.perform(put("/api/academic-exam-settings")
@@ -431,6 +439,7 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getTotal()).isEqualTo(UPDATED_TOTAL);
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(UPDATED_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(UPDATED_ACTIONS);
+        assertThat(testAcademicExamSetting.getGroupvalue()).isEqualTo(UPDATED_GROUPVALUE);
 
         // Validate the AcademicExamSetting in Elasticsearch
         verify(mockAcademicExamSettingSearchRepository, times(1)).save(testAcademicExamSetting);
@@ -499,7 +508,8 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].gradeType").value(hasItem(DEFAULT_GRADE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
             .andExpect(jsonPath("$.[*].passing").value(hasItem(DEFAULT_PASSING)))
-            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS)));
+            .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS)))
+            .andExpect(jsonPath("$.[*].groupvalue").value(hasItem(DEFAULT_GROUPVALUE.intValue())));
     }
 
     @Test

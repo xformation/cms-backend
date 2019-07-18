@@ -398,7 +398,7 @@ public class TestDataPojoBuilder {
 		typeOfGrading.setMinMarks(35);
 		typeOfGrading.setMaxMarks(95);
 		typeOfGrading.setGrades("");
-		typeOfGrading.setNextId(3342l);
+		typeOfGrading.setGroupvalue(3342l);
 		return typeOfGrading;
 	}
 
