@@ -1,6 +1,5 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
@@ -14,10 +13,8 @@ public class AdmissionApplicationDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private AdmissionStatusEnum admissionStatus;
 
-    @NotNull
     private String studentName;
 
     private String studentMiddleName;
@@ -36,32 +33,24 @@ public class AdmissionApplicationDTO implements Serializable {
 
     private String motherLastName;
 
-    @NotNull
     private String contactNumber;
 
     private String alternateMobileNumber;
 
-    @NotNull
     private LocalDate dateOfBirth;
 
     private String email;
 
-    @NotNull
     private Gender sex;
 
-    @NotNull
     private String comments;
 
-    @NotNull
     private Integer applicationId;
 
-    @NotNull
     private String uploadPhoto;
 
-    @NotNull
     private CourseEnum course;
 
-    @NotNull
     private LocalDate admissionDate;
 
 

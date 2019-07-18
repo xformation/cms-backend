@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity AdmissionApplication.
     -->
-    <changeSet id="20190716091755-2" author="jhipster">
+    <changeSet id="20190718121451-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="admission_enquiry_id"
                                  baseTableName="admission_application"

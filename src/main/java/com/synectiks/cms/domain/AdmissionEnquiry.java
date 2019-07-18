@@ -72,16 +72,14 @@ public class AdmissionEnquiry implements Serializable {
     @Column(name = "alternate_mobile_number")
     private String alternateMobileNumber;
 
-    @NotNull
-    @Column(name = "date_of_birth", nullable = false)
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
     @Column(name = "email")
     private String email;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "sex", nullable = false)
+    @Column(name = "sex")
     private Gender sex;
 
     @NotNull
@@ -97,22 +95,18 @@ public class AdmissionEnquiry implements Serializable {
     @Column(name = "highest_qualification", nullable = false)
     private String highestQualification;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "mode_of_enquiry", nullable = false)
+    @Column(name = "mode_of_enquiry")
     private ModeOfEnquiry modeOfEnquiry;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private EnquiryStatus status;
 
-    @NotNull
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Column(name = "enquiry_date", nullable = false)
+    @Column(name = "enquiry_date")
     private LocalDate enquiryDate;
 
     @Column(name = "updated_on")

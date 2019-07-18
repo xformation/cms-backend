@@ -39,12 +39,10 @@ public class AdmissionEnquiryDTO implements Serializable {
 
     private String alternateMobileNumber;
 
-    @NotNull
     private LocalDate dateOfBirth;
 
     private String email;
 
-    @NotNull
     private Gender sex;
 
     @NotNull
@@ -56,16 +54,12 @@ public class AdmissionEnquiryDTO implements Serializable {
     @NotNull
     private String highestQualification;
 
-    @NotNull
     private ModeOfEnquiry modeOfEnquiry;
 
-    @NotNull
     private EnquiryStatus status;
 
-    @NotNull
     private String description;
 
-    @NotNull
     private LocalDate enquiryDate;
 
     private LocalDate updatedOn;

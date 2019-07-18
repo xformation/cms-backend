@@ -168,14 +168,7 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
                   <Label id="studentNameLabel" for="studentName">
                     Student Name
                   </Label>
-                  <AvField
-                    id="admission-application-studentName"
-                    type="text"
-                    name="studentName"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-application-studentName" type="text" name="studentName" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="studentMiddleNameLabel" for="studentMiddleName">
@@ -229,14 +222,7 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
                   <Label id="contactNumberLabel" for="contactNumber">
                     Contact Number
                   </Label>
-                  <AvField
-                    id="admission-application-contactNumber"
-                    type="text"
-                    name="contactNumber"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-application-contactNumber" type="text" name="contactNumber" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="alternateMobileNumberLabel" for="alternateMobileNumber">
@@ -248,15 +234,7 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
                   <Label id="dateOfBirthLabel" for="dateOfBirth">
                     Date Of Birth
                   </Label>
-                  <AvField
-                    id="admission-application-dateOfBirth"
-                    type="date"
-                    className="form-control"
-                    name="dateOfBirth"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-application-dateOfBirth" type="date" className="form-control" name="dateOfBirth" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="emailLabel" for="email">
@@ -282,42 +260,19 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
                   <Label id="commentsLabel" for="comments">
                     Comments
                   </Label>
-                  <AvField
-                    id="admission-application-comments"
-                    type="text"
-                    name="comments"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-application-comments" type="text" name="comments" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="applicationIdLabel" for="applicationId">
                     Application Id
                   </Label>
-                  <AvField
-                    id="admission-application-applicationId"
-                    type="string"
-                    className="form-control"
-                    name="applicationId"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
-                    }}
-                  />
+                  <AvField id="admission-application-applicationId" type="string" className="form-control" name="applicationId" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="uploadPhotoLabel" for="uploadPhoto">
                     Upload Photo
                   </Label>
-                  <AvField
-                    id="admission-application-uploadPhoto"
-                    type="text"
-                    name="uploadPhoto"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-application-uploadPhoto" type="text" name="uploadPhoto" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="courseLabel">Course</Label>
@@ -338,15 +293,7 @@ export class AdmissionApplicationUpdate extends React.Component<IAdmissionApplic
                   <Label id="admissionDateLabel" for="admissionDate">
                     Admission Date
                   </Label>
-                  <AvField
-                    id="admission-application-admissionDate"
-                    type="date"
-                    className="form-control"
-                    name="admissionDate"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-application-admissionDate" type="date" className="form-control" name="admissionDate" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="admissionEnquiry.id">Admission Enquiry</Label>

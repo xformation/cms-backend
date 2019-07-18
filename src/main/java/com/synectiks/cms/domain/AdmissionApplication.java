@@ -6,7 +6,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
@@ -35,13 +34,11 @@ public class AdmissionApplication implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "admission_status", nullable = false)
+    @Column(name = "admission_status")
     private AdmissionStatusEnum admissionStatus;
 
-    @NotNull
-    @Column(name = "student_name", nullable = false)
+    @Column(name = "student_name")
     private String studentName;
 
     @Column(name = "student_middle_name")
@@ -68,44 +65,36 @@ public class AdmissionApplication implements Serializable {
     @Column(name = "mother_last_name")
     private String motherLastName;
 
-    @NotNull
-    @Column(name = "contact_number", nullable = false)
+    @Column(name = "contact_number")
     private String contactNumber;
 
     @Column(name = "alternate_mobile_number")
     private String alternateMobileNumber;
 
-    @NotNull
-    @Column(name = "date_of_birth", nullable = false)
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
     @Column(name = "email")
     private String email;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "sex", nullable = false)
+    @Column(name = "sex")
     private Gender sex;
 
-    @NotNull
-    @Column(name = "comments", nullable = false)
+    @Column(name = "comments")
     private String comments;
 
-    @NotNull
-    @Column(name = "application_id", nullable = false)
+    @Column(name = "application_id")
     private Integer applicationId;
 
-    @NotNull
-    @Column(name = "upload_photo", nullable = false)
+    @Column(name = "upload_photo")
     private String uploadPhoto;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "course", nullable = false)
+    @Column(name = "course")
     private CourseEnum course;
 
-    @NotNull
-    @Column(name = "admission_date", nullable = false)
+    @Column(name = "admission_date")
     private LocalDate admissionDate;
 
     @ManyToOne

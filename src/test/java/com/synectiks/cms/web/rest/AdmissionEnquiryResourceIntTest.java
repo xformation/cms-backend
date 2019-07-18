@@ -316,44 +316,6 @@ public class AdmissionEnquiryResourceIntTest {
 
     @Test
     @Transactional
-    public void checkDateOfBirthIsRequired() throws Exception {
-        int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
-        // set the field null
-        admissionEnquiry.setDateOfBirth(null);
-
-        // Create the AdmissionEnquiry, which fails.
-        AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);
-
-        restAdmissionEnquiryMockMvc.perform(post("/api/admission-enquiries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(admissionEnquiryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
-        assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkSexIsRequired() throws Exception {
-        int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
-        // set the field null
-        admissionEnquiry.setSex(null);
-
-        // Create the AdmissionEnquiry, which fails.
-        AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);
-
-        restAdmissionEnquiryMockMvc.perform(post("/api/admission-enquiries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(admissionEnquiryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
-        assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkCommentsIsRequired() throws Exception {
         int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
         // set the field null
@@ -396,82 +358,6 @@ public class AdmissionEnquiryResourceIntTest {
         int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
         // set the field null
         admissionEnquiry.setHighestQualification(null);
-
-        // Create the AdmissionEnquiry, which fails.
-        AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);
-
-        restAdmissionEnquiryMockMvc.perform(post("/api/admission-enquiries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(admissionEnquiryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
-        assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkModeOfEnquiryIsRequired() throws Exception {
-        int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
-        // set the field null
-        admissionEnquiry.setModeOfEnquiry(null);
-
-        // Create the AdmissionEnquiry, which fails.
-        AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);
-
-        restAdmissionEnquiryMockMvc.perform(post("/api/admission-enquiries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(admissionEnquiryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
-        assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
-        // set the field null
-        admissionEnquiry.setStatus(null);
-
-        // Create the AdmissionEnquiry, which fails.
-        AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);
-
-        restAdmissionEnquiryMockMvc.perform(post("/api/admission-enquiries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(admissionEnquiryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
-        assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkDescriptionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
-        // set the field null
-        admissionEnquiry.setDescription(null);
-
-        // Create the AdmissionEnquiry, which fails.
-        AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);
-
-        restAdmissionEnquiryMockMvc.perform(post("/api/admission-enquiries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(admissionEnquiryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
-        assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkEnquiryDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = admissionEnquiryRepository.findAll().size();
-        // set the field null
-        admissionEnquiry.setEnquiryDate(null);
 
         // Create the AdmissionEnquiry, which fails.
         AdmissionEnquiryDTO admissionEnquiryDTO = admissionEnquiryMapper.toDto(admissionEnquiry);

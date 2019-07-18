@@ -494,8 +494,8 @@ enum GradeType{
 
 
 entity AdmissionApplication{
-    admissionStatus AdmissionStatusEnum required
-    studentName String required
+    admissionStatus AdmissionStatusEnum
+    studentName String
     studentMiddleName String
     studentLastName String
     fatherName String
@@ -504,17 +504,17 @@ entity AdmissionApplication{
     motherName String
     motherMiddleName String
     motherLastName String
-    contactNumber String required
+    contactNumber String
     alternateMobileNumber String
-    dateOfBirth LocalDate required
+    dateOfBirth LocalDate
     email String
-    sex Gender required
+    sex Gender
     comments String
-    applicationId Integer required
-    uploadPhoto String required
-    course CourseEnum required
-    admissionDate LocalDate required
-    comments String required
+    applicationId Integer
+    uploadPhoto String
+    course CourseEnum
+    admissionDate LocalDate
+    comments String
 }
 
 
@@ -530,16 +530,16 @@ entity AdmissionEnquiry {
     motherLastName String
     contactNumber String required
     alternateMobileNumber String
-    dateOfBirth LocalDate required
+    dateOfBirth LocalDate
     email String
-    sex Gender required
+    sex Gender
     comments String required
     courseApplyingFor CourseEnum required
     highestQualification String required
-    modeOfEnquiry ModeOfEnquiry required
-    status EnquiryStatus required
-    description String required
-    enquiryDate LocalDate required
+    modeOfEnquiry ModeOfEnquiry
+    status EnquiryStatus
+    description String
+    enquiryDate LocalDate
     updatedOn LocalDate
     updatedBy String
 }

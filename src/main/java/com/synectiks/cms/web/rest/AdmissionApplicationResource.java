@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -44,7 +43,7 @@ public class AdmissionApplicationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/admission-applications")
-    public ResponseEntity<AdmissionApplicationDTO> createAdmissionApplication(@Valid @RequestBody AdmissionApplicationDTO admissionApplicationDTO) throws URISyntaxException {
+    public ResponseEntity<AdmissionApplicationDTO> createAdmissionApplication(@RequestBody AdmissionApplicationDTO admissionApplicationDTO) throws URISyntaxException {
         log.debug("REST request to save AdmissionApplication : {}", admissionApplicationDTO);
         if (admissionApplicationDTO.getId() != null) {
             throw new BadRequestAlertException("A new admissionApplication cannot already have an ID", ENTITY_NAME, "idexists");
@@ -65,7 +64,7 @@ public class AdmissionApplicationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/admission-applications")
-    public ResponseEntity<AdmissionApplicationDTO> updateAdmissionApplication(@Valid @RequestBody AdmissionApplicationDTO admissionApplicationDTO) throws URISyntaxException {
+    public ResponseEntity<AdmissionApplicationDTO> updateAdmissionApplication(@RequestBody AdmissionApplicationDTO admissionApplicationDTO) throws URISyntaxException {
         log.debug("REST request to update AdmissionApplication : {}", admissionApplicationDTO);
         if (admissionApplicationDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

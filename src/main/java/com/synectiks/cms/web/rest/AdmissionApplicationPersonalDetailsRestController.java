@@ -56,7 +56,12 @@ public class AdmissionApplicationPersonalDetailsRestController {
         a.setEmail(cmsAdmissionApplicationVo.getEmail());
         a.setSex(cmsAdmissionApplicationVo.getSex());
         a.setCountry(c);
-        AdmissionApplication result = admissionApplicationRepository.save(a);
+        AdmissionApplication result = null;
+        try {
+            result = admissionApplicationRepository.save(a);
+        }catch(Exception e) {
+            logger.error("Exception : "+e.getMessage(),e);
+        }
         cmsAdmissionApplicationVo.setId(result.getId());
         return ResponseEntity.created(new URI("/api/cmsadmissionApplications" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

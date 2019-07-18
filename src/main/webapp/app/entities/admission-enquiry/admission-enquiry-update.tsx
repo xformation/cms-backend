@@ -200,15 +200,7 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                   <Label id="dateOfBirthLabel" for="dateOfBirth">
                     Date Of Birth
                   </Label>
-                  <AvField
-                    id="admission-enquiry-dateOfBirth"
-                    type="date"
-                    className="form-control"
-                    name="dateOfBirth"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-enquiry-dateOfBirth" type="date" className="form-control" name="dateOfBirth" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="emailLabel" for="email">
@@ -303,28 +295,13 @@ export class AdmissionEnquiryUpdate extends React.Component<IAdmissionEnquiryUpd
                   <Label id="descriptionLabel" for="description">
                     Description
                   </Label>
-                  <AvField
-                    id="admission-enquiry-description"
-                    type="text"
-                    name="description"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-enquiry-description" type="text" name="description" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="enquiryDateLabel" for="enquiryDate">
                     Enquiry Date
                   </Label>
-                  <AvField
-                    id="admission-enquiry-enquiryDate"
-                    type="date"
-                    className="form-control"
-                    name="enquiryDate"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                  <AvField id="admission-enquiry-enquiryDate" type="date" className="form-control" name="enquiryDate" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="updatedOnLabel" for="updatedOn">
