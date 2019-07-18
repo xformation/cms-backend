@@ -1,15 +1,19 @@
 package com.synectiks.cms.business.service.exam;
 
-import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.TypeOfGrading;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class SummaryDataService {
@@ -19,6 +23,9 @@ public class SummaryDataService {
 
     @Autowired
     AcademicYearRepository academicYearRepository;
+
+    @Autowired
+    TypeOfGradingRepository typeOfGradingRepository;
 
     public List<AcExamSetting> acExamSettings() {
         List<AcExamSetting> original = new ArrayList<>();
@@ -81,8 +88,14 @@ public class SummaryDataService {
 //       academicYearRepository.find
 //    }
 
-
+    public List<TypeOfGrading> findTypeOfGradingOnNextId(Long nextId){
+        List<TypeOfGrading> original = new ArrayList<>();
+        typeOfGradingRepository.findAll().forEach(typeofgrading -> {
+            TypeOfGrading settingModel = new TypeOfGrading();
+            BeanUtils.copyProperties(typeofgrading, settingModel);
+            original.add(settingModel);
+           });
+        return original;
+    }
 
 }
-
-

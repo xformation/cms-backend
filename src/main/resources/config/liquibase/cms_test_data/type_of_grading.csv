@@ -1,4 +1,4 @@
-id;min_marks;max_marks;grades;next_id
-7534;91;100;Aplus;123
-8795;81;90;A;124
-3687;71;80;Bplus;125
+id;min_marks;max_marks;grades;groupvalue
+7534;91;100;Aplus;1
+8795;81;90;A;2
+3687;71;80;Bplus;3

@@ -122,14 +122,7 @@ enum SemesterEnum{
     SEMESTER7
     SEMESTER8
 }
-enum GradesEnum{
-    Aplus
-    A
-    Bplus
-    B
-    Cplus
-    C
-}
+
 enum GradeType{
     PERCENTAGE
     GRADE
@@ -267,7 +260,7 @@ type Query {
 
   acExamSetting(id:Long!):AcExamSetting!
   acExamSettings:[AcExamSetting!]!
-
+  findTypeOfGradingOnNextId(nextId:Long!):[TypeOfGrading!]!
 
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
@@ -437,7 +430,12 @@ type AcExamSetting{
     subExamDate: String!
    }
 
-
+type TypeOfGradingPojo{
+    minMarks:Long!
+    maxMarks: String!
+    grades: String!
+    next: String!
+   }
 type StudentFilterDataCache {
 	branches: [Branch]
 	departments: [Department]
@@ -641,7 +639,7 @@ type TypeOfGrading{
     minMarks: Int!
     maxMarks: Int!
     grades: String!
-    nextId: Long!
+    groupvalue: Long!
 }
 
 type City{
@@ -1071,6 +1069,7 @@ type AcademicExamSetting{
     total: Int!
     passing: Int!
     actions: String!
+    groupvalue: Long!
     department: Department!
     section: Section!
     subject: Subject!
@@ -1784,7 +1783,7 @@ input UpdateTypeOfGradingInput {
     minMarks: Int!
     maxMarks: Int!
     grades: String!
-    nextId: Long!
+    groupvalue: Long!
 }
 
 type UpdateTypeOfGradingPayload {
@@ -1807,6 +1806,7 @@ input AddAcademicExamSettingInput{
     total: Int!
     passing: Int!
     actions: String!
+    groupvalue: Long!
     departmentId: Long!
     sectionId: Long!
     subjectId: Long!
@@ -1814,6 +1814,7 @@ input AddAcademicExamSettingInput{
     batchId: Long!
     branchId: Long!
     typeOfGradingId: Long!
+
 }
 
 type AddAcademicExamSettingPayload {
@@ -1830,6 +1831,7 @@ input UpdateAcademicExamSettingInput {
     total: Int!
     passing: Int!
     actions: String!
+    groupvalue: Long!
     departmentId: Long!
     sectionId: Long!
     subjectId: Long!

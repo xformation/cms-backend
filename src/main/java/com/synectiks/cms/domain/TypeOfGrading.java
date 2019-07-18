@@ -40,8 +40,8 @@ public class TypeOfGrading implements Serializable {
     private String grades;
 
     @NotNull
-    @Column(name = "next_id", nullable = false)
-    private Long nextId;
+    @Column(name = "groupvalue", nullable = false)
+    private Long groupvalue;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -91,17 +91,17 @@ public class TypeOfGrading implements Serializable {
         this.grades = grades;
     }
 
-    public Long getNextId() {
-        return nextId;
+    public Long getGroupvalue() {
+        return groupvalue;
     }
 
-    public TypeOfGrading nextId(Long nextId) {
-        this.nextId = nextId;
+    public TypeOfGrading groupvalue(Long groupvalue) {
+        this.groupvalue = groupvalue;
         return this;
     }
 
-    public void setNextId(Long nextId) {
-        this.nextId = nextId;
+    public void setGroupvalue(Long groupvalue) {
+        this.groupvalue = groupvalue;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -132,7 +132,7 @@ public class TypeOfGrading implements Serializable {
             ", minMarks=" + getMinMarks() +
             ", maxMarks=" + getMaxMarks() +
             ", grades='" + getGrades() + "'" +
-            ", nextId=" + getNextId() +
+            ", groupvalue=" + getGroupvalue() +
             "}";
     }
 }

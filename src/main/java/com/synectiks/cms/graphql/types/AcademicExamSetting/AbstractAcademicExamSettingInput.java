@@ -17,6 +17,7 @@ public class AbstractAcademicExamSettingInput {
     private Integer total;
     private Integer passing;
     private String actions;
+    private Long groupvalue;
 
     public Long getId() {
         return id;
@@ -98,6 +99,14 @@ public class AbstractAcademicExamSettingInput {
         this.examName = examName;
     }
 
+    public Long getGroupvalue() {
+        return groupvalue;
+    }
+
+    public void setGroupvalue(Long groupvalue) {
+        this.groupvalue = groupvalue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,12 +121,13 @@ public class AbstractAcademicExamSettingInput {
             gradeType == that.gradeType &&
             Objects.equals(total, that.total) &&
             Objects.equals(passing, that.passing) &&
-            Objects.equals(actions, that.actions);
+            Objects.equals(actions, that.actions) &&
+            Objects.equals(groupvalue, that.groupvalue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, examName, semester, examDate, startTime, endTime, gradeType, total, passing, actions);
+        return Objects.hash(id, examName, semester, examDate, startTime, endTime, gradeType, total, passing, actions, groupvalue);
     }
 
     @Override
@@ -133,6 +143,7 @@ public class AbstractAcademicExamSettingInput {
             ", total=" + total +
             ", passing=" + passing +
             ", actions='" + actions + '\'' +
+            ", groupvalue=" + groupvalue +
             '}';
     }
 }

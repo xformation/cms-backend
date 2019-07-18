@@ -67,6 +67,7 @@ public class AddAcademicExamSettingInput extends AbstractAcademicExamSettingInpu
         this.typeOfGradingId = typeOfGradingId;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

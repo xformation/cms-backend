@@ -311,6 +311,7 @@ entity AcademicExamSetting {
     total Integer required
     passing Integer required
     actions String
+    groupvalue Long
 }
 entity BankAccounts{
 nameOfBank NameOfBank required
@@ -556,7 +557,7 @@ entity TypeOfGrading{
     minMarks  Integer required
     maxMarks Integer required
     grades String required
-    nextId Long required
+    groupvalue Long required
 }
 
 enum RouteFrequency{

@@ -15,77 +15,37 @@
  */
 package com.synectiks.cms.graphql.resolvers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.synectiks.cms.business.service.CmsAdmissionApplicationService;
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.filter.Book.BookfilterProcessor;
-import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
-import com.synectiks.cms.repository.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
+import com.synectiks.cms.business.service.CmsAdmissionApplicationService;
 import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
 import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.filter.Book.BookfilterProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
+import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
 import com.synectiks.cms.filter.common.CommonGraphiqlFilter;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.summary.SummaryFilter;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AcademicHistoryRepository;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AdminAttendanceRepository;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.CompetitiveExamRepository;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.repository.DueDateRepository;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.FeeCategoryRepository;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.LateFeeRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.LegalEntitySelectRepository;
-import com.synectiks.cms.repository.PaymentRemainderRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentExamReportRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
+import com.synectiks.cms.repository.*;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Query Resolver for CMS Queries
@@ -364,6 +324,9 @@ public class Query implements GraphQLQueryResolver {
    public List<AcExamSetting> acExamSettings(){
 
         return  Lists.newArrayList(summaryFilter.acExamSettings());
+    }
+    public List<TypeOfGrading> findTypeOfGradingOnNextId(Long nextId){
+        return summaryFilter.findTypeOfGradingOnNextId(nextId);
     }
 
 
@@ -805,7 +768,6 @@ public class Query implements GraphQLQueryResolver {
         List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
         List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
         List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
-
         List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
 

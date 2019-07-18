@@ -69,6 +69,9 @@ public class AcademicExamSetting implements Serializable {
     @Column(name = "actions")
     private String actions;
 
+    @Column(name = "groupvalue")
+    private Long groupvalue;
+
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
     private Branch branch;
@@ -223,6 +226,19 @@ public class AcademicExamSetting implements Serializable {
         this.actions = actions;
     }
 
+    public Long getGroupvalue() {
+        return groupvalue;
+    }
+
+    public AcademicExamSetting groupvalue(Long groupvalue) {
+        this.groupvalue = groupvalue;
+        return this;
+    }
+
+    public void setGroupvalue(Long groupvalue) {
+        this.groupvalue = groupvalue;
+    }
+
     public Branch getBranch() {
         return branch;
     }
@@ -348,6 +364,7 @@ public class AcademicExamSetting implements Serializable {
             ", total=" + getTotal() +
             ", passing=" + getPassing() +
             ", actions='" + getActions() + "'" +
+            ", groupvalue=" + getGroupvalue() +
             "}";
     }
 }

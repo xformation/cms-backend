@@ -64,4 +64,5 @@ public class UpdateAcademicExamSettingInput extends AbstractAcademicExamSettingI
     public void setTypeOfGradingId(Long typeOfGradingId) {
         this.typeOfGradingId = typeOfGradingId;
     }
+
 }

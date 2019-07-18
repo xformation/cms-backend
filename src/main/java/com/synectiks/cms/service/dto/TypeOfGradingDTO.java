@@ -20,7 +20,7 @@ public class TypeOfGradingDTO implements Serializable {
     private String grades;
 
     @NotNull
-    private Long nextId;
+    private Long groupvalue;
 
 
     public Long getId() {
@@ -55,12 +55,12 @@ public class TypeOfGradingDTO implements Serializable {
         this.grades = grades;
     }
 
-    public Long getNextId() {
-        return nextId;
+    public Long getGroupvalue() {
+        return groupvalue;
     }
 
-    public void setNextId(Long nextId) {
-        this.nextId = nextId;
+    public void setGroupvalue(Long groupvalue) {
+        this.groupvalue = groupvalue;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class TypeOfGradingDTO implements Serializable {
             ", minMarks=" + getMinMarks() +
             ", maxMarks=" + getMaxMarks() +
             ", grades='" + getGrades() + "'" +
-            ", nextId=" + getNextId() +
+            ", groupvalue=" + getGroupvalue() +
             "}";
     }
 }
