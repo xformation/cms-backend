@@ -83,7 +83,7 @@ public class AdmissionApplicationPersonalDetailsRestController {
         logger.info("REST request to update existing personal details.", cmsAdmissionApplicationVo);
         if (cmsAdmissionApplicationVo.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
+        } 
         AdmissionApplication a = new AdmissionApplication();
         Country c = this.countryRepository.findById(cmsAdmissionApplicationVo.getCountryId()).get();
         a.setStudentName(cmsAdmissionApplicationVo.getStudentName());
