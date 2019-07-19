@@ -24,6 +24,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     private String st;
     private String ed;
     private String subExamDate;
+    private Long countvalue;
 
     public AcExamSetting() { }
 
@@ -126,13 +127,22 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
 
     public void setSubExamDate(String subExamDate) {this.subExamDate = subExamDate;}
 
+    public Long getCountvalue() {
+        return countvalue;
+    }
+
+    public void setCountvalue(Long countvalue) {
+        this.countvalue = countvalue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcExamSetting that = (AcExamSetting) o;
         return examName.equals(that.examName) &&
-            departmnt.equals(that.departmnt) && bctch.equals(that.bctch);
+            departmnt.equals(that.departmnt) && bctch.equals(that.bctch)
+            && countvalue.equals((this.countvalue));
     }
 
 
@@ -142,7 +152,7 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     }
 
 
-    public AcExamSetting(Long id, String examName, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action,  Date examDate, String st, String ed, String subExamDate) {
+    public AcExamSetting(Long id, String examName, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action,  Date examDate, String st, String ed, String subExamDate, Long countvalue) {
         this.id=id;
         this.examName = examName;
         this.departmnt = departmnt;
@@ -151,11 +161,11 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.brnch = brnch;
         this.action = action;
         this.sbjct = sbjct;
-
         this.examDate = examDate;
         this.st = st;
         this.ed = ed;
         this.subExamDate= subExamDate;
+        this.countvalue= countvalue;
     }
 
        @Override
@@ -169,63 +179,63 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     public AcExamSetting merge(AcExamSetting other) {
         assert (this.equals(other));
 
-        String str =this.sbjct+","+other.sbjct;
-        String[] strWords = str.split("\\,+");
-        Arrays.sort(strWords);
-        LinkedHashSet<String> lhSetWords
-            = new LinkedHashSet<String>( Arrays.asList(strWords) );
+        String sub1 =this.sbjct+","+other.sbjct;
+//        String[] strWords = str.split("\\,+");
+//        Arrays.sort(strWords);
+//        LinkedHashSet<String> lhSetWords
+//            = new LinkedHashSet<String>( Arrays.asList(strWords) );
+//
+//        StringBuilder sbTemp = new StringBuilder();
+//        int index = 0;
+//
+//        for(String s : lhSetWords){
+//
+//            if(index > 0)
+//                sbTemp.append(",");
+//
+//            sbTemp.append(s);
+//            index++;
+//        }
+//        str = sbTemp.toString();
 
-        StringBuilder sbTemp = new StringBuilder();
-        int index = 0;
 
-        for(String s : lhSetWords){
-
-            if(index > 0)
-                sbTemp.append(",");
-
-            sbTemp.append(s);
-            index++;
-        }
-        str = sbTemp.toString();
-
-
-        String str1 =this.sectn+","+other.sectn;
-        String[] strWords1 = str1.split("\\,+");
-        Arrays.sort(strWords1);
-        LinkedHashSet<String> lhSetWords1
-            = new LinkedHashSet<String>( Arrays.asList(strWords1) );
-
-        StringBuilder sbTemp1 = new StringBuilder();
-        int index1 = 0;
-
-        for(String s1 : lhSetWords1){
-
-            if(index1 > 0)
-                sbTemp1.append(",");
-
-            sbTemp1.append(s1);
-            index1++;
-        }
-        str1 = sbTemp1.toString();
+        String sec1 =this.sectn+","+other.sectn;
+//        String[] strWords1 = str1.split("\\,+");
+//        Arrays.sort(strWords1);
+//        LinkedHashSet<String> lhSetWords1
+//            = new LinkedHashSet<String>( Arrays.asList(strWords1) );
+//
+//        StringBuilder sbTemp1 = new StringBuilder();
+//        int index1 = 0;
+//
+//        for(String s1 : lhSetWords1){
+//
+//            if(index1 > 0)
+//                sbTemp1.append(",");
+//
+//            sbTemp1.append(s1);
+//            index1++;
+//        }
+//        str1 = sbTemp1.toString();
 
         String ids =this.action+","+other.action;
-        String[] idsWords = ids.split("\\,+");
-        Arrays.sort(idsWords);
-        LinkedHashSet<String> idslhSetWords
-            = new LinkedHashSet<String>( Arrays.asList(idsWords) );
-
-        StringBuilder idsbTemp = new StringBuilder();
-        int idsindex = 0;
-
-        for(String sids : idslhSetWords){
-
-            if(idsindex > 0)
-                idsbTemp.append(",");
-
-            idsbTemp.append(sids);
-            idsindex++;
-        }
-        ids = idsbTemp.toString();
+//        String[] idsWords = ids.split("\\,+");
+//        Arrays.sort(idsWords);
+//        LinkedHashSet<String> idslhSetWords
+//            = new LinkedHashSet<String>( Arrays.asList(idsWords) );
+//
+//        StringBuilder idsbTemp = new StringBuilder();
+//        int idsindex = 0;
+//
+//        for(String sids : idslhSetWords){
+//
+//            if(idsindex > 0)
+//                idsbTemp.append(",");
+//
+//            idsbTemp.append(sids);
+//            idsindex++;
+//        }
+//        ids = idsbTemp.toString();
 
         String strSubExam =this.subExamDate+","+other.subExamDate;
         String[] strSubExamWords = strSubExam.split("\\,+");
@@ -251,14 +261,14 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             this.departmnt,
             this.brnch,
             this.bctch,
-            sectn=str1,
-            this.sbjct=str,
+            this.sectn=sec1,
+            this.sbjct=sub1,
             this.action=ids,
             this.examDate,
             this.st=sdf.format(this.examDate),
             this.ed=sdf.format(other.examDate),
-            this.subExamDate=strSubExam
-
+            this.subExamDate=strSubExam,
+            this.countvalue=countvalue
 
             //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
 

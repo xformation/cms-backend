@@ -1,10 +1,7 @@
 package com.synectiks.cms.business.service.exam;
 
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.repository.*;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +23,21 @@ public class SummaryDataService {
 
     @Autowired
     TypeOfGradingRepository typeOfGradingRepository;
+
+    @Autowired
+    SubjectRepository subjectRepository;
+
+    @Autowired
+    BatchRepository batchRepository;
+
+    @Autowired
+    SectionRepository sectionRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+    @Autowired
+    BranchRepository branchRepository;
 
     public List<AcExamSetting> acExamSettings() {
         List<AcExamSetting> original = new ArrayList<>();
@@ -84,11 +96,19 @@ public class SummaryDataService {
 
     }
 
-//    public AcExamSetting acExamSetting(String action) {
-//       academicYearRepository.find
-//    }
+    public List<AcademicExamSetting> findExamValuesOnGroupvalue(Long countvalue){
+        List<AcademicExamSetting> original = new ArrayList<>();
+        examSettingRepo.findAll().forEach(exams -> {
+//            Branch branch = branchRepository.findById(original.getBranchId()).get();
+            AcademicExamSetting settingModel = new AcademicExamSetting();
+            BeanUtils.copyProperties(exams, settingModel);
+            settingModel.setActions(exams.getExamDate().toString());
 
-    public List<TypeOfGrading> findTypeOfGradingOnNextId(Long nextId){
+            original.add(settingModel);
+        });
+        return original;
+    }
+    public List<TypeOfGrading> findTypeOfGradingOnNextId(Long groupvalue){
         List<TypeOfGrading> original = new ArrayList<>();
         typeOfGradingRepository.findAll().forEach(typeofgrading -> {
             TypeOfGrading settingModel = new TypeOfGrading();

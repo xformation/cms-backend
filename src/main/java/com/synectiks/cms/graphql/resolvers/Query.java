@@ -325,9 +325,11 @@ public class Query implements GraphQLQueryResolver {
 
         return  Lists.newArrayList(summaryFilter.acExamSettings());
     }
-    public List<TypeOfGrading> findTypeOfGradingOnNextId(Long nextId){
-        return summaryFilter.findTypeOfGradingOnNextId(nextId);
+    public List<TypeOfGrading> findTypeOfGradingOnNextId(Long groupvalue){
+        return summaryFilter.findTypeOfGradingOnNextId(groupvalue);
     }
+    public List<AcademicExamSetting> findExamValuesOnGroupvalue(Long countvalue){
+        return summaryFilter.findExamValuesOnGroupvalue(countvalue);}
 
 
 

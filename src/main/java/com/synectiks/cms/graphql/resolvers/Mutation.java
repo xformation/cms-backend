@@ -543,7 +543,7 @@ public class Mutation implements GraphQLMutationResolver {
     public AddAcademicExamSettingPayload addAcademicExamSetting(List<AddAcademicExamSettingInput> list) {
         AcademicExamSetting academicExamSetting = null;
         int countvalue = getCountvalueId()+1;
-        for(AddAcademicExamSettingInput input: list ){
+        for(AddAcademicExamSettingInput input: list ) {
             Branch branch = branchRepository.findById(input.getBranchId()).get();
             Subject subject = subjectRepository.findById(input.getSubjectId()).get();
             AcademicYear academicYear = academicYearRepository.findById(input.getAcademicyearId()).get();

@@ -260,7 +260,9 @@ type Query {
 
   acExamSetting(id:Long!):AcExamSetting!
   acExamSettings:[AcExamSetting!]!
-  findTypeOfGradingOnNextId(nextId:Long!):[TypeOfGrading!]!
+  findTypeOfGradingOnNextId(groupvalue:Long!):[TypeOfGrading!]!
+ findExamValuesOnGroupvalue(countvalue: Long!):[AcademicExamSetting!]!
+
 
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
@@ -428,6 +430,7 @@ type AcExamSetting{
     st: String!
     ed: String!
     subExamDate: String!
+    countvalue: Long!
    }
 
 type TypeOfGradingPojo{
