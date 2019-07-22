@@ -401,6 +401,7 @@ type ExamFilterDataCache {
 	sections: [Section]
 	semesters: [CmsSemesterVo]
 	subjects: [Subject]
+	academicExamSettings : [AcademicExamSetting]
 
 }
 type FeeDataCache {

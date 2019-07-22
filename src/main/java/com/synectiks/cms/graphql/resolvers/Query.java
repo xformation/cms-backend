@@ -769,6 +769,7 @@ public class Query implements GraphQLQueryResolver {
         List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
         List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
         List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
+        List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(departmentList, batchList);
         List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
         List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
@@ -776,6 +777,7 @@ public class Query implements GraphQLQueryResolver {
         ExamFilterDataCache cache = new ExamFilterDataCache();
         cache.setDepartments(departmentList);
         cache.setBatches(batchList);
+        cache.setAcademicExamSettings(examsList);
         cache.setBranches(branchList);
         cache.setSections(sectionList);
         cache.setSemesters(sem);

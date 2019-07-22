@@ -10,6 +10,7 @@ public class ExamFilterDataCache {
     private List<CmsSemesterVo> semesters;
     private List<Branch> branches;
     private List<Subject> subjects;
+    private List<AcademicExamSetting> academicExamSettings;
 
     public List<Department> getDepartments() {
         return departments;
@@ -56,5 +57,13 @@ public class ExamFilterDataCache {
 
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public List<AcademicExamSetting> getAcademicExamSettings() {
+        return academicExamSettings;
+    }
+
+    public void setAcademicExamSettings(List<AcademicExamSetting> academicExamSettings) {
+        this.academicExamSettings = academicExamSettings;
     }
 }

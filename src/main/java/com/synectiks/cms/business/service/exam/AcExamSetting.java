@@ -200,23 +200,23 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
 
 
         String sec1 =this.sectn+","+other.sectn;
-//        String[] strWords1 = str1.split("\\,+");
-//        Arrays.sort(strWords1);
-//        LinkedHashSet<String> lhSetWords1
-//            = new LinkedHashSet<String>( Arrays.asList(strWords1) );
-//
-//        StringBuilder sbTemp1 = new StringBuilder();
-//        int index1 = 0;
-//
-//        for(String s1 : lhSetWords1){
-//
-//            if(index1 > 0)
-//                sbTemp1.append(",");
-//
-//            sbTemp1.append(s1);
-//            index1++;
-//        }
-//        str1 = sbTemp1.toString();
+        String[] strWords1 = sec1.split("\\,+");
+        Arrays.sort(strWords1);
+        LinkedHashSet<String> lhSetWords1
+            = new LinkedHashSet<String>( Arrays.asList(strWords1) );
+
+        StringBuilder sbTemp1 = new StringBuilder();
+        int index1 = 0;
+
+        for(String s1 : lhSetWords1){
+
+            if(index1 > 0)
+                sbTemp1.append(",");
+
+            sbTemp1.append(s1);
+            index1++;
+        }
+        sec1 = sbTemp1.toString();
 
         String ids =this.action+","+other.action;
 //        String[] idsWords = ids.split("\\,+");

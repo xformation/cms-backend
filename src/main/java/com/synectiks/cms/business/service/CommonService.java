@@ -19,6 +19,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
+import com.synectiks.cms.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,32 +27,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsCourseEnumVo;
-import com.synectiks.cms.domain.CmsFacility;
-import com.synectiks.cms.domain.CmsFeeCategory;
-import com.synectiks.cms.domain.CmsFeeDetails;
-import com.synectiks.cms.domain.CmsGenderVo;
-import com.synectiks.cms.domain.CmsSemesterVo;
-import com.synectiks.cms.domain.CmsStudentTypeVo;
-import com.synectiks.cms.domain.CmsTermVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
@@ -499,6 +474,37 @@ public class CommonService {
         logger.debug("Returning list of sections from JPA criteria query. Total records : "+secList.size());
         return secList;
     }
+
+    public List<AcademicExamSetting> getExamsForCriteria(List<Department> dept, List<Batch> batch){
+        if(dept.size() == 0 || batch.size() == 0 ) {
+            logger.warn("Either department or batch list is empty. Returning empty AcademicExamSetting list.");
+            logger.warn("Total records in department list: "+dept.size()+", total records in batch list: "+batch.size());
+            return Collections.emptyList();
+        }
+
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<AcademicExamSetting> query = cb.createQuery(AcademicExamSetting.class);
+        Root<AcademicExamSetting> root = query.from(AcademicExamSetting.class);
+        In<Long> inDepartment = cb.in(root.get("department"));
+        for (Department dt : dept) {
+            inDepartment.value(dt.getId());
+        }
+        In<Long> inBatch = cb.in(root.get("batch"));
+        for (Batch bth : batch) {
+            inBatch.value(bth.getId());
+        }
+//        In<Long> inSection = cb.in(root.get("section"));
+//        for (Section sec : secList) {
+//            inSection.value(sec.getId());
+//        }
+        CriteriaQuery<AcademicExamSetting> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch));
+        TypedQuery<AcademicExamSetting> typedQuery = this.entityManager.createQuery(select);
+        List<AcademicExamSetting> examsList = typedQuery.getResultList();
+        logger.debug("Returning list of exams from JPA criteria query. Total records : "+examsList.size());
+        return examsList;
+    }
+
+
 
     public List<Teach> getTeachForCriteria(List<Subject> subjectList, Long teacherId){
         if(subjectList.size() == 0) {
