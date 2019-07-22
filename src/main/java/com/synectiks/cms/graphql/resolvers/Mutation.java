@@ -32,6 +32,10 @@ import com.synectiks.cms.graphql.types.AcademicYear.*;
 import com.synectiks.cms.graphql.types.AdminAttendance.*;
 import com.synectiks.cms.graphql.types.AdmissionApplication.*;
 import com.synectiks.cms.graphql.types.AdmissionEnquiry.*;
+import com.synectiks.cms.graphql.types.AdmissionPersonalDetails.AddAdmissionPersonalDetailsInput;
+import com.synectiks.cms.graphql.types.AdmissionPersonalDetails.RemoveAdmissionPersonalDetailsInput;
+import com.synectiks.cms.graphql.types.AdmissionPersonalDetails.RemoveAdmissionPersonalDetailsPayload;
+import com.synectiks.cms.graphql.types.AdmissionPersonalDetails.UpdateAdmissionPersonalDetailsInput;
 import com.synectiks.cms.graphql.types.AttendanceMaster.*;
 import com.synectiks.cms.graphql.types.AuthorizedSignatory.*;
 import com.synectiks.cms.graphql.types.BankAccounts.*;
@@ -373,7 +377,7 @@ public class Mutation implements GraphQLMutationResolver {
         admissionApplication.setMotherLastName(addAdmissionApplicationInput.getMotherLastName());
         admissionApplication.setContactNumber(addAdmissionApplicationInput.getContactNumber());
         admissionApplication.setAlternateMobileNumber(addAdmissionApplicationInput.getAlternateMobileNumber());
-        admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getAdmissionDate()));
+        admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getDateOfBirth()));
         admissionApplication.setEmail(addAdmissionApplicationInput.getEmail());
         admissionApplication.setSex(addAdmissionApplicationInput.getSex());
         admissionApplication.setCourse(addAdmissionApplicationInput.getCourse());
@@ -2789,6 +2793,96 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveFeeDetailsPayload(Lists.newArrayList(feeDetailsRepository.findAll()));
     }
 
+    public CmsAdmissionApplicationVo addAdmissionPersonaldetails(AddAdmissionPersonalDetailsInput addAdmissionPersonalDetailsInput) {
+
+        Country country = countryRepository.findById(addAdmissionPersonalDetailsInput.getCountryId()).get();
+
+        final AdmissionApplication admissionApplication = new AdmissionApplication();
+        admissionApplication.setStudentName(addAdmissionPersonalDetailsInput.getStudentName());
+        admissionApplication.setStudentMiddleName(addAdmissionPersonalDetailsInput.getStudentMiddleName());
+        admissionApplication.setStudentLastName(addAdmissionPersonalDetailsInput.getStudentLastName());
+        admissionApplication.setFatherName(addAdmissionPersonalDetailsInput.getFatherName());
+        admissionApplication.setFatherMiddleName(addAdmissionPersonalDetailsInput.getFatherMiddleName());
+        admissionApplication.setFatherLastName(addAdmissionPersonalDetailsInput.getFatherLastName());
+        admissionApplication.setMotherName(addAdmissionPersonalDetailsInput.getMotherName());
+        admissionApplication.setMotherMiddleName(addAdmissionPersonalDetailsInput.getMotherMiddleName());
+        admissionApplication.setMotherLastName(addAdmissionPersonalDetailsInput.getMotherLastName());
+        admissionApplication.setContactNumber(addAdmissionPersonalDetailsInput.getContactNumber());
+        admissionApplication.setAlternateMobileNumber(addAdmissionPersonalDetailsInput.getAlternateMobileNumber());
+        admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionPersonalDetailsInput.getDateOfBirth()));
+        admissionApplication.setEmail(addAdmissionPersonalDetailsInput.getEmail());
+        admissionApplication.setSex(addAdmissionPersonalDetailsInput.getSex());
+        admissionApplication.setCountry(country);
+        admissionApplicationRepository.save(admissionApplication);
+        CmsAdmissionApplicationVo caa = CommonUtil.createCopyProperties(admissionApplication, CmsAdmissionApplicationVo.class);
+       return caa;
+    }
+
+    public CmsAdmissionApplicationVo updateAdmissionPersonaldetails(UpdateAdmissionPersonalDetailsInput updateAdmissionPersonalDetailsInput) {
+        AdmissionApplication admissionApplication = admissionApplicationRepository.findById(updateAdmissionPersonalDetailsInput.getId()).get();
+
+
+        if (updateAdmissionPersonalDetailsInput.getStudentName() != null) {
+            admissionApplication.setStudentName(updateAdmissionPersonalDetailsInput.getStudentName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getStudentMiddleName() != null) {
+            admissionApplication.setStudentMiddleName(updateAdmissionPersonalDetailsInput.getStudentMiddleName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getStudentLastName() != null) {
+            admissionApplication.setStudentLastName(updateAdmissionPersonalDetailsInput.getStudentLastName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getFatherName() != null) {
+            admissionApplication.setFatherName(updateAdmissionPersonalDetailsInput.getFatherName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getFatherMiddleName() != null) {
+            admissionApplication.setFatherMiddleName(updateAdmissionPersonalDetailsInput.getFatherMiddleName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getFatherLastName() != null) {
+            admissionApplication.setFatherLastName(updateAdmissionPersonalDetailsInput.getFatherLastName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getMotherName() != null) {
+            admissionApplication.setMotherName(updateAdmissionPersonalDetailsInput.getMotherName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getMotherMiddleName() != null) {
+            admissionApplication.setMotherMiddleName(updateAdmissionPersonalDetailsInput.getMotherMiddleName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getMotherLastName() != null) {
+            admissionApplication.setMotherLastName(updateAdmissionPersonalDetailsInput.getMotherLastName());
+        }
+        if (updateAdmissionPersonalDetailsInput.getContactNumber() != null) {
+            admissionApplication.setContactNumber(updateAdmissionPersonalDetailsInput.getContactNumber());
+        }
+        if (updateAdmissionPersonalDetailsInput.getAlternateMobileNumber() != null) {
+            admissionApplication.setAlternateMobileNumber(updateAdmissionPersonalDetailsInput.getAlternateMobileNumber());
+        }
+        if (updateAdmissionPersonalDetailsInput.getDateOfBirth() != null) {
+            admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionPersonalDetailsInput.getDateOfBirth()));
+        }
+        if (updateAdmissionPersonalDetailsInput.getEmail() != null) {
+            admissionApplication.setEmail(updateAdmissionPersonalDetailsInput.getEmail());
+        }
+        if (updateAdmissionPersonalDetailsInput.getSex() != null) {
+            admissionApplication.setSex(updateAdmissionPersonalDetailsInput.getSex());
+        }
+
+        if (updateAdmissionPersonalDetailsInput.getCountryId() != null) {
+            Country country = countryRepository.findById(updateAdmissionPersonalDetailsInput.getCountryId()).get();
+            admissionApplication.setCountry(country);
+        }
+
+
+        admissionApplicationRepository.save(admissionApplication);
+
+        CmsAdmissionApplicationVo caa = CommonUtil.createCopyProperties(admissionApplication, CmsAdmissionApplicationVo.class);
+        return caa;
+    }
+
+    public RemoveAdmissionPersonalDetailsPayload removeAdmissionPersonalDetails(RemoveAdmissionPersonalDetailsInput removeAdmissionPersonalDetailsInput) {
+        AdmissionApplication admissionApplication = admissionApplicationRepository.findById(removeAdmissionPersonalDetailsInput.getAdmissionApplicationId()).get();
+
+        admissionApplicationRepository.delete(admissionApplication);
+        return new RemoveAdmissionPersonalDetailsPayload(Lists.newArrayList(admissionApplicationRepository.findAll()));
+    }
 
     public AddFacilityPayload addFacility(AddFacilityInput addFacilityInput) {
         final Branch branch = branchRepository.findById(addFacilityInput.getBranchId()).get();

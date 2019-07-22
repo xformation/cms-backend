@@ -1444,6 +1444,11 @@ type Mutation {
     updateFeeDetails(input: UpdateFeeDetailsInput!): UpdateFeeDetailsPayload!
     removeFeeDetails(input: RemoveFeeDetailsInput!): RemoveFeeDetailsPayload!
 
+    addAdmissionPersonaldetails(input: AddAdmissionPersonalDetailsInput): CmsAdmissionApplicationVo!
+    updateAdmissionPersonaldetails(input: UpdateAdmissionPersonalDetailsInput): CmsAdmissionApplicationVo!
+    removeAdmissionPersonalDetails(input: RemoveAdmissionPersonalDetailsInput!): RemoveAdmissionPersonalDetailsPayload!
+
+
    updateStudentAttendanceData(input: [StudentAttendanceUpdateFilter!]!): QueryResult!
    updateAcademicExamSettingData(input: [AcademicExamSettingUpdateFilter!]!): QueryResult!
 
@@ -2046,6 +2051,54 @@ input RemoveFeeCategoryInput {
 }
 type RemoveFeeCategoryPayload {
     feeCategories: [ FeeCategory!]!
+}
+
+input AddAdmissionPersonalDetailsInput {
+           studentName: String!
+           studentMiddleName: String!
+           studentLastName: String!
+           fatherName: String!
+           fatherMiddleName: String!
+           fatherLastName: String!
+           motherName: String!
+           motherMiddleName: String!
+           motherLastName: String!
+           contactNumber: String!
+           alternateMobileNumber: String!
+           dateOfBirth: Date!
+           email: String!
+           sex: Gender!
+           countryId: Long!
+}
+type AddAdmissionPersonalDetailsPayload {
+    admissionApplication: AdmissionApplication!
+}
+input UpdateAdmissionPersonalDetailsInput {
+      id: Long!
+      studentName: String!
+      studentMiddleName: String!
+      studentLastName: String!
+      fatherName: String!
+      fatherMiddleName: String!
+      fatherLastName: String!
+      motherName: String!
+      motherMiddleName: String!
+      motherLastName: String!
+      contactNumber: String!
+      alternateMobileNumber: String!
+      dateOfBirth: Date!
+      email: String!
+      sex: Gender!
+      countryId: Long!
+}
+type UpdateAdmissionPersonalDetailsPayload {
+    admissionApplication: AdmissionApplication!
+}
+input RemoveAdmissionPersonalDetailsInput {
+    admissionApplicationId: Long!
+}
+type RemoveAdmissionPersonalDetailsPayload {
+    admissionpersonaldetails: [AdmissionApplication!]!
 }
 
 input AddFeeDetailsInput {
