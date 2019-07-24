@@ -3,6 +3,7 @@ package com.synectiks.cms.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.cms.base64.file.Base64FileProcessor;
+import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.Frequency;
@@ -2232,12 +2233,13 @@ public class Mutation implements GraphQLMutationResolver {
         AcademicYear academicYear = academicYearRepository.findById(addStudentExamReportInput.getAcademicyearId()).get();
         Student student = studentRepository.findById(addStudentExamReportInput.getStudentId()).get();
         Batch batch = batchRepository.findById(addStudentExamReportInput.getBatchId()).get();
-
+        Department department = departmentRepository.findById(addStudentExamReportInput.getDepartmentId()).get();
         studentExamReport.setTypeOfGrading(typeOfGrading);
         studentExamReport.setAcademicyear(academicYear);
         studentExamReport.setAcademicExamSetting(academicExamSetting);
         studentExamReport.setBatch(batch);
         studentExamReport.setStudent(student);
+        studentExamReport.setDepartment(department);
         studentExamReport.setMarksObtained(addStudentExamReportInput.getMarksObtained());
         studentExamReport.setComments(addStudentExamReportInput.getComments());
         studentExamReport.setCreatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addStudentExamReportInput.getCreatedOn()));
@@ -2287,6 +2289,10 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentExamReportInput.getBatchId() != null) {
             final Batch batch = batchRepository.findById(updateStudentExamReportInput.getBatchId()).get();
             studentExamReport.setBatch(batch);
+        }
+        if (updateStudentExamReportInput.getDepartmentId() != null) {
+            final Department department = departmentRepository.findById(updateStudentExamReportInput.getDepartmentId()).get();
+            studentExamReport.setDepartment(department);
         }
         if (updateStudentExamReportInput.getTypeOfGradingId() != null) {
             final TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateStudentExamReportInput.getTypeOfGradingId()).get();
@@ -3565,6 +3571,13 @@ public class Mutation implements GraphQLMutationResolver {
         logger.debug("Total Subjects retrieved. "+list.size());
         return list;
     }
+
+    public List<StudentExamReport> getSubjectandStudents(ExamReportFilterInput filter) throws Exception {
+        List<StudentExamReport> list = this.examFilterProcessor.searchSubjectandStudents(filter);
+        logger.debug("Total Subjects retrieved. "+list.size());
+        return list;
+    }
+
 	@Transactional(propagation=Propagation.REQUIRED)
 	public QueryResult saveDueDatePaymentRemLateFee(UpdateDueDateInput udd, UpdatePaymentRemainderInput upr, UpdateLateFeeInput ulf) {
 		QueryResult qr = new QueryResult();

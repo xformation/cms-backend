@@ -723,6 +723,7 @@ type StudentExamReport{
     typeOfGrading: TypeOfGrading!
     academicyear: AcademicYear!
     batch: Batch!
+    department: Department!
 }
 
   type TransportRoute{
@@ -1541,6 +1542,7 @@ type Mutation {
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [Student]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
+	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getExamDataForAdmin(filter: ExamListFilterInput!): [DailyExamVo!]!
 	saveDueDatePaymentRemLateFee(inputd: UpdateDueDateInput, inputp: UpdatePaymentRemainderInput, inputl: UpdateLateFeeInput): QueryResult!
@@ -1606,18 +1608,24 @@ input StudentListFilterInput {
 }
 
 input ExamListFilterInput {
-	departmentId: String
-	batchId: String
-	semester: String
-	sectionId: String
-	examName: String
-	subjectId: String
-	branchId: String
-    subjectDesc: String
+    branchId:String!
+	  departmentId:String!
+	  batchId: String!
+	  sectionId: String!
+	  subjectId: String!
+	  subjectDesc: String!
+      semester: String!
+      examName: String!
 
 }
 
+input ExamReportFilterInput {
+	batchId: String!
+    academicExamSettingId: String!
+    departmentId: String!
 
+
+}
 input AddDocumentsInput{
     documentName: String!
     documentFilePath: String!
@@ -1943,6 +1951,7 @@ input AddStudentExamReportInput{
         typeOfGradingId: Long!
         academicyearId: Long!
         batchId: Long!
+        departmentId:Long!
 }
 
 type AddStudentExamReportPayload {
@@ -1961,6 +1970,7 @@ input UpdateStudentExamReportInput {
     typeOfGradingId: Long!
     academicyearId: Long!
     batchId: Long!
+    departmentId:Long!
 }
 
 type UpdateStudentExamReportPayload {

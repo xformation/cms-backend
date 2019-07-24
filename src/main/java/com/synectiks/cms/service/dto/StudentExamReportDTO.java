@@ -34,6 +34,8 @@ public class StudentExamReportDTO implements Serializable {
 
     private Long studentId;
 
+    private Long departmentId;
+
     private Long typeOfGradingId;
 
     private Long batchId;
@@ -112,6 +114,14 @@ public class StudentExamReportDTO implements Serializable {
         this.studentId = studentId;
     }
 
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public Long getTypeOfGradingId() {
         return typeOfGradingId;
     }
@@ -169,6 +179,7 @@ public class StudentExamReportDTO implements Serializable {
             ", updatedBy='" + getUpdatedBy() + "'" +
             ", academicExamSetting=" + getAcademicExamSettingId() +
             ", student=" + getStudentId() +
+            ", department=" + getDepartmentId() +
             ", typeOfGrading=" + getTypeOfGradingId() +
             ", batch=" + getBatchId() +
             ", academicyear=" + getAcademicyearId() +

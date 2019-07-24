@@ -8,11 +8,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity StudentExamReport and its DTO StudentExamReportDTO.
  */
-@Mapper(componentModel = "spring", uses = {AcademicExamSettingMapper.class, StudentMapper.class, TypeOfGradingMapper.class, BatchMapper.class, AcademicYearMapper.class})
+@Mapper(componentModel = "spring", uses = {AcademicExamSettingMapper.class, StudentMapper.class, DepartmentMapper.class, TypeOfGradingMapper.class, BatchMapper.class, AcademicYearMapper.class})
 public interface StudentExamReportMapper extends EntityMapper<StudentExamReportDTO, StudentExamReport> {
 
     @Mapping(source = "academicExamSetting.id", target = "academicExamSettingId")
     @Mapping(source = "student.id", target = "studentId")
+    @Mapping(source = "department.id", target = "departmentId")
     @Mapping(source = "typeOfGrading.id", target = "typeOfGradingId")
     @Mapping(source = "batch.id", target = "batchId")
     @Mapping(source = "academicyear.id", target = "academicyearId")
@@ -20,6 +21,7 @@ public interface StudentExamReportMapper extends EntityMapper<StudentExamReportD
 
     @Mapping(source = "academicExamSettingId", target = "academicExamSetting")
     @Mapping(source = "studentId", target = "student")
+    @Mapping(source = "departmentId", target = "department")
     @Mapping(source = "typeOfGradingId", target = "typeOfGrading")
     @Mapping(source = "batchId", target = "batch")
     @Mapping(source = "academicyearId", target = "academicyear")

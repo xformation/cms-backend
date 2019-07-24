@@ -20,6 +20,7 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +33,6 @@ import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
 import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.graphql.types.gender.Gender;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -96,6 +83,9 @@ public class CommonService {
     @Autowired
     private BranchRepository branchRepository;
 
+    @Autowired
+    private AcademicExamSettingRepository academicExamSettingRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -134,6 +124,17 @@ public class CommonService {
         Optional<Department> newDt = this.departmentRepository.findById(departmentId);
         if(newDt.isPresent()) {
             return newDt.get();
+        }
+        return null;
+    }
+
+    public AcademicExamSetting getAcademicExamSettingById(Long academicExamSettingId) {
+        if(academicExamSettingId == null) {
+            return null;
+        }
+        Optional<AcademicExamSetting> newAs = this.academicExamSettingRepository.findById(academicExamSettingId);
+        if(newAs.isPresent()) {
+            return newAs.get();
         }
         return null;
     }

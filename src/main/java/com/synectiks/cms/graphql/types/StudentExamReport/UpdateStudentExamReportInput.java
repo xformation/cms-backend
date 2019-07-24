@@ -6,6 +6,8 @@ public class UpdateStudentExamReportInput extends AddStudentExamReportInput {
     private Long studentId;
     private Long academicExamSettingId;
     private Long batchId;
+    private Long departmentId;
+
 
     public Long getAcademicyearId() {
         return academicyearId;
@@ -45,5 +47,15 @@ public class UpdateStudentExamReportInput extends AddStudentExamReportInput {
 
     public void setBatchId(Long batchId) {
         this.batchId = batchId;
+    }
+
+    @Override
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    @Override
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 }
