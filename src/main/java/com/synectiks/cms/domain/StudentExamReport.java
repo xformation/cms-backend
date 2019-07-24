@@ -63,6 +63,10 @@ public class StudentExamReport implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("studentExamReports")
+    private Department department;
+
+    @ManyToOne
+    @JsonIgnoreProperties("studentExamReports")
     private TypeOfGrading typeOfGrading;
 
     @ManyToOne
@@ -184,6 +188,19 @@ public class StudentExamReport implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public StudentExamReport department(Department department) {
+        this.department = department;
+        return this;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public TypeOfGrading getTypeOfGrading() {
