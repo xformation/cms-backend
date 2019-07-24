@@ -1623,8 +1623,8 @@ input ExamReportFilterInput {
 	batchId: String!
     academicExamSettingId: String!
     departmentId: String!
-
-
+    sectionId: String!
+    subjectId: String!
 }
 input AddDocumentsInput{
     documentName: String!
@@ -1952,6 +1952,8 @@ input AddStudentExamReportInput{
         academicyearId: Long!
         batchId: Long!
         departmentId:Long!
+        sectionId:Long!
+        subjectId:Long!
 }
 
 type AddStudentExamReportPayload {
@@ -1971,6 +1973,8 @@ input UpdateStudentExamReportInput {
     academicyearId: Long!
     batchId: Long!
     departmentId:Long!
+    sectionId:Long!
+    subjectId:Long!
 }
 
 type UpdateStudentExamReportPayload {

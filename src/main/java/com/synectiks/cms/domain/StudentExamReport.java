@@ -63,6 +63,14 @@ public class StudentExamReport implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("studentExamReports")
+    private Section section;
+
+    @ManyToOne
+    @JsonIgnoreProperties("studentExamReports")
+    private Subject subject;
+
+    @ManyToOne
+    @JsonIgnoreProperties("studentExamReports")
     private Department department;
 
     @ManyToOne
@@ -188,6 +196,32 @@ public class StudentExamReport implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public StudentExamReport section(Section section) {
+        this.section = section;
+        return this;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public StudentExamReport subject(Subject subject) {
+        this.subject = subject;
+        return this;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public Department getDepartment() {

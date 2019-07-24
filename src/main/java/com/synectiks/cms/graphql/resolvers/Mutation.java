@@ -2234,12 +2234,16 @@ public class Mutation implements GraphQLMutationResolver {
         Student student = studentRepository.findById(addStudentExamReportInput.getStudentId()).get();
         Batch batch = batchRepository.findById(addStudentExamReportInput.getBatchId()).get();
         Department department = departmentRepository.findById(addStudentExamReportInput.getDepartmentId()).get();
+        Subject subject = subjectRepository.findById(addStudentExamReportInput.getSubjectId()).get();
+        Section section =sectionRepository.findById(addStudentExamReportInput.getSectionId()).get();
         studentExamReport.setTypeOfGrading(typeOfGrading);
         studentExamReport.setAcademicyear(academicYear);
         studentExamReport.setAcademicExamSetting(academicExamSetting);
         studentExamReport.setBatch(batch);
         studentExamReport.setStudent(student);
         studentExamReport.setDepartment(department);
+        studentExamReport.setSection(section);
+        studentExamReport.setSubject(subject);
         studentExamReport.setMarksObtained(addStudentExamReportInput.getMarksObtained());
         studentExamReport.setComments(addStudentExamReportInput.getComments());
         studentExamReport.setCreatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addStudentExamReportInput.getCreatedOn()));
@@ -2298,7 +2302,14 @@ public class Mutation implements GraphQLMutationResolver {
             final TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateStudentExamReportInput.getTypeOfGradingId()).get();
             studentExamReport.setTypeOfGrading(typeOfGrading);
         }
-
+        if (updateStudentExamReportInput.getSectionId() != null) {
+            final Section section = sectionRepository.findById(updateStudentExamReportInput.getSectionId()).get();
+            studentExamReport.setSection(section);
+        }
+        if (updateStudentExamReportInput.getSubjectId() != null) {
+            final Subject subject = subjectRepository.findById(updateStudentExamReportInput.getSubjectId()).get();
+            studentExamReport.setSubject(subject);
+        }
         studentExamReportRepository.save(studentExamReport);
 
         return new UpdateStudentExamReportPayload(studentExamReport);

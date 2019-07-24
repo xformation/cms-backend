@@ -97,6 +97,18 @@ public class ExamService {
                 studentExamReport.setDepartment(department);
             }
         }
+        if (!CommonUtil.isNullOrEmpty(filter.getSectionId())) {
+            Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+            if (section != null) {
+                studentExamReport.setSection(section);
+            }
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getSubjectId())) {
+            Subject subject = this.commonService.getSubjectById(Long.valueOf(filter.getSubjectId()));
+            if (subject != null) {
+                studentExamReport.setSubject(subject);
+            }
+        }
 //        if (!CommonUtil.isNullOrEmpty(filter.getTypeOfGradingId())) {
 //            TypeOfGrading typeOfGrading = this.commonService.getTypeOfGradingById(Long.valueOf(filter.getBatchId()));
 //            if (typeOfGrading != null) {

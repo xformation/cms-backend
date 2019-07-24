@@ -9,6 +9,9 @@ public class AddStudentExamReportInput extends AbstractStudentExamReportInput {
     private Long academicExamSettingId;
     private Long batchId;
     private Long departmentId;
+    private Long sectionId;
+    private Long subjectId;
+
 
     public Long getAcademicyearId() {
         return academicyearId;
@@ -58,6 +61,22 @@ public class AddStudentExamReportInput extends AbstractStudentExamReportInput {
         this.departmentId = departmentId;
     }
 
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,12 +88,14 @@ public class AddStudentExamReportInput extends AbstractStudentExamReportInput {
             Objects.equals(studentId, that.studentId) &&
             Objects.equals(academicExamSettingId, that.academicExamSettingId) &&
             Objects.equals(batchId, that.batchId) &&
-            Objects.equals(departmentId, that.departmentId);
+            Objects.equals(departmentId, that.departmentId) &&
+            Objects.equals(sectionId, that.sectionId) &&
+            Objects.equals(subjectId, that.subjectId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), academicyearId, typeOfGradingId, studentId, academicExamSettingId, batchId, departmentId);
+        return Objects.hash(super.hashCode(), academicyearId, typeOfGradingId, studentId, academicExamSettingId, batchId, departmentId, sectionId, subjectId);
     }
 
     @Override
@@ -86,6 +107,8 @@ public class AddStudentExamReportInput extends AbstractStudentExamReportInput {
             ", academicExamSettingId=" + academicExamSettingId +
             ", batchId=" + batchId +
             ", departmentId=" + departmentId +
+            ", sectionId=" + sectionId +
+            ", subjectId=" + subjectId +
             '}';
     }
 }

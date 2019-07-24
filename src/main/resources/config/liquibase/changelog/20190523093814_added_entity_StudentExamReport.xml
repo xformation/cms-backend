@@ -53,6 +53,14 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="section_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="subject_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="department_id" type="bigint">
                 <constraints nullable="true" />
             </column>

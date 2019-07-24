@@ -663,6 +663,8 @@ Teacher {department} to Department,
 Teacher{branch} to Branch,
 StudentExamReport{academicExamSetting} to AcademicExamSetting,
 StudentExamReport{student} to Student,
+StudentExamReport{section} to Section,
+StudentExamReport{subject} to Subject,
 StudentExamReport{department} to Department,
 StudentExamReport{typeOfGrading} to TypeOfGrading,
 StudentExamReport{batch} to Batch

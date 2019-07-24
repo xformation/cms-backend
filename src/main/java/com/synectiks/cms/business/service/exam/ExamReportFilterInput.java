@@ -10,6 +10,9 @@ public class ExamReportFilterInput {
     private String academicExamSettingId;
     private String batchId;
     private String departmentId;
+    private String subjectId;
+    private String sectionId;
+
 
 //
 //    @JsonProperty("academicyearId")
@@ -30,7 +33,25 @@ public class ExamReportFilterInput {
         this.departmentId = departmentId;
     }
 
-//    @JsonProperty("studentId")
+    @JsonProperty("subjectId")
+    public String getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(String subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    @JsonProperty("sectionId")
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    //    @JsonProperty("studentId")
 //    public String getStudentId() {
 //        return studentId;
 //    }
