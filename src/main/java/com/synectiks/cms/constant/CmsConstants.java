@@ -83,4 +83,9 @@ public interface CmsConstants {
 	String XLSX_FILE_EXTENSION = "xlsx";
 	String XLS_FILE_EXTENSION = "xls";
 	int BATCH_SIZE = 100;
+	String INFLUXDB_LOG_LEVEL_BASIC = "BASIC";
+	String INFLUXDB_LOG_LEVEL_FULL = "FULL";
+	String INFLUXDB_LOG_LEVEL_HEADERS = "HEADERS";
+	String INFLUXDB_LOG_LEVEL_NONE = "NONE";
+	
 }

@@ -11,4 +11,42 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
 
+	private String influxDbUrl;
+	private String influxDb;
+	private String influxDbUsername;
+	private String influxDbPassword;
+	private String influxDbLogLevel;
+	
+	public String getInfluxDbUrl() {
+		return influxDbUrl;
+	}
+	public void setInfluxDbUrl(String influxDbUrl) {
+		this.influxDbUrl = influxDbUrl;
+	}
+	public String getInfluxDb() {
+		return influxDb;
+	}
+	public void setInfluxDb(String influxDb) {
+		this.influxDb = influxDb;
+	}
+	public String getInfluxDbUsername() {
+		return influxDbUsername;
+	}
+	public void setInfluxDbUsername(String influxDbUsername) {
+		this.influxDbUsername = influxDbUsername;
+	}
+	public String getInfluxDbPassword() {
+		return influxDbPassword;
+	}
+	public void setInfluxDbPassword(String influxDbPassword) {
+		this.influxDbPassword = influxDbPassword;
+	}
+	public String getInfluxDbLogLevel() {
+		return influxDbLogLevel;
+	}
+	public void setInfluxDbLogLevel(String influxDbLogLevel) {
+		this.influxDbLogLevel = influxDbLogLevel;
+	}
+	
+	
 }
