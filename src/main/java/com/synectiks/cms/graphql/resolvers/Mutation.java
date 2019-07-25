@@ -907,6 +907,7 @@ public class Mutation implements GraphQLMutationResolver {
         final Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
         final Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
+        student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addStudentInput.getDateOfBirth()));
         student.setUploadPhoto("");
         student.setBatch(batch);
         student.setSection(section);
