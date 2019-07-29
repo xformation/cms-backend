@@ -631,6 +631,12 @@ drivingLicenceValidity LocalDate
 gender String
 }
 
+entity Modules {
+	moduleName String
+	subModuleName String
+	url String
+	status Status
+}
 
 relationship ManyToOne {
 Student{department required} to Department ,

@@ -16,6 +16,7 @@ public class ApplicationProperties {
 	private String influxDbUsername;
 	private String influxDbPassword;
 	private String influxDbLogLevel;
+	private String secSrvUrl;
 	
 	public String getInfluxDbUrl() {
 		return influxDbUrl;
@@ -46,6 +47,12 @@ public class ApplicationProperties {
 	}
 	public void setInfluxDbLogLevel(String influxDbLogLevel) {
 		this.influxDbLogLevel = influxDbLogLevel;
+	}
+	public String getSecSrvUrl() {
+		return secSrvUrl;
+	}
+	public void setSecSrvUrl(String secSrvUrl) {
+		this.secSrvUrl = secSrvUrl;
 	}
 	
 	

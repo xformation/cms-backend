@@ -149,3 +149,4 @@ application:
     influxDbUsername: cms
     influxDbPassword: cms
     influxDbLogLevel: BASIC
+    secSrvUrl: http://18.234.66.133:8094
