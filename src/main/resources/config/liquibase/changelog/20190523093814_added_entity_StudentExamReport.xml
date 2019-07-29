@@ -29,20 +29,8 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="created_on" type="date">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="created_by" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="updated_on" type="date">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="updated_by" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="g_op" type="integer">
+                <constraints nullable="true" />
             </column>
 
             <column name="academic_exam_setting_id" type="bigint">
