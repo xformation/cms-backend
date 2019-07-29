@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -17,17 +16,7 @@ public class StudentExamReportDTO implements Serializable {
     @NotNull
     private String comments;
 
-    @NotNull
-    private LocalDate createdOn;
-
-    @NotNull
-    private String createdBy;
-
-    @NotNull
-    private LocalDate updatedOn;
-
-    @NotNull
-    private String updatedBy;
+    private Integer gOp;
 
 
     private Long academicExamSettingId;
@@ -70,36 +59,12 @@ public class StudentExamReportDTO implements Serializable {
         this.comments = comments;
     }
 
-    public LocalDate getCreatedOn() {
-        return createdOn;
+    public Integer getgOp() {
+        return gOp;
     }
 
-    public void setCreatedOn(LocalDate createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDate getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(LocalDate updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
+    public void setgOp(Integer gOp) {
+        this.gOp = gOp;
     }
 
     public Long getAcademicExamSettingId() {
@@ -193,10 +158,7 @@ public class StudentExamReportDTO implements Serializable {
             "id=" + getId() +
             ", marksObtained=" + getMarksObtained() +
             ", comments='" + getComments() + "'" +
-            ", createdOn='" + getCreatedOn() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", updatedOn='" + getUpdatedOn() + "'" +
-            ", updatedBy='" + getUpdatedBy() + "'" +
+            ", gOp=" + getgOp() +
             ", academicExamSetting=" + getAcademicExamSettingId() +
             ", student=" + getStudentId() +
             ", section=" + getSectionId() +

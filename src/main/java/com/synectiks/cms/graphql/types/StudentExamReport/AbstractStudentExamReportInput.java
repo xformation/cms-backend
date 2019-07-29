@@ -7,10 +7,7 @@ public class AbstractStudentExamReportInput {
     private Long id;
     private Integer marksObtained;
     private String comments;
-    private Date createdOn;
-    private String createdBy;
-    private Date updatedOn;
-    private String updatedBy;
+    private Integer gOp;
 
     public Long getId() {
         return id;
@@ -36,67 +33,36 @@ public class AbstractStudentExamReportInput {
         this.comments = comments;
     }
 
-    public Date getCreatedOn() {
-        return createdOn;
+    public Integer getgOp() {
+        return gOp;
     }
 
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
+    public void setgOp(Integer gOp) {
+        this.gOp = gOp;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        if (!super.equals(object)) return false;
+        AbstractStudentExamReportInput that = (AbstractStudentExamReportInput) object;
+        return java.util.Objects.equals(id, that.id) &&
+            java.util.Objects.equals(marksObtained, that.marksObtained) &&
+            java.util.Objects.equals(comments, that.comments) &&
+            java.util.Objects.equals(gOp, that.gOp);
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractStudentExamReportInput that = (AbstractStudentExamReportInput) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(marksObtained, that.marksObtained) &&
-            Objects.equals(comments, that.comments) &&
-            Objects.equals(createdOn, that.createdOn) &&
-            Objects.equals(createdBy, that.createdBy) &&
-            Objects.equals(updatedOn, that.updatedOn) &&
-            Objects.equals(updatedBy, that.updatedBy);
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(id, marksObtained, comments, createdOn, createdBy, updatedOn, updatedBy);
+        return java.util.Objects.hash(super.hashCode(), id, marksObtained, comments, gOp);
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "AbstractStudentExamReportInput{" +
             "id=" + id +
             ", marksObtained=" + marksObtained +
             ", comments='" + comments + '\'' +
-            ", createdOn=" + createdOn +
-            ", createdBy='" + createdBy + '\'' +
-            ", updatedOn=" + updatedOn +
-            ", updatedBy='" + updatedBy + '\'' +
+            ", gOp=" + gOp +
             '}';
     }
 }

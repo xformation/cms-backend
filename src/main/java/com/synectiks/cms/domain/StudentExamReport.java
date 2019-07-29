@@ -10,7 +10,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -37,21 +36,8 @@ public class StudentExamReport implements Serializable {
     @Column(name = "comments", nullable = false)
     private String comments;
 
-    @NotNull
-    @Column(name = "created_on", nullable = false)
-    private LocalDate createdOn;
-
-    @NotNull
-    @Column(name = "created_by", nullable = false)
-    private String createdBy;
-
-    @NotNull
-    @Column(name = "updated_on", nullable = false)
-    private LocalDate updatedOn;
-
-    @NotNull
-    @Column(name = "updated_by", nullable = false)
-    private String updatedBy;
+    @Column(name = "g_op")
+    private Integer gOp;
 
     @ManyToOne
     @JsonIgnoreProperties("studentExamReports")
@@ -120,56 +106,17 @@ public class StudentExamReport implements Serializable {
         this.comments = comments;
     }
 
-    public LocalDate getCreatedOn() {
-        return createdOn;
+    public Integer getgOp() {
+        return gOp;
     }
 
-    public StudentExamReport createdOn(LocalDate createdOn) {
-        this.createdOn = createdOn;
+    public StudentExamReport gOp(Integer gOp) {
+        this.gOp = gOp;
         return this;
     }
 
-    public void setCreatedOn(LocalDate createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public StudentExamReport createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDate getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public StudentExamReport updatedOn(LocalDate updatedOn) {
-        this.updatedOn = updatedOn;
-        return this;
-    }
-
-    public void setUpdatedOn(LocalDate updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public StudentExamReport updatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-        return this;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
+    public void setgOp(Integer gOp) {
+        this.gOp = gOp;
     }
 
     public AcademicExamSetting getAcademicExamSetting() {
@@ -303,10 +250,7 @@ public class StudentExamReport implements Serializable {
             "id=" + getId() +
             ", marksObtained=" + getMarksObtained() +
             ", comments='" + getComments() + "'" +
-            ", createdOn='" + getCreatedOn() + "'" +
-            ", createdBy='" + getCreatedBy() + "'" +
-            ", updatedOn='" + getUpdatedOn() + "'" +
-            ", updatedBy='" + getUpdatedBy() + "'" +
+            ", gOp=" + getgOp() +
             "}";
     }
 }

@@ -26,10 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 
@@ -56,17 +53,8 @@ public class StudentExamReportResourceIntTest {
     private static final String DEFAULT_COMMENTS = "AAAAAAAAAA";
     private static final String UPDATED_COMMENTS = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_CREATED_ON = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_CREATED_ON = LocalDate.now(ZoneId.systemDefault());
-
-    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
-    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
-
-    private static final LocalDate DEFAULT_UPDATED_ON = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
-
-    private static final String DEFAULT_UPDATED_BY = "AAAAAAAAAA";
-    private static final String UPDATED_UPDATED_BY = "BBBBBBBBBB";
+    private static final Integer DEFAULT_G_OP = 1;
+    private static final Integer UPDATED_G_OP = 2;
 
     @Autowired
     private StudentExamReportRepository studentExamReportRepository;
@@ -126,10 +114,7 @@ public class StudentExamReportResourceIntTest {
         StudentExamReport studentExamReport = new StudentExamReport()
             .marksObtained(DEFAULT_MARKS_OBTAINED)
             .comments(DEFAULT_COMMENTS)
-            .createdOn(DEFAULT_CREATED_ON)
-            .createdBy(DEFAULT_CREATED_BY)
-            .updatedOn(DEFAULT_UPDATED_ON)
-            .updatedBy(DEFAULT_UPDATED_BY);
+            .gOp(DEFAULT_G_OP);
         return studentExamReport;
     }
 
@@ -156,10 +141,7 @@ public class StudentExamReportResourceIntTest {
         StudentExamReport testStudentExamReport = studentExamReportList.get(studentExamReportList.size() - 1);
         assertThat(testStudentExamReport.getMarksObtained()).isEqualTo(DEFAULT_MARKS_OBTAINED);
         assertThat(testStudentExamReport.getComments()).isEqualTo(DEFAULT_COMMENTS);
-        assertThat(testStudentExamReport.getCreatedOn()).isEqualTo(DEFAULT_CREATED_ON);
-        assertThat(testStudentExamReport.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
-        assertThat(testStudentExamReport.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
-        assertThat(testStudentExamReport.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
+        assertThat(testStudentExamReport.getgOp()).isEqualTo(DEFAULT_G_OP);
 
         // Validate the StudentExamReport in Elasticsearch
         verify(mockStudentExamReportSearchRepository, times(1)).save(testStudentExamReport);
@@ -228,82 +210,6 @@ public class StudentExamReportResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCreatedOnIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentExamReportRepository.findAll().size();
-        // set the field null
-        studentExamReport.setCreatedOn(null);
-
-        // Create the StudentExamReport, which fails.
-        StudentExamReportDTO studentExamReportDTO = studentExamReportMapper.toDto(studentExamReport);
-
-        restStudentExamReportMockMvc.perform(post("/api/student-exam-reports")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentExamReportDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<StudentExamReport> studentExamReportList = studentExamReportRepository.findAll();
-        assertThat(studentExamReportList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCreatedByIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentExamReportRepository.findAll().size();
-        // set the field null
-        studentExamReport.setCreatedBy(null);
-
-        // Create the StudentExamReport, which fails.
-        StudentExamReportDTO studentExamReportDTO = studentExamReportMapper.toDto(studentExamReport);
-
-        restStudentExamReportMockMvc.perform(post("/api/student-exam-reports")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentExamReportDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<StudentExamReport> studentExamReportList = studentExamReportRepository.findAll();
-        assertThat(studentExamReportList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUpdatedOnIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentExamReportRepository.findAll().size();
-        // set the field null
-        studentExamReport.setUpdatedOn(null);
-
-        // Create the StudentExamReport, which fails.
-        StudentExamReportDTO studentExamReportDTO = studentExamReportMapper.toDto(studentExamReport);
-
-        restStudentExamReportMockMvc.perform(post("/api/student-exam-reports")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentExamReportDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<StudentExamReport> studentExamReportList = studentExamReportRepository.findAll();
-        assertThat(studentExamReportList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUpdatedByIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentExamReportRepository.findAll().size();
-        // set the field null
-        studentExamReport.setUpdatedBy(null);
-
-        // Create the StudentExamReport, which fails.
-        StudentExamReportDTO studentExamReportDTO = studentExamReportMapper.toDto(studentExamReport);
-
-        restStudentExamReportMockMvc.perform(post("/api/student-exam-reports")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentExamReportDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<StudentExamReport> studentExamReportList = studentExamReportRepository.findAll();
-        assertThat(studentExamReportList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllStudentExamReports() throws Exception {
         // Initialize the database
         studentExamReportRepository.saveAndFlush(studentExamReport);
@@ -315,12 +221,9 @@ public class StudentExamReportResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentExamReport.getId().intValue())))
             .andExpect(jsonPath("$.[*].marksObtained").value(hasItem(DEFAULT_MARKS_OBTAINED)))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
-            .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
-            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())));
+            .andExpect(jsonPath("$.[*].gOp").value(hasItem(DEFAULT_G_OP)));
     }
-
+    
     @Test
     @Transactional
     public void getStudentExamReport() throws Exception {
@@ -334,10 +237,7 @@ public class StudentExamReportResourceIntTest {
             .andExpect(jsonPath("$.id").value(studentExamReport.getId().intValue()))
             .andExpect(jsonPath("$.marksObtained").value(DEFAULT_MARKS_OBTAINED))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()))
-            .andExpect(jsonPath("$.createdOn").value(DEFAULT_CREATED_ON.toString()))
-            .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
-            .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
-            .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()));
+            .andExpect(jsonPath("$.gOp").value(DEFAULT_G_OP));
     }
 
     @Test
@@ -363,10 +263,7 @@ public class StudentExamReportResourceIntTest {
         updatedStudentExamReport
             .marksObtained(UPDATED_MARKS_OBTAINED)
             .comments(UPDATED_COMMENTS)
-            .createdOn(UPDATED_CREATED_ON)
-            .createdBy(UPDATED_CREATED_BY)
-            .updatedOn(UPDATED_UPDATED_ON)
-            .updatedBy(UPDATED_UPDATED_BY);
+            .gOp(UPDATED_G_OP);
         StudentExamReportDTO studentExamReportDTO = studentExamReportMapper.toDto(updatedStudentExamReport);
 
         restStudentExamReportMockMvc.perform(put("/api/student-exam-reports")
@@ -380,10 +277,7 @@ public class StudentExamReportResourceIntTest {
         StudentExamReport testStudentExamReport = studentExamReportList.get(studentExamReportList.size() - 1);
         assertThat(testStudentExamReport.getMarksObtained()).isEqualTo(UPDATED_MARKS_OBTAINED);
         assertThat(testStudentExamReport.getComments()).isEqualTo(UPDATED_COMMENTS);
-        assertThat(testStudentExamReport.getCreatedOn()).isEqualTo(UPDATED_CREATED_ON);
-        assertThat(testStudentExamReport.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
-        assertThat(testStudentExamReport.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
-        assertThat(testStudentExamReport.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
+        assertThat(testStudentExamReport.getgOp()).isEqualTo(UPDATED_G_OP);
 
         // Validate the StudentExamReport in Elasticsearch
         verify(mockStudentExamReportSearchRepository, times(1)).save(testStudentExamReport);
@@ -446,10 +340,7 @@ public class StudentExamReportResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentExamReport.getId().intValue())))
             .andExpect(jsonPath("$.[*].marksObtained").value(hasItem(DEFAULT_MARKS_OBTAINED)))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)))
-            .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
-            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY)));
+            .andExpect(jsonPath("$.[*].gOp").value(hasItem(DEFAULT_G_OP)));
     }
 
     @Test

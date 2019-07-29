@@ -408,10 +408,7 @@ public class TestDataPojoBuilder {
 		StudentExamReport studentExamReport = new StudentExamReport();
 		studentExamReport.setMarksObtained(35);
 		studentExamReport.setComments("");
-		studentExamReport.setCreatedOn(LocalDate.now());
-		studentExamReport.setCreatedBy("");
-		studentExamReport.setUpdatedOn(LocalDate.now());
-		studentExamReport.setUpdatedBy("");
+        studentExamReport.setgOp(23);
 		studentExamReport.setAcademicExamSetting(academicExamSetting);
 		studentExamReport.setStudent(student);
 		studentExamReport.setTypeOfGrading(typeofGrading);

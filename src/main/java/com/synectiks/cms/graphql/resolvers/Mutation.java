@@ -2247,11 +2247,7 @@ public class Mutation implements GraphQLMutationResolver {
         studentExamReport.setSubject(subject);
         studentExamReport.setMarksObtained(addStudentExamReportInput.getMarksObtained());
         studentExamReport.setComments(addStudentExamReportInput.getComments());
-        studentExamReport.setCreatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addStudentExamReportInput.getCreatedOn()));
-        studentExamReport.setCreatedBy(addStudentExamReportInput.getCreatedBy());
-        studentExamReport.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addStudentExamReportInput.getUpdatedOn()));
-        studentExamReport.setUpdatedBy(addStudentExamReportInput.getUpdatedBy());
-
+        studentExamReport.setgOp(addStudentExamReportInput.getgOp());
         studentExamReportRepository.save(studentExamReport);
         return new AddStudentExamReportPayload(studentExamReport);
     }
@@ -2266,19 +2262,9 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentExamReportInput.getComments() != null) {
             studentExamReport.setComments(updateStudentExamReportInput.getComments());
         }
-        if (updateStudentExamReportInput.getCreatedOn() != null) {
-            studentExamReport.setCreatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentExamReportInput.getCreatedOn()));
+        if (updateStudentExamReportInput.getgOp() != null) {
+            studentExamReport.setgOp(updateStudentExamReportInput.getgOp());
         }
-        if (updateStudentExamReportInput.getCreatedBy() != null) {
-            studentExamReport.setCreatedBy(updateStudentExamReportInput.getCreatedBy());
-        }
-        if (updateStudentExamReportInput.getUpdatedOn() != null) {
-            studentExamReport.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentExamReportInput.getUpdatedOn()));
-        }
-        if (updateStudentExamReportInput.getUpdatedBy() != null) {
-            studentExamReport.setUpdatedBy(updateStudentExamReportInput.getUpdatedBy());
-        }
-
         if (updateStudentExamReportInput.getAcademicExamSettingId() != null) {
             final AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(updateStudentExamReportInput.getAcademicExamSettingId()).get();
             studentExamReport.setAcademicExamSetting(academicExamSetting);

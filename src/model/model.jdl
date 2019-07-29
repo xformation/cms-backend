@@ -15,10 +15,7 @@ backgroundImageFileName String
 entity StudentExamReport{
 	marksObtained Integer required
 	comments String required
-	createdOn LocalDate required
-	createdBy String required
-	updatedOn LocalDate required
-    updatedBy String required
+	gOp Integer 
 }
 
 entity Branch{

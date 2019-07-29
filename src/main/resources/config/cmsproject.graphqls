@@ -714,10 +714,7 @@ type StudentExamReport{
     id: Long!
     marksObtained: Int!
     comments: String!
-    createdOn: Date!
-    createdBy: String!
-    updatedOn: Date!
-    updatedBy: String!
+    gOp: Int!
     student: Student!
     academicExamSetting: AcademicExamSetting!
     typeOfGrading: TypeOfGrading!
@@ -1942,10 +1939,7 @@ type RemoveAuthorizedSignatoryPayload {
 input AddStudentExamReportInput{
         marksObtained: Int!
         comments: String!
-        createdOn: Date!
-        createdBy: String!
-        updatedOn: Date!
-        updatedBy: String!
+        gOp: Int!
         studentId: Long!
         academicExamSettingId: Long!
         typeOfGradingId: Long!
@@ -1963,10 +1957,7 @@ input UpdateStudentExamReportInput {
     id: Long!
     marksObtained: Int!
     comments: String!
-    createdOn: Date!
-    createdBy: String!
-    updatedOn: Date!
-    updatedBy: String!
+    gOp: Int!
     studentId: Long!
     academicExamSettingId: Long!
     typeOfGradingId: Long!
