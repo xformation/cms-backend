@@ -554,6 +554,7 @@ type CmsAdmissionApplicationVo {
       totalDeclined : Long!
       totalAccepted : Long!
       id: Long
+      admissionStatus: AdmissionStatusEnum
       studentName: String
       studentMiddleName: String
       studentLastName: String

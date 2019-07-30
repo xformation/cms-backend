@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 import com.synectiks.cms.domain.enumeration.Gender;
 
@@ -14,6 +15,7 @@ public class CmsAdmissionApplicationVo implements Serializable {
     private Long totalDeclined = 0L;
     private Long totalAccepted = 0L;
     private Long id;
+    private AdmissionStatusEnum admissionStatus;
     private String studentName;
     private String studentMiddleName;
     private String studentLastName;
@@ -94,6 +96,14 @@ public class CmsAdmissionApplicationVo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public AdmissionStatusEnum getAdmissionStatus() {
+        return admissionStatus;
+    }
+
+    public void setAdmissionStatus(AdmissionStatusEnum admissionStatus) {
+        this.admissionStatus = admissionStatus;
     }
 
     public String getStudentName() {
@@ -434,6 +444,7 @@ public class CmsAdmissionApplicationVo implements Serializable {
             Objects.equals(getTotalDeclined(), that.getTotalDeclined()) &&
             Objects.equals(getTotalAccepted(), that.getTotalAccepted()) &&
             Objects.equals(getId(), that.getId()) &&
+            getAdmissionStatus() == that.getAdmissionStatus() &&
             Objects.equals(getStudentName(), that.getStudentName()) &&
             Objects.equals(getStudentMiddleName(), that.getStudentMiddleName()) &&
             Objects.equals(getStudentLastName(), that.getStudentLastName()) &&
@@ -463,13 +474,23 @@ public class CmsAdmissionApplicationVo implements Serializable {
             Objects.equals(getCountry(), that.getCountry()) &&
             Objects.equals(getDepartment(), that.getDepartment()) &&
             Objects.equals(getAcademicyear(), that.getAcademicyear()) &&
+            Objects.equals(getAcademicyearId(), that.getAcademicyearId()) &&
+            Objects.equals(getAdmissionEnquiryId(), that.getAdmissionEnquiryId()) &&
+            Objects.equals(getAcademicHistoryId(), that.getAcademicHistoryId()) &&
+            Objects.equals(getDocumentsId(), that.getDocumentsId()) &&
+            Objects.equals(getBranchId(), that.getBranchId()) &&
+            Objects.equals(getBatchId(), that.getBatchId()) &&
+            Objects.equals(getStateId(), that.getStateId()) &&
+            Objects.equals(getCityId(), that.getCityId()) &&
+            Objects.equals(getCountryId(), that.getCountryId()) &&
+            Objects.equals(getDepartmentId(), that.getDepartmentId()) &&
             Objects.equals(getStrDateOfBirth(), that.getStrDateOfBirth()) &&
             Objects.equals(getStrAdmissionDate(), that.getStrAdmissionDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTotalReceived(), getTotalInprocess(), getTotalDeclined(), getTotalAccepted(), getId(), getStudentName(), getStudentMiddleName(), getStudentLastName(), getFatherName(), getFatherMiddleName(), getFatherLastName(), getMotherName(), getMotherMiddleName(), getMotherLastName(), getContactNumber(), getAlternateMobileNumber(), getDateOfBirth(), getEmail(), getSex(), getComments(), getApplicationId(), getUploadPhoto(), getCourse(), getAdmissionDate(), getAdmissionEnquiry(), getAcademicHistory(), getDocuments(), getBranch(), getBatch(), getState(), getCity(), getCountry(), getDepartment(), getAcademicyear(), getStrDateOfBirth(), getStrAdmissionDate());
+        return Objects.hash(getTotalReceived(), getTotalInprocess(), getTotalDeclined(), getTotalAccepted(), getId(), getAdmissionStatus(), getStudentName(), getStudentMiddleName(), getStudentLastName(), getFatherName(), getFatherMiddleName(), getFatherLastName(), getMotherName(), getMotherMiddleName(), getMotherLastName(), getContactNumber(), getAlternateMobileNumber(), getDateOfBirth(), getEmail(), getSex(), getComments(), getApplicationId(), getUploadPhoto(), getCourse(), getAdmissionDate(), getAdmissionEnquiry(), getAcademicHistory(), getDocuments(), getBranch(), getBatch(), getState(), getCity(), getCountry(), getDepartment(), getAcademicyear(), getAcademicyearId(), getAdmissionEnquiryId(), getAcademicHistoryId(), getDocumentsId(), getBranchId(), getBatchId(), getStateId(), getCityId(), getCountryId(), getDepartmentId(), getStrDateOfBirth(), getStrAdmissionDate());
     }
 
     @Override
@@ -480,6 +501,7 @@ public class CmsAdmissionApplicationVo implements Serializable {
             ", totalDeclined=" + totalDeclined +
             ", totalAccepted=" + totalAccepted +
             ", id=" + id +
+            ", admissionStatus=" + admissionStatus +
             ", studentName='" + studentName + '\'' +
             ", studentMiddleName='" + studentMiddleName + '\'' +
             ", studentLastName='" + studentLastName + '\'' +
@@ -509,6 +531,16 @@ public class CmsAdmissionApplicationVo implements Serializable {
             ", country=" + country +
             ", department=" + department +
             ", academicyear=" + academicyear +
+            ", academicyearId=" + academicyearId +
+            ", admissionEnquiryId=" + admissionEnquiryId +
+            ", academicHistoryId=" + academicHistoryId +
+            ", documentsId=" + documentsId +
+            ", branchId=" + branchId +
+            ", batchId=" + batchId +
+            ", stateId=" + stateId +
+            ", cityId=" + cityId +
+            ", countryId=" + countryId +
+            ", departmentId=" + departmentId +
             ", strDateOfBirth='" + strDateOfBirth + '\'' +
             ", strAdmissionDate='" + strAdmissionDate + '\'' +
             '}';
