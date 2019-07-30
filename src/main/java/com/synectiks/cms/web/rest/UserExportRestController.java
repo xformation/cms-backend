@@ -59,8 +59,8 @@ public class UserExportRestController {
 	@RequestMapping(method = RequestMethod.POST, value = "/cmsuserexport")
 	public ResponseEntity<Integer> exportUser(@RequestParam Map<String, String> dataMap) throws JSONException, ParseException, JsonProcessingException {
 		boolean isTecher = dataMap.get("chkTeacher") != null ? Boolean.parseBoolean(dataMap.get("chkTeacher")) : false;
-		boolean isStudent = dataMap.get("chkStudent") != null ? Boolean.parseBoolean(dataMap.get("chkTeacher")) : false;
-		boolean isEmployee = dataMap.get("chkEmployee") != null ? Boolean.parseBoolean(dataMap.get("chkTeacher")) : false;
+		boolean isStudent = dataMap.get("chkStudent") != null ? Boolean.parseBoolean(dataMap.get("chkStudent")) : false;
+		boolean isEmployee = dataMap.get("chkEmployee") != null ? Boolean.parseBoolean(dataMap.get("chkEmployee")) : false;
 		logger.debug("Teacher selected : "+isTecher+", Student selected : "+isStudent+", Employee selected : "+isEmployee);
 		
 		Set<String> email = new HashSet<>();
@@ -83,11 +83,16 @@ public class UserExportRestController {
 				email.add(e.getOfficialMailId());
 			}
 		}
-		
-		int statusCode = exportUserToSecuryService(email.stream().collect(Collectors.toList()));
-		return ResponseEntity.status(statusCode)
+		List<String> finalList = email.stream().collect(Collectors.toList());
+		if(finalList != null && finalList.size() > 0) {
+			int statusCode = exportUserToSecuryService(finalList);
+			return ResponseEntity.status(statusCode)
+		            .headers(HeaderUtil.createEntityUpdateAlert("", ""))
+		            .body(new Integer(statusCode));
+		}
+		return ResponseEntity.status(200)
 	            .headers(HeaderUtil.createEntityUpdateAlert("", ""))
-	            .body(new Integer(statusCode));
+	            .body(new Integer(200));
 	}
 	
 	private int exportUserToSecuryService(List<String> list) throws JsonProcessingException {
