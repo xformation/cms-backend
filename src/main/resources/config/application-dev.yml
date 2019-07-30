@@ -144,9 +144,9 @@ jhipster:
 # ===================================================================
 
 application:
-    influxDbUrl: http://18.234.66.133:8086
+    influxDbUrl: http://3.89.247.154:8086
     influxDb: cmsdb
     influxDbUsername: cms
     influxDbPassword: cms
     influxDbLogLevel: BASIC
-    secSrvUrl: http://18.234.66.133:8094
+    secSrvUrl: http://3.89.247.154:8094
