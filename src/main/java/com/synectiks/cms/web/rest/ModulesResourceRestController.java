@@ -1,8 +1,11 @@
 package com.synectiks.cms.web.rest;
 
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,6 +112,23 @@ public class ModulesResourceRestController {
         return modulesRepository.findAll(Example.of(module));
     }
 
+    /**
+     * getAllParentModules() gives a unique list of all the active modules/plugins
+     * @return
+     */
+    @GetMapping("/cmsparentmodules")
+    public List<String> getAllParentModules() {
+    	Modules module = new Modules();
+    	module.setStatus(Status.ACTIVE);
+        logger.debug("REST request to get all UI Modules");
+        List<Modules> list = modulesRepository.findAll(Example.of(module));
+        Set<String> parentModules = new HashSet<>();
+        for(Modules md : list) {
+        	parentModules.add(md.getModuleName());
+        }
+        return parentModules.stream().collect(Collectors.toList());
+    }
+    
     /**
      * {@code GET  /cmsmodules/:id} : get the "id" modules.
      *
