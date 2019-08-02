@@ -37,7 +37,7 @@ public class StudentAttendanceInfluxPush implements InfluxPush {
 			point = Point.measurement("StudentAttendance")
 					.addField("StudentId", sa.getStudent().getId())
 					.addField("StudentName", sa.getStudent().getStudentName())
-					.addField("AttendanceDate", DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(sa.getLecture().getLecDate()))))
+					.addField("AttendanceDate", DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(sa.getLecture().getLecDate()))))
 					.addField("AttendanceStatus", sa.getAttendanceStatus().toString())
 					.addField("Subject", sa.getLecture().getAttendancemaster().getTeach().getSubject().getSubjectDesc())
 					.addField("Teacher", sa.getLecture().getAttendancemaster().getTeach().getTeacher().getTeacherName())

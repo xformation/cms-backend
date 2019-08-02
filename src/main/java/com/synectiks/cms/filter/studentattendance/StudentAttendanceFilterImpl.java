@@ -62,6 +62,7 @@ public class StudentAttendanceFilterImpl  {
     
     @PersistenceContext
     private EntityManager entityManager;
+    
     /**
      * Student attendance data for a teacher role end user
      * @param filter
@@ -70,27 +71,18 @@ public class StudentAttendanceFilterImpl  {
      */
     public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) throws Exception {
         
-//      Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
     	Branch branch = new Branch();
     	branch.setId(Long.valueOf(filter.getBranchId()));
-    	Department department = new Department(); //this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+    	Department department = new Department(); 
     	department.setId(Long.valueOf(filter.getDepartmentId()));
-    	Batch batch = new Batch(); //this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+    	Batch batch = new Batch(); 
     	batch.setId(Long.valueOf(filter.getBatchId()));
-    	Section section = new Section(); //this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+    	Section section = new Section(); 
     	section.setId(Long.valueOf(filter.getSectionId()));
     	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(Long.valueOf(filter.getTeacherId()), Long.valueOf(filter.getSubjectId()));
-//    	Subject subject = new Subject();
-//    	subject.setId(Long.valueOf(filter.getSubjectId()));
-//    	Teacher teacher = new Teacher();
-//    	teacher.setId(Long.valueOf(filter.getTeacherId()));
-//    	teach.setSubject(subject);
-//    	teach.setTeacher(teacher);
     	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
     	
     	List<DailyAttendanceVo> voList = new ArrayList<>();
-//        List<Student> studentList = getStudentList(branch, department, batch, section);
-//    	List<Student> studentList = getStudentList(branch, department, batch, section);
     	List<Student> studentList = getStudentListByNativeQuery(branch, department, batch, section);
         
         Lecture currentDateLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 0);
@@ -116,35 +108,27 @@ public class StudentAttendanceFilterImpl  {
      */
     public List<DailyAttendanceVo> getStudenceAttendanceDataForAdmin(StudentAttendanceFilterInput filter) throws Exception {
         
-        Branch branch = new Branch(); //this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
+        Branch branch = new Branch(); 
         branch.setId(Long.valueOf(filter.getBranchId()));
-    	Department department = new Department(); //this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+    	Department department = new Department(); 
     	department.setId(Long.valueOf(filter.getDepartmentId()));
-    	Batch batch = new Batch(); //this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+    	Batch batch = new Batch(); 
     	batch.setId(Long.valueOf(filter.getBatchId()));
-    	Section section = new Section(); //this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+    	Section section = new Section(); 
     	section.setId(Long.valueOf(filter.getSectionId()));
-//    	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(Long.valueOf(filter.getTeacherId()), Long.valueOf(filter.getSubjectId()));
-//    	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
     	
     	List<DailyAttendanceVo> voList = new ArrayList<>();
-//        List<Student> studentList = getStudentList(branch, department, batch, section);
     	List<Student> studentList = getStudentListByNativeQuery(branch, department, batch, section);
     	
         Lecture lecture = lectureScheduleStatus(filter);
-//        Lecture oneDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 1);
-//        Lecture twoDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 2);
-//        Lecture threeDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 3);
         
         // lecture schedule on current date insert/update all the students in student_attendance table.
         setCurrentDateStatus(voList, studentList, lecture);
-//        setHistoryDateStatus(voList, oneDayPrevLecture, 1);
-//        setHistoryDateStatus(voList, twoDayPrevLecture, 2);
-//        setHistoryDateStatus(voList, threeDayPrevLecture, 3);
         
         return voList;
     }
  
+    
 //	private void setCurrentDateStatus(List<DailyAttendanceVo> voList, List<Student> studentList,
 //			Lecture currentDateLecture) {
 //		if(currentDateLecture != null) {

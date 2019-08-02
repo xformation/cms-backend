@@ -97,7 +97,7 @@ public class CmsAdmissionApplicationService {
         List<CmsAdmissionApplicationVo> ls = new ArrayList<>();
         for(AdmissionApplication temp: list) {
             CmsAdmissionApplicationVo cae = CommonUtil.createCopyProperties(temp, CmsAdmissionApplicationVo.class);
-            cae.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getAdmissionDate()))));
+            cae.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getAdmissionDate()))));
 
             ls.add(cae);
         }

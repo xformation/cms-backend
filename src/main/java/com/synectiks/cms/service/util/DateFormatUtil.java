@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -102,10 +103,22 @@ public final class DateFormatUtil {
 		if(date == null) return null;
 	   return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 	}
-	  
+	
+	public final static String changeLocalDateFormat(LocalDate dt, String targetFormat) {
+		if(dt == null || targetFormat == null) return null;
+		DateTimeFormatter formatters = DateTimeFormatter.ofPattern(targetFormat);
+        String text = dt.format(formatters);
+        logger.debug("Formated local date : "+text);
+        return text;
+	}
 	public static void main(String a[]) throws Exception {
-		String dt = changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", "29/04/2019");
-		Date d = getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,dt);
-		System.out.println(d);
+//		String dt = changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", "29/04/2019");
+//		Date d = getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,dt);
+//		System.out.println(d);
+		LocalDate date = LocalDate.now();
+		System.out.println("date to be formated : "+date);
+		String dt = changeLocalDateFormat(date, CmsConstants.DATE_FORMAT_MM_dd_yyyy);
+//		DateTimeFormatter formatters = DateTimeFormatter.ofPattern(CmsConstants.DATE_FORMAT_MM_dd_yyyy);
+//		System.out.println("local date after format change : "+formatters.format(date));
 	}
 }

@@ -43,7 +43,7 @@ public class AdmissionApplicationRestController {
         aap = admissionApplicationRepository.save(aap);
 
         cmsAdmissionApplicationVo.setId(aap.getId());
-        cmsAdmissionApplicationVo.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.getAdmissionDate()))));
+        cmsAdmissionApplicationVo.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.getAdmissionDate()))));
         return ResponseEntity.created(new URI("/api/admission-applications/" + cmsAdmissionApplicationVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsAdmissionApplicationVo.getId().toString()))
             .body(cmsAdmissionApplicationVo);
@@ -59,7 +59,7 @@ public class AdmissionApplicationRestController {
         AdmissionApplication aap = CommonUtil.createCopyProperties(cmsAdmissionApplicationVo, AdmissionApplication.class);
         aap = admissionApplicationRepository.save(aap);
 
-        cmsAdmissionApplicationVo.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.getAdmissionDate()))));
+        cmsAdmissionApplicationVo.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.getAdmissionDate()))));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsAdmissionApplicationVo.getId().toString()))
             .body(cmsAdmissionApplicationVo);
@@ -72,7 +72,7 @@ public class AdmissionApplicationRestController {
         List<CmsAdmissionApplicationVo> ls = new ArrayList<>();
         for(AdmissionApplication aap: list) {
             CmsAdmissionApplicationVo caap = CommonUtil.createCopyProperties(aap, CmsAdmissionApplicationVo.class);
-            caap.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.getAdmissionDate()))));;
+            caap.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.getAdmissionDate()))));;
             ls.add(caap);
         }
         return ls;
@@ -85,7 +85,7 @@ public class AdmissionApplicationRestController {
         CmsAdmissionApplicationVo caap = new CmsAdmissionApplicationVo();
         if(aap.isPresent()) {
             caap = CommonUtil.createCopyProperties(aap.get(), CmsAdmissionApplicationVo.class);
-            caap.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.get().getAdmissionDate()))));;
+            caap.setStrAdmissionDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aap.get().getAdmissionDate()))));;
 
         }
         return ResponseUtil.wrapOrNotFound(Optional.of(caap));

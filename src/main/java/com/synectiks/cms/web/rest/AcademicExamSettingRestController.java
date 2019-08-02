@@ -45,7 +45,7 @@ public class AcademicExamSettingRestController {
         aes = academicExamSettingRepository.save(aes);
 
         cmsAcademicExamSettingVo.setId(aes.getId());
-        cmsAcademicExamSettingVo.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.getExamDate()))));
+        cmsAcademicExamSettingVo.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.getExamDate()))));
         return ResponseEntity.created(new URI("/api/academi-exam-settings/" + cmsAcademicExamSettingVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsAcademicExamSettingVo.getId().toString()))
             .body(cmsAcademicExamSettingVo);
@@ -61,7 +61,7 @@ public class AcademicExamSettingRestController {
         AcademicExamSetting aes = CommonUtil.createCopyProperties(cmsAcademicExamSettingVo, AcademicExamSetting.class);
         aes = academicExamSettingRepository.save(aes);
 
-        cmsAcademicExamSettingVo.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.getExamDate()))));
+        cmsAcademicExamSettingVo.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.getExamDate()))));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsAcademicExamSettingVo.getId().toString()))
             .body(cmsAcademicExamSettingVo);
@@ -74,7 +74,7 @@ public class AcademicExamSettingRestController {
         List<CmsAcademicExamSettingVo> ls = new ArrayList<>();
         for(AcademicExamSetting aes: list) {
             CmsAcademicExamSettingVo caes = CommonUtil.createCopyProperties(aes, CmsAcademicExamSettingVo.class);
-            caes.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.getExamDate()))));
+            caes.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.getExamDate()))));
             ls.add(caes);
         }
         return ls;
@@ -87,7 +87,7 @@ public class AcademicExamSettingRestController {
         CmsAcademicExamSettingVo caes = new CmsAcademicExamSettingVo();
         if(aes.isPresent()) {
             caes = CommonUtil.createCopyProperties(aes.get(), CmsAcademicExamSettingVo.class);
-            caes.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.get().getExamDate()))));
+            caes.setStrexamDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(aes.get().getExamDate()))));
 
         }
         return ResponseUtil.wrapOrNotFound(Optional.of(caes));

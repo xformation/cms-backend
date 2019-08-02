@@ -43,8 +43,8 @@ public class AdmissionEnquiryRestController {
 
         ae = admissionEnquiryRepository.save(ae);
         cmsAdmissionEnquiryVo.setId(ae.getId());
-        cmsAdmissionEnquiryVo.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getEnquiryDate()))));
-        cmsAdmissionEnquiryVo.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getUpdatedOn()))));
+        cmsAdmissionEnquiryVo.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getEnquiryDate()))));
+        cmsAdmissionEnquiryVo.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getUpdatedOn()))));
         return ResponseEntity.created(new URI("/api/admission-applications/" + cmsAdmissionEnquiryVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsAdmissionEnquiryVo.getId().toString()))
             .body(cmsAdmissionEnquiryVo);
@@ -59,8 +59,8 @@ public class AdmissionEnquiryRestController {
 
         AdmissionEnquiry ae = CommonUtil.createCopyProperties(cmsAdmissionEnquiryVo, AdmissionEnquiry.class);
         ae = admissionEnquiryRepository.save(ae);
-        cmsAdmissionEnquiryVo.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getEnquiryDate()))));
-        cmsAdmissionEnquiryVo.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getUpdatedOn()))));
+        cmsAdmissionEnquiryVo.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getEnquiryDate()))));
+        cmsAdmissionEnquiryVo.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getUpdatedOn()))));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsAdmissionEnquiryVo.getId().toString()))
             .body(cmsAdmissionEnquiryVo);
@@ -73,8 +73,8 @@ public class AdmissionEnquiryRestController {
         List<CmsAdmissionEnquiryVo> ls = new ArrayList<>();
         for(AdmissionEnquiry ae: list) {
             CmsAdmissionEnquiryVo cae = CommonUtil.createCopyProperties(ae, CmsAdmissionEnquiryVo.class);
-            cae.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getEnquiryDate()))));
-            cae.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getUpdatedOn()))));
+            cae.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getEnquiryDate()))));
+            cae.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.getUpdatedOn()))));
             ls.add(cae);
         }
         return ls;
@@ -86,8 +86,8 @@ public class AdmissionEnquiryRestController {
         Optional<AdmissionEnquiry> ae = admissionEnquiryRepository.findById(id);
         CmsAdmissionEnquiryVo cae = new CmsAdmissionEnquiryVo();
         if(ae.isPresent()) {
-            cae.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.get().getEnquiryDate()))));
-            cae.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.get().getUpdatedOn()))));
+            cae.setStrEnquiryDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.get().getEnquiryDate()))));
+            cae.setStrUpdatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ae.get().getUpdatedOn()))));
             cae = CommonUtil.createCopyProperties(ae.get(), CmsAdmissionEnquiryVo.class);
 
         }

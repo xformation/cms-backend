@@ -28,7 +28,10 @@ public class CmsExcelDataImportRestController {
 	private final Logger logger = LoggerFactory.getLogger(CmsExcelDataImportRestController.class);
 	
 	@Autowired
-	DataLoaderFactory dataLoaderFactory;
+	private DataLoaderFactory dataLoaderFactory;
+	
+	@Autowired
+	private AllRepositories allRepositories;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmsdataimport/{tableName}")
 	public ResponseEntity<QueryResult> doImport(@RequestParam("file") MultipartFile file, @PathVariable String tableName) throws URISyntaxException {
@@ -55,7 +58,7 @@ public class CmsExcelDataImportRestController {
 			for(String entity: CmsConstants.tabelName) {
 				try {
 					if(!"ALL".equalsIgnoreCase(entity)) {
-						DataLoader dataLoader = this.dataLoaderFactory.getLoader(entity);
+						DataLoader dataLoader = this.dataLoaderFactory.getLoader(entity, this.allRepositories);
 						if(dataLoader == null) {
 							logger.warn("Application does not support data import for entity - "+entity);
 						}
@@ -67,15 +70,15 @@ public class CmsExcelDataImportRestController {
 				}
 			}
 		}else {
-			DataLoader dataLoader = this.dataLoaderFactory.getLoader(tableName);
+			DataLoader dataLoader = this.dataLoaderFactory.getLoader(tableName, this.allRepositories);
 			if(dataLoader == null) {
-				msg = "Sorry. Application does not support data import for entity - "+tableName;
+				msg = "Application does not support data import for entity - "+tableName;
 				logger.warn(msg);
 			}
 			try {
-					dataLoader.load(file);
+				dataLoader.load(file);
 			}catch(Exception e) {
-				msg = "Sorry. Due to some error data import failed for entity - "+tableName;
+				msg = "Due to some error data import failed for entity - "+tableName;
 				result.setStatusCode(1);
 				logger.error(msg, e);
 			}

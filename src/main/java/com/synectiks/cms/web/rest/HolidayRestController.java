@@ -57,7 +57,7 @@ public class HolidayRestController {
         hd = holidayRepository.save(hd);
 
         cmsHolidayVo.setId(hd.getId());
-        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
 
         return ResponseEntity.created(new URI("/api/holidays/" + cmsHolidayVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsHolidayVo.getId().toString()))
@@ -73,7 +73,7 @@ public class HolidayRestController {
         Holiday hd = CommonUtil.createCopyProperties(cmsHolidayVo, Holiday.class);
         hd = holidayRepository.save(hd);
 
-        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsHolidayVo.getId().toString()))
@@ -87,7 +87,7 @@ public class HolidayRestController {
         List<CmsHolidayVo> ls = new ArrayList<>();
         for(Holiday hd: list) {
             CmsHolidayVo chd = CommonUtil.createCopyProperties(hd, CmsHolidayVo.class);
-            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
 
             ls.add(chd);
         }
@@ -103,7 +103,7 @@ public class HolidayRestController {
 
 
             chd = CommonUtil.createCopyProperties(hd.get(), CmsHolidayVo.class);
-            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.get().getHolidayDate()))));
+            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.get().getHolidayDate()))));
 
 
         }
@@ -128,7 +128,7 @@ public class HolidayRestController {
             List<Holiday> list = this.holidayRepository.findAll(exm);
             for(Holiday hd: list) {
                 CmsHolidayVo chd = CommonUtil.createCopyProperties(hd, CmsHolidayVo.class);
-                chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+                chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
 
                 ls.add(chd);
             }
