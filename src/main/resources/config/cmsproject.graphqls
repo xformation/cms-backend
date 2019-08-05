@@ -3436,7 +3436,8 @@ type RemoveLibraryPayload{
       rcNo:  String!
       contactNumber:  String!
       status:Status!
-
+      employee: Employee!
+      transportRoute: TransportRoute!
   }
 
 
@@ -3453,6 +3454,8 @@ input AddVehicleInput{
       rcNo:  String!
       contactNumber:  String!
       status:Status!
+      employeeId: Long!
+      transportRouteId: Long!
 }
 type AddVehiclePayload{
     vehicle:Vehicle!
@@ -3471,6 +3474,8 @@ input UpdateVehicleInput{
          rcNo:  String!
          contactNumber:  String!
          status:Status!
+         employeeId: Long!
+         transportRouteId: Long!
 }
 type UpdateVehiclePayload{
     vehicle:Vehicle!

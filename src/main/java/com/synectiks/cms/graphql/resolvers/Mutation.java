@@ -3652,6 +3652,8 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddVehiclePayload addVehicle(AddVehicleInput addVehicleInput) {
+        final TransportRoute transportRoute =  transportRouteRepository.findById(addVehicleInput.getTransportRouteId()).get();
+        final Employee employee = employeeRepository.findById(addVehicleInput.getEmployeeId()).get();
         final Vehicle vehicle = new Vehicle();
         vehicle.setVehicleNumber(addVehicleInput.getVehicleNumber());
         vehicle.setVehicleType(addVehicleInput.getVehicleType());
@@ -3665,6 +3667,8 @@ public class Mutation implements GraphQLMutationResolver {
         vehicle.setRcNo(addVehicleInput.getRcNo());
         vehicle.setContactNumber(addVehicleInput.getContactNumber());
         vehicle.setStatus(addVehicleInput.getStatus());
+        vehicle.setEmployee(employee);
+        vehicle.setTransportRoute(transportRoute);
         vehicleRepository.save(vehicle);
 
         return new AddVehiclePayload(vehicle);
@@ -3705,6 +3709,14 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if (updateVehicleInput.getStatus() != null) {
             vehicle.setStatus(updateVehicleInput.getStatus());
+        }
+        if(updateVehicleInput.getEmployeeId()!=null){
+            Employee employee = employeeRepository.findById(updateVehicleInput.getEmployeeId()).get();
+            vehicle.setEmployee(employee);
+        }
+        if(updateVehicleInput.getTransportRouteId()!=null){
+            TransportRoute transportRoute = transportRouteRepository.findById(updateVehicleInput.getTransportRouteId()).get();
+            vehicle.setTransportRoute(transportRoute);
         }
 
         vehicleRepository.save(vehicle);
