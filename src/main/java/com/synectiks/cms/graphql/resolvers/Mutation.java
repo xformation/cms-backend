@@ -666,159 +666,145 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveStatePayload(Lists.newArrayList(stateRepository.findAll()));
     }
 
-    public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput addAdmissionApplicationInput) {
-        AdmissionEnquiry admissionEnquiry = admissionEnquiryRepository.findById(addAdmissionApplicationInput.getAdmissionEnquiryId()).get();
-        AcademicHistory academicHistory = academicHistoryRepository.findById(addAdmissionApplicationInput.getAcademicHistoryId()).get();
-        Documents documents = documentsRepository.findById(addAdmissionApplicationInput.getDocumentsId()).get();
-        Branch branch = branchRepository.findById(addAdmissionApplicationInput.getBranchId()).get();
-        Batch batch = batchRepository.findById(addAdmissionApplicationInput.getBatchId()).get();
-        State state = stateRepository.findById(addAdmissionApplicationInput.getStateId()).get();
-        City city = cityRepository.findById(addAdmissionApplicationInput.getCityId()).get();
-        Country country = countryRepository.findById(addAdmissionApplicationInput.getCountryId()).get();
-        Department department = departmentRepository.findById(addAdmissionApplicationInput.getDepartmentId()).get();
-        AcademicYear academicYear = academicYearRepository.findById(addAdmissionApplicationInput.getAcademicyearId()).get();
+    public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput input) {
+    	
+        Optional<AdmissionEnquiry> admissionEnquiry = admissionEnquiryRepository.findById(input.getAdmissionEnquiryId());
+        Optional<AcademicHistory> academicHistory = academicHistoryRepository.findById(input.getAcademicHistoryId());
+        Optional<Documents> documents = documentsRepository.findById(input.getDocumentsId());
+        Optional<Branch> branch = branchRepository.findById(input.getBranchId());
+        Optional<Batch> batch = batchRepository.findById(input.getBatchId());
+        Optional<State> state = stateRepository.findById(input.getStateId());
+        Optional<City> city = cityRepository.findById(input.getCityId());
+        Optional<Country> country = countryRepository.findById(input.getCountryId());
+        Optional<Department> department = departmentRepository.findById(input.getDepartmentId());
+        Optional<AcademicYear> academicYear = academicYearRepository.findById(input.getAcademicyearId());
 
-        final AdmissionApplication admissionApplication = new AdmissionApplication();
-        admissionApplication.setAdmissionStatus(addAdmissionApplicationInput.getAdmissionStatus());
-        admissionApplication.setStudentName(addAdmissionApplicationInput.getStudentName());
-        admissionApplication.setStudentMiddleName(addAdmissionApplicationInput.getStudentMiddleName());
-        admissionApplication.setStudentLastName(addAdmissionApplicationInput.getStudentLastName());
-        admissionApplication.setFatherName(addAdmissionApplicationInput.getFatherName());
-        admissionApplication.setFatherMiddleName(addAdmissionApplicationInput.getFatherMiddleName());
-        admissionApplication.setFatherLastName(addAdmissionApplicationInput.getFatherLastName());
-        admissionApplication.setMotherName(addAdmissionApplicationInput.getMotherName());
-        admissionApplication.setMotherMiddleName(addAdmissionApplicationInput.getMotherMiddleName());
-        admissionApplication.setMotherLastName(addAdmissionApplicationInput.getMotherLastName());
-        admissionApplication.setContactNumber(addAdmissionApplicationInput.getContactNumber());
-        admissionApplication.setAlternateMobileNumber(addAdmissionApplicationInput.getAlternateMobileNumber());
-        admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getDateOfBirth()));
-        admissionApplication.setEmail(addAdmissionApplicationInput.getEmail());
-        admissionApplication.setSex(addAdmissionApplicationInput.getSex());
-        admissionApplication.setCourse(addAdmissionApplicationInput.getCourse());
-        admissionApplication.setComments(addAdmissionApplicationInput.getComments());
-        admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(addAdmissionApplicationInput.getAdmissionDate()));
-        admissionApplication.setApplicationId(addAdmissionApplicationInput.getApplicationId());
-        admissionApplication.setUploadPhoto(addAdmissionApplicationInput.getUploadPhoto());
-        admissionApplication.setAcademicyear(academicYear);
-        admissionApplication.setAdmissionEnquiry(admissionEnquiry);
-        admissionApplication.setAcademicHistory(academicHistory);
-        admissionApplication.setDocuments(documents);
-        admissionApplication.setBranch(branch);
-        admissionApplication.setBatch(batch);
-        admissionApplication.setState(state);
-        admissionApplication.setCity(city);
-        admissionApplication.setCountry(country);
-        admissionApplication.setDepartment(department);
+        AdmissionApplication admissionApplication = CommonUtil.createCopyProperties(input, AdmissionApplication.class);
+        admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(input.getDateOfBirth()));
+        admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getAdmissionDate()));
+        admissionApplication.setAcademicyear(academicYear.isPresent() ? academicYear.get() : null);
+        admissionApplication.setAdmissionEnquiry(admissionEnquiry.isPresent() ? admissionEnquiry.get() : null);
+        admissionApplication.setAcademicHistory(academicHistory.isPresent() ? academicHistory.get() : null);
+        admissionApplication.setDocuments(documents.isPresent() ? documents.get() : null);
+        admissionApplication.setBranch(branch.isPresent() ? branch.get() : null);
+        admissionApplication.setBatch(batch.isPresent() ? batch.get() : null);
+        admissionApplication.setState(state.isPresent() ? state.get() : null);
+        admissionApplication.setCity(city.isPresent() ? city.get() : null);
+        admissionApplication.setCountry(country.isPresent() ? country.get() : null);
+        admissionApplication.setDepartment(department.isPresent() ? department.get() : null);
+        admissionApplication.setStatus(input.getStatus());
         admissionApplicationRepository.save(admissionApplication);
         return new AddAdmissionApplicationPayload(admissionApplication);
     }
 
-    public UpdateAdmissionApplicationPayload updateAdmissionApplication(UpdateAdmissionApplicationInput updateAdmissionApplicationInput) {
-        AdmissionApplication admissionApplication = admissionApplicationRepository.findById(updateAdmissionApplicationInput.getId()).get();
+    public UpdateAdmissionApplicationPayload updateAdmissionApplication(UpdateAdmissionApplicationInput input) {
+        AdmissionApplication admissionApplication = admissionApplicationRepository.findById(input.getId()).get();
 
 
-        if (updateAdmissionApplicationInput.getAdmissionStatus() != null) {
-            admissionApplication.setAdmissionStatus(updateAdmissionApplicationInput.getAdmissionStatus());
+        if (input.getAdmissionStatus() != null) {
+            admissionApplication.setAdmissionStatus(input.getAdmissionStatus());
         }
-        if (updateAdmissionApplicationInput.getStudentName() != null) {
-            admissionApplication.setStudentName(updateAdmissionApplicationInput.getStudentName());
+        if (input.getStudentName() != null) {
+            admissionApplication.setStudentName(input.getStudentName());
         }
-        if (updateAdmissionApplicationInput.getStudentMiddleName() != null) {
-            admissionApplication.setStudentMiddleName(updateAdmissionApplicationInput.getStudentMiddleName());
+        if (input.getStudentMiddleName() != null) {
+            admissionApplication.setStudentMiddleName(input.getStudentMiddleName());
         }
-        if (updateAdmissionApplicationInput.getStudentLastName() != null) {
-            admissionApplication.setStudentLastName(updateAdmissionApplicationInput.getStudentLastName());
+        if (input.getStudentLastName() != null) {
+            admissionApplication.setStudentLastName(input.getStudentLastName());
         }
-        if (updateAdmissionApplicationInput.getFatherName() != null) {
-            admissionApplication.setFatherName(updateAdmissionApplicationInput.getFatherName());
+        if (input.getFatherName() != null) {
+            admissionApplication.setFatherName(input.getFatherName());
         }
-        if (updateAdmissionApplicationInput.getFatherMiddleName() != null) {
-            admissionApplication.setFatherMiddleName(updateAdmissionApplicationInput.getFatherMiddleName());
+        if (input.getFatherMiddleName() != null) {
+            admissionApplication.setFatherMiddleName(input.getFatherMiddleName());
         }
-        if (updateAdmissionApplicationInput.getFatherLastName() != null) {
-            admissionApplication.setFatherLastName(updateAdmissionApplicationInput.getFatherLastName());
+        if (input.getFatherLastName() != null) {
+            admissionApplication.setFatherLastName(input.getFatherLastName());
         }
-        if (updateAdmissionApplicationInput.getMotherName() != null) {
-            admissionApplication.setMotherName(updateAdmissionApplicationInput.getMotherName());
+        if (input.getMotherName() != null) {
+            admissionApplication.setMotherName(input.getMotherName());
         }
-        if (updateAdmissionApplicationInput.getMotherMiddleName() != null) {
-            admissionApplication.setMotherMiddleName(updateAdmissionApplicationInput.getMotherMiddleName());
+        if (input.getMotherMiddleName() != null) {
+            admissionApplication.setMotherMiddleName(input.getMotherMiddleName());
         }
-        if (updateAdmissionApplicationInput.getMotherLastName() != null) {
-            admissionApplication.setMotherLastName(updateAdmissionApplicationInput.getMotherLastName());
+        if (input.getMotherLastName() != null) {
+            admissionApplication.setMotherLastName(input.getMotherLastName());
         }
-        if (updateAdmissionApplicationInput.getContactNumber() != null) {
-            admissionApplication.setContactNumber(updateAdmissionApplicationInput.getContactNumber());
+        if (input.getContactNumber() != null) {
+            admissionApplication.setContactNumber(input.getContactNumber());
         }
-        if (updateAdmissionApplicationInput.getAlternateMobileNumber() != null) {
-            admissionApplication.setAlternateMobileNumber(updateAdmissionApplicationInput.getAlternateMobileNumber());
+        if (input.getAlternateMobileNumber() != null) {
+            admissionApplication.setAlternateMobileNumber(input.getAlternateMobileNumber());
         }
-        if (updateAdmissionApplicationInput.getDateOfBirth() != null) {
-            admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionApplicationInput.getDateOfBirth()));
+        if (input.getDateOfBirth() != null) {
+            admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(input.getDateOfBirth()));
         }
-        if (updateAdmissionApplicationInput.getEmail() != null) {
-            admissionApplication.setEmail(updateAdmissionApplicationInput.getEmail());
+        if (input.getEmail() != null) {
+            admissionApplication.setEmail(input.getEmail());
         }
-        if (updateAdmissionApplicationInput.getSex() != null) {
-            admissionApplication.setSex(updateAdmissionApplicationInput.getSex());
+        if (input.getSex() != null) {
+            admissionApplication.setSex(input.getSex());
         }
-        if (updateAdmissionApplicationInput.getComments() != null) {
-            admissionApplication.setComments(updateAdmissionApplicationInput.getComments());
+        if (input.getComments() != null) {
+            admissionApplication.setComments(input.getComments());
         }
-        if (updateAdmissionApplicationInput.getApplicationId() != null) {
-            admissionApplication.setApplicationId(updateAdmissionApplicationInput.getApplicationId());
+        if (input.getApplicationId() != null) {
+            admissionApplication.setApplicationId(input.getApplicationId());
         }
-        if (updateAdmissionApplicationInput.getUploadPhoto() != null) {
-            admissionApplication.setUploadPhoto(updateAdmissionApplicationInput.getUploadPhoto());
-        }
-
-        if (updateAdmissionApplicationInput.getCourse() != null) {
-            admissionApplication.setCourse(updateAdmissionApplicationInput.getCourse());
-        }
-        if (updateAdmissionApplicationInput.getAdmissionDate() != null) {
-            admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(updateAdmissionApplicationInput.getAdmissionDate()));
-        }
-        if (updateAdmissionApplicationInput.getAdmissionEnquiryId() != null) {
-            AdmissionEnquiry admissionEnquiry = admissionEnquiryRepository.findById(updateAdmissionApplicationInput.getAdmissionEnquiryId()).get();
-            admissionApplication.setAdmissionEnquiry(admissionEnquiry);
-        }
-        if (updateAdmissionApplicationInput.getDocumentsId() != null) {
-            Documents documents = documentsRepository.findById(updateAdmissionApplicationInput.getDocumentsId()).get();
-            admissionApplication.setDocuments(documents);
-        }
-        if (updateAdmissionApplicationInput.getAcademicHistoryId() != null) {
-            AcademicHistory academicHistory = academicHistoryRepository.findById(updateAdmissionApplicationInput.getAcademicHistoryId()).get();
-            admissionApplication.setAcademicHistory(academicHistory);
-        }
-        if (updateAdmissionApplicationInput.getBranchId() != null) {
-            Branch branch = branchRepository.findById(updateAdmissionApplicationInput.getBranchId()).get();
-            admissionApplication.setBranch(branch);
-        }
-        if (updateAdmissionApplicationInput.getBatchId() != null) {
-            Batch batch = batchRepository.findById(updateAdmissionApplicationInput.getBatchId()).get();
-            admissionApplication.setBatch(batch);
-        }
-        if (updateAdmissionApplicationInput.getStateId() != null) {
-            State state = stateRepository.findById(updateAdmissionApplicationInput.getStateId()).get();
-            admissionApplication.setState(state);
-        }
-        if (updateAdmissionApplicationInput.getCityId() != null) {
-            City city = cityRepository.findById(updateAdmissionApplicationInput.getCityId()).get();
-            admissionApplication.setCity(city);
-        }
-        if (updateAdmissionApplicationInput.getCountryId() != null) {
-            Country country = countryRepository.findById(updateAdmissionApplicationInput.getCountryId()).get();
-            admissionApplication.setCountry(country);
-        }
-        if (updateAdmissionApplicationInput.getDepartmentId() != null) {
-            Department department = departmentRepository.findById(updateAdmissionApplicationInput.getDepartmentId()).get();
-            admissionApplication.setDepartment(department);
-        }
-        if (updateAdmissionApplicationInput.getAcademicyearId() != null) {
-            AcademicYear academicYear = academicYearRepository.findById(updateAdmissionApplicationInput.getAcademicyearId()).get();
-            admissionApplication.setAcademicyear(academicYear);
+        if (input.getUploadPhoto() != null) {
+            admissionApplication.setUploadPhoto(input.getUploadPhoto());
         }
 
+        if (input.getCourse() != null) {
+            admissionApplication.setCourse(input.getCourse());
+        }
+        if (input.getAdmissionDate() != null) {
+            admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getAdmissionDate()));
+        }
+        if (input.getAdmissionEnquiryId() != null) {
+            Optional<AdmissionEnquiry> admissionEnquiry = admissionEnquiryRepository.findById(input.getAdmissionEnquiryId());
+            admissionApplication.setAdmissionEnquiry(admissionEnquiry.isPresent() ? admissionEnquiry.get() : null);
+        }
+        if (input.getDocumentsId() != null) {
+            Optional<Documents> documents = documentsRepository.findById(input.getDocumentsId());
+            admissionApplication.setDocuments(documents.isPresent() ? documents.get() : null);
+        }
+        if (input.getAcademicHistoryId() != null) {
+            Optional<AcademicHistory> academicHistory = academicHistoryRepository.findById(input.getAcademicHistoryId());
+            admissionApplication.setAcademicHistory(academicHistory.isPresent() ? academicHistory.get() : null);
+        }
+        if (input.getBranchId() != null) {
+            Optional<Branch> branch = branchRepository.findById(input.getBranchId());
+            admissionApplication.setBranch(branch.isPresent() ? branch.get() : null);
+        }
+        if (input.getBatchId() != null) {
+            Optional<Batch> batch = batchRepository.findById(input.getBatchId());
+            admissionApplication.setBatch(batch.isPresent() ? batch.get() : null);
+        }
+        if (input.getStateId() != null) {
+            Optional<State> state = stateRepository.findById(input.getStateId());
+            admissionApplication.setState(state.isPresent() ? state.get() : null);
+        }
+        if (input.getCityId() != null) {
+            Optional<City> city = cityRepository.findById(input.getCityId());
+            admissionApplication.setCity(city.isPresent() ? city.get() : null);
+        }
+        if (input.getCountryId() != null) {
+            Optional<Country> country = countryRepository.findById(input.getCountryId());
+            admissionApplication.setCountry(country.isPresent() ? country.get() : null);
+        }
+        if (input.getDepartmentId() != null) {
+            Optional<Department> department = departmentRepository.findById(input.getDepartmentId());
+            admissionApplication.setDepartment(department.isPresent() ? department.get() : null);
+        }
+        if (input.getAcademicyearId() != null) {
+            Optional<AcademicYear> academicYear = academicYearRepository.findById(input.getAcademicyearId());
+            admissionApplication.setAcademicyear(academicYear.isPresent() ? academicYear.get() : null);
+        }
+        if (input.getStatus() != null) {
+            admissionApplication.setStatus(input.getStatus());
+        }
         admissionApplicationRepository.save(admissionApplication);
 
         return new UpdateAdmissionApplicationPayload(admissionApplication);

@@ -3,6 +3,9 @@ package com.synectiks.cms.constant;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.synectiks.cms.domain.Config;
 
 public interface CmsConstants {
 	
@@ -30,7 +33,8 @@ public interface CmsConstants {
 	String COLLEGE_ID_PLACEHOLDER_REPLACER = "college_id_";
 	String BRANCH_ID_PLACEHOLDER_REPLACER = "branch_id_";
 	String STUDENT_IMAGE_FILE_PATH = CMS_IMAGE_FILE_PATH+File.separator+"COLLEGE_ID"+File.separator+"student_images";
-	
+	ConcurrentHashMap<String, Config> USERS_CACHE = new ConcurrentHashMap<String, Config>();
+    
 	List<String> tabelName = initTableList();
 	
 	public static List<String> initTableList() {

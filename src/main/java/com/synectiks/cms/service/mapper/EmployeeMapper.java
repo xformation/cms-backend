@@ -12,7 +12,7 @@ import org.mapstruct.*;
 public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
 
 
-    @Mapping(target = "vehicle", ignore = true)
+    @Mapping(target = "branch", ignore = true)
     Employee toEntity(EmployeeDTO employeeDTO);
 
     default Employee fromId(Long id) {

@@ -36,6 +36,10 @@ public class CollegeRestController {
 	@RequestMapping(method = RequestMethod.POST, value = "/cmscollege")
 	public int createCollege(@RequestBody CmsCollegeVo cmsCollegeVo) {
 		logger.info("REST request to create a new college.");
+		List<College> existingCollegeList = collegeRepository.findAll();
+		if(existingCollegeList.size() >= 1) {
+			return 500;
+		}
 		int status = 400;
 		College college = new College();
 		college.setShortName(cmsCollegeVo.getShortName());

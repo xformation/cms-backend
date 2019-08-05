@@ -4,9 +4,11 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
 /**
- * A DTO for the Employee entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Employee} entity.
  */
 public class EmployeeDTO implements Serializable {
 
@@ -15,6 +17,7 @@ public class EmployeeDTO implements Serializable {
     @NotNull
     private String employeeName;
 
+    @NotNull
     private String designation;
 
     @NotNull
@@ -36,16 +39,12 @@ public class EmployeeDTO implements Serializable {
 
     private String secondaryContactNo;
 
-    @NotNull
     private String employeeFatherName;
 
-    @NotNull
     private String employeeMotherName;
 
-    @NotNull
     private String primaryAddress;
 
-    @NotNull
     private String secondaryAddress;
 
     private String employeeAddress;
@@ -62,6 +61,16 @@ public class EmployeeDTO implements Serializable {
 
     private String gender;
 
+    private String typeOfEmployment;
+
+    private Long managerId;
+
+    private Status status;
+
+    private MaritalStatus maritalStatus;
+
+
+    private Long branchId;
 
     public Long getId() {
         return id;
@@ -247,6 +256,46 @@ public class EmployeeDTO implements Serializable {
         this.gender = gender;
     }
 
+    public String getTypeOfEmployment() {
+        return typeOfEmployment;
+    }
+
+    public void setTypeOfEmployment(String typeOfEmployment) {
+        this.typeOfEmployment = typeOfEmployment;
+    }
+
+    public Long getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -294,6 +343,11 @@ public class EmployeeDTO implements Serializable {
             ", drivingLicenceNo='" + getDrivingLicenceNo() + "'" +
             ", drivingLicenceValidity='" + getDrivingLicenceValidity() + "'" +
             ", gender='" + getGender() + "'" +
+            ", typeOfEmployment='" + getTypeOfEmployment() + "'" +
+            ", managerId=" + getManagerId() +
+            ", status='" + getStatus() + "'" +
+            ", maritalStatus='" + getMaritalStatus() + "'" +
+            ", branch=" + getBranchId() +
             "}";
     }
 }

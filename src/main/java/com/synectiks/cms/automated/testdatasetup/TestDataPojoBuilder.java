@@ -184,7 +184,7 @@ public class TestDataPojoBuilder {
 		st.setDateOfBirth(LocalDate.now());
 		st.setPlaceOfBirth("");
 		st.setReligion(Religion.HINDU);
-		st.setCaste(Caste.OC);
+		st.setCaste(Caste.OBC);
 		st.setSubCaste("");
 		st.setAge(25);
 		st.setSex(Gender.MALE);
@@ -234,7 +234,7 @@ public class TestDataPojoBuilder {
 		thr.setDateOfBirth(LocalDate.now());
 		thr.setPlaceOfBirth("");
 		thr.setReligion(Religion.HINDU);
-		thr.setCaste(Caste.OC);
+		thr.setCaste(Caste.GENERAL);
 		thr.setSubCaste("");
 		thr.setAge(25);
 		thr.setSex(Gender.MALE);

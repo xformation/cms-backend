@@ -1,16 +1,13 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
 
@@ -18,20 +15,23 @@ import com.synectiks.cms.domain.enumeration.Gender;
 
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 
+import com.synectiks.cms.domain.enumeration.Status;
+
 /**
  * A AdmissionApplication.
  */
 @Entity
 @Table(name = "admission_application")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "admissionapplication")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "admissionapplication")
 public class AdmissionApplication implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -96,6 +96,10 @@ public class AdmissionApplication implements Serializable {
 
     @Column(name = "admission_date")
     private LocalDate admissionDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 
     @ManyToOne
     @JsonIgnoreProperties("admissionApplications")
@@ -406,6 +410,19 @@ public class AdmissionApplication implements Serializable {
         this.admissionDate = admissionDate;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public AdmissionApplication status(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public AdmissionEnquiry getAdmissionEnquiry() {
         return admissionEnquiry;
     }
@@ -542,19 +559,15 @@ public class AdmissionApplication implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AdmissionApplication)) {
             return false;
         }
-        AdmissionApplication admissionApplication = (AdmissionApplication) o;
-        if (admissionApplication.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), admissionApplication.getId());
+        return id != null && id.equals(((AdmissionApplication) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -581,6 +594,7 @@ public class AdmissionApplication implements Serializable {
             ", uploadPhoto='" + getUploadPhoto() + "'" +
             ", course='" + getCourse() + "'" +
             ", admissionDate='" + getAdmissionDate() + "'" +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
+import com.synectiks.cms.config.GlobalConfig;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
@@ -89,6 +90,12 @@ public class CommonService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private StudentRepository studentRepository;
+    
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    
 //    @Autowired
 //    private StudentRepository studentRepository;
 
@@ -823,7 +830,52 @@ public class CommonService {
         logger.debug("Returning list of facilities from JPA criteria query. Total records : "+facilityList.size());
         return ls;
     }
-
+    
+    public Config createUserConfig(String userName) {
+		logger.debug("Creating user specific config object");
+		Config config = new Config();
+		config.setLoggedInUser(userName);
+		
+        Student st = new Student();
+        Teacher th = new Teacher();
+        Employee em = new Employee();
+        st.setStudentEmailAddress(userName);
+        th.setTeacherEmailAddress(userName);
+        em.setOfficialMailId(userName);
+        Optional<Student> student = studentRepository.findOne(Example.of(st));
+        Optional<Teacher> teacher = teacherRepository.findOne(Example.of(th));
+        Optional<Employee> employee = employeeRepository.findOne(Example.of(em));
+        if(student.isPresent()) {
+        	config.setLoggedInUser(userName);
+        	config.setCountry(student.get().getBranch().getState().getCountry());
+        	config.setState(student.get().getBranch().getState());
+        	config.setCity(student.get().getBranch().getCity());
+        	config.setBranch(student.get().getBranch());
+        }else if(teacher.isPresent()) {
+        	config.setLoggedInUser(userName);
+        	config.setCountry(teacher.get().getBranch().getState().getCountry());
+        	config.setState(teacher.get().getBranch().getState());
+        	config.setCity(teacher.get().getBranch().getCity());
+        	config.setBranch(teacher.get().getBranch());
+        }else if(employee.isPresent()) {
+        	config.setLoggedInUser(userName);
+        	config.setCountry(employee.get().getBranch().getState().getCountry());
+        	config.setState(teacher.get().getBranch().getState());
+        	config.setCity(teacher.get().getBranch().getCity());
+        	config.setBranch(employee.get().getBranch());
+        }
+        
+        if(config.getCollege() == null) {
+	        List<College> cl = collegeRepository.findAll();
+	        config.setCollege((cl != null && cl.size() > 1) ? cl.get(0) : null);
+        }
+        AcademicYear academicYear = new AcademicYear();
+        academicYear.setStatus(Status.ACTIVE);
+        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
+        config.setAcademicYear(oa.isPresent() ? oa.get() : null);
+        return config;
+	}
+    
     public static void main(String a[]) {
         LocalDate ld = LocalDate.now();
         System.out.println(ld);

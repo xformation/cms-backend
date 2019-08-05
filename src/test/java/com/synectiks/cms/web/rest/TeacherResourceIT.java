@@ -1,7 +1,6 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.repository.TeacherRepository;
 import com.synectiks.cms.repository.search.TeacherSearchRepository;
@@ -10,16 +9,14 @@ import com.synectiks.cms.service.dto.TeacherDTO;
 import com.synectiks.cms.service.mapper.TeacherMapper;
 import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +26,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,13 +44,10 @@ import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.StaffType;
 /**
- * Test class for the TeacherResource REST controller.
- *
- * @see TeacherResource
+ * Integration tests for the {@Link TeacherResource} REST controller.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = CmsApp.class)
-public class TeacherResourceIntTest {
+public class TeacherResourceIT {
 
     private static final String DEFAULT_TEACHER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_TEACHER_NAME = "BBBBBBBBBB";
@@ -105,7 +97,7 @@ public class TeacherResourceIntTest {
     private static final Religion DEFAULT_RELIGION = Religion.HINDU;
     private static final Religion UPDATED_RELIGION = Religion.MUSLIM;
 
-    private static final Caste DEFAULT_CASTE = Caste.OBC;
+    private static final Caste DEFAULT_CASTE = Caste.GENERAL;
     private static final Caste UPDATED_CASTE = Caste.OBC;
 
     private static final String DEFAULT_SUB_CASTE = "AAAAAAAAAA";
@@ -117,8 +109,8 @@ public class TeacherResourceIntTest {
     private static final Gender DEFAULT_SEX = Gender.MALE;
     private static final Gender UPDATED_SEX = Gender.FEMALE;
 
-    private static final Bloodgroup DEFAULT_BLOOD_GROUP = Bloodgroup.ABPOSITIVE;
-    private static final Bloodgroup UPDATED_BLOOD_GROUP = Bloodgroup.ABNEGATIVE;
+    private static final Bloodgroup DEFAULT_BLOOD_GROUP = Bloodgroup.APOSITIVE;
+    private static final Bloodgroup UPDATED_BLOOD_GROUP = Bloodgroup.ANEGATIVE;
 
     private static final String DEFAULT_ADDRESS_LINE_ONE = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS_LINE_ONE = "BBBBBBBBBB";
@@ -215,12 +207,14 @@ public class TeacherResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
 
     private MockMvc restTeacherMockMvc;
 
     private Teacher teacher;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         final TeacherResource teacherResource = new TeacherResource(teacherService);
@@ -228,7 +222,8 @@ public class TeacherResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -284,8 +279,61 @@ public class TeacherResourceIntTest {
             .staffType(DEFAULT_STAFF_TYPE);
         return teacher;
     }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Teacher createUpdatedEntity(EntityManager em) {
+        Teacher teacher = new Teacher()
+            .teacherName(UPDATED_TEACHER_NAME)
+            .teacherMiddleName(UPDATED_TEACHER_MIDDLE_NAME)
+            .teacherLastName(UPDATED_TEACHER_LAST_NAME)
+            .fatherName(UPDATED_FATHER_NAME)
+            .fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME)
+            .fatherLastName(UPDATED_FATHER_LAST_NAME)
+            .spouseName(UPDATED_SPOUSE_NAME)
+            .spouseMiddleName(UPDATED_SPOUSE_MIDDLE_NAME)
+            .spouseLastName(UPDATED_SPOUSE_LAST_NAME)
+            .motherName(UPDATED_MOTHER_NAME)
+            .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
+            .motherLastName(UPDATED_MOTHER_LAST_NAME)
+            .aadharNo(UPDATED_AADHAR_NO)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .placeOfBirth(UPDATED_PLACE_OF_BIRTH)
+            .religion(UPDATED_RELIGION)
+            .caste(UPDATED_CASTE)
+            .subCaste(UPDATED_SUB_CASTE)
+            .age(UPDATED_AGE)
+            .sex(UPDATED_SEX)
+            .bloodGroup(UPDATED_BLOOD_GROUP)
+            .addressLineOne(UPDATED_ADDRESS_LINE_ONE)
+            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
+            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
+            .town(UPDATED_TOWN)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY)
+            .pincode(UPDATED_PINCODE)
+            .teacherContactNumber(UPDATED_TEACHER_CONTACT_NUMBER)
+            .alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
+            .teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS)
+            .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStaff(UPDATED_RELATION_WITH_STAFF)
+            .emergencyContactName(UPDATED_EMERGENCY_CONTACT_NAME)
+            .emergencyContactMiddleName(UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME)
+            .emergencyContactLastName(UPDATED_EMERGENCY_CONTACT_LAST_NAME)
+            .emergencyContactNo(UPDATED_EMERGENCY_CONTACT_NO)
+            .emergencyContactEmailAddress(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS)
+            .uploadPhoto(UPDATED_UPLOAD_PHOTO)
+            .status(UPDATED_STATUS)
+            .employeeId(UPDATED_EMPLOYEE_ID)
+            .designation(UPDATED_DESIGNATION)
+            .staffType(UPDATED_STAFF_TYPE);
+        return teacher;
+    }
 
-    @Before
+    @BeforeEach
     public void initTest() {
         teacher = createEntity(em);
     }
@@ -376,6 +424,7 @@ public class TeacherResourceIntTest {
         // Validate the Teacher in Elasticsearch
         verify(mockTeacherSearchRepository, times(0)).save(teacher);
     }
+
 
     @Test
     @Transactional
@@ -1116,7 +1165,7 @@ public class TeacherResourceIntTest {
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
-
+    
     @Test
     @Transactional
     public void getTeacher() throws Exception {
@@ -1329,9 +1378,9 @@ public class TeacherResourceIntTest {
         // Delete the teacher
         restTeacherMockMvc.perform(delete("/api/teachers/{id}", teacher.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk());
+            .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Teacher> teacherList = teacherRepository.findAll();
         assertThat(teacherList).hasSize(databaseSizeBeforeDelete - 1);
 

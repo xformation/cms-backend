@@ -1,7 +1,6 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Batch;
@@ -14,16 +13,14 @@ import com.synectiks.cms.service.dto.StudentDTO;
 import com.synectiks.cms.service.mapper.StudentMapper;
 import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +30,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,13 +47,10 @@ import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 /**
- * Test class for the StudentResource REST controller.
- *
- * @see StudentResource
+ * Integration tests for the {@Link StudentResource} REST controller.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = CmsApp.class)
-public class StudentResourceIntTest {
+public class StudentResourceIT {
 
     private static final String DEFAULT_STUDENT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_STUDENT_NAME = "BBBBBBBBBB";
@@ -90,7 +82,7 @@ public class StudentResourceIntTest {
     private static final Long DEFAULT_AADHAR_NO = 1L;
     private static final Long UPDATED_AADHAR_NO = 2L;
 
-    private static final LocalDate DEFAULT_DATE_OF_BIRTH =  LocalDate.ofEpochDay(0L);
+    private static final LocalDate DEFAULT_DATE_OF_BIRTH = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_OF_BIRTH = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_PLACE_OF_BIRTH = "AAAAAAAAAA";
@@ -99,7 +91,7 @@ public class StudentResourceIntTest {
     private static final Religion DEFAULT_RELIGION = Religion.HINDU;
     private static final Religion UPDATED_RELIGION = Religion.MUSLIM;
 
-    private static final Caste DEFAULT_CASTE = Caste.OBC;
+    private static final Caste DEFAULT_CASTE = Caste.GENERAL;
     private static final Caste UPDATED_CASTE = Caste.OBC;
 
     private static final String DEFAULT_SUB_CASTE = "AAAAAAAAAA";
@@ -111,8 +103,8 @@ public class StudentResourceIntTest {
     private static final Gender DEFAULT_SEX = Gender.MALE;
     private static final Gender UPDATED_SEX = Gender.FEMALE;
 
-    private static final Bloodgroup DEFAULT_BLOOD_GROUP = Bloodgroup.ABPOSITIVE;
-    private static final Bloodgroup UPDATED_BLOOD_GROUP = Bloodgroup.ABNEGATIVE;
+    private static final Bloodgroup DEFAULT_BLOOD_GROUP = Bloodgroup.APOSITIVE;
+    private static final Bloodgroup UPDATED_BLOOD_GROUP = Bloodgroup.ANEGATIVE;
 
     private static final String DEFAULT_ADDRESS_LINE_ONE = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS_LINE_ONE = "BBBBBBBBBB";
@@ -206,12 +198,14 @@ public class StudentResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
 
     private MockMvc restStudentMockMvc;
 
     private Student student;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         final StudentResource studentResource = new StudentResource(studentService);
@@ -219,7 +213,8 @@ public class StudentResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -270,29 +265,138 @@ public class StudentResourceIntTest {
             .rollNo(DEFAULT_ROLL_NO)
             .studentType(DEFAULT_STUDENT_TYPE);
         // Add required entity
-        Department department = DepartmentResourceIntTest.createEntity(em);
-        em.persist(department);
-        em.flush();
-        student.setDepartment(department);
+//        Department department;
+//        if (TestUtil.findAll(em, Department.class).isEmpty()) {
+//            department = DepartmentResourceIT.createEntity(em);
+//            em.persist(department);
+//            em.flush();
+//        } else {
+//            department = TestUtil.findAll(em, Department.class).get(0);
+//        }
+//        student.setDepartment(department);
+//        // Add required entity
+//        Batch batch;
+//        if (TestUtil.findAll(em, Batch.class).isEmpty()) {
+//            batch = BatchResourceIT.createEntity(em);
+//            em.persist(batch);
+//            em.flush();
+//        } else {
+//            batch = TestUtil.findAll(em, Batch.class).get(0);
+//        }
+//        student.setBatch(batch);
+//        // Add required entity
+//        Section section;
+//        if (TestUtil.findAll(em, Section.class).isEmpty()) {
+//            section = SectionResourceIT.createEntity(em);
+//            em.persist(section);
+//            em.flush();
+//        } else {
+//            section = TestUtil.findAll(em, Section.class).get(0);
+//        }
+//        student.setSection(section);
+//        // Add required entity
+//        Branch branch;
+//        if (TestUtil.findAll(em, Branch.class).isEmpty()) {
+//            branch = BranchResourceIT.createEntity(em);
+//            em.persist(branch);
+//            em.flush();
+//        } else {
+//            branch = TestUtil.findAll(em, Branch.class).get(0);
+//        }
+//        student.setBranch(branch);
+        return student;
+    }
+    /**
+     * Create an updated entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Student createUpdatedEntity(EntityManager em) {
+        Student student = new Student()
+            .studentName(UPDATED_STUDENT_NAME)
+            .studentMiddleName(UPDATED_STUDENT_MIDDLE_NAME)
+            .studentLastName(UPDATED_STUDENT_LAST_NAME)
+            .fatherName(UPDATED_FATHER_NAME)
+            .fatherMiddleName(UPDATED_FATHER_MIDDLE_NAME)
+            .fatherLastName(UPDATED_FATHER_LAST_NAME)
+            .motherName(UPDATED_MOTHER_NAME)
+            .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
+            .motherLastName(UPDATED_MOTHER_LAST_NAME)
+            .aadharNo(UPDATED_AADHAR_NO)
+            .dateOfBirth(UPDATED_DATE_OF_BIRTH)
+            .placeOfBirth(UPDATED_PLACE_OF_BIRTH)
+            .religion(UPDATED_RELIGION)
+            .caste(UPDATED_CASTE)
+            .subCaste(UPDATED_SUB_CASTE)
+            .age(UPDATED_AGE)
+            .sex(UPDATED_SEX)
+            .bloodGroup(UPDATED_BLOOD_GROUP)
+            .addressLineOne(UPDATED_ADDRESS_LINE_ONE)
+            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
+            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
+            .town(UPDATED_TOWN)
+            .state(UPDATED_STATE)
+            .country(UPDATED_COUNTRY)
+            .pincode(UPDATED_PINCODE)
+            .studentContactNumber(UPDATED_STUDENT_CONTACT_NUMBER)
+            .alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
+            .studentEmailAddress(UPDATED_STUDENT_EMAIL_ADDRESS)
+            .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
+            .relationWithStudent(UPDATED_RELATION_WITH_STUDENT)
+            .emergencyContactName(UPDATED_EMERGENCY_CONTACT_NAME)
+            .emergencyContactMiddleName(UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME)
+            .emergencyContactLastName(UPDATED_EMERGENCY_CONTACT_LAST_NAME)
+            .emergencyContactNo(UPDATED_EMERGENCY_CONTACT_NO)
+            .emergencyContactEmailAddress(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS)
+            .uploadPhoto(UPDATED_UPLOAD_PHOTO)
+            .admissionNo(UPDATED_ADMISSION_NO)
+            .rollNo(UPDATED_ROLL_NO)
+            .studentType(UPDATED_STUDENT_TYPE);
         // Add required entity
-        Batch batch = BatchResourceIntTest.createEntity(em);
-        em.persist(batch);
-        em.flush();
-        student.setBatch(batch);
-        // Add required entity
-        Section section = SectionResourceIntTest.createEntity(em);
-        em.persist(section);
-        em.flush();
-        student.setSection(section);
-        // Add required entity
-        Branch branch = BranchResourceIntTest.createEntity(em);
-        em.persist(branch);
-        em.flush();
-        student.setBranch(branch);
+//        Department department;
+//        if (TestUtil.findAll(em, Department.class).isEmpty()) {
+//            department = DepartmentResourceIT.createUpdatedEntity(em);
+//            em.persist(department);
+//            em.flush();
+//        } else {
+//            department = TestUtil.findAll(em, Department.class).get(0);
+//        }
+//        student.setDepartment(department);
+//        // Add required entity
+//        Batch batch;
+//        if (TestUtil.findAll(em, Batch.class).isEmpty()) {
+//            batch = BatchResourceIT.createUpdatedEntity(em);
+//            em.persist(batch);
+//            em.flush();
+//        } else {
+//            batch = TestUtil.findAll(em, Batch.class).get(0);
+//        }
+//        student.setBatch(batch);
+//        // Add required entity
+//        Section section;
+//        if (TestUtil.findAll(em, Section.class).isEmpty()) {
+//            section = SectionResourceIT.createUpdatedEntity(em);
+//            em.persist(section);
+//            em.flush();
+//        } else {
+//            section = TestUtil.findAll(em, Section.class).get(0);
+//        }
+//        student.setSection(section);
+//        // Add required entity
+//        Branch branch;
+//        if (TestUtil.findAll(em, Branch.class).isEmpty()) {
+//            branch = BranchResourceIT.createUpdatedEntity(em);
+//            em.persist(branch);
+//            em.flush();
+//        } else {
+//            branch = TestUtil.findAll(em, Branch.class).get(0);
+//        }
+//        student.setBranch(branch);
         return student;
     }
 
-    @Before
+    @BeforeEach
     public void initTest() {
         student = createEntity(em);
     }
@@ -379,6 +483,7 @@ public class StudentResourceIntTest {
         // Validate the Student in Elasticsearch
         verify(mockStudentSearchRepository, times(0)).save(student);
     }
+
 
     @Test
     @Transactional
@@ -1096,7 +1201,7 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].rollNo").value(hasItem(DEFAULT_ROLL_NO.toString())))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())));
     }
-
+    
     @Test
     @Transactional
     public void getStudent() throws Exception {
@@ -1297,9 +1402,9 @@ public class StudentResourceIntTest {
         // Delete the student
         restStudentMockMvc.perform(delete("/api/students/{id}", student.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk());
+            .andExpect(status().isNoContent());
 
-        // Validate the database is empty
+        // Validate the database contains one less item
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeDelete - 1);
 

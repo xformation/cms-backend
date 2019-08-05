@@ -71,7 +71,7 @@ termStatus Status required
 }
 
 enum Status {
-ACTIVE,DEACTIVE
+ACTIVE,DEACTIVE, DRAFT
 }
 
 enum InvoicePaymentStatus {
@@ -83,15 +83,15 @@ enum Gender {
 }
 
 enum Religion{
-   HINDU,MUSLIM,CHRISTIAN
+   HINDU,MUSLIM,CHRISTIAN,SIKH,BUDH
 }
 
 enum Caste{
-  OC,BC,SC,ST
+  GENERAL,OBC,SC,ST
 }
 
 enum Bloodgroup{
-  ABPOSITIVE,ABNEGATIVE,OPOSITIVE,BPOSITIVE,BNEGATIVE
+  APOSITIVE,ANEGATIVE, ABPOSITIVE,ABNEGATIVE,OPOSITIVE,ONEGATIVE,BPOSITIVE,BNEGATIVE  
 }
 
 enum RelationWithStudentEnum{
@@ -253,7 +253,7 @@ HDFC, SBI, ICICI, ANDHRABANK
 }
 
 enum TypeOfCollege{
-PRIVATE, PUBLIC
+PRIVATE, PUBLIC, SEMIGOVERNMENT
 }
 
 entity LegalEntity{
@@ -512,6 +512,7 @@ entity AdmissionApplication{
     course CourseEnum
     admissionDate LocalDate
     comments String
+    status Status
 }
 
 
@@ -608,7 +609,7 @@ validTill LocalDate required
 
 entity Employee {
 employeeName String required
-designation String
+designation String required
 joiningDate LocalDate required
 jobEndDate LocalDate
 resignationDate LocalDate
@@ -618,17 +619,25 @@ panNo String
 passportNo String
 primaryContactNo String
 secondaryContactNo String
-employeeFatherName String required
-employeeMotherName String required
-primaryAddress String required
-secondaryAddress String required
-employeeAddress String
-personalMailId String
-officialMailId String
+employeeFatherName String 
+employeeMotherName String 
+primaryAddress String 
+secondaryAddress String 
+employeeAddress String 
+personalMailId String 
+officialMailId String 
 disability Disability
 drivingLicenceNo String
 drivingLicenceValidity LocalDate
 gender String
+typeOfEmployment String
+managerId Long
+status Status
+maritalStatus MaritalStatus
+}
+
+enum MaritalStatus{
+	MARRIED, SINGLE, DIVORCED, WIDOWED
 }
 
 entity Modules {
@@ -639,6 +648,7 @@ entity Modules {
 }
 
 relationship ManyToOne {
+Employee{branch required} to Branch,
 Student{department required} to Department ,
 Student{batch required} to Batch ,
 Student{section required} to Section,

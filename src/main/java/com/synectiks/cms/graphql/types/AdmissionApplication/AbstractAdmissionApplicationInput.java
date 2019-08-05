@@ -1,11 +1,12 @@
 package com.synectiks.cms.graphql.types.AdmissionApplication;
 
+import java.util.Date;
+import java.util.Objects;
+
 import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 import com.synectiks.cms.domain.enumeration.Gender;
-
-import java.util.Date;
-import java.util.Objects;
+import com.synectiks.cms.domain.enumeration.Status;
 
 public class AbstractAdmissionApplicationInput
 {
@@ -30,7 +31,8 @@ public class AbstractAdmissionApplicationInput
     private String uploadPhoto;
     private CourseEnum course;
     private Date admissionDate;
-
+    private Status status;
+    
     public Long getId() {
         return id;
     }
@@ -258,4 +260,12 @@ public class AbstractAdmissionApplicationInput
             ", admissionDate=" + admissionDate +
             '}';
     }
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 }

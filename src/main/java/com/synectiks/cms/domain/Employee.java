@@ -1,18 +1,20 @@
 package com.synectiks.cms.domain;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Disability;
+
+import com.synectiks.cms.domain.enumeration.Status;
+
+import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
 /**
  * A Employee.
@@ -20,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.Disability;
 @Entity
 @Table(name = "employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "employee")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "employee")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,13 +30,15 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
     @Column(name = "employee_name", nullable = false)
     private String employeeName;
 
-    @Column(name = "designation")
+    @NotNull
+    @Column(name = "designation", nullable = false)
     private String designation;
 
     @NotNull
@@ -65,20 +69,16 @@ public class Employee implements Serializable {
     @Column(name = "secondary_contact_no")
     private String secondaryContactNo;
 
-    @NotNull
-    @Column(name = "employee_father_name", nullable = false)
+    @Column(name = "employee_father_name")
     private String employeeFatherName;
 
-    @NotNull
-    @Column(name = "employee_mother_name", nullable = false)
+    @Column(name = "employee_mother_name")
     private String employeeMotherName;
 
-    @NotNull
-    @Column(name = "primary_address", nullable = false)
+    @Column(name = "primary_address")
     private String primaryAddress;
 
-    @NotNull
-    @Column(name = "secondary_address", nullable = false)
+    @Column(name = "secondary_address")
     private String secondaryAddress;
 
     @Column(name = "employee_address")
@@ -103,9 +103,24 @@ public class Employee implements Serializable {
     @Column(name = "gender")
     private String gender;
 
-    @OneToOne(mappedBy = "employee")
-    @JsonIgnore
-    private Vehicle vehicle;
+    @Column(name = "type_of_employment")
+    private String typeOfEmployment;
+
+    @Column(name = "manager_id")
+    private Long managerId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "marital_status")
+    private MaritalStatus maritalStatus;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("employees")
+    private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -402,17 +417,69 @@ public class Employee implements Serializable {
         this.gender = gender;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public String getTypeOfEmployment() {
+        return typeOfEmployment;
     }
 
-    public Employee vehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public Employee typeOfEmployment(String typeOfEmployment) {
+        this.typeOfEmployment = typeOfEmployment;
         return this;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setTypeOfEmployment(String typeOfEmployment) {
+        this.typeOfEmployment = typeOfEmployment;
+    }
+
+    public Long getManagerId() {
+        return managerId;
+    }
+
+    public Employee managerId(Long managerId) {
+        this.managerId = managerId;
+        return this;
+    }
+
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Employee status(Status status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public Employee maritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+        return this;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Employee branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -421,19 +488,15 @@ public class Employee implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Employee)) {
             return false;
         }
-        Employee employee = (Employee) o;
-        if (employee.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), employee.getId());
+        return id != null && id.equals(((Employee) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -462,6 +525,10 @@ public class Employee implements Serializable {
             ", drivingLicenceNo='" + getDrivingLicenceNo() + "'" +
             ", drivingLicenceValidity='" + getDrivingLicenceValidity() + "'" +
             ", gender='" + getGender() + "'" +
+            ", typeOfEmployment='" + getTypeOfEmployment() + "'" +
+            ", managerId=" + getManagerId() +
+            ", status='" + getStatus() + "'" +
+            ", maritalStatus='" + getMaritalStatus() + "'" +
             "}";
     }
 }
