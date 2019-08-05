@@ -1,6 +1,6 @@
 package com.synectiks.cms.domain;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,7 +24,7 @@ import com.synectiks.cms.domain.enumeration.Disability;
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -102,6 +102,10 @@ public class Employee implements Serializable {
 
     @Column(name = "gender")
     private String gender;
+
+    @OneToOne(mappedBy = "employee")
+    @JsonIgnore
+    private Vehicle vehicle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -396,6 +400,19 @@ public class Employee implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public Employee vehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+        return this;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

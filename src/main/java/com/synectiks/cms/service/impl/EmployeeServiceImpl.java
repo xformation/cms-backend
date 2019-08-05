@@ -50,6 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDTO save(EmployeeDTO employeeDTO) {
         log.debug("Request to save Employee : {}", employeeDTO);
+
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
         EmployeeDTO result = employeeMapper.toDto(employee);
@@ -72,6 +73,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
 
+
+    /**
+     *  get all the employees where Vehicle is null.
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<EmployeeDTO> findAllWhereVehicleIsNull() {
+        log.debug("Request to get all employees where Vehicle is null");
+        return StreamSupport
+            .stream(employeeRepository.findAll().spliterator(), false)
+            .filter(employee -> employee.getVehicle() == null)
+            .map(employeeMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
     /**
      * Get one employee by id.
      *
@@ -93,7 +109,8 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Employee : {}", id);        employeeRepository.deleteById(id);
+        log.debug("Request to delete Employee : {}", id);
+        employeeRepository.deleteById(id);
         employeeSearchRepository.deleteById(id);
     }
 

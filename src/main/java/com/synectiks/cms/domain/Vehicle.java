@@ -1,7 +1,7 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,7 +25,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 public class Vehicle implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -74,6 +74,13 @@ public class Vehicle implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
+
+    @OneToOne    @JoinColumn(unique = true)
+    private Employee employee;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private TransportRoute transportRoute;
 
     @OneToOne(mappedBy = "vehicle")
     @JsonIgnore
@@ -242,6 +249,32 @@ public class Vehicle implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public Vehicle employee(Employee employee) {
+        this.employee = employee;
+        return this;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public TransportRoute getTransportRoute() {
+        return transportRoute;
+    }
+
+    public Vehicle transportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
+        return this;
+    }
+
+    public void setTransportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
     }
 
     public Insurance getInsurance() {

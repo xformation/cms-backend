@@ -52,6 +52,8 @@ import AcademicExamSetting from './academic-exam-setting';
 import MetaLecture from './meta-lecture';
 import TypeOfGrading from './type-of-grading';
 import StudentExamReport from './student-exam-report';
+import Vehicle from './vehicle';
+import Employee from './employee';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -106,6 +108,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/meta-lecture`} component={MetaLecture} />
       <ErrorBoundaryRoute path={`${match.url}/type-of-grading`} component={TypeOfGrading} />
       <ErrorBoundaryRoute path={`${match.url}/student-exam-report`} component={StudentExamReport} />
+      <ErrorBoundaryRoute path={`${match.url}/vehicle`} component={Vehicle} />
+      <ErrorBoundaryRoute path={`${match.url}/employee`} component={Employee} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -43,6 +44,9 @@ public class VehicleDTO implements Serializable {
     @NotNull
     private Status status;
 
+    private Long employeeId;
+
+    private Long transportRouteId;
 
     public Long getId() {
         return id;
@@ -148,6 +152,22 @@ public class VehicleDTO implements Serializable {
         this.status = status;
     }
 
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Long getTransportRouteId() {
+        return transportRouteId;
+    }
+
+    public void setTransportRouteId(Long transportRouteId) {
+        this.transportRouteId = transportRouteId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -185,6 +205,8 @@ public class VehicleDTO implements Serializable {
             ", rcNo='" + getRcNo() + "'" +
             ", contactNumber='" + getContactNumber() + "'" +
             ", status='" + getStatus() + "'" +
+            ", employee=" + getEmployeeId() +
+            ", transportRoute=" + getTransportRouteId() +
             "}";
     }
 }

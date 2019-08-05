@@ -755,12 +755,14 @@ StudentFacilityLink{facility} to Facility,
 Documents{vehicle} to Vehicle,
 Documents{employee} to Employee,
 Documents{contract} to Contract,
+Vehicle{transportRoute} to TransportRoute,
 AdmissionApplication{academicyear} to AcademicYear
 
 }
 
 relationship OneToOne{
-Insurance{vehicle} to Vehicle{insurance}
+Insurance{vehicle} to Vehicle{insurance},
+Vehicle{employee} to Employee{vehicle}
 }
 
 dto * with mapstruct

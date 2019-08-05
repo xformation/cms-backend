@@ -12,6 +12,8 @@ import org.mapstruct.*;
 public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
 
 
+    @Mapping(target = "vehicle", ignore = true)
+    Employee toEntity(EmployeeDTO employeeDTO);
 
     default Employee fromId(Long id) {
         if (id == null) {
