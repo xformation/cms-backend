@@ -896,6 +896,7 @@ type Employee{
 	managerId: Long
 	status: Status
 	maritalStatus: MaritalStatus
+	branch: Branch!
 }
 
 enum MaritalStatus{
@@ -1704,25 +1705,30 @@ input AddEmployeeInput{
     employeeName: String!
     designation: String!
     joiningDate: Date!
-    jobEndDate: Date!
-    resignationDate: Date!
-    resignationAcceptanceDate: Date!
-    aadharNo: String!
-    panNo: String!
-    passportNo: String!
-    primaryContactNo: String!
-    secondaryContactNo: String!
-    employeeFatherName: String!
-    employeeMotherName: String!
-    primaryAddress: String!
-    secondaryAddress: String!
-    employeeAddress: String!
-    personalMailId: String!
-    officialMailId: String!
-    disability: Disability!
-    drivingLicenceNo: String!
-    drivingLicenceValidity: String!
-    gender: String!
+    jobEndDate: Date
+    resignationDate: Date
+    resignationAcceptanceDate: Date
+    aadharNo: String
+    panNo: String
+    passportNo: String
+    primaryContactNo: String
+    secondaryContactNo: String
+    employeeFatherName: String
+    employeeMotherName: String
+    primaryAddress: String
+    secondaryAddress: String
+    employeeAddress: String
+    personalMailId: String
+    officialMailId: String
+    disability: Disability
+    drivingLicenceNo: String
+    drivingLicenceValidity: String
+    gender: String
+    typeOfEmployment: String
+    managerId: Long
+    status: Status
+    maritalStatus: MaritalStatus
+    branchId: Long!
 }
 
 type AddEmployeePayload {
@@ -1734,25 +1740,30 @@ input UpdateEmployeeInput {
     employeeName: String!
     designation: String!
     joiningDate: Date!
-    jobEndDate: Date!
-    resignationDate: Date!
-    resignationAcceptanceDate: Date!
-    aadharNo: String!
-    panNo: String!
-    passportNo: String!
-    primaryContactNo: String!
-    secondaryContactNo: String!
-    employeeFatherName: String!
-    employeeMotherName: String!
-    primaryAddress: String!
-    secondaryAddress: String!
-    employeeAddress: String!
-    personalMailId: String!
-    officialMailId: String!
-    disability: Disability!
-    drivingLicenceNo: String!
-    drivingLicenceValidity: String!
-    gender: String!
+    jobEndDate: Date
+    resignationDate: Date
+    resignationAcceptanceDate: Date
+    aadharNo: String
+    panNo: String
+    passportNo: String
+    primaryContactNo: String
+    secondaryContactNo: String
+    employeeFatherName: String
+    employeeMotherName: String
+    primaryAddress: String
+    secondaryAddress: String
+    employeeAddress: String
+    personalMailId: String
+    officialMailId: String
+    disability: Disability
+    drivingLicenceNo: String
+    drivingLicenceValidity: String
+    gender: String
+    typeOfEmployment: String
+    managerId: Long
+    status: Status
+    maritalStatus: MaritalStatus
+     branchId: Long!
 }
 
 type UpdateEmployeePayload {

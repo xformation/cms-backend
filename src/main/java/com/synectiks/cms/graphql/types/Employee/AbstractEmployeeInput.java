@@ -1,6 +1,8 @@
 package com.synectiks.cms.graphql.types.Employee;
 
 import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.MaritalStatus;
+import com.synectiks.cms.domain.enumeration.Status;
 
 import java.util.Date;
 import java.util.Objects;
@@ -29,6 +31,10 @@ public class AbstractEmployeeInput {
     private String drivingLicenceNo;
     private Date drivingLicenceValidity;
     private String gender;
+    private String typeOfEmployment;
+    private Long managerId;
+    private Status status;
+    private MaritalStatus maritalStatus;
 
     public Long getId() {
         return id;
@@ -214,6 +220,38 @@ public class AbstractEmployeeInput {
         this.gender = gender;
     }
 
+    public String getTypeOfEmployment() {
+        return typeOfEmployment;
+    }
+
+    public void setTypeOfEmployment(String typeOfEmployment) {
+        this.typeOfEmployment = typeOfEmployment;
+    }
+
+    public Long getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -241,12 +279,16 @@ public class AbstractEmployeeInput {
             getDisability() == that.getDisability() &&
             Objects.equals(getDrivingLicenceNo(), that.getDrivingLicenceNo()) &&
             Objects.equals(getDrivingLicenceValidity(), that.getDrivingLicenceValidity()) &&
-            Objects.equals(getGender(), that.getGender());
+            Objects.equals(getGender(), that.getGender()) &&
+            Objects.equals(getTypeOfEmployment(), that.getTypeOfEmployment()) &&
+            Objects.equals(getManagerId(), that.getManagerId()) &&
+            getStatus() == that.getStatus() &&
+            getMaritalStatus() == that.getMaritalStatus();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEmployeeName(), getDesignation(), getJoiningDate(), getJobEndDate(), getResignationDate(), getResignationAcceptanceDate(), getAadharNo(), getPanNo(), getPassportNo(), getPrimaryContactNo(), getSecondaryContactNo(), getEmployeeFatherName(), getEmployeeMotherName(), getPrimaryAddress(), getSecondaryAddress(), getEmployeeAddress(), getPersonalMailId(), getOfficialMailId(), getDisability(), getDrivingLicenceNo(), getDrivingLicenceValidity(), getGender());
+        return Objects.hash(getId(), getEmployeeName(), getDesignation(), getJoiningDate(), getJobEndDate(), getResignationDate(), getResignationAcceptanceDate(), getAadharNo(), getPanNo(), getPassportNo(), getPrimaryContactNo(), getSecondaryContactNo(), getEmployeeFatherName(), getEmployeeMotherName(), getPrimaryAddress(), getSecondaryAddress(), getEmployeeAddress(), getPersonalMailId(), getOfficialMailId(), getDisability(), getDrivingLicenceNo(), getDrivingLicenceValidity(), getGender(), getTypeOfEmployment(), getManagerId(), getStatus(), getMaritalStatus());
     }
 
     @Override
@@ -275,6 +317,10 @@ public class AbstractEmployeeInput {
             ", drivingLicenceNo='" + drivingLicenceNo + '\'' +
             ", drivingLicenceValidity=" + drivingLicenceValidity +
             ", gender='" + gender + '\'' +
+            ", typeOfEmployment='" + typeOfEmployment + '\'' +
+            ", managerId=" + managerId +
+            ", status=" + status +
+            ", maritalStatus=" + maritalStatus +
             '}';
     }
 }

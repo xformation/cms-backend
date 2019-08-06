@@ -1797,6 +1797,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddEmployeePayload addEmployee(AddEmployeeInput addEmployeeInput) {
         final Employee employee = new Employee();
+        final Branch branch = branchRepository.findById(addEmployeeInput.getBranchId()).get();
         employee.setEmployeeName(addEmployeeInput.getEmployeeName());
         employee.setDesignation(addEmployeeInput.getDesignation());
         employee.setJoiningDate(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getJoiningDate()));
@@ -1819,7 +1820,11 @@ public class Mutation implements GraphQLMutationResolver {
         employee.setDrivingLicenceNo(addEmployeeInput.getDrivingLicenceNo());
         employee.setDrivingLicenceValidity(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getDrivingLicenceValidity()));
         employee.setGender(addEmployeeInput.getGender());
-
+        employee.setTypeOfEmployment(addEmployeeInput.getTypeOfEmployment());
+        employee.setManagerId(addEmployeeInput.getManagerId());
+        employee.setStatus(addEmployeeInput.getStatus());
+        employee.setMaritalStatus(addEmployeeInput.getMaritalStatus());
+        employee.setBranch(branch);
         employeeRepository.save(employee);
 
         return new AddEmployeePayload(employee);
@@ -1896,9 +1901,22 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateEmployeeInput.getGender() != null) {
             employee.setGender(updateEmployeeInput.getGender());
         }
-
-
-
+        if (updateEmployeeInput.getTypeOfEmployment() != null) {
+            employee.setTypeOfEmployment(updateEmployeeInput.getTypeOfEmployment());
+        }
+        if (updateEmployeeInput.getManagerId() != null) {
+            employee.setManagerId(updateEmployeeInput.getManagerId());
+        }
+        if (updateEmployeeInput.getStatus() != null) {
+            employee.setStatus(updateEmployeeInput.getStatus());
+        }
+        if (updateEmployeeInput.getMaritalStatus() != null) {
+            employee.setMaritalStatus(updateEmployeeInput.getMaritalStatus());
+        }
+        if (updateEmployeeInput.getBranchId() != null) {
+            Branch branch = branchRepository.findById(updateEmployeeInput.getBranchId()).get();
+            employee.setBranch(branch);
+        }
         employeeRepository.save(employee);
 
         return new UpdateEmployeePayload(employee);

@@ -1,8 +1,20 @@
 package com.synectiks.cms.graphql.types.Employee;
 
 public class AddEmployeeInput extends AbstractEmployeeInput {
+    private Long branchId;
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
     @Override
-    public String toString(){
-        return "AddEmployeeInput {}" + super.toString();
+    public String toString() {
+        return "AddEmployeeInput{" +
+            "branchId=" + branchId +
+            '}';
     }
 }
