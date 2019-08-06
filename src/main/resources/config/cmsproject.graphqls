@@ -951,37 +951,38 @@ type AcademicYear{
 }
 
 type AdmissionApplication{
-     id: Long!
-     admissionStatus: AdmissionStatusEnum!
-     studentName: String!
-     studentMiddleName: String!
-     studentLastName: String!
-     fatherName: String!
-     fatherMiddleName: String!
-     fatherLastName: String!
-     motherName: String!
-     motherMiddleName: String!
-     motherLastName: String!
-     contactNumber: String!
-     alternateMobileNumber: String!
-     dateOfBirth: Date!
-     email: String!
-     sex: Gender!
-     comments: String!
-     applicationId: Int!
-     uploadPhoto: String!
-     course:CourseEnum!
-     admissionDate: Date!
-     admissionEnquiry: AdmissionEnquiry!
-     academicHistory: AcademicHistory!
-     documents: Documents!
-     branch: Branch!
-     batch: Batch!
-     state: State!
-     city: City!
-     country: Country!
-     department: Department!
-     academicyear: AcademicYear!
+     id: Long
+     admissionStatus: AdmissionStatusEnum
+     studentName: String
+     studentMiddleName: String
+     studentLastName: String
+     fatherName: String
+     fatherMiddleName: String
+     fatherLastName: String
+     motherName: String
+     motherMiddleName: String
+     motherLastName: String
+     contactNumber: String
+     alternateMobileNumber: String
+     dateOfBirth: Date
+     email: String
+     sex: Gender
+     comments: String
+     applicationId: Int
+     uploadPhoto: String
+     course:CourseEnum
+     admissionDate: Date
+     admissionEnquiry: AdmissionEnquiry
+     academicHistory: AcademicHistory
+     documents: Documents
+     branch: Branch
+     batch: Batch
+     state: State
+     city: City
+     country: Country
+     department: Department
+     academicyear: AcademicYear
+     status: Status
 
 }
 
