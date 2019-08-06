@@ -354,22 +354,22 @@
 			<artifactId>cucumber-junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-		    <groupId>org.junit</groupId>
-		    <artifactId>junit5-engine</artifactId>
-		    <version>5.0.0-ALPHA</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.junit.jupiter</groupId>
-		    <artifactId>junit-jupiter-engine</artifactId>
-		    <version>5.0.0</version>
-		    <scope>test</scope>
-		</dependency>
-		<dependency>
-	        <groupId>org.influxdb</groupId>
-	        <artifactId>influxdb-java</artifactId>
-	        <version>2.5</version>
-		</dependency>
+        <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>junit5-engine</artifactId>
+            <version>5.0.0-ALPHA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.0.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.influxdb</groupId>
+            <artifactId>influxdb-java</artifactId>
+            <version>2.5</version>
+        </dependency>
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-spring</artifactId>
@@ -971,54 +971,6 @@
 						</executions>
 					</plugin>
 					<plugin>
-						<groupId>com.github.eirslett</groupId>
-						<artifactId>frontend-maven-plugin</artifactId>
-						<version>${frontend-maven-plugin.version}</version>
-						<executions>
-							<execution>
-								<id>install node and yarn</id>
-								<goals>
-									<goal>install-node-and-yarn</goal>
-								</goals>
-								<configuration>
-									<nodeVersion>${node.version}</nodeVersion>
-									<yarnVersion>${yarn.version}</yarnVersion>
-								</configuration>
-							</execution>
-							<execution>
-								<id>yarn install</id>
-								<goals>
-									<goal>yarn</goal>
-								</goals>
-								<configuration>
-									<arguments>install</arguments>
-								</configuration>
-							</execution>
-							<execution>
-								<id>webpack build test</id>
-								<goals>
-									<goal>yarn</goal>
-								</goals>
-								<phase>test</phase>
-								<configuration>
-									<arguments>run webpack:test</arguments>
-									<yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-								</configuration>
-							</execution>
-							<execution>
-								<id>webpack build prod</id>
-								<goals>
-									<goal>yarn</goal>
-								</goals>
-								<phase>generate-resources</phase>
-								<configuration>
-									<arguments>run webpack:prod</arguments>
-									<yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
 						<groupId>pl.project13.maven</groupId>
 						<artifactId>git-commit-id-plugin</artifactId>
 						<version>2.2.4</version>
@@ -1039,6 +991,24 @@
 							</includeOnlyProperties>
 						</configuration>
 					</plugin>
+					<plugin>
+                        			<groupId>com.google.cloud.tools</groupId>
+                        			<artifactId>jib-maven-plugin</artifactId>
+                       				<version>1.4.0</version>
+                        			<configuration>
+                                			<to>
+                                        			<image>papu/cmsbackend</image>
+                                			</to>
+                        			</configuration>
+                        			<executions>
+                                			<execution>
+                                			<phase>package</phase>
+                                			<goals>
+                                        			<goal>build</goal>
+                                			</goals>
+                                			</execution>
+                        			</executions>
+                    			</plugin>
 				</plugins>
 			</build>
 			<properties>
