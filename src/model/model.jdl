@@ -771,7 +771,7 @@ AdmissionApplication{academicyear} to AcademicYear
 }
 
 relationship OneToOne{
-Insurance{vehicle} to Vehicle{insurance},
+Vehicle{insurance} to Insurance{vehicle},
 Vehicle{employee} to Employee{vehicle}
 }
 

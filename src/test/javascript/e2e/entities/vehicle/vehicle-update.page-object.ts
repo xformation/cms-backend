@@ -16,6 +16,7 @@ export default class VehicleUpdatePage {
   rcNoInput: ElementFinder = element(by.css('input#vehicle-rcNo'));
   contactNumberInput: ElementFinder = element(by.css('input#vehicle-contactNumber'));
   statusSelect: ElementFinder = element(by.css('select#vehicle-status'));
+  insuranceSelect: ElementFinder = element(by.css('select#vehicle-insurance'));
   employeeSelect: ElementFinder = element(by.css('select#vehicle-employee'));
   transportRouteSelect: ElementFinder = element(by.css('select#vehicle-transportRoute'));
 
@@ -125,6 +126,25 @@ export default class VehicleUpdatePage {
       .last()
       .click();
   }
+  async insuranceSelectLastOption() {
+    await this.insuranceSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
+
+  async insuranceSelectOption(option) {
+    await this.insuranceSelect.sendKeys(option);
+  }
+
+  getInsuranceSelect() {
+    return this.insuranceSelect;
+  }
+
+  async getInsuranceSelectedOption() {
+    return this.insuranceSelect.element(by.css('option:checked')).getText();
+  }
+
   async employeeSelectLastOption() {
     await this.employeeSelect
       .all(by.tagName('option'))

@@ -78,6 +78,8 @@ export class VehicleDetail extends React.Component<IVehicleDetailProps> {
               <span id="status">Status</span>
             </dt>
             <dd>{vehicleEntity.status}</dd>
+            <dt>Insurance</dt>
+            <dd>{vehicleEntity.insuranceId ? vehicleEntity.insuranceId : ''}</dd>
             <dt>Employee</dt>
             <dd>{vehicleEntity.employeeId ? vehicleEntity.employeeId : ''}</dd>
             <dt>Transport Route</dt>

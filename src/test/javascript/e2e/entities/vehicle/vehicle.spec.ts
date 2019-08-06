@@ -69,6 +69,7 @@ describe('Vehicle e2e test', () => {
     await vehicleUpdatePage.setContactNumberInput('contactNumber');
     expect(await vehicleUpdatePage.getContactNumberInput()).to.match(/contactNumber/);
     await vehicleUpdatePage.statusSelectLastOption();
+    await vehicleUpdatePage.insuranceSelectLastOption();
     await vehicleUpdatePage.employeeSelectLastOption();
     await vehicleUpdatePage.transportRouteSelectLastOption();
     await waitUntilDisplayed(vehicleUpdatePage.getSaveButton());

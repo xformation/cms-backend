@@ -16,7 +16,7 @@
     <!--
         Added the entity Vehicle.
     -->
-    <changeSet id="20190802111030-1" author="jhipster">
+    <changeSet id="20190806043756-1" author="jhipster">
         <createTable tableName="vehicle">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -68,7 +68,9 @@
             <column name="status" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="employee_id" type="bigint">
+            <column name="insurance_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_vehicle_insurance_id" />
+            </column>            <column name="employee_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_vehicle_employee_id" />
             </column>
             <column name="transport_route_id" type="bigint">

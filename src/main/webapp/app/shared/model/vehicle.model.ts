@@ -2,7 +2,8 @@ import { Moment } from 'moment';
 
 export const enum Status {
   ACTIVE = 'ACTIVE',
-  DEACTIVE = 'DEACTIVE'
+  DEACTIVE = 'DEACTIVE',
+  DRAFT = 'DRAFT'
 }
 
 export interface IVehicle {
@@ -19,9 +20,9 @@ export interface IVehicle {
   rcNo?: string;
   contactNumber?: string;
   status?: Status;
+  insuranceId?: number;
   employeeId?: number;
   transportRouteId?: number;
-  insuranceId?: number;
 }
 
 export const defaultValue: Readonly<IVehicle> = {};

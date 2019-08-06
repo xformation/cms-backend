@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.InsuranceService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class InsuranceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/insurances")
+    @Timed
     public ResponseEntity<InsuranceDTO> createInsurance(@Valid @RequestBody InsuranceDTO insuranceDTO) throws URISyntaxException {
         log.debug("REST request to save Insurance : {}", insuranceDTO);
         if (insuranceDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class InsuranceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/insurances")
+    @Timed
     public ResponseEntity<InsuranceDTO> updateInsurance(@Valid @RequestBody InsuranceDTO insuranceDTO) throws URISyntaxException {
         log.debug("REST request to update Insurance : {}", insuranceDTO);
         if (insuranceDTO.getId() == null) {
@@ -79,10 +83,16 @@ public class InsuranceResource {
     /**
      * GET  /insurances : get all the insurances.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of insurances in body
      */
     @GetMapping("/insurances")
-    public List<InsuranceDTO> getAllInsurances() {
+    @Timed
+    public List<InsuranceDTO> getAllInsurances(@RequestParam(required = false) String filter) {
+        if ("vehicle-is-null".equals(filter)) {
+            log.debug("REST request to get all Insurances where vehicle is null");
+            return insuranceService.findAllWhereVehicleIsNull();
+        }
         log.debug("REST request to get all Insurances");
         return insuranceService.findAll();
     }
@@ -94,6 +104,7 @@ public class InsuranceResource {
      * @return the ResponseEntity with status 200 (OK) and with body the insuranceDTO, or with status 404 (Not Found)
      */
     @GetMapping("/insurances/{id}")
+    @Timed
     public ResponseEntity<InsuranceDTO> getInsurance(@PathVariable Long id) {
         log.debug("REST request to get Insurance : {}", id);
         Optional<InsuranceDTO> insuranceDTO = insuranceService.findOne(id);
@@ -107,6 +118,7 @@ public class InsuranceResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/insurances/{id}")
+    @Timed
     public ResponseEntity<Void> deleteInsurance(@PathVariable Long id) {
         log.debug("REST request to delete Insurance : {}", id);
         insuranceService.delete(id);
@@ -121,6 +133,7 @@ public class InsuranceResource {
      * @return the result of the search
      */
     @GetMapping("/_search/insurances")
+    @Timed
     public List<InsuranceDTO> searchInsurances(@RequestParam String query) {
         log.debug("REST request to search Insurances for query {}", query);
         return insuranceService.search(query);

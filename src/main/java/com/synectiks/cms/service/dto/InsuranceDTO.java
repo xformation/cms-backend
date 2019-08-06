@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -23,9 +24,6 @@ public class InsuranceDTO implements Serializable {
 
     @NotNull
     private LocalDate validTill;
-
-
-    private Long vehicleId;
 
     public Long getId() {
         return id;
@@ -67,14 +65,6 @@ public class InsuranceDTO implements Serializable {
         this.validTill = validTill;
     }
 
-    public Long getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,7 +94,6 @@ public class InsuranceDTO implements Serializable {
             ", typeOfInsurance='" + getTypeOfInsurance() + "'" +
             ", dateOfInsurance='" + getDateOfInsurance() + "'" +
             ", validTill='" + getValidTill() + "'" +
-            ", vehicle=" + getVehicleId() +
             "}";
     }
 }

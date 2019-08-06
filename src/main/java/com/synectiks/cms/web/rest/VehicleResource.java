@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.VehicleService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -44,6 +46,7 @@ public class VehicleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/vehicles")
+    @Timed
     public ResponseEntity<VehicleDTO> createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) throws URISyntaxException {
         log.debug("REST request to save Vehicle : {}", vehicleDTO);
         if (vehicleDTO.getId() != null) {
@@ -65,6 +68,7 @@ public class VehicleResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/vehicles")
+    @Timed
     public ResponseEntity<VehicleDTO> updateVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) throws URISyntaxException {
         log.debug("REST request to update Vehicle : {}", vehicleDTO);
         if (vehicleDTO.getId() == null) {
@@ -79,15 +83,11 @@ public class VehicleResource {
     /**
      * GET  /vehicles : get all the vehicles.
      *
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of vehicles in body
      */
     @GetMapping("/vehicles")
-    public List<VehicleDTO> getAllVehicles(@RequestParam(required = false) String filter) {
-        if ("insurance-is-null".equals(filter)) {
-            log.debug("REST request to get all Vehicles where insurance is null");
-            return vehicleService.findAllWhereInsuranceIsNull();
-        }
+    @Timed
+    public List<VehicleDTO> getAllVehicles() {
         log.debug("REST request to get all Vehicles");
         return vehicleService.findAll();
     }
@@ -99,6 +99,7 @@ public class VehicleResource {
      * @return the ResponseEntity with status 200 (OK) and with body the vehicleDTO, or with status 404 (Not Found)
      */
     @GetMapping("/vehicles/{id}")
+    @Timed
     public ResponseEntity<VehicleDTO> getVehicle(@PathVariable Long id) {
         log.debug("REST request to get Vehicle : {}", id);
         Optional<VehicleDTO> vehicleDTO = vehicleService.findOne(id);
@@ -112,6 +113,7 @@ public class VehicleResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/vehicles/{id}")
+    @Timed
     public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
         log.debug("REST request to delete Vehicle : {}", id);
         vehicleService.delete(id);
@@ -126,6 +128,7 @@ public class VehicleResource {
      * @return the result of the search
      */
     @GetMapping("/_search/vehicles")
+    @Timed
     public List<VehicleDTO> searchVehicles(@RequestParam String query) {
         log.debug("REST request to search Vehicles for query {}", query);
         return vehicleService.search(query);

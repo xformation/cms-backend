@@ -87,6 +87,7 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
                 <th>Rc No</th>
                 <th>Contact Number</th>
                 <th>Status</th>
+                <th>Insurance</th>
                 <th>Employee</th>
                 <th>Transport Route</th>
                 <th />
@@ -114,6 +115,7 @@ export class Vehicle extends React.Component<IVehicleProps, IVehicleState> {
                   <td>{vehicle.rcNo}</td>
                   <td>{vehicle.contactNumber}</td>
                   <td>{vehicle.status}</td>
+                  <td>{vehicle.insuranceId ? <Link to={`insurance/${vehicle.insuranceId}`}>{vehicle.insuranceId}</Link> : ''}</td>
                   <td>{vehicle.employeeId ? <Link to={`employee/${vehicle.employeeId}`}>{vehicle.employeeId}</Link> : ''}</td>
                   <td>
                     {vehicle.transportRouteId ? (

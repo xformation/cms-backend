@@ -54,6 +54,11 @@ import TypeOfGrading from './type-of-grading';
 import StudentExamReport from './student-exam-report';
 import Vehicle from './vehicle';
 import Employee from './employee';
+import Library from './library';
+import StudentFacilityLink from './student-facility-link';
+import Contract from './contract';
+import Insurance from './insurance';
+import Modules from './modules';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -110,6 +115,11 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/student-exam-report`} component={StudentExamReport} />
       <ErrorBoundaryRoute path={`${match.url}/vehicle`} component={Vehicle} />
       <ErrorBoundaryRoute path={`${match.url}/employee`} component={Employee} />
+      <ErrorBoundaryRoute path={`${match.url}/library`} component={Library} />
+      <ErrorBoundaryRoute path={`${match.url}/student-facility-link`} component={StudentFacilityLink} />
+      <ErrorBoundaryRoute path={`${match.url}/contract`} component={Contract} />
+      <ErrorBoundaryRoute path={`${match.url}/insurance`} component={Insurance} />
+      <ErrorBoundaryRoute path={`${match.url}/modules`} component={Modules} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

@@ -50,6 +50,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     @Override
     public InsuranceDTO save(InsuranceDTO insuranceDTO) {
         log.debug("Request to save Insurance : {}", insuranceDTO);
+
         Insurance insurance = insuranceMapper.toEntity(insuranceDTO);
         insurance = insuranceRepository.save(insurance);
         InsuranceDTO result = insuranceMapper.toDto(insurance);
@@ -72,6 +73,21 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
 
 
+
+    /**
+     *  get all the insurances where Vehicle is null.
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<InsuranceDTO> findAllWhereVehicleIsNull() {
+        log.debug("Request to get all insurances where Vehicle is null");
+        return StreamSupport
+            .stream(insuranceRepository.findAll().spliterator(), false)
+            .filter(insurance -> insurance.getVehicle() == null)
+            .map(insuranceMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
     /**
      * Get one insurance by id.
      *
@@ -93,7 +109,8 @@ public class InsuranceServiceImpl implements InsuranceService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Insurance : {}", id);        insuranceRepository.deleteById(id);
+        log.debug("Request to delete Insurance : {}", id);
+        insuranceRepository.deleteById(id);
         insuranceSearchRepository.deleteById(id);
     }
 

@@ -44,6 +44,8 @@ public class VehicleDTO implements Serializable {
     @NotNull
     private Status status;
 
+    private Long insuranceId;
+
     private Long employeeId;
 
     private Long transportRouteId;
@@ -152,6 +154,14 @@ public class VehicleDTO implements Serializable {
         this.status = status;
     }
 
+    public Long getInsuranceId() {
+        return insuranceId;
+    }
+
+    public void setInsuranceId(Long insuranceId) {
+        this.insuranceId = insuranceId;
+    }
+
     public Long getEmployeeId() {
         return employeeId;
     }
@@ -205,6 +215,7 @@ public class VehicleDTO implements Serializable {
             ", rcNo='" + getRcNo() + "'" +
             ", contactNumber='" + getContactNumber() + "'" +
             ", status='" + getStatus() + "'" +
+            ", insurance=" + getInsuranceId() +
             ", employee=" + getEmployeeId() +
             ", transportRoute=" + getTransportRouteId() +
             "}";

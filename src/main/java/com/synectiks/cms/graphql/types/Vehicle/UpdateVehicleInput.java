@@ -3,6 +3,7 @@ package com.synectiks.cms.graphql.types.Vehicle;
 public class UpdateVehicleInput extends AbstractVehicleInput {
     private Long employeeId;
     private Long transportRouteId;
+    private Long insuranceId;
 
     public Long getEmployeeId() {
         return employeeId;
@@ -20,11 +21,20 @@ public class UpdateVehicleInput extends AbstractVehicleInput {
         this.transportRouteId = transportRouteId;
     }
 
+    public Long getInsuranceId() {
+        return insuranceId;
+    }
+
+    public void setInsuranceId(Long insuranceId) {
+        this.insuranceId = insuranceId;
+    }
+
     @Override
     public String toString() {
-        return "AddVehicleInput{" +
+        return "UpdateVehicleInput{" +
             "employeeId=" + employeeId +
             ", transportRouteId=" + transportRouteId +
+            ", insuranceId=" + insuranceId +
             '}';
     }
 }

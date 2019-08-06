@@ -6,8 +6,14 @@
     <!--
         Added the constraints for entity Vehicle.
     -->
-    <changeSet id="20190802111030-2" author="jhipster">
+    <changeSet id="20190806043756-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="insurance_id"
+                                 baseTableName="vehicle"
+                                 constraintName="fk_vehicle_insurance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance"/>
+
         <addForeignKeyConstraint baseColumnNames="employee_id"
                                  baseTableName="vehicle"
                                  constraintName="fk_vehicle_employee_id"

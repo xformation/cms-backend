@@ -50,6 +50,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public VehicleDTO save(VehicleDTO vehicleDTO) {
         log.debug("Request to save Vehicle : {}", vehicleDTO);
+
         Vehicle vehicle = vehicleMapper.toEntity(vehicleDTO);
         vehicle = vehicleRepository.save(vehicle);
         VehicleDTO result = vehicleMapper.toDto(vehicle);
@@ -72,21 +73,6 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
 
-
-    /**
-     *  get all the vehicles where Insurance is null.
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true) 
-    public List<VehicleDTO> findAllWhereInsuranceIsNull() {
-        log.debug("Request to get all vehicles where Insurance is null");
-        return StreamSupport
-            .stream(vehicleRepository.findAll().spliterator(), false)
-            .filter(vehicle -> vehicle.getInsurance() == null)
-            .map(vehicleMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
-
     /**
      * Get one vehicle by id.
      *
@@ -108,7 +94,8 @@ public class VehicleServiceImpl implements VehicleService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Vehicle : {}", id);        vehicleRepository.deleteById(id);
+        log.debug("Request to delete Vehicle : {}", id);
+        vehicleRepository.deleteById(id);
         vehicleSearchRepository.deleteById(id);
     }
 

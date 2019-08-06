@@ -8,12 +8,12 @@ import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipste
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IInsurance } from 'app/shared/model/insurance.model';
+import { getEntities as getInsurances } from 'app/entities/insurance/insurance.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { ITransportRoute } from 'app/shared/model/transport-route.model';
 import { getEntities as getTransportRoutes } from 'app/entities/transport-route/transport-route.reducer';
-import { IInsurance } from 'app/shared/model/insurance.model';
-import { getEntities as getInsurances } from 'app/entities/insurance/insurance.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './vehicle.reducer';
 import { IVehicle } from 'app/shared/model/vehicle.model';
 // tslint:disable-next-line:no-unused-variable
@@ -24,18 +24,18 @@ export interface IVehicleUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface IVehicleUpdateState {
   isNew: boolean;
+  insuranceId: string;
   employeeId: string;
   transportRouteId: string;
-  insuranceId: string;
 }
 
 export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicleUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      insuranceId: '0',
       employeeId: '0',
       transportRouteId: '0',
-      insuranceId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -53,9 +53,9 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getInsurances();
     this.props.getEmployees();
     this.props.getTransportRoutes();
-    this.props.getInsurances();
   }
 
   saveEntity = (event, errors, values) => {
@@ -79,7 +79,7 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
   };
 
   render() {
-    const { vehicleEntity, employees, transportRoutes, insurances, loading, updating } = this.props;
+    const { vehicleEntity, insurances, employees, transportRoutes, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -224,6 +224,20 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
                   >
                     <option value="ACTIVE">ACTIVE</option>
                     <option value="DEACTIVE">DEACTIVE</option>
+                    <option value="DRAFT">DRAFT</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="insurance.id">Insurance</Label>
+                  <AvInput id="vehicle-insurance" type="select" className="form-control" name="insuranceId">
+                    <option value="" key="0" />
+                    {insurances
+                      ? insurances.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
@@ -270,9 +284,9 @@ export class VehicleUpdate extends React.Component<IVehicleUpdateProps, IVehicle
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  insurances: storeState.insurance.entities,
   employees: storeState.employee.entities,
   transportRoutes: storeState.transportRoute.entities,
-  insurances: storeState.insurance.entities,
   vehicleEntity: storeState.vehicle.entity,
   loading: storeState.vehicle.loading,
   updating: storeState.vehicle.updating,
@@ -280,9 +294,9 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getInsurances,
   getEmployees,
   getTransportRoutes,
-  getInsurances,
   getEntity,
   updateEntity,
   createEntity,
