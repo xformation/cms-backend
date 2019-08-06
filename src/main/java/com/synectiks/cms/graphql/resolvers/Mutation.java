@@ -668,30 +668,51 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput input) {
     	
-        Optional<AdmissionEnquiry> admissionEnquiry = admissionEnquiryRepository.findById(input.getAdmissionEnquiryId());
-        Optional<AcademicHistory> academicHistory = academicHistoryRepository.findById(input.getAcademicHistoryId());
-        Optional<Documents> documents = documentsRepository.findById(input.getDocumentsId());
-        Optional<Branch> branch = branchRepository.findById(input.getBranchId());
-        Optional<Batch> batch = batchRepository.findById(input.getBatchId());
-        Optional<State> state = stateRepository.findById(input.getStateId());
-        Optional<City> city = cityRepository.findById(input.getCityId());
-        Optional<Country> country = countryRepository.findById(input.getCountryId());
-        Optional<Department> department = departmentRepository.findById(input.getDepartmentId());
-        Optional<AcademicYear> academicYear = academicYearRepository.findById(input.getAcademicyearId());
-
-        AdmissionApplication admissionApplication = CommonUtil.createCopyProperties(input, AdmissionApplication.class);
+    	AdmissionApplication admissionApplication = CommonUtil.createCopyProperties(input, AdmissionApplication.class);
+        
+    	if(input.getAdmissionEnquiryId() != null) {
+    		Optional<AdmissionEnquiry> admissionEnquiry = admissionEnquiryRepository.findById(input.getAdmissionEnquiryId());
+    		admissionApplication.setAdmissionEnquiry(admissionEnquiry.isPresent() ? admissionEnquiry.get() : null);
+    	}
+    	if(input.getAcademicHistoryId() != null) {
+    		Optional<AcademicHistory> academicHistory = academicHistoryRepository.findById(input.getAcademicHistoryId());
+    		admissionApplication.setAcademicHistory(academicHistory.isPresent() ? academicHistory.get() : null);
+    	}
+    	if(input.getDocumentsId() != null) {
+    		Optional<Documents> documents = documentsRepository.findById(input.getDocumentsId());
+    		admissionApplication.setDocuments(documents.isPresent() ? documents.get() : null);
+    	}
+    	if(input.getBranchId() != null) {
+    		Optional<Branch> branch = branchRepository.findById(input.getBranchId());
+    		admissionApplication.setBranch(branch.isPresent() ? branch.get() : null);
+    	}
+    	if(input.getBatchId() != null) {
+    		Optional<Batch> batch = batchRepository.findById(input.getBatchId());
+    		admissionApplication.setBatch(batch.isPresent() ? batch.get() : null);
+    	}
+    	if(input.getStateId() != null) {
+    		Optional<State> state = stateRepository.findById(input.getStateId());
+    		admissionApplication.setState(state.isPresent() ? state.get() : null);
+    	}
+    	if(input.getCityId() != null) {
+    		Optional<City> city = cityRepository.findById(input.getCityId());
+    		admissionApplication.setCity(city.isPresent() ? city.get() : null);
+    	}
+    	if(input.getCountryId() != null) {
+    		Optional<Country> country = countryRepository.findById(input.getCountryId());
+    		admissionApplication.setCountry(country.isPresent() ? country.get() : null);
+    	}
+    	if(input.getDepartmentId() != null) {
+    		Optional<Department> department = departmentRepository.findById(input.getDepartmentId());
+    		admissionApplication.setDepartment(department.isPresent() ? department.get() : null);
+    	}
+    	if(input.getAcademicyearId() != null) {
+    		Optional<AcademicYear> academicYear = academicYearRepository.findById(input.getAcademicyearId());
+    		admissionApplication.setAcademicyear(academicYear.isPresent() ? academicYear.get() : null);
+    	}
+        
         admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(input.getDateOfBirth()));
         admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getAdmissionDate()));
-        admissionApplication.setAcademicyear(academicYear.isPresent() ? academicYear.get() : null);
-        admissionApplication.setAdmissionEnquiry(admissionEnquiry.isPresent() ? admissionEnquiry.get() : null);
-        admissionApplication.setAcademicHistory(academicHistory.isPresent() ? academicHistory.get() : null);
-        admissionApplication.setDocuments(documents.isPresent() ? documents.get() : null);
-        admissionApplication.setBranch(branch.isPresent() ? branch.get() : null);
-        admissionApplication.setBatch(batch.isPresent() ? batch.get() : null);
-        admissionApplication.setState(state.isPresent() ? state.get() : null);
-        admissionApplication.setCity(city.isPresent() ? city.get() : null);
-        admissionApplication.setCountry(country.isPresent() ? country.get() : null);
-        admissionApplication.setDepartment(department.isPresent() ? department.get() : null);
         admissionApplication.setStatus(input.getStatus());
         admissionApplicationRepository.save(admissionApplication);
         return new AddAdmissionApplicationPayload(admissionApplication);
