@@ -1,7 +1,6 @@
 package com.synectiks.cms.payments;
 
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
@@ -9,11 +8,17 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+
 public final class UniqueOrderNo {
+	private final static Logger logger = LoggerFactory.getLogger(UniqueOrderNo.class);
 	
 	private static final String ALGO = "SHA-256";
 	private static final String ENCODING = "UTF-8";
-	private static final String BASE = "SYNECTICKS";
+	private static final String BASE = "SYN";
 	
 	private static AtomicLong COUNTER = new AtomicLong();
 			
@@ -49,7 +54,7 @@ public final class UniqueOrderNo {
 	public static synchronized String getUniqueOrderNo() throws NoSuchAlgorithmException {
 		String id = BASE+COUNTER.getAndIncrement();
 		String dt = new SimpleDateFormat(DATE_FORMAT).format(new Date(System.currentTimeMillis()));
-		id = id + COUNTER + dt+"--"+getSecureRandomNumber();
+		id = id + dt;
 		return id.toUpperCase();
 	}
 	
@@ -84,10 +89,10 @@ public final class UniqueOrderNo {
 		String randomNum = new Integer(prng.nextInt()).toString();
 		
 		//get its digest
-		MessageDigest sha = MessageDigest.getInstance("SHA-1");
-		byte[] result =  sha.digest(randomNum.getBytes());
+//		MessageDigest sha = MessageDigest.getInstance("SHA-1");
+//		byte[] result =  sha.digest(randomNum.getBytes());
 		
-		System.out.println("Random number: " + randomNum);
+		logger.debug("Random number: " + randomNum);
 //		System.out.println("Message digest: " + new String(result));
 		return randomNum;
 	}
