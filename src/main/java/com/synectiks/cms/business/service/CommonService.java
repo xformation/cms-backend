@@ -95,6 +95,9 @@ public class CommonService {
     
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private TransportRouteRepository transportRouteRepository;
     
 //    @Autowired
 //    private StudentRepository studentRepository;
@@ -131,6 +134,17 @@ public class CommonService {
         Optional<Department> newDt = this.departmentRepository.findById(departmentId);
         if(newDt.isPresent()) {
             return newDt.get();
+        }
+        return null;
+    }
+
+    public TransportRoute getTransportRouteById(Long transportRouteId) {
+        if(transportRouteId == null) {
+            return null;
+        }
+        Optional<TransportRoute> newTr = this.transportRouteRepository.findById(transportRouteId);
+        if(newTr.isPresent()) {
+            return newTr.get();
         }
         return null;
     }

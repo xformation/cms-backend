@@ -14,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
+import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -494,6 +496,9 @@ public class Mutation implements GraphQLMutationResolver {
 
 	@Autowired
     private StudentFilterProcessor studentFilterProcessor;
+
+	@Autowired
+    private VehicleFilterProcessor vehicleFilterProcessor;
 
     @Autowired
 	private Base64FileProcessor base64FileProcessor;
@@ -3868,6 +3873,11 @@ public class Mutation implements GraphQLMutationResolver {
     	return list;
     }
 
+    public List<Vehicle> getVehicleList(VehicleListFilterInput filter) throws Exception {
+        List<Vehicle> list = this.vehicleFilterProcessor.searchVehicle(filter);
+        logger.debug("Total vehicles retrieved. "+list.size());
+        return list;
+    }
 
     public Long getTotalReceived( long academicyearId) {
         return admissionApplicationProcessor.getTotalReceived( academicyearId);

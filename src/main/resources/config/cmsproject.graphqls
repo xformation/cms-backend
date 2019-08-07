@@ -280,6 +280,7 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
+    searchVehicle(transportRouteId:Long, vehicleNumber:Int): [Vehicle!]!
     searchBook (bookTitle:String,author:String,departmentId:Long,batchId:Long,subjectId:Long):[Library!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
@@ -1552,6 +1553,7 @@ type Mutation {
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [Student]!
+	getVehicleList(filter: VehicleListFilterInput!): [Vehicle]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -1616,6 +1618,11 @@ input StudentListFilterInput {
 	sectionId: String
 	gender: String
 	studentType: String
+}
+
+input VehicleListFilterInput {
+   transportRouteId: String
+   vehicleId: String
 }
 
 input ExamListFilterInput {
@@ -3517,12 +3524,14 @@ type RemoveVehiclePayload{
 
 type Insurance{
   id: Long!
+  insuranceCompany: String!
   typeOfInsurance: TypeOfInsurance!
   dateOfInsurance: Date!
   validTill: Date!
 }
 
 input AddInsuranceInput{
+     insuranceCompany: String!
     typeOfInsurance: TypeOfInsurance!
      dateOfInsurance: Date!
      validTill: Date!
@@ -3532,6 +3541,7 @@ type AddInsurancePayload {
 }
 input UpdateInsuranceInput {
     id:Long!
+    insuranceCompany: String!
     typeOfInsurance: TypeOfInsurance!
     dateOfInsurance: Date!
     validTill: Date!
