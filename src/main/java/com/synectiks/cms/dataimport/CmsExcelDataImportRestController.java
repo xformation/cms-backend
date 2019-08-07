@@ -62,7 +62,7 @@ public class CmsExcelDataImportRestController {
 						if(dataLoader == null) {
 							logger.warn("Application does not support data import for entity - "+entity);
 						}
-						dataLoader.load(file);
+						dataLoader.load(file, this.dataLoaderFactory.getClassName(entity));
 						
 					}
 				}catch(Exception e) {
@@ -76,7 +76,7 @@ public class CmsExcelDataImportRestController {
 				logger.warn(msg);
 			}
 			try {
-				dataLoader.load(file);
+				dataLoader.load(file,this.dataLoaderFactory.getClassName(tableName));
 			}catch(Exception e) {
 				msg = "Due to some error data import failed for entity - "+tableName;
 				result.setStatusCode(1);
