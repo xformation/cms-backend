@@ -56,6 +56,7 @@ import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.CmsSemesterVo;
 import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.CmsTermVo;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.CompetitiveExam;
@@ -299,8 +300,12 @@ public class Query implements GraphQLQueryResolver {
         this.insuranceRepository = insuranceRepository;
     }
 
-    public Student student(long id) {
-        return studentRepository.findById(id).get();
+    public CmsStudentVo student(long id) {
+        Student s = studentRepository.findById(id).get();
+        CmsStudentVo vo = CommonUtil.createCopyProperties(s, CmsStudentVo.class);
+        vo.setStrDateOfBirth(DateFormatUtil.changeLocalDateFormat(s.getDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        s.setDateOfBirth(null);
+        return vo;
     }
 
     public List<Student> students() {

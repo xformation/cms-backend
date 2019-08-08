@@ -185,7 +185,7 @@ type Query {
   section(id: Long!): Section!
   sections: [Section!]!
 
-  student(id: Long!): Student!
+  student(id: Long!): CmsStudentVo!
   students: [Student!]!
 
   studentAttendance(id: Long!): StudentAttendance!
