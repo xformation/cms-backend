@@ -778,6 +778,14 @@ public class CommonService {
 //                cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate())));
 //        		ff.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, ff.getEndDate())));
             }
+            if(ff.getCreatedOn() != null) {
+            	cfc.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(ff.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            	cfc.setCreatedOn(null);
+            }
+            if(ff.getUpdatedOn() != null) {
+            	cfc.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(ff.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            	cfc.setUpdatedOn(null);
+            }
             ls.add(cfc);
         }
         Collections.sort(ls, Collections.reverseOrder());
@@ -814,6 +822,14 @@ public class CommonService {
 //                cfd.setStrEndDate(ff.getEndDate().format(dateFormatter));
             	cfd.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ff.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
                 cfd.setEndDate(null);
+            }
+            if(ff.getCreatedOn() != null) {
+            	cfd.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(ff.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            	cfd.setCreatedOn(null);
+            }
+            if(ff.getUpdatedOn() != null) {
+            	cfd.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(ff.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            	cfd.setUpdatedOn(null);
             }
             ls.add(cfd);
         }
