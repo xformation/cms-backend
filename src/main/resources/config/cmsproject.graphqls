@@ -612,12 +612,12 @@ type CmsTermVo {
 }
 type CmsLectureVo{
 	id: Long!
-	lecDate: Date!
-    lastUpdatedBy: String!
-    lastUpdatedOn: Date!
-    startTime: String!
-	endTime: String!
-	attendancemaster: AttendanceMaster!
+	lecDate: Date
+    lastUpdatedBy: String
+    lastUpdatedOn: Date
+    startTime: String
+	endTime: String
+	attendancemaster: AttendanceMaster
 	strLecDate: String
 }
 
