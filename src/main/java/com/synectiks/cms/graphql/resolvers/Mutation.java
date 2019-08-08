@@ -3097,10 +3097,22 @@ public class Mutation implements GraphQLMutationResolver {
         feeDetails = feeDetailsRepository.save(feeDetails);
         CmsFeeDetails cfd = CommonUtil.createCopyProperties(feeDetails, CmsFeeDetails.class);
         if(feeDetails.getStartDate() != null) {
-    		cfd.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(feeDetails.getStartDate()))));
+        	cfd.setStrStartDate(DateFormatUtil.changeLocalDateFormat(feeDetails.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	cfd.setStartDate(null);
+//    		cfd.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(feeDetails.getStartDate()))));
+    	}
+        if(feeDetails.getEndDate() != null) {
+        	cfd.setStrEndDate(DateFormatUtil.changeLocalDateFormat(feeDetails.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	cfd.setEndDate(null);
     	}
     	if(feeDetails.getCreatedOn() != null) {
-    		cfd.setStrCreatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(feeDetails.getCreatedOn()))));
+    		cfd.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(feeDetails.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	cfd.setCreatedOn(null);
+//    		cfd.setStrCreatedOn(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(feeDetails.getCreatedOn()))));
+    	}
+    	if(feeDetails.getUpdatedOn() != null) {
+    		cfd.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(feeDetails.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	cfd.setUpdatedOn(null);
     	}
         return cfd;
     }
