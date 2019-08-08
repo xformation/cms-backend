@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
-import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +48,7 @@ import com.synectiks.cms.domain.CmsFeeDetails;
 import com.synectiks.cms.domain.CmsFeeSettingsVo;
 import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.CmsLibrary;
+import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.CompetitiveExam;
 import com.synectiks.cms.domain.Contract;
@@ -108,6 +106,8 @@ import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
+import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
+import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.graphql.types.AcademicExamSetting.AddAcademicExamSettingInput;
 import com.synectiks.cms.graphql.types.AcademicExamSetting.AddAcademicExamSettingPayload;
 import com.synectiks.cms.graphql.types.AcademicExamSetting.RemoveAcademicExamSettingInput;
@@ -3867,10 +3867,21 @@ public class Mutation implements GraphQLMutationResolver {
         return Lists.newArrayList(admissionEnquiryProcessor.admissionEnquiryList(branchId));
     }
 
-    public List<Student> getStudentList(StudentListFilterInput filter) throws Exception {
+    public List<CmsStudentVo> getStudentList(StudentListFilterInput filter) throws Exception {
     	List<Student> list = this.studentFilterProcessor.searchStudent(filter);
+    	List<CmsStudentVo> ls = new ArrayList<>();
+    	for(Student student: list) {
+    		CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
+    		vo.setStrDateOfBirth(DateFormatUtil.changeLocalDateFormat(student.getDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+    		vo.setDateOfBirth(null);
+    		vo.setDepartmentId(student.getDepartment() != null ? student.getDepartment().getId() : null);
+    		vo.setBatchId(student.getBatch() != null ? student.getBatch().getId() : null);
+    		vo.setSectionId(student.getSection() != null ? student.getSection().getId() : null);
+    		vo.setBranchId(student.getBranch() != null ? student.getBranch().getId() : null);
+    		ls.add(vo);
+    	}
     	logger.debug("Total students retrieved. "+list.size());
-    	return list;
+    	return ls;
     }
 
     public List<Vehicle> getVehicleList(VehicleListFilterInput filter) throws Exception {
