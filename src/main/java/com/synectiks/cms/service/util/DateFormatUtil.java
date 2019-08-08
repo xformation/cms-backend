@@ -111,13 +111,21 @@ public final class DateFormatUtil {
         logger.debug("Formated local date : "+text);
         return text;
 	}
+	
+	public final static LocalDate convertStringToLocalDate(String dt, String targetFormat) {
+		DateTimeFormatter formatters = DateTimeFormatter.ofPattern(targetFormat);
+		LocalDate localDate = LocalDate.parse(dt, formatters);
+		 logger.debug("Local date from string date: "+localDate);
+		return localDate;
+	}
+	
 	public static void main(String a[]) throws Exception {
 //		String dt = changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", "29/04/2019");
 //		Date d = getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,dt);
 //		System.out.println(d);
-		LocalDate date = LocalDate.now();
+		LocalDate date = convertStringToLocalDate("08-08-2019",CmsConstants.DATE_FORMAT_MM_dd_yyyy); //LocalDate.now();
 		System.out.println("date to be formated : "+date);
-		String dt = changeLocalDateFormat(date, CmsConstants.DATE_FORMAT_MM_dd_yyyy);
+//		String dt = changeLocalDateFormat(date, CmsConstants.DATE_FORMAT_MM_dd_yyyy);
 //		DateTimeFormatter formatters = DateTimeFormatter.ofPattern(CmsConstants.DATE_FORMAT_MM_dd_yyyy);
 //		System.out.println("local date after format change : "+formatters.format(date));
 	}
