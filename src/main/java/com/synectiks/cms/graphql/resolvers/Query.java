@@ -304,7 +304,7 @@ public class Query implements GraphQLQueryResolver {
         Student s = studentRepository.findById(id).get();
         CmsStudentVo vo = CommonUtil.createCopyProperties(s, CmsStudentVo.class);
         vo.setStrDateOfBirth(DateFormatUtil.changeLocalDateFormat(s.getDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        s.setDateOfBirth(null);
+        vo.setDateOfBirth(null);
         return vo;
     }
 
