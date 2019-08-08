@@ -52,7 +52,7 @@ public class OnlinePaymentRestController {
     	String chkSum = CheckSumGenerator.getCheckSum(m);
     	String msg = m+"|"+chkSum;
     	logger.debug("Payment message : "+msg);
-    	return m+chkSum;
+    	return msg;
     }
     
   
