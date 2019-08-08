@@ -28,7 +28,7 @@ public class OnlinePaymentRestController {
     
     private static final String MERCHANT_ID = "HMACUAT";
     private static final String SECURITY_ID = "hmacuat";
-    private static final String RESPONSE_URL = "http://localhost:3000/payment-response";
+    private static final String RESPONSE_URL = "http://18.209.4.2:3000/payment-response";
     
     @RequestMapping(method = RequestMethod.GET, value = "/cmspayment/{entity}")
     public ResponseEntity<QueryResult> getMessage(@PathVariable String entity) throws ParseException, Exception {
