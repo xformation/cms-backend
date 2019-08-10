@@ -57,22 +57,22 @@ public class AcademicYearRestController {
             throw new BadRequestAlertException("A new academicYear cannot have an ID which already exists.", ENTITY_NAME, "idexists");
         }
         AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
-        String stDt[] = cmsAcademicYearVo.getStrStartDate().split("/");
-        String ndDt[] = cmsAcademicYearVo.getStrEndDate().split("/");
-        if(stDt[0].length() == 1) {
-        	stDt[0] = "0"+stDt[0];
-        }
-        if(stDt[1].length() == 1) {
-        	stDt[1] = "0"+stDt[1];
-        }
-        if(ndDt[0].length() == 1) {
-        	ndDt[0] = "0"+ndDt[0];
-        }
-        if(ndDt[1].length() == 1) {
-        	ndDt[1] = "0"+ndDt[1];
-        }
-        ay.setStartDate(DateFormatUtil.convertStringToLocalDate(stDt[0]+"/"+stDt[1]+"/"+stDt[2], "MM/dd/yyyy"));
-        ay.setEndDate(DateFormatUtil.convertStringToLocalDate(ndDt[0]+"/"+ndDt[1]+"/"+ndDt[2], "MM/dd/yyyy"));
+//        String stDt[] = cmsAcademicYearVo.getStrStartDate().split("/");
+//        String ndDt[] = cmsAcademicYearVo.getStrEndDate().split("/");
+//        if(stDt[0].length() == 1) {
+//        	stDt[0] = "0"+stDt[0];
+//        }
+//        if(stDt[1].length() == 1) {
+//        	stDt[1] = "0"+stDt[1];
+//        }
+//        if(ndDt[0].length() == 1) {
+//        	ndDt[0] = "0"+ndDt[0];
+//        }
+//        if(ndDt[1].length() == 1) {
+//        	ndDt[1] = "0"+ndDt[1];
+//        }
+        ay.setStartDate(DateFormatUtil.getLocalDateFromString(cmsAcademicYearVo.getStrStartDate()));
+        ay.setEndDate(DateFormatUtil.getLocalDateFromString(cmsAcademicYearVo.getStrEndDate()));
         ay = academicYearRepository.save(ay);
 
         cmsAcademicYearVo.setId(ay.getId());
@@ -100,29 +100,30 @@ public class AcademicYearRestController {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
-        String stDt[] = cmsAcademicYearVo.getStrStartDate().split("/");
-        String ndDt[] = cmsAcademicYearVo.getStrEndDate().split("/");
-        if(stDt[0].length() == 1) {
-        	stDt[0] = "0"+stDt[0];
-        }
-        if(stDt[1].length() == 1) {
-        	stDt[1] = "0"+stDt[1];
-        }
-        if(ndDt[0].length() == 1) {
-        	ndDt[0] = "0"+ndDt[0];
-        }
-        if(ndDt[1].length() == 1) {
-        	ndDt[1] = "0"+ndDt[1];
-        }
-        ay.setStartDate(DateFormatUtil.convertStringToLocalDate(stDt[0]+"/"+stDt[1]+"/"+stDt[2], "MM/dd/yyyy"));
-        ay.setEndDate(DateFormatUtil.convertStringToLocalDate(ndDt[0]+"/"+ndDt[1]+"/"+ndDt[2], "MM/dd/yyyy"));
+//        String stDt[] = cmsAcademicYearVo.getStrStartDate().split("/");
+//        String ndDt[] = cmsAcademicYearVo.getStrEndDate().split("/");
+//        if(stDt[0].length() == 1) {
+//        	stDt[0] = "0"+stDt[0];
+//        }
+//        if(stDt[1].length() == 1) {
+//        	stDt[1] = "0"+stDt[1];
+//        }
+//        if(ndDt[0].length() == 1) {
+//        	ndDt[0] = "0"+ndDt[0];
+//        }
+//        if(ndDt[1].length() == 1) {
+//        	ndDt[1] = "0"+ndDt[1];
+//        }
+        ay.setStartDate(DateFormatUtil.getLocalDateFromString(cmsAcademicYearVo.getStrStartDate()));
+        ay.setEndDate(DateFormatUtil.getLocalDateFromString(cmsAcademicYearVo.getStrEndDate()));
+        
+//        ay.setStartDate(DateFormatUtil.convertStringToLocalDate(stDt[0]+"/"+stDt[1]+"/"+stDt[2], "MM/dd/yyyy"));
+//        ay.setEndDate(DateFormatUtil.convertStringToLocalDate(ndDt[0]+"/"+ndDt[1]+"/"+ndDt[2], "MM/dd/yyyy"));
         
         ay = academicYearRepository.save(ay);
         cmsAcademicYearVo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         cmsAcademicYearVo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         
-//        cmsAcademicYearVo.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getStartDate()))));
-//        cmsAcademicYearVo.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ay.getEndDate()))));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsAcademicYearVo.getId().toString()))
             .body(cmsAcademicYearVo);

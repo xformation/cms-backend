@@ -119,11 +119,22 @@ public final class DateFormatUtil {
 		return localDate;
 	}
 	
+	public final static LocalDate getLocalDateFromString(String strDate) {
+    	String stDt[] = strDate.split("/");
+        if(stDt[0].length() == 1) {
+        	stDt[0] = "0"+stDt[0];
+        }
+        if(stDt[1].length() == 1) {
+        	stDt[1] = "0"+stDt[1];
+        }
+        return DateFormatUtil.convertStringToLocalDate(stDt[2]+"-"+stDt[0]+"-"+stDt[1], CmsConstants.DATE_FORMAT_yyyy_MM_dd);
+    }
+	
 	public static void main(String a[]) throws Exception {
 //		String dt = changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", "29/04/2019");
 //		Date d = getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,dt);
 //		System.out.println(d);
-		LocalDate date = convertStringToLocalDate("08-08-2019",CmsConstants.DATE_FORMAT_MM_dd_yyyy); //LocalDate.now();
+		LocalDate date = convertStringToLocalDate("08"+"/"+"09"+"/"+"2019","MM/dd/yyyy"); //LocalDate.now();
 		System.out.println("date to be formated : "+date);
 //		String dt = changeLocalDateFormat(date, CmsConstants.DATE_FORMAT_MM_dd_yyyy);
 //		DateTimeFormatter formatters = DateTimeFormatter.ofPattern(CmsConstants.DATE_FORMAT_MM_dd_yyyy);

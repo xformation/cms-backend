@@ -1,12 +1,32 @@
 package com.synectiks.cms.web.rest;
 
 
+import java.net.URI;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.CmsHolidayVo;
-import com.synectiks.cms.domain.CmsTermVo;
 import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.HolidayRepository;
@@ -14,21 +34,8 @@ import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -53,11 +60,13 @@ public class HolidayRestController {
             cmsHolidayVo.setHolidayStatus(Status.DEACTIVE);
         }
         Holiday hd = CommonUtil.createCopyProperties(cmsHolidayVo, Holiday.class);
-
+        hd.setHolidayDate(DateFormatUtil.getLocalDateFromString(cmsHolidayVo.getStrHolidayDate()));
+        
         hd = holidayRepository.save(hd);
 
         cmsHolidayVo.setId(hd.getId());
-        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
+        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeLocalDateFormat(hd.getHolidayDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
 
         return ResponseEntity.created(new URI("/api/holidays/" + cmsHolidayVo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsHolidayVo.getId().toString()))
