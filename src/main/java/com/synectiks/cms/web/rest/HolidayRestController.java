@@ -79,11 +79,16 @@ public class HolidayRestController {
         if (cmsHolidayVo.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if(cmsHolidayVo.getHolidayStatus() == null) {
+            cmsHolidayVo.setHolidayStatus(Status.DEACTIVE);
+        }
+        
         Holiday hd = CommonUtil.createCopyProperties(cmsHolidayVo, Holiday.class);
+        hd.setHolidayDate(DateFormatUtil.getLocalDateFromString(cmsHolidayVo.getStrHolidayDate()));
+        
         hd = holidayRepository.save(hd);
 
-        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
-
+        cmsHolidayVo.setStrHolidayDate(DateFormatUtil.changeLocalDateFormat(hd.getHolidayDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsHolidayVo.getId().toString()))
             .body(cmsHolidayVo);
@@ -96,8 +101,7 @@ public class HolidayRestController {
         List<CmsHolidayVo> ls = new ArrayList<>();
         for(Holiday hd: list) {
             CmsHolidayVo chd = CommonUtil.createCopyProperties(hd, CmsHolidayVo.class);
-            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
-
+            chd.setStrHolidayDate(DateFormatUtil.changeLocalDateFormat(hd.getHolidayDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
             ls.add(chd);
         }
         return ls;
@@ -109,12 +113,8 @@ public class HolidayRestController {
         Optional<Holiday> hd = holidayRepository.findById(id);
         CmsHolidayVo chd = new CmsHolidayVo();
         if(hd.isPresent()) {
-
-
             chd = CommonUtil.createCopyProperties(hd.get(), CmsHolidayVo.class);
-            chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.get().getHolidayDate()))));
-
-
+            chd.setStrHolidayDate(DateFormatUtil.changeLocalDateFormat(hd.get().getHolidayDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         }
         return ResponseUtil.wrapOrNotFound(Optional.of(chd));
     }
@@ -137,12 +137,12 @@ public class HolidayRestController {
             List<Holiday> list = this.holidayRepository.findAll(exm);
             for(Holiday hd: list) {
                 CmsHolidayVo chd = CommonUtil.createCopyProperties(hd, CmsHolidayVo.class);
-                chd.setStrHolidayDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(hd.getHolidayDate()))));
-
+                chd.setStrHolidayDate(DateFormatUtil.changeLocalDateFormat(hd.getHolidayDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                
                 ls.add(chd);
             }
         }
-        logger.debug("Total holidays retrieved: "+ls);
+        logger.debug("Total holidays retrieved: "+ls.size());
         return ls;
 
     }
