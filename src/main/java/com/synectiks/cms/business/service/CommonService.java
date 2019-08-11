@@ -917,14 +917,45 @@ public class CommonService {
         	config.setBranch(employee.get().getBranch());
         }
         
-        if(config.getCollege() == null) {
-	        List<College> cl = collegeRepository.findAll();
-	        config.setCollege((cl != null && cl.size() > 1) ? cl.get(0) : null);
-        }
+//        if(config.getCollege() == null) {
+//	        List<College> cl = collegeRepository.findAll();
+//	        config.setCollege((cl != null && cl.size() > 1) ? cl.get(0) : null);
+//        }
+        config.setCollege(GlobalConfig.CONFIG.getCollege());
         AcademicYear academicYear = new AcademicYear();
         academicYear.setStatus(Status.ACTIVE);
         Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
-        config.setAcademicYear(oa.isPresent() ? oa.get() : null);
+        if(oa.isPresent()) {
+        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(oa.get(), CmsAcademicYearVo.class);
+        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(oa.get().getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(oa.get().getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	config.setCmsAcademicYearVo(vo);
+        }else {
+        	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
+        }
+        config.setBranchList(this.branchRepository.findAll());
+        
+        return config;
+	}
+    
+    public Config createUserConfigForAdmin(String userName) {
+		logger.debug("Creating admin user specific config object");
+		Config config = new Config();
+		config.setLoggedInUser(userName);
+		config.setCollege(GlobalConfig.CONFIG.getCollege());
+        AcademicYear academicYear = new AcademicYear();
+        academicYear.setStatus(Status.ACTIVE);
+        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
+        if(oa.isPresent()) {
+        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(oa.get(), CmsAcademicYearVo.class);
+        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(oa.get().getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(oa.get().getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	config.setCmsAcademicYearVo(vo);
+        }else {
+        	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
+        }
+        config.setBranchList(this.branchRepository.findAll());
+        
         return config;
 	}
     

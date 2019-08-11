@@ -30,7 +30,7 @@ public class GlobalConfigRestController {
         logger.debug("REST request to get global settings");
         String userName = dataMap.get("userName") != null ? dataMap.get("userName").trim() : null;
         
-        if(CommonUtil.isNullOrEmpty(userName)) {
+        if(!CommonUtil.isNullOrEmpty(userName)) {
         	Config config = CmsConstants.USERS_CACHE.get(userName);
         	return ResponseUtil.wrapOrNotFound(Optional.of(config));
         }

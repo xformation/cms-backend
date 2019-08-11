@@ -1,6 +1,7 @@
 package com.synectiks.cms.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Config implements Serializable{
 
@@ -9,10 +10,11 @@ public class Config implements Serializable{
 	private City city;
 	private College college;
 	private Branch branch;
-	private AcademicYear academicYear;
+	private CmsAcademicYearVo cmsAcademicYearVo;
 	private String loggedInUser;
 	private String footerNote;
 	private Object loginResponse;
+	private List<Branch> branchList;
 	
 	public Country getCountry() {
 		return country;
@@ -44,12 +46,7 @@ public class Config implements Serializable{
 	public void setBranch(Branch branch) {
 		this.branch = branch;
 	}
-	public AcademicYear getAcademicYear() {
-		return academicYear;
-	}
-	public void setAcademicYear(AcademicYear academicYear) {
-		this.academicYear = academicYear;
-	}
+	
 	public String getLoggedInUser() {
 		return loggedInUser;
 	}
@@ -92,11 +89,18 @@ public class Config implements Serializable{
 	public void setLoginResponse(Object loginResponse) {
 		this.loginResponse = loginResponse;
 	}
-	@Override
-	public String toString() {
-		return "Config [country=" + country + ", state=" + state + ", city=" + city + ", college=" + college
-				+ ", branch=" + branch + ", academicYear=" + academicYear + ", loggedInUser=" + loggedInUser
-				+ ", footerNote=" + footerNote + ", loginResponse=" + loginResponse + "]";
+	
+	public List<Branch> getBranchList() {
+		return branchList;
+	}
+	public void setBranchList(List<Branch> branchList) {
+		this.branchList = branchList;
+	}
+	public CmsAcademicYearVo getCmsAcademicYearVo() {
+		return cmsAcademicYearVo;
+	}
+	public void setCmsAcademicYearVo(CmsAcademicYearVo cmsAcademicYearVo) {
+		this.cmsAcademicYearVo = cmsAcademicYearVo;
 	}
 	
 	
