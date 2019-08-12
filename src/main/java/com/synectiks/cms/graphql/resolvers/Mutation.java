@@ -1245,6 +1245,9 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+    	if(branch == null) return;
+    	if(branch != null && branch.getCollege() == null) return;
+    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
     	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
     	String filePath = Paths.get("", temp).toString();
     	String fileName = String.valueOf(student.getId());
