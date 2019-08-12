@@ -1240,7 +1240,7 @@ public class Mutation implements GraphQLMutationResolver {
         student.setDepartment(department);
         logger.info("Saving student record.");
         student = studentRepository.save(student);
-//        saveStudentImage(addStudentInput, student, branch);
+        saveStudentImage(addStudentInput, student, branch);
         return new AddStudentPayload(student);
     }
 
