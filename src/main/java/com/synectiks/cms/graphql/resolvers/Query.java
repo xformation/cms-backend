@@ -18,6 +18,7 @@ package com.synectiks.cms.graphql.resolvers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,68 +33,6 @@ import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicHistory;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.AdmissionDataCache;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.domain.CmsCourseEnumVo;
-import com.synectiks.cms.domain.CmsFacility;
-import com.synectiks.cms.domain.CmsFeeCategory;
-import com.synectiks.cms.domain.CmsFeeDetails;
-import com.synectiks.cms.domain.CmsGenderVo;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.CmsLectureVo;
-import com.synectiks.cms.domain.CmsSemesterVo;
-import com.synectiks.cms.domain.CmsStudentTypeVo;
-import com.synectiks.cms.domain.CmsStudentVo;
-import com.synectiks.cms.domain.CmsTermVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.ExamFilterDataCache;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDataCache;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.FeeSetupDataCache;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntityAuthSignatoryLink;
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.StudentAttendanceCache;
-import com.synectiks.cms.domain.StudentExamReport;
-import com.synectiks.cms.domain.StudentFilterDataCache;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.Book.BookfilterProcessor;
@@ -905,6 +844,15 @@ public class Query implements GraphQLQueryResolver {
     	cache.setBranches(branchList);
     	
     	return cache;
+    }
+
+    public VehicleDataCache createVehicleDataCache() throws Exception{
+        List<Vehicle> vehicleList = this.vehicleRepository.findAll();
+        List<TransportRoute> transportRouteList = this.transportRouteRepository.findAll();
+        VehicleDataCache cache = new VehicleDataCache();
+        cache.setVehicles(vehicleList);
+        cache.setTransportRoutes(transportRouteList);
+        return cache;
     }
 
     public AdmissionDataCache createAdmissionDataCache() throws  Exception{

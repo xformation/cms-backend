@@ -317,6 +317,7 @@ type Query {
   createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
   createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
   createFeeDataCache: FeeDataCache!
+  createVehicleDataCache: VehicleDataCache!
     createAdmissionDataCache: AdmissionDataCache!
   createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
   createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
@@ -409,7 +410,10 @@ type FeeDataCache {
 	colleges: [College]
 	branches: [Branch]	
 }
-
+type VehicleDataCache{
+     vehicles: [Vehicle]
+     transportRoutes: [TransportRoute]
+}
 type AdmissionDataCache {
     branches: [Branch]
     departments: [Department]
