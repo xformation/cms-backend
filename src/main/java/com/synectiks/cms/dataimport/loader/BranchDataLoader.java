@@ -20,10 +20,12 @@ public class BranchDataLoader extends DataLoader {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private AllRepositories allRepositories;
-
+	private String sheetName;
+	
 	public BranchDataLoader(String sheetName, AllRepositories allRepositories) {
 		super(sheetName, allRepositories);
 		this.allRepositories = allRepositories;
+		this.sheetName = sheetName;
 	}
 	
 	@Override
@@ -37,27 +39,24 @@ public class BranchDataLoader extends DataLoader {
 		if(!CommonUtil.isNullOrEmpty(collegeName)) {
 			College college = new College();
 			college.setShortName(collegeName);
-			Optional<College> c = this.allRepositories.findRepository(College.class).findOne(Example.of(college));
+			Optional<College> c = this.allRepositories.findRepository("college").findOne(Example.of(college));
 			obj.setCollege(c.isPresent() ? c.get() : null);
 		}
 		String cityName = row.getCellAsString(5).orElse(null);
+		if(!CommonUtil.isNullOrEmpty(cityName)) {
+			City city = new City();
+			city.setCityName(cityName);
+			Optional<City> c = this.allRepositories.findRepository("city").findOne(Example.of(city));
+			obj.setCity(c.isPresent() ? c.get() : null);
+		}
 		String stateName = row.getCellAsString(6).orElse(null);
-		if(!CommonUtil.isNullOrEmpty(cityName) && !CommonUtil.isNullOrEmpty(stateName)) {
+		if(!CommonUtil.isNullOrEmpty(stateName)) {
 			State state = new State();
 			state.setStateName(stateName);
-			Optional<State> s = this.allRepositories.findRepository(State.class).findOne(Example.of(state));
-			if(s.isPresent()) {
-				City city = new City();
-				city.setCityName(cityName);
-				city.setState(s.get());
-				Optional<City> c = this.allRepositories.findRepository(City.class).findOne(Example.of(city));
-				obj.setCity(c.get());
-				obj.setState(state);
-			}
-			
+			Optional<State> c = this.allRepositories.findRepository("state").findOne(Example.of(state));
+			obj.setState(c.isPresent() ? c.get() : null);
 		}
 		return (T)obj;
-		
 	}
 	
 }

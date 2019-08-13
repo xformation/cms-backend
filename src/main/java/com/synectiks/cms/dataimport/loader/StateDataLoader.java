@@ -32,7 +32,7 @@ public class StateDataLoader extends DataLoader {
 		obj.setStateCode((row.getCellAsString(2).orElse(null)));
 		Country country = new Country();
 		country.setCountryName(((row.getCellAsString(3).orElse(null))));
-		Optional<Country> ct = allRepositories.countryRepository.findOne(Example.of(country));
+		Optional<Country> ct = allRepositories.findRepository("country").findOne(Example.of(country));
 		obj.setCountry(ct.isPresent() ? ct.get() : null);
 		return (T)obj;
 	}

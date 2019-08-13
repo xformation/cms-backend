@@ -2,7 +2,9 @@ package com.synectiks.cms.dataimport;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
@@ -11,7 +13,6 @@ import org.dhatim.fastexcel.reader.Sheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.synectiks.cms.constant.CmsConstants;
@@ -51,7 +52,8 @@ public abstract class DataLoader {
 				rows.forEach(row -> {
 
 					if (list.size() == CmsConstants.BATCH_SIZE) {
-						allRepositories.findRepository(cls).saveAll(list);
+//						allRepositories.findRepository(cls).saveAll(list);
+						allRepositories.findRepository(this.sheetName).saveAll(list);
 						list.clear();
 					}
 
@@ -59,9 +61,15 @@ public abstract class DataLoader {
 					if (row.getRowNum() > 1) {
 						try {
 							T obj = getObject(row, cls);
-							if(!allRepositories.findRepository(cls).exists(Example.of(obj))) {
-								list.add(obj);
+							if(obj != null) {
+//								if(!allRepositories.findRepository(cls).exists(Example.of(obj))) {
+//									list.add(obj);
+//								}
+								if(!allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
+									list.add(obj);
+								}
 							}
+							
 						} catch (InstantiationException | IllegalAccessException e) {
 							// TODO Auto-generated catch block
 							logger.error("Exception in loading data from excel file :"+e.getMessage(), e);
@@ -71,7 +79,8 @@ public abstract class DataLoader {
 					}
 				});
 				// Save remaining items
-				allRepositories.findRepository(cls).saveAll(list);
+//				allRepositories.findRepository(cls).saveAll(list);
+				allRepositories.findRepository(this.sheetName).saveAll(list);
 				list.clear();
 			}
 		} catch (Exception e) {

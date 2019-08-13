@@ -1,5 +1,7 @@
 package com.synectiks.cms.dataimport.loader;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.dhatim.fastexcel.reader.Row;
@@ -18,6 +20,7 @@ public class CityDataLoader extends DataLoader {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private AllRepositories allRepositories;
+	private Map<String, Object> DATA_MAP = new HashMap<String, Object>();
 	
 	public CityDataLoader(String sheetName, AllRepositories allRepositories) {
 		super(sheetName, allRepositories);
@@ -29,11 +32,23 @@ public class CityDataLoader extends DataLoader {
 		City obj = CommonUtil.createCopyProperties(cls.newInstance(), City.class);
 		obj.setCityName((row.getCellAsString(0).orElse(null)));
 		obj.setCityCode((row.getCellAsString(1).orElse(null)));
-		obj.setStdCode((row.getCellAsString(2).orElse(null)));
-		State state = new State();
-		state.setStateName((row.getCellAsString(3).orElse(null)));
-		Optional<State> st = allRepositories.stateRepository.findOne(Example.of(state));
-		obj.setState(st.isPresent() ? st.get() : null);
+		String stateName = row.getCellAsString(2).orElse(null);
+		State state = null;
+		if(!CommonUtil.isNullOrEmpty(stateName)) {
+			if(DATA_MAP.get(stateName) != null) {
+				state =  (State)DATA_MAP.get(stateName);
+			}else {
+				state = new State();
+				state.setStateName(stateName);
+				Optional<State> st = allRepositories.findRepository("state").findOne(Example.of(state));
+				if(st.isPresent()) {
+					state = st.get() ;
+					DATA_MAP.put(stateName, state);
+				}
+			}
+		}
+		obj.setState(state);
+		obj.setStdCode(state != null ? state.getStateCode() : null);
 		return (T)obj;
 	}
 	
