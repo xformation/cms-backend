@@ -38,7 +38,7 @@ public class StudentAttendanceInfluxPush implements InfluxPush {
 					.addField("StudentId", sa.getStudent().getId())
 					.addField("StudentName", sa.getStudent().getStudentName())
 					.addField("AttendanceDate", DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(sa.getLecture().getLecDate()))))
-					.addField("AttendanceStatus", sa.getAttendanceStatus().toString())
+					.addField("AttendanceStatus", sa.getAttendanceStatus().toString().equalsIgnoreCase("PRESENT") ? 0 : 1)
 					.addField("Subject", sa.getLecture().getAttendancemaster().getTeach().getSubject().getSubjectDesc())
 					.addField("Teacher", sa.getLecture().getAttendancemaster().getTeach().getTeacher().getTeacherName())
 					.build();
