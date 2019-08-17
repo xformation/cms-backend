@@ -176,4 +176,13 @@ public interface CmsConstants {
 	String INFLUXDB_LOG_LEVEL_HEADERS = "HEADERS";
 	String INFLUXDB_LOG_LEVEL_NONE = "NONE";
 	
+	// BillDesk payment gateway specific constants
+	String HASH_KEY = "uIZ2iayX70hc";
+	String HASH_ALGO = "HmacSHA256";
+    String MERCHANT_ID = "HMACUAT";
+    String SECURITY_ID = "hmacuat";
+    String RESPONSE_URL = "http://localhost:8080/api/cmspaymentresponse";
+	String PAYMENT_STATUS_FAILED = "550";
+	String PAYMENT_REDIRECT_URL = "http://localhost:3000/payment-response";
+	
 }
