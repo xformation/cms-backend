@@ -181,8 +181,8 @@ public interface CmsConstants {
 	String HASH_ALGO = "HmacSHA256";
     String MERCHANT_ID = "HMACUAT";
     String SECURITY_ID = "hmacuat";
-    String RESPONSE_URL = "http://localhost:8080/api/cmspaymentresponse";
+    String RESPONSE_URL = "http://18.209.4.2:8080/api/cmspaymentresponse";
 	String PAYMENT_STATUS_FAILED = "550";
-	String PAYMENT_REDIRECT_URL = "http://localhost:3000/payment-response";
+	String PAYMENT_REDIRECT_URL = "http://18.209.4.2:3000/payment-response";
 	
 }
