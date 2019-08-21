@@ -673,7 +673,7 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(studentFilterProcessor.searchStudent(departmentId, batchId, sectionId, branchId, gender, studentType, studentName));
     }
 
-    public List<Vehicle> searchVehicle(Long transportRouteId, Integer vehicleNumber){
+    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, Integer vehicleNumber) throws Exception {
         return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(transportRouteId, vehicleNumber));
     }
 

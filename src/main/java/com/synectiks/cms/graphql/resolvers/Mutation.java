@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.domain.*;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,58 +30,6 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicHistory;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.domain.CmsFeeCategory;
-import com.synectiks.cms.domain.CmsFeeDetails;
-import com.synectiks.cms.domain.CmsFeeSettingsVo;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.CmsLibrary;
-import com.synectiks.cms.domain.CmsStudentVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.StudentExamReport;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
@@ -3683,36 +3632,57 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveLibraryPayload((Lists.newArrayList(libraryRepository.findAll())));
     }
 
-    public AddInsurancePayload addInsurance(AddInsuranceInput addInsuranceInput) {
-        final Insurance insurance = new Insurance();
-        insurance.setInsuranceCompany(addInsuranceInput.getInsuranceCompany());
-        insurance.setTypeOfInsurance(addInsuranceInput.getTypeOfInsurance());
+
+    public List<CmsInsurance> addInsurance(AddInsuranceInput addInsuranceInput) throws Exception {
+        Insurance insurance = CommonUtil.createCopyProperties(addInsuranceInput, Insurance.class);
         insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getDateOfInsurance()));
         insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getValidTill()));
-        insuranceRepository.save(insurance);
+        insurance = insuranceRepository.save(insurance);
 
-        return new AddInsurancePayload(insurance);
+        Insurance i = new Insurance();
+        Example<Insurance> example = Example.of(i);
+        List<Insurance> list = this.insuranceRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsInsurance> ls = new ArrayList<>();
+        for(Insurance in: list) {
+            CmsInsurance cin = CommonUtil.createCopyProperties(in, CmsInsurance.class);
+            if(in.getDateOfInsurance() != null) {
+                cin.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(in.getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cin.setDateOfInsurance(null);
+            }
+            if(in.getValidTill() != null) {
+                cin.setStrValidTill(DateFormatUtil.changeLocalDateFormat(in.getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cin.setValidTill(null);
+            }
+            ls.add(cin);
+        }
+        return ls;
     }
 
-    public UpdateInsurancePayload updateInsurance(UpdateInsuranceInput updateInsuranceInput) {
-        Insurance insurance = insuranceRepository.findById(updateInsuranceInput.getId()).get();
+    public List<CmsInsurance> updateInsurance(UpdateInsuranceInput updateInsuranceInput) throws ParseException, Exception {
+        Insurance insurance = CommonUtil.createCopyProperties(updateInsuranceInput, Insurance.class);
+        insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getDateOfInsurance()));
+        insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getValidTill()));
+        insurance = insuranceRepository.save(insurance);
 
-        if (updateInsuranceInput.getInsuranceCompany() != null) {
-            insurance.setInsuranceCompany(updateInsuranceInput.getInsuranceCompany());
-        }
-        if (updateInsuranceInput.getTypeOfInsurance() != null) {
-            insurance.setInsuranceCompany(updateInsuranceInput.getInsuranceCompany());
-        }
-        if (updateInsuranceInput.getDateOfInsurance() != null) {
-            insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getDateOfInsurance()));
-        }
-        if (updateInsuranceInput.getValidTill() != null) {
-            insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getValidTill()));
-        }
 
-        insuranceRepository.save(insurance);
+        Insurance i = new Insurance();
+        Example<Insurance> example = Example.of(i);
+        List<Insurance> list = this.insuranceRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsInsurance> ls = new ArrayList<>();
+        for(Insurance in: list) {
+            CmsInsurance cin = CommonUtil.createCopyProperties(in, CmsInsurance.class);
+            if(in.getDateOfInsurance() != null) {
+                cin.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(in.getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cin.setDateOfInsurance(null);
+            }
+            if(in.getValidTill() != null) {
+                cin.setStrValidTill(DateFormatUtil.changeLocalDateFormat(in.getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cin.setValidTill(null);
+            }
+            ls.add(cin);
+        }
+        return ls;
 
-        return new UpdateInsurancePayload(insurance);
     }
 
     public RemoveInsurancePayload removeInsurance(RemoveInsuranceInput removeInsuranceInput) {
@@ -3931,10 +3901,8 @@ public class Mutation implements GraphQLMutationResolver {
     	return ls;
     }
 
-    public List<Vehicle> getVehicleList(VehicleListFilterInput filter) throws Exception {
-        List<Vehicle> list = this.vehicleFilterProcessor.searchVehicle(filter);
-        logger.debug("Total vehicles retrieved. "+list.size());
-        return list;
+    public List<CmsVehicleVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
+        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(filter));
     }
 
     public Long getTotalReceived( long academicyearId) {

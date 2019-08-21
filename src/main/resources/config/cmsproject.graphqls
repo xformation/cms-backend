@@ -280,7 +280,7 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
-    searchVehicle(transportRouteId:Long, vehicleNumber:Int): [Vehicle!]!
+    searchVehicle(transportRouteId:Long, vehicleNumber:Int): [CmsVehicleVo!]!
     searchBook (bookTitle:String,author:String,departmentId:Long,batchId:Long,subjectId:Long):[Library!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
@@ -500,6 +500,29 @@ type CmsInvoice {
     strNextPaymentDate: String
     strUpdatedOn: String
     
+}
+
+type CmsVehicleVo {
+    id: Long
+    vehicleNumber: Int
+    vehicleType: String
+    capacity: Long
+    ownerShip: String
+    dateOfRegistration:Date
+    yearOfManufacturing: String
+    manufacturingCompany: String
+    model:  String
+    chasisNo:  String
+    rcNo:  String
+    contactNumber:  String
+    status:Status
+    employee: Employee
+    transportRoute: TransportRoute
+    insurance: Insurance
+    strDateOfRegistration: String
+    insuranceId: Long
+    employeeId: Long
+    transportRouteId: Long
 }
 
 type CmsLibrary {
@@ -1601,8 +1624,8 @@ type Mutation {
     removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
     searchLib(bookTitle:String,author:String,departmentId:Long, batchId:Long, subjectId:Long):[CmsLibrary!]!
 
-     addInsurance(input:AddInsuranceInput!):AddInsurancePayload!
-     updateInsurance(input:UpdateInsuranceInput!):UpdateInsurancePayload!
+     addInsurance(input:AddInsuranceInput!):[CmsInsurance]!
+     updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
      removeInsurance(input:RemoveInsuranceInput!):RemoveInsurancePayload!
 
      addVehicle(input:AddVehicleInput!):AddVehiclePayload!
@@ -1611,7 +1634,7 @@ type Mutation {
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [CmsStudentVo]!
-	getVehicleList(filter: VehicleListFilterInput!): [Vehicle]!
+	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -1639,6 +1662,17 @@ type CmsFeeCategory {
      strEndDate: String
      branch: Branch
 }
+
+type CmsInsurance {
+     id: Long
+     insuranceCompany: String
+     typeOfInsurance: TypeOfInsurance
+     dateOfInsurance: Date
+     validTill: Date
+     strDateOfInsurance: String
+     strValidTill: String
+}
+
 
 type CmsFeeSettingsVo {
 	lateFeeId: Long
@@ -3589,20 +3623,24 @@ type Insurance{
 }
 
 input AddInsuranceInput{
-     insuranceCompany: String!
-    typeOfInsurance: TypeOfInsurance!
-     dateOfInsurance: Date!
-     validTill: Date!
+         insuranceCompany: String
+         typeOfInsurance: TypeOfInsurance
+         dateOfInsurance: Date
+         validTill: Date
+         strDateOfInsurance: String
+         strValidTill: String
 }
 type AddInsurancePayload {
     insurance:Insurance!
 }
 input UpdateInsuranceInput {
-    id:Long!
-    insuranceCompany: String!
-    typeOfInsurance: TypeOfInsurance!
-    dateOfInsurance: Date!
-    validTill: Date!
+   id: Long
+   insuranceCompany: String
+   typeOfInsurance: TypeOfInsurance
+   dateOfInsurance: Date
+   validTill: Date
+   strDateOfInsurance: String
+   strValidTill: String
 }
 type UpdateInsurancePayload{
     insurance:Insurance!

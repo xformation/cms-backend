@@ -1,15 +1,19 @@
 package com.synectiks.cms.business.service;
 
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.CmsVehicleVo;
 import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.TransportRoute_;
 import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.repository.VehicleRepository;
 import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -20,7 +24,7 @@ public class VehicleService {
     @Autowired
     private CommonService commonService;
 
-    public List<Vehicle> searchVehicle(Long transportRouteId, Integer vehicleNumber) {
+    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, Integer vehicleNumber) throws Exception{
         Vehicle vehicle = new Vehicle();
 
         if(transportRouteId != null) {
@@ -35,11 +39,18 @@ public class VehicleService {
 
         Example<Vehicle> example = Example.of(vehicle);
         List<Vehicle> list = this.vehicleRepository.findAll(example);
-        return list;
+        List<CmsVehicleVo> ls = new ArrayList<>();
+        for(Vehicle temp: list) {
+//            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
+            CmsVehicleVo cve = CommonUtil.createCopyProperties(temp, CmsVehicleVo.class);
+            cve.setStrDateOfRegistration(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getDateOfRegistration()))));
+            ls.add(cve);
+        }
+        return ls;
     }
 
 
-    public List<Vehicle> searchVehicle(VehicleListFilterInput filter) {
+    public List<CmsVehicleVo> searchVehicle(VehicleListFilterInput filter) throws Exception{
         Vehicle vehicle = new Vehicle();
         if(!CommonUtil.isNullOrEmpty(filter.getTransportRouteId())) {
             TransportRoute transportRoute = this.commonService.getTransportRouteById(Long.valueOf(filter.getTransportRouteId()));
@@ -56,6 +67,13 @@ public class VehicleService {
 
         Example<Vehicle> example = Example.of(vehicle);
         List<Vehicle> list = this.vehicleRepository.findAll(example);
-        return list;
+        List<CmsVehicleVo> ls = new ArrayList<>();
+        for(Vehicle temp: list) {
+//            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
+            CmsVehicleVo cve = CommonUtil.createCopyProperties(temp, CmsVehicleVo.class);
+            cve.setStrDateOfRegistration(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getDateOfRegistration()))));
+            ls.add(cve);
+        }
+        return ls;
     }
 }

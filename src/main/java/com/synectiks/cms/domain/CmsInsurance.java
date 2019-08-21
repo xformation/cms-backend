@@ -1,16 +1,15 @@
-package com.synectiks.cms.graphql.types.Insurance;
+package com.synectiks.cms.domain;
 
 import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
 
-import java.util.Date;
-import java.util.Objects;
+import java.time.LocalDate;
 
-public class AbstractInsuranceInput {
+public class CmsInsurance implements Comparable<CmsInsurance> {
     private Long id;
     private String insuranceCompany;
     private TypeOfInsurance typeOfInsurance;
-    private Date dateOfInsurance;
-    private Date validTill;
+    private LocalDate dateOfInsurance;
+    private LocalDate validTill;
     private String strDateOfInsurance;
     private String strValidTill;
 
@@ -38,19 +37,19 @@ public class AbstractInsuranceInput {
         this.typeOfInsurance = typeOfInsurance;
     }
 
-    public Date getDateOfInsurance() {
+    public LocalDate getDateOfInsurance() {
         return dateOfInsurance;
     }
 
-    public void setDateOfInsurance(Date dateOfInsurance) {
+    public void setDateOfInsurance(LocalDate dateOfInsurance) {
         this.dateOfInsurance = dateOfInsurance;
     }
 
-    public Date getValidTill() {
+    public LocalDate getValidTill() {
         return validTill;
     }
 
-    public void setValidTill(Date validTill) {
+    public void setValidTill(LocalDate validTill) {
         this.validTill = validTill;
     }
 
@@ -70,4 +69,8 @@ public class AbstractInsuranceInput {
         this.strValidTill = strValidTill;
     }
 
+    @Override
+    public int compareTo(CmsInsurance o) {
+        return this.id.compareTo(o.getId());
+    }
 }
