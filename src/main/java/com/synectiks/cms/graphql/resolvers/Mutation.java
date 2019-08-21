@@ -240,6 +240,12 @@ import com.synectiks.cms.graphql.types.Library.RemoveLibraryInput;
 import com.synectiks.cms.graphql.types.Library.RemoveLibraryPayload;
 import com.synectiks.cms.graphql.types.Library.UpdateLibraryInput;
 import com.synectiks.cms.graphql.types.Library.UpdateLibraryPayload;
+import com.synectiks.cms.graphql.types.Book.AddBookInput;
+import com.synectiks.cms.graphql.types.Book.AddBookPayload;
+import com.synectiks.cms.graphql.types.Book.RemoveBookInput;
+import com.synectiks.cms.graphql.types.Book.RemoveBookPayload;
+import com.synectiks.cms.graphql.types.Book.UpdateBookInput;
+import com.synectiks.cms.graphql.types.Book.UpdateBookPayload;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AbstractPaymentRemainderPayload;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AddPaymentRemainderInput;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AddPaymentRemainderPayload;
@@ -350,6 +356,7 @@ import com.synectiks.cms.repository.LateFeeRepository;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.LegalEntityRepository;
 import com.synectiks.cms.repository.LibraryRepository;
+import com.synectiks.cms.repository.BookRepository;
 import com.synectiks.cms.repository.LocationRepository;
 import com.synectiks.cms.repository.PaymentRemainderRepository;
 import com.synectiks.cms.repository.SectionRepository;
@@ -414,6 +421,8 @@ public class Mutation implements GraphQLMutationResolver {
     private final TypeOfGradingRepository typeOfGradingRepository;
     private final StudentExamReportRepository studentExamReportRepository;
     private final LibraryRepository libraryRepository;
+    private final BookRepository bookRepository;
+
     private final VehicleRepository vehicleRepository;
     private final EmployeeRepository employeeRepository;
     private final ContractRepository contractRepository;
@@ -457,7 +466,7 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private LibraryFilterProcessor libraryFilterProcessor;
 
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
+    public Mutation(AcademicExamSettingRepository academicExamSettingRepository,BookRepository bookRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
         this.admissionEnquiryRepository = admissionEnquiryRepository;
@@ -501,6 +510,8 @@ public class Mutation implements GraphQLMutationResolver {
         this.typeOfGradingRepository = typeOfGradingRepository;
         this.studentExamReportRepository = studentExamReportRepository;
         this.libraryRepository = libraryRepository;
+        this.bookRepository = bookRepository;
+
         this.vehicleRepository = vehicleRepository;
         this.employeeRepository = employeeRepository;
         this.contractRepository = contractRepository;
@@ -3630,6 +3641,56 @@ public class Mutation implements GraphQLMutationResolver {
         Library book =libraryRepository.findById(removeLibraryInput.getLibraryId()).get();
         libraryRepository.delete(book);
         return new RemoveLibraryPayload((Lists.newArrayList(libraryRepository.findAll())));
+    }
+
+    public AddBookPayload addBook(AddBookInput bookInput){
+        Student student = studentRepository.findById(bookInput.getStudentId()).get();
+        Library library = libraryRepository.findById(bookInput.getLibraryId()).get();
+        final Book b = new Book ();
+        b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getIssueDate()));
+        b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getDueDate()));
+        b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getReceivedDate()));
+        b.setNoOfCopiesAvailable(bookInput.getNoOfCopiesAvailable());
+        b.setStatus(bookInput.getStatus());
+        b.setStudent(student);
+        b.setLibrary(library);
+        bookRepository.save(b);
+        return new AddBookPayload(b);
+    }
+    public UpdateBookPayload updateBook(UpdateBookInput updateBookInput) {
+        Book b = bookRepository.findById(updateBookInput.getId()).get();
+        if(updateBookInput.getIssueDate()!=null) {
+            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
+        }
+        if (updateBookInput.getDueDate() != null){
+            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
+        }
+        if (updateBookInput.getReceivedDate() != null){
+            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
+        }
+        if(updateBookInput.getNoOfCopiesAvailable()!=null){
+            b.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
+        }
+        if (updateBookInput.getStatus() != null) {
+            b.setStatus(updateBookInput.getStatus());
+        }
+
+        if(updateBookInput.getStudentId()!=null){
+            Student student =studentRepository.findById(updateBookInput.getStudentId()).get();
+            b.setStudent(student);
+        }
+        if(updateBookInput.getLibraryId()!=null){
+            Library library =libraryRepository.findById(updateBookInput.getLibraryId()).get();
+            b.setLibrary(library);
+        }
+        bookRepository.save(b);
+        return new UpdateBookPayload(b);
+
+    }
+    public RemoveBookPayload removeBook(RemoveBookInput removeBookInput){
+        Book b =bookRepository.findById(removeBookInput.getBookId()).get();
+        bookRepository.delete(b);
+        return new RemoveBookPayload((Lists.newArrayList(bookRepository.findAll())));
     }
 
 

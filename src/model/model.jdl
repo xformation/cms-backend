@@ -24,6 +24,14 @@ address1 String required
 address2 String required
 branchHead String required
 }
+entity Book{
+ issueDate LocalDate required
+ dueDate LocalDate required
+ noOfCopiesAvailable Integer required
+ status StatusEnum required
+ receivedDate LocalDate
+
+}
 entity Department{
 name String required
 description String required
@@ -54,7 +62,9 @@ status Status required
 enum SubTypeEnum{
 COMMON,ELECTIVE
 }
-
+enum StatusEnum{
+AVAILABLE,RESERVED
+}
 entity Section{
 section SectionEnum required
 }
@@ -689,6 +699,8 @@ BankAccounts{college} to College,
 Library{batch} to Batch,
 Library{subject} to Subject,
 Library{department} to Department,
+Book{student} to Student,
+Book{library} to Library
 LegalEntity{branch} to Branch,
 LegalEntity{college} to College,
 LegalEntity{state} to State,

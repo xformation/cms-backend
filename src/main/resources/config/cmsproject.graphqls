@@ -106,6 +106,10 @@ enum ModeOfPayment {
     CHEQUE
     DEMANDDRAFT
 }
+enum StatusEnum{
+     AVAILABLE
+	 RESERVED
+}
 
 enum InvoicePaymentStatus {
 	PAID
@@ -269,6 +273,11 @@ type Query {
 
     library(id: Long!): Library
     libraries: [Library!]!
+
+    book(id: Long!): Book
+    	books: [Book!]!
+
+
 
     contract(id: Long!): Contract!
     contracts:[Contract!]!
@@ -771,6 +780,17 @@ type  Library{
     subject:Subject!
     department:Department!
 }
+ type Book{
+          id:Long!
+     	 issueDate:Date!
+     	 dueDate:Date!
+     	 receivedDate:Date!
+     	 noOfCopiesAvailable:Int!
+     	 status:StatusEnum
+     	 student:Student
+     	 library:Library
+     }
+
 
   type FeeDetails{
        id: Long!
@@ -1623,6 +1643,12 @@ type Mutation {
     updateLibrary(input:UpdateLibraryInput!):UpdateLibraryPayload!
     removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
     searchLib(bookTitle:String,author:String,departmentId:Long, batchId:Long, subjectId:Long):[CmsLibrary!]!
+
+    addBook(input:AddBookInput!):AddBookPayload!
+     updateBook(input:UpdateBookInput!):UpdateBookPayload!
+     removeBook(input:RemoveBookInput!):RemoveBookPayload!
+
+
 
      addInsurance(input:AddInsuranceInput!):[CmsInsurance]!
      updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
@@ -3544,6 +3570,38 @@ input RemoveLibraryInput {
 }
 type RemoveLibraryPayload{
     libraries:[Library]!
+}
+
+input AddBookInput{
+    issueDate:Date!
+    dueDate:Date!
+    noOfCopiesAvailable:Int!
+    status:StatusEnum!
+    receivedDate:Date!
+	studentId:Long
+	libraryId:Long
+}
+type AddBookPayload{
+    book:Book!
+}
+input UpdateBookInput {
+    id:Long!
+    issueDate:Date!
+	dueDate:Date!
+	noOfCopiesAvailable:Int!
+	status:StatusEnum
+	receivedDate:Date!
+	studentId:Long
+	libraryId:Long
+}
+type UpdateBookPayload{
+    book:Book!
+}
+input RemoveBookInput {
+    addBookId:Long!
+}
+type RemoveBookPayload{
+    books:[Book]!
 }
 
  type Vehicle{

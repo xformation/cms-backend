@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
+import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,50 +45,6 @@ import com.synectiks.cms.filter.common.CommonGraphiqlFilter;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.summary.SummaryFilter;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AcademicHistoryRepository;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AdminAttendanceRepository;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.CompetitiveExamRepository;
-import com.synectiks.cms.repository.ContractRepository;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.repository.DueDateRepository;
-import com.synectiks.cms.repository.EmployeeRepository;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.FeeCategoryRepository;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.InsuranceRepository;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.LateFeeRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.LegalEntitySelectRepository;
-import com.synectiks.cms.repository.LibraryRepository;
-import com.synectiks.cms.repository.PaymentRemainderRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentExamReportRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
-import com.synectiks.cms.repository.VehicleRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -141,6 +98,8 @@ public class Query implements GraphQLQueryResolver {
     private final TypeOfGradingRepository typeOfGradingRepository;
     private final StudentExamReportRepository studentExamReportRepository;
     private final LibraryRepository libraryRepository;
+    private final BookRepository bookRepository;
+
     private final ContractRepository contractRepository;
     private final EmployeeRepository employeeRepository;
     private final VehicleRepository vehicleRepository;
@@ -188,8 +147,9 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     private CmsAdmissionApplicationService cmsAdmissionApplicationService;
     
-    public Query(LibraryRepository libraryRepository, SummaryFilter summaryFilter, AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository LibraryRepository, ContractRepository contractRepository, EmployeeRepository employeeRepository, VehicleRepository vehicleRepository, InsuranceRepository insuranceRepository) {
+    public Query(LibraryRepository libraryRepository, SummaryFilter summaryFilter,BookRepository bookRepository ,AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository LibraryRepository, ContractRepository contractRepository, EmployeeRepository employeeRepository, VehicleRepository vehicleRepository, InsuranceRepository insuranceRepository) {
         this.libraryRepository = libraryRepository;
+        this.bookRepository=bookRepository;
         this.summaryFilter = summaryFilter;
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicHistoryRepository = academicHistoryRepository;
@@ -921,5 +881,11 @@ public class Query implements GraphQLQueryResolver {
     }
     public List<Library>libraries(){
         return Lists.newArrayList(libraryRepository.findAll());
+    }
+    public Book book(long id){
+        return bookRepository.findById(id).get();
+    }
+    public List<Book>books(){
+        return Lists.newArrayList(bookRepository.findAll());
     }
 }
