@@ -35,8 +35,9 @@ export class Library extends React.Component<ILibraryProps, ILibraryState> {
   };
 
   clear = () => {
-    this.setState({ search: '' }, () => {
-      this.props.getEntities();
+    this.props.getEntities();
+    this.setState({
+      search: ''
     });
   };
 
@@ -77,11 +78,10 @@ export class Library extends React.Component<ILibraryProps, ILibraryState> {
                 <th>Book Title</th>
                 <th>Author</th>
                 <th>No Of Copies</th>
-                <th>Book No</th>
-                <th>Additional Info</th>
-                <th>Unique No</th>
+                <th>Book Id</th>
                 <th>Batch</th>
                 <th>Subject</th>
+                <th>Department</th>
                 <th />
               </tr>
             </thead>
@@ -96,11 +96,10 @@ export class Library extends React.Component<ILibraryProps, ILibraryState> {
                   <td>{library.bookTitle}</td>
                   <td>{library.author}</td>
                   <td>{library.noOfCopies}</td>
-                  <td>{library.bookNo}</td>
-                  <td>{library.additionalInfo}</td>
-                  <td>{library.uniqueNo}</td>
+                  <td>{library.bookId}</td>
                   <td>{library.batchId ? <Link to={`batch/${library.batchId}`}>{library.batchId}</Link> : ''}</td>
                   <td>{library.subjectId ? <Link to={`subject/${library.subjectId}`}>{library.subjectId}</Link> : ''}</td>
+                  <td>{library.departmentId ? <Link to={`department/${library.departmentId}`}>{library.departmentId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${library.id}`} color="info" size="sm">

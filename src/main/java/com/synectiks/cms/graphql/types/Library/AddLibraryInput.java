@@ -7,6 +7,7 @@ import java.util.Objects;
 public class AddLibraryInput extends AbstractLibraryInput {
     private Long batchId;
     private Long subjectId;
+    private Long departmentId;
 
     public Long getBatchId() {
         return batchId;
@@ -24,26 +25,36 @@ public class AddLibraryInput extends AbstractLibraryInput {
         this.subjectId = subjectId;
     }
 
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AddLibraryInput)) return false;
-        if (!super.equals ( o )) return false;
         AddLibraryInput that = (AddLibraryInput) o;
-        return Objects.equals ( batchId, that.batchId ) &&
-            Objects.equals ( subjectId, that.subjectId );
+        return Objects.equals(getBatchId(), that.getBatchId()) &&
+            Objects.equals(getSubjectId(), that.getSubjectId()) &&
+            Objects.equals(getDepartmentId(), that.getDepartmentId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash ( super.hashCode (), batchId, subjectId );
+        return Objects.hash(batchId, subjectId);
     }
+
 
     @Override
     public String toString() {
         return "AddLibraryInput{" +
             "batchId=" + batchId +
             ", subjectId=" + subjectId +
+            ", departmentId=" + departmentId +
             '}';
     }
 }

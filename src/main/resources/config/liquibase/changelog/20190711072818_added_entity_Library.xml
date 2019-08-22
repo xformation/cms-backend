@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-    
+
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
@@ -16,7 +16,7 @@
     <!--
         Added the entity Library.
     -->
-    <changeSet id="20190820052427-1" author="jhipster">
+    <changeSet id="20190711072818-1" author="jhipster">
         <createTable tableName="library">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -33,16 +33,8 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="book_no" type="bigint">
+            <column name="book_id" type="bigint">
                 <constraints nullable="false" />
-            </column>
-
-            <column name="additional_info" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="unique_no" type="bigint">
-                <constraints nullable="true" />
             </column>
 
             <column name="batch_id" type="bigint">
@@ -50,6 +42,10 @@
             </column>
 
             <column name="subject_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="department_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

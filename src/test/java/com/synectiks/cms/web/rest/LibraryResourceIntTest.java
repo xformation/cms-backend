@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -56,14 +55,8 @@ public class LibraryResourceIntTest {
     private static final Long DEFAULT_NO_OF_COPIES = 1L;
     private static final Long UPDATED_NO_OF_COPIES = 2L;
 
-    private static final Long DEFAULT_BOOK_NO = 1L;
-    private static final Long UPDATED_BOOK_NO = 2L;
-
-    private static final String DEFAULT_ADDITIONAL_INFO = "AAAAAAAAAA";
-    private static final String UPDATED_ADDITIONAL_INFO = "BBBBBBBBBB";
-
-    private static final Long DEFAULT_UNIQUE_NO = 1L;
-    private static final Long UPDATED_UNIQUE_NO = 2L;
+    private static final Long DEFAULT_BOOK_ID = 1L;
+    private static final Long UPDATED_BOOK_ID = 2L;
 
     @Autowired
     private LibraryRepository libraryRepository;
@@ -94,9 +87,6 @@ public class LibraryResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restLibraryMockMvc;
 
     private Library library;
@@ -109,8 +99,7 @@ public class LibraryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -124,9 +113,7 @@ public class LibraryResourceIntTest {
             .bookTitle(DEFAULT_BOOK_TITLE)
             .author(DEFAULT_AUTHOR)
             .noOfCopies(DEFAULT_NO_OF_COPIES)
-            .bookNo(DEFAULT_BOOK_NO)
-            .additionalInfo(DEFAULT_ADDITIONAL_INFO)
-            .uniqueNo(DEFAULT_UNIQUE_NO);
+            .bookId(DEFAULT_BOOK_ID);
         return library;
     }
 
@@ -154,9 +141,7 @@ public class LibraryResourceIntTest {
         assertThat(testLibrary.getBookTitle()).isEqualTo(DEFAULT_BOOK_TITLE);
         assertThat(testLibrary.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(DEFAULT_NO_OF_COPIES);
-        assertThat(testLibrary.getBookNo()).isEqualTo(DEFAULT_BOOK_NO);
-        assertThat(testLibrary.getAdditionalInfo()).isEqualTo(DEFAULT_ADDITIONAL_INFO);
-        assertThat(testLibrary.getUniqueNo()).isEqualTo(DEFAULT_UNIQUE_NO);
+        assertThat(testLibrary.getBookId()).isEqualTo(DEFAULT_BOOK_ID);
 
         // Validate the Library in Elasticsearch
         verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
@@ -244,10 +229,10 @@ public class LibraryResourceIntTest {
 
     @Test
     @Transactional
-    public void checkBookNoIsRequired() throws Exception {
+    public void checkBookIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = libraryRepository.findAll().size();
         // set the field null
-        library.setBookNo(null);
+        library.setBookId(null);
 
         // Create the Library, which fails.
         LibraryDTO libraryDTO = libraryMapper.toDto(library);
@@ -275,9 +260,7 @@ public class LibraryResourceIntTest {
             .andExpect(jsonPath("$.[*].bookTitle").value(hasItem(DEFAULT_BOOK_TITLE.toString())))
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())))
             .andExpect(jsonPath("$.[*].noOfCopies").value(hasItem(DEFAULT_NO_OF_COPIES.intValue())))
-            .andExpect(jsonPath("$.[*].bookNo").value(hasItem(DEFAULT_BOOK_NO.intValue())))
-            .andExpect(jsonPath("$.[*].additionalInfo").value(hasItem(DEFAULT_ADDITIONAL_INFO.toString())))
-            .andExpect(jsonPath("$.[*].uniqueNo").value(hasItem(DEFAULT_UNIQUE_NO.intValue())));
+            .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
     }
     
     @Test
@@ -294,9 +277,7 @@ public class LibraryResourceIntTest {
             .andExpect(jsonPath("$.bookTitle").value(DEFAULT_BOOK_TITLE.toString()))
             .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
             .andExpect(jsonPath("$.noOfCopies").value(DEFAULT_NO_OF_COPIES.intValue()))
-            .andExpect(jsonPath("$.bookNo").value(DEFAULT_BOOK_NO.intValue()))
-            .andExpect(jsonPath("$.additionalInfo").value(DEFAULT_ADDITIONAL_INFO.toString()))
-            .andExpect(jsonPath("$.uniqueNo").value(DEFAULT_UNIQUE_NO.intValue()));
+            .andExpect(jsonPath("$.bookId").value(DEFAULT_BOOK_ID.intValue()));
     }
 
     @Test
@@ -323,9 +304,7 @@ public class LibraryResourceIntTest {
             .bookTitle(UPDATED_BOOK_TITLE)
             .author(UPDATED_AUTHOR)
             .noOfCopies(UPDATED_NO_OF_COPIES)
-            .bookNo(UPDATED_BOOK_NO)
-            .additionalInfo(UPDATED_ADDITIONAL_INFO)
-            .uniqueNo(UPDATED_UNIQUE_NO);
+            .bookId(UPDATED_BOOK_ID);
         LibraryDTO libraryDTO = libraryMapper.toDto(updatedLibrary);
 
         restLibraryMockMvc.perform(put("/api/libraries")
@@ -340,9 +319,7 @@ public class LibraryResourceIntTest {
         assertThat(testLibrary.getBookTitle()).isEqualTo(UPDATED_BOOK_TITLE);
         assertThat(testLibrary.getAuthor()).isEqualTo(UPDATED_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(UPDATED_NO_OF_COPIES);
-        assertThat(testLibrary.getBookNo()).isEqualTo(UPDATED_BOOK_NO);
-        assertThat(testLibrary.getAdditionalInfo()).isEqualTo(UPDATED_ADDITIONAL_INFO);
-        assertThat(testLibrary.getUniqueNo()).isEqualTo(UPDATED_UNIQUE_NO);
+        assertThat(testLibrary.getBookId()).isEqualTo(UPDATED_BOOK_ID);
 
         // Validate the Library in Elasticsearch
         verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
@@ -378,7 +355,7 @@ public class LibraryResourceIntTest {
 
         int databaseSizeBeforeDelete = libraryRepository.findAll().size();
 
-        // Delete the library
+        // Get the library
         restLibraryMockMvc.perform(delete("/api/libraries/{id}", library.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -406,9 +383,7 @@ public class LibraryResourceIntTest {
             .andExpect(jsonPath("$.[*].bookTitle").value(hasItem(DEFAULT_BOOK_TITLE)))
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR)))
             .andExpect(jsonPath("$.[*].noOfCopies").value(hasItem(DEFAULT_NO_OF_COPIES.intValue())))
-            .andExpect(jsonPath("$.[*].bookNo").value(hasItem(DEFAULT_BOOK_NO.intValue())))
-            .andExpect(jsonPath("$.[*].additionalInfo").value(hasItem(DEFAULT_ADDITIONAL_INFO)))
-            .andExpect(jsonPath("$.[*].uniqueNo").value(hasItem(DEFAULT_UNIQUE_NO.intValue())));
+            .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
     }
 
     @Test

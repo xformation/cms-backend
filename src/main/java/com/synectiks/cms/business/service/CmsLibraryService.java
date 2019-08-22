@@ -17,8 +17,10 @@ public class CmsLibraryService {
     @Autowired
     private LibraryRepository libraryRepository;
 
-    public List<CmsLibrary> searchLib(String bookTitle, String author, Long batchId, Long subjectId) throws Exception {
+    public List<CmsLibrary> searchLib(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId) throws Exception {
         Library lib = new Library();
+        Department department = new Department();
+        department.setId(departmentId);
         Batch batch = new Batch();
         batch.setId(batchId);
 

@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -20,16 +21,13 @@ public class LibraryDTO implements Serializable {
     private Long noOfCopies;
 
     @NotNull
-    private Long bookNo;
-
-    private String additionalInfo;
-
-    private Long uniqueNo;
-
+    private Long bookId;
 
     private Long batchId;
 
     private Long subjectId;
+
+    private Long departmentId;
 
     public Long getId() {
         return id;
@@ -63,28 +61,12 @@ public class LibraryDTO implements Serializable {
         this.noOfCopies = noOfCopies;
     }
 
-    public Long getBookNo() {
-        return bookNo;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBookNo(Long bookNo) {
-        this.bookNo = bookNo;
-    }
-
-    public String getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
-    }
-
-    public Long getUniqueNo() {
-        return uniqueNo;
-    }
-
-    public void setUniqueNo(Long uniqueNo) {
-        this.uniqueNo = uniqueNo;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public Long getBatchId() {
@@ -101,6 +83,14 @@ public class LibraryDTO implements Serializable {
 
     public void setSubjectId(Long subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -131,11 +121,10 @@ public class LibraryDTO implements Serializable {
             ", bookTitle='" + getBookTitle() + "'" +
             ", author='" + getAuthor() + "'" +
             ", noOfCopies=" + getNoOfCopies() +
-            ", bookNo=" + getBookNo() +
-            ", additionalInfo='" + getAdditionalInfo() + "'" +
-            ", uniqueNo=" + getUniqueNo() +
+            ", bookId=" + getBookId() +
             ", batch=" + getBatchId() +
             ", subject=" + getSubjectId() +
+            ", department=" + getDepartmentId() +
             "}";
     }
 }

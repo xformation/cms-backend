@@ -27,6 +27,7 @@ describe('Library e2e test', () => {
     await signInPage.password.sendKeys('admin');
     await signInPage.loginButton.click();
     await signInPage.waitUntilHidden();
+
     await waitUntilDisplayed(navBarPage.entityMenu);
   });
 
@@ -51,14 +52,11 @@ describe('Library e2e test', () => {
     expect(await libraryUpdatePage.getAuthorInput()).to.match(/author/);
     await libraryUpdatePage.setNoOfCopiesInput('5');
     expect(await libraryUpdatePage.getNoOfCopiesInput()).to.eq('5');
-    await libraryUpdatePage.setBookNoInput('5');
-    expect(await libraryUpdatePage.getBookNoInput()).to.eq('5');
-    await libraryUpdatePage.setAdditionalInfoInput('additionalInfo');
-    expect(await libraryUpdatePage.getAdditionalInfoInput()).to.match(/additionalInfo/);
-    await libraryUpdatePage.setUniqueNoInput('5');
-    expect(await libraryUpdatePage.getUniqueNoInput()).to.eq('5');
+    await libraryUpdatePage.setBookIdInput('5');
+    expect(await libraryUpdatePage.getBookIdInput()).to.eq('5');
     await libraryUpdatePage.batchSelectLastOption();
     await libraryUpdatePage.subjectSelectLastOption();
+    await libraryUpdatePage.departmentSelectLastOption();
     await waitUntilDisplayed(libraryUpdatePage.getSaveButton());
     await libraryUpdatePage.save();
     await waitUntilHidden(libraryUpdatePage.getSaveButton());

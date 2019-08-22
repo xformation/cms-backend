@@ -12,10 +12,12 @@ import { IBatch } from 'app/shared/model/batch.model';
 import { getEntities as getBatches } from 'app/entities/batch/batch.reducer';
 import { ISubject } from 'app/shared/model/subject.model';
 import { getEntities as getSubjects } from 'app/entities/subject/subject.reducer';
+import { IDepartment } from 'app/shared/model/department.model';
+import { getEntities as getDepartments } from 'app/entities/department/department.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './library.reducer';
 import { ILibrary } from 'app/shared/model/library.model';
 // tslint:disable-next-line:no-unused-variable
-import { convertDateTimeFromServer, convertDateTimeToServer } from 'app/shared/util/date-utils';
+import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface ILibraryUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -24,6 +26,7 @@ export interface ILibraryUpdateState {
   isNew: boolean;
   batchId: string;
   subjectId: string;
+  departmentId: string;
 }
 
 export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibraryUpdateState> {
@@ -32,6 +35,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
     this.state = {
       batchId: '0',
       subjectId: '0',
+      departmentId: '0',
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -51,6 +55,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
 
     this.props.getBatches();
     this.props.getSubjects();
+    this.props.getDepartments();
   }
 
   saveEntity = (event, errors, values) => {
@@ -74,7 +79,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
   };
 
   render() {
-    const { libraryEntity, batches, subjects, loading, updating } = this.props;
+    const { libraryEntity, batches, subjects, departments, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -138,31 +143,19 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="bookNoLabel" for="bookNo">
-                    Book No
+                  <Label id="bookIdLabel" for="bookId">
+                    Book Id
                   </Label>
                   <AvField
-                    id="library-bookNo"
+                    id="library-bookId"
                     type="string"
                     className="form-control"
-                    name="bookNo"
+                    name="bookId"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' },
                       number: { value: true, errorMessage: 'This field should be a number.' }
                     }}
                   />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="additionalInfoLabel" for="additionalInfo">
-                    Additional Info
-                  </Label>
-                  <AvField id="library-additionalInfo" type="text" name="additionalInfo" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="uniqueNoLabel" for="uniqueNo">
-                    Unique No
-                  </Label>
-                  <AvField id="library-uniqueNo" type="string" className="form-control" name="uniqueNo" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="batch.id">Batch</Label>
@@ -190,6 +183,19 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="department.id">Department</Label>
+                  <AvInput id="library-department" type="select" className="form-control" name="departmentId">
+                    <option value="" key="0" />
+                    {departments
+                      ? departments.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/library" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -210,6 +216,7 @@ export class LibraryUpdate extends React.Component<ILibraryUpdateProps, ILibrary
 const mapStateToProps = (storeState: IRootState) => ({
   batches: storeState.batch.entities,
   subjects: storeState.subject.entities,
+  departments: storeState.department.entities,
   libraryEntity: storeState.library.entity,
   loading: storeState.library.loading,
   updating: storeState.library.updating,
@@ -219,6 +226,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getBatches,
   getSubjects,
+  getDepartments,
   getEntity,
   updateEntity,
   createEntity,

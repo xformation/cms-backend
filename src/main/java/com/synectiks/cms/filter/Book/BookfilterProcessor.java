@@ -12,8 +12,8 @@ public class BookfilterProcessor  {
     @Autowired
 
     private  BookService bookService;
-    public List<Library> searchBook(String bookTitle, String author,  Long batchId, Long subjectId) {
-        return bookService.searchBook(bookTitle, author, batchId, subjectId);
+    public List<Library> searchBook(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId) {
+        return bookService.searchBook(bookTitle, author, departmentId, batchId, subjectId);
     }
     public List<Library> searchBook(BookListFilterInput filter){
            return bookService.searchBook(filter);
