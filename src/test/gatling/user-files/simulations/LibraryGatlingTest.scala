@@ -75,7 +75,9 @@ class LibraryGatlingTest extends Simulation {
                 , "bookTitle":"SAMPLE_TEXT"
                 , "author":"SAMPLE_TEXT"
                 , "noOfCopies":null
-                , "bookId":null
+                , "bookNo":null
+                , "additionalInfo":"SAMPLE_TEXT"
+                , "uniqueNo":null
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_library_url"))).exitHereIfFailed

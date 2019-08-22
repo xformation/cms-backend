@@ -41,15 +41,21 @@ export class LibraryDetail extends React.Component<ILibraryDetailProps> {
             </dt>
             <dd>{libraryEntity.noOfCopies}</dd>
             <dt>
-              <span id="bookId">Book Id</span>
+              <span id="bookNo">Book No</span>
             </dt>
-            <dd>{libraryEntity.bookId}</dd>
+            <dd>{libraryEntity.bookNo}</dd>
+            <dt>
+              <span id="additionalInfo">Additional Info</span>
+            </dt>
+            <dd>{libraryEntity.additionalInfo}</dd>
+            <dt>
+              <span id="uniqueNo">Unique No</span>
+            </dt>
+            <dd>{libraryEntity.uniqueNo}</dd>
             <dt>Batch</dt>
             <dd>{libraryEntity.batchId ? libraryEntity.batchId : ''}</dd>
             <dt>Subject</dt>
             <dd>{libraryEntity.subjectId ? libraryEntity.subjectId : ''}</dd>
-            <dt>Department</dt>
-            <dd>{libraryEntity.departmentId ? libraryEntity.departmentId : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/library" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BookListFilterInput {
     private String bookTitle;
     private String author;
-    private String departmentId;
     private String batchId;
     private String subjectId;
 
@@ -24,14 +23,6 @@ public class BookListFilterInput {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-    @JsonProperty ("departmentId")
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
     }
     @JsonProperty ("batchId")
     public String getBatchId() {

@@ -10,7 +10,6 @@ public class CmsLibrary {
     private Date dateOfIssue;
     private DueDate dueDate;
     private Student student;
-    private Department department;
     private String noOfCopies;
     private String copiesAvailable;
 
@@ -52,14 +51,6 @@ public class CmsLibrary {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
 
     public String getNoOfCopies() {

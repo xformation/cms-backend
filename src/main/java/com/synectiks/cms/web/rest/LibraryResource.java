@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.LibraryService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class LibraryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/libraries")
-    @Timed
     public ResponseEntity<LibraryDTO> createLibrary(@Valid @RequestBody LibraryDTO libraryDTO) throws URISyntaxException {
         log.debug("REST request to save Library : {}", libraryDTO);
         if (libraryDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class LibraryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/libraries")
-    @Timed
     public ResponseEntity<LibraryDTO> updateLibrary(@Valid @RequestBody LibraryDTO libraryDTO) throws URISyntaxException {
         log.debug("REST request to update Library : {}", libraryDTO);
         if (libraryDTO.getId() == null) {
@@ -86,7 +82,6 @@ public class LibraryResource {
      * @return the ResponseEntity with status 200 (OK) and the list of libraries in body
      */
     @GetMapping("/libraries")
-    @Timed
     public List<LibraryDTO> getAllLibraries() {
         log.debug("REST request to get all Libraries");
         return libraryService.findAll();
@@ -99,7 +94,6 @@ public class LibraryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the libraryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/libraries/{id}")
-    @Timed
     public ResponseEntity<LibraryDTO> getLibrary(@PathVariable Long id) {
         log.debug("REST request to get Library : {}", id);
         Optional<LibraryDTO> libraryDTO = libraryService.findOne(id);
@@ -113,7 +107,6 @@ public class LibraryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/libraries/{id}")
-    @Timed
     public ResponseEntity<Void> deleteLibrary(@PathVariable Long id) {
         log.debug("REST request to delete Library : {}", id);
         libraryService.delete(id);
@@ -128,7 +121,6 @@ public class LibraryResource {
      * @return the result of the search
      */
     @GetMapping("/_search/libraries")
-    @Timed
     public List<LibraryDTO> searchLibraries(@RequestParam String query) {
         log.debug("REST request to search Libraries for query {}", query);
         return libraryService.search(query);

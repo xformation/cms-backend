@@ -63,11 +63,6 @@ export default (state: LibraryState = initialState, action): LibraryState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.SEARCH_LIBRARIES):
-      return {
-        ...state,
-        loading: false,
-        entities: action.payload.data
-      };
     case SUCCESS(ACTION_TYPES.FETCH_LIBRARY_LIST):
       return {
         ...state,
@@ -109,9 +104,9 @@ const apiSearchUrl = 'api/_search/libraries';
 
 // Actions
 
-export const getSearchEntities: ICrudSearchAction<ILibrary> = query => ({
+export const getSearchEntities: ICrudSearchAction<ILibrary> = (query, page, size, sort) => ({
   type: ACTION_TYPES.SEARCH_LIBRARIES,
-  payload: axios.get<ILibrary>(`${apiSearchUrl}?query=` + query)
+  payload: axios.get<ILibrary>(`${apiSearchUrl}?query=${query}`)
 });
 
 export const getEntities: ICrudGetAllAction<ILibrary> = (page, size, sort) => ({

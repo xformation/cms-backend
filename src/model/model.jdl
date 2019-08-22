@@ -15,7 +15,7 @@ backgroundImageFileName String
 entity StudentExamReport{
 	marksObtained Integer required
 	comments String required
-	gOp Integer 
+	gOp Integer
 }
 
 entity Branch{
@@ -41,7 +41,9 @@ entity Library{
     bookTitle String required
     author String required
     noOfCopies Long required
-    bookId Long required
+    bookNo Long required
+    additionalInfo String
+    uniqueNo Long
 }
 
 entity Batch{
@@ -101,7 +103,7 @@ enum Caste{
 }
 
 enum Bloodgroup{
-  APOSITIVE,ANEGATIVE, ABPOSITIVE,ABNEGATIVE,OPOSITIVE,ONEGATIVE,BPOSITIVE,BNEGATIVE  
+  APOSITIVE,ANEGATIVE, ABPOSITIVE,ABNEGATIVE,OPOSITIVE,ONEGATIVE,BPOSITIVE,BNEGATIVE
 }
 
 enum RelationWithStudentEnum{
@@ -629,13 +631,13 @@ panNo String
 passportNo String
 primaryContactNo String
 secondaryContactNo String
-employeeFatherName String 
-employeeMotherName String 
-primaryAddress String 
-secondaryAddress String 
-employeeAddress String 
-personalMailId String 
-officialMailId String 
+employeeFatherName String
+employeeMotherName String
+primaryAddress String
+secondaryAddress String
+employeeAddress String
+personalMailId String
+officialMailId String
 disability Disability
 drivingLicenceNo String
 drivingLicenceValidity LocalDate
@@ -698,7 +700,6 @@ BankAccounts{branch} to Branch,
 BankAccounts{college} to College,
 Library{batch} to Batch,
 Library{subject} to Subject,
-Library{department} to Department,
 Book{student} to Student,
 Book{library} to Library
 LegalEntity{branch} to Branch,

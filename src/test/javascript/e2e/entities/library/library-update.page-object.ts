@@ -7,10 +7,11 @@ export default class LibraryUpdatePage {
   bookTitleInput: ElementFinder = element(by.css('input#library-bookTitle'));
   authorInput: ElementFinder = element(by.css('input#library-author'));
   noOfCopiesInput: ElementFinder = element(by.css('input#library-noOfCopies'));
-  bookIdInput: ElementFinder = element(by.css('input#library-bookId'));
+  bookNoInput: ElementFinder = element(by.css('input#library-bookNo'));
+  additionalInfoInput: ElementFinder = element(by.css('input#library-additionalInfo'));
+  uniqueNoInput: ElementFinder = element(by.css('input#library-uniqueNo'));
   batchSelect: ElementFinder = element(by.css('select#library-batch'));
   subjectSelect: ElementFinder = element(by.css('select#library-subject'));
-  departmentSelect: ElementFinder = element(by.css('select#library-department'));
 
   getPageTitle() {
     return this.pageTitle;
@@ -40,12 +41,28 @@ export default class LibraryUpdatePage {
     return this.noOfCopiesInput.getAttribute('value');
   }
 
-  async setBookIdInput(bookId) {
-    await this.bookIdInput.sendKeys(bookId);
+  async setBookNoInput(bookNo) {
+    await this.bookNoInput.sendKeys(bookNo);
   }
 
-  async getBookIdInput() {
-    return this.bookIdInput.getAttribute('value');
+  async getBookNoInput() {
+    return this.bookNoInput.getAttribute('value');
+  }
+
+  async setAdditionalInfoInput(additionalInfo) {
+    await this.additionalInfoInput.sendKeys(additionalInfo);
+  }
+
+  async getAdditionalInfoInput() {
+    return this.additionalInfoInput.getAttribute('value');
+  }
+
+  async setUniqueNoInput(uniqueNo) {
+    await this.uniqueNoInput.sendKeys(uniqueNo);
+  }
+
+  async getUniqueNoInput() {
+    return this.uniqueNoInput.getAttribute('value');
   }
 
   async batchSelectLastOption() {
@@ -84,25 +101,6 @@ export default class LibraryUpdatePage {
 
   async getSubjectSelectedOption() {
     return this.subjectSelect.element(by.css('option:checked')).getText();
-  }
-
-  async departmentSelectLastOption() {
-    await this.departmentSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async departmentSelectOption(option) {
-    await this.departmentSelect.sendKeys(option);
-  }
-
-  getDepartmentSelect() {
-    return this.departmentSelect;
-  }
-
-  async getDepartmentSelectedOption() {
-    return this.departmentSelect.element(by.css('option:checked')).getText();
   }
 
   async save() {

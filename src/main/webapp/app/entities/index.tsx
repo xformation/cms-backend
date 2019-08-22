@@ -59,6 +59,7 @@ import StudentFacilityLink from './student-facility-link';
 import Contract from './contract';
 import Insurance from './insurance';
 import Modules from './modules';
+import Book from './book';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -120,6 +121,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/contract`} component={Contract} />
       <ErrorBoundaryRoute path={`${match.url}/insurance`} component={Insurance} />
       <ErrorBoundaryRoute path={`${match.url}/modules`} component={Modules} />
+      <ErrorBoundaryRoute path={`${match.url}/book`} component={Book} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

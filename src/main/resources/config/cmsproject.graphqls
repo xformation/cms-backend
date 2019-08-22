@@ -290,7 +290,7 @@ type Query {
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
     searchVehicle(transportRouteId:Long, vehicleNumber:Int): [CmsVehicleVo!]!
-    searchBook (bookTitle:String,author:String,departmentId:Long,batchId:Long,subjectId:Long):[Library!]!
+    searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
@@ -540,7 +540,6 @@ type CmsLibrary {
     dateOfIssue:Date
     dueDate:DueDate
     student:Student
-    department:Department
     noOfCopies:String
     copiesAvailable:String
 }
@@ -774,11 +773,13 @@ type  Library{
     id:Long!
     bookTitle:String!
     author:String!
-    bookId: Long!
+    bookNo: Long!
     noOfCopies :Long!
+	additionalInfo:String!
+	uniqueNo:Long!
     batch: Batch!
     subject:Subject!
-    department:Department!
+   
 }
  type Book{
           id:Long!
@@ -1642,7 +1643,7 @@ type Mutation {
     addLibrary(input:AddLibraryInput!):AddLibraryPayload!
     updateLibrary(input:UpdateLibraryInput!):UpdateLibraryPayload!
     removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
-    searchLib(bookTitle:String,author:String,departmentId:Long, batchId:Long, subjectId:Long):[CmsLibrary!]!
+    searchLib(bookTitle:String,author:String, batchId:Long, subjectId:Long):[CmsLibrary!]!
 
     addBook(input:AddBookInput!):AddBookPayload!
      updateBook(input:UpdateBookInput!):UpdateBookPayload!
@@ -3543,11 +3544,12 @@ type RemoveInvoicePayload{
 input AddLibraryInput{
     bookTitle:String!
     author:String!
-    bookId:Long!
+    bookNo:Long!
     noOfCopies:Long!
+	additionalInfo:String!
+	uniqueNo:Long!
     batchId:Long!
     subjectId:Long!
-    departmentId:Long!
 }
 type AddLibraryPayload {
     library:Library!
@@ -3556,11 +3558,12 @@ input UpdateLibraryInput {
     id:Long!
     bookTitle:String!
     author:String!
-    bookId:Long!
+    bookNo:Long!
     noOfCopies:Long!
+	additionalInfo:String!
+	uniqueNo:Long!
     batchId:Long!
     subjectId:Long!
-    departmentId:Long!
 }
 type UpdateLibraryPayload{
     library:Library!
