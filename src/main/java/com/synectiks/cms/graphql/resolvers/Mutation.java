@@ -3595,15 +3595,15 @@ public class Mutation implements GraphQLMutationResolver {
     public AddLibraryPayload addLibrary(AddLibraryInput libraryInput){
         Batch batch = batchRepository.findById(libraryInput.getBatchId()).get();
         Subject subject = subjectRepository.findById(libraryInput.getSubjectId()).get();
-        Department department =departmentRepository.findById(libraryInput.getDepartmentId()).get();
         final Library book = new Library ();
         book.setBookTitle(libraryInput.getBookTitle());
         book.setAuthor(libraryInput.getAuthor());
-        book.setBookId(libraryInput.getBookId());
+        book.setBookNo(libraryInput.getBookNo());
         book.setNoOfCopies(libraryInput.getNoOfCopies());
+        book.setAdditionalInfo(libraryInput.getAdditionalInfo());
+        book.setUniqueNo(libraryInput.getUniqueNo());
         book.setBatch(batch);
         book.setSubject(subject);
-        book.setDepartment(department);
         libraryRepository.save(book);
         return new AddLibraryPayload(book);
     }
@@ -3615,11 +3615,17 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateLibraryInput.getAuthor() != null){
             book.setAuthor(updateLibraryInput.getAuthor());
         }
-        if(updateLibraryInput.getBookId()!=null){
-            book.setBookId(updateLibraryInput.getBookId());
+        if(updateLibraryInput.getBookNo()!=null){
+            book.setBookNo(updateLibraryInput.getBookNo());
         }
         if (updateLibraryInput.getNoOfCopies() != null) {
             book.setNoOfCopies(updateLibraryInput.getNoOfCopies());
+        }
+        if (updateLibraryInput.getAdditionalInfo() != null) {
+            book.setAdditionalInfo(updateLibraryInput.getAdditionalInfo());
+        }
+        if (updateLibraryInput.getUniqueNo() != null) {
+            book.setUniqueNo(updateLibraryInput.getUniqueNo());
         }
 
         if(updateLibraryInput.getBatchId()!=null){
@@ -3628,9 +3634,7 @@ public class Mutation implements GraphQLMutationResolver {
         }
         if(updateLibraryInput.getSubjectId()!=null){
             Subject subject =subjectRepository.findById(updateLibraryInput.getSubjectId()).get();
-        }
-        if(updateLibraryInput.getDepartmentId()!= null){
-            Department department =departmentRepository.findById(updateLibraryInput.getDepartmentId()).get();
+            book.setSubject(subject);
         }
 
         libraryRepository.save(book);
@@ -3898,8 +3902,8 @@ public class Mutation implements GraphQLMutationResolver {
     public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception{
         return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId, collegeId, branchId, academicYearId));
     }
-    public List<CmsLibrary>searchLib(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId)throws Exception{
-        return Lists.newArrayList(libraryFilterProcessor.searchLib( bookTitle,  author,  departmentId,  batchId, subjectId));
+    public List<CmsLibrary>searchLib(String bookTitle, String author,Long batchId, Long subjectId)throws Exception{
+        return Lists.newArrayList(libraryFilterProcessor.searchLib( bookTitle,  author, batchId, subjectId));
     }
     public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
         return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);

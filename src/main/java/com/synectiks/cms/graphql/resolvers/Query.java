@@ -637,8 +637,8 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(transportRouteId, vehicleNumber));
     }
 
-    public List<Library>searchBook(String bookTitle,String author,Long departmentId,Long batchId,Long subjectId){
-        return (List<Library>) Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,departmentId,batchId,subjectId));
+    public List<Library>searchBook(String bookTitle,String author,Long batchId,Long subjectId){
+        return (List<Library>) Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,batchId,subjectId));
 
     }
 

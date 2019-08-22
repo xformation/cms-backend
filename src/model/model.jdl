@@ -41,7 +41,9 @@ entity Library{
     bookTitle String required
     author String required
     noOfCopies Long required
-    bookId Long required
+    bookNo Long required
+    additionalInfo String
+    uniqueNo Long
 }
 
 entity Batch{
@@ -698,7 +700,6 @@ BankAccounts{branch} to Branch,
 BankAccounts{college} to College,
 Library{batch} to Batch,
 Library{subject} to Subject,
-Library{department} to Department,
 Book{student} to Student,
 Book{library} to Library
 LegalEntity{branch} to Branch,

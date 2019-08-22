@@ -18,7 +18,7 @@ public class BookService {
     @Autowired
     CommonService commonService;
 
-    public List<Library> searchBook(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId) {
+    public List<Library> searchBook(String bookTitle, String author, Long batchId, Long subjectId) {
         Library book = new Library();
 
         if (bookTitle != null) {
@@ -28,11 +28,7 @@ public class BookService {
         if (author != null) {
             book.setAuthor(author);
         }
-        if (departmentId != null) {
-            Department department = new Department();
-            department.setId(departmentId);
-            book.setDepartment(department);
-        }
+
         if (batchId != null) {
             Batch batch = new Batch();
             batch.setId(batchId);
@@ -50,12 +46,6 @@ public class BookService {
 
     public List<Library> searchBook(BookListFilterInput filter) {
         Library book = new Library();
-        if (!CommonUtil.isNullOrEmpty(filter.getDepartmentId())) {
-            Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
-            if (department != null) {
-                book.setDepartment(department);
-            }
-        }
         if (!CommonUtil.isNullOrEmpty(filter.getBatchId())) {
             Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
             if (batch != null) {

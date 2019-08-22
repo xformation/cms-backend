@@ -7,7 +7,6 @@ import java.util.Objects;
 public class AddLibraryInput extends AbstractLibraryInput {
     private Long batchId;
     private Long subjectId;
-    private Long departmentId;
 
     public Long getBatchId() {
         return batchId;
@@ -25,13 +24,6 @@ public class AddLibraryInput extends AbstractLibraryInput {
         this.subjectId = subjectId;
     }
 
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -39,8 +31,8 @@ public class AddLibraryInput extends AbstractLibraryInput {
         if (!(o instanceof AddLibraryInput)) return false;
         AddLibraryInput that = (AddLibraryInput) o;
         return Objects.equals(getBatchId(), that.getBatchId()) &&
-            Objects.equals(getSubjectId(), that.getSubjectId()) &&
-            Objects.equals(getDepartmentId(), that.getDepartmentId());
+            Objects.equals(getSubjectId(), that.getSubjectId());
+
     }
 
     @Override
@@ -54,7 +46,6 @@ public class AddLibraryInput extends AbstractLibraryInput {
         return "AddLibraryInput{" +
             "batchId=" + batchId +
             ", subjectId=" + subjectId +
-            ", departmentId=" + departmentId +
             '}';
     }
 }

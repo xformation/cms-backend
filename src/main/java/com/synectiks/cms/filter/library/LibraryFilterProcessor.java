@@ -17,7 +17,7 @@ public class LibraryFilterProcessor {
 
     private CmsLibraryService cmsLibraryService;
 
-    public List<CmsLibrary> searchLib(String bookTitle, String author, Long departmentId, Long batchId, Long subjectId) throws Exception {
-        return cmsLibraryService.searchLib( bookTitle,  author,  departmentId,  batchId,  subjectId);
+    public List<CmsLibrary> searchLib(String bookTitle, String author,  Long batchId, Long subjectId) throws Exception {
+        return cmsLibraryService.searchLib( bookTitle,  author,  batchId,  subjectId);
     }
 }
