@@ -113,7 +113,7 @@ public class LibraryResourceIntTest {
             .bookTitle(DEFAULT_BOOK_TITLE)
             .author(DEFAULT_AUTHOR)
             .noOfCopies(DEFAULT_NO_OF_COPIES)
-            .bookId(DEFAULT_BOOK_ID);
+            .bookNo(DEFAULT_BOOK_ID);
         return library;
     }
 
@@ -141,7 +141,7 @@ public class LibraryResourceIntTest {
         assertThat(testLibrary.getBookTitle()).isEqualTo(DEFAULT_BOOK_TITLE);
         assertThat(testLibrary.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(DEFAULT_NO_OF_COPIES);
-        assertThat(testLibrary.getBookId()).isEqualTo(DEFAULT_BOOK_ID);
+        assertThat(testLibrary.getBookNo()).isEqualTo(DEFAULT_BOOK_ID);
 
         // Validate the Library in Elasticsearch
         verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
@@ -232,7 +232,7 @@ public class LibraryResourceIntTest {
     public void checkBookIdIsRequired() throws Exception {
         int databaseSizeBeforeTest = libraryRepository.findAll().size();
         // set the field null
-        library.setBookId(null);
+        library.setBookNo(null);
 
         // Create the Library, which fails.
         LibraryDTO libraryDTO = libraryMapper.toDto(library);
@@ -304,7 +304,7 @@ public class LibraryResourceIntTest {
             .bookTitle(UPDATED_BOOK_TITLE)
             .author(UPDATED_AUTHOR)
             .noOfCopies(UPDATED_NO_OF_COPIES)
-            .bookId(UPDATED_BOOK_ID);
+            .bookNo(UPDATED_BOOK_ID);
         LibraryDTO libraryDTO = libraryMapper.toDto(updatedLibrary);
 
         restLibraryMockMvc.perform(put("/api/libraries")
@@ -319,7 +319,7 @@ public class LibraryResourceIntTest {
         assertThat(testLibrary.getBookTitle()).isEqualTo(UPDATED_BOOK_TITLE);
         assertThat(testLibrary.getAuthor()).isEqualTo(UPDATED_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(UPDATED_NO_OF_COPIES);
-        assertThat(testLibrary.getBookId()).isEqualTo(UPDATED_BOOK_ID);
+        assertThat(testLibrary.getBookNo()).isEqualTo(UPDATED_BOOK_ID);
 
         // Validate the Library in Elasticsearch
         verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
