@@ -1,8 +1,11 @@
 package com.synectiks.cms.web.rest;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,10 @@ import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.TeacherRepository;
 
 /**
  * REST controller for managing user login.
@@ -33,6 +40,12 @@ public class LoginRestController {
 	
 	@Autowired
 	private CommonService commonService;
+	
+	@Autowired
+	private StudentRepository studentRepository;
+	
+	@Autowired
+	private TeacherRepository teacherRepository;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cmslogin")
 	public ResponseEntity<Object> cmsLogin(@RequestParam  String username, @RequestParam String password) {
@@ -60,6 +73,28 @@ public class LoginRestController {
 			CmsConstants.USERS_CACHE.remove(username);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/cmsstudentuser")
+	public ResponseEntity<Object> cmsLoggedInUser(@RequestParam  String userName, @RequestParam  String role) {
+		Object obj = null;
+		try {
+			if("STUDENT".equalsIgnoreCase(role)) {
+				Student st = new Student();
+				st.setStudentEmailAddress(userName);
+				Optional<Student> ost = this.studentRepository.findOne(Example.of(st));
+				obj = ost.isPresent() ? ost.get() : st;
+			}else if("TEACHER".equalsIgnoreCase(role)) {
+				Teacher th = new Teacher();
+				th.setTeacherEmailAddress(userName);
+				Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(th));
+				obj = oth.isPresent() ? oth.get() : th;
+			}
+		}catch(Exception e) {
+			logger.error("Loging authentication failed :", e);
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(obj);
 	}
 	
 }
