@@ -659,6 +659,65 @@ entity Modules {
 	status Status
 }
 
+entity ExceptionRecord {
+	exceptionSource String
+	exceptionType String
+	exceptionRecord String
+	exceptionDate LocalDate
+	user String
+}
+
+entity PaymentRequestResponse {
+	requestMerchantID String
+	requestUniqueTransactionNo String
+	requestTxnAmount String
+	requestCurrencyType String
+	requestTypeField1 String
+	requestSecurityID String
+	requestTypeField2 String
+	requestTxtadditional1 String
+	requestTxtadditional2 String
+	requestTxtadditional3 String
+	requestTxtadditional4 String
+	requestTxtadditional5 String
+	requestTxtadditional6 String
+	requestTxtadditional7 String
+	requestRu String
+	requestCheckSum String
+	requestMsg String
+	
+	responseMerchantID String
+	responseUniqueTransactionNo String
+	responseTxnReferenceNo String
+	responseBankReferenceNo String
+	responseTxnAmount String
+	responseBankID String
+	responseBankMerchantID String
+	responseTxnType String
+	responseCurrencyName String
+	responseItemCode String
+	responseSecurityType String
+	responseSecurityID String
+	responseSecurityPassword String
+	responseTxnDate String
+	responseAuthStatus String
+	responseSettlementType String
+	responseAdditionalInfo1 String
+	responseAdditionalInfo2 String
+	responseAdditionalInfo3 String
+	responseAdditionalInfo4 String
+	responseAdditionalInfo5 String
+	responseAdditionalInfo6 String
+	responseAdditionalInfo7 String
+	responseErrorStatus String
+	responseErrorDescription String
+	responseCheckSum String
+	responseMsg String
+	user String
+	requestTxnDate LocalDate
+	requestTxnTime String
+}
+
 relationship ManyToOne {
 Employee{branch required} to Branch,
 Student{department required} to Department ,
@@ -780,7 +839,8 @@ Documents{employee} to Employee,
 Documents{contract} to Contract,
 Vehicle{transportRoute} to TransportRoute,
 AdmissionApplication{academicyear} to AcademicYear
-
+PaymentRequestResponse{branch} to Branch
+PaymentRequestResponse{academicYear} to AcademicYear
 }
 
 relationship OneToOne{

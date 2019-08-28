@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity PaymentRequestResponse.
+    -->
+    <changeSet id="20190819184553-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="payment_request_response"
+                                 constraintName="fk_payment_request_response_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
+        <addForeignKeyConstraint baseColumnNames="academic_year_id"
+                                 baseTableName="payment_request_response"
+                                 constraintName="fk_payment_request_response_academic_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="academic_year"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -93,6 +93,8 @@ public class CacheConfiguration {
             cm.createCache(com.synectiks.cms.domain.Employee.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.Modules.class.getName(), jcacheConfiguration);
             cm.createCache(com.synectiks.cms.domain.Book.class.getName(), jcacheConfiguration);
+			cm.createCache(com.synectiks.cms.domain.ExceptionRecord.class.getName(), jcacheConfiguration);
+            cm.createCache(com.synectiks.cms.domain.PaymentRequestResponse.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

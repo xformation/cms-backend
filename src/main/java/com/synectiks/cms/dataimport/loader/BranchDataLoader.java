@@ -13,6 +13,7 @@ import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.City;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.State;
+import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;
 
 
@@ -29,32 +30,92 @@ public class BranchDataLoader extends DataLoader {
 	}
 	
 	@Override
-	public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException {
+	public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, MandatoryFieldMissingException {
+		StringBuilder sb = new StringBuilder();	
 		Branch obj = CommonUtil.createCopyProperties(cls.newInstance(), Branch.class);
-		obj.setBranchName(row.getCellAsString(0).orElse(null));
-		obj.setAddress1(row.getCellAsString(1).orElse(null));
-		obj.setAddress2(row.getCellAsString(2).orElse(null));
-		obj.setBranchHead(row.getCellAsString(3).orElse(null));
+		
+		String branchName = row.getCellAsString(0).orElse(null);
+		if(CommonUtil.isNullOrEmpty(branchName)) {
+			sb.append("branch_name, ");
+			logger.warn("Mandatory field missing. Field name - branch_name");
+		}else {
+			obj.setBranchName(branchName);
+		}
+		
+		String address1 = row.getCellAsString(1).orElse(null);
+		if(CommonUtil.isNullOrEmpty(address1)) {
+			sb.append("address_1, ");
+			logger.warn("Mandatory field missing. Field name - address_1");
+		}else {
+			obj.setAddress1(address1);
+		}
+		
+		String address2 = row.getCellAsString(2).orElse(null);
+		if(CommonUtil.isNullOrEmpty(address2)) {
+			sb.append("address_2, ");
+			logger.warn("Mandatory field missing. Field name - address_2");
+		}else {
+			obj.setAddress2(address2);
+		}
+		
+		String branchHead = row.getCellAsString(3).orElse(null);
+		if(CommonUtil.isNullOrEmpty(branchHead)) {
+			sb.append("branch_head, ");
+			logger.warn("Mandatory field missing. Field name - branch_head");
+		}else {
+			obj.setBranchHead(branchHead);
+		}
+		
 		String collegeName = row.getCellAsString(4).orElse(null);
-		if(!CommonUtil.isNullOrEmpty(collegeName)) {
+		if(CommonUtil.isNullOrEmpty(collegeName)) {
+			sb.append("college_id, ");
+			logger.warn("Mandatory field missing. Field name - college_id");
+		}else {
 			College college = new College();
 			college.setShortName(collegeName);
 			Optional<College> c = this.allRepositories.findRepository("college").findOne(Example.of(college));
-			obj.setCollege(c.isPresent() ? c.get() : null);
+			if(c.isPresent()) {
+				obj.setCollege(c.get());
+			}else {
+				sb.append("college_id, ");
+				logger.warn("College not found. Given college name : "+collegeName);
+			}
 		}
-		String cityName = row.getCellAsString(5).orElse(null);
-		if(!CommonUtil.isNullOrEmpty(cityName)) {
-			City city = new City();
-			city.setCityName(cityName);
-			Optional<City> c = this.allRepositories.findRepository("city").findOne(Example.of(city));
-			obj.setCity(c.isPresent() ? c.get() : null);
-		}
+		
 		String stateName = row.getCellAsString(6).orElse(null);
-		if(!CommonUtil.isNullOrEmpty(stateName)) {
+		if(CommonUtil.isNullOrEmpty(stateName)) {
+			sb.append("state_id, ");
+			logger.warn("Mandatory field missing. Field name - state_id");
+		}else {
 			State state = new State();
 			state.setStateName(stateName);
 			Optional<State> c = this.allRepositories.findRepository("state").findOne(Example.of(state));
-			obj.setState(c.isPresent() ? c.get() : null);
+			if(c.isPresent()) {
+				obj.setState(c.get());
+			}else {
+				sb.append("state_id, ");
+				logger.warn("State not found. Given state name : "+stateName);
+			}
+		}
+		
+		String cityName = row.getCellAsString(5).orElse(null);
+		if(CommonUtil.isNullOrEmpty(cityName)) {
+			sb.append("city_id, ");
+			logger.warn("Mandatory field missing. Field name - city_id");
+		}else {
+			City city = new City();
+			city.setCityName(cityName);
+			Optional<City> c = this.allRepositories.findRepository("city").findOne(Example.of(city));
+			if(c.isPresent()) {
+				obj.setCity(c.get());
+			}else {
+				sb.append("city_id, ");
+				logger.warn("City not found. Given city name : "+cityName);
+			}
+		}
+		if(sb.length() > 0) {
+			String msg = "Field name - ";
+			throw new MandatoryFieldMissingException(msg+sb.substring(0, sb.lastIndexOf(",")));
 		}
 		return (T)obj;
 	}

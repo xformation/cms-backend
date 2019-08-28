@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
 import com.synectiks.cms.domain.College;
+import com.synectiks.cms.exceptions.AdditionalCollegeFoundException;
+import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;
 
 
@@ -23,26 +25,34 @@ public class CollegeDataLoader extends DataLoader {
 	}
 	
 	@Override
-	public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException {
+	public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, AdditionalCollegeFoundException, MandatoryFieldMissingException {
 //		int count = this.allRepositories.findRepository(cls).findAll().size();
 		int count = this.allRepositories.findRepository(this.sheetName).findAll().size();
+		String exceptionMsg = "College already exists. This application only supports one college";
+		if(count > 0 || this.isCollegeExist) {
+			logger.warn(exceptionMsg);
+			throw new AdditionalCollegeFoundException(exceptionMsg);
+		}
+		StringBuilder sb = new StringBuilder();	
 		
-		if(count > 0) {
-			logger.warn("College already exists. This application only supports one college");
-			return null;
-		}
-		if(this.isCollegeExist) {
-			logger.warn("One first entry will be considard. Other entries will be ingnored.");
-			return null;
-		}
-			
 		College obj = CommonUtil.createCopyProperties(cls.newInstance(), College.class);
-		obj.setShortName(row.getCellAsString(0).orElse(null));
+		
+		String shortName = row.getCellAsString(0).orElse(null);
+		if(CommonUtil.isNullOrEmpty(shortName)) {
+			sb.append("short_name, ");
+			logger.warn("Mandatory field missing. Field name - short_name");
+		}else {
+			obj.setShortName(shortName);
+		}
 		obj.setLogoPath(row.getCellAsString(1).orElse(null));
 		obj.setBackgroundImagePath(row.getCellAsString(2).orElse(null));
 		obj.setInstructionInformation(row.getCellAsString(3).orElse(null));
 		obj.setLogoFileName(row.getCellAsString(4).orElse(null));
 		obj.setBackgroundImageFileName(row.getCellAsString(5).orElse(null));
+		if(sb.length() > 0) {
+			String msg = "Field name - ";
+			throw new MandatoryFieldMissingException(msg+sb.substring(0, sb.lastIndexOf(",")));
+		}
 		this.isCollegeExist = true;
 		return (T)obj;
 		

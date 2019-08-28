@@ -29,6 +29,7 @@ import com.synectiks.cms.domain.Currency;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Documents;
 import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.domain.ExceptionRecord;
 import com.synectiks.cms.domain.Facility;
 import com.synectiks.cms.domain.FeeCategory;
 import com.synectiks.cms.domain.FeeDetails;
@@ -66,6 +67,7 @@ import com.synectiks.cms.repository.CurrencyRepository;
 import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.repository.DocumentsRepository;
 import com.synectiks.cms.repository.DueDateRepository;
+import com.synectiks.cms.repository.ExceptionRecordRepository;
 import com.synectiks.cms.repository.FacilityRepository;
 import com.synectiks.cms.repository.FeeCategoryRepository;
 import com.synectiks.cms.repository.FeeDetailsRepository;
@@ -123,6 +125,7 @@ public interface CmsConstants {
 	
 	public static Map<String, CmsTableWithDomainAndRepositoryMapper> initTableDomainRepositoryMapperMap() {
 		Map<String, CmsTableWithDomainAndRepositoryMapper> mpr = new HashMap<String, CmsTableWithDomainAndRepositoryMapper>();
+		mpr.put("exception_record", new CmsTableWithDomainAndRepositoryMapper("exception_record", ExceptionRecord.class, ExceptionRecordRepository.class));      
 		mpr.put("country", new CmsTableWithDomainAndRepositoryMapper("country", Country.class, CountryRepository.class));
 		mpr.put("state", new CmsTableWithDomainAndRepositoryMapper("state", State.class, StateRepository.class));
 		mpr.put("city", new CmsTableWithDomainAndRepositoryMapper("city", City.class, CityRepository.class));   
@@ -164,6 +167,7 @@ public interface CmsConstants {
 //	    mpr.put("student_facility_link", new CmsTableWithDomainAndRepositoryMapper("country", Country.class, CountryRepository.class)); 
 	    mpr.put("transport_route", new CmsTableWithDomainAndRepositoryMapper("transport_route", TransportRoute.class, TransportRouteRepository.class));      
 	    mpr.put("type_of_grading", new CmsTableWithDomainAndRepositoryMapper("type_of_grading", TypeOfGrading.class, TypeOfGradingRepository.class));      
+	    
 	    return mpr;
 	}
 	
@@ -181,8 +185,8 @@ public interface CmsConstants {
 	String HASH_ALGO = "HmacSHA256";
     String MERCHANT_ID = "HMACUAT";
     String SECURITY_ID = "hmacuat";
-    String RESPONSE_URL = "http://18.209.4.2:8080/api/cmspaymentresponse";
+    String RESPONSE_URL = "http://localhost:8080/api/cmspaymentresponse";
 	String PAYMENT_STATUS_FAILED = "550";
-	String PAYMENT_REDIRECT_URL = "http://18.209.4.2:3000/payment-response";
+	String PAYMENT_REDIRECT_URL = "http://localhost:3000/payment-response";
 	
 }
