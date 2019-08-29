@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CmsInvoiceService;
-import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.repository.InvoiceRepository;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
@@ -89,11 +90,5 @@ public class CmsInvoiceRestController {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-    @GetMapping("/cmsinvoices-bystudentid/{studentId}")
-    public ResponseEntity<CmsInvoice> getInvoiceByStudentId(@PathVariable String studentId) {
-        log.debug("REST request to get Invoice by studentMailId : {}", studentId);
-        CmsInvoice invoice = this.cmsInvoiceService.getInvoiceByStudentId(studentId);
-        return ResponseUtil.wrapOrNotFound(Optional.of(invoice));
-    }
     
 }

@@ -75,26 +75,4 @@ public class LoginRestController {
 		return ResponseEntity.status(HttpStatus.OK).body(HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/cmsstudentuser")
-	public ResponseEntity<Object> cmsLoggedInUser(@RequestParam  String userName, @RequestParam  String role) {
-		Object obj = null;
-		try {
-			if("STUDENT".equalsIgnoreCase(role)) {
-				Student st = new Student();
-				st.setStudentEmailAddress(userName);
-				Optional<Student> ost = this.studentRepository.findOne(Example.of(st));
-				obj = ost.isPresent() ? ost.get() : st;
-			}else if("TEACHER".equalsIgnoreCase(role)) {
-				Teacher th = new Teacher();
-				th.setTeacherEmailAddress(userName);
-				Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(th));
-				obj = oth.isPresent() ? oth.get() : th;
-			}
-		}catch(Exception e) {
-			logger.error("Loging authentication failed :", e);
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e);
-		}
-		return ResponseEntity.status(HttpStatus.OK).body(obj);
-	}
-	
 }
