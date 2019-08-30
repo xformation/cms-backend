@@ -2,10 +2,8 @@ package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +13,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +23,64 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.config.GlobalConfig;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsAcademicYearVo;
+import com.synectiks.cms.domain.CmsCourseEnumVo;
+import com.synectiks.cms.domain.CmsFacility;
+import com.synectiks.cms.domain.CmsFeeCategory;
+import com.synectiks.cms.domain.CmsFeeDetails;
+import com.synectiks.cms.domain.CmsGenderVo;
+import com.synectiks.cms.domain.CmsNotificationsVo;
+import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.domain.CmsTermVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Notifications;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
 import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.graphql.types.gender.Gender;
+import com.synectiks.cms.repository.AcademicExamSettingRepository;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.CityRepository;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.repository.EmployeeRepository;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.NotificationsRepository;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.repository.TermRepository;
+import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -102,6 +149,9 @@ public class CommonService {
 //    @Autowired
 //    private StudentRepository studentRepository;
 
+    @Autowired
+    private NotificationsRepository notificationsRepository;
+    
     public AcademicYear findAcademicYearByYear(String academicYear) {
         if(CommonUtil.isNullOrEmpty(academicYear)) {
             return null;
@@ -127,6 +177,16 @@ public class CommonService {
         return null;
     }
 
+    public AcademicYear getActiveAcademicYear() {
+    	AcademicYear ay = new AcademicYear();
+    	ay.setStatus(Status.ACTIVE);
+        Optional<AcademicYear> newAy = this.academicYearRepository.findOne(Example.of(ay));
+        if(newAy.isPresent()) {
+            return newAy.get();
+        }
+        return null;
+    }
+    
     public Department getDepartmentById(Long departmentId) {
         if(departmentId == null) {
             return null;
@@ -959,12 +1019,33 @@ public class CommonService {
         return config;
 	}
     
-    public static void main(String a[]) {
-        LocalDate ld = LocalDate.now();
-        System.out.println(ld);
-
-        String strLd =  ld.format(DateTimeFormatter.ofPattern("d-MM-yyyy"));
-        LocalDate localDate = LocalDate.parse(strLd, DateTimeFormatter.ofPattern("d-MM-yyyy"));
-        System.out.println(localDate);
+    public List<CmsNotificationsVo> getNotifications(){
+    	logger.debug("Getting notifications data");
+    	AcademicYear ay = getActiveAcademicYear();
+    	Notifications ntf = new Notifications();
+    	ntf.setAcademicYear(ay);
+    	List<Notifications> list = this.notificationsRepository.findAll(Example.of(ntf));
+    	List<CmsNotificationsVo> ls = new ArrayList<>();
+    	for(Notifications n: list) {
+    		CmsNotificationsVo vo = CommonUtil.createCopyProperties(n, CmsNotificationsVo.class);
+    		if(n.getCreatedOn() != null) {
+    			vo.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(n.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+    		}
+    		if(n.getUpdatedOn() != null) {
+    			vo.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(n.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+    		}
+    		logger.debug("Notifications : "+vo);
+    		ls.add(vo);
+    	}
+    	return ls;
     }
+
+//    public static void main(String a[]) {
+//        LocalDate ld = LocalDate.now();
+//        System.out.println(ld);
+//
+//        String strLd =  ld.format(DateTimeFormatter.ofPattern("d-MM-yyyy"));
+//        LocalDate localDate = LocalDate.parse(strLd, DateTimeFormatter.ofPattern("d-MM-yyyy"));
+//        System.out.println(localDate);
+//    }
 } 

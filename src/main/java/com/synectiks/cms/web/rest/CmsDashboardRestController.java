@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CmsInvoiceService;
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.CmsDashboardVo;
 import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.CmsNotificationsVo;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentFacilityLink;
@@ -63,9 +65,11 @@ public class CmsDashboardRestController {
     @Autowired
     private LectureRepository lectureRepository;
     
-    
     @Autowired
     private StudentFacilityLinkRepository studentFacilityLinkRepository;
+
+    @Autowired
+    private CommonService commonService;
     
     @RequestMapping(method = RequestMethod.GET, value = "/cmsdashboard")
     public ResponseEntity<Object> cmsDashboardUser(@RequestParam  String userName, @RequestParam  String role) {
@@ -82,10 +86,12 @@ public class CmsDashboardRestController {
 				CmsInvoice inv = getInvoiceByStudentId(userName);
 				List<StudentFacilityLink> list = getStudentFacilityLinkByStudentUserName(userName);
 				List<CmsLectureVo> lecList = getScheduledLectures(userName);
+				List<CmsNotificationsVo> ntfList = this.commonService.getNotifications();
 				
 				obj.setCmsInvoice(inv);
 				obj.setStudentFacilityLinkList(list);
 				obj.setCmsLectureVoList(lecList);
+				obj.setCmsNotificationsVoList(ntfList);
 				
 			}else if("TEACHER".equalsIgnoreCase(role)) {
 				logger.info("Getting teacher data for dashboard");
@@ -148,6 +154,8 @@ public class CmsDashboardRestController {
     	logger.debug("Total lectures scheduled today for student : "+ls.size());
     	return ls;
     }
+    
+    
     
     private Optional<Student> getStudent(String userName){
     	Student st = new Student();

@@ -13,6 +13,8 @@ public class CmsDashboardVo implements Serializable {
 	private CmsInvoice cmsInvoice;
 	private List<StudentFacilityLink> studentFacilityLinkList;
 	private List<CmsLectureVo> cmsLectureVoList;
+	private List<CmsNotificationsVo> cmsNotificationsVoList;
+	
 	public Student getStudent() {
 		return student;
 	}
@@ -42,6 +44,12 @@ public class CmsDashboardVo implements Serializable {
 	}
 	public void setCmsLectureVoList(List<CmsLectureVo> cmsLectureVoList) {
 		this.cmsLectureVoList = cmsLectureVoList;
+	}
+	public List<CmsNotificationsVo> getCmsNotificationsVoList() {
+		return cmsNotificationsVoList;
+	}
+	public void setCmsNotificationsVoList(List<CmsNotificationsVo> cmsNotificationsVoList) {
+		this.cmsNotificationsVoList = cmsNotificationsVoList;
 	}
     
 }

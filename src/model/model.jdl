@@ -718,6 +718,16 @@ entity PaymentRequestResponse {
 	requestTxnTime String
 }
 
+entity Notifications {
+	messageCode String
+	message String maxlength(2000)
+	status Status
+	createdBy String
+	createdOn LocalDate
+	updatedBy String
+	updatedOn LocalDate
+}
+
 relationship ManyToOne {
 Employee{branch required} to Branch,
 Student{department required} to Department ,
@@ -841,6 +851,7 @@ Vehicle{transportRoute} to TransportRoute,
 AdmissionApplication{academicyear} to AcademicYear
 PaymentRequestResponse{branch} to Branch
 PaymentRequestResponse{academicYear} to AcademicYear
+Notifications{academicYear} to AcademicYear
 }
 
 relationship OneToOne{
