@@ -25,6 +25,9 @@ public class InfluxDataPushRestController {
     @Autowired
     private StudentAttendanceInfluxPush studentAttendanceInfluxPush;
 
+    @Autowired
+    private StudentInfluxPush studentInfluxPush;
+    
     @RequestMapping(method = RequestMethod.POST, value = "/cmsinfluxpush/{entity}")
     public ResponseEntity<Void> createStudentAttendance(@PathVariable String entity) throws ParseException, Exception {
         logger.debug("REST request to push data in influx db for table : "+entity);
@@ -43,6 +46,8 @@ public class InfluxDataPushRestController {
     private InfluxPush getEnity(String entity) {
     	if("student_attendance".equalsIgnoreCase(entity)) {
         	return this.studentAttendanceInfluxPush;
+        }else if("student".equalsIgnoreCase(entity)) {
+        	return this.studentInfluxPush;
         }
     	return null;
     }

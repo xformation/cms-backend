@@ -52,6 +52,7 @@ import com.synectiks.cms.domain.Notifications;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.State;
 import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
@@ -75,6 +76,7 @@ import com.synectiks.cms.repository.HolidayRepository;
 import com.synectiks.cms.repository.NotificationsRepository;
 import com.synectiks.cms.repository.SectionRepository;
 import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
@@ -145,6 +147,9 @@ public class CommonService {
 
     @Autowired
     private TransportRouteRepository transportRouteRepository;
+    
+    @Autowired
+    private StudentAttendanceRepository studentAttendanceRepository;
     
 //    @Autowired
 //    private StudentRepository studentRepository;
@@ -1040,6 +1045,63 @@ public class CommonService {
     	return ls;
     }
 
+    public List<Student> getAllStudentsOfCurrentAcademicYear(){
+		AcademicYear ay = getActiveAcademicYear();
+		Department department = new Department();
+		department.setAcademicyear(ay);
+		Student student = new Student();
+		student.setDepartment(department);
+		List<Student> list = this.studentRepository.findAll(Example.of(student));
+		return list;
+	}
+    
+    public List<Subject>getAllSubjectsOfStudent(Student student){
+		Subject subject = new Subject();
+		subject.setDepartment(student.getDepartment());
+		subject.setBatch(student.getBatch());
+		List<Subject> list = this.subjectRepository.findAll(Example.of(subject));
+		return list;
+	}
+    
+    public long getTotalLecturesScheduledForStudent(Student student) {
+		StudentAttendance sa = new StudentAttendance();
+		sa.setStudent(student);
+		long count = this.studentAttendanceRepository.count(Example.of(sa));
+		logger.debug("Total lectures scheduled for student : "+student.getStudentEmailAddress()+" are : "+count);
+		return count;
+	}
+    
+    public List<StudentAttendance> getTotalLecturesConductedForStudent(Student student, LocalDate dt) throws Exception{
+        
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<StudentAttendance> query = cb.createQuery(StudentAttendance.class);
+        Root<StudentAttendance> root = query.from(StudentAttendance.class);
+        List<Lecture> lecList = getLectures(dt);
+        
+        In<Long> inLecture = cb.in(root.get("lecture"));
+        for (Lecture lec : lecList) {
+        	inLecture.value(lec.getId());
+        }
+        
+        CriteriaQuery<StudentAttendance> select = query.select(root).where(cb.and(inLecture), cb.and(cb.equal(root.get("student"), student.getId())));
+        TypedQuery<StudentAttendance> typedQuery = this.entityManager.createQuery(select);
+        List<StudentAttendance> lectureList = typedQuery.getResultList();
+        logger.debug("Lecture date : "+dt+". Student id : "+student.getId()+". Student email : "+student.getStudentEmailAddress()+". Total lectures conducted till date for given : "+lectureList.size());
+        return lectureList;
+    }
+    
+    public List<Lecture> getLectures(LocalDate dt){
+    	CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Lecture> query = cb.createQuery(Lecture.class);
+        Root<Lecture> root = query.from(Lecture.class);
+        
+        CriteriaQuery<Lecture> select = query.select(root).where(cb.lessThanOrEqualTo(root.get("lecDate"), dt));
+        TypedQuery<Lecture> typedQuery = this.entityManager.createQuery(select);
+        List<Lecture> lectureList = typedQuery.getResultList();
+        logger.debug("Lecture date : "+dt+". Total lectures conducted till date : "+lectureList.size());
+        return lectureList;
+    }
+    
 //    public static void main(String a[]) {
 //        LocalDate ld = LocalDate.now();
 //        System.out.println(ld);
