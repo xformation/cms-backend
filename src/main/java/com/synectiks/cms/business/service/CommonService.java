@@ -319,7 +319,7 @@ public class CommonService {
         return null;
     }
 
-    public List<Holiday> getHolidayList(Optional<AcademicYear> oay) throws ParseException  {
+    public List<Holiday> getHolidayList(Optional<AcademicYear> oay) {
 //		AcademicYear acd = findAcademicYearByYear(academicYear);
         if(!oay.isPresent()) {
             logger.warn("Academic Year is null. Returning empty holiday list.");
@@ -1102,6 +1102,29 @@ public class CommonService {
         return lectureList;
     }
     
+    public List<Teacher> getAllActiveTeachers(){
+    	Teacher teacher = new Teacher();
+    	teacher.setStatus(Status.ACTIVE);
+    	List<Teacher> list = this.teacherRepository.findAll(Example.of(teacher));
+    	logger.debug("Total teachers irrespective of branches : "+list.size());
+    	return list;
+    }
+    
+    public List<Teach> getAllSubjectsOfTeacher(Teacher th){
+    	Teach teach = new Teach();
+    	teach.setTeacher(th);
+    	List<Teach> list = this.teachRepository.findAll(Example.of(teach));
+    	logger.debug("Total subjects teach by teacher "+th.getTeacherName() + " are : "+list.size());
+    	return list;
+    }
+    
+    public long getTotalLecturesScheduledForTeacher(Teacher th) {
+		StudentAttendance sa = new StudentAttendance();
+//		sa.setStudent(student);
+//		long count = this.studentAttendanceRepository.count(Example.of(sa));
+//		logger.debug("Total lectures scheduled for student : "+student.getStudentEmailAddress()+" are : "+count);
+		return 0;
+	}
 //    public static void main(String a[]) {
 //        LocalDate ld = LocalDate.now();
 //        System.out.println(ld);

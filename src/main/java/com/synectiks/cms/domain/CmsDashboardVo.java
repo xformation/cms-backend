@@ -14,6 +14,7 @@ public class CmsDashboardVo implements Serializable {
 	private List<StudentFacilityLink> studentFacilityLinkList;
 	private List<CmsLectureVo> cmsLectureVoList;
 	private List<CmsNotificationsVo> cmsNotificationsVoList;
+	private List<CmsHolidayVo> cmsHolidayVoList;
 	
 	public Student getStudent() {
 		return student;
@@ -50,6 +51,12 @@ public class CmsDashboardVo implements Serializable {
 	}
 	public void setCmsNotificationsVoList(List<CmsNotificationsVo> cmsNotificationsVoList) {
 		this.cmsNotificationsVoList = cmsNotificationsVoList;
+	}
+	public List<CmsHolidayVo> getCmsHolidayVoList() {
+		return cmsHolidayVoList;
+	}
+	public void setCmsHolidayVoList(List<CmsHolidayVo> cmsHolidayVoList) {
+		this.cmsHolidayVoList = cmsHolidayVoList;
 	}
     
 }

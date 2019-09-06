@@ -20,14 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.CmsDashboardVo;
+import com.synectiks.cms.domain.CmsHolidayVo;
 import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.CmsNotificationsVo;
+import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentFacilityLink;
+import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.InvoiceRepository;
@@ -85,7 +89,7 @@ public class CmsDashboardRestController {
 				obj.setStudent(st);
 				CmsInvoice inv = getInvoiceByStudentId(userName);
 				List<StudentFacilityLink> list = getStudentFacilityLinkByStudentUserName(userName);
-				List<CmsLectureVo> lecList = getScheduledLectures(userName);
+				List<CmsLectureVo> lecList = getScheduledLecturesForStudent(userName);
 				List<CmsNotificationsVo> ntfList = this.commonService.getNotifications();
 				
 				obj.setCmsInvoice(inv);
@@ -102,6 +106,13 @@ public class CmsDashboardRestController {
 					th = oth.get();
 				}
 				obj.setTeacher(th);
+				List<CmsNotificationsVo> ntfList = this.commonService.getNotifications();
+				List<CmsHolidayVo> holidayList = getHolidayList();
+				List<CmsLectureVo> lecList = getScheduledLecturesForTeacher(oth.isPresent() ? oth.get() : null);
+				
+				obj.setCmsNotificationsVoList(ntfList);
+				obj.setCmsHolidayVoList(holidayList);
+				obj.setCmsLectureVoList(lecList);
 			}
 			
 		}catch(Exception e) {
@@ -129,7 +140,7 @@ public class CmsDashboardRestController {
         return ls;
     }
     
-    private List<CmsLectureVo> getScheduledLectures(String userName){
+    private List<CmsLectureVo> getScheduledLecturesForStudent(String userName){
     	logger.info("Getting student's scheduled lectures data for dashboard :");
     	List<CmsLectureVo> ls = new ArrayList<>();
     	Optional<Student> ost = getStudent(userName);
@@ -156,11 +167,51 @@ public class CmsDashboardRestController {
     }
     
     
+    private List<CmsLectureVo> getScheduledLecturesForTeacher(Teacher teacher){
+    	logger.info("Getting teacher's scheduled lectures data for dashboard :");
+    	List<CmsLectureVo> ls = new ArrayList<>();
+    	if(teacher != null) {
+    		Teach teach = new Teach();
+    		teach.setTeacher(teacher);
+    		AttendanceMaster am = new AttendanceMaster();
+    		am.setTeach(teach);
+    		
+//    		List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
+//    		for(AttendanceMaster a: amList) {
+    			Lecture lec = new Lecture();
+        		lec.setAttendancemaster(am);
+        		lec.setLecDate(LocalDate.now());
+        		List<Lecture> list = this.lectureRepository.findAll(Example.of(lec));
+        		for(Lecture l: list) {
+        			CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
+        			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        			ls.add(vo);
+        		}
+//    		}
+    		
+    	}
+    	logger.debug("Total lectures scheduled today for teacher : "+ls.size());
+    	return ls;
+    }
+    
+
     
     private Optional<Student> getStudent(String userName){
     	Student st = new Student();
 		st.setStudentEmailAddress(userName);
 		Optional<Student> ost = this.studentRepository.findOne(Example.of(st));
 		return ost;
+    }
+    
+    private List<CmsHolidayVo> getHolidayList(){
+    	AcademicYear ay = this.commonService.getActiveAcademicYear();
+    	List<Holiday> list = this.commonService.getHolidayList(Optional.of(ay));
+    	List<CmsHolidayVo> ls = new ArrayList<>();
+    	for(Holiday hl: list) {
+    		CmsHolidayVo vo = CommonUtil.createCopyProperties(hl, CmsHolidayVo.class);
+    		vo.setStrHolidayDate(DateFormatUtil.changeLocalDateFormat(vo.getHolidayDate(), CmsConstants.DATE_FORMAT_d_MMM_yyyy));
+    		ls.add(vo);
+    	}
+    	return ls;
     }
 }

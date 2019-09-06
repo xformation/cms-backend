@@ -537,12 +537,9 @@ public class CmsDataRowProcessor {
 	private List<Date> filterDates(int day) {
 		List<Date> dateList = this.lectureService.createDates(this.term);
 		List<Holiday> holidayList = null;
-		try {
-			holidayList = this.commonService
-					.getHolidayList(Optional.of(this.aYear));
-		} catch (ParseException e) {
-			logger.error(e.getMessage(), e);
-		}
+		
+		holidayList = this.commonService.getHolidayList(Optional.of(this.aYear));
+		
 		this.lectureService.filterHolidays(holidayList, dateList);
 		this.lectureService.filterSundays(dateList);
 		List<Date> list = this.lectureService.filterDateListOnDayOfweek(dateList, day);

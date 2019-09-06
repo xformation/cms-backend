@@ -98,6 +98,7 @@ public interface CmsConstants {
 	String DATE_FORMAT_yyyy_MM_dd = "yyyy-MM-dd";
 	String DATE_FORMAT_dd_MM_yyyy = "dd-MM-yyyy";
 	String DATE_FORMAT_MM_dd_yyyy = "MM-dd-yyyy";
+	String DATE_FORMAT_d_MMM_yyyy = "d MMM yyyy";
 	
 	String LECTURE_NOT_SCHEDULED = "LECTURE_NOT_SCHEDULED";
 	
