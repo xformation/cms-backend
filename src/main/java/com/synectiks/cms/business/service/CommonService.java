@@ -73,6 +73,7 @@ import com.synectiks.cms.repository.CollegeRepository;
 import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.repository.EmployeeRepository;
 import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.NotificationsRepository;
 import com.synectiks.cms.repository.SectionRepository;
 import com.synectiks.cms.repository.StateRepository;
@@ -156,6 +157,9 @@ public class CommonService {
 
     @Autowired
     private NotificationsRepository notificationsRepository;
+    
+    @Autowired
+    private LectureRepository lectureRepository;
     
     public AcademicYear findAcademicYearByYear(String academicYear) {
         if(CommonUtil.isNullOrEmpty(academicYear)) {
@@ -1118,13 +1122,56 @@ public class CommonService {
     	return list;
     }
     
-    public long getTotalLecturesScheduledForTeacher(Teacher th) {
-		StudentAttendance sa = new StudentAttendance();
-//		sa.setStudent(student);
-//		long count = this.studentAttendanceRepository.count(Example.of(sa));
-//		logger.debug("Total lectures scheduled for student : "+student.getStudentEmailAddress()+" are : "+count);
-		return 0;
+    public List<Lecture> getAllLecturesScheduledForTeacher(Teacher th, Subject sub) {
+    	AcademicYear ay = this.getActiveAcademicYear();
+    	Teach teach = new Teach();
+    	teach.setTeacher(th);
+    	teach.setSubject(sub);
+    	List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
+    	
+    	@SuppressWarnings("unchecked")
+		List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
+    			.setParameter("th", thList)
+    			.getResultList();
+    	
+    	@SuppressWarnings("unchecked")
+		List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
+    			.setParameter("startDate", ay.getStartDate())
+    			.setParameter("endDate", ay.getEndDate())
+    			.setParameter("amId", amList)
+    			.getResultList();
+		return list;
 	}
+    
+    
+    public long getTotalLecturesScheduledForTeacher(Teacher th, Subject sub) {
+    	List<Lecture> list =  getAllLecturesScheduledForTeacher(th, sub);
+    	logger.debug("Teahcer : "+th.getTeacherName()+", Subject : "+sub.getSubjectCode()+", Total lecture scheduled : "+list.size());
+    	return list.size();
+    }
+    
+    
+    public List<Lecture> getTotalLecturesConductedForTeacher(Teacher th, Subject sub, LocalDate dt) throws Exception{
+    	AcademicYear ay = this.getActiveAcademicYear();
+    	Teach teach = new Teach();
+    	teach.setTeacher(th);
+    	teach.setSubject(sub);
+    	List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
+    	
+    	@SuppressWarnings("unchecked")
+		List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
+    			.setParameter("th", thList)
+    			.getResultList();
+    	
+    	@SuppressWarnings("unchecked")
+		List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
+    			.setParameter("startDate", ay.getStartDate())
+    			.setParameter("endDate", dt)
+    			.setParameter("amId", amList)
+    			.getResultList();
+		return list;
+    }
+    
 //    public static void main(String a[]) {
 //        LocalDate ld = LocalDate.now();
 //        System.out.println(ld);
