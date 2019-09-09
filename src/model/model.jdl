@@ -848,6 +848,8 @@ Documents{vehicle} to Vehicle,
 Documents{employee} to Employee,
 Documents{contract} to Contract,
 Vehicle{transportRoute} to TransportRoute,
+Employee{transportRoute} to TransportRoute,
+Vehicle{contract} to Contract,
 AdmissionApplication{academicyear} to AcademicYear
 PaymentRequestResponse{branch} to Branch
 PaymentRequestResponse{academicYear} to AcademicYear

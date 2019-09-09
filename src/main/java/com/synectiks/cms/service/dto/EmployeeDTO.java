@@ -1,4 +1,5 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
 /**
- * A DTO for the {@link com.synectiks.cms.domain.Employee} entity.
+ * A DTO for the Employee entity.
  */
 public class EmployeeDTO implements Serializable {
 
@@ -69,8 +70,9 @@ public class EmployeeDTO implements Serializable {
 
     private MaritalStatus maritalStatus;
 
-
     private Long branchId;
+
+    private Long transportRouteId;
 
     public Long getId() {
         return id;
@@ -296,6 +298,14 @@ public class EmployeeDTO implements Serializable {
         this.branchId = branchId;
     }
 
+    public Long getTransportRouteId() {
+        return transportRouteId;
+    }
+
+    public void setTransportRouteId(Long transportRouteId) {
+        this.transportRouteId = transportRouteId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -348,6 +358,7 @@ public class EmployeeDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", maritalStatus='" + getMaritalStatus() + "'" +
             ", branch=" + getBranchId() +
+            ", transportRoute=" + getTransportRouteId() +
             "}";
     }
 }

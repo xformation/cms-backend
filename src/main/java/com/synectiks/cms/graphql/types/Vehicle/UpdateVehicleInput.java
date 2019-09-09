@@ -4,6 +4,7 @@ public class UpdateVehicleInput extends AbstractVehicleInput {
     private Long employeeId;
     private Long transportRouteId;
     private Long insuranceId;
+    private Long contractId;
 
     public Long getEmployeeId() {
         return employeeId;
@@ -29,12 +30,21 @@ public class UpdateVehicleInput extends AbstractVehicleInput {
         this.insuranceId = insuranceId;
     }
 
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
     @Override
     public String toString() {
         return "UpdateVehicleInput{" +
             "employeeId=" + employeeId +
             ", transportRouteId=" + transportRouteId +
             ", insuranceId=" + insuranceId +
+            ", contractId=" + contractId +
             '}';
     }
 }

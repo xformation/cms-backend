@@ -83,7 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.debug("Request to get all employees where Vehicle is null");
         return StreamSupport
             .stream(employeeRepository.findAll().spliterator(), false)
-//            .filter(employee -> employee.getVehicle() == null)
+            .filter(employee -> employee.getVehicle() == null)
             .map(employeeMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

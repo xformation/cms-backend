@@ -1,4 +1,6 @@
 package com.synectiks.cms.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -6,9 +8,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Disability;
 
@@ -22,7 +25,7 @@ import com.synectiks.cms.domain.enumeration.MaritalStatus;
 @Entity
 @Table(name = "employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "employee")
+@Document(indexName = "employee")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +33,6 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
@@ -119,8 +121,16 @@ public class Employee implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("employees")
+    @JsonIgnoreProperties("")
     private Branch branch;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private TransportRoute transportRoute;
+
+    @OneToOne(mappedBy = "employee")
+    @JsonIgnore
+    private Vehicle vehicle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -481,6 +491,32 @@ public class Employee implements Serializable {
     public void setBranch(Branch branch) {
         this.branch = branch;
     }
+
+    public TransportRoute getTransportRoute() {
+        return transportRoute;
+    }
+
+    public Employee transportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
+        return this;
+    }
+
+    public void setTransportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public Employee vehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+        return this;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -488,15 +524,19 @@ public class Employee implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Employee)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((Employee) o).id);
+        Employee employee = (Employee) o;
+        if (employee.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), employee.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
     @Override

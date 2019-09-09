@@ -3,6 +3,7 @@ package com.synectiks.cms.web.rest;
 import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.repository.EmployeeRepository;
 import com.synectiks.cms.repository.search.EmployeeSearchRepository;
 import com.synectiks.cms.service.EmployeeService;
@@ -23,7 +24,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -41,6 +41,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.MaritalStatus;
 /**
  * Test class for the EmployeeResource REST controller.
  *
@@ -116,6 +118,18 @@ public class EmployeeResourceIntTest {
     private static final String DEFAULT_GENDER = "AAAAAAAAAA";
     private static final String UPDATED_GENDER = "BBBBBBBBBB";
 
+    private static final String DEFAULT_TYPE_OF_EMPLOYMENT = "AAAAAAAAAA";
+    private static final String UPDATED_TYPE_OF_EMPLOYMENT = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_MANAGER_ID = 1L;
+    private static final Long UPDATED_MANAGER_ID = 2L;
+
+    private static final Status DEFAULT_STATUS = Status.ACTIVE;
+    private static final Status UPDATED_STATUS = Status.DEACTIVE;
+
+    private static final MaritalStatus DEFAULT_MARITAL_STATUS = MaritalStatus.MARRIED;
+    private static final MaritalStatus UPDATED_MARITAL_STATUS = MaritalStatus.SINGLE;
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -145,9 +159,6 @@ public class EmployeeResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restEmployeeMockMvc;
 
     private Employee employee;
@@ -160,8 +171,7 @@ public class EmployeeResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -193,7 +203,16 @@ public class EmployeeResourceIntTest {
             .disability(DEFAULT_DISABILITY)
             .drivingLicenceNo(DEFAULT_DRIVING_LICENCE_NO)
             .drivingLicenceValidity(DEFAULT_DRIVING_LICENCE_VALIDITY)
-            .gender(DEFAULT_GENDER);
+            .gender(DEFAULT_GENDER)
+            .typeOfEmployment(DEFAULT_TYPE_OF_EMPLOYMENT)
+            .managerId(DEFAULT_MANAGER_ID)
+            .status(DEFAULT_STATUS)
+            .maritalStatus(DEFAULT_MARITAL_STATUS);
+        // Add required entity
+        Branch branch = BranchResourceIntTest.createEntity(em);
+        em.persist(branch);
+        em.flush();
+        employee.setBranch(branch);
         return employee;
     }
 
@@ -240,6 +259,10 @@ public class EmployeeResourceIntTest {
         assertThat(testEmployee.getDrivingLicenceNo()).isEqualTo(DEFAULT_DRIVING_LICENCE_NO);
         assertThat(testEmployee.getDrivingLicenceValidity()).isEqualTo(DEFAULT_DRIVING_LICENCE_VALIDITY);
         assertThat(testEmployee.getGender()).isEqualTo(DEFAULT_GENDER);
+        assertThat(testEmployee.getTypeOfEmployment()).isEqualTo(DEFAULT_TYPE_OF_EMPLOYMENT);
+        assertThat(testEmployee.getManagerId()).isEqualTo(DEFAULT_MANAGER_ID);
+        assertThat(testEmployee.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testEmployee.getMaritalStatus()).isEqualTo(DEFAULT_MARITAL_STATUS);
 
         // Validate the Employee in Elasticsearch
         verify(mockEmployeeSearchRepository, times(1)).save(testEmployee);
@@ -289,86 +312,29 @@ public class EmployeeResourceIntTest {
 
     @Test
     @Transactional
+    public void checkDesignationIsRequired() throws Exception {
+        int databaseSizeBeforeTest = employeeRepository.findAll().size();
+        // set the field null
+        employee.setDesignation(null);
+
+        // Create the Employee, which fails.
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
+
+        restEmployeeMockMvc.perform(post("/api/employees")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Employee> employeeList = employeeRepository.findAll();
+        assertThat(employeeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkJoiningDateIsRequired() throws Exception {
         int databaseSizeBeforeTest = employeeRepository.findAll().size();
         // set the field null
         employee.setJoiningDate(null);
-
-        // Create the Employee, which fails.
-        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
-
-        restEmployeeMockMvc.perform(post("/api/employees")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employee> employeeList = employeeRepository.findAll();
-        assertThat(employeeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkEmployeeFatherNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeeRepository.findAll().size();
-        // set the field null
-        employee.setEmployeeFatherName(null);
-
-        // Create the Employee, which fails.
-        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
-
-        restEmployeeMockMvc.perform(post("/api/employees")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employee> employeeList = employeeRepository.findAll();
-        assertThat(employeeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkEmployeeMotherNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeeRepository.findAll().size();
-        // set the field null
-        employee.setEmployeeMotherName(null);
-
-        // Create the Employee, which fails.
-        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
-
-        restEmployeeMockMvc.perform(post("/api/employees")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employee> employeeList = employeeRepository.findAll();
-        assertThat(employeeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkPrimaryAddressIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeeRepository.findAll().size();
-        // set the field null
-        employee.setPrimaryAddress(null);
-
-        // Create the Employee, which fails.
-        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
-
-        restEmployeeMockMvc.perform(post("/api/employees")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Employee> employeeList = employeeRepository.findAll();
-        assertThat(employeeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkSecondaryAddressIsRequired() throws Exception {
-        int databaseSizeBeforeTest = employeeRepository.findAll().size();
-        // set the field null
-        employee.setSecondaryAddress(null);
 
         // Create the Employee, which fails.
         EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
@@ -414,7 +380,11 @@ public class EmployeeResourceIntTest {
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.toString())))
             .andExpect(jsonPath("$.[*].drivingLicenceNo").value(hasItem(DEFAULT_DRIVING_LICENCE_NO.toString())))
             .andExpect(jsonPath("$.[*].drivingLicenceValidity").value(hasItem(DEFAULT_DRIVING_LICENCE_VALIDITY.toString())))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
+            .andExpect(jsonPath("$.[*].typeOfEmployment").value(hasItem(DEFAULT_TYPE_OF_EMPLOYMENT.toString())))
+            .andExpect(jsonPath("$.[*].managerId").value(hasItem(DEFAULT_MANAGER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].maritalStatus").value(hasItem(DEFAULT_MARITAL_STATUS.toString())));
     }
     
     @Test
@@ -449,7 +419,11 @@ public class EmployeeResourceIntTest {
             .andExpect(jsonPath("$.disability").value(DEFAULT_DISABILITY.toString()))
             .andExpect(jsonPath("$.drivingLicenceNo").value(DEFAULT_DRIVING_LICENCE_NO.toString()))
             .andExpect(jsonPath("$.drivingLicenceValidity").value(DEFAULT_DRIVING_LICENCE_VALIDITY.toString()))
-            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()));
+            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
+            .andExpect(jsonPath("$.typeOfEmployment").value(DEFAULT_TYPE_OF_EMPLOYMENT.toString()))
+            .andExpect(jsonPath("$.managerId").value(DEFAULT_MANAGER_ID.intValue()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.maritalStatus").value(DEFAULT_MARITAL_STATUS.toString()));
     }
 
     @Test
@@ -494,7 +468,11 @@ public class EmployeeResourceIntTest {
             .disability(UPDATED_DISABILITY)
             .drivingLicenceNo(UPDATED_DRIVING_LICENCE_NO)
             .drivingLicenceValidity(UPDATED_DRIVING_LICENCE_VALIDITY)
-            .gender(UPDATED_GENDER);
+            .gender(UPDATED_GENDER)
+            .typeOfEmployment(UPDATED_TYPE_OF_EMPLOYMENT)
+            .managerId(UPDATED_MANAGER_ID)
+            .status(UPDATED_STATUS)
+            .maritalStatus(UPDATED_MARITAL_STATUS);
         EmployeeDTO employeeDTO = employeeMapper.toDto(updatedEmployee);
 
         restEmployeeMockMvc.perform(put("/api/employees")
@@ -528,6 +506,10 @@ public class EmployeeResourceIntTest {
         assertThat(testEmployee.getDrivingLicenceNo()).isEqualTo(UPDATED_DRIVING_LICENCE_NO);
         assertThat(testEmployee.getDrivingLicenceValidity()).isEqualTo(UPDATED_DRIVING_LICENCE_VALIDITY);
         assertThat(testEmployee.getGender()).isEqualTo(UPDATED_GENDER);
+        assertThat(testEmployee.getTypeOfEmployment()).isEqualTo(UPDATED_TYPE_OF_EMPLOYMENT);
+        assertThat(testEmployee.getManagerId()).isEqualTo(UPDATED_MANAGER_ID);
+        assertThat(testEmployee.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testEmployee.getMaritalStatus()).isEqualTo(UPDATED_MARITAL_STATUS);
 
         // Validate the Employee in Elasticsearch
         verify(mockEmployeeSearchRepository, times(1)).save(testEmployee);
@@ -563,7 +545,7 @@ public class EmployeeResourceIntTest {
 
         int databaseSizeBeforeDelete = employeeRepository.findAll().size();
 
-        // Delete the employee
+        // Get the employee
         restEmployeeMockMvc.perform(delete("/api/employees/{id}", employee.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -609,7 +591,11 @@ public class EmployeeResourceIntTest {
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.toString())))
             .andExpect(jsonPath("$.[*].drivingLicenceNo").value(hasItem(DEFAULT_DRIVING_LICENCE_NO)))
             .andExpect(jsonPath("$.[*].drivingLicenceValidity").value(hasItem(DEFAULT_DRIVING_LICENCE_VALIDITY.toString())))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER)));
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER)))
+            .andExpect(jsonPath("$.[*].typeOfEmployment").value(hasItem(DEFAULT_TYPE_OF_EMPLOYMENT)))
+            .andExpect(jsonPath("$.[*].managerId").value(hasItem(DEFAULT_MANAGER_ID.intValue())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].maritalStatus").value(hasItem(DEFAULT_MARITAL_STATUS.toString())));
     }
 
     @Test

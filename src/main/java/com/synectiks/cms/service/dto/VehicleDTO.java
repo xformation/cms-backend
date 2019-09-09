@@ -50,6 +50,8 @@ public class VehicleDTO implements Serializable {
 
     private Long transportRouteId;
 
+    private Long contractId;
+
     public Long getId() {
         return id;
     }
@@ -178,6 +180,14 @@ public class VehicleDTO implements Serializable {
         this.transportRouteId = transportRouteId;
     }
 
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -218,6 +228,7 @@ public class VehicleDTO implements Serializable {
             ", insurance=" + getInsuranceId() +
             ", employee=" + getEmployeeId() +
             ", transportRoute=" + getTransportRouteId() +
+            ", contract=" + getContractId() +
             "}";
     }
 }

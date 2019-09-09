@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Vehicle.
     -->
-    <changeSet id="20190806043756-2" author="jhipster">
+    <changeSet id="20190909092502-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="insurance_id"
                                  baseTableName="vehicle"
@@ -25,6 +25,12 @@
                                  constraintName="fk_vehicle_transport_route_id"
                                  referencedColumnNames="id"
                                  referencedTableName="transport_route"/>
+
+        <addForeignKeyConstraint baseColumnNames="contract_id"
+                                 baseTableName="vehicle"
+                                 constraintName="fk_vehicle_contract_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contract"/>
 
     </changeSet>
 </databaseChangeLog>

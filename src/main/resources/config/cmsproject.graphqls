@@ -945,6 +945,7 @@ type Employee{
 	status: Status
 	maritalStatus: MaritalStatus
 	branch: Branch!
+	transportRoute: TransportRoute!
 }
 
 enum MaritalStatus{
@@ -1855,6 +1856,7 @@ input AddEmployeeInput{
     status: Status
     maritalStatus: MaritalStatus
     branchId: Long!
+    transportRouteId: Long!
 }
 
 type AddEmployeePayload {
@@ -1890,6 +1892,7 @@ input UpdateEmployeeInput {
     status: Status
     maritalStatus: MaritalStatus
      branchId: Long!
+      transportRouteId: Long!
 }
 
 type UpdateEmployeePayload {
@@ -3623,6 +3626,7 @@ type RemoveBookPayload{
       employee: Employee!
       transportRoute: TransportRoute!
       insurance: Insurance!
+      contract: Contract!
   }
 
 
@@ -3642,6 +3646,7 @@ input AddVehicleInput{
       employeeId: Long!
       transportRouteId: Long!
       insuranceId: Long!
+      contractId: Long!
 }
 type AddVehiclePayload{
     vehicle:Vehicle!
@@ -3663,6 +3668,7 @@ input UpdateVehicleInput{
          employeeId: Long!
          transportRouteId: Long!
          insuranceId: Long!
+         contractId: Long!
 }
 type UpdateVehiclePayload{
     vehicle:Vehicle!

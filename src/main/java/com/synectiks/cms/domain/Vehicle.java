@@ -84,6 +84,10 @@ public class Vehicle implements Serializable {
     @JsonIgnoreProperties("")
     private TransportRoute transportRoute;
 
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Contract contract;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -286,6 +290,19 @@ public class Vehicle implements Serializable {
 
     public void setTransportRoute(TransportRoute transportRoute) {
         this.transportRoute = transportRoute;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public Vehicle contract(Contract contract) {
+        this.contract = contract;
+        return this;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

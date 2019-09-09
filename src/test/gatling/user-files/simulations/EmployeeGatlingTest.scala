@@ -94,6 +94,10 @@ class EmployeeGatlingTest extends Simulation {
                 , "drivingLicenceNo":"SAMPLE_TEXT"
                 , "drivingLicenceValidity":"2020-01-01T00:00:00.000Z"
                 , "gender":"SAMPLE_TEXT"
+                , "typeOfEmployment":"SAMPLE_TEXT"
+                , "managerId":null
+                , "status":"ACTIVE"
+                , "maritalStatus":"MARRIED"
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_employee_url"))).exitHereIfFailed

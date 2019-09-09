@@ -16,7 +16,7 @@
     <!--
         Added the entity Employee.
     -->
-    <changeSet id="20190802111033-1" author="jhipster">
+    <changeSet id="20190909092505-1" author="jhipster">
         <createTable tableName="employee">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -26,7 +26,7 @@
             </column>
 
             <column name="designation" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="joining_date" type="date">
@@ -66,19 +66,19 @@
             </column>
 
             <column name="employee_father_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="employee_mother_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="primary_address" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="secondary_address" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="employee_address" type="varchar(255)">
@@ -106,6 +106,30 @@
             </column>
 
             <column name="gender" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="type_of_employment" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="manager_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="marital_status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="branch_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="transport_route_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

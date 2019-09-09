@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -115,9 +114,6 @@ public class VehicleResourceIntTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private Validator validator;
-
     private MockMvc restVehicleMockMvc;
 
     private Vehicle vehicle;
@@ -130,8 +126,7 @@ public class VehicleResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     /**
@@ -492,7 +487,7 @@ public class VehicleResourceIntTest {
 
         int databaseSizeBeforeDelete = vehicleRepository.findAll().size();
 
-        // Delete the vehicle
+        // Get the vehicle
         restVehicleMockMvc.perform(delete("/api/vehicles/{id}", vehicle.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
