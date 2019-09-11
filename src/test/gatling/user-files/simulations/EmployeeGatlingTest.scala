@@ -93,7 +93,7 @@ class EmployeeGatlingTest extends Simulation {
                 , "disability":"YES"
                 , "drivingLicenceNo":"SAMPLE_TEXT"
                 , "drivingLicenceValidity":"2020-01-01T00:00:00.000Z"
-                , "gender":"SAMPLE_TEXT"
+                , "gender":"MALE"
                 , "typeOfEmployment":"SAMPLE_TEXT"
                 , "managerId":null
                 , "status":"ACTIVE"

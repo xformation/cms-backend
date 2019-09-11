@@ -24,7 +24,7 @@ public class VehicleService {
     @Autowired
     private CommonService commonService;
 
-    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, Integer vehicleNumber) throws Exception{
+    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, String vehicleNumber) throws Exception{
         Vehicle vehicle = new Vehicle();
 
         if(transportRouteId != null) {

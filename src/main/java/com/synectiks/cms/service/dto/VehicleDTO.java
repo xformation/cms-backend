@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -14,7 +13,7 @@ public class VehicleDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Integer vehicleNumber;
+    private String vehicleNumber;
 
     @NotNull
     private String vehicleType;
@@ -44,6 +43,7 @@ public class VehicleDTO implements Serializable {
     @NotNull
     private Status status;
 
+
     private Long insuranceId;
 
     private Long employeeId;
@@ -60,11 +60,11 @@ public class VehicleDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getVehicleNumber() {
+    public String getVehicleNumber() {
         return vehicleNumber;
     }
 
-    public void setVehicleNumber(Integer vehicleNumber) {
+    public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
     }
 
@@ -213,7 +213,7 @@ public class VehicleDTO implements Serializable {
     public String toString() {
         return "VehicleDTO{" +
             "id=" + getId() +
-            ", vehicleNumber=" + getVehicleNumber() +
+            ", vehicleNumber='" + getVehicleNumber() + "'" +
             ", vehicleType='" + getVehicleType() + "'" +
             ", capacity=" + getCapacity() +
             ", ownerShip='" + getOwnerShip() + "'" +

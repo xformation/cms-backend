@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -24,7 +25,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 public class Vehicle implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -32,7 +33,7 @@ public class Vehicle implements Serializable {
 
     @NotNull
     @Column(name = "vehicle_number", nullable = false)
-    private Integer vehicleNumber;
+    private String vehicleNumber;
 
     @NotNull
     @Column(name = "vehicle_type", nullable = false)
@@ -74,18 +75,20 @@ public class Vehicle implements Serializable {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    @OneToOne    @JoinColumn(unique = true)
+    @OneToOne
+    @JoinColumn(unique = true)
     private Insurance insurance;
 
-    @OneToOne    @JoinColumn(unique = true)
+    @OneToOne
+    @JoinColumn(unique = true)
     private Employee employee;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("vehicles")
     private TransportRoute transportRoute;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("vehicles")
     private Contract contract;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -97,16 +100,16 @@ public class Vehicle implements Serializable {
         this.id = id;
     }
 
-    public Integer getVehicleNumber() {
+    public String getVehicleNumber() {
         return vehicleNumber;
     }
 
-    public Vehicle vehicleNumber(Integer vehicleNumber) {
+    public Vehicle vehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
         return this;
     }
 
-    public void setVehicleNumber(Integer vehicleNumber) {
+    public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
     }
 
@@ -330,7 +333,7 @@ public class Vehicle implements Serializable {
     public String toString() {
         return "Vehicle{" +
             "id=" + getId() +
-            ", vehicleNumber=" + getVehicleNumber() +
+            ", vehicleNumber='" + getVehicleNumber() + "'" +
             ", vehicleType='" + getVehicleType() + "'" +
             ", capacity=" + getCapacity() +
             ", ownerShip='" + getOwnerShip() + "'" +

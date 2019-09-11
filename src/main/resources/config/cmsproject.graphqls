@@ -289,7 +289,7 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
-    searchVehicle(transportRouteId:Long, vehicleNumber:Int): [CmsVehicleVo!]!
+    searchVehicle(transportRouteId:Long, vehicleNumber:String): [CmsVehicleVo!]!
     searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
@@ -514,7 +514,7 @@ type CmsInvoice {
 
 type CmsVehicleVo {
     id: Long
-    vehicleNumber: Int
+    vehicleNumber: String
     vehicleType: String
     capacity: Long
     ownerShip: String
@@ -940,7 +940,7 @@ type Employee{
     disability: Disability
     drivingLicenceNo: String
     drivingLicenceValidity: Date
-    gender: String
+    gender: Gender
 	typeOfEmployment: String
 	managerId: Long
 	status: Status
@@ -1861,7 +1861,7 @@ input AddEmployeeInput{
     disability: Disability
     drivingLicenceNo: String
     drivingLicenceValidity: String
-    gender: String
+    gender: Gender
     typeOfEmployment: String
     managerId: Long
     status: Status
@@ -1897,7 +1897,7 @@ input UpdateEmployeeInput {
     disability: Disability
     drivingLicenceNo: String
     drivingLicenceValidity: String
-    gender: String
+    gender: Gender
     typeOfEmployment: String
     managerId: Long
     status: Status
@@ -3622,7 +3622,7 @@ type RemoveBookPayload{
 
  type Vehicle{
      id: Long!
-     vehicleNumber: Int!
+     vehicleNumber: String!
      vehicleType: String!
      capacity: Long!
      ownerShip: String!
@@ -3642,7 +3642,7 @@ type RemoveBookPayload{
 
 
 input AddVehicleInput{
-     vehicleNumber: Int!
+     vehicleNumber: String!
      vehicleType: String!
      capacity: Long!
      ownerShip: String!
@@ -3664,7 +3664,7 @@ type AddVehiclePayload{
 }
 input UpdateVehicleInput{
         id:Long!
-        vehicleNumber: Int!
+        vehicleNumber: String!
         vehicleType: String!
         capacity: Long!
         ownerShip: String!

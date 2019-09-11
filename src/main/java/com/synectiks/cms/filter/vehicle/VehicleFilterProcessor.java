@@ -13,7 +13,7 @@ public class VehicleFilterProcessor {
     @Autowired
     private VehicleService vehicleService;
 
-    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, Integer vehicleNumber) throws Exception {
+    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, String vehicleNumber) throws Exception {
         return vehicleService.searchVehicle(transportRouteId,vehicleNumber);
     }
 

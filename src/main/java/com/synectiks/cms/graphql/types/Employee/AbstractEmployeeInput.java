@@ -1,6 +1,7 @@
 package com.synectiks.cms.graphql.types.Employee;
 
 import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
 import com.synectiks.cms.domain.enumeration.Status;
 
@@ -30,7 +31,7 @@ public class AbstractEmployeeInput {
     private Disability disability;
     private String drivingLicenceNo;
     private Date drivingLicenceValidity;
-    private String gender;
+    private Gender gender;
     private String typeOfEmployment;
     private Long managerId;
     private Status status;
@@ -212,11 +213,11 @@ public class AbstractEmployeeInput {
         this.drivingLicenceValidity = drivingLicenceValidity;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

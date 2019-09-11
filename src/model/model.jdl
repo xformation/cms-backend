@@ -15,7 +15,7 @@ backgroundImageFileName String
 entity StudentExamReport{
 	marksObtained Integer required
 	comments String required
-	gOp Integer 
+	gOp Integer
 }
 
 entity Branch{
@@ -103,7 +103,7 @@ enum Caste{
 }
 
 enum Bloodgroup{
-  APOSITIVE,ANEGATIVE, ABPOSITIVE,ABNEGATIVE,OPOSITIVE,ONEGATIVE,BPOSITIVE,BNEGATIVE  
+  APOSITIVE,ANEGATIVE, ABPOSITIVE,ABNEGATIVE,OPOSITIVE,ONEGATIVE,BPOSITIVE,BNEGATIVE
 }
 
 enum RelationWithStudentEnum{
@@ -581,7 +581,7 @@ YES, NO
 }
 
 entity Vehicle{
-vehicleNumber Integer required
+vehicleNumber String required
 vehicleType String required
 capacity Long required
 ownerShip String required
@@ -631,17 +631,17 @@ panNo String
 passportNo String
 primaryContactNo String
 secondaryContactNo String
-employeeFatherName String 
-employeeMotherName String 
-primaryAddress String 
-secondaryAddress String 
-employeeAddress String 
-personalMailId String 
-officialMailId String 
+employeeFatherName String
+employeeMotherName String
+primaryAddress String
+secondaryAddress String
+employeeAddress String
+personalMailId String
+officialMailId String
 disability Disability
 drivingLicenceNo String
 drivingLicenceValidity LocalDate
-gender String
+gender Gender
 typeOfEmployment String
 managerId Long
 status Status
@@ -685,7 +685,7 @@ entity PaymentRequestResponse {
 	requestRu String
 	requestCheckSum String
 	requestMsg String
-	
+
 	responseMerchantID String
 	responseUniqueTransactionNo String
 	responseTxnReferenceNo String

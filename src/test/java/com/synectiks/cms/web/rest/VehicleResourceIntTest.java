@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -49,8 +50,8 @@ import com.synectiks.cms.domain.enumeration.Status;
 @SpringBootTest(classes = CmsApp.class)
 public class VehicleResourceIntTest {
 
-    private static final Integer DEFAULT_VEHICLE_NUMBER = 1;
-    private static final Integer UPDATED_VEHICLE_NUMBER = 2;
+    private static final String DEFAULT_VEHICLE_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_VEHICLE_NUMBER = "BBBBBBBBBB";
 
     private static final String DEFAULT_VEHICLE_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_VEHICLE_TYPE = "BBBBBBBBBB";
@@ -114,6 +115,9 @@ public class VehicleResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restVehicleMockMvc;
 
     private Vehicle vehicle;
@@ -126,7 +130,8 @@ public class VehicleResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -357,7 +362,7 @@ public class VehicleResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(vehicle.getId().intValue())))
-            .andExpect(jsonPath("$.[*].vehicleNumber").value(hasItem(DEFAULT_VEHICLE_NUMBER)))
+            .andExpect(jsonPath("$.[*].vehicleNumber").value(hasItem(DEFAULT_VEHICLE_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].vehicleType").value(hasItem(DEFAULT_VEHICLE_TYPE.toString())))
             .andExpect(jsonPath("$.[*].capacity").value(hasItem(DEFAULT_CAPACITY.intValue())))
             .andExpect(jsonPath("$.[*].ownerShip").value(hasItem(DEFAULT_OWNER_SHIP.toString())))
@@ -382,7 +387,7 @@ public class VehicleResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(vehicle.getId().intValue()))
-            .andExpect(jsonPath("$.vehicleNumber").value(DEFAULT_VEHICLE_NUMBER))
+            .andExpect(jsonPath("$.vehicleNumber").value(DEFAULT_VEHICLE_NUMBER.toString()))
             .andExpect(jsonPath("$.vehicleType").value(DEFAULT_VEHICLE_TYPE.toString()))
             .andExpect(jsonPath("$.capacity").value(DEFAULT_CAPACITY.intValue()))
             .andExpect(jsonPath("$.ownerShip").value(DEFAULT_OWNER_SHIP.toString()))
@@ -487,7 +492,7 @@ public class VehicleResourceIntTest {
 
         int databaseSizeBeforeDelete = vehicleRepository.findAll().size();
 
-        // Get the vehicle
+        // Delete the vehicle
         restVehicleMockMvc.perform(delete("/api/vehicles/{id}", vehicle.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

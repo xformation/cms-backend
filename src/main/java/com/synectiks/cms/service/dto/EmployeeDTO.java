@@ -1,10 +1,10 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
@@ -60,7 +60,7 @@ public class EmployeeDTO implements Serializable {
 
     private LocalDate drivingLicenceValidity;
 
-    private String gender;
+    private Gender gender;
 
     private String typeOfEmployment;
 
@@ -69,6 +69,7 @@ public class EmployeeDTO implements Serializable {
     private Status status;
 
     private MaritalStatus maritalStatus;
+
 
     private Long branchId;
 
@@ -250,11 +251,11 @@ public class EmployeeDTO implements Serializable {
         this.drivingLicenceValidity = drivingLicenceValidity;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 

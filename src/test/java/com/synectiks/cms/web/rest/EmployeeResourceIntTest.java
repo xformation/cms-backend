@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
 /**
@@ -115,8 +117,8 @@ public class EmployeeResourceIntTest {
     private static final LocalDate DEFAULT_DRIVING_LICENCE_VALIDITY = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DRIVING_LICENCE_VALIDITY = LocalDate.now(ZoneId.systemDefault());
 
-    private static final String DEFAULT_GENDER = "AAAAAAAAAA";
-    private static final String UPDATED_GENDER = "BBBBBBBBBB";
+    private static final Gender DEFAULT_GENDER = Gender.MALE;
+    private static final Gender UPDATED_GENDER = Gender.FEMALE;
 
     private static final String DEFAULT_TYPE_OF_EMPLOYMENT = "AAAAAAAAAA";
     private static final String UPDATED_TYPE_OF_EMPLOYMENT = "BBBBBBBBBB";
@@ -159,6 +161,9 @@ public class EmployeeResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restEmployeeMockMvc;
 
     private Employee employee;
@@ -171,7 +176,8 @@ public class EmployeeResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -545,7 +551,7 @@ public class EmployeeResourceIntTest {
 
         int databaseSizeBeforeDelete = employeeRepository.findAll().size();
 
-        // Get the employee
+        // Delete the employee
         restEmployeeMockMvc.perform(delete("/api/employees/{id}", employee.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -591,7 +597,7 @@ public class EmployeeResourceIntTest {
             .andExpect(jsonPath("$.[*].disability").value(hasItem(DEFAULT_DISABILITY.toString())))
             .andExpect(jsonPath("$.[*].drivingLicenceNo").value(hasItem(DEFAULT_DRIVING_LICENCE_NO)))
             .andExpect(jsonPath("$.[*].drivingLicenceValidity").value(hasItem(DEFAULT_DRIVING_LICENCE_VALIDITY.toString())))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER)))
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
             .andExpect(jsonPath("$.[*].typeOfEmployment").value(hasItem(DEFAULT_TYPE_OF_EMPLOYMENT)))
             .andExpect(jsonPath("$.[*].managerId").value(hasItem(DEFAULT_MANAGER_ID.intValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))

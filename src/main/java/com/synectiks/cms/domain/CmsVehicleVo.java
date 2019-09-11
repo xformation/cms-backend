@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class CmsVehicleVo implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
-    private Integer vehicleNumber;
+    private String vehicleNumber;
     private String vehicleType;
     private Long capacity;
     private String ownerShip;
@@ -40,11 +40,11 @@ public class CmsVehicleVo implements Serializable {
         this.id = id;
     }
 
-    public Integer getVehicleNumber() {
+    public String getVehicleNumber() {
         return vehicleNumber;
     }
 
-    public void setVehicleNumber(Integer vehicleNumber) {
+    public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
     }
 

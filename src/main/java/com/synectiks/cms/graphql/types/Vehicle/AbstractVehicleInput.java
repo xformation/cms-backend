@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class AbstractVehicleInput {
     private Long id;
-    private Integer vehicleNumber;
+    private String vehicleNumber;
     private String vehicleType;
     private Long capacity;
     private String ownerShip;
@@ -28,11 +28,11 @@ public class AbstractVehicleInput {
         this.id = id;
     }
 
-    public Integer getVehicleNumber() {
+    public String getVehicleNumber() {
         return vehicleNumber;
     }
 
-    public void setVehicleNumber(Integer vehicleNumber) {
+    public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
     }
 

@@ -72,7 +72,7 @@ class VehicleGatlingTest extends Simulation {
             .headers(headers_http_authenticated)
             .body(StringBody("""{
                 "id":null
-                , "vehicleNumber":"0"
+                , "vehicleNumber":"SAMPLE_TEXT"
                 , "vehicleType":"SAMPLE_TEXT"
                 , "capacity":null
                 , "ownerShip":"SAMPLE_TEXT"

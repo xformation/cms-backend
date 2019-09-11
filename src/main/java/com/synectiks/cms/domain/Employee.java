@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
@@ -15,6 +16,8 @@ import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Disability;
 
+import com.synectiks.cms.domain.enumeration.Gender;
+
 import com.synectiks.cms.domain.enumeration.Status;
 
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
@@ -29,7 +32,7 @@ import com.synectiks.cms.domain.enumeration.MaritalStatus;
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -102,8 +105,9 @@ public class Employee implements Serializable {
     @Column(name = "driving_licence_validity")
     private LocalDate drivingLicenceValidity;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    private String gender;
+    private Gender gender;
 
     @Column(name = "type_of_employment")
     private String typeOfEmployment;
@@ -121,11 +125,11 @@ public class Employee implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("employees")
     private Branch branch;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("employees")
     private TransportRoute transportRoute;
 
     @OneToOne(mappedBy = "employee")
@@ -414,16 +418,16 @@ public class Employee implements Serializable {
         this.drivingLicenceValidity = drivingLicenceValidity;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public Employee gender(String gender) {
+    public Employee gender(Gender gender) {
         this.gender = gender;
         return this;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
