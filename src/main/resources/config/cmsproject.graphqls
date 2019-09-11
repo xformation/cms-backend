@@ -1,6 +1,6 @@
 scalar Date
 
- 
+
 enum Status {
     ACTIVE
     DEACTIVE
@@ -194,8 +194,8 @@ type Query {
 
   studentAttendance(id: Long!): StudentAttendance!
   studentAttendances: [StudentAttendance!]!
-  
-    
+
+
   subject(id: Long!): Subject!
   subjects: [Subject!]!
 
@@ -301,7 +301,7 @@ type Query {
     getBatchById(batchId:Long): Batch!
 
 
-    
+
   getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
@@ -321,15 +321,16 @@ type Query {
     getAdmissionApplicationData(academicyearId:String): CmsAdmissionApplicationVo
 
 
-  
-  createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
-  createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
-  createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
-  createFeeDataCache: FeeDataCache!
-  createVehicleDataCache: VehicleDataCache!
+
+    createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
+    createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
+    createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
+    createFeeDataCache: FeeDataCache!
+    createVehicleDataCache: VehicleDataCache!
     createAdmissionDataCache: AdmissionDataCache!
-  createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
-  createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
+    createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
+    createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
+    createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
 
 }
 
@@ -345,64 +346,64 @@ type FeeSetupDataCache {
 }
 
 type CmsFacility {
-	id: Long	
-	name: String	
-	status: Status	
+	id: Long
+	name: String
+	status: Status
     startDate: Date
     endDate: Date
     suspandStartDate: Date
     suspandEndDate: Date
 	academicYear: AcademicYear
     branch: Branch
-	strStartDate: String 
-	strEndDate: String 
-	strSuspandStartDate: String 
-	strSuspandEndDate: String 
+	strStartDate: String
+	strEndDate: String
+	strSuspandStartDate: String
+	strSuspandEndDate: String
 }
 
 type CmsFeeCategory{
-	id: Long   
-    categoryName: String 
-    description: String 
-    status: Status 
-    createdBy:	  String 
-    createdOn:	  Date   
-    updatedBy:	  String 
-    updatedOn:	  Date   
-    startDate:	  Date   
-    endDate:	  Date   
-    branchId:	  Long   
-    strCreatedOn: String 
-    strUpdatedOn: String 
-    strStartDate: String 
-    strEndDate:	  String 
-    branch:	  Branch 
+	id: Long
+    categoryName: String
+    description: String
+    status: Status
+    createdBy:	  String
+    createdOn:	  Date
+    updatedBy:	  String
+    updatedOn:	  Date
+    startDate:	  Date
+    endDate:	  Date
+    branchId:	  Long
+    strCreatedOn: String
+    strUpdatedOn: String
+    strStartDate: String
+    strEndDate:	  String
+    branch:	  Branch
 }
 
 type CmsFeeDetails {
-    id: Long 
-    feeParticularsName: String 
-    feeParticularDesc:	String 
+    id: Long
+    feeParticularsName: String
+    feeParticularDesc:	String
     studentType: StudentTypeEnum
     gender: Gender
     amount: Float
-    status: Status 
-    createdBy: String 
+    status: Status
+    createdBy: String
     createdOn: Date
     updatedBy: String
-    updatedOn: Date 
-    startDate: Date 
-    endDate:   Date 
+    updatedOn: Date
+    startDate: Date
+    endDate:   Date
     feeCategory: FeeCategory
     batch: Batch
     facility: Facility
     transportRoute: TransportRoute
     department: Department
 
-    strCreatedOn: String 
-    strUpdatedOn: String 
-    strStartDate: String 
-    strEndDate:	  String  
+    strCreatedOn: String
+    strUpdatedOn: String
+    strStartDate: String
+    strEndDate:	  String
 }
 
 type ExamFilterDataCache {
@@ -417,7 +418,7 @@ type ExamFilterDataCache {
 }
 type FeeDataCache {
 	colleges: [College]
-	branches: [Branch]	
+	branches: [Branch]
 }
 type VehicleDataCache{
      vehicles: [Vehicle]
@@ -478,7 +479,7 @@ type CmsCourseEnumVo{
     description: String
 }
 
-type CmsInvoice { 
+type CmsInvoice {
 	totalInvoice: Long!
 	totalPaidInvoice: Long!
 	totalUnPaidInvoice: Long!
@@ -508,7 +509,7 @@ type CmsInvoice {
     strPaymentDate: String
     strNextPaymentDate: String
     strUpdatedOn: String
-    
+
 }
 
 type CmsVehicleVo {
@@ -796,7 +797,7 @@ type  Library{
        id: Long!
        feeParticularsName: String!
        feeParticularDesc: String!
-       studentType: StudentTypeEnum 
+       studentType: StudentTypeEnum
        gender: Gender
        amount: Long
        status: Status
@@ -811,7 +812,7 @@ type  Library{
        facility: Facility
        transportRoute: TransportRoute
        department: Department
-       
+
       }
 
 type Country{
@@ -1272,7 +1273,7 @@ type CmsStudentVo {
        branch: Branch
        department: Department
        strDateOfBirth: String
-       departmentId: Long 
+       departmentId: Long
        batchId: Long
        sectionId: Long
        branchId: Long
@@ -1669,8 +1670,18 @@ type Mutation {
 	saveDueDatePaymentRemLateFee(inputd: UpdateDueDateInput, inputp: UpdatePaymentRemainderInput, inputl: UpdateLateFeeInput): QueryResult!
 	getFeeSettingData(branchId: Long): CmsFeeSettingsVo!
 	getFeeSettingDueDateData(branchId: Long, paymentType: String): CmsFeeSettingsVo!
-}
 
+}
+type LibraryFilterDataCache{
+    branches: [Branch]
+	departments: [Department]
+	batches: [Batch]
+	sections: [Section]
+	semesters: [CmsSemesterVo]
+	subjects: [Subject]
+	academicExamSettings : [AcademicExamSetting]
+	libraries: [Library]
+}
 type CmsFeeCategory {
 	 id: Long
 	 categoryName: String
@@ -1710,7 +1721,7 @@ type CmsFeeSettingsVo {
 	percentCharges: String
 	lateFeeFrequency: String
 	lateFeeRepeatDays: Int
-	
+
 	prId: Long
     isAutoRemainder: String
     isFirstPaymentRemainder: String
@@ -1722,7 +1733,7 @@ type CmsFeeSettingsVo {
     overDuePaymentRemainderDays: Int
     isRemainderRecipients: String
     remainderRecipients: String
-    
+
     dueDateId: Long
     paymentMethod: String
     installments: Int
@@ -2261,7 +2272,7 @@ type RemoveAdmissionPersonalDetailsPayload {
 input AddFeeDetailsInput {
      feeParticularsName: String!
    	 feeParticularDesc: String!
-   	 studentType: StudentTypeEnum 
+   	 studentType: StudentTypeEnum
    	 gender: Gender
    	 amount: Float
    	 status: Status
@@ -2276,8 +2287,8 @@ input AddFeeDetailsInput {
      facilityId: Long
      transportRouteId: Long
      departmentId: Long
-     
-     
+
+
 }
 type AddFeeDetailsPayload {
     feeDetails: FeeDetails!
@@ -2286,7 +2297,7 @@ input UpdateFeeDetailsInput {
      id: Long!
      feeParticularsName: String!
    	 feeParticularDesc: String!
-   	 studentType: StudentTypeEnum 
+   	 studentType: StudentTypeEnum
    	 gender: Gender
    	 amount: Long
    	 status: Status
@@ -2321,7 +2332,7 @@ input AddFacilityInput {
     suspandEndDate: Date
     academicyearId: Long
     branchId: Long
-    
+
 }
 type AddFacilityPayload {
     facility: Facility!
@@ -3369,7 +3380,7 @@ type RemoveCountryPayload {
 }
 input AddDueDateInput{
     paymentMethod: String!
-    installments:Int 
+    installments:Int
     dayDesc:String
     paymentDay:Int
     frequency:Frequency

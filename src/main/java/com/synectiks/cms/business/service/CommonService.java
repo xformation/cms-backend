@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.synectiks.cms.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,41 +24,6 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.config.GlobalConfig;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsAcademicYearVo;
-import com.synectiks.cms.domain.CmsCourseEnumVo;
-import com.synectiks.cms.domain.CmsFacility;
-import com.synectiks.cms.domain.CmsFeeCategory;
-import com.synectiks.cms.domain.CmsFeeDetails;
-import com.synectiks.cms.domain.CmsGenderVo;
-import com.synectiks.cms.domain.CmsNotificationsVo;
-import com.synectiks.cms.domain.CmsSemesterVo;
-import com.synectiks.cms.domain.CmsStudentTypeVo;
-import com.synectiks.cms.domain.CmsTermVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Config;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Notifications;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
@@ -142,25 +108,25 @@ public class CommonService {
 
     @Autowired
     private StudentRepository studentRepository;
-    
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
     private TransportRouteRepository transportRouteRepository;
-    
+
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
-    
+
 //    @Autowired
 //    private StudentRepository studentRepository;
 
     @Autowired
     private NotificationsRepository notificationsRepository;
-    
+
     @Autowired
     private LectureRepository lectureRepository;
-    
+
     public AcademicYear findAcademicYearByYear(String academicYear) {
         if(CommonUtil.isNullOrEmpty(academicYear)) {
             return null;
@@ -195,7 +161,7 @@ public class CommonService {
         }
         return null;
     }
-    
+
     public Department getDepartmentById(Long departmentId) {
         if(departmentId == null) {
             return null;
@@ -626,7 +592,34 @@ public class CommonService {
         logger.debug("Returning list of teach based on teacher id from JPA criteria query. Total records : "+teachList.size());
         return teachList;
     }
+    public List<Library> getLibraryForCriteria(List<Subject> subj, List<Batch> batch){
+        if(subj.size() == 0 || batch.size() == 0 ) {
+            logger.warn("Either department or batch list is empty. Returning empty AcademicExamSetting list.");
+            logger.warn("Total records in department list: "+subj.size()+", total records in batch list: "+batch.size());
+            return Collections.emptyList();
+        }
 
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Library> query = cb.createQuery(Library.class);
+        Root<Library> root = query.from(Library.class);
+        In<Long> inSubject = cb.in(root.get("subject"));
+        for (Subject dt : subj) {
+            inSubject.value(dt.getId());
+        }
+        In<Long> inBatch = cb.in(root.get("batch"));
+        for (Batch bth : batch) {
+            inBatch.value(bth.getId());
+        }
+//        In<Long> inSection = cb.in(root.get("section"));
+//        for (Section sec : secList) {
+//            inSection.value(sec.getId());
+//        }
+        CriteriaQuery<Library> select = query.select(root).where(cb.and(inSubject), cb.and(inBatch));
+        TypedQuery<Library> typedQuery = this.entityManager.createQuery(select);
+        List<Library> examsList = typedQuery.getResultList();
+        logger.debug("Returning list of exams from JPA criteria query. Total records : "+examsList.size());
+        return examsList;
+    }
     /**
      * AttendanceMaster for teacher attendance
      * @param batchList
@@ -707,7 +700,7 @@ public class CommonService {
         }
 //        Date dt = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
         LocalDate dt = DateFormatUtil.convertStringToLocalDate(lectureDate, CmsConstants.DATE_FORMAT_dd_MM_yyyy);
-        
+
         CriteriaQuery<Lecture> select = query.select(root).where(cb.and(inAtndMstr), cb.and(cb.equal(root.get("lecDate"), dt)));
         TypedQuery<Lecture> typedQuery = this.entityManager.createQuery(select);
         List<Lecture> lectureList = typedQuery.getResultList();
@@ -951,12 +944,12 @@ public class CommonService {
         logger.debug("Returning list of facilities from JPA criteria query. Total records : "+facilityList.size());
         return ls;
     }
-    
+
     public Config createUserConfig(String userName) {
 		logger.debug("Creating user specific config object");
 		Config config = new Config();
 		config.setLoggedInUser(userName);
-		
+
         Student st = new Student();
         Teacher th = new Teacher();
         Employee em = new Employee();
@@ -985,7 +978,7 @@ public class CommonService {
         	config.setCity(teacher.get().getBranch().getCity());
         	config.setBranch(employee.get().getBranch());
         }
-        
+
 //        if(config.getCollege() == null) {
 //	        List<College> cl = collegeRepository.findAll();
 //	        config.setCollege((cl != null && cl.size() > 1) ? cl.get(0) : null);
@@ -1003,10 +996,10 @@ public class CommonService {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
         }
         config.setBranchList(this.branchRepository.findAll());
-        
+
         return config;
 	}
-    
+
     public Config createUserConfigForAdmin(String userName) {
 		logger.debug("Creating admin user specific config object");
 		Config config = new Config();
@@ -1024,10 +1017,10 @@ public class CommonService {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
         }
         config.setBranchList(this.branchRepository.findAll());
-        
+
         return config;
 	}
-    
+
     public List<CmsNotificationsVo> getNotifications(){
     	logger.debug("Getting notifications data");
     	AcademicYear ay = getActiveAcademicYear();
@@ -1058,7 +1051,7 @@ public class CommonService {
 		List<Student> list = this.studentRepository.findAll(Example.of(student));
 		return list;
 	}
-    
+
     public List<Subject>getAllSubjectsOfStudent(Student student){
 		Subject subject = new Subject();
 		subject.setDepartment(student.getDepartment());
@@ -1066,7 +1059,7 @@ public class CommonService {
 		List<Subject> list = this.subjectRepository.findAll(Example.of(subject));
 		return list;
 	}
-    
+
     public long getTotalLecturesScheduledForStudent(Student student) {
 		StudentAttendance sa = new StudentAttendance();
 		sa.setStudent(student);
@@ -1074,38 +1067,38 @@ public class CommonService {
 		logger.debug("Total lectures scheduled for student : "+student.getStudentEmailAddress()+" are : "+count);
 		return count;
 	}
-    
+
     public List<StudentAttendance> getTotalLecturesConductedForStudent(Student student, LocalDate dt) throws Exception{
-        
+
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<StudentAttendance> query = cb.createQuery(StudentAttendance.class);
         Root<StudentAttendance> root = query.from(StudentAttendance.class);
         List<Lecture> lecList = getLectures(dt);
-        
+
         In<Long> inLecture = cb.in(root.get("lecture"));
         for (Lecture lec : lecList) {
         	inLecture.value(lec.getId());
         }
-        
+
         CriteriaQuery<StudentAttendance> select = query.select(root).where(cb.and(inLecture), cb.and(cb.equal(root.get("student"), student.getId())));
         TypedQuery<StudentAttendance> typedQuery = this.entityManager.createQuery(select);
         List<StudentAttendance> lectureList = typedQuery.getResultList();
         logger.debug("Lecture date : "+dt+". Student id : "+student.getId()+". Student email : "+student.getStudentEmailAddress()+". Total lectures conducted till date for given : "+lectureList.size());
         return lectureList;
     }
-    
+
     public List<Lecture> getLectures(LocalDate dt){
     	CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Lecture> query = cb.createQuery(Lecture.class);
         Root<Lecture> root = query.from(Lecture.class);
-        
+
         CriteriaQuery<Lecture> select = query.select(root).where(cb.lessThanOrEqualTo(root.get("lecDate"), dt));
         TypedQuery<Lecture> typedQuery = this.entityManager.createQuery(select);
         List<Lecture> lectureList = typedQuery.getResultList();
         logger.debug("Lecture date : "+dt+". Total lectures conducted till date : "+lectureList.size());
         return lectureList;
     }
-    
+
     public List<Teacher> getAllActiveTeachers(){
     	Teacher teacher = new Teacher();
     	teacher.setStatus(Status.ACTIVE);
@@ -1113,7 +1106,7 @@ public class CommonService {
     	logger.debug("Total teachers irrespective of branches : "+list.size());
     	return list;
     }
-    
+
     public List<Teach> getAllSubjectsOfTeacher(Teacher th){
     	Teach teach = new Teach();
     	teach.setTeacher(th);
@@ -1121,19 +1114,19 @@ public class CommonService {
     	logger.debug("Total subjects teach by teacher "+th.getTeacherName() + " are : "+list.size());
     	return list;
     }
-    
+
     public List<Lecture> getAllLecturesScheduledForTeacher(Teacher th, Subject sub) {
     	AcademicYear ay = this.getActiveAcademicYear();
     	Teach teach = new Teach();
     	teach.setTeacher(th);
     	teach.setSubject(sub);
     	List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
-    	
+
     	@SuppressWarnings("unchecked")
 		List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
     			.setParameter("th", thList)
     			.getResultList();
-    	
+
     	@SuppressWarnings("unchecked")
 		List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
     			.setParameter("startDate", ay.getStartDate())
@@ -1142,27 +1135,27 @@ public class CommonService {
     			.getResultList();
 		return list;
 	}
-    
-    
+
+
     public long getTotalLecturesScheduledForTeacher(Teacher th, Subject sub) {
     	List<Lecture> list =  getAllLecturesScheduledForTeacher(th, sub);
     	logger.debug("Teahcer : "+th.getTeacherName()+", Subject : "+sub.getSubjectCode()+", Total lecture scheduled : "+list.size());
     	return list.size();
     }
-    
-    
+
+
     public List<Lecture> getTotalLecturesConductedForTeacher(Teacher th, Subject sub, LocalDate dt) throws Exception{
     	AcademicYear ay = this.getActiveAcademicYear();
     	Teach teach = new Teach();
     	teach.setTeacher(th);
     	teach.setSubject(sub);
     	List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
-    	
+
     	@SuppressWarnings("unchecked")
 		List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
     			.setParameter("th", thList)
     			.getResultList();
-    	
+
     	@SuppressWarnings("unchecked")
 		List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
     			.setParameter("startDate", ay.getStartDate())
@@ -1171,7 +1164,7 @@ public class CommonService {
     			.getResultList();
 		return list;
     }
-    
+
 //    public static void main(String a[]) {
 //        LocalDate ld = LocalDate.now();
 //        System.out.println(ld);
@@ -1180,4 +1173,4 @@ public class CommonService {
 //        LocalDate localDate = LocalDate.parse(strLd, DateTimeFormatter.ofPattern("d-MM-yyyy"));
 //        System.out.println(localDate);
 //    }
-} 
+}
