@@ -13,6 +13,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
+import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,61 +32,6 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicHistory;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Book;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.domain.CmsFeeCategory;
-import com.synectiks.cms.domain.CmsFeeDetails;
-import com.synectiks.cms.domain.CmsFeeSettingsVo;
-import com.synectiks.cms.domain.CmsInsurance;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.CmsLibrary;
-import com.synectiks.cms.domain.CmsStudentVo;
-import com.synectiks.cms.domain.CmsVehicleVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.StudentExamReport;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
@@ -497,6 +445,8 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private InvoiceFilterProcessor invoiceFilterProcessor;
+    @Autowired
+    private EmployeeFilterProcessor employeeFilterProcessor;
 
     @Autowired
     private AdmissionEnquiryProcessor admissionEnquiryProcessor;
@@ -684,9 +634,9 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddAdmissionApplicationPayload addAdmissionApplication(AddAdmissionApplicationInput input) {
-    	
+
     	AdmissionApplication admissionApplication = CommonUtil.createCopyProperties(input, AdmissionApplication.class);
-        
+
     	if(input.getAdmissionEnquiryId() != null) {
     		Optional<AdmissionEnquiry> admissionEnquiry = admissionEnquiryRepository.findById(input.getAdmissionEnquiryId());
     		admissionApplication.setAdmissionEnquiry(admissionEnquiry.isPresent() ? admissionEnquiry.get() : null);
@@ -727,7 +677,7 @@ public class Mutation implements GraphQLMutationResolver {
     		Optional<AcademicYear> academicYear = academicYearRepository.findById(input.getAcademicyearId());
     		admissionApplication.setAcademicyear(academicYear.isPresent() ? academicYear.get() : null);
     	}
-        
+
         admissionApplication.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(input.getDateOfBirth()));
         admissionApplication.setAdmissionDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getAdmissionDate()));
         admissionApplication.setStatus(input.getStatus());
@@ -1278,13 +1228,13 @@ public class Mutation implements GraphQLMutationResolver {
     	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
 //    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
     	String temp = "src/main/webapp/static/images";
-    	
+
     	String filePath = Paths.get("", temp).toString();
     	String fileName = String.valueOf(student.getId());
     	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
 //    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
     	String absFilePath = filePath+ File.separator+fileName+"."+ext;
-    	
+
     	student.setUploadPhoto(absFilePath);
     	logger.info("Saving student image. File path: "+absFilePath);
     	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, null, null);
@@ -3238,7 +3188,7 @@ public class Mutation implements GraphQLMutationResolver {
         caa.setDateOfBirth(null);
         caa.setStrDateOfBirth(dt);
         logger.debug("date of birth : "+dt);
-        
+
        return caa;
     }
 
@@ -4053,6 +4003,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     public List<CmsVehicleVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
         return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(filter));
+    }
+    public List<CmsEmployeeVo> getEmployeeList(EmployeeListFilterInput filter) throws Exception {
+        return Lists.newArrayList(employeeFilterProcessor.searchEmployee(filter));
     }
 
     public Long getTotalReceived( long academicyearId) {

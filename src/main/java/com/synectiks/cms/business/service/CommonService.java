@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,27 +30,6 @@ import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
 import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.graphql.types.gender.Gender;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.EmployeeRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.NotificationsRepository;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -90,6 +70,8 @@ public class CommonService {
 
     @Autowired
     private CollegeRepository collegeRepository;
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
     @Autowired
     private StateRepository stateRepository;
@@ -183,6 +165,17 @@ public class CommonService {
         }
         return null;
     }
+    public Vehicle getVehicleById(Long vehicleId) {
+        if(vehicleId == null) {
+            return null;
+        }
+        Optional<Vehicle> newVe = this.vehicleRepository.findById(vehicleId);
+        if(newVe.isPresent()) {
+            return newVe.get();
+        }
+        return null;
+    }
+
 
     public AcademicExamSetting getAcademicExamSettingById(Long academicExamSettingId) {
         if(academicExamSettingId == null) {

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
 import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
@@ -122,6 +123,8 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private VehicleFilterProcessor vehicleFilterProcessor;
+    @Autowired
+    private EmployeeFilterProcessor employeeFilterProcessor;
 
     @Autowired
     private BookfilterProcessor bookfilterProcessor;
@@ -636,6 +639,9 @@ public class Query implements GraphQLQueryResolver {
     public List<CmsVehicleVo> searchVehicle(Long transportRouteId, String vehicleNumber) throws Exception {
         return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(transportRouteId, vehicleNumber));
     }
+    public List<CmsEmployeeVo> searchEmployee(Long vehicleId, Long employeeId ,String employeeName) throws Exception {
+        return Lists.newArrayList(employeeFilterProcessor.searchEmployee(vehicleId, employeeId,employeeName));
+    }
 
     public List<Library>searchBook(String bookTitle,String author,Long batchId,Long subjectId){
         return (List<Library>) Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,batchId,subjectId));
@@ -833,6 +839,15 @@ public class Query implements GraphQLQueryResolver {
         cache.setTransportRoutes(transportRouteList);
         return cache;
     }
+    public EmployeeDataCache createEmployeeDataCache() throws Exception{
+        List<Employee> employeeList = this.employeeRepository.findAll();
+        List<Vehicle> vehicleList = this.vehicleRepository.findAll();
+        EmployeeDataCache cache = new EmployeeDataCache();
+        cache.setEmployees(employeeList);
+        cache.setVehicles(vehicleList);
+        return cache;
+    }
+
 
     public AdmissionDataCache createAdmissionDataCache() throws  Exception{
         List<Department> departmentList = this.departmentRepository.findAll();

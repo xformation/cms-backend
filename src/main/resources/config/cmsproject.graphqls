@@ -290,6 +290,7 @@ type Query {
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
     searchVehicle(transportRouteId:Long, vehicleNumber:String): [CmsVehicleVo!]!
+    searchEmployee(vehicleId:Long, employeeId:Long, employeeName:String): [CmsEmployeeVo!]!
     searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
@@ -327,6 +328,7 @@ type Query {
     createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
     createFeeDataCache: FeeDataCache!
     createVehicleDataCache: VehicleDataCache!
+    createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
     createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
@@ -423,6 +425,10 @@ type FeeDataCache {
 type VehicleDataCache{
      vehicles: [Vehicle]
      transportRoutes: [TransportRoute]
+}
+type EmployeeDataCache{
+    employees: [Employee]
+    vehicles: [Vehicle]
 }
 type AdmissionDataCache {
     branches: [Branch]
@@ -533,6 +539,43 @@ type CmsVehicleVo {
     insuranceId: Long
     employeeId: Long
     transportRouteId: Long
+}
+type CmsEmployeeVo{
+     id:Long
+     employeeName:String
+     designation:String
+     joiningDate:Date
+     jobEndDate:Date
+     resignationDate:Date
+     resignationAcceptanceDate:Date
+     aadharNo:String
+     panNo:String
+     passportNo:String
+     primaryContactNo:String
+     secondaryContactNo:String
+     employeeFatherName:String
+     employeeMotherName:String
+     primaryAddress:String
+     secondaryAddress:String
+     employeeAddress:String
+     personalMailId:String
+     officialMailId:String
+     disability:Disability
+     drivingLicenceNo:String
+     drivingLicenceValidity:Date
+     gender:String
+     typeOfEmployment:String
+     managerId:Long
+     status:Status
+     maritalStatus:MaritalStatus
+     strjoiningDate:String
+     strjobEndDate:String
+     strresignationDate:String
+     strresignationAcceptanceDate:String
+     branchId:Long
+     transportRouteId:Long
+     vehicleId:Long
+
 }
 
 type CmsLibrary {
@@ -1663,6 +1706,7 @@ type Mutation {
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [CmsStudentVo]!
 	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
+	getEmployeeList(filter: EmployeeListFilterInput!): [CmsEmployeeVo]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -1753,6 +1797,11 @@ input StudentListFilterInput {
 input VehicleListFilterInput {
    transportRouteId: String
    vehicleId: String
+}
+
+input EmployeeListFilterInput {
+   vehicleId: String!
+   employeeId: String!
 }
 
 input ExamListFilterInput {
