@@ -984,13 +984,13 @@ public class CommonService {
 //	        config.setCollege((cl != null && cl.size() > 1) ? cl.get(0) : null);
 //        }
         config.setCollege(GlobalConfig.CONFIG.getCollege());
-        AcademicYear academicYear = new AcademicYear();
-        academicYear.setStatus(Status.ACTIVE);
-        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
-        if(oa.isPresent()) {
-        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(oa.get(), CmsAcademicYearVo.class);
-        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(oa.get().getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(oa.get().getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        AcademicYear ay = this.getActiveAcademicYear();
+//        academicYear.setStatus(Status.ACTIVE);
+//        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
+        if(ay != null) {
+        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         	config.setCmsAcademicYearVo(vo);
         }else {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
@@ -1005,13 +1005,14 @@ public class CommonService {
 		Config config = new Config();
 		config.setLoggedInUser(userName);
 		config.setCollege(GlobalConfig.CONFIG.getCollege());
-        AcademicYear academicYear = new AcademicYear();
-        academicYear.setStatus(Status.ACTIVE);
-        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
-        if(oa.isPresent()) {
-        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(oa.get(), CmsAcademicYearVo.class);
-        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(oa.get().getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(oa.get().getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//        AcademicYear academicYear = new AcademicYear();
+//        academicYear.setStatus(Status.ACTIVE);
+//        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
+		AcademicYear ay = this.getActiveAcademicYear();
+		if(ay != null) {
+        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         	config.setCmsAcademicYearVo(vo);
         }else {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());

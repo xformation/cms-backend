@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.Config;
 import com.synectiks.cms.repository.CollegeRepository;
@@ -37,8 +36,8 @@ public class GlobalConfig {
         	CONFIG.setCollege(collegeList.get(0));
         }
         
-        CmsConstants.USERS_CACHE.put("admin", commonService.createUserConfigForAdmin("admin"));
-        CmsConstants.USERS_CACHE.put("sysadmin", commonService.createUserConfigForAdmin("admin"));
+//        CmsConstants.USERS_CACHE.put("admin", commonService.createUserConfigForAdmin("admin"));
+//        CmsConstants.USERS_CACHE.put("cmsadmin", commonService.createUserConfigForAdmin("cmsadmin"));
 	}
     
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * A Vo for the AcademicYear entity.
+ * A Vo for the various dashboards.
  */
 public class CmsDashboardVo implements Serializable {
 

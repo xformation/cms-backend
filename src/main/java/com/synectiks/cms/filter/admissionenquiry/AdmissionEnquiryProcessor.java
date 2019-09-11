@@ -1,7 +1,9 @@
 package com.synectiks.cms.filter.admissionenquiry;
 
 import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
+import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.AdmissionEnquiry;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 import org.slf4j.Logger;
@@ -9,7 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Component
 public class AdmissionEnquiryProcessor {
@@ -20,8 +26,12 @@ public class AdmissionEnquiryProcessor {
     private Long totalFollowup = 0L;
     private Long totalDeclined = 0L;
     private Long totalConverted = 0L;
+    
     @Autowired
     private CmsAdmissionEnquiryService cmsAdmissionEnquiryService;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
 
     public Long getTotalAdmissions( Long branchId ) {
@@ -88,7 +98,21 @@ public class AdmissionEnquiryProcessor {
     public void setTotalConverted(Long totalConverted) {
         this.totalConverted = totalConverted;
     }
-
+    
+    
+    public Long getTotalEnquiry(Branch branch, AcademicYear academicYear, EnquiryStatus enqStatus) {
+    	Object result = this.entityManager.createQuery("select count(ae.status) from AdmissionEnquiry ae where ae.enquiryDate between :startDate and :endDate and ae.status = :enqStatus and ae.branch = :br ")
+    			.setParameter("startDate", academicYear.getStartDate())
+    			.setParameter("endDate", academicYear.getEndDate())
+    			.setParameter("enqStatus", enqStatus)
+    			.setParameter("br", branch)
+    			.getSingleResult();
+    	Long totalConverted = (Long)result;
+    	logger.debug("Total converted enquiries: "+totalConverted);
+    	
+    	return totalConverted ;
+    }
+    
     @Override
     public String toString() {
         return "AdmissionEnquiryProcessor{" +
