@@ -61,9 +61,9 @@ public class FeeInfluxPush implements InfluxPush {
 						.tag("Tpending", String.valueOf(amtPending))
 						.tag("Toverdue", String.valueOf(amtOverDue))
 						.addField("BranchName", branch.getBranchName())
-						.addField("Collected", String.valueOf(amtCollected))
-						.addField("Pending", String.valueOf(amtPending))
-						.addField("Overdue", String.valueOf(amtOverDue))
+						.addField("Collected", amtCollected)
+						.addField("Pending", amtPending)
+						.addField("Overdue", amtOverDue)
 						.addField("time", tm)
 						.build();
 			influxDB.write(applicationProperties.getInfluxDb(), "autogen", point);

@@ -59,9 +59,9 @@ public class AdmissionEnquiryInfluxPush implements InfluxPush {
 						.tag("Tdeclined", String.valueOf(totalDeclined))
 						.tag("Tfollowup", String.valueOf(totalFollowUp))
 						.addField("BranchName", branch.getBranchName())
-						.addField("Converted", String.valueOf(totalConverted))
-						.addField("Declined", String.valueOf(totalDeclined))
-						.addField("Followup", String.valueOf(totalFollowUp))
+						.addField("Converted", totalConverted)
+						.addField("Declined", totalDeclined)
+						.addField("Followup", totalFollowUp)
 						.addField("time", tm)
 						.build();
 			influxDB.write(applicationProperties.getInfluxDb(), "autogen", point);

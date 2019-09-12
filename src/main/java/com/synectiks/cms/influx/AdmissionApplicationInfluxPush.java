@@ -105,7 +105,7 @@ public class AdmissionApplicationInfluxPush implements InfluxPush {
 							.tag("TrecordCount", cnt)
 							.addField("BranchName", apvo.getBranch().getBranchName())
 							.addField("AdmissionStatus", ase.name().toString())
-							.addField("RecordCount", cnt)
+							.addField("RecordCount", Integer.parseInt(cnt))
 							.addField("time", tm)
 							.build();
 				influxDB.write(applicationProperties.getInfluxDb(), "autogen", point);
