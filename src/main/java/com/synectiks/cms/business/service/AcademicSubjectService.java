@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsSubjectVo;
 import com.synectiks.cms.domain.Department;
@@ -27,6 +28,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.service.util.CommonUtil;
@@ -42,6 +44,10 @@ public class AcademicSubjectService {
 	@Autowired
 	private TeachRepository teachRepository;
 
+	@Autowired
+	private AttendanceMasterRepository attendanceMasterRepository;
+
+	
 	@Autowired
 	CommonService commonService;
 	
@@ -273,6 +279,13 @@ public class AcademicSubjectService {
 			teach.setDesc(dto.getSubjectCode());
 			this.teachRepository.save(teach);
 			logger.info("Teach data saved.");
+			
+			AttendanceMaster am = new AttendanceMaster();
+			am.setTeach(teach);
+			am.setBatch(bt);
+			am = this.attendanceMasterRepository.save(am);
+			logger.info("Attendance Master data saved.");
+			
 		}
 		logger.info("Subject and Teach records saved into database successfully.");
 		
@@ -313,6 +326,13 @@ public class AcademicSubjectService {
 		teach.setTeacher(teacher);
 		teach.setDesc(cmsSubjectVo.getSubjectCode());
 		teach = this.teachRepository.save(teach);
+		logger.info("Teach data saved.");
+		
+		AttendanceMaster am = new AttendanceMaster();
+		am.setTeach(teach);
+		am.setBatch(bt);
+		am = this.attendanceMasterRepository.save(am);
+		logger.info("Attendance Master data saved.");
 		
 		cmsSubjectVo = CommonUtil.createCopyProperties(sub, CmsSubjectVo.class);
 		cmsSubjectVo.setId(sub.getId());
