@@ -31,11 +31,14 @@ public class EmployeeService {
         {
             employee.setEmployeeName(employeeName);
         }
+
         if(vehicleId != null) {
             Vehicle vehicle = new Vehicle();
             vehicle.setId(vehicleId);
             employee.setVehicle(vehicle);
         }
+
+
         Example<Employee> example = Example.of(employee);
         List<Employee> list = this.employeeRepository.findAll(example);
         List<CmsEmployeeVo> ls = new ArrayList<>();
@@ -53,12 +56,15 @@ public class EmployeeService {
     }
     public List<CmsEmployeeVo> searchEmployee(EmployeeListFilterInput filter) throws Exception{
         Employee employee = new Employee();
-        if(!CommonUtil.isNullOrEmpty(filter.getEmployeeId())) {
-            Vehicle vehicle = this.commonService.getVehicleById(Long.valueOf(filter.getVehicleId()));
-            if(vehicle != null) {
-                employee.setVehicle(vehicle);
-            }
+
+        if(!CommonUtil.isNullOrEmpty(filter.getVehicleId())) {
+           Vehicle vehicle = new Vehicle();
+           if(vehicle != null){
+               vehicle.setId(Long.valueOf(filter.getVehicleId()));
+               employee.setVehicle(vehicle);
+           }
         }
+
         if(!CommonUtil.isNullOrEmpty(filter.getEmployeeId())) {
             if (employee != null) {
                 employee.setId(Long.valueOf(filter.getEmployeeId()));

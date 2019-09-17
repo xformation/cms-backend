@@ -290,7 +290,7 @@ type Query {
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
     searchVehicle(transportRouteId:Long, vehicleNumber:String): [CmsVehicleVo!]!
-    searchEmployee(vehicleId:Long, employeeId:Long, employeeName:String): [CmsEmployeeVo!]!
+    searchEmployee(employeeId:Long, vehicleId:Long, employeeName:String): [CmsEmployeeVo!]!
     searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
 
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
@@ -572,6 +572,10 @@ type CmsEmployeeVo{
      strjobEndDate:String
      strresignationDate:String
      strresignationAcceptanceDate:String
+     strdrivingLicenceValidity:String
+     transportRoute: TransportRoute
+     branch: Branch
+     vehicle: Vehicle
      branchId:Long
      transportRouteId:Long
      vehicleId:Long
@@ -990,6 +994,7 @@ type Employee{
 	maritalStatus: MaritalStatus
 	branch: Branch!
 	transportRoute: TransportRoute!
+	vehicle: Vehicle
 }
 
 enum MaritalStatus{
@@ -1800,8 +1805,8 @@ input VehicleListFilterInput {
 }
 
 input EmployeeListFilterInput {
-   vehicleId: String!
-   employeeId: String!
+   employeeId: String
+   vehicleId: String
 }
 
 input ExamListFilterInput {

@@ -40,6 +40,9 @@ public class CmsEmployeeVo {
     private String strresignationDate;
     private String strresignationAcceptanceDate;
     private String strdrivingLicenceValidity;
+    private Branch branch;
+    private TransportRoute transportRoute;
+    private Vehicle vehicle;
     private Long branchId;
     private Long transportRouteId;
     private Long vehicleId;
@@ -302,6 +305,30 @@ public class CmsEmployeeVo {
 
     public void setStrresignationAcceptanceDate(String strresignationAcceptanceDate) {
         this.strresignationAcceptanceDate = strresignationAcceptanceDate;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public TransportRoute getTransportRoute() {
+        return transportRoute;
+    }
+
+    public void setTransportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public Long getBranchId() {
