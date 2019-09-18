@@ -1710,6 +1710,7 @@ type Mutation {
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [CmsStudentVo]!
+	getBookList(filter: LibraryListFilterInput!): [CmsLibraryVo]!
 	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
 	getEmployeeList(filter: EmployeeListFilterInput!): [CmsEmployeeVo]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
@@ -1760,6 +1761,17 @@ type CmsInsurance {
      strValidTill: String
 }
 
+type CmsLibraryVo {
+       id: Long
+       bookTitle: String
+       author: String
+       noOfCopies: Long
+       bookNo: Long
+       additionalInfo: String
+       uniqueNo: Long
+       batch: Batch
+       subject: Subject
+       }
 
 type CmsFeeSettingsVo {
 	lateFeeId: Long
@@ -1797,6 +1809,11 @@ input StudentListFilterInput {
 	sectionId: String
 	gender: String
 	studentType: String
+}
+
+input LibraryListFilterInput {
+	batchId: String
+	subjectId: String
 }
 
 input VehicleListFilterInput {

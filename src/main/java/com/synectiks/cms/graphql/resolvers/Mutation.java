@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
 import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
+import com.synectiks.cms.filter.library.LibraryFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -4161,4 +4162,16 @@ public class Mutation implements GraphQLMutationResolver {
 		}
 		return vo;
 	}
+    public List<CmsLibraryVo> getBookList(LibraryFilterInput filter) throws Exception {
+        List <Library> list = this.libraryFilterProcessor.searchBook(filter);
+        List <CmsLibraryVo> ls = new ArrayList<>();
+        for(Library library: list){
+            CmsLibraryVo vo = CommonUtil.createCopyProperties(library, CmsLibraryVo.class);
+            vo.setBatchId(library.getBatch() != null ? library.getBatch().getId() : null);
+            vo.setSubjectId(library.getSubject() != null ? library.getSubject().getId() : null);
+            ls.add(vo);
+        }
+        logger.debug("Total books retrieved. "+list.size());
+        return ls;
+    }
 }
