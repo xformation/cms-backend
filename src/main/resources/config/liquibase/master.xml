@@ -42,7 +42,6 @@
     <include file="config/liquibase/changelog/20190523093814_added_entity_StudentExamReport.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190529083914_added_entity_StudentFacilityLink.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190307052145_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190701061850_added_entity_AddNewBook.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190705121624_added_entity_TransportRoute.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190705121631_added_entity_Documents.xml" relativeToChangelogFile="false"/>
 
@@ -96,7 +95,6 @@
 
 
     <include file="config/liquibase/changelog/20190307052145_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190701061850_added_entity_constraints_AddNewBook.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190705121631_added_entity_constraints_Documents.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190718121451_added_entity_constraints_AdmissionApplication.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190718121452_added_entity_constraints_AdmissionEnquiry.xml" relativeToChangelogFile="false"/>
