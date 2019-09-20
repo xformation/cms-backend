@@ -23,10 +23,14 @@ public class CmsVehicleVo implements Serializable {
     private Insurance insurance;
     private Employee employee;
     private TransportRoute transportRoute;
+    private Branch branch;
+    private College college;
     private String strDateOfRegistration;
     private Long insuranceId;
     private Long employeeId;
     private Long transportRouteId;
+    private Long branchId;
+    private Long collegeId;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -190,5 +194,37 @@ public class CmsVehicleVo implements Serializable {
 
     public void setTransportRouteId(Long transportRouteId) {
         this.transportRouteId = transportRouteId;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public College getCollege() {
+        return college;
+    }
+
+    public void setCollege(College college) {
+        this.college = college;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
     }
 }

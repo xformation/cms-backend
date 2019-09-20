@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -25,7 +24,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 public class Vehicle implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -75,21 +74,27 @@ public class Vehicle implements Serializable {
     @Column(name = "status", nullable = false)
     private Status status;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @OneToOne    @JoinColumn(unique = true)
     private Insurance insurance;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @OneToOne    @JoinColumn(unique = true)
     private Employee employee;
 
     @ManyToOne
-    @JsonIgnoreProperties("vehicles")
+    @JsonIgnoreProperties("")
     private TransportRoute transportRoute;
 
     @ManyToOne
-    @JsonIgnoreProperties("vehicles")
+    @JsonIgnoreProperties("")
     private Contract contract;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private College college;
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -306,6 +311,32 @@ public class Vehicle implements Serializable {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    public College getCollege() {
+        return college;
+    }
+
+    public Vehicle college(College college) {
+        this.college = college;
+        return this;
+    }
+
+    public void setCollege(College college) {
+        this.college = college;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Vehicle branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

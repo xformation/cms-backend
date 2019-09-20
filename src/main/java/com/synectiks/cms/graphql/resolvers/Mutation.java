@@ -3790,6 +3790,8 @@ public class Mutation implements GraphQLMutationResolver {
         final Employee employee = employeeRepository.findById(addVehicleInput.getEmployeeId()).get();
         final Insurance insurance = insuranceRepository.findById(addVehicleInput.getInsuranceId()).get();
         final Contract contract = contractRepository.findById(addVehicleInput.getContractId()).get();
+        final Branch branch = branchRepository.findById(addVehicleInput.getBranchId()).get();
+        final College college = collegeRepository.findById(addVehicleInput.getCollegeId()).get();
         final Vehicle vehicle = new Vehicle();
         vehicle.setVehicleNumber(addVehicleInput.getVehicleNumber());
         vehicle.setVehicleType(addVehicleInput.getVehicleType());
@@ -3807,6 +3809,8 @@ public class Mutation implements GraphQLMutationResolver {
         vehicle.setTransportRoute(transportRoute);
         vehicle.setInsurance(insurance);
         vehicle.setContract(contract);
+        vehicle.setBranch(branch);
+        vehicle.setCollege(college);
         vehicleRepository.save(vehicle);
 
         return new AddVehiclePayload(vehicle);
@@ -3864,7 +3868,14 @@ public class Mutation implements GraphQLMutationResolver {
             Contract contract = contractRepository.findById(updateVehicleInput.getContractId()).get();
             vehicle.setContract(contract);
         }
-
+        if(updateVehicleInput.getBranchId()!=null){
+            Branch branch = branchRepository.findById(updateVehicleInput.getBranchId()).get();
+            vehicle.setBranch(branch);
+        }
+        if(updateVehicleInput.getCollegeId()!=null){
+            College college = collegeRepository.findById(updateVehicleInput.getCollegeId()).get();
+            vehicle.setCollege(college);
+        }
 
         vehicleRepository.save(vehicle);
 

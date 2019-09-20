@@ -831,6 +831,16 @@ public class Query implements GraphQLQueryResolver {
     	return cache;
     }
 
+    public AddVehicleDataCache createAddVehicleDataCache() throws Exception{
+        List<College> collegeList = this.collegeRepository.findAll();
+        List<Branch> branchList = this.branchRepository.findAll();
+        AddVehicleDataCache cache = new AddVehicleDataCache();
+        cache.setColleges(collegeList);
+        cache.setBranches(branchList);
+
+        return cache;
+    }
+
     public VehicleDataCache createVehicleDataCache() throws Exception{
         List<Vehicle> vehicleList = this.vehicleRepository.findAll();
         List<TransportRoute> transportRouteList = this.transportRouteRepository.findAll();

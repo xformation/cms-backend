@@ -327,6 +327,7 @@ type Query {
     createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
     createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
     createFeeDataCache: FeeDataCache!
+    createAddVehicleDataCache: AddVehicleDataCache!
     createVehicleDataCache: VehicleDataCache!
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
@@ -422,6 +423,10 @@ type FeeDataCache {
 	colleges: [College]
 	branches: [Branch]
 }
+	 type AddVehicleDataCache{
+      colleges: [College]
+      branches: [Branch]
+    }
 type VehicleDataCache{
      vehicles: [Vehicle]
      transportRoutes: [TransportRoute]
@@ -535,10 +540,15 @@ type CmsVehicleVo {
     employee: Employee
     transportRoute: TransportRoute
     insurance: Insurance
+    branch: Branch
+    college: College
     strDateOfRegistration: String
     insuranceId: Long
     employeeId: Long
     transportRouteId: Long
+    collegeId: Long
+    branchId: Long
+
 }
 type CmsEmployeeVo{
      id:Long
@@ -3709,6 +3719,8 @@ type RemoveBookPayload{
       transportRoute: TransportRoute!
       insurance: Insurance!
       contract: Contract!
+      branch: Branch!
+      college: College!
   }
 
 
@@ -3729,6 +3741,8 @@ input AddVehicleInput{
       transportRouteId: Long!
       insuranceId: Long!
       contractId: Long!
+      branchId: Long!
+      collegeId: Long!
 }
 type AddVehiclePayload{
     vehicle:Vehicle!
@@ -3751,6 +3765,8 @@ input UpdateVehicleInput{
          transportRouteId: Long!
          insuranceId: Long!
          contractId: Long!
+         branchId: Long!
+         collegeId: Long!
 }
 type UpdateVehiclePayload{
     vehicle:Vehicle!
