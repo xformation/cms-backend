@@ -2,14 +2,10 @@ package com.synectiks.cms.dataimport;
 
 import java.util.Map;
 
+import com.synectiks.cms.dataimport.loader.*;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.dataimport.loader.BranchDataLoader;
-import com.synectiks.cms.dataimport.loader.CityDataLoader;
-import com.synectiks.cms.dataimport.loader.CollegeDataLoader;
-import com.synectiks.cms.dataimport.loader.CountryDataLoader;
-import com.synectiks.cms.dataimport.loader.StateDataLoader;
 import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
@@ -39,6 +35,16 @@ public class DataLoaderFactory {
         if(tableName.equalsIgnoreCase("BRANCH")) {  
         	return new BranchDataLoader(tableName, allRepositories);
         }
+        if(tableName.equalsIgnoreCase("AUTHORIZED_SIGNATORY")){
+            return new AuthorizedSignatoryLoader (tableName, allRepositories);
+        }
+        if(tableName.equalsIgnoreCase("ACADEMIC_YEAR")){
+            return new AcademicYearLoader (tableName, allRepositories);
+        }
+        if(tableName.equalsIgnoreCase("DEPARTMENT")){
+            return new DepartmentLoader (tableName, allRepositories);
+        }
+
         return null;  
 	}
 	
