@@ -3641,8 +3641,7 @@ input AddLibraryInput{
     bookNo:Long!
     noOfCopies:Long!
     additionalInfo:String!
-    uniqueNo:Long!
-    batchId:Long!
+     batchId:Long!
     subjectId:Long!
 }
 type AddLibraryPayload {
