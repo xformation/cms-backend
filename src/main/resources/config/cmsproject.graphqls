@@ -259,7 +259,7 @@ type Query {
   insurance(id:Long!):Insurance!
   insurances:[Insurance!]!
 
-  vehicle(id:Long!):Vehicle!
+  vehicle(id:Long!):CmsVehicleVo!
   vehicles:[Vehicle!]!
 
   acExamSetting(id:Long!):AcExamSetting!
@@ -539,16 +539,25 @@ type CmsVehicleVo {
     status:Status
     employee: Employee
     transportRoute: TransportRoute
+    contract: Contract
     insurance: Insurance
     branch: Branch
     college: College
     strDateOfRegistration: String
+    dateOfInsurance: Date
+    strDateOfInsurance: String
+    validTill: Date
+    strValidTill: String
+    startDate: Date
+     endDate: Date
+      strStartDate: String
+      strEndDate: String
     insuranceId: Long
     employeeId: Long
     transportRouteId: Long
     collegeId: Long
     branchId: Long
-
+    contractId: Long
 }
 type CmsEmployeeVo{
      id:Long

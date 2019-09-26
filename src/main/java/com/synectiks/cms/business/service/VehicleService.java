@@ -3,7 +3,6 @@ package com.synectiks.cms.business.service;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.CmsVehicleVo;
 import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.TransportRoute_;
 import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.repository.VehicleRepository;
@@ -72,6 +71,7 @@ public class VehicleService {
 //            String stDt = DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, temp.getPaymentDate());
             CmsVehicleVo cve = CommonUtil.createCopyProperties(temp, CmsVehicleVo.class);
             cve.setStrDateOfRegistration(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getDateOfRegistration()))));
+            cve.setStrValidTill(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(temp.getInsurance().getValidTill()))));
             ls.add(cve);
         }
         return ls;

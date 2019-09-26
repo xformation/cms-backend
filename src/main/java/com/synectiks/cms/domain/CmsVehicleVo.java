@@ -23,14 +23,24 @@ public class CmsVehicleVo implements Serializable {
     private Insurance insurance;
     private Employee employee;
     private TransportRoute transportRoute;
+    private Contract contract;
     private Branch branch;
     private College college;
     private String strDateOfRegistration;
+    private LocalDate dateOfInsurance;
+    private String strDateOfInsurance;
+    private LocalDate validTill;
+    private String strValidTill;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String strStartDate;
+    private String strEndDate;
     private Long insuranceId;
     private Long employeeId;
     private Long transportRouteId;
     private Long branchId;
     private Long collegeId;
+    private Long contractId;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -226,5 +236,85 @@ public class CmsVehicleVo implements Serializable {
 
     public void setCollegeId(Long collegeId) {
         this.collegeId = collegeId;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
+    public String getStrDateOfInsurance() {
+        return strDateOfInsurance;
+    }
+
+    public void setStrDateOfInsurance(String strDateOfInsurance) {
+        this.strDateOfInsurance = strDateOfInsurance;
+    }
+
+    public String getStrValidTill() {
+        return strValidTill;
+    }
+
+    public void setStrValidTill(String strValidTill) {
+        this.strValidTill = strValidTill;
+    }
+
+    public LocalDate getValidTill() {
+        return validTill;
+    }
+
+    public void setValidTill(LocalDate validTill) {
+        this.validTill = validTill;
+    }
+
+    public LocalDate getDateOfInsurance() {
+        return dateOfInsurance;
+    }
+
+    public void setDateOfInsurance(LocalDate dateOfInsurance) {
+        this.dateOfInsurance = dateOfInsurance;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getStrStartDate() {
+        return strStartDate;
+    }
+
+    public void setStrStartDate(String strStartDate) {
+        this.strStartDate = strStartDate;
+    }
+
+    public String getStrEndDate() {
+        return strEndDate;
+    }
+
+    public void setStrEndDate(String strEndDate) {
+        this.strEndDate = strEndDate;
     }
 }

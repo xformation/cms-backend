@@ -559,9 +559,22 @@ public class Query implements GraphQLQueryResolver {
         return  Lists.newArrayList(insuranceRepository.findAll());
     }
 
-    public Vehicle vehicle(long id){
-        return vehicleRepository.findById(id).get();
+    public CmsVehicleVo vehicle(long id) {
+        Vehicle v = vehicleRepository.findById(id).get();
+        CmsVehicleVo vo = CommonUtil.createCopyProperties(v, CmsVehicleVo.class);
+        vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(v.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        vo.setDateOfRegistration(null);
+        vo.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(v.getInsurance().getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        vo.setDateOfInsurance(null);
+        vo.setStrValidTill(DateFormatUtil.changeLocalDateFormat(v.getInsurance().getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        vo.setValidTill(null);
+        vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(v.getContract().getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        vo.setStartDate(null);
+        vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(v.getContract().getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        vo.setEndDate(null);
+        return vo;
     }
+
 
     public List<Vehicle>  vehicles(){
         return  Lists.newArrayList(vehicleRepository.findAll());
