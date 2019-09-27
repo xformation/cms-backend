@@ -14,7 +14,6 @@ import org.springframework.data.domain.Example;
 
 import java.util.Optional;
 
-import static org.springframework.data.elasticsearch.annotations.DateFormat.year;
 
 public class DepartmentLoader extends DataLoader {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

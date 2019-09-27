@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 
-import java.time.LocalDate;
 
 public class AcademicYearLoader extends DataLoader {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

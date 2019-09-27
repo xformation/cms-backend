@@ -44,6 +44,17 @@ public class DataLoaderFactory {
         if(tableName.equalsIgnoreCase("DEPARTMENT")){
             return new DepartmentLoader (tableName, allRepositories);
         }
+        if(tableName.equalsIgnoreCase("TERM")){
+            return new TermDataLoader (tableName, allRepositories);
+        }
+        if(tableName.equalsIgnoreCase("HOLIDAY")){
+            return new HolidayDataLoader (tableName, allRepositories);
+        }
+
+        if(tableName.equalsIgnoreCase("BATCH")){
+            return new BatchDataLoader (tableName, allRepositories);
+        }
+
 
         return null;  
 	}
