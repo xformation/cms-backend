@@ -10,11 +10,18 @@ public class Config implements Serializable{
 	private City city;
 	private College college;
 	private Branch branch;
+	private Department department;
 	private CmsAcademicYearVo cmsAcademicYearVo;
 	private String loggedInUser;
 	private String footerNote;
 	private Object loginResponse;
 	private List<Branch> branchList;
+	private List<CmsAcademicYearVo> academicYearList;
+	private List<CmsDepartmentVo> departmentList;
+	
+	private Long selectedAcademicYearId;
+	private Long selectedBranchId;
+	private Long selectedDepartmentId;
 	
 	public Country getCountry() {
 		return country;
@@ -101,6 +108,42 @@ public class Config implements Serializable{
 	}
 	public void setCmsAcademicYearVo(CmsAcademicYearVo cmsAcademicYearVo) {
 		this.cmsAcademicYearVo = cmsAcademicYearVo;
+	}
+	public List<CmsAcademicYearVo> getAcademicYearList() {
+		return academicYearList;
+	}
+	public void setAcademicYearList(List<CmsAcademicYearVo> academicYearList) {
+		this.academicYearList = academicYearList;
+	}
+	public Long getSelectedAcademicYearId() {
+		return selectedAcademicYearId;
+	}
+	public void setSelectedAcademicYearId(Long selectedAcademicYearId) {
+		this.selectedAcademicYearId = selectedAcademicYearId;
+	}
+	public Long getSelectedBranchId() {
+		return selectedBranchId;
+	}
+	public void setSelectedBranchId(Long selectedBranchId) {
+		this.selectedBranchId = selectedBranchId;
+	}
+	public Long getSelectedDepartmentId() {
+		return selectedDepartmentId;
+	}
+	public void setSelectedDepartmentId(Long selectedDepartmentId) {
+		this.selectedDepartmentId = selectedDepartmentId;
+	}
+	public List<CmsDepartmentVo> getDepartmentList() {
+		return departmentList;
+	}
+	public void setDepartmentList(List<CmsDepartmentVo> departmentList) {
+		this.departmentList = departmentList;
+	}
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 	
 	

@@ -54,7 +54,13 @@ public class LoginRestController {
 		
 		try {
 			status = restTemplate.getForObject(url, Object.class);
-			Config config = commonService.createUserConfig(username);
+			Config config = null;
+			if("admin".equals(username) || "cmsadmin".equals(username)) {
+    			config = commonService.createUserConfigForAdmin(username);
+			}else {
+				config = commonService.createUserConfig(username);
+			}
+			
 			config.setLoginResponse(status);
 			CmsConstants.USERS_CACHE.put(username, config);
 		}catch(Exception e) {

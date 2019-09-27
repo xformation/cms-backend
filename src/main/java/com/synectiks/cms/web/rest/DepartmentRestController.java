@@ -1,6 +1,26 @@
 package com.synectiks.cms.web.rest;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsDepartmentVo;
@@ -11,19 +31,6 @@ import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -40,6 +47,10 @@ public class DepartmentRestController {
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
+    
+    @Autowired
+    private CommonService commonService;
+    
 
     @RequestMapping(method = RequestMethod.POST, value = "/cmsdepartments")
     public ResponseEntity<CmsDepartmentVo> createDepartment(@Valid @RequestBody CmsDepartmentVo cmsDepartmentVo) throws URISyntaxException{
@@ -107,17 +118,7 @@ public class DepartmentRestController {
         if(!this.branchRepository.existsById(id)) {
             return Collections.emptyList();
         }
-        Branch branch = this.branchRepository.findById(id).get();
-        Department department = new Department();
-        department.setBranch(branch);
-        Example<Department> example = Example.of(department);
-        List<Department> list = departmentRepository.findAll(example);
-        List<CmsDepartmentVo> ls = new ArrayList<>();
-        for(Department de : list) {
-            CmsDepartmentVo vo = CommonUtil.createCopyProperties(de, CmsDepartmentVo.class);
-            vo.setBranchId(de.getBranch().getId());
-            ls.add(vo);
-        }
+        List<CmsDepartmentVo> ls = this.commonService.getDepartmentListByBranch(id);
         return ls;
     }
 

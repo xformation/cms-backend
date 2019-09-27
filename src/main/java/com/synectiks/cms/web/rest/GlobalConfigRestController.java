@@ -1,6 +1,7 @@
 package com.synectiks.cms.web.rest;
 
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.GlobalConfig;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.CmsDepartmentVo;
 import com.synectiks.cms.domain.Config;
 import com.synectiks.cms.service.util.CommonUtil;
 
@@ -40,6 +42,7 @@ public class GlobalConfigRestController {
         	if(config == null) {
         		if("admin".equals(userName) || "cmsadmin".equals(userName)) {
         			config = commonService.createUserConfigForAdmin(userName);
+        			CmsConstants.USERS_CACHE.put(userName, config);
             		return ResponseUtil.wrapOrNotFound(Optional.of(config));
         		}
         	}
@@ -49,4 +52,23 @@ public class GlobalConfigRestController {
         return ResponseUtil.wrapOrNotFound(Optional.of(GlobalConfig.CONFIG));
     }
    
+    @RequestMapping(method = RequestMethod.POST, value = "/cmssettings")
+    public ResponseEntity<Config> applyUserSetting(@RequestParam Map<String, String> dataMap) throws Exception {
+        logger.debug("REST request to apply user specific global settings");
+        String userName = dataMap.get("userName") != null ? dataMap.get("userName").trim() : null;
+        String ayId = dataMap.get("academicYearId") != null ? dataMap.get("academicYearId").trim() : null;
+        String branchId = dataMap.get("branchId") != null ? dataMap.get("branchId").trim() : null;
+        String departmentId = dataMap.get("departmentId") != null ? dataMap.get("departmentId").trim() : null;
+        
+        Config config = CmsConstants.USERS_CACHE.get(userName);
+        config.setSelectedAcademicYearId(Long.parseLong(ayId));
+        config.setSelectedBranchId(Long.parseLong(branchId));
+        List<CmsDepartmentVo> deptList = this.commonService.getDepartmentListByBranch(Long.parseLong(branchId));
+        config.setDepartmentList(deptList);
+        config.setSelectedDepartmentId(Long.parseLong(departmentId));
+        CmsConstants.USERS_CACHE.put(userName, config);
+        logger.debug("User specific global settings applied successfully");
+        return ResponseUtil.wrapOrNotFound(Optional.of(config));
+    }
+    
 }

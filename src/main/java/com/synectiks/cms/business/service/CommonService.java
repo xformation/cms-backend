@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.config.GlobalConfig;
@@ -943,7 +945,23 @@ public class CommonService {
 		Config config = new Config();
 		config.setLoggedInUser(userName);
 
-        Student st = new Student();
+        findUserConfig(userName, config);
+
+        config.setCollege(GlobalConfig.CONFIG.getCollege());
+        AcademicYear ay = this.getActiveAcademicYear();
+        if(ay != null) {
+        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	config.setCmsAcademicYearVo(vo);
+        }else {
+        	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
+        }
+        return config;
+	}
+
+	private void findUserConfig(String userName, Config config) {
+		Student st = new Student();
         Teacher th = new Teacher();
         Employee em = new Employee();
         st.setStudentEmailAddress(userName);
@@ -958,28 +976,46 @@ public class CommonService {
         	config.setState(student.get().getBranch().getState());
         	config.setCity(student.get().getBranch().getCity());
         	config.setBranch(student.get().getBranch());
+        	config.setDepartment(student.get().getDepartment());
         }else if(teacher.isPresent()) {
         	config.setLoggedInUser(userName);
         	config.setCountry(teacher.get().getBranch().getState().getCountry());
         	config.setState(teacher.get().getBranch().getState());
         	config.setCity(teacher.get().getBranch().getCity());
         	config.setBranch(teacher.get().getBranch());
+        	config.setDepartment(teacher.get().getDepartment());
         }else if(employee.isPresent()) {
         	config.setLoggedInUser(userName);
         	config.setCountry(employee.get().getBranch().getState().getCountry());
-        	config.setState(teacher.get().getBranch().getState());
-        	config.setCity(teacher.get().getBranch().getCity());
+        	config.setState(employee.get().getBranch().getState());
+        	config.setCity(employee.get().getBranch().getCity());
         	config.setBranch(employee.get().getBranch());
+        	config.setDepartment(null);
         }
+	}
 
-//        if(config.getCollege() == null) {
-//	        List<College> cl = collegeRepository.findAll();
-//	        config.setCollege((cl != null && cl.size() > 1) ? cl.get(0) : null);
-//        }
-        config.setCollege(GlobalConfig.CONFIG.getCollege());
+    public Config createUserConfigForAdmin(String userName) {
+		logger.debug("Creating admin user specific config object");
+		Config config = new Config();
+		config.setLoggedInUser(userName);
+		
+		findUserConfig(userName, config);
+
+		config.setCollege(GlobalConfig.CONFIG.getCollege());
+		List<AcademicYear> acYearList = this.academicYearRepository.findAll(Sort.by(Direction.ASC, "id"));
+		List<CmsAcademicYearVo> ayList = new ArrayList<>();
+		for(AcademicYear ay: acYearList ) {
+			CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	ayList.add(vo);
+		}
+		List<CmsDepartmentVo> deptList = new ArrayList<>();
+		config.setAcademicYearList(ayList);
+        config.setBranchList(this.branchRepository.findAll());
+        config.setDepartmentList(deptList);
+        
         AcademicYear ay = this.getActiveAcademicYear();
-//        academicYear.setStatus(Status.ACTIVE);
-//        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
         if(ay != null) {
         	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
         	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
@@ -988,30 +1024,7 @@ public class CommonService {
         }else {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
         }
-        config.setBranchList(this.branchRepository.findAll());
-
-        return config;
-	}
-
-    public Config createUserConfigForAdmin(String userName) {
-		logger.debug("Creating admin user specific config object");
-		Config config = new Config();
-		config.setLoggedInUser(userName);
-		config.setCollege(GlobalConfig.CONFIG.getCollege());
-//        AcademicYear academicYear = new AcademicYear();
-//        academicYear.setStatus(Status.ACTIVE);
-//        Optional<AcademicYear> oa = academicYearRepository.findOne(Example.of(academicYear));
-		AcademicYear ay = this.getActiveAcademicYear();
-		if(ay != null) {
-        	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
-        	vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        	vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        	config.setCmsAcademicYearVo(vo);
-        }else {
-        	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
-        }
-        config.setBranchList(this.branchRepository.findAll());
-
+        
         return config;
 	}
 
@@ -1158,6 +1171,23 @@ public class CommonService {
     			.getResultList();
 		return list;
     }
+    
+    public List<CmsDepartmentVo> getDepartmentListByBranch(Long branchId){
+    	Branch branch = this.branchRepository.findById(branchId).get();
+        Department department = new Department();
+        department.setBranch(branch);
+        Example<Department> example = Example.of(department);
+        List<Department> list = departmentRepository.findAll(example);
+        List<CmsDepartmentVo> ls = new ArrayList<>();
+        for(Department de : list) {
+            CmsDepartmentVo vo = CommonUtil.createCopyProperties(de, CmsDepartmentVo.class);
+            vo.setBranchId(de.getBranch().getId());
+            ls.add(vo);
+        }
+        return ls;
+    }
+    
+    
 
 //    public static void main(String a[]) {
 //        LocalDate ld = LocalDate.now();
