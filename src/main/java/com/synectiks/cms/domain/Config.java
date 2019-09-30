@@ -22,7 +22,8 @@ public class Config implements Serializable{
 	private Long selectedAcademicYearId;
 	private Long selectedBranchId;
 	private Long selectedDepartmentId;
-	
+	private Long userId;
+		
 	public Country getCountry() {
 		return country;
 	}
@@ -144,6 +145,12 @@ public class Config implements Serializable{
 	}
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 	

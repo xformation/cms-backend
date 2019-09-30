@@ -678,12 +678,26 @@ public class Query implements GraphQLQueryResolver {
     public Batch getBatchById(Long batchId){return commonGraphiqlFilter.getBatchById(batchId);}
 
     public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId, String lectureDate) throws Exception{
-
-    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.valueOf(branchId), Long.valueOf(academicYearId));
+    	StudentAttendanceCache cache = new StudentAttendanceCache();
+    	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
+    		logger.warn("Either branch/academic year or teacher id is not provided. Return empty cache");
+    		cache.setDepartments(new ArrayList<Department>());
+        	cache.setBatches(new ArrayList<Batch>());
+        	cache.setSubjects(new ArrayList<Subject>());
+        	cache.setSections(new ArrayList<Section>());
+        	cache.setLectures(new ArrayList<CmsLectureVo>());
+        	cache.setSemesters(new ArrayList<CmsSemesterVo>());
+        	cache.setTerms(new ArrayList<CmsTermVo>());
+        	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
+    		cache.setTeaches(new ArrayList<Teach>());
+        	return cache;
+    	}
+    	
+    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
     	List<Batch> bth = this.commonService.getBatchForCriteria(dept); //batches();
     	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth); //subjects();
     	List<Section> sec = this.commonService.getSectionForCriteria(bth); //sections();
-    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.valueOf(teacherId)); //teaches();
+    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.parseLong(teacherId)); //teaches();
     	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec, teach);// attendanceMasters();
     	List<Subject> selectedSubjectList = new ArrayList<>();
 
@@ -710,7 +724,6 @@ public class Query implements GraphQLQueryResolver {
 
     	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
 
-    	StudentAttendanceCache cache = new StudentAttendanceCache();
     	cache.setDepartments(dept);
     	cache.setBatches(bth);
     	cache.setSubjects(selectedSubjectList);
@@ -732,8 +745,20 @@ public class Query implements GraphQLQueryResolver {
      * @throws Exception
      */
     public StudentAttendanceCache createStudentAttendanceCacheForAdmin(String branchId, String academicYearId, String lectureDate) throws Exception{
-
-    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.valueOf(branchId), Long.valueOf(academicYearId));
+    	StudentAttendanceCache cache = new StudentAttendanceCache();
+    	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
+    		logger.warn("Either branch or academic year id is not provided. Return empty cache");
+    		cache.setDepartments(new ArrayList<Department>());
+        	cache.setBatches(new ArrayList<Batch>());
+        	cache.setSubjects(new ArrayList<Subject>());
+        	cache.setSections(new ArrayList<Section>());
+        	cache.setLectures(new ArrayList<CmsLectureVo>());
+        	cache.setSemesters(new ArrayList<CmsSemesterVo>());
+        	cache.setTerms(new ArrayList<CmsTermVo>());
+        	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
+    		return cache;
+    	}
+    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
     	List<Batch> bth = this.commonService.getBatchForCriteria(dept);
     	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth);
     	List<Section> sec = this.commonService.getSectionForCriteria(bth);
@@ -764,7 +789,6 @@ public class Query implements GraphQLQueryResolver {
 
     	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
 
-    	StudentAttendanceCache cache = new StudentAttendanceCache();
     	cache.setDepartments(dept);
     	cache.setBatches(bth);
     	cache.setSubjects(sub);

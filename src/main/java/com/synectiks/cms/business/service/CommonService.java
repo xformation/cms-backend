@@ -957,6 +957,11 @@ public class CommonService {
         }else {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
         }
+        
+        config.setSelectedAcademicYearId(ay != null ? ay.getId() : null);
+        config.setSelectedBranchId(config.getBranch() != null ? config.getBranch().getId() : null);
+        config.setSelectedDepartmentId(config.getDepartment() != null ? config.getDepartment().getId() : null);
+        
         return config;
 	}
 
@@ -977,6 +982,7 @@ public class CommonService {
         	config.setCity(student.get().getBranch().getCity());
         	config.setBranch(student.get().getBranch());
         	config.setDepartment(student.get().getDepartment());
+        	config.setUserId(student.get().getId());
         }else if(teacher.isPresent()) {
         	config.setLoggedInUser(userName);
         	config.setCountry(teacher.get().getBranch().getState().getCountry());
@@ -984,6 +990,7 @@ public class CommonService {
         	config.setCity(teacher.get().getBranch().getCity());
         	config.setBranch(teacher.get().getBranch());
         	config.setDepartment(teacher.get().getDepartment());
+        	config.setUserId(teacher.get().getId());
         }else if(employee.isPresent()) {
         	config.setLoggedInUser(userName);
         	config.setCountry(employee.get().getBranch().getState().getCountry());
@@ -991,6 +998,7 @@ public class CommonService {
         	config.setCity(employee.get().getBranch().getCity());
         	config.setBranch(employee.get().getBranch());
         	config.setDepartment(null);
+        	config.setUserId(employee.get().getId());
         }
 	}
 
