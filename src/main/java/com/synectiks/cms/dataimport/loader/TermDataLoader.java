@@ -36,66 +36,65 @@ public class TermDataLoader extends DataLoader {
         StringBuilder sb = new StringBuilder();
         Term obj = CommonUtil.createCopyProperties(cls.newInstance(), Term.class);
 
-        obj.setTermStatus(Status.ACTIVE);
-        if(!this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
-
-            String termDesc = row.getCellAsString(0).orElse(null);
-            if (CommonUtil.isNullOrEmpty(termDesc)) {
-                sb.append("term_desc, ");
-                logger.warn("Mandatory field missing. Field name - term_desc");
-            } else {
-                obj.setTermsDesc(termDesc);
-            }
-
-            String startDate = row.getCellAsString(1).orElse(null);
-            if (CommonUtil.isNullOrEmpty(startDate)) {
-                sb.append("start_date, ");
-                logger.warn("Mandatory field missing. Field name - start_date");
-            } else {
-                obj.startDate(DateFormatUtil.convertStringToLocalDate(startDate, CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            }
-
-            String endDate = row.getCellAsString(2).orElse(null);
-            if (CommonUtil.isNullOrEmpty(endDate)) {
-                sb.append("end_date, ");
-                logger.warn("Mandatory field missing. Field name - end_date");
-            } else {
-                obj.endDate(DateFormatUtil.convertStringToLocalDate(endDate, CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            }
-
-            String termStatus = row.getCellAsString(3).orElse(null);
-            if (CommonUtil.isNullOrEmpty(termStatus)) {
-                sb.append("status, ");
-                logger.warn("Mandatory field missing. Field name - term_status");
-            } else {
-                if (Status.ACTIVE.toString().equalsIgnoreCase(termStatus)) {
-                    obj.setTermStatus(Status.ACTIVE);
-                } else {
-                    obj.setTermStatus(Status.DEACTIVE);
-                }
-            }
-        }else {
-            sb.append("Application already have an active term status, ");
-            logger.warn("Application already have an active term status");
-            if (sb.length() > 0) {
-                String msg = "Application already have an active term status";
-                throw new AdditionalTermFoundException(msg);
-            }
+        String termDesc = row.getCellAsString(0).orElse(null);
+        if (CommonUtil.isNullOrEmpty(termDesc)) {
+            sb.append("term_desc, ");
+            logger.warn("Mandatory field missing. Field name - term_desc");
+        } else {
+            obj.setTermsDesc(termDesc);
         }
-
+        
         String academicYear = row.getCellAsString(4).orElse(null);
         if(CommonUtil.isNullOrEmpty(academicYear)) {
             sb.append("academic_year_id, ");
             logger.warn("Mandatory field missing. Field name - academic_year_id");
-        }else {
-            AcademicYear academicYear1 = new AcademicYear();
-            academicYear1.setYear(academicYear);
-            Optional<AcademicYear> ay = this.allRepositories.findRepository("academic_year").findOne(Example.of(academicYear1));
-            if(ay.isPresent()) {
-                obj.setAcademicyear(ay.get());
+        } else {
+            AcademicYear ay = new AcademicYear();
+            ay.setYear(academicYear);
+            Optional<AcademicYear> oay = this.allRepositories.findRepository("academic_year").findOne(Example.of(ay));
+            if(oay.isPresent()) {
+                obj.setAcademicyear(oay.get());
             }else {
                 sb.append("academic_year_id, ");
                 logger.warn("AcademicYear not found. Given academicYear name : "+academicYear);
+            }
+        }
+        
+        if(!CommonUtil.isNullOrEmpty(termDesc) && !CommonUtil.isNullOrEmpty(academicYear) && 
+        		this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
+        	  String msg = "Application already have a term with the given term description : "+termDesc + " in the given academic year : "+academicYear;
+              sb.append(msg+", ");
+              logger.warn(msg);
+              if (sb.length() > 0) {
+                  throw new AdditionalTermFoundException(msg);
+              }
+        }
+        
+        String startDate = row.getCellAsString(1).orElse(null);
+        if (CommonUtil.isNullOrEmpty(startDate)) {
+            sb.append("start_date, ");
+            logger.warn("Mandatory field missing. Field name - start_date");
+        } else {
+            obj.startDate(DateFormatUtil.convertStringToLocalDate(startDate, CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        }
+
+        String endDate = row.getCellAsString(2).orElse(null);
+        if (CommonUtil.isNullOrEmpty(endDate)) {
+            sb.append("end_date, ");
+            logger.warn("Mandatory field missing. Field name - end_date");
+        } else {
+            obj.endDate(DateFormatUtil.convertStringToLocalDate(endDate, CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        }
+
+        String termStatus = row.getCellAsString(3).orElse(null);
+        if (CommonUtil.isNullOrEmpty(termStatus)) {
+            sb.append("status, ");
+            logger.warn("Mandatory field missing. Field name - term_status");
+        } else {
+            if (Status.ACTIVE.toString().equalsIgnoreCase(termStatus)) {
+                obj.setTermStatus(Status.ACTIVE);
+            } else {
+                obj.setTermStatus(Status.DEACTIVE);
             }
         }
 
