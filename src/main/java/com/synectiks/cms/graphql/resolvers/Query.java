@@ -679,6 +679,19 @@ public class Query implements GraphQLQueryResolver {
 
     public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId, String lectureDate) throws Exception{
     	StudentAttendanceCache cache = new StudentAttendanceCache();
+    	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId) 
+    			|| academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)) {
+    		logger.warn("Either branch or academic year id is null. Return empty cache");
+    		cache.setDepartments(new ArrayList<Department>());
+        	cache.setBatches(new ArrayList<Batch>());
+        	cache.setSubjects(new ArrayList<Subject>());
+        	cache.setSections(new ArrayList<Section>());
+        	cache.setLectures(new ArrayList<CmsLectureVo>());
+        	cache.setSemesters(new ArrayList<CmsSemesterVo>());
+        	cache.setTerms(new ArrayList<CmsTermVo>());
+        	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
+    		return cache;
+    	}
     	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
     		logger.warn("Either branch/academic year or teacher id is not provided. Return empty cache");
     		cache.setDepartments(new ArrayList<Department>());
@@ -746,6 +759,19 @@ public class Query implements GraphQLQueryResolver {
      */
     public StudentAttendanceCache createStudentAttendanceCacheForAdmin(String branchId, String academicYearId, String lectureDate) throws Exception{
     	StudentAttendanceCache cache = new StudentAttendanceCache();
+    	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId) 
+    			|| academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)) {
+    		logger.warn("Either branch or academic year id is null. Return empty cache");
+    		cache.setDepartments(new ArrayList<Department>());
+        	cache.setBatches(new ArrayList<Batch>());
+        	cache.setSubjects(new ArrayList<Subject>());
+        	cache.setSections(new ArrayList<Section>());
+        	cache.setLectures(new ArrayList<CmsLectureVo>());
+        	cache.setSemesters(new ArrayList<CmsSemesterVo>());
+        	cache.setTerms(new ArrayList<CmsTermVo>());
+        	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
+    		return cache;
+    	}
     	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
     		logger.warn("Either branch or academic year id is not provided. Return empty cache");
     		cache.setDepartments(new ArrayList<Department>());
