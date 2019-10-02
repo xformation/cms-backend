@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.BankAccountsService;
 import com.synectiks.cms.domain.BankAccounts;
 import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
+//import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
 import com.synectiks.cms.service.dto.BankAccountsDTO;
 import com.synectiks.cms.service.mapper.BankAccountsMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing BankAccounts.
@@ -33,12 +33,12 @@ public class BankAccountsServiceImpl implements BankAccountsService {
 
     private final BankAccountsMapper bankAccountsMapper;
 
-    private final BankAccountsSearchRepository bankAccountsSearchRepository;
+    //private final BankAccountsSearchRepository bankAccountsSearchRepository;
 
-    public BankAccountsServiceImpl(BankAccountsRepository bankAccountsRepository, BankAccountsMapper bankAccountsMapper, BankAccountsSearchRepository bankAccountsSearchRepository) {
+    public BankAccountsServiceImpl(BankAccountsRepository bankAccountsRepository, BankAccountsMapper bankAccountsMapper/*, BankAccountsSearchRepository bankAccountsSearchRepository*/) {
         this.bankAccountsRepository = bankAccountsRepository;
         this.bankAccountsMapper = bankAccountsMapper;
-        this.bankAccountsSearchRepository = bankAccountsSearchRepository;
+        //this.bankAccountsSearchRepository = bankAccountsSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BankAccountsServiceImpl implements BankAccountsService {
         BankAccounts bankAccounts = bankAccountsMapper.toEntity(bankAccountsDTO);
         bankAccounts = bankAccountsRepository.save(bankAccounts);
         BankAccountsDTO result = bankAccountsMapper.toDto(bankAccounts);
-        bankAccountsSearchRepository.save(bankAccounts);
+        //bankAccountsSearchRepository.save(bankAccounts);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class BankAccountsServiceImpl implements BankAccountsService {
     public void delete(Long id) {
         log.debug("Request to delete BankAccounts : {}", id);
         bankAccountsRepository.deleteById(id);
-        bankAccountsSearchRepository.deleteById(id);
+        //bankAccountsSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class BankAccountsServiceImpl implements BankAccountsService {
     @Transactional(readOnly = true)
     public List<BankAccountsDTO> search(String query) {
         log.debug("Request to search BankAccounts for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(bankAccountsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(bankAccountsMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

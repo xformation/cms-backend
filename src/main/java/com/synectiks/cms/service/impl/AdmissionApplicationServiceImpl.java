@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.AdmissionApplicationService;
 import com.synectiks.cms.domain.AdmissionApplication;
 import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
+//import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
 import com.synectiks.cms.service.dto.AdmissionApplicationDTO;
 import com.synectiks.cms.service.mapper.AdmissionApplicationMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing AdmissionApplication.
@@ -33,12 +33,12 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
 
     private final AdmissionApplicationMapper admissionApplicationMapper;
 
-    private final AdmissionApplicationSearchRepository admissionApplicationSearchRepository;
+    //private final AdmissionApplicationSearchRepository admissionApplicationSearchRepository;
 
-    public AdmissionApplicationServiceImpl(AdmissionApplicationRepository admissionApplicationRepository, AdmissionApplicationMapper admissionApplicationMapper, AdmissionApplicationSearchRepository admissionApplicationSearchRepository) {
+    public AdmissionApplicationServiceImpl(AdmissionApplicationRepository admissionApplicationRepository, AdmissionApplicationMapper admissionApplicationMapper/*, AdmissionApplicationSearchRepository admissionApplicationSearchRepository*/) {
         this.admissionApplicationRepository = admissionApplicationRepository;
         this.admissionApplicationMapper = admissionApplicationMapper;
-        this.admissionApplicationSearchRepository = admissionApplicationSearchRepository;
+        //this.admissionApplicationSearchRepository = admissionApplicationSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
         AdmissionApplication admissionApplication = admissionApplicationMapper.toEntity(admissionApplicationDTO);
         admissionApplication = admissionApplicationRepository.save(admissionApplication);
         AdmissionApplicationDTO result = admissionApplicationMapper.toDto(admissionApplication);
-        admissionApplicationSearchRepository.save(admissionApplication);
+        //admissionApplicationSearchRepository.save(admissionApplication);
         return result;
     }
 
@@ -93,8 +93,9 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AdmissionApplication : {}", id);        admissionApplicationRepository.deleteById(id);
-        admissionApplicationSearchRepository.deleteById(id);
+        log.debug("Request to delete AdmissionApplication : {}", id);
+        admissionApplicationRepository.deleteById(id);
+        //admissionApplicationSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,9 +108,11 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
     @Transactional(readOnly = true)
     public List<AdmissionApplicationDTO> search(String query) {
         log.debug("Request to search AdmissionApplications for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(admissionApplicationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(admissionApplicationMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

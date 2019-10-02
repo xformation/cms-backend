@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
+//import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
 import com.synectiks.cms.service.AcademicYearService;
 import com.synectiks.cms.service.dto.AcademicYearDTO;
 import com.synectiks.cms.service.mapper.AcademicYearMapper;
@@ -34,7 +34,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -70,14 +70,6 @@ public class AcademicYearResourceIntTest {
 
     @Autowired
     private AcademicYearService academicYearService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AcademicYearSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AcademicYearSearchRepository mockAcademicYearSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -146,9 +138,6 @@ public class AcademicYearResourceIntTest {
         assertThat(testAcademicYear.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testAcademicYear.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testAcademicYear.getStatus()).isEqualTo(DEFAULT_STATUS);
-
-        // Validate the AcademicYear in Elasticsearch
-        verify(mockAcademicYearSearchRepository, times(1)).save(testAcademicYear);
     }
 
     @Test
@@ -169,10 +158,7 @@ public class AcademicYearResourceIntTest {
         // Validate the AcademicYear in the database
         List<AcademicYear> academicYearList = academicYearRepository.findAll();
         assertThat(academicYearList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AcademicYear in Elasticsearch
-        verify(mockAcademicYearSearchRepository, times(0)).save(academicYear);
-    }
+   }
 
     @Test
     @Transactional
@@ -324,10 +310,7 @@ public class AcademicYearResourceIntTest {
         assertThat(testAcademicYear.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testAcademicYear.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testAcademicYear.getStatus()).isEqualTo(UPDATED_STATUS);
-
-        // Validate the AcademicYear in Elasticsearch
-        verify(mockAcademicYearSearchRepository, times(1)).save(testAcademicYear);
-    }
+   }
 
     @Test
     @Transactional
@@ -346,9 +329,6 @@ public class AcademicYearResourceIntTest {
         // Validate the AcademicYear in the database
         List<AcademicYear> academicYearList = academicYearRepository.findAll();
         assertThat(academicYearList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AcademicYear in Elasticsearch
-        verify(mockAcademicYearSearchRepository, times(0)).save(academicYear);
     }
 
     @Test
@@ -367,18 +347,13 @@ public class AcademicYearResourceIntTest {
         // Validate the database is empty
         List<AcademicYear> academicYearList = academicYearRepository.findAll();
         assertThat(academicYearList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AcademicYear in Elasticsearch
-        verify(mockAcademicYearSearchRepository, times(1)).deleteById(academicYear.getId());
-    }
+   }
 
     @Test
     @Transactional
     public void searchAcademicYear() throws Exception {
         // Initialize the database
         academicYearRepository.saveAndFlush(academicYear);
-        when(mockAcademicYearSearchRepository.search(queryStringQuery("id:" + academicYear.getId())))
-            .thenReturn(Collections.singletonList(academicYear));
         // Search the academicYear
         restAcademicYearMockMvc.perform(get("/api/_search/academic-years?query=id:" + academicYear.getId()))
             .andExpect(status().isOk())

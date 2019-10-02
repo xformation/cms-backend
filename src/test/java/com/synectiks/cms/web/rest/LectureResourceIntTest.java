@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.search.LectureSearchRepository;
-import com.synectiks.cms.service.LectureService;
-import com.synectiks.cms.service.dto.LectureDTO;
-import com.synectiks.cms.service.mapper.LectureMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,23 +30,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.service.LectureService;
+import com.synectiks.cms.service.dto.LectureDTO;
+import com.synectiks.cms.service.mapper.LectureMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the LectureResource REST controller.
@@ -73,14 +71,6 @@ public class LectureResourceIntTest {
 
     @Autowired
     private LectureService lectureService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.LectureSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private LectureSearchRepository mockLectureSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -152,9 +142,6 @@ public class LectureResourceIntTest {
         assertThat(testLecture.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testLecture.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testLecture.getEndTime()).isEqualTo(DEFAULT_END_TIME);
-
-        // Validate the Lecture in Elasticsearch
-        verify(mockLectureSearchRepository, times(1)).save(testLecture);
     }
 
     @Test
@@ -175,9 +162,6 @@ public class LectureResourceIntTest {
         // Validate the Lecture in the database
         List<Lecture> lectureList = lectureRepository.findAll();
         assertThat(lectureList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Lecture in Elasticsearch
-        verify(mockLectureSearchRepository, times(0)).save(lecture);
     }
 
     @Test
@@ -353,9 +337,6 @@ public class LectureResourceIntTest {
         assertThat(testLecture.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testLecture.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testLecture.getEndTime()).isEqualTo(UPDATED_END_TIME);
-
-        // Validate the Lecture in Elasticsearch
-        verify(mockLectureSearchRepository, times(1)).save(testLecture);
     }
 
     @Test
@@ -375,9 +356,6 @@ public class LectureResourceIntTest {
         // Validate the Lecture in the database
         List<Lecture> lectureList = lectureRepository.findAll();
         assertThat(lectureList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Lecture in Elasticsearch
-        verify(mockLectureSearchRepository, times(0)).save(lecture);
     }
 
     @Test
@@ -396,9 +374,6 @@ public class LectureResourceIntTest {
         // Validate the database is empty
         List<Lecture> lectureList = lectureRepository.findAll();
         assertThat(lectureList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Lecture in Elasticsearch
-        verify(mockLectureSearchRepository, times(1)).deleteById(lecture.getId());
     }
 
     @Test
@@ -406,8 +381,6 @@ public class LectureResourceIntTest {
     public void searchLecture() throws Exception {
         // Initialize the database
         lectureRepository.saveAndFlush(lecture);
-        when(mockLectureSearchRepository.search(queryStringQuery("id:" + lecture.getId())))
-            .thenReturn(Collections.singletonList(lecture));
         // Search the lecture
         restLectureMockMvc.perform(get("/api/_search/lectures?query=id:" + lecture.getId()))
             .andExpect(status().isOk())

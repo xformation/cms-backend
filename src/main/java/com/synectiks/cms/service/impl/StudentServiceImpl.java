@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.StudentService;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.search.StudentSearchRepository;
+//import com.synectiks.cms.repository.search.StudentSearchRepository;
 import com.synectiks.cms.service.dto.StudentDTO;
 import com.synectiks.cms.service.mapper.StudentMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Student.
@@ -33,12 +33,12 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentMapper studentMapper;
 
-    private final StudentSearchRepository studentSearchRepository;
+    //private final StudentSearchRepository studentSearchRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper, StudentSearchRepository studentSearchRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper/*, StudentSearchRepository studentSearchRepository*/) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
-        this.studentSearchRepository = studentSearchRepository;
+        //this.studentSearchRepository = studentSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentMapper.toEntity(studentDTO);
         student = studentRepository.save(student);
         StudentDTO result = studentMapper.toDto(student);
-        studentSearchRepository.save(student);
+        //studentSearchRepository.save(student);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class StudentServiceImpl implements StudentService {
     public void delete(Long id) {
         log.debug("Request to delete Student : {}", id);
         studentRepository.deleteById(id);
-        studentSearchRepository.deleteById(id);
+        //studentSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(readOnly = true)
     public List<StudentDTO> search(String query) {
         log.debug("Request to search Students for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(studentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(studentMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

@@ -3,7 +3,6 @@ package com.synectiks.cms.service;
 import com.synectiks.cms.CmsApp;
 import com.synectiks.cms.config.Constants;
 import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.search.UserSearchRepository;
 import com.synectiks.cms.repository.UserRepository;
 import com.synectiks.cms.service.dto.UserDTO;
 import com.synectiks.cms.service.util.RandomUtil;
@@ -49,14 +48,6 @@ public class UserServiceIntTest {
 
     @Autowired
     private UserService userService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.UserSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private UserSearchRepository mockUserSearchRepository;
 
     @Autowired
     private AuditingHandler auditingHandler;
@@ -168,9 +159,6 @@ public class UserServiceIntTest {
         userService.removeNotActivatedUsers();
         users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(now.minus(3, ChronoUnit.DAYS));
         assertThat(users).isEmpty();
-
-        // Verify Elasticsearch mock
-        verify(mockUserSearchRepository, times(1)).delete(user);
     }
 
     @Test
@@ -199,9 +187,6 @@ public class UserServiceIntTest {
         assertThat(userRepository.findOneByLogin("johndoe")).isPresent();
         userService.removeNotActivatedUsers();
         assertThat(userRepository.findOneByLogin("johndoe")).isNotPresent();
-
-        // Verify Elasticsearch mock
-        verify(mockUserSearchRepository, times(1)).delete(user);
     }
 
 }

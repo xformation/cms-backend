@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.TeachService;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.search.TeachSearchRepository;
+//import com.synectiks.cms.repository.search.TeachSearchRepository;
 import com.synectiks.cms.service.dto.TeachDTO;
 import com.synectiks.cms.service.mapper.TeachMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Teach.
@@ -33,12 +33,12 @@ public class TeachServiceImpl implements TeachService {
 
     private final TeachMapper teachMapper;
 
-    private final TeachSearchRepository teachSearchRepository;
+    //private final TeachSearchRepository teachSearchRepository;
 
-    public TeachServiceImpl(TeachRepository teachRepository, TeachMapper teachMapper, TeachSearchRepository teachSearchRepository) {
+    public TeachServiceImpl(TeachRepository teachRepository, TeachMapper teachMapper/*, TeachSearchRepository teachSearchRepository*/) {
         this.teachRepository = teachRepository;
         this.teachMapper = teachMapper;
-        this.teachSearchRepository = teachSearchRepository;
+        //this.teachSearchRepository = teachSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TeachServiceImpl implements TeachService {
         Teach teach = teachMapper.toEntity(teachDTO);
         teach = teachRepository.save(teach);
         TeachDTO result = teachMapper.toDto(teach);
-        teachSearchRepository.save(teach);
+        //teachSearchRepository.save(teach);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TeachServiceImpl implements TeachService {
     public void delete(Long id) {
         log.debug("Request to delete Teach : {}", id);
         teachRepository.deleteById(id);
-        teachSearchRepository.deleteById(id);
+        //teachSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class TeachServiceImpl implements TeachService {
     @Transactional(readOnly = true)
     public List<TeachDTO> search(String query) {
         log.debug("Request to search Teaches for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(teachSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(teachMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

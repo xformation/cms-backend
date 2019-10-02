@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.ContractService;
 import com.synectiks.cms.domain.Contract;
 import com.synectiks.cms.repository.ContractRepository;
-import com.synectiks.cms.repository.search.ContractSearchRepository;
+//import com.synectiks.cms.repository.search.ContractSearchRepository;
 import com.synectiks.cms.service.dto.ContractDTO;
 import com.synectiks.cms.service.mapper.ContractMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Contract.
@@ -33,12 +33,12 @@ public class ContractServiceImpl implements ContractService {
 
     private final ContractMapper contractMapper;
 
-    private final ContractSearchRepository contractSearchRepository;
+    //private final ContractSearchRepository contractSearchRepository;
 
-    public ContractServiceImpl(ContractRepository contractRepository, ContractMapper contractMapper, ContractSearchRepository contractSearchRepository) {
+    public ContractServiceImpl(ContractRepository contractRepository, ContractMapper contractMapper/*, ContractSearchRepository contractSearchRepository*/) {
         this.contractRepository = contractRepository;
         this.contractMapper = contractMapper;
-        this.contractSearchRepository = contractSearchRepository;
+        //this.contractSearchRepository = contractSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class ContractServiceImpl implements ContractService {
         Contract contract = contractMapper.toEntity(contractDTO);
         contract = contractRepository.save(contract);
         ContractDTO result = contractMapper.toDto(contract);
-        contractSearchRepository.save(contract);
+        //contractSearchRepository.save(contract);
         return result;
     }
 
@@ -93,8 +93,9 @@ public class ContractServiceImpl implements ContractService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Contract : {}", id);        contractRepository.deleteById(id);
-        contractSearchRepository.deleteById(id);
+        log.debug("Request to delete Contract : {}", id);
+        contractRepository.deleteById(id);
+        //contractSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,9 +108,11 @@ public class ContractServiceImpl implements ContractService {
     @Transactional(readOnly = true)
     public List<ContractDTO> search(String query) {
         log.debug("Request to search Contracts for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(contractSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(contractMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

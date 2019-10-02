@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
-import com.synectiks.cms.service.StudentAttendanceService;
-import com.synectiks.cms.service.dto.StudentAttendanceDTO;
-import com.synectiks.cms.service.mapper.StudentAttendanceMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,20 +30,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.service.StudentAttendanceService;
+import com.synectiks.cms.service.dto.StudentAttendanceDTO;
+import com.synectiks.cms.service.mapper.StudentAttendanceMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the StudentAttendanceResource REST controller.
  *
@@ -62,14 +61,6 @@ public class StudentAttendanceResourceIntTest {
 
     @Autowired
     private StudentAttendanceService studentAttendanceService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.StudentAttendanceSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private StudentAttendanceSearchRepository mockStudentAttendanceSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -138,9 +129,6 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
         assertThat(testStudentAttendance.getAttendanceStatus()).isEqualTo(DEFAULT_ATTENDANCE_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(DEFAULT_COMMENTS);
-
-        // Validate the StudentAttendance in Elasticsearch
-        verify(mockStudentAttendanceSearchRepository, times(1)).save(testStudentAttendance);
     }
 
     @Test
@@ -161,9 +149,6 @@ public class StudentAttendanceResourceIntTest {
         // Validate the StudentAttendance in the database
         List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
         assertThat(studentAttendanceList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the StudentAttendance in Elasticsearch
-        verify(mockStudentAttendanceSearchRepository, times(0)).save(studentAttendance);
     }
 
     @Test
@@ -251,9 +236,6 @@ public class StudentAttendanceResourceIntTest {
         StudentAttendance testStudentAttendance = studentAttendanceList.get(studentAttendanceList.size() - 1);
         assertThat(testStudentAttendance.getAttendanceStatus()).isEqualTo(UPDATED_ATTENDANCE_STATUS);
         assertThat(testStudentAttendance.getComments()).isEqualTo(UPDATED_COMMENTS);
-
-        // Validate the StudentAttendance in Elasticsearch
-        verify(mockStudentAttendanceSearchRepository, times(1)).save(testStudentAttendance);
     }
 
     @Test
@@ -273,9 +255,6 @@ public class StudentAttendanceResourceIntTest {
         // Validate the StudentAttendance in the database
         List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
         assertThat(studentAttendanceList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the StudentAttendance in Elasticsearch
-        verify(mockStudentAttendanceSearchRepository, times(0)).save(studentAttendance);
     }
 
     @Test
@@ -294,9 +273,6 @@ public class StudentAttendanceResourceIntTest {
         // Validate the database is empty
         List<StudentAttendance> studentAttendanceList = studentAttendanceRepository.findAll();
         assertThat(studentAttendanceList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the StudentAttendance in Elasticsearch
-        verify(mockStudentAttendanceSearchRepository, times(1)).deleteById(studentAttendance.getId());
     }
 
     @Test
@@ -304,8 +280,6 @@ public class StudentAttendanceResourceIntTest {
     public void searchStudentAttendance() throws Exception {
         // Initialize the database
         studentAttendanceRepository.saveAndFlush(studentAttendance);
-        when(mockStudentAttendanceSearchRepository.search(queryStringQuery("id:" + studentAttendance.getId())))
-            .thenReturn(Collections.singletonList(studentAttendance));
         // Search the studentAttendance
         restStudentAttendanceMockMvc.perform(get("/api/_search/student-attendances?query=id:" + studentAttendance.getId()))
             .andExpect(status().isOk())

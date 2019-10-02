@@ -4,7 +4,6 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.BankAccounts;
 import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
 import com.synectiks.cms.service.BankAccountsService;
 import com.synectiks.cms.service.dto.BankAccountsDTO;
 import com.synectiks.cms.service.mapper.BankAccountsMapper;
@@ -32,7 +31,6 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -74,14 +72,6 @@ public class BankAccountsResourceIntTest {
 
     @Autowired
     private BankAccountsService bankAccountsService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.BankAccountsSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private BankAccountsSearchRepository mockBankAccountsSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -158,9 +148,6 @@ public class BankAccountsResourceIntTest {
         assertThat(testBankAccounts.getIfscCode()).isEqualTo(DEFAULT_IFSC_CODE);
         assertThat(testBankAccounts.getBranchAddress()).isEqualTo(DEFAULT_BRANCH_ADDRESS);
         assertThat(testBankAccounts.getCorporateId()).isEqualTo(DEFAULT_CORPORATE_ID);
-
-        // Validate the BankAccounts in Elasticsearch
-        verify(mockBankAccountsSearchRepository, times(1)).save(testBankAccounts);
     }
 
     @Test
@@ -181,9 +168,6 @@ public class BankAccountsResourceIntTest {
         // Validate the BankAccounts in the database
         List<BankAccounts> bankAccountsList = bankAccountsRepository.findAll();
         assertThat(bankAccountsList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the BankAccounts in Elasticsearch
-        verify(mockBankAccountsSearchRepository, times(0)).save(bankAccounts);
     }
 
     @Test
@@ -382,10 +366,7 @@ public class BankAccountsResourceIntTest {
         assertThat(testBankAccounts.getIfscCode()).isEqualTo(UPDATED_IFSC_CODE);
         assertThat(testBankAccounts.getBranchAddress()).isEqualTo(UPDATED_BRANCH_ADDRESS);
         assertThat(testBankAccounts.getCorporateId()).isEqualTo(UPDATED_CORPORATE_ID);
-
-        // Validate the BankAccounts in Elasticsearch
-        verify(mockBankAccountsSearchRepository, times(1)).save(testBankAccounts);
-    }
+   }
 
     @Test
     @Transactional
@@ -404,9 +385,6 @@ public class BankAccountsResourceIntTest {
         // Validate the BankAccounts in the database
         List<BankAccounts> bankAccountsList = bankAccountsRepository.findAll();
         assertThat(bankAccountsList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the BankAccounts in Elasticsearch
-        verify(mockBankAccountsSearchRepository, times(0)).save(bankAccounts);
     }
 
     @Test
@@ -425,9 +403,6 @@ public class BankAccountsResourceIntTest {
         // Validate the database is empty
         List<BankAccounts> bankAccountsList = bankAccountsRepository.findAll();
         assertThat(bankAccountsList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the BankAccounts in Elasticsearch
-        verify(mockBankAccountsSearchRepository, times(1)).deleteById(bankAccounts.getId());
     }
 
     @Test
@@ -435,8 +410,6 @@ public class BankAccountsResourceIntTest {
     public void searchBankAccounts() throws Exception {
         // Initialize the database
         bankAccountsRepository.saveAndFlush(bankAccounts);
-        when(mockBankAccountsSearchRepository.search(queryStringQuery("id:" + bankAccounts.getId())))
-            .thenReturn(Collections.singletonList(bankAccounts));
         // Search the bankAccounts
         restBankAccountsMockMvc.perform(get("/api/_search/bank-accounts?query=id:" + bankAccounts.getId()))
             .andExpect(status().isOk())

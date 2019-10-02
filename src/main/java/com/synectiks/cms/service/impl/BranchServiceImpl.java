@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.BranchService;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.search.BranchSearchRepository;
+//import com.synectiks.cms.repository.search.BranchSearchRepository;
 import com.synectiks.cms.service.dto.BranchDTO;
 import com.synectiks.cms.service.mapper.BranchMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Branch.
@@ -33,12 +33,12 @@ public class BranchServiceImpl implements BranchService {
 
     private final BranchMapper branchMapper;
 
-    private final BranchSearchRepository branchSearchRepository;
+    //private final BranchSearchRepository branchSearchRepository;
 
-    public BranchServiceImpl(BranchRepository branchRepository, BranchMapper branchMapper, BranchSearchRepository branchSearchRepository) {
+    public BranchServiceImpl(BranchRepository branchRepository, BranchMapper branchMapper/*, BranchSearchRepository branchSearchRepository*/) {
         this.branchRepository = branchRepository;
         this.branchMapper = branchMapper;
-        this.branchSearchRepository = branchSearchRepository;
+        //this.branchSearchRepository = branchSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BranchServiceImpl implements BranchService {
         Branch branch = branchMapper.toEntity(branchDTO);
         branch = branchRepository.save(branch);
         BranchDTO result = branchMapper.toDto(branch);
-        branchSearchRepository.save(branch);
+        //branchSearchRepository.save(branch);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class BranchServiceImpl implements BranchService {
     public void delete(Long id) {
         log.debug("Request to delete Branch : {}", id);
         branchRepository.deleteById(id);
-        branchSearchRepository.deleteById(id);
+        //branchSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class BranchServiceImpl implements BranchService {
     @Transactional(readOnly = true)
     public List<BranchDTO> search(String query) {
         log.debug("Request to search Branches for query {}", query);
-        return StreamSupport
+       /* return StreamSupport
             .stream(branchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(branchMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

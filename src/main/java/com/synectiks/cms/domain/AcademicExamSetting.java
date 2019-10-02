@@ -6,7 +6,7 @@ import com.synectiks.cms.domain.enumeration.GradeType;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,7 +20,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "academic_exam_setting")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "academicexamsetting")
+//@Document(indexName = "academicexamsetting")
 public class AcademicExamSetting implements Serializable {
 
     private static final long serialVersionUID = 1L;

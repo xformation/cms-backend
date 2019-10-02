@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.FacilityService;
 import com.synectiks.cms.domain.Facility;
 import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.search.FacilitySearchRepository;
+//import com.synectiks.cms.repository.search.FacilitySearchRepository;
 import com.synectiks.cms.service.dto.FacilityDTO;
 import com.synectiks.cms.service.mapper.FacilityMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Facility.
@@ -33,12 +33,12 @@ public class FacilityServiceImpl implements FacilityService {
 
     private final FacilityMapper facilityMapper;
 
-    private final FacilitySearchRepository facilitySearchRepository;
+    //private final FacilitySearchRepository facilitySearchRepository;
 
-    public FacilityServiceImpl(FacilityRepository facilityRepository, FacilityMapper facilityMapper, FacilitySearchRepository facilitySearchRepository) {
+    public FacilityServiceImpl(FacilityRepository facilityRepository, FacilityMapper facilityMapper/*, FacilitySearchRepository facilitySearchRepository*/) {
         this.facilityRepository = facilityRepository;
         this.facilityMapper = facilityMapper;
-        this.facilitySearchRepository = facilitySearchRepository;
+        //this.facilitySearchRepository = facilitySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class FacilityServiceImpl implements FacilityService {
         Facility facility = facilityMapper.toEntity(facilityDTO);
         facility = facilityRepository.save(facility);
         FacilityDTO result = facilityMapper.toDto(facility);
-        facilitySearchRepository.save(facility);
+        //facilitySearchRepository.save(facility);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class FacilityServiceImpl implements FacilityService {
     public void delete(Long id) {
         log.debug("Request to delete Facility : {}", id);
         facilityRepository.deleteById(id);
-        facilitySearchRepository.deleteById(id);
+        //facilitySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class FacilityServiceImpl implements FacilityService {
     @Transactional(readOnly = true)
     public List<FacilityDTO> search(String query) {
         log.debug("Request to search Facilities for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(facilitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(facilityMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

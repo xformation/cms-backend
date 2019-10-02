@@ -1,18 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.search.StudentSearchRepository;
-import com.synectiks.cms.service.StudentService;
-import com.synectiks.cms.service.dto.StudentDTO;
-import com.synectiks.cms.service.mapper.StudentMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,30 +30,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.service.StudentService;
+import com.synectiks.cms.service.dto.StudentDTO;
+import com.synectiks.cms.service.mapper.StudentMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the StudentResource REST controller.
  *
@@ -185,15 +182,6 @@ public class StudentResourceIntTest {
 
     @Autowired
     private StudentService studentService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.StudentSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private StudentSearchRepository mockStudentSearchRepository;
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -351,11 +339,7 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
         assertThat(testStudent.getAdmissionNo()).isEqualTo(DEFAULT_ADMISSION_NO);
         assertThat(testStudent.getRollNo()).isEqualTo(DEFAULT_ROLL_NO);
-        assertThat(testStudent.getStudentType()).isEqualTo(DEFAULT_STUDENT_TYPE);
-
-        // Validate the Student in Elasticsearch
-        verify(mockStudentSearchRepository, times(1)).save(testStudent);
-    }
+        assertThat(testStudent.getStudentType()).isEqualTo(DEFAULT_STUDENT_TYPE);    }
 
     @Test
     @Transactional
@@ -375,9 +359,6 @@ public class StudentResourceIntTest {
         // Validate the Student in the database
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Student in Elasticsearch
-        verify(mockStudentSearchRepository, times(0)).save(student);
     }
 
     @Test
@@ -1259,9 +1240,6 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getAdmissionNo()).isEqualTo(UPDATED_ADMISSION_NO);
         assertThat(testStudent.getRollNo()).isEqualTo(UPDATED_ROLL_NO);
         assertThat(testStudent.getStudentType()).isEqualTo(UPDATED_STUDENT_TYPE);
-
-        // Validate the Student in Elasticsearch
-        verify(mockStudentSearchRepository, times(1)).save(testStudent);
     }
 
     @Test
@@ -1281,9 +1259,6 @@ public class StudentResourceIntTest {
         // Validate the Student in the database
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Student in Elasticsearch
-        verify(mockStudentSearchRepository, times(0)).save(student);
     }
 
     @Test
@@ -1301,19 +1276,13 @@ public class StudentResourceIntTest {
 
         // Validate the database is empty
         List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Student in Elasticsearch
-        verify(mockStudentSearchRepository, times(1)).deleteById(student.getId());
-    }
+        assertThat(studentList).hasSize(databaseSizeBeforeDelete - 1);    }
 
     @Test
     @Transactional
     public void searchStudent() throws Exception {
         // Initialize the database
         studentRepository.saveAndFlush(student);
-        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
-            .thenReturn(Collections.singletonList(student));
         // Search the student
         restStudentMockMvc.perform(get("/api/_search/students?query=id:" + student.getId()))
             .andExpect(status().isOk())

@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.CityService;
 import com.synectiks.cms.domain.City;
 import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.search.CitySearchRepository;
+//import com.synectiks.cms.repository.search.CitySearchRepository;
 import com.synectiks.cms.service.dto.CityDTO;
 import com.synectiks.cms.service.mapper.CityMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing City.
@@ -33,12 +33,12 @@ public class CityServiceImpl implements CityService {
 
     private final CityMapper cityMapper;
 
-    private final CitySearchRepository citySearchRepository;
+    //private final CitySearchRepository citySearchRepository;
 
-    public CityServiceImpl(CityRepository cityRepository, CityMapper cityMapper, CitySearchRepository citySearchRepository) {
+    public CityServiceImpl(CityRepository cityRepository, CityMapper cityMapper/*, CitySearchRepository citySearchRepository*/) {
         this.cityRepository = cityRepository;
         this.cityMapper = cityMapper;
-        this.citySearchRepository = citySearchRepository;
+        //this.citySearchRepository = citySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class CityServiceImpl implements CityService {
         City city = cityMapper.toEntity(cityDTO);
         city = cityRepository.save(city);
         CityDTO result = cityMapper.toDto(city);
-        citySearchRepository.save(city);
+        //citySearchRepository.save(city);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class CityServiceImpl implements CityService {
     public void delete(Long id) {
         log.debug("Request to delete City : {}", id);
         cityRepository.deleteById(id);
-        citySearchRepository.deleteById(id);
+        //citySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class CityServiceImpl implements CityService {
     @Transactional(readOnly = true)
     public List<CityDTO> search(String query) {
         log.debug("Request to search Cities for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(citySearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(cityMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+        	//TODO: Fix it by fetching result from search api
+        	return null;
     }
 }

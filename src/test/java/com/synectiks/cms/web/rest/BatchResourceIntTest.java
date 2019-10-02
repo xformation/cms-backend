@@ -4,7 +4,6 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.search.BatchSearchRepository;
 import com.synectiks.cms.service.BatchService;
 import com.synectiks.cms.service.dto.BatchDTO;
 import com.synectiks.cms.service.mapper.BatchMapper;
@@ -32,7 +31,6 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -59,14 +57,6 @@ public class BatchResourceIntTest {
 
     @Autowired
     private BatchService batchService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.BatchSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private BatchSearchRepository mockBatchSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -133,9 +123,6 @@ public class BatchResourceIntTest {
         assertThat(batchList).hasSize(databaseSizeBeforeCreate + 1);
         Batch testBatch = batchList.get(batchList.size() - 1);
         assertThat(testBatch.getBatch()).isEqualTo(DEFAULT_BATCH);
-
-        // Validate the Batch in Elasticsearch
-        verify(mockBatchSearchRepository, times(1)).save(testBatch);
     }
 
     @Test
@@ -156,9 +143,6 @@ public class BatchResourceIntTest {
         // Validate the Batch in the database
         List<Batch> batchList = batchRepository.findAll();
         assertThat(batchList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Batch in Elasticsearch
-        verify(mockBatchSearchRepository, times(0)).save(batch);
     }
 
     @Test
@@ -242,9 +226,6 @@ public class BatchResourceIntTest {
         assertThat(batchList).hasSize(databaseSizeBeforeUpdate);
         Batch testBatch = batchList.get(batchList.size() - 1);
         assertThat(testBatch.getBatch()).isEqualTo(UPDATED_BATCH);
-
-        // Validate the Batch in Elasticsearch
-        verify(mockBatchSearchRepository, times(1)).save(testBatch);
     }
 
     @Test
@@ -264,10 +245,7 @@ public class BatchResourceIntTest {
         // Validate the Batch in the database
         List<Batch> batchList = batchRepository.findAll();
         assertThat(batchList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Batch in Elasticsearch
-        verify(mockBatchSearchRepository, times(0)).save(batch);
-    }
+   }
 
     @Test
     @Transactional
@@ -285,18 +263,13 @@ public class BatchResourceIntTest {
         // Validate the database is empty
         List<Batch> batchList = batchRepository.findAll();
         assertThat(batchList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Batch in Elasticsearch
-        verify(mockBatchSearchRepository, times(1)).deleteById(batch.getId());
-    }
+   }
 
     @Test
     @Transactional
     public void searchBatch() throws Exception {
         // Initialize the database
         batchRepository.saveAndFlush(batch);
-        when(mockBatchSearchRepository.search(queryStringQuery("id:" + batch.getId())))
-            .thenReturn(Collections.singletonList(batch));
         // Search the batch
         restBatchMockMvc.perform(get("/api/_search/batches?query=id:" + batch.getId()))
             .andExpect(status().isOk())

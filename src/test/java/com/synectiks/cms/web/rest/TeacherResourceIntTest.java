@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.search.TeacherSearchRepository;
-import com.synectiks.cms.service.TeacherService;
-import com.synectiks.cms.service.dto.TeacherDTO;
-import com.synectiks.cms.service.mapper.TeacherMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,31 +30,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.StaffType;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.service.TeacherService;
+import com.synectiks.cms.service.dto.TeacherDTO;
+import com.synectiks.cms.service.mapper.TeacherMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the TeacherResource REST controller.
  *
@@ -194,14 +191,6 @@ public class TeacherResourceIntTest {
 
     @Autowired
     private TeacherService teacherService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.TeacherSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private TeacherSearchRepository mockTeacherSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -350,8 +339,6 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getDesignation()).isEqualTo(DEFAULT_DESIGNATION);
         assertThat(testTeacher.getStaffType()).isEqualTo(DEFAULT_STAFF_TYPE);
 
-        // Validate the Teacher in Elasticsearch
-        verify(mockTeacherSearchRepository, times(1)).save(testTeacher);
     }
 
     @Test
@@ -372,9 +359,6 @@ public class TeacherResourceIntTest {
         // Validate the Teacher in the database
         List<Teacher> teacherList = teacherRepository.findAll();
         assertThat(teacherList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Teacher in Elasticsearch
-        verify(mockTeacherSearchRepository, times(0)).save(teacher);
     }
 
     @Test
@@ -1291,9 +1275,6 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
         assertThat(testTeacher.getDesignation()).isEqualTo(UPDATED_DESIGNATION);
         assertThat(testTeacher.getStaffType()).isEqualTo(UPDATED_STAFF_TYPE);
-
-        // Validate the Teacher in Elasticsearch
-        verify(mockTeacherSearchRepository, times(1)).save(testTeacher);
     }
 
     @Test
@@ -1313,9 +1294,6 @@ public class TeacherResourceIntTest {
         // Validate the Teacher in the database
         List<Teacher> teacherList = teacherRepository.findAll();
         assertThat(teacherList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Teacher in Elasticsearch
-        verify(mockTeacherSearchRepository, times(0)).save(teacher);
     }
 
     @Test
@@ -1334,9 +1312,6 @@ public class TeacherResourceIntTest {
         // Validate the database is empty
         List<Teacher> teacherList = teacherRepository.findAll();
         assertThat(teacherList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Teacher in Elasticsearch
-        verify(mockTeacherSearchRepository, times(1)).deleteById(teacher.getId());
     }
 
     @Test
@@ -1344,8 +1319,6 @@ public class TeacherResourceIntTest {
     public void searchTeacher() throws Exception {
         // Initialize the database
         teacherRepository.saveAndFlush(teacher);
-        when(mockTeacherSearchRepository.search(queryStringQuery("id:" + teacher.getId())))
-            .thenReturn(Collections.singletonList(teacher));
         // Search the teacher
         restTeacherMockMvc.perform(get("/api/_search/teachers?query=id:" + teacher.getId()))
             .andExpect(status().isOk())

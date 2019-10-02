@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.PaymentRemainderService;
 import com.synectiks.cms.domain.PaymentRemainder;
 import com.synectiks.cms.repository.PaymentRemainderRepository;
-import com.synectiks.cms.repository.search.PaymentRemainderSearchRepository;
+//import com.synectiks.cms.repository.search.PaymentRemainderSearchRepository;
 import com.synectiks.cms.service.dto.PaymentRemainderDTO;
 import com.synectiks.cms.service.mapper.PaymentRemainderMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing PaymentRemainder.
@@ -33,12 +33,12 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
 
     private final PaymentRemainderMapper paymentRemainderMapper;
 
-    private final PaymentRemainderSearchRepository paymentRemainderSearchRepository;
+    //private final PaymentRemainderSearchRepository paymentRemainderSearchRepository;
 
-    public PaymentRemainderServiceImpl(PaymentRemainderRepository paymentRemainderRepository, PaymentRemainderMapper paymentRemainderMapper, PaymentRemainderSearchRepository paymentRemainderSearchRepository) {
+    public PaymentRemainderServiceImpl(PaymentRemainderRepository paymentRemainderRepository, PaymentRemainderMapper paymentRemainderMapper/*, PaymentRemainderSearchRepository paymentRemainderSearchRepository*/) {
         this.paymentRemainderRepository = paymentRemainderRepository;
         this.paymentRemainderMapper = paymentRemainderMapper;
-        this.paymentRemainderSearchRepository = paymentRemainderSearchRepository;
+        //this.paymentRemainderSearchRepository = paymentRemainderSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
         PaymentRemainder paymentRemainder = paymentRemainderMapper.toEntity(paymentRemainderDTO);
         paymentRemainder = paymentRemainderRepository.save(paymentRemainder);
         PaymentRemainderDTO result = paymentRemainderMapper.toDto(paymentRemainder);
-        paymentRemainderSearchRepository.save(paymentRemainder);
+        //paymentRemainderSearchRepository.save(paymentRemainder);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
     public void delete(Long id) {
         log.debug("Request to delete PaymentRemainder : {}", id);
         paymentRemainderRepository.deleteById(id);
-        paymentRemainderSearchRepository.deleteById(id);
+        //paymentRemainderSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
     @Transactional(readOnly = true)
     public List<PaymentRemainderDTO> search(String query) {
         log.debug("Request to search PaymentRemainders for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(paymentRemainderSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(paymentRemainderMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

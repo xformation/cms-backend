@@ -4,7 +4,6 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.search.BranchSearchRepository;
 import com.synectiks.cms.service.BranchService;
 import com.synectiks.cms.service.dto.BranchDTO;
 import com.synectiks.cms.service.mapper.BranchMapper;
@@ -32,7 +31,6 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -67,14 +65,6 @@ public class BranchResourceIntTest {
 
     @Autowired
     private BranchService branchService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.BranchSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private BranchSearchRepository mockBranchSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -148,8 +138,6 @@ public class BranchResourceIntTest {
         assertThat(testBranch.getAddress2()).isEqualTo(DEFAULT_ADDRESS_2);
         assertThat(testBranch.getBranchHead()).isEqualTo(DEFAULT_BRANCH_HEAD);
 
-        // Validate the Branch in Elasticsearch
-        verify(mockBranchSearchRepository, times(1)).save(testBranch);
     }
 
     @Test
@@ -171,8 +159,6 @@ public class BranchResourceIntTest {
         List<Branch> branchList = branchRepository.findAll();
         assertThat(branchList).hasSize(databaseSizeBeforeCreate);
 
-        // Validate the Branch in Elasticsearch
-        verify(mockBranchSearchRepository, times(0)).save(branch);
     }
 
     @Test
@@ -325,9 +311,6 @@ public class BranchResourceIntTest {
         assertThat(testBranch.getAddress1()).isEqualTo(UPDATED_ADDRESS_1);
         assertThat(testBranch.getAddress2()).isEqualTo(UPDATED_ADDRESS_2);
         assertThat(testBranch.getBranchHead()).isEqualTo(UPDATED_BRANCH_HEAD);
-
-        // Validate the Branch in Elasticsearch
-        verify(mockBranchSearchRepository, times(1)).save(testBranch);
     }
 
     @Test
@@ -348,8 +331,6 @@ public class BranchResourceIntTest {
         List<Branch> branchList = branchRepository.findAll();
         assertThat(branchList).hasSize(databaseSizeBeforeUpdate);
 
-        // Validate the Branch in Elasticsearch
-        verify(mockBranchSearchRepository, times(0)).save(branch);
     }
 
     @Test
@@ -369,8 +350,6 @@ public class BranchResourceIntTest {
         List<Branch> branchList = branchRepository.findAll();
         assertThat(branchList).hasSize(databaseSizeBeforeDelete - 1);
 
-        // Validate the Branch in Elasticsearch
-        verify(mockBranchSearchRepository, times(1)).deleteById(branch.getId());
     }
 
     @Test
@@ -378,8 +357,6 @@ public class BranchResourceIntTest {
     public void searchBranch() throws Exception {
         // Initialize the database
         branchRepository.saveAndFlush(branch);
-        when(mockBranchSearchRepository.search(queryStringQuery("id:" + branch.getId())))
-            .thenReturn(Collections.singletonList(branch));
         // Search the branch
         restBranchMockMvc.perform(get("/api/_search/branches?query=id:" + branch.getId()))
             .andExpect(status().isOk())

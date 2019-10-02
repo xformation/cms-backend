@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.search.StateSearchRepository;
-import com.synectiks.cms.service.StateService;
-import com.synectiks.cms.service.dto.StateDTO;
-import com.synectiks.cms.service.mapper.StateMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.service.StateService;
+import com.synectiks.cms.service.dto.StateDTO;
+import com.synectiks.cms.service.mapper.StateMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the StateResource REST controller.
@@ -64,15 +64,6 @@ public class StateResourceIntTest {
 
     @Autowired
     private StateService stateService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.StateSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private StateSearchRepository mockStateSearchRepository;
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -142,9 +133,6 @@ public class StateResourceIntTest {
         assertThat(testState.getStateName()).isEqualTo(DEFAULT_STATE_NAME);
         assertThat(testState.getDivisionType()).isEqualTo(DEFAULT_DIVISION_TYPE);
         assertThat(testState.getStateCode()).isEqualTo(DEFAULT_STATE_CODE);
-
-        // Validate the State in Elasticsearch
-        verify(mockStateSearchRepository, times(1)).save(testState);
     }
 
     @Test
@@ -165,10 +153,7 @@ public class StateResourceIntTest {
         // Validate the State in the database
         List<State> stateList = stateRepository.findAll();
         assertThat(stateList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the State in Elasticsearch
-        verify(mockStateSearchRepository, times(0)).save(state);
-    }
+        }
 
     @Test
     @Transactional
@@ -297,9 +282,6 @@ public class StateResourceIntTest {
         assertThat(testState.getStateName()).isEqualTo(UPDATED_STATE_NAME);
         assertThat(testState.getDivisionType()).isEqualTo(UPDATED_DIVISION_TYPE);
         assertThat(testState.getStateCode()).isEqualTo(UPDATED_STATE_CODE);
-
-        // Validate the State in Elasticsearch
-        verify(mockStateSearchRepository, times(1)).save(testState);
     }
 
     @Test
@@ -319,9 +301,6 @@ public class StateResourceIntTest {
         // Validate the State in the database
         List<State> stateList = stateRepository.findAll();
         assertThat(stateList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the State in Elasticsearch
-        verify(mockStateSearchRepository, times(0)).save(state);
     }
 
     @Test
@@ -340,9 +319,6 @@ public class StateResourceIntTest {
         // Validate the database is empty
         List<State> stateList = stateRepository.findAll();
         assertThat(stateList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the State in Elasticsearch
-        verify(mockStateSearchRepository, times(1)).deleteById(state.getId());
     }
 
     @Test
@@ -350,8 +326,6 @@ public class StateResourceIntTest {
     public void searchState() throws Exception {
         // Initialize the database
         stateRepository.saveAndFlush(state);
-        when(mockStateSearchRepository.search(queryStringQuery("id:" + state.getId())))
-            .thenReturn(Collections.singletonList(state));
         // Search the state
         restStateMockMvc.perform(get("/api/_search/states?query=id:" + state.getId()))
             .andExpect(status().isOk())

@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.LateFeeService;
 import com.synectiks.cms.domain.LateFee;
 import com.synectiks.cms.repository.LateFeeRepository;
-import com.synectiks.cms.repository.search.LateFeeSearchRepository;
+//import com.synectiks.cms.repository.search.LateFeeSearchRepository;
 import com.synectiks.cms.service.dto.LateFeeDTO;
 import com.synectiks.cms.service.mapper.LateFeeMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing LateFee.
@@ -33,12 +33,12 @@ public class LateFeeServiceImpl implements LateFeeService {
 
     private final LateFeeMapper lateFeeMapper;
 
-    private final LateFeeSearchRepository lateFeeSearchRepository;
+    //private final LateFeeSearchRepository lateFeeSearchRepository;
 
-    public LateFeeServiceImpl(LateFeeRepository lateFeeRepository, LateFeeMapper lateFeeMapper, LateFeeSearchRepository lateFeeSearchRepository) {
+    public LateFeeServiceImpl(LateFeeRepository lateFeeRepository, LateFeeMapper lateFeeMapper/*, LateFeeSearchRepository lateFeeSearchRepository*/) {
         this.lateFeeRepository = lateFeeRepository;
         this.lateFeeMapper = lateFeeMapper;
-        this.lateFeeSearchRepository = lateFeeSearchRepository;
+        //this.lateFeeSearchRepository = lateFeeSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class LateFeeServiceImpl implements LateFeeService {
         LateFee lateFee = lateFeeMapper.toEntity(lateFeeDTO);
         lateFee = lateFeeRepository.save(lateFee);
         LateFeeDTO result = lateFeeMapper.toDto(lateFee);
-        lateFeeSearchRepository.save(lateFee);
+        //lateFeeSearchRepository.save(lateFee);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class LateFeeServiceImpl implements LateFeeService {
     public void delete(Long id) {
         log.debug("Request to delete LateFee : {}", id);
         lateFeeRepository.deleteById(id);
-        lateFeeSearchRepository.deleteById(id);
+        //lateFeeSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class LateFeeServiceImpl implements LateFeeService {
     @Transactional(readOnly = true)
     public List<LateFeeDTO> search(String query) {
         log.debug("Request to search LateFees for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(lateFeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(lateFeeMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

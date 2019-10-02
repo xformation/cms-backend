@@ -1,13 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Modules;
-import com.synectiks.cms.repository.ModulesRepository;
-import com.synectiks.cms.repository.search.ModulesSearchRepository;
-import com.synectiks.cms.service.ModulesService;
-import com.synectiks.cms.service.dto.ModulesDTO;
-import com.synectiks.cms.service.mapper.ModulesMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,19 +28,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Modules;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.ModulesRepository;
+import com.synectiks.cms.service.ModulesService;
+import com.synectiks.cms.service.dto.ModulesDTO;
+import com.synectiks.cms.service.mapper.ModulesMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Integration tests for the {@Link ModulesResource} REST controller.
  */
@@ -61,14 +62,6 @@ public class ModulesResourceIT {
 
     @Autowired
     private ModulesService modulesService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.ModulesSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private ModulesSearchRepository mockModulesSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -155,9 +148,6 @@ public class ModulesResourceIT {
         assertThat(testModules.getSubModuleName()).isEqualTo(DEFAULT_SUB_MODULE_NAME);
         assertThat(testModules.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testModules.getStatus()).isEqualTo(DEFAULT_STATUS);
-
-        // Validate the Modules in Elasticsearch
-        verify(mockModulesSearchRepository, times(1)).save(testModules);
     }
 
     @Test
@@ -178,9 +168,6 @@ public class ModulesResourceIT {
         // Validate the Modules in the database
         List<Modules> modulesList = modulesRepository.findAll();
         assertThat(modulesList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Modules in Elasticsearch
-        verify(mockModulesSearchRepository, times(0)).save(modules);
     }
 
 
@@ -258,9 +245,6 @@ public class ModulesResourceIT {
         assertThat(testModules.getSubModuleName()).isEqualTo(UPDATED_SUB_MODULE_NAME);
         assertThat(testModules.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testModules.getStatus()).isEqualTo(UPDATED_STATUS);
-
-        // Validate the Modules in Elasticsearch
-        verify(mockModulesSearchRepository, times(1)).save(testModules);
     }
 
     @Test
@@ -280,9 +264,6 @@ public class ModulesResourceIT {
         // Validate the Modules in the database
         List<Modules> modulesList = modulesRepository.findAll();
         assertThat(modulesList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Modules in Elasticsearch
-        verify(mockModulesSearchRepository, times(0)).save(modules);
     }
 
     @Test
@@ -301,9 +282,6 @@ public class ModulesResourceIT {
         // Validate the database contains one less item
         List<Modules> modulesList = modulesRepository.findAll();
         assertThat(modulesList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Modules in Elasticsearch
-        verify(mockModulesSearchRepository, times(1)).deleteById(modules.getId());
     }
 
     @Test
@@ -311,8 +289,6 @@ public class ModulesResourceIT {
     public void searchModules() throws Exception {
         // Initialize the database
         modulesRepository.saveAndFlush(modules);
-        when(mockModulesSearchRepository.search(queryStringQuery("id:" + modules.getId())))
-            .thenReturn(Collections.singletonList(modules));
         // Search the modules
         restModulesMockMvc.perform(get("/api/_search/modules?query=id:" + modules.getId()))
             .andExpect(status().isOk())

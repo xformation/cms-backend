@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.StudentExamReportService;
 import com.synectiks.cms.domain.StudentExamReport;
 import com.synectiks.cms.repository.StudentExamReportRepository;
-import com.synectiks.cms.repository.search.StudentExamReportSearchRepository;
+//import com.synectiks.cms.repository.search.StudentExamReportSearchRepository;
 import com.synectiks.cms.service.dto.StudentExamReportDTO;
 import com.synectiks.cms.service.mapper.StudentExamReportMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing StudentExamReport.
@@ -33,12 +33,12 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
 
     private final StudentExamReportMapper studentExamReportMapper;
 
-    private final StudentExamReportSearchRepository studentExamReportSearchRepository;
+    //private final StudentExamReportSearchRepository studentExamReportSearchRepository;
 
-    public StudentExamReportServiceImpl(StudentExamReportRepository studentExamReportRepository, StudentExamReportMapper studentExamReportMapper, StudentExamReportSearchRepository studentExamReportSearchRepository) {
+    public StudentExamReportServiceImpl(StudentExamReportRepository studentExamReportRepository, StudentExamReportMapper studentExamReportMapper/*, StudentExamReportSearchRepository studentExamReportSearchRepository*/) {
         this.studentExamReportRepository = studentExamReportRepository;
         this.studentExamReportMapper = studentExamReportMapper;
-        this.studentExamReportSearchRepository = studentExamReportSearchRepository;
+        //this.studentExamReportSearchRepository = studentExamReportSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
         StudentExamReport studentExamReport = studentExamReportMapper.toEntity(studentExamReportDTO);
         studentExamReport = studentExamReportRepository.save(studentExamReport);
         StudentExamReportDTO result = studentExamReportMapper.toDto(studentExamReport);
-        studentExamReportSearchRepository.save(studentExamReport);
+        //studentExamReportSearchRepository.save(studentExamReport);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     public void delete(Long id) {
         log.debug("Request to delete StudentExamReport : {}", id);
         studentExamReportRepository.deleteById(id);
-        studentExamReportSearchRepository.deleteById(id);
+        //studentExamReportSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     @Transactional(readOnly = true)
     public List<StudentExamReportDTO> search(String query) {
         log.debug("Request to search StudentExamReports for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(studentExamReportSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(studentExamReportMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

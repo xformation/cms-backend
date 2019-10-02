@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.IdCardService;
 import com.synectiks.cms.domain.IdCard;
 import com.synectiks.cms.repository.IdCardRepository;
-import com.synectiks.cms.repository.search.IdCardSearchRepository;
+//import com.synectiks.cms.repository.search.IdCardSearchRepository;
 import com.synectiks.cms.service.dto.IdCardDTO;
 import com.synectiks.cms.service.mapper.IdCardMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing IdCard.
@@ -33,12 +33,12 @@ public class IdCardServiceImpl implements IdCardService {
 
     private final IdCardMapper idCardMapper;
 
-    private final IdCardSearchRepository idCardSearchRepository;
+    //private final IdCardSearchRepository idCardSearchRepository;
 
-    public IdCardServiceImpl(IdCardRepository idCardRepository, IdCardMapper idCardMapper, IdCardSearchRepository idCardSearchRepository) {
+    public IdCardServiceImpl(IdCardRepository idCardRepository, IdCardMapper idCardMapper/*, IdCardSearchRepository idCardSearchRepository*/) {
         this.idCardRepository = idCardRepository;
         this.idCardMapper = idCardMapper;
-        this.idCardSearchRepository = idCardSearchRepository;
+        //this.idCardSearchRepository = idCardSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class IdCardServiceImpl implements IdCardService {
         IdCard idCard = idCardMapper.toEntity(idCardDTO);
         idCard = idCardRepository.save(idCard);
         IdCardDTO result = idCardMapper.toDto(idCard);
-        idCardSearchRepository.save(idCard);
+        //idCardSearchRepository.save(idCard);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class IdCardServiceImpl implements IdCardService {
     public void delete(Long id) {
         log.debug("Request to delete IdCard : {}", id);
         idCardRepository.deleteById(id);
-        idCardSearchRepository.deleteById(id);
+        //idCardSearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,11 @@ public class IdCardServiceImpl implements IdCardService {
     @Transactional(readOnly = true)
     public List<IdCardDTO> search(String query) {
         log.debug("Request to search IdCards for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(idCardSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(idCardMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.LegalEntityService;
 import com.synectiks.cms.domain.LegalEntity;
 import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+//import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
 import com.synectiks.cms.service.dto.LegalEntityDTO;
 import com.synectiks.cms.service.mapper.LegalEntityMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing LegalEntity.
@@ -33,12 +33,12 @@ public class LegalEntityServiceImpl implements LegalEntityService {
 
     private final LegalEntityMapper legalEntityMapper;
 
-    private final LegalEntitySearchRepository legalEntitySearchRepository;
+    //private final LegalEntitySearchRepository legalEntitySearchRepository;
 
-    public LegalEntityServiceImpl(LegalEntityRepository legalEntityRepository, LegalEntityMapper legalEntityMapper, LegalEntitySearchRepository legalEntitySearchRepository) {
+    public LegalEntityServiceImpl(LegalEntityRepository legalEntityRepository, LegalEntityMapper legalEntityMapper/*, LegalEntitySearchRepository legalEntitySearchRepository*/) {
         this.legalEntityRepository = legalEntityRepository;
         this.legalEntityMapper = legalEntityMapper;
-        this.legalEntitySearchRepository = legalEntitySearchRepository;
+        //this.legalEntitySearchRepository = legalEntitySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
         LegalEntity legalEntity = legalEntityMapper.toEntity(legalEntityDTO);
         legalEntity = legalEntityRepository.save(legalEntity);
         LegalEntityDTO result = legalEntityMapper.toDto(legalEntity);
-        legalEntitySearchRepository.save(legalEntity);
+        //legalEntitySearchRepository.save(legalEntity);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     public void delete(Long id) {
         log.debug("Request to delete LegalEntity : {}", id);
         legalEntityRepository.deleteById(id);
-        legalEntitySearchRepository.deleteById(id);
+        //legalEntitySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Transactional(readOnly = true)
     public List<LegalEntityDTO> search(String query) {
         log.debug("Request to search LegalEntities for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(legalEntitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(legalEntityMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

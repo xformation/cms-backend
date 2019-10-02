@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.TeacherService;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.search.TeacherSearchRepository;
+//import com.synectiks.cms.repository.search.TeacherSearchRepository;
 import com.synectiks.cms.service.dto.TeacherDTO;
 import com.synectiks.cms.service.mapper.TeacherMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Teacher.
@@ -33,12 +33,12 @@ public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherMapper teacherMapper;
 
-    private final TeacherSearchRepository teacherSearchRepository;
+    //private final TeacherSearchRepository teacherSearchRepository;
 
-    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherMapper teacherMapper, TeacherSearchRepository teacherSearchRepository) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherMapper teacherMapper/*, TeacherSearchRepository teacherSearchRepository*/) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
-        this.teacherSearchRepository = teacherSearchRepository;
+        //this.teacherSearchRepository = teacherSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = teacherMapper.toEntity(teacherDTO);
         teacher = teacherRepository.save(teacher);
         TeacherDTO result = teacherMapper.toDto(teacher);
-        teacherSearchRepository.save(teacher);
+        //teacherSearchRepository.save(teacher);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TeacherServiceImpl implements TeacherService {
     public void delete(Long id) {
         log.debug("Request to delete Teacher : {}", id);
         teacherRepository.deleteById(id);
-        teacherSearchRepository.deleteById(id);
+        //teacherSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional(readOnly = true)
     public List<TeacherDTO> search(String query) {
         log.debug("Request to search Teachers for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(teacherSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(teacherMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

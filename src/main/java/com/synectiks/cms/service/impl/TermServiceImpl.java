@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.TermService;
 import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.search.TermSearchRepository;
+//import com.synectiks.cms.repository.search.TermSearchRepository;
 import com.synectiks.cms.service.dto.TermDTO;
 import com.synectiks.cms.service.mapper.TermMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Term.
@@ -33,12 +33,12 @@ public class TermServiceImpl implements TermService {
 
     private final TermMapper termMapper;
 
-    private final TermSearchRepository termSearchRepository;
+    //private final TermSearchRepository termSearchRepository;
 
-    public TermServiceImpl(TermRepository termRepository, TermMapper termMapper, TermSearchRepository termSearchRepository) {
+    public TermServiceImpl(TermRepository termRepository, TermMapper termMapper/*, TermSearchRepository termSearchRepository*/) {
         this.termRepository = termRepository;
         this.termMapper = termMapper;
-        this.termSearchRepository = termSearchRepository;
+        //this.termSearchRepository = termSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TermServiceImpl implements TermService {
         Term term = termMapper.toEntity(termDTO);
         term = termRepository.save(term);
         TermDTO result = termMapper.toDto(term);
-        termSearchRepository.save(term);
+        //termSearchRepository.save(term);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TermServiceImpl implements TermService {
     public void delete(Long id) {
         log.debug("Request to delete Term : {}", id);
         termRepository.deleteById(id);
-        termSearchRepository.deleteById(id);
+        //termSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class TermServiceImpl implements TermService {
     @Transactional(readOnly = true)
     public List<TermDTO> search(String query) {
         log.debug("Request to search Terms for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(termSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(termMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

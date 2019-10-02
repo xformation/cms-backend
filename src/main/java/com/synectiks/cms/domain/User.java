@@ -26,7 +26,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "user")
+//@org.springframework.data.elasticsearch.annotations.Document(indexName = "user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

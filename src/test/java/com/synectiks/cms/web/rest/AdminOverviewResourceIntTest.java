@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AdminOverview;
 import com.synectiks.cms.repository.AdminOverviewRepository;
-import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
+//import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
 import com.synectiks.cms.service.AdminOverviewService;
 import com.synectiks.cms.service.dto.AdminOverviewDTO;
 import com.synectiks.cms.service.mapper.AdminOverviewMapper;
@@ -35,7 +35,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -99,14 +99,6 @@ public class AdminOverviewResourceIntTest {
 
     @Autowired
     private AdminOverviewService adminOverviewService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AdminOverviewSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AdminOverviewSearchRepository mockAdminOverviewSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -187,9 +179,6 @@ public class AdminOverviewResourceIntTest {
         assertThat(testAdminOverview.getLectureSix()).isEqualTo(DEFAULT_LECTURE_SIX);
         assertThat(testAdminOverview.getLectureSeven()).isEqualTo(DEFAULT_LECTURE_SEVEN);
         assertThat(testAdminOverview.getLectureEight()).isEqualTo(DEFAULT_LECTURE_EIGHT);
-
-        // Validate the AdminOverview in Elasticsearch
-        verify(mockAdminOverviewSearchRepository, times(1)).save(testAdminOverview);
     }
 
     @Test
@@ -210,9 +199,6 @@ public class AdminOverviewResourceIntTest {
         // Validate the AdminOverview in the database
         List<AdminOverview> adminOverviewList = adminOverviewRepository.findAll();
         assertThat(adminOverviewList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AdminOverview in Elasticsearch
-        verify(mockAdminOverviewSearchRepository, times(0)).save(adminOverview);
     }
 
     @Test
@@ -503,9 +489,6 @@ public class AdminOverviewResourceIntTest {
         assertThat(testAdminOverview.getLectureSix()).isEqualTo(UPDATED_LECTURE_SIX);
         assertThat(testAdminOverview.getLectureSeven()).isEqualTo(UPDATED_LECTURE_SEVEN);
         assertThat(testAdminOverview.getLectureEight()).isEqualTo(UPDATED_LECTURE_EIGHT);
-
-        // Validate the AdminOverview in Elasticsearch
-        verify(mockAdminOverviewSearchRepository, times(1)).save(testAdminOverview);
     }
 
     @Test
@@ -525,9 +508,6 @@ public class AdminOverviewResourceIntTest {
         // Validate the AdminOverview in the database
         List<AdminOverview> adminOverviewList = adminOverviewRepository.findAll();
         assertThat(adminOverviewList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AdminOverview in Elasticsearch
-        verify(mockAdminOverviewSearchRepository, times(0)).save(adminOverview);
     }
 
     @Test
@@ -546,9 +526,6 @@ public class AdminOverviewResourceIntTest {
         // Validate the database is empty
         List<AdminOverview> adminOverviewList = adminOverviewRepository.findAll();
         assertThat(adminOverviewList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AdminOverview in Elasticsearch
-        verify(mockAdminOverviewSearchRepository, times(1)).deleteById(adminOverview.getId());
     }
 
     @Test
@@ -556,9 +533,7 @@ public class AdminOverviewResourceIntTest {
     public void searchAdminOverview() throws Exception {
         // Initialize the database
         adminOverviewRepository.saveAndFlush(adminOverview);
-        when(mockAdminOverviewSearchRepository.search(queryStringQuery("id:" + adminOverview.getId())))
-            .thenReturn(Collections.singletonList(adminOverview));
-        // Search the adminOverview
+       // Search the adminOverview
         restAdminOverviewMockMvc.perform(get("/api/_search/admin-overviews?query=id:" + adminOverview.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

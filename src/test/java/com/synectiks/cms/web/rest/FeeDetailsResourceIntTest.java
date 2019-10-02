@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.search.FeeDetailsSearchRepository;
-import com.synectiks.cms.service.FeeDetailsService;
-import com.synectiks.cms.service.dto.FeeDetailsDTO;
-import com.synectiks.cms.service.mapper.FeeDetailsMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,24 +31,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.FeeDetails;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.repository.FeeDetailsRepository;
+import com.synectiks.cms.service.FeeDetailsService;
+import com.synectiks.cms.service.dto.FeeDetailsDTO;
+import com.synectiks.cms.service.mapper.FeeDetailsMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the FeeDetailsResource REST controller.
  *
@@ -97,14 +96,6 @@ public class FeeDetailsResourceIntTest {
 
     @Autowired
     private FeeDetailsService feeDetailsService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.FeeDetailsSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private FeeDetailsSearchRepository mockFeeDetailsSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -189,9 +180,6 @@ public class FeeDetailsResourceIntTest {
         assertThat(testFeeDetails.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
         assertThat(testFeeDetails.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testFeeDetails.getEndDate()).isEqualTo(DEFAULT_END_DATE);
-
-        // Validate the FeeDetails in Elasticsearch
-        verify(mockFeeDetailsSearchRepository, times(1)).save(testFeeDetails);
     }
 
     @Test
@@ -212,9 +200,6 @@ public class FeeDetailsResourceIntTest {
         // Validate the FeeDetails in the database
         List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
         assertThat(feeDetailsList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the FeeDetails in Elasticsearch
-        verify(mockFeeDetailsSearchRepository, times(0)).save(feeDetails);
     }
 
     @Test
@@ -361,9 +346,6 @@ public class FeeDetailsResourceIntTest {
         assertThat(testFeeDetails.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
         assertThat(testFeeDetails.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testFeeDetails.getEndDate()).isEqualTo(UPDATED_END_DATE);
-
-        // Validate the FeeDetails in Elasticsearch
-        verify(mockFeeDetailsSearchRepository, times(1)).save(testFeeDetails);
     }
 
     @Test
@@ -383,9 +365,6 @@ public class FeeDetailsResourceIntTest {
         // Validate the FeeDetails in the database
         List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
         assertThat(feeDetailsList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the FeeDetails in Elasticsearch
-        verify(mockFeeDetailsSearchRepository, times(0)).save(feeDetails);
     }
 
     @Test
@@ -404,9 +383,6 @@ public class FeeDetailsResourceIntTest {
         // Validate the database is empty
         List<FeeDetails> feeDetailsList = feeDetailsRepository.findAll();
         assertThat(feeDetailsList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the FeeDetails in Elasticsearch
-        verify(mockFeeDetailsSearchRepository, times(1)).deleteById(feeDetails.getId());
     }
 
     @Test
@@ -414,8 +390,6 @@ public class FeeDetailsResourceIntTest {
     public void searchFeeDetails() throws Exception {
         // Initialize the database
         feeDetailsRepository.saveAndFlush(feeDetails);
-        when(mockFeeDetailsSearchRepository.search(queryStringQuery("id:" + feeDetails.getId())))
-            .thenReturn(Collections.singletonList(feeDetails));
         // Search the feeDetails
         restFeeDetailsMockMvc.perform(get("/api/_search/fee-details?query=id:" + feeDetails.getId()))
             .andExpect(status().isOk())

@@ -7,7 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,7 +19,7 @@ import com.synectiks.cms.domain.enumeration.RouteFrequency;
 @Entity
 @Table(name = "transport_route")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "transportroute")
+//@Document(indexName = "transportroute")
 public class TransportRoute implements Serializable {
 
     private static final long serialVersionUID = 1L;

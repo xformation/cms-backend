@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.repository.ContractRepository;
-import com.synectiks.cms.repository.search.ContractSearchRepository;
-import com.synectiks.cms.service.ContractService;
-import com.synectiks.cms.service.dto.ContractDTO;
-import com.synectiks.cms.service.mapper.ContractMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,22 +32,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Contract;
 import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
+import com.synectiks.cms.repository.ContractRepository;
+import com.synectiks.cms.service.ContractService;
+import com.synectiks.cms.service.dto.ContractDTO;
+import com.synectiks.cms.service.mapper.ContractMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the ContractResource REST controller.
  *
@@ -73,14 +72,6 @@ public class ContractResourceIntTest {
 
     @Autowired
     private ContractService contractService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.ContractSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private ContractSearchRepository mockContractSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -156,8 +147,6 @@ public class ContractResourceIntTest {
         assertThat(testContract.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testContract.getEndDate()).isEqualTo(DEFAULT_END_DATE);
 
-        // Validate the Contract in Elasticsearch
-        verify(mockContractSearchRepository, times(1)).save(testContract);
     }
 
     @Test
@@ -179,8 +168,6 @@ public class ContractResourceIntTest {
         List<Contract> contractList = contractRepository.findAll();
         assertThat(contractList).hasSize(databaseSizeBeforeCreate);
 
-        // Validate the Contract in Elasticsearch
-        verify(mockContractSearchRepository, times(0)).save(contract);
     }
 
     @Test
@@ -357,8 +344,6 @@ public class ContractResourceIntTest {
         assertThat(testContract.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testContract.getEndDate()).isEqualTo(UPDATED_END_DATE);
 
-        // Validate the Contract in Elasticsearch
-        verify(mockContractSearchRepository, times(1)).save(testContract);
     }
 
     @Test
@@ -378,9 +363,6 @@ public class ContractResourceIntTest {
         // Validate the Contract in the database
         List<Contract> contractList = contractRepository.findAll();
         assertThat(contractList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Contract in Elasticsearch
-        verify(mockContractSearchRepository, times(0)).save(contract);
     }
 
     @Test
@@ -399,9 +381,6 @@ public class ContractResourceIntTest {
         // Validate the database is empty
         List<Contract> contractList = contractRepository.findAll();
         assertThat(contractList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Contract in Elasticsearch
-        verify(mockContractSearchRepository, times(1)).deleteById(contract.getId());
     }
 
     @Test
@@ -409,8 +388,6 @@ public class ContractResourceIntTest {
     public void searchContract() throws Exception {
         // Initialize the database
         contractRepository.saveAndFlush(contract);
-        when(mockContractSearchRepository.search(queryStringQuery("id:" + contract.getId())))
-            .thenReturn(Collections.singletonList(contract));
         // Search the contract
         restContractMockMvc.perform(get("/api/_search/contracts?query=id:" + contract.getId()))
             .andExpect(status().isOk())

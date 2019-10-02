@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.InvoiceService;
 import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.search.InvoiceSearchRepository;
+//import com.synectiks.cms.repository.search.InvoiceSearchRepository;
 import com.synectiks.cms.service.dto.InvoiceDTO;
 import com.synectiks.cms.service.mapper.InvoiceMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Invoice.
@@ -33,12 +33,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private final InvoiceMapper invoiceMapper;
 
-    private final InvoiceSearchRepository invoiceSearchRepository;
+    //private final InvoiceSearchRepository invoiceSearchRepository;
 
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, InvoiceSearchRepository invoiceSearchRepository) {
+    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper/*, InvoiceSearchRepository invoiceSearchRepository*/) {
         this.invoiceRepository = invoiceRepository;
         this.invoiceMapper = invoiceMapper;
-        this.invoiceSearchRepository = invoiceSearchRepository;
+        //this.invoiceSearchRepository = invoiceSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice invoice = invoiceMapper.toEntity(invoiceDTO);
         invoice = invoiceRepository.save(invoice);
         InvoiceDTO result = invoiceMapper.toDto(invoice);
-        invoiceSearchRepository.save(invoice);
+        //invoiceSearchRepository.save(invoice);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void delete(Long id) {
         log.debug("Request to delete Invoice : {}", id);
         invoiceRepository.deleteById(id);
-        invoiceSearchRepository.deleteById(id);
+        //invoiceSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Transactional(readOnly = true)
     public List<InvoiceDTO> search(String query) {
         log.debug("Request to search Invoices for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(invoiceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(invoiceMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

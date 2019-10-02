@@ -22,7 +22,7 @@ management:
                 include: ["configprops", "env", "health", "info", "threaddump"]
     endpoint:
         health:
-            show-details: when_authorized
+            show-details: WHEN_AUTHORIZED
     info:
         git:
             mode: full

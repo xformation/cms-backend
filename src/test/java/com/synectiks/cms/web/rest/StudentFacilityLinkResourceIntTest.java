@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.StudentFacilityLink;
-import com.synectiks.cms.repository.StudentFacilityLinkRepository;
-import com.synectiks.cms.repository.search.StudentFacilityLinkSearchRepository;
-import com.synectiks.cms.service.StudentFacilityLinkService;
-import com.synectiks.cms.service.dto.StudentFacilityLinkDTO;
-import com.synectiks.cms.service.mapper.StudentFacilityLinkMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.StudentFacilityLink;
+import com.synectiks.cms.repository.StudentFacilityLinkRepository;
+import com.synectiks.cms.service.StudentFacilityLinkService;
+import com.synectiks.cms.service.dto.StudentFacilityLinkDTO;
+import com.synectiks.cms.service.mapper.StudentFacilityLinkMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the StudentFacilityLinkResource REST controller.
@@ -59,15 +59,6 @@ public class StudentFacilityLinkResourceIntTest {
 
     @Autowired
     private StudentFacilityLinkService studentFacilityLinkService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.StudentFacilityLinkSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private StudentFacilityLinkSearchRepository mockStudentFacilityLinkSearchRepository;
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -129,9 +120,6 @@ public class StudentFacilityLinkResourceIntTest {
         assertThat(studentFacilityLinkList).hasSize(databaseSizeBeforeCreate + 1);
         StudentFacilityLink testStudentFacilityLink = studentFacilityLinkList.get(studentFacilityLinkList.size() - 1);
         assertThat(testStudentFacilityLink.getLinkDesc()).isEqualTo(DEFAULT_LINK_DESC);
-
-        // Validate the StudentFacilityLink in Elasticsearch
-        verify(mockStudentFacilityLinkSearchRepository, times(1)).save(testStudentFacilityLink);
     }
 
     @Test
@@ -152,9 +140,6 @@ public class StudentFacilityLinkResourceIntTest {
         // Validate the StudentFacilityLink in the database
         List<StudentFacilityLink> studentFacilityLinkList = studentFacilityLinkRepository.findAll();
         assertThat(studentFacilityLinkList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the StudentFacilityLink in Elasticsearch
-        verify(mockStudentFacilityLinkSearchRepository, times(0)).save(studentFacilityLink);
     }
 
     @Test
@@ -219,9 +204,6 @@ public class StudentFacilityLinkResourceIntTest {
         assertThat(studentFacilityLinkList).hasSize(databaseSizeBeforeUpdate);
         StudentFacilityLink testStudentFacilityLink = studentFacilityLinkList.get(studentFacilityLinkList.size() - 1);
         assertThat(testStudentFacilityLink.getLinkDesc()).isEqualTo(UPDATED_LINK_DESC);
-
-        // Validate the StudentFacilityLink in Elasticsearch
-        verify(mockStudentFacilityLinkSearchRepository, times(1)).save(testStudentFacilityLink);
     }
 
     @Test
@@ -240,11 +222,7 @@ public class StudentFacilityLinkResourceIntTest {
 
         // Validate the StudentFacilityLink in the database
         List<StudentFacilityLink> studentFacilityLinkList = studentFacilityLinkRepository.findAll();
-        assertThat(studentFacilityLinkList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the StudentFacilityLink in Elasticsearch
-        verify(mockStudentFacilityLinkSearchRepository, times(0)).save(studentFacilityLink);
-    }
+        assertThat(studentFacilityLinkList).hasSize(databaseSizeBeforeUpdate);    }
 
     @Test
     @Transactional
@@ -261,19 +239,13 @@ public class StudentFacilityLinkResourceIntTest {
 
         // Validate the database is empty
         List<StudentFacilityLink> studentFacilityLinkList = studentFacilityLinkRepository.findAll();
-        assertThat(studentFacilityLinkList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the StudentFacilityLink in Elasticsearch
-        verify(mockStudentFacilityLinkSearchRepository, times(1)).deleteById(studentFacilityLink.getId());
-    }
+        assertThat(studentFacilityLinkList).hasSize(databaseSizeBeforeDelete - 1);    }
 
     @Test
     @Transactional
     public void searchStudentFacilityLink() throws Exception {
         // Initialize the database
         studentFacilityLinkRepository.saveAndFlush(studentFacilityLink);
-        when(mockStudentFacilityLinkSearchRepository.search(queryStringQuery("id:" + studentFacilityLink.getId())))
-            .thenReturn(Collections.singletonList(studentFacilityLink));
         // Search the studentFacilityLink
         restStudentFacilityLinkMockMvc.perform(get("/api/_search/student-facility-links?query=id:" + studentFacilityLink.getId()))
             .andExpect(status().isOk())

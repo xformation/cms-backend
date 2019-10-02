@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.search.TeachSearchRepository;
-import com.synectiks.cms.service.TeachService;
-import com.synectiks.cms.service.dto.TeachDTO;
-import com.synectiks.cms.service.mapper.TeachMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.service.TeachService;
+import com.synectiks.cms.service.dto.TeachDTO;
+import com.synectiks.cms.service.mapper.TeachMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the TeachResource REST controller.
@@ -57,15 +57,7 @@ public class TeachResourceIntTest {
     private TeachMapper teachMapper;
 
     @Autowired
-    private TeachService teachService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.TeachSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private TeachSearchRepository mockTeachSearchRepository;
+    private TeachService teachService;;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -131,11 +123,7 @@ public class TeachResourceIntTest {
         List<Teach> teachList = teachRepository.findAll();
         assertThat(teachList).hasSize(databaseSizeBeforeCreate + 1);
         Teach testTeach = teachList.get(teachList.size() - 1);
-        assertThat(testTeach.getDesc()).isEqualTo(DEFAULT_DESC);
-
-        // Validate the Teach in Elasticsearch
-        verify(mockTeachSearchRepository, times(1)).save(testTeach);
-    }
+        assertThat(testTeach.getDesc()).isEqualTo(DEFAULT_DESC);    }
 
     @Test
     @Transactional
@@ -154,11 +142,7 @@ public class TeachResourceIntTest {
 
         // Validate the Teach in the database
         List<Teach> teachList = teachRepository.findAll();
-        assertThat(teachList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Teach in Elasticsearch
-        verify(mockTeachSearchRepository, times(0)).save(teach);
-    }
+        assertThat(teachList).hasSize(databaseSizeBeforeCreate);    }
 
     @Test
     @Transactional
@@ -222,9 +206,6 @@ public class TeachResourceIntTest {
         assertThat(teachList).hasSize(databaseSizeBeforeUpdate);
         Teach testTeach = teachList.get(teachList.size() - 1);
         assertThat(testTeach.getDesc()).isEqualTo(UPDATED_DESC);
-
-        // Validate the Teach in Elasticsearch
-        verify(mockTeachSearchRepository, times(1)).save(testTeach);
     }
 
     @Test
@@ -243,11 +224,7 @@ public class TeachResourceIntTest {
 
         // Validate the Teach in the database
         List<Teach> teachList = teachRepository.findAll();
-        assertThat(teachList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Teach in Elasticsearch
-        verify(mockTeachSearchRepository, times(0)).save(teach);
-    }
+        assertThat(teachList).hasSize(databaseSizeBeforeUpdate);    }
 
     @Test
     @Transactional
@@ -265,9 +242,6 @@ public class TeachResourceIntTest {
         // Validate the database is empty
         List<Teach> teachList = teachRepository.findAll();
         assertThat(teachList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Teach in Elasticsearch
-        verify(mockTeachSearchRepository, times(1)).deleteById(teach.getId());
     }
 
     @Test
@@ -275,8 +249,6 @@ public class TeachResourceIntTest {
     public void searchTeach() throws Exception {
         // Initialize the database
         teachRepository.saveAndFlush(teach);
-        when(mockTeachSearchRepository.search(queryStringQuery("id:" + teach.getId())))
-            .thenReturn(Collections.singletonList(teach));
         // Search the teach
         restTeachMockMvc.perform(get("/api/_search/teaches?query=id:" + teach.getId()))
             .andExpect(status().isOk())

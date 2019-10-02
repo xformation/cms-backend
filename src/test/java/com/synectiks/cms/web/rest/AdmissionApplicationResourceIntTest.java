@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AdmissionApplication;
 import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
+//import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
 import com.synectiks.cms.service.AdmissionApplicationService;
 import com.synectiks.cms.service.dto.AdmissionApplicationDTO;
 import com.synectiks.cms.service.mapper.AdmissionApplicationMapper;
@@ -34,7 +34,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -120,14 +120,6 @@ public class AdmissionApplicationResourceIntTest {
 
     @Autowired
     private AdmissionApplicationService admissionApplicationService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AdmissionApplicationSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AdmissionApplicationSearchRepository mockAdmissionApplicationSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -232,9 +224,6 @@ public class AdmissionApplicationResourceIntTest {
         assertThat(testAdmissionApplication.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
         assertThat(testAdmissionApplication.getCourse()).isEqualTo(DEFAULT_COURSE);
         assertThat(testAdmissionApplication.getAdmissionDate()).isEqualTo(DEFAULT_ADMISSION_DATE);
-
-        // Validate the AdmissionApplication in Elasticsearch
-        verify(mockAdmissionApplicationSearchRepository, times(1)).save(testAdmissionApplication);
     }
 
     @Test
@@ -255,9 +244,6 @@ public class AdmissionApplicationResourceIntTest {
         // Validate the AdmissionApplication in the database
         List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
         assertThat(admissionApplicationList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AdmissionApplication in Elasticsearch
-        verify(mockAdmissionApplicationSearchRepository, times(0)).save(admissionApplication);
     }
 
     @Test
@@ -398,9 +384,6 @@ public class AdmissionApplicationResourceIntTest {
         assertThat(testAdmissionApplication.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
         assertThat(testAdmissionApplication.getCourse()).isEqualTo(UPDATED_COURSE);
         assertThat(testAdmissionApplication.getAdmissionDate()).isEqualTo(UPDATED_ADMISSION_DATE);
-
-        // Validate the AdmissionApplication in Elasticsearch
-        verify(mockAdmissionApplicationSearchRepository, times(1)).save(testAdmissionApplication);
     }
 
     @Test
@@ -420,9 +403,6 @@ public class AdmissionApplicationResourceIntTest {
         // Validate the AdmissionApplication in the database
         List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
         assertThat(admissionApplicationList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AdmissionApplication in Elasticsearch
-        verify(mockAdmissionApplicationSearchRepository, times(0)).save(admissionApplication);
     }
 
     @Test
@@ -441,9 +421,6 @@ public class AdmissionApplicationResourceIntTest {
         // Validate the database is empty
         List<AdmissionApplication> admissionApplicationList = admissionApplicationRepository.findAll();
         assertThat(admissionApplicationList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AdmissionApplication in Elasticsearch
-        verify(mockAdmissionApplicationSearchRepository, times(1)).deleteById(admissionApplication.getId());
     }
 
     @Test
@@ -451,8 +428,6 @@ public class AdmissionApplicationResourceIntTest {
     public void searchAdmissionApplication() throws Exception {
         // Initialize the database
         admissionApplicationRepository.saveAndFlush(admissionApplication);
-        when(mockAdmissionApplicationSearchRepository.search(queryStringQuery("id:" + admissionApplication.getId())))
-            .thenReturn(Collections.singletonList(admissionApplication));
         // Search the admissionApplication
         restAdmissionApplicationMockMvc.perform(get("/api/_search/admission-applications?query=id:" + admissionApplication.getId()))
             .andExpect(status().isOk())

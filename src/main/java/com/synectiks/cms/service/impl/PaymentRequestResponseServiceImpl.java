@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.PaymentRequestResponseService;
 import com.synectiks.cms.domain.PaymentRequestResponse;
 import com.synectiks.cms.repository.PaymentRequestResponseRepository;
-import com.synectiks.cms.repository.search.PaymentRequestResponseSearchRepository;
+//import com.synectiks.cms.repository.search.PaymentRequestResponseSearchRepository;
 import com.synectiks.cms.service.dto.PaymentRequestResponseDTO;
 import com.synectiks.cms.service.mapper.PaymentRequestResponseMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link PaymentRequestResponse}.
@@ -33,12 +33,12 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
 
     private final PaymentRequestResponseMapper paymentRequestResponseMapper;
 
-    private final PaymentRequestResponseSearchRepository paymentRequestResponseSearchRepository;
+    //private final PaymentRequestResponseSearchRepository paymentRequestResponseSearchRepository;
 
-    public PaymentRequestResponseServiceImpl(PaymentRequestResponseRepository paymentRequestResponseRepository, PaymentRequestResponseMapper paymentRequestResponseMapper, PaymentRequestResponseSearchRepository paymentRequestResponseSearchRepository) {
+    public PaymentRequestResponseServiceImpl(PaymentRequestResponseRepository paymentRequestResponseRepository, PaymentRequestResponseMapper paymentRequestResponseMapper/*, PaymentRequestResponseSearchRepository paymentRequestResponseSearchRepository*/) {
         this.paymentRequestResponseRepository = paymentRequestResponseRepository;
         this.paymentRequestResponseMapper = paymentRequestResponseMapper;
-        this.paymentRequestResponseSearchRepository = paymentRequestResponseSearchRepository;
+        //this.paymentRequestResponseSearchRepository = paymentRequestResponseSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
         PaymentRequestResponse paymentRequestResponse = paymentRequestResponseMapper.toEntity(paymentRequestResponseDTO);
         paymentRequestResponse = paymentRequestResponseRepository.save(paymentRequestResponse);
         PaymentRequestResponseDTO result = paymentRequestResponseMapper.toDto(paymentRequestResponse);
-        paymentRequestResponseSearchRepository.save(paymentRequestResponse);
+        //paymentRequestResponseSearchRepository.save(paymentRequestResponse);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
     public void delete(Long id) {
         log.debug("Request to delete PaymentRequestResponse : {}", id);
         paymentRequestResponseRepository.deleteById(id);
-        paymentRequestResponseSearchRepository.deleteById(id);
+        //paymentRequestResponseSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
     @Transactional(readOnly = true)
     public List<PaymentRequestResponseDTO> search(String query) {
         log.debug("Request to search PaymentRequestResponses for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(paymentRequestResponseSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(paymentRequestResponseMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

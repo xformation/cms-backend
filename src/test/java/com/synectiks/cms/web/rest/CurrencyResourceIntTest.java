@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Currency;
-import com.synectiks.cms.repository.CurrencyRepository;
-import com.synectiks.cms.repository.search.CurrencySearchRepository;
-import com.synectiks.cms.service.CurrencyService;
-import com.synectiks.cms.service.dto.CurrencyDTO;
-import com.synectiks.cms.service.mapper.CurrencyMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Currency;
+import com.synectiks.cms.repository.CurrencyRepository;
+import com.synectiks.cms.service.CurrencyService;
+import com.synectiks.cms.service.dto.CurrencyDTO;
+import com.synectiks.cms.service.mapper.CurrencyMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the CurrencyResource REST controller.
@@ -64,14 +64,6 @@ public class CurrencyResourceIntTest {
 
     @Autowired
     private CurrencyService currencyService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.CurrencySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private CurrencySearchRepository mockCurrencySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -142,9 +134,6 @@ public class CurrencyResourceIntTest {
         assertThat(testCurrency.getCurrencyName()).isEqualTo(DEFAULT_CURRENCY_NAME);
         assertThat(testCurrency.getCurrencyCode()).isEqualTo(DEFAULT_CURRENCY_CODE);
         assertThat(testCurrency.getCurrencySymbol()).isEqualTo(DEFAULT_CURRENCY_SYMBOL);
-
-        // Validate the Currency in Elasticsearch
-        verify(mockCurrencySearchRepository, times(1)).save(testCurrency);
     }
 
     @Test
@@ -165,9 +154,6 @@ public class CurrencyResourceIntTest {
         // Validate the Currency in the database
         List<Currency> currencyList = currencyRepository.findAll();
         assertThat(currencyList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Currency in Elasticsearch
-        verify(mockCurrencySearchRepository, times(0)).save(currency);
     }
 
     @Test
@@ -259,9 +245,6 @@ public class CurrencyResourceIntTest {
         assertThat(testCurrency.getCurrencyName()).isEqualTo(UPDATED_CURRENCY_NAME);
         assertThat(testCurrency.getCurrencyCode()).isEqualTo(UPDATED_CURRENCY_CODE);
         assertThat(testCurrency.getCurrencySymbol()).isEqualTo(UPDATED_CURRENCY_SYMBOL);
-
-        // Validate the Currency in Elasticsearch
-        verify(mockCurrencySearchRepository, times(1)).save(testCurrency);
     }
 
     @Test
@@ -282,8 +265,6 @@ public class CurrencyResourceIntTest {
         List<Currency> currencyList = currencyRepository.findAll();
         assertThat(currencyList).hasSize(databaseSizeBeforeUpdate);
 
-        // Validate the Currency in Elasticsearch
-        verify(mockCurrencySearchRepository, times(0)).save(currency);
     }
 
     @Test
@@ -303,8 +284,6 @@ public class CurrencyResourceIntTest {
         List<Currency> currencyList = currencyRepository.findAll();
         assertThat(currencyList).hasSize(databaseSizeBeforeDelete - 1);
 
-        // Validate the Currency in Elasticsearch
-        verify(mockCurrencySearchRepository, times(1)).deleteById(currency.getId());
     }
 
     @Test
@@ -312,8 +291,6 @@ public class CurrencyResourceIntTest {
     public void searchCurrency() throws Exception {
         // Initialize the database
         currencyRepository.saveAndFlush(currency);
-        when(mockCurrencySearchRepository.search(queryStringQuery("id:" + currency.getId())))
-            .thenReturn(Collections.singletonList(currency));
         // Search the currency
         restCurrencyMockMvc.perform(get("/api/_search/currencies?query=id:" + currency.getId()))
             .andExpect(status().isOk())

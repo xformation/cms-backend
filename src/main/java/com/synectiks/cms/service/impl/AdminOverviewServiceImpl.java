@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.AdminOverviewService;
 import com.synectiks.cms.domain.AdminOverview;
 import com.synectiks.cms.repository.AdminOverviewRepository;
-import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
+//import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
 import com.synectiks.cms.service.dto.AdminOverviewDTO;
 import com.synectiks.cms.service.mapper.AdminOverviewMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing AdminOverview.
@@ -33,12 +33,12 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
 
     private final AdminOverviewMapper adminOverviewMapper;
 
-    private final AdminOverviewSearchRepository adminOverviewSearchRepository;
+    //private final AdminOverviewSearchRepository adminOverviewSearchRepository;
 
-    public AdminOverviewServiceImpl(AdminOverviewRepository adminOverviewRepository, AdminOverviewMapper adminOverviewMapper, AdminOverviewSearchRepository adminOverviewSearchRepository) {
+    public AdminOverviewServiceImpl(AdminOverviewRepository adminOverviewRepository, AdminOverviewMapper adminOverviewMapper/*, AdminOverviewSearchRepository adminOverviewSearchRepository*/) {
         this.adminOverviewRepository = adminOverviewRepository;
         this.adminOverviewMapper = adminOverviewMapper;
-        this.adminOverviewSearchRepository = adminOverviewSearchRepository;
+        //this.adminOverviewSearchRepository = adminOverviewSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
         AdminOverview adminOverview = adminOverviewMapper.toEntity(adminOverviewDTO);
         adminOverview = adminOverviewRepository.save(adminOverview);
         AdminOverviewDTO result = adminOverviewMapper.toDto(adminOverview);
-        adminOverviewSearchRepository.save(adminOverview);
+        //adminOverviewSearchRepository.save(adminOverview);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
     public void delete(Long id) {
         log.debug("Request to delete AdminOverview : {}", id);
         adminOverviewRepository.deleteById(id);
-        adminOverviewSearchRepository.deleteById(id);
+        //adminOverviewSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
     @Transactional(readOnly = true)
     public List<AdminOverviewDTO> search(String query) {
         log.debug("Request to search AdminOverviews for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(adminOverviewSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(adminOverviewMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.ExceptionRecordService;
 import com.synectiks.cms.domain.ExceptionRecord;
 import com.synectiks.cms.repository.ExceptionRecordRepository;
-import com.synectiks.cms.repository.search.ExceptionRecordSearchRepository;
+//import com.synectiks.cms.repository.search.ExceptionRecordSearchRepository;
 import com.synectiks.cms.service.dto.ExceptionRecordDTO;
 import com.synectiks.cms.service.mapper.ExceptionRecordMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link ExceptionRecord}.
@@ -33,12 +33,12 @@ public class ExceptionRecordServiceImpl implements ExceptionRecordService {
 
     private final ExceptionRecordMapper exceptionRecordMapper;
 
-    private final ExceptionRecordSearchRepository exceptionRecordSearchRepository;
+    //private final ExceptionRecordSearchRepository exceptionRecordSearchRepository;
 
-    public ExceptionRecordServiceImpl(ExceptionRecordRepository exceptionRecordRepository, ExceptionRecordMapper exceptionRecordMapper, ExceptionRecordSearchRepository exceptionRecordSearchRepository) {
+    public ExceptionRecordServiceImpl(ExceptionRecordRepository exceptionRecordRepository, ExceptionRecordMapper exceptionRecordMapper/*, ExceptionRecordSearchRepository exceptionRecordSearchRepository*/) {
         this.exceptionRecordRepository = exceptionRecordRepository;
         this.exceptionRecordMapper = exceptionRecordMapper;
-        this.exceptionRecordSearchRepository = exceptionRecordSearchRepository;
+        //this.exceptionRecordSearchRepository = exceptionRecordSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class ExceptionRecordServiceImpl implements ExceptionRecordService {
         ExceptionRecord exceptionRecord = exceptionRecordMapper.toEntity(exceptionRecordDTO);
         exceptionRecord = exceptionRecordRepository.save(exceptionRecord);
         ExceptionRecordDTO result = exceptionRecordMapper.toDto(exceptionRecord);
-        exceptionRecordSearchRepository.save(exceptionRecord);
+        //exceptionRecordSearchRepository.save(exceptionRecord);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class ExceptionRecordServiceImpl implements ExceptionRecordService {
     public void delete(Long id) {
         log.debug("Request to delete ExceptionRecord : {}", id);
         exceptionRecordRepository.deleteById(id);
-        exceptionRecordSearchRepository.deleteById(id);
+        //exceptionRecordSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class ExceptionRecordServiceImpl implements ExceptionRecordService {
     @Transactional(readOnly = true)
     public List<ExceptionRecordDTO> search(String query) {
         log.debug("Request to search ExceptionRecords for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(exceptionRecordSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(exceptionRecordMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

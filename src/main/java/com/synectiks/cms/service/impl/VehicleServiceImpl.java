@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.VehicleService;
 import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.repository.VehicleRepository;
-import com.synectiks.cms.repository.search.VehicleSearchRepository;
+//import com.synectiks.cms.repository.search.VehicleSearchRepository;
 import com.synectiks.cms.service.dto.VehicleDTO;
 import com.synectiks.cms.service.mapper.VehicleMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Vehicle.
@@ -33,12 +33,12 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleMapper vehicleMapper;
 
-    private final VehicleSearchRepository vehicleSearchRepository;
+    //private final VehicleSearchRepository vehicleSearchRepository;
 
-    public VehicleServiceImpl(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper, VehicleSearchRepository vehicleSearchRepository) {
+    public VehicleServiceImpl(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper/*, VehicleSearchRepository vehicleSearchRepository*/) {
         this.vehicleRepository = vehicleRepository;
         this.vehicleMapper = vehicleMapper;
-        this.vehicleSearchRepository = vehicleSearchRepository;
+        //this.vehicleSearchRepository = vehicleSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class VehicleServiceImpl implements VehicleService {
         Vehicle vehicle = vehicleMapper.toEntity(vehicleDTO);
         vehicle = vehicleRepository.save(vehicle);
         VehicleDTO result = vehicleMapper.toDto(vehicle);
-        vehicleSearchRepository.save(vehicle);
+        //vehicleSearchRepository.save(vehicle);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class VehicleServiceImpl implements VehicleService {
     public void delete(Long id) {
         log.debug("Request to delete Vehicle : {}", id);
         vehicleRepository.deleteById(id);
-        vehicleSearchRepository.deleteById(id);
+        ///vehicleSearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,11 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional(readOnly = true)
     public List<VehicleDTO> search(String query) {
         log.debug("Request to search Vehicles for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(vehicleSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(vehicleMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

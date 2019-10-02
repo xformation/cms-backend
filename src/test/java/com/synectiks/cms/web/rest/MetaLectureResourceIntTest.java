@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.MetaLecture;
-import com.synectiks.cms.repository.MetaLectureRepository;
-import com.synectiks.cms.repository.search.MetaLectureSearchRepository;
-import com.synectiks.cms.service.MetaLectureService;
-import com.synectiks.cms.service.dto.MetaLectureDTO;
-import com.synectiks.cms.service.mapper.MetaLectureMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.MetaLecture;
+import com.synectiks.cms.repository.MetaLectureRepository;
+import com.synectiks.cms.service.MetaLectureService;
+import com.synectiks.cms.service.dto.MetaLectureDTO;
+import com.synectiks.cms.service.mapper.MetaLectureMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the MetaLectureResource REST controller.
@@ -63,14 +63,6 @@ public class MetaLectureResourceIntTest {
 
     @Autowired
     private MetaLectureService metaLectureService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.MetaLectureSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private MetaLectureSearchRepository mockMetaLectureSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -137,9 +129,6 @@ public class MetaLectureResourceIntTest {
         assertThat(testMetaLecture.getWeekDay()).isEqualTo(DEFAULT_WEEK_DAY);
         assertThat(testMetaLecture.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testMetaLecture.getEndTime()).isEqualTo(DEFAULT_END_TIME);
-
-        // Validate the MetaLecture in Elasticsearch
-        verify(mockMetaLectureSearchRepository, times(1)).save(testMetaLecture);
     }
 
     @Test
@@ -160,9 +149,6 @@ public class MetaLectureResourceIntTest {
         // Validate the MetaLecture in the database
         List<MetaLecture> metaLectureList = metaLectureRepository.findAll();
         assertThat(metaLectureList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the MetaLecture in Elasticsearch
-        verify(mockMetaLectureSearchRepository, times(0)).save(metaLecture);
     }
 
     @Test
@@ -235,9 +221,6 @@ public class MetaLectureResourceIntTest {
         assertThat(testMetaLecture.getWeekDay()).isEqualTo(UPDATED_WEEK_DAY);
         assertThat(testMetaLecture.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testMetaLecture.getEndTime()).isEqualTo(UPDATED_END_TIME);
-
-        // Validate the MetaLecture in Elasticsearch
-        verify(mockMetaLectureSearchRepository, times(1)).save(testMetaLecture);
     }
 
     @Test
@@ -257,9 +240,6 @@ public class MetaLectureResourceIntTest {
         // Validate the MetaLecture in the database
         List<MetaLecture> metaLectureList = metaLectureRepository.findAll();
         assertThat(metaLectureList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the MetaLecture in Elasticsearch
-        verify(mockMetaLectureSearchRepository, times(0)).save(metaLecture);
     }
 
     @Test
@@ -278,9 +258,6 @@ public class MetaLectureResourceIntTest {
         // Validate the database is empty
         List<MetaLecture> metaLectureList = metaLectureRepository.findAll();
         assertThat(metaLectureList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the MetaLecture in Elasticsearch
-        verify(mockMetaLectureSearchRepository, times(1)).deleteById(metaLecture.getId());
     }
 
     @Test
@@ -288,8 +265,6 @@ public class MetaLectureResourceIntTest {
     public void searchMetaLecture() throws Exception {
         // Initialize the database
         metaLectureRepository.saveAndFlush(metaLecture);
-        when(mockMetaLectureSearchRepository.search(queryStringQuery("id:" + metaLecture.getId())))
-            .thenReturn(Collections.singletonList(metaLecture));
         // Search the metaLecture
         restMetaLectureMockMvc.perform(get("/api/_search/meta-lectures?query=id:" + metaLecture.getId()))
             .andExpect(status().isOk())

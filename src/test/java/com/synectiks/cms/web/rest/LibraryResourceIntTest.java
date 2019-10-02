@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.repository.LibraryRepository;
-import com.synectiks.cms.repository.search.LibrarySearchRepository;
-import com.synectiks.cms.service.LibraryService;
-import com.synectiks.cms.service.dto.LibraryDTO;
-import com.synectiks.cms.service.mapper.LibraryMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.repository.LibraryRepository;
+import com.synectiks.cms.service.LibraryService;
+import com.synectiks.cms.service.dto.LibraryDTO;
+import com.synectiks.cms.service.mapper.LibraryMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the LibraryResource REST controller.
@@ -66,14 +66,6 @@ public class LibraryResourceIntTest {
 
     @Autowired
     private LibraryService libraryService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.LibrarySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private LibrarySearchRepository mockLibrarySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -142,9 +134,6 @@ public class LibraryResourceIntTest {
         assertThat(testLibrary.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(DEFAULT_NO_OF_COPIES);
         assertThat(testLibrary.getBookNo()).isEqualTo(DEFAULT_BOOK_ID);
-
-        // Validate the Library in Elasticsearch
-        verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
     }
 
     @Test
@@ -165,9 +154,6 @@ public class LibraryResourceIntTest {
         // Validate the Library in the database
         List<Library> libraryList = libraryRepository.findAll();
         assertThat(libraryList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Library in Elasticsearch
-        verify(mockLibrarySearchRepository, times(0)).save(library);
     }
 
     @Test
@@ -320,9 +306,6 @@ public class LibraryResourceIntTest {
         assertThat(testLibrary.getAuthor()).isEqualTo(UPDATED_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(UPDATED_NO_OF_COPIES);
         assertThat(testLibrary.getBookNo()).isEqualTo(UPDATED_BOOK_ID);
-
-        // Validate the Library in Elasticsearch
-        verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
     }
 
     @Test
@@ -342,9 +325,6 @@ public class LibraryResourceIntTest {
         // Validate the Library in the database
         List<Library> libraryList = libraryRepository.findAll();
         assertThat(libraryList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Library in Elasticsearch
-        verify(mockLibrarySearchRepository, times(0)).save(library);
     }
 
     @Test
@@ -363,9 +343,6 @@ public class LibraryResourceIntTest {
         // Validate the database is empty
         List<Library> libraryList = libraryRepository.findAll();
         assertThat(libraryList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Library in Elasticsearch
-        verify(mockLibrarySearchRepository, times(1)).deleteById(library.getId());
     }
 
     @Test
@@ -373,8 +350,6 @@ public class LibraryResourceIntTest {
     public void searchLibrary() throws Exception {
         // Initialize the database
         libraryRepository.saveAndFlush(library);
-        when(mockLibrarySearchRepository.search(queryStringQuery("id:" + library.getId())))
-            .thenReturn(Collections.singletonList(library));
         // Search the library
         restLibraryMockMvc.perform(get("/api/_search/libraries?query=id:" + library.getId()))
             .andExpect(status().isOk())

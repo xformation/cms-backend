@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AdminAttendance;
 import com.synectiks.cms.repository.AdminAttendanceRepository;
-import com.synectiks.cms.repository.search.AdminAttendanceSearchRepository;
+//import com.synectiks.cms.repository.search.AdminAttendanceSearchRepository;
 import com.synectiks.cms.service.AdminAttendanceService;
 import com.synectiks.cms.service.dto.AdminAttendanceDTO;
 import com.synectiks.cms.service.mapper.AdminAttendanceMapper;
@@ -34,7 +34,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -63,14 +63,6 @@ public class AdminAttendanceResourceIntTest {
 
     @Autowired
     private AdminAttendanceService adminAttendanceService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AdminAttendanceSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AdminAttendanceSearchRepository mockAdminAttendanceSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -135,9 +127,6 @@ public class AdminAttendanceResourceIntTest {
         AdminAttendance testAdminAttendance = adminAttendanceList.get(adminAttendanceList.size() - 1);
         assertThat(testAdminAttendance.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
         assertThat(testAdminAttendance.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
-
-        // Validate the AdminAttendance in Elasticsearch
-        verify(mockAdminAttendanceSearchRepository, times(1)).save(testAdminAttendance);
     }
 
     @Test
@@ -158,9 +147,6 @@ public class AdminAttendanceResourceIntTest {
         // Validate the AdminAttendance in the database
         List<AdminAttendance> adminAttendanceList = adminAttendanceRepository.findAll();
         assertThat(adminAttendanceList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AdminAttendance in Elasticsearch
-        verify(mockAdminAttendanceSearchRepository, times(0)).save(adminAttendance);
     }
 
     @Test
@@ -229,9 +215,6 @@ public class AdminAttendanceResourceIntTest {
         AdminAttendance testAdminAttendance = adminAttendanceList.get(adminAttendanceList.size() - 1);
         assertThat(testAdminAttendance.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
         assertThat(testAdminAttendance.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
-
-        // Validate the AdminAttendance in Elasticsearch
-        verify(mockAdminAttendanceSearchRepository, times(1)).save(testAdminAttendance);
     }
 
     @Test
@@ -251,10 +234,7 @@ public class AdminAttendanceResourceIntTest {
         // Validate the AdminAttendance in the database
         List<AdminAttendance> adminAttendanceList = adminAttendanceRepository.findAll();
         assertThat(adminAttendanceList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AdminAttendance in Elasticsearch
-        verify(mockAdminAttendanceSearchRepository, times(0)).save(adminAttendance);
-    }
+  }
 
     @Test
     @Transactional
@@ -272,18 +252,13 @@ public class AdminAttendanceResourceIntTest {
         // Validate the database is empty
         List<AdminAttendance> adminAttendanceList = adminAttendanceRepository.findAll();
         assertThat(adminAttendanceList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AdminAttendance in Elasticsearch
-        verify(mockAdminAttendanceSearchRepository, times(1)).deleteById(adminAttendance.getId());
-    }
+   }
 
     @Test
     @Transactional
     public void searchAdminAttendance() throws Exception {
         // Initialize the database
         adminAttendanceRepository.saveAndFlush(adminAttendance);
-        when(mockAdminAttendanceSearchRepository.search(queryStringQuery("id:" + adminAttendance.getId())))
-            .thenReturn(Collections.singletonList(adminAttendance));
         // Search the adminAttendance
         restAdminAttendanceMockMvc.perform(get("/api/_search/admin-attendances?query=id:" + adminAttendance.getId()))
             .andExpect(status().isOk())

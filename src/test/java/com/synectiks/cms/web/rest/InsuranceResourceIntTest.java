@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.repository.InsuranceRepository;
-import com.synectiks.cms.repository.search.InsuranceSearchRepository;
-import com.synectiks.cms.service.InsuranceService;
-import com.synectiks.cms.service.dto.InsuranceDTO;
-import com.synectiks.cms.service.mapper.InsuranceMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,22 +32,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Insurance;
 import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
+import com.synectiks.cms.repository.InsuranceRepository;
+import com.synectiks.cms.service.InsuranceService;
+import com.synectiks.cms.service.dto.InsuranceDTO;
+import com.synectiks.cms.service.mapper.InsuranceMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the InsuranceResource REST controller.
  *
@@ -70,14 +69,6 @@ public class InsuranceResourceIntTest {
 
     @Autowired
     private InsuranceService insuranceService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.InsuranceSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private InsuranceSearchRepository mockInsuranceSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -151,8 +142,6 @@ public class InsuranceResourceIntTest {
         assertThat(testInsurance.getDateOfInsurance()).isEqualTo(DEFAULT_DATE_OF_INSURANCE);
         assertThat(testInsurance.getValidTill()).isEqualTo(DEFAULT_VALID_TILL);
 
-        // Validate the Insurance in Elasticsearch
-        verify(mockInsuranceSearchRepository, times(1)).save(testInsurance);
     }
 
     @Test
@@ -173,9 +162,6 @@ public class InsuranceResourceIntTest {
         // Validate the Insurance in the database
         List<Insurance> insuranceList = insuranceRepository.findAll();
         assertThat(insuranceList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Insurance in Elasticsearch
-        verify(mockInsuranceSearchRepository, times(0)).save(insurance);
     }
 
     @Test
@@ -328,9 +314,6 @@ public class InsuranceResourceIntTest {
         assertThat(testInsurance.getTypeOfInsurance()).isEqualTo(UPDATED_TYPE_OF_INSURANCE);
         assertThat(testInsurance.getDateOfInsurance()).isEqualTo(UPDATED_DATE_OF_INSURANCE);
         assertThat(testInsurance.getValidTill()).isEqualTo(UPDATED_VALID_TILL);
-
-        // Validate the Insurance in Elasticsearch
-        verify(mockInsuranceSearchRepository, times(1)).save(testInsurance);
     }
 
     @Test
@@ -350,9 +333,6 @@ public class InsuranceResourceIntTest {
         // Validate the Insurance in the database
         List<Insurance> insuranceList = insuranceRepository.findAll();
         assertThat(insuranceList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Insurance in Elasticsearch
-        verify(mockInsuranceSearchRepository, times(0)).save(insurance);
     }
 
     @Test
@@ -371,9 +351,6 @@ public class InsuranceResourceIntTest {
         // Validate the database is empty
         List<Insurance> insuranceList = insuranceRepository.findAll();
         assertThat(insuranceList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Insurance in Elasticsearch
-        verify(mockInsuranceSearchRepository, times(1)).deleteById(insurance.getId());
     }
 
     @Test
@@ -381,8 +358,6 @@ public class InsuranceResourceIntTest {
     public void searchInsurance() throws Exception {
         // Initialize the database
         insuranceRepository.saveAndFlush(insurance);
-        when(mockInsuranceSearchRepository.search(queryStringQuery("id:" + insurance.getId())))
-            .thenReturn(Collections.singletonList(insurance));
         // Search the insurance
         restInsuranceMockMvc.perform(get("/api/_search/insurances?query=id:" + insurance.getId()))
             .andExpect(status().isOk())

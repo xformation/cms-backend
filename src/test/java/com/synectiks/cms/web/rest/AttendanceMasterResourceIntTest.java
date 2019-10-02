@@ -4,7 +4,6 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.search.AttendanceMasterSearchRepository;
 import com.synectiks.cms.service.AttendanceMasterService;
 import com.synectiks.cms.service.dto.AttendanceMasterDTO;
 import com.synectiks.cms.service.mapper.AttendanceMasterMapper;
@@ -32,7 +31,6 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -58,14 +56,6 @@ public class AttendanceMasterResourceIntTest {
 
     @Autowired
     private AttendanceMasterService attendanceMasterService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AttendanceMasterSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AttendanceMasterSearchRepository mockAttendanceMasterSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -132,9 +122,6 @@ public class AttendanceMasterResourceIntTest {
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeCreate + 1);
         AttendanceMaster testAttendanceMaster = attendanceMasterList.get(attendanceMasterList.size() - 1);
         assertThat(testAttendanceMaster.getDesc()).isEqualTo(DEFAULT_DESC);
-
-        // Validate the AttendanceMaster in Elasticsearch
-        verify(mockAttendanceMasterSearchRepository, times(1)).save(testAttendanceMaster);
     }
 
     @Test
@@ -155,9 +142,6 @@ public class AttendanceMasterResourceIntTest {
         // Validate the AttendanceMaster in the database
         List<AttendanceMaster> attendanceMasterList = attendanceMasterRepository.findAll();
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AttendanceMaster in Elasticsearch
-        verify(mockAttendanceMasterSearchRepository, times(0)).save(attendanceMaster);
     }
 
     @Test
@@ -222,9 +206,6 @@ public class AttendanceMasterResourceIntTest {
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeUpdate);
         AttendanceMaster testAttendanceMaster = attendanceMasterList.get(attendanceMasterList.size() - 1);
         assertThat(testAttendanceMaster.getDesc()).isEqualTo(UPDATED_DESC);
-
-        // Validate the AttendanceMaster in Elasticsearch
-        verify(mockAttendanceMasterSearchRepository, times(1)).save(testAttendanceMaster);
     }
 
     @Test
@@ -244,9 +225,6 @@ public class AttendanceMasterResourceIntTest {
         // Validate the AttendanceMaster in the database
         List<AttendanceMaster> attendanceMasterList = attendanceMasterRepository.findAll();
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AttendanceMaster in Elasticsearch
-        verify(mockAttendanceMasterSearchRepository, times(0)).save(attendanceMaster);
     }
 
     @Test
@@ -265,9 +243,6 @@ public class AttendanceMasterResourceIntTest {
         // Validate the database is empty
         List<AttendanceMaster> attendanceMasterList = attendanceMasterRepository.findAll();
         assertThat(attendanceMasterList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AttendanceMaster in Elasticsearch
-        verify(mockAttendanceMasterSearchRepository, times(1)).deleteById(attendanceMaster.getId());
     }
 
     @Test
@@ -275,8 +250,6 @@ public class AttendanceMasterResourceIntTest {
     public void searchAttendanceMaster() throws Exception {
         // Initialize the database
         attendanceMasterRepository.saveAndFlush(attendanceMaster);
-        when(mockAttendanceMasterSearchRepository.search(queryStringQuery("id:" + attendanceMaster.getId())))
-            .thenReturn(Collections.singletonList(attendanceMaster));
         // Search the attendanceMaster
         restAttendanceMasterMockMvc.perform(get("/api/_search/attendance-masters?query=id:" + attendanceMaster.getId()))
             .andExpect(status().isOk())

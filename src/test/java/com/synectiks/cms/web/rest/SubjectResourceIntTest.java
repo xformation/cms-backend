@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.search.SubjectSearchRepository;
-import com.synectiks.cms.service.SubjectService;
-import com.synectiks.cms.service.dto.SubjectDTO;
-import com.synectiks.cms.service.mapper.SubjectMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,21 +30,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.synectiks.cms.domain.enumeration.SubTypeEnum;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.SubTypeEnum;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.service.SubjectService;
+import com.synectiks.cms.service.dto.SubjectDTO;
+import com.synectiks.cms.service.mapper.SubjectMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the SubjectResource REST controller.
  *
@@ -69,15 +68,6 @@ public class SubjectResourceIntTest {
 
     @Autowired
     private SubjectService subjectService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.SubjectSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private SubjectSearchRepository mockSubjectSearchRepository;
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -148,11 +138,7 @@ public class SubjectResourceIntTest {
         assertThat(testSubject.getSubjectCode()).isEqualTo(DEFAULT_SUBJECT_CODE);
         assertThat(testSubject.getSubjectType()).isEqualTo(DEFAULT_SUBJECT_TYPE);
         assertThat(testSubject.getSubjectDesc()).isEqualTo(DEFAULT_SUBJECT_DESC);
-        assertThat(testSubject.getStatus()).isEqualTo(DEFAULT_STATUS);
-
-        // Validate the Subject in Elasticsearch
-        verify(mockSubjectSearchRepository, times(1)).save(testSubject);
-    }
+        assertThat(testSubject.getStatus()).isEqualTo(DEFAULT_STATUS);    }
 
     @Test
     @Transactional
@@ -172,9 +158,6 @@ public class SubjectResourceIntTest {
         // Validate the Subject in the database
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Subject in Elasticsearch
-        verify(mockSubjectSearchRepository, times(0)).save(subject);
     }
 
     @Test
@@ -326,11 +309,7 @@ public class SubjectResourceIntTest {
         assertThat(testSubject.getSubjectCode()).isEqualTo(UPDATED_SUBJECT_CODE);
         assertThat(testSubject.getSubjectType()).isEqualTo(UPDATED_SUBJECT_TYPE);
         assertThat(testSubject.getSubjectDesc()).isEqualTo(UPDATED_SUBJECT_DESC);
-        assertThat(testSubject.getStatus()).isEqualTo(UPDATED_STATUS);
-
-        // Validate the Subject in Elasticsearch
-        verify(mockSubjectSearchRepository, times(1)).save(testSubject);
-    }
+        assertThat(testSubject.getStatus()).isEqualTo(UPDATED_STATUS);    }
 
     @Test
     @Transactional
@@ -348,11 +327,7 @@ public class SubjectResourceIntTest {
 
         // Validate the Subject in the database
         List<Subject> subjectList = subjectRepository.findAll();
-        assertThat(subjectList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Subject in Elasticsearch
-        verify(mockSubjectSearchRepository, times(0)).save(subject);
-    }
+        assertThat(subjectList).hasSize(databaseSizeBeforeUpdate);    }
 
     @Test
     @Transactional
@@ -370,9 +345,6 @@ public class SubjectResourceIntTest {
         // Validate the database is empty
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Subject in Elasticsearch
-        verify(mockSubjectSearchRepository, times(1)).deleteById(subject.getId());
     }
 
     @Test
@@ -380,8 +352,6 @@ public class SubjectResourceIntTest {
     public void searchSubject() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
-        when(mockSubjectSearchRepository.search(queryStringQuery("id:" + subject.getId())))
-            .thenReturn(Collections.singletonList(subject));
         // Search the subject
         restSubjectMockMvc.perform(get("/api/_search/subjects?query=id:" + subject.getId()))
             .andExpect(status().isOk())

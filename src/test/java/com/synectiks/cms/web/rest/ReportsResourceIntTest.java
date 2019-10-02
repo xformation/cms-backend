@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Reports;
-import com.synectiks.cms.repository.ReportsRepository;
-import com.synectiks.cms.repository.search.ReportsSearchRepository;
-import com.synectiks.cms.service.ReportsService;
-import com.synectiks.cms.service.dto.ReportsDTO;
-import com.synectiks.cms.service.mapper.ReportsMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Reports;
+import com.synectiks.cms.repository.ReportsRepository;
+import com.synectiks.cms.service.ReportsService;
+import com.synectiks.cms.service.dto.ReportsDTO;
+import com.synectiks.cms.service.mapper.ReportsMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the ReportsResource REST controller.
@@ -57,14 +57,6 @@ public class ReportsResourceIntTest {
 
     @Autowired
     private ReportsService reportsService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.ReportsSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private ReportsSearchRepository mockReportsSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -127,9 +119,6 @@ public class ReportsResourceIntTest {
         assertThat(reportsList).hasSize(databaseSizeBeforeCreate + 1);
         Reports testReports = reportsList.get(reportsList.size() - 1);
         assertThat(testReports.getDesc()).isEqualTo(DEFAULT_DESC);
-
-        // Validate the Reports in Elasticsearch
-        verify(mockReportsSearchRepository, times(1)).save(testReports);
     }
 
     @Test
@@ -150,9 +139,6 @@ public class ReportsResourceIntTest {
         // Validate the Reports in the database
         List<Reports> reportsList = reportsRepository.findAll();
         assertThat(reportsList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Reports in Elasticsearch
-        verify(mockReportsSearchRepository, times(0)).save(reports);
     }
 
     @Test
@@ -236,9 +222,6 @@ public class ReportsResourceIntTest {
         assertThat(reportsList).hasSize(databaseSizeBeforeUpdate);
         Reports testReports = reportsList.get(reportsList.size() - 1);
         assertThat(testReports.getDesc()).isEqualTo(UPDATED_DESC);
-
-        // Validate the Reports in Elasticsearch
-        verify(mockReportsSearchRepository, times(1)).save(testReports);
     }
 
     @Test
@@ -258,9 +241,6 @@ public class ReportsResourceIntTest {
         // Validate the Reports in the database
         List<Reports> reportsList = reportsRepository.findAll();
         assertThat(reportsList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Reports in Elasticsearch
-        verify(mockReportsSearchRepository, times(0)).save(reports);
     }
 
     @Test
@@ -279,9 +259,6 @@ public class ReportsResourceIntTest {
         // Validate the database is empty
         List<Reports> reportsList = reportsRepository.findAll();
         assertThat(reportsList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Reports in Elasticsearch
-        verify(mockReportsSearchRepository, times(1)).deleteById(reports.getId());
     }
 
     @Test
@@ -289,8 +266,6 @@ public class ReportsResourceIntTest {
     public void searchReports() throws Exception {
         // Initialize the database
         reportsRepository.saveAndFlush(reports);
-        when(mockReportsSearchRepository.search(queryStringQuery("id:" + reports.getId())))
-            .thenReturn(Collections.singletonList(reports));
         // Search the reports
         restReportsMockMvc.perform(get("/api/_search/reports?query=id:" + reports.getId()))
             .andExpect(status().isOk())

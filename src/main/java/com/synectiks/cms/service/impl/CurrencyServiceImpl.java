@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.CurrencyService;
 import com.synectiks.cms.domain.Currency;
 import com.synectiks.cms.repository.CurrencyRepository;
-import com.synectiks.cms.repository.search.CurrencySearchRepository;
+//import com.synectiks.cms.repository.search.CurrencySearchRepository;
 import com.synectiks.cms.service.dto.CurrencyDTO;
 import com.synectiks.cms.service.mapper.CurrencyMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Currency.
@@ -33,12 +33,12 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     private final CurrencyMapper currencyMapper;
 
-    private final CurrencySearchRepository currencySearchRepository;
+    //private final CurrencySearchRepository currencySearchRepository;
 
-    public CurrencyServiceImpl(CurrencyRepository currencyRepository, CurrencyMapper currencyMapper, CurrencySearchRepository currencySearchRepository) {
+    public CurrencyServiceImpl(CurrencyRepository currencyRepository, CurrencyMapper currencyMapper/*, CurrencySearchRepository currencySearchRepository*/) {
         this.currencyRepository = currencyRepository;
         this.currencyMapper = currencyMapper;
-        this.currencySearchRepository = currencySearchRepository;
+        //this.currencySearchRepository = currencySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         Currency currency = currencyMapper.toEntity(currencyDTO);
         currency = currencyRepository.save(currency);
         CurrencyDTO result = currencyMapper.toDto(currency);
-        currencySearchRepository.save(currency);
+        //currencySearchRepository.save(currency);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     public void delete(Long id) {
         log.debug("Request to delete Currency : {}", id);
         currencyRepository.deleteById(id);
-        currencySearchRepository.deleteById(id);
+        //currencySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Transactional(readOnly = true)
     public List<CurrencyDTO> search(String query) {
         log.debug("Request to search Currencies for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(currencySearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(currencyMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

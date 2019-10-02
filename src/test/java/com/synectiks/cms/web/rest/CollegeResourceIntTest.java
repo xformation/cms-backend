@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.search.CollegeSearchRepository;
-import com.synectiks.cms.service.CollegeService;
-import com.synectiks.cms.service.dto.CollegeDTO;
-import com.synectiks.cms.service.mapper.CollegeMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.service.CollegeService;
+import com.synectiks.cms.service.dto.CollegeDTO;
+import com.synectiks.cms.service.mapper.CollegeMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the CollegeResource REST controller.
@@ -74,14 +74,6 @@ public class CollegeResourceIntTest {
 
     @Autowired
     private CollegeService collegeService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.CollegeSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private CollegeSearchRepository mockCollegeSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -155,8 +147,6 @@ public class CollegeResourceIntTest {
         assertThat(testCollege.getLogoFileName()).isEqualTo(DEFAULT_LOGO_FILE_NAME);
         assertThat(testCollege.getBackgroundImageFileName()).isEqualTo(DEFAULT_BACKGROUND_IMAGE_FILE_NAME);
 
-        // Validate the College in Elasticsearch
-        verify(mockCollegeSearchRepository, times(1)).save(testCollege);
     }
 
     @Test
@@ -178,8 +168,6 @@ public class CollegeResourceIntTest {
         List<College> collegeList = collegeRepository.findAll();
         assertThat(collegeList).hasSize(databaseSizeBeforeCreate);
 
-        // Validate the College in Elasticsearch
-        verify(mockCollegeSearchRepository, times(0)).save(college);
     }
 
     @Test
@@ -284,8 +272,6 @@ public class CollegeResourceIntTest {
         assertThat(testCollege.getLogoFileName()).isEqualTo(UPDATED_LOGO_FILE_NAME);
         assertThat(testCollege.getBackgroundImageFileName()).isEqualTo(UPDATED_BACKGROUND_IMAGE_FILE_NAME);
 
-        // Validate the College in Elasticsearch
-        verify(mockCollegeSearchRepository, times(1)).save(testCollege);
     }
 
     @Test
@@ -306,8 +292,6 @@ public class CollegeResourceIntTest {
         List<College> collegeList = collegeRepository.findAll();
         assertThat(collegeList).hasSize(databaseSizeBeforeUpdate);
 
-        // Validate the College in Elasticsearch
-        verify(mockCollegeSearchRepository, times(0)).save(college);
     }
 
     @Test
@@ -327,8 +311,6 @@ public class CollegeResourceIntTest {
         List<College> collegeList = collegeRepository.findAll();
         assertThat(collegeList).hasSize(databaseSizeBeforeDelete - 1);
 
-        // Validate the College in Elasticsearch
-        verify(mockCollegeSearchRepository, times(1)).deleteById(college.getId());
     }
 
     @Test
@@ -336,8 +318,6 @@ public class CollegeResourceIntTest {
     public void searchCollege() throws Exception {
         // Initialize the database
         collegeRepository.saveAndFlush(college);
-        when(mockCollegeSearchRepository.search(queryStringQuery("id:" + college.getId())))
-            .thenReturn(Collections.singletonList(college));
         // Search the college
         restCollegeMockMvc.perform(get("/api/_search/colleges?query=id:" + college.getId()))
             .andExpect(status().isOk())

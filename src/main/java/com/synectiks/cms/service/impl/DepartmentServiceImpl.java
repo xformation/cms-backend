@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.DepartmentService;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.repository.DepartmentRepository;
-import com.synectiks.cms.repository.search.DepartmentSearchRepository;
+//import com.synectiks.cms.repository.search.DepartmentSearchRepository;
 import com.synectiks.cms.service.dto.DepartmentDTO;
 import com.synectiks.cms.service.mapper.DepartmentMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Department.
@@ -33,12 +33,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentMapper departmentMapper;
 
-    private final DepartmentSearchRepository departmentSearchRepository;
+    //private final DepartmentSearchRepository departmentSearchRepository;
 
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository, DepartmentMapper departmentMapper, DepartmentSearchRepository departmentSearchRepository) {
+    public DepartmentServiceImpl(DepartmentRepository departmentRepository, DepartmentMapper departmentMapper/*, DepartmentSearchRepository departmentSearchRepository*/) {
         this.departmentRepository = departmentRepository;
         this.departmentMapper = departmentMapper;
-        this.departmentSearchRepository = departmentSearchRepository;
+        //this.departmentSearchRepository = departmentSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = departmentMapper.toEntity(departmentDTO);
         department = departmentRepository.save(department);
         DepartmentDTO result = departmentMapper.toDto(department);
-        departmentSearchRepository.save(department);
+        //departmentSearchRepository.save(department);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void delete(Long id) {
         log.debug("Request to delete Department : {}", id);
         departmentRepository.deleteById(id);
-        departmentSearchRepository.deleteById(id);
+        //departmentSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional(readOnly = true)
     public List<DepartmentDTO> search(String query) {
         log.debug("Request to search Departments for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(departmentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(departmentMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

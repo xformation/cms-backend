@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AcademicHistory;
 import com.synectiks.cms.repository.AcademicHistoryRepository;
-import com.synectiks.cms.repository.search.AcademicHistorySearchRepository;
+//import com.synectiks.cms.repository.search.AcademicHistorySearchRepository;
 import com.synectiks.cms.service.AcademicHistoryService;
 import com.synectiks.cms.service.dto.AcademicHistoryDTO;
 import com.synectiks.cms.service.mapper.AcademicHistoryMapper;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -76,14 +76,6 @@ public class AcademicHistoryResourceIntTest {
 
     @Autowired
     private AcademicHistoryService academicHistoryService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AcademicHistorySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AcademicHistorySearchRepository mockAcademicHistorySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -162,9 +154,6 @@ public class AcademicHistoryResourceIntTest {
         assertThat(testAcademicHistory.getEnrollmentNo()).isEqualTo(DEFAULT_ENROLLMENT_NO);
         assertThat(testAcademicHistory.getScore()).isEqualTo(DEFAULT_SCORE);
         assertThat(testAcademicHistory.getPercentage()).isEqualTo(DEFAULT_PERCENTAGE);
-
-        // Validate the AcademicHistory in Elasticsearch
-        verify(mockAcademicHistorySearchRepository, times(1)).save(testAcademicHistory);
     }
 
     @Test
@@ -185,10 +174,7 @@ public class AcademicHistoryResourceIntTest {
         // Validate the AcademicHistory in the database
         List<AcademicHistory> academicHistoryList = academicHistoryRepository.findAll();
         assertThat(academicHistoryList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AcademicHistory in Elasticsearch
-        verify(mockAcademicHistorySearchRepository, times(0)).save(academicHistory);
-    }
+   }
 
     @Test
     @Transactional
@@ -409,9 +395,6 @@ public class AcademicHistoryResourceIntTest {
         assertThat(testAcademicHistory.getEnrollmentNo()).isEqualTo(UPDATED_ENROLLMENT_NO);
         assertThat(testAcademicHistory.getScore()).isEqualTo(UPDATED_SCORE);
         assertThat(testAcademicHistory.getPercentage()).isEqualTo(UPDATED_PERCENTAGE);
-
-        // Validate the AcademicHistory in Elasticsearch
-        verify(mockAcademicHistorySearchRepository, times(1)).save(testAcademicHistory);
     }
 
     @Test
@@ -431,10 +414,7 @@ public class AcademicHistoryResourceIntTest {
         // Validate the AcademicHistory in the database
         List<AcademicHistory> academicHistoryList = academicHistoryRepository.findAll();
         assertThat(academicHistoryList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AcademicHistory in Elasticsearch
-        verify(mockAcademicHistorySearchRepository, times(0)).save(academicHistory);
-    }
+   }
 
     @Test
     @Transactional
@@ -452,9 +432,6 @@ public class AcademicHistoryResourceIntTest {
         // Validate the database is empty
         List<AcademicHistory> academicHistoryList = academicHistoryRepository.findAll();
         assertThat(academicHistoryList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AcademicHistory in Elasticsearch
-        verify(mockAcademicHistorySearchRepository, times(1)).deleteById(academicHistory.getId());
     }
 
     @Test
@@ -462,8 +439,6 @@ public class AcademicHistoryResourceIntTest {
     public void searchAcademicHistory() throws Exception {
         // Initialize the database
         academicHistoryRepository.saveAndFlush(academicHistory);
-        when(mockAcademicHistorySearchRepository.search(queryStringQuery("id:" + academicHistory.getId())))
-            .thenReturn(Collections.singletonList(academicHistory));
         // Search the academicHistory
         restAcademicHistoryMockMvc.perform(get("/api/_search/academic-histories?query=id:" + academicHistory.getId()))
             .andExpect(status().isOk())

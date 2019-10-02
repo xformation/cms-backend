@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.search.HolidaySearchRepository;
-import com.synectiks.cms.service.HolidayService;
-import com.synectiks.cms.service.dto.HolidayDTO;
-import com.synectiks.cms.service.mapper.HolidayMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,25 +30,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.service.HolidayService;
+import com.synectiks.cms.service.dto.HolidayDTO;
+import com.synectiks.cms.service.mapper.HolidayMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the HolidayResource REST controller.
  *
@@ -68,14 +65,6 @@ public class HolidayResourceIntTest {
 
     @Autowired
     private HolidayService holidayService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.HolidaySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private HolidaySearchRepository mockHolidaySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -143,9 +132,6 @@ public class HolidayResourceIntTest {
         assertThat(testHoliday.getHolidayDesc()).isEqualTo(DEFAULT_HOLIDAY_DESC);
         assertThat(testHoliday.getHolidayDate()).isEqualTo(DEFAULT_HOLIDAY_DATE);
         assertThat(testHoliday.getHolidayStatus()).isEqualTo(DEFAULT_HOLIDAY_STATUS);
-
-        // Validate the Holiday in Elasticsearch
-        verify(mockHolidaySearchRepository, times(1)).save(testHoliday);
     }
 
     @Test
@@ -166,9 +152,6 @@ public class HolidayResourceIntTest {
         // Validate the Holiday in the database
         List<Holiday> holidayList = holidayRepository.findAll();
         assertThat(holidayList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Holiday in Elasticsearch
-        verify(mockHolidaySearchRepository, times(0)).save(holiday);
     }
 
     @Test
@@ -298,9 +281,6 @@ public class HolidayResourceIntTest {
         assertThat(testHoliday.getHolidayDesc()).isEqualTo(UPDATED_HOLIDAY_DESC);
         assertThat(testHoliday.getHolidayDate()).isEqualTo(UPDATED_HOLIDAY_DATE);
         assertThat(testHoliday.getHolidayStatus()).isEqualTo(UPDATED_HOLIDAY_STATUS);
-
-        // Validate the Holiday in Elasticsearch
-        verify(mockHolidaySearchRepository, times(1)).save(testHoliday);
     }
 
     @Test
@@ -320,9 +300,6 @@ public class HolidayResourceIntTest {
         // Validate the Holiday in the database
         List<Holiday> holidayList = holidayRepository.findAll();
         assertThat(holidayList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Holiday in Elasticsearch
-        verify(mockHolidaySearchRepository, times(0)).save(holiday);
     }
 
     @Test
@@ -341,9 +318,6 @@ public class HolidayResourceIntTest {
         // Validate the database is empty
         List<Holiday> holidayList = holidayRepository.findAll();
         assertThat(holidayList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Holiday in Elasticsearch
-        verify(mockHolidaySearchRepository, times(1)).deleteById(holiday.getId());
     }
 
     @Test
@@ -351,8 +325,6 @@ public class HolidayResourceIntTest {
     public void searchHoliday() throws Exception {
         // Initialize the database
         holidayRepository.saveAndFlush(holiday);
-        when(mockHolidaySearchRepository.search(queryStringQuery("id:" + holiday.getId())))
-            .thenReturn(Collections.singletonList(holiday));
         // Search the holiday
         restHolidayMockMvc.perform(get("/api/_search/holidays?query=id:" + holiday.getId()))
             .andExpect(status().isOk())

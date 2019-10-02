@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.InsuranceService;
 import com.synectiks.cms.domain.Insurance;
 import com.synectiks.cms.repository.InsuranceRepository;
-import com.synectiks.cms.repository.search.InsuranceSearchRepository;
+//import com.synectiks.cms.repository.search.InsuranceSearchRepository;
 import com.synectiks.cms.service.dto.InsuranceDTO;
 import com.synectiks.cms.service.mapper.InsuranceMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Insurance.
@@ -33,12 +33,12 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     private final InsuranceMapper insuranceMapper;
 
-    private final InsuranceSearchRepository insuranceSearchRepository;
+    //private final InsuranceSearchRepository insuranceSearchRepository;
 
-    public InsuranceServiceImpl(InsuranceRepository insuranceRepository, InsuranceMapper insuranceMapper, InsuranceSearchRepository insuranceSearchRepository) {
+    public InsuranceServiceImpl(InsuranceRepository insuranceRepository, InsuranceMapper insuranceMapper/*, InsuranceSearchRepository insuranceSearchRepository*/) {
         this.insuranceRepository = insuranceRepository;
         this.insuranceMapper = insuranceMapper;
-        this.insuranceSearchRepository = insuranceSearchRepository;
+        //this.insuranceSearchRepository = insuranceSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class InsuranceServiceImpl implements InsuranceService {
         Insurance insurance = insuranceMapper.toEntity(insuranceDTO);
         insurance = insuranceRepository.save(insurance);
         InsuranceDTO result = insuranceMapper.toDto(insurance);
-        insuranceSearchRepository.save(insurance);
+        //insuranceSearchRepository.save(insurance);
         return result;
     }
 
@@ -111,7 +111,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     public void delete(Long id) {
         log.debug("Request to delete Insurance : {}", id);
         insuranceRepository.deleteById(id);
-        insuranceSearchRepository.deleteById(id);
+        //insuranceSearchRepository.deleteById(id);
     }
 
     /**
@@ -124,9 +124,11 @@ public class InsuranceServiceImpl implements InsuranceService {
     @Transactional(readOnly = true)
     public List<InsuranceDTO> search(String query) {
         log.debug("Request to search Insurances for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(insuranceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(insuranceMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

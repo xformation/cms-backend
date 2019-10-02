@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.search.CitySearchRepository;
-import com.synectiks.cms.service.CityService;
-import com.synectiks.cms.service.dto.CityDTO;
-import com.synectiks.cms.service.mapper.CityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.repository.CityRepository;
+import com.synectiks.cms.service.CityService;
+import com.synectiks.cms.service.dto.CityDTO;
+import com.synectiks.cms.service.mapper.CityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the CityResource REST controller.
@@ -65,13 +65,6 @@ public class CityResourceIntTest {
     @Autowired
     private CityService cityService;
 
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.CitySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private CitySearchRepository mockCitySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -143,8 +136,6 @@ public class CityResourceIntTest {
         assertThat(testCity.getCityCode()).isEqualTo(DEFAULT_CITY_CODE);
         assertThat(testCity.getStdCode()).isEqualTo(DEFAULT_STD_CODE);
 
-        // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(1)).save(testCity);
     }
 
     @Test
@@ -166,8 +157,6 @@ public class CityResourceIntTest {
         List<City> cityList = cityRepository.findAll();
         assertThat(cityList).hasSize(databaseSizeBeforeCreate);
 
-        // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(0)).save(city);
     }
 
     @Test
@@ -260,8 +249,6 @@ public class CityResourceIntTest {
         assertThat(testCity.getCityCode()).isEqualTo(UPDATED_CITY_CODE);
         assertThat(testCity.getStdCode()).isEqualTo(UPDATED_STD_CODE);
 
-        // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(1)).save(testCity);
     }
 
     @Test
@@ -281,9 +268,6 @@ public class CityResourceIntTest {
         // Validate the City in the database
         List<City> cityList = cityRepository.findAll();
         assertThat(cityList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(0)).save(city);
     }
 
     @Test
@@ -303,8 +287,6 @@ public class CityResourceIntTest {
         List<City> cityList = cityRepository.findAll();
         assertThat(cityList).hasSize(databaseSizeBeforeDelete - 1);
 
-        // Validate the City in Elasticsearch
-        verify(mockCitySearchRepository, times(1)).deleteById(city.getId());
     }
 
     @Test
@@ -312,8 +294,6 @@ public class CityResourceIntTest {
     public void searchCity() throws Exception {
         // Initialize the database
         cityRepository.saveAndFlush(city);
-        when(mockCitySearchRepository.search(queryStringQuery("id:" + city.getId())))
-            .thenReturn(Collections.singletonList(city));
         // Search the city
         restCityMockMvc.perform(get("/api/_search/cities?query=id:" + city.getId()))
             .andExpect(status().isOk())

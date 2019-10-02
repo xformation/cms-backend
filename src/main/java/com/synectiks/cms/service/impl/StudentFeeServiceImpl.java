@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.StudentFeeService;
 import com.synectiks.cms.domain.StudentFee;
 import com.synectiks.cms.repository.StudentFeeRepository;
-import com.synectiks.cms.repository.search.StudentFeeSearchRepository;
+//import com.synectiks.cms.repository.search.StudentFeeSearchRepository;
 import com.synectiks.cms.service.dto.StudentFeeDTO;
 import com.synectiks.cms.service.mapper.StudentFeeMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing StudentFee.
@@ -33,12 +33,12 @@ public class StudentFeeServiceImpl implements StudentFeeService {
 
     private final StudentFeeMapper studentFeeMapper;
 
-    private final StudentFeeSearchRepository studentFeeSearchRepository;
+    //private final StudentFeeSearchRepository studentFeeSearchRepository;
 
-    public StudentFeeServiceImpl(StudentFeeRepository studentFeeRepository, StudentFeeMapper studentFeeMapper, StudentFeeSearchRepository studentFeeSearchRepository) {
+    public StudentFeeServiceImpl(StudentFeeRepository studentFeeRepository, StudentFeeMapper studentFeeMapper/*, StudentFeeSearchRepository studentFeeSearchRepository*/) {
         this.studentFeeRepository = studentFeeRepository;
         this.studentFeeMapper = studentFeeMapper;
-        this.studentFeeSearchRepository = studentFeeSearchRepository;
+        //this.studentFeeSearchRepository = studentFeeSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class StudentFeeServiceImpl implements StudentFeeService {
         StudentFee studentFee = studentFeeMapper.toEntity(studentFeeDTO);
         studentFee = studentFeeRepository.save(studentFee);
         StudentFeeDTO result = studentFeeMapper.toDto(studentFee);
-        studentFeeSearchRepository.save(studentFee);
+        //studentFeeSearchRepository.save(studentFee);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class StudentFeeServiceImpl implements StudentFeeService {
     public void delete(Long id) {
         log.debug("Request to delete StudentFee : {}", id);
         studentFeeRepository.deleteById(id);
-        studentFeeSearchRepository.deleteById(id);
+        //studentFeeSearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,11 @@ public class StudentFeeServiceImpl implements StudentFeeService {
     @Transactional(readOnly = true)
     public List<StudentFeeDTO> search(String query) {
         log.debug("Request to search StudentFees for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(studentFeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(studentFeeMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

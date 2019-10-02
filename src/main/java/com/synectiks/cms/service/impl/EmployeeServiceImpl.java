@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.EmployeeService;
 import com.synectiks.cms.domain.Employee;
 import com.synectiks.cms.repository.EmployeeRepository;
-import com.synectiks.cms.repository.search.EmployeeSearchRepository;
+//import com.synectiks.cms.repository.search.EmployeeSearchRepository;
 import com.synectiks.cms.service.dto.EmployeeDTO;
 import com.synectiks.cms.service.mapper.EmployeeMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Employee.
@@ -33,12 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeMapper employeeMapper;
 
-    private final EmployeeSearchRepository employeeSearchRepository;
+    //private final EmployeeSearchRepository employeeSearchRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper, EmployeeSearchRepository employeeSearchRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper/*, EmployeeSearchRepository employeeSearchRepository*/) {
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
-        this.employeeSearchRepository = employeeSearchRepository;
+        //this.employeeSearchRepository = employeeSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
         EmployeeDTO result = employeeMapper.toDto(employee);
-        employeeSearchRepository.save(employee);
+        //employeeSearchRepository.save(employee);
         return result;
     }
 
@@ -111,7 +111,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Long id) {
         log.debug("Request to delete Employee : {}", id);
         employeeRepository.deleteById(id);
-        employeeSearchRepository.deleteById(id);
+        //employeeSearchRepository.deleteById(id);
     }
 
     /**
@@ -124,9 +124,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(readOnly = true)
     public List<EmployeeDTO> search(String query) {
         log.debug("Request to search Employees for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(employeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(employeeMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

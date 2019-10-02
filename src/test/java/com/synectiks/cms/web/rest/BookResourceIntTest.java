@@ -4,7 +4,6 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.Book;
 import com.synectiks.cms.repository.BookRepository;
-import com.synectiks.cms.repository.search.BookSearchRepository;
 import com.synectiks.cms.service.BookService;
 import com.synectiks.cms.service.dto.BookDTO;
 import com.synectiks.cms.service.mapper.BookMapper;
@@ -34,7 +33,6 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -73,14 +71,6 @@ public class BookResourceIntTest {
 
     @Autowired
     private BookService bookService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.BookSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private BookSearchRepository mockBookSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -155,9 +145,6 @@ public class BookResourceIntTest {
         assertThat(testBook.getNoOfCopiesAvailable()).isEqualTo(DEFAULT_NO_OF_COPIES_AVAILABLE);
         assertThat(testBook.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testBook.getReceivedDate()).isEqualTo(DEFAULT_RECEIVED_DATE);
-
-        // Validate the Book in Elasticsearch
-        verify(mockBookSearchRepository, times(1)).save(testBook);
     }
 
     @Test
@@ -178,9 +165,6 @@ public class BookResourceIntTest {
         // Validate the Book in the database
         List<Book> bookList = bookRepository.findAll();
         assertThat(bookList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Book in Elasticsearch
-        verify(mockBookSearchRepository, times(0)).save(book);
     }
 
     @Test
@@ -337,9 +321,6 @@ public class BookResourceIntTest {
         assertThat(testBook.getNoOfCopiesAvailable()).isEqualTo(UPDATED_NO_OF_COPIES_AVAILABLE);
         assertThat(testBook.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testBook.getReceivedDate()).isEqualTo(UPDATED_RECEIVED_DATE);
-
-        // Validate the Book in Elasticsearch
-        verify(mockBookSearchRepository, times(1)).save(testBook);
     }
 
     @Test
@@ -359,9 +340,6 @@ public class BookResourceIntTest {
         // Validate the Book in the database
         List<Book> bookList = bookRepository.findAll();
         assertThat(bookList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Book in Elasticsearch
-        verify(mockBookSearchRepository, times(0)).save(book);
     }
 
     @Test
@@ -380,9 +358,6 @@ public class BookResourceIntTest {
         // Validate the database is empty
         List<Book> bookList = bookRepository.findAll();
         assertThat(bookList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Book in Elasticsearch
-        verify(mockBookSearchRepository, times(1)).deleteById(book.getId());
     }
 
     @Test
@@ -390,8 +365,6 @@ public class BookResourceIntTest {
     public void searchBook() throws Exception {
         // Initialize the database
         bookRepository.saveAndFlush(book);
-        when(mockBookSearchRepository.search(queryStringQuery("id:" + book.getId())))
-            .thenReturn(Collections.singletonList(book));
         // Search the book
         restBookMockMvc.perform(get("/api/_search/books?query=id:" + book.getId()))
             .andExpect(status().isOk())

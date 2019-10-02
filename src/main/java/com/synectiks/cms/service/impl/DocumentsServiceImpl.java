@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.DocumentsService;
 import com.synectiks.cms.domain.Documents;
 import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.repository.search.DocumentsSearchRepository;
+//import com.synectiks.cms.repository.search.DocumentsSearchRepository;
 import com.synectiks.cms.service.dto.DocumentsDTO;
 import com.synectiks.cms.service.mapper.DocumentsMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Documents.
@@ -33,12 +33,12 @@ public class DocumentsServiceImpl implements DocumentsService {
 
     private final DocumentsMapper documentsMapper;
 
-    private final DocumentsSearchRepository documentsSearchRepository;
+    //private final DocumentsSearchRepository documentsSearchRepository;
 
-    public DocumentsServiceImpl(DocumentsRepository documentsRepository, DocumentsMapper documentsMapper, DocumentsSearchRepository documentsSearchRepository) {
+    public DocumentsServiceImpl(DocumentsRepository documentsRepository, DocumentsMapper documentsMapper/*, DocumentsSearchRepository documentsSearchRepository*/) {
         this.documentsRepository = documentsRepository;
         this.documentsMapper = documentsMapper;
-        this.documentsSearchRepository = documentsSearchRepository;
+        //this.documentsSearchRepository = documentsSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class DocumentsServiceImpl implements DocumentsService {
         Documents documents = documentsMapper.toEntity(documentsDTO);
         documents = documentsRepository.save(documents);
         DocumentsDTO result = documentsMapper.toDto(documents);
-        documentsSearchRepository.save(documents);
+        //documentsSearchRepository.save(documents);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     public void delete(Long id) {
         log.debug("Request to delete Documents : {}", id);
         documentsRepository.deleteById(id);
-        documentsSearchRepository.deleteById(id);
+        //documentsSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class DocumentsServiceImpl implements DocumentsService {
     @Transactional(readOnly = true)
     public List<DocumentsDTO> search(String query) {
         log.debug("Request to search Documents for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(documentsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(documentsMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.AttendanceMasterService;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.search.AttendanceMasterSearchRepository;
+//import com.synectiks.cms.repository.search.AttendanceMasterSearchRepository;
 import com.synectiks.cms.service.dto.AttendanceMasterDTO;
 import com.synectiks.cms.service.mapper.AttendanceMasterMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing AttendanceMaster.
@@ -33,12 +33,12 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
 
     private final AttendanceMasterMapper attendanceMasterMapper;
 
-    private final AttendanceMasterSearchRepository attendanceMasterSearchRepository;
+    //private final AttendanceMasterSearchRepository attendanceMasterSearchRepository;
 
-    public AttendanceMasterServiceImpl(AttendanceMasterRepository attendanceMasterRepository, AttendanceMasterMapper attendanceMasterMapper, AttendanceMasterSearchRepository attendanceMasterSearchRepository) {
+    public AttendanceMasterServiceImpl(AttendanceMasterRepository attendanceMasterRepository, AttendanceMasterMapper attendanceMasterMapper/*, AttendanceMasterSearchRepository attendanceMasterSearchRepository*/) {
         this.attendanceMasterRepository = attendanceMasterRepository;
         this.attendanceMasterMapper = attendanceMasterMapper;
-        this.attendanceMasterSearchRepository = attendanceMasterSearchRepository;
+        //this.attendanceMasterSearchRepository = attendanceMasterSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
         AttendanceMaster attendanceMaster = attendanceMasterMapper.toEntity(attendanceMasterDTO);
         attendanceMaster = attendanceMasterRepository.save(attendanceMaster);
         AttendanceMasterDTO result = attendanceMasterMapper.toDto(attendanceMaster);
-        attendanceMasterSearchRepository.save(attendanceMaster);
+        //attendanceMasterSearchRepository.save(attendanceMaster);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
     public void delete(Long id) {
         log.debug("Request to delete AttendanceMaster : {}", id);
         attendanceMasterRepository.deleteById(id);
-        attendanceMasterSearchRepository.deleteById(id);
+        //attendanceMasterSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
     @Transactional(readOnly = true)
     public List<AttendanceMasterDTO> search(String query) {
         log.debug("Request to search AttendanceMasters for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(attendanceMasterSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(attendanceMasterMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

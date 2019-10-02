@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Vehicle;
-import com.synectiks.cms.repository.VehicleRepository;
-import com.synectiks.cms.repository.search.VehicleSearchRepository;
-import com.synectiks.cms.service.VehicleService;
-import com.synectiks.cms.service.dto.VehicleDTO;
-import com.synectiks.cms.service.mapper.VehicleMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,22 +31,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.VehicleRepository;
+import com.synectiks.cms.service.VehicleService;
+import com.synectiks.cms.service.dto.VehicleDTO;
+import com.synectiks.cms.service.mapper.VehicleMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the VehicleResource REST controller.
  *
@@ -93,14 +92,6 @@ public class VehicleResourceIntTest {
 
     @Autowired
     private VehicleService vehicleService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.VehicleSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private VehicleSearchRepository mockVehicleSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -185,9 +176,6 @@ public class VehicleResourceIntTest {
         assertThat(testVehicle.getRcNo()).isEqualTo(DEFAULT_RC_NO);
         assertThat(testVehicle.getContactNumber()).isEqualTo(DEFAULT_CONTACT_NUMBER);
         assertThat(testVehicle.getStatus()).isEqualTo(DEFAULT_STATUS);
-
-        // Validate the Vehicle in Elasticsearch
-        verify(mockVehicleSearchRepository, times(1)).save(testVehicle);
     }
 
     @Test
@@ -208,9 +196,6 @@ public class VehicleResourceIntTest {
         // Validate the Vehicle in the database
         List<Vehicle> vehicleList = vehicleRepository.findAll();
         assertThat(vehicleList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Vehicle in Elasticsearch
-        verify(mockVehicleSearchRepository, times(0)).save(vehicle);
     }
 
     @Test
@@ -452,9 +437,6 @@ public class VehicleResourceIntTest {
         assertThat(testVehicle.getRcNo()).isEqualTo(UPDATED_RC_NO);
         assertThat(testVehicle.getContactNumber()).isEqualTo(UPDATED_CONTACT_NUMBER);
         assertThat(testVehicle.getStatus()).isEqualTo(UPDATED_STATUS);
-
-        // Validate the Vehicle in Elasticsearch
-        verify(mockVehicleSearchRepository, times(1)).save(testVehicle);
     }
 
     @Test
@@ -474,9 +456,6 @@ public class VehicleResourceIntTest {
         // Validate the Vehicle in the database
         List<Vehicle> vehicleList = vehicleRepository.findAll();
         assertThat(vehicleList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Vehicle in Elasticsearch
-        verify(mockVehicleSearchRepository, times(0)).save(vehicle);
     }
 
     @Test
@@ -495,9 +474,6 @@ public class VehicleResourceIntTest {
         // Validate the database is empty
         List<Vehicle> vehicleList = vehicleRepository.findAll();
         assertThat(vehicleList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Vehicle in Elasticsearch
-        verify(mockVehicleSearchRepository, times(1)).deleteById(vehicle.getId());
     }
 
     @Test
@@ -505,8 +481,6 @@ public class VehicleResourceIntTest {
     public void searchVehicle() throws Exception {
         // Initialize the database
         vehicleRepository.saveAndFlush(vehicle);
-        when(mockVehicleSearchRepository.search(queryStringQuery("id:" + vehicle.getId())))
-            .thenReturn(Collections.singletonList(vehicle));
         // Search the vehicle
         restVehicleMockMvc.perform(get("/api/_search/vehicles?query=id:" + vehicle.getId()))
             .andExpect(status().isOk())

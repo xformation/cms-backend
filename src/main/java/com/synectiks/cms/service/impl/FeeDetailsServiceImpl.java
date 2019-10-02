@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.FeeDetailsService;
 import com.synectiks.cms.domain.FeeDetails;
 import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.search.FeeDetailsSearchRepository;
+//import com.synectiks.cms.repository.search.FeeDetailsSearchRepository;
 import com.synectiks.cms.service.dto.FeeDetailsDTO;
 import com.synectiks.cms.service.mapper.FeeDetailsMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing FeeDetails.
@@ -33,12 +33,12 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
 
     private final FeeDetailsMapper feeDetailsMapper;
 
-    private final FeeDetailsSearchRepository feeDetailsSearchRepository;
+    //private final FeeDetailsSearchRepository feeDetailsSearchRepository;
 
-    public FeeDetailsServiceImpl(FeeDetailsRepository feeDetailsRepository, FeeDetailsMapper feeDetailsMapper, FeeDetailsSearchRepository feeDetailsSearchRepository) {
+    public FeeDetailsServiceImpl(FeeDetailsRepository feeDetailsRepository, FeeDetailsMapper feeDetailsMapper/*, FeeDetailsSearchRepository feeDetailsSearchRepository*/) {
         this.feeDetailsRepository = feeDetailsRepository;
         this.feeDetailsMapper = feeDetailsMapper;
-        this.feeDetailsSearchRepository = feeDetailsSearchRepository;
+        //this.feeDetailsSearchRepository = feeDetailsSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
         FeeDetails feeDetails = feeDetailsMapper.toEntity(feeDetailsDTO);
         feeDetails = feeDetailsRepository.save(feeDetails);
         FeeDetailsDTO result = feeDetailsMapper.toDto(feeDetails);
-        feeDetailsSearchRepository.save(feeDetails);
+        //feeDetailsSearchRepository.save(feeDetails);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
     public void delete(Long id) {
         log.debug("Request to delete FeeDetails : {}", id);
         feeDetailsRepository.deleteById(id);
-        feeDetailsSearchRepository.deleteById(id);
+        //feeDetailsSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
     @Transactional(readOnly = true)
     public List<FeeDetailsDTO> search(String query) {
         log.debug("Request to search FeeDetails for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(feeDetailsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(feeDetailsMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

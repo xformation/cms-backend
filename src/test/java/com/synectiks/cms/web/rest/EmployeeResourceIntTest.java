@@ -1,15 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.repository.EmployeeRepository;
-import com.synectiks.cms.repository.search.EmployeeSearchRepository;
-import com.synectiks.cms.service.EmployeeService;
-import com.synectiks.cms.service.dto.EmployeeDTO;
-import com.synectiks.cms.service.mapper.EmployeeMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,25 +32,18 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.Employee;
 import com.synectiks.cms.domain.enumeration.Disability;
 import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.EmployeeRepository;
+import com.synectiks.cms.service.EmployeeService;
+import com.synectiks.cms.service.dto.EmployeeDTO;
+import com.synectiks.cms.service.mapper.EmployeeMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the EmployeeResource REST controller.
  *
@@ -140,14 +139,6 @@ public class EmployeeResourceIntTest {
 
     @Autowired
     private EmployeeService employeeService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.EmployeeSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private EmployeeSearchRepository mockEmployeeSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -270,8 +261,6 @@ public class EmployeeResourceIntTest {
         assertThat(testEmployee.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testEmployee.getMaritalStatus()).isEqualTo(DEFAULT_MARITAL_STATUS);
 
-        // Validate the Employee in Elasticsearch
-        verify(mockEmployeeSearchRepository, times(1)).save(testEmployee);
     }
 
     @Test
@@ -292,9 +281,6 @@ public class EmployeeResourceIntTest {
         // Validate the Employee in the database
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Employee in Elasticsearch
-        verify(mockEmployeeSearchRepository, times(0)).save(employee);
     }
 
     @Test
@@ -517,8 +503,6 @@ public class EmployeeResourceIntTest {
         assertThat(testEmployee.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testEmployee.getMaritalStatus()).isEqualTo(UPDATED_MARITAL_STATUS);
 
-        // Validate the Employee in Elasticsearch
-        verify(mockEmployeeSearchRepository, times(1)).save(testEmployee);
     }
 
     @Test
@@ -538,9 +522,6 @@ public class EmployeeResourceIntTest {
         // Validate the Employee in the database
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Employee in Elasticsearch
-        verify(mockEmployeeSearchRepository, times(0)).save(employee);
     }
 
     @Test
@@ -559,9 +540,6 @@ public class EmployeeResourceIntTest {
         // Validate the database is empty
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Employee in Elasticsearch
-        verify(mockEmployeeSearchRepository, times(1)).deleteById(employee.getId());
     }
 
     @Test
@@ -569,8 +547,6 @@ public class EmployeeResourceIntTest {
     public void searchEmployee() throws Exception {
         // Initialize the database
         employeeRepository.saveAndFlush(employee);
-        when(mockEmployeeSearchRepository.search(queryStringQuery("id:" + employee.getId())))
-            .thenReturn(Collections.singletonList(employee));
         // Search the employee
         restEmployeeMockMvc.perform(get("/api/_search/employees?query=id:" + employee.getId()))
             .andExpect(status().isOk())

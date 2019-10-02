@@ -4,7 +4,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+//import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 
 import com.synectiks.cms.domain.enumeration.Status;
@@ -15,7 +15,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "modules")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "modules")
+//@org.springframework.data.elasticsearch.annotations.Document(indexName = "modules")
 public class Modules implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,7 +23,7 @@ public class Modules implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
+    //@org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "module_name")

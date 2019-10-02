@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
-import com.synectiks.cms.service.TransportRouteService;
-import com.synectiks.cms.service.dto.TransportRouteDTO;
-import com.synectiks.cms.service.mapper.TransportRouteMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,20 +30,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.enumeration.RouteFrequency;
+import com.synectiks.cms.repository.TransportRouteRepository;
+import com.synectiks.cms.service.TransportRouteService;
+import com.synectiks.cms.service.dto.TransportRouteDTO;
+import com.synectiks.cms.service.mapper.TransportRouteMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the TransportRouteResource REST controller.
  *
@@ -71,14 +70,6 @@ public class TransportRouteResourceIntTest {
 
     @Autowired
     private TransportRouteService transportRouteService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.TransportRouteSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private TransportRouteSearchRepository mockTransportRouteSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -154,8 +145,6 @@ public class TransportRouteResourceIntTest {
         assertThat(testTransportRoute.getNoOfStops()).isEqualTo(DEFAULT_NO_OF_STOPS);
         assertThat(testTransportRoute.getRouteFrequency()).isEqualTo(DEFAULT_ROUTE_FREQUENCY);
 
-        // Validate the TransportRoute in Elasticsearch
-        verify(mockTransportRouteSearchRepository, times(1)).save(testTransportRoute);
     }
 
     @Test
@@ -176,9 +165,6 @@ public class TransportRouteResourceIntTest {
         // Validate the TransportRoute in the database
         List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
         assertThat(transportRouteList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the TransportRoute in Elasticsearch
-        verify(mockTransportRouteSearchRepository, times(0)).save(transportRoute);
     }
 
     @Test
@@ -336,8 +322,6 @@ public class TransportRouteResourceIntTest {
         assertThat(testTransportRoute.getNoOfStops()).isEqualTo(UPDATED_NO_OF_STOPS);
         assertThat(testTransportRoute.getRouteFrequency()).isEqualTo(UPDATED_ROUTE_FREQUENCY);
 
-        // Validate the TransportRoute in Elasticsearch
-        verify(mockTransportRouteSearchRepository, times(1)).save(testTransportRoute);
     }
 
     @Test
@@ -357,9 +341,6 @@ public class TransportRouteResourceIntTest {
         // Validate the TransportRoute in the database
         List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
         assertThat(transportRouteList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the TransportRoute in Elasticsearch
-        verify(mockTransportRouteSearchRepository, times(0)).save(transportRoute);
     }
 
     @Test
@@ -378,9 +359,6 @@ public class TransportRouteResourceIntTest {
         // Validate the database is empty
         List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
         assertThat(transportRouteList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the TransportRoute in Elasticsearch
-        verify(mockTransportRouteSearchRepository, times(1)).deleteById(transportRoute.getId());
     }
 
     @Test
@@ -388,8 +366,6 @@ public class TransportRouteResourceIntTest {
     public void searchTransportRoute() throws Exception {
         // Initialize the database
         transportRouteRepository.saveAndFlush(transportRoute);
-        when(mockTransportRouteSearchRepository.search(queryStringQuery("id:" + transportRoute.getId())))
-            .thenReturn(Collections.singletonList(transportRoute));
         // Search the transportRoute
         restTransportRouteMockMvc.perform(get("/api/_search/transport-routes?query=id:" + transportRoute.getId()))
             .andExpect(status().isOk())

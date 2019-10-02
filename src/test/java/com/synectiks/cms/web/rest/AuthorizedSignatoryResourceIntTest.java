@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AuthorizedSignatory;
 import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
+//import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
 import com.synectiks.cms.service.AuthorizedSignatoryService;
 import com.synectiks.cms.service.dto.AuthorizedSignatoryDTO;
 import com.synectiks.cms.service.mapper.AuthorizedSignatoryMapper;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -85,14 +85,6 @@ public class AuthorizedSignatoryResourceIntTest {
 
     @Autowired
     private AuthorizedSignatoryService authorizedSignatoryService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AuthorizedSignatorySearchRepository mockAuthorizedSignatorySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -177,9 +169,6 @@ public class AuthorizedSignatoryResourceIntTest {
         assertThat(testAuthorizedSignatory.getAddress5()).isEqualTo(DEFAULT_ADDRESS_5);
         assertThat(testAuthorizedSignatory.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testAuthorizedSignatory.getPanCardNumber()).isEqualTo(DEFAULT_PAN_CARD_NUMBER);
-
-        // Validate the AuthorizedSignatory in Elasticsearch
-        verify(mockAuthorizedSignatorySearchRepository, times(1)).save(testAuthorizedSignatory);
     }
 
     @Test
@@ -200,9 +189,6 @@ public class AuthorizedSignatoryResourceIntTest {
         // Validate the AuthorizedSignatory in the database
         List<AuthorizedSignatory> authorizedSignatoryList = authorizedSignatoryRepository.findAll();
         assertThat(authorizedSignatoryList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AuthorizedSignatory in Elasticsearch
-        verify(mockAuthorizedSignatorySearchRepository, times(0)).save(authorizedSignatory);
     }
 
     @Test
@@ -417,9 +403,6 @@ public class AuthorizedSignatoryResourceIntTest {
         assertThat(testAuthorizedSignatory.getAddress5()).isEqualTo(UPDATED_ADDRESS_5);
         assertThat(testAuthorizedSignatory.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testAuthorizedSignatory.getPanCardNumber()).isEqualTo(UPDATED_PAN_CARD_NUMBER);
-
-        // Validate the AuthorizedSignatory in Elasticsearch
-        verify(mockAuthorizedSignatorySearchRepository, times(1)).save(testAuthorizedSignatory);
     }
 
     @Test
@@ -439,9 +422,6 @@ public class AuthorizedSignatoryResourceIntTest {
         // Validate the AuthorizedSignatory in the database
         List<AuthorizedSignatory> authorizedSignatoryList = authorizedSignatoryRepository.findAll();
         assertThat(authorizedSignatoryList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AuthorizedSignatory in Elasticsearch
-        verify(mockAuthorizedSignatorySearchRepository, times(0)).save(authorizedSignatory);
     }
 
     @Test
@@ -460,9 +440,6 @@ public class AuthorizedSignatoryResourceIntTest {
         // Validate the database is empty
         List<AuthorizedSignatory> authorizedSignatoryList = authorizedSignatoryRepository.findAll();
         assertThat(authorizedSignatoryList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AuthorizedSignatory in Elasticsearch
-        verify(mockAuthorizedSignatorySearchRepository, times(1)).deleteById(authorizedSignatory.getId());
     }
 
     @Test
@@ -470,8 +447,6 @@ public class AuthorizedSignatoryResourceIntTest {
     public void searchAuthorizedSignatory() throws Exception {
         // Initialize the database
         authorizedSignatoryRepository.saveAndFlush(authorizedSignatory);
-        when(mockAuthorizedSignatorySearchRepository.search(queryStringQuery("id:" + authorizedSignatory.getId())))
-            .thenReturn(Collections.singletonList(authorizedSignatory));
         // Search the authorizedSignatory
         restAuthorizedSignatoryMockMvc.perform(get("/api/_search/authorized-signatories?query=id:" + authorizedSignatory.getId()))
             .andExpect(status().isOk())

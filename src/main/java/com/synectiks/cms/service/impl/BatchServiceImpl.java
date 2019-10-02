@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.BatchService;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.search.BatchSearchRepository;
+//import com.synectiks.cms.repository.search.BatchSearchRepository;
 import com.synectiks.cms.service.dto.BatchDTO;
 import com.synectiks.cms.service.mapper.BatchMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Batch.
@@ -33,12 +33,12 @@ public class BatchServiceImpl implements BatchService {
 
     private final BatchMapper batchMapper;
 
-    private final BatchSearchRepository batchSearchRepository;
+    //private final BatchSearchRepository batchSearchRepository;
 
-    public BatchServiceImpl(BatchRepository batchRepository, BatchMapper batchMapper, BatchSearchRepository batchSearchRepository) {
+    public BatchServiceImpl(BatchRepository batchRepository, BatchMapper batchMapper/*, BatchSearchRepository batchSearchRepository*/) {
         this.batchRepository = batchRepository;
         this.batchMapper = batchMapper;
-        this.batchSearchRepository = batchSearchRepository;
+        //this.batchSearchRepository = batchSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BatchServiceImpl implements BatchService {
         Batch batch = batchMapper.toEntity(batchDTO);
         batch = batchRepository.save(batch);
         BatchDTO result = batchMapper.toDto(batch);
-        batchSearchRepository.save(batch);
+        //batchSearchRepository.save(batch);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class BatchServiceImpl implements BatchService {
     public void delete(Long id) {
         log.debug("Request to delete Batch : {}", id);
         batchRepository.deleteById(id);
-        batchSearchRepository.deleteById(id);
+        //batchSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class BatchServiceImpl implements BatchService {
     @Transactional(readOnly = true)
     public List<BatchDTO> search(String query) {
         log.debug("Request to search Batches for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(batchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(batchMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

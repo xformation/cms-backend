@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.TypeOfGradingService;
 import com.synectiks.cms.domain.TypeOfGrading;
 import com.synectiks.cms.repository.TypeOfGradingRepository;
-import com.synectiks.cms.repository.search.TypeOfGradingSearchRepository;
+//import com.synectiks.cms.repository.search.TypeOfGradingSearchRepository;
 import com.synectiks.cms.service.dto.TypeOfGradingDTO;
 import com.synectiks.cms.service.mapper.TypeOfGradingMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing TypeOfGrading.
@@ -33,12 +33,12 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
 
     private final TypeOfGradingMapper typeOfGradingMapper;
 
-    private final TypeOfGradingSearchRepository typeOfGradingSearchRepository;
+    //private final TypeOfGradingSearchRepository typeOfGradingSearchRepository;
 
-    public TypeOfGradingServiceImpl(TypeOfGradingRepository typeOfGradingRepository, TypeOfGradingMapper typeOfGradingMapper, TypeOfGradingSearchRepository typeOfGradingSearchRepository) {
+    public TypeOfGradingServiceImpl(TypeOfGradingRepository typeOfGradingRepository, TypeOfGradingMapper typeOfGradingMapper/*, TypeOfGradingSearchRepository typeOfGradingSearchRepository*/) {
         this.typeOfGradingRepository = typeOfGradingRepository;
         this.typeOfGradingMapper = typeOfGradingMapper;
-        this.typeOfGradingSearchRepository = typeOfGradingSearchRepository;
+        //this.typeOfGradingSearchRepository = typeOfGradingSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
         TypeOfGrading typeOfGrading = typeOfGradingMapper.toEntity(typeOfGradingDTO);
         typeOfGrading = typeOfGradingRepository.save(typeOfGrading);
         TypeOfGradingDTO result = typeOfGradingMapper.toDto(typeOfGrading);
-        typeOfGradingSearchRepository.save(typeOfGrading);
+        //typeOfGradingSearchRepository.save(typeOfGrading);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
     public void delete(Long id) {
         log.debug("Request to delete TypeOfGrading : {}", id);
         typeOfGradingRepository.deleteById(id);
-        typeOfGradingSearchRepository.deleteById(id);
+        //typeOfGradingSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
     @Transactional(readOnly = true)
     public List<TypeOfGradingDTO> search(String query) {
         log.debug("Request to search TypeOfGradings for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(typeOfGradingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(typeOfGradingMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

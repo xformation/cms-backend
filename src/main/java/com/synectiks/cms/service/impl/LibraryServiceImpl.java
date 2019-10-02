@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.LibraryService;
 import com.synectiks.cms.domain.Library;
 import com.synectiks.cms.repository.LibraryRepository;
-import com.synectiks.cms.repository.search.LibrarySearchRepository;
+//import com.synectiks.cms.repository.search.LibrarySearchRepository;
 import com.synectiks.cms.service.dto.LibraryDTO;
 import com.synectiks.cms.service.mapper.LibraryMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Library.
@@ -33,12 +33,12 @@ public class LibraryServiceImpl implements LibraryService {
 
     private final LibraryMapper libraryMapper;
 
-    private final LibrarySearchRepository librarySearchRepository;
+    //private final LibrarySearchRepository librarySearchRepository;
 
-    public LibraryServiceImpl(LibraryRepository libraryRepository, LibraryMapper libraryMapper, LibrarySearchRepository librarySearchRepository) {
+    public LibraryServiceImpl(LibraryRepository libraryRepository, LibraryMapper libraryMapper/*, LibrarySearchRepository librarySearchRepository*/) {
         this.libraryRepository = libraryRepository;
         this.libraryMapper = libraryMapper;
-        this.librarySearchRepository = librarySearchRepository;
+        //this.librarySearchRepository = librarySearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class LibraryServiceImpl implements LibraryService {
         Library library = libraryMapper.toEntity(libraryDTO);
         library = libraryRepository.save(library);
         LibraryDTO result = libraryMapper.toDto(library);
-        librarySearchRepository.save(library);
+        //librarySearchRepository.save(library);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class LibraryServiceImpl implements LibraryService {
     public void delete(Long id) {
         log.debug("Request to delete Library : {}", id);
         libraryRepository.deleteById(id);
-        librarySearchRepository.deleteById(id);
+        //librarySearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,11 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     public List<LibraryDTO> search(String query) {
         log.debug("Request to search Libraries for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(librarySearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(libraryMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

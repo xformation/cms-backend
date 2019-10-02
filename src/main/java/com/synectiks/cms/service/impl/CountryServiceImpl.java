@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.CountryService;
 import com.synectiks.cms.domain.Country;
 import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.search.CountrySearchRepository;
+//import com.synectiks.cms.repository.search.CountrySearchRepository;
 import com.synectiks.cms.service.dto.CountryDTO;
 import com.synectiks.cms.service.mapper.CountryMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Country.
@@ -33,12 +33,12 @@ public class CountryServiceImpl implements CountryService {
 
     private final CountryMapper countryMapper;
 
-    private final CountrySearchRepository countrySearchRepository;
+    //private final CountrySearchRepository countrySearchRepository;
 
-    public CountryServiceImpl(CountryRepository countryRepository, CountryMapper countryMapper, CountrySearchRepository countrySearchRepository) {
+    public CountryServiceImpl(CountryRepository countryRepository, CountryMapper countryMapper/*, CountrySearchRepository countrySearchRepository*/) {
         this.countryRepository = countryRepository;
         this.countryMapper = countryMapper;
-        this.countrySearchRepository = countrySearchRepository;
+        //this.countrySearchRepository = countrySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class CountryServiceImpl implements CountryService {
         Country country = countryMapper.toEntity(countryDTO);
         country = countryRepository.save(country);
         CountryDTO result = countryMapper.toDto(country);
-        countrySearchRepository.save(country);
+        //countrySearchRepository.save(country);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class CountryServiceImpl implements CountryService {
     public void delete(Long id) {
         log.debug("Request to delete Country : {}", id);
         countryRepository.deleteById(id);
-        countrySearchRepository.deleteById(id);
+        //countrySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class CountryServiceImpl implements CountryService {
     @Transactional(readOnly = true)
     public List<CountryDTO> search(String query) {
         log.debug("Request to search Countries for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(countrySearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(countryMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.StudentFee;
-import com.synectiks.cms.repository.StudentFeeRepository;
-import com.synectiks.cms.repository.search.StudentFeeSearchRepository;
-import com.synectiks.cms.service.StudentFeeService;
-import com.synectiks.cms.service.dto.StudentFeeDTO;
-import com.synectiks.cms.service.mapper.StudentFeeMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,21 +31,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.StudentFee;
+import com.synectiks.cms.repository.StudentFeeRepository;
+import com.synectiks.cms.service.StudentFeeService;
+import com.synectiks.cms.service.dto.StudentFeeDTO;
+import com.synectiks.cms.service.mapper.StudentFeeMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the StudentFeeResource REST controller.
@@ -72,14 +71,6 @@ public class StudentFeeResourceIntTest {
 
     @Autowired
     private StudentFeeService studentFeeService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.StudentFeeSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private StudentFeeSearchRepository mockStudentFeeSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -150,9 +141,6 @@ public class StudentFeeResourceIntTest {
         assertThat(testStudentFee.getFeesDue()).isEqualTo(DEFAULT_FEES_DUE);
         assertThat(testStudentFee.getDueDate()).isEqualTo(DEFAULT_DUE_DATE);
         assertThat(testStudentFee.getTotalRemaining()).isEqualTo(DEFAULT_TOTAL_REMAINING);
-
-        // Validate the StudentFee in Elasticsearch
-        verify(mockStudentFeeSearchRepository, times(1)).save(testStudentFee);
     }
 
     @Test
@@ -172,11 +160,7 @@ public class StudentFeeResourceIntTest {
 
         // Validate the StudentFee in the database
         List<StudentFee> studentFeeList = studentFeeRepository.findAll();
-        assertThat(studentFeeList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the StudentFee in Elasticsearch
-        verify(mockStudentFeeSearchRepository, times(0)).save(studentFee);
-    }
+        assertThat(studentFeeList).hasSize(databaseSizeBeforeCreate);    }
 
     @Test
     @Transactional
@@ -350,11 +334,7 @@ public class StudentFeeResourceIntTest {
         assertThat(testStudentFee.getFeesPaid()).isEqualTo(UPDATED_FEES_PAID);
         assertThat(testStudentFee.getFeesDue()).isEqualTo(UPDATED_FEES_DUE);
         assertThat(testStudentFee.getDueDate()).isEqualTo(UPDATED_DUE_DATE);
-        assertThat(testStudentFee.getTotalRemaining()).isEqualTo(UPDATED_TOTAL_REMAINING);
-
-        // Validate the StudentFee in Elasticsearch
-        verify(mockStudentFeeSearchRepository, times(1)).save(testStudentFee);
-    }
+        assertThat(testStudentFee.getTotalRemaining()).isEqualTo(UPDATED_TOTAL_REMAINING);    }
 
     @Test
     @Transactional
@@ -373,9 +353,6 @@ public class StudentFeeResourceIntTest {
         // Validate the StudentFee in the database
         List<StudentFee> studentFeeList = studentFeeRepository.findAll();
         assertThat(studentFeeList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the StudentFee in Elasticsearch
-        verify(mockStudentFeeSearchRepository, times(0)).save(studentFee);
     }
 
     @Test
@@ -394,9 +371,6 @@ public class StudentFeeResourceIntTest {
         // Validate the database is empty
         List<StudentFee> studentFeeList = studentFeeRepository.findAll();
         assertThat(studentFeeList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the StudentFee in Elasticsearch
-        verify(mockStudentFeeSearchRepository, times(1)).deleteById(studentFee.getId());
     }
 
     @Test
@@ -404,8 +378,6 @@ public class StudentFeeResourceIntTest {
     public void searchStudentFee() throws Exception {
         // Initialize the database
         studentFeeRepository.saveAndFlush(studentFee);
-        when(mockStudentFeeSearchRepository.search(queryStringQuery("id:" + studentFee.getId())))
-            .thenReturn(Collections.singletonList(studentFee));
         // Search the studentFee
         restStudentFeeMockMvc.perform(get("/api/_search/student-fees?query=id:" + studentFee.getId()))
             .andExpect(status().isOk())

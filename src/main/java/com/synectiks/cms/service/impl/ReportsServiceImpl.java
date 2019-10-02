@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.ReportsService;
 import com.synectiks.cms.domain.Reports;
 import com.synectiks.cms.repository.ReportsRepository;
-import com.synectiks.cms.repository.search.ReportsSearchRepository;
+//import com.synectiks.cms.repository.search.ReportsSearchRepository;
 import com.synectiks.cms.service.dto.ReportsDTO;
 import com.synectiks.cms.service.mapper.ReportsMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Reports.
@@ -33,12 +33,12 @@ public class ReportsServiceImpl implements ReportsService {
 
     private final ReportsMapper reportsMapper;
 
-    private final ReportsSearchRepository reportsSearchRepository;
+    //private final ReportsSearchRepository reportsSearchRepository;
 
-    public ReportsServiceImpl(ReportsRepository reportsRepository, ReportsMapper reportsMapper, ReportsSearchRepository reportsSearchRepository) {
+    public ReportsServiceImpl(ReportsRepository reportsRepository, ReportsMapper reportsMapper/*, ReportsSearchRepository reportsSearchRepository*/) {
         this.reportsRepository = reportsRepository;
         this.reportsMapper = reportsMapper;
-        this.reportsSearchRepository = reportsSearchRepository;
+        //this.reportsSearchRepository = reportsSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class ReportsServiceImpl implements ReportsService {
         Reports reports = reportsMapper.toEntity(reportsDTO);
         reports = reportsRepository.save(reports);
         ReportsDTO result = reportsMapper.toDto(reports);
-        reportsSearchRepository.save(reports);
+        //reportsSearchRepository.save(reports);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class ReportsServiceImpl implements ReportsService {
     public void delete(Long id) {
         log.debug("Request to delete Reports : {}", id);
         reportsRepository.deleteById(id);
-        reportsSearchRepository.deleteById(id);
+        //reportsSearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,11 @@ public class ReportsServiceImpl implements ReportsService {
     @Transactional(readOnly = true)
     public List<ReportsDTO> search(String query) {
         log.debug("Request to search Reports for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(reportsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(reportsMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

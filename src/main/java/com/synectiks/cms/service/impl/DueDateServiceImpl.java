@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.DueDateService;
 import com.synectiks.cms.domain.DueDate;
 import com.synectiks.cms.repository.DueDateRepository;
-import com.synectiks.cms.repository.search.DueDateSearchRepository;
+//import com.synectiks.cms.repository.search.DueDateSearchRepository;
 import com.synectiks.cms.service.dto.DueDateDTO;
 import com.synectiks.cms.service.mapper.DueDateMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing DueDate.
@@ -33,12 +33,12 @@ public class DueDateServiceImpl implements DueDateService {
 
     private final DueDateMapper dueDateMapper;
 
-    private final DueDateSearchRepository dueDateSearchRepository;
+    //private final DueDateSearchRepository dueDateSearchRepository;
 
-    public DueDateServiceImpl(DueDateRepository dueDateRepository, DueDateMapper dueDateMapper, DueDateSearchRepository dueDateSearchRepository) {
+    public DueDateServiceImpl(DueDateRepository dueDateRepository, DueDateMapper dueDateMapper/*, DueDateSearchRepository dueDateSearchRepository*/) {
         this.dueDateRepository = dueDateRepository;
         this.dueDateMapper = dueDateMapper;
-        this.dueDateSearchRepository = dueDateSearchRepository;
+        //this.dueDateSearchRepository = dueDateSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class DueDateServiceImpl implements DueDateService {
         DueDate dueDate = dueDateMapper.toEntity(dueDateDTO);
         dueDate = dueDateRepository.save(dueDate);
         DueDateDTO result = dueDateMapper.toDto(dueDate);
-        dueDateSearchRepository.save(dueDate);
+        //dueDateSearchRepository.save(dueDate);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class DueDateServiceImpl implements DueDateService {
     public void delete(Long id) {
         log.debug("Request to delete DueDate : {}", id);
         dueDateRepository.deleteById(id);
-        dueDateSearchRepository.deleteById(id);
+        //dueDateSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class DueDateServiceImpl implements DueDateService {
     @Transactional(readOnly = true)
     public List<DueDateDTO> search(String query) {
         log.debug("Request to search DueDates for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(dueDateSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(dueDateMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

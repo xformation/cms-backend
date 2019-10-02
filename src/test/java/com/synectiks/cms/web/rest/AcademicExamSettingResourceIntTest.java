@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
+//import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
 import com.synectiks.cms.service.AcademicExamSettingService;
 import com.synectiks.cms.service.dto.AcademicExamSettingDTO;
 import com.synectiks.cms.service.mapper.AcademicExamSettingMapper;
@@ -34,7 +34,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -89,14 +89,6 @@ public class AcademicExamSettingResourceIntTest {
 
     @Autowired
     private AcademicExamSettingService academicExamSettingService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AcademicExamSettingSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AcademicExamSettingSearchRepository mockAcademicExamSettingSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -181,9 +173,6 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(DEFAULT_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(DEFAULT_ACTIONS);
         assertThat(testAcademicExamSetting.getGroupvalue()).isEqualTo(DEFAULT_GROUPVALUE);
-
-        // Validate the AcademicExamSetting in Elasticsearch
-        verify(mockAcademicExamSettingSearchRepository, times(1)).save(testAcademicExamSetting);
     }
 
     @Test
@@ -204,9 +193,6 @@ public class AcademicExamSettingResourceIntTest {
         // Validate the AcademicExamSetting in the database
         List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
         assertThat(academicExamSettingList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AcademicExamSetting in Elasticsearch
-        verify(mockAcademicExamSettingSearchRepository, times(0)).save(academicExamSetting);
     }
 
     @Test
@@ -440,9 +426,6 @@ public class AcademicExamSettingResourceIntTest {
         assertThat(testAcademicExamSetting.getPassing()).isEqualTo(UPDATED_PASSING);
         assertThat(testAcademicExamSetting.getActions()).isEqualTo(UPDATED_ACTIONS);
         assertThat(testAcademicExamSetting.getGroupvalue()).isEqualTo(UPDATED_GROUPVALUE);
-
-        // Validate the AcademicExamSetting in Elasticsearch
-        verify(mockAcademicExamSettingSearchRepository, times(1)).save(testAcademicExamSetting);
     }
 
     @Test
@@ -462,9 +445,6 @@ public class AcademicExamSettingResourceIntTest {
         // Validate the AcademicExamSetting in the database
         List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
         assertThat(academicExamSettingList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AcademicExamSetting in Elasticsearch
-        verify(mockAcademicExamSettingSearchRepository, times(0)).save(academicExamSetting);
     }
 
     @Test
@@ -483,9 +463,6 @@ public class AcademicExamSettingResourceIntTest {
         // Validate the database is empty
         List<AcademicExamSetting> academicExamSettingList = academicExamSettingRepository.findAll();
         assertThat(academicExamSettingList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AcademicExamSetting in Elasticsearch
-        verify(mockAcademicExamSettingSearchRepository, times(1)).deleteById(academicExamSetting.getId());
     }
 
     @Test
@@ -493,8 +470,6 @@ public class AcademicExamSettingResourceIntTest {
     public void searchAcademicExamSetting() throws Exception {
         // Initialize the database
         academicExamSettingRepository.saveAndFlush(academicExamSetting);
-        when(mockAcademicExamSettingSearchRepository.search(queryStringQuery("id:" + academicExamSetting.getId())))
-            .thenReturn(Collections.singletonList(academicExamSetting));
         // Search the academicExamSetting
         restAcademicExamSettingMockMvc.perform(get("/api/_search/academic-exam-settings?query=id:" + academicExamSetting.getId()))
             .andExpect(status().isOk())

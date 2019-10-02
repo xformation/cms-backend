@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.StudentAttendanceService;
 import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
+//import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
 import com.synectiks.cms.service.dto.StudentAttendanceDTO;
 import com.synectiks.cms.service.mapper.StudentAttendanceMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing StudentAttendance.
@@ -33,12 +33,12 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
 
     private final StudentAttendanceMapper studentAttendanceMapper;
 
-    private final StudentAttendanceSearchRepository studentAttendanceSearchRepository;
+    //private final StudentAttendanceSearchRepository studentAttendanceSearchRepository;
 
-    public StudentAttendanceServiceImpl(StudentAttendanceRepository studentAttendanceRepository, StudentAttendanceMapper studentAttendanceMapper, StudentAttendanceSearchRepository studentAttendanceSearchRepository) {
+    public StudentAttendanceServiceImpl(StudentAttendanceRepository studentAttendanceRepository, StudentAttendanceMapper studentAttendanceMapper/*, StudentAttendanceSearchRepository studentAttendanceSearchRepository*/) {
         this.studentAttendanceRepository = studentAttendanceRepository;
         this.studentAttendanceMapper = studentAttendanceMapper;
-        this.studentAttendanceSearchRepository = studentAttendanceSearchRepository;
+        //this.studentAttendanceSearchRepository = studentAttendanceSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
         StudentAttendance studentAttendance = studentAttendanceMapper.toEntity(studentAttendanceDTO);
         studentAttendance = studentAttendanceRepository.save(studentAttendance);
         StudentAttendanceDTO result = studentAttendanceMapper.toDto(studentAttendance);
-        studentAttendanceSearchRepository.save(studentAttendance);
+        //studentAttendanceSearchRepository.save(studentAttendance);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
     public void delete(Long id) {
         log.debug("Request to delete StudentAttendance : {}", id);
         studentAttendanceRepository.deleteById(id);
-        studentAttendanceSearchRepository.deleteById(id);
+        //studentAttendanceSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
     @Transactional(readOnly = true)
     public List<StudentAttendanceDTO> search(String query) {
         log.debug("Request to search StudentAttendances for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(studentAttendanceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(studentAttendanceMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

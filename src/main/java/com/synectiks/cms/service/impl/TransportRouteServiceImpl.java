@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.TransportRouteService;
 import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
+//import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
 import com.synectiks.cms.service.dto.TransportRouteDTO;
 import com.synectiks.cms.service.mapper.TransportRouteMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing TransportRoute.
@@ -33,12 +33,12 @@ public class TransportRouteServiceImpl implements TransportRouteService {
 
     private final TransportRouteMapper transportRouteMapper;
 
-    private final TransportRouteSearchRepository transportRouteSearchRepository;
+    //private final TransportRouteSearchRepository transportRouteSearchRepository;
 
-    public TransportRouteServiceImpl(TransportRouteRepository transportRouteRepository, TransportRouteMapper transportRouteMapper, TransportRouteSearchRepository transportRouteSearchRepository) {
+    public TransportRouteServiceImpl(TransportRouteRepository transportRouteRepository, TransportRouteMapper transportRouteMapper/*, TransportRouteSearchRepository transportRouteSearchRepository*/) {
         this.transportRouteRepository = transportRouteRepository;
         this.transportRouteMapper = transportRouteMapper;
-        this.transportRouteSearchRepository = transportRouteSearchRepository;
+        //this.transportRouteSearchRepository = transportRouteSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TransportRouteServiceImpl implements TransportRouteService {
         TransportRoute transportRoute = transportRouteMapper.toEntity(transportRouteDTO);
         transportRoute = transportRouteRepository.save(transportRoute);
         TransportRouteDTO result = transportRouteMapper.toDto(transportRoute);
-        transportRouteSearchRepository.save(transportRoute);
+        //transportRouteSearchRepository.save(transportRoute);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TransportRouteServiceImpl implements TransportRouteService {
     public void delete(Long id) {
         log.debug("Request to delete TransportRoute : {}", id);
         transportRouteRepository.deleteById(id);
-        transportRouteSearchRepository.deleteById(id);
+        //transportRouteSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class TransportRouteServiceImpl implements TransportRouteService {
     @Transactional(readOnly = true)
     public List<TransportRouteDTO> search(String query) {
         log.debug("Request to search TransportRoutes for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(transportRouteSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(transportRouteMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

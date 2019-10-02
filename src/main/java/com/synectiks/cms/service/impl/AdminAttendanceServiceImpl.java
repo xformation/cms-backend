@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.AdminAttendanceService;
 import com.synectiks.cms.domain.AdminAttendance;
 import com.synectiks.cms.repository.AdminAttendanceRepository;
-import com.synectiks.cms.repository.search.AdminAttendanceSearchRepository;
+//import com.synectiks.cms.repository.search.AdminAttendanceSearchRepository;
 import com.synectiks.cms.service.dto.AdminAttendanceDTO;
 import com.synectiks.cms.service.mapper.AdminAttendanceMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing AdminAttendance.
@@ -33,12 +33,12 @@ public class AdminAttendanceServiceImpl implements AdminAttendanceService {
 
     private final AdminAttendanceMapper adminAttendanceMapper;
 
-    private final AdminAttendanceSearchRepository adminAttendanceSearchRepository;
+    //private final AdminAttendanceSearchRepository adminAttendanceSearchRepository;
 
-    public AdminAttendanceServiceImpl(AdminAttendanceRepository adminAttendanceRepository, AdminAttendanceMapper adminAttendanceMapper, AdminAttendanceSearchRepository adminAttendanceSearchRepository) {
+    public AdminAttendanceServiceImpl(AdminAttendanceRepository adminAttendanceRepository, AdminAttendanceMapper adminAttendanceMapper/*, AdminAttendanceSearchRepository adminAttendanceSearchRepository*/) {
         this.adminAttendanceRepository = adminAttendanceRepository;
         this.adminAttendanceMapper = adminAttendanceMapper;
-        this.adminAttendanceSearchRepository = adminAttendanceSearchRepository;
+        //this.adminAttendanceSearchRepository = adminAttendanceSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class AdminAttendanceServiceImpl implements AdminAttendanceService {
         AdminAttendance adminAttendance = adminAttendanceMapper.toEntity(adminAttendanceDTO);
         adminAttendance = adminAttendanceRepository.save(adminAttendance);
         AdminAttendanceDTO result = adminAttendanceMapper.toDto(adminAttendance);
-        adminAttendanceSearchRepository.save(adminAttendance);
+        //adminAttendanceSearchRepository.save(adminAttendance);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class AdminAttendanceServiceImpl implements AdminAttendanceService {
     public void delete(Long id) {
         log.debug("Request to delete AdminAttendance : {}", id);
         adminAttendanceRepository.deleteById(id);
-        adminAttendanceSearchRepository.deleteById(id);
+        //adminAttendanceSearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,11 @@ public class AdminAttendanceServiceImpl implements AdminAttendanceService {
     @Transactional(readOnly = true)
     public List<AdminAttendanceDTO> search(String query) {
         log.debug("Request to search AdminAttendances for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(adminAttendanceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(adminAttendanceMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

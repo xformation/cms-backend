@@ -1,17 +1,24 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Authority;
-import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.UserRepository;
-import com.synectiks.cms.repository.search.UserSearchRepository;
-import com.synectiks.cms.security.AuthoritiesConstants;
-import com.synectiks.cms.service.MailService;
-import com.synectiks.cms.service.UserService;
-import com.synectiks.cms.service.dto.UserDTO;
-import com.synectiks.cms.service.mapper.UserMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
-import com.synectiks.cms.web.rest.vm.ManagedUserVM;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,15 +35,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Authority;
+import com.synectiks.cms.domain.User;
+import com.synectiks.cms.repository.UserRepository;
+import com.synectiks.cms.security.AuthoritiesConstants;
+import com.synectiks.cms.service.MailService;
+import com.synectiks.cms.service.UserService;
+import com.synectiks.cms.service.dto.UserDTO;
+import com.synectiks.cms.service.mapper.UserMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import com.synectiks.cms.web.rest.vm.ManagedUserVM;
 
 /**
  * Test class for the UserResource REST controller.
@@ -72,15 +81,6 @@ public class UserResourceIntTest {
 
     @Autowired
     private UserRepository userRepository;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.UserSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private UserSearchRepository mockUserSearchRepository;
-
     @Autowired
     private MailService mailService;
 
@@ -114,7 +114,7 @@ public class UserResourceIntTest {
         MockitoAnnotations.initMocks(this);
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, userRepository, mailService, mockUserSearchRepository);
+        UserResource userResource = new UserResource(userService, userRepository, mailService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -215,7 +215,6 @@ public class UserResourceIntTest {
     public void createUserWithExistingLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -245,7 +244,6 @@ public class UserResourceIntTest {
     public void createUserWithExistingEmail() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -275,7 +273,6 @@ public class UserResourceIntTest {
     public void getAllUsers() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
 
         // Get all the users
         restUserMockMvc.perform(get("/api/users?sort=id,desc")
@@ -295,7 +292,6 @@ public class UserResourceIntTest {
     public void getUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
 
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNull();
 
@@ -325,7 +321,6 @@ public class UserResourceIntTest {
     public void updateUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
@@ -368,7 +363,6 @@ public class UserResourceIntTest {
     public void updateUserLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
@@ -412,7 +406,6 @@ public class UserResourceIntTest {
     public void updateUserExistingEmail() throws Exception {
         // Initialize the database with 2 users
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
 
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
@@ -424,7 +417,6 @@ public class UserResourceIntTest {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         userRepository.saveAndFlush(anotherUser);
-        mockUserSearchRepository.save(anotherUser);
 
         // Update the user
         User updatedUser = userRepository.findById(user.getId()).get();
@@ -456,7 +448,6 @@ public class UserResourceIntTest {
     public void updateUserExistingLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
 
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
@@ -468,7 +459,6 @@ public class UserResourceIntTest {
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
         userRepository.saveAndFlush(anotherUser);
-        mockUserSearchRepository.save(anotherUser);
 
         // Update the user
         User updatedUser = userRepository.findById(user.getId()).get();
@@ -500,7 +490,6 @@ public class UserResourceIntTest {
     public void deleteUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
         int databaseSizeBeforeDelete = userRepository.findAll().size();
 
         // Delete the user

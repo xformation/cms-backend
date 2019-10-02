@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.search.TermSearchRepository;
-import com.synectiks.cms.service.TermService;
-import com.synectiks.cms.service.dto.TermDTO;
-import com.synectiks.cms.service.mapper.TermMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,25 +30,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.TermRepository;
+import com.synectiks.cms.service.TermService;
+import com.synectiks.cms.service.dto.TermDTO;
+import com.synectiks.cms.service.mapper.TermMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the TermResource REST controller.
  *
@@ -71,15 +68,6 @@ public class TermResourceIntTest {
 
     @Autowired
     private TermService termService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.TermSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private TermSearchRepository mockTermSearchRepository;
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -148,9 +136,6 @@ public class TermResourceIntTest {
         assertThat(testTerm.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testTerm.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testTerm.getTermStatus()).isEqualTo(DEFAULT_TERM_STATUS);
-
-        // Validate the Term in Elasticsearch
-        verify(mockTermSearchRepository, times(1)).save(testTerm);
     }
 
     @Test
@@ -171,9 +156,6 @@ public class TermResourceIntTest {
         // Validate the Term in the database
         List<Term> termList = termRepository.findAll();
         assertThat(termList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Term in Elasticsearch
-        verify(mockTermSearchRepository, times(0)).save(term);
     }
 
     @Test
@@ -326,9 +308,6 @@ public class TermResourceIntTest {
         assertThat(testTerm.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testTerm.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testTerm.getTermStatus()).isEqualTo(UPDATED_TERM_STATUS);
-
-        // Validate the Term in Elasticsearch
-        verify(mockTermSearchRepository, times(1)).save(testTerm);
     }
 
     @Test
@@ -347,11 +326,7 @@ public class TermResourceIntTest {
 
         // Validate the Term in the database
         List<Term> termList = termRepository.findAll();
-        assertThat(termList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Term in Elasticsearch
-        verify(mockTermSearchRepository, times(0)).save(term);
-    }
+        assertThat(termList).hasSize(databaseSizeBeforeUpdate);    }
 
     @Test
     @Transactional
@@ -369,9 +344,6 @@ public class TermResourceIntTest {
         // Validate the database is empty
         List<Term> termList = termRepository.findAll();
         assertThat(termList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Term in Elasticsearch
-        verify(mockTermSearchRepository, times(1)).deleteById(term.getId());
     }
 
     @Test
@@ -379,8 +351,6 @@ public class TermResourceIntTest {
     public void searchTerm() throws Exception {
         // Initialize the database
         termRepository.saveAndFlush(term);
-        when(mockTermSearchRepository.search(queryStringQuery("id:" + term.getId())))
-            .thenReturn(Collections.singletonList(term));
         // Search the term
         restTermMockMvc.perform(get("/api/_search/terms?query=id:" + term.getId()))
             .andExpect(status().isOk())

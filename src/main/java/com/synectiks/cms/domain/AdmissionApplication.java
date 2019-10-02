@@ -5,7 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+//import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -23,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "admission_application")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "admissionapplication")
+//@org.springframework.data.elasticsearch.annotations.Document(indexName = "admissionapplication")
 public class AdmissionApplication implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public class AdmissionApplication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
+    //@org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Enumerated(EnumType.STRING)

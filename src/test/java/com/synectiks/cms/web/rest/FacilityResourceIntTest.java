@@ -2,11 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,8 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -41,7 +35,6 @@ import com.synectiks.cms.CmsApp;
 import com.synectiks.cms.domain.Facility;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.repository.search.FacilitySearchRepository;
 import com.synectiks.cms.service.FacilityService;
 import com.synectiks.cms.service.dto.FacilityDTO;
 import com.synectiks.cms.service.mapper.FacilityMapper;
@@ -83,15 +76,6 @@ public class FacilityResourceIntTest {
 
     @Autowired
     private FacilityService facilityService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.FacilitySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private FacilitySearchRepository mockFacilitySearchRepository;
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -163,9 +147,6 @@ public class FacilityResourceIntTest {
         assertThat(testFacility.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testFacility.getSuspandStartDate()).isEqualTo(DEFAULT_SUSPAND_START_DATE);
         assertThat(testFacility.getSuspandEndDate()).isEqualTo(DEFAULT_SUSPAND_END_DATE);
-
-        // Validate the Facility in Elasticsearch
-        verify(mockFacilitySearchRepository, times(1)).save(testFacility);
     }
 
     @Test
@@ -186,9 +167,6 @@ public class FacilityResourceIntTest {
         // Validate the Facility in the database
         List<Facility> facilityList = facilityRepository.findAll();
         assertThat(facilityList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Facility in Elasticsearch
-        verify(mockFacilitySearchRepository, times(0)).save(facility);
     }
 
     @Test
@@ -311,9 +289,6 @@ public class FacilityResourceIntTest {
         assertThat(testFacility.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testFacility.getSuspandStartDate()).isEqualTo(UPDATED_SUSPAND_START_DATE);
         assertThat(testFacility.getSuspandEndDate()).isEqualTo(UPDATED_SUSPAND_END_DATE);
-
-        // Validate the Facility in Elasticsearch
-        verify(mockFacilitySearchRepository, times(1)).save(testFacility);
     }
 
     @Test
@@ -333,9 +308,6 @@ public class FacilityResourceIntTest {
         // Validate the Facility in the database
         List<Facility> facilityList = facilityRepository.findAll();
         assertThat(facilityList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Facility in Elasticsearch
-        verify(mockFacilitySearchRepository, times(0)).save(facility);
     }
 
     @Test
@@ -354,9 +326,6 @@ public class FacilityResourceIntTest {
         // Validate the database is empty
         List<Facility> facilityList = facilityRepository.findAll();
         assertThat(facilityList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Facility in Elasticsearch
-        verify(mockFacilitySearchRepository, times(1)).deleteById(facility.getId());
     }
 
     @Test
@@ -364,8 +333,6 @@ public class FacilityResourceIntTest {
     public void searchFacility() throws Exception {
         // Initialize the database
         facilityRepository.saveAndFlush(facility);
-        when(mockFacilitySearchRepository.search(queryStringQuery("id:" + facility.getId())))
-            .thenReturn(Collections.singletonList(facility));
         // Search the facility
         restFacilityMockMvc.perform(get("/api/_search/facilities?query=id:" + facility.getId()))
             .andExpect(status().isOk())

@@ -1,20 +1,11 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.config.Constants;
-import com.codahale.metrics.annotation.Timed;
-import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.UserRepository;
-import com.synectiks.cms.repository.search.UserSearchRepository;
-import com.synectiks.cms.security.AuthoritiesConstants;
-import com.synectiks.cms.service.MailService;
-import com.synectiks.cms.service.UserService;
-import com.synectiks.cms.service.dto.UserDTO;
-import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.errors.EmailAlreadyUsedException;
-import com.synectiks.cms.web.rest.errors.LoginAlreadyUsedException;
-import com.synectiks.cms.web.rest.util.HeaderUtil;
-import com.synectiks.cms.web.rest.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,16 +15,30 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import com.codahale.metrics.annotation.Timed;
+import com.synectiks.cms.config.Constants;
+import com.synectiks.cms.domain.User;
+import com.synectiks.cms.repository.UserRepository;
+import com.synectiks.cms.security.AuthoritiesConstants;
+import com.synectiks.cms.service.MailService;
+import com.synectiks.cms.service.UserService;
+import com.synectiks.cms.service.dto.UserDTO;
+import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
+import com.synectiks.cms.web.rest.errors.EmailAlreadyUsedException;
+import com.synectiks.cms.web.rest.errors.LoginAlreadyUsedException;
+import com.synectiks.cms.web.rest.util.HeaderUtil;
+import com.synectiks.cms.web.rest.util.PaginationUtil;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing users.
@@ -71,14 +76,14 @@ public class UserResource {
 
     private final MailService mailService;
 
-    private final UserSearchRepository userSearchRepository;
+    //private final UserSearchRepository userSearchRepository;
 
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService, UserSearchRepository userSearchRepository) {
+    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
 
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
-        this.userSearchRepository = userSearchRepository;
+        //this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -207,8 +212,10 @@ public class UserResource {
     @GetMapping("/_search/users/{query}")
     @Timed
     public List<User> search(@PathVariable String query) {
-        return StreamSupport
+        /*return StreamSupport
             .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

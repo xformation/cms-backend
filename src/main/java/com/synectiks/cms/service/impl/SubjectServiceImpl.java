@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.SubjectService;
 import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.search.SubjectSearchRepository;
+//import com.synectiks.cms.repository.search.SubjectSearchRepository;
 import com.synectiks.cms.service.dto.SubjectDTO;
 import com.synectiks.cms.service.mapper.SubjectMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Subject.
@@ -33,12 +33,12 @@ public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectMapper subjectMapper;
 
-    private final SubjectSearchRepository subjectSearchRepository;
+    //private final SubjectSearchRepository subjectSearchRepository;
 
-    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper, SubjectSearchRepository subjectSearchRepository) {
+    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper/*, SubjectSearchRepository subjectSearchRepository*/) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
-        this.subjectSearchRepository = subjectSearchRepository;
+        //this.subjectSearchRepository = subjectSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class SubjectServiceImpl implements SubjectService {
         Subject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
         SubjectDTO result = subjectMapper.toDto(subject);
-        subjectSearchRepository.save(subject);
+        //subjectSearchRepository.save(subject);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class SubjectServiceImpl implements SubjectService {
     public void delete(Long id) {
         log.debug("Request to delete Subject : {}", id);
         subjectRepository.deleteById(id);
-        subjectSearchRepository.deleteById(id);
+        //subjectSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class SubjectServiceImpl implements SubjectService {
     @Transactional(readOnly = true)
     public List<SubjectDTO> search(String query) {
         log.debug("Request to search Subjects for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(subjectSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(subjectMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

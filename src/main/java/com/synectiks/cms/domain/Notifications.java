@@ -6,7 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+//import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -18,7 +18,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "notifications")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "notifications")
+//@org.springframework.data.elasticsearch.annotations.Document(indexName = "notifications")
 public class Notifications implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class Notifications implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
+    //@org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "message_code")

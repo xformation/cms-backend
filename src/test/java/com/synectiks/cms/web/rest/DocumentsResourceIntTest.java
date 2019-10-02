@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.repository.search.DocumentsSearchRepository;
-import com.synectiks.cms.service.DocumentsService;
-import com.synectiks.cms.service.dto.DocumentsDTO;
-import com.synectiks.cms.service.mapper.DocumentsMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Documents;
+import com.synectiks.cms.repository.DocumentsRepository;
+import com.synectiks.cms.service.DocumentsService;
+import com.synectiks.cms.service.dto.DocumentsDTO;
+import com.synectiks.cms.service.mapper.DocumentsMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the DocumentsResource REST controller.
@@ -61,14 +61,6 @@ public class DocumentsResourceIntTest {
 
     @Autowired
     private DocumentsService documentsService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.DocumentsSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private DocumentsSearchRepository mockDocumentsSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -137,9 +129,6 @@ public class DocumentsResourceIntTest {
         Documents testDocuments = documentsList.get(documentsList.size() - 1);
         assertThat(testDocuments.getDocumentName()).isEqualTo(DEFAULT_DOCUMENT_NAME);
         assertThat(testDocuments.getDocumentFilePath()).isEqualTo(DEFAULT_DOCUMENT_FILE_PATH);
-
-        // Validate the Documents in Elasticsearch
-        verify(mockDocumentsSearchRepository, times(1)).save(testDocuments);
     }
 
     @Test
@@ -160,9 +149,6 @@ public class DocumentsResourceIntTest {
         // Validate the Documents in the database
         List<Documents> documentsList = documentsRepository.findAll();
         assertThat(documentsList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Documents in Elasticsearch
-        verify(mockDocumentsSearchRepository, times(0)).save(documents);
     }
 
     @Test
@@ -269,9 +255,6 @@ public class DocumentsResourceIntTest {
         Documents testDocuments = documentsList.get(documentsList.size() - 1);
         assertThat(testDocuments.getDocumentName()).isEqualTo(UPDATED_DOCUMENT_NAME);
         assertThat(testDocuments.getDocumentFilePath()).isEqualTo(UPDATED_DOCUMENT_FILE_PATH);
-
-        // Validate the Documents in Elasticsearch
-        verify(mockDocumentsSearchRepository, times(1)).save(testDocuments);
     }
 
     @Test
@@ -291,9 +274,6 @@ public class DocumentsResourceIntTest {
         // Validate the Documents in the database
         List<Documents> documentsList = documentsRepository.findAll();
         assertThat(documentsList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Documents in Elasticsearch
-        verify(mockDocumentsSearchRepository, times(0)).save(documents);
     }
 
     @Test
@@ -313,8 +293,6 @@ public class DocumentsResourceIntTest {
         List<Documents> documentsList = documentsRepository.findAll();
         assertThat(documentsList).hasSize(databaseSizeBeforeDelete - 1);
 
-        // Validate the Documents in Elasticsearch
-        verify(mockDocumentsSearchRepository, times(1)).deleteById(documents.getId());
     }
 
     @Test
@@ -322,8 +300,6 @@ public class DocumentsResourceIntTest {
     public void searchDocuments() throws Exception {
         // Initialize the database
         documentsRepository.saveAndFlush(documents);
-        when(mockDocumentsSearchRepository.search(queryStringQuery("id:" + documents.getId())))
-            .thenReturn(Collections.singletonList(documents));
         // Search the documents
         restDocumentsMockMvc.perform(get("/api/_search/documents?query=id:" + documents.getId()))
             .andExpect(status().isOk())

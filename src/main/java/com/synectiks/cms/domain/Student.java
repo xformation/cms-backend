@@ -8,7 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+//import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -31,7 +31,7 @@ import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 @Entity
 @Table(name = "student")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "student")
+//@Document(indexName = "student")
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;

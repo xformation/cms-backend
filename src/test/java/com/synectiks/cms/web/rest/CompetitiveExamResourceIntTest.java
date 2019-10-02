@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.repository.CompetitiveExamRepository;
-import com.synectiks.cms.repository.search.CompetitiveExamSearchRepository;
-import com.synectiks.cms.service.CompetitiveExamService;
-import com.synectiks.cms.service.dto.CompetitiveExamDTO;
-import com.synectiks.cms.service.mapper.CompetitiveExamMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.CompetitiveExam;
+import com.synectiks.cms.repository.CompetitiveExamRepository;
+import com.synectiks.cms.service.CompetitiveExamService;
+import com.synectiks.cms.service.dto.CompetitiveExamDTO;
+import com.synectiks.cms.service.mapper.CompetitiveExamMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the CompetitiveExamResource REST controller.
@@ -67,14 +67,6 @@ public class CompetitiveExamResourceIntTest {
 
     @Autowired
     private CompetitiveExamService competitiveExamService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.CompetitiveExamSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private CompetitiveExamSearchRepository mockCompetitiveExamSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -148,8 +140,6 @@ public class CompetitiveExamResourceIntTest {
         assertThat(testCompetitiveExam.getEnrollmentNo()).isEqualTo(DEFAULT_ENROLLMENT_NO);
         assertThat(testCompetitiveExam.getRank()).isEqualTo(DEFAULT_RANK);
 
-        // Validate the CompetitiveExam in Elasticsearch
-        verify(mockCompetitiveExamSearchRepository, times(1)).save(testCompetitiveExam);
     }
 
     @Test
@@ -171,8 +161,6 @@ public class CompetitiveExamResourceIntTest {
         List<CompetitiveExam> competitiveExamList = competitiveExamRepository.findAll();
         assertThat(competitiveExamList).hasSize(databaseSizeBeforeCreate);
 
-        // Validate the CompetitiveExam in Elasticsearch
-        verify(mockCompetitiveExamSearchRepository, times(0)).save(competitiveExam);
     }
 
     @Test
@@ -326,8 +314,6 @@ public class CompetitiveExamResourceIntTest {
         assertThat(testCompetitiveExam.getEnrollmentNo()).isEqualTo(UPDATED_ENROLLMENT_NO);
         assertThat(testCompetitiveExam.getRank()).isEqualTo(UPDATED_RANK);
 
-        // Validate the CompetitiveExam in Elasticsearch
-        verify(mockCompetitiveExamSearchRepository, times(1)).save(testCompetitiveExam);
     }
 
     @Test
@@ -348,8 +334,6 @@ public class CompetitiveExamResourceIntTest {
         List<CompetitiveExam> competitiveExamList = competitiveExamRepository.findAll();
         assertThat(competitiveExamList).hasSize(databaseSizeBeforeUpdate);
 
-        // Validate the CompetitiveExam in Elasticsearch
-        verify(mockCompetitiveExamSearchRepository, times(0)).save(competitiveExam);
     }
 
     @Test
@@ -368,9 +352,6 @@ public class CompetitiveExamResourceIntTest {
         // Validate the database is empty
         List<CompetitiveExam> competitiveExamList = competitiveExamRepository.findAll();
         assertThat(competitiveExamList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the CompetitiveExam in Elasticsearch
-        verify(mockCompetitiveExamSearchRepository, times(1)).deleteById(competitiveExam.getId());
     }
 
     @Test
@@ -378,8 +359,6 @@ public class CompetitiveExamResourceIntTest {
     public void searchCompetitiveExam() throws Exception {
         // Initialize the database
         competitiveExamRepository.saveAndFlush(competitiveExam);
-        when(mockCompetitiveExamSearchRepository.search(queryStringQuery("id:" + competitiveExam.getId())))
-            .thenReturn(Collections.singletonList(competitiveExam));
         // Search the competitiveExam
         restCompetitiveExamMockMvc.perform(get("/api/_search/competitive-exams?query=id:" + competitiveExam.getId()))
             .andExpect(status().isOk())

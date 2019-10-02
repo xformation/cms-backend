@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.StudentExamReport;
-import com.synectiks.cms.repository.StudentExamReportRepository;
-import com.synectiks.cms.repository.search.StudentExamReportSearchRepository;
-import com.synectiks.cms.service.StudentExamReportService;
-import com.synectiks.cms.service.dto.StudentExamReportDTO;
-import com.synectiks.cms.service.mapper.StudentExamReportMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.StudentExamReport;
+import com.synectiks.cms.repository.StudentExamReportRepository;
+import com.synectiks.cms.service.StudentExamReportService;
+import com.synectiks.cms.service.dto.StudentExamReportDTO;
+import com.synectiks.cms.service.mapper.StudentExamReportMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the StudentExamReportResource REST controller.
@@ -64,14 +64,6 @@ public class StudentExamReportResourceIntTest {
 
     @Autowired
     private StudentExamReportService studentExamReportService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.StudentExamReportSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private StudentExamReportSearchRepository mockStudentExamReportSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -142,9 +134,6 @@ public class StudentExamReportResourceIntTest {
         assertThat(testStudentExamReport.getMarksObtained()).isEqualTo(DEFAULT_MARKS_OBTAINED);
         assertThat(testStudentExamReport.getComments()).isEqualTo(DEFAULT_COMMENTS);
         assertThat(testStudentExamReport.getgOp()).isEqualTo(DEFAULT_G_OP);
-
-        // Validate the StudentExamReport in Elasticsearch
-        verify(mockStudentExamReportSearchRepository, times(1)).save(testStudentExamReport);
     }
 
     @Test
@@ -165,9 +154,6 @@ public class StudentExamReportResourceIntTest {
         // Validate the StudentExamReport in the database
         List<StudentExamReport> studentExamReportList = studentExamReportRepository.findAll();
         assertThat(studentExamReportList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the StudentExamReport in Elasticsearch
-        verify(mockStudentExamReportSearchRepository, times(0)).save(studentExamReport);
     }
 
     @Test
@@ -278,9 +264,6 @@ public class StudentExamReportResourceIntTest {
         assertThat(testStudentExamReport.getMarksObtained()).isEqualTo(UPDATED_MARKS_OBTAINED);
         assertThat(testStudentExamReport.getComments()).isEqualTo(UPDATED_COMMENTS);
         assertThat(testStudentExamReport.getgOp()).isEqualTo(UPDATED_G_OP);
-
-        // Validate the StudentExamReport in Elasticsearch
-        verify(mockStudentExamReportSearchRepository, times(1)).save(testStudentExamReport);
     }
 
     @Test
@@ -300,9 +283,6 @@ public class StudentExamReportResourceIntTest {
         // Validate the StudentExamReport in the database
         List<StudentExamReport> studentExamReportList = studentExamReportRepository.findAll();
         assertThat(studentExamReportList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the StudentExamReport in Elasticsearch
-        verify(mockStudentExamReportSearchRepository, times(0)).save(studentExamReport);
     }
 
     @Test
@@ -321,9 +301,6 @@ public class StudentExamReportResourceIntTest {
         // Validate the database is empty
         List<StudentExamReport> studentExamReportList = studentExamReportRepository.findAll();
         assertThat(studentExamReportList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the StudentExamReport in Elasticsearch
-        verify(mockStudentExamReportSearchRepository, times(1)).deleteById(studentExamReport.getId());
     }
 
     @Test
@@ -331,8 +308,6 @@ public class StudentExamReportResourceIntTest {
     public void searchStudentExamReport() throws Exception {
         // Initialize the database
         studentExamReportRepository.saveAndFlush(studentExamReport);
-        when(mockStudentExamReportSearchRepository.search(queryStringQuery("id:" + studentExamReport.getId())))
-            .thenReturn(Collections.singletonList(studentExamReport));
         // Search the studentExamReport
         restStudentExamReportMockMvc.perform(get("/api/_search/student-exam-reports?query=id:" + studentExamReport.getId()))
             .andExpect(status().isOk())

@@ -4,7 +4,7 @@ import com.synectiks.cms.CmsApp;
 
 import com.synectiks.cms.domain.AdmissionEnquiry;
 import com.synectiks.cms.repository.AdmissionEnquiryRepository;
-import com.synectiks.cms.repository.search.AdmissionEnquirySearchRepository;
+//import com.synectiks.cms.repository.search.AdmissionEnquirySearchRepository;
 import com.synectiks.cms.service.AdmissionEnquiryService;
 import com.synectiks.cms.service.dto.AdmissionEnquiryDTO;
 import com.synectiks.cms.service.mapper.AdmissionEnquiryMapper;
@@ -34,7 +34,7 @@ import java.util.List;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -130,14 +130,6 @@ public class AdmissionEnquiryResourceIntTest {
 
     @Autowired
     private AdmissionEnquiryService admissionEnquiryService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.AdmissionEnquirySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private AdmissionEnquirySearchRepository mockAdmissionEnquirySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -248,9 +240,6 @@ public class AdmissionEnquiryResourceIntTest {
         assertThat(testAdmissionEnquiry.getEnquiryDate()).isEqualTo(DEFAULT_ENQUIRY_DATE);
         assertThat(testAdmissionEnquiry.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
         assertThat(testAdmissionEnquiry.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
-
-        // Validate the AdmissionEnquiry in Elasticsearch
-        verify(mockAdmissionEnquirySearchRepository, times(1)).save(testAdmissionEnquiry);
     }
 
     @Test
@@ -271,9 +260,6 @@ public class AdmissionEnquiryResourceIntTest {
         // Validate the AdmissionEnquiry in the database
         List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
         assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the AdmissionEnquiry in Elasticsearch
-        verify(mockAdmissionEnquirySearchRepository, times(0)).save(admissionEnquiry);
     }
 
     @Test
@@ -521,9 +507,6 @@ public class AdmissionEnquiryResourceIntTest {
         assertThat(testAdmissionEnquiry.getEnquiryDate()).isEqualTo(UPDATED_ENQUIRY_DATE);
         assertThat(testAdmissionEnquiry.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
         assertThat(testAdmissionEnquiry.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
-
-        // Validate the AdmissionEnquiry in Elasticsearch
-        verify(mockAdmissionEnquirySearchRepository, times(1)).save(testAdmissionEnquiry);
     }
 
     @Test
@@ -543,9 +526,6 @@ public class AdmissionEnquiryResourceIntTest {
         // Validate the AdmissionEnquiry in the database
         List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
         assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the AdmissionEnquiry in Elasticsearch
-        verify(mockAdmissionEnquirySearchRepository, times(0)).save(admissionEnquiry);
     }
 
     @Test
@@ -564,9 +544,6 @@ public class AdmissionEnquiryResourceIntTest {
         // Validate the database is empty
         List<AdmissionEnquiry> admissionEnquiryList = admissionEnquiryRepository.findAll();
         assertThat(admissionEnquiryList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the AdmissionEnquiry in Elasticsearch
-        verify(mockAdmissionEnquirySearchRepository, times(1)).deleteById(admissionEnquiry.getId());
     }
 
     @Test
@@ -574,8 +551,6 @@ public class AdmissionEnquiryResourceIntTest {
     public void searchAdmissionEnquiry() throws Exception {
         // Initialize the database
         admissionEnquiryRepository.saveAndFlush(admissionEnquiry);
-        when(mockAdmissionEnquirySearchRepository.search(queryStringQuery("id:" + admissionEnquiry.getId())))
-            .thenReturn(Collections.singletonList(admissionEnquiry));
         // Search the admissionEnquiry
         restAdmissionEnquiryMockMvc.perform(get("/api/_search/admission-enquiries?query=id:" + admissionEnquiry.getId()))
             .andExpect(status().isOk())

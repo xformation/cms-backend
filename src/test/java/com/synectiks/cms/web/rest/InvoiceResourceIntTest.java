@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.search.InvoiceSearchRepository;
-import com.synectiks.cms.service.InvoiceService;
-import com.synectiks.cms.service.dto.InvoiceDTO;
-import com.synectiks.cms.service.mapper.InvoiceMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,23 +31,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.synectiks.cms.domain.enumeration.ModeOfPayment;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.domain.enumeration.ModeOfPayment;
+import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.service.InvoiceService;
+import com.synectiks.cms.service.dto.InvoiceDTO;
+import com.synectiks.cms.service.mapper.InvoiceMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the InvoiceResource REST controller.
  *
@@ -99,14 +98,6 @@ public class InvoiceResourceIntTest {
 
     @Autowired
     private InvoiceService invoiceService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.InvoiceSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private InvoiceSearchRepository mockInvoiceSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -193,9 +184,6 @@ public class InvoiceResourceIntTest {
         assertThat(testInvoice.getComments()).isEqualTo(DEFAULT_COMMENTS);
         assertThat(testInvoice.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
         assertThat(testInvoice.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
-
-        // Validate the Invoice in Elasticsearch
-        verify(mockInvoiceSearchRepository, times(1)).save(testInvoice);
     }
 
     @Test
@@ -216,9 +204,6 @@ public class InvoiceResourceIntTest {
         // Validate the Invoice in the database
         List<Invoice> invoiceList = invoiceRepository.findAll();
         assertThat(invoiceList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Invoice in Elasticsearch
-        verify(mockInvoiceSearchRepository, times(0)).save(invoice);
     }
 
     @Test
@@ -521,9 +506,6 @@ public class InvoiceResourceIntTest {
         assertThat(testInvoice.getComments()).isEqualTo(UPDATED_COMMENTS);
         assertThat(testInvoice.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
         assertThat(testInvoice.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
-
-        // Validate the Invoice in Elasticsearch
-        verify(mockInvoiceSearchRepository, times(1)).save(testInvoice);
     }
 
     @Test
@@ -543,9 +525,6 @@ public class InvoiceResourceIntTest {
         // Validate the Invoice in the database
         List<Invoice> invoiceList = invoiceRepository.findAll();
         assertThat(invoiceList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Invoice in Elasticsearch
-        verify(mockInvoiceSearchRepository, times(0)).save(invoice);
     }
 
     @Test
@@ -564,9 +543,6 @@ public class InvoiceResourceIntTest {
         // Validate the database is empty
         List<Invoice> invoiceList = invoiceRepository.findAll();
         assertThat(invoiceList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Invoice in Elasticsearch
-        verify(mockInvoiceSearchRepository, times(1)).deleteById(invoice.getId());
     }
 
     @Test
@@ -574,8 +550,6 @@ public class InvoiceResourceIntTest {
     public void searchInvoice() throws Exception {
         // Initialize the database
         invoiceRepository.saveAndFlush(invoice);
-        when(mockInvoiceSearchRepository.search(queryStringQuery("id:" + invoice.getId())))
-            .thenReturn(Collections.singletonList(invoice));
         // Search the invoice
         restInvoiceMockMvc.perform(get("/api/_search/invoices?query=id:" + invoice.getId()))
             .andExpect(status().isOk())

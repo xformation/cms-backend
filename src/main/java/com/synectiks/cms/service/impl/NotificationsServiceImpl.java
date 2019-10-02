@@ -3,7 +3,7 @@ package com.synectiks.cms.service.impl;
 import com.synectiks.cms.service.NotificationsService;
 import com.synectiks.cms.domain.Notifications;
 import com.synectiks.cms.repository.NotificationsRepository;
-import com.synectiks.cms.repository.search.NotificationsSearchRepository;
+//import com.synectiks.cms.repository.search.NotificationsSearchRepository;
 import com.synectiks.cms.service.dto.NotificationsDTO;
 import com.synectiks.cms.service.mapper.NotificationsMapper;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing {@link Notifications}.
@@ -33,12 +33,12 @@ public class NotificationsServiceImpl implements NotificationsService {
 
     private final NotificationsMapper notificationsMapper;
 
-    private final NotificationsSearchRepository notificationsSearchRepository;
+    //private final NotificationsSearchRepository notificationsSearchRepository;
 
-    public NotificationsServiceImpl(NotificationsRepository notificationsRepository, NotificationsMapper notificationsMapper, NotificationsSearchRepository notificationsSearchRepository) {
+    public NotificationsServiceImpl(NotificationsRepository notificationsRepository, NotificationsMapper notificationsMapper/*, NotificationsSearchRepository notificationsSearchRepository*/) {
         this.notificationsRepository = notificationsRepository;
         this.notificationsMapper = notificationsMapper;
-        this.notificationsSearchRepository = notificationsSearchRepository;
+        //this.notificationsSearchRepository = notificationsSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class NotificationsServiceImpl implements NotificationsService {
         Notifications notifications = notificationsMapper.toEntity(notificationsDTO);
         notifications = notificationsRepository.save(notifications);
         NotificationsDTO result = notificationsMapper.toDto(notifications);
-        notificationsSearchRepository.save(notifications);
+        //notificationsSearchRepository.save(notifications);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class NotificationsServiceImpl implements NotificationsService {
     public void delete(Long id) {
         log.debug("Request to delete Notifications : {}", id);
         notificationsRepository.deleteById(id);
-        notificationsSearchRepository.deleteById(id);
+        //notificationsSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,11 @@ public class NotificationsServiceImpl implements NotificationsService {
     @Transactional(readOnly = true)
     public List<NotificationsDTO> search(String query) {
         log.debug("Request to search Notifications for query {}", query);
-        return StreamSupport
+        /*return StreamSupport
             .stream(notificationsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
             .map(notificationsMapper::toDto)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
+    	//TODO: Fix it by fetching result from search api
+    	return null;
     }
 }

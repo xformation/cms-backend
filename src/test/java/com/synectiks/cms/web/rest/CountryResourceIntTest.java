@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.search.CountrySearchRepository;
-import com.synectiks.cms.service.CountryService;
-import com.synectiks.cms.service.dto.CountryDTO;
-import com.synectiks.cms.service.mapper.CountryMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Country;
+import com.synectiks.cms.repository.CountryRepository;
+import com.synectiks.cms.service.CountryService;
+import com.synectiks.cms.service.dto.CountryDTO;
+import com.synectiks.cms.service.mapper.CountryMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the CountryResource REST controller.
@@ -64,14 +64,6 @@ public class CountryResourceIntTest {
 
     @Autowired
     private CountryService countryService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.CountrySearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private CountrySearchRepository mockCountrySearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -142,9 +134,6 @@ public class CountryResourceIntTest {
         assertThat(testCountry.getCountryName()).isEqualTo(DEFAULT_COUNTRY_NAME);
         assertThat(testCountry.getCountryCode()).isEqualTo(DEFAULT_COUNTRY_CODE);
         assertThat(testCountry.getIsdCode()).isEqualTo(DEFAULT_ISD_CODE);
-
-        // Validate the Country in Elasticsearch
-        verify(mockCountrySearchRepository, times(1)).save(testCountry);
     }
 
     @Test
@@ -165,9 +154,6 @@ public class CountryResourceIntTest {
         // Validate the Country in the database
         List<Country> countryList = countryRepository.findAll();
         assertThat(countryList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Country in Elasticsearch
-        verify(mockCountrySearchRepository, times(0)).save(country);
     }
 
     @Test
@@ -278,9 +264,6 @@ public class CountryResourceIntTest {
         assertThat(testCountry.getCountryName()).isEqualTo(UPDATED_COUNTRY_NAME);
         assertThat(testCountry.getCountryCode()).isEqualTo(UPDATED_COUNTRY_CODE);
         assertThat(testCountry.getIsdCode()).isEqualTo(UPDATED_ISD_CODE);
-
-        // Validate the Country in Elasticsearch
-        verify(mockCountrySearchRepository, times(1)).save(testCountry);
     }
 
     @Test
@@ -300,9 +283,6 @@ public class CountryResourceIntTest {
         // Validate the Country in the database
         List<Country> countryList = countryRepository.findAll();
         assertThat(countryList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Country in Elasticsearch
-        verify(mockCountrySearchRepository, times(0)).save(country);
     }
 
     @Test
@@ -321,9 +301,6 @@ public class CountryResourceIntTest {
         // Validate the database is empty
         List<Country> countryList = countryRepository.findAll();
         assertThat(countryList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Country in Elasticsearch
-        verify(mockCountrySearchRepository, times(1)).deleteById(country.getId());
     }
 
     @Test
@@ -331,8 +308,6 @@ public class CountryResourceIntTest {
     public void searchCountry() throws Exception {
         // Initialize the database
         countryRepository.saveAndFlush(country);
-        when(mockCountrySearchRepository.search(queryStringQuery("id:" + country.getId())))
-            .thenReturn(Collections.singletonList(country));
         // Search the country
         restCountryMockMvc.perform(get("/api/_search/countries?query=id:" + country.getId()))
             .andExpect(status().isOk())

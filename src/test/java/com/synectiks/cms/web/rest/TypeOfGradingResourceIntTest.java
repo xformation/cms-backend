@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
-import com.synectiks.cms.repository.search.TypeOfGradingSearchRepository;
-import com.synectiks.cms.service.TypeOfGradingService;
-import com.synectiks.cms.service.dto.TypeOfGradingDTO;
-import com.synectiks.cms.service.mapper.TypeOfGradingMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +30,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.repository.TypeOfGradingRepository;
+import com.synectiks.cms.service.TypeOfGradingService;
+import com.synectiks.cms.service.dto.TypeOfGradingDTO;
+import com.synectiks.cms.service.mapper.TypeOfGradingMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the TypeOfGradingResource REST controller.
@@ -67,14 +67,6 @@ public class TypeOfGradingResourceIntTest {
 
     @Autowired
     private TypeOfGradingService typeOfGradingService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.TypeOfGradingSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private TypeOfGradingSearchRepository mockTypeOfGradingSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -147,9 +139,6 @@ public class TypeOfGradingResourceIntTest {
         assertThat(testTypeOfGrading.getMaxMarks()).isEqualTo(DEFAULT_MAX_MARKS);
         assertThat(testTypeOfGrading.getGrades()).isEqualTo(DEFAULT_GRADES);
         assertThat(testTypeOfGrading.getGroupvalue()).isEqualTo(DEFAULT_GROUPVALUE);
-
-        // Validate the TypeOfGrading in Elasticsearch
-        verify(mockTypeOfGradingSearchRepository, times(1)).save(testTypeOfGrading);
     }
 
     @Test
@@ -170,9 +159,6 @@ public class TypeOfGradingResourceIntTest {
         // Validate the TypeOfGrading in the database
         List<TypeOfGrading> typeOfGradingList = typeOfGradingRepository.findAll();
         assertThat(typeOfGradingList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the TypeOfGrading in Elasticsearch
-        verify(mockTypeOfGradingSearchRepository, times(0)).save(typeOfGrading);
     }
 
     @Test
@@ -325,9 +311,6 @@ public class TypeOfGradingResourceIntTest {
         assertThat(testTypeOfGrading.getMaxMarks()).isEqualTo(UPDATED_MAX_MARKS);
         assertThat(testTypeOfGrading.getGrades()).isEqualTo(UPDATED_GRADES);
         assertThat(testTypeOfGrading.getGroupvalue()).isEqualTo(UPDATED_GROUPVALUE);
-
-        // Validate the TypeOfGrading in Elasticsearch
-        verify(mockTypeOfGradingSearchRepository, times(1)).save(testTypeOfGrading);
     }
 
     @Test
@@ -347,9 +330,6 @@ public class TypeOfGradingResourceIntTest {
         // Validate the TypeOfGrading in the database
         List<TypeOfGrading> typeOfGradingList = typeOfGradingRepository.findAll();
         assertThat(typeOfGradingList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the TypeOfGrading in Elasticsearch
-        verify(mockTypeOfGradingSearchRepository, times(0)).save(typeOfGrading);
     }
 
     @Test
@@ -369,8 +349,6 @@ public class TypeOfGradingResourceIntTest {
         List<TypeOfGrading> typeOfGradingList = typeOfGradingRepository.findAll();
         assertThat(typeOfGradingList).hasSize(databaseSizeBeforeDelete - 1);
 
-        // Validate the TypeOfGrading in Elasticsearch
-        verify(mockTypeOfGradingSearchRepository, times(1)).deleteById(typeOfGrading.getId());
     }
 
     @Test
@@ -378,8 +356,6 @@ public class TypeOfGradingResourceIntTest {
     public void searchTypeOfGrading() throws Exception {
         // Initialize the database
         typeOfGradingRepository.saveAndFlush(typeOfGrading);
-        when(mockTypeOfGradingSearchRepository.search(queryStringQuery("id:" + typeOfGrading.getId())))
-            .thenReturn(Collections.singletonList(typeOfGrading));
         // Search the typeOfGrading
         restTypeOfGradingMockMvc.perform(get("/api/_search/type-of-gradings?query=id:" + typeOfGrading.getId()))
             .andExpect(status().isOk())

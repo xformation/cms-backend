@@ -1,14 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.search.LocationSearchRepository;
-import com.synectiks.cms.service.LocationService;
-import com.synectiks.cms.service.dto.LocationDTO;
-import com.synectiks.cms.service.mapper.LocationMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.service.LocationService;
+import com.synectiks.cms.service.dto.LocationDTO;
+import com.synectiks.cms.service.mapper.LocationMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the LocationResource REST controller.
@@ -65,14 +65,6 @@ public class LocationResourceIntTest {
 
     @Autowired
     private LocationService locationService;
-
-    /**
-     * This repository is mocked in the com.synectiks.cms.repository.search test package.
-     *
-     * @see com.synectiks.cms.repository.search.LocationSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private LocationSearchRepository mockLocationSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -139,9 +131,6 @@ public class LocationResourceIntTest {
         assertThat(testLocation.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testLocation.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testLocation.getAppliesTo()).isEqualTo(DEFAULT_APPLIES_TO);
-
-        // Validate the Location in Elasticsearch
-        verify(mockLocationSearchRepository, times(1)).save(testLocation);
     }
 
     @Test
@@ -162,9 +151,6 @@ public class LocationResourceIntTest {
         // Validate the Location in the database
         List<Location> locationList = locationRepository.findAll();
         assertThat(locationList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Location in Elasticsearch
-        verify(mockLocationSearchRepository, times(0)).save(location);
     }
 
     @Test
@@ -294,9 +280,6 @@ public class LocationResourceIntTest {
         assertThat(testLocation.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testLocation.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testLocation.getAppliesTo()).isEqualTo(UPDATED_APPLIES_TO);
-
-        // Validate the Location in Elasticsearch
-        verify(mockLocationSearchRepository, times(1)).save(testLocation);
     }
 
     @Test
@@ -316,9 +299,6 @@ public class LocationResourceIntTest {
         // Validate the Location in the database
         List<Location> locationList = locationRepository.findAll();
         assertThat(locationList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Location in Elasticsearch
-        verify(mockLocationSearchRepository, times(0)).save(location);
     }
 
     @Test
@@ -337,9 +317,6 @@ public class LocationResourceIntTest {
         // Validate the database is empty
         List<Location> locationList = locationRepository.findAll();
         assertThat(locationList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Location in Elasticsearch
-        verify(mockLocationSearchRepository, times(1)).deleteById(location.getId());
     }
 
     @Test
@@ -347,8 +324,6 @@ public class LocationResourceIntTest {
     public void searchLocation() throws Exception {
         // Initialize the database
         locationRepository.saveAndFlush(location);
-        when(mockLocationSearchRepository.search(queryStringQuery("id:" + location.getId())))
-            .thenReturn(Collections.singletonList(location));
         // Search the location
         restLocationMockMvc.perform(get("/api/_search/locations?query=id:" + location.getId()))
             .andExpect(status().isOk())
