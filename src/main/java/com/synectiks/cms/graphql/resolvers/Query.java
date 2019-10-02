@@ -624,7 +624,10 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public CmsAdmissionEnquiryVo getAdmissionData( String branchId) {
-        return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId));
+    	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId)) {
+    		return new CmsAdmissionEnquiryVo();
+    	}
+        return admissionEnquiryProcessor.getAdmissionData( Long.parseLong(branchId));
     }
 
     public Long getTotalReceived( long academicyearId) {
@@ -642,8 +645,11 @@ public class Query implements GraphQLQueryResolver {
         return admissionApplicationProcessor.getTotalAccepted(academicyearId);
     }
 
-    public CmsAdmissionApplicationVo getAdmissionApplicationData( String academicyearId) {
-        return admissionApplicationProcessor.getAdmissionApplicationData( Long.valueOf(academicyearId));
+    public CmsAdmissionApplicationVo getAdmissionApplicationData( String academicYearId) {
+    	if(academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)) {
+    		return new CmsAdmissionApplicationVo();
+    	}
+        return admissionApplicationProcessor.getAdmissionApplicationData( Long.parseLong(academicYearId));
     }
 
 
