@@ -34,10 +34,12 @@ import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.TeacherRepository;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
 
@@ -63,6 +65,9 @@ public class StudentAttendanceFilterImpl  {
     @PersistenceContext
     private EntityManager entityManager;
     
+    @Autowired
+    private TeacherRepository teacherRepository;
+    
     /**
      * Student attendance data for a teacher role end user
      * @param filter
@@ -79,7 +84,14 @@ public class StudentAttendanceFilterImpl  {
     	batch.setId(Long.valueOf(filter.getBatchId()));
     	Section section = new Section(); 
     	section.setId(Long.valueOf(filter.getSectionId()));
-    	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(Long.valueOf(filter.getTeacherId()), Long.valueOf(filter.getSubjectId()));
+    	
+    	Teacher thr = new Teacher();
+        thr.setTeacherEmailAddress(filter.getTeacherId());
+    	Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(thr));
+        Long tid = oth.isPresent() ? oth.get().getId() : 0;
+        
+        
+    	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(tid, Long.valueOf(filter.getSubjectId()));
     	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
     	
     	List<DailyAttendanceVo> voList = new ArrayList<>();

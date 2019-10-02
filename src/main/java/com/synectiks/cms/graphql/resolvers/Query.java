@@ -17,6 +17,7 @@ package com.synectiks.cms.graphql.resolvers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
@@ -25,6 +26,7 @@ import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
@@ -680,8 +682,10 @@ public class Query implements GraphQLQueryResolver {
     public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId, String lectureDate) throws Exception{
     	StudentAttendanceCache cache = new StudentAttendanceCache();
     	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId) 
-    			|| academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)) {
-    		logger.warn("Either branch or academic year id is null. Return empty cache");
+    			|| academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)
+    			|| teacherId == null || "null".equalsIgnoreCase(teacherId) || "undefined".equalsIgnoreCase(teacherId)) {
+    		
+    		logger.warn("Either branch/academic year or teacher id is null. Return empty cache");
     		cache.setDepartments(new ArrayList<Department>());
         	cache.setBatches(new ArrayList<Batch>());
         	cache.setSubjects(new ArrayList<Subject>());
@@ -692,7 +696,13 @@ public class Query implements GraphQLQueryResolver {
         	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
     		return cache;
     	}
-    	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
+    	
+    	Teacher thr = new Teacher();
+        thr.setTeacherEmailAddress(teacherId);
+    	Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(thr));
+        Long tid = oth.isPresent() ? oth.get().getId() : 0;
+        
+    	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0 || tid == 0) {
     		logger.warn("Either branch/academic year or teacher id is not provided. Return empty cache");
     		cache.setDepartments(new ArrayList<Department>());
         	cache.setBatches(new ArrayList<Batch>());
@@ -710,7 +720,7 @@ public class Query implements GraphQLQueryResolver {
     	List<Batch> bth = this.commonService.getBatchForCriteria(dept); //batches();
     	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth); //subjects();
     	List<Section> sec = this.commonService.getSectionForCriteria(bth); //sections();
-    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.parseLong(teacherId)); //teaches();
+    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, tid); //teaches();
     	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec, teach);// attendanceMasters();
     	List<Subject> selectedSubjectList = new ArrayList<>();
 
