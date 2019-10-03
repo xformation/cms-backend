@@ -1750,6 +1750,7 @@ type LibraryFilterDataCache{
 	subjects: [Subject]
 	academicExamSettings : [AcademicExamSetting]
 	libraries: [Library]
+	students: [Student]
 }
 type CmsFeeCategory {
 	 id: Long

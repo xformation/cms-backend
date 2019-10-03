@@ -555,7 +555,34 @@ public class CommonService {
         logger.debug("Returning list of exams from JPA criteria query. Total records : "+examsList.size());
         return examsList;
     }
+    public List<Student> getStudentsForCriteria(List<Department> dept, List<Batch> batch, List<Section> sec){
+        if(dept.size() == 0 || batch.size() == 0 || sec.size() == 0) {
+            logger.warn("Either department or batch list is empty. Returning empty AcademicExamSetting list.");
+            logger.warn("Total records in department list: "+dept.size()+", total records in batch list: "+batch.size()+",total records in batch list: "+sec.size());
+            return Collections.emptyList();
+        }
 
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Student> query = cb.createQuery(Student.class);
+        Root<Student> root = query.from(Student.class);
+        In<Long> inDepartment = cb.in(root.get("department"));
+        for (Department dt : dept) {
+            inDepartment.value(dt.getId());
+        }
+        In<Long> inBatch = cb.in(root.get("batch"));
+        for (Batch bth : batch) {
+            inBatch.value(bth.getId());
+        }
+        In<Long> inSection = cb.in(root.get("section"));
+        for (Section sc : sec) {
+            inSection.value(sc.getId());
+        }
+        CriteriaQuery<Student> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch), cb.and(inSection));
+        TypedQuery<Student> typedQuery = this.entityManager.createQuery(select);
+        List<Student> examsList = typedQuery.getResultList();
+        logger.debug("Returning list of exams from JPA criteria query. Total records : "+examsList.size());
+        return examsList;
+    }
 
 
     public List<Teach> getTeachForCriteria(List<Subject> subjectList, Long teacherId){
@@ -593,7 +620,6 @@ public class CommonService {
             logger.warn("Total records in department list: "+subj.size()+", total records in batch list: "+batch.size());
             return Collections.emptyList();
         }
-
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Library> query = cb.createQuery(Library.class);
         Root<Library> root = query.from(Library.class);
@@ -605,16 +631,16 @@ public class CommonService {
         for (Batch bth : batch) {
             inBatch.value(bth.getId());
         }
-//        In<Long> inSection = cb.in(root.get("section"));
-//        for (Section sec : secList) {
-//            inSection.value(sec.getId());
-//        }
+
         CriteriaQuery<Library> select = query.select(root).where(cb.and(inSubject), cb.and(inBatch));
         TypedQuery<Library> typedQuery = this.entityManager.createQuery(select);
         List<Library> examsList = typedQuery.getResultList();
         logger.debug("Returning list of exams from JPA criteria query. Total records : "+examsList.size());
         return examsList;
     }
+
+
+
     /**
      * AttendanceMaster for teacher attendance
      * @param batchList
@@ -957,11 +983,11 @@ public class CommonService {
         }else {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
         }
-        
+
         config.setSelectedAcademicYearId(ay != null ? ay.getId() : null);
         config.setSelectedBranchId(config.getBranch() != null ? config.getBranch().getId() : null);
         config.setSelectedDepartmentId(config.getDepartment() != null ? config.getDepartment().getId() : null);
-        
+
         return config;
 	}
 
@@ -1006,7 +1032,7 @@ public class CommonService {
 		logger.debug("Creating admin user specific config object");
 		Config config = new Config();
 		config.setLoggedInUser(userName);
-		
+
 		findUserConfig(userName, config);
 
 		config.setCollege(GlobalConfig.CONFIG.getCollege());
@@ -1022,7 +1048,7 @@ public class CommonService {
 		config.setAcademicYearList(ayList);
         config.setBranchList(this.branchRepository.findAll());
         config.setDepartmentList(deptList);
-        
+
         AcademicYear ay = this.getActiveAcademicYear();
         if(ay != null) {
         	CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
@@ -1032,7 +1058,7 @@ public class CommonService {
         }else {
         	config.setCmsAcademicYearVo(new CmsAcademicYearVo());
         }
-        
+
         return config;
 	}
 
@@ -1179,7 +1205,7 @@ public class CommonService {
     			.getResultList();
 		return list;
     }
-    
+
     public List<CmsDepartmentVo> getDepartmentListByBranch(Long branchId){
     	Branch branch = this.branchRepository.findById(branchId).get();
         Department department = new Department();
@@ -1194,8 +1220,8 @@ public class CommonService {
         }
         return ls;
     }
-    
-    
+
+
 
 //    public static void main(String a[]) {
 //        LocalDate ld = LocalDate.now();
