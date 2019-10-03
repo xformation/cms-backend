@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Spring Data  repository for the AcademicExamSetting entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface AcademicExamSettingRepository extends JpaRepository<AcademicExamSetting, Long> {
 

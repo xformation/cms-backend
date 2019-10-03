@@ -21,7 +21,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
-@EnableJpaRepositories(repositoryBaseClass = SynectiksJPARepo.class)
+@EnableJpaRepositories(
+		basePackages = {"com.synectiks.cms.config"},
+		repositoryBaseClass = SynectiksJPARepo.class)
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class CmsApp {
 

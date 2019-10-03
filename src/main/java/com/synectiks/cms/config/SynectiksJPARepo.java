@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import com.synectiks.cms.domain.ESEvent;
@@ -24,7 +23,6 @@ import com.synectiks.cms.utils.IUtils;
 /**
  * @author Rajesh Upadhyay
  */
-@Repository
 public class SynectiksJPARepo<T, ID extends Serializable>
 		extends SimpleJpaRepository<T, ID> {
 
@@ -34,6 +32,10 @@ public class SynectiksJPARepo<T, ID extends Serializable>
 	private Environment env;
 	@Autowired
 	private RestTemplate rest;
+
+	public SynectiksJPARepo(Class<T> domainClass, EntityManager entityManager) {
+        super(domainClass, entityManager);
+    }
 
 	public SynectiksJPARepo(JpaEntityInformation<T, ?> entityInformation,
 			EntityManager entityManager) {
