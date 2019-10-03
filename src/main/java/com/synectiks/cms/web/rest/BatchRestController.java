@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsBatchVo;
 import com.synectiks.cms.domain.Department;
@@ -29,6 +31,8 @@ import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Batch.
@@ -47,6 +51,8 @@ public class BatchRestController {
 	@Autowired
 	private DepartmentRepository departmentRepository;
 	
+	@Autowired
+	private CommonService commonService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmsbatches")
 	public ResponseEntity<CmsBatchVo> createBatch(@Valid @RequestBody CmsBatchVo cmsBatchVo) throws URISyntaxException {
@@ -144,6 +150,20 @@ public class BatchRestController {
     		return HttpStatus.FAILED_DEPENDENCY.value();
     	}
     	return HttpStatus.OK.value();
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/cmsbatchenums")
+    public List<CmsBatchVo> getAllCmsBatchEnums() {
+		logger.debug("Get all batches/years.");
+		List<CmsBatchVo> ls = this.commonService.getAllBatches();
+        return ls;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/cmsbatchenums/{id}")
+    public ResponseEntity<CmsBatchVo> getCmsBatchEnums(@PathVariable Long id) throws Exception {
+        logger.debug("Get a batch/year of given id : "+id);
+        CmsBatchVo vo = this.commonService.getCmsBatchVo(id);
+        return ResponseUtil.wrapOrNotFound(Optional.of(vo));
     }
     
 }

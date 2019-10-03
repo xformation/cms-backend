@@ -13,6 +13,7 @@ public class CmsSectionVo implements Serializable {
     private SectionEnum section;
     private Long batchId;
     private Batch batch;
+    private String description;
     
     public Long getId() {
         return id;
@@ -81,6 +82,22 @@ public class CmsSectionVo implements Serializable {
 	@Override
 	public String toString() {
 		return "CmsSectionVo [id=" + id + ", section=" + section + ", batchId=" + batchId + ", batch=" + batch + "]";
+	}
+
+	public Batch getBatch() {
+		return batch;
+	}
+
+	public void setBatch(Batch batch) {
+		this.batch = batch;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
     

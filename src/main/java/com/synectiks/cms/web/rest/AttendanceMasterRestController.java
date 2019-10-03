@@ -23,6 +23,7 @@ import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
@@ -115,20 +116,20 @@ public class AttendanceMasterRestController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cmsattendance-masters-bybatchsection")
     public List<AttendanceMaster> getAllAttendanceMasterByBatchSection(@RequestParam Map<String, String> dataMap) {
-    	if (!dataMap.containsKey("batchId")) {
-            throw new BadRequestAlertException("Batch id not present", ENTITY_NAME, "batch id null");
-        }
-    	if (!dataMap.containsKey("sectionId")) {
-            throw new BadRequestAlertException("Section id not present", ENTITY_NAME, "section id null");
-        }
+    	logger.debug("Getting attendance master");
     	
+    	String departmentId = dataMap.get("departmentId");
     	String batchId = dataMap.get("batchId");
     	String sectionId = dataMap.get("sectionId");
-    	logger.debug("Getting attendance master id for batch id : "+batchId+", section id : "+sectionId);
-    	Batch bt = this.commonService.getBatchById(Long.parseLong(batchId));
-    	Section sc = this.commonService.getSectionById(Long.parseLong(sectionId));
-    	List<AttendanceMaster> list = this.commonService.getAttendanceMasterByBatchSection(bt, sc);
-    	logger.debug("AttendanceMaster : "+list);
+    	
+    	Long dptId = Long.parseLong(departmentId);
+    	Long bId = Long.parseLong(batchId);
+    	Long scId = 0L;
+    	if(!CommonUtil.isNullOrEmpty(sectionId) && !"null".equalsIgnoreCase(sectionId) && !"undefined".equalsIgnoreCase(sectionId)) {
+    		scId = Long.parseLong(sectionId);
+    	}
+    	List<AttendanceMaster> list = this.commonService.getAttendanceMastersList(dptId, bId, scId);
+    	logger.debug("AttendanceMaster list : "+list);
     	return list;
     }
     

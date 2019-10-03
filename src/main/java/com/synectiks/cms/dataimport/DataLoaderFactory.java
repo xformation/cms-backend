@@ -50,11 +50,12 @@ public class DataLoaderFactory {
         if(tableName.equalsIgnoreCase("HOLIDAY")){
             return new HolidayDataLoader (tableName, allRepositories);
         }
-
         if(tableName.equalsIgnoreCase("BATCH")){
             return new BatchDataLoader (tableName, allRepositories);
         }
-
+        if(tableName.equalsIgnoreCase("TEACHER")){
+            return new TeacherDataLoader (tableName, allRepositories);
+        }
 
         return null;  
 	}

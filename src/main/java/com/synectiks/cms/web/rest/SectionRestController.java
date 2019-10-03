@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsSectionVo;
 import com.synectiks.cms.domain.Section;
@@ -29,6 +31,8 @@ import com.synectiks.cms.repository.SectionRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Section.
@@ -47,6 +51,8 @@ public class SectionRestController {
 	@Autowired
 	private SectionRepository sectionRepository;
 	
+	@Autowired
+	private CommonService commonService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmssections")
 	public ResponseEntity<CmsSectionVo> createSection(@Valid @RequestBody CmsSectionVo cmsSectionVo) throws URISyntaxException {
@@ -145,6 +151,20 @@ public class SectionRestController {
     		return HttpStatus.FAILED_DEPENDENCY.value();
     	}
     	return HttpStatus.OK.value();
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/cmssectionenums")
+    public List<CmsSectionVo> getAllCmsSectionEnums() {
+		logger.debug("Get all sections.");
+		List<CmsSectionVo> ls = this.commonService.getAllSections();
+        return ls;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/cmssectionenums/{id}")
+    public ResponseEntity<CmsSectionVo> getCmsSectionEnums(@PathVariable Long id) throws Exception {
+        logger.debug("Get a section", id);
+        CmsSectionVo vo = this.commonService.getCmsSectionVo(id);
+        return ResponseUtil.wrapOrNotFound(Optional.of(vo));
     }
     
 }
