@@ -3653,6 +3653,7 @@ input AddLibraryInput{
     additionalInfo:String!
      batchId:Long!
     subjectId:Long!
+    uniqueNo: Long!
 }
 type AddLibraryPayload {
     library:Library!
