@@ -1340,23 +1340,18 @@ public class CommonService {
 
     public List<AttendanceMaster> getAttendanceMastersList(Long dtId, Long btId, Long scId) {
     	logger.debug("Calling getAttendanceMastersList() ");
-    	Department department = this.getDepartmentById(dtId);
-    	
-    	Batch batch = createBatch(btId);
-    	batch.setDepartment(department);
-    	
-    	Optional<Batch> obt = this.batchRepository.findOne(Example.of(batch));
+    	Batch batch = this.getBatchById(btId);
     	
     	Optional<Section> osc = null;
-    	if(scId > 0 && obt.isPresent()) {
+    	if(scId > 0) {
     		Section sec = new Section();
     		sec.setId(scId);
-    		sec.setBatch(obt.get());
+    		sec.setBatch(batch);
     		osc = this.sectionRepository.findOne(Example.of(sec));
     	}
     	
     	AttendanceMaster am = new AttendanceMaster();
-    	am.setBatch(obt.isPresent() ? obt.get() : null);
+    	am.setBatch(batch);
     	if(osc != null && osc.isPresent()) {
     		am.setSection(osc.get());
     	}

@@ -201,7 +201,7 @@ public class LectureService {
     }
 
     @Transactional(propagation=Propagation.REQUIRED)
-    public QueryResult addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter, Optional<AcademicYear> oay) throws JSONException, ParseException {
+    public List<CmsLectureVo> addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter, Optional<AcademicYear> oay) throws JSONException, ParseException {
         QueryResult res = new QueryResult();
         res.setStatusCode(0);
         res.setStatusDesc("Records inserted successfully.");
@@ -226,25 +226,27 @@ public class LectureService {
         String[] values = lectureScheduleInput.getValues();
         this.bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
         this.sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+        List<CmsLectureVo> lsList = new ArrayList<>();
         try {
-            createLectureSchedule(mondayList, values, MONDAY, filter);
-            createLectureSchedule(tuesdayList, values, TUESDAY, filter);
-            createLectureSchedule(wednesdayList, values, WEDNESDAY, filter);
-            createLectureSchedule(thursdayList, values, THURSDAY, filter);
-            createLectureSchedule(fridayList, values, FRIDAY, filter);
-            createLectureSchedule(saturdayList, values, SATURDAY, filter);
+        	lsList.addAll(createLectureSchedule(mondayList, values, MONDAY, filter));
+        	lsList.addAll(createLectureSchedule(tuesdayList, values, TUESDAY, filter));
+        	lsList.addAll(createLectureSchedule(wednesdayList, values, WEDNESDAY, filter));
+        	lsList.addAll(createLectureSchedule(thursdayList, values, THURSDAY, filter));
+        	lsList.addAll(createLectureSchedule(fridayList, values, FRIDAY, filter));
+        	lsList.addAll(createLectureSchedule(saturdayList, values, SATURDAY, filter));
         }catch(Exception e) {
             logger.error("Exception. There is some error in inserting lecture records. ",e);
             res.setStatusCode(1);
             res.setStatusDesc("There is some error in inserting lecture records.");
         }
-        return res;
+        return lsList;
     }
 
-    public void createLectureSchedule(List<Date> dataList, String[] values, String dayName, LectureScheduleFilter filter)
+    public List<CmsLectureVo> createLectureSchedule(List<Date> dataList, String[] values, String dayName, LectureScheduleFilter filter)
         throws ParseException {
         logger.debug(String.format("Inserting records for %s.",dayName));
 
+        List<CmsLectureVo> lsList = new ArrayList<>();
 //		Batch bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
 //		Section sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
 
@@ -288,13 +290,19 @@ public class LectureService {
                     lecture.setEndTime(jsonObj.getString("endTime"));
                     lecture.setLastUpdatedBy(getLoggedInUser());
                     lecture.setLastUpdatedOn(LocalDate.now());
-                    this.lectureRepository.save(lecture);
+                    lecture = this.lectureRepository.save(lecture);
+                    
+                    CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
+        			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(lecture.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        			lsList.add(vo);
+        			
 //					insertLecture(dt, jsonObj, filter);
                 }
             }
         }
 //		this.map.remove("Teach");
 //		this.map.remove("AttendanceMaster");
+        return lsList;
     }
 
     public void createLectureSchedule(Date dt, String[] values, String dayName, LectureScheduleFilter filter)
@@ -526,7 +534,90 @@ public class LectureService {
         return list;
     }
 
-
-
+    public List<CmsLectureVo> getAllLecturess(Long ayId, Long brId, Long dpId, Long trId, Long btId, Long scId, Long sbId, Long thId, LocalDate lecDate){
+    	logger.info("Getting scheduled lectures data:");
+    	List<CmsLectureVo> ls = new ArrayList<>();
+    	
+    	AcademicYear ay = this.commonService.getAcademicYearById(ayId);
+    	Branch branch = this.commonService.getBranchById(brId);
+    	Department department = this.commonService.getDepartmentById(dpId);
+    	Term term = this.commonService.getTermById(trId);
+    	Batch batch = this.commonService.getBatchById(btId);
+    	Section section = this.commonService.getSectionById(scId);
+    	Subject subject = this.commonService.getSubjectById(sbId);
+    	Teacher teacher = this.commonService.getTeacherById(thId);
+    	
+    	Query query = null;
+		if(batch != null) {
+			query = this.entityManager.createQuery("select a from Batch a where a.id = :btid ");
+			query.setParameter("btid", btId);
+		}else {
+			query = this.entityManager.createQuery("select a from Batch a where a.department = :dp ");
+			query.setParameter("dp", department);
+		}
+		@SuppressWarnings("unchecked")
+		List<Batch> batchList = query.getResultList();
+    	
+    	Teach teach = null;
+		if(subject != null || teacher != null) {
+			teach = new Teach();
+			if(subject != null) {
+				teach.setSubject(subject);
+			}
+			if(teacher != null) {
+				teach.setTeacher(teacher);
+			}
+		}
+		query = null;
+		if(section != null && teach != null) {
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach = :th and a.batch in (:bth)");
+			query.setParameter("sc", section);
+			query.setParameter("th", teach);
+			query.setParameter("bth", batchList);
+		}else if(section != null && teach == null) {
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.batch in (:bth)");
+			query.setParameter("sc", section);
+			query.setParameter("bth", batchList);
+		}else if(section == null && teach != null) {
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach = :th and a.batch in (:bth)");
+			query.setParameter("th", teach);
+			query.setParameter("bth", batchList);
+		}else {
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.batch in (:bth)");
+			query.setParameter("bth", batchList);
+		}
+		@SuppressWarnings("unchecked")
+		List<AttendanceMaster> amList = query.getResultList();
+    	
+		query = null;
+		if(lecDate != null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate = :lcdt and l.attendancemaster in (:amId) ");
+			query.setParameter("lcdt", lecDate);
+			query.setParameter("amId", amList);
+		}else if(term != null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
+			query.setParameter("startDate", term.getStartDate());
+			query.setParameter("endDate", term.getEndDate());
+			query.setParameter("amId", amList);
+		}else {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
+			query.setParameter("startDate", ay.getStartDate());
+			query.setParameter("endDate", ay.getEndDate());
+			query.setParameter("amId", amList);
+		}
+    	
+		@SuppressWarnings("unchecked")
+		List<Lecture> list = query.getResultList();
+		
+		for(Lecture l: list) {
+			CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
+			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+			ls.add(vo);
+		}
+    		
+    	logger.debug("Total lectures scheduled today for teacher : "+ls.size());
+    	return ls;
+    }
+    
 }
 
