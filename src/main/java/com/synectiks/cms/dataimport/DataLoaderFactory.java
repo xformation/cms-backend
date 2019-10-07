@@ -2,22 +2,10 @@ package com.synectiks.cms.dataimport;
 
 import java.util.Map;
 
+import com.synectiks.cms.dataimport.loader.*;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.dataimport.loader.AcademicYearLoader;
-import com.synectiks.cms.dataimport.loader.AttendanceMasterDataLoader;
-import com.synectiks.cms.dataimport.loader.AuthorizedSignatoryLoader;
-import com.synectiks.cms.dataimport.loader.BatchDataLoader;
-import com.synectiks.cms.dataimport.loader.BranchDataLoader;
-import com.synectiks.cms.dataimport.loader.CityDataLoader;
-import com.synectiks.cms.dataimport.loader.CollegeDataLoader;
-import com.synectiks.cms.dataimport.loader.CountryDataLoader;
-import com.synectiks.cms.dataimport.loader.DepartmentLoader;
-import com.synectiks.cms.dataimport.loader.HolidayDataLoader;
-import com.synectiks.cms.dataimport.loader.StateDataLoader;
-import com.synectiks.cms.dataimport.loader.TeacherDataLoader;
-import com.synectiks.cms.dataimport.loader.TermDataLoader;
 import com.synectiks.cms.service.util.CommonUtil;
 
 @Component
@@ -70,6 +58,9 @@ public class DataLoaderFactory {
         }
         if(tableName.equalsIgnoreCase("ATTENDANCE_MASTER")){
             return new AttendanceMasterDataLoader (tableName, allRepositories);
+        }
+        if(tableName.equalsIgnoreCase("STUDENT")){
+            return new StudentDataLoader(tableName, allRepositories);
         }
         
         return null;  
