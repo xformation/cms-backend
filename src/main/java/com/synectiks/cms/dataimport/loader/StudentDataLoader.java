@@ -5,13 +5,10 @@ import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.*;
-import com.synectiks.cms.exceptions.AdditionalSectionFoundException;
 import com.synectiks.cms.exceptions.AdditionalStudentFoundException;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
-import com.synectiks.cms.graphql.types.Student.StudentType;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
-import org.apache.poi.ss.formula.functions.T;
 import org.dhatim.fastexcel.reader.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +30,7 @@ public class StudentDataLoader extends DataLoader {
     }
 
     @Override
-    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, AdditionalStudentFoundException, AdditionalSectionFoundException, MandatoryFieldMissingException {
+    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, AdditionalStudentFoundException, MandatoryFieldMissingException {
 
         StringBuilder sb = new StringBuilder();
         Student obj = CommonUtil.createCopyProperties(cls.newInstance(), Student.class);
