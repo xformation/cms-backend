@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A LegalEntity.
@@ -22,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 @Table(name = "legal_entity")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "legalentity")
-public class LegalEntity implements Serializable {
+public class LegalEntity implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

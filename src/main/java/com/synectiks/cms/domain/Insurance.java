@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Insurance.
@@ -21,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
 @Table(name = "insurance")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "insurance")
-public class Insurance implements Serializable {
+public class Insurance implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

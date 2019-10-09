@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Frequency;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A DueDate.
@@ -20,7 +21,7 @@ import com.synectiks.cms.domain.enumeration.Frequency;
 @Table(name = "due_date")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "duedate")
-public class DueDate implements Serializable {
+public class DueDate implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

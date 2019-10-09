@@ -1,15 +1,14 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.MetaLecture;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.MetaLecture;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the MetaLecture entity.
+ * Spring Data repository for the MetaLecture entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface MetaLectureRepository extends JpaRepository<MetaLecture, Long> {
+public interface MetaLectureRepository extends JPASearchRepository<MetaLecture, Long> {
 
 }

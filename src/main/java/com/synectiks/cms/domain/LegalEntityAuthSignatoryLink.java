@@ -24,6 +24,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A LegalEntityAuthSignatoryLink entity. This will display records of legal entity and authorized signatory
@@ -33,7 +34,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 @Table(name = "legal_entity")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "legalentity")
-public class LegalEntityAuthSignatoryLink implements Serializable {
+public class LegalEntityAuthSignatoryLink implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

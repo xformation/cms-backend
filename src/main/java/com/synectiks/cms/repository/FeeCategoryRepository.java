@@ -1,15 +1,14 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.FeeCategory;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the FeeCategory entity.
+ * Spring Data repository for the FeeCategory entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface FeeCategoryRepository extends JpaRepository<FeeCategory, Long> {
+public interface FeeCategoryRepository extends JPASearchRepository<FeeCategory, Long> {
 
 }

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.StatusEnum;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Book.
@@ -22,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.StatusEnum;
 @Table(name = "book")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "book")
-public class Book implements Serializable {
+public class Book implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

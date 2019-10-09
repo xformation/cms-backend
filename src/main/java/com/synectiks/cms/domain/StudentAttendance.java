@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A StudentAttendance.
@@ -21,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 @Table(name = "student_attendance")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "studentattendance")
-public class StudentAttendance implements Serializable {
+public class StudentAttendance implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

@@ -51,6 +51,7 @@ public class CollegeServiceImpl implements CollegeService {
     public CollegeDTO save(CollegeDTO collegeDTO) {
         log.debug("Request to save College : {}", collegeDTO);
         College college = collegeMapper.toEntity(collegeDTO);
+        log.debug("Request to save College : {}", college);
         college = collegeRepository.save(college);
         CollegeDTO result = collegeMapper.toDto(college);
         //collegeSearchRepository.save(college);

@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.NameOfBank;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A BankAccounts.
@@ -21,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.NameOfBank;
 @Table(name = "bank_accounts")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "bankaccounts")
-public class BankAccounts implements Serializable {
+public class BankAccounts implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

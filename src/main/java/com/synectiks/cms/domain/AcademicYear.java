@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A AcademicYear.
@@ -21,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Table(name = "academic_year")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "academicyear")
-public class AcademicYear implements Serializable {
+public class AcademicYear implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

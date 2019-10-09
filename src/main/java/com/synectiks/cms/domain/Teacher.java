@@ -24,7 +24,7 @@ import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 
 import com.synectiks.cms.domain.enumeration.Status;
-
+import com.synectiks.cms.utils.IESEntity;
 import com.synectiks.cms.domain.enumeration.StaffType;
 
 /**
@@ -34,7 +34,7 @@ import com.synectiks.cms.domain.enumeration.StaffType;
 @Table(name = "teacher")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "teacher")
-public class Teacher implements Serializable {
+public class Teacher implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

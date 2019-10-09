@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.SectionEnum;
-
+import com.synectiks.cms.utils.IESEntity;
 import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
 
 /**
@@ -23,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
 @Table(name = "admin_overview")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "adminoverview")
-public class AdminOverview implements Serializable {
+public class AdminOverview implements Serializable , IESEntity{
 
     private static final long serialVersionUID = 1L;
 

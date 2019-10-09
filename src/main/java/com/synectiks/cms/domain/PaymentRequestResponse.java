@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.synectiks.cms.utils.IESEntity;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -15,8 +17,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "payment_request_response")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@org.springframework.data.elasticsearch.annotations.Document(indexName = "paymentrequestresponse")
-public class PaymentRequestResponse implements Serializable {
+//@Document(indexName = "paymentrequestresponse")
+public class PaymentRequestResponse implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

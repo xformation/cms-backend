@@ -2,6 +2,8 @@ package com.synectiks.cms.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.synectiks.cms.utils.IESEntity;
+
 import javax.persistence.*;
 
 //import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -14,8 +16,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "exception_record")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@org.springframework.data.elasticsearch.annotations.Document(indexName = "exceptionrecord")
-public class ExceptionRecord implements Serializable {
+//@Document(indexName = "exceptionrecord")
+public class ExceptionRecord implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

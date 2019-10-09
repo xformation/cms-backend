@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
-
+import com.synectiks.cms.utils.IESEntity;
 import com.synectiks.cms.domain.enumeration.Status;
 
 /**
@@ -23,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Table(name = "subject")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "subject")
-public class Subject implements Serializable {
+public class Subject implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

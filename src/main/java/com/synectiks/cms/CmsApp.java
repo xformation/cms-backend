@@ -2,7 +2,7 @@ package com.synectiks.cms;
 
 import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.config.DefaultProfileUtil;
-import com.synectiks.cms.config.SynectiksJPARepo;
+import com.synectiks.cms.utils.SynectiksJPARepo;
 
 import io.github.jhipster.config.JHipsterConstants;
 
@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -21,13 +22,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
-@EnableJpaRepositories(
-		basePackages = {"com.synectiks.cms.config"},
-		repositoryBaseClass = SynectiksJPARepo.class)
+@EnableJpaRepositories(repositoryBaseClass = SynectiksJPARepo.class)
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class CmsApp {
 
     private static final Logger log = LoggerFactory.getLogger(CmsApp.class);
+
+	private static ConfigurableApplicationContext ctx = null;
 
     private final Environment env;
 
@@ -63,7 +64,8 @@ public class CmsApp {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(CmsApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
-        Environment env = app.run(args).getEnvironment();
+        ctx  = app.run(args);
+        Environment env = ctx.getEnvironment();
         String protocol = "http";
         if (env.getProperty("server.ssl.key-store") != null) {
             protocol = "https";
@@ -87,4 +89,13 @@ public class CmsApp {
             env.getProperty("server.port"),
             env.getActiveProfiles());
     }
+
+	/**
+	 * Utility method to get bean from spring context.
+	 * @param cls
+	 * @return
+	 */
+	public static <T> T getBean(Class<T> cls) {
+		return ctx.getBean(cls);
+	}
 }

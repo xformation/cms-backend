@@ -1,15 +1,15 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.AttendanceMaster;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the AttendanceMaster entity.
+ * Spring Data repository for the AttendanceMaster entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface AttendanceMasterRepository extends JpaRepository<AttendanceMaster, Long> {
+public interface AttendanceMasterRepository
+		extends JPASearchRepository<AttendanceMaster, Long> {
 
 }

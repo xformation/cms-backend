@@ -1,15 +1,14 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.Student;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the Student entity.
+ * Spring Data repository for the Student entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
+public interface StudentRepository extends JPASearchRepository<Student, Long> {
 
 }

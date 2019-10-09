@@ -1,15 +1,15 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.AdminOverview;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.AdminOverview;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the AdminOverview entity.
+ * Spring Data repository for the AdminOverview entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface AdminOverviewRepository extends JpaRepository<AdminOverview, Long> {
+public interface AdminOverviewRepository
+		extends JPASearchRepository<AdminOverview, Long> {
 
 }

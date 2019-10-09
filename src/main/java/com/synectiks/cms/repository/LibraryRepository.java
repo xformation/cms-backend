@@ -1,15 +1,14 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.Library;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the Library entity.
+ * Spring Data repository for the Library entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface LibraryRepository extends JpaRepository<Library, Long> {
+public interface LibraryRepository extends JPASearchRepository<Library, Long> {
 
 }

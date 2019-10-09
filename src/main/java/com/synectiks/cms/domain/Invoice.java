@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
-
+import com.synectiks.cms.utils.IESEntity;
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 
 /**
@@ -23,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 @Table(name = "invoice")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "invoice")
-public class Invoice implements Serializable {
+public class Invoice implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

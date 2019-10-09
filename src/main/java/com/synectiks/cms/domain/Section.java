@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.SectionEnum;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Section.
@@ -21,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.SectionEnum;
 @Table(name = "section")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "section")
-public class Section implements Serializable {
+public class Section implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

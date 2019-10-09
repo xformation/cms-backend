@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Notifications.
@@ -18,8 +19,8 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "notifications")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@org.springframework.data.elasticsearch.annotations.Document(indexName = "notifications")
-public class Notifications implements Serializable {
+//@Document(indexName = "notifications")
+public class Notifications implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

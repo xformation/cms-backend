@@ -16,6 +16,7 @@ import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A AdmissionApplication.
@@ -23,8 +24,8 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "admission_application")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@org.springframework.data.elasticsearch.annotations.Document(indexName = "admissionapplication")
-public class AdmissionApplication implements Serializable {
+//@Document(indexName = "admissionapplication")
+public class AdmissionApplication implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

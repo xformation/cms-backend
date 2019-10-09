@@ -22,6 +22,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Facility.
@@ -30,7 +31,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Table(name = "facility")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "facility")
-public class Facility implements Serializable {
+public class Facility implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,15 +1,15 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.AcademicHistory;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the AcademicHistory entity.
+ * Spring Data repository for the AcademicHistory entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface AcademicHistoryRepository extends JpaRepository<AcademicHistory, Long> {
+public interface AcademicHistoryRepository
+		extends JPASearchRepository<AcademicHistory, Long> {
 
 }

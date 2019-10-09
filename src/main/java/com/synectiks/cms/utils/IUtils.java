@@ -33,7 +33,6 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.synectiks.cms.domain.ESEvent;
 
 /**
  * @author Rajesh Upadhyay
@@ -84,6 +83,10 @@ public interface IUtils {
 	}
 
 	static String getValueByKey(Environment env, String key, String defVal) {
+		if (isNull(env) || isNullOrEmpty(key)) {
+			logger.error(env + " or " + key + " should not be null.");
+			return null;
+		}
 		String val = env.getProperty(key);
 		if (isNull(val)) {
 			val = defVal;

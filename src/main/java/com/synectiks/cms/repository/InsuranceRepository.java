@@ -1,15 +1,14 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.Insurance;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import com.synectiks.cms.domain.Insurance;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
- * Spring Data  repository for the Insurance entity.
+ * Spring Data repository for the Insurance entity.
  */
-@SuppressWarnings("unused")
 @Repository
-public interface InsuranceRepository extends JpaRepository<Insurance, Long> {
+public interface InsuranceRepository extends JPASearchRepository<Insurance, Long> {
 
 }

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Contract.
@@ -21,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
 @Table(name = "contract")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "contract")
-public class Contract implements Serializable {
+public class Contract implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

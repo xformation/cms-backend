@@ -19,7 +19,7 @@ import com.synectiks.cms.domain.enumeration.Disability;
 import com.synectiks.cms.domain.enumeration.Gender;
 
 import com.synectiks.cms.domain.enumeration.Status;
-
+import com.synectiks.cms.utils.IESEntity;
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
 /**
@@ -29,7 +29,7 @@ import com.synectiks.cms.domain.enumeration.MaritalStatus;
 @Table(name = "employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "employee")
-public class Employee implements Serializable {
+public class Employee implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

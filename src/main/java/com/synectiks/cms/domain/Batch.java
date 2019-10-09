@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.BatchEnum;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Batch.
@@ -21,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.BatchEnum;
 @Table(name = "batch")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "batch")
-public class Batch implements Serializable {
+public class Batch implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

@@ -4,6 +4,8 @@ package com.synectiks.cms.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.GradeType;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.cms.utils.IESEntity;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 //import org.springframework.data.elasticsearch.annotations.Document;
@@ -21,7 +23,7 @@ import java.util.Objects;
 @Table(name = "academic_exam_setting")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "academicexamsetting")
-public class AcademicExamSetting implements Serializable {
+public class AcademicExamSetting implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

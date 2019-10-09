@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.RouteFrequency;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A TransportRoute.
@@ -20,7 +21,7 @@ import com.synectiks.cms.domain.enumeration.RouteFrequency;
 @Table(name = "transport_route")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "transportroute")
-public class TransportRoute implements Serializable {
+public class TransportRoute implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

@@ -3,6 +3,8 @@ package com.synectiks.cms.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.synectiks.cms.utils.IESEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -17,7 +19,7 @@ import java.util.Objects;
 @Table(name = "location")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "location")
-public class Location implements Serializable {
+public class Location implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

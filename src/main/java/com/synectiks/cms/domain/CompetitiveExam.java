@@ -2,6 +2,8 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.synectiks.cms.utils.IESEntity;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,7 +21,7 @@ import java.util.Objects;
 @Table(name = "competitive_exam")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "competitiveexam")
-public class CompetitiveExam implements Serializable {
+public class CompetitiveExam implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     

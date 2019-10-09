@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Modules.
@@ -15,8 +16,8 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "modules")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@org.springframework.data.elasticsearch.annotations.Document(indexName = "modules")
-public class Modules implements Serializable {
+//@Document(indexName = "modules")
+public class Modules implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

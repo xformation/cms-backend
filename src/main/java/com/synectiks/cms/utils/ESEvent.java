@@ -1,15 +1,13 @@
 /**
  * 
  */
-package com.synectiks.cms.domain;
+package com.synectiks.cms.utils;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.synectiks.cms.utils.IUtils;
 
 /**
  * @author Rajesh
@@ -31,6 +29,7 @@ public class ESEvent implements Serializable {
 
 	private EventType eventType;
 	private Object entity;
+	private String cls;
 
 	public ESEvent() {
 		
@@ -39,6 +38,7 @@ public class ESEvent implements Serializable {
 	public ESEvent(EventType type, Object entity) {
 		this.eventType = type;
 		this.entity = entity;
+		this.cls = entity.getClass().getName();
 	}
 
 	public EventType getEventType() {
@@ -53,8 +53,16 @@ public class ESEvent implements Serializable {
 		return entity;
 	}
 
-	public void setEntity(Class<? extends Serializable> entity) {
+	public void setEntity(Class<? extends IESEntity> entity) {
 		this.entity = entity;
+	}
+
+	public String getCls() {
+		return cls;
+	}
+
+	public void setCls(String clz) {
+		this.cls = clz;
 	}
 
 	/**
@@ -86,7 +94,7 @@ public class ESEvent implements Serializable {
 	public static ESEventBuilder builder(
 			EventType type, Object entity) {
 		Object ent = null;
-		if (Objects.isNull(entity) || !(entity instanceof Serializable)) {
+		if (Objects.isNull(entity) || !(entity instanceof IESEntity)) {
 			logger.error("Entity is null or not a valid entity "
 					+ "(Subclass of IESEntity) to index.");
 		} else {
@@ -127,7 +135,7 @@ public class ESEvent implements Serializable {
 			return this;
 		}
 
-		public ESEventBuilder withEntity(Class<? extends Serializable> event) {
+		public ESEventBuilder withEntity(Class<? extends IESEntity> event) {
 			this.entity = event;
 			return this;
 		}

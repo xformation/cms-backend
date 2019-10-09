@@ -18,7 +18,7 @@ import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 
 import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
-
+import com.synectiks.cms.utils.IESEntity;
 import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 
 /**
@@ -28,7 +28,7 @@ import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 @Table(name = "admission_enquiry")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "admissionenquiry")
-public class AdmissionEnquiry implements Serializable {
+public class AdmissionEnquiry implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
     
