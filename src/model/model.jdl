@@ -25,10 +25,10 @@ address2 String required
 branchHead String required
 }
 entity Book{
- issueDate LocalDate required
- dueDate LocalDate required
- noOfCopiesAvailable Integer required
- status StatusEnum required
+ issueDate LocalDate
+ dueDate LocalDate
+ noOfCopiesAvailable Integer
+ status StatusEnum
  receivedDate LocalDate
 
 }

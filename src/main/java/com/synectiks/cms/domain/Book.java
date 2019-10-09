@@ -6,7 +6,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
@@ -31,21 +30,17 @@ public class Book implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "issue_date", nullable = false)
+    @Column(name = "issue_date")
     private LocalDate issueDate;
 
-    @NotNull
-    @Column(name = "due_date", nullable = false)
+    @Column(name = "due_date")
     private LocalDate dueDate;
 
-    @NotNull
-    @Column(name = "no_of_copies_available", nullable = false)
+    @Column(name = "no_of_copies_available")
     private Integer noOfCopiesAvailable;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private StatusEnum status;
 
     @Column(name = "received_date")

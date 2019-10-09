@@ -1713,7 +1713,7 @@ type Mutation {
     removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
     searchLib(bookTitle:String,author:String, batchId:Long, subjectId:Long):[CmsLibrary!]!
 
-    addBook(input:AddBookInput!):AddBookPayload!
+     addBook(input: [AddBookInput!]!): AddBookPayload!
      updateBook(input:UpdateBookInput!):UpdateBookPayload!
      removeBook(input:RemoveBookInput!):RemoveBookPayload!
 
@@ -3680,13 +3680,8 @@ type RemoveLibraryPayload{
 }
 
 input AddBookInput{
-    issueDate:Date!
-    dueDate:Date!
-    noOfCopiesAvailable:Int!
-    status:StatusEnum!
-    receivedDate:Date!
-	studentId:Long
 	libraryId:Long
+	studentId:Long
 }
 type AddBookPayload{
     book:Book!

@@ -1,6 +1,5 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.StatusEnum;
@@ -12,16 +11,12 @@ public class BookDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private LocalDate issueDate;
 
-    @NotNull
     private LocalDate dueDate;
 
-    @NotNull
     private Integer noOfCopiesAvailable;
 
-    @NotNull
     private StatusEnum status;
 
     private LocalDate receivedDate;
