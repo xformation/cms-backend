@@ -3675,19 +3675,50 @@ public class Mutation implements GraphQLMutationResolver {
         libraryRepository.delete(book);
         return new RemoveLibraryPayload((Lists.newArrayList(libraryRepository.findAll())));
     }
+//    public AddAcademicExamSettingPayload addAcademicExamSetting(List<AddAcademicExamSettingInput> list) {
+//        AcademicExamSetting academicExamSetting = null;
+//        int countvalue = getCountvalueId()+1;
+//        for(AddAcademicExamSettingInput input: list ) {
+//            Branch branch = branchRepository.findById(input.getBranchId()).get();
+//            Subject subject = subjectRepository.findById(input.getSubjectId()).get();
+//            AcademicYear academicYear = academicYearRepository.findById(input.getAcademicyearId()).get();
+//            Batch batch = batchRepository.findById(input.getBatchId()).get();
+//            Section section = sectionRepository.findById(input.getSectionId()).get();
+//            Department department = departmentRepository.findById(input.getDepartmentId()).get();
+//            TypeOfGrading typeOfGrading = typeOfGradingRepository.findById((input.getTypeOfGradingId())).get();
+//
+//            academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
+//            academicExamSetting.setCountvalue(new Long(countvalue));
+//            academicExamSetting.setBranch(branch);
+//            academicExamSetting.setSubject(subject);
+//            academicExamSetting.setBatch(batch);
+//            academicExamSetting.setAcademicyear(academicYear);
+//            academicExamSetting.setSection(section);
+//            academicExamSetting.setDepartment(department);
+//            academicExamSetting.setTypeOfGrading(typeOfGrading);
+//            academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate()));
+//            this.academicExamSettingRepository.save(academicExamSetting);
+//
+//        }
+//        return  new AddAcademicExamSettingPayload(academicExamSetting);
+//    }
+    public AddBookPayload addBook(List<AddBookInput> list){
 
-    public AddBookPayload addBook(AddBookInput bookInput){
-        Student student = studentRepository.findById(bookInput.getStudentId()).get();
-        Library library = libraryRepository.findById(bookInput.getLibraryId()).get();
-        final Book b = new Book ();
-        b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getIssueDate()));
-        b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getDueDate()));
-        b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getReceivedDate()));
-        b.setNoOfCopiesAvailable(bookInput.getNoOfCopiesAvailable());
-        b.setStatus(bookInput.getStatus());
-        b.setStudent(student);
-        b.setLibrary(library);
-        bookRepository.save(b);
+         Book b = null;
+        for(AddBookInput input: list ) {
+            Student student = studentRepository.findById(input.getStudentId()).get();
+            Library library = libraryRepository.findById(input.getLibraryId()).get();
+
+            b = CommonUtil.createCopyProperties(input, Book.class);
+            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getIssueDate()));
+            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getDueDate()));
+            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getReceivedDate()));
+            b.setNoOfCopiesAvailable(input.getNoOfCopiesAvailable());
+            b.setStatus(input.getStatus());
+            b.setStudent(student);
+            b.setLibrary(library);
+            bookRepository.save(b);
+        }
         return new AddBookPayload(b);
     }
     public UpdateBookPayload updateBook(UpdateBookInput updateBookInput) {

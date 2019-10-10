@@ -3692,7 +3692,6 @@ input UpdateBookInput {
 	dueDate:Date!
 	noOfCopiesAvailable:Int!
 	status:StatusEnum
-	receivedDate:Date!
 	studentId:Long
 	libraryId:Long
 }
