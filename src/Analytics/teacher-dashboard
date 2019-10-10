@@ -1,0 +1,391 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 8,
+  "iteration": 1567775056474,
+  "links": [],
+  "panels": [
+    {
+      "content": "<html>\r\n  <head>\r\n    <style>\r\n      .dashTd{\r\n        border: 0px solid !important;\r\n      \tfont-weight: 500;\r\n      \tfont-family: Helvetica, Arial, sans-serif;\r\n        color: rgb(78, 144, 203);\r\n        padding-top:0 !important;\r\n        padding-bottom:0 !important;\r\n        \r\n      }\r\n      .borderStyle{\r\n        border: 0px solid !important;\r\n        padding-top:0 !important;\r\n        padding-bottom:0 !important;\r\n      }\r\n    </style>\r\n  </head>\r\n  <body >\r\n    <table text-align=\"left\" style=\"width:100%; border:0px solid;\">\r\n      <tr style=\"border:0px solid;\">\r\n          <td rowspan=\"3\" style=\"border:0px solid; width:16%\"><img id=\"imgProfile\" src=\"\" width=\"150\" height=\"150\"/></td>\r\n      </tr>\r\n      <tr style=\"border:0px solid;\">\r\n          <td style=\"border:0px solid; width:39%\"><font face=\"Helvetica, Arial, sans-serif\" size=\"5\" color=\"#4E90CB\" ><b><span id=\"thName\"></span></b></font></td>\r\n          <td style=\"border:0px solid; width:18%\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Contact No:</b></font>&nbsp;&nbsp;</span><span id=\"thPhone\"></span></td>\r\n          <td style=\"border:0px solid; width:23%\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Emergency Contact:</b></font>&nbsp;&nbsp;<span id=\"thPrPhone\"></span></td>\r\n          <td style=\"border:0px solid; width:4%\"><input type=\"button\" value=\"Profile\" style=\"background-color:light-gray;color:white;width:120px;height:35px;\" onclick=\"changeToProfile();\" disabled></input></td>\r\n      </tr>\r\n      <tr style=\"border:0px solid;\">\r\n        <td colspan=\"4\" style=\"border:0px solid;\">\r\n          <table style=\"width:70%; border:0px solid;\">\r\n            <tr style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\">\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Employee ID:</b></font></span>&nbsp;&nbsp;<span id=\"thEmpId\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Designation:</b></font></span>&nbsp;&nbsp;<span id=\"thDsg\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Staff Type:</b></font></span>&nbsp;&nbsp;<span id=\"thStfTyp\"></span></td>\r\n            </tr>\r\n            <tr style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\">\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Branch:</b></font></span>&nbsp;&nbsp;<span id=\"thBranch\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Department:</b></font></span>&nbsp;&nbsp;<span id=\"thDept\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Status:</b></font></span>&nbsp;&nbsp;<span id=\"thStatus\"></span></td>\r\n               \r\n            </tr>      \r\n          <table>\r\n        </td>\r\n      </tr>\r\n    </table>\r\n  </body>\r\n</html>\r\n\r\n<script>\r\n    var ipFend = '$CmsNodeIP';  \r\n    var ipBend = '$CmsBackEndIP';\r\n    var uploadPhoto = \"default_profile_image.jpg\";\r\n    var loggedInUser = '$CurrentUser';\r\n    \r\n    var asynReq = new XMLHttpRequest();\r\n    asynReq.onreadystatechange = function() {\r\n        if (asynReq.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4\r\n           if (asynReq.status == 200) {\r\n               var resp = asynReq.responseText;\r\n               var obj = JSON.parse(resp);\r\n               fillTeacherPersonalDetails(obj);\r\n               fillNotification(obj);\r\n               fillHoliday(obj);\r\n              // fillFeeDetails(obj);\r\n              \r\n              fillLecture(obj);\r\n               \r\n           }\r\n           else if (asynReq.status == 400) {\r\n              console.log('There was an error 400');\r\n           }\r\n           else {\r\n              console.log('something else other than 200 was returned');\r\n           }\r\n        }\r\n    };\r\n      \r\n    asynReq.open(\"GET\", \"http://\"+ipBend+\":8080/api/cmsdashboard?userName=\"+loggedInUser+\"&role=teacher\", true);\r\n    asynReq.send();\r\n    \r\n    \r\n    function changeToProfile(){\r\n      \r\n    }\r\n    \r\n    function fillTeacherPersonalDetails(obj){\r\n      document.getElementById(\"thName\").innerText = obj.teacher.teacherName + \" \"+obj.teacher.teacherMiddleName+ \" \"+obj.teacher.teacherLastName;\r\n      document.getElementById(\"thPhone\").innerText = obj.teacher.teacherContactNumber;\r\n      document.getElementById(\"thPrPhone\").innerText = obj.teacher.emergencyContactNo;\r\n      document.getElementById(\"thEmpId\").innerText = obj.teacher.employeeId;\r\n      document.getElementById(\"thDsg\").innerText = obj.teacher.designation;\r\n      document.getElementById(\"thStfTyp\").innerText = obj.teacher.staffType;\r\n      document.getElementById(\"thBranch\").innerText = obj.teacher.branch.branchName;\r\n      document.getElementById(\"thDept\").innerText = obj.teacher.department.name;\r\n      document.getElementById(\"thStatus\").innerText = obj.teacher.status;\r\n      var profileImg = document.getElementById(\"imgProfile\");\r\n      if(obj.teacher.uploadPhoto != null && obj.teacher.uploadPhoto != \"\"){\r\n        var ar = obj.teacher.uploadPhoto.split(\"\\\\\");\r\n        profileImg.src = \"http://\"+ipBend+\":8080/static/images/\"+ar[5];\r\n      }else{\r\n        profileImg.src = \"http://\"+ipBend+\":8080/static/images/\"+uploadPhoto;\r\n      }\r\n    }\r\n    \r\n    function fillFeeDetails(obj){\r\n      document.getElementById(\"invNo\").innerText = obj.cmsInvoice.invoiceNumber;\r\n      document.getElementById(\"amt\").innerText = obj.cmsInvoice.amountPaid;\r\n      document.getElementById(\"dueDt\").innerText = obj.cmsInvoice.strNextPaymentDate;\r\n      document.getElementById(\"status\").innerText = obj.cmsInvoice.paymentStatus;\r\n    }\r\n    \r\n    function fillHoliday(obj){\r\n      var table = document.getElementById(\"holidayTable\");\r\n      table.classList.add(\"borderStyle\");\r\n      for(var i=0; i<obj.cmsHolidayVoList.length; i++){\r\n        var j=0;\r\n        var objF = obj.cmsHolidayVoList[i];\r\n        var row = table.insertRow(i);\r\n        row.classList.add(\"borderStyle\");\r\n        // row.innerHTML = '<td >'+objF.holidayDesc+'</td>'+'<td>'+objF.strHolidayDate+'</td>';\r\n        row.innerHTML = '<td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" >'+objF.holidayDesc+'</font></span></td>'+\r\n        '<td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span>'+objF.strHolidayDate+'</span></td>'\r\n               \r\n        // var cell = row.insertCell(j);\r\n        // cell.classList.add(\"borderStyle\");\r\n        // cell.innerHTML = \"<span>\"+objF.facility.name+\"</span>\";\r\n      }\r\n    }\r\n    \r\n    function fillLecture(obj){\r\n      var table = document.getElementById(\"lectureTable\");\r\n      for(var i=0; i<obj.cmsLectureVoList.length; i++){\r\n        var j=0;\r\n        var row = table.insertRow(i+1);\r\n        var lecObj = obj.cmsLectureVoList[i];\r\n        \r\n        var cell1 = row.insertCell(j);\r\n        cell1.innerHTML = \"<span>\"+lecObj.attendancemaster.batch.department.name+\"</span>\";\r\n        var cell2 = row.insertCell(++j);\r\n        cell2.innerHTML = \"<span>\"+lecObj.attendancemaster.teach.subject.subjectDesc+\"</span>\";\r\n        var cell3 = row.insertCell(++j);\r\n        cell3.innerHTML = \"<span>\"+lecObj.attendancemaster.batch.batch+\"</span>\";\r\n        \r\n        var cell4 = row.insertCell(++j);\r\n        cell4.innerHTML = \"<span>\"+lecObj.attendancemaster.section.section+\"</span>\";\r\n        \r\n        \r\n        var cell5 = row.insertCell(++j);\r\n        cell5.innerHTML = \"<span>\"+lecObj.strLecDate+\"</span>\";\r\n        var cell6 = row.insertCell(++j);\r\n        cell6.innerHTML = \"<span>\"+lecObj.startTime+\"</span>\";\r\n        var cell7 = row.insertCell(++j);\r\n        cell7.innerHTML = \"<span>\"+lecObj.endTime+\"</span>\";\r\n      }\r\n    }\r\n    function fillNotification(obj){\r\n      console.log(\"notification ::::: \",obj);\r\n      var table = document.getElementById(\"notificationTable\");\r\n      // table.classList.add(\"borderStyle\");\r\n      \r\n      for(var i=0; i<obj.cmsNotificationsVoList.length; i++){\r\n        var j=0;\r\n        var nObj = obj.cmsNotificationsVoList[i]\r\n        var row = table.insertRow(i);\r\n        var cell = row.insertCell(j);\r\n        // cell.classList.add(\"borderStyle\");\r\n        cell.innerHTML = \"<span><b>\"+nObj.messageCode+\"</b></span><br><span>\"+nObj.message+\"</span>\";\r\n      }\r\n    }\r\n\r\n   \r\n</script>\r\n\r\n",
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Personal Details",
+      "type": "text"
+    },
+    {
+      "content": "<html>\r\n  <body>\r\n    <table id=\"notificationTable\" width=\"100%\">\r\n      \r\n    </table>\r\n  </body>\r\n</html>\r\n",
+      "gridPos": {
+        "h": 10,
+        "w": 5,
+        "x": 0,
+        "y": 5
+      },
+      "id": 4,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Notifications",
+      "type": "text"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 5,
+        "y": 5
+      },
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "paceLength": 10,
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "stack": false,
+      "steppedLine": false,
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Attendance Analysis",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 13,
+        "y": 5
+      },
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "paceLength": 10,
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "stack": false,
+      "steppedLine": false,
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Attendance Analysis",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "content": "<html>\n  <body>\n    <table style=\"width:100%; border:0px solid;\" id=\"holidayTable\" width=\"100%\">\n     \n    </table>\n  </body>\n</html>\n",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 5
+      },
+      "id": 10,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Holiday & Events",
+      "type": "text"
+    },
+    {
+      "content": "<html>\r\n  <body>\r\n    <table id=\"lectureTable\" width=\"100%\">\r\n      <tr ><th >Department</th><th >Subject</th><th >Year</th><th >Section</th><th >Lecture Date</th><th >Start Time</th><th >End Time</th></tr>\r\n    </table>\r\n  </body>\r\n</html>\r\n",
+      "gridPos": {
+        "h": 5,
+        "w": 13,
+        "x": 5,
+        "y": 10
+      },
+      "id": 12,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Today's Lecture Schedule",
+      "type": "text"
+    },
+    {
+      "content": "",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 10
+      },
+      "id": 14,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Upcoming Assignments",
+      "type": "text"
+    }
+  ],
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "100.81.3.25",
+          "value": "100.81.3.25"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "CmsNodeIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "100.81.3.25",
+            "value": "100.81.3.25"
+          }
+        ],
+        "query": "100.81.3.25",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "100.81.3.25",
+          "value": "100.81.3.25"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "CmsBackEndIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "100.81.3.25",
+            "value": "100.81.3.25"
+          }
+        ],
+        "query": "100.81.3.25",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "admin",
+          "value": "admin"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "CurrentUser",
+        "options": {
+          "selected": true,
+          "text": "admin",
+          "value": "admin"
+        },
+        "query": "admin",
+        "skipUrlSync": false,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "teacher-dashboard",
+  "uid": "Gua2k4cZk",
+  "version": 23
+}

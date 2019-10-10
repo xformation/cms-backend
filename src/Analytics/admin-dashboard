@@ -1,0 +1,710 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 8,
+  "iteration": 1568228545504,
+  "links": [],
+  "panels": [
+    {
+      "content": "<html>\n  <style>\n  .zeroBorder{\n      border: 0px solid !important;\n    }\n  .bordrLeftTopBottom{\n      border-left: 0px solid !important;\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottom{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottomRight{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n      border-right: 0px solid !important;\n    }\n  .textAlign {\n      text-align:center;\n    }\n  .blueFont{\n      color: rgb(78, 144, 203);\n    }\n  .greenFont{\n      color: rgb(97, 203, 150);\n    }\n  .orangeFont{\n      color: rgb(255, 162, 85);\n    }\n  .brownFont{\n      color: rgb(205, 99, 109);\n    }  \n  .boldFont{\n      font-weight:bold;\n    }\n  </style>\n  <body>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"zeroBorder textAlign blueFont boldFont\">Total New Enquiry</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"zeroBorder textAlign blueFont boldFont\">[[totalAdmEnq]]</td></tr>\n    </table>\n    <hr>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont boldFont\">Converted</td><td class=\"bordrTopBottom textAlign orangeFont boldFont\">Followup</td><td class=\"bordrTopBottomRight textAlign brownFont boldFont\">Declined</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont\">[[convertedAdmEnq]]</td><td class=\"bordrTopBottom textAlign orangeFont\">[[followupAdmEnq]]</td><td class=\"bordrTopBottomRight textAlign brownFont\">[[declinedAdmEnq]]</td></tr>\n    </table>\n  </body>\n</html>",
+      "gridPos": {
+        "h": 6,
+        "w": 9,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Admissions",
+      "type": "text"
+    },
+    {
+      "content": "<html>\n  <style>\n  .zeroBorder{\n      border: 0px solid !important;\n    }\n  .bordrLeftTopBottom{\n      border-left: 0px solid !important;\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottom{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottomRight{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n      border-right: 0px solid !important;\n    }\n  .textAlign {\n      text-align:center;\n    }\n  .blueFont{\n      color: rgb(78, 144, 203);\n    }\n  .greenFont{\n      color: rgb(97, 203, 150);\n    }\n  .orangeFont{\n      color: rgb(255, 162, 85);\n    }\n  .brownFont{\n      color: rgb(205, 99, 109);\n    }  \n  .boldFont{\n      font-weight:bold;\n    }\n  </style>\n  <body>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"zeroBorder textAlign blueFont boldFont\">Total Monthly Fees</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"zeroBorder textAlign blueFont boldFont\">[[totalFee]]</td></tr>\n    </table>\n    <hr>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont boldFont\">Collected</td><td class=\"bordrTopBottom textAlign orangeFont boldFont\">Pending</td><td class=\"bordrTopBottomRight textAlign brownFont boldFont\">Over Due</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont\">[[totalCollectedFee]]</td><td class=\"bordrTopBottom textAlign orangeFont\">[[totalPendingFee]]</td><td class=\"bordrTopBottomRight textAlign brownFont\">[[totalOverdueFee]]</td></tr>\n    </table>\n  </body>\n</html>",
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 9,
+        "y": 0
+      },
+      "id": 7,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Fees",
+      "type": "text"
+    },
+    {
+      "content": "<html>\n  <style>\n  .zeroBorder{\n      border: 0px solid !important;\n    }\n  .bordrLeftTopBottom{\n      border-left: 0px solid !important;\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottom{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottomRight{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n      border-right: 0px solid !important;\n    }\n  .textAlign {\n      text-align:center;\n    }\n  .blueFont{\n      color: rgb(78, 144, 203);\n    }\n  .greenFont{\n      color: rgb(97, 203, 150);\n    }\n  .orangeFont{\n      color: rgb(255, 162, 85);\n    }\n  .brownFont{\n      color: rgb(205, 99, 109);\n    }  \n  .boldFont{\n      font-weight:bold;\n    }\n  </style>\n  <body>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"zeroBorder textAlign blueFont boldFont\">Total Monthly Fees</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"zeroBorder textAlign blueFont boldFont\">[[totalFeeBranchWise]]</td></tr>\n    </table>\n    <hr>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont boldFont\">Collected</td><td class=\"bordrTopBottom textAlign orangeFont boldFont\">Pending</td><td class=\"bordrTopBottomRight textAlign brownFont boldFont\">Over Due</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont\">[[collectedFee]]</td><td class=\"bordrTopBottom textAlign orangeFont\">[[pendingFee]]</td><td class=\"bordrTopBottomRight textAlign brownFont\">[[overdueFee]]</td></tr>\n    </table>\n  </body>\n</html>",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 8,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Branch wise Fee -[[branch]]",
+      "type": "text"
+    },
+    {
+      "aliasColors": {},
+      "breakPoint": "25%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "InfluxDB",
+      "decimals": null,
+      "fontSize": "50%",
+      "format": "short",
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 4,
+      "interval": null,
+      "legend": {
+        "header": "Total",
+        "show": true,
+        "sideWidth": null,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "pieType": "donut",
+      "strokeWidth": "0",
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "select cnt as \"Total\" from admap2 where (\"tgbranch\"=~ /^[[branch]]$/) group by tgstatus",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Branch wise Students -  [[branch]]",
+      "type": "grafana-piechart-panel",
+      "valueName": "total"
+    },
+    {
+      "content": "<html>\r\n  <body>\r\n    <table id=\"notificationTable\" width=\"100%\">\r\n      \r\n    </table>\r\n  </body>\r\n</html>\r\n\r\n<script>\r\n    var ipFend = '$CmsNodeIP';  \r\n    var ipBend = '$CmsBackEndIP';\r\n    console.log(\"ipBend ---------\",ipBend);\r\n    var asynReq = new XMLHttpRequest();\r\n    asynReq.onreadystatechange = function() {\r\n        if (asynReq.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4\r\n          if (asynReq.status == 200) {\r\n              var resp = asynReq.responseText;\r\n              var obj = JSON.parse(resp);\r\n              fillNotification(obj);\r\n          }\r\n          else if (asynReq.status == 400) {\r\n              console.log('There was an error 400');\r\n          }\r\n          else {\r\n              console.log('something else other than 200 was returned');\r\n          }\r\n        }\r\n    };\r\n      \r\n    asynReq.open(\"GET\", \"http://\"+ipBend+\":8080/api/notifications\", true);\r\n    asynReq.send();\r\n    \r\n    function fillNotification(obj){\r\n      var table = document.getElementById(\"notificationTable\");\r\n      // console.log(\"NTF ::::: \",obj);\r\n      \r\n      for(var i=0; i<obj.length; i++){\r\n        var j=0;\r\n        var nObj = obj[i]\r\n        console.log(\"NTF : \",nObj);\r\n      \r\n        var row = table.insertRow(i);\r\n        var cell = row.insertCell(j);\r\n        // cell.classList.add(\"borderStyle\");\r\n        cell.innerHTML = \"<span><b>\"+nObj.messageCode+\"</b></span><br><span>\"+nObj.message+\"</span>\";\r\n      }\r\n    }\r\n\r\n   \r\n</script>",
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 10,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "News",
+      "type": "text"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "text": "Hyd Engineering college, IT Park branch",
+          "value": "Hyd Engineering college, IT Park branch"
+        },
+        "datasource": "InfluxDB",
+        "definition": "show tag values with key=\"TbranchName\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "branch",
+        "options": [],
+        "query": "show tag values with key=\"TbranchName\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "33891932",
+          "value": "33891932"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Collected from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "collectedFee",
+        "options": [],
+        "query": "select Collected from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "0",
+          "value": "0"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Pending from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "pendingFee",
+        "options": [],
+        "query": "select Pending from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "0",
+          "value": "0"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "overdueFee",
+        "options": [],
+        "query": "select Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Collected+Pending+Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalFeeBranchWise",
+        "options": [],
+        "query": "select Collected+Pending+Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select sum(Collected) from Fee ",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalCollectedFee",
+        "options": [],
+        "query": "select sum(Collected) from Fee ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select sum(pending) from Fee ",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalPendingFee",
+        "options": [],
+        "query": "select sum(pending) from Fee ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select sum(overdue) from Fee ",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalOverdueFee",
+        "options": [],
+        "query": "select sum(overdue) from Fee ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select sum(collected)+sum(pending)+sum(overdue) from Fee ",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalFee",
+        "options": [],
+        "query": "select sum(collected)+sum(pending)+sum(overdue) from Fee ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select converted from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "convertedAdmEnq",
+        "options": [],
+        "query": "select converted from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select followup from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "followupAdmEnq",
+        "options": [],
+        "query": "select followup from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "declinedAdmEnq",
+        "options": [],
+        "query": "select declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "select converted+followup+declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalAdmEnq",
+        "options": [],
+        "query": "select converted+followup+declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "text": "localhost",
+          "value": "localhost"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "CmsNodeIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "localhost",
+            "value": "localhost"
+          }
+        ],
+        "query": "localhost",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "localhost",
+          "value": "localhost"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "CmsBackEndIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "localhost",
+            "value": "localhost"
+          }
+        ],
+        "query": "localhost",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "admin",
+          "value": "admin"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "CurrentUser",
+        "options": {
+          "selected": true,
+          "text": "admin",
+          "value": "admin"
+        },
+        "query": "admin",
+        "skipUrlSync": false,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "admin-dashboard",
+  "uid": "V5HDv2cWk",
+  "version": 203
+}
