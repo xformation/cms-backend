@@ -123,7 +123,12 @@ public class AttendanceMasterRestController {
     	String sectionId = dataMap.get("sectionId");
     	
     	Long dptId = Long.parseLong(departmentId);
-    	Long bId = Long.parseLong(batchId);
+    	
+    	Long bId = 0L;
+    	if(!CommonUtil.isNullOrEmpty(batchId) && !"null".equalsIgnoreCase(batchId) && !"undefined".equalsIgnoreCase(batchId)) {
+    		bId = Long.parseLong(batchId);
+    	}
+    	
     	Long scId = 0L;
     	if(!CommonUtil.isNullOrEmpty(sectionId) && !"null".equalsIgnoreCase(sectionId) && !"undefined".equalsIgnoreCase(sectionId)) {
     		scId = Long.parseLong(sectionId);

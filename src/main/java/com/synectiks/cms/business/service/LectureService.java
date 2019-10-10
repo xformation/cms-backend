@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,7 +18,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.service.util.DateFormatUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -49,8 +49,10 @@ import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleVo;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.MetaLectureRepository;
+import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
 import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 @Component
 public class LectureService {
@@ -68,6 +70,9 @@ public class LectureService {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private TeachRepository teachRepository;
 
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -534,7 +539,7 @@ public class LectureService {
         return list;
     }
 
-    public List<CmsLectureVo> getAllLecturess(Long ayId, Long brId, Long dpId, Long trId, Long btId, Long scId, Long sbId, Long thId, LocalDate lecDate){
+    public List<CmsLectureVo> getAllLecturess(Long ayId, Long brId, Long dpId, Long trId, Long btId, Long scId, Long sbId, Long thId, LocalDate fromLecDate, LocalDate toLecDate){
     	logger.info("Getting scheduled lectures data:");
     	List<CmsLectureVo> ls = new ArrayList<>();
     	
@@ -558,29 +563,30 @@ public class LectureService {
 		@SuppressWarnings("unchecked")
 		List<Batch> batchList = query.getResultList();
     	
-    	Teach teach = null;
-		if(subject != null || teacher != null) {
-			teach = new Teach();
-			if(subject != null) {
-				teach.setSubject(subject);
-			}
-			if(teacher != null) {
-				teach.setTeacher(teacher);
-			}
+    	Teach teach = new Teach(); //(teacher != null && subject != null) ? this.commonService.getTeachBySubjectAndTeacherId(teacher.getId(), subject.getId()) : null;
+		if(teacher != null && subject == null) {
+			teach.setTeacher(teacher);
+		}else if(teacher == null && subject != null) {
+			teach.setSubject(subject);
+		}else if(teacher != null && subject != null) {
+			teach.setTeacher(teacher);
+			teach.setSubject(subject);
 		}
-		query = null;
-		if(section != null && teach != null) {
-			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach = :th and a.batch in (:bth)");
+		List<Teach> teachList  = this.teachRepository.findAll(Example.of(teach));
+		
+    	query = null;
+		if(section != null && teachList.size() > 0) {
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach in (:th) and a.batch in (:bth)");
 			query.setParameter("sc", section);
-			query.setParameter("th", teach);
+			query.setParameter("th", teachList);
 			query.setParameter("bth", batchList);
-		}else if(section != null && teach == null) {
+		}else if(section != null && teachList.size() == 0) {
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.batch in (:bth)");
 			query.setParameter("sc", section);
 			query.setParameter("bth", batchList);
-		}else if(section == null && teach != null) {
-			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach = :th and a.batch in (:bth)");
-			query.setParameter("th", teach);
+		}else if(section == null && teachList.size() > 0) {
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th) and a.batch in (:bth)");
+			query.setParameter("th", teachList);
 			query.setParameter("bth", batchList);
 		}else {
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.batch in (:bth)");
@@ -588,11 +594,20 @@ public class LectureService {
 		}
 		@SuppressWarnings("unchecked")
 		List<AttendanceMaster> amList = query.getResultList();
-    	
+    	if(amList.size() == 0) {
+    		AttendanceMaster am = new AttendanceMaster();
+    		am.setId(0L);
+    		amList.add(am);
+    	}
 		query = null;
-		if(lecDate != null) {
-			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate = :lcdt and l.attendancemaster in (:amId) ");
-			query.setParameter("lcdt", lecDate);
+		if(fromLecDate != null && toLecDate == null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate >= :lcdt and l.attendancemaster in (:amId) ");
+			query.setParameter("lcdt", fromLecDate);
+			query.setParameter("amId", amList);
+		}else if(fromLecDate != null && toLecDate != null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
+			query.setParameter("startDate", fromLecDate);
+			query.setParameter("endDate", toLecDate);
 			query.setParameter("amId", amList);
 		}else if(term != null) {
 			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
@@ -614,10 +629,12 @@ public class LectureService {
 			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
 			ls.add(vo);
 		}
-    		
+    	
+		Collections.sort(ls, (o1, o2) -> o1.getLecDate().compareTo(o2.getLecDate()));
     	logger.debug("Total lectures scheduled today for teacher : "+ls.size());
     	return ls;
     }
+    
     
 }
 

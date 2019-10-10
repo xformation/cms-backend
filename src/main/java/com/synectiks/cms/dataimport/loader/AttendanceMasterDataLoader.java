@@ -22,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.SectionEnum;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 import com.synectiks.cms.exceptions.DataNotFoundException;
-import com.synectiks.cms.exceptions.DuplicationRecordFoundException;
+import com.synectiks.cms.exceptions.DuplicateRecordFoundException;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;
 
@@ -40,7 +40,7 @@ public class AttendanceMasterDataLoader extends DataLoader {
     }
 
     @Override
-    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, DuplicationRecordFoundException, MandatoryFieldMissingException, DataNotFoundException {
+    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, DuplicateRecordFoundException, MandatoryFieldMissingException, DataNotFoundException {
         StringBuilder sb = new StringBuilder();
 
         AttendanceMaster obj = CommonUtil.createCopyProperties(cls.newInstance(), AttendanceMaster.class);
@@ -226,7 +226,7 @@ public class AttendanceMasterDataLoader extends DataLoader {
                     		String msg = "Duplicate attendance master found";
                         	sb.append(msg+",");
                             logger.warn(msg);
-                            throw new DuplicationRecordFoundException(msg);
+                            throw new DuplicateRecordFoundException(msg);
                     	}
                     }else {
                     	sb.append("section_id, ");
@@ -257,7 +257,7 @@ public class AttendanceMasterDataLoader extends DataLoader {
         	sb.append(msg+",");
             logger.warn(msg);
             if (sb.length() > 0) {
-                throw new DuplicationRecordFoundException(msg);
+                throw new DuplicateRecordFoundException(msg);
             }
         }
         

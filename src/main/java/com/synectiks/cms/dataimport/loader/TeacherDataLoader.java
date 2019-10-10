@@ -25,7 +25,7 @@ import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.StaffType;
 import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.exceptions.DuplicationRecordFoundException;
+import com.synectiks.cms.exceptions.DuplicateRecordFoundException;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
@@ -44,7 +44,7 @@ public class TeacherDataLoader extends DataLoader {
     }
 
     @Override
-    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, DuplicationRecordFoundException , MandatoryFieldMissingException {
+    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, DuplicateRecordFoundException , MandatoryFieldMissingException {
         StringBuilder sb = new StringBuilder();
 
         Teacher obj = CommonUtil.createCopyProperties(cls.newInstance(), Teacher.class);
@@ -531,7 +531,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append(msg+",");
             logger.warn(msg);
             if (sb.length() > 0) {
-                throw new DuplicationRecordFoundException(msg);
+                throw new DuplicateRecordFoundException(msg);
             }
         }
         

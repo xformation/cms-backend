@@ -39,6 +39,7 @@ import com.synectiks.cms.domain.CmsFacility;
 import com.synectiks.cms.domain.CmsFeeCategory;
 import com.synectiks.cms.domain.CmsFeeDetails;
 import com.synectiks.cms.domain.CmsGenderVo;
+import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.CmsNotificationsVo;
 import com.synectiks.cms.domain.CmsSectionVo;
 import com.synectiks.cms.domain.CmsSemesterVo;
@@ -712,8 +713,8 @@ public class CommonService {
      * @return
      */
     public List<AttendanceMaster> getAttendanceMasterForCriteria(List<Batch> batchList, List<Section> secList, List<Teach> teachList){
-        if(batchList.size() == 0 || secList.size() == 0 || teachList.size() == 0) {
-            logger.warn("Either batch, section or teach list is empty. Returning empty attendance master list.");
+        if(batchList.size() == 0 || teachList.size() == 0) {
+            logger.warn("Either batch, teach list is empty. Returning empty attendance master list.");
             logger.warn("Total records in batch list: "+batchList.size()+", total records in section list: "+secList.size()	+", total records in teach list: "+teachList.size());
             return Collections.emptyList();
         }
@@ -724,15 +725,25 @@ public class CommonService {
         for (Batch bth : batchList) {
             inBatch.value(bth.getId());
         }
-        In<Long> inSection = cb.in(root.get("section"));
-        for (Section sec : secList) {
-            inSection.value(sec.getId());
+        In<Long> inSection = null;
+        if(secList != null && secList.size() > 0) {
+        	inSection = cb.in(root.get("section"));
+            for (Section sec : secList) {
+                inSection.value(sec.getId());
+            }
         }
+        
         In<Long> inTeach = cb.in(root.get("teach"));
         for (Teach tch : teachList) {
             inTeach.value(tch.getId());
         }
-        CriteriaQuery<AttendanceMaster> select = query.select(root).where(cb.and(inBatch),cb.and(inSection), cb.and(inTeach));
+        CriteriaQuery<AttendanceMaster> select = null;
+        if(inSection != null) {
+        	select = query.select(root).where(cb.and(inBatch),cb.and(inSection), cb.and(inTeach));
+        }else {
+        	select = query.select(root).where(cb.and(inBatch), cb.and(inTeach));
+        }
+        
         TypedQuery<AttendanceMaster> typedQuery = this.entityManager.createQuery(select);
         List<AttendanceMaster> atndMstrList = typedQuery.getResultList();
         logger.debug("Returning list of attendance master from JPA criteria query. Total records : "+atndMstrList.size());
@@ -746,28 +757,45 @@ public class CommonService {
      * @return
      */
     public List<AttendanceMaster> getAttendanceMasterForCriteria(List<Batch> batchList, List<Section> secList){
-        if(batchList.size() == 0 || secList.size() == 0 ) {
-            logger.warn("Either batch or section. Returning empty attendance master list.");
+        if(batchList.size() == 0 ) {
+            logger.warn("Batch is empty. Returning empty attendance master list.");
             logger.warn("Total records in batch list: "+batchList.size()+" and total records in section list: "+secList.size());
             return Collections.emptyList();
         }
-        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<AttendanceMaster> query = cb.createQuery(AttendanceMaster.class);
-        Root<AttendanceMaster> root = query.from(AttendanceMaster.class);
-        In<Long> inBatch = cb.in(root.get("batch"));
-        for (Batch bth : batchList) {
-            inBatch.value(bth.getId());
-        }
-        In<Long> inSection = cb.in(root.get("section"));
-        for (Section sec : secList) {
-            inSection.value(sec.getId());
-        }
-
-        CriteriaQuery<AttendanceMaster> select = query.select(root).where(cb.and(inBatch),cb.and(inSection));
-        TypedQuery<AttendanceMaster> typedQuery = this.entityManager.createQuery(select);
-        List<AttendanceMaster> atndMstrList = typedQuery.getResultList();
-        logger.debug("Returning list of attendance master for admin attendance from JPA criteria query. Total records : "+atndMstrList.size());
-        return atndMstrList;
+        
+    	@SuppressWarnings("unchecked")
+		List<AttendanceMaster> list = this.entityManager.createQuery("select l from AttendanceMaster l where l.batch in (:bthList)  or l.section in (:secList)")
+    			.setParameter("bthList", batchList)
+    			.setParameter("secList", secList)
+    			.getResultList();
+		return list;
+		
+//        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+//        CriteriaQuery<AttendanceMaster> query = cb.createQuery(AttendanceMaster.class);
+//        Root<AttendanceMaster> root = query.from(AttendanceMaster.class);
+//        In<Long> inBatch = cb.in(root.get("batch"));
+//        for (Batch bth : batchList) {
+//            inBatch.value(bth.getId());
+//        }
+//        In<Long> inSection = null;
+//        if(secList != null && secList.size() >0) {
+//        	inSection = cb.in(root.get("section"));
+//            for (Section sec : secList) {
+//                inSection.value(sec.getId());
+//            }
+//        }
+//        
+//        CriteriaQuery<AttendanceMaster> select = null;
+//        if(inSection != null) {
+//        	select = query.select(root).where(cb.and(inBatch),cb.and(inSection));
+//        }else {
+//        	select = query.select(root).where(cb.and(inBatch));
+//        }
+//        
+//        TypedQuery<AttendanceMaster> typedQuery = this.entityManager.createQuery(select);
+//        List<AttendanceMaster> atndMstrList = typedQuery.getResultList();
+//        logger.debug("Returning list of attendance master for admin attendance from JPA criteria query. Total records : "+atndMstrList.size());
+//        return atndMstrList;
     }
 
     public List<Lecture> getLectureForCriteria(List<AttendanceMaster> atndMstrList, String lectureDate) throws Exception{
@@ -1403,12 +1431,30 @@ public class CommonService {
 		return batch;
 	}
     
-//    public static void main(String a[]) {
+    public List<Lecture> getAllLecturesAlreadyScheduled(List<AttendanceMaster> amList, CmsLectureVo vo) {
+    	
+    	LocalDate lecDate = DateFormatUtil.convertStringToLocalDate(vo.getStrLecDate(), "MM/dd/yyyy");
+    	
+    	@SuppressWarnings("unchecked")
+		List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate = :lcDate and l.startTime = :stTime and l.endTime = :ndTime and l.attendancemaster in (:amId) ")
+    			.setParameter("lcDate", lecDate)
+    			.setParameter("stTime", vo.getStartTime())
+    			.setParameter("ndTime", vo.getEndTime())
+    			.setParameter("amId", amList)
+    			.getResultList();
+		return list;
+	}
+    
+    public static void main(String a[]) {
+    	String dt = "10/10/2019";
+    	LocalDate ld = DateFormatUtil.convertStringToLocalDate(dt, "MM/dd/yyyy");
+    	System.out.println(ld);
 //        LocalDate ld = LocalDate.now();
 //        System.out.println(ld);
 //
 //        String strLd =  ld.format(DateTimeFormatter.ofPattern("d-MM-yyyy"));
 //        LocalDate localDate = LocalDate.parse(strLd, DateTimeFormatter.ofPattern("d-MM-yyyy"));
 //        System.out.println(localDate);
-//    }
+    	
+    }
 }
