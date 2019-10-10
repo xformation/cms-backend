@@ -1,0 +1,176 @@
+<html>
+  <head>
+    <style>
+      .dashTd{
+        border: 0px solid !important;
+      	font-weight: 500;
+      	font-family: Helvetica, Arial, sans-serif;
+        color: rgb(78, 144, 203);
+        padding-top:0 !important;
+        padding-bottom:0 !important;
+
+      }
+      .borderStyle{
+        border: 0px solid !important;
+        padding-top:0 !important;
+        padding-bottom:0 !important;
+      }
+    </style>
+  </head>
+  <body >
+    <table text-align="left" style="width:100%; border:0px solid;">
+      <tr style="border:0px solid;">
+          <td rowspan="3" style="border:0px solid; width:16%"><img id="imgProfile" src="" width="150" height="150"/></td>
+      </tr>
+      <tr style="border:0px solid;">
+          <td style="border:0px solid; width:39%"><font face="Helvetica, Arial, sans-serif" size="5" color="#4E90CB" ><b><span id="thName"></span></b></font></td>
+          <td style="border:0px solid; width:18%"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Contact No:</b></font>&nbsp;&nbsp;</span><span id="thPhone"></span></td>
+          <td style="border:0px solid; width:23%"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Emergency Contact:</b></font>&nbsp;&nbsp;<span id="thPrPhone"></span></td>
+          <td style="border:0px solid; width:4%"><input type="button" value="Profile" style="background-color:light-gray;color:white;width:120px;height:35px;" onclick="changeToProfile();" disabled></input></td>
+      </tr>
+      <tr style="border:0px solid;">
+        <td colspan="4" style="border:0px solid;">
+          <table style="width:70%; border:0px solid;">
+            <tr style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;">
+               <td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Employee ID:</b></font></span>&nbsp;&nbsp;<span id="thEmpId"></span></td>
+               <td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Designation:</b></font></span>&nbsp;&nbsp;<span id="thDsg"></span></td>
+               <td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Staff Type:</b></font></span>&nbsp;&nbsp;<span id="thStfTyp"></span></td>
+            </tr>
+            <tr style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;">
+               <td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Branch:</b></font></span>&nbsp;&nbsp;<span id="thBranch"></span></td>
+               <td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Department:</b></font></span>&nbsp;&nbsp;<span id="thDept"></span></td>
+               <td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" ><b>Status:</b></font></span>&nbsp;&nbsp;<span id="thStatus"></span></td>
+
+            </tr>
+          <table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+<script>
+    var ipFend = '$CmsNodeIP';
+    var ipBend = '$CmsBackEndIP';
+    var uploadPhoto = "default_profile_image.jpg";
+    var loggedInUser = '$CurrentUser';
+
+    var asynReq = new XMLHttpRequest();
+    asynReq.onreadystatechange = function() {
+        if (asynReq.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
+           if (asynReq.status == 200) {
+               var resp = asynReq.responseText;
+               var obj = JSON.parse(resp);
+               fillTeacherPersonalDetails(obj);
+               fillNotification(obj);
+               fillHoliday(obj);
+              // fillFeeDetails(obj);
+
+              fillLecture(obj);
+
+           }
+           else if (asynReq.status == 400) {
+              console.log('There was an error 400');
+           }
+           else {
+              console.log('something else other than 200 was returned');
+           }
+        }
+    };
+
+    asynReq.open("GET", "http://"+ipBend+":8080/api/cmsdashboard?userName="+loggedInUser+"&role=teacher", true);
+    asynReq.send();
+
+
+    function changeToProfile(){
+
+    }
+
+    function fillTeacherPersonalDetails(obj){
+      document.getElementById("thName").innerText = obj.teacher.teacherName + " "+obj.teacher.teacherMiddleName+ " "+obj.teacher.teacherLastName;
+      document.getElementById("thPhone").innerText = obj.teacher.teacherContactNumber;
+      document.getElementById("thPrPhone").innerText = obj.teacher.emergencyContactNo;
+      document.getElementById("thEmpId").innerText = obj.teacher.employeeId;
+      document.getElementById("thDsg").innerText = obj.teacher.designation;
+      document.getElementById("thStfTyp").innerText = obj.teacher.staffType;
+      document.getElementById("thBranch").innerText = obj.teacher.branch.branchName;
+      document.getElementById("thDept").innerText = obj.teacher.department.name;
+      document.getElementById("thStatus").innerText = obj.teacher.status;
+      var profileImg = document.getElementById("imgProfile");
+      if(obj.teacher.uploadPhoto != null && obj.teacher.uploadPhoto != ""){
+        var ar = obj.teacher.uploadPhoto.split("\\");
+        profileImg.src = "http://"+ipBend+":8080/static/images/"+ar[5];
+      }else{
+        profileImg.src = "http://"+ipBend+":8080/static/images/"+uploadPhoto;
+      }
+    }
+
+    function fillFeeDetails(obj){
+      document.getElementById("invNo").innerText = obj.cmsInvoice.invoiceNumber;
+      document.getElementById("amt").innerText = obj.cmsInvoice.amountPaid;
+      document.getElementById("dueDt").innerText = obj.cmsInvoice.strNextPaymentDate;
+      document.getElementById("status").innerText = obj.cmsInvoice.paymentStatus;
+    }
+
+    function fillHoliday(obj){
+      var table = document.getElementById("holidayTable");
+      table.classList.add("borderStyle");
+      for(var i=0; i<obj.cmsHolidayVoList.length; i++){
+        var j=0;
+        var objF = obj.cmsHolidayVoList[i];
+        var row = table.insertRow(i);
+        row.classList.add("borderStyle");
+        // row.innerHTML = '<td >'+objF.holidayDesc+'</td>'+'<td>'+objF.strHolidayDate+'</td>';
+        row.innerHTML = '<td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span><font face="Helvetica, Arial, sans-serif" color="#4E90CB" >'+objF.holidayDesc+'</font></span></td>'+
+        '<td style="border:0px solid; padding-top:0 !important; padding-bottom:0 !important;"><span>'+objF.strHolidayDate+'</span></td>'
+
+        // var cell = row.insertCell(j);
+        // cell.classList.add("borderStyle");
+        // cell.innerHTML = "<span>"+objF.facility.name+"</span>";
+      }
+    }
+
+    function fillLecture(obj){
+      var table = document.getElementById("lectureTable");
+      for(var i=0; i<obj.cmsLectureVoList.length; i++){
+        var j=0;
+        var row = table.insertRow(i+1);
+        var lecObj = obj.cmsLectureVoList[i];
+
+        var cell1 = row.insertCell(j);
+        cell1.innerHTML = "<span>"+lecObj.attendancemaster.batch.department.name+"</span>";
+        var cell2 = row.insertCell(++j);
+        cell2.innerHTML = "<span>"+lecObj.attendancemaster.teach.subject.subjectDesc+"</span>";
+        var cell3 = row.insertCell(++j);
+        cell3.innerHTML = "<span>"+lecObj.attendancemaster.batch.batch+"</span>";
+
+        var cell4 = row.insertCell(++j);
+        cell4.innerHTML = "<span>"+lecObj.attendancemaster.section.section+"</span>";
+
+
+        var cell5 = row.insertCell(++j);
+        cell5.innerHTML = "<span>"+lecObj.strLecDate+"</span>";
+        var cell6 = row.insertCell(++j);
+        cell6.innerHTML = "<span>"+lecObj.startTime+"</span>";
+        var cell7 = row.insertCell(++j);
+        cell7.innerHTML = "<span>"+lecObj.endTime+"</span>";
+      }
+    }
+    function fillNotification(obj){
+      console.log("notification ::::: ",obj);
+      var table = document.getElementById("notificationTable");
+      // table.classList.add("borderStyle");
+
+      for(var i=0; i<obj.cmsNotificationsVoList.length; i++){
+        var j=0;
+        var nObj = obj.cmsNotificationsVoList[i]
+        var row = table.insertRow(i);
+        var cell = row.insertCell(j);
+        // cell.classList.add("borderStyle");
+        cell.innerHTML = "<span><b>"+nObj.messageCode+"</b></span><br><span>"+nObj.message+"</span>";
+      }
+    }
+
+
+</script>
+
