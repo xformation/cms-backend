@@ -1040,7 +1040,7 @@ type AttendanceMaster{
 	id: Long!
     desc: String!
     teach: Teach!
-    section: Section!
+    section: Section
     batch: Batch!
 }
 type Lecture{

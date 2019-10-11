@@ -714,10 +714,11 @@ public class CommonService {
      */
     public List<AttendanceMaster> getAttendanceMasterForCriteria(List<Batch> batchList, List<Section> secList, List<Teach> teachList){
         if(batchList.size() == 0 || teachList.size() == 0) {
-            logger.warn("Either batch, teach list is empty. Returning empty attendance master list.");
-            logger.warn("Total records in batch list: "+batchList.size()+", total records in section list: "+secList.size()	+", total records in teach list: "+teachList.size());
+            logger.warn("Either batch or teach list is empty. Returning empty attendance master list.");
+            logger.warn("Total records in batch list: "+batchList.size()+", total records in teach list: "+teachList.size());
             return Collections.emptyList();
         }
+        
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<AttendanceMaster> query = cb.createQuery(AttendanceMaster.class);
         Root<AttendanceMaster> root = query.from(AttendanceMaster.class);
@@ -725,24 +726,24 @@ public class CommonService {
         for (Batch bth : batchList) {
             inBatch.value(bth.getId());
         }
-        In<Long> inSection = null;
-        if(secList != null && secList.size() > 0) {
-        	inSection = cb.in(root.get("section"));
-            for (Section sec : secList) {
-                inSection.value(sec.getId());
-            }
-        }
+//        In<Long> inSection = null;
+//        if(secList != null && secList.size() > 0) {
+//        	inSection = cb.in(root.get("section"));
+//            for (Section sec : secList) {
+//                inSection.value(sec.getId());
+//            }
+//        }
         
         In<Long> inTeach = cb.in(root.get("teach"));
         for (Teach tch : teachList) {
             inTeach.value(tch.getId());
         }
-        CriteriaQuery<AttendanceMaster> select = null;
-        if(inSection != null) {
-        	select = query.select(root).where(cb.and(inBatch),cb.and(inSection), cb.and(inTeach));
-        }else {
-        	select = query.select(root).where(cb.and(inBatch), cb.and(inTeach));
-        }
+        CriteriaQuery<AttendanceMaster> select = query.select(root).where(cb.and(inBatch), cb.and(inTeach));
+//        if(inSection != null) {
+//        	select = query.select(root).where(cb.and(inBatch),cb.and(inSection), cb.and(inTeach));
+//        }else {
+//        	select = query.select(root).where(cb.and(inBatch), cb.and(inTeach));
+//        }
         
         TypedQuery<AttendanceMaster> typedQuery = this.entityManager.createQuery(select);
         List<AttendanceMaster> atndMstrList = typedQuery.getResultList();
@@ -764,9 +765,9 @@ public class CommonService {
         }
         
     	@SuppressWarnings("unchecked")
-		List<AttendanceMaster> list = this.entityManager.createQuery("select l from AttendanceMaster l where l.batch in (:bthList)  or l.section in (:secList)")
+		List<AttendanceMaster> list = this.entityManager.createQuery("select l from AttendanceMaster l where l.batch in (:bthList) ")
     			.setParameter("bthList", batchList)
-    			.setParameter("secList", secList)
+//    			.setParameter("secList", secList)
     			.getResultList();
 		return list;
 		
