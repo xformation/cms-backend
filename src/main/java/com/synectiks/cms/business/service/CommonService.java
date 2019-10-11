@@ -642,8 +642,8 @@ public class CommonService {
                 cfc.setIssueDate(null);
             }
             if(ff.getReceivedDate() != null) {
-                cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setIssueDate(null);
+                cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setReceivedDate(null);
             }
 
             ls.add(cfc);

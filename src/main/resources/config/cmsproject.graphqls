@@ -3714,9 +3714,10 @@ input UpdateBookInput {
     issueDate:Date!
 	dueDate:Date!
 	noOfCopiesAvailable:Int!
-	status:StatusEnum
-	studentId:Long
-	libraryId:Long
+	status:StatusEnum!
+	studentId:Long!
+	libraryId:Long!
+	receivedDate: Date!
 }
 type UpdateBookPayload{
     book:Book!
