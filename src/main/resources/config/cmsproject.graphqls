@@ -948,11 +948,11 @@ type AuthorizedSignatory {
 type BankAccounts {
     id: Long!
     nameOfBank: NameOfBank!
-    accountNumber: Long!
+    accountNumber: String!
     typeOfAccount: String!
     ifscCode: String!
     branchAddress: String!
-    corporateId: Int!
+    corporateId: String!
     branch: Branch
     college: College!
 }
@@ -2248,11 +2248,11 @@ type RemoveStudentExamReportPayload {
 
 input AddBankAccountsInput {
    nameOfBank: NameOfBank!
-   accountNumber: Long!
+   accountNumber: String!
    typeOfAccount: String!
    ifscCode: String!
    branchAddress: String!
-   corporateId: Int!
+   corporateId: String!
    branchId: Long
    collegeId: Long!
 }
@@ -2262,11 +2262,11 @@ type AddBankAccountsPayload {
 input UpdateBankAccountsInput {
    id: Long!
    nameOfBank: NameOfBank!
-   accountNumber: Long!
+   accountNumber: String!
    typeOfAccount: String!
    ifscCode: String!
    branchAddress: String!
-   corporateId: Int!
+   corporateId: String!
    branchId: Long
    collegeId: Long
 }

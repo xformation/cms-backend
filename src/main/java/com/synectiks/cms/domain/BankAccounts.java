@@ -1,6 +1,4 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -8,9 +6,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.NameOfBank;
 
@@ -20,14 +17,15 @@ import com.synectiks.cms.domain.enumeration.NameOfBank;
 @Entity
 @Table(name = "bank_accounts")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "bankaccounts")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "bankaccounts")
 public class BankAccounts implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @NotNull
@@ -37,7 +35,7 @@ public class BankAccounts implements Serializable {
 
     @NotNull
     @Column(name = "account_number", nullable = false)
-    private Long accountNumber;
+    private String accountNumber;
 
     @NotNull
     @Column(name = "type_of_account", nullable = false)
@@ -53,7 +51,7 @@ public class BankAccounts implements Serializable {
 
     @NotNull
     @Column(name = "corporate_id", nullable = false)
-    private Integer corporateId;
+    private String corporateId;
 
     @ManyToOne
     @JsonIgnoreProperties("bankAccounts")
@@ -85,16 +83,16 @@ public class BankAccounts implements Serializable {
         this.nameOfBank = nameOfBank;
     }
 
-    public Long getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
-    public BankAccounts accountNumber(Long accountNumber) {
+    public BankAccounts accountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
         return this;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -137,16 +135,16 @@ public class BankAccounts implements Serializable {
         this.branchAddress = branchAddress;
     }
 
-    public Integer getCorporateId() {
+    public String getCorporateId() {
         return corporateId;
     }
 
-    public BankAccounts corporateId(Integer corporateId) {
+    public BankAccounts corporateId(String corporateId) {
         this.corporateId = corporateId;
         return this;
     }
 
-    public void setCorporateId(Integer corporateId) {
+    public void setCorporateId(String corporateId) {
         this.corporateId = corporateId;
     }
 
@@ -182,19 +180,15 @@ public class BankAccounts implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BankAccounts)) {
             return false;
         }
-        BankAccounts bankAccounts = (BankAccounts) o;
-        if (bankAccounts.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), bankAccounts.getId());
+        return id != null && id.equals(((BankAccounts) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -202,11 +196,11 @@ public class BankAccounts implements Serializable {
         return "BankAccounts{" +
             "id=" + getId() +
             ", nameOfBank='" + getNameOfBank() + "'" +
-            ", accountNumber=" + getAccountNumber() +
+            ", accountNumber='" + getAccountNumber() + "'" +
             ", typeOfAccount='" + getTypeOfAccount() + "'" +
             ", ifscCode='" + getIfscCode() + "'" +
             ", branchAddress='" + getBranchAddress() + "'" +
-            ", corporateId=" + getCorporateId() +
+            ", corporateId='" + getCorporateId() + "'" +
             "}";
     }
 }

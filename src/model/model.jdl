@@ -324,13 +324,14 @@ entity AcademicExamSetting {
     countvalue Long required
 
 }
+
 entity BankAccounts{
-nameOfBank NameOfBank required
-accountNumber Long required
-typeOfAccount String required
-ifscCode String required
-branchAddress String required
-corporateId Integer required
+	nameOfBank NameOfBank required
+	accountNumber String required
+	typeOfAccount String required
+	ifscCode String required
+	branchAddress String required
+	corporateId String required
 }
 
 entity Country{

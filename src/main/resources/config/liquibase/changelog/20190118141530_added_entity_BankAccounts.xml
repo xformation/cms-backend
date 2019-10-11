@@ -25,7 +25,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="account_number" type="bigint">
+            <column name="account_number" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
@@ -41,7 +41,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="corporate_id" type="integer">
+            <column name="corporate_id" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
