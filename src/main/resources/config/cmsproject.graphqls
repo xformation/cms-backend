@@ -1713,11 +1713,9 @@ type Mutation {
     removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
     searchLib(bookTitle:String,author:String, batchId:Long, subjectId:Long):[CmsLibrary!]!
 
-     addBook(input: [AddBookInput!]!): AddBookPayload!
-     updateBook(input:UpdateBookInput!):UpdateBookPayload!
+     addBook(input: [AddBookInput!]!): [CmsBook]!
+     updateBook(input: UpdateBookInput!): [CmsBook!]!
      removeBook(input:RemoveBookInput!):RemoveBookPayload!
-
-
 
      addInsurance(input:AddInsuranceInput!):[CmsInsurance]!
      updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
@@ -1751,6 +1749,7 @@ type LibraryFilterDataCache{
 	academicExamSettings : [AcademicExamSetting]
 	libraries: [Library]
 	students: [Student]
+	books: [CmsBook]
 }
 type CmsFeeCategory {
 	 id: Long
@@ -1771,6 +1770,21 @@ type CmsFeeCategory {
      branch: Branch
 }
 
+type CmsBook {
+	 id: Long
+     status: StatusEnum
+     issueDate: Date
+     dueDate: Date
+     receivedDate: Date
+     studentId: Long
+     libraryId: Long
+     strIssueDate: String
+     strDueDate: String
+     strRecDate: String
+    noOfCopiesAvailable: Int
+     student: Student
+     library: Library
+}
 type CmsInsurance {
      id: Long
      insuranceCompany: String
@@ -3682,6 +3696,15 @@ type RemoveLibraryPayload{
 input AddBookInput{
 	libraryId:Long
 	studentId:Long
+    status: StatusEnum
+    issueDate: Date
+    dueDate: Date
+    receivedDate: Date
+    strIssueDate: String
+    strDueDate: String
+    strRecDate: String
+    noOfCopiesAvailable: Int
+
 }
 type AddBookPayload{
     book:Book!

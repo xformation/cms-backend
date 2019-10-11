@@ -2913,18 +2913,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
-        final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
-        final Lecture lecture = new Lecture();
-        lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLecDate()));
-        lecture.setLastUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLastUpdatedOn()));
-        lecture.setLastUpdatedBy(addLectureInput.getLastUpdatedBy());
-        lecture.setStartTime(addLectureInput.getStartTime());
-        lecture.setEndTime(addLectureInput.getEndTime());
-        lecture.setAttendancemaster(attendanceMaster);
-        lectureRepository.save(lecture);
-        return new AddLecturePayload(lecture);
-    }
+
 
     public UpdateLecturePayload updateLecture(UpdateLectureInput updateLectureInput) {
         Lecture lecture = lectureRepository.findById(updateLectureInput.getId()).get();
@@ -2957,6 +2946,71 @@ public class Mutation implements GraphQLMutationResolver {
         lectureRepository.delete(lecture);
         return new RemoveLecturePayload(Lists.newArrayList(lectureRepository.findAll()));
     }
+//    public List<Book> addBook(List<AddBookInput> list){
+//        List<Book> al= new ArrayList<>();
+//        Book b = null;
+//        for(AddBookInput input: list ) {
+//            Student student = studentRepository.findById(input.getStudentId()).get();
+//            Library library = libraryRepository.findById(input.getLibraryId()).get();
+//
+//            b = CommonUtil.createCopyProperties(input, Book.class);
+//            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getIssueDate()));
+//            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getDueDate()));
+//            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getReceivedDate()));
+//            b.setNoOfCopiesAvailable(input.getNoOfCopiesAvailable());
+//            b.setStatus(input.getStatus());
+//            b.setStudent(student);
+//            b.setLibrary(library);
+//            bookRepository.save(b);
+//        }
+//        al.add(b);
+//        return al;
+//    }
+    public List<CmsBook> addBook(List<AddBookInput> inputlist) {
+        List<CmsBook> al = new ArrayList<>();
+        for (AddBookInput input : inputlist) {
+            Student student = studentRepository.findById(input.getStudentId()).get();
+            Library library = libraryRepository.findById(input.getLibraryId()).get();
+            Book b = CommonUtil.createCopyProperties(input, Book.class);
+
+            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getIssueDate()));
+            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getDueDate()));
+            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getReceivedDate()));
+            b.setNoOfCopiesAvailable(input.getNoOfCopiesAvailable());
+            b.setStatus(input.getStatus());
+            b.setStudent(student);
+            b.setLibrary(library);
+            bookRepository.save(b);
+
+            Book bb = new Book();
+            bb.setStudent(student);
+            bb.setLibrary(library);
+            Example<Book> example = Example.of(bb);
+            List<Book> list = this.bookRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+//            List<CmsBook> ls = new ArrayList<>();
+            for (Book ff : list) {
+                CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
+                if (ff.getIssueDate() != null) {
+                    cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                    cfc.setIssueDate(null);
+                }
+
+                if (ff.getDueDate() != null) {
+                    cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                    cfc.setDueDate(null);
+                }
+
+                if (ff.getReceivedDate() != null) {
+                    cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                    cfc.setReceivedDate(null);
+                }
+                al.add(cfc);
+            }
+
+        }
+        return al;
+    }
+
 
     public List<CmsFeeCategory> addFeeCategory(AddFeeCategoryInput addFeeCategoryInput) throws Exception {
         FeeCategory fc = CommonUtil.createCopyProperties(addFeeCategoryInput, FeeCategory.class);
@@ -3000,6 +3054,52 @@ public class Mutation implements GraphQLMutationResolver {
             ls.add(cfc);
         }
         return ls;
+    }
+    public List<CmsBook> updateBook(UpdateBookInput updateBookInput) throws ParseException, Exception {
+
+        Book fc = CommonUtil.createCopyProperties(updateBookInput, Book.class);
+        fc.setStatus(updateBookInput.getStatus());
+        fc.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
+        fc.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
+        fc.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
+        fc.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
+        Library lib = new Library();
+        lib.setId(updateBookInput.getLibraryId());
+        fc.setLibrary(lib);
+        Student st = new Student();
+        st.setId(updateBookInput.getStudentId());
+        fc.setStudent(st);
+
+
+        fc = bookRepository.save(fc);
+
+        Book f = new Book();
+        f.setLibrary(lib);
+        f.setStudent(st);
+
+        Example<Book> example = Example.of(f);
+        List<Book> list = this.bookRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsBook> ls = new ArrayList<>();
+        for(Book ff: list) {
+            CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
+
+            if(ff.getIssueDate() != null) {
+                cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setStrIssueDate(null);
+            }
+            if(ff.getDueDate() != null) {
+                cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setDueDate(null);
+            }
+            if(ff.getReceivedDate() != null) {
+                cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setReceivedDate(null);
+            }
+            cfc.setNoOfCopiesAvailable(ff.getNoOfCopiesAvailable());
+            ls.add(cfc);
+        }
+        return ls;
+
     }
 
     public List<CmsFeeCategory> updateFeeCategory(UpdateFeeCategoryInput updateFeeCategoryInput) throws ParseException, Exception {
@@ -3702,55 +3802,37 @@ public class Mutation implements GraphQLMutationResolver {
 //        }
 //        return  new AddAcademicExamSettingPayload(academicExamSetting);
 //    }
-    public AddBookPayload addBook(List<AddBookInput> list){
 
-         Book b = null;
-        for(AddBookInput input: list ) {
-            Student student = studentRepository.findById(input.getStudentId()).get();
-            Library library = libraryRepository.findById(input.getLibraryId()).get();
-
-            b = CommonUtil.createCopyProperties(input, Book.class);
-            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getIssueDate()));
-            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getDueDate()));
-            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getReceivedDate()));
-            b.setNoOfCopiesAvailable(input.getNoOfCopiesAvailable());
-            b.setStatus(input.getStatus());
-            b.setStudent(student);
-            b.setLibrary(library);
-            bookRepository.save(b);
-        }
-        return new AddBookPayload(b);
-    }
-    public UpdateBookPayload updateBook(UpdateBookInput updateBookInput) {
-        Book b = bookRepository.findById(updateBookInput.getId()).get();
-        if(updateBookInput.getIssueDate()!=null) {
-            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
-        }
-        if (updateBookInput.getDueDate() != null){
-            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
-        }
-        if (updateBookInput.getReceivedDate() != null){
-            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
-        }
-        if(updateBookInput.getNoOfCopiesAvailable()!=null){
-            b.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
-        }
-        if (updateBookInput.getStatus() != null) {
-            b.setStatus(updateBookInput.getStatus());
-        }
-
-        if(updateBookInput.getStudentId()!=null){
-            Student student =studentRepository.findById(updateBookInput.getStudentId()).get();
-            b.setStudent(student);
-        }
-        if(updateBookInput.getLibraryId()!=null){
-            Library library =libraryRepository.findById(updateBookInput.getLibraryId()).get();
-            b.setLibrary(library);
-        }
-        bookRepository.save(b);
-        return new UpdateBookPayload(b);
-
-    }
+//    public UpdateBookPayload updateBook(UpdateBookInput updateBookInput) {
+//        Book b = bookRepository.findById(updateBookInput.getId()).get();
+//        if(updateBookInput.getIssueDate()!=null) {
+//            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
+//        }
+//        if (updateBookInput.getDueDate() != null){
+//            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
+//        }
+//        if (updateBookInput.getReceivedDate() != null){
+//            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
+//        }
+//        if(updateBookInput.getNoOfCopiesAvailable()!=null){
+//            b.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
+//        }
+//        if (updateBookInput.getStatus() != null) {
+//            b.setStatus(updateBookInput.getStatus());
+//        }
+//
+//        if(updateBookInput.getStudentId()!=null){
+//            Student student =studentRepository.findById(updateBookInput.getStudentId()).get();
+//            b.setStudent(student);
+//        }
+//        if(updateBookInput.getLibraryId()!=null){
+//            Library library =libraryRepository.findById(updateBookInput.getLibraryId()).get();
+//            b.setLibrary(library);
+//        }
+//        bookRepository.save(b);
+//        return new UpdateBookPayload(b);
+//
+//    }
     public RemoveBookPayload removeBook(RemoveBookInput removeBookInput){
         Book b =bookRepository.findById(removeBookInput.getBookId()).get();
         bookRepository.delete(b);
@@ -3808,6 +3890,19 @@ public class Mutation implements GraphQLMutationResolver {
         }
         return ls;
 
+    }
+
+    public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
+        final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
+        final Lecture lecture = new Lecture();
+        lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLecDate()));
+        lecture.setLastUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLastUpdatedOn()));
+        lecture.setLastUpdatedBy(addLectureInput.getLastUpdatedBy());
+        lecture.setStartTime(addLectureInput.getStartTime());
+        lecture.setEndTime(addLectureInput.getEndTime());
+        lecture.setAttendancemaster(attendanceMaster);
+        lectureRepository.save(lecture);
+        return new AddLecturePayload(lecture);
     }
 
     public RemoveInsurancePayload removeInsurance(RemoveInsuranceInput removeInsuranceInput) {

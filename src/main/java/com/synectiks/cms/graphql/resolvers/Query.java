@@ -890,6 +890,7 @@ public class Query implements GraphQLQueryResolver {
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
         List<Library> library = this.commonService.getLibraryForCriteria(sub,batchList);
         List<Student> student = this.commonService.getStudentsForCriteria(departmentList, batchList, sectionList);
+        List<CmsBook> book = this.commonService.getBookForCriteria(library,student);
         LibraryFilterDataCache cache = new LibraryFilterDataCache();
         cache.setDepartments(departmentList);
         cache.setBatches(batchList);
@@ -900,8 +901,13 @@ public class Query implements GraphQLQueryResolver {
         cache.setSubjects(sub);
         cache.setLibraries(library);
         cache.setStudents(student);
+        cache.setBooks(book);
         return cache;
+
+
     }
+
+
     public FeeDataCache createFeeDataCache() throws Exception{
     	List<College> collegeList = this.collegeRepository.findAll();
     	List<Branch> branchList = this.branchRepository.findAll();
