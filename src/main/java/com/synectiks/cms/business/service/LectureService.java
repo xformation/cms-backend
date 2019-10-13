@@ -48,6 +48,7 @@ import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleVo;
+import com.synectiks.cms.repository.BatchRepository;
 import com.synectiks.cms.repository.ExceptionRecordRepository;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.MetaLectureRepository;
@@ -76,6 +77,9 @@ public class LectureService {
     @Autowired
     private TeachRepository teachRepository;
 
+    @Autowired
+    private BatchRepository batchRepository;
+    
     @Autowired
     private ExceptionRecordRepository exceptionRecordRepository;
 
@@ -567,77 +571,115 @@ public class LectureService {
     	Subject subject = this.commonService.getSubjectById(sbId);
     	Teacher teacher = this.commonService.getTeacherById(thId);
     	
-    	Query query = null;
-		if(batch != null) {
-			query = this.entityManager.createQuery("select a from Batch a where a.id = :btid and a.department = :dp ");
-			query.setParameter("btid", btId);
-			query.setParameter("dp", department);
-		}else {
-			query = this.entityManager.createQuery("select a from Batch a where a.department = :dp ");
-			query.setParameter("dp", department);
-		}
-		@SuppressWarnings("unchecked")
-		List<Batch> batchList = query.getResultList();
+//    	Query query = null;
+//		if(batch != null) {
+//			query = this.entityManager.createQuery("select a from Batch a where a.id = :btid and a.department = :dp ");
+//			query.setParameter("btid", btId);
+//			query.setParameter("dp", department);
+//		}else {
+//			query = this.entityManager.createQuery("select a from Batch a where a.department = :dp ");
+//			query.setParameter("dp", department);
+//		}
+//		@SuppressWarnings("unchecked")
+//		List<Batch> batchList = query.getResultList();
+    	List<Batch> batchList = new ArrayList<>();
+    	if(batch != null) {
+    		batchList.add(batch);
+    	}else {
+    		Batch bth = new Batch();
+    		bth.setDepartment(department);
+    		batchList = this.batchRepository.findAll(Example.of(bth));
+    	}
     	
     	Teach teach = new Teach(); //(teacher != null && subject != null) ? this.commonService.getTeachBySubjectAndTeacherId(teacher.getId(), subject.getId()) : null;
-		if(teacher != null && subject == null) {
+    	if(teacher != null) {
 			teach.setTeacher(teacher);
-		}else if(teacher == null && subject != null) {
-			teach.setSubject(subject);
-		}else if(teacher != null && subject != null) {
-			teach.setTeacher(teacher);
+		}
+    	if(subject != null) {
 			teach.setSubject(subject);
 		}
+    	if(teacher == null && subject == null) {
+    		logger.debug("Both teacher and subject are null");
+    		Subject sub = new Subject();
+    		Teacher thr = new Teacher();
+    		sub.setDepartment(department);
+    		thr.setDepartment(department);
+    		teach.setSubject(sub);
+    		teach.setTeacher(thr);
+    	}
+    	List<Teach> teachList = this.teachRepository.findAll(Example.of(teach));
 		
+    	if(batchList.size() == 0) {
+    		Batch b = new Batch();
+    		b.setId(0L);
+    		batchList.add(b);
+    	}
+    	if(teachList.size() ==0) {
+    		Teach t = new Teach();
+    		t.setId(0L);
+    		teachList.add(t);
+    	}
+//		List<Teach> teachList = null;
+//		if(teach.getSubject() == null && teach.getTeacher() == null) {
+//			query = null;
+//			query = this.entityManager.createQuery("select a from Subject a where a.department = :dp ");
+//			query.setParameter("dp", department);
+//			@SuppressWarnings("unchecked")
+//			List<Subject> subList = query.getResultList();
+//	    	
+//			query = null;
+//			query = this.entityManager.createQuery("select a from Teacher a where a.department = :dp ");
+//			query.setParameter("dp", department);
+//			@SuppressWarnings("unchecked")
+//			List<Teacher> thrList = query.getResultList();
+//	    	
+//			query = null;
+//			query = this.entityManager.createQuery("select a from Teach a where a.subject in (:subLs) and a.teacher in (:thrLs)  ");
+//			query.setParameter("subLs", subList);
+//			query.setParameter("thrLs", thrList);
+//			@SuppressWarnings("unchecked")
+//			List<Teach> tList = query.getResultList();
+//			teachList = tList;
+//		}else {
+//			List<Teach> tList  = this.teachRepository.findAll(Example.of(teach));
+//			teachList = tList;
+//		}
 		
-		List<Teach> teachList = null;
-		if(teach.getSubject() == null && teach.getTeacher() == null) {
-			query = null;
-			query = this.entityManager.createQuery("select a from Subject a where a.department = :dp ");
-			query.setParameter("dp", department);
-			@SuppressWarnings("unchecked")
-			List<Subject> subList = query.getResultList();
-	    	
-			query = null;
-			query = this.entityManager.createQuery("select a from Teacher a where a.department = :dp ");
-			query.setParameter("dp", department);
-			@SuppressWarnings("unchecked")
-			List<Teacher> thrList = query.getResultList();
-	    	
-			query = null;
-			query = this.entityManager.createQuery("select a from Teach a where a.subject in (:subLs) and a.teacher in (:thrLs)  ");
-			query.setParameter("subLs", subList);
-			query.setParameter("thrLs", thrList);
-			@SuppressWarnings("unchecked")
-			List<Teach> tList = query.getResultList();
-			teachList = tList;
-		}else {
-			List<Teach> tList  = this.teachRepository.findAll(Example.of(teach));
-			teachList = tList;
-		}
-		
-    	query = null;
-		if(section != null && teachList.size() > 0) {
+    	Query query = null;
+    	if(section != null) {
 			logger.info("1. Section not null, Teach list size > 0, size : "+teachList.size());
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach in (:th) and a.batch in (:bth)");
 			query.setParameter("sc", section);
 			query.setParameter("th", teachList);
 			query.setParameter("bth", batchList);
-		}else if(section != null && teachList.size() == 0) {
-			logger.info("2. Section not null, Teach list size == 0, size: "+teachList.size());
-			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.batch in (:bth)");
-			query.setParameter("sc", section);
-			query.setParameter("bth", batchList);
-		}else if(section == null && teachList.size() > 0) {
-			logger.info("3. Section null, Teach list size > 0, size: "+teachList.size());
+		}else {
+			logger.info("1. Section not null, Teach list size > 0, size : "+teachList.size());
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th) and a.batch in (:bth)");
+//			query.setParameter("sc", section);
 			query.setParameter("th", teachList);
 			query.setParameter("bth", batchList);
-		}else {
-			logger.info("4. Section null, Teach list size == 0, size: "+teachList.size());
-			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.batch in (:bth)");
-			query.setParameter("bth", batchList);
 		}
+//		if(section != null && teachList.size() > 0) {
+//			logger.info("1. Section not null, Teach list size > 0, size : "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach in (:th) and a.batch in (:bth)");
+//			query.setParameter("sc", section);
+//			query.setParameter("th", teachList);
+//			query.setParameter("bth", batchList);
+//		}else if(section != null && teachList.size() == 0) {
+//			logger.info("2. Section not null, Teach list size == 0, size: "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.batch in (:bth)");
+//			query.setParameter("sc", section);
+//			query.setParameter("bth", batchList);
+//		}else if(section == null && teachList.size() > 0) {
+//			logger.info("3. Section null, Teach list size > 0, size: "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th) and a.batch in (:bth)");
+//			query.setParameter("th", teachList);
+//			query.setParameter("bth", batchList);
+//		}else {
+//			logger.info("4. Section null, Teach list size == 0, size: "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.batch in (:bth)");
+//			query.setParameter("bth", batchList);
+//		}
 		
 		
 		@SuppressWarnings("unchecked")
