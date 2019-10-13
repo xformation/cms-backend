@@ -172,7 +172,14 @@ public class AcademicSubjectService {
 		List<Subject> list = this.subjectRepository.findAll(example);
 		return list;
 	}
-    
+    public List<Subject> getSubjectList(Long departmentId)  {
+		Department department = this.commonService.getDepartmentById(departmentId);
+		Subject sub = new Subject();
+		sub.setDepartment(department);
+		Example<Subject> example = Example.of(sub);
+		List<Subject> list = this.subjectRepository.findAll(example);
+		return list;
+	}
     public List<CmsSubjectVo> getAllSubjectAndTeachData(Map<String, String> dataMap){
     	List<Teach> teachList = this.teachRepository.findAll();
     	List<CmsSubjectVo> ls = new ArrayList<>();

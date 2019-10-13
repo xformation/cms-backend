@@ -129,5 +129,19 @@ public class SubjectRestController {
     	return list;
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/cmssubjects-bydepartmentid")
+    public List<Subject> getSubjectsByDepartmentId(@RequestParam Map<String, String> dataMap) {
+    	Long departmentId =0L;
+    	if(dataMap.containsKey("departmentId")) {
+    		departmentId = Long.parseLong(dataMap.get("departmentId"));
+    	}else {
+    		logger.warn("Department id not provided. Returning empty list.");
+    		return Collections.emptyList();
+    	}
+    	logger.debug(String.format("Retrieving subject based on department id: %d ", departmentId));
+    	List<Subject> list = this.academicSubjectService.getSubjectList(departmentId);
+    	logger.debug(String.format("Totale subjects retrieved %d", list.size()));
+    	return list;
+    }
     
 }

@@ -2,6 +2,8 @@ package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +17,6 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.synectiks.cms.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,49 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.config.GlobalConfig;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsAcademicYearVo;
+import com.synectiks.cms.domain.CmsBatchVo;
+import com.synectiks.cms.domain.CmsBook;
+import com.synectiks.cms.domain.CmsCourseEnumVo;
+import com.synectiks.cms.domain.CmsDepartmentVo;
+import com.synectiks.cms.domain.CmsFacility;
+import com.synectiks.cms.domain.CmsFeeCategory;
+import com.synectiks.cms.domain.CmsFeeDetails;
+import com.synectiks.cms.domain.CmsGenderVo;
+import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.CmsNotificationsVo;
+import com.synectiks.cms.domain.CmsSectionVo;
+import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.domain.CmsTermVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.domain.Notifications;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.BatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
@@ -268,9 +312,9 @@ public class CommonService {
         th.setSubject(s);
         th.setTeacher(t);
         Example<Teach> example = Example.of(th);
-        Optional<Teach> newTh = this.teachRepository.findOne(example);
-        if(newTh.isPresent()) {
-            return newTh.get();
+        List<Teach> newTh = this.teachRepository.findAll(example);
+        if(newTh.size() > 0) {
+            return newTh.get(0);
         }
         return null;
     }
@@ -281,9 +325,9 @@ public class CommonService {
         am.setSection(sc);
         am.setTeach(th);
         Example<AttendanceMaster> example = Example.of(am);
-        Optional<AttendanceMaster> newAm = this.attendanceMasterRepository.findOne(example);
-        if(newAm.isPresent()) {
-            return newAm.get();
+        List<AttendanceMaster> newAm = this.attendanceMasterRepository.findAll(example);
+        if(newAm.size() > 0) {
+            return newAm.get(0);
         }
         return null;
     }
@@ -1453,9 +1497,9 @@ public class CommonService {
     }
 
     public static void main(String a[]) {
-        String dt = "10/10/2019";
-        LocalDate ld = DateFormatUtil.convertStringToLocalDate(dt, "MM/dd/yyyy");
-        System.out.println(ld);
+//        String dt = "10/10/2019";
+//        LocalDate ld = DateFormatUtil.convertStringToLocalDate(dt, "MM/dd/yyyy");
+//        System.out.println(ld);
 //        LocalDate ld = LocalDate.now();
 //        System.out.println(ld);
 //
@@ -1463,5 +1507,13 @@ public class CommonService {
 //        LocalDate localDate = LocalDate.parse(strLd, DateTimeFormatter.ofPattern("d-MM-yyyy"));
 //        System.out.println(localDate);
 
+        String time1 = "02:00:00";
+//        LocalTime lt = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm a"));
+        LocalTime localTime = LocalTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+        String time2 = localTime.format(dateTimeFormatter);
+        LocalTime lt = LocalTime.parse(time1, dateTimeFormatter);
+        System.out.println(time2);
+        System.out.println(lt);
     }
 }

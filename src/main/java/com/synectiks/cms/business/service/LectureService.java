@@ -35,6 +35,7 @@ import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.ExceptionRecord;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.MetaLecture;
@@ -47,6 +48,7 @@ import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleVo;
+import com.synectiks.cms.repository.ExceptionRecordRepository;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.MetaLectureRepository;
 import com.synectiks.cms.repository.TeachRepository;
@@ -74,6 +76,8 @@ public class LectureService {
     @Autowired
     private TeachRepository teachRepository;
 
+    @Autowired
+    private ExceptionRecordRepository exceptionRecordRepository;
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     private static final String MONDAY = "MONDAY";
@@ -293,13 +297,24 @@ public class LectureService {
                     lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(getDate(dt)));
                     lecture.setStartTime(jsonObj.getString("startTime"));
                     lecture.setEndTime(jsonObj.getString("endTime"));
-                    lecture.setLastUpdatedBy(getLoggedInUser());
-                    lecture.setLastUpdatedOn(LocalDate.now());
-                    lecture = this.lectureRepository.save(lecture);
                     
-                    CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
-        			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(lecture.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        			lsList.add(vo);
+                    if(!this.lectureRepository.exists(Example.of(lecture))) {
+                    	lecture.setLastUpdatedBy(getLoggedInUser());
+                        lecture.setLastUpdatedOn(LocalDate.now());
+                        lecture = this.lectureRepository.save(lecture);
+                        
+                        CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
+            			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(lecture.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            			lsList.add(vo);
+                    }else {
+                    	logger.warn("Lecture already exists. Discarding it. Lecture : "+lecture);
+                    	ExceptionRecord er = new ExceptionRecord();
+                    	er.setExceptionDate(LocalDate.now());
+                    	er.setExceptionSource("EMS Application. api/cmslectures rest api. addLectures() method");
+                    	er.setExceptionType("DuplicateRecordFoundException");
+                    	er.setExceptionRecord(lecture.toString().length() > 255 ? lecture.toString().substring(0, 250) : lecture.toString());
+                    	this.exceptionRecordRepository.save(er);
+                    }
         			
 //					insertLecture(dt, jsonObj, filter);
                 }

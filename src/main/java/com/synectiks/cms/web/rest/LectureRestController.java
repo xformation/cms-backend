@@ -38,6 +38,7 @@ import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.QueryResult;
 import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
@@ -46,6 +47,7 @@ import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.repository.TeacherRepository;
@@ -89,6 +91,8 @@ public class LectureRestController {
 	@Autowired
 	private AttendanceMasterRepository attendanceMasterRepository;
 	
+	@Autowired
+	private StudentAttendanceRepository studentAttendanceRepository;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmslectures")
 	@Transactional(propagation=Propagation.REQUIRED)
@@ -323,10 +327,25 @@ public class LectureRestController {
 	
 	
 	@DeleteMapping("/cmslectures/{id}")
-    public ResponseEntity<Void> deleteLecture(@PathVariable Long id) {
+    public ResponseEntity<QueryResult> deleteLecture(@PathVariable Long id) {
         logger.debug("REST request to delete a Lecture : {}", id);
-        this.lectureRepository.deleteById(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("Lecture", id.toString())).build();
+        QueryResult res = new QueryResult();
+        
+        Optional<Lecture> lc = this.lectureRepository.findById(id);
+        StudentAttendance sa = new StudentAttendance();
+        sa.setLecture(lc.get());
+        if(!this.studentAttendanceRepository.exists(Example.of(sa))) {
+        	this.lectureRepository.deleteById(id);
+        	res.setStatusCode(0);
+        	res.setStatusDesc("Lecture deleted successfully");
+        }else {
+        	res.setStatusCode(1);
+        	res.setStatusDesc("Lecture cannot be deleted because it has the associated attendace data.");
+        }
+        
+//        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("Lecture", id.toString())).build();
+        Optional<QueryResult> r = Optional.of(res);
+		return ResponseUtil.wrapOrNotFound(r);
     }
-
+	
 }
