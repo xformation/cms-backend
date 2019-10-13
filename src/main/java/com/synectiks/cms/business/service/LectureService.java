@@ -569,8 +569,9 @@ public class LectureService {
     	
     	Query query = null;
 		if(batch != null) {
-			query = this.entityManager.createQuery("select a from Batch a where a.id = :btid ");
+			query = this.entityManager.createQuery("select a from Batch a where a.id = :btid and a.department = :dp ");
 			query.setParameter("btid", btId);
+			query.setParameter("dp", department);
 		}else {
 			query = this.entityManager.createQuery("select a from Batch a where a.department = :dp ");
 			query.setParameter("dp", department);
@@ -587,26 +588,58 @@ public class LectureService {
 			teach.setTeacher(teacher);
 			teach.setSubject(subject);
 		}
-		List<Teach> teachList  = this.teachRepository.findAll(Example.of(teach));
+		
+		
+		List<Teach> teachList = null;
+		if(teach.getSubject() == null && teach.getTeacher() == null) {
+			query = null;
+			query = this.entityManager.createQuery("select a from Subject a where a.department = :dp ");
+			query.setParameter("dp", department);
+			@SuppressWarnings("unchecked")
+			List<Subject> subList = query.getResultList();
+	    	
+			query = null;
+			query = this.entityManager.createQuery("select a from Teacher a where a.department = :dp ");
+			query.setParameter("dp", department);
+			@SuppressWarnings("unchecked")
+			List<Teacher> thrList = query.getResultList();
+	    	
+			query = null;
+			query = this.entityManager.createQuery("select a from Teach a where a.subject in (:subLs) and a.teacher in (:thrLs)  ");
+			query.setParameter("subLs", subList);
+			query.setParameter("thrLs", thrList);
+			@SuppressWarnings("unchecked")
+			List<Teach> tList = query.getResultList();
+			teachList = tList;
+		}else {
+			List<Teach> tList  = this.teachRepository.findAll(Example.of(teach));
+			teachList = tList;
+		}
 		
     	query = null;
 		if(section != null && teachList.size() > 0) {
+			logger.info("1. Section not null, Teach list size > 0, size : "+teachList.size());
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach in (:th) and a.batch in (:bth)");
 			query.setParameter("sc", section);
 			query.setParameter("th", teachList);
 			query.setParameter("bth", batchList);
 		}else if(section != null && teachList.size() == 0) {
+			logger.info("2. Section not null, Teach list size == 0, size: "+teachList.size());
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.batch in (:bth)");
 			query.setParameter("sc", section);
 			query.setParameter("bth", batchList);
 		}else if(section == null && teachList.size() > 0) {
+			logger.info("3. Section null, Teach list size > 0, size: "+teachList.size());
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th) and a.batch in (:bth)");
 			query.setParameter("th", teachList);
 			query.setParameter("bth", batchList);
 		}else {
+			logger.info("4. Section null, Teach list size == 0, size: "+teachList.size());
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.batch in (:bth)");
 			query.setParameter("bth", batchList);
 		}
+		
+		
 		@SuppressWarnings("unchecked")
 		List<AttendanceMaster> amList = query.getResultList();
     	if(amList.size() == 0) {
@@ -618,6 +651,10 @@ public class LectureService {
 		if(fromLecDate != null && toLecDate == null) {
 			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate >= :lcdt and l.attendancemaster in (:amId) ");
 			query.setParameter("lcdt", fromLecDate);
+			query.setParameter("amId", amList);
+		}else if(fromLecDate == null && toLecDate != null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate <= :lcdt and l.attendancemaster in (:amId) ");
+			query.setParameter("lcdt", toLecDate);
 			query.setParameter("amId", amList);
 		}else if(fromLecDate != null && toLecDate != null) {
 			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
