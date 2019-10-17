@@ -69,13 +69,13 @@ public class SubjectRestController {
 
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmssubjects")
-    public ResponseEntity<CmsSubjectVo> createSubject(@RequestBody CmsSubjectVo cmsSubjectvo) throws URISyntaxException {
+    public ResponseEntity<CmsSubjectVo> createSubject(@RequestBody CmsSubjectVo cmsSubjectvo, @RequestParam Map<String, String> dataMap) throws URISyntaxException {
         logger.debug("REST request to save a subject : {}", cmsSubjectvo);
         if (cmsSubjectvo.getId() != null) {
             throw new BadRequestAlertException("A new subject cannot have an ID which already exists", ENTITY_NAME, "idexists");
         }
-        cmsSubjectvo = this.academicSubjectService.createSubject(cmsSubjectvo);
-        return ResponseEntity.created(new URI("/api/subjects/" + cmsSubjectvo.getId()))
+        cmsSubjectvo = this.academicSubjectService.createSubject(cmsSubjectvo, dataMap);
+        return ResponseEntity.created(new URI("/api/cmssubjects/" + cmsSubjectvo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsSubjectvo.getId().toString()))
             .body(cmsSubjectvo);
     }

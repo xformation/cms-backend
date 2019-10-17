@@ -206,7 +206,7 @@ public class LectureRestController {
 		if(teachList.size() == 0) {
 			teach.setSubject(subject);
 			teach.setTeacher(teacher);
-			teach.setDesc("Teacher "+teacher.getTeacherName()+" is the teacher of subject "+subject.getSubjectDesc());
+			teach.setDesc(subject.getSubjectCode());
 			teach = this.teachRepository.save(teach);
 		}
 		

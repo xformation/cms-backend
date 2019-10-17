@@ -1,10 +1,12 @@
 package com.synectiks.cms.business.service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,15 +24,20 @@ import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsSubjectVo;
 import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.ExceptionRecord;
 import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.ExceptionRecordRepository;
+import com.synectiks.cms.repository.SectionRepository;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.service.util.CommonUtil;
@@ -47,10 +56,14 @@ public class AcademicSubjectService {
 	@Autowired
 	private AttendanceMasterRepository attendanceMasterRepository;
 
+	@Autowired
+	private SectionRepository sectionRepository;
 	
 	@Autowired
 	CommonService commonService;
 	
+	@Autowired
+	private ExceptionRecordRepository exceptionRecordRepository;
 	
     @Transactional(propagation=Propagation.REQUIRED)
     public QueryResult insertSubjectAndTeachRecord(AcademicSubjectMutationPayload academicSubjectMutationPayload) throws JSONException, ParseException {
@@ -169,7 +182,7 @@ public class AcademicSubjectService {
 		sub.setDepartment(department);
 		sub.setBatch(batch);
 		Example<Subject> example = Example.of(sub);
-		List<Subject> list = this.subjectRepository.findAll(example);
+		List<Subject> list = this.subjectRepository.findAll(example, Sort.by(Direction.DESC, "id"));
 		return list;
 	}
     public List<Subject> getSubjectList(Long departmentId)  {
@@ -177,7 +190,7 @@ public class AcademicSubjectService {
 		Subject sub = new Subject();
 		sub.setDepartment(department);
 		Example<Subject> example = Example.of(sub);
-		List<Subject> list = this.subjectRepository.findAll(example);
+		List<Subject> list = this.subjectRepository.findAll(example, Sort.by(Direction.DESC, "id"));
 		return list;
 	}
     public List<CmsSubjectVo> getAllSubjectAndTeachData(Map<String, String> dataMap){
@@ -299,7 +312,7 @@ public class AcademicSubjectService {
 	}
     
     @Transactional(propagation=Propagation.REQUIRED)
-	public CmsSubjectVo createSubject(CmsSubjectVo cmsSubjectVo) {
+	public CmsSubjectVo createSubject(CmsSubjectVo cmsSubjectVo, Map<String, String> dataMap) {
 		Subject sub = new Subject();
 		sub.setSubjectCode(cmsSubjectVo.getSubjectCode());
 		if(cmsSubjectVo.getSubjectType() == null) {
@@ -335,10 +348,79 @@ public class AcademicSubjectService {
 		teach = this.teachRepository.save(teach);
 		logger.info("Teach data saved.");
 		
-		AttendanceMaster am = new AttendanceMaster();
-		am.setTeach(teach);
-		am.setBatch(bt);
-		am = this.attendanceMasterRepository.save(am);
+		String sectionA = dataMap.get("sectionA");
+		String sectionB = dataMap.get("sectionB");
+		String sectionC = dataMap.get("sectionC");
+		String sectionD = dataMap.get("sectionD");
+		
+		if(!CommonUtil.isNullOrEmpty(sectionA) && !"undefined".equalsIgnoreCase(sectionA) && !"null".equalsIgnoreCase(sectionA)) {
+			Section section = new Section();
+			section.setBatch(bt);
+			section.setSection(SectionEnum.A);
+			Optional<Section> ose = this.sectionRepository.findOne(Example.of(section));
+			if(ose.isPresent()) {
+				AttendanceMaster am = new AttendanceMaster();
+				am.setTeach(teach);
+				am.setBatch(bt);
+				am.setSection(ose.get());
+				am = this.attendanceMasterRepository.save(am);
+			}else {
+				ExceptionRecord er = getExceptionObject(SectionEnum.A, bt);
+				this.exceptionRecordRepository.save(er);
+			}
+		}
+		
+		if(!CommonUtil.isNullOrEmpty(sectionB) && !"undefined".equalsIgnoreCase(sectionB) && !"null".equalsIgnoreCase(sectionB)) {
+			Section section = new Section();
+			section.setBatch(bt);
+			section.setSection(SectionEnum.B);
+			Optional<Section> ose = this.sectionRepository.findOne(Example.of(section));
+			if(ose.isPresent()) {
+				AttendanceMaster am = new AttendanceMaster();
+				am.setTeach(teach);
+				am.setBatch(bt);
+				am.setSection(ose.get());
+				am = this.attendanceMasterRepository.save(am);
+			}else {
+				ExceptionRecord er = getExceptionObject(SectionEnum.B, bt);
+				this.exceptionRecordRepository.save(er);
+			}
+		}
+		
+		if(!CommonUtil.isNullOrEmpty(sectionC) && !"undefined".equalsIgnoreCase(sectionC) && !"null".equalsIgnoreCase(sectionC)) {
+			Section section = new Section();
+			section.setBatch(bt);
+			section.setSection(SectionEnum.C);
+			Optional<Section> ose = this.sectionRepository.findOne(Example.of(section));
+			if(ose.isPresent()) {
+				AttendanceMaster am = new AttendanceMaster();
+				am.setTeach(teach);
+				am.setBatch(bt);
+				am.setSection(ose.get());
+				am = this.attendanceMasterRepository.save(am);
+			}else {
+				ExceptionRecord er = getExceptionObject(SectionEnum.C, bt);
+				this.exceptionRecordRepository.save(er);
+			}
+			
+		}
+		if(!CommonUtil.isNullOrEmpty(sectionD) && !"undefined".equalsIgnoreCase(sectionD) && !"null".equalsIgnoreCase(sectionD)) {
+			Section section = new Section();
+			section.setBatch(bt);
+			section.setSection(SectionEnum.D);
+			Optional<Section> ose = this.sectionRepository.findOne(Example.of(section));
+			if(ose.isPresent()) {
+				AttendanceMaster am = new AttendanceMaster();
+				am.setTeach(teach);
+				am.setBatch(bt);
+				am.setSection(ose.get());
+				am = this.attendanceMasterRepository.save(am);
+			}else {
+				ExceptionRecord er = getExceptionObject(SectionEnum.D, bt);
+				this.exceptionRecordRepository.save(er);
+			}
+		}
+		
 		logger.info("Attendance Master data saved.");
 		
 		cmsSubjectVo = CommonUtil.createCopyProperties(sub, CmsSubjectVo.class);
@@ -384,6 +466,15 @@ public class AcademicSubjectService {
 		logger.info("Subject and Teach records updated in database successfully.");
 		return cmsSubjectVo;
 		
+	}
+    
+    private ExceptionRecord getExceptionObject(SectionEnum se, Batch batch) {
+		ExceptionRecord obj = new ExceptionRecord(); 
+		obj.setExceptionSource("AcademicSubjectService");
+		obj.setExceptionType("DataNotFoundException : ");
+		obj.setExceptionRecord("Section :"+se.toString()+" for batch : "+batch.getBatch().toString()+" not found");
+		obj.setExceptionDate(LocalDate.now());
+		return obj;
 	}
     
 }

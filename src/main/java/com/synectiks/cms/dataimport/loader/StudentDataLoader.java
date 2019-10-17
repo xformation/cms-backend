@@ -6,6 +6,7 @@ import com.synectiks.cms.dataimport.DataLoader;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.*;
 import com.synectiks.cms.exceptions.AdditionalStudentFoundException;
+import com.synectiks.cms.exceptions.DataNotFoundException;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
@@ -30,11 +31,10 @@ public class StudentDataLoader extends DataLoader {
     }
 
     @Override
-    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, AdditionalStudentFoundException, MandatoryFieldMissingException {
+    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, AdditionalStudentFoundException, DataNotFoundException, MandatoryFieldMissingException {
 
         StringBuilder sb = new StringBuilder();
         Student obj = CommonUtil.createCopyProperties(cls.newInstance(), Student.class);
-
 
         String studentName = row.getCellAsString(0).orElse(null);
         if (CommonUtil.isNullOrEmpty(studentName)) {
@@ -113,7 +113,7 @@ public class StudentDataLoader extends DataLoader {
             sb.append("aadhar_no, ");
             logger.warn("Mandatory field missing. Field name - aadhar_no");
         } else {
-            obj.setAadharNo(Long.valueOf(aadharNo));
+            obj.setAadharNo(Long.parseLong(aadharNo));
         }
 
         String dateOfBirth = row.getCellAsString(10).orElse(null);
@@ -171,7 +171,6 @@ public class StudentDataLoader extends DataLoader {
                 logger.warn("Cast not listed in the system. Field name - caste");
             }
         }
-
 
         String subCaste = row.getCellAsString(14).orElse(null);
         if (CommonUtil.isNullOrEmpty(subCaste)) {
@@ -257,15 +256,33 @@ public class StudentDataLoader extends DataLoader {
         } else {
             obj.setAddressLineThree(addressLineThree);
         }
-
+        
+        String countryName = row.getCellAsString(23).orElse(null);
+        Optional<Country> octry = null;
+        if(CommonUtil.isNullOrEmpty(countryName)) {
+            sb.append("country_id, ");
+            logger.warn("Mandatory field missing. Field name - country_id");
+        }else {
+            Country country = new Country();
+            country.countryName(countryName);
+            octry = this.allRepositories.findRepository("country").findOne(Example.of(country));
+            if(octry != null && octry.isPresent()) {
+                obj.setCountry(octry.get().getCountryName());
+            }else {
+                sb.append("country_id, ");
+                logger.warn("Country not found. Given country name : "+countryName);
+            }
+        }
+        
         Optional<State> ostate = null;
         String stateName = row.getCellAsString(22).orElse(null);
-        if(CommonUtil.isNullOrEmpty(stateName)) {
+        if(CommonUtil.isNullOrEmpty(stateName) || octry == null || (octry != null && !octry.isPresent())) {
             sb.append("state_id, ");
             logger.warn("Mandatory field missing. Field name - state_id");
         }else {
-            State state = new State();
+        	State state = new State();
             state.setStateName(stateName);
+            state.setCountry(octry.get());
             ostate = this.allRepositories.findRepository("state").findOne(Example.of(state));
             if(ostate != null && ostate.isPresent()) {
                 obj.setState(ostate.get().getStateName());
@@ -276,7 +293,7 @@ public class StudentDataLoader extends DataLoader {
         }
 
         String cityName = row.getCellAsString(21).orElse(null);
-        if(CommonUtil.isNullOrEmpty(cityName)) {
+        if(CommonUtil.isNullOrEmpty(cityName) || ostate == null || (ostate != null && !ostate.isPresent())) {
             sb.append("town, ");
             logger.warn("Mandatory field missing. Field name - town");
         }else {
@@ -295,23 +312,6 @@ public class StudentDataLoader extends DataLoader {
             }
         }
 
-        String countryName = row.getCellAsString(23).orElse(null);
-        if(CommonUtil.isNullOrEmpty(countryName)) {
-            sb.append("country_id, ");
-            logger.warn("Mandatory field missing. Field name - country_id");
-        }else {
-            Country country = new Country();
-            country.countryName(countryName);
-            Optional<Country> octry = this.allRepositories.findRepository("country").findOne(Example.of(country));
-            if(octry.isPresent()) {
-                obj.setCountry(octry.get().getCountryName());
-            }else {
-                sb.append("country_id, ");
-                logger.warn("Country not found. Given country name : "+countryName);
-            }
-        }
-
-
         String pincode = row.getCellAsString(24).orElse(null);
         if (CommonUtil.isNullOrEmpty(pincode)) {
             sb.append("pincode, ");
@@ -329,12 +329,7 @@ public class StudentDataLoader extends DataLoader {
         }
 
         String alternateContactNumber = row.getCellAsString(26).orElse(null);
-        if (CommonUtil.isNullOrEmpty(alternateContactNumber)) {
-            sb.append("alternate_contact_number, ");
-            logger.warn("Mandatory field missing. Field name - alternate_contact_number");
-        } else {
-            obj.setAlternateContactNumber(alternateContactNumber);
-        }
+        obj.setAlternateContactNumber(alternateContactNumber);
 
         String studentEmailAddress = row.getCellAsString(27).orElse(null);
         if (CommonUtil.isNullOrEmpty(studentEmailAddress)) {
@@ -345,12 +340,7 @@ public class StudentDataLoader extends DataLoader {
         }
 
         String alternateEmailAddress = row.getCellAsString(28).orElse(null);
-        if (CommonUtil.isNullOrEmpty(alternateEmailAddress)) {
-            sb.append("alternate_email_address, ");
-            logger.warn("Mandatory field missing. Field name - alternate_email_address");
-        } else {
-            obj.setAlternateEmailAddress(alternateEmailAddress);
-        }
+        obj.setAlternateEmailAddress(alternateEmailAddress);
 
         String relationWithStudent = row.getCellAsString(29).orElse(null);
         if (CommonUtil.isNullOrEmpty(relationWithStudent)) {
@@ -412,21 +402,13 @@ public class StudentDataLoader extends DataLoader {
         obj.setUploadPhoto(""); // cell 35
 
         String admissionNo = row.getCellAsString(36).orElse(null);
-        if (CommonUtil.isNullOrEmpty(admissionNo)) {
-            sb.append("admission_no, ");
-            logger.warn("Mandatory field missing. Field name - admission_no");
-        } else {
-            obj.setAdmissionNo(Long.parseLong(admissionNo));
+        if (!CommonUtil.isNullOrEmpty(admissionNo)) {
+        	obj.setAdmissionNo(Long.parseLong(admissionNo));
         }
-
+        
         String rollNo = row.getCellAsString(37).orElse(null);
-        if (CommonUtil.isNullOrEmpty(rollNo)) {
-            sb.append("roll_no, ");
-            logger.warn("Mandatory field missing. Field name - roll_no");
-        } else {
-            obj.setRollNo(rollNo);
-        }
-
+        obj.setRollNo(rollNo);
+        
         String studentType = row.getCellAsString(38).orElse(null);
         if (CommonUtil.isNullOrEmpty(studentType)) {
             sb.append("student_type, ");
@@ -448,66 +430,52 @@ public class StudentDataLoader extends DataLoader {
             }
         }
 
-        String departmentName = row.getCellAsString(39).orElse(null);
-        if(CommonUtil.isNullOrEmpty(departmentName)) {
-            sb.append("department_id, ");
-            logger.warn("Mandatory field missing. Field name - department_id");
+        
+        String branchName = row.getCellAsString(39).orElse(null);
+        String branchAddress = row.getCellAsString(40).orElse(null);
+        Optional<Branch> b = null;
+        if(CommonUtil.isNullOrEmpty(branchName) || CommonUtil.isNullOrEmpty(branchAddress)) {
+        	sb.append("branch_id, ");
+            logger.warn("Mandatory field missing. Branch name or branch address not provided, Cannot find the branch");
         }else {
-            String branchName = row.getCellAsString(42).orElse(null);
-            String branchAddress = row.getCellAsString(43).orElse(null);
-            if(CommonUtil.isNullOrEmpty(branchName) || CommonUtil.isNullOrEmpty(branchAddress)) {
-                sb.append("department_id, ");
-                logger.warn("Either branch name or branch address not provided, Cannot identify that given department belongs to which branch");
+            Branch branch = new Branch();
+            branch.setBranchName(branchName);
+            branch.address1(branchAddress);
+            b = this.allRepositories.findRepository("branch").findOne(Example.of(branch));
+            if(!b.isPresent()) {
+            	sb.append("branch_id, ");
+                logger.warn("Mandatory field missing. Branch not found");
             }else {
-                Branch branch = new Branch();
-                branch.setBranchName(branchName);
-                branch.address1(branchAddress);
-                Optional<Branch> b = this.allRepositories.findRepository("branch").findOne(Example.of(branch));
-
-                if(b.isPresent()) {
-                    Department department = new Department();
-                    department.setName(departmentName);
-                    department.setBranch(b.get());
-                    Optional<Department> dp = this.allRepositories.findRepository("department").findOne(Example.of(department));
-                    if(dp.isPresent()) {
-                        obj.setDepartment(dp.get());
-                    }else {
-                        sb.append("department_id, ");
-                        logger.warn("Department not found. Given department name : " + departmentName);
-                    }
-                }else {
-                    sb.append("department_id, ");
-                    logger.warn("Either branch name or branch address not provided, Cannot identify that given department belongs to which branch");
-                }
+            	obj.setBranch(b.get());
             }
         }
-
-        String sectionName = row.getCellAsString(41).orElse(null);
-        if (CommonUtil.isNullOrEmpty(sectionName)) {
-            sb.append("section_id,");
-            logger.warn("Mandatory field missing. Field name - section_id");
-        } else {
-            Section se = new Section();
-            if(SectionEnum.A.toString().equalsIgnoreCase(sectionName)){
-                se.setSection(SectionEnum.A);
-            }else if (SectionEnum.A.toString().equalsIgnoreCase(sectionName)){
-                se.setSection(SectionEnum.B);
-            }else if(SectionEnum.C.toString().equalsIgnoreCase(sectionName)){
-                se.setSection(SectionEnum.C);
-            }else if(SectionEnum.C.toString().equalsIgnoreCase(sectionName)) {
-                se.setSection(SectionEnum.C);
-            } else {
-                sb.append("section_id, ");
-                logger.warn("Given section not listed. Field name - section_name");
+        
+        Optional<Department> dp = null;
+        String departmentName = row.getCellAsString(41).orElse(null);
+        if(CommonUtil.isNullOrEmpty(departmentName)) {
+        	sb.append("department, ");
+            logger.warn("Mandatory field missing. Field name - departmentName");
+        }else {
+        	Department department = new Department();
+            department.setName(departmentName);
+            department.setBranch(b.get());
+            dp = this.allRepositories.findRepository("department").findOne(Example.of(department));
+            if(!dp.isPresent()) {
+            	sb.append("department, ");
+                logger.warn("Mandatory field missing. Field name - departmentName");
+            }else {
+            	obj.setDepartment(dp.get());
             }
         }
-
-        String batchName = row.getCellAsString(40).orElse(null);
+        
+        
+        Batch batch = new Batch();
+        Optional<Batch> obatch = null;
+        String batchName = row.getCellAsString(42).orElse(null);
         if(CommonUtil.isNullOrEmpty(batchName)){
             sb.append("section_id,");
             logger.warn("Either batch name not provided, Cannot identify that given section belongs to which batch");
         }else {
-            Batch batch = new Batch();
             if(BatchEnum.FIRSTYEAR.toString().equalsIgnoreCase(batchName)) {
                 batch.setBatch(BatchEnum.FIRSTYEAR);
             }else if(BatchEnum.SECONDYEAR.toString().equalsIgnoreCase(batchName)) {
@@ -516,9 +484,48 @@ public class StudentDataLoader extends DataLoader {
                 batch.setBatch(BatchEnum.THIRDYEAR);
             }else if(BatchEnum.FOURTHYEAR.toString().equalsIgnoreCase(batchName)) {
                 batch.setBatch(BatchEnum.FOURTHYEAR);
+            }else {
+            	sb.append("batch_id, ");
+                logger.warn("Given batch/year not listed. batch/year - "+batchName);
+            }
+            batch.setDepartment(dp.get());
+        	obatch = this.allRepositories.findRepository("batch").findOne(Example.of(batch));
+        	if(!obatch.isPresent()) {
+        		sb.append("batch, ");
+                logger.warn("Given batch is missing. Field name - batch");
+        	}else {
+        		obj.setBatch(obatch.get());
+        	}
+        }
+
+        Optional<Section> osc = null;
+		Section section = new Section();
+        String sectionName = row.getCellAsString(43).orElse(null);
+        if (CommonUtil.isNullOrEmpty(sectionName)) {
+            sb.append("section_id,");
+            logger.warn("Mandatory field missing. Field name - section_id");
+        } else {
+            if(SectionEnum.A.toString().equalsIgnoreCase(sectionName)){
+            	section.setSection(SectionEnum.A);
+            }else if (SectionEnum.A.toString().equalsIgnoreCase(sectionName)){
+            	section.setSection(SectionEnum.B);
+            }else if(SectionEnum.C.toString().equalsIgnoreCase(sectionName)){
+            	section.setSection(SectionEnum.C);
+            }else if(SectionEnum.C.toString().equalsIgnoreCase(sectionName)) {
+            	section.setSection(SectionEnum.C);
             } else {
-                sb.append("batch_id, ");
-                logger.warn("Given batch not listed. Field name - batch_name");
+            	logger.warn("Given section not listed. Section - "+sectionName);
+        		sb.append("section, ");
+            }
+            if(section.getSection() != null) {
+            	section.setBatch(obatch.get());
+            	osc = this.allRepositories.findRepository("section").findOne(Example.of(section));
+            	if(osc.isPresent()) {
+            		obj.setSection(osc.get());
+            	}else {
+            		sb.append("section, ");
+                    logger.warn("Given section is missing. Field name - section. "+sectionName);
+                }
             }
         }
 
@@ -526,7 +533,6 @@ public class StudentDataLoader extends DataLoader {
             String msg = "Field name - ";
             throw new MandatoryFieldMissingException(msg+sb.substring(0, sb.lastIndexOf(",")));
         }
-
 
         return (T) obj;
     }

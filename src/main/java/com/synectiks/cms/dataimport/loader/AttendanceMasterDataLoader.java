@@ -44,7 +44,6 @@ public class AttendanceMasterDataLoader extends DataLoader {
         StringBuilder sb = new StringBuilder();
 
         AttendanceMaster obj = CommonUtil.createCopyProperties(cls.newInstance(), AttendanceMaster.class);
-        Batch batch = new Batch();
         Subject subject = new Subject();
         
         String subjectCode = row.getCellAsString(0).orElse(null);
@@ -95,51 +94,57 @@ public class AttendanceMasterDataLoader extends DataLoader {
         	}
         }
         
-        
         String branchName = row.getCellAsString(5).orElse(null);
         String branchAddress = row.getCellAsString(6).orElse(null);
         Optional<Branch> b = null;
-        if(!CommonUtil.isNullOrEmpty(branchName) && !CommonUtil.isNullOrEmpty(branchAddress)) {
-//        	sb.append("branch_id, ");
-//            logger.warn("branch name or branch address not provided, Cannot find the branch");
-//        }else {
+        if(CommonUtil.isNullOrEmpty(branchName) || CommonUtil.isNullOrEmpty(branchAddress)) {
+        	sb.append("branch_id, ");
+            logger.warn("Mandatory field missing. Branch name or branch address not provided, Cannot find the branch");
+        }else {
             Branch branch = new Branch();
             branch.setBranchName(branchName);
             branch.address1(branchAddress);
             b = this.allRepositories.findRepository("branch").findOne(Example.of(branch));
-        }
-        
-        String departmentName = row.getCellAsString(4).orElse(null);
-        if(!CommonUtil.isNullOrEmpty(departmentName)) {
-//            sb.append("department_id, ");
-//            logger.warn("Mandatory field missing. Field name - department_id");
-//        }else {
-        	if(b != null && b.isPresent()) {
-            	Department department = new Department();
-                department.setName(departmentName);
-                department.setBranch(b.get());
-                Optional<Department> dp = this.allRepositories.findRepository("department").findOne(Example.of(department));
-                if(dp.isPresent()) {
-                    subject.setDepartment(dp.get());
-                    batch.setDepartment(dp.get());
-                }
-//                else {
-//                    sb.append("department_id, ");
-//                    logger.warn("Department not found. Given department name : " + departmentName);
-//                }
+            if(!b.isPresent()) {
+            	sb.append("branch_id, ");
+                logger.warn("Mandatory field missing. Branch not found");
             }
-//        	else {
-//            	sb.append("department_id, ");
-//                logger.warn("Either branch name or branch address not provided, Cannot identify that given department belongs to which branch");
-//            }
         }
         
+        if (sb.length() > 0) {
+            String msg = "Field name - ";
+            throw new MandatoryFieldMissingException(msg + sb.substring(0, sb.lastIndexOf(",")));
+        }
+        
+        Optional<Department> dp = null;
+        String departmentName = row.getCellAsString(4).orElse(null);
+        if(CommonUtil.isNullOrEmpty(departmentName)) {
+        	sb.append("department, ");
+            logger.warn("Mandatory field missing. Field name - departmentName");
+        }else {
+        	Department department = new Department();
+            department.setName(departmentName);
+            department.setBranch(b.get());
+            dp = this.allRepositories.findRepository("department").findOne(Example.of(department));
+            if(!dp.isPresent()) {
+            	sb.append("department, ");
+                logger.warn("Mandatory field missing. Field name - departmentName");
+            }
+        }
+        if (sb.length() > 0) {
+            String msg = "Field name - ";
+            throw new MandatoryFieldMissingException(msg + sb.substring(0, sb.lastIndexOf(",")));
+        }
+        
+        Batch batch = new Batch();
         Optional<Batch> obatch = null;
         String batchName = row.getCellAsString(7).orElse(null);
-        if(!CommonUtil.isNullOrEmpty(batchName)) {
-//        	sb.append("batch_id, ");
-//            logger.warn("Mandatory field missing. Field name - batch_id");
-//        }else {
+        if(CommonUtil.isNullOrEmpty(batchName)) {
+        	sb.append("batch_id, ");
+            logger.warn("Mandatory field missing. Field name - batch_id");
+            String msg = "Field name - ";
+            throw new MandatoryFieldMissingException(msg + sb.substring(0, sb.lastIndexOf(",")));
+        }else {
         	if(BatchEnum.FIRSTYEAR.toString().equalsIgnoreCase(batchName)) {
         		batch.setBatch(BatchEnum.FIRSTYEAR);
         	}else if(BatchEnum.SECONDYEAR.toString().equalsIgnoreCase(batchName)) {
@@ -149,108 +154,101 @@ public class AttendanceMasterDataLoader extends DataLoader {
         	}else if(BatchEnum.FOURTHYEAR.toString().equalsIgnoreCase(batchName)) {
         		batch.setBatch(BatchEnum.FOURTHYEAR);
         	}else {
-//        		sb.append("batch_id, ");
+        		sb.append("batch_id, ");
                 logger.warn("Given batch/year not listed. batch/year - "+batchName);
+                String msg = "Field name - ";
+                throw new DataNotFoundException(msg + sb.substring(0, sb.lastIndexOf(",")));
         	}
-        	if(batch.getDepartment() != null && batch.getBatch() != null) {
-//        		sb.append("batch_id, ");
-//                logger.warn("Mandatory field missing. Field name - batch_id");
-//        	}else {
-        		 obatch = this.allRepositories.findRepository("batch").findOne(Example.of(batch));
-        		 if(obatch != null && obatch.isPresent()) {
-        			 subject.setBatch(obatch.get());
-        			 obj.setBatch(obatch.get());
-        		 }
+        	
+        	batch.setDepartment(dp.get());
+        	obatch = this.allRepositories.findRepository("batch").findOne(Example.of(batch));
+        	if(!obatch.isPresent()) {
+        		sb.append("batch, ");
+                logger.warn("Given batch is missing. Field name - batch");
+                String msg = "Field name - ";
+                throw new DataNotFoundException(msg + sb.substring(0, sb.lastIndexOf(",")));
         	}
         }
         
-        if (sb.length() > 0) {
-            String msg = "Field name - ";
-            throw new MandatoryFieldMissingException(msg + sb.substring(0, sb.lastIndexOf(",")));
-        }
         
+        subject.setDepartment(dp.get());
+        subject.setBatch(obatch.get());
+        Optional<Subject> osub = null;
         if(!this.allRepositories.findRepository("subject").exists(Example.of(subject))) {
         	logger.info("Saving subject record.");
         	subject = (Subject)this.allRepositories.findRepository("subject").save(subject);
         	logger.info("Subject saved successfully. Subject : "+subject);
         }else {
         	logger.warn("Duplicate subject found. Discarding the subject.");
+        	osub = this.allRepositories.findRepository("subject").findOne(Example.of(subject));
+        	subject = osub.get();
         }
         
         Optional<Teacher> oth = null;
         String teacherEmailAddress = row.getCellAsString(8).orElse(null);
-        if(!CommonUtil.isNullOrEmpty(teacherEmailAddress)) {
-//        	sb.append("teacher_email_address, ");
-//            logger.warn("Mandatory field missing. Field name - teacher_email_address. Needed to assign teacher to respective subject");
-//        }else {
+        if(CommonUtil.isNullOrEmpty(teacherEmailAddress)) {
+        	sb.append("teacher_email_address, ");
+            logger.warn("Mandatory field missing. Field name - teacher_email_address. Needed to assign teacher to respective subject");
+        }else {
         	Teacher th = new Teacher();
         	th.setTeacherEmailAddress(teacherEmailAddress);
+        	th.setDepartment(dp.get());
         	oth = this.allRepositories.findRepository("teacher").findOne(Example.of(th));
-        }
-        
-        String sectionName = row.getCellAsString(9).orElse(null);
-        if(oth != null && oth.isPresent()) {
-	        Teach teach = new Teach();
-			teach.setSubject(subject);
-    		teach.setTeacher(oth.get());
-    		if(CommonUtil.isNullOrEmpty(sectionName)) {
-	        	if(!this.allRepositories.findRepository("teach").exists(Example.of(teach)) && obj.getBatch() != null) {
-	        		teach.setDesc(oth.get().getTeacherName() + " is teaching "+subject.getSubjectDesc());
-	    			teach = (Teach)this.allRepositories.findRepository("teach").save(teach);
-	    			obj.setTeach(teach);
-	    		}
-        	}else {
-        		if(obj.getBatch() != null) {
-                	Section section = new Section();
-                	if(SectionEnum.A.toString().equalsIgnoreCase(sectionName)) {
-                		section.setSection(SectionEnum.A);
-                	}else if(SectionEnum.B.toString().equalsIgnoreCase(sectionName)) {
-                		section.setSection(SectionEnum.B);
-                	}if(SectionEnum.C.toString().equalsIgnoreCase(sectionName)) {
-                		section.setSection(SectionEnum.C);
-                	}if(SectionEnum.D.toString().equalsIgnoreCase(sectionName)) {
-                		section.setSection(SectionEnum.D);
-                	}
-                    section.setBatch(obatch.get());
-                    Optional<Section> osc = this.allRepositories.findRepository("section").findOne(Example.of(section));
-                    if(osc.isPresent()) {
-                    	obj.setSection(osc.get());
-                    	Optional<Teach> oteach = this.allRepositories.findRepository("teach").findOne(Example.of(teach));
-                    	obj.setTeach(oteach.isPresent() ? oteach.get() : null);
-                    	if(!this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
-                    		teach.setDesc(oth.get().getTeacherName() + " is teaching "+subject.getSubjectDesc() +" in section "+sectionName);
-        	    			teach = (Teach)this.allRepositories.findRepository("teach").save(teach);
-        	    			obj.setTeach(teach);
-                    	}else {
-                    		logger.warn("Duplicate record in attendance master. Discarding the record.");
-                    		String msg = "Duplicate attendance master found";
-                        	sb.append(msg+",");
-                            logger.warn(msg);
-                            throw new DuplicateRecordFoundException(msg);
-                    	}
-                    }else {
-                    	sb.append("section_id, ");
-                    	String msg = "Field name - ";
-                        logger.warn("Section given in file is not listed in database. Section : "+sectionName+". Field name - section_id");
-                        throw new DataNotFoundException(msg + sb.substring(0, sb.lastIndexOf(",")));
-                    }
-                }
+        	if(!oth.isPresent()) {
+        		sb.append("teacher_email_address, ");
+                logger.warn("Mandatory field missing. Field name - teacher_email_address. Needed to assign teacher to respective subject");
         	}
-    	}
-        
-        if(obj.getTeach() == null) {
-        	sb.append("teach_id, ");
-            logger.warn("Mandatory field missing. Field name - teach_id");
         }
-        if(obj.getBatch() == null) {
-        	sb.append("batch_id, ");
-            logger.warn("Mandatory field missing. Field name - batch_id");
-        }
-        
         if (sb.length() > 0) {
             String msg = "Field name - ";
             throw new MandatoryFieldMissingException(msg + sb.substring(0, sb.lastIndexOf(",")));
         }
+        
+        Teach teach = new Teach();
+		teach.setSubject(subject);
+		teach.setTeacher(oth.get());
+		if(!this.allRepositories.findRepository("teach").exists(Example.of(teach))) {
+			teach.setDesc(subject.getSubjectCode());
+			teach = (Teach)this.allRepositories.findRepository("teach").save(teach);
+		}else {
+			logger.debug("Teach alrady exists. Returning the reference of existing teach");
+			teach = (Teach)this.allRepositories.findRepository("teach").findOne(Example.of(teach)).get();
+		}
+		
+		Optional<Section> osc = null;
+		Section section = new Section();
+        String sectionName = row.getCellAsString(9).orElse(null);
+        if(!CommonUtil.isNullOrEmpty(sectionName)) {
+        	if(SectionEnum.A.toString().equalsIgnoreCase(sectionName)) {
+        		section.setSection(SectionEnum.A);
+        	}else if(SectionEnum.B.toString().equalsIgnoreCase(sectionName)) {
+        		section.setSection(SectionEnum.B);
+        	}else if(SectionEnum.C.toString().equalsIgnoreCase(sectionName)) {
+        		section.setSection(SectionEnum.C);
+        	}else if(SectionEnum.D.toString().equalsIgnoreCase(sectionName)) {
+        		section.setSection(SectionEnum.D);
+        	}else {
+        		logger.warn("Given section not listed. Section - "+sectionName);
+        		sb.append("section, ");
+                String msg = "Field name - ";
+                throw new DataNotFoundException(msg + sb.substring(0, sb.lastIndexOf(",")));
+        	}
+        	if(section.getSection() != null) {
+            	section.setBatch(obatch.get());
+            	osc = this.allRepositories.findRepository("section").findOne(Example.of(section));
+            	if(osc.isPresent()) {
+            		obj.setSection(osc.get());
+            	}else {
+            		sb.append("section, ");
+                    logger.warn("Given section is missing. Field name - section. "+sectionName);
+                    String msg = "Field name - ";
+                    throw new DataNotFoundException(msg + sb.substring(0, sb.lastIndexOf(",")));
+            	}
+            }
+    	}
+        
+        obj.setBatch(obatch.get());
+        obj.setTeach(teach);
         
         if(this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
         	String msg = "Duplicate attendance master found";
@@ -261,26 +259,15 @@ public class AttendanceMasterDataLoader extends DataLoader {
             }
         }
         
-        String desc = "Teacher "+oth.get().getTeacherName()+" is the attendance master of subject "+subject.getSubjectDesc();
-        if(obj.getSection() != null) {
-        	desc = desc + " and section "+obj.getSection().getSection().toString();
-        }
-        obj.setDesc(desc);
+////        String desc = "Teacher "+oth.get().getTeacherName()+" is the attendance master of subject "+subject.getSubjectDesc();
+//        if(obj.getSection() != null) {
+//        	desc = desc + " and section "+obj.getSection().getSection().toString();
+//        }
+//        obj.setDesc(desc);
         return (T)obj;
     }
     
-    private BatchEnum findBatch(String batchName) {
-    	if(BatchEnum.FIRSTYEAR.toString().equalsIgnoreCase(batchName)) {
-    		return BatchEnum.FIRSTYEAR;
-    	}else if(BatchEnum.SECONDYEAR.toString().equalsIgnoreCase(batchName)) {
-    		return BatchEnum.SECONDYEAR;
-    	}else if(BatchEnum.THIRDYEAR.toString().equalsIgnoreCase(batchName)) {
-    		return BatchEnum.THIRDYEAR;
-    	}else if(BatchEnum.FOURTHYEAR.toString().equalsIgnoreCase(batchName)) {
-    		return BatchEnum.FOURTHYEAR;
-    	}
-    	return null;
-    }
+   
     
     
 }

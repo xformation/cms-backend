@@ -73,6 +73,7 @@ import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.BatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
@@ -435,14 +436,14 @@ public class CommonService {
     }
 
     public List<Department> getDepartmentsByBranchAndAcademicYear(Long branchId, Long academicYearId){
-        if(branchId == null || academicYearId == null) {
+        if(branchId == null ) { //|| academicYearId == null
             Collections.emptyList();
         }
         Department department = new Department();
         Branch branch = this.getBranchById(branchId);
-        AcademicYear ay = this.getAcademicYearById(academicYearId);
+//        AcademicYear ay = this.getAcademicYearById(academicYearId);
         department.setBranch(branch);
-        department.setAcademicyear(ay);
+//        department.setAcademicyear(ay);
         Example<Department> example = Example.of(department);
         List<Department> list = this.departmentRepository.findAll(example);
         return list;
@@ -1441,6 +1442,19 @@ public class CommonService {
         return amList;
     }
 
+    public SectionEnum findSection(String sectionName) {
+    	if(SectionEnum.A.toString().equalsIgnoreCase(sectionName)) {
+    		return SectionEnum.A;
+    	}else if(SectionEnum.B.toString().equalsIgnoreCase(sectionName)) {
+    		return SectionEnum.B;
+    	}else if(SectionEnum.C.toString().equalsIgnoreCase(sectionName)) {
+    		return SectionEnum.C;
+    	}else if(SectionEnum.D.toString().equalsIgnoreCase(sectionName)) {
+    		return SectionEnum.D;
+    	}
+        return null;
+    }
+    
     public BatchEnum findBatch(String batchName) {
         if(BatchEnum.FIRSTYEAR.toString().equalsIgnoreCase(batchName)) {
             return BatchEnum.FIRSTYEAR;

@@ -35,7 +35,7 @@ public class HolidayDataLoader extends DataLoader {
         StringBuilder sb = new StringBuilder();
         Holiday obj = CommonUtil.createCopyProperties(cls.newInstance(), Holiday.class);
 
-        String academicYear = row.getCellAsString(4).orElse(null);
+        String academicYear = row.getCellAsString(3).orElse(null);
         if(CommonUtil.isNullOrEmpty(academicYear)) {
             sb.append("jhi_year, ");
             logger.warn("Mandatory field missing. Field name - jhi_year");
@@ -67,17 +67,17 @@ public class HolidayDataLoader extends DataLoader {
             obj.holidayDate(DateFormatUtil.convertStringToLocalDate(holidayDate, CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         }
 
-        if(!CommonUtil.isNullOrEmpty(academicYear) && !CommonUtil.isNullOrEmpty(holidayDesc) && !CommonUtil.isNullOrEmpty(holidayDate) 
-        		&& this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
-        	String msg = "Application already have a holiday with name : "+holidayDesc+" for the date : "+holidayDate+" in the given academic year :"+academicYear;
-        	sb.append(msg);
-        	logger.warn(msg);
-        	if (sb.length() > 0) {
-              throw new AdditionalHolidayFoundException(msg);
-        	}
-        }
+//        if(!CommonUtil.isNullOrEmpty(academicYear) && !CommonUtil.isNullOrEmpty(holidayDesc) && !CommonUtil.isNullOrEmpty(holidayDate) 
+//        		&& this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
+//        	String msg = "Application already have a holiday with name : "+holidayDesc+" for the date : "+holidayDate+" in the given academic year :"+academicYear;
+//        	sb.append(msg);
+//        	logger.warn(msg);
+//        	if (sb.length() > 0) {
+//              throw new AdditionalHolidayFoundException(msg);
+//        	}
+//        }
         
-        String holidayStatus = row.getCellAsString(3).orElse(null);
+        String holidayStatus = row.getCellAsString(2).orElse(null);
         if (CommonUtil.isNullOrEmpty(holidayStatus)) {
             sb.append("status, ");
             logger.warn("Mandatory field missing. Field name - holiday_status");
@@ -94,6 +94,15 @@ public class HolidayDataLoader extends DataLoader {
             throw new MandatoryFieldMissingException(msg+sb.substring(0, sb.lastIndexOf(",")));
         }
 
+        if(this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
+        	String msg = "Application already have a holiday in the given academic year :"+academicYear;
+        	sb.append(msg);
+        	logger.warn(msg);
+        	if (sb.length() > 0) {
+              throw new AdditionalHolidayFoundException(msg);
+        	}
+        }
+        
         return (T) obj;
     }
 }

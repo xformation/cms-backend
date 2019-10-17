@@ -60,15 +60,15 @@ public class TermDataLoader extends DataLoader {
             }
         }
         
-        if(!CommonUtil.isNullOrEmpty(termDesc) && !CommonUtil.isNullOrEmpty(academicYear) && 
-        		this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
-        	  String msg = "Application already have a term with the given term description : "+termDesc + " in the given academic year : "+academicYear;
-              sb.append(msg+", ");
-              logger.warn(msg);
-              if (sb.length() > 0) {
-                  throw new AdditionalTermFoundException(msg);
-              }
-        }
+//        if(!CommonUtil.isNullOrEmpty(termDesc) && !CommonUtil.isNullOrEmpty(academicYear) && 
+//        		this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
+//        	  String msg = "Application already have a term with the given term description : "+termDesc + " in the given academic year : "+academicYear;
+//              sb.append(msg+", ");
+//              logger.warn(msg);
+//              if (sb.length() > 0) {
+//                  throw new AdditionalTermFoundException(msg);
+//              }
+//        }
         
         String startDate = row.getCellAsString(1).orElse(null);
         if (CommonUtil.isNullOrEmpty(startDate)) {
@@ -103,6 +103,15 @@ public class TermDataLoader extends DataLoader {
             throw new MandatoryFieldMissingException(msg+sb.substring(0, sb.lastIndexOf(",")));
         }
 
+        if(this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
+        	  String msg = "Application already have a term with the given given fields in the given academic year : "+academicYear;
+              sb.append(msg+", ");
+              logger.warn(msg);
+              if (sb.length() > 0) {
+                  throw new AdditionalTermFoundException(msg);
+              }
+        }
+        
         return  (T) obj;
     }
 }

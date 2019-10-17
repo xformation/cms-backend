@@ -97,10 +97,10 @@ public class StudentAttendanceFilterImpl  {
     	List<DailyAttendanceVo> voList = new ArrayList<>();
     	List<Student> studentList = getStudentListByNativeQuery(branch, department, batch, section);
         
-        Lecture currentDateLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 0);
-        Lecture oneDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 1);
-        Lecture twoDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 2);
-        Lecture threeDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 3);
+        Lecture currentDateLecture = lectureScheduleStatus(filter, am, 0);
+        Lecture oneDayPrevLecture = lectureScheduleStatus(filter, am, 1);
+        Lecture twoDayPrevLecture = lectureScheduleStatus(filter, am, 2);
+        Lecture threeDayPrevLecture = lectureScheduleStatus(filter, am, 3);
         
         // lecture schedule on current date insert/update all the students in student_attendance table.
         setCurrentDateStatus(voList, studentList, currentDateLecture);
@@ -354,7 +354,12 @@ public class StudentAttendanceFilterImpl  {
      * @throws ParseException
      * @throws Exception
      */
-    private Lecture lectureScheduleStatus(String lectureDate, AttendanceMaster attendanceMaster, int days) throws ParseException, Exception {
+    private Lecture lectureScheduleStatus(StudentAttendanceFilterInput filter, AttendanceMaster attendanceMaster, int days) throws ParseException, Exception {
+    	String lectureDate = filter.getAttendanceDate();
+    	
+    	if(days == 0) {
+    		return this.lectureRepository.findById(Long.parseLong(filter.getLectureId())).get();
+    	}
     	Lecture lec = new Lecture();
     	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
 //    			DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", lectureDate));
@@ -365,9 +370,9 @@ public class StudentAttendanceFilterImpl  {
     	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
     	lec.setAttendancemaster(attendanceMaster);
     	Example<Lecture> example = Example.of(lec);
-    	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
-    	if(nlec.isPresent()) {
-    		return nlec.get();
+    	List<Lecture> nlec = this.lectureRepository.findAll(example);
+    	if(nlec.size() > 0) {
+    		return nlec.get(0);
     	}
     	return null;
     }

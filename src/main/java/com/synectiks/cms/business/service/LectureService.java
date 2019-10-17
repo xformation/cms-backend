@@ -647,13 +647,13 @@ public class LectureService {
 		
     	Query query = null;
     	if(section != null) {
-			logger.info("1. Section not null, Teach list size > 0, size : "+teachList.size());
+			logger.info("1. Section not null");
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach in (:th) and a.batch in (:bth)");
 			query.setParameter("sc", section);
 			query.setParameter("th", teachList);
 			query.setParameter("bth", batchList);
 		}else {
-			logger.info("1. Section not null, Teach list size > 0, size : "+teachList.size());
+			logger.info("2. Section is null");
 			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th) and a.batch in (:bth)");
 //			query.setParameter("sc", section);
 			query.setParameter("th", teachList);
