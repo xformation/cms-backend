@@ -435,12 +435,16 @@ public class AcademicSubjectService {
     
     
     @Transactional(propagation=Propagation.REQUIRED)
-	public CmsSubjectVo updateSubject(CmsSubjectVo cmsSubjectVo) {
-		Subject sub = CommonUtil.createCopyProperties(cmsSubjectVo, Subject.class);
-		
+	public CmsSubjectVo updateSubject(CmsSubjectVo cmsSubjectVo, Map<String, String> dataMap) {
+//		Subject sub = CommonUtil.createCopyProperties(cmsSubjectVo, Subject.class);
+    	Subject sub = this.subjectRepository.findById(cmsSubjectVo.getId()).get();
+    	sub.setSubjectCode(cmsSubjectVo.getSubjectCode());
+    	sub.setSubjectDesc(cmsSubjectVo.getSubjectDesc());
+    	sub.setStatus(cmsSubjectVo.getStatus());
+    	
 		Department dt = commonService.getDepartmentById(cmsSubjectVo.getDepartmentId());
 		Batch bt =  commonService.getBatchById(cmsSubjectVo.getBatchId());
-		sub.setDepartment(dt);
+//		sub.setDepartment(dt);
 		sub.setBatch(bt);
 		sub = this.subjectRepository.save(sub);
 		logger.info("Subject data updated.");
@@ -456,15 +460,86 @@ public class AcademicSubjectService {
 		if(!this.teachRepository.exists(example)) {
 			teach.setDesc(cmsSubjectVo.getSubjectCode());
 			teach = this.teachRepository.save(teach);
+			logger.info("Teach data updated.");
+		}else {
+			teach = this.teachRepository.findOne(example).get();
 		}
 		
-		cmsSubjectVo = CommonUtil.createCopyProperties(sub, CmsSubjectVo.class);
-		cmsSubjectVo.setId(sub.getId());
-		cmsSubjectVo.setTeacher(teacher);
-		cmsSubjectVo.setTeacherId(teacher.getId());
+		String sectionA = dataMap.get("sectionA");
+		String sectionB = dataMap.get("sectionB");
+		String sectionC = dataMap.get("sectionC");
+		String sectionD = dataMap.get("sectionD");
 		
-		logger.info("Subject and Teach records updated in database successfully.");
-		return cmsSubjectVo;
+		AttendanceMaster am = new AttendanceMaster();
+		am.setTeach(teach);
+		am.setBatch(bt);
+		Section section = new Section();
+		section.setBatch(bt);
+		section.setSection(SectionEnum.A);
+		Optional<Section> ose = this.sectionRepository.findOne(Example.of(section));
+		if(ose.isPresent()) {
+			if(CommonUtil.isNullOrEmpty(sectionA) || "undefined".equalsIgnoreCase(sectionA) || "null".equalsIgnoreCase(sectionA)) {
+				am.setSection(null);
+				am = this.attendanceMasterRepository.save(am);
+			}
+		}
+		am = new AttendanceMaster();
+		am.setTeach(teach);
+		am.setBatch(bt);
+		section = new Section();
+		section.setBatch(bt);
+		section.setSection(SectionEnum.B);
+		ose = this.sectionRepository.findOne(Example.of(section));
+		if(ose.isPresent()) {
+			if(CommonUtil.isNullOrEmpty(sectionB) || "undefined".equalsIgnoreCase(sectionB) || "null".equalsIgnoreCase(sectionB)) {
+				am.setSection(null);
+				am = this.attendanceMasterRepository.save(am);
+			}
+		}
+		
+		am = new AttendanceMaster();
+		am.setTeach(teach);
+		am.setBatch(bt);
+		section = new Section();
+		section.setBatch(bt);
+		section.setSection(SectionEnum.C);
+		ose = this.sectionRepository.findOne(Example.of(section));
+		if(ose.isPresent()) {
+			if(CommonUtil.isNullOrEmpty(sectionC) || "undefined".equalsIgnoreCase(sectionC) || "null".equalsIgnoreCase(sectionC)) {
+				am.setSection(null);
+				am = this.attendanceMasterRepository.save(am);
+			}
+		}
+		
+		am = new AttendanceMaster();
+		am.setTeach(teach);
+		am.setBatch(bt);
+		section = new Section();
+		section.setBatch(bt);
+		section.setSection(SectionEnum.D);
+		ose = this.sectionRepository.findOne(Example.of(section));
+		if(ose.isPresent()) {
+			am.setSection(ose.get());
+			if(!this.attendanceMasterRepository.exists(Example.of(am))) {
+				if(!CommonUtil.isNullOrEmpty(sectionD) && !"undefined".equalsIgnoreCase(sectionD) && !"null".equalsIgnoreCase(sectionD)) {
+					am = this.attendanceMasterRepository.save(am);
+				}
+			}else {
+				if(CommonUtil.isNullOrEmpty(sectionD) || "undefined".equalsIgnoreCase(sectionD) || "null".equalsIgnoreCase(sectionD)) {
+					am.setSection(null);
+					am = this.attendanceMasterRepository.save(am);
+				}
+			}
+			
+		}
+		
+		CmsSubjectVo vo = CommonUtil.createCopyProperties(sub, CmsSubjectVo.class);
+		vo.setId(sub.getId());
+		vo.setTeacher(teacher);
+		vo.setTeacherId(teacher.getId());
+		
+		logger.info("Subject, Teach and attendance master records updated in database successfully.");
+		return vo;
 		
 	}
     
@@ -477,4 +552,16 @@ public class AcademicSubjectService {
 		return obj;
 	}
     
+    public List<Teach> getAllSubjectsWithTeacher(Long departmentId){
+    	Department department = this.commonService.getDepartmentById(departmentId);
+    	Subject subject = new Subject();
+    	Teacher teacher = new Teacher();
+    	subject.setDepartment(department);
+    	teacher.setDepartment(department);
+    	Teach teach = new Teach();
+    	teach.setSubject(subject);
+    	teach.setTeacher(teacher);
+    	List<Teach> teachList = this.teachRepository.findAll(Example.of(teach));
+    	return teachList;
+    }
 }
