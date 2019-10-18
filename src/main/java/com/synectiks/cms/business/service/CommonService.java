@@ -1311,6 +1311,11 @@ public class CommonService {
             .setParameter("th", thList)
             .getResultList();
 
+        if(amList.size() == 0) {
+        	logger.warn("getAllLecturesScheduledForTeacher(): Attendance master not found. Returning empty list");
+        	return Collections.emptyList();
+        }
+        
         @SuppressWarnings("unchecked")
         List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
             .setParameter("startDate", ay.getStartDate())
@@ -1340,6 +1345,11 @@ public class CommonService {
             .setParameter("th", thList)
             .getResultList();
 
+        if(amList.size() == 0) {
+        	logger.warn("getTotalLecturesConductedForTeacher(): Attendance master not found. Returning empty list");
+        	return Collections.emptyList();
+        }
+        
         @SuppressWarnings("unchecked")
         List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
             .setParameter("startDate", ay.getStartDate())
