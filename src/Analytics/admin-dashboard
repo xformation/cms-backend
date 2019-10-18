@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
-  "iteration": 1568228545504,
+  "id": 5,
+  "iteration": 1571394117530,
   "links": [],
   "panels": [
     {
@@ -232,7 +232,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select cnt as \"Total\" from admap2 where (\"tgbranch\"=~ /^[[branch]]$/) group by tgstatus",
+          "query": "select RecordCount from AdmissionApplication where (\"TbranchName\"=~ /^[[branch]]$/) group by TadmissionStatus;",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -286,6 +286,7 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "Hyd Engineering college, IT Park branch",
           "value": "Hyd Engineering college, IT Park branch"
         },
@@ -301,7 +302,7 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 5,
+        "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -315,14 +316,14 @@
           "value": "33891932"
         },
         "datasource": "InfluxDB",
-        "definition": "select Collected from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
-        "hide": 0,
+        "definition": "select Collected from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "collectedFee",
         "options": [],
-        "query": "select Collected from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "query": "select Collected from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -340,14 +341,14 @@
           "value": "0"
         },
         "datasource": "InfluxDB",
-        "definition": "select Pending from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
-        "hide": 0,
+        "definition": "select Pending from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "pendingFee",
         "options": [],
-        "query": "select Pending from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "query": "select Pending from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -365,14 +366,14 @@
           "value": "0"
         },
         "datasource": "InfluxDB",
-        "definition": "select Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
-        "hide": 0,
+        "definition": "select Overdue from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "overdueFee",
         "options": [],
-        "query": "select Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "query": "select Overdue from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -386,19 +387,18 @@
       {
         "allValue": null,
         "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
+          "text": "33891932",
+          "value": "33891932"
         },
         "datasource": "InfluxDB",
-        "definition": "select Collected+Pending+Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
-        "hide": 0,
+        "definition": "select Collected+Pending+Overdue from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "totalFeeBranchWise",
         "options": [],
-        "query": "select Collected+Pending+Overdue from Fee where (\"TbranchName\"=~ /^[[branch]]$/)",
+        "query": "select Collected+Pending+Overdue from Fee where (\"TbranchName\"=~/^[[branch]]$/)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -412,13 +412,12 @@
       {
         "allValue": null,
         "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
+          "text": "101675796",
+          "value": "101675796"
         },
         "datasource": "InfluxDB",
         "definition": "select sum(Collected) from Fee ",
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
@@ -438,175 +437,18 @@
       {
         "allValue": null,
         "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
+          "text": "0",
+          "value": "0"
         },
         "datasource": "InfluxDB",
-        "definition": "select sum(pending) from Fee ",
-        "hide": 0,
+        "definition": "select sum(Pending) from Fee ",
+        "hide": 2,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "totalPendingFee",
         "options": [],
-        "query": "select sum(pending) from Fee ",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "InfluxDB",
-        "definition": "select sum(overdue) from Fee ",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "totalOverdueFee",
-        "options": [],
-        "query": "select sum(overdue) from Fee ",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "InfluxDB",
-        "definition": "select sum(collected)+sum(pending)+sum(overdue) from Fee ",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "totalFee",
-        "options": [],
-        "query": "select sum(collected)+sum(pending)+sum(overdue) from Fee ",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "InfluxDB",
-        "definition": "select converted from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "convertedAdmEnq",
-        "options": [],
-        "query": "select converted from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "InfluxDB",
-        "definition": "select followup from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "followupAdmEnq",
-        "options": [],
-        "query": "select followup from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "InfluxDB",
-        "definition": "select declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "declinedAdmEnq",
-        "options": [],
-        "query": "select declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "isNone": true,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": "InfluxDB",
-        "definition": "select converted+followup+declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "totalAdmEnq",
-        "options": [],
-        "query": "select converted+followup+declined from admen where (\"tgbranch\"=~ /^[[branch]]$/)",
+        "query": "select sum(Pending) from Fee ",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -619,48 +461,173 @@
       },
       {
         "current": {
-          "text": "localhost",
-          "value": "localhost"
+          "text": "100.81.3.25",
+          "value": "100.81.3.25"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CmsNodeIP",
         "options": [
           {
             "selected": true,
-            "text": "localhost",
-            "value": "localhost"
+            "text": "100.81.3.25",
+            "value": "100.81.3.25"
           }
         ],
-        "query": "localhost",
+        "query": "100.81.3.25",
         "skipUrlSync": false,
         "type": "constant"
       },
       {
         "current": {
-          "text": "localhost",
-          "value": "localhost"
+          "text": "100.81.3.25",
+          "value": "100.81.3.25"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CmsBackEndIP",
         "options": [
           {
             "selected": true,
-            "text": "localhost",
-            "value": "localhost"
+            "text": "100.81.3.25",
+            "value": "100.81.3.25"
           }
         ],
-        "query": "localhost",
+        "query": "100.81.3.25",
         "skipUrlSync": false,
         "type": "constant"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "101675796",
+          "value": "101675796"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select sum(Collected)+sum(Pending)+sum(Overdue) from Fee",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalFee",
+        "options": [],
+        "query": "select sum(Collected)+sum(Pending)+sum(Overdue) from Fee",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "14",
+          "value": "14"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Converted from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "convertedAdmEnq",
+        "options": [],
+        "query": "select Converted from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "29",
+          "value": "29"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Followup from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "followupAdmEnq",
+        "options": [],
+        "query": "select Followup from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "7",
+          "value": "7"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Declined from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "declinedAdmEnq",
+        "options": [],
+        "query": "select Declined from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "50",
+          "value": "50"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select Converted+Followup+Declined from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalAdmEnq",
+        "options": [],
+        "query": "select Converted+Followup+Declined from AdmissionEnquiry where (\"TbranchName\"=~/^[[branch]]$/)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       },
       {
         "current": {
           "text": "admin",
           "value": "admin"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CurrentUser",
         "options": {
@@ -671,6 +638,31 @@
         "query": "admin",
         "skipUrlSync": false,
         "type": "constant"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "0",
+          "value": "0"
+        },
+        "datasource": "InfluxDB",
+        "definition": "select sum(Overdue) from Fee ",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "totalOverdueFee",
+        "options": [],
+        "query": "select sum(Overdue) from Fee ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -706,5 +698,5 @@
   "timezone": "",
   "title": "admin-dashboard",
   "uid": "V5HDv2cWk",
-  "version": 203
+  "version": 53
 }
