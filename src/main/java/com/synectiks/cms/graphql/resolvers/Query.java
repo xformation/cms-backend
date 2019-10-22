@@ -800,24 +800,12 @@ public class Query implements GraphQLQueryResolver {
         	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
     		return cache;
     	}
-    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
-    	List<Batch> bth = this.commonService.getBatchForCriteria(dept);
-    	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth);
-    	List<Section> sec = this.commonService.getSectionForCriteria(bth);
-//    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.valueOf(teacherId));
-    	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec);
-//    	List<Subject> selectedSubjectList = new ArrayList<>();
 
-//    	for(Subject subject: sub) {
-//    		for(Teach th: teach) {
-//    			logger.debug("Subject id : "+subject.getId()+", teach-subject id : "+th.getSubject().getId());
-//    			if(subject.getId().compareTo(th.getSubject().getId()) == 0 ) {
-//    				logger.debug("Selected subject id : "+subject.toString());
-//    				selectedSubjectList.add(subject);
-//    			}
-//
-//    		}
-//    	}
+        List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
+        List<Batch> bth = this.commonService.getBatchForCriteria(dept);
+        List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth);
+        List<Section> sec = this.commonService.getSectionForCriteria(bth);
+        List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec);
     	List<CmsTermVo> term = this.commonService.getTermsByAcademicYear(Long.valueOf(academicYearId));
     	List<Lecture> lec =  this.commonService.getLectureForAdminCriteria(attendanceMaster);
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
@@ -861,25 +849,50 @@ public class Query implements GraphQLQueryResolver {
     	cache.setGenders(genderList);
     	return cache;
     }
-    public ExamFilterDataCache createExamFilterDataCache(String collegeId, String academicYearId) throws Exception{
-        List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
-        List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
-        List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
-        List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(departmentList, batchList);
-        List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
-        List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
+    public ExamFilterDataCache createExamFilterDataCache( String branchId, String academicYearId) throws Exception{
+        ExamFilterDataCache cache = new ExamFilterDataCache();
+
+        if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId)
+            || academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)) {
+            logger.warn("Either branch or academic year id is null. Return empty cache");
+            cache.setDepartments(new ArrayList<Department>());
+            cache.setBatches(new ArrayList<Batch>());
+            cache.setAcademicExamSettings(new ArrayList<AcademicExamSetting>());
+            cache.setSubjects(new ArrayList<Subject>());
+            cache.setSections(new ArrayList<Section>());
+            cache.setSemesters(new ArrayList<CmsSemesterVo>());
+            return cache;
+        }
+
+        if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
+            logger.warn("Either branch or academic year id is not provided. Return empty cache");
+            cache.setDepartments(new ArrayList<Department>());
+            cache.setBatches(new ArrayList<Batch>());
+            cache.setAcademicExamSettings(new ArrayList<AcademicExamSetting>());
+            cache.setSubjects(new ArrayList<Subject>());
+            cache.setSections(new ArrayList<Section>());
+            cache.setSemesters(new ArrayList<CmsSemesterVo>());
+            return cache;
+        }
+        List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
+        List<Batch> bth = this.commonService.getBatchForCriteria(dept); //batches();
+        List<AcademicExamSetting> examsList = this.commonService.getExamsForCriteria(dept, bth);
+        List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth); //subjects();
+        List<Section> sec = this.commonService.getSectionForCriteria(bth); //sections();
+        List<Subject> selectedSubjectList = new ArrayList<>();
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
 
-        ExamFilterDataCache cache = new ExamFilterDataCache();
-        cache.setDepartments(departmentList);
-        cache.setBatches(batchList);
+
+        cache.setDepartments(dept);
+        cache.setBatches(bth);
         cache.setAcademicExamSettings(examsList);
-        cache.setBranches(branchList);
-        cache.setSections(sectionList);
+        cache.setSections(sec);
         cache.setSemesters(sem);
-        cache.setSubjects(sub);
+        cache.setSubjects(selectedSubjectList);
         return cache;
     }
+
+
     public LibraryFilterDataCache createLibraryFilterDataCache(String collegeId, String academicYearId) throws Exception{
         List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
         List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));

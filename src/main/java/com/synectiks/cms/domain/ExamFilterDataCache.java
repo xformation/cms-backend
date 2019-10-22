@@ -8,7 +8,6 @@ public class ExamFilterDataCache {
     private List<Batch> batches;
     private List<Section> sections;
     private List<CmsSemesterVo> semesters;
-    private List<Branch> branches;
     private List<Subject> subjects;
     private List<AcademicExamSetting> academicExamSettings;
 
@@ -43,13 +42,7 @@ public class ExamFilterDataCache {
         this.semesters = semesters;
     }
 
-    public List<Branch> getBranches() {
-        return branches;
-    }
 
-    public void setBranches(List<Branch> branches) {
-        this.branches = branches;
-    }
 
     public List<Subject> getSubjects() {
         return subjects;
