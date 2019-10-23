@@ -331,7 +331,7 @@ type Query {
     createVehicleDataCache: VehicleDataCache!
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
-    createExamFilterDataCache(branchId:String , academicYearId:String): ExamFilterDataCache!
+    createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
     createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
 
@@ -410,6 +410,7 @@ type CmsFeeDetails {
 }
 
 type ExamFilterDataCache {
+branches: [Branch]
 	departments: [Department]
 	batches: [Batch]
 	sections: [Section]
