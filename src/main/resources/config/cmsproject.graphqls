@@ -3711,13 +3711,13 @@ type AddBookPayload{
 }
 input UpdateBookInput {
     id:Long!
-    issueDate:Date!
-	dueDate:Date!
-	noOfCopiesAvailable:Int!
-	status:StatusEnum!
-	studentId:Long!
-	libraryId:Long!
-	receivedDate: Date!
+    issueDate:Date
+	dueDate:Date
+	noOfCopiesAvailable:Int
+	status:StatusEnum
+	studentId:Long
+	libraryId:Long
+	receivedDate: Date
 }
 type UpdateBookPayload{
     book:Book!

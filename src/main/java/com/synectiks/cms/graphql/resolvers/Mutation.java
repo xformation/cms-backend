@@ -3085,7 +3085,7 @@ public class Mutation implements GraphQLMutationResolver {
 
             if(ff.getIssueDate() != null) {
                 cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setStrIssueDate(null);
+                cfc.setIssueDate(null);
             }
             if(ff.getDueDate() != null) {
                 cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
