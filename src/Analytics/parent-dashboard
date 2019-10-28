@@ -1,0 +1,471 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 10,
+  "iteration": 1572259994049,
+  "links": [],
+  "panels": [
+    {
+      "content": "<html>\r\n  <head>\r\n    <style>\r\n      .dashTd{\r\n        border: 0px solid !important;\r\n      \tfont-weight: 500;\r\n      \tfont-family: Helvetica, Arial, sans-serif;\r\n        color: rgb(78, 144, 203);\r\n        padding-top:0 !important;\r\n        padding-bottom:0 !important;\r\n        \r\n      }\r\n      .borderStyle{\r\n        border: 0px solid !important;\r\n        padding-top:0 !important;\r\n        padding-bottom:0 !important;\r\n      }\r\n    </style>\r\n  </head>\r\n  <body >\r\n    <table text-align=\"left\" style=\"width:100%; border:0px solid;\">\r\n      <tr style=\"border:0px solid;\">\r\n          <td rowspan=\"3\" style=\"border:0px solid; width:16%\"><img id=\"imgProfile\" src=\"\" width=\"150\" height=\"150\"/></td>\r\n      </tr>\r\n      <tr style=\"border:0px solid;\">\r\n          <td style=\"border:0px solid; width:39%\"><font face=\"Helvetica, Arial, sans-serif\" size=\"5\" color=\"#4E90CB\" ><b><span id=\"stName\"></span></b></font></td>\r\n          <td style=\"border:0px solid; width:18%\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Contact No:</b></font>&nbsp;&nbsp;</span><span id=\"stPhone\"></span></td>\r\n          <td style=\"border:0px solid; width:23%\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Emergency Contact:</b></font>&nbsp;&nbsp;<span id=\"stPrPhone\"></span></td>\r\n          <td style=\"border:0px solid; width:4%\"><input type=\"button\" value=\"Profile\" style=\"background-color:#3697ef;color:white;width:120px;height:35px;\" onclick=\"changeToProfile();\"></input></td>\r\n      </tr>\r\n      <tr style=\"border:0px solid;\">\r\n        <td colspan=\"4\" style=\"border:0px solid;\">\r\n          <table style=\"width:70%; border:0px solid;\">\r\n            <tr style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\">\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Admission No:</b></font></span>&nbsp;&nbsp;<span id=\"stAdmNo\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Roll No:</b></font></span>&nbsp;&nbsp;<span id=\"stRollNo\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Class:</b></font></span>&nbsp;&nbsp;<span id=\"stClass\"></span></td>\r\n            </tr>\r\n            <tr style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\">\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Student Id:</b></font></span>&nbsp;&nbsp;<span id=\"stId\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Department:</b></font></span>&nbsp;&nbsp;<span id=\"stDept\"></span></td>\r\n               <td style=\"border:0px solid; padding-top:0 !important; padding-bottom:0 !important;\"><span><font face=\"Helvetica, Arial, sans-serif\" color=\"#4E90CB\" ><b>Section:</b></font></span>&nbsp;&nbsp;<span id=\"stSection\"></span></td>\r\n               \r\n            </tr>      \r\n          <table>\r\n        </td>\r\n      </tr>\r\n    </table>\r\n  </body>\r\n</html>\r\n\r\n<script>\r\n    var ipFend = '$CmsNodeIP';  \r\n    var ipBend = '$CmsBackEndIP';\r\n    var uploadPhoto = \"default_profile_image.jpg\";\r\n    var loggedInUser = '$CurrentUser';\r\n    \r\n    \r\n  \r\n      var asynReq = new XMLHttpRequest();\r\n      asynReq.onreadystatechange = function() {\r\n        if (asynReq.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4\r\n           if (asynReq.status == 200) {\r\n               var resp = asynReq.responseText;\r\n               var obj = JSON.parse(resp);\r\n               fillStudentPersonalDetails(obj);\r\n               fillFeeDetails(obj);\r\n               fillFacility(obj);\r\n               fillLecture(obj);\r\n               fillNotification(obj);\r\n           }\r\n           else if (asynReq.status == 400) {\r\n              console.log('There was an error 400');\r\n           }\r\n           else {\r\n              console.log('something else other than 200 was returned');\r\n           }\r\n        }\r\n      };\r\n      asynReq.open(\"GET\", \"http://\"+ipBend+\":8080/api/cmsdashboard?userName=\"+loggedInUser+\"&role=student\", true);\r\n      asynReq.send();\r\n    \r\n    \r\n    \r\n    function changeToProfile(){\r\n      var stId = document.getElementById(\"stId\").innerText;\r\n      window.location.href = 'http://'+ipFend+':3000/plugins/ems-student/page/student?id='+stId;\r\n    }\r\n    \r\n    function fillStudentPersonalDetails(obj){\r\n      document.getElementById(\"stName\").innerText = obj.student.studentName + \" \"+obj.student.studentMiddleName+ \" \"+obj.student.studentLastName;\r\n      document.getElementById(\"stPhone\").innerText = obj.student.studentContactNumber;\r\n      // document.getElementById(\"stPrContact\").innerText = obj.emergencyContactName;\r\n      document.getElementById(\"stPrPhone\").innerText = obj.student.emergencyContactNo;\r\n      document.getElementById(\"stAdmNo\").innerText = obj.student.admissionNo;\r\n      document.getElementById(\"stRollNo\").innerText = obj.student.rollNo;\r\n      document.getElementById(\"stClass\").innerText = obj.student.batch.batch;\r\n      document.getElementById(\"stId\").innerText = obj.student.id;\r\n      // profileId = obj.student.id;\r\n      document.getElementById(\"stDept\").innerText = obj.student.department.name;\r\n      document.getElementById(\"stSection\").innerText = obj.student.section.section;\r\n      var profileImg = document.getElementById(\"imgProfile\");\r\n      if(obj.student.uploadPhoto != null && obj.student.uploadPhoto != \"\"){\r\n        console.log(\"before split :::::: \",obj.student.uploadPhoto);\r\n        var ar = obj.student.uploadPhoto.split(\"\\\\\");\r\n        // uploadPhoto = ar[5];  \r\n        console.log(\"after split :::::: \",ar[5]);\r\n        \r\n        profileImg.src = \"http://\"+ipBend+\":8080/static/images/\"+ar[5];\r\n      }else{\r\n        profileImg.src = \"http://\"+ipBend+\":8080/static/images/\"+uploadPhoto;\r\n      }\r\n      \r\n    }\r\n    \r\n    function fillFeeDetails(obj){\r\n      document.getElementById(\"invNo\").innerText = obj.cmsInvoice.invoiceNumber;\r\n      document.getElementById(\"amt\").innerText = obj.cmsInvoice.amountPaid;\r\n      document.getElementById(\"dueDt\").innerText = obj.cmsInvoice.strNextPaymentDate;\r\n      document.getElementById(\"status\").innerText = obj.cmsInvoice.paymentStatus;\r\n    }\r\n    \r\n    function fillFacility(obj){\r\n      var table = document.getElementById(\"facilityTable\");\r\n      table.classList.add(\"borderStyle\");\r\n      for(var i=0; i<obj.studentFacilityLinkList.length; i++){\r\n        var j=0;\r\n        var objF = obj.studentFacilityLinkList[i];\r\n        var row = table.insertRow(i);\r\n        row.classList.add(\"borderStyle\");\r\n        row.innerHTML = \"<th>\"+objF.facility.name+\"</th>\";\r\n        // var cell = row.insertCell(j);\r\n        // cell.classList.add(\"borderStyle\");\r\n        // cell.innerHTML = \"<span>\"+objF.facility.name+\"</span>\";\r\n      }\r\n    }\r\n    \r\n    function fillLecture(obj){\r\n      var table = document.getElementById(\"lectureTable\");\r\n      for(var i=0; i<obj.cmsLectureVoList.length; i++){\r\n        var j=0;\r\n        var row = table.insertRow(i+1);\r\n        var lecObj = obj.cmsLectureVoList[i];\r\n        \r\n        var cell1 = row.insertCell(j);\r\n        cell1.innerHTML = \"<span>\"+lecObj.attendancemaster.batch.department.name+\"</span>\";\r\n        var cell2 = row.insertCell(++j);\r\n        cell2.innerHTML = \"<span>\"+lecObj.attendancemaster.teach.subject.subjectDesc+\"</span>\";\r\n        var cell3 = row.insertCell(++j);\r\n        var thrName = lecObj.attendancemaster.teach.teacher;\r\n        cell3.innerHTML = \"<span>\"+thrName.teacherName+\" \"+thrName.teacherMiddleName+thrName.teacherLastName+\"</span>\";\r\n        var cell4 = row.insertCell(++j);\r\n        cell4.innerHTML = \"<span>\"+lecObj.strLecDate+\"</span>\";\r\n        var cell5 = row.insertCell(++j);\r\n        cell5.innerHTML = \"<span>\"+lecObj.startTime+\"</span>\";\r\n        var cell6 = row.insertCell(++j);\r\n        cell6.innerHTML = \"<span>\"+lecObj.endTime+\"</span>\";\r\n      }\r\n    }\r\n    function fillNotification(obj){\r\n      console.log(\"notification ::::: \",obj);\r\n      var table = document.getElementById(\"notificationTable\");\r\n      // table.classList.add(\"borderStyle\");\r\n      \r\n      for(var i=0; i<obj.cmsNotificationsVoList.length; i++){\r\n        var j=0;\r\n        var nObj = obj.cmsNotificationsVoList[i]\r\n        var row = table.insertRow(i);\r\n        var cell = row.insertCell(j);\r\n        // cell.classList.add(\"borderStyle\");\r\n        cell.innerHTML = \"<span><b>\"+nObj.messageCode+\"</b></span><br><span>\"+nObj.message+\"</span>\";\r\n      }\r\n    }\r\n\r\n   \r\n</script>\r\n\r\n",
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Academic Details",
+      "type": "text"
+    },
+    {
+      "content": "<html>\r\n  <body>\r\n    <table id=\"notificationTable\" width=\"100%\">\r\n      \r\n    </table>\r\n  </body>\r\n</html>\r\n",
+      "datasource": "InfluxDB",
+      "gridPos": {
+        "h": 11,
+        "w": 5,
+        "x": 0,
+        "y": 6
+      },
+      "id": 4,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Notifications",
+      "type": "text"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fill": 1,
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 5,
+        "y": 6
+      },
+      "hideTimeOverride": true,
+      "id": 6,
+      "interval": "1m",
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": true,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "paceLength": 10,
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "Tsubject"
+              ],
+              "type": "tag"
+            }
+          ],
+          "measurement": "Student",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100 AS \"per\" FROM \"Student\" WHERE (\"TstudentEmail\" =~ /^$CurrentUser/)   GROUP BY \"Tsubject\" ",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "Subject"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "(TotalPresent/TotalLecturesConducted)*100"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "per"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "TstudentEmail",
+              "operator": "=",
+              "value": "Rajesh_2051@gmail.com"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "1h",
+      "timeRegions": [],
+      "timeShift": "1h",
+      "title": "Attendance Analysis",
+      "tooltip": {
+        "shared": false,
+        "sort": 1,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": true,
+        "values": [
+          "total"
+        ]
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Attendance Percentage",
+          "logBase": 1,
+          "max": "100",
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": "100",
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": true,
+        "alignLevel": 0
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#299c46"
+      ],
+      "datasource": "InfluxDB",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": true,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 14,
+        "y": 6
+      },
+      "id": 8,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "null",
+      "nullText": null,
+      "postfix": "%",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "StudentEmail",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100  FROM \"Student\" where (\"StudentEmail\"=~ /^[[CurrentUser]]$/  and \"Subject\"=~ /^[[Subjects]]$/) group by StudentName,StudentEmail,year,subject",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": "30,70,100",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Attendance:  [[Subjects]]",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "content": "<html>\n  <body>\n    <table class=\"borderStyle\">\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Invoice No:</td><td class=\"borderStyle\"><span id=\"invNo\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Amount:</td><td class=\"borderStyle\"><span id=\"amt\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Payment Status:</td><td class=\"borderStyle\"><span id=\"status\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Next Due Date:</td><td class=\"borderStyle\"><span id=\"dueDt\"></span></td></tr>\n    </table>\n  </body>\n</html>\n",
+      "datasource": "InfluxDB",
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 19,
+        "y": 6
+      },
+      "id": 10,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Fee Details",
+      "type": "text"
+    },
+    {
+      "content": "<html>\r\n  <body>\r\n    <table id=\"lectureTable\" width=\"100%\">\r\n      <tr ><th >Department</th><th >Subject</th><th >Teacher</th><th >Lecture Date</th><th >Start Time</th><th >End Time</th></tr>\r\n    </table>\r\n  </body>\r\n</html>\r\n",
+      "datasource": "InfluxDB",
+      "gridPos": {
+        "h": 6,
+        "w": 14,
+        "x": 5,
+        "y": 11
+      },
+      "id": 12,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Today's Lecture Schedule",
+      "type": "text"
+    },
+    {
+      "content": "<html>\n  <body>\n    <table class=\"borderStyle\" id=\"facilityTable\" width=\"100%\">\n     \n    </table>\n  </body>\n</html>\n",
+      "datasource": "InfluxDB",
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 19,
+        "y": 11
+      },
+      "id": 14,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Facility",
+      "type": "text"
+    }
+  ],
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "admin",
+          "value": "admin"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "CurrentUser",
+        "options": {
+          "selected": true,
+          "text": "admin",
+          "value": "admin"
+        },
+        "query": "admin",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "100.81.3.26",
+          "value": "100.81.3.26"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "CmsNodeIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "100.81.3.26",
+            "value": "100.81.3.26"
+          }
+        ],
+        "query": "100.81.3.26",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "100.81.3.26",
+          "value": "100.81.3.26"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "CmsBackEndIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "100.81.3.26",
+            "value": "100.81.3.26"
+          }
+        ],
+        "query": "100.81.3.26",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "Students",
+        "options": [],
+        "query": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "parent-dashboard",
+  "uid": "HXTSUF0Wz",
+  "version": 3
+}
