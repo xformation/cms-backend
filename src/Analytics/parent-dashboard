@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 10,
-  "iteration": 1572259994049,
+  "iteration": 1572340844420,
   "links": [],
   "panels": [
     {
@@ -293,7 +293,7 @@
       "valueName": "avg"
     },
     {
-      "content": "<html>\n  <body>\n    <table class=\"borderStyle\">\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Invoice No:</td><td class=\"borderStyle\"><span id=\"invNo\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Amount:</td><td class=\"borderStyle\"><span id=\"amt\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Payment Status:</td><td class=\"borderStyle\"><span id=\"status\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Next Due Date:</td><td class=\"borderStyle\"><span id=\"dueDt\"></span></td></tr>\n    </table>\n  </body>\n</html>\n",
+      "content": "\n<html>\n<style>\n#noBorder {\n  border: 0px solid !important;\n}\n.align-center{\n  align-items: center;\n}\n</style>\n\n  <body>\n    <table class=\"borderStyle\">\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Invoice No:</td><td class=\"borderStyle\"><span id=\"invNo\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Amount:</td><td class=\"borderStyle\"><span id=\"amt\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Payment Status:</td><td class=\"borderStyle\"><span id=\"status\"></span></td></tr>\n      <tr class=\"borderStyle\"><td class=\"dashTd\">Next Due Date:</td><td class=\"borderStyle\"><span id=\"dueDt\"></span></td></tr>\n      <tr class=\"borderStyle\"><td id=\"noBorder\" class=\"align-center\"><input type=\"button\" value=\"Pay Now\" style=\"background-color:#3697ef;color:white;width:100px;height:35px;\" onclick=\"changeToProfile();\"></input></td></tr>\n    </table>\n  </body>\n</html>\n",
       "datasource": "InfluxDB",
       "gridPos": {
         "h": 5,
@@ -352,23 +352,6 @@
   "tags": [],
   "templating": {
     "list": [
-      {
-        "current": {
-          "text": "admin",
-          "value": "admin"
-        },
-        "hide": 2,
-        "label": null,
-        "name": "CurrentUser",
-        "options": {
-          "selected": true,
-          "text": "admin",
-          "value": "admin"
-        },
-        "query": "admin",
-        "skipUrlSync": false,
-        "type": "constant"
-      },
       {
         "current": {
           "text": "100.81.3.26",
@@ -432,6 +415,49 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "text": "admin",
+          "value": "admin"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "CurrentUser",
+        "options": {
+          "selected": true,
+          "text": "admin",
+          "value": "admin"
+        },
+        "query": "admin",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "Subjects",
+        "options": [],
+        "query": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -467,5 +493,5 @@
   "timezone": "",
   "title": "parent-dashboard",
   "uid": "HXTSUF0Wz",
-  "version": 3
+  "version": 20
 }
