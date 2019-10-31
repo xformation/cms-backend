@@ -142,11 +142,11 @@ jhipster:
 # More documentation is available at:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
+# 18.209.4.2/localhost
 application:
-    influxDbUrl: http://18.209.4.2:8086
+    influxDbUrl: http://localhost:8086
     influxDb: cmsdb
     influxDbUsername: cms
     influxDbPassword: cms
     influxDbLogLevel: BASIC
-    secSrvUrl: http://18.209.4.2:8094
+    secSrvUrl: http://localhost:8094

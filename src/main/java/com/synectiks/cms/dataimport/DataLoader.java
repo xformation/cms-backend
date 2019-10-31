@@ -110,7 +110,7 @@ public abstract class DataLoader {
 		ExceptionRecord obj = new ExceptionRecord(); 
 		obj.setExceptionSource((this.fileName != null ? "File - "+this.fileName : "") + ", worksheet - "+this.sheetName);
 		obj.setExceptionType(exp.getClass().getSimpleName()+" : "+exp.getMessage());
-		obj.setExceptionRecord(row.toString().length() > 255 ? row.toString().substring(0, 254) : row.toString());
+		obj.setExceptionRecord(row.toString().length() > 255 ? row.toString().substring(0, 250) : row.toString());
 		obj.setExceptionDate(LocalDate.now());
 		return obj;
 	}

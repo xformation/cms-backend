@@ -3,6 +3,7 @@ package com.synectiks.cms.dataimport.loader;
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
 import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.enumeration.BatchEnum;
 import com.synectiks.cms.exceptions.AdditionalBatchFoundException;
@@ -33,56 +34,64 @@ public class BatchDataLoader extends DataLoader {
         StringBuilder sb = new StringBuilder();
 
         Batch obj = CommonUtil.createCopyProperties(cls.newInstance(), Batch.class);
-
-        obj.setBatch(BatchEnum.FIRSTYEAR);
-        if (!this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
-
-            String batch = row.getCellAsString(0).orElse(null);
-            if (CommonUtil.isNullOrEmpty(batch)) {
-                sb.append("batch, ");
+        
+        String batchName = row.getCellAsString(0).orElse(null);
+        if(!CommonUtil.isNullOrEmpty(batchName)) {
+        	BatchEnum be = findBatch(batchName);
+            if(be == null) {
+            	sb.append("batch, ");
                 logger.warn("Mandatory field missing. Field name - batch");
-            } else {
-                if (BatchEnum.FIRSTYEAR.toString().equalsIgnoreCase(batch)) {
-                    obj.setBatch(BatchEnum.FIRSTYEAR);
-                } else {
-                    if (BatchEnum.SECONDYEAR.toString().equalsIgnoreCase(batch)) {
-                        obj.setBatch(BatchEnum.SECONDYEAR);
-                    } else {
-                        if (BatchEnum.THIRDYEAR.toString().equalsIgnoreCase(batch)) {
-                            obj.setBatch(BatchEnum.THIRDYEAR);
-                        } else {
-                            if (BatchEnum.FOURTHYEAR.toString().equalsIgnoreCase(batch)) {
-                                obj.setBatch((BatchEnum.FOURTHYEAR));
-                            }
-                        }
-                    }
-                }
+            }else {
+            	obj.setBatch(be);
             }
-        } else {
-            sb.append("Application already have an active batch, ");
-            logger.warn("Application already have an active batch");
-            if (sb.length() > 0) {
-                String msg = "Application already have an active batch";
-                throw new AdditionalBatchFoundException(msg);
-            }
+        }else {
+        	sb.append("batch, ");
+            logger.warn("Mandatory field missing. Field name - batch");
         }
-
-        String name = row.getCellAsString(1).orElse(null);
-        if(CommonUtil.isNullOrEmpty(name)) {
+        
+        String departmentName = row.getCellAsString(1).orElse(null);
+        if(CommonUtil.isNullOrEmpty(departmentName)) {
             sb.append("department_id, ");
             logger.warn("Mandatory field missing. Field name - department_id");
         }else {
-            Department department = new Department();
-            department.setName(name);
-            Optional<Department> dp = this.allRepositories.findRepository("department").findOne(Example.of(department));
-            if(dp.isPresent()) {
-                obj.setDepartment(dp.get());
+        	String branchName = row.getCellAsString(2).orElse(null);
+            String branchAddress = row.getCellAsString(3).orElse(null);
+            if(CommonUtil.isNullOrEmpty(branchName) || CommonUtil.isNullOrEmpty(branchAddress)) {
+            	sb.append("department_id, ");
+                logger.warn("Either branch name or branch address not provided, Cannot identify that given department belongs to which branch");
             }else {
-                sb.append("department_id, ");
-                logger.warn("Department not found. Given department name : " + name);
+                Branch branch = new Branch();
+                branch.setBranchName(branchName);
+                branch.address1(branchAddress);
+                Optional<Branch> b = this.allRepositories.findRepository("branch").findOne(Example.of(branch));
+                
+                if(b.isPresent()) {
+                	Department department = new Department();
+                    department.setName(departmentName);
+                    department.setBranch(b.get());
+                    Optional<Department> dp = this.allRepositories.findRepository("department").findOne(Example.of(department));
+                    if(dp.isPresent()) {
+                        obj.setDepartment(dp.get());
+                    }else {
+                        sb.append("department_id, ");
+                        logger.warn("Department not found. Given department name : " + departmentName);
+                    }
+                }else {
+                	sb.append("department_id, ");
+                    logger.warn("Either branch name or branch address not provided, Cannot identify that given department belongs to which branch");
+                }
             }
         }
-
+        
+        if (this.allRepositories.findRepository(this.sheetName).exists(Example.of(obj))) {
+        	String msg = "Batch and department combination already exists";
+        	sb.append(msg+",");
+            logger.warn(msg);
+            if (sb.length() > 0) {
+                throw new AdditionalBatchFoundException(msg);
+            }
+        }
+        
         if (sb.length() > 0) {
             String msg = "Field name - ";
             throw new MandatoryFieldMissingException(msg + sb.substring(0, sb.lastIndexOf(",")));
@@ -90,4 +99,18 @@ public class BatchDataLoader extends DataLoader {
 
         return (T)obj;
     }
+    
+    private BatchEnum findBatch(String batchName) {
+    	if(BatchEnum.FIRSTYEAR.toString().equalsIgnoreCase(batchName)) {
+    		return BatchEnum.FIRSTYEAR;
+    	}else if(BatchEnum.SECONDYEAR.toString().equalsIgnoreCase(batchName)) {
+    		return BatchEnum.SECONDYEAR;
+    	}else if(BatchEnum.THIRDYEAR.toString().equalsIgnoreCase(batchName)) {
+    		return BatchEnum.THIRDYEAR;
+    	}else if(BatchEnum.FOURTHYEAR.toString().equalsIgnoreCase(batchName)) {
+    		return BatchEnum.FOURTHYEAR;
+    	}
+    	return null;
+    }
+    
 }

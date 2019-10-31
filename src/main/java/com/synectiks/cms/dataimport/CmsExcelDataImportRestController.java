@@ -33,6 +33,14 @@ public class CmsExcelDataImportRestController {
 	@Autowired
 	private AllRepositories allRepositories;
 	
+	private String [] allEntities = 
+		{		"country","state","city",
+				"academic_year","holiday","term",
+				"college","branch","department",
+				"batch","section", "teacher", 
+				"attendance_master"
+		};
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmsdataimport/{tableName}")
 	public ResponseEntity<QueryResult> doImport(@RequestParam("file") MultipartFile file, @PathVariable String tableName) throws URISyntaxException {
 		String msg = "Data successfully imported for entity - "+tableName;
@@ -55,20 +63,34 @@ public class CmsExcelDataImportRestController {
 		}
 		
 		if("ALL".equalsIgnoreCase(tableName)){
-			for(String entity: CmsConstants.tabelName) {
+			for(int i=0; i<allEntities.length; i++) {
+				DataLoader dataLoader = this.dataLoaderFactory.getLoader(allEntities[i], this.allRepositories);
+				if(dataLoader == null) {
+					msg = "Application does not support data import for entity - "+allEntities[i];
+					logger.warn(msg);
+				}
 				try {
-					if(!"ALL".equalsIgnoreCase(entity)) {
-						DataLoader dataLoader = this.dataLoaderFactory.getLoader(entity, this.allRepositories);
-						if(dataLoader == null) {
-							logger.warn("Application does not support data import for entity - "+entity);
-						}
-						dataLoader.load(file, this.dataLoaderFactory.getClassName(entity));
-						
-					}
+					dataLoader.load(file,this.dataLoaderFactory.getClassName(allEntities[i]));
 				}catch(Exception e) {
-					logger.error("Data import failed for entiry : "+entity);
+					msg = "Due to some error data import failed for entity - "+allEntities[i];
+					result.setStatusCode(1);
+					logger.error(msg, e);
 				}
 			}
+//			for(String entity: CmsConstants.tabelName) {
+//				try {
+//					if(!"ALL".equalsIgnoreCase(entity)) {
+//						DataLoader dataLoader = this.dataLoaderFactory.getLoader(entity, this.allRepositories);
+//						if(dataLoader == null) {
+//							logger.warn("Application does not support data import for entity - "+entity);
+//						}
+//						dataLoader.load(file, this.dataLoaderFactory.getClassName(entity));
+//						
+//					}
+//				}catch(Exception e) {
+//					logger.error("Data import failed for entiry : "+entity);
+//				}
+//			}
 		}else {
 			DataLoader dataLoader = this.dataLoaderFactory.getLoader(tableName, this.allRepositories);
 			if(dataLoader == null) {
