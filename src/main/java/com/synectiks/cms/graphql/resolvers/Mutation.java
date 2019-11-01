@@ -1190,58 +1190,60 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-        final Section section = sectionRepository.findById(addStudentInput.getSectionId()).get();
-        final Branch branch = branchRepository.findById(addStudentInput.getBranchId()).get();
-        final Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
-        final Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
+        Section section = sectionRepository.findById(addStudentInput.getSectionId()).get();
+        Branch branch = branchRepository.findById(addStudentInput.getBranchId()).get();
+        Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
+        Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
+        
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
-        student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addStudentInput.getDateOfBirth()));
-        student.setUploadPhoto("");
+        
+        student.setDateOfBirth(addStudentInput.getDateOfBirth());
+//        student.setUploadPhoto("");
         student.setBatch(batch);
         student.setSection(section);
         student.setBranch(branch);
         student.setDepartment(department);
         logger.info("Saving student record.");
         student = studentRepository.save(student);
-        saveStudentImage2(addStudentInput, student, branch);
+//        saveStudentImage2(addStudentInput, student, branch);
         return new AddStudentPayload(student);
     }
 
-    private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-    	if(branch == null) return;
-    	if(branch != null && branch.getCollege() == null) return;
-    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
-    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
-    	String filePath = Paths.get("", temp).toString();
-    	String fileName = String.valueOf(student.getId());
-    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
-    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
-    	student.setUploadPhoto(absFilePath);
-    	logger.info("Saving student image. File path: "+absFilePath);
-    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, String.valueOf(branch.getId()), null);
-    	logger.info("Updating student record with image file path: "+absFilePath);
-    	this.studentRepository.save(student);
-    }
-
-    private void saveStudentImage2(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-    	if(branch == null) return;
-    	if(branch != null && branch.getCollege() == null) return;
-    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
+//    private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//    	if(branch == null) return;
+//    	if(branch != null && branch.getCollege() == null) return;
+//    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
 //    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
-    	String temp = "src/main/webapp/static/images";
-
-    	String filePath = Paths.get("", temp).toString();
-    	String fileName = String.valueOf(student.getId());
-    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
+//    	String filePath = Paths.get("", temp).toString();
+//    	String fileName = String.valueOf(student.getId());
+//    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
 //    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
-    	String absFilePath = filePath+ File.separator+fileName+"."+ext;
-
-    	student.setUploadPhoto(absFilePath);
-    	logger.info("Saving student image. File path: "+absFilePath);
-    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, null, null);
-    	logger.info("Updating student record with image file path: "+absFilePath);
-    	this.studentRepository.save(student);
-    }
+//    	student.setStudentImagePath(absFilePath);
+//    	logger.info("Saving student image. File path: "+absFilePath);
+//    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, String.valueOf(branch.getId()), null);
+//    	logger.info("Updating student record with image file path: "+absFilePath);
+//    	this.studentRepository.save(student);
+//    }
+//
+//    private void saveStudentImage2(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//    	if(branch == null) return;
+//    	if(branch != null && branch.getCollege() == null) return;
+//    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
+////    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
+//    	String temp = "src/main/webapp/static/images";
+//
+//    	String filePath = Paths.get("", temp).toString();
+//    	String fileName = String.valueOf(student.getId());
+//    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
+////    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
+//    	String absFilePath = filePath+ File.separator+fileName+"."+ext;
+//
+//    	student.setStudentImagePath(absFilePath);
+//    	logger.info("Saving student image. File path: "+absFilePath);
+//    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, null, null);
+//    	logger.info("Updating student record with image file path: "+absFilePath);
+//    	this.studentRepository.save(student);
+//    }
 
     public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
         Student student = studentRepository.findById(updateStudentInput.getId()).get();
@@ -1272,12 +1274,12 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getMotherLastName() != null) {
             student.setMotherLastName(updateStudentInput.getMotherLastName());
         }
-        if (updateStudentInput.getAadharNo() != null) {
-            student.setAadharNo(updateStudentInput.getAadharNo());
-        }
-        if (updateStudentInput.getDateOfBirth() != null) {
-            student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentInput.getDateOfBirth()));
-        }
+//        if (updateStudentInput.getAadharNo() != null) {
+//            student.setAadharNo(updateStudentInput.getAadharNo());
+//        }
+//        if (updateStudentInput.getDateOfBirth() != null) {
+//            student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentInput.getDateOfBirth()));
+//        }
         if (updateStudentInput.getPlaceOfBirth() != null) {
             student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
         }
@@ -1299,39 +1301,39 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getBloodGroup() != null) {
             student.setBloodGroup(updateStudentInput.getBloodGroup());
         }
-        if (updateStudentInput.getAddressLineOne() != null) {
-            student.setAddressLineOne(updateStudentInput.getAddressLineOne());
-        }
-        if (updateStudentInput.getAddressLineTwo() != null) {
-            student.setAddressLineTwo(updateStudentInput.getAddressLineTwo());
-        }
-        if (updateStudentInput.getAddressLineThree() != null) {
-            student.setAddressLineThree(updateStudentInput.getAddressLineThree());
-        }
-        if (updateStudentInput.getTown() != null) {
-            student.setTown(updateStudentInput.getTown());
-        }
+//        if (updateStudentInput.getAddressLineOne() != null) {
+//            student.setAddressLineOne(updateStudentInput.getAddressLineOne());
+//        }
+//        if (updateStudentInput.getAddressLineTwo() != null) {
+//            student.setAddressLineTwo(updateStudentInput.getAddressLineTwo());
+//        }
+//        if (updateStudentInput.getAddressLineThree() != null) {
+//            student.setAddressLineThree(updateStudentInput.getAddressLineThree());
+//        }
+//        if (updateStudentInput.getTown() != null) {
+//            student.setTown(updateStudentInput.getTown());
+//        }
         if (updateStudentInput.getState() != null) {
             student.setState(updateStudentInput.getState());
         }
         if (updateStudentInput.getCountry() != null) {
             student.setCountry(updateStudentInput.getCountry());
         }
-        if (updateStudentInput.getPincode() != null) {
-            student.setPincode(updateStudentInput.getPincode());
-        }
-        if (updateStudentInput.getStudentContactNumber() != null) {
-            student.setStudentContactNumber(updateStudentInput.getStudentContactNumber());
-        }
-        if (updateStudentInput.getAlternateContactNumber() != null) {
-            student.setAlternateContactNumber(updateStudentInput.getAlternateContactNumber());
-        }
-        if (updateStudentInput.getStudentEmailAddress() != null) {
-            student.setStudentEmailAddress(updateStudentInput.getStudentEmailAddress());
-        }
-        if (updateStudentInput.getAlternateEmailAddress() != null) {
-            student.setAlternateEmailAddress(updateStudentInput.getAlternateEmailAddress());
-        }
+//        if (updateStudentInput.getPincode() != null) {
+//            student.setPincode(updateStudentInput.getPincode());
+//        }
+//        if (updateStudentInput.getStudentContactNumber() != null) {
+//            student.setStudentContactNumber(updateStudentInput.getStudentContactNumber());
+//        }
+//        if (updateStudentInput.getAlternateContactNumber() != null) {
+//            student.setAlternateContactNumber(updateStudentInput.getAlternateContactNumber());
+//        }
+//        if (updateStudentInput.getStudentEmailAddress() != null) {
+//            student.setStudentEmailAddress(updateStudentInput.getStudentEmailAddress());
+//        }
+//        if (updateStudentInput.getAlternateEmailAddress() != null) {
+//            student.setAlternateEmailAddress(updateStudentInput.getAlternateEmailAddress());
+//        }
         if (updateStudentInput.getRelationWithStudent() != null) {
             student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
         }
@@ -1344,12 +1346,12 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getEmergencyContactLastName() != null) {
             student.setEmergencyContactLastName(updateStudentInput.getEmergencyContactLastName());
         }
-        if (updateStudentInput.getEmergencyContactNo() != null) {
-            student.setEmergencyContactNo(updateStudentInput.getEmergencyContactNo());
-        }
-        if (updateStudentInput.getEmergencyContactEmailAddress() != null) {
-            student.setEmergencyContactEmailAddress(updateStudentInput.getEmergencyContactEmailAddress());
-        }
+//        if (updateStudentInput.getEmergencyContactNo() != null) {
+//            student.setEmergencyContactNo(updateStudentInput.getEmergencyContactNo());
+//        }
+//        if (updateStudentInput.getEmergencyContactEmailAddress() != null) {
+//            student.setEmergencyContactEmailAddress(updateStudentInput.getEmergencyContactEmailAddress());
+//        }
 
 //        if (updateStudentInput.getUploadPhoto() != null) {
 //            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
@@ -1381,7 +1383,7 @@ public class Mutation implements GraphQLMutationResolver {
             student.setDepartment(department);
         }
 
-        saveStudentImage(updateStudentInput, student, student.getBranch());
+//        saveStudentImage(updateStudentInput, student, student.getBranch());
 
         studentRepository.save(student);
 

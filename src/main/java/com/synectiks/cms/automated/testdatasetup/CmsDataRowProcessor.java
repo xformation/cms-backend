@@ -446,7 +446,7 @@ public class CmsDataRowProcessor {
         State st = findStateWithStateName("Telangana");
         City ct = findCiyt(st, "Hyderabad");
         this.student = pojoBuilder.createStudentPojo(cell);
-        this.student.setTown(ct.getCityName());
+        this.student.setCity(ct.getCityName());
         this.student.setState(st.getStateName());
         this.student.setCountry(country.getCountryName());
         this.student.setDepartment(department);

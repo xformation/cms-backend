@@ -22,90 +22,106 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="student_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="student_middle_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="student_last_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="father_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="father_middle_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="father_last_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="mother_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="mother_middle_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="mother_last_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
-            <column name="aadhar_no" type="bigint">
-                <constraints nullable="false" />
+            <column name="student_aadhar_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_pan_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_social_security_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_tax_reference_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_bpl_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_driving_license_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_passport_no" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
             <column name="date_of_birth" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="place_of_birth" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="religion" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="caste" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="sub_caste" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="age" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="sex" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
-            <column name="blood_group" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="student_local_address" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
-            <column name="address_line_one" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="student_permanent_address" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
-            <column name="address_line_two" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="address_line_three" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="town" type="varchar(255)">
+            <column name="city" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
@@ -117,55 +133,67 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="pincode" type="bigint">
+            <column name="pin_code" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="student_contact_number" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="alternate_contact_number" type="varchar(255)">
+            <column name="student_primary_cell_number" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="student_email_address" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="student_alternate_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
-            <column name="alternate_email_address" type="varchar(255)">
+            <column name="student_land_line_phone_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_primary_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_alternate_email_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
             <column name="relation_with_student" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="emergency_contact_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="emergency_contact_middle_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="emergency_contact_last_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
-            <column name="emergency_contact_no" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="emergency_contact_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+			
+			<column name="emergency_contact_land_line_phone_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+			
+            <column name="emergency_contact_email_id" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
-            <column name="emergency_contact_email_address" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="student_image_path" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
-            <column name="upload_photo" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="admission_no" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
-            <column name="admission_no" type="bigint">
+            <column name="enrollment_no" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -174,7 +202,291 @@
             </column>
 
             <column name="student_type" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_occupation" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_office_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_office_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_office_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+			
+			<column name="father_office_land_line_phone_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+			
+            <column name="father_aadhar_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_pan_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_social_security_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_tax_reference_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_bpl_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_driving_license_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_passport_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="father_image_path" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_occupation" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_office_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_office_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_office_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+			<column name="mother_office_land_line_phone_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_aadhar_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_pan_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_social_security_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_tax_reference_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_bpl_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_driving_license_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_passport_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mother_image_path" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_middle_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_last_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_land_line_phone_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_occupation" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_office_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_office_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="guardian_office_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+			
+			<column name="guardian_office_land_line_phone_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+			
+            <column name="guardian_image_path" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="is_guardian_sponsor_agency" type="varchar(3)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+			
+			<column name="sponsor_agency_registration_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_land_line_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_appointee_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_appointee_designation" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_appointee_cell_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_appointee_land_line_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_appointee_email_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sponsor_agency_appointee_office_address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="is_physically_challenged" type="varchar(3)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="details_of_disability" type="varchar(2000)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="disability_certificate_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="disability_certificate_issue_authority" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="disability_certificate_issue_date" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="percentag_of_disability" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="blood_group" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="vaccination_details" type="varchar(1000)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="other_medical_details" type="varchar(2000)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="created_by" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="created_on" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="updated_by" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="updated_on" type="date">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="comments" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
             <column name="department_id" type="bigint">
@@ -192,6 +504,7 @@
             <column name="branch_id" type="bigint">
                 <constraints nullable="false" />
             </column>
+
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -129,6 +130,13 @@ public final class DateFormatUtil {
         }
         return DateFormatUtil.convertStringToLocalDate(stDt[2]+"-"+stDt[0]+"-"+stDt[1], CmsConstants.DATE_FORMAT_yyyy_MM_dd);
     }
+	
+	public static int calculateAge(LocalDate dateOfBirth) {
+	  LocalDate now = LocalDate.now(); 
+	  Period diff = Period.between(dateOfBirth, now); //difference between the dates is calculated
+	  logger.debug("Age : " + diff.getYears());
+	  return diff.getYears();
+	}
 	
 	public static void main(String a[]) throws Exception {
 //		String dt = changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", "29/04/2019");

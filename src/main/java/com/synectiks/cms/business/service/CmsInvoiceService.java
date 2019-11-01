@@ -201,7 +201,7 @@ public class CmsInvoiceService {
     
     public CmsInvoice getInvoiceByStudentId(String studentMailId) {
     	Student student = new Student();
-    	student.setStudentEmailAddress(studentMailId);
+    	student.setStudentPrimaryEmailId(studentMailId);
     	Optional<Student> ost = this.studentRepository.findOne(Example.of(student));
     	CmsInvoice cmsInv = null;
     	if(ost.isPresent()) {

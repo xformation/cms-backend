@@ -123,45 +123,129 @@ CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
 }
 
 entity Student{
-studentName String required
-studentMiddleName String required
-studentLastName String required
-fatherName String required
-fatherMiddleName String required
-fatherLastName String required
-motherName String required
-motherMiddleName String required
-motherLastName String required
-aadharNo Long required
-dateOfBirth LocalDate required
-placeOfBirth String required
-religion Religion required
-caste Caste required
-subCaste String required
-age Integer required
-sex Gender required
-bloodGroup Bloodgroup required
-addressLineOne String required
-addressLineTwo String required
-addressLineThree String required
-town String required
-state String required
-country String required
-pincode Long required
-studentContactNumber String required
-alternateContactNumber String
-studentEmailAddress String required
-alternateEmailAddress String
-relationWithStudent RelationWithStudentEnum required
-emergencyContactName String required
-emergencyContactMiddleName String required
-emergencyContactLastName String required
-emergencyContactNo String required
-emergencyContactEmailAddress String required
-uploadPhoto String required
-admissionNo Long
-rollNo String
-studentType StudentTypeEnum required
+	studentName String 
+	studentMiddleName String 
+	studentLastName String 
+	fatherName String 
+	fatherMiddleName String 
+	fatherLastName String 
+	motherName String 
+	motherMiddleName String 
+	motherLastName String 
+	studentAadharNo String 
+	studentPanNo String
+	studentSocialSecurityNo String
+	studentTaxReferenceNo String
+	studentBplNo String
+	studentDrivingLicenseNo String
+	studentPassportNo String
+	dateOfBirth LocalDate 
+	placeOfBirth String 
+	religion Religion 
+	caste Caste 
+	subCaste String 
+	age Integer 
+	sex Gender 
+	studentLocalAddress String
+	studentPermanentAddress String 
+	city String required
+	state String required
+	country String required
+	pinCode String required
+	studentPrimaryCellNumber String 
+	studentAlternateCellNumber String
+	studentLandLinePhoneNumber String
+	studentPrimaryEmailId String 
+	studentAlternateEmailId String
+	relationWithStudent RelationWithStudentEnum
+	emergencyContactName String 
+	emergencyContactMiddleName String 
+	emergencyContactLastName String 
+	emergencyContactCellNumber String
+	emergencyContactLandLinePhoneNumber String 
+	emergencyContactEmailId String 
+	studentImagePath String 
+	admissionNo String
+	enrollmentNo String
+	rollNo String
+	studentType StudentTypeEnum
+	fatherCellNumber String
+	fatherEmailId String
+	fatherOccupation String
+	fatherOfficeEmailId String
+	fatherOfficeAddress String  
+	fatherOfficeCellNumber String
+	fatherOfficeLandLinePhoneNumber	String
+	fatherAadharNo String 
+	fatherPanNo String
+	fatherSocialSecurityNo String
+	fatherTaxReferenceNo String
+	fatherBplNo String
+	fatherDrivingLicenseNo String
+	fatherPassportNo String
+	fatherImagePath String 
+	
+	motherCellNumber String
+	motherEmailId String
+	motherOccupation String
+	motherOfficeEmailId String
+	motherOfficeAddress String  
+	motherOfficeCellNumber String
+	motherOfficeLandLinePhoneNumber	String
+	motherAadharNo String 
+	motherPanNo String
+	motherSocialSecurityNo String
+	motherTaxReferenceNo String
+	motherBplNo String
+	motherDrivingLicenseNo String
+	motherPassportNo String
+	motherImagePath String 
+	
+	guardianName String 
+	guardianMiddleName String 
+	guardianLastName String 
+	guardianAddress String  
+	guardianCellNumber String
+	guardianLandLinePhoneNumber String
+	guardianEmailId String
+	guardianOccupation String
+	guardianOfficeEmailId String
+	guardianOfficeAddress String  
+	guardianOfficeCellNumber String
+	guardianOfficeLandLinePhoneNumber String
+	guardianImagePath String 
+	
+	isGuardianSponsorAgency String maxlength(3)
+	sponsorAgencyName String
+	sponsorAgencyRegistrationNo String
+	sponsorAgencyAddress String 
+	sponsorAgencyCellNumber String
+	sponsorAgencyLandLineNumber String
+	sponsorAgencyEmailId String
+	sponsorAgencyAppointeeName String
+	sponsorAgencyAppointeeDesignation String
+	sponsorAgencyAppointeeCellNumber String
+	sponsorAgencyAppointeeLandLineNumber String
+	sponsorAgencyAppointeeEmailId String
+	sponsorAgencyAppointeeOfficeAddress String
+	
+	isPhysicallyChallenged String maxlength(3)
+	detailsOfDisability String maxlength(2000)
+	disabilityCertificateNo String
+	disabilityCertificateIssueAuthority String
+	disabilityCertificateIssueDate LocalDate
+	percentagOfDisability Integer
+	
+	bloodGroup Bloodgroup 
+	vaccinationDetails String maxlength(2000)
+	otherMedicalDetails String maxlength(2000)
+	
+	status Status
+	createdBy String
+	createdOn LocalDate
+	updatedBy String
+	updatedOn LocalDate
+	comments String	
 }
 
 

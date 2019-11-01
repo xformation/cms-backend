@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.config.GlobalConfig;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.CmsDepartmentVo;
 import com.synectiks.cms.domain.Config;
@@ -49,7 +48,7 @@ public class GlobalConfigRestController {
         	return ResponseUtil.wrapOrNotFound(Optional.of(config));
         }
         
-        return ResponseUtil.wrapOrNotFound(Optional.of(GlobalConfig.CONFIG));
+        return ResponseUtil.wrapOrNotFound(Optional.of(new Config()));
     }
    
     @RequestMapping(method = RequestMethod.POST, value = "/cmssettings")

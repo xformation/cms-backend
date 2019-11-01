@@ -25,7 +25,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
-import com.synectiks.cms.config.GlobalConfig;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.domain.AcademicYear;
@@ -1116,7 +1115,6 @@ public class CommonService {
 
         findUserConfig(userName, config);
 
-        config.setCollege(GlobalConfig.CONFIG.getCollege());
         AcademicYear ay = this.getActiveAcademicYear();
         if(ay != null) {
             CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
@@ -1138,7 +1136,7 @@ public class CommonService {
         Student st = new Student();
         Teacher th = new Teacher();
         Employee em = new Employee();
-        st.setStudentEmailAddress(userName);
+        st.setStudentPrimaryEmailId(userName);
         th.setTeacherEmailAddress(userName);
         em.setOfficialMailId(userName);
         Optional<Student> student = studentRepository.findOne(Example.of(st));
@@ -1152,6 +1150,7 @@ public class CommonService {
             config.setBranch(student.get().getBranch());
             config.setDepartment(student.get().getDepartment());
             config.setUserId(student.get().getId());
+            config.setCollege(student.get().getBranch().getCollege());
         }else if(teacher.isPresent()) {
             config.setLoggedInUser(userName);
             config.setCountry(teacher.get().getBranch().getState().getCountry());
@@ -1160,6 +1159,7 @@ public class CommonService {
             config.setBranch(teacher.get().getBranch());
             config.setDepartment(teacher.get().getDepartment());
             config.setUserId(teacher.get().getId());
+            config.setCollege(teacher.get().getBranch().getCollege());
         }else if(employee.isPresent()) {
             config.setLoggedInUser(userName);
             config.setCountry(employee.get().getBranch().getState().getCountry());
@@ -1168,6 +1168,7 @@ public class CommonService {
             config.setBranch(employee.get().getBranch());
             config.setDepartment(null);
             config.setUserId(employee.get().getId());
+            config.setCollege(employee.get().getBranch().getCollege());
         }
     }
 
@@ -1178,7 +1179,6 @@ public class CommonService {
 
         findUserConfig(userName, config);
 
-        config.setCollege(GlobalConfig.CONFIG.getCollege());
         List<AcademicYear> acYearList = this.academicYearRepository.findAll(Sort.by(Direction.ASC, "id"));
         List<CmsAcademicYearVo> ayList = new ArrayList<>();
         for(AcademicYear ay: acYearList ) {
@@ -1248,7 +1248,7 @@ public class CommonService {
         StudentAttendance sa = new StudentAttendance();
         sa.setStudent(student);
         long count = this.studentAttendanceRepository.count(Example.of(sa));
-        logger.debug("Total lectures scheduled for student : "+student.getStudentEmailAddress()+" are : "+count);
+        logger.debug("Total lectures scheduled for student : "+student.getStudentPrimaryEmailId()+" are : "+count);
         return count;
     }
 
@@ -1267,7 +1267,7 @@ public class CommonService {
         CriteriaQuery<StudentAttendance> select = query.select(root).where(cb.and(inLecture), cb.and(cb.equal(root.get("student"), student.getId())));
         TypedQuery<StudentAttendance> typedQuery = this.entityManager.createQuery(select);
         List<StudentAttendance> lectureList = typedQuery.getResultList();
-        logger.debug("Lecture date : "+dt+". Student id : "+student.getId()+". Student email : "+student.getStudentEmailAddress()+". Total lectures conducted till date for given : "+lectureList.size());
+        logger.debug("Lecture date : "+dt+". Student id : "+student.getId()+". Student email : "+student.getStudentPrimaryEmailId()+". Total lectures conducted till date for given : "+lectureList.size());
         return lectureList;
     }
 
