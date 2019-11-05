@@ -1249,7 +1249,13 @@ public class CommonService {
             inLecture.value(lec.getId());
         }
 
-        CriteriaQuery<StudentAttendance> select = query.select(root).where(cb.and(inLecture), cb.and(cb.equal(root.get("student"), student.getId())));
+        CriteriaQuery<StudentAttendance> select = null;
+        if(lecList.size() > 0) {
+            select = query.select(root).where(cb.and(inLecture), cb.and(cb.equal(root.get("student"), student.getId())));
+        }else{
+            return Collections.emptyList();
+        }
+
         TypedQuery<StudentAttendance> typedQuery = this.entityManager.createQuery(select);
         List<StudentAttendance> lectureList = typedQuery.getResultList();
         logger.debug("Lecture date : "+dt+". Student id : "+student.getId()+". Student email : "+student.getStudentPrimaryEmailId()+". Total lectures conducted till date for given : "+lectureList.size());
