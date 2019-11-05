@@ -910,12 +910,16 @@ public class Query implements GraphQLQueryResolver {
     	return cache;
     }
 
-    public AddVehicleDataCache createAddVehicleDataCache() throws Exception{
+    public AddVehicleDataCache createAddVehicleDataCache(String collegeId, String branchId) throws Exception{
         List<College> collegeList = this.collegeRepository.findAll();
         List<Branch> branchList = this.branchRepository.findAll();
+        List<CmsTypeOfInsuranceVo> typeOfInsuranceList = this.commonService.getAllTypeOfInsurances();
+        List<CmsTypeOfOwnershipVo> typeOfOwnershipList = this.commonService.getAllTypeOfOwnerships();
         AddVehicleDataCache cache = new AddVehicleDataCache();
         cache.setColleges(collegeList);
         cache.setBranches(branchList);
+        cache.setTypeOfInsurances(typeOfInsuranceList);
+        cache.setTypeOfOwnerships(typeOfOwnershipList);
 
         return cache;
     }
