@@ -12,6 +12,8 @@ public class AbstractContractInput {
     private String durationOfContract;
     private Date startDate;
     private Date endDate;
+    private String strStartDate;
+    private String strEndDate;
 
     public Long getId() {
         return id;
@@ -61,22 +63,40 @@ public class AbstractContractInput {
         this.endDate = endDate;
     }
 
+    public String getStrStartDate() {
+        return strStartDate;
+    }
+
+    public void setStrStartDate(String strStartDate) {
+        this.strStartDate = strStartDate;
+    }
+
+    public String getStrEndDate() {
+        return strEndDate;
+    }
+
+    public void setStrEndDate(String strEndDate) {
+        this.strEndDate = strEndDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractContractInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractContractInput that = (AbstractContractInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getVendorName(), that.getVendorName()) &&
-            getTypeOfOwnerShip() == that.getTypeOfOwnerShip() &&
-            Objects.equals(getDurationOfContract(), that.getDurationOfContract()) &&
-            Objects.equals(getStartDate(), that.getStartDate()) &&
-            Objects.equals(getEndDate(), that.getEndDate());
+        return Objects.equals(id, that.id) &&
+            Objects.equals(vendorName, that.vendorName) &&
+            typeOfOwnerShip == that.typeOfOwnerShip &&
+            Objects.equals(durationOfContract, that.durationOfContract) &&
+            Objects.equals(startDate, that.startDate) &&
+            Objects.equals(endDate, that.endDate) &&
+            Objects.equals(strStartDate, that.strStartDate) &&
+            Objects.equals(strEndDate, that.strEndDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getVendorName(), getTypeOfOwnerShip(), getDurationOfContract(), getStartDate(), getEndDate());
+        return Objects.hash(id, vendorName, typeOfOwnerShip, durationOfContract, startDate, endDate, strStartDate, strEndDate);
     }
 
     @Override
@@ -88,6 +108,8 @@ public class AbstractContractInput {
             ", durationOfContract='" + durationOfContract + '\'' +
             ", startDate=" + startDate +
             ", endDate=" + endDate +
+            ", strStartDate='" + strStartDate + '\'' +
+            ", strEndDate='" + strEndDate + '\'' +
             '}';
     }
 }
