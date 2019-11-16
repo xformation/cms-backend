@@ -38,7 +38,7 @@ public class CmsExcelDataImportRestController {
 				"academic_year","holiday","term",
 				"college","branch","department",
 				"batch","section", "teacher", 
-				"attendance_master"
+				"attendance_master", "student"
 		};
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmsdataimport/{tableName}")

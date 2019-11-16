@@ -1,5 +1,8 @@
 package com.synectiks.cms.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -73,6 +76,7 @@ public class AdmissionApplication implements Serializable, IESEntity {
     private String alternateMobileNumber;
 
     @Column(name = "date_of_birth")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfBirth;
 
     @Column(name = "email")
@@ -96,6 +100,7 @@ public class AdmissionApplication implements Serializable, IESEntity {
     private CourseEnum course;
 
     @Column(name = "admission_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate admissionDate;
 
     @Enumerated(EnumType.STRING)

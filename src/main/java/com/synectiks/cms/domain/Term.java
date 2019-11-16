@@ -2,6 +2,9 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -38,10 +41,12 @@ public class Term implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
 
     @NotNull

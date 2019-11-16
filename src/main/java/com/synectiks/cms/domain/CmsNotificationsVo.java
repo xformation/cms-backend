@@ -2,6 +2,8 @@ package com.synectiks.cms.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
 
 
@@ -14,8 +16,10 @@ public class CmsNotificationsVo implements Serializable {
     private String message;
     private Status status;
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate createdOn;
     private String updatedBy;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate updatedOn;
     private AcademicYear academicYear;
 

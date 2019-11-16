@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 /**
@@ -23,6 +25,7 @@ public class CmsLegalEntityVo implements Serializable {
 
     private TypeOfCollege typeOfCollege;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfIncorporation;
 
     private String registeredOfficeAddress1;
@@ -49,18 +52,21 @@ public class CmsLegalEntityVo implements Serializable {
 
     private String pfNumber;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate pfRegistrationDate;
 
     private Long pfSignatory;
 
     private String esiNumber;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate esiRegistrationDate;
 
     private Long esiSignatory;
 
     private String ptNumber;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate ptRegistrationDate;
 
     private Long ptSignatory;

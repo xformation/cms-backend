@@ -2,6 +2,9 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -52,10 +55,12 @@ public class LegalEntity implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "date_of_incorporation", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfIncorporation;
 
     @NotNull
     @Column(name = "registered_office_address_1", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private String registeredOfficeAddress1;
 
     @Column(name = "registered_office_address_2")
@@ -100,6 +105,7 @@ public class LegalEntity implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "pf_registration_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate pfRegistrationDate;
 
     @NotNull
@@ -112,6 +118,7 @@ public class LegalEntity implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "esi_registration_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate esiRegistrationDate;
 
     @NotNull
@@ -124,6 +131,7 @@ public class LegalEntity implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "pt_registration_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate ptRegistrationDate;
 
     @NotNull

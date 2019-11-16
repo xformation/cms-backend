@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.utils.IESEntity;
 
@@ -37,10 +39,12 @@ public class AcademicYear implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
 
     @NotNull
     @Column(name = "end_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
 
     @NotNull

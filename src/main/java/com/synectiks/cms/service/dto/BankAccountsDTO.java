@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.NameOfBank;
 
 /**
- * A DTO for the BankAccounts entity.
+ * A DTO for the {@link com.synectiks.cms.domain.BankAccounts} entity.
  */
 public class BankAccountsDTO implements Serializable {
 
@@ -15,7 +15,7 @@ public class BankAccountsDTO implements Serializable {
     private NameOfBank nameOfBank;
 
     @NotNull
-    private Long accountNumber;
+    private String accountNumber;
 
     @NotNull
     private String typeOfAccount;
@@ -27,7 +27,7 @@ public class BankAccountsDTO implements Serializable {
     private String branchAddress;
 
     @NotNull
-    private Integer corporateId;
+    private String corporateId;
 
 
     private Long branchId;
@@ -50,11 +50,11 @@ public class BankAccountsDTO implements Serializable {
         this.nameOfBank = nameOfBank;
     }
 
-    public Long getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -82,11 +82,11 @@ public class BankAccountsDTO implements Serializable {
         this.branchAddress = branchAddress;
     }
 
-    public Integer getCorporateId() {
+    public String getCorporateId() {
         return corporateId;
     }
 
-    public void setCorporateId(Integer corporateId) {
+    public void setCorporateId(String corporateId) {
         this.corporateId = corporateId;
     }
 
@@ -132,11 +132,11 @@ public class BankAccountsDTO implements Serializable {
         return "BankAccountsDTO{" +
             "id=" + getId() +
             ", nameOfBank='" + getNameOfBank() + "'" +
-            ", accountNumber=" + getAccountNumber() +
+            ", accountNumber='" + getAccountNumber() + "'" +
             ", typeOfAccount='" + getTypeOfAccount() + "'" +
             ", ifscCode='" + getIfscCode() + "'" +
             ", branchAddress='" + getBranchAddress() + "'" +
-            ", corporateId=" + getCorporateId() +
+            ", corporateId='" + getCorporateId() + "'" +
             ", branch=" + getBranchId() +
             ", college=" + getCollegeId() +
             "}";

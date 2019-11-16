@@ -2,6 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
@@ -44,6 +49,10 @@ public class AttendanceMasterRestController {
 
     @Autowired
     private CommonService commonService;
+    
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    
     
     @RequestMapping(method = RequestMethod.POST, value = "/cmsattendance-masters")
     public ResponseEntity<AttendanceMaster> createAttendanceMaster(@RequestBody AttendanceMaster attendanceMaster) throws URISyntaxException {
@@ -115,20 +124,42 @@ public class AttendanceMasterRestController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cmsattendance-masters-bybatchsection")
     public List<AttendanceMaster> getAllAttendanceMasterByBatchSection(@RequestParam Map<String, String> dataMap) {
-    	if (!dataMap.containsKey("batchId")) {
-            throw new BadRequestAlertException("Batch id not present", ENTITY_NAME, "batch id null");
-        }
-    	if (!dataMap.containsKey("sectionId")) {
-            throw new BadRequestAlertException("Section id not present", ENTITY_NAME, "section id null");
-        }
+    	logger.debug("Getting attendance master");
     	
+    	String departmentId = dataMap.get("departmentId");
     	String batchId = dataMap.get("batchId");
     	String sectionId = dataMap.get("sectionId");
-    	logger.debug("Getting attendance master id for batch id : "+batchId+", section id : "+sectionId);
-    	Batch bt = this.commonService.getBatchById(Long.parseLong(batchId));
-    	Section sc = this.commonService.getSectionById(Long.parseLong(sectionId));
-    	List<AttendanceMaster> list = this.commonService.getAttendanceMasterByBatchSection(bt, sc);
-    	logger.debug("AttendanceMaster : "+list);
+    	
+    	Long dptId = Long.parseLong(departmentId);
+    	
+    	Long bId = 0L;
+    	if(!CommonUtil.isNullOrEmpty(batchId) && !"null".equalsIgnoreCase(batchId) && !"undefined".equalsIgnoreCase(batchId)) {
+    		bId = Long.parseLong(batchId);
+    	}
+    	
+    	Long scId = 0L;
+    	if(!CommonUtil.isNullOrEmpty(sectionId) && !"null".equalsIgnoreCase(sectionId) && !"undefined".equalsIgnoreCase(sectionId)) {
+    		scId = Long.parseLong(sectionId);
+    	}
+    	List<AttendanceMaster> list = this.commonService.getAttendanceMastersList(dptId, bId, scId);
+    	logger.debug("AttendanceMaster list : "+list);
+    	return list;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/cmsattendance-masters-bydepartmentid")
+    public List<AttendanceMaster> getAttendanceMasterByDepartment(@RequestParam Map<String, String> dataMap) {
+    	logger.debug("Getting attendance master");
+    	
+    	String departmentId = dataMap.get("departmentId");
+    	Long dptId = Long.parseLong(departmentId);
+    	Department dept = new Department();
+    	dept.setId(dptId);
+    	List<Department> listDept = this.departmentRepository.findAll(Example.of(dept));
+    	
+    	List<Batch> batchList = this.commonService.getBatchForCriteria(listDept);
+    	List<Section> emptyList = new ArrayList<>();
+    	List<AttendanceMaster> list = this.commonService.getAttendanceMasterForCriteria(batchList, emptyList);
+    	logger.debug("AttendanceMaster list : "+list);
     	return list;
     }
     

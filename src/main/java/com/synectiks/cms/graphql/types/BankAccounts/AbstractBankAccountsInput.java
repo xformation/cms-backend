@@ -8,11 +8,11 @@ import java.util.Objects;
 public class AbstractBankAccountsInput {
     private Long id;
     private NameOfBank nameOfBank;
-    private Long accountNumber;
+    private String accountNumber;
     private String typeOfAccount;
     private String ifscCode;
     private String branchAddress;
-    private Integer corporateId;
+    private String corporateId;
     private Long branchId;
     private Long collegeId;
     public Long getId() {
@@ -31,11 +31,11 @@ public class AbstractBankAccountsInput {
         this.nameOfBank = nameOfBank;
     }
 
-    public Long getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -63,11 +63,11 @@ public class AbstractBankAccountsInput {
         this.branchAddress = branchAddress;
     }
 
-    public Integer getCorporateId() {
+    public String getCorporateId() {
         return corporateId;
     }
 
-    public void setCorporateId(Integer corporateId) {
+    public void setCorporateId(String corporateId) {
         this.corporateId = corporateId;
     }
 

@@ -3,6 +3,9 @@ package com.synectiks.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -48,15 +51,19 @@ public class Employee implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "joining_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate joiningDate;
 
     @Column(name = "job_end_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate jobEndDate;
 
     @Column(name = "resignation_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate resignationDate;
 
     @Column(name = "resignation_acceptance_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate resignationAcceptanceDate;
 
     @Column(name = "aadhar_no")
@@ -103,6 +110,7 @@ public class Employee implements Serializable, IESEntity {
     private String drivingLicenceNo;
 
     @Column(name = "driving_licence_validity")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate drivingLicenceValidity;
 
     @Enumerated(EnumType.STRING)

@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
 
 import java.io.Serializable;
@@ -12,6 +14,7 @@ public class CmsVehicleVo implements Serializable {
     private String vehicleType;
     private Long capacity;
     private String ownerShip;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfRegistration;
     private String yearOfManufacturing;
     private String manufacturingCompany;
@@ -27,11 +30,15 @@ public class CmsVehicleVo implements Serializable {
     private Branch branch;
     private College college;
     private String strDateOfRegistration;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfInsurance;
     private String strDateOfInsurance;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate validTill;
     private String strValidTill;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
     private String strStartDate;
     private String strEndDate;

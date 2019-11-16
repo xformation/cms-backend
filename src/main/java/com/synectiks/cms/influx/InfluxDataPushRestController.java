@@ -39,6 +39,9 @@ public class InfluxDataPushRestController {
     
     @Autowired
     private FeeInfluxPush feeInfluxPush;
+
+    @Autowired
+    private ParentInfluxPush parentInfluxPush;
     
     @RequestMapping(method = RequestMethod.POST, value = "/cmsinfluxpush/{entity}")
     public ResponseEntity<Void> createStudentAttendance(@PathVariable String entity) throws ParseException, Exception {
@@ -68,6 +71,8 @@ public class InfluxDataPushRestController {
         	return this.feeInfluxPush;
         }else if("admission_enquiry".equalsIgnoreCase(entity)) {
         	return this.admissionEnquiryInfluxPush;
+        }else if("parent".equalsIgnoreCase(entity)){
+    	    return this.parentInfluxPush;
         }
     	return null;
     }

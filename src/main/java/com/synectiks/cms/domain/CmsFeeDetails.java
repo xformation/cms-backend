@@ -1,6 +1,9 @@
 package com.synectiks.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,10 +34,14 @@ public class CmsFeeDetails implements Serializable {
     private Float amount;
     private Status status;
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate createdOn;
     private String updatedBy;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate updatedOn;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
     private FeeCategory feeCategory;
     private Batch batch;

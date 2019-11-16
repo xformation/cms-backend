@@ -23,6 +23,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 //import org.springframework.data.elasticsearch.annotations.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 import com.synectiks.cms.utils.IESEntity;
 
@@ -58,6 +60,7 @@ public class LegalEntityAuthSignatoryLink implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "date_of_incorporation", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfIncorporation;
 
     @NotNull
@@ -94,6 +97,7 @@ public class LegalEntityAuthSignatoryLink implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "pf_registration_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate pfRegistrationDate;
 
     @NotNull
@@ -106,6 +110,7 @@ public class LegalEntityAuthSignatoryLink implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "esi_registration_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate esiRegistrationDate;
 
     @NotNull
@@ -118,6 +123,7 @@ public class LegalEntityAuthSignatoryLink implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "pt_registration_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate ptRegistrationDate;
 
     @NotNull

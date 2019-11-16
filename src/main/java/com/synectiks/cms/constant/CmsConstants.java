@@ -29,6 +29,7 @@ import com.synectiks.cms.domain.Currency;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.Documents;
 import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.domain.Employee;
 import com.synectiks.cms.domain.ExceptionRecord;
 import com.synectiks.cms.domain.Facility;
 import com.synectiks.cms.domain.FeeCategory;
@@ -67,6 +68,7 @@ import com.synectiks.cms.repository.CurrencyRepository;
 import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.repository.DocumentsRepository;
 import com.synectiks.cms.repository.DueDateRepository;
+import com.synectiks.cms.repository.EmployeeRepository;
 import com.synectiks.cms.repository.ExceptionRecordRepository;
 import com.synectiks.cms.repository.FacilityRepository;
 import com.synectiks.cms.repository.FeeCategoryRepository;
@@ -168,6 +170,7 @@ public interface CmsConstants {
 //	    mpr.put("student_facility_link", new CmsTableWithDomainAndRepositoryMapper("country", Country.class, CountryRepository.class)); 
 	    mpr.put("transport_route", new CmsTableWithDomainAndRepositoryMapper("transport_route", TransportRoute.class, TransportRouteRepository.class));      
 	    mpr.put("type_of_grading", new CmsTableWithDomainAndRepositoryMapper("type_of_grading", TypeOfGrading.class, TypeOfGradingRepository.class));      
+	    mpr.put("employee", new CmsTableWithDomainAndRepositoryMapper("employee", Employee.class, EmployeeRepository.class));      
 	    
 	    return mpr;
 	}

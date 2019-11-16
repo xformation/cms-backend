@@ -1,6 +1,9 @@
 package com.synectiks.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -42,10 +45,12 @@ public class Insurance implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "date_of_insurance", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfInsurance;
 
     @NotNull
     @Column(name = "valid_till", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate validTill;
 
     @OneToOne(mappedBy = "insurance")

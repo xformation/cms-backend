@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
 
 import java.time.LocalDate;
@@ -8,7 +10,9 @@ public class CmsInsurance implements Comparable<CmsInsurance> {
     private Long id;
     private String insuranceCompany;
     private TypeOfInsurance typeOfInsurance;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfInsurance;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate validTill;
     private String strDateOfInsurance;
     private String strValidTill;

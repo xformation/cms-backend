@@ -1,14 +1,21 @@
 package com.synectiks.cms.domain;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import com.synectiks.cms.utils.IESEntity;
-
-import javax.persistence.*;
-
 //import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * A ExceptionRecord.
@@ -17,7 +24,7 @@ import java.time.LocalDate;
 @Table(name = "exception_record")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@Document(indexName = "exceptionrecord")
-public class ExceptionRecord implements Serializable, IESEntity {
+public class ExceptionRecord implements Serializable/* , IESEntity */ {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +44,7 @@ public class ExceptionRecord implements Serializable, IESEntity {
     private String exceptionRecord;
 
     @Column(name = "exception_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate exceptionDate;
 
     @Column(name = "jhi_user")

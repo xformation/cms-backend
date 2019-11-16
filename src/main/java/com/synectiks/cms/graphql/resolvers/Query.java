@@ -17,6 +17,7 @@ package com.synectiks.cms.graphql.resolvers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
@@ -25,6 +26,7 @@ import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
@@ -622,7 +624,10 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public CmsAdmissionEnquiryVo getAdmissionData( String branchId) {
-        return admissionEnquiryProcessor.getAdmissionData( Long.valueOf(branchId));
+    	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId)) {
+    		return new CmsAdmissionEnquiryVo();
+    	}
+        return admissionEnquiryProcessor.getAdmissionData( Long.parseLong(branchId));
     }
 
     public Long getTotalReceived( long academicyearId) {
@@ -640,8 +645,11 @@ public class Query implements GraphQLQueryResolver {
         return admissionApplicationProcessor.getTotalAccepted(academicyearId);
     }
 
-    public CmsAdmissionApplicationVo getAdmissionApplicationData( String academicyearId) {
-        return admissionApplicationProcessor.getAdmissionApplicationData( Long.valueOf(academicyearId));
+    public CmsAdmissionApplicationVo getAdmissionApplicationData( String academicYearId) {
+    	if(academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)) {
+    		return new CmsAdmissionApplicationVo();
+    	}
+        return admissionApplicationProcessor.getAdmissionApplicationData( Long.parseLong(academicYearId));
     }
 
 
@@ -679,7 +687,28 @@ public class Query implements GraphQLQueryResolver {
 
     public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId, String lectureDate) throws Exception{
     	StudentAttendanceCache cache = new StudentAttendanceCache();
-    	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
+    	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId)
+    			|| academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)
+    			|| teacherId == null || "null".equalsIgnoreCase(teacherId) || "undefined".equalsIgnoreCase(teacherId)) {
+
+    		logger.warn("Either branch/academic year or teacher id is null. Return empty cache");
+    		cache.setDepartments(new ArrayList<Department>());
+        	cache.setBatches(new ArrayList<Batch>());
+        	cache.setSubjects(new ArrayList<Subject>());
+        	cache.setSections(new ArrayList<Section>());
+        	cache.setLectures(new ArrayList<CmsLectureVo>());
+        	cache.setSemesters(new ArrayList<CmsSemesterVo>());
+        	cache.setTerms(new ArrayList<CmsTermVo>());
+        	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
+    		return cache;
+    	}
+
+    	Teacher thr = new Teacher();
+        thr.setTeacherEmailAddress(teacherId);
+    	Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(thr));
+        Long tid = oth.isPresent() ? oth.get().getId() : 0;
+
+    	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0 || tid == 0) {
     		logger.warn("Either branch/academic year or teacher id is not provided. Return empty cache");
     		cache.setDepartments(new ArrayList<Department>());
         	cache.setBatches(new ArrayList<Batch>());
@@ -692,12 +721,12 @@ public class Query implements GraphQLQueryResolver {
     		cache.setTeaches(new ArrayList<Teach>());
         	return cache;
     	}
-    	
+
     	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
     	List<Batch> bth = this.commonService.getBatchForCriteria(dept); //batches();
     	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth); //subjects();
     	List<Section> sec = this.commonService.getSectionForCriteria(bth); //sections();
-    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.parseLong(teacherId)); //teaches();
+    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, tid); //teaches();
     	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec, teach);// attendanceMasters();
     	List<Subject> selectedSubjectList = new ArrayList<>();
 
@@ -746,6 +775,19 @@ public class Query implements GraphQLQueryResolver {
      */
     public StudentAttendanceCache createStudentAttendanceCacheForAdmin(String branchId, String academicYearId, String lectureDate) throws Exception{
     	StudentAttendanceCache cache = new StudentAttendanceCache();
+    	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId)
+    			|| academicYearId == null || "null".equalsIgnoreCase(academicYearId) || "undefined".equalsIgnoreCase(academicYearId)) {
+    		logger.warn("Either branch or academic year id is null. Return empty cache");
+    		cache.setDepartments(new ArrayList<Department>());
+        	cache.setBatches(new ArrayList<Batch>());
+        	cache.setSubjects(new ArrayList<Subject>());
+        	cache.setSections(new ArrayList<Section>());
+        	cache.setLectures(new ArrayList<CmsLectureVo>());
+        	cache.setSemesters(new ArrayList<CmsSemesterVo>());
+        	cache.setTerms(new ArrayList<CmsTermVo>());
+        	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
+    		return cache;
+    	}
     	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0) {
     		logger.warn("Either branch or academic year id is not provided. Return empty cache");
     		cache.setDepartments(new ArrayList<Department>());
@@ -758,24 +800,12 @@ public class Query implements GraphQLQueryResolver {
         	cache.setAttendanceMasters(new ArrayList<AttendanceMaster>());
     		return cache;
     	}
-    	List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
-    	List<Batch> bth = this.commonService.getBatchForCriteria(dept);
-    	List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth);
-    	List<Section> sec = this.commonService.getSectionForCriteria(bth);
-//    	List<Teach> teach = this.commonService.getTeachForCriteria(sub, Long.valueOf(teacherId));
-    	List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec);
-//    	List<Subject> selectedSubjectList = new ArrayList<>();
 
-//    	for(Subject subject: sub) {
-//    		for(Teach th: teach) {
-//    			logger.debug("Subject id : "+subject.getId()+", teach-subject id : "+th.getSubject().getId());
-//    			if(subject.getId().compareTo(th.getSubject().getId()) == 0 ) {
-//    				logger.debug("Selected subject id : "+subject.toString());
-//    				selectedSubjectList.add(subject);
-//    			}
-//
-//    		}
-//    	}
+        List<Department> dept = this.commonService.getDepartmentsByBranchAndAcademicYear(Long.parseLong(branchId), Long.parseLong(academicYearId));
+        List<Batch> bth = this.commonService.getBatchForCriteria(dept);
+        List<Subject> sub = this.commonService.getSubjectForCriteria(dept, bth);
+        List<Section> sec = this.commonService.getSectionForCriteria(bth);
+        List<AttendanceMaster> attendanceMaster = this.commonService.getAttendanceMasterForCriteria(bth, sec);
     	List<CmsTermVo> term = this.commonService.getTermsByAcademicYear(Long.valueOf(academicYearId));
     	List<Lecture> lec =  this.commonService.getLectureForAdminCriteria(attendanceMaster);
     	List<CmsLectureVo> cmsLec = new ArrayList<>();
@@ -828,16 +858,20 @@ public class Query implements GraphQLQueryResolver {
         List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
 
+
         ExamFilterDataCache cache = new ExamFilterDataCache();
+        cache.setBranches(branchList);
         cache.setDepartments(departmentList);
         cache.setBatches(batchList);
         cache.setAcademicExamSettings(examsList);
-        cache.setBranches(branchList);
+        cache.setSubjects(sub);
         cache.setSections(sectionList);
         cache.setSemesters(sem);
-        cache.setSubjects(sub);
+
         return cache;
     }
+
+
     public LibraryFilterDataCache createLibraryFilterDataCache(String collegeId, String academicYearId) throws Exception{
         List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
         List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
@@ -847,6 +881,8 @@ public class Query implements GraphQLQueryResolver {
         List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
         List<Library> library = this.commonService.getLibraryForCriteria(sub,batchList);
+        List<Student> student = this.commonService.getStudentsForCriteria(departmentList, batchList, sectionList);
+        List<CmsBook> book = this.commonService.getBookForCriteria(library,student);
         LibraryFilterDataCache cache = new LibraryFilterDataCache();
         cache.setDepartments(departmentList);
         cache.setBatches(batchList);
@@ -856,8 +892,14 @@ public class Query implements GraphQLQueryResolver {
         cache.setSemesters(sem);
         cache.setSubjects(sub);
         cache.setLibraries(library);
+        cache.setStudents(student);
+        cache.setBooks(book);
         return cache;
+
+
     }
+
+
     public FeeDataCache createFeeDataCache() throws Exception{
     	List<College> collegeList = this.collegeRepository.findAll();
     	List<Branch> branchList = this.branchRepository.findAll();
@@ -868,12 +910,16 @@ public class Query implements GraphQLQueryResolver {
     	return cache;
     }
 
-    public AddVehicleDataCache createAddVehicleDataCache() throws Exception{
+    public AddVehicleDataCache createAddVehicleDataCache(String collegeId, String branchId) throws Exception{
         List<College> collegeList = this.collegeRepository.findAll();
         List<Branch> branchList = this.branchRepository.findAll();
+        List<CmsTypeOfInsuranceVo> typeOfInsuranceList = this.commonService.getAllTypeOfInsurances();
+        List<CmsTypeOfOwnershipVo> typeOfOwnershipList = this.commonService.getAllTypeOfOwnerships();
         AddVehicleDataCache cache = new AddVehicleDataCache();
         cache.setColleges(collegeList);
         cache.setBranches(branchList);
+        cache.setTypeOfInsurances(typeOfInsuranceList);
+        cache.setTypeOfOwnerships(typeOfOwnershipList);
 
         return cache;
     }

@@ -2,6 +2,8 @@ package com.synectiks.cms.domain;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.ModeOfPayment;
 
@@ -15,7 +17,9 @@ public class CmsInvoice {
 	private Long id;
     private String invoiceNumber;
     private Long amountPaid;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate paymentDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate nextPaymentDate;
     private Long outStandingAmount;
     private ModeOfPayment modeOfPayment;
@@ -25,6 +29,7 @@ public class CmsInvoice {
     private InvoicePaymentStatus paymentStatus;
     private String comments;
     private String updatedBy;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate updatedOn;
     private FeeCategory feeCategory;
     private FeeDetails feeDetails;

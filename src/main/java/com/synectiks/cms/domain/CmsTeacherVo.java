@@ -9,6 +9,8 @@ import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 import com.synectiks.cms.domain.enumeration.Status;
@@ -57,7 +59,7 @@ public class CmsTeacherVo implements Serializable {
     
     private Long aadharNo;
 
-    
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfBirth;
 
     

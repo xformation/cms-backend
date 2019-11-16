@@ -1,6 +1,9 @@
 package com.synectiks.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -48,6 +51,7 @@ public class Vehicle implements Serializable, IESEntity {
     private String ownerShip;
 
     @Column(name = "date_of_registration")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfRegistration;
 
     @Column(name = "year_of_manufacturing")

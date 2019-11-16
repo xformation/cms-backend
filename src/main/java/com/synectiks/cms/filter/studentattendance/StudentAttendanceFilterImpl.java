@@ -34,10 +34,12 @@ import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.TeacherRepository;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
 
@@ -63,6 +65,9 @@ public class StudentAttendanceFilterImpl  {
     @PersistenceContext
     private EntityManager entityManager;
     
+    @Autowired
+    private TeacherRepository teacherRepository;
+    
     /**
      * Student attendance data for a teacher role end user
      * @param filter
@@ -79,16 +84,23 @@ public class StudentAttendanceFilterImpl  {
     	batch.setId(Long.valueOf(filter.getBatchId()));
     	Section section = new Section(); 
     	section.setId(Long.valueOf(filter.getSectionId()));
-    	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(Long.valueOf(filter.getTeacherId()), Long.valueOf(filter.getSubjectId()));
+    	
+    	Teacher thr = new Teacher();
+        thr.setTeacherEmailAddress(filter.getTeacherId());
+    	Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(thr));
+        Long tid = oth.isPresent() ? oth.get().getId() : 0;
+        
+        
+    	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(tid, Long.valueOf(filter.getSubjectId()));
     	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
     	
     	List<DailyAttendanceVo> voList = new ArrayList<>();
     	List<Student> studentList = getStudentListByNativeQuery(branch, department, batch, section);
         
-        Lecture currentDateLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 0);
-        Lecture oneDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 1);
-        Lecture twoDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 2);
-        Lecture threeDayPrevLecture = lectureScheduleStatus(filter.getAttendanceDate(), am, 3);
+        Lecture currentDateLecture = lectureScheduleStatus(filter, am, 0);
+        Lecture oneDayPrevLecture = lectureScheduleStatus(filter, am, 1);
+        Lecture twoDayPrevLecture = lectureScheduleStatus(filter, am, 2);
+        Lecture threeDayPrevLecture = lectureScheduleStatus(filter, am, 3);
         
         // lecture schedule on current date insert/update all the students in student_attendance table.
         setCurrentDateStatus(voList, studentList, currentDateLecture);
@@ -342,7 +354,12 @@ public class StudentAttendanceFilterImpl  {
      * @throws ParseException
      * @throws Exception
      */
-    private Lecture lectureScheduleStatus(String lectureDate, AttendanceMaster attendanceMaster, int days) throws ParseException, Exception {
+    private Lecture lectureScheduleStatus(StudentAttendanceFilterInput filter, AttendanceMaster attendanceMaster, int days) throws ParseException, Exception {
+    	String lectureDate = filter.getAttendanceDate();
+    	
+    	if(days == 0) {
+    		return this.lectureRepository.findById(Long.parseLong(filter.getLectureId())).get();
+    	}
     	Lecture lec = new Lecture();
     	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
 //    			DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", lectureDate));
@@ -353,9 +370,9 @@ public class StudentAttendanceFilterImpl  {
     	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
     	lec.setAttendancemaster(attendanceMaster);
     	Example<Lecture> example = Example.of(lec);
-    	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
-    	if(nlec.isPresent()) {
-    		return nlec.get();
+    	List<Lecture> nlec = this.lectureRepository.findAll(example);
+    	if(nlec.size() > 0) {
+    		return nlec.get(0);
     	}
     	return null;
     }

@@ -2,6 +2,8 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.utils.IESEntity;
 
 import org.hibernate.annotations.Cache;
@@ -33,10 +35,12 @@ public class Lecture implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "lec_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate lecDate;
 
     @NotNull
     @Column(name = "last_updated_on", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate lastUpdatedOn;
 
     @NotNull

@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.utils.IESEntity;
 
 import org.hibernate.annotations.Cache;
@@ -164,6 +166,7 @@ public class PaymentRequestResponse implements Serializable, IESEntity {
     private String user;
 
     @Column(name = "request_txn_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate requestTxnDate;
 
     @Column(name = "request_txn_time")

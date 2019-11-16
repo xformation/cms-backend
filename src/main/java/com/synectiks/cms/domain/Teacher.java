@@ -2,6 +2,9 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -94,6 +97,7 @@ public class Teacher implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "date_of_birth", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfBirth;
 
     @NotNull

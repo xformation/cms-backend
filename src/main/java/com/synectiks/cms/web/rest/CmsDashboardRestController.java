@@ -198,7 +198,7 @@ public class CmsDashboardRestController {
     
     private Optional<Student> getStudent(String userName){
     	Student st = new Student();
-		st.setStudentEmailAddress(userName);
+		st.setStudentPrimaryEmailId(userName);
 		Optional<Student> ost = this.studentRepository.findOne(Example.of(st));
 		return ost;
     }

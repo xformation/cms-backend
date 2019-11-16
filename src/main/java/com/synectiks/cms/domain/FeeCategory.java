@@ -1,6 +1,9 @@
 package com.synectiks.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -48,18 +51,22 @@ public class FeeCategory implements Serializable, IESEntity {
     private String createdBy;
 
     @Column(name = "created_on")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate createdOn;
 
     @Column(name = "updated_by")
     private String updatedBy;
 
     @Column(name = "updated_on")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate updatedOn;
 
     @Column(name = "start_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
 
     @Column(name = "end_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
 
     @ManyToOne

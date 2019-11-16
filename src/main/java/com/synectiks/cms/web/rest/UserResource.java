@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.validation.Valid;
 
@@ -28,6 +30,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.config.Constants;
 import com.synectiks.cms.domain.User;
 import com.synectiks.cms.repository.UserRepository;
+import com.synectiks.cms.repository.search.UserSearchRepository;
 import com.synectiks.cms.security.AuthoritiesConstants;
 import com.synectiks.cms.service.MailService;
 import com.synectiks.cms.service.UserService;
@@ -44,7 +47,7 @@ import io.github.jhipster.web.util.ResponseUtil;
  * REST controller for managing users.
  * <p>
  * This class accesses the User entity, and needs to fetch its collection of authorities.
- * <p>
+ * <p>O
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
  * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join
  * which would be good for performance.
@@ -76,14 +79,11 @@ public class UserResource {
 
     private final MailService mailService;
 
-    //private final UserSearchRepository userSearchRepository;
-
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
 
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
-        //this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -209,13 +209,12 @@ public class UserResource {
      * @param query the query to search
      * @return the result of the search
      */
-    @GetMapping("/_search/users/{query}")
-    @Timed
-    public List<User> search(@PathVariable String query) {
-        /*return StreamSupport
-            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());*/
-    	//TODO: Fix it by fetching result from search api
-    	return null;
-    }
+	/*
+	 * @GetMapping("/_search/users/{query}")
+	 * 
+	 * @Timed public List<User> search(@PathVariable String query) { return
+	 * StreamSupport
+	 * .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(
+	 * ), false) .collect(Collectors.toList()); }
+	 */
 }

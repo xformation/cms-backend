@@ -2,6 +2,8 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.GradeType;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import com.synectiks.cms.utils.IESEntity;
@@ -43,6 +45,7 @@ public class AcademicExamSetting implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "exam_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate examDate;
 
     @NotNull

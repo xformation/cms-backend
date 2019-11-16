@@ -21,6 +21,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 //import org.springframework.data.elasticsearch.annotations.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.utils.IESEntity;
 
@@ -50,15 +52,19 @@ public class Facility implements Serializable, IESEntity {
     private Status status;
 
     @Column(name = "start_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
 
     @Column(name = "end_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
 
     @Column(name = "suspand_start_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate suspandStartDate;
 
     @Column(name = "suspand_end_date")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate suspandEndDate;
 
     @ManyToOne

@@ -3,6 +3,8 @@ package com.synectiks.cms.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.utils.IESEntity;
 
 import javax.persistence.*;
@@ -43,6 +45,7 @@ public class StudentFee implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "due_date", nullable = false)
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dueDate;
 
     @NotNull

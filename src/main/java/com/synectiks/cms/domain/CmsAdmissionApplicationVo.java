@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
 import com.synectiks.cms.domain.enumeration.CourseEnum;
 import com.synectiks.cms.domain.enumeration.Gender;
@@ -9,8 +11,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class CmsAdmissionApplicationVo implements Serializable {
-
-    private Long totalReceived = 0L;
+	private static final long serialVersionUID = -6957439040519535366L;
+	private Long totalReceived = 0L;
     private Long totalInprocess = 0L;
     private Long totalDeclined = 0L;
     private Long totalAccepted = 0L;
@@ -27,6 +29,7 @@ public class CmsAdmissionApplicationVo implements Serializable {
     private String motherLastName;
     private String contactNumber;
     private String alternateMobileNumber;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfBirth;
     private String email;
     private Gender sex;
@@ -34,6 +37,7 @@ public class CmsAdmissionApplicationVo implements Serializable {
     private Integer applicationId;
     private String uploadPhoto;
     private CourseEnum course;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate admissionDate;
     private AdmissionEnquiry admissionEnquiry;
     private AcademicHistory academicHistory;

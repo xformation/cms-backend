@@ -38,7 +38,7 @@ public class BankAccounts implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "account_number", nullable = false)
-    private Long accountNumber;
+    private String accountNumber;
 
     @NotNull
     @Column(name = "type_of_account", nullable = false)
@@ -54,7 +54,7 @@ public class BankAccounts implements Serializable, IESEntity {
 
     @NotNull
     @Column(name = "corporate_id", nullable = false)
-    private Integer corporateId;
+    private String corporateId;
 
     @ManyToOne
     @JsonIgnoreProperties("bankAccounts")
@@ -86,16 +86,16 @@ public class BankAccounts implements Serializable, IESEntity {
         this.nameOfBank = nameOfBank;
     }
 
-    public Long getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
-    public BankAccounts accountNumber(Long accountNumber) {
+    public BankAccounts accountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
         return this;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -138,16 +138,16 @@ public class BankAccounts implements Serializable, IESEntity {
         this.branchAddress = branchAddress;
     }
 
-    public Integer getCorporateId() {
+    public String getCorporateId() {
         return corporateId;
     }
 
-    public BankAccounts corporateId(Integer corporateId) {
+    public BankAccounts corporateId(String corporateId) {
         this.corporateId = corporateId;
         return this;
     }
 
-    public void setCorporateId(Integer corporateId) {
+    public void setCorporateId(String corporateId) {
         this.corporateId = corporateId;
     }
 

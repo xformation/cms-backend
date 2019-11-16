@@ -1,6 +1,8 @@
 package com.synectiks.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.utils.IESEntity;
 
 import org.hibernate.annotations.Cache;
@@ -30,6 +32,7 @@ public class AdminAttendance implements Serializable, IESEntity {
     private Long id;
 
     @Column(name = "updated_on")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate updatedOn;
 
     @Column(name = "updated_by")

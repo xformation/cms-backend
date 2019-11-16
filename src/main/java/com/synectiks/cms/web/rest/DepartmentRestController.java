@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +30,12 @@ import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.BranchRepository;
 import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.service.dto.DepartmentDTO;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -141,6 +146,15 @@ public class DepartmentRestController {
         return ls;
     }
 
+    @GetMapping("/cmsdepartments/{id}")
+    public ResponseEntity<CmsDepartmentVo> getDepartment(@PathVariable Long id) {
+    	logger.debug("REST request to get a Department : {}", id);
+        Optional<Department> de = departmentRepository.findById(id);
+        CmsDepartmentVo vo = CommonUtil.createCopyProperties(de.get(), CmsDepartmentVo.class);
+        vo.setAcademicyearId(de.get().getAcademicyear().getId());
+        return ResponseUtil.wrapOrNotFound(Optional.of(vo));
+    }
+    
     @RequestMapping(method = RequestMethod.DELETE, value = "/cmsdepartments/{id}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
         logger.debug("REST request to delete a Department : {}", id);

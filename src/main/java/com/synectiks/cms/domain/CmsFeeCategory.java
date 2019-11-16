@@ -2,6 +2,8 @@ package com.synectiks.cms.domain;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
 
 public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
@@ -10,10 +12,14 @@ public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
     private String description;
     private Status status;
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate createdOn;
     private String updatedBy;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate updatedOn;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
     private Long branchId;
     

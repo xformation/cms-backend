@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
 
 import java.io.Serializable;
@@ -12,9 +14,13 @@ import java.util.Objects;
  */
 public class CmsAcademicYearVo implements Serializable {
 
-    private Long id;
+	private static final long serialVersionUID = -943476811993626442L;
+
+	private Long id;
     private String year;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
     private Status status;
 

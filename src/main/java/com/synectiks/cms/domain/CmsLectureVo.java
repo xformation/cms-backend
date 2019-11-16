@@ -3,6 +3,9 @@ package com.synectiks.cms.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 /**
  * A Vo for the Lecture entity.
  */
@@ -14,7 +17,9 @@ public class CmsLectureVo implements Serializable {
 	 */
 	private static final long serialVersionUID = 6029380770424642966L;
 	private Long id;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate lecDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate lastUpdatedOn;
     private String lastUpdatedBy;
     private String startTime;

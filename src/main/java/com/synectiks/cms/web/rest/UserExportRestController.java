@@ -74,7 +74,7 @@ public class UserExportRestController {
 		if(isStudent) {
 			List<Student> studentList = this.studentRepository.findAll();
 			for(Student s: studentList) {
-				email.add(s.getStudentEmailAddress());
+				email.add(s.getStudentPrimaryEmailId());
 			}
 		}
 		if(isEmployee) {

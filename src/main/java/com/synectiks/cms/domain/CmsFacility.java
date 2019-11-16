@@ -3,6 +3,8 @@ package com.synectiks.cms.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
 
 
@@ -13,9 +15,13 @@ public class CmsFacility implements Serializable {
     private Long id;
     private String name;
     private Status status;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate suspandStartDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate suspandEndDate;
     private AcademicYear academicYear;
     private Branch branch;

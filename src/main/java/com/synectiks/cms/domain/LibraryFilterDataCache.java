@@ -12,6 +12,8 @@ public class LibraryFilterDataCache {
     private List<Subject> subjects;
     private List<AcademicExamSetting> academicExamSettings;
     private List<Library> libraries;
+    private List<Student> students;
+    private List<CmsBook>  books;
 
     public List<Department> getDepartments() {
         return departments;
@@ -74,5 +76,21 @@ public class LibraryFilterDataCache {
 
     public void setLibraries(List<Library> libraries) {
         this.libraries = libraries;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<CmsBook> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<CmsBook> books) {
+        this.books = books;
     }
 }

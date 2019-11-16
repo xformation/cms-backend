@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.Disability;
 import com.synectiks.cms.domain.enumeration.MaritalStatus;
 import com.synectiks.cms.domain.enumeration.Status;
@@ -11,9 +13,13 @@ public class CmsEmployeeVo {
     private Long id;
     private String employeeName;
     private String designation;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate joiningDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate jobEndDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate resignationDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate resignationAcceptanceDate;
     private String aadharNo;
     private String panNo;
@@ -29,6 +35,7 @@ public class CmsEmployeeVo {
     private String officialMailId;
     private Disability disability;
     private String drivingLicenceNo;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate drivingLicenceValidity;
     private String gender;
     private String typeOfEmployment;

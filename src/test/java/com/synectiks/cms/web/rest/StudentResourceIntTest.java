@@ -227,7 +227,7 @@ public class StudentResourceIntTest {
             .motherName(DEFAULT_MOTHER_NAME)
             .motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME)
             .motherLastName(DEFAULT_MOTHER_LAST_NAME)
-            .aadharNo(DEFAULT_AADHAR_NO)
+            ///.aadharNo(DEFAULT_AADHAR_NO)
             .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
             .placeOfBirth(DEFAULT_PLACE_OF_BIRTH)
             .religion(DEFAULT_RELIGION)
@@ -236,25 +236,25 @@ public class StudentResourceIntTest {
             .age(DEFAULT_AGE)
             .sex(DEFAULT_SEX)
             .bloodGroup(DEFAULT_BLOOD_GROUP)
-            .addressLineOne(DEFAULT_ADDRESS_LINE_ONE)
-            .addressLineTwo(DEFAULT_ADDRESS_LINE_TWO)
-            .addressLineThree(DEFAULT_ADDRESS_LINE_THREE)
-            .town(DEFAULT_TOWN)
+            //.addressLineOne(DEFAULT_ADDRESS_LINE_ONE)
+            //.addressLineTwo(DEFAULT_ADDRESS_LINE_TWO)
+            //.addressLineThree(DEFAULT_ADDRESS_LINE_THREE)
+            //.town(DEFAULT_TOWN)
             .state(DEFAULT_STATE)
             .country(DEFAULT_COUNTRY)
-            .pincode(DEFAULT_PINCODE)
-            .studentContactNumber(DEFAULT_STUDENT_CONTACT_NUMBER)
-            .alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER)
-            .studentEmailAddress(DEFAULT_STUDENT_EMAIL_ADDRESS)
-            .alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS)
+            //.pincode(DEFAULT_PINCODE)
+            //.studentContactNumber(DEFAULT_STUDENT_CONTACT_NUMBER)
+            //.alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER)
+            //.studentEmailAddress(DEFAULT_STUDENT_EMAIL_ADDRESS)
+            //.alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS)
             .relationWithStudent(DEFAULT_RELATION_WITH_STUDENT)
             .emergencyContactName(DEFAULT_EMERGENCY_CONTACT_NAME)
             .emergencyContactMiddleName(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME)
             .emergencyContactLastName(DEFAULT_EMERGENCY_CONTACT_LAST_NAME)
-            .emergencyContactNo(DEFAULT_EMERGENCY_CONTACT_NO)
-            .emergencyContactEmailAddress(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS)
-            .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
-            .admissionNo(DEFAULT_ADMISSION_NO)
+            //.emergencyContactNo(DEFAULT_EMERGENCY_CONTACT_NO)
+            //.emergencyContactEmailAddress(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS)
+            //.uploadPhoto(DEFAULT_UPLOAD_PHOTO)
+            //.admissionNo(DEFAULT_ADMISSION_NO)
             .rollNo(DEFAULT_ROLL_NO)
             .studentType(DEFAULT_STUDENT_TYPE);
         // Add required entity
@@ -310,7 +310,7 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getMotherName()).isEqualTo(DEFAULT_MOTHER_NAME);
         assertThat(testStudent.getMotherMiddleName()).isEqualTo(DEFAULT_MOTHER_MIDDLE_NAME);
         assertThat(testStudent.getMotherLastName()).isEqualTo(DEFAULT_MOTHER_LAST_NAME);
-        assertThat(testStudent.getAadharNo()).isEqualTo(DEFAULT_AADHAR_NO);
+        //assertThat(testStudent.getAadharNo()).isEqualTo(DEFAULT_AADHAR_NO);
         assertThat(testStudent.getDateOfBirth()).isEqualTo(DEFAULT_DATE_OF_BIRTH);
         assertThat(testStudent.getPlaceOfBirth()).isEqualTo(DEFAULT_PLACE_OF_BIRTH);
         assertThat(testStudent.getReligion()).isEqualTo(DEFAULT_RELIGION);
@@ -319,24 +319,12 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getAge()).isEqualTo(DEFAULT_AGE);
         assertThat(testStudent.getSex()).isEqualTo(DEFAULT_SEX);
         assertThat(testStudent.getBloodGroup()).isEqualTo(DEFAULT_BLOOD_GROUP);
-        assertThat(testStudent.getAddressLineOne()).isEqualTo(DEFAULT_ADDRESS_LINE_ONE);
-        assertThat(testStudent.getAddressLineTwo()).isEqualTo(DEFAULT_ADDRESS_LINE_TWO);
-        assertThat(testStudent.getAddressLineThree()).isEqualTo(DEFAULT_ADDRESS_LINE_THREE);
-        assertThat(testStudent.getTown()).isEqualTo(DEFAULT_TOWN);
         assertThat(testStudent.getState()).isEqualTo(DEFAULT_STATE);
         assertThat(testStudent.getCountry()).isEqualTo(DEFAULT_COUNTRY);
-        assertThat(testStudent.getPincode()).isEqualTo(DEFAULT_PINCODE);
-        assertThat(testStudent.getStudentContactNumber()).isEqualTo(DEFAULT_STUDENT_CONTACT_NUMBER);
-        assertThat(testStudent.getAlternateContactNumber()).isEqualTo(DEFAULT_ALTERNATE_CONTACT_NUMBER);
-        assertThat(testStudent.getStudentEmailAddress()).isEqualTo(DEFAULT_STUDENT_EMAIL_ADDRESS);
-        assertThat(testStudent.getAlternateEmailAddress()).isEqualTo(DEFAULT_ALTERNATE_EMAIL_ADDRESS);
         assertThat(testStudent.getRelationWithStudent()).isEqualTo(DEFAULT_RELATION_WITH_STUDENT);
         assertThat(testStudent.getEmergencyContactName()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_NAME);
         assertThat(testStudent.getEmergencyContactMiddleName()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME);
         assertThat(testStudent.getEmergencyContactLastName()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_LAST_NAME);
-        assertThat(testStudent.getEmergencyContactNo()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_NO);
-        assertThat(testStudent.getEmergencyContactEmailAddress()).isEqualTo(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS);
-        assertThat(testStudent.getUploadPhoto()).isEqualTo(DEFAULT_UPLOAD_PHOTO);
         assertThat(testStudent.getAdmissionNo()).isEqualTo(DEFAULT_ADMISSION_NO);
         assertThat(testStudent.getRollNo()).isEqualTo(DEFAULT_ROLL_NO);
         assertThat(testStudent.getStudentType()).isEqualTo(DEFAULT_STUDENT_TYPE);    }
@@ -536,8 +524,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkAadharNoIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setAadharNo(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -707,8 +693,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkAddressLineOneIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setAddressLineOne(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -726,8 +710,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkAddressLineTwoIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setAddressLineTwo(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -745,8 +727,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkAddressLineThreeIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setAddressLineThree(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -764,8 +744,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkTownIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setTown(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -821,8 +799,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkPincodeIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setPincode(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -840,8 +816,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkStudentContactNumberIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setStudentContactNumber(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -859,8 +833,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkStudentEmailAddressIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setStudentEmailAddress(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -954,8 +926,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkEmergencyContactNoIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setEmergencyContactNo(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -973,8 +943,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkEmergencyContactEmailAddressIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setEmergencyContactEmailAddress(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -992,8 +960,6 @@ public class StudentResourceIntTest {
     @Transactional
     public void checkUploadPhotoIsRequired() throws Exception {
         int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setUploadPhoto(null);
 
         // Create the Student, which fails.
         StudentDTO studentDTO = studentMapper.toDto(student);
@@ -1160,7 +1126,7 @@ public class StudentResourceIntTest {
             .motherName(UPDATED_MOTHER_NAME)
             .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
             .motherLastName(UPDATED_MOTHER_LAST_NAME)
-            .aadharNo(UPDATED_AADHAR_NO)
+            //.aadharNo(UPDATED_AADHAR_NO)
             .dateOfBirth(UPDATED_DATE_OF_BIRTH)
             .placeOfBirth(UPDATED_PLACE_OF_BIRTH)
             .religion(UPDATED_RELIGION)
@@ -1169,25 +1135,25 @@ public class StudentResourceIntTest {
             .age(UPDATED_AGE)
             .sex(UPDATED_SEX)
             .bloodGroup(UPDATED_BLOOD_GROUP)
-            .addressLineOne(UPDATED_ADDRESS_LINE_ONE)
-            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
-            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
-            .town(UPDATED_TOWN)
+            //.addressLineOne(UPDATED_ADDRESS_LINE_ONE)
+            //.addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
+            //.addressLineThree(UPDATED_ADDRESS_LINE_THREE)
+            //.town(UPDATED_TOWN)
             .state(UPDATED_STATE)
             .country(UPDATED_COUNTRY)
-            .pincode(UPDATED_PINCODE)
-            .studentContactNumber(UPDATED_STUDENT_CONTACT_NUMBER)
-            .alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
-            .studentEmailAddress(UPDATED_STUDENT_EMAIL_ADDRESS)
-            .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
+            //.pincode(UPDATED_PINCODE)
+            //.studentContactNumber(UPDATED_STUDENT_CONTACT_NUMBER)
+            //.alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
+            //.studentEmailAddress(UPDATED_STUDENT_EMAIL_ADDRESS)
+            //.alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
             .relationWithStudent(UPDATED_RELATION_WITH_STUDENT)
             .emergencyContactName(UPDATED_EMERGENCY_CONTACT_NAME)
             .emergencyContactMiddleName(UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME)
             .emergencyContactLastName(UPDATED_EMERGENCY_CONTACT_LAST_NAME)
-            .emergencyContactNo(UPDATED_EMERGENCY_CONTACT_NO)
-            .emergencyContactEmailAddress(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS)
-            .uploadPhoto(UPDATED_UPLOAD_PHOTO)
-            .admissionNo(UPDATED_ADMISSION_NO)
+            //.emergencyContactNo(UPDATED_EMERGENCY_CONTACT_NO)
+            //.emergencyContactEmailAddress(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS)
+            //.uploadPhoto(UPDATED_UPLOAD_PHOTO)
+            //.admissionNo(UPDATED_ADMISSION_NO)
             .rollNo(UPDATED_ROLL_NO)
             .studentType(UPDATED_STUDENT_TYPE);
         StudentDTO studentDTO = studentMapper.toDto(updatedStudent);
@@ -1210,7 +1176,7 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getMotherName()).isEqualTo(UPDATED_MOTHER_NAME);
         assertThat(testStudent.getMotherMiddleName()).isEqualTo(UPDATED_MOTHER_MIDDLE_NAME);
         assertThat(testStudent.getMotherLastName()).isEqualTo(UPDATED_MOTHER_LAST_NAME);
-        assertThat(testStudent.getAadharNo()).isEqualTo(UPDATED_AADHAR_NO);
+        //assertThat(testStudent.getAadharNo()).isEqualTo(UPDATED_AADHAR_NO);
         assertThat(testStudent.getDateOfBirth()).isEqualTo(UPDATED_DATE_OF_BIRTH);
         assertThat(testStudent.getPlaceOfBirth()).isEqualTo(UPDATED_PLACE_OF_BIRTH);
         assertThat(testStudent.getReligion()).isEqualTo(UPDATED_RELIGION);
@@ -1219,24 +1185,24 @@ public class StudentResourceIntTest {
         assertThat(testStudent.getAge()).isEqualTo(UPDATED_AGE);
         assertThat(testStudent.getSex()).isEqualTo(UPDATED_SEX);
         assertThat(testStudent.getBloodGroup()).isEqualTo(UPDATED_BLOOD_GROUP);
-        assertThat(testStudent.getAddressLineOne()).isEqualTo(UPDATED_ADDRESS_LINE_ONE);
-        assertThat(testStudent.getAddressLineTwo()).isEqualTo(UPDATED_ADDRESS_LINE_TWO);
-        assertThat(testStudent.getAddressLineThree()).isEqualTo(UPDATED_ADDRESS_LINE_THREE);
-        assertThat(testStudent.getTown()).isEqualTo(UPDATED_TOWN);
+        //assertThat(testStudent.getAddressLineOne()).isEqualTo(UPDATED_ADDRESS_LINE_ONE);
+        //assertThat(testStudent.getAddressLineTwo()).isEqualTo(UPDATED_ADDRESS_LINE_TWO);
+        //assertThat(testStudent.getAddressLineThree()).isEqualTo(UPDATED_ADDRESS_LINE_THREE);
+        //assertThat(testStudent.getTown()).isEqualTo(UPDATED_TOWN);
         assertThat(testStudent.getState()).isEqualTo(UPDATED_STATE);
         assertThat(testStudent.getCountry()).isEqualTo(UPDATED_COUNTRY);
-        assertThat(testStudent.getPincode()).isEqualTo(UPDATED_PINCODE);
-        assertThat(testStudent.getStudentContactNumber()).isEqualTo(UPDATED_STUDENT_CONTACT_NUMBER);
-        assertThat(testStudent.getAlternateContactNumber()).isEqualTo(UPDATED_ALTERNATE_CONTACT_NUMBER);
-        assertThat(testStudent.getStudentEmailAddress()).isEqualTo(UPDATED_STUDENT_EMAIL_ADDRESS);
-        assertThat(testStudent.getAlternateEmailAddress()).isEqualTo(UPDATED_ALTERNATE_EMAIL_ADDRESS);
+        //assertThat(testStudent.getPincode()).isEqualTo(UPDATED_PINCODE);
+        //assertThat(testStudent.getStudentContactNumber()).isEqualTo(UPDATED_STUDENT_CONTACT_NUMBER);
+        //assertThat(testStudent.getAlternateContactNumber()).isEqualTo(UPDATED_ALTERNATE_CONTACT_NUMBER);
+        //assertThat(testStudent.getStudentEmailAddress()).isEqualTo(UPDATED_STUDENT_EMAIL_ADDRESS);
+        //assertThat(testStudent.getAlternateEmailAddress()).isEqualTo(UPDATED_ALTERNATE_EMAIL_ADDRESS);
         assertThat(testStudent.getRelationWithStudent()).isEqualTo(UPDATED_RELATION_WITH_STUDENT);
         assertThat(testStudent.getEmergencyContactName()).isEqualTo(UPDATED_EMERGENCY_CONTACT_NAME);
         assertThat(testStudent.getEmergencyContactMiddleName()).isEqualTo(UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME);
         assertThat(testStudent.getEmergencyContactLastName()).isEqualTo(UPDATED_EMERGENCY_CONTACT_LAST_NAME);
-        assertThat(testStudent.getEmergencyContactNo()).isEqualTo(UPDATED_EMERGENCY_CONTACT_NO);
-        assertThat(testStudent.getEmergencyContactEmailAddress()).isEqualTo(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS);
-        assertThat(testStudent.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
+        //assertThat(testStudent.getEmergencyContactNo()).isEqualTo(UPDATED_EMERGENCY_CONTACT_NO);
+        //assertThat(testStudent.getEmergencyContactEmailAddress()).isEqualTo(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS);
+        //assertThat(testStudent.getUploadPhoto()).isEqualTo(UPDATED_UPLOAD_PHOTO);
         assertThat(testStudent.getAdmissionNo()).isEqualTo(UPDATED_ADMISSION_NO);
         assertThat(testStudent.getRollNo()).isEqualTo(UPDATED_ROLL_NO);
         assertThat(testStudent.getStudentType()).isEqualTo(UPDATED_STUDENT_TYPE);

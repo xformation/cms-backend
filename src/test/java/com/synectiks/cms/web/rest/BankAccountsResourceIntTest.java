@@ -1,13 +1,19 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.service.BankAccountsService;
-import com.synectiks.cms.service.dto.BankAccountsDTO;
-import com.synectiks.cms.service.mapper.BankAccountsMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,19 +30,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.BankAccounts;
 import com.synectiks.cms.domain.enumeration.NameOfBank;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.service.BankAccountsService;
+import com.synectiks.cms.service.dto.BankAccountsDTO;
+import com.synectiks.cms.service.mapper.BankAccountsMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the BankAccountsResource REST controller.
  *
@@ -49,8 +50,8 @@ public class BankAccountsResourceIntTest {
     private static final NameOfBank DEFAULT_NAME_OF_BANK = NameOfBank.HDFC;
     private static final NameOfBank UPDATED_NAME_OF_BANK = NameOfBank.SBI;
 
-    private static final Long DEFAULT_ACCOUNT_NUMBER = 1L;
-    private static final Long UPDATED_ACCOUNT_NUMBER = 2L;
+    private static final String DEFAULT_ACCOUNT_NUMBER = "123";
+    private static final String UPDATED_ACCOUNT_NUMBER = "456";
 
     private static final String DEFAULT_TYPE_OF_ACCOUNT = "AAAAAAAAAA";
     private static final String UPDATED_TYPE_OF_ACCOUNT = "BBBBBBBBBB";
@@ -61,8 +62,8 @@ public class BankAccountsResourceIntTest {
     private static final String DEFAULT_BRANCH_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_BRANCH_ADDRESS = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_CORPORATE_ID = 1;
-    private static final Integer UPDATED_CORPORATE_ID = 2;
+    private static final String DEFAULT_CORPORATE_ID = "1";
+    private static final String UPDATED_CORPORATE_ID = "2";
 
     @Autowired
     private BankAccountsRepository bankAccountsRepository;
@@ -296,7 +297,7 @@ public class BankAccountsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(bankAccounts.getId().intValue())))
             .andExpect(jsonPath("$.[*].nameOfBank").value(hasItem(DEFAULT_NAME_OF_BANK.toString())))
-            .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER)))
             .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT.toString())))
             .andExpect(jsonPath("$.[*].ifscCode").value(hasItem(DEFAULT_IFSC_CODE.toString())))
             .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS.toString())))
@@ -315,7 +316,7 @@ public class BankAccountsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(bankAccounts.getId().intValue()))
             .andExpect(jsonPath("$.nameOfBank").value(DEFAULT_NAME_OF_BANK.toString()))
-            .andExpect(jsonPath("$.accountNumber").value(DEFAULT_ACCOUNT_NUMBER.intValue()))
+            .andExpect(jsonPath("$.accountNumber").value(DEFAULT_ACCOUNT_NUMBER))
             .andExpect(jsonPath("$.typeOfAccount").value(DEFAULT_TYPE_OF_ACCOUNT.toString()))
             .andExpect(jsonPath("$.ifscCode").value(DEFAULT_IFSC_CODE.toString()))
             .andExpect(jsonPath("$.branchAddress").value(DEFAULT_BRANCH_ADDRESS.toString()))
@@ -416,7 +417,7 @@ public class BankAccountsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(bankAccounts.getId().intValue())))
             .andExpect(jsonPath("$.[*].nameOfBank").value(hasItem(DEFAULT_NAME_OF_BANK.toString())))
-            .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER.intValue())))
+            .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER)))
             .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT)))
             .andExpect(jsonPath("$.[*].ifscCode").value(hasItem(DEFAULT_IFSC_CODE)))
             .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS)))

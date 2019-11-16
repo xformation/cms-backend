@@ -1190,58 +1190,60 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-        final Section section = sectionRepository.findById(addStudentInput.getSectionId()).get();
-        final Branch branch = branchRepository.findById(addStudentInput.getBranchId()).get();
-        final Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
-        final Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
+        Section section = sectionRepository.findById(addStudentInput.getSectionId()).get();
+        Branch branch = branchRepository.findById(addStudentInput.getBranchId()).get();
+        Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
+        Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
+
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
-        student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addStudentInput.getDateOfBirth()));
-        student.setUploadPhoto("");
+
+        student.setDateOfBirth(addStudentInput.getDateOfBirth());
+//        student.setUploadPhoto("");
         student.setBatch(batch);
         student.setSection(section);
         student.setBranch(branch);
         student.setDepartment(department);
         logger.info("Saving student record.");
         student = studentRepository.save(student);
-        saveStudentImage2(addStudentInput, student, branch);
+//        saveStudentImage2(addStudentInput, student, branch);
         return new AddStudentPayload(student);
     }
 
-    private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-    	if(branch == null) return;
-    	if(branch != null && branch.getCollege() == null) return;
-    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
-    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
-    	String filePath = Paths.get("", temp).toString();
-    	String fileName = String.valueOf(student.getId());
-    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
-    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
-    	student.setUploadPhoto(absFilePath);
-    	logger.info("Saving student image. File path: "+absFilePath);
-    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, String.valueOf(branch.getId()), null);
-    	logger.info("Updating student record with image file path: "+absFilePath);
-    	this.studentRepository.save(student);
-    }
-
-    private void saveStudentImage2(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-    	if(branch == null) return;
-    	if(branch != null && branch.getCollege() == null) return;
-    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
+//    private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//    	if(branch == null) return;
+//    	if(branch != null && branch.getCollege() == null) return;
+//    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
 //    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
-    	String temp = "src/main/webapp/static/images";
-
-    	String filePath = Paths.get("", temp).toString();
-    	String fileName = String.valueOf(student.getId());
-    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
+//    	String filePath = Paths.get("", temp).toString();
+//    	String fileName = String.valueOf(student.getId());
+//    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
 //    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
-    	String absFilePath = filePath+ File.separator+fileName+"."+ext;
-
-    	student.setUploadPhoto(absFilePath);
-    	logger.info("Saving student image. File path: "+absFilePath);
-    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, null, null);
-    	logger.info("Updating student record with image file path: "+absFilePath);
-    	this.studentRepository.save(student);
-    }
+//    	student.setStudentImagePath(absFilePath);
+//    	logger.info("Saving student image. File path: "+absFilePath);
+//    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, String.valueOf(branch.getId()), null);
+//    	logger.info("Updating student record with image file path: "+absFilePath);
+//    	this.studentRepository.save(student);
+//    }
+//
+//    private void saveStudentImage2(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//    	if(branch == null) return;
+//    	if(branch != null && branch.getCollege() == null) return;
+//    	if(CommonUtil.isNullOrEmpty(input.getFileName())) return;
+////    	String temp = CmsConstants.STUDENT_IMAGE_FILE_PATH.replaceAll("COLLEGE_ID", CmsConstants.COLLEGE_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getCollege().getId()));
+//    	String temp = "src/main/webapp/static/images";
+//
+//    	String filePath = Paths.get("", temp).toString();
+//    	String fileName = String.valueOf(student.getId());
+//    	String ext = this.base64FileProcessor.getFileExtensionFromBase64Srting(input.getFileName().split(",")[0]);
+////    	String absFilePath = filePath+ File.separator+CmsConstants.BRANCH_ID_PLACEHOLDER_REPLACER+String.valueOf(branch.getId())+File.separator + fileName+"."+ext;
+//    	String absFilePath = filePath+ File.separator+fileName+"."+ext;
+//
+//    	student.setStudentImagePath(absFilePath);
+//    	logger.info("Saving student image. File path: "+absFilePath);
+//    	this.base64FileProcessor.createFileFromBase64String(input.getFileName(), filePath, fileName, null, null);
+//    	logger.info("Updating student record with image file path: "+absFilePath);
+//    	this.studentRepository.save(student);
+//    }
 
     public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
         Student student = studentRepository.findById(updateStudentInput.getId()).get();
@@ -1272,12 +1274,12 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getMotherLastName() != null) {
             student.setMotherLastName(updateStudentInput.getMotherLastName());
         }
-        if (updateStudentInput.getAadharNo() != null) {
-            student.setAadharNo(updateStudentInput.getAadharNo());
-        }
-        if (updateStudentInput.getDateOfBirth() != null) {
-            student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentInput.getDateOfBirth()));
-        }
+//        if (updateStudentInput.getAadharNo() != null) {
+//            student.setAadharNo(updateStudentInput.getAadharNo());
+//        }
+//        if (updateStudentInput.getDateOfBirth() != null) {
+//            student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentInput.getDateOfBirth()));
+//        }
         if (updateStudentInput.getPlaceOfBirth() != null) {
             student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
         }
@@ -1299,39 +1301,39 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getBloodGroup() != null) {
             student.setBloodGroup(updateStudentInput.getBloodGroup());
         }
-        if (updateStudentInput.getAddressLineOne() != null) {
-            student.setAddressLineOne(updateStudentInput.getAddressLineOne());
-        }
-        if (updateStudentInput.getAddressLineTwo() != null) {
-            student.setAddressLineTwo(updateStudentInput.getAddressLineTwo());
-        }
-        if (updateStudentInput.getAddressLineThree() != null) {
-            student.setAddressLineThree(updateStudentInput.getAddressLineThree());
-        }
-        if (updateStudentInput.getTown() != null) {
-            student.setTown(updateStudentInput.getTown());
-        }
+//        if (updateStudentInput.getAddressLineOne() != null) {
+//            student.setAddressLineOne(updateStudentInput.getAddressLineOne());
+//        }
+//        if (updateStudentInput.getAddressLineTwo() != null) {
+//            student.setAddressLineTwo(updateStudentInput.getAddressLineTwo());
+//        }
+//        if (updateStudentInput.getAddressLineThree() != null) {
+//            student.setAddressLineThree(updateStudentInput.getAddressLineThree());
+//        }
+//        if (updateStudentInput.getTown() != null) {
+//            student.setTown(updateStudentInput.getTown());
+//        }
         if (updateStudentInput.getState() != null) {
             student.setState(updateStudentInput.getState());
         }
         if (updateStudentInput.getCountry() != null) {
             student.setCountry(updateStudentInput.getCountry());
         }
-        if (updateStudentInput.getPincode() != null) {
-            student.setPincode(updateStudentInput.getPincode());
-        }
-        if (updateStudentInput.getStudentContactNumber() != null) {
-            student.setStudentContactNumber(updateStudentInput.getStudentContactNumber());
-        }
-        if (updateStudentInput.getAlternateContactNumber() != null) {
-            student.setAlternateContactNumber(updateStudentInput.getAlternateContactNumber());
-        }
-        if (updateStudentInput.getStudentEmailAddress() != null) {
-            student.setStudentEmailAddress(updateStudentInput.getStudentEmailAddress());
-        }
-        if (updateStudentInput.getAlternateEmailAddress() != null) {
-            student.setAlternateEmailAddress(updateStudentInput.getAlternateEmailAddress());
-        }
+//        if (updateStudentInput.getPincode() != null) {
+//            student.setPincode(updateStudentInput.getPincode());
+//        }
+//        if (updateStudentInput.getStudentContactNumber() != null) {
+//            student.setStudentContactNumber(updateStudentInput.getStudentContactNumber());
+//        }
+//        if (updateStudentInput.getAlternateContactNumber() != null) {
+//            student.setAlternateContactNumber(updateStudentInput.getAlternateContactNumber());
+//        }
+//        if (updateStudentInput.getStudentEmailAddress() != null) {
+//            student.setStudentEmailAddress(updateStudentInput.getStudentEmailAddress());
+//        }
+//        if (updateStudentInput.getAlternateEmailAddress() != null) {
+//            student.setAlternateEmailAddress(updateStudentInput.getAlternateEmailAddress());
+//        }
         if (updateStudentInput.getRelationWithStudent() != null) {
             student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
         }
@@ -1344,12 +1346,12 @@ public class Mutation implements GraphQLMutationResolver {
         if (updateStudentInput.getEmergencyContactLastName() != null) {
             student.setEmergencyContactLastName(updateStudentInput.getEmergencyContactLastName());
         }
-        if (updateStudentInput.getEmergencyContactNo() != null) {
-            student.setEmergencyContactNo(updateStudentInput.getEmergencyContactNo());
-        }
-        if (updateStudentInput.getEmergencyContactEmailAddress() != null) {
-            student.setEmergencyContactEmailAddress(updateStudentInput.getEmergencyContactEmailAddress());
-        }
+//        if (updateStudentInput.getEmergencyContactNo() != null) {
+//            student.setEmergencyContactNo(updateStudentInput.getEmergencyContactNo());
+//        }
+//        if (updateStudentInput.getEmergencyContactEmailAddress() != null) {
+//            student.setEmergencyContactEmailAddress(updateStudentInput.getEmergencyContactEmailAddress());
+//        }
 
 //        if (updateStudentInput.getUploadPhoto() != null) {
 //            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
@@ -1381,7 +1383,7 @@ public class Mutation implements GraphQLMutationResolver {
             student.setDepartment(department);
         }
 
-        saveStudentImage(updateStudentInput, student, student.getBranch());
+//        saveStudentImage(updateStudentInput, student, student.getBranch());
 
         studentRepository.save(student);
 
@@ -1737,45 +1739,56 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
     }
 
-    public AddContractPayload addContract(AddContractInput addContractInput) {
-        final Contract contract = new Contract();
-        contract.setVendorName(addContractInput.getVendorName());
-        contract.setTypeOfOwnerShip(addContractInput.getTypeOfOwnerShip());
-        contract.setDurationOfContract(addContractInput.getDurationOfContract());
+    public List<CmsContract> addContract(AddContractInput addContractInput) throws Exception {
+        Contract contract = CommonUtil.createCopyProperties(addContractInput, Contract.class);
         contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getStartDate()));
         contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getEndDate()));
+        contract = contractRepository.save(contract);
 
-        contractRepository.save(contract);
-
-        return new AddContractPayload(contract);
+        Contract c = new Contract();
+        Example<Contract> example = Example.of(c);
+        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsContract> ls = new ArrayList<>();
+        for(Contract co: list) {
+            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
+            if(co.getStartDate() != null) {
+                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setStartDate(null);
+            }
+            if(co.getEndDate() != null) {
+                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setEndDate(null);
+            }
+            ls.add(cco);
+        }
+        return ls;
     }
 
-    public UpdateContractPayload updateContract(UpdateContractInput updateContractInput) {
-        Contract contract = contractRepository.findById(updateContractInput.getId()).get();
-        if (updateContractInput.getVendorName() != null) {
-            contract.setVendorName(updateContractInput.getVendorName());
+    public List<CmsContract> updateContract(UpdateContractInput updateContractInput) throws ParseException, Exception {
+        Contract contract = CommonUtil.createCopyProperties(updateContractInput, Contract.class);
+        contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getStartDate()));
+        contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getEndDate()));
+        contract = contractRepository.save(contract);
+
+
+        Contract c = new Contract();
+        Example<Contract> example = Example.of(c);
+        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsContract> ls = new ArrayList<>();
+        for(Contract co: list) {
+            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
+            if(co.getStartDate() != null) {
+                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setStartDate(null);
+            }
+            if(co.getEndDate() != null) {
+                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setEndDate(null);
+            }
+            ls.add(cco);
         }
+        return ls;
 
-        if (updateContractInput.getTypeOfOwnerShip() != null) {
-            contract.setTypeOfOwnerShip(updateContractInput.getTypeOfOwnerShip());
-        }
-
-        if (updateContractInput.getDurationOfContract() != null) {
-            contract.setDurationOfContract(updateContractInput.getDurationOfContract());
-        }
-
-        if (updateContractInput.getStartDate() != null) {
-            contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getStartDate()));
-        }
-
-        if (updateContractInput.getEndDate() != null) {
-            contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getEndDate()));
-        }
-
-
-        contractRepository.save(contract);
-
-        return new UpdateContractPayload(contract);
     }
 
     public RemoveContractPayload removeContract(RemoveContractInput removeContractInput) {
@@ -2913,18 +2926,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
-        final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
-        final Lecture lecture = new Lecture();
-        lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLecDate()));
-        lecture.setLastUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLastUpdatedOn()));
-        lecture.setLastUpdatedBy(addLectureInput.getLastUpdatedBy());
-        lecture.setStartTime(addLectureInput.getStartTime());
-        lecture.setEndTime(addLectureInput.getEndTime());
-        lecture.setAttendancemaster(attendanceMaster);
-        lectureRepository.save(lecture);
-        return new AddLecturePayload(lecture);
-    }
+
 
     public UpdateLecturePayload updateLecture(UpdateLectureInput updateLectureInput) {
         Lecture lecture = lectureRepository.findById(updateLectureInput.getId()).get();
@@ -2957,6 +2959,71 @@ public class Mutation implements GraphQLMutationResolver {
         lectureRepository.delete(lecture);
         return new RemoveLecturePayload(Lists.newArrayList(lectureRepository.findAll()));
     }
+//    public List<Book> addBook(List<AddBookInput> list){
+//        List<Book> al= new ArrayList<>();
+//        Book b = null;
+//        for(AddBookInput input: list ) {
+//            Student student = studentRepository.findById(input.getStudentId()).get();
+//            Library library = libraryRepository.findById(input.getLibraryId()).get();
+//
+//            b = CommonUtil.createCopyProperties(input, Book.class);
+//            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getIssueDate()));
+//            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getDueDate()));
+//            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getReceivedDate()));
+//            b.setNoOfCopiesAvailable(input.getNoOfCopiesAvailable());
+//            b.setStatus(input.getStatus());
+//            b.setStudent(student);
+//            b.setLibrary(library);
+//            bookRepository.save(b);
+//        }
+//        al.add(b);
+//        return al;
+//    }
+    public List<CmsBook> addBook(List<AddBookInput> inputlist) {
+        List<CmsBook> al = new ArrayList<>();
+        for (AddBookInput input : inputlist) {
+            Student student = studentRepository.findById(input.getStudentId()).get();
+            Library library = libraryRepository.findById(input.getLibraryId()).get();
+            Book b = CommonUtil.createCopyProperties(input, Book.class);
+
+            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getIssueDate()));
+            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getDueDate()));
+            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getReceivedDate()));
+            b.setNoOfCopiesAvailable(input.getNoOfCopiesAvailable());
+            b.setStatus(input.getStatus());
+            b.setStudent(student);
+            b.setLibrary(library);
+            bookRepository.save(b);
+
+            Book bb = new Book();
+            bb.setStudent(student);
+            bb.setLibrary(library);
+            Example<Book> example = Example.of(bb);
+            List<Book> list = this.bookRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+//            List<CmsBook> ls = new ArrayList<>();
+            for (Book ff : list) {
+                CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
+                if (ff.getIssueDate() != null) {
+                    cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                    cfc.setIssueDate(null);
+                }
+
+                if (ff.getDueDate() != null) {
+                    cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                    cfc.setDueDate(null);
+                }
+
+                if (ff.getReceivedDate() != null) {
+                    cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                    cfc.setReceivedDate(null);
+                }
+                al.add(cfc);
+            }
+
+        }
+        return al;
+    }
+
 
     public List<CmsFeeCategory> addFeeCategory(AddFeeCategoryInput addFeeCategoryInput) throws Exception {
         FeeCategory fc = CommonUtil.createCopyProperties(addFeeCategoryInput, FeeCategory.class);
@@ -3000,6 +3067,52 @@ public class Mutation implements GraphQLMutationResolver {
             ls.add(cfc);
         }
         return ls;
+    }
+    public List<CmsBook> updateBook(UpdateBookInput updateBookInput) throws ParseException, Exception {
+
+        Book fc = CommonUtil.createCopyProperties(updateBookInput, Book.class);
+        fc.setStatus(updateBookInput.getStatus());
+        fc.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
+        fc.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
+        fc.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
+        fc.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
+        Library lib = new Library();
+        lib.setId(updateBookInput.getLibraryId());
+        fc.setLibrary(lib);
+        Student st = new Student();
+        st.setId(updateBookInput.getStudentId());
+        fc.setStudent(st);
+
+
+        fc = bookRepository.save(fc);
+
+        Book f = new Book();
+        f.setLibrary(lib);
+        f.setStudent(st);
+
+        Example<Book> example = Example.of(f);
+        List<Book> list = this.bookRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsBook> ls = new ArrayList<>();
+        for(Book ff: list) {
+            CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
+
+            if(ff.getIssueDate() != null) {
+                cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setIssueDate(null);
+            }
+            if(ff.getDueDate() != null) {
+                cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setDueDate(null);
+            }
+            if(ff.getReceivedDate() != null) {
+                cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setReceivedDate(null);
+            }
+            cfc.setNoOfCopiesAvailable(ff.getNoOfCopiesAvailable());
+            ls.add(cfc);
+        }
+        return ls;
+
     }
 
     public List<CmsFeeCategory> updateFeeCategory(UpdateFeeCategoryInput updateFeeCategoryInput) throws ParseException, Exception {
@@ -3675,51 +3788,64 @@ public class Mutation implements GraphQLMutationResolver {
         libraryRepository.delete(book);
         return new RemoveLibraryPayload((Lists.newArrayList(libraryRepository.findAll())));
     }
+//    public AddAcademicExamSettingPayload addAcademicExamSetting(List<AddAcademicExamSettingInput> list) {
+//        AcademicExamSetting academicExamSetting = null;
+//        int countvalue = getCountvalueId()+1;
+//        for(AddAcademicExamSettingInput input: list ) {
+//            Branch branch = branchRepository.findById(input.getBranchId()).get();
+//            Subject subject = subjectRepository.findById(input.getSubjectId()).get();
+//            AcademicYear academicYear = academicYearRepository.findById(input.getAcademicyearId()).get();
+//            Batch batch = batchRepository.findById(input.getBatchId()).get();
+//            Section section = sectionRepository.findById(input.getSectionId()).get();
+//            Department department = departmentRepository.findById(input.getDepartmentId()).get();
+//            TypeOfGrading typeOfGrading = typeOfGradingRepository.findById((input.getTypeOfGradingId())).get();
+//
+//            academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
+//            academicExamSetting.setCountvalue(new Long(countvalue));
+//            academicExamSetting.setBranch(branch);
+//            academicExamSetting.setSubject(subject);
+//            academicExamSetting.setBatch(batch);
+//            academicExamSetting.setAcademicyear(academicYear);
+//            academicExamSetting.setSection(section);
+//            academicExamSetting.setDepartment(department);
+//            academicExamSetting.setTypeOfGrading(typeOfGrading);
+//            academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate()));
+//            this.academicExamSettingRepository.save(academicExamSetting);
+//
+//        }
+//        return  new AddAcademicExamSettingPayload(academicExamSetting);
+//    }
 
-    public AddBookPayload addBook(AddBookInput bookInput){
-        Student student = studentRepository.findById(bookInput.getStudentId()).get();
-        Library library = libraryRepository.findById(bookInput.getLibraryId()).get();
-        final Book b = new Book ();
-        b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getIssueDate()));
-        b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getDueDate()));
-        b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(bookInput.getReceivedDate()));
-        b.setNoOfCopiesAvailable(bookInput.getNoOfCopiesAvailable());
-        b.setStatus(bookInput.getStatus());
-        b.setStudent(student);
-        b.setLibrary(library);
-        bookRepository.save(b);
-        return new AddBookPayload(b);
-    }
-    public UpdateBookPayload updateBook(UpdateBookInput updateBookInput) {
-        Book b = bookRepository.findById(updateBookInput.getId()).get();
-        if(updateBookInput.getIssueDate()!=null) {
-            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
-        }
-        if (updateBookInput.getDueDate() != null){
-            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
-        }
-        if (updateBookInput.getReceivedDate() != null){
-            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
-        }
-        if(updateBookInput.getNoOfCopiesAvailable()!=null){
-            b.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
-        }
-        if (updateBookInput.getStatus() != null) {
-            b.setStatus(updateBookInput.getStatus());
-        }
-
-        if(updateBookInput.getStudentId()!=null){
-            Student student =studentRepository.findById(updateBookInput.getStudentId()).get();
-            b.setStudent(student);
-        }
-        if(updateBookInput.getLibraryId()!=null){
-            Library library =libraryRepository.findById(updateBookInput.getLibraryId()).get();
-            b.setLibrary(library);
-        }
-        bookRepository.save(b);
-        return new UpdateBookPayload(b);
-
-    }
+//    public UpdateBookPayload updateBook(UpdateBookInput updateBookInput) {
+//        Book b = bookRepository.findById(updateBookInput.getId()).get();
+//        if(updateBookInput.getIssueDate()!=null) {
+//            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
+//        }
+//        if (updateBookInput.getDueDate() != null){
+//            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
+//        }
+//        if (updateBookInput.getReceivedDate() != null){
+//            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
+//        }
+//        if(updateBookInput.getNoOfCopiesAvailable()!=null){
+//            b.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
+//        }
+//        if (updateBookInput.getStatus() != null) {
+//            b.setStatus(updateBookInput.getStatus());
+//        }
+//
+//        if(updateBookInput.getStudentId()!=null){
+//            Student student =studentRepository.findById(updateBookInput.getStudentId()).get();
+//            b.setStudent(student);
+//        }
+//        if(updateBookInput.getLibraryId()!=null){
+//            Library library =libraryRepository.findById(updateBookInput.getLibraryId()).get();
+//            b.setLibrary(library);
+//        }
+//        bookRepository.save(b);
+//        return new UpdateBookPayload(b);
+//
+//    }
     public RemoveBookPayload removeBook(RemoveBookInput removeBookInput){
         Book b =bookRepository.findById(removeBookInput.getBookId()).get();
         bookRepository.delete(b);
@@ -3777,6 +3903,19 @@ public class Mutation implements GraphQLMutationResolver {
         }
         return ls;
 
+    }
+
+    public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
+        final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
+        final Lecture lecture = new Lecture();
+        lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLecDate()));
+        lecture.setLastUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addLectureInput.getLastUpdatedOn()));
+        lecture.setLastUpdatedBy(addLectureInput.getLastUpdatedBy());
+        lecture.setStartTime(addLectureInput.getStartTime());
+        lecture.setEndTime(addLectureInput.getEndTime());
+        lecture.setAttendancemaster(attendanceMaster);
+        lectureRepository.save(lecture);
+        return new AddLecturePayload(lecture);
     }
 
     public RemoveInsurancePayload removeInsurance(RemoveInsuranceInput removeInsuranceInput) {

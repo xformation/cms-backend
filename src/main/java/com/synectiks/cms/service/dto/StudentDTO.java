@@ -6,82 +6,70 @@ import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
- * A DTO for the Student entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Student} entity.
  */
 public class StudentDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String studentName;
 
-    @NotNull
     private String studentMiddleName;
 
-    @NotNull
     private String studentLastName;
 
-    @NotNull
     private String fatherName;
 
-    @NotNull
     private String fatherMiddleName;
 
-    @NotNull
     private String fatherLastName;
 
-    @NotNull
     private String motherName;
 
-    @NotNull
     private String motherMiddleName;
 
-    @NotNull
     private String motherLastName;
 
-    @NotNull
-    private Long aadharNo;
+    private String studentAadharNo;
 
-    @NotNull
+    private String studentPanNo;
+
+    private String studentSocialSecurityNo;
+
+    private String studentTaxReferenceNo;
+
+    private String studentBplNo;
+
+    private String studentDrivingLicenseNo;
+
+    private String studentPassportNo;
+
     private LocalDate dateOfBirth;
 
-    @NotNull
     private String placeOfBirth;
 
-    @NotNull
     private Religion religion;
 
-    @NotNull
     private Caste caste;
 
-    @NotNull
     private String subCaste;
 
-    @NotNull
     private Integer age;
 
-    @NotNull
     private Gender sex;
 
-    @NotNull
-    private Bloodgroup bloodGroup;
+    private String studentLocalAddress;
+
+    private String studentPermanentAddress;
 
     @NotNull
-    private String addressLineOne;
-
-    @NotNull
-    private String addressLineTwo;
-
-    @NotNull
-    private String addressLineThree;
-
-    @NotNull
-    private String town;
+    private String city;
 
     @NotNull
     private String state;
@@ -90,45 +78,188 @@ public class StudentDTO implements Serializable {
     private String country;
 
     @NotNull
-    private Long pincode;
+    private String pinCode;
 
-    @NotNull
-    private String studentContactNumber;
+    private String studentPrimaryCellNumber;
 
-    private String alternateContactNumber;
+    private String studentAlternateCellNumber;
 
-    @NotNull
-    private String studentEmailAddress;
+    private String studentLandLinePhoneNumber;
 
-    private String alternateEmailAddress;
+    private String studentPrimaryEmailId;
 
-    @NotNull
+    private String studentAlternateEmailId;
+
     private RelationWithStudentEnum relationWithStudent;
 
-    @NotNull
     private String emergencyContactName;
 
-    @NotNull
     private String emergencyContactMiddleName;
 
-    @NotNull
     private String emergencyContactLastName;
 
-    @NotNull
-    private String emergencyContactNo;
+    private String emergencyContactCellNumber;
 
-    @NotNull
-    private String emergencyContactEmailAddress;
+    private String emergencyContactLandLinePhoneNumber;
 
-    @NotNull
-    private String uploadPhoto;
+    private String emergencyContactEmailId;
 
-    private Long admissionNo;
+    private String studentImagePath;
+
+    private String admissionNo;
+
+    private String enrollmentNo;
 
     private String rollNo;
 
-    @NotNull
     private StudentTypeEnum studentType;
+
+    private String fatherCellNumber;
+
+    private String fatherEmailId;
+
+    private String fatherOccupation;
+
+    private String fatherOfficeEmailId;
+
+    private String fatherOfficeAddress;
+
+    private String fatherOfficeCellNumber;
+
+    private String fatherOfficeLandLinePhoneNumber;
+
+    private String fatherAadharNo;
+
+    private String fatherPanNo;
+
+    private String fatherSocialSecurityNo;
+
+    private String fatherTaxReferenceNo;
+
+    private String fatherBplNo;
+
+    private String fatherDrivingLicenseNo;
+
+    private String fatherPassportNo;
+
+    private String fatherImagePath;
+
+    private String motherCellNumber;
+
+    private String motherEmailId;
+
+    private String motherOccupation;
+
+    private String motherOfficeEmailId;
+
+    private String motherOfficeAddress;
+
+    private String motherOfficeCellNumber;
+
+    private String motherOfficeLandLinePhoneNumber;
+
+    private String motherAadharNo;
+
+    private String motherPanNo;
+
+    private String motherSocialSecurityNo;
+
+    private String motherTaxReferenceNo;
+
+    private String motherBplNo;
+
+    private String motherDrivingLicenseNo;
+
+    private String motherPassportNo;
+
+    private String motherImagePath;
+
+    private String guardianName;
+
+    private String guardianMiddleName;
+
+    private String guardianLastName;
+
+    private String guardianAddress;
+
+    private String guardianCellNumber;
+
+    private String guardianLandLinePhoneNumber;
+
+    private String guardianEmailId;
+
+    private String guardianOccupation;
+
+    private String guardianOfficeEmailId;
+
+    private String guardianOfficeAddress;
+
+    private String guardianOfficeCellNumber;
+
+    private String guardianOfficeLandLinePhoneNumber;
+
+    private String guardianImagePath;
+
+    @Size(max = 3)
+    private String isGuardianSponsorAgency;
+
+    private String sponsorAgencyName;
+
+    private String sponsorAgencyRegistrationNo;
+
+    private String sponsorAgencyAddress;
+
+    private String sponsorAgencyCellNumber;
+
+    private String sponsorAgencyLandLineNumber;
+
+    private String sponsorAgencyEmailId;
+
+    private String sponsorAgencyAppointeeName;
+
+    private String sponsorAgencyAppointeeDesignation;
+
+    private String sponsorAgencyAppointeeCellNumber;
+
+    private String sponsorAgencyAppointeeLandLineNumber;
+
+    private String sponsorAgencyAppointeeEmailId;
+
+    private String sponsorAgencyAppointeeOfficeAddress;
+
+    @Size(max = 3)
+    private String isPhysicallyChallenged;
+
+    @Size(max = 2000)
+    private String detailsOfDisability;
+
+    private String disabilityCertificateNo;
+
+    private String disabilityCertificateIssueAuthority;
+
+    private LocalDate disabilityCertificateIssueDate;
+
+    private Integer percentagOfDisability;
+
+    private Bloodgroup bloodGroup;
+
+    @Size(max = 2000)
+    private String vaccinationDetails;
+
+    @Size(max = 2000)
+    private String otherMedicalDetails;
+
+    private Status status;
+
+    private String createdBy;
+
+    private LocalDate createdOn;
+
+    private String updatedBy;
+
+    private LocalDate updatedOn;
+
+    private String comments;
 
 
     private Long departmentId;
@@ -219,12 +350,60 @@ public class StudentDTO implements Serializable {
         this.motherLastName = motherLastName;
     }
 
-    public Long getAadharNo() {
-        return aadharNo;
+    public String getStudentAadharNo() {
+        return studentAadharNo;
     }
 
-    public void setAadharNo(Long aadharNo) {
-        this.aadharNo = aadharNo;
+    public void setStudentAadharNo(String studentAadharNo) {
+        this.studentAadharNo = studentAadharNo;
+    }
+
+    public String getStudentPanNo() {
+        return studentPanNo;
+    }
+
+    public void setStudentPanNo(String studentPanNo) {
+        this.studentPanNo = studentPanNo;
+    }
+
+    public String getStudentSocialSecurityNo() {
+        return studentSocialSecurityNo;
+    }
+
+    public void setStudentSocialSecurityNo(String studentSocialSecurityNo) {
+        this.studentSocialSecurityNo = studentSocialSecurityNo;
+    }
+
+    public String getStudentTaxReferenceNo() {
+        return studentTaxReferenceNo;
+    }
+
+    public void setStudentTaxReferenceNo(String studentTaxReferenceNo) {
+        this.studentTaxReferenceNo = studentTaxReferenceNo;
+    }
+
+    public String getStudentBplNo() {
+        return studentBplNo;
+    }
+
+    public void setStudentBplNo(String studentBplNo) {
+        this.studentBplNo = studentBplNo;
+    }
+
+    public String getStudentDrivingLicenseNo() {
+        return studentDrivingLicenseNo;
+    }
+
+    public void setStudentDrivingLicenseNo(String studentDrivingLicenseNo) {
+        this.studentDrivingLicenseNo = studentDrivingLicenseNo;
+    }
+
+    public String getStudentPassportNo() {
+        return studentPassportNo;
+    }
+
+    public void setStudentPassportNo(String studentPassportNo) {
+        this.studentPassportNo = studentPassportNo;
     }
 
     public LocalDate getDateOfBirth() {
@@ -283,44 +462,28 @@ public class StudentDTO implements Serializable {
         this.sex = sex;
     }
 
-    public Bloodgroup getBloodGroup() {
-        return bloodGroup;
+    public String getStudentLocalAddress() {
+        return studentLocalAddress;
     }
 
-    public void setBloodGroup(Bloodgroup bloodGroup) {
-        this.bloodGroup = bloodGroup;
+    public void setStudentLocalAddress(String studentLocalAddress) {
+        this.studentLocalAddress = studentLocalAddress;
     }
 
-    public String getAddressLineOne() {
-        return addressLineOne;
+    public String getStudentPermanentAddress() {
+        return studentPermanentAddress;
     }
 
-    public void setAddressLineOne(String addressLineOne) {
-        this.addressLineOne = addressLineOne;
+    public void setStudentPermanentAddress(String studentPermanentAddress) {
+        this.studentPermanentAddress = studentPermanentAddress;
     }
 
-    public String getAddressLineTwo() {
-        return addressLineTwo;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddressLineTwo(String addressLineTwo) {
-        this.addressLineTwo = addressLineTwo;
-    }
-
-    public String getAddressLineThree() {
-        return addressLineThree;
-    }
-
-    public void setAddressLineThree(String addressLineThree) {
-        this.addressLineThree = addressLineThree;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getState() {
@@ -339,44 +502,52 @@ public class StudentDTO implements Serializable {
         this.country = country;
     }
 
-    public Long getPincode() {
-        return pincode;
+    public String getPinCode() {
+        return pinCode;
     }
 
-    public void setPincode(Long pincode) {
-        this.pincode = pincode;
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
     }
 
-    public String getStudentContactNumber() {
-        return studentContactNumber;
+    public String getStudentPrimaryCellNumber() {
+        return studentPrimaryCellNumber;
     }
 
-    public void setStudentContactNumber(String studentContactNumber) {
-        this.studentContactNumber = studentContactNumber;
+    public void setStudentPrimaryCellNumber(String studentPrimaryCellNumber) {
+        this.studentPrimaryCellNumber = studentPrimaryCellNumber;
     }
 
-    public String getAlternateContactNumber() {
-        return alternateContactNumber;
+    public String getStudentAlternateCellNumber() {
+        return studentAlternateCellNumber;
     }
 
-    public void setAlternateContactNumber(String alternateContactNumber) {
-        this.alternateContactNumber = alternateContactNumber;
+    public void setStudentAlternateCellNumber(String studentAlternateCellNumber) {
+        this.studentAlternateCellNumber = studentAlternateCellNumber;
     }
 
-    public String getStudentEmailAddress() {
-        return studentEmailAddress;
+    public String getStudentLandLinePhoneNumber() {
+        return studentLandLinePhoneNumber;
     }
 
-    public void setStudentEmailAddress(String studentEmailAddress) {
-        this.studentEmailAddress = studentEmailAddress;
+    public void setStudentLandLinePhoneNumber(String studentLandLinePhoneNumber) {
+        this.studentLandLinePhoneNumber = studentLandLinePhoneNumber;
     }
 
-    public String getAlternateEmailAddress() {
-        return alternateEmailAddress;
+    public String getStudentPrimaryEmailId() {
+        return studentPrimaryEmailId;
     }
 
-    public void setAlternateEmailAddress(String alternateEmailAddress) {
-        this.alternateEmailAddress = alternateEmailAddress;
+    public void setStudentPrimaryEmailId(String studentPrimaryEmailId) {
+        this.studentPrimaryEmailId = studentPrimaryEmailId;
+    }
+
+    public String getStudentAlternateEmailId() {
+        return studentAlternateEmailId;
+    }
+
+    public void setStudentAlternateEmailId(String studentAlternateEmailId) {
+        this.studentAlternateEmailId = studentAlternateEmailId;
     }
 
     public RelationWithStudentEnum getRelationWithStudent() {
@@ -411,36 +582,52 @@ public class StudentDTO implements Serializable {
         this.emergencyContactLastName = emergencyContactLastName;
     }
 
-    public String getEmergencyContactNo() {
-        return emergencyContactNo;
+    public String getEmergencyContactCellNumber() {
+        return emergencyContactCellNumber;
     }
 
-    public void setEmergencyContactNo(String emergencyContactNo) {
-        this.emergencyContactNo = emergencyContactNo;
+    public void setEmergencyContactCellNumber(String emergencyContactCellNumber) {
+        this.emergencyContactCellNumber = emergencyContactCellNumber;
     }
 
-    public String getEmergencyContactEmailAddress() {
-        return emergencyContactEmailAddress;
+    public String getEmergencyContactLandLinePhoneNumber() {
+        return emergencyContactLandLinePhoneNumber;
     }
 
-    public void setEmergencyContactEmailAddress(String emergencyContactEmailAddress) {
-        this.emergencyContactEmailAddress = emergencyContactEmailAddress;
+    public void setEmergencyContactLandLinePhoneNumber(String emergencyContactLandLinePhoneNumber) {
+        this.emergencyContactLandLinePhoneNumber = emergencyContactLandLinePhoneNumber;
     }
 
-    public String getUploadPhoto() {
-        return uploadPhoto;
+    public String getEmergencyContactEmailId() {
+        return emergencyContactEmailId;
     }
 
-    public void setUploadPhoto(String uploadPhoto) {
-        this.uploadPhoto = uploadPhoto;
+    public void setEmergencyContactEmailId(String emergencyContactEmailId) {
+        this.emergencyContactEmailId = emergencyContactEmailId;
     }
 
-    public Long getAdmissionNo() {
+    public String getStudentImagePath() {
+        return studentImagePath;
+    }
+
+    public void setStudentImagePath(String studentImagePath) {
+        this.studentImagePath = studentImagePath;
+    }
+
+    public String getAdmissionNo() {
         return admissionNo;
     }
 
-    public void setAdmissionNo(Long admissionNo) {
+    public void setAdmissionNo(String admissionNo) {
         this.admissionNo = admissionNo;
+    }
+
+    public String getEnrollmentNo() {
+        return enrollmentNo;
+    }
+
+    public void setEnrollmentNo(String enrollmentNo) {
+        this.enrollmentNo = enrollmentNo;
     }
 
     public String getRollNo() {
@@ -457,6 +644,574 @@ public class StudentDTO implements Serializable {
 
     public void setStudentType(StudentTypeEnum studentType) {
         this.studentType = studentType;
+    }
+
+    public String getFatherCellNumber() {
+        return fatherCellNumber;
+    }
+
+    public void setFatherCellNumber(String fatherCellNumber) {
+        this.fatherCellNumber = fatherCellNumber;
+    }
+
+    public String getFatherEmailId() {
+        return fatherEmailId;
+    }
+
+    public void setFatherEmailId(String fatherEmailId) {
+        this.fatherEmailId = fatherEmailId;
+    }
+
+    public String getFatherOccupation() {
+        return fatherOccupation;
+    }
+
+    public void setFatherOccupation(String fatherOccupation) {
+        this.fatherOccupation = fatherOccupation;
+    }
+
+    public String getFatherOfficeEmailId() {
+        return fatherOfficeEmailId;
+    }
+
+    public void setFatherOfficeEmailId(String fatherOfficeEmailId) {
+        this.fatherOfficeEmailId = fatherOfficeEmailId;
+    }
+
+    public String getFatherOfficeAddress() {
+        return fatherOfficeAddress;
+    }
+
+    public void setFatherOfficeAddress(String fatherOfficeAddress) {
+        this.fatherOfficeAddress = fatherOfficeAddress;
+    }
+
+    public String getFatherOfficeCellNumber() {
+        return fatherOfficeCellNumber;
+    }
+
+    public void setFatherOfficeCellNumber(String fatherOfficeCellNumber) {
+        this.fatherOfficeCellNumber = fatherOfficeCellNumber;
+    }
+
+    public String getFatherOfficeLandLinePhoneNumber() {
+        return fatherOfficeLandLinePhoneNumber;
+    }
+
+    public void setFatherOfficeLandLinePhoneNumber(String fatherOfficeLandLinePhoneNumber) {
+        this.fatherOfficeLandLinePhoneNumber = fatherOfficeLandLinePhoneNumber;
+    }
+
+    public String getFatherAadharNo() {
+        return fatherAadharNo;
+    }
+
+    public void setFatherAadharNo(String fatherAadharNo) {
+        this.fatherAadharNo = fatherAadharNo;
+    }
+
+    public String getFatherPanNo() {
+        return fatherPanNo;
+    }
+
+    public void setFatherPanNo(String fatherPanNo) {
+        this.fatherPanNo = fatherPanNo;
+    }
+
+    public String getFatherSocialSecurityNo() {
+        return fatherSocialSecurityNo;
+    }
+
+    public void setFatherSocialSecurityNo(String fatherSocialSecurityNo) {
+        this.fatherSocialSecurityNo = fatherSocialSecurityNo;
+    }
+
+    public String getFatherTaxReferenceNo() {
+        return fatherTaxReferenceNo;
+    }
+
+    public void setFatherTaxReferenceNo(String fatherTaxReferenceNo) {
+        this.fatherTaxReferenceNo = fatherTaxReferenceNo;
+    }
+
+    public String getFatherBplNo() {
+        return fatherBplNo;
+    }
+
+    public void setFatherBplNo(String fatherBplNo) {
+        this.fatherBplNo = fatherBplNo;
+    }
+
+    public String getFatherDrivingLicenseNo() {
+        return fatherDrivingLicenseNo;
+    }
+
+    public void setFatherDrivingLicenseNo(String fatherDrivingLicenseNo) {
+        this.fatherDrivingLicenseNo = fatherDrivingLicenseNo;
+    }
+
+    public String getFatherPassportNo() {
+        return fatherPassportNo;
+    }
+
+    public void setFatherPassportNo(String fatherPassportNo) {
+        this.fatherPassportNo = fatherPassportNo;
+    }
+
+    public String getFatherImagePath() {
+        return fatherImagePath;
+    }
+
+    public void setFatherImagePath(String fatherImagePath) {
+        this.fatherImagePath = fatherImagePath;
+    }
+
+    public String getMotherCellNumber() {
+        return motherCellNumber;
+    }
+
+    public void setMotherCellNumber(String motherCellNumber) {
+        this.motherCellNumber = motherCellNumber;
+    }
+
+    public String getMotherEmailId() {
+        return motherEmailId;
+    }
+
+    public void setMotherEmailId(String motherEmailId) {
+        this.motherEmailId = motherEmailId;
+    }
+
+    public String getMotherOccupation() {
+        return motherOccupation;
+    }
+
+    public void setMotherOccupation(String motherOccupation) {
+        this.motherOccupation = motherOccupation;
+    }
+
+    public String getMotherOfficeEmailId() {
+        return motherOfficeEmailId;
+    }
+
+    public void setMotherOfficeEmailId(String motherOfficeEmailId) {
+        this.motherOfficeEmailId = motherOfficeEmailId;
+    }
+
+    public String getMotherOfficeAddress() {
+        return motherOfficeAddress;
+    }
+
+    public void setMotherOfficeAddress(String motherOfficeAddress) {
+        this.motherOfficeAddress = motherOfficeAddress;
+    }
+
+    public String getMotherOfficeCellNumber() {
+        return motherOfficeCellNumber;
+    }
+
+    public void setMotherOfficeCellNumber(String motherOfficeCellNumber) {
+        this.motherOfficeCellNumber = motherOfficeCellNumber;
+    }
+
+    public String getMotherOfficeLandLinePhoneNumber() {
+        return motherOfficeLandLinePhoneNumber;
+    }
+
+    public void setMotherOfficeLandLinePhoneNumber(String motherOfficeLandLinePhoneNumber) {
+        this.motherOfficeLandLinePhoneNumber = motherOfficeLandLinePhoneNumber;
+    }
+
+    public String getMotherAadharNo() {
+        return motherAadharNo;
+    }
+
+    public void setMotherAadharNo(String motherAadharNo) {
+        this.motherAadharNo = motherAadharNo;
+    }
+
+    public String getMotherPanNo() {
+        return motherPanNo;
+    }
+
+    public void setMotherPanNo(String motherPanNo) {
+        this.motherPanNo = motherPanNo;
+    }
+
+    public String getMotherSocialSecurityNo() {
+        return motherSocialSecurityNo;
+    }
+
+    public void setMotherSocialSecurityNo(String motherSocialSecurityNo) {
+        this.motherSocialSecurityNo = motherSocialSecurityNo;
+    }
+
+    public String getMotherTaxReferenceNo() {
+        return motherTaxReferenceNo;
+    }
+
+    public void setMotherTaxReferenceNo(String motherTaxReferenceNo) {
+        this.motherTaxReferenceNo = motherTaxReferenceNo;
+    }
+
+    public String getMotherBplNo() {
+        return motherBplNo;
+    }
+
+    public void setMotherBplNo(String motherBplNo) {
+        this.motherBplNo = motherBplNo;
+    }
+
+    public String getMotherDrivingLicenseNo() {
+        return motherDrivingLicenseNo;
+    }
+
+    public void setMotherDrivingLicenseNo(String motherDrivingLicenseNo) {
+        this.motherDrivingLicenseNo = motherDrivingLicenseNo;
+    }
+
+    public String getMotherPassportNo() {
+        return motherPassportNo;
+    }
+
+    public void setMotherPassportNo(String motherPassportNo) {
+        this.motherPassportNo = motherPassportNo;
+    }
+
+    public String getMotherImagePath() {
+        return motherImagePath;
+    }
+
+    public void setMotherImagePath(String motherImagePath) {
+        this.motherImagePath = motherImagePath;
+    }
+
+    public String getGuardianName() {
+        return guardianName;
+    }
+
+    public void setGuardianName(String guardianName) {
+        this.guardianName = guardianName;
+    }
+
+    public String getGuardianMiddleName() {
+        return guardianMiddleName;
+    }
+
+    public void setGuardianMiddleName(String guardianMiddleName) {
+        this.guardianMiddleName = guardianMiddleName;
+    }
+
+    public String getGuardianLastName() {
+        return guardianLastName;
+    }
+
+    public void setGuardianLastName(String guardianLastName) {
+        this.guardianLastName = guardianLastName;
+    }
+
+    public String getGuardianAddress() {
+        return guardianAddress;
+    }
+
+    public void setGuardianAddress(String guardianAddress) {
+        this.guardianAddress = guardianAddress;
+    }
+
+    public String getGuardianCellNumber() {
+        return guardianCellNumber;
+    }
+
+    public void setGuardianCellNumber(String guardianCellNumber) {
+        this.guardianCellNumber = guardianCellNumber;
+    }
+
+    public String getGuardianLandLinePhoneNumber() {
+        return guardianLandLinePhoneNumber;
+    }
+
+    public void setGuardianLandLinePhoneNumber(String guardianLandLinePhoneNumber) {
+        this.guardianLandLinePhoneNumber = guardianLandLinePhoneNumber;
+    }
+
+    public String getGuardianEmailId() {
+        return guardianEmailId;
+    }
+
+    public void setGuardianEmailId(String guardianEmailId) {
+        this.guardianEmailId = guardianEmailId;
+    }
+
+    public String getGuardianOccupation() {
+        return guardianOccupation;
+    }
+
+    public void setGuardianOccupation(String guardianOccupation) {
+        this.guardianOccupation = guardianOccupation;
+    }
+
+    public String getGuardianOfficeEmailId() {
+        return guardianOfficeEmailId;
+    }
+
+    public void setGuardianOfficeEmailId(String guardianOfficeEmailId) {
+        this.guardianOfficeEmailId = guardianOfficeEmailId;
+    }
+
+    public String getGuardianOfficeAddress() {
+        return guardianOfficeAddress;
+    }
+
+    public void setGuardianOfficeAddress(String guardianOfficeAddress) {
+        this.guardianOfficeAddress = guardianOfficeAddress;
+    }
+
+    public String getGuardianOfficeCellNumber() {
+        return guardianOfficeCellNumber;
+    }
+
+    public void setGuardianOfficeCellNumber(String guardianOfficeCellNumber) {
+        this.guardianOfficeCellNumber = guardianOfficeCellNumber;
+    }
+
+    public String getGuardianOfficeLandLinePhoneNumber() {
+        return guardianOfficeLandLinePhoneNumber;
+    }
+
+    public void setGuardianOfficeLandLinePhoneNumber(String guardianOfficeLandLinePhoneNumber) {
+        this.guardianOfficeLandLinePhoneNumber = guardianOfficeLandLinePhoneNumber;
+    }
+
+    public String getGuardianImagePath() {
+        return guardianImagePath;
+    }
+
+    public void setGuardianImagePath(String guardianImagePath) {
+        this.guardianImagePath = guardianImagePath;
+    }
+
+    public String getIsGuardianSponsorAgency() {
+        return isGuardianSponsorAgency;
+    }
+
+    public void setIsGuardianSponsorAgency(String isGuardianSponsorAgency) {
+        this.isGuardianSponsorAgency = isGuardianSponsorAgency;
+    }
+
+    public String getSponsorAgencyName() {
+        return sponsorAgencyName;
+    }
+
+    public void setSponsorAgencyName(String sponsorAgencyName) {
+        this.sponsorAgencyName = sponsorAgencyName;
+    }
+
+    public String getSponsorAgencyRegistrationNo() {
+        return sponsorAgencyRegistrationNo;
+    }
+
+    public void setSponsorAgencyRegistrationNo(String sponsorAgencyRegistrationNo) {
+        this.sponsorAgencyRegistrationNo = sponsorAgencyRegistrationNo;
+    }
+
+    public String getSponsorAgencyAddress() {
+        return sponsorAgencyAddress;
+    }
+
+    public void setSponsorAgencyAddress(String sponsorAgencyAddress) {
+        this.sponsorAgencyAddress = sponsorAgencyAddress;
+    }
+
+    public String getSponsorAgencyCellNumber() {
+        return sponsorAgencyCellNumber;
+    }
+
+    public void setSponsorAgencyCellNumber(String sponsorAgencyCellNumber) {
+        this.sponsorAgencyCellNumber = sponsorAgencyCellNumber;
+    }
+
+    public String getSponsorAgencyLandLineNumber() {
+        return sponsorAgencyLandLineNumber;
+    }
+
+    public void setSponsorAgencyLandLineNumber(String sponsorAgencyLandLineNumber) {
+        this.sponsorAgencyLandLineNumber = sponsorAgencyLandLineNumber;
+    }
+
+    public String getSponsorAgencyEmailId() {
+        return sponsorAgencyEmailId;
+    }
+
+    public void setSponsorAgencyEmailId(String sponsorAgencyEmailId) {
+        this.sponsorAgencyEmailId = sponsorAgencyEmailId;
+    }
+
+    public String getSponsorAgencyAppointeeName() {
+        return sponsorAgencyAppointeeName;
+    }
+
+    public void setSponsorAgencyAppointeeName(String sponsorAgencyAppointeeName) {
+        this.sponsorAgencyAppointeeName = sponsorAgencyAppointeeName;
+    }
+
+    public String getSponsorAgencyAppointeeDesignation() {
+        return sponsorAgencyAppointeeDesignation;
+    }
+
+    public void setSponsorAgencyAppointeeDesignation(String sponsorAgencyAppointeeDesignation) {
+        this.sponsorAgencyAppointeeDesignation = sponsorAgencyAppointeeDesignation;
+    }
+
+    public String getSponsorAgencyAppointeeCellNumber() {
+        return sponsorAgencyAppointeeCellNumber;
+    }
+
+    public void setSponsorAgencyAppointeeCellNumber(String sponsorAgencyAppointeeCellNumber) {
+        this.sponsorAgencyAppointeeCellNumber = sponsorAgencyAppointeeCellNumber;
+    }
+
+    public String getSponsorAgencyAppointeeLandLineNumber() {
+        return sponsorAgencyAppointeeLandLineNumber;
+    }
+
+    public void setSponsorAgencyAppointeeLandLineNumber(String sponsorAgencyAppointeeLandLineNumber) {
+        this.sponsorAgencyAppointeeLandLineNumber = sponsorAgencyAppointeeLandLineNumber;
+    }
+
+    public String getSponsorAgencyAppointeeEmailId() {
+        return sponsorAgencyAppointeeEmailId;
+    }
+
+    public void setSponsorAgencyAppointeeEmailId(String sponsorAgencyAppointeeEmailId) {
+        this.sponsorAgencyAppointeeEmailId = sponsorAgencyAppointeeEmailId;
+    }
+
+    public String getSponsorAgencyAppointeeOfficeAddress() {
+        return sponsorAgencyAppointeeOfficeAddress;
+    }
+
+    public void setSponsorAgencyAppointeeOfficeAddress(String sponsorAgencyAppointeeOfficeAddress) {
+        this.sponsorAgencyAppointeeOfficeAddress = sponsorAgencyAppointeeOfficeAddress;
+    }
+
+    public String getIsPhysicallyChallenged() {
+        return isPhysicallyChallenged;
+    }
+
+    public void setIsPhysicallyChallenged(String isPhysicallyChallenged) {
+        this.isPhysicallyChallenged = isPhysicallyChallenged;
+    }
+
+    public String getDetailsOfDisability() {
+        return detailsOfDisability;
+    }
+
+    public void setDetailsOfDisability(String detailsOfDisability) {
+        this.detailsOfDisability = detailsOfDisability;
+    }
+
+    public String getDisabilityCertificateNo() {
+        return disabilityCertificateNo;
+    }
+
+    public void setDisabilityCertificateNo(String disabilityCertificateNo) {
+        this.disabilityCertificateNo = disabilityCertificateNo;
+    }
+
+    public String getDisabilityCertificateIssueAuthority() {
+        return disabilityCertificateIssueAuthority;
+    }
+
+    public void setDisabilityCertificateIssueAuthority(String disabilityCertificateIssueAuthority) {
+        this.disabilityCertificateIssueAuthority = disabilityCertificateIssueAuthority;
+    }
+
+    public LocalDate getDisabilityCertificateIssueDate() {
+        return disabilityCertificateIssueDate;
+    }
+
+    public void setDisabilityCertificateIssueDate(LocalDate disabilityCertificateIssueDate) {
+        this.disabilityCertificateIssueDate = disabilityCertificateIssueDate;
+    }
+
+    public Integer getPercentagOfDisability() {
+        return percentagOfDisability;
+    }
+
+    public void setPercentagOfDisability(Integer percentagOfDisability) {
+        this.percentagOfDisability = percentagOfDisability;
+    }
+
+    public Bloodgroup getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(Bloodgroup bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public String getVaccinationDetails() {
+        return vaccinationDetails;
+    }
+
+    public void setVaccinationDetails(String vaccinationDetails) {
+        this.vaccinationDetails = vaccinationDetails;
+    }
+
+    public String getOtherMedicalDetails() {
+        return otherMedicalDetails;
+    }
+
+    public void setOtherMedicalDetails(String otherMedicalDetails) {
+        this.otherMedicalDetails = otherMedicalDetails;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDate getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDate createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public LocalDate getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(LocalDate updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public Long getDepartmentId() {
@@ -525,7 +1280,13 @@ public class StudentDTO implements Serializable {
             ", motherName='" + getMotherName() + "'" +
             ", motherMiddleName='" + getMotherMiddleName() + "'" +
             ", motherLastName='" + getMotherLastName() + "'" +
-            ", aadharNo=" + getAadharNo() +
+            ", studentAadharNo='" + getStudentAadharNo() + "'" +
+            ", studentPanNo='" + getStudentPanNo() + "'" +
+            ", studentSocialSecurityNo='" + getStudentSocialSecurityNo() + "'" +
+            ", studentTaxReferenceNo='" + getStudentTaxReferenceNo() + "'" +
+            ", studentBplNo='" + getStudentBplNo() + "'" +
+            ", studentDrivingLicenseNo='" + getStudentDrivingLicenseNo() + "'" +
+            ", studentPassportNo='" + getStudentPassportNo() + "'" +
             ", dateOfBirth='" + getDateOfBirth() + "'" +
             ", placeOfBirth='" + getPlaceOfBirth() + "'" +
             ", religion='" + getReligion() + "'" +
@@ -533,28 +1294,100 @@ public class StudentDTO implements Serializable {
             ", subCaste='" + getSubCaste() + "'" +
             ", age=" + getAge() +
             ", sex='" + getSex() + "'" +
-            ", bloodGroup='" + getBloodGroup() + "'" +
-            ", addressLineOne='" + getAddressLineOne() + "'" +
-            ", addressLineTwo='" + getAddressLineTwo() + "'" +
-            ", addressLineThree='" + getAddressLineThree() + "'" +
-            ", town='" + getTown() + "'" +
+            ", studentLocalAddress='" + getStudentLocalAddress() + "'" +
+            ", studentPermanentAddress='" + getStudentPermanentAddress() + "'" +
+            ", city='" + getCity() + "'" +
             ", state='" + getState() + "'" +
             ", country='" + getCountry() + "'" +
-            ", pincode=" + getPincode() +
-            ", studentContactNumber='" + getStudentContactNumber() + "'" +
-            ", alternateContactNumber='" + getAlternateContactNumber() + "'" +
-            ", studentEmailAddress='" + getStudentEmailAddress() + "'" +
-            ", alternateEmailAddress='" + getAlternateEmailAddress() + "'" +
+            ", pinCode='" + getPinCode() + "'" +
+            ", studentPrimaryCellNumber='" + getStudentPrimaryCellNumber() + "'" +
+            ", studentAlternateCellNumber='" + getStudentAlternateCellNumber() + "'" +
+            ", studentLandLinePhoneNumber='" + getStudentLandLinePhoneNumber() + "'" +
+            ", studentPrimaryEmailId='" + getStudentPrimaryEmailId() + "'" +
+            ", studentAlternateEmailId='" + getStudentAlternateEmailId() + "'" +
             ", relationWithStudent='" + getRelationWithStudent() + "'" +
             ", emergencyContactName='" + getEmergencyContactName() + "'" +
             ", emergencyContactMiddleName='" + getEmergencyContactMiddleName() + "'" +
             ", emergencyContactLastName='" + getEmergencyContactLastName() + "'" +
-            ", emergencyContactNo='" + getEmergencyContactNo() + "'" +
-            ", emergencyContactEmailAddress='" + getEmergencyContactEmailAddress() + "'" +
-            ", uploadPhoto='" + getUploadPhoto() + "'" +
-            ", admissionNo=" + getAdmissionNo() +
+            ", emergencyContactCellNumber='" + getEmergencyContactCellNumber() + "'" +
+            ", emergencyContactLandLinePhoneNumber='" + getEmergencyContactLandLinePhoneNumber() + "'" +
+            ", emergencyContactEmailId='" + getEmergencyContactEmailId() + "'" +
+            ", studentImagePath='" + getStudentImagePath() + "'" +
+            ", admissionNo='" + getAdmissionNo() + "'" +
+            ", enrollmentNo='" + getEnrollmentNo() + "'" +
             ", rollNo='" + getRollNo() + "'" +
             ", studentType='" + getStudentType() + "'" +
+            ", fatherCellNumber='" + getFatherCellNumber() + "'" +
+            ", fatherEmailId='" + getFatherEmailId() + "'" +
+            ", fatherOccupation='" + getFatherOccupation() + "'" +
+            ", fatherOfficeEmailId='" + getFatherOfficeEmailId() + "'" +
+            ", fatherOfficeAddress='" + getFatherOfficeAddress() + "'" +
+            ", fatherOfficeCellNumber='" + getFatherOfficeCellNumber() + "'" +
+            ", fatherOfficeLandLinePhoneNumber='" + getFatherOfficeLandLinePhoneNumber() + "'" +
+            ", fatherAadharNo='" + getFatherAadharNo() + "'" +
+            ", fatherPanNo='" + getFatherPanNo() + "'" +
+            ", fatherSocialSecurityNo='" + getFatherSocialSecurityNo() + "'" +
+            ", fatherTaxReferenceNo='" + getFatherTaxReferenceNo() + "'" +
+            ", fatherBplNo='" + getFatherBplNo() + "'" +
+            ", fatherDrivingLicenseNo='" + getFatherDrivingLicenseNo() + "'" +
+            ", fatherPassportNo='" + getFatherPassportNo() + "'" +
+            ", fatherImagePath='" + getFatherImagePath() + "'" +
+            ", motherCellNumber='" + getMotherCellNumber() + "'" +
+            ", motherEmailId='" + getMotherEmailId() + "'" +
+            ", motherOccupation='" + getMotherOccupation() + "'" +
+            ", motherOfficeEmailId='" + getMotherOfficeEmailId() + "'" +
+            ", motherOfficeAddress='" + getMotherOfficeAddress() + "'" +
+            ", motherOfficeCellNumber='" + getMotherOfficeCellNumber() + "'" +
+            ", motherOfficeLandLinePhoneNumber='" + getMotherOfficeLandLinePhoneNumber() + "'" +
+            ", motherAadharNo='" + getMotherAadharNo() + "'" +
+            ", motherPanNo='" + getMotherPanNo() + "'" +
+            ", motherSocialSecurityNo='" + getMotherSocialSecurityNo() + "'" +
+            ", motherTaxReferenceNo='" + getMotherTaxReferenceNo() + "'" +
+            ", motherBplNo='" + getMotherBplNo() + "'" +
+            ", motherDrivingLicenseNo='" + getMotherDrivingLicenseNo() + "'" +
+            ", motherPassportNo='" + getMotherPassportNo() + "'" +
+            ", motherImagePath='" + getMotherImagePath() + "'" +
+            ", guardianName='" + getGuardianName() + "'" +
+            ", guardianMiddleName='" + getGuardianMiddleName() + "'" +
+            ", guardianLastName='" + getGuardianLastName() + "'" +
+            ", guardianAddress='" + getGuardianAddress() + "'" +
+            ", guardianCellNumber='" + getGuardianCellNumber() + "'" +
+            ", guardianLandLinePhoneNumber='" + getGuardianLandLinePhoneNumber() + "'" +
+            ", guardianEmailId='" + getGuardianEmailId() + "'" +
+            ", guardianOccupation='" + getGuardianOccupation() + "'" +
+            ", guardianOfficeEmailId='" + getGuardianOfficeEmailId() + "'" +
+            ", guardianOfficeAddress='" + getGuardianOfficeAddress() + "'" +
+            ", guardianOfficeCellNumber='" + getGuardianOfficeCellNumber() + "'" +
+            ", guardianOfficeLandLinePhoneNumber='" + getGuardianOfficeLandLinePhoneNumber() + "'" +
+            ", guardianImagePath='" + getGuardianImagePath() + "'" +
+            ", isGuardianSponsorAgency='" + getIsGuardianSponsorAgency() + "'" +
+            ", sponsorAgencyName='" + getSponsorAgencyName() + "'" +
+            ", sponsorAgencyRegistrationNo='" + getSponsorAgencyRegistrationNo() + "'" +
+            ", sponsorAgencyAddress='" + getSponsorAgencyAddress() + "'" +
+            ", sponsorAgencyCellNumber='" + getSponsorAgencyCellNumber() + "'" +
+            ", sponsorAgencyLandLineNumber='" + getSponsorAgencyLandLineNumber() + "'" +
+            ", sponsorAgencyEmailId='" + getSponsorAgencyEmailId() + "'" +
+            ", sponsorAgencyAppointeeName='" + getSponsorAgencyAppointeeName() + "'" +
+            ", sponsorAgencyAppointeeDesignation='" + getSponsorAgencyAppointeeDesignation() + "'" +
+            ", sponsorAgencyAppointeeCellNumber='" + getSponsorAgencyAppointeeCellNumber() + "'" +
+            ", sponsorAgencyAppointeeLandLineNumber='" + getSponsorAgencyAppointeeLandLineNumber() + "'" +
+            ", sponsorAgencyAppointeeEmailId='" + getSponsorAgencyAppointeeEmailId() + "'" +
+            ", sponsorAgencyAppointeeOfficeAddress='" + getSponsorAgencyAppointeeOfficeAddress() + "'" +
+            ", isPhysicallyChallenged='" + getIsPhysicallyChallenged() + "'" +
+            ", detailsOfDisability='" + getDetailsOfDisability() + "'" +
+            ", disabilityCertificateNo='" + getDisabilityCertificateNo() + "'" +
+            ", disabilityCertificateIssueAuthority='" + getDisabilityCertificateIssueAuthority() + "'" +
+            ", disabilityCertificateIssueDate='" + getDisabilityCertificateIssueDate() + "'" +
+            ", percentagOfDisability=" + getPercentagOfDisability() +
+            ", bloodGroup='" + getBloodGroup() + "'" +
+            ", vaccinationDetails='" + getVaccinationDetails() + "'" +
+            ", otherMedicalDetails='" + getOtherMedicalDetails() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", createdBy='" + getCreatedBy() + "'" +
+            ", createdOn='" + getCreatedOn() + "'" +
+            ", updatedBy='" + getUpdatedBy() + "'" +
+            ", updatedOn='" + getUpdatedOn() + "'" +
+            ", comments='" + getComments() + "'" +
             ", department=" + getDepartmentId() +
             ", batch=" + getBatchId() +
             ", section=" + getSectionId() +

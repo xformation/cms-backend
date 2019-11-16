@@ -1,5 +1,7 @@
 package com.synectiks.cms.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
 
 import java.io.Serializable;
@@ -7,11 +9,13 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class CmsAcademicExamSettingVo implements Serializable {
+	private static final long serialVersionUID = -2547366689482152312L;
 
-    private Long id;
+	private Long id;
     private String examType;
     private SemesterEnum semester;
     private String subject;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate examDate;
     private String day;
     private String duration;

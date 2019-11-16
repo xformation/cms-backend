@@ -2,6 +2,9 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,6 +47,7 @@ public class CmsStudentVo implements Serializable {
     private String motherMiddleName;
     private String motherLastName;
     private Long aadharNo;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfBirth;
     private String placeOfBirth;
     private Religion religion;

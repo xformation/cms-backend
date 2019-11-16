@@ -3,6 +3,7 @@ package com.synectiks.cms.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,7 +100,9 @@ public class AcademicYearRestController {
         if (cmsAcademicYearVo.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
+//        AcademicYear ay = CommonUtil.createCopyProperties(cmsAcademicYearVo, AcademicYear.class);
+        AcademicYear ay = this.academicYearRepository.findById(cmsAcademicYearVo.getId()).get();
+          
 //        String stDt[] = cmsAcademicYearVo.getStrStartDate().split("/");
 //        String ndDt[] = cmsAcademicYearVo.getStrEndDate().split("/");
 //        if(stDt[0].length() == 1) {
@@ -114,6 +117,8 @@ public class AcademicYearRestController {
 //        if(ndDt[1].length() == 1) {
 //        	ndDt[1] = "0"+ndDt[1];
 //        }
+        ay.setYear(cmsAcademicYearVo.getYear());
+        ay.setStatus(cmsAcademicYearVo.getStatus());
         ay.setStartDate(DateFormatUtil.getLocalDateFromString(cmsAcademicYearVo.getStrStartDate()));
         ay.setEndDate(DateFormatUtil.getLocalDateFromString(cmsAcademicYearVo.getStrEndDate()));
         
@@ -121,12 +126,13 @@ public class AcademicYearRestController {
 //        ay.setEndDate(DateFormatUtil.convertStringToLocalDate(ndDt[0]+"/"+ndDt[1]+"/"+ndDt[2], "MM/dd/yyyy"));
         
         ay = academicYearRepository.save(ay);
-        cmsAcademicYearVo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        cmsAcademicYearVo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+        vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
         
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsAcademicYearVo.getId().toString()))
-            .body(cmsAcademicYearVo);
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, vo.getId().toString()))
+            .body(vo);
     }
 
     /**
@@ -146,6 +152,7 @@ public class AcademicYearRestController {
             cay.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
             ls.add(cay);
         }
+        Collections.sort(ls, (o1, o2) -> o1.getId().compareTo(o2.getId()));
         return ls;
     }
 

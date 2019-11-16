@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,7 +18,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.service.util.DateFormatUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -35,6 +35,7 @@ import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.ExceptionRecord;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.MetaLecture;
@@ -47,10 +48,14 @@ import com.synectiks.cms.domain.Term;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleVo;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.ExceptionRecordRepository;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.MetaLectureRepository;
+import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
 import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 @Component
 public class LectureService {
@@ -69,6 +74,14 @@ public class LectureService {
     @Autowired
     private CommonService commonService;
 
+    @Autowired
+    private TeachRepository teachRepository;
+
+    @Autowired
+    private BatchRepository batchRepository;
+    
+    @Autowired
+    private ExceptionRecordRepository exceptionRecordRepository;
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     private static final String MONDAY = "MONDAY";
@@ -201,7 +214,7 @@ public class LectureService {
     }
 
     @Transactional(propagation=Propagation.REQUIRED)
-    public QueryResult addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter, Optional<AcademicYear> oay) throws JSONException, ParseException {
+    public List<CmsLectureVo> addLectureSchedule(LectureScheduleInput lectureScheduleInput, LectureScheduleFilter filter, Optional<AcademicYear> oay) throws JSONException, ParseException {
         QueryResult res = new QueryResult();
         res.setStatusCode(0);
         res.setStatusDesc("Records inserted successfully.");
@@ -226,25 +239,27 @@ public class LectureService {
         String[] values = lectureScheduleInput.getValues();
         this.bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
         this.sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+        List<CmsLectureVo> lsList = new ArrayList<>();
         try {
-            createLectureSchedule(mondayList, values, MONDAY, filter);
-            createLectureSchedule(tuesdayList, values, TUESDAY, filter);
-            createLectureSchedule(wednesdayList, values, WEDNESDAY, filter);
-            createLectureSchedule(thursdayList, values, THURSDAY, filter);
-            createLectureSchedule(fridayList, values, FRIDAY, filter);
-            createLectureSchedule(saturdayList, values, SATURDAY, filter);
+        	lsList.addAll(createLectureSchedule(mondayList, values, MONDAY, filter));
+        	lsList.addAll(createLectureSchedule(tuesdayList, values, TUESDAY, filter));
+        	lsList.addAll(createLectureSchedule(wednesdayList, values, WEDNESDAY, filter));
+        	lsList.addAll(createLectureSchedule(thursdayList, values, THURSDAY, filter));
+        	lsList.addAll(createLectureSchedule(fridayList, values, FRIDAY, filter));
+        	lsList.addAll(createLectureSchedule(saturdayList, values, SATURDAY, filter));
         }catch(Exception e) {
             logger.error("Exception. There is some error in inserting lecture records. ",e);
             res.setStatusCode(1);
             res.setStatusDesc("There is some error in inserting lecture records.");
         }
-        return res;
+        return lsList;
     }
 
-    public void createLectureSchedule(List<Date> dataList, String[] values, String dayName, LectureScheduleFilter filter)
+    public List<CmsLectureVo> createLectureSchedule(List<Date> dataList, String[] values, String dayName, LectureScheduleFilter filter)
         throws ParseException {
         logger.debug(String.format("Inserting records for %s.",dayName));
 
+        List<CmsLectureVo> lsList = new ArrayList<>();
 //		Batch bth = commonService.getBatchById(Long.valueOf(filter.getBatchId()));
 //		Section sec = commonService.getSectionById(Long.valueOf(filter.getSectionId()));
 
@@ -286,15 +301,32 @@ public class LectureService {
                     lecture.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(getDate(dt)));
                     lecture.setStartTime(jsonObj.getString("startTime"));
                     lecture.setEndTime(jsonObj.getString("endTime"));
-                    lecture.setLastUpdatedBy(getLoggedInUser());
-                    lecture.setLastUpdatedOn(LocalDate.now());
-                    this.lectureRepository.save(lecture);
+                    
+                    if(!this.lectureRepository.exists(Example.of(lecture))) {
+                    	lecture.setLastUpdatedBy(getLoggedInUser());
+                        lecture.setLastUpdatedOn(LocalDate.now());
+                        lecture = this.lectureRepository.save(lecture);
+                        
+                        CmsLectureVo vo = CommonUtil.createCopyProperties(lecture, CmsLectureVo.class);
+            			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(lecture.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            			lsList.add(vo);
+                    }else {
+                    	logger.warn("Lecture already exists. Discarding it. Lecture : "+lecture);
+                    	ExceptionRecord er = new ExceptionRecord();
+                    	er.setExceptionDate(LocalDate.now());
+                    	er.setExceptionSource("EMS Application. api/cmslectures rest api. addLectures() method");
+                    	er.setExceptionType("DuplicateRecordFoundException");
+                    	er.setExceptionRecord(lecture.toString().length() > 255 ? lecture.toString().substring(0, 250) : lecture.toString());
+                    	this.exceptionRecordRepository.save(er);
+                    }
+        			
 //					insertLecture(dt, jsonObj, filter);
                 }
             }
         }
 //		this.map.remove("Teach");
 //		this.map.remove("AttendanceMaster");
+        return lsList;
     }
 
     public void createLectureSchedule(Date dt, String[] values, String dayName, LectureScheduleFilter filter)
@@ -526,7 +558,177 @@ public class LectureService {
         return list;
     }
 
-
-
+    public List<CmsLectureVo> getAllLecturess(Long ayId, Long brId, Long dpId, Long trId, Long btId, Long scId, Long sbId, Long thId, LocalDate fromLecDate, LocalDate toLecDate){
+    	logger.info("Getting scheduled lectures data:");
+    	List<CmsLectureVo> ls = new ArrayList<>();
+    	
+    	AcademicYear ay = this.commonService.getAcademicYearById(ayId);
+    	Branch branch = this.commonService.getBranchById(brId);
+    	Department department = this.commonService.getDepartmentById(dpId);
+    	Term term = this.commonService.getTermById(trId);
+    	Batch batch = this.commonService.getBatchById(btId);
+    	Section section = this.commonService.getSectionById(scId);
+    	Subject subject = this.commonService.getSubjectById(sbId);
+    	Teacher teacher = this.commonService.getTeacherById(thId);
+    	
+//    	Query query = null;
+//		if(batch != null) {
+//			query = this.entityManager.createQuery("select a from Batch a where a.id = :btid and a.department = :dp ");
+//			query.setParameter("btid", btId);
+//			query.setParameter("dp", department);
+//		}else {
+//			query = this.entityManager.createQuery("select a from Batch a where a.department = :dp ");
+//			query.setParameter("dp", department);
+//		}
+//		@SuppressWarnings("unchecked")
+//		List<Batch> batchList = query.getResultList();
+    	List<Batch> batchList = new ArrayList<>();
+    	if(batch != null) {
+    		batchList.add(batch);
+    	}else {
+    		Batch bth = new Batch();
+    		bth.setDepartment(department);
+    		batchList = this.batchRepository.findAll(Example.of(bth));
+    	}
+    	
+    	Teach teach = new Teach(); //(teacher != null && subject != null) ? this.commonService.getTeachBySubjectAndTeacherId(teacher.getId(), subject.getId()) : null;
+    	if(teacher != null) {
+			teach.setTeacher(teacher);
+		}
+    	if(subject != null) {
+			teach.setSubject(subject);
+		}
+    	if(teacher == null && subject == null) {
+    		logger.debug("Both teacher and subject are null");
+    		Subject sub = new Subject();
+    		Teacher thr = new Teacher();
+    		sub.setDepartment(department);
+    		thr.setDepartment(department);
+    		teach.setSubject(sub);
+    		teach.setTeacher(thr);
+    	}
+    	List<Teach> teachList = this.teachRepository.findAll(Example.of(teach));
+		
+    	if(batchList.size() == 0) {
+    		Batch b = new Batch();
+    		b.setId(0L);
+    		batchList.add(b);
+    	}
+    	if(teachList.size() ==0) {
+    		Teach t = new Teach();
+    		t.setId(0L);
+    		teachList.add(t);
+    	}
+//		List<Teach> teachList = null;
+//		if(teach.getSubject() == null && teach.getTeacher() == null) {
+//			query = null;
+//			query = this.entityManager.createQuery("select a from Subject a where a.department = :dp ");
+//			query.setParameter("dp", department);
+//			@SuppressWarnings("unchecked")
+//			List<Subject> subList = query.getResultList();
+//	    	
+//			query = null;
+//			query = this.entityManager.createQuery("select a from Teacher a where a.department = :dp ");
+//			query.setParameter("dp", department);
+//			@SuppressWarnings("unchecked")
+//			List<Teacher> thrList = query.getResultList();
+//	    	
+//			query = null;
+//			query = this.entityManager.createQuery("select a from Teach a where a.subject in (:subLs) and a.teacher in (:thrLs)  ");
+//			query.setParameter("subLs", subList);
+//			query.setParameter("thrLs", thrList);
+//			@SuppressWarnings("unchecked")
+//			List<Teach> tList = query.getResultList();
+//			teachList = tList;
+//		}else {
+//			List<Teach> tList  = this.teachRepository.findAll(Example.of(teach));
+//			teachList = tList;
+//		}
+		
+    	Query query = null;
+    	if(section != null) {
+			logger.info("1. Section not null");
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach in (:th) and a.batch in (:bth)");
+			query.setParameter("sc", section);
+			query.setParameter("th", teachList);
+			query.setParameter("bth", batchList);
+		}else {
+			logger.info("2. Section is null");
+			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th) and a.batch in (:bth)");
+//			query.setParameter("sc", section);
+			query.setParameter("th", teachList);
+			query.setParameter("bth", batchList);
+		}
+//		if(section != null && teachList.size() > 0) {
+//			logger.info("1. Section not null, Teach list size > 0, size : "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.teach in (:th) and a.batch in (:bth)");
+//			query.setParameter("sc", section);
+//			query.setParameter("th", teachList);
+//			query.setParameter("bth", batchList);
+//		}else if(section != null && teachList.size() == 0) {
+//			logger.info("2. Section not null, Teach list size == 0, size: "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.section = :sc and a.batch in (:bth)");
+//			query.setParameter("sc", section);
+//			query.setParameter("bth", batchList);
+//		}else if(section == null && teachList.size() > 0) {
+//			logger.info("3. Section null, Teach list size > 0, size: "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th) and a.batch in (:bth)");
+//			query.setParameter("th", teachList);
+//			query.setParameter("bth", batchList);
+//		}else {
+//			logger.info("4. Section null, Teach list size == 0, size: "+teachList.size());
+//			query = this.entityManager.createQuery("select a from AttendanceMaster a where a.batch in (:bth)");
+//			query.setParameter("bth", batchList);
+//		}
+		
+		
+		@SuppressWarnings("unchecked")
+		List<AttendanceMaster> amList = query.getResultList();
+    	if(amList.size() == 0) {
+    		AttendanceMaster am = new AttendanceMaster();
+    		am.setId(0L);
+    		amList.add(am);
+    	}
+		query = null;
+		if(fromLecDate != null && toLecDate == null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate >= :lcdt and l.attendancemaster in (:amId) ");
+			query.setParameter("lcdt", fromLecDate);
+			query.setParameter("amId", amList);
+		}else if(fromLecDate == null && toLecDate != null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate <= :lcdt and l.attendancemaster in (:amId) ");
+			query.setParameter("lcdt", toLecDate);
+			query.setParameter("amId", amList);
+		}else if(fromLecDate != null && toLecDate != null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
+			query.setParameter("startDate", fromLecDate);
+			query.setParameter("endDate", toLecDate);
+			query.setParameter("amId", amList);
+		}else if(term != null) {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
+			query.setParameter("startDate", term.getStartDate());
+			query.setParameter("endDate", term.getEndDate());
+			query.setParameter("amId", amList);
+		}else {
+			query = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ");
+			query.setParameter("startDate", ay.getStartDate());
+			query.setParameter("endDate", ay.getEndDate());
+			query.setParameter("amId", amList);
+		}
+    	
+		@SuppressWarnings("unchecked")
+		List<Lecture> list = query.getResultList();
+		
+		for(Lecture l: list) {
+			CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
+			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+			ls.add(vo);
+		}
+    	
+		Collections.sort(ls, (o1, o2) -> o1.getLecDate().compareTo(o2.getLecDate()));
+    	logger.debug("Total lectures scheduled today for teacher : "+ls.size());
+    	return ls;
+    }
+    
+    
 }
 

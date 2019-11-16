@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.synectiks.cms.business.service.AcademicSubjectService;
 import com.synectiks.cms.domain.CmsSubjectVo;
 import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.SubjectRepository;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
@@ -69,24 +70,24 @@ public class SubjectRestController {
 
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/cmssubjects")
-    public ResponseEntity<CmsSubjectVo> createSubject(@RequestBody CmsSubjectVo cmsSubjectvo) throws URISyntaxException {
+    public ResponseEntity<CmsSubjectVo> createSubject(@RequestBody CmsSubjectVo cmsSubjectvo, @RequestParam Map<String, String> dataMap) throws URISyntaxException {
         logger.debug("REST request to save a subject : {}", cmsSubjectvo);
         if (cmsSubjectvo.getId() != null) {
             throw new BadRequestAlertException("A new subject cannot have an ID which already exists", ENTITY_NAME, "idexists");
         }
-        cmsSubjectvo = this.academicSubjectService.createSubject(cmsSubjectvo);
-        return ResponseEntity.created(new URI("/api/subjects/" + cmsSubjectvo.getId()))
+        cmsSubjectvo = this.academicSubjectService.createSubject(cmsSubjectvo, dataMap);
+        return ResponseEntity.created(new URI("/api/cmssubjects/" + cmsSubjectvo.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, cmsSubjectvo.getId().toString()))
             .body(cmsSubjectvo);
     }
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/cmssubjects")
-    public ResponseEntity<CmsSubjectVo> updateSubject(@RequestBody CmsSubjectVo cmsSubjectvo) throws URISyntaxException {
+    public ResponseEntity<CmsSubjectVo> updateSubject(@RequestBody CmsSubjectVo cmsSubjectvo, @RequestParam Map<String, String> dataMap) throws URISyntaxException {
         logger.debug("REST request to save a subject : {}", cmsSubjectvo);
         if (cmsSubjectvo.getId() == null) {
             throw new BadRequestAlertException("Invalid subject id", ENTITY_NAME, "idexists");
         }
-        cmsSubjectvo = this.academicSubjectService.updateSubject(cmsSubjectvo);
+        cmsSubjectvo = this.academicSubjectService.updateSubject(cmsSubjectvo, dataMap);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cmsSubjectvo.getId().toString()))
                 .body(cmsSubjectvo);
@@ -129,5 +130,32 @@ public class SubjectRestController {
     	return list;
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/cmssubjects-bydepartmentid")
+    public List<Subject> getSubjectsByDepartmentId(@RequestParam Map<String, String> dataMap) {
+    	Long departmentId =0L;
+    	if(dataMap.containsKey("departmentId")) {
+    		departmentId = Long.parseLong(dataMap.get("departmentId"));
+    	}else {
+    		logger.warn("Department id not provided. Returning empty subject list.");
+    		return Collections.emptyList();
+    	}
+    	logger.debug(String.format("Retrieving subject based on department id: %d ", departmentId));
+    	List<Subject> list = this.academicSubjectService.getSubjectList(departmentId);
+    	logger.debug(String.format("Totale subjects retrieved %d", list.size()));
+    	return list;
+    }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/cmssubjects-teacher-bydepartmentid")
+    public List<Teach> getSubjectsWithTeacher(@RequestParam Map<String, String> dataMap) {
+    	Long departmentId =0L;
+    	if(dataMap.containsKey("departmentId")) {
+    		departmentId = Long.parseLong(dataMap.get("departmentId"));
+    	}else {
+    		logger.warn("Department id not provided. Returning empty subject-teaher list.");
+    		return Collections.emptyList();
+    	}
+    	List<Teach> list = this.academicSubjectService.getAllSubjectsWithTeacher(departmentId);
+    	logger.debug(String.format("Totale subjects-teacher records %d", list.size()));
+    	return list;
+    }
 }

@@ -1,16 +1,19 @@
 package com.synectiks.cms.domain;
 
-import com.synectiks.cms.domain.enumeration.Status;
-
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.synectiks.cms.domain.enumeration.Status;
 
 public class CmsTermVo {
 
     private Long id;
     private String termsDesc;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate startDate;
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate endDate;
     private Status termStatus;
     private AcademicYear academicyear;
