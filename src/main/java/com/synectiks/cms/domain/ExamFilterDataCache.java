@@ -43,6 +43,7 @@ public class ExamFilterDataCache {
         this.semesters = semesters;
     }
 
+
     public List<Branch> getBranches() {
         return branches;
     }

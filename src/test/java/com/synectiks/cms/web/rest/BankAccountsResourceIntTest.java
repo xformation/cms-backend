@@ -50,8 +50,8 @@ public class BankAccountsResourceIntTest {
     private static final NameOfBank DEFAULT_NAME_OF_BANK = NameOfBank.HDFC;
     private static final NameOfBank UPDATED_NAME_OF_BANK = NameOfBank.SBI;
 
-    private static final String DEFAULT_ACCOUNT_NUMBER = "123";
-    private static final String UPDATED_ACCOUNT_NUMBER = "456";
+    private static final String DEFAULT_ACCOUNT_NUMBER = "1";
+    private static final String UPDATED_ACCOUNT_NUMBER = "1";
 
     private static final String DEFAULT_TYPE_OF_ACCOUNT = "AAAAAAAAAA";
     private static final String UPDATED_TYPE_OF_ACCOUNT = "BBBBBBBBBB";
@@ -298,7 +298,7 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(bankAccounts.getId().intValue())))
             .andExpect(jsonPath("$.[*].nameOfBank").value(hasItem(DEFAULT_NAME_OF_BANK.toString())))
             .andExpect(jsonPath("$.[*].accountNumber").value(hasItem(DEFAULT_ACCOUNT_NUMBER)))
-            .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT.toString())))
+            .andExpect(jsonPath("$.[*].typeOfAccount").value(hasItem(DEFAULT_TYPE_OF_ACCOUNT)))
             .andExpect(jsonPath("$.[*].ifscCode").value(hasItem(DEFAULT_IFSC_CODE.toString())))
             .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].corporateId").value(hasItem(DEFAULT_CORPORATE_ID)));
@@ -317,7 +317,7 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.id").value(bankAccounts.getId().intValue()))
             .andExpect(jsonPath("$.nameOfBank").value(DEFAULT_NAME_OF_BANK.toString()))
             .andExpect(jsonPath("$.accountNumber").value(DEFAULT_ACCOUNT_NUMBER))
-            .andExpect(jsonPath("$.typeOfAccount").value(DEFAULT_TYPE_OF_ACCOUNT.toString()))
+            .andExpect(jsonPath("$.typeOfAccount").value(DEFAULT_TYPE_OF_ACCOUNT))
             .andExpect(jsonPath("$.ifscCode").value(DEFAULT_IFSC_CODE.toString()))
             .andExpect(jsonPath("$.branchAddress").value(DEFAULT_BRANCH_ADDRESS.toString()))
             .andExpect(jsonPath("$.corporateId").value(DEFAULT_CORPORATE_ID));

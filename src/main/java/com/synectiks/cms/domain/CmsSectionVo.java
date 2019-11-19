@@ -84,6 +84,14 @@ public class CmsSectionVo implements Serializable {
 		return "CmsSectionVo [id=" + id + ", section=" + section + ", batchId=" + batchId + ", batch=" + batch + "]";
 	}
 
+	public Batch getBatch() {
+		return batch;
+	}
+
+	public void setBatch(Batch batch) {
+		this.batch = batch;
+	}
+
 	public String getDescription() {
 		return description;
 	}

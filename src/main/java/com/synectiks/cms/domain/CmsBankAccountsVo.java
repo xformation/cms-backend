@@ -12,11 +12,11 @@ public class CmsBankAccountsVo implements Serializable {
 
     private Long id;
     private NameOfBank nameOfBank;
-    private Long accountNumber;
+    private String accountNumber;
     private String typeOfAccount;
     private String ifscCode;
     private String branchAddress;
-    private Integer corporateId;
+    private String corporateId;
     private Long branchId;
     private Long collegeId;
     private Branch branch;
@@ -38,11 +38,11 @@ public class CmsBankAccountsVo implements Serializable {
         this.nameOfBank = nameOfBank;
     }
 
-    public Long getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -70,11 +70,11 @@ public class CmsBankAccountsVo implements Serializable {
         this.branchAddress = branchAddress;
     }
 
-    public Integer getCorporateId() {
+    public String getCorporateId() {
         return corporateId;
     }
 
-    public void setCorporateId(Integer corporateId) {
+    public void setCorporateId(String corporateId) {
         this.corporateId = corporateId;
     }
 

@@ -1,6 +1,5 @@
 package com.synectiks.cms.domain;
 
-//import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -40,6 +39,7 @@ import com.synectiks.cms.utils.IESEntity;
 public class Student implements Serializable, IESEntity {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
 	@SequenceGenerator(name = "sequenceGenerator")
@@ -124,22 +124,18 @@ public class Student implements Serializable, IESEntity {
 	private String studentPermanentAddress;
 
 	@NotNull
-
 	@Column(name = "city", nullable = false)
 	private String city;
 
 	@NotNull
-
 	@Column(name = "state", nullable = false)
 	private String state;
 
 	@NotNull
-
 	@Column(name = "country", nullable = false)
 	private String country;
 
 	@NotNull
-
 	@Column(name = "pin_code", nullable = false)
 	private String pinCode;
 
@@ -418,31 +414,26 @@ public class Student implements Serializable, IESEntity {
 
 	@ManyToOne(optional = false)
 	@NotNull
-
 	@JsonIgnoreProperties("students")
 	private Department department;
 
 	@ManyToOne(optional = false)
 	@NotNull
-
 	@JsonIgnoreProperties("students")
 	private Batch batch;
 
 	@ManyToOne(optional = false)
 	@NotNull
-
 	@JsonIgnoreProperties("students")
 	private Section section;
 
 	@ManyToOne(optional = false)
 	@NotNull
-
 	@JsonIgnoreProperties("students")
 	private Branch branch;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
-
 	public Long getId() {
 		return id;
 	}
@@ -457,7 +448,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentName(String studentName) {
 		this.studentName = studentName;
-
 		return this;
 	}
 
@@ -471,7 +461,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentMiddleName(String studentMiddleName) {
 		this.studentMiddleName = studentMiddleName;
-
 		return this;
 	}
 
@@ -485,7 +474,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentLastName(String studentLastName) {
 		this.studentLastName = studentLastName;
-
 		return this;
 	}
 
@@ -499,7 +487,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherName(String fatherName) {
 		this.fatherName = fatherName;
-
 		return this;
 	}
 
@@ -513,7 +500,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherMiddleName(String fatherMiddleName) {
 		this.fatherMiddleName = fatherMiddleName;
-
 		return this;
 	}
 
@@ -527,7 +513,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherLastName(String fatherLastName) {
 		this.fatherLastName = fatherLastName;
-
 		return this;
 	}
 
@@ -541,7 +526,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherName(String motherName) {
 		this.motherName = motherName;
-
 		return this;
 	}
 
@@ -555,7 +539,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherMiddleName(String motherMiddleName) {
 		this.motherMiddleName = motherMiddleName;
-
 		return this;
 	}
 
@@ -569,7 +552,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherLastName(String motherLastName) {
 		this.motherLastName = motherLastName;
-
 		return this;
 	}
 
@@ -583,7 +565,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentAadharNo(String studentAadharNo) {
 		this.studentAadharNo = studentAadharNo;
-
 		return this;
 	}
 
@@ -597,7 +578,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentPanNo(String studentPanNo) {
 		this.studentPanNo = studentPanNo;
-
 		return this;
 	}
 
@@ -611,7 +591,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentSocialSecurityNo(String studentSocialSecurityNo) {
 		this.studentSocialSecurityNo = studentSocialSecurityNo;
-
 		return this;
 	}
 
@@ -625,7 +604,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentTaxReferenceNo(String studentTaxReferenceNo) {
 		this.studentTaxReferenceNo = studentTaxReferenceNo;
-
 		return this;
 	}
 
@@ -639,7 +617,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentBplNo(String studentBplNo) {
 		this.studentBplNo = studentBplNo;
-
 		return this;
 	}
 
@@ -653,7 +630,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentDrivingLicenseNo(String studentDrivingLicenseNo) {
 		this.studentDrivingLicenseNo = studentDrivingLicenseNo;
-
 		return this;
 	}
 
@@ -667,7 +643,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentPassportNo(String studentPassportNo) {
 		this.studentPassportNo = studentPassportNo;
-
 		return this;
 	}
 
@@ -681,7 +656,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student dateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
-
 		return this;
 	}
 
@@ -695,7 +669,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student placeOfBirth(String placeOfBirth) {
 		this.placeOfBirth = placeOfBirth;
-
 		return this;
 	}
 
@@ -709,7 +682,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student religion(Religion religion) {
 		this.religion = religion;
-
 		return this;
 	}
 
@@ -723,7 +695,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student caste(Caste caste) {
 		this.caste = caste;
-
 		return this;
 	}
 
@@ -737,7 +708,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student subCaste(String subCaste) {
 		this.subCaste = subCaste;
-
 		return this;
 	}
 
@@ -751,7 +721,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student age(Integer age) {
 		this.age = age;
-
 		return this;
 	}
 
@@ -765,7 +734,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sex(Gender sex) {
 		this.sex = sex;
-
 		return this;
 	}
 
@@ -779,7 +747,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentLocalAddress(String studentLocalAddress) {
 		this.studentLocalAddress = studentLocalAddress;
-
 		return this;
 	}
 
@@ -793,7 +760,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentPermanentAddress(String studentPermanentAddress) {
 		this.studentPermanentAddress = studentPermanentAddress;
-
 		return this;
 	}
 
@@ -807,7 +773,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student city(String city) {
 		this.city = city;
-
 		return this;
 	}
 
@@ -821,7 +786,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student state(String state) {
 		this.state = state;
-
 		return this;
 	}
 
@@ -835,7 +799,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student country(String country) {
 		this.country = country;
-
 		return this;
 	}
 
@@ -849,7 +812,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student pinCode(String pinCode) {
 		this.pinCode = pinCode;
-
 		return this;
 	}
 
@@ -863,7 +825,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentPrimaryCellNumber(String studentPrimaryCellNumber) {
 		this.studentPrimaryCellNumber = studentPrimaryCellNumber;
-
 		return this;
 	}
 
@@ -877,7 +838,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentAlternateCellNumber(String studentAlternateCellNumber) {
 		this.studentAlternateCellNumber = studentAlternateCellNumber;
-
 		return this;
 	}
 
@@ -891,7 +851,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentLandLinePhoneNumber(String studentLandLinePhoneNumber) {
 		this.studentLandLinePhoneNumber = studentLandLinePhoneNumber;
-
 		return this;
 	}
 
@@ -905,7 +864,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentPrimaryEmailId(String studentPrimaryEmailId) {
 		this.studentPrimaryEmailId = studentPrimaryEmailId;
-
 		return this;
 	}
 
@@ -919,7 +877,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentAlternateEmailId(String studentAlternateEmailId) {
 		this.studentAlternateEmailId = studentAlternateEmailId;
-
 		return this;
 	}
 
@@ -933,7 +890,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student relationWithStudent(RelationWithStudentEnum relationWithStudent) {
 		this.relationWithStudent = relationWithStudent;
-
 		return this;
 	}
 
@@ -947,7 +903,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student emergencyContactName(String emergencyContactName) {
 		this.emergencyContactName = emergencyContactName;
-
 		return this;
 	}
 
@@ -961,7 +916,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student emergencyContactMiddleName(String emergencyContactMiddleName) {
 		this.emergencyContactMiddleName = emergencyContactMiddleName;
-
 		return this;
 	}
 
@@ -975,7 +929,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student emergencyContactLastName(String emergencyContactLastName) {
 		this.emergencyContactLastName = emergencyContactLastName;
-
 		return this;
 	}
 
@@ -989,7 +942,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student emergencyContactCellNumber(String emergencyContactCellNumber) {
 		this.emergencyContactCellNumber = emergencyContactCellNumber;
-
 		return this;
 	}
 
@@ -1004,7 +956,6 @@ public class Student implements Serializable, IESEntity {
 	public Student emergencyContactLandLinePhoneNumber(
 			String emergencyContactLandLinePhoneNumber) {
 		this.emergencyContactLandLinePhoneNumber = emergencyContactLandLinePhoneNumber;
-
 		return this;
 	}
 
@@ -1019,7 +970,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student emergencyContactEmailId(String emergencyContactEmailId) {
 		this.emergencyContactEmailId = emergencyContactEmailId;
-
 		return this;
 	}
 
@@ -1033,7 +983,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentImagePath(String studentImagePath) {
 		this.studentImagePath = studentImagePath;
-
 		return this;
 	}
 
@@ -1047,7 +996,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student admissionNo(String admissionNo) {
 		this.admissionNo = admissionNo;
-
 		return this;
 	}
 
@@ -1061,7 +1009,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student enrollmentNo(String enrollmentNo) {
 		this.enrollmentNo = enrollmentNo;
-
 		return this;
 	}
 
@@ -1075,7 +1022,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student rollNo(String rollNo) {
 		this.rollNo = rollNo;
-
 		return this;
 	}
 
@@ -1089,7 +1035,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student studentType(StudentTypeEnum studentType) {
 		this.studentType = studentType;
-
 		return this;
 	}
 
@@ -1103,7 +1048,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherCellNumber(String fatherCellNumber) {
 		this.fatherCellNumber = fatherCellNumber;
-
 		return this;
 	}
 
@@ -1117,7 +1061,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherEmailId(String fatherEmailId) {
 		this.fatherEmailId = fatherEmailId;
-
 		return this;
 	}
 
@@ -1131,7 +1074,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherOccupation(String fatherOccupation) {
 		this.fatherOccupation = fatherOccupation;
-
 		return this;
 	}
 
@@ -1145,7 +1087,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherOfficeEmailId(String fatherOfficeEmailId) {
 		this.fatherOfficeEmailId = fatherOfficeEmailId;
-
 		return this;
 	}
 
@@ -1159,7 +1100,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherOfficeAddress(String fatherOfficeAddress) {
 		this.fatherOfficeAddress = fatherOfficeAddress;
-
 		return this;
 	}
 
@@ -1173,7 +1113,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherOfficeCellNumber(String fatherOfficeCellNumber) {
 		this.fatherOfficeCellNumber = fatherOfficeCellNumber;
-
 		return this;
 	}
 
@@ -1188,7 +1127,6 @@ public class Student implements Serializable, IESEntity {
 	public Student fatherOfficeLandLinePhoneNumber(
 			String fatherOfficeLandLinePhoneNumber) {
 		this.fatherOfficeLandLinePhoneNumber = fatherOfficeLandLinePhoneNumber;
-
 		return this;
 	}
 
@@ -1203,7 +1141,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherAadharNo(String fatherAadharNo) {
 		this.fatherAadharNo = fatherAadharNo;
-
 		return this;
 	}
 
@@ -1217,7 +1154,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherPanNo(String fatherPanNo) {
 		this.fatherPanNo = fatherPanNo;
-
 		return this;
 	}
 
@@ -1231,7 +1167,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherSocialSecurityNo(String fatherSocialSecurityNo) {
 		this.fatherSocialSecurityNo = fatherSocialSecurityNo;
-
 		return this;
 	}
 
@@ -1245,7 +1180,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherTaxReferenceNo(String fatherTaxReferenceNo) {
 		this.fatherTaxReferenceNo = fatherTaxReferenceNo;
-
 		return this;
 	}
 
@@ -1259,7 +1193,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherBplNo(String fatherBplNo) {
 		this.fatherBplNo = fatherBplNo;
-
 		return this;
 	}
 
@@ -1273,7 +1206,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherDrivingLicenseNo(String fatherDrivingLicenseNo) {
 		this.fatherDrivingLicenseNo = fatherDrivingLicenseNo;
-
 		return this;
 	}
 
@@ -1287,7 +1219,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherPassportNo(String fatherPassportNo) {
 		this.fatherPassportNo = fatherPassportNo;
-
 		return this;
 	}
 
@@ -1301,7 +1232,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student fatherImagePath(String fatherImagePath) {
 		this.fatherImagePath = fatherImagePath;
-
 		return this;
 	}
 
@@ -1315,7 +1245,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherCellNumber(String motherCellNumber) {
 		this.motherCellNumber = motherCellNumber;
-
 		return this;
 	}
 
@@ -1329,7 +1258,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherEmailId(String motherEmailId) {
 		this.motherEmailId = motherEmailId;
-
 		return this;
 	}
 
@@ -1343,7 +1271,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherOccupation(String motherOccupation) {
 		this.motherOccupation = motherOccupation;
-
 		return this;
 	}
 
@@ -1357,7 +1284,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherOfficeEmailId(String motherOfficeEmailId) {
 		this.motherOfficeEmailId = motherOfficeEmailId;
-
 		return this;
 	}
 
@@ -1371,7 +1297,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherOfficeAddress(String motherOfficeAddress) {
 		this.motherOfficeAddress = motherOfficeAddress;
-
 		return this;
 	}
 
@@ -1385,7 +1310,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherOfficeCellNumber(String motherOfficeCellNumber) {
 		this.motherOfficeCellNumber = motherOfficeCellNumber;
-
 		return this;
 	}
 
@@ -1400,7 +1324,6 @@ public class Student implements Serializable, IESEntity {
 	public Student motherOfficeLandLinePhoneNumber(
 			String motherOfficeLandLinePhoneNumber) {
 		this.motherOfficeLandLinePhoneNumber = motherOfficeLandLinePhoneNumber;
-
 		return this;
 	}
 
@@ -1415,7 +1338,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherAadharNo(String motherAadharNo) {
 		this.motherAadharNo = motherAadharNo;
-
 		return this;
 	}
 
@@ -1429,7 +1351,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherPanNo(String motherPanNo) {
 		this.motherPanNo = motherPanNo;
-
 		return this;
 	}
 
@@ -1443,7 +1364,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherSocialSecurityNo(String motherSocialSecurityNo) {
 		this.motherSocialSecurityNo = motherSocialSecurityNo;
-
 		return this;
 	}
 
@@ -1457,7 +1377,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherTaxReferenceNo(String motherTaxReferenceNo) {
 		this.motherTaxReferenceNo = motherTaxReferenceNo;
-
 		return this;
 	}
 
@@ -1471,7 +1390,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherBplNo(String motherBplNo) {
 		this.motherBplNo = motherBplNo;
-
 		return this;
 	}
 
@@ -1485,7 +1403,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherDrivingLicenseNo(String motherDrivingLicenseNo) {
 		this.motherDrivingLicenseNo = motherDrivingLicenseNo;
-
 		return this;
 	}
 
@@ -1499,7 +1416,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherPassportNo(String motherPassportNo) {
 		this.motherPassportNo = motherPassportNo;
-
 		return this;
 	}
 
@@ -1513,7 +1429,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student motherImagePath(String motherImagePath) {
 		this.motherImagePath = motherImagePath;
-
 		return this;
 	}
 
@@ -1527,7 +1442,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianName(String guardianName) {
 		this.guardianName = guardianName;
-
 		return this;
 	}
 
@@ -1541,7 +1455,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianMiddleName(String guardianMiddleName) {
 		this.guardianMiddleName = guardianMiddleName;
-
 		return this;
 	}
 
@@ -1555,7 +1468,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianLastName(String guardianLastName) {
 		this.guardianLastName = guardianLastName;
-
 		return this;
 	}
 
@@ -1569,7 +1481,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianAddress(String guardianAddress) {
 		this.guardianAddress = guardianAddress;
-
 		return this;
 	}
 
@@ -1583,7 +1494,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianCellNumber(String guardianCellNumber) {
 		this.guardianCellNumber = guardianCellNumber;
-
 		return this;
 	}
 
@@ -1597,7 +1507,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianLandLinePhoneNumber(String guardianLandLinePhoneNumber) {
 		this.guardianLandLinePhoneNumber = guardianLandLinePhoneNumber;
-
 		return this;
 	}
 
@@ -1611,7 +1520,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianEmailId(String guardianEmailId) {
 		this.guardianEmailId = guardianEmailId;
-
 		return this;
 	}
 
@@ -1625,7 +1533,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianOccupation(String guardianOccupation) {
 		this.guardianOccupation = guardianOccupation;
-
 		return this;
 	}
 
@@ -1639,7 +1546,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianOfficeEmailId(String guardianOfficeEmailId) {
 		this.guardianOfficeEmailId = guardianOfficeEmailId;
-
 		return this;
 	}
 
@@ -1653,7 +1559,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianOfficeAddress(String guardianOfficeAddress) {
 		this.guardianOfficeAddress = guardianOfficeAddress;
-
 		return this;
 	}
 
@@ -1667,7 +1572,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianOfficeCellNumber(String guardianOfficeCellNumber) {
 		this.guardianOfficeCellNumber = guardianOfficeCellNumber;
-
 		return this;
 	}
 
@@ -1682,7 +1586,6 @@ public class Student implements Serializable, IESEntity {
 	public Student guardianOfficeLandLinePhoneNumber(
 			String guardianOfficeLandLinePhoneNumber) {
 		this.guardianOfficeLandLinePhoneNumber = guardianOfficeLandLinePhoneNumber;
-
 		return this;
 	}
 
@@ -1697,7 +1600,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student guardianImagePath(String guardianImagePath) {
 		this.guardianImagePath = guardianImagePath;
-
 		return this;
 	}
 
@@ -1711,7 +1613,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student isGuardianSponsorAgency(String isGuardianSponsorAgency) {
 		this.isGuardianSponsorAgency = isGuardianSponsorAgency;
-
 		return this;
 	}
 
@@ -1725,7 +1626,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyName(String sponsorAgencyName) {
 		this.sponsorAgencyName = sponsorAgencyName;
-
 		return this;
 	}
 
@@ -1739,7 +1639,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyRegistrationNo(String sponsorAgencyRegistrationNo) {
 		this.sponsorAgencyRegistrationNo = sponsorAgencyRegistrationNo;
-
 		return this;
 	}
 
@@ -1753,7 +1652,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyAddress(String sponsorAgencyAddress) {
 		this.sponsorAgencyAddress = sponsorAgencyAddress;
-
 		return this;
 	}
 
@@ -1767,7 +1665,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyCellNumber(String sponsorAgencyCellNumber) {
 		this.sponsorAgencyCellNumber = sponsorAgencyCellNumber;
-
 		return this;
 	}
 
@@ -1781,7 +1678,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyLandLineNumber(String sponsorAgencyLandLineNumber) {
 		this.sponsorAgencyLandLineNumber = sponsorAgencyLandLineNumber;
-
 		return this;
 	}
 
@@ -1795,7 +1691,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyEmailId(String sponsorAgencyEmailId) {
 		this.sponsorAgencyEmailId = sponsorAgencyEmailId;
-
 		return this;
 	}
 
@@ -1809,7 +1704,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyAppointeeName(String sponsorAgencyAppointeeName) {
 		this.sponsorAgencyAppointeeName = sponsorAgencyAppointeeName;
-
 		return this;
 	}
 
@@ -1824,7 +1718,6 @@ public class Student implements Serializable, IESEntity {
 	public Student sponsorAgencyAppointeeDesignation(
 			String sponsorAgencyAppointeeDesignation) {
 		this.sponsorAgencyAppointeeDesignation = sponsorAgencyAppointeeDesignation;
-
 		return this;
 	}
 
@@ -1840,7 +1733,6 @@ public class Student implements Serializable, IESEntity {
 	public Student sponsorAgencyAppointeeCellNumber(
 			String sponsorAgencyAppointeeCellNumber) {
 		this.sponsorAgencyAppointeeCellNumber = sponsorAgencyAppointeeCellNumber;
-
 		return this;
 	}
 
@@ -1856,7 +1748,6 @@ public class Student implements Serializable, IESEntity {
 	public Student sponsorAgencyAppointeeLandLineNumber(
 			String sponsorAgencyAppointeeLandLineNumber) {
 		this.sponsorAgencyAppointeeLandLineNumber = sponsorAgencyAppointeeLandLineNumber;
-
 		return this;
 	}
 
@@ -1871,7 +1762,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student sponsorAgencyAppointeeEmailId(String sponsorAgencyAppointeeEmailId) {
 		this.sponsorAgencyAppointeeEmailId = sponsorAgencyAppointeeEmailId;
-
 		return this;
 	}
 
@@ -1886,7 +1776,6 @@ public class Student implements Serializable, IESEntity {
 	public Student sponsorAgencyAppointeeOfficeAddress(
 			String sponsorAgencyAppointeeOfficeAddress) {
 		this.sponsorAgencyAppointeeOfficeAddress = sponsorAgencyAppointeeOfficeAddress;
-
 		return this;
 	}
 
@@ -1901,7 +1790,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student isPhysicallyChallenged(String isPhysicallyChallenged) {
 		this.isPhysicallyChallenged = isPhysicallyChallenged;
-
 		return this;
 	}
 
@@ -1915,7 +1803,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student detailsOfDisability(String detailsOfDisability) {
 		this.detailsOfDisability = detailsOfDisability;
-
 		return this;
 	}
 
@@ -1929,7 +1816,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student disabilityCertificateNo(String disabilityCertificateNo) {
 		this.disabilityCertificateNo = disabilityCertificateNo;
-
 		return this;
 	}
 
@@ -1944,7 +1830,6 @@ public class Student implements Serializable, IESEntity {
 	public Student disabilityCertificateIssueAuthority(
 			String disabilityCertificateIssueAuthority) {
 		this.disabilityCertificateIssueAuthority = disabilityCertificateIssueAuthority;
-
 		return this;
 	}
 
@@ -1960,7 +1845,6 @@ public class Student implements Serializable, IESEntity {
 	public Student disabilityCertificateIssueDate(
 			LocalDate disabilityCertificateIssueDate) {
 		this.disabilityCertificateIssueDate = disabilityCertificateIssueDate;
-
 		return this;
 	}
 
@@ -1975,7 +1859,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student percentagOfDisability(Integer percentagOfDisability) {
 		this.percentagOfDisability = percentagOfDisability;
-
 		return this;
 	}
 
@@ -1989,7 +1872,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student bloodGroup(Bloodgroup bloodGroup) {
 		this.bloodGroup = bloodGroup;
-
 		return this;
 	}
 
@@ -2003,7 +1885,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student vaccinationDetails(String vaccinationDetails) {
 		this.vaccinationDetails = vaccinationDetails;
-
 		return this;
 	}
 
@@ -2017,7 +1898,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student otherMedicalDetails(String otherMedicalDetails) {
 		this.otherMedicalDetails = otherMedicalDetails;
-
 		return this;
 	}
 
@@ -2031,7 +1911,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student status(Status status) {
 		this.status = status;
-
 		return this;
 	}
 
@@ -2045,7 +1924,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student createdBy(String createdBy) {
 		this.createdBy = createdBy;
-
 		return this;
 	}
 
@@ -2059,7 +1937,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student createdOn(LocalDate createdOn) {
 		this.createdOn = createdOn;
-
 		return this;
 	}
 
@@ -2073,7 +1950,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student updatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
-
 		return this;
 	}
 
@@ -2087,7 +1963,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student updatedOn(LocalDate updatedOn) {
 		this.updatedOn = updatedOn;
-
 		return this;
 	}
 
@@ -2101,7 +1976,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student comments(String comments) {
 		this.comments = comments;
-
 		return this;
 	}
 
@@ -2115,7 +1989,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student department(Department department) {
 		this.department = department;
-
 		return this;
 	}
 
@@ -2129,7 +2002,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student batch(Batch batch) {
 		this.batch = batch;
-
 		return this;
 	}
 
@@ -2143,7 +2015,6 @@ public class Student implements Serializable, IESEntity {
 
 	public Student section(Section section) {
 		this.section = section;
-
 		return this;
 	}
 
@@ -2157,41 +2028,32 @@ public class Student implements Serializable, IESEntity {
 
 	public Student branch(Branch branch) {
 		this.branch = branch;
-
 		return this;
 	}
 
 	public void setBranch(Branch branch) {
 		this.branch = branch;
 	}
-
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
 	// and setters here, do not remove
 
 	@Override
-
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
-
 		}
-
 		if (!(o instanceof Student)) {
 			return false;
-
 		}
-
 		return id != null && id.equals(((Student) o).id);
 	}
 
 	@Override
-
 	public int hashCode() {
 		return 31;
 	}
 
 	@Override
-
 	public String toString() {
 		return "Student{" + "id=" + getId() + ", studentName='" + getStudentName() + "'"
 				+ ", studentMiddleName='" + getStudentMiddleName() + "'"

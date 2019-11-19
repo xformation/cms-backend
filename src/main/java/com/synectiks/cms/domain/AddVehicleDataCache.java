@@ -7,6 +7,7 @@ public class AddVehicleDataCache {
     private List<Branch> branches;
     private List<CmsTypeOfInsuranceVo> typeOfInsurances;
     private List<CmsTypeOfOwnershipVo> typeOfOwnerships;
+
     public List<College> getColleges() {
         return colleges;
     }

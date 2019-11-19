@@ -66,17 +66,17 @@
 		<sonar.exclusions>src/main/webapp/content/**/*.*,
 			src/main/webapp/i18n/*.js, target/www/**/*.*</sonar.exclusions>
 		<sonar.issue.ignore.multicriteria>S3437,UndocumentedApi,BoldAndItalicTagsCheck</sonar.issue.ignore.multicriteria>
-		<!-- Rule https://sonarcloud.io/coding_rules?open=Web%3ABoldAndItalicTagsCheck&rule_key=Web%3ABoldAndItalicTagsCheck 
-			is ignored. Even if we agree that using the "i" tag is an awful practice, 
+		<!-- Rule https://sonarcloud.io/coding_rules?open=Web%3ABoldAndItalicTagsCheck&rule_key=Web%3ABoldAndItalicTagsCheck
+			is ignored. Even if we agree that using the "i" tag is an awful practice,
 			this is what is recommended by http://fontawesome.io/examples/ -->
 		<sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.resourceKey>src/main/webapp/app/**/*.*</sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.resourceKey>
 		<sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.ruleKey>Web:BoldAndItalicTagsCheck</sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.ruleKey>
-		<!-- Rule https://sonarcloud.io/coding_rules?open=squid%3AS3437&rule_key=squid%3AS3437 
+		<!-- Rule https://sonarcloud.io/coding_rules?open=squid%3AS3437&rule_key=squid%3AS3437
 			is ignored, as a JPA-managed field cannot be transient -->
 		<sonar.issue.ignore.multicriteria.S3437.resourceKey>src/main/java/**/*</sonar.issue.ignore.multicriteria.S3437.resourceKey>
 		<sonar.issue.ignore.multicriteria.S3437.ruleKey>squid:S3437</sonar.issue.ignore.multicriteria.S3437.ruleKey>
-		<!-- Rule https://sonarcloud.io/coding_rules?open=squid%3AUndocumentedApi&rule_key=squid%3AUndocumentedApi 
-			is ignored, as we want to follow "clean code" guidelines and classes, methods 
+		<!-- Rule https://sonarcloud.io/coding_rules?open=squid%3AUndocumentedApi&rule_key=squid%3AUndocumentedApi
+			is ignored, as we want to follow "clean code" guidelines and classes, methods
 			and arguments names should be self-explanatory -->
 		<sonar.issue.ignore.multicriteria.UndocumentedApi.resourceKey>src/main/java/**/*</sonar.issue.ignore.multicriteria.UndocumentedApi.resourceKey>
 		<sonar.issue.ignore.multicriteria.UndocumentedApi.ruleKey>squid:UndocumentedApi</sonar.issue.ignore.multicriteria.UndocumentedApi.ruleKey>
@@ -430,7 +430,7 @@
 			<artifactId>spring-boot-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
@@ -640,7 +640,7 @@
 							<destFile>${project.testresult.directory}/coverage/jacoco/jacoco.exec</destFile>
 						</configuration>
 					</execution>
-					<!-- Ensures that the code coverage report for unit tests is created 
+					<!-- Ensures that the code coverage report for unit tests is created
 						after unit tests have been run -->
 					<execution>
 						<id>post-unit-test</id>
@@ -713,8 +713,9 @@
 				<configuration>
 					<mainClass>${start-class}</mainClass>
 					<executable>true</executable>
-                    <!--<jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>-->
-					<fork>true</fork>
+                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
+
+                    <fork>true</fork>
 					<!-- Enable the line below to have remote debugging of your application
 						on port 5005 <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments> -->
 				</configuration>
@@ -724,8 +725,8 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>${dockerfile-maven-plugin.version}</version>
 				<executions>
-					<!-- Uncomment the section below to build the docker image with mvn 
-						package and and push it with mvn deploy <execution> <id>default</id> <goals> 
+					<!-- Uncomment the section below to build the docker image with mvn
+						package and and push it with mvn deploy <execution> <id>default</id> <goals>
 						<goal>build</goal> <goal>push</goal> </goals> </execution> -->
 					<execution>
 						<id>tag-latest</id>
@@ -770,8 +771,8 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!-- This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. Remove when the m2e 
+				<!-- This plugin's configuration is used to store Eclipse m2e settings
+					only. It has no influence on the Maven build itself. Remove when the m2e
 					plugin can correctly bind to Maven lifecycle -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -1009,11 +1010,11 @@
 			</properties>
 		</profile>
 		<profile>
-			<!-- Profile for doing "continuous compilation" with the Scala Maven plugin. 
-				It allows automatic compilation of Java classes as soon as they are saved. 
-				To use it, run in 3 terminals: - './mvnw -Pcc scala:cc' for continuous compilation 
-				of your classes - './mvnw -Pcc -Pdev' for hot reload of Spring boot - 'npm 
-				start/yarn start' for hot reload of the HTML/JavaScript asset Everything 
+			<!-- Profile for doing "continuous compilation" with the Scala Maven plugin.
+				It allows automatic compilation of Java classes as soon as they are saved.
+				To use it, run in 3 terminals: - './mvnw -Pcc scala:cc' for continuous compilation
+				of your classes - './mvnw -Pcc -Pdev' for hot reload of Spring boot - 'npm
+				start/yarn start' for hot reload of the HTML/JavaScript asset Everything
 				should hot reload automatically! -->
 			<id>cc</id>
 			<dependencies>
@@ -1046,9 +1047,9 @@
 							<mainClass>${start-class}</mainClass>
 							<executable>true</executable>
 							<fork>true</fork>
-                            <!--<jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>-->
+                            <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
 							<addResources>true</addResources>
-							<!-- Enable the line below to have remote debugging of your application 
+							<!-- Enable the line below to have remote debugging of your application
 								on port 5005 <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments> -->
 						</configuration>
 					</plugin>
@@ -1131,8 +1132,8 @@
 			</dependencies>
 		</profile>
 		<profile>
-			<!-- Profile for applying IDE-specific configuration. At the moment it 
-				configures MapStruct and Hibernate JPA Metamodel Generator, which you need 
+			<!-- Profile for applying IDE-specific configuration. At the moment it
+				configures MapStruct and Hibernate JPA Metamodel Generator, which you need
 				when working with DTOs and entity filtering. -->
 			<id>IDE</id>
 			<dependencies>

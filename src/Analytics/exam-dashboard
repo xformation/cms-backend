@@ -1,0 +1,497 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 9,
+  "iteration": 1570686768753,
+  "links": [],
+  "panels": [
+    {
+      "content": "<html>\n  <style>\n  .zeroBorder{\n      border: 0px solid !important;\n    }\n  .bordrLeftTopBottom{\n      border-left: 0px solid !important;\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottom{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottomRight{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n      border-right: 0px solid !important;\n    }\n  .textAlign {\n      text-align:center;\n    }\n  .blueFont{\n      color: rgb(78, 144, 203);\n    }\n  .greenFont{\n      color: rgb(97, 203, 150);\n    }\n  .orangeFont{\n      color: rgb(255, 162, 85);\n    }\n  .brownFont{\n      color: rgb(205, 99, 109);\n    }  \n  .boldFont{\n      font-weight:bold;\n    }\n  </style>\n  <body>\n    <hr>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont boldFont\">Total</td><td class=\"bordrTopBottom textAlign orangeFont boldFont\">Active</td><td class=\"bordrTopBottomRight textAlign brownFont boldFont\">Absent</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont\">[[totalStuds]]</td><td class=\"bordrTopBottom textAlign orangeFont\">[[activeStuds]]</td><td class=\"bordrTopBottomRight textAlign brownFont\">[[absentStuds]]</td></tr>\n    </table>\n  </body>\n</html>",
+      "datasource": "InfluxDB",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Students-[[department]] | [[batch]]",
+      "type": "text"
+    },
+    {
+      "content": "<html>\n  <style>\n  .zeroBorder{\n      border: 0px solid !important;\n    }\n  .bordrLeftTopBottom{\n      border-left: 0px solid !important;\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottom{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottomRight{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n      border-right: 0px solid !important;\n    }\n  .textAlign {\n      text-align:center;\n    }\n  .blueFont{\n      color: rgb(78, 144, 203);\n    }\n  .greenFont{\n      color: rgb(97, 203, 150);\n    }\n  .orangeFont{\n      color: rgb(255, 162, 85);\n    }\n  .brownFont{\n      color: rgb(205, 99, 109);\n    }  \n  .boldFont{\n      font-weight:bold;\n    }\n  </style>\n  <body>\n    <hr>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont boldFont\">Total</td><td class=\"bordrTopBottom textAlign orangeFont boldFont\">Academic</td><td class=\"bordrTopBottomRight textAlign brownFont boldFont\">Non-Academic</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont\">[[totalSubs]]</td><td class=\"bordrTopBottom textAlign orangeFont\">[[academicSubs]]</td><td class=\"bordrTopBottomRight textAlign brownFont\">[[nonAcacdemicSubs]]</td></tr>\n    </table>\n  </body>\n</html>",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "id": 4,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Subjects-[[department]] | [[batch]]",
+      "type": "text"
+    },
+    {
+      "content": "<html>\n  <style>\n  .zeroBorder{\n      border: 0px solid !important;\n    }\n  .bordrLeftTopBottom{\n      border-left: 0px solid !important;\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottom{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n    }\n  .bordrTopBottomRight{\n      border-top: 0px solid !important;\n      border-bottom: 0px solid !important;\n      border-right: 0px solid !important;\n    }\n  .textAlign {\n      text-align:center;\n    }\n  .blueFont{\n      color: rgb(78, 144, 203);\n    }\n  .greenFont{\n      color: rgb(97, 203, 150);\n    }\n  .orangeFont{\n      color: rgb(255, 162, 85);\n    }\n  .brownFont{\n      color: rgb(205, 99, 109);\n    }  \n  .boldFont{\n      font-weight:bold;\n    }\n  </style>\n  <body>\n    <hr>\n    <table width=\"100%\" class=\"zeroBorder\">\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont boldFont\">Total</td><td class=\"bordrTopBottom textAlign orangeFont boldFont\">Completed</td><td class=\"bordrTopBottomRight textAlign brownFont boldFont\">Locked</td></tr>\n      <tr class=\"zeroBorder\"><td class=\"bordrLeftTopBottom textAlign greenFont\">[[totalExams]]</td><td class=\"bordrTopBottom textAlign orangeFont\">[[completedExams]]</td><td class=\"bordrTopBottomRight textAlign brownFont\">[[lockedExams]]</td></tr>\n    </table>\n  </body>\n</html>",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 6,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Exams- [[department]] | [[batch]]",
+      "type": "text"
+    },
+    {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "InfluxDB",
+      "fontSize": "80%",
+      "format": "short",
+      "gridPos": {
+        "h": 8,
+        "w": 11,
+        "x": 0,
+        "y": 8
+      },
+      "id": 8,
+      "interval": null,
+      "legend": {
+        "header": "Total",
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "null",
+      "pieType": "donut",
+      "strokeWidth": 1,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Exam - [[department]] | [[batch]]",
+      "type": "grafana-piechart-panel",
+      "valueName": "total"
+    },
+    {
+      "columns": [],
+      "datasource": "InfluxDB",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 13,
+        "x": 11,
+        "y": 8
+      },
+      "id": 10,
+      "links": [],
+      "nullPointMode": "null",
+      "pageSize": 6,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Student Name",
+          "type": "string"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "All Exams - [[department]] | [[batch]]",
+      "transform": "table",
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "100.81.3.26",
+          "value": "100.81.3.26"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "CmsNodeIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "100.81.3.26",
+            "value": "100.81.3.26"
+          }
+        ],
+        "query": "100.81.3.26",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "100.81.3.26",
+          "value": "100.81.3.26"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "CmsBackEndIP",
+        "options": [
+          {
+            "selected": true,
+            "text": "100.81.3.26",
+            "value": "100.81.3.26"
+          }
+        ],
+        "query": "100.81.3.26",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "Computer Science",
+          "value": "Computer Science"
+        },
+        "datasource": "InfluxDB",
+        "definition": "show tag values with key=\"Tdepartment\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "department",
+        "options": [],
+        "query": "show tag values with key=\"Tdepartment\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "FIRSTYEAR",
+          "value": "FIRSTYEAR"
+        },
+        "datasource": "InfluxDB",
+        "definition": "show tag values with key=\"Tyear\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "batch",
+        "options": [],
+        "query": "show tag values with key=\"Tyear\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "text": "admin",
+          "value": "admin"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "CurrentUser",
+        "options": {
+          "selected": true,
+          "text": "admin",
+          "value": "admin"
+        },
+        "query": "admin",
+        "skipUrlSync": false,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "exam-dashboard",
+  "uid": "yW89-lhZz",
+  "version": 25
+}

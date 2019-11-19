@@ -1,6 +1,4 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -10,7 +8,6 @@ import javax.validation.constraints.*;
 
 //import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.NameOfBank;
 import com.synectiks.cms.utils.IESEntity;
@@ -25,7 +22,7 @@ import com.synectiks.cms.utils.IESEntity;
 public class BankAccounts implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -183,19 +180,15 @@ public class BankAccounts implements Serializable, IESEntity {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BankAccounts)) {
             return false;
         }
-        BankAccounts bankAccounts = (BankAccounts) o;
-        if (bankAccounts.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), bankAccounts.getId());
+        return id != null && id.equals(((BankAccounts) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -203,11 +196,11 @@ public class BankAccounts implements Serializable, IESEntity {
         return "BankAccounts{" +
             "id=" + getId() +
             ", nameOfBank='" + getNameOfBank() + "'" +
-            ", accountNumber=" + getAccountNumber() +
+            ", accountNumber='" + getAccountNumber() + "'" +
             ", typeOfAccount='" + getTypeOfAccount() + "'" +
             ", ifscCode='" + getIfscCode() + "'" +
             ", branchAddress='" + getBranchAddress() + "'" +
-            ", corporateId=" + getCorporateId() +
+            ", corporateId='" + getCorporateId() + "'" +
             "}";
     }
 }

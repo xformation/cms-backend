@@ -410,7 +410,7 @@ type CmsFeeDetails {
 }
 
 type ExamFilterDataCache {
-    branches: [Branch]
+branches: [Branch]
 	departments: [Department]
 	batches: [Batch]
 	sections: [Section]
@@ -429,6 +429,7 @@ type AddVehicleDataCache{
 	typeOfInsurances: [CmsTypeOfInsuranceVo]
     typeOfOwnerships: [CmsTypeOfOwnershipVo]
 }
+
 type CmsTypeOfInsuranceVo{
      id: Int
 	description: String
@@ -438,6 +439,7 @@ type CmsTypeOfOwnershipVo{
      id: Int
 	description: String
 }
+
 type VehicleDataCache{
      vehicles: [Vehicle]
      transportRoutes: [TransportRoute]
@@ -860,10 +862,10 @@ type  Library{
 }
  type Book{
           id:Long!
-     	 issueDate:Date!
-     	 dueDate:Date!
-     	 receivedDate:Date!
-     	 noOfCopiesAvailable:Int!
+     	 issueDate:Date
+     	 dueDate:Date
+     	 receivedDate:Date
+     	 noOfCopiesAvailable:Int
      	 status:StatusEnum
      	 student:Student
      	 library:Library
@@ -959,11 +961,11 @@ type AuthorizedSignatory {
 type BankAccounts {
     id: Long!
     nameOfBank: NameOfBank!
-    accountNumber: Long!
+    accountNumber: String!
     typeOfAccount: String!
     ifscCode: String!
     branchAddress: String!
-    corporateId: Int!
+    corporateId: String!
     branch: Branch
     college: College!
 }
@@ -1051,7 +1053,7 @@ type AttendanceMaster{
 	id: Long!
     desc: String!
     teach: Teach!
-    section: Section!
+    section: Section
     batch: Batch!
 }
 type Lecture{
@@ -1259,102 +1261,261 @@ enum Religion {
 
 
 type Student {
-       id: Long
-       studentName: String
-       studentMiddleName: String
-       studentLastName: String
-       fatherName: String
-       fatherMiddleName: String
-       fatherLastName: String
-       motherName: String
-       motherMiddleName: String
-       motherLastName: String
-       aadharNo: Long
-       dateOfBirth: Date
-       placeOfBirth: String
-       religion: Religion
-       caste: Caste
-       subCaste: String
-       age: Long
-       sex: Gender
-       bloodGroup: Bloodgroup
-       addressLineOne: String
-       addressLineTwo: String
-       addressLineThree: String
-       town: String
-       state: String
-       country: String
-       pincode: Long
-       studentContactNumber: String
-       alternateContactNumber: String
-       studentEmailAddress: String
-       alternateEmailAddress: String
-       relationWithStudent: RelationWithStudentEnum
-       emergencyContactName: String
-       emergencyContactMiddleName: String
-       emergencyContactLastName: String
-       emergencyContactNo: String
-       emergencyContactEmailAddress: String
-       uploadPhoto: String
-       admissionNo: Long
-       rollNo: String
-       studentType: StudentTypeEnum
-       batch: Batch
-       section: Section
-       branch: Branch
-       department: Department
+	id: Long
+	studentName: String
+	studentMiddleName: String
+	studentLastName: String
+	fatherName: String
+	fatherMiddleName: String
+	fatherLastName: String
+	motherName: String
+	motherMiddleName: String
+	motherLastName: String
+	studentAadharNo: String
+	studentPanNo: String
+	studentSocialSecurityNo: String
+	studentTaxReferenceNo: String
+	studentBplNo: String
+	studentDrivingLicenseNo: String
+	studentPassportNo: String
+	dateOfBirth: Date
+	placeOfBirth: String
+	religion: Religion
+	caste: Caste
+	subCaste: String
+	age: Int
+	sex: Gender
+	studentLocalAddress: String
+	studentPermanentAddress: String
+	city: String
+	state: String
+	country: String
+	pinCode: String
+	studentPrimaryCellNumber: String
+	studentAlternateCellNumber: String
+	studentLandLinePhoneNumber: String
+	studentPrimaryEmailId: String
+	studentAlternateEmailId: String
+	relationWithStudent: RelationWithStudentEnum
+	emergencyContactName: String
+	emergencyContactMiddleName: String
+	emergencyContactLastName: String
+	emergencyContactCellNumber: String
+	emergencyContactLandLinePhoneNumber: String
+	emergencyContactEmailId: String
+	studentImagePath: String
+	admissionNo: String
+	enrollmentNo: String
+	rollNo: String
+	studentType: StudentTypeEnum
+	fatherCellNumber: String
+	fatherEmailId: String
+	fatherOccupation: String
+	fatherOfficeEmailId: String
+	fatherOfficeAddress: String
+	fatherOfficeCellNumber: String
+	fatherOfficeLandLinePhoneNumber: String
+	fatherAadharNo: String
+	fatherPanNo: String
+	fatherSocialSecurityNo: String
+	fatherTaxReferenceNo: String
+	fatherBplNo: String
+	fatherDrivingLicenseNo: String
+	fatherPassportNo: String
+	fatherImagePath: String
+	motherCellNumber: String
+	motherEmailId: String
+	motherOccupation: String
+	motherOfficeEmailId: String
+	motherOfficeAddress: String
+	motherOfficeCellNumber: String
+	motherOfficeLandLinePhoneNumber: String
+	motherAadharNo: String
+	motherPanNo: String
+	motherSocialSecurityNo: String
+	motherTaxReferenceNo: String
+	motherBplNo: String
+	motherDrivingLicenseNo: String
+	motherPassportNo: String
+	motherImagePath: String
+	guardianName: String
+	guardianMiddleName: String
+	guardianLastName: String
+	guardianAddress: String
+	guardianCellNumber: String
+	guardianLandLinePhoneNumber: String
+	guardianEmailId: String
+	guardianOccupation: String
+	guardianOfficeEmailId: String
+	guardianOfficeAddress: String
+	guardianOfficeCellNumber: String
+	guardianOfficeLandLinePhoneNumber: String
+	guardianImagePath: String
+	isGuardianSponsorAgency: String
+	sponsorAgencyName: String
+	sponsorAgencyRegistrationNo: String
+	sponsorAgencyAddress: String
+	sponsorAgencyCellNumber: String
+	sponsorAgencyLandLineNumber: String
+	sponsorAgencyEmailId: String
+	sponsorAgencyAppointeeName: String
+	sponsorAgencyAppointeeDesignation: String
+	sponsorAgencyAppointeeCellNumber: String
+	sponsorAgencyAppointeeLandLineNumber: String
+	sponsorAgencyAppointeeEmailId: String
+	sponsorAgencyAppointeeOfficeAddress: String
+	isPhysicallyChallenged: String
+	detailsOfDisability: String
+	disabilityCertificateNo: String
+	disabilityCertificateIssueAuthority: String
+	disabilityCertificateIssueDate: Date
+	percentagOfDisability: Int
+	bloodGroup: Bloodgroup
+	vaccinationDetails: String
+	otherMedicalDetails: String
+	status: Status
+	createdBy: String
+	createdOn: Date
+	updatedBy: String
+	updatedOn: Date
+	comments: String
+	department: Department
+	batch: Batch
+	section: Section
+	branch: Branch
 }
 
 type CmsStudentVo {
-       id: Long
-       studentName: String
-       studentMiddleName: String
-       studentLastName: String
-       fatherName: String
-       fatherMiddleName: String
-       fatherLastName: String
-       motherName: String
-       motherMiddleName: String
-       motherLastName: String
-       aadharNo: Long
-       dateOfBirth: Date
-       placeOfBirth: String
-       religion: Religion
-       caste: Caste
-       subCaste: String
-       age: Long
-       sex: Gender
-       bloodGroup: Bloodgroup
-       addressLineOne: String
-       addressLineTwo: String
-       addressLineThree: String
-       town: String
-       state: String
-       country: String
-       pincode: Long
-       studentContactNumber: String
-       alternateContactNumber: String
-       studentEmailAddress: String
-       alternateEmailAddress: String
-       relationWithStudent: RelationWithStudentEnum
-       emergencyContactName: String
-       emergencyContactMiddleName: String
-       emergencyContactLastName: String
-       emergencyContactNo: String
-       emergencyContactEmailAddress: String
-       uploadPhoto: String
-       admissionNo: Long
-       rollNo: String
-       studentType: StudentTypeEnum
-       batch: Batch
-       section: Section
-       branch: Branch
-       department: Department
-       strDateOfBirth: String
-       departmentId: Long
-       batchId: Long
-       sectionId: Long
-       branchId: Long
+    id: Long
+	studentName: String
+	studentMiddleName: String
+	studentLastName: String
+	fatherName: String
+	fatherMiddleName: String
+	fatherLastName: String
+	motherName: String
+	motherMiddleName: String
+	motherLastName: String
+	studentAadharNo: String
+	studentPanNo: String
+	studentSocialSecurityNo: String
+	studentTaxReferenceNo: String
+	studentBplNo: String
+	studentDrivingLicenseNo: String
+	studentPassportNo: String
+	dateOfBirth: Date
+	placeOfBirth: String
+	religion: Religion
+	caste: Caste
+	subCaste: String
+	age: Int
+	sex: Gender
+	studentLocalAddress: String
+	studentPermanentAddress: String
+	city: String
+	state: String
+	country: String
+	pinCode: String
+	studentPrimaryCellNumber: String
+	studentAlternateCellNumber: String
+	studentLandLinePhoneNumber: String
+	studentPrimaryEmailId: String
+	studentAlternateEmailId: String
+	relationWithStudent: RelationWithStudentEnum
+	emergencyContactName: String
+	emergencyContactMiddleName: String
+	emergencyContactLastName: String
+	emergencyContactCellNumber: String
+	emergencyContactLandLinePhoneNumber: String
+	emergencyContactEmailId: String
+	studentImagePath: String
+	admissionNo: String
+	enrollmentNo: String
+	rollNo: String
+	studentType: StudentTypeEnum
+	fatherCellNumber: String
+	fatherEmailId: String
+	fatherOccupation: String
+	fatherOfficeEmailId: String
+	fatherOfficeAddress: String
+	fatherOfficeCellNumber: String
+	fatherOfficeLandLinePhoneNumber: String
+	fatherAadharNo: String
+	fatherPanNo: String
+	fatherSocialSecurityNo: String
+	fatherTaxReferenceNo: String
+	fatherBplNo: String
+	fatherDrivingLicenseNo: String
+	fatherPassportNo: String
+	fatherImagePath: String
+	motherCellNumber: String
+	motherEmailId: String
+	motherOccupation: String
+	motherOfficeEmailId: String
+	motherOfficeAddress: String
+	motherOfficeCellNumber: String
+	motherOfficeLandLinePhoneNumber: String
+	motherAadharNo: String
+	motherPanNo: String
+	motherSocialSecurityNo: String
+	motherTaxReferenceNo: String
+	motherBplNo: String
+	motherDrivingLicenseNo: String
+	motherPassportNo: String
+	motherImagePath: String
+	guardianName: String
+	guardianMiddleName: String
+	guardianLastName: String
+	guardianAddress: String
+	guardianCellNumber: String
+	guardianLandLinePhoneNumber: String
+	guardianEmailId: String
+	guardianOccupation: String
+	guardianOfficeEmailId: String
+	guardianOfficeAddress: String
+	guardianOfficeCellNumber: String
+	guardianOfficeLandLinePhoneNumber: String
+	guardianImagePath: String
+	isGuardianSponsorAgency: String
+	sponsorAgencyName: String
+	sponsorAgencyRegistrationNo: String
+	sponsorAgencyAddress: String
+	sponsorAgencyCellNumber: String
+	sponsorAgencyLandLineNumber: String
+	sponsorAgencyEmailId: String
+	sponsorAgencyAppointeeName: String
+	sponsorAgencyAppointeeDesignation: String
+	sponsorAgencyAppointeeCellNumber: String
+	sponsorAgencyAppointeeLandLineNumber: String
+	sponsorAgencyAppointeeEmailId: String
+	sponsorAgencyAppointeeOfficeAddress: String
+	isPhysicallyChallenged: String
+	detailsOfDisability: String
+	disabilityCertificateNo: String
+	disabilityCertificateIssueAuthority: String
+	disabilityCertificateIssueDate: Date
+	percentagOfDisability: Int
+	bloodGroup: Bloodgroup
+	vaccinationDetails: String
+	otherMedicalDetails: String
+	status: Status
+	createdBy: String
+	createdOn: Date
+	updatedBy: String
+	updatedOn: Date
+	comments: String
+	department: Department
+	batch: Batch
+	section: Section
+	branch: Branch
+	departmentId: Long
+	batchId: Long
+	sectionId: Long
+	branchId: Long
+	strCreatedOn: String
+	strUpdatedOn: String
+	strDisabilityCertificateIssueDate: String
+	strDateOfBirth: String
 }
 
 
@@ -1538,8 +1699,8 @@ type Mutation {
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
 
-    addContract(input: AddContractInput!): AddContractPayload!
-    updateContract(input: UpdateContractInput!): UpdateContractPayload!
+    addContract(input: AddContractInput!): [CmsContract]!
+    updateContract(input: UpdateContractInput!):  [CmsContract]!
     removeContract(input: RemoveContractInput!): RemoveContractPayload!
 
     addEmployee(input: AddEmployeeInput!): AddEmployeePayload!
@@ -1724,11 +1885,9 @@ type Mutation {
     removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
     searchLib(bookTitle:String,author:String, batchId:Long, subjectId:Long):[CmsLibrary!]!
 
-    addBook(input:AddBookInput!):AddBookPayload!
-     updateBook(input:UpdateBookInput!):UpdateBookPayload!
+     addBook(input: [AddBookInput!]!): [CmsBook]!
+     updateBook(input: UpdateBookInput!): [CmsBook!]!
      removeBook(input:RemoveBookInput!):RemoveBookPayload!
-
-
 
      addInsurance(input:AddInsuranceInput!):[CmsInsurance]!
      updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
@@ -1761,6 +1920,8 @@ type LibraryFilterDataCache{
 	subjects: [Subject]
 	academicExamSettings : [AcademicExamSetting]
 	libraries: [Library]
+	students: [Student]
+	books: [CmsBook]
 }
 type CmsFeeCategory {
 	 id: Long
@@ -1781,6 +1942,21 @@ type CmsFeeCategory {
      branch: Branch
 }
 
+type CmsBook {
+	 id: Long
+     status: StatusEnum
+     issueDate: Date
+     dueDate: Date
+     receivedDate: Date
+     studentId: Long
+     libraryId: Long
+     strIssueDate: String
+     strDueDate: String
+     strRecDate: String
+    noOfCopiesAvailable: Int
+     student: Student
+     library: Library
+}
 type CmsInsurance {
      id: Long
      insuranceCompany: String
@@ -1790,6 +1966,18 @@ type CmsInsurance {
      strDateOfInsurance: String
      strValidTill: String
 }
+
+type CmsContract {
+     id: Long
+     vendorName: String
+     typeOfOwnerShip: TypeOfOwnerShip
+     durationOfContract: String
+     startDate: Date
+     endDate: Date
+     strStartDate: String
+     strEndDate: String
+}
+
 
 type CmsLibraryVo {
        id: Long
@@ -1912,6 +2100,8 @@ input AddContractInput{
     durationOfContract: String!
     startDate: Date!
     endDate: Date!
+    strDateOfInsurance: String
+    strValidTill: String
 }
 
 type AddContractPayload {
@@ -1925,6 +2115,8 @@ input UpdateContractInput {
     durationOfContract: String!
     startDate: Date!
     endDate: Date!
+    strDateOfInsurance: String
+    strValidTill: String
 }
 
 
@@ -2244,11 +2436,11 @@ type RemoveStudentExamReportPayload {
 
 input AddBankAccountsInput {
    nameOfBank: NameOfBank!
-   accountNumber: Long!
+   accountNumber: String!
    typeOfAccount: String!
    ifscCode: String!
    branchAddress: String!
-   corporateId: Int!
+   corporateId: String!
    branchId: Long
    collegeId: Long!
 }
@@ -2258,11 +2450,11 @@ type AddBankAccountsPayload {
 input UpdateBankAccountsInput {
    id: Long!
    nameOfBank: NameOfBank!
-   accountNumber: Long!
+   accountNumber: String!
    typeOfAccount: String!
    ifscCode: String!
    branchAddress: String!
-   corporateId: Int!
+   corporateId: String!
    branchId: Long
    collegeId: Long
 }
@@ -3663,6 +3855,7 @@ input AddLibraryInput{
     additionalInfo:String!
      batchId:Long!
     subjectId:Long!
+    uniqueNo: Long!
 }
 type AddLibraryPayload {
     library:Library!
@@ -3689,26 +3882,30 @@ type RemoveLibraryPayload{
 }
 
 input AddBookInput{
-    issueDate:Date!
-    dueDate:Date!
-    noOfCopiesAvailable:Int!
-    status:StatusEnum!
-    receivedDate:Date!
-	studentId:Long
 	libraryId:Long
+	studentId:Long
+    status: StatusEnum
+    issueDate: Date
+    dueDate: Date
+    receivedDate: Date
+    strIssueDate: String
+    strDueDate: String
+    strRecDate: String
+    noOfCopiesAvailable: Int
+
 }
 type AddBookPayload{
     book:Book!
 }
 input UpdateBookInput {
     id:Long!
-    issueDate:Date!
-	dueDate:Date!
-	noOfCopiesAvailable:Int!
+    issueDate:Date
+	dueDate:Date
+	noOfCopiesAvailable:Int
 	status:StatusEnum
-	receivedDate:Date!
 	studentId:Long
 	libraryId:Long
+	receivedDate: Date
 }
 type UpdateBookPayload{
     book:Book!
