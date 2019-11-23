@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.City;
 
-import com.synectiks.cms.domain.City;
+import com.synectiks.commons.entities.cms.City;
 
 public class AbstractCityPayload {
     private final City city;

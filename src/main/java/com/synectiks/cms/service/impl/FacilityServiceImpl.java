@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.FacilityService;
-import com.synectiks.cms.domain.Facility;
+import com.synectiks.commons.entities.cms.Facility;
 import com.synectiks.cms.repository.FacilityRepository;
 //import com.synectiks.cms.repository.search.FacilitySearchRepository;
 import com.synectiks.cms.service.dto.FacilityDTO;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.MetaLectureService;
-import com.synectiks.cms.domain.MetaLecture;
+import com.synectiks.commons.entities.cms.MetaLecture;
 import com.synectiks.cms.repository.MetaLectureRepository;
 //import com.synectiks.cms.repository.search.MetaLectureSearchRepository;
 import com.synectiks.cms.service.dto.MetaLectureDTO;

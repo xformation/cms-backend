@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AdmissionApplicationService;
-import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.commons.entities.cms.AdmissionApplication;
 import com.synectiks.cms.repository.AdmissionApplicationRepository;
 //import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
 import com.synectiks.cms.service.dto.AdmissionApplicationDTO;

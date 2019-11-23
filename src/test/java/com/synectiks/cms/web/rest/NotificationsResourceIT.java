@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Notifications;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.Notifications;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 import com.synectiks.cms.repository.NotificationsRepository;
 import com.synectiks.cms.service.NotificationsService;
 import com.synectiks.cms.service.dto.NotificationsDTO;

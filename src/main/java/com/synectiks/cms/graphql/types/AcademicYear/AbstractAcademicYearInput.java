@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.AcademicYear;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 
 import java.util.Date;
 

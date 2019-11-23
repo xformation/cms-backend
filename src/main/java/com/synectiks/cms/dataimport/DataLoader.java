@@ -16,7 +16,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.ExceptionRecord;
+import com.synectiks.commons.entities.cms.ExceptionRecord;
 
 public abstract class DataLoader {
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.synectiks.cms.domain.PaymentRequestResponse} entity.
+ * A DTO for the {@link com.synectiks.commons.entities.cms.PaymentRequestResponse} entity.
  */
 public class PaymentRequestResponseDTO implements Serializable {
 

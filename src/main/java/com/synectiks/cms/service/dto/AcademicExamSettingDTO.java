@@ -3,8 +3,8 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
-import com.synectiks.cms.domain.enumeration.GradeType;
+import com.synectiks.commons.entities.cms.enumeration.SemesterEnum;
+import com.synectiks.commons.entities.cms.enumeration.GradeType;
 
 /**
  * A DTO for the AcademicExamSetting entity.

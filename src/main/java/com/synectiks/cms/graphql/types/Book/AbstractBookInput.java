@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Book;
 
-import com.synectiks.cms.domain.enumeration.StatusEnum;
+import com.synectiks.commons.entities.cms.enumeration.StatusEnum;
 
 import java.util.Date;
 import java.util.Objects;

@@ -3,7 +3,7 @@ package com.synectiks.cms.graphql.types.LegalEntity;
 
 import java.util.Date;
 
-import com.synectiks.cms.domain.enumeration.TypeOfCollege;
+import com.synectiks.commons.entities.cms.enumeration.TypeOfCollege;
 
     public class AbstractLegalEntityInput {
 

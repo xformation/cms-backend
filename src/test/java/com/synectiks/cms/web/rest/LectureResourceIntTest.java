@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Lecture;
+import com.synectiks.commons.entities.cms.Lecture;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.service.LectureService;
 import com.synectiks.cms.service.dto.LectureDTO;

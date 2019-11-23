@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.Facility;
 
 import java.util.Date;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 
 public class AbstractFacilityInput {
     private Long id;

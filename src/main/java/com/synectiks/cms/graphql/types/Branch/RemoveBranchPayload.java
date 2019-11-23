@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.Branch;
 
 import java.util.List;
 
-import com.synectiks.cms.domain.Branch;
+import com.synectiks.commons.entities.cms.Branch;
 
 public class RemoveBranchPayload {
     private final List<Branch> branch;

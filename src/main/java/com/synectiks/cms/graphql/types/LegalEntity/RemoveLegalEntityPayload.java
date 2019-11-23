@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.LegalEntity;
 
-import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.commons.entities.cms.LegalEntity;
 
 import java.util.List;
 

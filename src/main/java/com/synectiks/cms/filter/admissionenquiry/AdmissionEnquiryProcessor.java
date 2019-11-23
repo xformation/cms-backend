@@ -1,11 +1,11 @@
 package com.synectiks.cms.filter.admissionenquiry;
 
 import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.domain.enumeration.EnquiryStatus;
+import com.synectiks.commons.entities.cms.AcademicYear;
+import com.synectiks.commons.entities.cms.AdmissionEnquiry;
+import com.synectiks.commons.entities.cms.Branch;
+import com.synectiks.commons.entities.cms.CmsAdmissionEnquiryVo;
+import com.synectiks.commons.entities.cms.enumeration.EnquiryStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.FeeDetailsService;
-import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.commons.entities.cms.FeeDetails;
 import com.synectiks.cms.repository.FeeDetailsRepository;
 //import com.synectiks.cms.repository.search.FeeDetailsSearchRepository;
 import com.synectiks.cms.service.dto.FeeDetailsDTO;

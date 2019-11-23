@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Contract;
 
-import com.synectiks.cms.domain.Contract;
+import com.synectiks.commons.entities.cms.Contract;
 
 public class AddContractPayload extends AbstractContractPayload {
 

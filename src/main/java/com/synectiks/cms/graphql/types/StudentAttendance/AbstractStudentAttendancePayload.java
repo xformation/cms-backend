@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.StudentAttendance;
 
-import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.commons.entities.cms.StudentAttendance;
 
 public class AbstractStudentAttendancePayload {
     private final StudentAttendance studentAttendance;

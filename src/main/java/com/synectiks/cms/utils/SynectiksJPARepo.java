@@ -16,7 +16,9 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.web.client.RestTemplate;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.utils.ESEvent.EventType;
+import com.synectiks.commons.entities.search.ESEvent;
+import com.synectiks.commons.entities.search.ESEvent.EventType;
+import com.synectiks.commons.interfaces.IESEntity;
 
 /**
  * @author Rajesh Upadhyay

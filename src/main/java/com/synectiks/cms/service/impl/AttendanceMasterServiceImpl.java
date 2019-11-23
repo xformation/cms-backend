@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AttendanceMasterService;
-import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.commons.entities.cms.AttendanceMaster;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 //import com.synectiks.cms.repository.search.AttendanceMasterSearchRepository;
 import com.synectiks.cms.service.dto.AttendanceMasterDTO;

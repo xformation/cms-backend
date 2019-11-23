@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StudentAttendanceService;
-import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.commons.entities.cms.StudentAttendance;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
 //import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
 import com.synectiks.cms.service.dto.StudentAttendanceDTO;

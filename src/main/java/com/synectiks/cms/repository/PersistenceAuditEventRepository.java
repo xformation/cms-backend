@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.synectiks.cms.domain.PersistentAuditEvent;
+import com.synectiks.commons.entities.cms.PersistentAuditEvent;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

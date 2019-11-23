@@ -2,7 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 
-import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.commons.entities.cms.AcademicHistory;
 import com.synectiks.cms.repository.AcademicHistoryRepository;
 //import com.synectiks.cms.repository.search.AcademicHistorySearchRepository;
 import com.synectiks.cms.service.AcademicHistoryService;

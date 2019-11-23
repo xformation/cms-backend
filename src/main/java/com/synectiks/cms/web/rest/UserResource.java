@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.config.Constants;
-import com.synectiks.cms.domain.User;
+import com.synectiks.commons.entities.cms.User;
 import com.synectiks.cms.repository.UserRepository;
 import com.synectiks.cms.repository.search.UserSearchRepository;
 import com.synectiks.cms.security.AuthoritiesConstants;

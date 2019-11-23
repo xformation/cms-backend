@@ -3,10 +3,10 @@ package com.synectiks.cms.graphql.types.AdmissionEnquiry;
 import java.util.Date;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.CourseEnum;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
-import com.synectiks.cms.domain.enumeration.EnquiryStatus;
+import com.synectiks.commons.entities.cms.enumeration.CourseEnum;
+import com.synectiks.commons.entities.cms.enumeration.Gender;
+import com.synectiks.commons.entities.cms.enumeration.ModeOfEnquiry;
+import com.synectiks.commons.entities.cms.enumeration.EnquiryStatus;
 
 public class AbstractAdmissionEnquiryInput {
 

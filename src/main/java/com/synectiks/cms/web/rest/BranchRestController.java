@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsBranchVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.State;
+import com.synectiks.commons.entities.cms.Branch;
+import com.synectiks.commons.entities.cms.City;
+import com.synectiks.commons.entities.cms.CmsBranchVo;
+import com.synectiks.commons.entities.cms.College;
+import com.synectiks.commons.entities.cms.State;
 import com.synectiks.cms.repository.BranchRepository;
 import com.synectiks.cms.repository.CityRepository;
 import com.synectiks.cms.repository.CollegeRepository;

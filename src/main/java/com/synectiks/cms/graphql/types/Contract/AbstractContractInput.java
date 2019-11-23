@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Contract;
 
-import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
+import com.synectiks.commons.entities.cms.enumeration.TypeOfOwnerShip;
 
 import java.util.Date;
 import java.util.Objects;

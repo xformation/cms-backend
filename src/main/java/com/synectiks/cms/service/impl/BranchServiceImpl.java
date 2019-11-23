@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.BranchService;
-import com.synectiks.cms.domain.Branch;
+import com.synectiks.commons.entities.cms.Branch;
 import com.synectiks.cms.repository.BranchRepository;
 //import com.synectiks.cms.repository.search.BranchSearchRepository;
 import com.synectiks.cms.service.dto.BranchDTO;

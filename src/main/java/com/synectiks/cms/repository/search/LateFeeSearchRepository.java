@@ -1,6 +1,6 @@
 package com.synectiks.cms.repository.search;
 
-import com.synectiks.cms.domain.LateFee;
+import com.synectiks.commons.entities.cms.LateFee;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

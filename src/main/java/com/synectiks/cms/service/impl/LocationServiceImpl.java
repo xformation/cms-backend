@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.LocationService;
-import com.synectiks.cms.domain.Location;
+import com.synectiks.commons.entities.cms.Location;
 import com.synectiks.cms.repository.LocationRepository;
 //import com.synectiks.cms.repository.search.LocationSearchRepository;
 import com.synectiks.cms.service.dto.LocationDTO;

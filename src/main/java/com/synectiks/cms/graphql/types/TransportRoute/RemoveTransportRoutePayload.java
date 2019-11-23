@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.TransportRoute;
 
-import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.commons.entities.cms.TransportRoute;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.synectiks.cms.repository.search;
 
-import com.synectiks.cms.domain.IdCard;
+import com.synectiks.commons.entities.cms.IdCard;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

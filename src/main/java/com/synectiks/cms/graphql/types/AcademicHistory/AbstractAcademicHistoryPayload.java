@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.AcademicHistory;
 
-import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.commons.entities.cms.AcademicHistory;
 
 public class AbstractAcademicHistoryPayload {
     private  final AcademicHistory academicHistory;

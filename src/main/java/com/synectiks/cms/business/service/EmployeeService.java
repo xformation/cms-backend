@@ -1,9 +1,9 @@
 package com.synectiks.cms.business.service;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsEmployeeVo;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Vehicle;
+import com.synectiks.commons.entities.cms.CmsEmployeeVo;
+import com.synectiks.commons.entities.cms.Employee;
+import com.synectiks.commons.entities.cms.Vehicle;
 import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
 import com.synectiks.cms.repository.EmployeeRepository;
 import com.synectiks.cms.service.util.CommonUtil;

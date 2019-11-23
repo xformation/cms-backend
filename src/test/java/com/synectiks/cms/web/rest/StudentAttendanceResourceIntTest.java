@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.commons.entities.cms.StudentAttendance;
+import com.synectiks.commons.entities.cms.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.service.StudentAttendanceService;
 import com.synectiks.cms.service.dto.StudentAttendanceDTO;

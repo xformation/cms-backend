@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Country;
 
-import com.synectiks.cms.domain.Country;
+import com.synectiks.commons.entities.cms.Country;
 
 public class RemoveCountryInput {
 

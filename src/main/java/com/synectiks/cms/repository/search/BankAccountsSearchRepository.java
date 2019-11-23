@@ -1,6 +1,6 @@
 package com.synectiks.cms.repository.search;
 
-import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.commons.entities.cms.BankAccounts;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

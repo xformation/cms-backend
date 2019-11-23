@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Insurance;
 
-import com.synectiks.cms.domain.Insurance;
+import com.synectiks.commons.entities.cms.Insurance;
 
 import java.util.List;
 

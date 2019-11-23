@@ -1,6 +1,6 @@
 //package com.synectiks.cms.graphql.types.Semester;
 //
-//import com.synectiks.cms.domain.Semester;
+//import com.synectiks.commons.entities.cms.Semester;
 //
 //import java.util.List;
 //

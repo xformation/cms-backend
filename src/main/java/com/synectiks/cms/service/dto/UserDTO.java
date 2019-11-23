@@ -2,8 +2,8 @@ package com.synectiks.cms.service.dto;
 
 import com.synectiks.cms.config.Constants;
 
-import com.synectiks.cms.domain.Authority;
-import com.synectiks.cms.domain.User;
+import com.synectiks.commons.entities.cms.Authority;
+import com.synectiks.commons.entities.cms.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

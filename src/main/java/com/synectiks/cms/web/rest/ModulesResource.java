@@ -27,7 +27,7 @@ import com.synectiks.cms.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.synectiks.cms.domain.Modules}.
+ * REST controller for managing {@link com.synectiks.commons.entities.cms.Modules}.
  */
 @RestController
 @RequestMapping("/api")

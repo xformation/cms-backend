@@ -25,11 +25,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.AcademicYear;
+import com.synectiks.commons.entities.cms.Holiday;
+import com.synectiks.commons.entities.cms.QueryResult;
+import com.synectiks.commons.entities.cms.Term;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.HolidayRepository;
 import com.synectiks.cms.repository.TermRepository;

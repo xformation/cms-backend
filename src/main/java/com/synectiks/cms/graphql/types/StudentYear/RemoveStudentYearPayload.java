@@ -1,6 +1,6 @@
 //package com.synectiks.cms.graphql.types.StudentYear;
 //
-//import com.synectiks.cms.domain.StudentYear;
+//import com.synectiks.commons.entities.cms.StudentYear;
 //
 //import java.util.List;
 //

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
-import com.synectiks.cms.domain.Country;
+import com.synectiks.commons.entities.cms.Country;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;
 

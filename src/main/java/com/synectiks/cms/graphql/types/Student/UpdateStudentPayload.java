@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.Student;
 
 
-import com.synectiks.cms.domain.Student;
+import com.synectiks.commons.entities.cms.Student;
 
 public class UpdateStudentPayload extends AbstractStudentPayload {
     public UpdateStudentPayload(Student student) {

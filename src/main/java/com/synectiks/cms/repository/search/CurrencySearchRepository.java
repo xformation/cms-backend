@@ -1,6 +1,6 @@
 package com.synectiks.cms.repository.search;
 
-import com.synectiks.cms.domain.Currency;
+import com.synectiks.commons.entities.cms.Currency;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

@@ -1,8 +1,6 @@
 package com.synectiks.cms.graphql.resolvers;
 
-import java.io.File;
 import java.math.BigInteger;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,10 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
-import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
-import com.synectiks.cms.filter.library.LibraryFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.enumeration.Frequency;
-import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
 import com.synectiks.cms.exceptions.FilePathNotFoundException;
@@ -42,6 +33,8 @@ import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
+import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
+import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
 import com.synectiks.cms.filter.exam.AcademicExamSettingFilterImpl;
 import com.synectiks.cms.filter.exam.AcademicExamSettingUpdateFilter;
 import com.synectiks.cms.filter.exam.DailyExamVo;
@@ -51,6 +44,7 @@ import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
+import com.synectiks.cms.filter.library.LibraryFilterInput;
 import com.synectiks.cms.filter.library.LibraryFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.student.StudentListFilterInput;
@@ -125,11 +119,9 @@ import com.synectiks.cms.graphql.types.Batch.RemoveBatchPayload;
 import com.synectiks.cms.graphql.types.Batch.UpdateBatchInput;
 import com.synectiks.cms.graphql.types.Batch.UpdateBatchPayload;
 import com.synectiks.cms.graphql.types.Book.AddBookInput;
-import com.synectiks.cms.graphql.types.Book.AddBookPayload;
 import com.synectiks.cms.graphql.types.Book.RemoveBookInput;
 import com.synectiks.cms.graphql.types.Book.RemoveBookPayload;
 import com.synectiks.cms.graphql.types.Book.UpdateBookInput;
-import com.synectiks.cms.graphql.types.Book.UpdateBookPayload;
 import com.synectiks.cms.graphql.types.Branch.AddBranchInput;
 import com.synectiks.cms.graphql.types.Branch.AddBranchPayload;
 import com.synectiks.cms.graphql.types.Branch.RemoveBranchInput;
@@ -155,11 +147,9 @@ import com.synectiks.cms.graphql.types.CompetitiveExam.RemoveCompetitiveExamPayl
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamInput;
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamPayload;
 import com.synectiks.cms.graphql.types.Contract.AddContractInput;
-import com.synectiks.cms.graphql.types.Contract.AddContractPayload;
 import com.synectiks.cms.graphql.types.Contract.RemoveContractInput;
 import com.synectiks.cms.graphql.types.Contract.RemoveContractPayload;
 import com.synectiks.cms.graphql.types.Contract.UpdateContractInput;
-import com.synectiks.cms.graphql.types.Contract.UpdateContractPayload;
 import com.synectiks.cms.graphql.types.Country.AddCountryInput;
 import com.synectiks.cms.graphql.types.Country.AddCountryPayload;
 import com.synectiks.cms.graphql.types.Country.RemoveCountryInput;
@@ -266,7 +256,6 @@ import com.synectiks.cms.graphql.types.State.RemoveStateInput;
 import com.synectiks.cms.graphql.types.State.RemoveStatePayload;
 import com.synectiks.cms.graphql.types.State.UpdateStateInput;
 import com.synectiks.cms.graphql.types.State.UpdateStatePayload;
-import com.synectiks.cms.graphql.types.Student.AbstractStudentInput;
 import com.synectiks.cms.graphql.types.Student.AddStudentInput;
 import com.synectiks.cms.graphql.types.Student.AddStudentPayload;
 import com.synectiks.cms.graphql.types.Student.RemoveStudentInput;
@@ -374,6 +363,67 @@ import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.repository.VehicleRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
+import com.synectiks.commons.entities.cms.AcademicExamSetting;
+import com.synectiks.commons.entities.cms.AcademicHistory;
+import com.synectiks.commons.entities.cms.AcademicYear;
+import com.synectiks.commons.entities.cms.AdminAttendance;
+import com.synectiks.commons.entities.cms.AdmissionApplication;
+import com.synectiks.commons.entities.cms.AdmissionEnquiry;
+import com.synectiks.commons.entities.cms.AttendanceMaster;
+import com.synectiks.commons.entities.cms.AuthorizedSignatory;
+import com.synectiks.commons.entities.cms.BankAccounts;
+import com.synectiks.commons.entities.cms.Batch;
+import com.synectiks.commons.entities.cms.Book;
+import com.synectiks.commons.entities.cms.Branch;
+import com.synectiks.commons.entities.cms.City;
+import com.synectiks.commons.entities.cms.CmsAdmissionApplicationVo;
+import com.synectiks.commons.entities.cms.CmsAdmissionEnquiryVo;
+import com.synectiks.commons.entities.cms.CmsBook;
+import com.synectiks.commons.entities.cms.CmsContract;
+import com.synectiks.commons.entities.cms.CmsEmployeeVo;
+import com.synectiks.commons.entities.cms.CmsFeeCategory;
+import com.synectiks.commons.entities.cms.CmsFeeDetails;
+import com.synectiks.commons.entities.cms.CmsFeeSettingsVo;
+import com.synectiks.commons.entities.cms.CmsInsurance;
+import com.synectiks.commons.entities.cms.CmsInvoice;
+import com.synectiks.commons.entities.cms.CmsLibrary;
+import com.synectiks.commons.entities.cms.CmsLibraryVo;
+import com.synectiks.commons.entities.cms.CmsStudentVo;
+import com.synectiks.commons.entities.cms.CmsVehicleVo;
+import com.synectiks.commons.entities.cms.College;
+import com.synectiks.commons.entities.cms.CompetitiveExam;
+import com.synectiks.commons.entities.cms.Contract;
+import com.synectiks.commons.entities.cms.Country;
+import com.synectiks.commons.entities.cms.Department;
+import com.synectiks.commons.entities.cms.Documents;
+import com.synectiks.commons.entities.cms.DueDate;
+import com.synectiks.commons.entities.cms.Employee;
+import com.synectiks.commons.entities.cms.Facility;
+import com.synectiks.commons.entities.cms.FeeCategory;
+import com.synectiks.commons.entities.cms.FeeDetails;
+import com.synectiks.commons.entities.cms.Holiday;
+import com.synectiks.commons.entities.cms.Insurance;
+import com.synectiks.commons.entities.cms.Invoice;
+import com.synectiks.commons.entities.cms.LateFee;
+import com.synectiks.commons.entities.cms.Lecture;
+import com.synectiks.commons.entities.cms.LegalEntity;
+import com.synectiks.commons.entities.cms.Library;
+import com.synectiks.commons.entities.cms.PaymentRemainder;
+import com.synectiks.commons.entities.cms.QueryResult;
+import com.synectiks.commons.entities.cms.Section;
+import com.synectiks.commons.entities.cms.State;
+import com.synectiks.commons.entities.cms.Student;
+import com.synectiks.commons.entities.cms.StudentAttendance;
+import com.synectiks.commons.entities.cms.StudentExamReport;
+import com.synectiks.commons.entities.cms.Subject;
+import com.synectiks.commons.entities.cms.Teach;
+import com.synectiks.commons.entities.cms.Teacher;
+import com.synectiks.commons.entities.cms.Term;
+import com.synectiks.commons.entities.cms.TransportRoute;
+import com.synectiks.commons.entities.cms.TypeOfGrading;
+import com.synectiks.commons.entities.cms.Vehicle;
+import com.synectiks.commons.entities.cms.enumeration.Frequency;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 
 
 
@@ -397,7 +447,6 @@ public class Mutation implements GraphQLMutationResolver {
     private final HolidayRepository holidayRepository;
     private final LectureRepository lectureRepository;
     private final LegalEntityRepository legalEntityRepository;
-    private final LocationRepository locationRepository;
     private final SectionRepository sectionRepository;
     private final StudentRepository studentRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
@@ -462,9 +511,6 @@ public class Mutation implements GraphQLMutationResolver {
     private VehicleFilterProcessor vehicleFilterProcessor;
 
     @Autowired
-	private Base64FileProcessor base64FileProcessor;
-
-    @Autowired
     private AdmissionApplicationProcessor admissionApplicationProcessor;
     @Autowired
     private LibraryFilterProcessor libraryFilterProcessor;
@@ -488,7 +534,6 @@ public class Mutation implements GraphQLMutationResolver {
         this.authorizedSignatoryRepository = authorizedSignatoryRepository;
         this.bankAccountsRepository = bankAccountsRepository;
         this.departmentRepository = departmentRepository;
-        this.locationRepository = locationRepository;
         this.studentAttendanceRepository = studentAttendanceRepository;
         this.academicYearRepository = academicYearRepository;
         this.holidayRepository = holidayRepository;
@@ -3468,7 +3513,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveTransportRoutePayload removeTransportRoute(RemoveTransportRouteInput removeTransportRouteInput) {
-        TransportRoute transportRoute = transportRouteRepository.getOne(removeTransportRouteInput.getTransportRouteId());
+        transportRouteRepository.getOne(removeTransportRouteInput.getTransportRouteId());
         return new RemoveTransportRoutePayload(Lists.newArrayList(transportRouteRepository.findAll()));
     }
 
@@ -3534,7 +3579,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public RemoveDueDatePayload removeDueDate(RemoveDueDateInput removeDueDateInput) {
-        DueDate dueDate = dueDateRepository.findById(removeDueDateInput.getDueDateId()).get();
+        dueDateRepository.findById(removeDueDateInput.getDueDateId()).get();
         return new RemoveDueDatePayload(Lists.newArrayList(dueDateRepository.findAll()));
     }
 

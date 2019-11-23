@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Book;
 
-import com.synectiks.cms.domain.Book;
+import com.synectiks.commons.entities.cms.Book;
 
 import java.util.List;
 

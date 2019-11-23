@@ -2,7 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 
-import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.commons.entities.cms.AcademicYear;
 import com.synectiks.cms.repository.AcademicYearRepository;
 //import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
 import com.synectiks.cms.service.AcademicYearService;
@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 /**
  * Test class for the AcademicYearResource REST controller.
  *

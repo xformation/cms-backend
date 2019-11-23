@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsCollegeVo;
-import com.synectiks.cms.domain.College;
+import com.synectiks.commons.entities.cms.CmsCollegeVo;
+import com.synectiks.commons.entities.cms.College;
 import com.synectiks.cms.repository.CollegeRepository;
 
 /**

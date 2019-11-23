@@ -1,11 +1,11 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Branch;
+import com.synectiks.commons.entities.cms.Student;
+import com.synectiks.commons.entities.cms.Department;
+import com.synectiks.commons.entities.cms.Batch;
+import com.synectiks.commons.entities.cms.Section;
+import com.synectiks.commons.entities.cms.Branch;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.search.StudentSearchRepository;
 import com.synectiks.cms.service.StudentService;
@@ -39,13 +39,13 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.enumeration.Religion;
+import com.synectiks.commons.entities.cms.enumeration.Caste;
+import com.synectiks.commons.entities.cms.enumeration.Gender;
+import com.synectiks.commons.entities.cms.enumeration.RelationWithStudentEnum;
+import com.synectiks.commons.entities.cms.enumeration.StudentTypeEnum;
+import com.synectiks.commons.entities.cms.enumeration.Bloodgroup;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 /**
  * Integration tests for the {@Link StudentResource} REST controller.
  */

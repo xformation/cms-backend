@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.commons.entities.cms.TypeOfGrading;
 import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.service.TypeOfGradingService;
 import com.synectiks.cms.service.dto.TypeOfGradingDTO;

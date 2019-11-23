@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
+import com.synectiks.commons.entities.cms.enumeration.TypeOfOwnerShip;
 
 /**
  * A DTO for the Contract entity.

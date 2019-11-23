@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
+import com.synectiks.commons.entities.cms.enumeration.TypeOfInsurance;
 
 /**
  * A DTO for the Insurance entity.

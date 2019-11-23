@@ -3,8 +3,8 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.ModeOfPayment;
-import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.commons.entities.cms.enumeration.ModeOfPayment;
+import com.synectiks.commons.entities.cms.enumeration.InvoicePaymentStatus;
 
 /**
  * A DTO for the Invoice entity.

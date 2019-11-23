@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.enumeration.EnquiryStatus;
+import com.synectiks.commons.entities.cms.AcademicYear;
+import com.synectiks.commons.entities.cms.Branch;
+import com.synectiks.commons.entities.cms.enumeration.EnquiryStatus;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
 import com.synectiks.cms.repository.BranchRepository;
 

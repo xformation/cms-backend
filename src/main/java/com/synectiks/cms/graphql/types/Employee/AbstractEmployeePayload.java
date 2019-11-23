@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Employee;
 
-import com.synectiks.cms.domain.Employee;
+import com.synectiks.commons.entities.cms.Employee;
 
 public class AbstractEmployeePayload {
     private final Employee employee;

@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.CmsBatchVo;
-import com.synectiks.cms.domain.Department;
+import com.synectiks.commons.entities.cms.Batch;
+import com.synectiks.commons.entities.cms.CmsBatchVo;
+import com.synectiks.commons.entities.cms.Department;
 import com.synectiks.cms.repository.BatchRepository;
 import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.service.util.CommonUtil;

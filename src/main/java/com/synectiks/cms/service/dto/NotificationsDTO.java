@@ -3,10 +3,10 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 
 /**
- * A DTO for the {@link com.synectiks.cms.domain.Notifications} entity.
+ * A DTO for the {@link com.synectiks.commons.entities.cms.Notifications} entity.
  */
 public class NotificationsDTO implements Serializable {
 

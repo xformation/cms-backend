@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.ContractService;
-import com.synectiks.cms.domain.Contract;
+import com.synectiks.commons.entities.cms.Contract;
 import com.synectiks.cms.repository.ContractRepository;
 //import com.synectiks.cms.repository.search.ContractSearchRepository;
 import com.synectiks.cms.service.dto.ContractDTO;

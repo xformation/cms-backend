@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AdminOverviewService;
-import com.synectiks.cms.domain.AdminOverview;
+import com.synectiks.commons.entities.cms.AdminOverview;
 import com.synectiks.cms.repository.AdminOverviewRepository;
 //import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
 import com.synectiks.cms.service.dto.AdminOverviewDTO;

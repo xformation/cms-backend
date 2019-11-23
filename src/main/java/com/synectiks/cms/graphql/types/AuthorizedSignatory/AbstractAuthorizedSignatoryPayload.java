@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.AuthorizedSignatory;
 
-import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.commons.entities.cms.AuthorizedSignatory;
 
 public class AbstractAuthorizedSignatoryPayload {
     private final AuthorizedSignatory authorizedSignatory;

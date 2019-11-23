@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.PaymentRequestResponse;
+import com.synectiks.commons.entities.cms.PaymentRequestResponse;
 import com.synectiks.cms.repository.PaymentRequestResponseRepository;
 import com.synectiks.cms.service.PaymentRequestResponseService;
 import com.synectiks.cms.service.dto.PaymentRequestResponseDTO;

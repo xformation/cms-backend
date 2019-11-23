@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StudentFacilityLinkService;
-import com.synectiks.cms.domain.StudentFacilityLink;
+import com.synectiks.commons.entities.cms.StudentFacilityLink;
 import com.synectiks.cms.repository.StudentFacilityLinkRepository;
 //import com.synectiks.cms.repository.search.StudentFacilityLinkSearchRepository;
 import com.synectiks.cms.service.dto.StudentFacilityLinkDTO;

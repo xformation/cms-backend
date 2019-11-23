@@ -15,7 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.synectiks.cms.domain.*;
+import com.synectiks.commons.entities.cms.*;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.commons.entities.cms.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
 

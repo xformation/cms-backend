@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.College;
 
-import com.synectiks.cms.domain.College;
+import com.synectiks.commons.entities.cms.College;
 
 import java.util.List;
 

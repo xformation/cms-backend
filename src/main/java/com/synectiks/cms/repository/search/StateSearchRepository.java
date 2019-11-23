@@ -1,6 +1,6 @@
 package com.synectiks.cms.repository.search;
 
-import com.synectiks.cms.domain.State;
+import com.synectiks.commons.entities.cms.State;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

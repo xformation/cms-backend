@@ -3,10 +3,10 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Disability;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.MaritalStatus;
+import com.synectiks.commons.entities.cms.enumeration.Disability;
+import com.synectiks.commons.entities.cms.enumeration.Gender;
+import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.commons.entities.cms.enumeration.MaritalStatus;
 
 /**
  * A DTO for the Employee entity.

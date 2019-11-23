@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.BookService;
-import com.synectiks.cms.domain.Book;
+import com.synectiks.commons.entities.cms.Book;
 import com.synectiks.cms.repository.BookRepository;
 //import com.synectiks.cms.repository.search.BookSearchRepository;
 import com.synectiks.cms.service.dto.BookDTO;

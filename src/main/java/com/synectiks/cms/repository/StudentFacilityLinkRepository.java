@@ -2,7 +2,7 @@ package com.synectiks.cms.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.synectiks.cms.domain.StudentFacilityLink;
+import com.synectiks.commons.entities.cms.StudentFacilityLink;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

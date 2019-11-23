@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TermService;
-import com.synectiks.cms.domain.Term;
+import com.synectiks.commons.entities.cms.Term;
 import com.synectiks.cms.repository.TermRepository;
 //import com.synectiks.cms.repository.search.TermSearchRepository;
 import com.synectiks.cms.service.dto.TermDTO;

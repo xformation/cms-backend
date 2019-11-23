@@ -20,9 +20,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Teacher;
+import com.synectiks.commons.entities.cms.Employee;
+import com.synectiks.commons.entities.cms.Student;
+import com.synectiks.commons.entities.cms.Teacher;
 import com.synectiks.cms.repository.EmployeeRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.TeacherRepository;

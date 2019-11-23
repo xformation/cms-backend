@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StateService;
-import com.synectiks.cms.domain.State;
+import com.synectiks.commons.entities.cms.State;
 import com.synectiks.cms.repository.StateRepository;
 //import com.synectiks.cms.repository.search.StateSearchRepository;
 import com.synectiks.cms.service.dto.StateDTO;

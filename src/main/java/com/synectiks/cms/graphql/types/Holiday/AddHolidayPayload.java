@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Holiday;
 
-import com.synectiks.cms.domain.Holiday;
+import com.synectiks.commons.entities.cms.Holiday;
 
 public class AddHolidayPayload extends AbstractHolidayPayload {
 

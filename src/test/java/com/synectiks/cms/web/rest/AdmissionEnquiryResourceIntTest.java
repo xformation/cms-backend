@@ -2,7 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 
-import com.synectiks.cms.domain.AdmissionEnquiry;
+import com.synectiks.commons.entities.cms.AdmissionEnquiry;
 import com.synectiks.cms.repository.AdmissionEnquiryRepository;
 //import com.synectiks.cms.repository.search.AdmissionEnquirySearchRepository;
 import com.synectiks.cms.service.AdmissionEnquiryService;
@@ -40,10 +40,10 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.CourseEnum;
-import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
-import com.synectiks.cms.domain.enumeration.EnquiryStatus;
+import com.synectiks.commons.entities.cms.enumeration.Gender;
+import com.synectiks.commons.entities.cms.enumeration.CourseEnum;
+import com.synectiks.commons.entities.cms.enumeration.ModeOfEnquiry;
+import com.synectiks.commons.entities.cms.enumeration.EnquiryStatus;
 /**
  * Test class for the AdmissionEnquiryResource REST controller.
  *

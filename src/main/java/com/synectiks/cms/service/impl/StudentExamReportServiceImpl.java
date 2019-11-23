@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StudentExamReportService;
-import com.synectiks.cms.domain.StudentExamReport;
+import com.synectiks.commons.entities.cms.StudentExamReport;
 import com.synectiks.cms.repository.StudentExamReportRepository;
 //import com.synectiks.cms.repository.search.StudentExamReportSearchRepository;
 import com.synectiks.cms.service.dto.StudentExamReportDTO;

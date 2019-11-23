@@ -3,8 +3,8 @@ package com.synectiks.cms.business.service.exam;
 import java.util.List;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.commons.entities.cms.*;
+import com.synectiks.commons.entities.cms.enumeration.SemesterEnum;
 import com.synectiks.cms.filter.exam.ExamListFilterInput;
 import com.synectiks.cms.graphql.types.StudentExamReport.AddStudentExamReportInput;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;

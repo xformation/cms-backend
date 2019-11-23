@@ -2,9 +2,9 @@ package com.synectiks.cms.business.service;
 
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
-import com.synectiks.cms.domain.enumeration.EnquiryStatus;
+import com.synectiks.commons.entities.cms.*;
+import com.synectiks.commons.entities.cms.enumeration.AdmissionStatusEnum;
+import com.synectiks.commons.entities.cms.enumeration.EnquiryStatus;
 import com.synectiks.cms.repository.AdmissionApplicationRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;

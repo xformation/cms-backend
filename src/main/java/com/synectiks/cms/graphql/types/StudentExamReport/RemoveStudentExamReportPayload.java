@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.StudentExamReport;
 
-import com.synectiks.cms.domain.StudentExamReport;
+import com.synectiks.commons.entities.cms.StudentExamReport;
 
 import java.util.List;
 

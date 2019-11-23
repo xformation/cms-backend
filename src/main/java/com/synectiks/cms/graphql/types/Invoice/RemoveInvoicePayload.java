@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Invoice;
 
-import com.synectiks.cms.domain.Invoice;
+import com.synectiks.commons.entities.cms.Invoice;
 
 import java.util.List;
 

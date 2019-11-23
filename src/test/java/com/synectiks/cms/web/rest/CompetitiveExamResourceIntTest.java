@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.CompetitiveExam;
+import com.synectiks.commons.entities.cms.CompetitiveExam;
 import com.synectiks.cms.repository.CompetitiveExamRepository;
 import com.synectiks.cms.service.CompetitiveExamService;
 import com.synectiks.cms.service.dto.CompetitiveExamDTO;

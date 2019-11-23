@@ -1,7 +1,7 @@
 package com.synectiks.cms.filter.common;
 
 import com.synectiks.cms.business.service.BranchService;
-import com.synectiks.cms.domain.*;
+import com.synectiks.commons.entities.cms.*;
 import com.synectiks.cms.repository.*;
 import com.synectiks.cms.service.impl.BranchServiceImpl;
 import org.springframework.data.domain.Example;

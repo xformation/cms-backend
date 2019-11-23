@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.TransportRoute;
 
-import com.synectiks.cms.domain.enumeration.RouteFrequency;
+import com.synectiks.commons.entities.cms.enumeration.RouteFrequency;
 
 import java.util.Objects;
 

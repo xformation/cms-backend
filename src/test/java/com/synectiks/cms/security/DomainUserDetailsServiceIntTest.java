@@ -1,7 +1,7 @@
 package com.synectiks.cms.security;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.User;
+import com.synectiks.commons.entities.cms.User;
 import com.synectiks.cms.repository.UserRepository;
 
 import org.apache.commons.lang3.RandomStringUtils;

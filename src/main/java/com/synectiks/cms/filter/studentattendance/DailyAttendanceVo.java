@@ -1,6 +1,6 @@
 package com.synectiks.cms.filter.studentattendance;
 
-import com.synectiks.cms.domain.Student;
+import com.synectiks.commons.entities.cms.Student;
 
 public class DailyAttendanceVo {
 	

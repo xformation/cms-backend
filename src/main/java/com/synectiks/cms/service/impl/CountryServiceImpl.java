@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CountryService;
-import com.synectiks.cms.domain.Country;
+import com.synectiks.commons.entities.cms.Country;
 import com.synectiks.cms.repository.CountryRepository;
 //import com.synectiks.cms.repository.search.CountrySearchRepository;
 import com.synectiks.cms.service.dto.CountryDTO;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.DueDateService;
-import com.synectiks.cms.domain.DueDate;
+import com.synectiks.commons.entities.cms.DueDate;
 import com.synectiks.cms.repository.DueDateRepository;
 //import com.synectiks.cms.repository.search.DueDateSearchRepository;
 import com.synectiks.cms.service.dto.DueDateDTO;

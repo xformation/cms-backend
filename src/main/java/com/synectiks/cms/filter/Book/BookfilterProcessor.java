@@ -2,7 +2,7 @@ package com.synectiks.cms.filter.Book;
 
 import com.synectiks.cms.business.service.BookService;
 
-import com.synectiks.cms.domain.Library;
+import com.synectiks.commons.entities.cms.Library;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

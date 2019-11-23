@@ -1,7 +1,7 @@
 package com.synectiks.cms.filter.exam;
 
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.Student;
+import com.synectiks.commons.entities.cms.AcademicExamSetting;
+import com.synectiks.commons.entities.cms.Student;
 
 public class DailyExamVo {
 	

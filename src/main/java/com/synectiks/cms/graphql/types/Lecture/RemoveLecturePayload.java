@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.Lecture;
 
 import java.util.List;
 
-import com.synectiks.cms.domain.Lecture;
+import com.synectiks.commons.entities.cms.Lecture;
 
 public class RemoveLecturePayload {
     private final List<Lecture> lecture;

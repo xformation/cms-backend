@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.IdCardService;
-import com.synectiks.cms.domain.IdCard;
+import com.synectiks.commons.entities.cms.IdCard;
 import com.synectiks.cms.repository.IdCardRepository;
 //import com.synectiks.cms.repository.search.IdCardSearchRepository;
 import com.synectiks.cms.service.dto.IdCardDTO;

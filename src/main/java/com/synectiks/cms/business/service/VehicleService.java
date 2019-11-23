@@ -1,9 +1,9 @@
 package com.synectiks.cms.business.service;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsVehicleVo;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.Vehicle;
+import com.synectiks.commons.entities.cms.CmsVehicleVo;
+import com.synectiks.commons.entities.cms.TransportRoute;
+import com.synectiks.commons.entities.cms.Vehicle;
 import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.repository.VehicleRepository;
 import com.synectiks.cms.service.util.CommonUtil;

@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Vehicle;
 
-import com.synectiks.cms.domain.Vehicle;
+import com.synectiks.commons.entities.cms.Vehicle;
 
 import java.util.List;
 

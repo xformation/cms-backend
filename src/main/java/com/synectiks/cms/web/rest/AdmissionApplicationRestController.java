@@ -1,8 +1,8 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
+import com.synectiks.commons.entities.cms.AdmissionApplication;
+import com.synectiks.commons.entities.cms.CmsAdmissionApplicationVo;
 import com.synectiks.cms.repository.AdmissionApplicationRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;

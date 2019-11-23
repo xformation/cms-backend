@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Section;
 
-import com.synectiks.cms.domain.Section;
+import com.synectiks.commons.entities.cms.Section;
 
 public class AbstractSectionPayload {
     private final Section section;

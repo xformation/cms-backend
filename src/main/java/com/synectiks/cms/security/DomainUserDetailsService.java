@@ -1,6 +1,6 @@
 package com.synectiks.cms.security;
 
-import com.synectiks.cms.domain.User;
+import com.synectiks.commons.entities.cms.User;
 import com.synectiks.cms.repository.UserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;

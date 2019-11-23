@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.AdminAttendance;
 
-import com.synectiks.cms.domain.AdminAttendance;
+import com.synectiks.commons.entities.cms.AdminAttendance;
 
 import java.util.List;
 

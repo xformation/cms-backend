@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.CmsTermVo;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.commons.entities.cms.AcademicYear;
+import com.synectiks.commons.entities.cms.CmsTermVo;
+import com.synectiks.commons.entities.cms.Term;
+import com.synectiks.commons.entities.cms.enumeration.Status;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.service.util.CommonUtil;

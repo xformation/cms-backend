@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.ExceptionRecordService;
-import com.synectiks.cms.domain.ExceptionRecord;
+import com.synectiks.commons.entities.cms.ExceptionRecord;
 import com.synectiks.cms.repository.ExceptionRecordRepository;
 //import com.synectiks.cms.repository.search.ExceptionRecordSearchRepository;
 import com.synectiks.cms.service.dto.ExceptionRecordDTO;

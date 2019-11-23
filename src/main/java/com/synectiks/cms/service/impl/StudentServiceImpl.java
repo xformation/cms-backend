@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StudentService;
-import com.synectiks.cms.domain.Student;
+import com.synectiks.commons.entities.cms.Student;
 import com.synectiks.cms.repository.StudentRepository;
 //import com.synectiks.cms.repository.search.StudentSearchRepository;
 import com.synectiks.cms.service.dto.StudentDTO;

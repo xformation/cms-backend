@@ -2,7 +2,7 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.SectionEnum;
+import com.synectiks.commons.entities.cms.enumeration.SectionEnum;
 
 /**
  * A DTO for the Section entity.
