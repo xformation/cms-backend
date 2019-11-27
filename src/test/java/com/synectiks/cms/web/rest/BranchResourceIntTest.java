@@ -2,7 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 
-import com.synectiks.commons.entities.cms.Branch;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.repository.BranchRepository;
 import com.synectiks.cms.service.BranchService;
 import com.synectiks.cms.service.dto.BranchDTO;

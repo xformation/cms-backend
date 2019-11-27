@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.BatchService;
-import com.synectiks.commons.entities.cms.Batch;
+import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.repository.BatchRepository;
 //import com.synectiks.cms.repository.search.BatchSearchRepository;
 import com.synectiks.cms.service.dto.BatchDTO;

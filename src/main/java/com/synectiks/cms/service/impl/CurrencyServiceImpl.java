@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CurrencyService;
-import com.synectiks.commons.entities.cms.Currency;
+import com.synectiks.cms.domain.Currency;
 import com.synectiks.cms.repository.CurrencyRepository;
 //import com.synectiks.cms.repository.search.CurrencySearchRepository;
 import com.synectiks.cms.service.dto.CurrencyDTO;

@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.PaymentRemainder;
+import com.synectiks.cms.domain.PaymentRemainder;
 import com.synectiks.cms.repository.PaymentRemainderRepository;
 import com.synectiks.cms.service.PaymentRemainderService;
 import com.synectiks.cms.service.dto.PaymentRemainderDTO;

@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Teacher;
 
-import com.synectiks.commons.entities.cms.enumeration.*;
+import com.synectiks.cms.domain.enumeration.*;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.synectiks.commons.entities.cms.ExceptionRecord} entity.
+ * A DTO for the {@link com.synectiks.cms.domain.ExceptionRecord} entity.
  */
 public class ExceptionRecordDTO implements Serializable {
 

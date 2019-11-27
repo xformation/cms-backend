@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.ModulesService;
-import com.synectiks.commons.entities.cms.Modules;
+import com.synectiks.cms.domain.Modules;
 import com.synectiks.cms.repository.ModulesRepository;
 //import com.synectiks.cms.repository.search.ModulesSearchRepository;
 import com.synectiks.cms.service.dto.ModulesDTO;

@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Documents;
 
-import com.synectiks.commons.entities.cms.Documents;
+import com.synectiks.cms.domain.Documents;
 
 public class AbstractDocumentsPayload {
 

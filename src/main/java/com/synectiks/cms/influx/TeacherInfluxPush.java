@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.commons.entities.cms.AcademicYear;
-import com.synectiks.commons.entities.cms.Lecture;
-import com.synectiks.commons.entities.cms.Teach;
-import com.synectiks.commons.entities.cms.Teacher;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
 
 @Component
 public class TeacherInfluxPush implements InfluxPush {

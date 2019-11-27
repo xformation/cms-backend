@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.ReportsService;
-import com.synectiks.commons.entities.cms.Reports;
+import com.synectiks.cms.domain.Reports;
 import com.synectiks.cms.repository.ReportsRepository;
 //import com.synectiks.cms.repository.search.ReportsSearchRepository;
 import com.synectiks.cms.service.dto.ReportsDTO;

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.commons.entities.cms.Lecture;
-import com.synectiks.commons.entities.cms.QueryResult;
-import com.synectiks.commons.entities.cms.Student;
-import com.synectiks.commons.entities.cms.StudentAttendance;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
 import com.synectiks.cms.repository.LectureRepository;

@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.TypeOfCollege;
+import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 /**
  * A DTO for the LegalEntity entity.

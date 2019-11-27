@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 
-import com.synectiks.commons.entities.cms.User;
+import com.synectiks.cms.domain.User;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

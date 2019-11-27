@@ -2,8 +2,8 @@ package com.synectiks.cms.web.rest;
 
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.commons.entities.cms.AcademicExamSetting;
-import com.synectiks.commons.entities.cms.CmsAcademicExamSettingVo;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.CmsAcademicExamSettingVo;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;

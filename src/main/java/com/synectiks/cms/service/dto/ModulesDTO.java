@@ -1,10 +1,10 @@
 package com.synectiks.cms.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
- * A DTO for the {@link com.synectiks.commons.entities.cms.Modules} entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Modules} entity.
  */
 public class ModulesDTO implements Serializable {
 

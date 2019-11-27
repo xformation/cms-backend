@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.commons.entities.cms.AuthorizedSignatory;
-import com.synectiks.commons.entities.cms.Branch;
-import com.synectiks.commons.entities.cms.CmsAuthorizedSignatoryVo;
-import com.synectiks.commons.entities.cms.College;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.CmsAuthorizedSignatoryVo;
+import com.synectiks.cms.domain.College;
 import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
 import com.synectiks.cms.repository.BranchRepository;
 import com.synectiks.cms.repository.CollegeRepository;

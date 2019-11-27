@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Insurance;
 
-import com.synectiks.commons.entities.cms.Insurance;
+import com.synectiks.cms.domain.Insurance;
 
 public class AbstractInsurancePayload {
     private final Insurance insurance;

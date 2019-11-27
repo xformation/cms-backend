@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.Subject;
 
-import com.synectiks.commons.entities.cms.enumeration.Status;
-import com.synectiks.commons.entities.cms.enumeration.SubTypeEnum;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 
 import java.util.Objects;
 

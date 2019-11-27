@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.SubjectService;
-import com.synectiks.commons.entities.cms.Subject;
+import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.repository.SubjectRepository;
 //import com.synectiks.cms.repository.search.SubjectSearchRepository;
 import com.synectiks.cms.service.dto.SubjectDTO;

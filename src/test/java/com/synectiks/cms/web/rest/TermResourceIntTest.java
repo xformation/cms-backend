@@ -32,8 +32,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Term;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.service.TermService;
 import com.synectiks.cms.service.dto.TermDTO;

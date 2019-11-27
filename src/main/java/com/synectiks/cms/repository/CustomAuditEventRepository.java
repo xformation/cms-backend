@@ -2,7 +2,7 @@ package com.synectiks.cms.repository;
 
 import com.synectiks.cms.config.Constants;
 import com.synectiks.cms.config.audit.AuditEventConverter;
-import com.synectiks.commons.entities.cms.PersistentAuditEvent;
+import com.synectiks.cms.domain.PersistentAuditEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

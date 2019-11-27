@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.EmployeeService;
-import com.synectiks.commons.entities.cms.Employee;
+import com.synectiks.cms.domain.Employee;
 import com.synectiks.cms.repository.EmployeeRepository;
 //import com.synectiks.cms.repository.search.EmployeeSearchRepository;
 import com.synectiks.cms.service.dto.EmployeeDTO;

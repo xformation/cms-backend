@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.HolidayService;
-import com.synectiks.commons.entities.cms.Holiday;
+import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.repository.HolidayRepository;
 //import com.synectiks.cms.repository.search.HolidaySearchRepository;
 import com.synectiks.cms.service.dto.HolidayDTO;

@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.CompetitiveExam;
 
-import com.synectiks.commons.entities.cms.CompetitiveExam;
+import com.synectiks.cms.domain.CompetitiveExam;
 
 import java.util.List;
 

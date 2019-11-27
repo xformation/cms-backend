@@ -36,8 +36,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Authority;
-import com.synectiks.commons.entities.cms.User;
+import com.synectiks.cms.domain.Authority;
+import com.synectiks.cms.domain.User;
 import com.synectiks.cms.repository.UserRepository;
 import com.synectiks.cms.security.AuthoritiesConstants;
 import com.synectiks.cms.service.MailService;

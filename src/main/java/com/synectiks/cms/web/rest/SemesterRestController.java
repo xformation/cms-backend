@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.commons.entities.cms.CmsSemesterVo;
+import com.synectiks.cms.domain.CmsSemesterVo;
 import com.synectiks.cms.graphql.types.Student.Semester;
 
 import io.github.jhipster.web.util.ResponseUtil;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.InvoiceService;
-import com.synectiks.commons.entities.cms.Invoice;
+import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.repository.InvoiceRepository;
 //import com.synectiks.cms.repository.search.InvoiceSearchRepository;
 import com.synectiks.cms.service.dto.InvoiceDTO;

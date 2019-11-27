@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.InsuranceService;
-import com.synectiks.commons.entities.cms.Insurance;
+import com.synectiks.cms.domain.Insurance;
 import com.synectiks.cms.repository.InsuranceRepository;
 //import com.synectiks.cms.repository.search.InsuranceSearchRepository;
 import com.synectiks.cms.service.dto.InsuranceDTO;

@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.FeeCategory;
 
-import com.synectiks.commons.entities.cms.FeeCategory;
+import com.synectiks.cms.domain.FeeCategory;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.synectiks.cms.filter.student;
 
 import com.synectiks.cms.business.service.StudentService;
-import com.synectiks.commons.entities.cms.Student;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.synectiks.cms.repository.search;
 
-import com.synectiks.commons.entities.cms.PaymentRequestResponse;
+import com.synectiks.cms.domain.PaymentRequestResponse;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

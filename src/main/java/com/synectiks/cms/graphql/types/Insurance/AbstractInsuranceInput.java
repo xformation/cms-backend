@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Insurance;
 
-import com.synectiks.commons.entities.cms.enumeration.TypeOfInsurance;
+import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
 
 import java.util.Date;
 import java.util.Objects;

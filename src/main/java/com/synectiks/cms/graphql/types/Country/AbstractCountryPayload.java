@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Country;
 
-import com.synectiks.commons.entities.cms.Country;
+import com.synectiks.cms.domain.Country;
 
 public class AbstractCountryPayload {
     private final Country country;

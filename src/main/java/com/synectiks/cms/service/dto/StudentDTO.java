@@ -3,16 +3,16 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.Religion;
-import com.synectiks.commons.entities.cms.enumeration.Caste;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.RelationWithStudentEnum;
-import com.synectiks.commons.entities.cms.enumeration.StudentTypeEnum;
-import com.synectiks.commons.entities.cms.enumeration.Bloodgroup;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.domain.enumeration.Caste;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
- * A DTO for the {@link com.synectiks.commons.entities.cms.Student} entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Student} entity.
  */
 public class StudentDTO implements Serializable {
 

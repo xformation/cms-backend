@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Teach;
+import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.repository.TeachRepository;
 import com.synectiks.cms.service.TeachService;
 import com.synectiks.cms.service.dto.TeachDTO;

@@ -17,7 +17,7 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.synectiks.commons.entities.cms.*;
+import com.synectiks.cms.domain.*;
 import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
 import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
 import org.slf4j.Logger;
@@ -29,11 +29,11 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.commons.entities.cms.enumeration.BatchEnum;
-import com.synectiks.commons.entities.cms.enumeration.CmsBatchEnum;
-import com.synectiks.commons.entities.cms.enumeration.CmsSectionEnum;
-import com.synectiks.commons.entities.cms.enumeration.SectionEnum;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
+import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
+import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
 import com.synectiks.cms.graphql.types.course.Course;

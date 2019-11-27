@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.commons.entities.cms.AdmissionApplication;
-import com.synectiks.commons.entities.cms.CmsAdmissionApplicationVo;
-import com.synectiks.commons.entities.cms.Country;
+import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
+import com.synectiks.cms.domain.Country;
 import com.synectiks.cms.repository.AdmissionApplicationRepository;
 import com.synectiks.cms.repository.CountryRepository;
 import com.synectiks.cms.service.util.CommonUtil;

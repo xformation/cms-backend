@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.NotificationsService;
-import com.synectiks.commons.entities.cms.Notifications;
+import com.synectiks.cms.domain.Notifications;
 import com.synectiks.cms.repository.NotificationsRepository;
 //import com.synectiks.cms.repository.search.NotificationsSearchRepository;
 import com.synectiks.cms.service.dto.NotificationsDTO;

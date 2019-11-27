@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Lecture;
 
-import com.synectiks.commons.entities.cms.Lecture;
+import com.synectiks.cms.domain.Lecture;
 
 public class AbstractLecturePayload {
     private final Lecture lecture;

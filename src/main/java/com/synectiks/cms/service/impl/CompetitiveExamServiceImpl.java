@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CompetitiveExamService;
-import com.synectiks.commons.entities.cms.CompetitiveExam;
+import com.synectiks.cms.domain.CompetitiveExam;
 import com.synectiks.cms.repository.CompetitiveExamRepository;
 //import com.synectiks.cms.repository.search.CompetitiveExamSearchRepository;
 import com.synectiks.cms.service.dto.CompetitiveExamDTO;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.LateFeeService;
-import com.synectiks.commons.entities.cms.LateFee;
+import com.synectiks.cms.domain.LateFee;
 import com.synectiks.cms.repository.LateFeeRepository;
 //import com.synectiks.cms.repository.search.LateFeeSearchRepository;
 import com.synectiks.cms.service.dto.LateFeeDTO;

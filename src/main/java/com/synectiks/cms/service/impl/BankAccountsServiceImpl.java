@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.BankAccountsService;
-import com.synectiks.commons.entities.cms.BankAccounts;
+import com.synectiks.cms.domain.BankAccounts;
 import com.synectiks.cms.repository.BankAccountsRepository;
 //import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
 import com.synectiks.cms.service.dto.BankAccountsDTO;

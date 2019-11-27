@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.commons.entities.cms.AttendanceMaster;
-import com.synectiks.commons.entities.cms.Batch;
-import com.synectiks.commons.entities.cms.Department;
-import com.synectiks.commons.entities.cms.Section;
-import com.synectiks.commons.entities.cms.Teach;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.service.util.CommonUtil;

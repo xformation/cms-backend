@@ -32,9 +32,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Invoice;
-import com.synectiks.commons.entities.cms.enumeration.InvoicePaymentStatus;
-import com.synectiks.commons.entities.cms.enumeration.ModeOfPayment;
+import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.domain.enumeration.ModeOfPayment;
 import com.synectiks.cms.repository.InvoiceRepository;
 import com.synectiks.cms.service.InvoiceService;
 import com.synectiks.cms.service.dto.InvoiceDTO;

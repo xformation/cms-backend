@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Currency;
+import com.synectiks.cms.domain.Currency;
 import com.synectiks.cms.repository.CurrencyRepository;
 import com.synectiks.cms.service.CurrencyService;
 import com.synectiks.cms.service.dto.CurrencyDTO;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.BankAccounts;
 
-import com.synectiks.commons.entities.cms.College;
-import com.synectiks.commons.entities.cms.enumeration.NameOfBank;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.enumeration.NameOfBank;
 
 import java.util.Objects;
 

@@ -3,7 +3,7 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.Frequency;
+import com.synectiks.cms.domain.enumeration.Frequency;
 
 /**
  * A DTO for the DueDate entity.

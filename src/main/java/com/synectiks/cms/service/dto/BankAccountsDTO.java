@@ -2,10 +2,10 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.NameOfBank;
+import com.synectiks.cms.domain.enumeration.NameOfBank;
 
 /**
- * A DTO for the {@link com.synectiks.commons.entities.cms.BankAccounts} entity.
+ * A DTO for the {@link com.synectiks.cms.domain.BankAccounts} entity.
  */
 public class BankAccountsDTO implements Serializable {
 

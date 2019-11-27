@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TeacherService;
-import com.synectiks.commons.entities.cms.Teacher;
+import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.repository.TeacherRepository;
 //import com.synectiks.cms.repository.search.TeacherSearchRepository;
 import com.synectiks.cms.service.dto.TeacherDTO;

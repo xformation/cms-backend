@@ -1,6 +1,6 @@
 package com.synectiks.cms.service.mapper;
 
-import com.synectiks.commons.entities.cms.*;
+import com.synectiks.cms.domain.*;
 import com.synectiks.cms.service.dto.CompetitiveExamDTO;
 
 import org.mapstruct.*;

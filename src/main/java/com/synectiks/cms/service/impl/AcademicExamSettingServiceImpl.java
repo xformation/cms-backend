@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AcademicExamSettingService;
-import com.synectiks.commons.entities.cms.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 //import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
 import com.synectiks.cms.service.dto.AcademicExamSettingDTO;

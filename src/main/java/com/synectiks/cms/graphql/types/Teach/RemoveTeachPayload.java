@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.Teach;
 
 import java.util.List;
 
-import com.synectiks.commons.entities.cms.Teach;
+import com.synectiks.cms.domain.Teach;
 
 public class RemoveTeachPayload {
     private final List<Teach> teach;

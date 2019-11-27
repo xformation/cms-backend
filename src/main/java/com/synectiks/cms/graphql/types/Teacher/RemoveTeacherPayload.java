@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Teacher;
 
-import com.synectiks.commons.entities.cms.Teacher;
+import com.synectiks.cms.domain.Teacher;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AuthorizedSignatoryService;
-import com.synectiks.commons.entities.cms.AuthorizedSignatory;
+import com.synectiks.cms.domain.AuthorizedSignatory;
 import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
 //import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
 import com.synectiks.cms.service.dto.AuthorizedSignatoryDTO;

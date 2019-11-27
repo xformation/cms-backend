@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TransportRouteService;
-import com.synectiks.commons.entities.cms.TransportRoute;
+import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.repository.TransportRouteRepository;
 //import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
 import com.synectiks.cms.service.dto.TransportRouteDTO;

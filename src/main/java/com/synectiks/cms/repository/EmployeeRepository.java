@@ -2,7 +2,7 @@ package com.synectiks.cms.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.synectiks.commons.entities.cms.Employee;
+import com.synectiks.cms.domain.Employee;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

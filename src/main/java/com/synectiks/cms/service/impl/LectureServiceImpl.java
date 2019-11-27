@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.LectureService;
-import com.synectiks.commons.entities.cms.Lecture;
+import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.repository.LectureRepository;
 //import com.synectiks.cms.repository.search.LectureSearchRepository;
 import com.synectiks.cms.service.dto.LectureDTO;

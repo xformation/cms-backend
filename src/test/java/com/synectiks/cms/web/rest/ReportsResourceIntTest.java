@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Reports;
+import com.synectiks.cms.domain.Reports;
 import com.synectiks.cms.repository.ReportsRepository;
 import com.synectiks.cms.service.ReportsService;
 import com.synectiks.cms.service.dto.ReportsDTO;

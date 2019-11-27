@@ -2,7 +2,7 @@ package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.BatchEnum;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
 
 /**
  * A DTO for the Batch entity.

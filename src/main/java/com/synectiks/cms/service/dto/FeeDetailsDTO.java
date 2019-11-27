@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.StudentTypeEnum;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the FeeDetails entity.

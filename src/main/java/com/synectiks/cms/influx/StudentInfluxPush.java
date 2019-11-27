@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.commons.entities.cms.Student;
-import com.synectiks.commons.entities.cms.StudentAttendance;
-import com.synectiks.commons.entities.cms.Subject;
-import com.synectiks.commons.entities.cms.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 
 @Component
 public class StudentInfluxPush implements InfluxPush {

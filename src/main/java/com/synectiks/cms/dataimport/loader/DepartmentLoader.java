@@ -2,9 +2,9 @@ package com.synectiks.cms.dataimport.loader;
 
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
-import com.synectiks.commons.entities.cms.AcademicYear;
-import com.synectiks.commons.entities.cms.Branch;
-import com.synectiks.commons.entities.cms.Department;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;
 import org.dhatim.fastexcel.reader.Row;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.Batch;
 
-import com.synectiks.commons.entities.cms.Department;
-import com.synectiks.commons.entities.cms.enumeration.BatchEnum;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
 
 public class AbstractBatchInput {
     private Long id;

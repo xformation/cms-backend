@@ -2,7 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 
-import com.synectiks.commons.entities.cms.AuthorizedSignatory;
+import com.synectiks.cms.domain.AuthorizedSignatory;
 import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
 //import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
 import com.synectiks.cms.service.AuthorizedSignatoryService;

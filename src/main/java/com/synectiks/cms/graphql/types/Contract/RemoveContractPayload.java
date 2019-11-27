@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Contract;
 
-import com.synectiks.commons.entities.cms.Contract;
+import com.synectiks.cms.domain.Contract;
 
 import java.util.List;
 

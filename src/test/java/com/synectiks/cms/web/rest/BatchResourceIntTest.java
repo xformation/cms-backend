@@ -2,7 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 
-import com.synectiks.commons.entities.cms.Batch;
+import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.repository.BatchRepository;
 import com.synectiks.cms.service.BatchService;
 import com.synectiks.cms.service.dto.BatchDTO;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.commons.entities.cms.enumeration.BatchEnum;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
 /**
  * Test class for the BatchResource REST controller.
  *

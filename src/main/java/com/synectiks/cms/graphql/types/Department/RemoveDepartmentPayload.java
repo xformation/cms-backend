@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.Department;
 
 import java.util.List;
 
-import com.synectiks.commons.entities.cms.Department;
+import com.synectiks.cms.domain.Department;
 
 public class RemoveDepartmentPayload {
     private final List<Department> department;

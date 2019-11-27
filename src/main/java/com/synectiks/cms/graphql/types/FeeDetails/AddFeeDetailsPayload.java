@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.FeeDetails;
 
-import com.synectiks.commons.entities.cms.FeeDetails;
+import com.synectiks.cms.domain.FeeDetails;
 
 public class AddFeeDetailsPayload extends AbstractFeeDetailsPayload{
     public AddFeeDetailsPayload(FeeDetails feeDetails) {

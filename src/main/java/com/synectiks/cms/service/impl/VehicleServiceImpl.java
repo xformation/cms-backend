@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.VehicleService;
-import com.synectiks.commons.entities.cms.Vehicle;
+import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.repository.VehicleRepository;
 //import com.synectiks.cms.repository.search.VehicleSearchRepository;
 import com.synectiks.cms.service.dto.VehicleDTO;

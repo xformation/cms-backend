@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the Term entity.

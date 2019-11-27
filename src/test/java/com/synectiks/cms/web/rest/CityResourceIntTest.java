@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.City;
+import com.synectiks.cms.domain.City;
 import com.synectiks.cms.repository.CityRepository;
 import com.synectiks.cms.service.CityService;
 import com.synectiks.cms.service.dto.CityDTO;

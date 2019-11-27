@@ -2,7 +2,7 @@ package com.synectiks.cms.service;
 import com.synectiks.cms.config.Constants;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.User;
+import com.synectiks.cms.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
 import org.junit.Test;

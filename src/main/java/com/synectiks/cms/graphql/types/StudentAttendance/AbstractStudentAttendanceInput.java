@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.StudentAttendance;
 
-import com.synectiks.commons.entities.cms.enumeration.AttendanceStatusEnum;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.domain.enumeration.Status;
 
 import java.time.LocalDate;
 import java.util.Date;

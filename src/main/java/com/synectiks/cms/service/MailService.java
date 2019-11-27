@@ -1,6 +1,6 @@
 package com.synectiks.cms.service;
 
-import com.synectiks.commons.entities.cms.User;
+import com.synectiks.cms.domain.User;
 
 import io.github.jhipster.config.JHipsterProperties;
 

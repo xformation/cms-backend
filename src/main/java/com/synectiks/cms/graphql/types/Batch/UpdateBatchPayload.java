@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Batch;
 
-import com.synectiks.commons.entities.cms.Batch;
+import com.synectiks.cms.domain.Batch;
 
 public class UpdateBatchPayload extends AbstractBatchPayload {
     public UpdateBatchPayload(Batch batch) {

@@ -17,9 +17,9 @@ import org.springframework.web.client.RestTemplate;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.commons.entities.cms.Config;
-import com.synectiks.commons.entities.cms.Student;
-import com.synectiks.commons.entities.cms.Teacher;
+import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.TeacherRepository;
 

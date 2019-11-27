@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CityService;
-import com.synectiks.commons.entities.cms.City;
+import com.synectiks.cms.domain.City;
 import com.synectiks.cms.repository.CityRepository;
 //import com.synectiks.cms.repository.search.CitySearchRepository;
 import com.synectiks.cms.service.dto.CityDTO;

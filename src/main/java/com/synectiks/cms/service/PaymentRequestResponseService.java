@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Service Interface for managing {@link com.synectiks.commons.entities.cms.PaymentRequestResponse}.
+ * Service Interface for managing {@link com.synectiks.cms.domain.PaymentRequestResponse}.
  */
 public interface PaymentRequestResponseService {
 

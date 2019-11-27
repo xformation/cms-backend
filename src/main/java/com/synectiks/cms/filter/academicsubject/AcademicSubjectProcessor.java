@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.AcademicSubjectService;
-import com.synectiks.commons.entities.cms.QueryResult;
-import com.synectiks.commons.entities.cms.Subject;
+import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.domain.Subject;
 
 @Component
 public class AcademicSubjectProcessor {

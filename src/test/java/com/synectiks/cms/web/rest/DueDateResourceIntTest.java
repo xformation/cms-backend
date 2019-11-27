@@ -30,8 +30,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.DueDate;
-import com.synectiks.commons.entities.cms.enumeration.Frequency;
+import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.repository.DueDateRepository;
 import com.synectiks.cms.service.DueDateService;
 import com.synectiks.cms.service.dto.DueDateDTO;

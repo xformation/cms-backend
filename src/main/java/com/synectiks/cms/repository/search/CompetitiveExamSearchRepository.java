@@ -1,6 +1,6 @@
 package com.synectiks.cms.repository.search;
 
-import com.synectiks.commons.entities.cms.CompetitiveExam;
+import com.synectiks.cms.domain.CompetitiveExam;
 import com.synectiks.cms.utils.JPASearchRepository;
 
 /**

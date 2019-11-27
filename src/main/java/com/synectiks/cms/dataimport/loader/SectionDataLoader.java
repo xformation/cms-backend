@@ -9,12 +9,12 @@ import org.springframework.data.domain.Example;
 
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
-import com.synectiks.commons.entities.cms.Batch;
-import com.synectiks.commons.entities.cms.Branch;
-import com.synectiks.commons.entities.cms.Department;
-import com.synectiks.commons.entities.cms.Section;
-import com.synectiks.commons.entities.cms.enumeration.BatchEnum;
-import com.synectiks.commons.entities.cms.enumeration.SectionEnum;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
 import com.synectiks.cms.exceptions.DuplicateRecordFoundException;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;

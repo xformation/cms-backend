@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Subject;
 
-import com.synectiks.commons.entities.cms.Subject;
+import com.synectiks.cms.domain.Subject;
 
 import java.util.List;
 

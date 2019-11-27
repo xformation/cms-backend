@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.IdCard;
+import com.synectiks.cms.domain.IdCard;
 import com.synectiks.cms.repository.IdCardRepository;
 import com.synectiks.cms.service.IdCardService;
 import com.synectiks.cms.service.dto.IdCardDTO;

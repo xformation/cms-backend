@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.DueDate;
 
-import com.synectiks.commons.entities.cms.DueDate;
+import com.synectiks.cms.domain.DueDate;
 
 public class AddDueDatePayload extends AbstractDueDatePayload {
 

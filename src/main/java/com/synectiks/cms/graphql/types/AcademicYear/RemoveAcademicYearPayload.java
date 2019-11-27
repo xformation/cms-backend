@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.AcademicYear;
 
-    import com.synectiks.commons.entities.cms.AcademicYear;
+    import com.synectiks.cms.domain.AcademicYear;
 
     import java.util.List;
 

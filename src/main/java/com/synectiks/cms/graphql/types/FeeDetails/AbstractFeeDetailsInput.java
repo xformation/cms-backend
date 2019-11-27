@@ -2,9 +2,9 @@ package com.synectiks.cms.graphql.types.FeeDetails;
 
 import java.time.LocalDate;
 
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.Status;
-import com.synectiks.commons.entities.cms.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 public class AbstractFeeDetailsInput {
 	private Long id;

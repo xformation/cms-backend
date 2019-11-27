@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.commons.entities.cms.Modules;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.Modules;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.ModulesRepository;
 import com.synectiks.cms.service.dto.ModulesDTO;
 import com.synectiks.cms.service.util.CommonUtil;
@@ -31,7 +31,7 @@ import com.synectiks.cms.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.synectiks.commons.entities.cms.Modules}.
+ * REST controller for managing {@link com.synectiks.cms.domain.Modules}.
  */
 @RestController
 @RequestMapping("/api")

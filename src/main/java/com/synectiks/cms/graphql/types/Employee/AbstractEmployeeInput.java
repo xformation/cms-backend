@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Employee;
 
-import com.synectiks.commons.entities.cms.enumeration.Disability;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.MaritalStatus;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.MaritalStatus;
+import com.synectiks.cms.domain.enumeration.Status;
 
 import java.util.Date;
 import java.util.Objects;

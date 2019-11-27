@@ -2,7 +2,7 @@ package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.StatusEnum;
+import com.synectiks.cms.domain.enumeration.StatusEnum;
 
 /**
  * A DTO for the Book entity.

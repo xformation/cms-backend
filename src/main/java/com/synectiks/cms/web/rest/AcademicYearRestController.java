@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.commons.entities.cms.AcademicYear;
-import com.synectiks.commons.entities.cms.CmsAcademicYearVo;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.CmsAcademicYearVo;
 import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;

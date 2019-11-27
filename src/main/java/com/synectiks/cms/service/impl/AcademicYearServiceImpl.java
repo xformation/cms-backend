@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AcademicYearService;
-import com.synectiks.commons.entities.cms.AcademicYear;
+import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.repository.AcademicYearRepository;
 //import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
 import com.synectiks.cms.service.dto.AcademicYearDTO;

@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Facility;
 
-import com.synectiks.commons.entities.cms.Facility;
+import com.synectiks.cms.domain.Facility;
 
 import java.util.List;
 

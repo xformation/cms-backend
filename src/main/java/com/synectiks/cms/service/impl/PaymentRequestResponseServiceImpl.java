@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.PaymentRequestResponseService;
-import com.synectiks.commons.entities.cms.PaymentRequestResponse;
+import com.synectiks.cms.domain.PaymentRequestResponse;
 import com.synectiks.cms.repository.PaymentRequestResponseRepository;
 //import com.synectiks.cms.repository.search.PaymentRequestResponseSearchRepository;
 import com.synectiks.cms.service.dto.PaymentRequestResponseDTO;

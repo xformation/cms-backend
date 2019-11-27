@@ -32,10 +32,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.FeeDetails;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.Status;
-import com.synectiks.commons.entities.cms.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.repository.FeeDetailsRepository;
 import com.synectiks.cms.service.FeeDetailsService;
 import com.synectiks.cms.service.dto.FeeDetailsDTO;

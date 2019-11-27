@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.AdmissionEnquiry;
 
-import com.synectiks.commons.entities.cms.AdmissionEnquiry;
+import com.synectiks.cms.domain.AdmissionEnquiry;
 
 public class AddAdmissionEnquiryPayload extends AbstractAdmissionEnquiryPayload {
 

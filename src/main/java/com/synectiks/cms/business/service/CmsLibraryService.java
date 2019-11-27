@@ -1,8 +1,8 @@
 package com.synectiks.cms.business.service;
 
-import com.synectiks.commons.entities.cms.*;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.library.LibraryFilterInput;
 import com.synectiks.cms.filter.student.StudentListFilterInput;
 import com.synectiks.cms.repository.LibraryRepository;

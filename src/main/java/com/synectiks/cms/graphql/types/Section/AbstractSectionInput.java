@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Section;
 
-import com.synectiks.commons.entities.cms.enumeration.SectionEnum;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
 
 public class AbstractSectionInput {
     private Long id;

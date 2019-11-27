@@ -2,8 +2,8 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.config.Constants;
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Authority;
-import com.synectiks.commons.entities.cms.User;
+import com.synectiks.cms.domain.Authority;
+import com.synectiks.cms.domain.User;
 import com.synectiks.cms.repository.AuthorityRepository;
 import com.synectiks.cms.repository.UserRepository;
 import com.synectiks.cms.security.AuthoritiesConstants;

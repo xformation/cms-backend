@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.LateFee;
 
-import com.synectiks.commons.entities.cms.LateFee;
+import com.synectiks.cms.domain.LateFee;
 
 import java.util.List;
 

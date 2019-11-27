@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CmsInvoiceService;
-import com.synectiks.commons.entities.cms.Invoice;
+import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.repository.InvoiceRepository;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;

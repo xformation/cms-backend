@@ -33,12 +33,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.commons.entities.cms.Branch;
-import com.synectiks.commons.entities.cms.Employee;
-import com.synectiks.commons.entities.cms.enumeration.Disability;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.MaritalStatus;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.domain.enumeration.Disability;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.MaritalStatus;
+import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.EmployeeRepository;
 import com.synectiks.cms.service.EmployeeService;
 import com.synectiks.cms.service.dto.EmployeeDTO;

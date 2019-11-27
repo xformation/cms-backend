@@ -2,7 +2,7 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 
-import com.synectiks.commons.entities.cms.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 //import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
 import com.synectiks.cms.service.AcademicExamSettingService;
@@ -40,8 +40,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.commons.entities.cms.enumeration.SemesterEnum;
-import com.synectiks.commons.entities.cms.enumeration.GradeType;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.cms.domain.enumeration.GradeType;
 /**
  * Test class for the AcademicExamSettingResource REST controller.
  *

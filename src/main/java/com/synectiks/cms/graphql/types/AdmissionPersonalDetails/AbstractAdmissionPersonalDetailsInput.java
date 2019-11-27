@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.AdmissionPersonalDetails;
 
-import com.synectiks.commons.entities.cms.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.Gender;
 
 import java.util.Date;
 import java.util.Objects;

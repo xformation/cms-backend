@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Department;
 
-import com.synectiks.commons.entities.cms.Department;
+import com.synectiks.cms.domain.Department;
 
 public class AbstractDepartmentPayload {
     private final Department department;

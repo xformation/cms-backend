@@ -3,10 +3,10 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.commons.entities.cms.enumeration.Gender;
-import com.synectiks.commons.entities.cms.enumeration.CourseEnum;
-import com.synectiks.commons.entities.cms.enumeration.ModeOfEnquiry;
-import com.synectiks.commons.entities.cms.enumeration.EnquiryStatus;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.CourseEnum;
+import com.synectiks.cms.domain.enumeration.ModeOfEnquiry;
+import com.synectiks.cms.domain.enumeration.EnquiryStatus;
 
 /**
  * A DTO for the AdmissionEnquiry entity.

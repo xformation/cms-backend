@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.State;
 
-import com.synectiks.commons.entities.cms.State;
+import com.synectiks.cms.domain.State;
 
 import java.util.List;
 

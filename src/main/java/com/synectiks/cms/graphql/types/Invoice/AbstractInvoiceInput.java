@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Invoice;
 
-import com.synectiks.commons.entities.cms.enumeration.InvoicePaymentStatus;
-import com.synectiks.commons.entities.cms.enumeration.ModeOfPayment;
-import com.synectiks.commons.entities.cms.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.domain.enumeration.ModeOfPayment;
+import com.synectiks.cms.domain.enumeration.Status;
 
 import java.util.Date;
 import java.util.Objects;

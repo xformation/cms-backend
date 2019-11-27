@@ -1,6 +1,6 @@
 package com.synectiks.cms.config.audit;
 
-import com.synectiks.commons.entities.cms.PersistentAuditEvent;
+import com.synectiks.cms.domain.PersistentAuditEvent;
 
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;

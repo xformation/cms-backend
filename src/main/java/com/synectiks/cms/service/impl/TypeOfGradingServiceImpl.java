@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TypeOfGradingService;
-import com.synectiks.commons.entities.cms.TypeOfGrading;
+import com.synectiks.cms.domain.TypeOfGrading;
 import com.synectiks.cms.repository.TypeOfGradingRepository;
 //import com.synectiks.cms.repository.search.TypeOfGradingSearchRepository;
 import com.synectiks.cms.service.dto.TypeOfGradingDTO;
