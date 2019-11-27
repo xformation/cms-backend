@@ -572,6 +572,30 @@ type CmsVehicleVo {
     branchId: Long
     contractId: Long
 }
+
+type CmsVehicle {
+    id: Long
+    vehicleNumber: String
+    vehicleType: String
+    capacity: Long
+    ownerShip: String
+    dateOfRegistration:Date
+    yearOfManufacturing: String
+    manufacturingCompany: String
+    model:  String
+    chasisNo:  String
+    rcNo:  String
+    contactNumber:  String
+    status:Status
+    employee: Employee
+    transportRoute: TransportRoute
+    contract: Contract
+    insurance: Insurance
+    branch: Branch
+    college: College
+    strDateOfRegistration: String
+	}
+
 type CmsEmployeeVo{
      id:Long
      employeeName:String
@@ -1893,7 +1917,7 @@ type Mutation {
      updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
      removeInsurance(input:RemoveInsuranceInput!):RemoveInsurancePayload!
 
-     addVehicle(input:AddVehicleInput!):AddVehiclePayload!
+     addVehicle(input:AddVehicleInput!):CmsVehicle!
      updateVehicle(input:UpdateVehicleInput!):UpdateVehiclePayload!
      removeVehicle(input:RemoveVehicleInput!):RemoveVehiclePayload!
 

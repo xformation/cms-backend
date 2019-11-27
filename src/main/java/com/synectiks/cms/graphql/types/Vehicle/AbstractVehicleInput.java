@@ -19,6 +19,7 @@ public class AbstractVehicleInput {
     private String rcNo;
     private String contactNumber;
     private Status status;
+    private String strDateOfRegistration;
 
     public Long getId() {
         return id;
@@ -124,36 +125,45 @@ public class AbstractVehicleInput {
         this.status = status;
     }
 
+    public String getStrDateOfRegistration() {
+        return strDateOfRegistration;
+    }
+
+    public void setStrDateOfRegistration(String strDateOfRegistration) {
+        this.strDateOfRegistration = strDateOfRegistration;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AbstractVehicleInput)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractVehicleInput that = (AbstractVehicleInput) o;
-        return Objects.equals(getId(), that.getId()) &&
-            Objects.equals(getVehicleNumber(), that.getVehicleNumber()) &&
-            Objects.equals(getVehicleType(), that.getVehicleType()) &&
-            Objects.equals(getCapacity(), that.getCapacity()) &&
-            Objects.equals(getOwnerShip(), that.getOwnerShip()) &&
-            Objects.equals(getDateOfRegistration(), that.getDateOfRegistration()) &&
-            Objects.equals(getYearOfManufacturing(), that.getYearOfManufacturing()) &&
-            Objects.equals(getManufacturingCompany(), that.getManufacturingCompany()) &&
-            Objects.equals(getModel(), that.getModel()) &&
-            Objects.equals(getChasisNo(), that.getChasisNo()) &&
-            Objects.equals(getRcNo(), that.getRcNo()) &&
-            Objects.equals(getContactNumber(), that.getContactNumber()) &&
-            getStatus() == that.getStatus();
+        return Objects.equals(id, that.id) &&
+            Objects.equals(vehicleNumber, that.vehicleNumber) &&
+            Objects.equals(vehicleType, that.vehicleType) &&
+            Objects.equals(capacity, that.capacity) &&
+            Objects.equals(ownerShip, that.ownerShip) &&
+            Objects.equals(dateOfRegistration, that.dateOfRegistration) &&
+            Objects.equals(yearOfManufacturing, that.yearOfManufacturing) &&
+            Objects.equals(manufacturingCompany, that.manufacturingCompany) &&
+            Objects.equals(model, that.model) &&
+            Objects.equals(chasisNo, that.chasisNo) &&
+            Objects.equals(rcNo, that.rcNo) &&
+            Objects.equals(contactNumber, that.contactNumber) &&
+            status == that.status &&
+            Objects.equals(strDateOfRegistration, that.strDateOfRegistration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getVehicleNumber(), getVehicleType(), getCapacity(), getOwnerShip(), getDateOfRegistration(), getYearOfManufacturing(), getManufacturingCompany(), getModel(), getChasisNo(), getRcNo(), getContactNumber(), getStatus());
+        return Objects.hash(id, vehicleNumber, vehicleType, capacity, ownerShip, dateOfRegistration, yearOfManufacturing, manufacturingCompany, model, chasisNo, rcNo, contactNumber, status, strDateOfRegistration);
     }
 
     @Override
     public String toString() {
         return "AbstractVehicleInput{" +
             "id=" + id +
-            ", vehicleNumber=" + vehicleNumber +
+            ", vehicleNumber='" + vehicleNumber + '\'' +
             ", vehicleType='" + vehicleType + '\'' +
             ", capacity=" + capacity +
             ", ownerShip='" + ownerShip + '\'' +
@@ -165,6 +175,7 @@ public class AbstractVehicleInput {
             ", rcNo='" + rcNo + '\'' +
             ", contactNumber='" + contactNumber + '\'' +
             ", status=" + status +
+            ", strDateOfRegistration='" + strDateOfRegistration + '\'' +
             '}';
     }
 }
