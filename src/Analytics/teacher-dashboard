@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 8,
-  "iteration": 1567775056474,
+  "iteration": 1575359549896,
   "links": [],
   "panels": [
     {
@@ -39,7 +39,7 @@
     {
       "content": "<html>\r\n  <body>\r\n    <table id=\"notificationTable\" width=\"100%\">\r\n      \r\n    </table>\r\n  </body>\r\n</html>\r\n",
       "gridPos": {
-        "h": 10,
+        "h": 13,
         "w": 5,
         "x": 0,
         "y": 5
@@ -55,13 +55,13 @@
     },
     {
       "aliasColors": {},
-      "bars": false,
+      "bars": true,
       "dashLength": 10,
       "dashes": false,
       "datasource": "InfluxDB",
       "fill": 1,
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 8,
         "x": 5,
         "y": 5
@@ -70,16 +70,17 @@
       "legend": {
         "avg": false,
         "current": false,
-        "max": false,
+        "hideZero": false,
+        "max": true,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
-        "values": false
+        "values": true
       },
-      "lines": true,
+      "lines": false,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "paceLength": 10,
       "percentage": false,
       "pointradius": 2,
@@ -88,121 +89,203 @@
       "seriesOverrides": [],
       "stack": false,
       "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (TotalPresent/TotalLecturesConducted )*100 AS \"per\" FROM \"Student\" WHERE (\"Tsubject\" =~ /^$subject/)   GROUP BY \"Tsubject\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
       "title": "Attendance Analysis",
       "tooltip": {
-        "shared": true,
-        "sort": 0,
+        "shared": false,
+        "sort": 1,
         "value_type": "individual"
       },
       "type": "graph",
       "xaxis": {
         "buckets": null,
-        "mode": "time",
+        "mode": "series",
         "name": null,
         "show": true,
-        "values": []
+        "values": [
+          "total"
+        ]
       },
       "yaxes": [
         {
+          "decimals": null,
           "format": "short",
-          "label": null,
+          "label": "Attendance Percentage",
           "logBase": 1,
-          "max": null,
-          "min": null,
+          "max": "100",
+          "min": "0",
           "show": true
         },
         {
+          "decimals": null,
           "format": "short",
           "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
+          "max": "100",
+          "min": "0",
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
+        "align": true,
         "alignLevel": null
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPostfix": false,
+      "colorValue": true,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "InfluxDB",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": true,
+        "thresholdMarkers": true
+      },
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 5,
         "x": 13,
         "y": 5
       },
       "id": 8,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
+      "interval": null,
       "links": [],
-      "nullPointMode": "null",
-      "paceLength": 10,
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "stack": false,
-      "steppedLine": false,
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Attendance Analysis",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
+      "mappingType": 1,
+      "mappingTypes": [
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "name": "value to text",
+          "value": 1
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "name": "range to text",
+          "value": 2
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "maxDataPoints": 100,
+      "nullPointMode": "null",
+      "nullText": null,
+      "postfix": "%",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100  FROM \"Student\" where (\"Subject\"=~ /^[[subject]]$/) group by StudentName,StudentEmail,year,subject\n\n",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": "30,70,100",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Attendance:  [[subject]]",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
     },
     {
       "content": "<html>\n  <body>\n    <table style=\"width:100%; border:0px solid;\" id=\"holidayTable\" width=\"100%\">\n     \n    </table>\n  </body>\n</html>\n",
@@ -259,26 +342,9 @@
       "type": "text"
     },
     {
-      "content": "<html>\r\n  <body>\r\n    <table id=\"lectureTable\" width=\"100%\">\r\n      <tr ><th >Department</th><th >Subject</th><th >Year</th><th >Section</th><th >Lecture Date</th><th >Start Time</th><th >End Time</th></tr>\r\n    </table>\r\n  </body>\r\n</html>\r\n",
-      "gridPos": {
-        "h": 5,
-        "w": 13,
-        "x": 5,
-        "y": 10
-      },
-      "id": 12,
-      "links": [],
-      "mode": "html",
-      "nullPointMode": "null",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Today's Lecture Schedule",
-      "type": "text"
-    },
-    {
       "content": "",
       "gridPos": {
-        "h": 5,
+        "h": 8,
         "w": 6,
         "x": 18,
         "y": 10
@@ -291,6 +357,23 @@
       "timeShift": null,
       "title": "Upcoming Assignments",
       "type": "text"
+    },
+    {
+      "content": "<html>\r\n  <body>\r\n    <table id=\"lectureTable\" width=\"100%\">\r\n      <tr ><th >Department</th><th >Subject</th><th >Year</th><th >Section</th><th >Lecture Date</th><th >Start Time</th><th >End Time</th></tr>\r\n    </table>\r\n  </body>\r\n</html>\r\n",
+      "gridPos": {
+        "h": 6,
+        "w": 13,
+        "x": 5,
+        "y": 12
+      },
+      "id": 12,
+      "links": [],
+      "mode": "html",
+      "nullPointMode": "null",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Today's Lecture Schedule",
+      "type": "text"
     }
   ],
   "schemaVersion": 16,
@@ -300,48 +383,74 @@
     "list": [
       {
         "current": {
-          "text": "100.81.3.25",
-          "value": "100.81.3.25"
+          "text": "localhost",
+          "value": "localhost"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CmsNodeIP",
         "options": [
           {
             "selected": true,
-            "text": "100.81.3.25",
-            "value": "100.81.3.25"
+            "text": "localhost",
+            "value": "localhost"
           }
         ],
-        "query": "100.81.3.25",
+        "query": "localhost",
         "skipUrlSync": false,
         "type": "constant"
       },
       {
         "current": {
-          "text": "100.81.3.25",
-          "value": "100.81.3.25"
+          "text": "localhost",
+          "value": "localhost"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CmsBackEndIP",
         "options": [
           {
             "selected": true,
-            "text": "100.81.3.25",
-            "value": "100.81.3.25"
+            "text": "localhost",
+            "value": "localhost"
           }
         ],
-        "query": "100.81.3.25",
+        "query": "localhost",
         "skipUrlSync": false,
         "type": "constant"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "InfluxDB",
+        "definition": "show tag values from \"Teacher\" with key = \"Tsubject\" where \"TteacherEmail\" =~ /^$CurrentUser/",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "subject",
+        "options": [],
+        "query": "show tag values from \"Teacher\" with key = \"Tsubject\" where \"TteacherEmail\" =~ /^$CurrentUser/",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       },
       {
         "current": {
           "text": "admin",
           "value": "admin"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CurrentUser",
         "options": {
@@ -387,5 +496,5 @@
   "timezone": "",
   "title": "teacher-dashboard",
   "uid": "Gua2k4cZk",
-  "version": 23
+  "version": 21
 }
