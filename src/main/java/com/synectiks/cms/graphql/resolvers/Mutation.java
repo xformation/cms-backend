@@ -1194,9 +1194,9 @@ public class Mutation implements GraphQLMutationResolver {
         Branch branch = branchRepository.findById(addStudentInput.getBranchId()).get();
         Department department = departmentRepository.findById(addStudentInput.getDepartmentId()).get();
         Batch batch = batchRepository.findById(addStudentInput.getBatchId()).get();
-        
+
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
-        
+
         student.setDateOfBirth(addStudentInput.getDateOfBirth());
 //        student.setUploadPhoto("");
         student.setBatch(batch);
@@ -1739,45 +1739,56 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
     }
 
-    public AddContractPayload addContract(AddContractInput addContractInput) {
-        final Contract contract = new Contract();
-        contract.setVendorName(addContractInput.getVendorName());
-        contract.setTypeOfOwnerShip(addContractInput.getTypeOfOwnerShip());
-        contract.setDurationOfContract(addContractInput.getDurationOfContract());
+    public List<CmsContract> addContract(AddContractInput addContractInput) throws Exception {
+        Contract contract = CommonUtil.createCopyProperties(addContractInput, Contract.class);
         contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getStartDate()));
         contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getEndDate()));
+        contract = contractRepository.save(contract);
 
-        contractRepository.save(contract);
-
-        return new AddContractPayload(contract);
+        Contract c = new Contract();
+        Example<Contract> example = Example.of(c);
+        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsContract> ls = new ArrayList<>();
+        for(Contract co: list) {
+            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
+            if(co.getStartDate() != null) {
+                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setStartDate(null);
+            }
+            if(co.getEndDate() != null) {
+                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setEndDate(null);
+            }
+            ls.add(cco);
+        }
+        return ls;
     }
 
-    public UpdateContractPayload updateContract(UpdateContractInput updateContractInput) {
-        Contract contract = contractRepository.findById(updateContractInput.getId()).get();
-        if (updateContractInput.getVendorName() != null) {
-            contract.setVendorName(updateContractInput.getVendorName());
+    public List<CmsContract> updateContract(UpdateContractInput updateContractInput) throws ParseException, Exception {
+        Contract contract = CommonUtil.createCopyProperties(updateContractInput, Contract.class);
+        contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getStartDate()));
+        contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getEndDate()));
+        contract = contractRepository.save(contract);
+
+
+        Contract c = new Contract();
+        Example<Contract> example = Example.of(c);
+        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsContract> ls = new ArrayList<>();
+        for(Contract co: list) {
+            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
+            if(co.getStartDate() != null) {
+                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setStartDate(null);
+            }
+            if(co.getEndDate() != null) {
+                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cco.setEndDate(null);
+            }
+            ls.add(cco);
         }
+        return ls;
 
-        if (updateContractInput.getTypeOfOwnerShip() != null) {
-            contract.setTypeOfOwnerShip(updateContractInput.getTypeOfOwnerShip());
-        }
-
-        if (updateContractInput.getDurationOfContract() != null) {
-            contract.setDurationOfContract(updateContractInput.getDurationOfContract());
-        }
-
-        if (updateContractInput.getStartDate() != null) {
-            contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getStartDate()));
-        }
-
-        if (updateContractInput.getEndDate() != null) {
-            contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getEndDate()));
-        }
-
-
-        contractRepository.save(contract);
-
-        return new UpdateContractPayload(contract);
     }
 
     public RemoveContractPayload removeContract(RemoveContractInput removeContractInput) {
@@ -3913,35 +3924,34 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveInsurancePayload(Lists.newArrayList(insuranceRepository.findAll()));
     }
 
-    public AddVehiclePayload addVehicle(AddVehicleInput addVehicleInput) {
-        final TransportRoute transportRoute =  transportRouteRepository.findById(addVehicleInput.getTransportRouteId()).get();
-        final Employee employee = employeeRepository.findById(addVehicleInput.getEmployeeId()).get();
-        final Insurance insurance = insuranceRepository.findById(addVehicleInput.getInsuranceId()).get();
-        final Contract contract = contractRepository.findById(addVehicleInput.getContractId()).get();
-        final Branch branch = branchRepository.findById(addVehicleInput.getBranchId()).get();
-        final College college = collegeRepository.findById(addVehicleInput.getCollegeId()).get();
-        final Vehicle vehicle = new Vehicle();
-        vehicle.setVehicleNumber(addVehicleInput.getVehicleNumber());
-        vehicle.setVehicleType(addVehicleInput.getVehicleType());
-        vehicle.setCapacity(addVehicleInput.getCapacity());
-        vehicle.setOwnerShip(addVehicleInput.getOwnerShip());
-        vehicle.setDateOfRegistration(DateFormatUtil.convertLocalDateFromUtilDate(addVehicleInput.getDateOfRegistration()));
-        vehicle.setYearOfManufacturing(addVehicleInput.getYearOfManufacturing());
-        vehicle.setManufacturingCompany(addVehicleInput.getManufacturingCompany());
-        vehicle.setModel(addVehicleInput.getModel());
-        vehicle.setChasisNo(addVehicleInput.getChasisNo());
-        vehicle.setRcNo(addVehicleInput.getRcNo());
-        vehicle.setContactNumber(addVehicleInput.getContactNumber());
-        vehicle.setStatus(addVehicleInput.getStatus());
+    public CmsVehicle addVehicle(AddVehicleInput addVehicleInput) throws ParseException, Exception {
+        Vehicle vehicle = CommonUtil.createCopyProperties(addVehicleInput, Vehicle.class);
+        Branch branch = new Branch();
+        branch.setId(addVehicleInput.getBranchId());
+        College college = new College();
+        college.setId(addVehicleInput.getCollegeId());
+        Employee employee = new Employee();
+        employee.setId(addVehicleInput.getEmployeeId());
+        TransportRoute transportRoute = new TransportRoute();
+        transportRoute.setId(addVehicleInput.getTransportRouteId());
+        Contract contract = new Contract();
+        contract.setId(addVehicleInput.getContractId());
+        Insurance insurance = new Insurance();
+        insurance.setId(addVehicleInput.getInsuranceId());
         vehicle.setEmployee(employee);
         vehicle.setTransportRoute(transportRoute);
         vehicle.setInsurance(insurance);
         vehicle.setContract(contract);
         vehicle.setBranch(branch);
         vehicle.setCollege(college);
-        vehicleRepository.save(vehicle);
-
-        return new AddVehiclePayload(vehicle);
+        vehicle.dateOfRegistration(DateFormatUtil.convertLocalDateFromUtilDate(addVehicleInput.getDateOfRegistration()));
+        vehicle = vehicleRepository.save(vehicle);
+        CmsVehicle cv = CommonUtil.createCopyProperties(vehicle, CmsVehicle.class);
+        if (vehicle.getDateOfRegistration() != null) {
+            cv.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            cv.setDateOfRegistration(null);
+        }
+        return cv;
     }
 
     public UpdateVehiclePayload updateVehicle(UpdateVehicleInput updateVehicleInput) {

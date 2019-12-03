@@ -572,6 +572,30 @@ type CmsVehicleVo {
     branchId: Long
     contractId: Long
 }
+
+type CmsVehicle {
+    id: Long
+    vehicleNumber: String
+    vehicleType: String
+    capacity: Long
+    ownerShip: String
+    dateOfRegistration:Date
+    yearOfManufacturing: String
+    manufacturingCompany: String
+    model:  String
+    chasisNo:  String
+    rcNo:  String
+    contactNumber:  String
+    status:Status
+    employee: Employee
+    transportRoute: TransportRoute
+    contract: Contract
+    insurance: Insurance
+    branch: Branch
+    college: College
+    strDateOfRegistration: String
+	}
+
 type CmsEmployeeVo{
      id:Long
      employeeName:String
@@ -1261,261 +1285,261 @@ enum Religion {
 
 
 type Student {
-	id: Long 
-	studentName: String 
-	studentMiddleName: String 
-	studentLastName: String 
-	fatherName: String 
-	fatherMiddleName: String 
-	fatherLastName: String 
-	motherName: String 
-	motherMiddleName: String 
-	motherLastName: String 
-	studentAadharNo: String 
-	studentPanNo: String 
-	studentSocialSecurityNo: String 
-	studentTaxReferenceNo: String 
-	studentBplNo: String 
-	studentDrivingLicenseNo: String 
-	studentPassportNo: String 
-	dateOfBirth: Date 
-	placeOfBirth: String 
-	religion: Religion 
-	caste: Caste 
-	subCaste: String 
+	id: Long
+	studentName: String
+	studentMiddleName: String
+	studentLastName: String
+	fatherName: String
+	fatherMiddleName: String
+	fatherLastName: String
+	motherName: String
+	motherMiddleName: String
+	motherLastName: String
+	studentAadharNo: String
+	studentPanNo: String
+	studentSocialSecurityNo: String
+	studentTaxReferenceNo: String
+	studentBplNo: String
+	studentDrivingLicenseNo: String
+	studentPassportNo: String
+	dateOfBirth: Date
+	placeOfBirth: String
+	religion: Religion
+	caste: Caste
+	subCaste: String
 	age: Int
-	sex: Gender 
-	studentLocalAddress: String 
-	studentPermanentAddress: String 
-	city: String 
-	state: String 
-	country: String 
-	pinCode: String 
-	studentPrimaryCellNumber: String 
-	studentAlternateCellNumber: String 
-	studentLandLinePhoneNumber: String 
-	studentPrimaryEmailId: String 
-	studentAlternateEmailId: String 
-	relationWithStudent: RelationWithStudentEnum 
-	emergencyContactName: String 
-	emergencyContactMiddleName: String 
-	emergencyContactLastName: String 
-	emergencyContactCellNumber: String 
-	emergencyContactLandLinePhoneNumber: String 
-	emergencyContactEmailId: String 
-	studentImagePath: String 
-	admissionNo: String 
-	enrollmentNo: String 
-	rollNo: String 
-	studentType: StudentTypeEnum 	
-	fatherCellNumber: String 
-	fatherEmailId: String 
-	fatherOccupation: String 
-	fatherOfficeEmailId: String 
-	fatherOfficeAddress: String 
-	fatherOfficeCellNumber: String 
-	fatherOfficeLandLinePhoneNumber: String 
-	fatherAadharNo: String 
-	fatherPanNo: String 
-	fatherSocialSecurityNo: String 
-	fatherTaxReferenceNo: String 
-	fatherBplNo: String 
-	fatherDrivingLicenseNo: String 
-	fatherPassportNo: String 
-	fatherImagePath: String 
-	motherCellNumber: String 
-	motherEmailId: String 
-	motherOccupation: String 
-	motherOfficeEmailId: String 
-	motherOfficeAddress: String 
-	motherOfficeCellNumber: String 
-	motherOfficeLandLinePhoneNumber: String 
-	motherAadharNo: String 
-	motherPanNo: String 
-	motherSocialSecurityNo: String 
-	motherTaxReferenceNo: String 
-	motherBplNo: String 
-	motherDrivingLicenseNo: String 
-	motherPassportNo: String 
-	motherImagePath: String 
-	guardianName: String 
-	guardianMiddleName: String 
-	guardianLastName: String 
-	guardianAddress: String 
-	guardianCellNumber: String 
-	guardianLandLinePhoneNumber: String 
-	guardianEmailId: String 
-	guardianOccupation: String 
-	guardianOfficeEmailId: String 
-	guardianOfficeAddress: String 
-	guardianOfficeCellNumber: String 
-	guardianOfficeLandLinePhoneNumber: String 
-	guardianImagePath: String 
-	isGuardianSponsorAgency: String 
-	sponsorAgencyName: String 
-	sponsorAgencyRegistrationNo: String 
-	sponsorAgencyAddress: String 
-	sponsorAgencyCellNumber: String 
-	sponsorAgencyLandLineNumber: String 
-	sponsorAgencyEmailId: String 
-	sponsorAgencyAppointeeName: String 
-	sponsorAgencyAppointeeDesignation: String 
-	sponsorAgencyAppointeeCellNumber: String 
-	sponsorAgencyAppointeeLandLineNumber: String 
-	sponsorAgencyAppointeeEmailId: String 
-	sponsorAgencyAppointeeOfficeAddress: String 
-	isPhysicallyChallenged: String 
-	detailsOfDisability: String 
-	disabilityCertificateNo: String 
-	disabilityCertificateIssueAuthority: String 
-	disabilityCertificateIssueDate: Date 
-	percentagOfDisability: Int 
-	bloodGroup: Bloodgroup 
-	vaccinationDetails: String 
-	otherMedicalDetails: String 
-	status: Status 
-	createdBy: String 
-	createdOn: Date 
-	updatedBy: String 
-	updatedOn: Date 
-	comments: String 
-	department: Department 
-	batch: Batch 
-	section: Section 
+	sex: Gender
+	studentLocalAddress: String
+	studentPermanentAddress: String
+	city: String
+	state: String
+	country: String
+	pinCode: String
+	studentPrimaryCellNumber: String
+	studentAlternateCellNumber: String
+	studentLandLinePhoneNumber: String
+	studentPrimaryEmailId: String
+	studentAlternateEmailId: String
+	relationWithStudent: RelationWithStudentEnum
+	emergencyContactName: String
+	emergencyContactMiddleName: String
+	emergencyContactLastName: String
+	emergencyContactCellNumber: String
+	emergencyContactLandLinePhoneNumber: String
+	emergencyContactEmailId: String
+	studentImagePath: String
+	admissionNo: String
+	enrollmentNo: String
+	rollNo: String
+	studentType: StudentTypeEnum
+	fatherCellNumber: String
+	fatherEmailId: String
+	fatherOccupation: String
+	fatherOfficeEmailId: String
+	fatherOfficeAddress: String
+	fatherOfficeCellNumber: String
+	fatherOfficeLandLinePhoneNumber: String
+	fatherAadharNo: String
+	fatherPanNo: String
+	fatherSocialSecurityNo: String
+	fatherTaxReferenceNo: String
+	fatherBplNo: String
+	fatherDrivingLicenseNo: String
+	fatherPassportNo: String
+	fatherImagePath: String
+	motherCellNumber: String
+	motherEmailId: String
+	motherOccupation: String
+	motherOfficeEmailId: String
+	motherOfficeAddress: String
+	motherOfficeCellNumber: String
+	motherOfficeLandLinePhoneNumber: String
+	motherAadharNo: String
+	motherPanNo: String
+	motherSocialSecurityNo: String
+	motherTaxReferenceNo: String
+	motherBplNo: String
+	motherDrivingLicenseNo: String
+	motherPassportNo: String
+	motherImagePath: String
+	guardianName: String
+	guardianMiddleName: String
+	guardianLastName: String
+	guardianAddress: String
+	guardianCellNumber: String
+	guardianLandLinePhoneNumber: String
+	guardianEmailId: String
+	guardianOccupation: String
+	guardianOfficeEmailId: String
+	guardianOfficeAddress: String
+	guardianOfficeCellNumber: String
+	guardianOfficeLandLinePhoneNumber: String
+	guardianImagePath: String
+	isGuardianSponsorAgency: String
+	sponsorAgencyName: String
+	sponsorAgencyRegistrationNo: String
+	sponsorAgencyAddress: String
+	sponsorAgencyCellNumber: String
+	sponsorAgencyLandLineNumber: String
+	sponsorAgencyEmailId: String
+	sponsorAgencyAppointeeName: String
+	sponsorAgencyAppointeeDesignation: String
+	sponsorAgencyAppointeeCellNumber: String
+	sponsorAgencyAppointeeLandLineNumber: String
+	sponsorAgencyAppointeeEmailId: String
+	sponsorAgencyAppointeeOfficeAddress: String
+	isPhysicallyChallenged: String
+	detailsOfDisability: String
+	disabilityCertificateNo: String
+	disabilityCertificateIssueAuthority: String
+	disabilityCertificateIssueDate: Date
+	percentagOfDisability: Int
+	bloodGroup: Bloodgroup
+	vaccinationDetails: String
+	otherMedicalDetails: String
+	status: Status
+	createdBy: String
+	createdOn: Date
+	updatedBy: String
+	updatedOn: Date
+	comments: String
+	department: Department
+	batch: Batch
+	section: Section
 	branch: Branch
 }
 
 type CmsStudentVo {
-    id: Long 
-	studentName: String 
-	studentMiddleName: String 
-	studentLastName: String 
-	fatherName: String 
-	fatherMiddleName: String 
-	fatherLastName: String 
-	motherName: String 
-	motherMiddleName: String 
-	motherLastName: String 
-	studentAadharNo: String 
-	studentPanNo: String 
-	studentSocialSecurityNo: String 
-	studentTaxReferenceNo: String 
-	studentBplNo: String 
-	studentDrivingLicenseNo: String 
-	studentPassportNo: String 
-	dateOfBirth: Date 
-	placeOfBirth: String 
-	religion: Religion 
-	caste: Caste 
-	subCaste: String 
+    id: Long
+	studentName: String
+	studentMiddleName: String
+	studentLastName: String
+	fatherName: String
+	fatherMiddleName: String
+	fatherLastName: String
+	motherName: String
+	motherMiddleName: String
+	motherLastName: String
+	studentAadharNo: String
+	studentPanNo: String
+	studentSocialSecurityNo: String
+	studentTaxReferenceNo: String
+	studentBplNo: String
+	studentDrivingLicenseNo: String
+	studentPassportNo: String
+	dateOfBirth: Date
+	placeOfBirth: String
+	religion: Religion
+	caste: Caste
+	subCaste: String
 	age: Int
-	sex: Gender 
-	studentLocalAddress: String 
-	studentPermanentAddress: String 
-	city: String 
-	state: String 
-	country: String 
-	pinCode: String 
-	studentPrimaryCellNumber: String 
-	studentAlternateCellNumber: String 
-	studentLandLinePhoneNumber: String 
-	studentPrimaryEmailId: String 
-	studentAlternateEmailId: String 
-	relationWithStudent: RelationWithStudentEnum 
-	emergencyContactName: String 
-	emergencyContactMiddleName: String 
-	emergencyContactLastName: String 
-	emergencyContactCellNumber: String 
-	emergencyContactLandLinePhoneNumber: String 
-	emergencyContactEmailId: String 
-	studentImagePath: String 
-	admissionNo: String 
-	enrollmentNo: String 
-	rollNo: String 
-	studentType: StudentTypeEnum 
-	fatherCellNumber: String 
-	fatherEmailId: String 
-	fatherOccupation: String 
-	fatherOfficeEmailId: String 
-	fatherOfficeAddress: String 
-	fatherOfficeCellNumber: String 
-	fatherOfficeLandLinePhoneNumber: String 
-	fatherAadharNo: String 
-	fatherPanNo: String 
-	fatherSocialSecurityNo: String 
-	fatherTaxReferenceNo: String 
-	fatherBplNo: String 
-	fatherDrivingLicenseNo: String 
-	fatherPassportNo: String 
-	fatherImagePath: String 
-	motherCellNumber: String 
-	motherEmailId: String 
-	motherOccupation: String 
-	motherOfficeEmailId: String 
-	motherOfficeAddress: String 
-	motherOfficeCellNumber: String 
-	motherOfficeLandLinePhoneNumber: String 
-	motherAadharNo: String 
-	motherPanNo: String 
-	motherSocialSecurityNo: String 
-	motherTaxReferenceNo: String 
-	motherBplNo: String 
-	motherDrivingLicenseNo: String 
-	motherPassportNo: String 
-	motherImagePath: String 
-	guardianName: String 
-	guardianMiddleName: String 
-	guardianLastName: String 
-	guardianAddress: String 
-	guardianCellNumber: String 
-	guardianLandLinePhoneNumber: String 
-	guardianEmailId: String 
-	guardianOccupation: String 
-	guardianOfficeEmailId: String 
-	guardianOfficeAddress: String 
-	guardianOfficeCellNumber: String 
-	guardianOfficeLandLinePhoneNumber: String 
-	guardianImagePath: String 
-	isGuardianSponsorAgency: String 
-	sponsorAgencyName: String 
-	sponsorAgencyRegistrationNo: String 
-	sponsorAgencyAddress: String 
-	sponsorAgencyCellNumber: String 
-	sponsorAgencyLandLineNumber: String 
-	sponsorAgencyEmailId: String 
-	sponsorAgencyAppointeeName: String 
-	sponsorAgencyAppointeeDesignation: String 
-	sponsorAgencyAppointeeCellNumber: String 
-	sponsorAgencyAppointeeLandLineNumber: String 
-	sponsorAgencyAppointeeEmailId: String 
-	sponsorAgencyAppointeeOfficeAddress: String 
-	isPhysicallyChallenged: String 
-	detailsOfDisability: String 
-	disabilityCertificateNo: String 
-	disabilityCertificateIssueAuthority: String 
-	disabilityCertificateIssueDate: Date 
-	percentagOfDisability: Int 
-	bloodGroup: Bloodgroup 
-	vaccinationDetails: String 
-	otherMedicalDetails: String 
-	status: Status 
-	createdBy: String 
-	createdOn: Date 
-	updatedBy: String 
-	updatedOn: Date 
-	comments: String 
-	department: Department 
-	batch: Batch 
-	section: Section 
-	branch: Branch 
-	departmentId: Long 
-	batchId: Long 
-	sectionId: Long 
-	branchId: Long 
-	strCreatedOn: String 
-	strUpdatedOn: String 
-	strDisabilityCertificateIssueDate: String 
-	strDateOfBirth: String 
+	sex: Gender
+	studentLocalAddress: String
+	studentPermanentAddress: String
+	city: String
+	state: String
+	country: String
+	pinCode: String
+	studentPrimaryCellNumber: String
+	studentAlternateCellNumber: String
+	studentLandLinePhoneNumber: String
+	studentPrimaryEmailId: String
+	studentAlternateEmailId: String
+	relationWithStudent: RelationWithStudentEnum
+	emergencyContactName: String
+	emergencyContactMiddleName: String
+	emergencyContactLastName: String
+	emergencyContactCellNumber: String
+	emergencyContactLandLinePhoneNumber: String
+	emergencyContactEmailId: String
+	studentImagePath: String
+	admissionNo: String
+	enrollmentNo: String
+	rollNo: String
+	studentType: StudentTypeEnum
+	fatherCellNumber: String
+	fatherEmailId: String
+	fatherOccupation: String
+	fatherOfficeEmailId: String
+	fatherOfficeAddress: String
+	fatherOfficeCellNumber: String
+	fatherOfficeLandLinePhoneNumber: String
+	fatherAadharNo: String
+	fatherPanNo: String
+	fatherSocialSecurityNo: String
+	fatherTaxReferenceNo: String
+	fatherBplNo: String
+	fatherDrivingLicenseNo: String
+	fatherPassportNo: String
+	fatherImagePath: String
+	motherCellNumber: String
+	motherEmailId: String
+	motherOccupation: String
+	motherOfficeEmailId: String
+	motherOfficeAddress: String
+	motherOfficeCellNumber: String
+	motherOfficeLandLinePhoneNumber: String
+	motherAadharNo: String
+	motherPanNo: String
+	motherSocialSecurityNo: String
+	motherTaxReferenceNo: String
+	motherBplNo: String
+	motherDrivingLicenseNo: String
+	motherPassportNo: String
+	motherImagePath: String
+	guardianName: String
+	guardianMiddleName: String
+	guardianLastName: String
+	guardianAddress: String
+	guardianCellNumber: String
+	guardianLandLinePhoneNumber: String
+	guardianEmailId: String
+	guardianOccupation: String
+	guardianOfficeEmailId: String
+	guardianOfficeAddress: String
+	guardianOfficeCellNumber: String
+	guardianOfficeLandLinePhoneNumber: String
+	guardianImagePath: String
+	isGuardianSponsorAgency: String
+	sponsorAgencyName: String
+	sponsorAgencyRegistrationNo: String
+	sponsorAgencyAddress: String
+	sponsorAgencyCellNumber: String
+	sponsorAgencyLandLineNumber: String
+	sponsorAgencyEmailId: String
+	sponsorAgencyAppointeeName: String
+	sponsorAgencyAppointeeDesignation: String
+	sponsorAgencyAppointeeCellNumber: String
+	sponsorAgencyAppointeeLandLineNumber: String
+	sponsorAgencyAppointeeEmailId: String
+	sponsorAgencyAppointeeOfficeAddress: String
+	isPhysicallyChallenged: String
+	detailsOfDisability: String
+	disabilityCertificateNo: String
+	disabilityCertificateIssueAuthority: String
+	disabilityCertificateIssueDate: Date
+	percentagOfDisability: Int
+	bloodGroup: Bloodgroup
+	vaccinationDetails: String
+	otherMedicalDetails: String
+	status: Status
+	createdBy: String
+	createdOn: Date
+	updatedBy: String
+	updatedOn: Date
+	comments: String
+	department: Department
+	batch: Batch
+	section: Section
+	branch: Branch
+	departmentId: Long
+	batchId: Long
+	sectionId: Long
+	branchId: Long
+	strCreatedOn: String
+	strUpdatedOn: String
+	strDisabilityCertificateIssueDate: String
+	strDateOfBirth: String
 }
 
 
@@ -1699,8 +1723,8 @@ type Mutation {
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
 
-    addContract(input: AddContractInput!): AddContractPayload!
-    updateContract(input: UpdateContractInput!): UpdateContractPayload!
+    addContract(input: AddContractInput!): [CmsContract]!
+    updateContract(input: UpdateContractInput!):  [CmsContract]!
     removeContract(input: RemoveContractInput!): RemoveContractPayload!
 
     addEmployee(input: AddEmployeeInput!): AddEmployeePayload!
@@ -1893,7 +1917,7 @@ type Mutation {
      updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
      removeInsurance(input:RemoveInsuranceInput!):RemoveInsurancePayload!
 
-     addVehicle(input:AddVehicleInput!):AddVehiclePayload!
+     addVehicle(input:AddVehicleInput!):CmsVehicle!
      updateVehicle(input:UpdateVehicleInput!):UpdateVehiclePayload!
      removeVehicle(input:RemoveVehicleInput!):RemoveVehiclePayload!
 
@@ -1966,6 +1990,18 @@ type CmsInsurance {
      strDateOfInsurance: String
      strValidTill: String
 }
+
+type CmsContract {
+     id: Long
+     vendorName: String
+     typeOfOwnerShip: TypeOfOwnerShip
+     durationOfContract: String
+     startDate: Date
+     endDate: Date
+     strStartDate: String
+     strEndDate: String
+}
+
 
 type CmsLibraryVo {
        id: Long
@@ -2088,6 +2124,8 @@ input AddContractInput{
     durationOfContract: String!
     startDate: Date!
     endDate: Date!
+    strDateOfInsurance: String
+    strValidTill: String
 }
 
 type AddContractPayload {
@@ -2101,6 +2139,8 @@ input UpdateContractInput {
     durationOfContract: String!
     startDate: Date!
     endDate: Date!
+    strDateOfInsurance: String
+    strValidTill: String
 }
 
 
