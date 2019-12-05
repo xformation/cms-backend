@@ -915,9 +915,11 @@ public class Query implements GraphQLQueryResolver {
         List<Branch> branchList = this.branchRepository.findAll();
         List<CmsTypeOfInsuranceVo> typeOfInsuranceList = this.commonService.getAllTypeOfInsurances();
         List<CmsTypeOfOwnershipVo> typeOfOwnershipList = this.commonService.getAllTypeOfOwnerships();
+
         AddVehicleDataCache cache = new AddVehicleDataCache();
         cache.setColleges(collegeList);
         cache.setBranches(branchList);
+
         cache.setTypeOfInsurances(typeOfInsuranceList);
         cache.setTypeOfOwnerships(typeOfOwnershipList);
 
@@ -927,8 +929,10 @@ public class Query implements GraphQLQueryResolver {
     public VehicleDataCache createVehicleDataCache() throws Exception{
         List<Vehicle> vehicleList = this.vehicleRepository.findAll();
         List<TransportRoute> transportRouteList = this.transportRouteRepository.findAll();
+        List<CmsRouteFrequency> routeFrequencyList = this.commonService.getAllRouteFrequencies();
         VehicleDataCache cache = new VehicleDataCache();
         cache.setVehicles(vehicleList);
+        cache.setRouteFrequencies(routeFrequencyList);
         cache.setTransportRoutes(transportRouteList);
         return cache;
     }

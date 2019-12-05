@@ -18,8 +18,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.*;
 import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
 import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
+import  com.synectiks.cms.graphql.types.TransportRoute.RouteFrequency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.enumeration.BatchEnum;
-import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
-import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
-import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
 import com.synectiks.cms.graphql.types.course.Course;
@@ -428,6 +425,17 @@ public class CommonService {
             vo.setId(toi.value());
             vo.setDescription(toi.getDescription());
             ls.add(vo);
+        }
+        return ls;
+    }
+    public List<CmsRouteFrequency> getAllRouteFrequencies() {
+        logger.debug("Retrieving all route  frequencies");
+        List<CmsRouteFrequency> ls = new ArrayList<>();
+        for(RouteFrequency rf: RouteFrequency.values()) {
+            CmsRouteFrequency crf = new CmsRouteFrequency();
+            crf.setId(rf.value());
+            crf.setDescription(rf.getDescription());
+            ls.add(crf);
         }
         return ls;
     }

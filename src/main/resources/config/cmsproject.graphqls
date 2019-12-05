@@ -435,6 +435,11 @@ type CmsTypeOfInsuranceVo{
 	description: String
 }
 
+type CmsRouteFrequency{
+     id: Int
+	description: String
+}
+
 type CmsTypeOfOwnershipVo{
      id: Int
 	description: String
@@ -443,6 +448,7 @@ type CmsTypeOfOwnershipVo{
 type VehicleDataCache{
      vehicles: [Vehicle]
      transportRoutes: [TransportRoute]
+     routeFrequencies:[CmsRouteFrequency]
 }
 type EmployeeDataCache{
     employees: [Employee]
