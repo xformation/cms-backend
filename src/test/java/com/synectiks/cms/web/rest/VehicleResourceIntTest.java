@@ -32,9 +32,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Vehicle;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.VehicleRepository;
+import com.synectiks.cms.entities.Vehicle;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.repositories.VehicleRepository;
 import com.synectiks.cms.service.VehicleService;
 import com.synectiks.cms.service.dto.VehicleDTO;
 import com.synectiks.cms.service.mapper.VehicleMapper;

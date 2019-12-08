@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AcademicExamSettingService;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-//import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
+import com.synectiks.cms.entities.AcademicExamSetting;
+import com.synectiks.cms.repositories.AcademicExamSettingRepository;
+//import com.synectiks.cms.commons.repositories.search.AcademicExamSettingSearchRepository;
 import com.synectiks.cms.service.dto.AcademicExamSettingDTO;
 import com.synectiks.cms.service.mapper.AcademicExamSettingMapper;
 import org.slf4j.Logger;

@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AdmissionEnquiryService;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
-//import com.synectiks.cms.repository.search.AdmissionEnquirySearchRepository;
+import com.synectiks.cms.entities.AdmissionEnquiry;
+import com.synectiks.cms.repositories.AdmissionEnquiryRepository;
+//import com.synectiks.cms.commons.repositories.search.AdmissionEnquirySearchRepository;
 import com.synectiks.cms.service.dto.AdmissionEnquiryDTO;
 import com.synectiks.cms.service.mapper.AdmissionEnquiryMapper;
 import org.slf4j.Logger;

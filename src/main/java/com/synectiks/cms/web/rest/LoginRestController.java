@@ -17,11 +17,11 @@ import org.springframework.web.client.RestTemplate;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.Config;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.entities.Config;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.Teacher;
+import com.synectiks.cms.repositories.StudentRepository;
+import com.synectiks.cms.repositories.TeacherRepository;
 
 /**
  * REST controller for managing user login.

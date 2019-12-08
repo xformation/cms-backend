@@ -1,11 +1,12 @@
 package com.synectiks.cms.graphql.types.Teacher;
 
-import com.synectiks.cms.domain.enumeration.*;
-
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+
+import com.synectiks.cms.entities.enumeration.*;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;

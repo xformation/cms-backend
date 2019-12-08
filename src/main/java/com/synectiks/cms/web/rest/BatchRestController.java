@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.CmsBatchVo;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.entities.Batch;
+import com.synectiks.cms.entities.CmsBatchVo;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.repositories.BatchRepository;
+import com.synectiks.cms.repositories.DepartmentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;

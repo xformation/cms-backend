@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AuthorizedSignatoryService;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-//import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
+import com.synectiks.cms.entities.AuthorizedSignatory;
+import com.synectiks.cms.repositories.AuthorizedSignatoryRepository;
+//import com.synectiks.cms.commons.repositories.search.AuthorizedSignatorySearchRepository;
 import com.synectiks.cms.service.dto.AuthorizedSignatoryDTO;
 import com.synectiks.cms.service.mapper.AuthorizedSignatoryMapper;
 import org.slf4j.Logger;

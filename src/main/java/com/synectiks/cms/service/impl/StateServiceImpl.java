@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StateService;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.repository.StateRepository;
-//import com.synectiks.cms.repository.search.StateSearchRepository;
+import com.synectiks.cms.entities.State;
+import com.synectiks.cms.repositories.StateRepository;
+//import com.synectiks.cms.commons.repositories.search.StateSearchRepository;
 import com.synectiks.cms.service.dto.StateDTO;
 import com.synectiks.cms.service.mapper.StateMapper;
 import org.slf4j.Logger;

@@ -2,8 +2,8 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 import com.synectiks.cms.config.audit.AuditEventConverter;
-import com.synectiks.cms.domain.PersistentAuditEvent;
-import com.synectiks.cms.repository.PersistenceAuditEventRepository;
+import com.synectiks.cms.entities.PersistentAuditEvent;
+import com.synectiks.cms.repositories.PersistenceAuditEventRepository;
 import com.synectiks.cms.service.AuditEventService;
 import org.junit.Before;
 import org.junit.Test;

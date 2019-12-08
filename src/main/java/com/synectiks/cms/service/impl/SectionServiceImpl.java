@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.SectionService;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.repository.SectionRepository;
-//import com.synectiks.cms.repository.search.SectionSearchRepository;
+import com.synectiks.cms.entities.Section;
+import com.synectiks.cms.repositories.SectionRepository;
+//import com.synectiks.cms.commons.repositories.search.SectionSearchRepository;
 import com.synectiks.cms.service.dto.SectionDTO;
 import com.synectiks.cms.service.mapper.SectionMapper;
 import org.slf4j.Logger;

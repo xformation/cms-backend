@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.BankAccounts;
 
-import com.synectiks.cms.domain.BankAccounts;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.BankAccounts;
 
 public class RemoveBankAccountsPayload {
     private final List<BankAccounts> bankAccounts;

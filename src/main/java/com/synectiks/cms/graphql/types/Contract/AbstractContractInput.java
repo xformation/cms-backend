@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Contract;
 
-import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.TypeOfOwnerShip;
 
 public class AbstractContractInput {
     private Long id;

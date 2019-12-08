@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.PaymentRemainderService;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.repository.PaymentRemainderRepository;
-//import com.synectiks.cms.repository.search.PaymentRemainderSearchRepository;
+import com.synectiks.cms.entities.PaymentRemainder;
+import com.synectiks.cms.repositories.PaymentRemainderRepository;
+//import com.synectiks.cms.commons.repositories.search.PaymentRemainderSearchRepository;
 import com.synectiks.cms.service.dto.PaymentRemainderDTO;
 import com.synectiks.cms.service.mapper.PaymentRemainderMapper;
 import org.slf4j.Logger;

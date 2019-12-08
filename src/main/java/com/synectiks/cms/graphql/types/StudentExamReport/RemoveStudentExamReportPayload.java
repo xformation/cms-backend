@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.StudentExamReport;
 
-import com.synectiks.cms.domain.StudentExamReport;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.StudentExamReport;
 
 public class RemoveStudentExamReportPayload {
     private final List<StudentExamReport> studentExamReports;

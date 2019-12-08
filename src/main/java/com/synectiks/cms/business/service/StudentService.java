@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.entities.Batch;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.entities.Section;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.student.StudentListFilterInput;
 import com.synectiks.cms.graphql.types.Student.StudentType;
-import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repositories.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 
 @Component

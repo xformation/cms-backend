@@ -30,8 +30,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.entities.College;
+import com.synectiks.cms.repositories.CollegeRepository;
 import com.synectiks.cms.service.CollegeService;
 import com.synectiks.cms.service.dto.CollegeDTO;
 import com.synectiks.cms.service.mapper.CollegeMapper;

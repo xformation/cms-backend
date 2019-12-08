@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.College;
 
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.entities.College;
+import com.synectiks.cms.entities.Student;
 
 public class AbstractCollegePayload {
     private final College college;

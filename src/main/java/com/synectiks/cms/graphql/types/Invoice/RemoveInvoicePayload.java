@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Invoice;
 
-import com.synectiks.cms.domain.Invoice;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Invoice;
 
 public class RemoveInvoicePayload {
     private final List<Invoice> invoices;

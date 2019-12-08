@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.NotificationsService;
-import com.synectiks.cms.domain.Notifications;
-import com.synectiks.cms.repository.NotificationsRepository;
-//import com.synectiks.cms.repository.search.NotificationsSearchRepository;
+import com.synectiks.cms.entities.Notifications;
+import com.synectiks.cms.repositories.NotificationsRepository;
+//import com.synectiks.cms.commons.repositories.search.NotificationsSearchRepository;
 import com.synectiks.cms.service.dto.NotificationsDTO;
 import com.synectiks.cms.service.mapper.NotificationsMapper;
 import org.slf4j.Logger;

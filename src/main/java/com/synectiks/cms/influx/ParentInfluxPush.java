@@ -2,10 +2,11 @@ package com.synectiks.cms.influx;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.StudentAttendance;
+import com.synectiks.cms.entities.Subject;
+import com.synectiks.cms.entities.enumeration.AttendanceStatusEnum;
+
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.slf4j.Logger;

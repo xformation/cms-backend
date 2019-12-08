@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Book;
 
-import com.synectiks.cms.domain.Book;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Book;
 
 public class RemoveBookPayload {
     private final List<Book> books;

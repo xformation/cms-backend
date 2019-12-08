@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CountryService;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.repository.CountryRepository;
-//import com.synectiks.cms.repository.search.CountrySearchRepository;
+import com.synectiks.cms.entities.Country;
+import com.synectiks.cms.repositories.CountryRepository;
+//import com.synectiks.cms.commons.repositories.search.CountrySearchRepository;
 import com.synectiks.cms.service.dto.CountryDTO;
 import com.synectiks.cms.service.mapper.CountryMapper;
 import org.slf4j.Logger;

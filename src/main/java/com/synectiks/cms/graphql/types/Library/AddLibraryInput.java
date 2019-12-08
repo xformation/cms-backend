@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Library;
 
-import com.synectiks.cms.domain.Batch;
-
 import java.util.Objects;
+
+import com.synectiks.cms.entities.Batch;
 
 public class AddLibraryInput extends AbstractLibraryInput {
     private Long batchId;

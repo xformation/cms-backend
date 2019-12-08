@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.entities.Teach;
+import com.synectiks.cms.repositories.TeachRepository;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 

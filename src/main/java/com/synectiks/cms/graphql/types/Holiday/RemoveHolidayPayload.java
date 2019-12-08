@@ -1,9 +1,8 @@
 package com.synectiks.cms.graphql.types.Holiday;
 
-import com.synectiks.cms.domain.Holiday;
-
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Holiday;
 
 public class RemoveHolidayPayload {
 

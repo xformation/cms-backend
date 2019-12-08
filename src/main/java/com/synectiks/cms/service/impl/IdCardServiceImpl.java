@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.IdCardService;
-import com.synectiks.cms.domain.IdCard;
-import com.synectiks.cms.repository.IdCardRepository;
-//import com.synectiks.cms.repository.search.IdCardSearchRepository;
+import com.synectiks.cms.entities.IdCard;
+import com.synectiks.cms.repositories.IdCardRepository;
+//import com.synectiks.cms.commons.repositories.search.IdCardSearchRepository;
 import com.synectiks.cms.service.dto.IdCardDTO;
 import com.synectiks.cms.service.mapper.IdCardMapper;
 import org.slf4j.Logger;

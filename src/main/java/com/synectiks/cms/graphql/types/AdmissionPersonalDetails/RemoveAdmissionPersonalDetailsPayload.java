@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.AdmissionPersonalDetails;
 
-import com.synectiks.cms.domain.AdmissionApplication;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.AdmissionApplication;
 
 public class RemoveAdmissionPersonalDetailsPayload {
     private final List<AdmissionApplication> admissionpersonaldetails;

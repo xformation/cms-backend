@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.FeeCategory;
 
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.entities.City;
+import com.synectiks.cms.entities.FeeCategory;
 
 public class AbstractFeeCategoryPayload {
     private final FeeCategory feeCategory;

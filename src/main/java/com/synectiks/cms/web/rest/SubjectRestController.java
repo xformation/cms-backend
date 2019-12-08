@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.AcademicSubjectService;
-import com.synectiks.cms.domain.CmsSubjectVo;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.entities.CmsSubjectVo;
+import com.synectiks.cms.entities.Subject;
+import com.synectiks.cms.entities.Teach;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.repositories.SubjectRepository;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 

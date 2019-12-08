@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.StudentExamReport;
-import com.synectiks.cms.repository.StudentExamReportRepository;
+import com.synectiks.cms.entities.StudentExamReport;
+import com.synectiks.cms.repositories.StudentExamReportRepository;
 import com.synectiks.cms.service.StudentExamReportService;
 import com.synectiks.cms.service.dto.StudentExamReportDTO;
 import com.synectiks.cms.service.mapper.StudentExamReportMapper;

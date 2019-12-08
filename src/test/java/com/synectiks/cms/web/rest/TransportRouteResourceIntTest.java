@@ -31,9 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.enumeration.RouteFrequency;
-import com.synectiks.cms.repository.TransportRouteRepository;
+import com.synectiks.cms.entities.TransportRoute;
+import com.synectiks.cms.entities.enumeration.RouteFrequency;
+import com.synectiks.cms.repositories.TransportRouteRepository;
 import com.synectiks.cms.service.TransportRouteService;
 import com.synectiks.cms.service.dto.TransportRouteDTO;
 import com.synectiks.cms.service.mapper.TransportRouteMapper;

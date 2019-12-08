@@ -2,10 +2,11 @@ package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.CourseEnum;
-import com.synectiks.cms.domain.enumeration.Status;
+
+import com.synectiks.cms.entities.enumeration.AdmissionStatusEnum;
+import com.synectiks.cms.entities.enumeration.CourseEnum;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.Status;
 
 /**
  * A DTO for the {@link com.synectiks.cms.domain.AdmissionApplication} entity.

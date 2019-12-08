@@ -1,8 +1,9 @@
 package com.synectiks.cms.business.service;
 
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.College;
+import com.synectiks.cms.repositories.BranchRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.FacilityService;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.repository.FacilityRepository;
-//import com.synectiks.cms.repository.search.FacilitySearchRepository;
+import com.synectiks.cms.entities.Facility;
+import com.synectiks.cms.repositories.FacilityRepository;
+//import com.synectiks.cms.commons.repositories.search.FacilitySearchRepository;
 import com.synectiks.cms.service.dto.FacilityDTO;
 import com.synectiks.cms.service.mapper.FacilityMapper;
 import org.slf4j.Logger;

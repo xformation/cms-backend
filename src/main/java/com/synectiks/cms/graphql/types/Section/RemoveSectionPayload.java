@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Section;
 
-import com.synectiks.cms.domain.Section;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Section;
 
 public class RemoveSectionPayload {
     private final List<Section>  sections;

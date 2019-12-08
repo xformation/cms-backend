@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Library;
 
 
-import com.synectiks.cms.domain.Library;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Library;
 
 public class RemoveLibraryPayload {
     private final List<Library>libraries;

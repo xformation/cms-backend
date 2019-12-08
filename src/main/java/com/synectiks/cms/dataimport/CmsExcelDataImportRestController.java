@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.entities.QueryResult;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 

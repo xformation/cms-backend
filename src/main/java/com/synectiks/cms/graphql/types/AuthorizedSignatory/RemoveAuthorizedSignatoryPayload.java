@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.AuthorizedSignatory;
 
-import com.synectiks.cms.domain.AuthorizedSignatory;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.AuthorizedSignatory;
 
 public class RemoveAuthorizedSignatoryPayload {
 

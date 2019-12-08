@@ -1,8 +1,9 @@
 package com.synectiks.cms.filter.admissionapplication;
 
 import com.synectiks.cms.business.service.CmsAdmissionApplicationService;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.entities.CmsAdmissionApplicationVo;
+import com.synectiks.cms.entities.CmsAdmissionEnquiryVo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Insurance;
 
-import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.TypeOfInsurance;
 
 public class AbstractInsuranceInput {
     private Long id;

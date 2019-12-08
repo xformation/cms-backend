@@ -1,11 +1,11 @@
 package com.synectiks.cms.graphql.types.Invoice;
 
-import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
-import com.synectiks.cms.domain.enumeration.ModeOfPayment;
-import com.synectiks.cms.domain.enumeration.Status;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.entities.enumeration.ModeOfPayment;
+import com.synectiks.cms.entities.enumeration.Status;
 
 public class AbstractInvoiceInput {
     private Long id;

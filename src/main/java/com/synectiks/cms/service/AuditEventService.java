@@ -1,7 +1,8 @@
 package com.synectiks.cms.service;
 
 import com.synectiks.cms.config.audit.AuditEventConverter;
-import com.synectiks.cms.repository.PersistenceAuditEventRepository;
+import com.synectiks.cms.repositories.PersistenceAuditEventRepository;
+
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

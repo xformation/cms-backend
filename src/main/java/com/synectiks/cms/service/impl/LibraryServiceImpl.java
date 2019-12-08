@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.LibraryService;
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.repository.LibraryRepository;
-//import com.synectiks.cms.repository.search.LibrarySearchRepository;
+import com.synectiks.cms.entities.Library;
+import com.synectiks.cms.repositories.LibraryRepository;
+//import com.synectiks.cms.commons.repositories.search.LibrarySearchRepository;
 import com.synectiks.cms.service.dto.LibraryDTO;
 import com.synectiks.cms.service.mapper.LibraryMapper;
 import org.slf4j.Logger;

@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.DueDate;
 
-import com.synectiks.cms.domain.DueDate;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.DueDate;
 
 public class RemoveDueDatePayload  {
     private final List<DueDate> dueDates;

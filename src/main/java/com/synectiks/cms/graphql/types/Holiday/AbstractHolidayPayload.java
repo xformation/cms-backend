@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.Holiday;
 
 
-import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.entities.Holiday;
 
 public class AbstractHolidayPayload {
     private final Holiday holiday;

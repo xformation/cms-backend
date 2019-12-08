@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.AcademicHistory;
 
-import com.synectiks.cms.domain.AcademicHistory;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.AcademicHistory;
 
 public class RemoveAcademicHistoryPayload {
     private final List<AcademicHistory> academicHistories;

@@ -1,12 +1,14 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.Disability;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.MaritalStatus;
+import com.synectiks.cms.entities.enumeration.Status;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Disability;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
 /**
  * A DTO for the Employee entity.

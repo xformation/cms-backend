@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Vehicle;
 
-import com.synectiks.cms.domain.enumeration.Status;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.Status;
 
 public class AbstractVehicleInput {
     private Long id;

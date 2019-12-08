@@ -24,17 +24,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CountryRepository;
-import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.entities.AcademicExamSetting;
+import com.synectiks.cms.entities.AcademicYear;
+import com.synectiks.cms.entities.City;
+import com.synectiks.cms.entities.Country;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.entities.Section;
+import com.synectiks.cms.entities.State;
+import com.synectiks.cms.repositories.AcademicExamSettingRepository;
+import com.synectiks.cms.repositories.CityRepository;
+import com.synectiks.cms.repositories.CountryRepository;
+import com.synectiks.cms.repositories.StateRepository;
 
 @RestController
 @RequestMapping("/api")

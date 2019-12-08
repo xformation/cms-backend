@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.LateFee;
 
-import com.synectiks.cms.domain.LateFee;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.LateFee;
 
 public class RemoveLateFeePayload {
     private final List<LateFee> lateFees;

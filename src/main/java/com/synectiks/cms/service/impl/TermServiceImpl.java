@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TermService;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.repository.TermRepository;
-//import com.synectiks.cms.repository.search.TermSearchRepository;
+import com.synectiks.cms.entities.Term;
+import com.synectiks.cms.repositories.TermRepository;
+//import com.synectiks.cms.commons.repositories.search.TermSearchRepository;
 import com.synectiks.cms.service.dto.TermDTO;
 import com.synectiks.cms.service.mapper.TermMapper;
 import org.slf4j.Logger;

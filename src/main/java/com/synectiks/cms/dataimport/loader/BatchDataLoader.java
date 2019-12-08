@@ -2,10 +2,10 @@ package com.synectiks.cms.dataimport.loader;
 
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.enumeration.BatchEnum;
+import com.synectiks.cms.entities.Batch;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.entities.enumeration.BatchEnum;
 import com.synectiks.cms.exceptions.AdditionalBatchFoundException;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;

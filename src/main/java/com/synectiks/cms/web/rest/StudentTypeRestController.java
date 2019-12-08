@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.entities.CmsStudentTypeVo;
 
 import io.github.jhipster.web.util.ResponseUtil;
 

@@ -1,11 +1,11 @@
 package com.synectiks.cms.business.service;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.entities.*;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.library.LibraryFilterInput;
 import com.synectiks.cms.filter.student.StudentListFilterInput;
-import com.synectiks.cms.repository.LibraryRepository;
+import com.synectiks.cms.repositories.LibraryRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

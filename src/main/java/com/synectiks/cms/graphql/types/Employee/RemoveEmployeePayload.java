@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Employee;
 
-import com.synectiks.cms.domain.Employee;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Employee;
 
 public class RemoveEmployeePayload {
     private final List<Employee> employees;

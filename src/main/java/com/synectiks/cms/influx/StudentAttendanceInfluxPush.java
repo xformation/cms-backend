@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.entities.StudentAttendance;
+import com.synectiks.cms.repositories.StudentAttendanceRepository;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
 @Component

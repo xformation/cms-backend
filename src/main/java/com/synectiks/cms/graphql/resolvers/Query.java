@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
 import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
-import com.synectiks.cms.repository.*;
+import com.synectiks.cms.repositories.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +37,9 @@ import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.entities.*;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.Book.BookfilterProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;

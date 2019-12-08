@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.InsuranceService;
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.repository.InsuranceRepository;
-//import com.synectiks.cms.repository.search.InsuranceSearchRepository;
+import com.synectiks.cms.entities.Insurance;
+import com.synectiks.cms.repositories.InsuranceRepository;
+//import com.synectiks.cms.commons.repositories.search.InsuranceSearchRepository;
 import com.synectiks.cms.service.dto.InsuranceDTO;
 import com.synectiks.cms.service.mapper.InsuranceMapper;
 import org.slf4j.Logger;

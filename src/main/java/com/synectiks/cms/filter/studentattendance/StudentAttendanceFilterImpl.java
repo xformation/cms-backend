@@ -24,22 +24,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.entities.AttendanceMaster;
+import com.synectiks.cms.entities.Batch;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.entities.Lecture;
+import com.synectiks.cms.entities.QueryResult;
+import com.synectiks.cms.entities.Section;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.StudentAttendance;
+import com.synectiks.cms.entities.Teach;
+import com.synectiks.cms.entities.Teacher;
+import com.synectiks.cms.entities.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.repositories.LectureRepository;
+import com.synectiks.cms.repositories.StudentAttendanceRepository;
+import com.synectiks.cms.repositories.StudentRepository;
+import com.synectiks.cms.repositories.TeacherRepository;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
 

@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.TransportRoute;
 
-import com.synectiks.cms.domain.enumeration.RouteFrequency;
-
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.RouteFrequency;
 
 public class AbstractTransportRouteInput {
     private Long id;

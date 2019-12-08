@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.base64.file.Base64FileProcessor;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsCollegeVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.entities.CmsCollegeVo;
+import com.synectiks.cms.entities.College;
+import com.synectiks.cms.repositories.CollegeRepository;
 
 /**
  * REST controller for managing College.

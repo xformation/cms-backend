@@ -3,12 +3,13 @@ package com.synectiks.cms.business.service.exam;
 import java.util.List;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.cms.entities.*;
+import com.synectiks.cms.entities.enumeration.SemesterEnum;
 import com.synectiks.cms.filter.exam.ExamListFilterInput;
 import com.synectiks.cms.graphql.types.StudentExamReport.AddStudentExamReportInput;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.StudentExamReportRepository;
+import com.synectiks.cms.repositories.AcademicExamSettingRepository;
+import com.synectiks.cms.repositories.StudentExamReportRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;

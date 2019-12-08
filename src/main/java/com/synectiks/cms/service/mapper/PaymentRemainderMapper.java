@@ -1,6 +1,6 @@
 package com.synectiks.cms.service.mapper;
 
-import com.synectiks.cms.domain.*;
+import com.synectiks.cms.entities.*;
 import com.synectiks.cms.service.dto.PaymentRemainderDTO;
 
 import org.mapstruct.*;

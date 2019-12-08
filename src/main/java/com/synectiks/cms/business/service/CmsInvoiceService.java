@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.entities.AcademicYear;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.CmsInvoice;
+import com.synectiks.cms.entities.College;
+import com.synectiks.cms.entities.Invoice;
+import com.synectiks.cms.entities.Lecture;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.repositories.InvoiceRepository;
+import com.synectiks.cms.repositories.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 

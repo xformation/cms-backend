@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.entities.QueryResult;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
 import com.synectiks.cms.exceptions.FilePathNotFoundException;

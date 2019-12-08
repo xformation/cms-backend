@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.LateFeeService;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.repository.LateFeeRepository;
-//import com.synectiks.cms.repository.search.LateFeeSearchRepository;
+import com.synectiks.cms.entities.LateFee;
+import com.synectiks.cms.repositories.LateFeeRepository;
+//import com.synectiks.cms.commons.repositories.search.LateFeeSearchRepository;
 import com.synectiks.cms.service.dto.LateFeeDTO;
 import com.synectiks.cms.service.mapper.LateFeeMapper;
 import org.slf4j.Logger;

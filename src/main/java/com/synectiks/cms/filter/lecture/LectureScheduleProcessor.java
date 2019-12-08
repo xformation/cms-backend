@@ -25,14 +25,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.TermRepository;
+import com.synectiks.cms.entities.AcademicYear;
+import com.synectiks.cms.entities.Holiday;
+import com.synectiks.cms.entities.QueryResult;
+import com.synectiks.cms.entities.Term;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.repositories.AcademicYearRepository;
+import com.synectiks.cms.repositories.HolidayRepository;
+import com.synectiks.cms.repositories.TermRepository;
 
 @Component
 public class LectureScheduleProcessor {

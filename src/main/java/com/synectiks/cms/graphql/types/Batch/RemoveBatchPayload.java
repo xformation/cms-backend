@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.Batch;
 
 import java.util.List;
 
-import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.entities.Batch;
 
 public class RemoveBatchPayload {
     private final List<Batch> batch;

@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TeacherService;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.repository.TeacherRepository;
-//import com.synectiks.cms.repository.search.TeacherSearchRepository;
+import com.synectiks.cms.entities.Teacher;
+import com.synectiks.cms.repositories.TeacherRepository;
+//import com.synectiks.cms.commons.repositories.search.TeacherSearchRepository;
 import com.synectiks.cms.service.dto.TeacherDTO;
 import com.synectiks.cms.service.mapper.TeacherMapper;
 import org.slf4j.Logger;

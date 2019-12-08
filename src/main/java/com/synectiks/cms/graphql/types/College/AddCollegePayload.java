@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.College;
 
-import com.synectiks.cms.domain.College;
+import com.synectiks.cms.entities.College;
 
 public class AddCollegePayload extends AbstractCollegePayload {
 

@@ -1,10 +1,12 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.entities.enumeration.ModeOfPayment;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.ModeOfPayment;
-import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 
 /**
  * A DTO for the Invoice entity.

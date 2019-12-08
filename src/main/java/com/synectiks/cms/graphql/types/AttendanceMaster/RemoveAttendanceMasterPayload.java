@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.AttendanceMaster;
 
 import java.util.List;
 
-import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.entities.AttendanceMaster;
 
 public class RemoveAttendanceMasterPayload {
     private final List<AttendanceMaster> attendanceMaster;

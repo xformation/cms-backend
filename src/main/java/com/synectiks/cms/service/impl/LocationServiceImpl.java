@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.LocationService;
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.repository.LocationRepository;
-//import com.synectiks.cms.repository.search.LocationSearchRepository;
+import com.synectiks.cms.entities.Location;
+import com.synectiks.cms.repositories.LocationRepository;
+//import com.synectiks.cms.commons.repositories.search.LocationSearchRepository;
 import com.synectiks.cms.service.dto.LocationDTO;
 import com.synectiks.cms.service.mapper.LocationMapper;
 import org.slf4j.Logger;

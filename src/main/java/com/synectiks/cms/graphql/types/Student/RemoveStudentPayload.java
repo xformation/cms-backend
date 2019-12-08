@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Student;
 
 
-import com.synectiks.cms.domain.Student;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Student;
 
 public class RemoveStudentPayload {
     private final List<Student> students;

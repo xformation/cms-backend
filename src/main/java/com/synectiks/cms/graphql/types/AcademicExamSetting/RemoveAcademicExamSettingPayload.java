@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.AcademicExamSetting;
 
-import com.synectiks.cms.domain.AcademicExamSetting;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.AcademicExamSetting;
 
 public class RemoveAcademicExamSettingPayload {
     private final List<AcademicExamSetting> academicExamSettings;

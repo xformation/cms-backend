@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentFacilityLink;
-import com.synectiks.cms.repository.StudentFacilityLinkRepository;
-import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.StudentFacilityLink;
+import com.synectiks.cms.repositories.StudentFacilityLinkRepository;
+import com.synectiks.cms.repositories.StudentRepository;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 

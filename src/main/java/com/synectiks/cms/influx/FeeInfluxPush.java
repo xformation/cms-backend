@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
-import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.entities.AcademicYear;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.CmsAdmissionApplicationVo;
+import com.synectiks.cms.entities.enumeration.AdmissionStatusEnum;
+import com.synectiks.cms.repositories.BranchRepository;
 
 @Component
 public class FeeInfluxPush implements InfluxPush {

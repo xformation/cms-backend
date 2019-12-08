@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Batch;
 
-import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.entities.Batch;
 
 public class AbstractBatchPayload {
     private final Batch batch;

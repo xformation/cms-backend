@@ -2,7 +2,7 @@ package com.synectiks.cms.graphql.types.FeeCategory;
 
 import java.util.Date;
 
-import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.Status;
 
 public class AbstractFeeCategoryInput {
     private Long id;

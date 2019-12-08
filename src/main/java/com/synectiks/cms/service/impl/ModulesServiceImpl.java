@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.ModulesService;
-import com.synectiks.cms.domain.Modules;
-import com.synectiks.cms.repository.ModulesRepository;
-//import com.synectiks.cms.repository.search.ModulesSearchRepository;
+import com.synectiks.cms.entities.Modules;
+import com.synectiks.cms.repositories.ModulesRepository;
+//import com.synectiks.cms.commons.repositories.search.ModulesSearchRepository;
 import com.synectiks.cms.service.dto.ModulesDTO;
 import com.synectiks.cms.service.mapper.ModulesMapper;
 import org.slf4j.Logger;

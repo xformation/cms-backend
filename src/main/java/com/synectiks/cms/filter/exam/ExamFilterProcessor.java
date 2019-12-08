@@ -2,9 +2,9 @@ package com.synectiks.cms.filter.exam;
 
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.business.service.exam.ExamService;
-import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.entities.AcademicExamSetting;
+import com.synectiks.cms.entities.StudentExamReport;
 
-import com.synectiks.cms.domain.StudentExamReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

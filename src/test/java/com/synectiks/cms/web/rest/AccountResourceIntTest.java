@@ -1,11 +1,11 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.config.Constants;
+import com.synectiks.cms.entities.Authority;
+import com.synectiks.cms.entities.User;
+import com.synectiks.cms.repositories.AuthorityRepository;
+import com.synectiks.cms.repositories.UserRepository;
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Authority;
-import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.AuthorityRepository;
-import com.synectiks.cms.repository.UserRepository;
 import com.synectiks.cms.security.AuthoritiesConstants;
 import com.synectiks.cms.service.MailService;
 import com.synectiks.cms.service.dto.UserDTO;

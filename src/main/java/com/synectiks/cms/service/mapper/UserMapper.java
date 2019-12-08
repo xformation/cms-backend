@@ -1,7 +1,7 @@
 package com.synectiks.cms.service.mapper;
 
-import com.synectiks.cms.domain.Authority;
-import com.synectiks.cms.domain.User;
+import com.synectiks.cms.entities.Authority;
+import com.synectiks.cms.entities.User;
 import com.synectiks.cms.service.dto.UserDTO;
 
 import org.springframework.stereotype.Service;

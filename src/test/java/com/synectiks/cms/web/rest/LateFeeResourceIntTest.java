@@ -30,8 +30,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.repository.LateFeeRepository;
+import com.synectiks.cms.entities.LateFee;
+import com.synectiks.cms.repositories.LateFeeRepository;
 import com.synectiks.cms.service.LateFeeService;
 import com.synectiks.cms.service.dto.LateFeeDTO;
 import com.synectiks.cms.service.mapper.LateFeeMapper;

@@ -32,9 +32,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.entities.Holiday;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.repositories.HolidayRepository;
 import com.synectiks.cms.service.HolidayService;
 import com.synectiks.cms.service.dto.HolidayDTO;
 import com.synectiks.cms.service.mapper.HolidayMapper;

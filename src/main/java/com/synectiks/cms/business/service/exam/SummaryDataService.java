@@ -1,7 +1,7 @@
 package com.synectiks.cms.business.service.exam;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.repository.*;
+import com.synectiks.cms.entities.*;
+import com.synectiks.cms.repositories.*;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

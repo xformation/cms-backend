@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.repository.CountryRepository;
+import com.synectiks.cms.entities.Country;
+import com.synectiks.cms.repositories.CountryRepository;
 import com.synectiks.cms.service.CountryService;
 import com.synectiks.cms.service.dto.CountryDTO;
 import com.synectiks.cms.service.mapper.CountryMapper;

@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.BankAccountsService;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.repository.BankAccountsRepository;
-//import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
+import com.synectiks.cms.entities.BankAccounts;
+import com.synectiks.cms.repositories.BankAccountsRepository;
+//import com.synectiks.cms.commons.repositories.search.BankAccountsSearchRepository;
 import com.synectiks.cms.service.dto.BankAccountsDTO;
 import com.synectiks.cms.service.mapper.BankAccountsMapper;
 import org.slf4j.Logger;

@@ -33,9 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
-import com.synectiks.cms.repository.InsuranceRepository;
+import com.synectiks.cms.entities.Insurance;
+import com.synectiks.cms.entities.enumeration.TypeOfInsurance;
+import com.synectiks.cms.repositories.InsuranceRepository;
 import com.synectiks.cms.service.InsuranceService;
 import com.synectiks.cms.service.dto.InsuranceDTO;
 import com.synectiks.cms.service.mapper.InsuranceMapper;

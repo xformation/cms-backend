@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.EmployeeService;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.repository.EmployeeRepository;
-//import com.synectiks.cms.repository.search.EmployeeSearchRepository;
+import com.synectiks.cms.entities.Employee;
+import com.synectiks.cms.repositories.EmployeeRepository;
+//import com.synectiks.cms.commons.repositories.search.EmployeeSearchRepository;
 import com.synectiks.cms.service.dto.EmployeeDTO;
 import com.synectiks.cms.service.mapper.EmployeeMapper;
 import org.slf4j.Logger;

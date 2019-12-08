@@ -1,9 +1,8 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-
-import com.synectiks.cms.domain.Book;
-import com.synectiks.cms.repository.BookRepository;
+import com.synectiks.cms.entities.Book;
+import com.synectiks.cms.entities.enumeration.StatusEnum;
 import com.synectiks.cms.service.BookService;
 import com.synectiks.cms.service.dto.BookDTO;
 import com.synectiks.cms.service.mapper.BookMapper;
@@ -38,7 +37,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.StatusEnum;
+import com.synectiks.cms.repositories.BookRepository;
 /**
  * Test class for the BookResource REST controller.
  *

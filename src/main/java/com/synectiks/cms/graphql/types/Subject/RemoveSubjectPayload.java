@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Subject;
 
-import com.synectiks.cms.domain.Subject;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Subject;
 
 public class RemoveSubjectPayload {
     private final List<Subject> subjects;

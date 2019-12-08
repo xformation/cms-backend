@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StudentService;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.repository.StudentRepository;
-//import com.synectiks.cms.repository.search.StudentSearchRepository;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.repositories.StudentRepository;
+//import com.synectiks.cms.commons.repositories.search.StudentSearchRepository;
 import com.synectiks.cms.service.dto.StudentDTO;
 import com.synectiks.cms.service.mapper.StudentMapper;
 import org.slf4j.Logger;

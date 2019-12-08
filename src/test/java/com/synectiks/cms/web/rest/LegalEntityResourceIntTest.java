@@ -32,9 +32,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.enumeration.TypeOfCollege;
-import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.entities.LegalEntity;
+import com.synectiks.cms.entities.enumeration.TypeOfCollege;
+import com.synectiks.cms.repositories.LegalEntityRepository;
 import com.synectiks.cms.service.LegalEntityService;
 import com.synectiks.cms.service.dto.LegalEntityDTO;
 import com.synectiks.cms.service.mapper.LegalEntityMapper;

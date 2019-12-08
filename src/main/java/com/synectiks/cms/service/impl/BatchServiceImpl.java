@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.BatchService;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.repository.BatchRepository;
-//import com.synectiks.cms.repository.search.BatchSearchRepository;
+import com.synectiks.cms.entities.Batch;
+import com.synectiks.cms.repositories.BatchRepository;
+//import com.synectiks.cms.commons.repositories.search.BatchSearchRepository;
 import com.synectiks.cms.service.dto.BatchDTO;
 import com.synectiks.cms.service.mapper.BatchMapper;
 import org.slf4j.Logger;

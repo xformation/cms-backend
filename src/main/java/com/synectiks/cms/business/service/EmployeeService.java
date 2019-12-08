@@ -1,11 +1,11 @@
 package com.synectiks.cms.business.service;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsEmployeeVo;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Vehicle;
+import com.synectiks.cms.entities.CmsEmployeeVo;
+import com.synectiks.cms.entities.Employee;
+import com.synectiks.cms.entities.Vehicle;
 import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
-import com.synectiks.cms.repository.EmployeeRepository;
+import com.synectiks.cms.repositories.EmployeeRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,12 @@
 package com.synectiks.cms.business.service;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.domain.enumeration.EnquiryStatus;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
+import com.synectiks.cms.entities.AdmissionApplication;
+import com.synectiks.cms.entities.AdmissionEnquiry;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.entities.enumeration.EnquiryStatus;
+import com.synectiks.cms.repositories.AdmissionEnquiryRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;

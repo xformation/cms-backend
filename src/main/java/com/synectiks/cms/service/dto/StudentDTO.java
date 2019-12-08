@@ -1,15 +1,17 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.Bloodgroup;
+import com.synectiks.cms.entities.enumeration.Caste;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.entities.enumeration.Religion;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the {@link com.synectiks.cms.domain.Student} entity.

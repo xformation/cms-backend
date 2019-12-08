@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Contract;
 
-import com.synectiks.cms.domain.Contract;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Contract;
 
 public class RemoveContractPayload {
     private final List<Contract> contracts;

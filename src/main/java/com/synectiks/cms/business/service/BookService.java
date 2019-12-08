@@ -1,8 +1,8 @@
 package com.synectiks.cms.business.service;
 
-import com.synectiks.cms.domain.*;
+import com.synectiks.cms.entities.*;
 import com.synectiks.cms.filter.Book.BookListFilterInput;
-import com.synectiks.cms.repository.LibraryRepository;
+import com.synectiks.cms.repositories.LibraryRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

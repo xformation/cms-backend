@@ -2,9 +2,9 @@ package com.synectiks.cms.web.rest;
 
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.CmsAcademicExamSettingVo;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
+import com.synectiks.cms.entities.AcademicExamSetting;
+import com.synectiks.cms.entities.CmsAcademicExamSettingVo;
+import com.synectiks.cms.repositories.AcademicExamSettingRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;

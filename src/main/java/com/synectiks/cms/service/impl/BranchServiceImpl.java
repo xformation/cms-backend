@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.BranchService;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.repository.BranchRepository;
-//import com.synectiks.cms.repository.search.BranchSearchRepository;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.repositories.BranchRepository;
+//import com.synectiks.cms.commons.repositories.search.BranchSearchRepository;
 import com.synectiks.cms.service.dto.BranchDTO;
 import com.synectiks.cms.service.mapper.BranchMapper;
 import org.slf4j.Logger;

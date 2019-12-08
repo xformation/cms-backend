@@ -1,11 +1,11 @@
 package com.synectiks.cms.graphql.types.StudentAttendance;
 
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
-import com.synectiks.cms.domain.enumeration.Status;
-
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.entities.enumeration.Status;
 
 public class AbstractStudentAttendanceInput {
     private Long id;

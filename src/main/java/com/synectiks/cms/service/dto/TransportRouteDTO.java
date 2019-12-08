@@ -1,8 +1,10 @@
 package com.synectiks.cms.service.dto;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.RouteFrequency;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.RouteFrequency;
 
 /**
  * A DTO for the TransportRoute entity.

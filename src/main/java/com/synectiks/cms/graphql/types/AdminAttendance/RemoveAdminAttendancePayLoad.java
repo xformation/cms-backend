@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.AdminAttendance;
 
-import com.synectiks.cms.domain.AdminAttendance;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.AdminAttendance;
 
 public class RemoveAdminAttendancePayLoad {
 

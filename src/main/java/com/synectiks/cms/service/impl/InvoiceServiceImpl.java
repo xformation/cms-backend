@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.InvoiceService;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.repository.InvoiceRepository;
-//import com.synectiks.cms.repository.search.InvoiceSearchRepository;
+import com.synectiks.cms.entities.Invoice;
+import com.synectiks.cms.repositories.InvoiceRepository;
+//import com.synectiks.cms.commons.repositories.search.InvoiceSearchRepository;
 import com.synectiks.cms.service.dto.InvoiceDTO;
 import com.synectiks.cms.service.mapper.InvoiceMapper;
 import org.slf4j.Logger;

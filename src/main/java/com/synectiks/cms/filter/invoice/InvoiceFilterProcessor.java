@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CmsInvoiceService;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.entities.CmsInvoice;
+import com.synectiks.cms.entities.Invoice;
 
 @Component
 public class InvoiceFilterProcessor {

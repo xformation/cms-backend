@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CityService;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.repository.CityRepository;
-//import com.synectiks.cms.repository.search.CitySearchRepository;
+import com.synectiks.cms.entities.City;
+import com.synectiks.cms.repositories.CityRepository;
+//import com.synectiks.cms.commons.repositories.search.CitySearchRepository;
 import com.synectiks.cms.service.dto.CityDTO;
 import com.synectiks.cms.service.mapper.CityMapper;
 import org.slf4j.Logger;

@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AcademicYearService;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.repository.AcademicYearRepository;
-//import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
+import com.synectiks.cms.entities.AcademicYear;
+import com.synectiks.cms.repositories.AcademicYearRepository;
+//import com.synectiks.cms.commons.repositories.search.AcademicYearSearchRepository;
 import com.synectiks.cms.service.dto.AcademicYearDTO;
 import com.synectiks.cms.service.mapper.AcademicYearMapper;
 import org.slf4j.Logger;

@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Country;
 
-import com.synectiks.cms.domain.Country;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Country;
 
 public class RemoveCountryPayload {
     private final List<Country> countries;

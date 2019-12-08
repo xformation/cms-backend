@@ -11,8 +11,8 @@ import org.springframework.data.domain.Example;
 
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.State;
+import com.synectiks.cms.entities.City;
+import com.synectiks.cms.entities.State;
 import com.synectiks.cms.service.util.CommonUtil;
 
 

@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.AcademicYear;
 
-import com.synectiks.cms.domain.enumeration.Status;
-
 import java.util.Date;
+
+import com.synectiks.cms.entities.enumeration.Status;
 
 public class AbstractAcademicYearInput {
     private Long id;

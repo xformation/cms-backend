@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.AcademicYear;
 
-    import com.synectiks.cms.domain.AcademicYear;
-
     import java.util.List;
+
+import com.synectiks.cms.entities.AcademicYear;
 
 public class RemoveAcademicYearPayload {
     private final List<AcademicYear> academicYears;

@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Teacher;
 
-import com.synectiks.cms.domain.Teacher;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Teacher;
 
 public class RemoveTeacherPayload {
     private final List<Teacher> teachers;

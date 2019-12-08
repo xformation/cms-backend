@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Vehicle;
 
-import com.synectiks.cms.domain.Vehicle;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Vehicle;
 
 public class RemoveVehiclePayload {
     private final List<Vehicle> vehicles;

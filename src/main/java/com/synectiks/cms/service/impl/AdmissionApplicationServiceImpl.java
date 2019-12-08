@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AdmissionApplicationService;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-//import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
+import com.synectiks.cms.entities.AdmissionApplication;
+import com.synectiks.cms.repositories.AdmissionApplicationRepository;
+//import com.synectiks.cms.commons.repositories.search.AdmissionApplicationSearchRepository;
 import com.synectiks.cms.service.dto.AdmissionApplicationDTO;
 import com.synectiks.cms.service.mapper.AdmissionApplicationMapper;
 import org.slf4j.Logger;

@@ -1,7 +1,7 @@
 package com.synectiks.cms.graphql.types.CompetitiveExam;
 
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.entities.CompetitiveExam;
+import com.synectiks.cms.entities.Student;
 
 public class AbstractCompetitiveExamPayload {
 

@@ -1,8 +1,8 @@
 package com.synectiks.cms.web.rest;
 
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.repository.*;
+import com.synectiks.cms.entities.*;
+import com.synectiks.cms.repositories.*;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;

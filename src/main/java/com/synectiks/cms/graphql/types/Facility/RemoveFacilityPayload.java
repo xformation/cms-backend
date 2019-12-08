@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Facility;
 
-import com.synectiks.cms.domain.Facility;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Facility;
 
 public class RemoveFacilityPayload {
     private final List<Facility> facilities;

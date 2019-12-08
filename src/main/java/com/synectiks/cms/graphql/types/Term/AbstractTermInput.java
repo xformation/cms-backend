@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Term;
 
-import com.synectiks.cms.domain.enumeration.Status;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.Status;
 
 public class AbstractTermInput {
     private Long id;

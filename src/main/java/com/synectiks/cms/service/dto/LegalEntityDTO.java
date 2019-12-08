@@ -1,9 +1,11 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.TypeOfCollege;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 
 /**
  * A DTO for the LegalEntity entity.

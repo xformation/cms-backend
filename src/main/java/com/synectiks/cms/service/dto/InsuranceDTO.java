@@ -2,9 +2,11 @@ package com.synectiks.cms.service.dto;
 
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.TypeOfInsurance;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
 
 /**
  * A DTO for the Insurance entity.

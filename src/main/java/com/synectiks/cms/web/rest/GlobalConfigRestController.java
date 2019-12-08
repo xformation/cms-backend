@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsDepartmentVo;
-import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.entities.CmsDepartmentVo;
+import com.synectiks.cms.entities.Config;
 import com.synectiks.cms.service.util.CommonUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;

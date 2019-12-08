@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.CountryRepository;
+import com.synectiks.cms.entities.AdmissionApplication;
+import com.synectiks.cms.entities.CmsAdmissionApplicationVo;
+import com.synectiks.cms.entities.Country;
+import com.synectiks.cms.repositories.AdmissionApplicationRepository;
+import com.synectiks.cms.repositories.CountryRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;

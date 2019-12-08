@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StudentFeeService;
-import com.synectiks.cms.domain.StudentFee;
-import com.synectiks.cms.repository.StudentFeeRepository;
-//import com.synectiks.cms.repository.search.StudentFeeSearchRepository;
+import com.synectiks.cms.entities.StudentFee;
+import com.synectiks.cms.repositories.StudentFeeRepository;
+//import com.synectiks.cms.commons.repositories.search.StudentFeeSearchRepository;
 import com.synectiks.cms.service.dto.StudentFeeDTO;
 import com.synectiks.cms.service.mapper.StudentFeeMapper;
 import org.slf4j.Logger;

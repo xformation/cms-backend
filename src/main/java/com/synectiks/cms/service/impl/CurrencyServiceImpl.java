@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CurrencyService;
-import com.synectiks.cms.domain.Currency;
-import com.synectiks.cms.repository.CurrencyRepository;
-//import com.synectiks.cms.repository.search.CurrencySearchRepository;
+import com.synectiks.cms.entities.Currency;
+import com.synectiks.cms.repositories.CurrencyRepository;
+//import com.synectiks.cms.commons.repositories.search.CurrencySearchRepository;
 import com.synectiks.cms.service.dto.CurrencyDTO;
 import com.synectiks.cms.service.mapper.CurrencyMapper;
 import org.slf4j.Logger;

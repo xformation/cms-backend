@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.DepartmentService;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.repository.DepartmentRepository;
-//import com.synectiks.cms.repository.search.DepartmentSearchRepository;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.repositories.DepartmentRepository;
+//import com.synectiks.cms.commons.repositories.search.DepartmentSearchRepository;
 import com.synectiks.cms.service.dto.DepartmentDTO;
 import com.synectiks.cms.service.mapper.DepartmentMapper;
 import org.slf4j.Logger;

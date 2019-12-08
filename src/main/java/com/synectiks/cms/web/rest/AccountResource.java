@@ -1,9 +1,8 @@
 package com.synectiks.cms.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-
-import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.UserRepository;
+import com.synectiks.cms.entities.User;
+import com.synectiks.cms.repositories.UserRepository;
 import com.synectiks.cms.security.SecurityUtils;
 import com.synectiks.cms.service.MailService;
 import com.synectiks.cms.service.UserService;

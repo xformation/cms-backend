@@ -1,11 +1,11 @@
 package com.synectiks.cms.service;
 
-import com.synectiks.cms.domain.Authority;
-import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.AuthorityRepository;
 import com.synectiks.cms.config.Constants;
-import com.synectiks.cms.repository.UserRepository;
-import com.synectiks.cms.repository.search.UserSearchRepository;
+import com.synectiks.cms.entities.Authority;
+import com.synectiks.cms.entities.User;
+import com.synectiks.cms.repositories.AuthorityRepository;
+import com.synectiks.cms.repositories.UserRepository;
+import com.synectiks.cms.repositories.search.UserSearchRepository;
 import com.synectiks.cms.security.AuthoritiesConstants;
 import com.synectiks.cms.security.SecurityUtils;
 import com.synectiks.cms.service.util.RandomUtil;

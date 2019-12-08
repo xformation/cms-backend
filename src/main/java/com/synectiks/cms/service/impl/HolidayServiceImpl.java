@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.HolidayService;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.repository.HolidayRepository;
-//import com.synectiks.cms.repository.search.HolidaySearchRepository;
+import com.synectiks.cms.entities.Holiday;
+import com.synectiks.cms.repositories.HolidayRepository;
+//import com.synectiks.cms.commons.repositories.search.HolidaySearchRepository;
 import com.synectiks.cms.service.dto.HolidayDTO;
 import com.synectiks.cms.service.mapper.HolidayMapper;
 import org.slf4j.Logger;

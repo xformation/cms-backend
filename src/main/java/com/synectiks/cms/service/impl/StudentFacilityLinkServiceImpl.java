@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.StudentFacilityLinkService;
-import com.synectiks.cms.domain.StudentFacilityLink;
-import com.synectiks.cms.repository.StudentFacilityLinkRepository;
-//import com.synectiks.cms.repository.search.StudentFacilityLinkSearchRepository;
+import com.synectiks.cms.entities.StudentFacilityLink;
+import com.synectiks.cms.repositories.StudentFacilityLinkRepository;
+//import com.synectiks.cms.commons.repositories.search.StudentFacilityLinkSearchRepository;
 import com.synectiks.cms.service.dto.StudentFacilityLinkDTO;
 import com.synectiks.cms.service.mapper.StudentFacilityLinkMapper;
 import org.slf4j.Logger;

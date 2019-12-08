@@ -30,8 +30,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.entities.Location;
+import com.synectiks.cms.repositories.LocationRepository;
 import com.synectiks.cms.service.LocationService;
 import com.synectiks.cms.service.dto.LocationDTO;
 import com.synectiks.cms.service.mapper.LocationMapper;

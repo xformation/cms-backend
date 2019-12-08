@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.MetaLectureService;
-import com.synectiks.cms.domain.MetaLecture;
-import com.synectiks.cms.repository.MetaLectureRepository;
-//import com.synectiks.cms.repository.search.MetaLectureSearchRepository;
+import com.synectiks.cms.entities.MetaLecture;
+import com.synectiks.cms.repositories.MetaLectureRepository;
+//import com.synectiks.cms.commons.repositories.search.MetaLectureSearchRepository;
 import com.synectiks.cms.service.dto.MetaLectureDTO;
 import com.synectiks.cms.service.mapper.MetaLectureMapper;
 import org.slf4j.Logger;

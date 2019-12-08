@@ -1,6 +1,6 @@
 //package com.synectiks.cms.graphql.types.StudentYear;
 //
-//import com.synectiks.cms.domain.enumeration.SYear;
+//import com.synectiks.cms.commons.entities.enumeration.SYear;
 //
 //import java.util.Objects;
 //

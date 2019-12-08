@@ -1,7 +1,8 @@
 package com.synectiks.cms.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Status;
+
+import com.synectiks.cms.entities.enumeration.Status;
 
 /**
  * A DTO for the {@link com.synectiks.cms.domain.Modules} entity.

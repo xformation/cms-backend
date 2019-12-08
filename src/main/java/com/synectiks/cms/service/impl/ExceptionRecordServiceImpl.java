@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.ExceptionRecordService;
-import com.synectiks.cms.domain.ExceptionRecord;
-import com.synectiks.cms.repository.ExceptionRecordRepository;
-//import com.synectiks.cms.repository.search.ExceptionRecordSearchRepository;
+import com.synectiks.cms.entities.ExceptionRecord;
+import com.synectiks.cms.repositories.ExceptionRecordRepository;
+//import com.synectiks.cms.commons.repositories.search.ExceptionRecordSearchRepository;
 import com.synectiks.cms.service.dto.ExceptionRecordDTO;
 import com.synectiks.cms.service.mapper.ExceptionRecordMapper;
 import org.slf4j.Logger;

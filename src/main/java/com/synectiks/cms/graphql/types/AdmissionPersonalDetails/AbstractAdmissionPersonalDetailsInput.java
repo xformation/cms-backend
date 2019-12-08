@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.AdmissionPersonalDetails;
 
-import com.synectiks.cms.domain.enumeration.Gender;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.Gender;
 
 public class AbstractAdmissionPersonalDetailsInput {
     private Long id;

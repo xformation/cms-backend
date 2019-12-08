@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.TypeOfGrading;
 
-import com.synectiks.cms.domain.TypeOfGrading;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.TypeOfGrading;
 
 public class RemoveTypeOfGradingPayload {
     private final List<TypeOfGrading> typeOfGradings;

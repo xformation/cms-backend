@@ -1,9 +1,8 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.entities.AttendanceMaster;
+import com.synectiks.cms.repositories.AttendanceMasterRepository;
 import com.synectiks.cms.service.AttendanceMasterService;
 import com.synectiks.cms.service.dto.AttendanceMasterDTO;
 import com.synectiks.cms.service.mapper.AttendanceMasterMapper;

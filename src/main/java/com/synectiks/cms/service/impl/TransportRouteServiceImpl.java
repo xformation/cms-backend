@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TransportRouteService;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.repository.TransportRouteRepository;
-//import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
+import com.synectiks.cms.entities.TransportRoute;
+import com.synectiks.cms.repositories.TransportRouteRepository;
+//import com.synectiks.cms.commons.repositories.search.TransportRouteSearchRepository;
 import com.synectiks.cms.service.dto.TransportRouteDTO;
 import com.synectiks.cms.service.mapper.TransportRouteMapper;
 import org.slf4j.Logger;

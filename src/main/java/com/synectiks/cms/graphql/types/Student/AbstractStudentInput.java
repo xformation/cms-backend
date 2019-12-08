@@ -2,13 +2,13 @@ package com.synectiks.cms.graphql.types.Student;
 
 import java.time.LocalDate;
 
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.entities.enumeration.Bloodgroup;
+import com.synectiks.cms.entities.enumeration.Caste;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.entities.enumeration.Religion;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
 
 public class AbstractStudentInput {
 	private Long id;

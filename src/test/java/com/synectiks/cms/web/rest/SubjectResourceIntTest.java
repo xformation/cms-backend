@@ -31,10 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.SubTypeEnum;
-import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.entities.Subject;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.SubTypeEnum;
+import com.synectiks.cms.repositories.SubjectRepository;
 import com.synectiks.cms.service.SubjectService;
 import com.synectiks.cms.service.dto.SubjectDTO;
 import com.synectiks.cms.service.mapper.SubjectMapper;

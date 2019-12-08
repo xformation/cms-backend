@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.TypeOfGradingService;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
-//import com.synectiks.cms.repository.search.TypeOfGradingSearchRepository;
+import com.synectiks.cms.entities.TypeOfGrading;
+import com.synectiks.cms.repositories.TypeOfGradingRepository;
+//import com.synectiks.cms.commons.repositories.search.TypeOfGradingSearchRepository;
 import com.synectiks.cms.service.dto.TypeOfGradingDTO;
 import com.synectiks.cms.service.mapper.TypeOfGradingMapper;
 import org.slf4j.Logger;

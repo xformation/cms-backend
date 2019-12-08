@@ -1,10 +1,9 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.repository.AdminAttendanceRepository;
-//import com.synectiks.cms.repository.search.AdminAttendanceSearchRepository;
+import com.synectiks.cms.entities.AdminAttendance;
+import com.synectiks.cms.repositories.AdminAttendanceRepository;
+//import com.synectiks.cms.commons.repositories.search.AdminAttendanceSearchRepository;
 import com.synectiks.cms.service.AdminAttendanceService;
 import com.synectiks.cms.service.dto.AdminAttendanceDTO;
 import com.synectiks.cms.service.mapper.AdminAttendanceMapper;

@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.CompetitiveExam;
 
-import com.synectiks.cms.domain.CompetitiveExam;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.CompetitiveExam;
 
 public class RemoveCompetitiveExamPayload {
     private final List<CompetitiveExam> CompetitiveExam;

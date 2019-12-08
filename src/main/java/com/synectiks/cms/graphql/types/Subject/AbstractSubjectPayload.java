@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.Subject;
 
-import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.entities.Subject;
 
 public class AbstractSubjectPayload {
     private final Subject subject;

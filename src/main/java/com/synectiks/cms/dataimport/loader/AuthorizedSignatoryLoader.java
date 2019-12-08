@@ -9,9 +9,9 @@ import org.springframework.data.domain.Example;
 
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.College;
+import com.synectiks.cms.entities.AuthorizedSignatory;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.College;
 import com.synectiks.cms.service.util.CommonUtil;
 
 

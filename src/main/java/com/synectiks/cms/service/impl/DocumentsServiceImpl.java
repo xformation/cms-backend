@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.DocumentsService;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.repository.DocumentsRepository;
-//import com.synectiks.cms.repository.search.DocumentsSearchRepository;
+import com.synectiks.cms.entities.Documents;
+import com.synectiks.cms.repositories.DocumentsRepository;
+//import com.synectiks.cms.commons.repositories.search.DocumentsSearchRepository;
 import com.synectiks.cms.service.dto.DocumentsDTO;
 import com.synectiks.cms.service.mapper.DocumentsMapper;
 import org.slf4j.Logger;

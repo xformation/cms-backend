@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.synectiks.cms.domain.Modules;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.ModulesRepository;
+import com.synectiks.cms.entities.Modules;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.repositories.ModulesRepository;
 import com.synectiks.cms.service.dto.ModulesDTO;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.web.rest.util.HeaderUtil;

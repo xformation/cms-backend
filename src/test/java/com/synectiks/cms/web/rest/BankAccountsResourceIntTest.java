@@ -31,9 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.enumeration.NameOfBank;
-import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.entities.BankAccounts;
+import com.synectiks.cms.entities.enumeration.NameOfBank;
+import com.synectiks.cms.repositories.BankAccountsRepository;
 import com.synectiks.cms.service.BankAccountsService;
 import com.synectiks.cms.service.dto.BankAccountsDTO;
 import com.synectiks.cms.service.mapper.BankAccountsMapper;

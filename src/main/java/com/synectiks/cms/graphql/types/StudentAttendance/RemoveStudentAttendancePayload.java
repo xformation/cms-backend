@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.StudentAttendance;
 
-import com.synectiks.cms.domain.StudentAttendance;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.StudentAttendance;
 
 public class RemoveStudentAttendancePayload {
     private final List<StudentAttendance> studentAttendances;

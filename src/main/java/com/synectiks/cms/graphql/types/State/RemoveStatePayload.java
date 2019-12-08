@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.State;
 
-import com.synectiks.cms.domain.State;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.State;
 
 public class RemoveStatePayload {
     private final List<State> states;

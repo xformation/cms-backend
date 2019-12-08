@@ -31,9 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.entities.Section;
+import com.synectiks.cms.entities.enumeration.SectionEnum;
+import com.synectiks.cms.repositories.SectionRepository;
 import com.synectiks.cms.service.SectionService;
 import com.synectiks.cms.service.dto.SectionDTO;
 import com.synectiks.cms.service.mapper.SectionMapper;

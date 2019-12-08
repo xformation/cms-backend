@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.entities.State;
+import com.synectiks.cms.repositories.StateRepository;
 import com.synectiks.cms.service.StateService;
 import com.synectiks.cms.service.dto.StateDTO;
 import com.synectiks.cms.service.mapper.StateMapper;

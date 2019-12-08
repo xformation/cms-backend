@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.DueDate;
 
-import com.synectiks.cms.domain.enumeration.Frequency;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.Frequency;
 
 public class AbstractDueDateInput {
     private Long id;

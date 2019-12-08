@@ -2,9 +2,9 @@ package com.synectiks.cms.web.rest;
 
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
+import com.synectiks.cms.entities.AdmissionEnquiry;
+import com.synectiks.cms.entities.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.repositories.AdmissionEnquiryRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;

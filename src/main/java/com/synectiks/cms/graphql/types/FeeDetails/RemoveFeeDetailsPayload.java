@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.FeeDetails;
 
-import com.synectiks.cms.domain.FeeDetails;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.FeeDetails;
 
 public class RemoveFeeDetailsPayload {
     private final List<FeeDetails> feeDetails;

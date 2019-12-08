@@ -1,10 +1,10 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-//import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
+import com.synectiks.cms.entities.AcademicExamSetting;
+import com.synectiks.cms.entities.enumeration.GradeType;
+import com.synectiks.cms.entities.enumeration.SemesterEnum;
+//import com.synectiks.cms.commons.repositories.search.AcademicExamSettingSearchRepository;
 import com.synectiks.cms.service.AcademicExamSettingService;
 import com.synectiks.cms.service.dto.AcademicExamSettingDTO;
 import com.synectiks.cms.service.mapper.AcademicExamSettingMapper;
@@ -40,8 +40,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
-import com.synectiks.cms.domain.enumeration.GradeType;
+import com.synectiks.cms.repositories.AcademicExamSettingRepository;
 /**
  * Test class for the AcademicExamSettingResource REST controller.
  *

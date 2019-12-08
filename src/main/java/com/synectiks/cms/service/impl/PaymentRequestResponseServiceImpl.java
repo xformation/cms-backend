@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.PaymentRequestResponseService;
-import com.synectiks.cms.domain.PaymentRequestResponse;
-import com.synectiks.cms.repository.PaymentRequestResponseRepository;
-//import com.synectiks.cms.repository.search.PaymentRequestResponseSearchRepository;
+import com.synectiks.cms.entities.PaymentRequestResponse;
+import com.synectiks.cms.repositories.PaymentRequestResponseRepository;
+//import com.synectiks.cms.commons.repositories.search.PaymentRequestResponseSearchRepository;
 import com.synectiks.cms.service.dto.PaymentRequestResponseDTO;
 import com.synectiks.cms.service.mapper.PaymentRequestResponseMapper;
 import org.slf4j.Logger;

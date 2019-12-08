@@ -2,17 +2,12 @@ package com.synectiks.cms.service.dto;
 
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.LectureAdminEnum;
+import com.synectiks.cms.entities.enumeration.SectionEnum;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
 
 /**
  * A DTO for the AdminOverview entity.

@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.repository.DepartmentRepository;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.repositories.DepartmentRepository;
 import com.synectiks.cms.service.DepartmentService;
 import com.synectiks.cms.service.dto.DepartmentDTO;
 import com.synectiks.cms.service.mapper.DepartmentMapper;

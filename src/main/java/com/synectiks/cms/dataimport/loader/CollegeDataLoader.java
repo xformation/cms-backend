@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
-import com.synectiks.cms.domain.College;
+import com.synectiks.cms.entities.College;
 import com.synectiks.cms.exceptions.AdditionalCollegeFoundException;
 import com.synectiks.cms.exceptions.MandatoryFieldMissingException;
 import com.synectiks.cms.service.util.CommonUtil;

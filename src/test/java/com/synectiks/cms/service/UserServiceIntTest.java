@@ -2,8 +2,8 @@ package com.synectiks.cms.service;
 
 import com.synectiks.cms.CmsApp;
 import com.synectiks.cms.config.Constants;
-import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.UserRepository;
+import com.synectiks.cms.entities.User;
+import com.synectiks.cms.repositories.UserRepository;
 import com.synectiks.cms.service.dto.UserDTO;
 import com.synectiks.cms.service.util.RandomUtil;
 

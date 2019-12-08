@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.PaymentRemainder;
 
-import com.synectiks.cms.domain.PaymentRemainder;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.PaymentRemainder;
 
 public class RemovePaymentRemainderPayload {
     private final List<PaymentRemainder>paymentRemainders;

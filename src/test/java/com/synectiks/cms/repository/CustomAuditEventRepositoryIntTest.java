@@ -3,7 +3,10 @@ package com.synectiks.cms.repository;
 import com.synectiks.cms.CmsApp;
 import com.synectiks.cms.config.Constants;
 import com.synectiks.cms.config.audit.AuditEventConverter;
-import com.synectiks.cms.domain.PersistentAuditEvent;
+import com.synectiks.cms.entities.PersistentAuditEvent;
+import com.synectiks.cms.repositories.CustomAuditEventRepository;
+import com.synectiks.cms.repositories.PersistenceAuditEventRepository;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.synectiks.cms.repositories.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.synectiks.cms.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
 
 /**
  * Test class for the CustomAuditEventRepository class.

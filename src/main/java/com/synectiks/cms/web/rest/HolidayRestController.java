@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.CmsHolidayVo;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.entities.AcademicYear;
+import com.synectiks.cms.entities.CmsHolidayVo;
+import com.synectiks.cms.entities.Holiday;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.repositories.AcademicYearRepository;
+import com.synectiks.cms.repositories.HolidayRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;

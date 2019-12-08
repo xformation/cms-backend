@@ -1,10 +1,12 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.GradeType;
+import com.synectiks.cms.entities.enumeration.SemesterEnum;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
-import com.synectiks.cms.domain.enumeration.GradeType;
 
 /**
  * A DTO for the AcademicExamSetting entity.

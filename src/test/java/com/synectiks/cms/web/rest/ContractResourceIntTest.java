@@ -33,9 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
-import com.synectiks.cms.repository.ContractRepository;
+import com.synectiks.cms.entities.Contract;
+import com.synectiks.cms.entities.enumeration.TypeOfOwnerShip;
+import com.synectiks.cms.repositories.ContractRepository;
 import com.synectiks.cms.service.ContractService;
 import com.synectiks.cms.service.dto.ContractDTO;
 import com.synectiks.cms.service.mapper.ContractMapper;

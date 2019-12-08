@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.DueDateService;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.repository.DueDateRepository;
-//import com.synectiks.cms.repository.search.DueDateSearchRepository;
+import com.synectiks.cms.entities.DueDate;
+import com.synectiks.cms.repositories.DueDateRepository;
+//import com.synectiks.cms.commons.repositories.search.DueDateSearchRepository;
 import com.synectiks.cms.service.dto.DueDateDTO;
 import com.synectiks.cms.service.mapper.DueDateMapper;
 import org.slf4j.Logger;

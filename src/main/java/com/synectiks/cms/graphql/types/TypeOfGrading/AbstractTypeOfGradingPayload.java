@@ -1,6 +1,6 @@
 package com.synectiks.cms.graphql.types.TypeOfGrading;
 
-import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.entities.TypeOfGrading;
 
 public class AbstractTypeOfGradingPayload {
 

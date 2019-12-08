@@ -1,8 +1,9 @@
 package com.synectiks.cms.filter.library;
 
 import com.synectiks.cms.business.service.CmsLibraryService;
-import com.synectiks.cms.domain.CmsLibrary;
-import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.entities.CmsLibrary;
+import com.synectiks.cms.entities.Library;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

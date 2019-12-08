@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.FeeDetailsService;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-//import com.synectiks.cms.repository.search.FeeDetailsSearchRepository;
+import com.synectiks.cms.entities.FeeDetails;
+import com.synectiks.cms.repositories.FeeDetailsRepository;
+//import com.synectiks.cms.commons.repositories.search.FeeDetailsSearchRepository;
 import com.synectiks.cms.service.dto.FeeDetailsDTO;
 import com.synectiks.cms.service.mapper.FeeDetailsMapper;
 import org.slf4j.Logger;

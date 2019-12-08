@@ -1,7 +1,8 @@
 package com.synectiks.cms.filter.employee;
 
 import com.synectiks.cms.business.service.EmployeeService;
-import com.synectiks.cms.domain.CmsEmployeeVo;
+import com.synectiks.cms.entities.CmsEmployeeVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

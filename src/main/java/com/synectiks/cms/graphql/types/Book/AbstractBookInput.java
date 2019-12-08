@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Book;
 
-import com.synectiks.cms.domain.enumeration.StatusEnum;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.StatusEnum;
 
 public class AbstractBookInput {
     private Long id;

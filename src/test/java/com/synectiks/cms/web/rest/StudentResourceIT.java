@@ -1,13 +1,20 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.search.StudentSearchRepository;
+import com.synectiks.cms.entities.Batch;
+import com.synectiks.cms.entities.Branch;
+import com.synectiks.cms.entities.Department;
+import com.synectiks.cms.entities.Section;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.enumeration.Bloodgroup;
+import com.synectiks.cms.entities.enumeration.Caste;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.entities.enumeration.Religion;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
+import com.synectiks.cms.repositories.StudentRepository;
+import com.synectiks.cms.repositories.search.StudentSearchRepository;
 import com.synectiks.cms.service.StudentService;
 import com.synectiks.cms.service.dto.StudentDTO;
 import com.synectiks.cms.service.mapper.StudentMapper;
@@ -38,14 +45,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.Status;
 /**
  * Integration tests for the {@Link StudentResource} REST controller.
  */

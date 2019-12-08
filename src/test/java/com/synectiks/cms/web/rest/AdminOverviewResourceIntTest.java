@@ -1,10 +1,10 @@
 package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
-
-import com.synectiks.cms.domain.AdminOverview;
-import com.synectiks.cms.repository.AdminOverviewRepository;
-//import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
+import com.synectiks.cms.entities.AdminOverview;
+import com.synectiks.cms.entities.enumeration.LectureAdminEnum;
+import com.synectiks.cms.entities.enumeration.SectionEnum;
+//import com.synectiks.cms.commons.repositories.search.AdminOverviewSearchRepository;
 import com.synectiks.cms.service.AdminOverviewService;
 import com.synectiks.cms.service.dto.AdminOverviewDTO;
 import com.synectiks.cms.service.mapper.AdminOverviewMapper;
@@ -41,15 +41,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
+import com.synectiks.cms.repositories.AdminOverviewRepository;
 /**
  * Test class for the AdminOverviewResource REST controller.
  *

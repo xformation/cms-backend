@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.AdminOverviewService;
-import com.synectiks.cms.domain.AdminOverview;
-import com.synectiks.cms.repository.AdminOverviewRepository;
-//import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
+import com.synectiks.cms.entities.AdminOverview;
+import com.synectiks.cms.repositories.AdminOverviewRepository;
+//import com.synectiks.cms.commons.repositories.search.AdminOverviewSearchRepository;
 import com.synectiks.cms.service.dto.AdminOverviewDTO;
 import com.synectiks.cms.service.mapper.AdminOverviewMapper;
 import org.slf4j.Logger;

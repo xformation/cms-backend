@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
+import com.synectiks.cms.entities.AcademicYear;
+import com.synectiks.cms.entities.AdmissionApplication;
+import com.synectiks.cms.entities.CmsAdmissionApplicationVo;
+import com.synectiks.cms.entities.enumeration.AdmissionStatusEnum;
+import com.synectiks.cms.repositories.AdmissionApplicationRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 
 @Component

@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.FeeCategory;
 
-import com.synectiks.cms.domain.FeeCategory;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.FeeCategory;
 
 public class RemoveFeeCategoryPayload {
     private final List<FeeCategory> feeCategories;

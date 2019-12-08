@@ -2,11 +2,13 @@ package com.synectiks.cms.service.dto;
 
 import java.time.LocalDate;
 import javax.validation.constraints.*;
+
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
+
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A DTO for the FeeDetails entity.

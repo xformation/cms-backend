@@ -30,8 +30,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.MetaLecture;
-import com.synectiks.cms.repository.MetaLectureRepository;
+import com.synectiks.cms.entities.MetaLecture;
+import com.synectiks.cms.repositories.MetaLectureRepository;
 import com.synectiks.cms.service.MetaLectureService;
 import com.synectiks.cms.service.dto.MetaLectureDTO;
 import com.synectiks.cms.service.mapper.MetaLectureMapper;

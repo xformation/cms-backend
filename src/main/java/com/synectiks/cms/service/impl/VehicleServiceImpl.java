@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.VehicleService;
-import com.synectiks.cms.domain.Vehicle;
-import com.synectiks.cms.repository.VehicleRepository;
-//import com.synectiks.cms.repository.search.VehicleSearchRepository;
+import com.synectiks.cms.entities.Vehicle;
+import com.synectiks.cms.repositories.VehicleRepository;
+//import com.synectiks.cms.commons.repositories.search.VehicleSearchRepository;
 import com.synectiks.cms.service.dto.VehicleDTO;
 import com.synectiks.cms.service.mapper.VehicleMapper;
 import org.slf4j.Logger;

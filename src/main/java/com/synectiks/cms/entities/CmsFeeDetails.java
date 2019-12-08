@@ -1,0 +1,356 @@
+package com.synectiks.cms.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.synectiks.cms.entities.enumeration.Gender;
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.StudentTypeEnum;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+//import org.springframework.data.elasticsearch.annotations.Document;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
+
+public class CmsFeeDetails implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private Long id;
+	private String feeParticularsName;
+	private String feeParticularDesc;
+	private StudentTypeEnum studentType;
+	private Gender gender;
+	private Float amount;
+	private Status status;
+	private String createdBy;
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate createdOn;
+	private String updatedBy;
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate updatedOn;
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate startDate;
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate endDate;
+	private FeeCategory feeCategory;
+	private Batch batch;
+	private Facility facility;
+	private TransportRoute transportRoute;
+	private Department department;
+
+	private String strCreatedOn;
+	private String strUpdatedOn;
+	private String strStartDate;
+	private String strEndDate;
+
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
+	// remove
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFeeParticularsName() {
+		return feeParticularsName;
+	}
+
+	public CmsFeeDetails feeParticularsName(String feeParticularsName) {
+		this.feeParticularsName = feeParticularsName;
+		return this;
+	}
+
+	public void setFeeParticularsName(String feeParticularsName) {
+		this.feeParticularsName = feeParticularsName;
+	}
+
+	public String getFeeParticularDesc() {
+		return feeParticularDesc;
+	}
+
+	public CmsFeeDetails feeParticularDesc(String feeParticularDesc) {
+		this.feeParticularDesc = feeParticularDesc;
+		return this;
+	}
+
+	public void setFeeParticularDesc(String feeParticularDesc) {
+		this.feeParticularDesc = feeParticularDesc;
+	}
+
+	public StudentTypeEnum getStudentType() {
+		return studentType;
+	}
+
+	public CmsFeeDetails studentType(StudentTypeEnum studentType) {
+		this.studentType = studentType;
+		return this;
+	}
+
+	public void setStudentType(StudentTypeEnum studentType) {
+		this.studentType = studentType;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public CmsFeeDetails gender(Gender gender) {
+		this.gender = gender;
+		return this;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public Float getAmount() {
+		return amount;
+	}
+
+	public CmsFeeDetails amount(Float amount) {
+		this.amount = amount;
+		return this;
+	}
+
+	public void setAmount(Float amount) {
+		this.amount = amount;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public CmsFeeDetails status(Status status) {
+		this.status = status;
+		return this;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public CmsFeeDetails createdBy(String createdBy) {
+		this.createdBy = createdBy;
+		return this;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDate getCreatedOn() {
+		return createdOn;
+	}
+
+	public CmsFeeDetails createdOn(LocalDate createdOn) {
+		this.createdOn = createdOn;
+		return this;
+	}
+
+	public void setCreatedOn(LocalDate createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public CmsFeeDetails updatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+		return this;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public LocalDate getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public CmsFeeDetails updatedOn(LocalDate updatedOn) {
+		this.updatedOn = updatedOn;
+		return this;
+	}
+
+	public void setUpdatedOn(LocalDate updatedOn) {
+		this.updatedOn = updatedOn;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public CmsFeeDetails startDate(LocalDate startDate) {
+		this.startDate = startDate;
+		return this;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public CmsFeeDetails endDate(LocalDate endDate) {
+		this.endDate = endDate;
+		return this;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+	public FeeCategory getFeeCategory() {
+		return feeCategory;
+	}
+
+	public CmsFeeDetails feeCategory(FeeCategory feeCategory) {
+		this.feeCategory = feeCategory;
+		return this;
+	}
+
+	public void setFeeCategory(FeeCategory feeCategory) {
+		this.feeCategory = feeCategory;
+	}
+
+	public Batch getBatch() {
+		return batch;
+	}
+
+	public CmsFeeDetails batch(Batch batch) {
+		this.batch = batch;
+		return this;
+	}
+
+	public void setBatch(Batch batch) {
+		this.batch = batch;
+	}
+
+	public Facility getFacility() {
+		return facility;
+	}
+
+	public CmsFeeDetails facility(Facility facility) {
+		this.facility = facility;
+		return this;
+	}
+
+	public void setFacility(Facility facility) {
+		this.facility = facility;
+	}
+
+	public TransportRoute getTransportRoute() {
+		return transportRoute;
+	}
+
+	public CmsFeeDetails transportRoute(TransportRoute transportRoute) {
+		this.transportRoute = transportRoute;
+		return this;
+	}
+
+	public void setTransportRoute(TransportRoute transportRoute) {
+		this.transportRoute = transportRoute;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public CmsFeeDetails department(Department department) {
+		this.department = department;
+		return this;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
+	// and setters here, do not remove
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		CmsFeeDetails feeDetails = (CmsFeeDetails) o;
+		if (feeDetails.getId() == null || getId() == null) {
+			return false;
+		}
+		return Objects.equals(getId(), feeDetails.getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public String toString() {
+		return "FeeDetails{" + "id=" + getId() + ", feeParticularsName='"
+				+ getFeeParticularsName() + "'" + ", feeParticularDesc='"
+				+ getFeeParticularDesc() + "'" + ", studentType='" + getStudentType()
+				+ "'" + ", gender='" + getGender() + "'" + ", amount=" + getAmount()
+				+ ", status='" + getStatus() + "'" + ", createdBy='" + getCreatedBy()
+				+ "'" + ", createdOn='" + getCreatedOn() + "'" + ", updatedBy='"
+				+ getUpdatedBy() + "'" + ", updatedOn='" + getUpdatedOn() + "'"
+				+ ", startDate='" + getStartDate() + "'" + ", endDate='" + getEndDate()
+				+ "'" + "}";
+	}
+
+	public String getStrCreatedOn() {
+		return strCreatedOn;
+	}
+
+	public void setStrCreatedOn(String strCreatedOn) {
+		this.strCreatedOn = strCreatedOn;
+	}
+
+	public String getStrUpdatedOn() {
+		return strUpdatedOn;
+	}
+
+	public void setStrUpdatedOn(String strUpdatedOn) {
+		this.strUpdatedOn = strUpdatedOn;
+	}
+
+	public String getStrStartDate() {
+		return strStartDate;
+	}
+
+	public void setStrStartDate(String strStartDate) {
+		this.strStartDate = strStartDate;
+	}
+
+	public String getStrEndDate() {
+		return strEndDate;
+	}
+
+	public void setStrEndDate(String strEndDate) {
+		this.strEndDate = strEndDate;
+	}
+}

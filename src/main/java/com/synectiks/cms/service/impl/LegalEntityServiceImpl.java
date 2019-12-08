@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.LegalEntityService;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.repository.LegalEntityRepository;
-//import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+import com.synectiks.cms.entities.LegalEntity;
+import com.synectiks.cms.repositories.LegalEntityRepository;
+//import com.synectiks.cms.commons.repositories.search.LegalEntitySearchRepository;
 import com.synectiks.cms.service.dto.LegalEntityDTO;
 import com.synectiks.cms.service.mapper.LegalEntityMapper;
 import org.slf4j.Logger;

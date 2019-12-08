@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.CompetitiveExamService;
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.repository.CompetitiveExamRepository;
-//import com.synectiks.cms.repository.search.CompetitiveExamSearchRepository;
+import com.synectiks.cms.entities.CompetitiveExam;
+import com.synectiks.cms.repositories.CompetitiveExamRepository;
+//import com.synectiks.cms.commons.repositories.search.CompetitiveExamSearchRepository;
 import com.synectiks.cms.service.dto.CompetitiveExamDTO;
 import com.synectiks.cms.service.mapper.CompetitiveExamMapper;
 import org.slf4j.Logger;

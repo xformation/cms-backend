@@ -1,10 +1,10 @@
 package com.synectiks.cms.graphql.types.AcademicExamSetting;
 
-import com.synectiks.cms.domain.enumeration.GradeType;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
-
 import java.util.Date;
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.GradeType;
+import com.synectiks.cms.entities.enumeration.SemesterEnum;
 
 public class AbstractAcademicExamSettingInput {
     private Long id;

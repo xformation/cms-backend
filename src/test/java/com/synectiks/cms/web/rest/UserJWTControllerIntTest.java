@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.User;
-import com.synectiks.cms.repository.UserRepository;
+import com.synectiks.cms.entities.User;
+import com.synectiks.cms.repositories.UserRepository;
 import com.synectiks.cms.security.jwt.TokenProvider;
 import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 import com.synectiks.cms.web.rest.vm.LoginVM;

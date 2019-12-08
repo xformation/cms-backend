@@ -1,9 +1,9 @@
 package com.synectiks.cms.graphql.types.Subject;
 
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.SubTypeEnum;
-
 import java.util.Objects;
+
+import com.synectiks.cms.entities.enumeration.Status;
+import com.synectiks.cms.entities.enumeration.SubTypeEnum;
 
 public class AbstractSubjectInput {
     private Long id;

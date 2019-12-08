@@ -20,12 +20,12 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.repository.EmployeeRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.entities.Employee;
+import com.synectiks.cms.entities.Student;
+import com.synectiks.cms.entities.Teacher;
+import com.synectiks.cms.repositories.EmployeeRepository;
+import com.synectiks.cms.repositories.StudentRepository;
+import com.synectiks.cms.repositories.TeacherRepository;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
 /**

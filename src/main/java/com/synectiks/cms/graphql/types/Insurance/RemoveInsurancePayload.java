@@ -1,8 +1,8 @@
 package com.synectiks.cms.graphql.types.Insurance;
 
-import com.synectiks.cms.domain.Insurance;
-
 import java.util.List;
+
+import com.synectiks.cms.entities.Insurance;
 
 public class RemoveInsurancePayload {
     private final List<Insurance> insurances;

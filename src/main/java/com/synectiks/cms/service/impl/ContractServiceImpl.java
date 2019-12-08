@@ -1,9 +1,9 @@
 package com.synectiks.cms.service.impl;
 
 import com.synectiks.cms.service.ContractService;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.repository.ContractRepository;
-//import com.synectiks.cms.repository.search.ContractSearchRepository;
+import com.synectiks.cms.entities.Contract;
+import com.synectiks.cms.repositories.ContractRepository;
+//import com.synectiks.cms.commons.repositories.search.ContractSearchRepository;
 import com.synectiks.cms.service.dto.ContractDTO;
 import com.synectiks.cms.service.mapper.ContractMapper;
 import org.slf4j.Logger;
