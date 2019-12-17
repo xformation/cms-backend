@@ -148,10 +148,10 @@ entity Student{
 	sex Gender 
 	studentLocalAddress String
 	studentPermanentAddress String 
-	city String required
-	state String required
-	country String required
-	pinCode String required
+	city String 
+	state String 
+	country String 
+	pinCode String 
 	studentPrimaryCellNumber String 
 	studentAlternateCellNumber String
 	studentLandLinePhoneNumber String
@@ -815,10 +815,10 @@ entity Notifications {
 
 relationship ManyToOne {
 Employee{branch required} to Branch,
-Student{department required} to Department ,
-Student{batch required} to Batch ,
-Student{section required} to Section,
-Student{branch required} to Branch,
+Student{department} to Department ,
+Student{batch} to Batch ,
+Student{section} to Section,
+Student{branch} to Branch,
 Branch{college} to College,
 Branch{city} to City,
 Branch{state} to State,

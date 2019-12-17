@@ -1,32 +1,28 @@
 package com.synectiks.cms.domain;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
 import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.Status;
+
+import com.synectiks.cms.domain.enumeration.Caste;
+
+import com.synectiks.cms.domain.enumeration.Gender;
+
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+
+import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A Student.
@@ -123,20 +119,16 @@ public class Student implements Serializable {
     @Column(name = "student_permanent_address")
     private String studentPermanentAddress;
 
-    @NotNull
-    @Column(name = "city", nullable = false)
+    @Column(name = "city")
     private String city;
 
-    @NotNull
-    @Column(name = "state", nullable = false)
+    @Column(name = "state")
     private String state;
 
-    @NotNull
-    @Column(name = "country", nullable = false)
+    @Column(name = "country")
     private String country;
 
-    @NotNull
-    @Column(name = "pin_code", nullable = false)
+    @Column(name = "pin_code")
     private String pinCode;
 
     @Column(name = "student_primary_cell_number")
@@ -412,23 +404,19 @@ public class Student implements Serializable {
     @Column(name = "comments")
     private String comments;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     @JsonIgnoreProperties("students")
     private Department department;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     @JsonIgnoreProperties("students")
     private Batch batch;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     @JsonIgnoreProperties("students")
     private Section section;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     @JsonIgnoreProperties("students")
     private Branch branch;
 

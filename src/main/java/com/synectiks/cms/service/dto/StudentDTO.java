@@ -68,16 +68,12 @@ public class StudentDTO implements Serializable {
 
     private String studentPermanentAddress;
 
-    @NotNull
     private String city;
 
-    @NotNull
     private String state;
 
-    @NotNull
     private String country;
 
-    @NotNull
     private String pinCode;
 
     private String studentPrimaryCellNumber;
