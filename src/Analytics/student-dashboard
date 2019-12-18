@@ -17,8 +17,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1570707205985,
+  "id": 1,
+  "iteration": 1576662617595,
   "links": [],
   "panels": [
     {
@@ -57,12 +57,83 @@
       "type": "text"
     },
     {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
+      "Aggregate": "last",
+      "BarPadding": 9,
+      "BaseLineColor": "rgb(157, 150, 121)",
+      "BaseLineValue": null,
+      "CurveType": "Monotone",
+      "DateFormat": "YYYY-MM-DD HH:mm:ss",
+      "DateTimeColName": "",
+      "DotColor": "white",
+      "DotSize": 10,
+      "EvenRowColor": "rgba(54, 80, 44, 0.62)",
+      "FlashHighLimitBar": false,
+      "FlashLowLimitBar": true,
+      "GroupColName": "",
+      "GroupCols": 0,
+      "GroupGap": 5,
+      "GroupLabelColor": "#ffffff",
+      "GroupLabelFontSize": "200%",
+      "GroupNameFilter": "",
+      "GroupSortString": "",
+      "HighAxisColor": "#890f02",
+      "HighBarColor": "rgba(244, 213, 152, 0.62)",
+      "HighLimitBarColor": "#3f6833",
+      "HighLimitBarFlashColor": "#0a50a1",
+      "HighLimitBarFlashTimeout": 350,
+      "HighLimitLineColor": "rgb(182, 137, 12)",
+      "HighLimitValue": 90,
+      "HighSideMargin": 22,
+      "Horizontal": true,
+      "LabelColName": "Tsubject",
+      "LabelColor": "#58140c",
+      "LabelFontSize": "80%",
+      "LabelMargin": 20,
+      "LabelNameFilter": "",
+      "LableAngle": 45,
+      "LineColor": "blue",
+      "LineWidth": 5,
+      "LowAxisColor": "#508642",
+      "LowBarColor": "rgb(65, 111, 82)",
+      "LowLimitBarColor": "rgb(234, 122, 48)",
+      "LowLimitBarFlashColor": "#890f02",
+      "LowLimitBarFlashTimeout": 300,
+      "LowLimitLineColor": "#ff0000",
+      "LowLimitValue": 40,
+      "LowSideMargin": 22,
+      "MaxLineColor": "#64b0c8",
+      "MaxLineValue": null,
+      "MinLineColor": "#ba43a9",
+      "MinLineValue": null,
+      "OddRowColor": "rgba(79, 80, 80, 0.32)",
+      "OutOfRangeLabelColor": "#bf1b00",
+      "RecolorHighLimitBar": true,
+      "RecolorLowLimitBar": true,
+      "ScaleFactor": 1,
+      "ShowBars": true,
+      "ShowBaseLine": true,
+      "ShowDate": false,
+      "ShowGroupLabels": true,
+      "ShowHighLimitLine": true,
+      "ShowLabels": true,
+      "ShowLeftAxis": true,
+      "ShowLines": false,
+      "ShowLowLimitLine": true,
+      "ShowMaxLine": false,
+      "ShowMinLine": true,
+      "ShowRightAxis": true,
+      "ShowTooltips": false,
+      "ShowValues": true,
+      "SortColName": "Tsubject",
+      "SortDirection": "ascending",
+      "TZOffsetHours": 0,
+      "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
+      "ValueColName": "per",
+      "ValueColor": "rgb(0, 0, 0)",
+      "ValueDecimals": 1,
+      "ValueFontSize": "80%",
+      "ValuePosition": "top",
       "datasource": "InfluxDB",
-      "fill": 1,
       "gridPos": {
         "h": 5,
         "w": 9,
@@ -72,27 +143,8 @@
       "hideTimeOverride": true,
       "id": 6,
       "interval": "1m",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": true,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": true
-      },
-      "lines": false,
-      "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
-      "paceLength": 10,
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
           "alias": "",
@@ -104,13 +156,14 @@
               "type": "tag"
             }
           ],
+          "hide": false,
           "measurement": "Student",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100 AS \"per\" FROM \"Student\" WHERE (\"TstudentEmail\" =~ /^$CurrentUser/)   GROUP BY \"Tsubject\" ",
+          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100 AS \"per\" FROM \"Student\" WHERE (\"TstudentEmail\" =~ /^$student/)   GROUP BY \"Tsubject\" ",
           "rawQuery": true,
           "refId": "A",
-          "resultFormat": "time_series",
+          "resultFormat": "table",
           "select": [
             [
               {
@@ -142,48 +195,10 @@
           ]
         }
       ],
-      "thresholds": [],
       "timeFrom": "1h",
-      "timeRegions": [],
-      "timeShift": "1h",
+      "timeShift": null,
       "title": "Attendance Analysis",
-      "tooltip": {
-        "shared": false,
-        "sort": 1,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "series",
-        "name": null,
-        "show": true,
-        "values": [
-          "total"
-        ]
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": "Attendance Percentage",
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": true,
-        "alignLevel": 0
-      }
+      "type": "michaeldmoore-multistat-panel"
     },
     {
       "cacheTimeout": null,
@@ -239,7 +254,7 @@
       ],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
+        "full": true,
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
@@ -262,7 +277,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100  FROM \"Student\" where (\"StudentEmail\"=~ /^[[CurrentUser]]$/  and \"Subject\"=~ /^[[Subjects]]$/) group by StudentName,StudentEmail,year,subject",
+          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100  FROM \"Student\" where (\"StudentEmail\"=~ /^[[CurrentUser]]$/ and \"Subject\"=~ /^[[subject]]$/) group by StudentName,StudentEmail",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -282,9 +297,9 @@
       "thresholds": "30,70,100",
       "timeFrom": null,
       "timeShift": null,
-      "title": "Attendance:  [[Subjects]]",
+      "title": "Attendance:  [[subject]]",
       "type": "singlestat",
-      "valueFontSize": "80%",
+      "valueFontSize": "70%",
       "valueMaps": [
         {
           "op": "=",
@@ -357,39 +372,39 @@
     "list": [
       {
         "current": {
-          "text": "100.81.3.25",
-          "value": "100.81.3.25"
+          "text": "localhost",
+          "value": "localhost"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CmsNodeIP",
         "options": [
           {
             "selected": true,
-            "text": "100.81.3.25",
-            "value": "100.81.3.25"
+            "text": "localhost",
+            "value": "localhost"
           }
         ],
-        "query": "100.81.3.25",
+        "query": "localhost",
         "skipUrlSync": false,
         "type": "constant"
       },
       {
         "current": {
-          "text": "100.81.3.25",
-          "value": "100.81.3.25"
+          "text": "localhost",
+          "value": "localhost"
         },
-        "hide": 0,
+        "hide": 2,
         "label": null,
         "name": "CmsBackEndIP",
         "options": [
           {
             "selected": true,
-            "text": "100.81.3.25",
-            "value": "100.81.3.25"
+            "text": "localhost",
+            "value": "localhost"
           }
         ],
-        "query": "100.81.3.25",
+        "query": "localhost",
         "skipUrlSync": false,
         "type": "constant"
       },
@@ -401,14 +416,39 @@
           "value": ""
         },
         "datasource": "InfluxDB",
-        "definition": "show tag values from \"Student\" with key = \"Tsubject\" where \"TstudentEmail\" =~ /^$CurrentUser/",
+        "definition": "show tag values from \"Student\" with key = \"TstudentName\" where \"TstudentEmail\" =~ /^$CurrentUser/ ",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "student",
+        "options": [],
+        "query": "show tag values from \"Student\" with key = \"TstudentName\" where \"TstudentEmail\" =~ /^$CurrentUser/ ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "OOP",
+          "value": "OOP"
+        },
+        "datasource": "InfluxDB",
+        "definition": "show tag values from \"Student\" with key = \"Tsubject\" where \"TstudentEmail\" =~ /^$student/",
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "Subjects",
+        "name": "subject",
         "options": [],
-        "query": "show tag values from \"Student\" with key = \"Tsubject\" where \"TstudentEmail\" =~ /^$CurrentUser/",
+        "query": "show tag values from \"Student\" with key = \"Tsubject\" where \"TstudentEmail\" =~ /^$student/",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -439,8 +479,8 @@
     ]
   },
   "time": {
-    "from": "now-6h",
-    "to": "now"
+    "from": "2019-12-16T11:47:35.327Z",
+    "to": "2019-12-18T11:47:35.343Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -470,5 +510,5 @@
   "timezone": "",
   "title": "student-dashboard",
   "uid": "Z7JE3NKWk",
-  "version": 1
+  "version": 55
 }
