@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
-  "iteration": 1575359549896,
+  "id": 3,
+  "iteration": 1576660294451,
   "links": [],
   "panels": [
     {
@@ -54,12 +54,83 @@
       "type": "text"
     },
     {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
+      "Aggregate": "last",
+      "BarPadding": 9,
+      "BaseLineColor": "rgb(157, 150, 121)",
+      "BaseLineValue": null,
+      "CurveType": "Monotone",
+      "DateFormat": "YYYY-MM-DD HH:mm:ss",
+      "DateTimeColName": "date",
+      "DotColor": "white",
+      "DotSize": 10,
+      "EvenRowColor": "rgba(54, 80, 44, 0.62)",
+      "FlashHighLimitBar": true,
+      "FlashLowLimitBar": true,
+      "GroupColName": "",
+      "GroupCols": 0,
+      "GroupGap": 3,
+      "GroupLabelColor": "#ffffff",
+      "GroupLabelFontSize": "200%",
+      "GroupNameFilter": "",
+      "GroupSortString": "",
+      "HighAxisColor": "rgba(137, 47, 3, 0.87)",
+      "HighBarColor": "rgba(244, 213, 152, 0.63)",
+      "HighLimitBarColor": "#3f6833",
+      "HighLimitBarFlashColor": "#0a50a1",
+      "HighLimitBarFlashTimeout": 350,
+      "HighLimitLineColor": "rgb(182, 137, 12)",
+      "HighLimitValue": 99,
+      "HighSideMargin": 22,
+      "Horizontal": true,
+      "LabelColName": "Tsubject",
+      "LabelColor": "#58140c",
+      "LabelFontSize": "80%",
+      "LabelMargin": 20,
+      "LabelNameFilter": "",
+      "LableAngle": 45,
+      "LineColor": "blue",
+      "LineWidth": 5,
+      "LowAxisColor": "#508642",
+      "LowBarColor": "rgb(65, 111, 96)",
+      "LowLimitBarColor": "rgb(234, 122, 48)",
+      "LowLimitBarFlashColor": "#890f02",
+      "LowLimitBarFlashTimeout": 300,
+      "LowLimitLineColor": "rgb(240, 61, 56)",
+      "LowLimitValue": 40,
+      "LowSideMargin": 22,
+      "MaxLineColor": "#64b0c8",
+      "MaxLineValue": null,
+      "MinLineColor": "#ba43a9",
+      "MinLineValue": null,
+      "OddRowColor": "rgba(79, 80, 80, 0.32)",
+      "OutOfRangeLabelColor": "#bf1b00",
+      "RecolorHighLimitBar": true,
+      "RecolorLowLimitBar": true,
+      "ScaleFactor": 1,
+      "ShowBars": true,
+      "ShowBaseLine": true,
+      "ShowDate": false,
+      "ShowGroupLabels": true,
+      "ShowHighLimitLine": true,
+      "ShowLabels": true,
+      "ShowLeftAxis": true,
+      "ShowLines": false,
+      "ShowLowLimitLine": true,
+      "ShowMaxLine": true,
+      "ShowMinLine": true,
+      "ShowRightAxis": true,
+      "ShowTooltips": true,
+      "ShowValues": true,
+      "SortColName": "Tsubject",
+      "SortDirection": "ascending",
+      "TZOffsetHours": 0,
+      "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
+      "ValueColName": "per",
+      "ValueColor": "rgb(4, 4, 4)",
+      "ValueDecimals": 1,
+      "ValueFontSize": "100%",
+      "ValuePosition": "bar base",
       "datasource": "InfluxDB",
-      "fill": 1,
       "gridPos": {
         "h": 7,
         "w": 8,
@@ -67,28 +138,8 @@
         "y": 5
       },
       "id": 6,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "hideZero": false,
-        "max": true,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": true
-      },
-      "lines": false,
-      "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
-      "paceLength": 10,
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
           "groupBy": [
@@ -110,7 +161,7 @@
           "query": "SELECT (TotalPresent/TotalLecturesConducted )*100 AS \"per\" FROM \"Student\" WHERE (\"Tsubject\" =~ /^$subject/)   GROUP BY \"Tsubject\"",
           "rawQuery": true,
           "refId": "A",
-          "resultFormat": "time_series",
+          "resultFormat": "table",
           "select": [
             [
               {
@@ -128,55 +179,14 @@
           "tags": []
         }
       ],
-      "thresholds": [],
       "timeFrom": null,
-      "timeRegions": [],
       "timeShift": null,
       "title": "Attendance Analysis",
-      "tooltip": {
-        "shared": false,
-        "sort": 1,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "series",
-        "name": null,
-        "show": true,
-        "values": [
-          "total"
-        ]
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "short",
-          "label": "Attendance Percentage",
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        },
-        {
-          "decimals": null,
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": true,
-        "alignLevel": null
-      }
+      "type": "michaeldmoore-multistat-panel"
     },
     {
       "cacheTimeout": null,
       "colorBackground": false,
-      "colorPostfix": false,
       "colorValue": true,
       "colors": [
         "#299c46",
@@ -249,9 +259,10 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100  FROM \"Student\" where (\"Subject\"=~ /^[[subject]]$/) group by StudentName,StudentEmail,year,subject\n\n",
+          "query": "SELECT (TotalPresent/TotalLecturesConducted)*100  FROM \"Student\" where (\"Subject\"=~ /^[[subject]]$/) group by subject\n",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -465,7 +476,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -496,5 +507,5 @@
   "timezone": "",
   "title": "teacher-dashboard",
   "uid": "Gua2k4cZk",
-  "version": 21
+  "version": 8
 }
