@@ -393,7 +393,7 @@ public class CommonService {
 
     public List<Department> getDepartmentsByBranchAndAcademicYear(Long branchId, Long academicYearId){
         if(branchId == null ) { //|| academicYearId == null
-            Collections.emptyList();
+            return Collections.emptyList();
         }
         Department department = new Department();
         Branch branch = this.getBranchById(branchId);

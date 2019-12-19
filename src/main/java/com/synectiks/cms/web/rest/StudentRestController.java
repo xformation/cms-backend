@@ -3,6 +3,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +13,9 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.Status;
@@ -47,6 +54,9 @@ public class StudentRestController {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private CommonService commonService;
 
     /**
      * POST  /students : Create a new student.
@@ -80,9 +90,59 @@ public class StudentRestController {
         student.setAdmissionNo(admissionNo);
         student.setStatus(Status.DRAFT);
         student.setCreatedOn(LocalDate.now());
+        Branch branch = this.commonService.getBranchById(cmsStudentVo.getBranchId());
+        student.setBranch(branch);
         Student result = studentRepository.save(student);
         CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
         return result.getId();
+    }
+    
+    @PutMapping("/cms-grant-admission-to-student")
+    public Long updateStudentToGrantAdmissionNo(@RequestBody CmsStudentVo cmsStudentVo, @RequestParam Map<String, String> dataMap) throws Exception {
+        log.debug("REST request to update a student : {}", cmsStudentVo);
+        if (cmsStudentVo.getId() == null) {
+            throw new BadRequestAlertException("Invalid student record. Id is null", ENTITY_NAME, "idnull");
+        }
+        String admissionNo = dataMap.get("admissionNo") != null ? dataMap.get("admissionNo").trim() : null;
+        Student student = CommonUtil.createCopyProperties(cmsStudentVo, Student.class);
+        student.setAdmissionNo(admissionNo);
+        student.setUpdatedOn(LocalDate.now());
+        Student result = studentRepository.save(student);
+        CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
+        return result.getId();
+    }
+    
+    @GetMapping("/cms-students-for-admission")
+    public List<CmsStudentVo> getStudentsToGrantAdmission(@RequestParam Map<String, String> dataMap) {
+        log.debug("REST request to get all students with draft status to grant admission");
+        if(CommonUtil.isNullOrEmpty(dataMap.get("branchId"))) {
+        	log.error("Branch id not provided. Returning empty student list");
+        	return Collections.emptyList();
+        }
+        Long branchId = Long.parseLong(dataMap.get("branchId"));
+//      Long academicYearId = Long.parseLong(dataMap.get("academicYearId"));
+//      AcademicYear ay = this.commonService.getAcademicYearById(academicYearId);
+        
+//        Branch branch = this.commonService.getBranchById(branchId);
+//        if(branch == null) {
+//        	log.error("Branch not found for the given branch id : "+branchId+". Returning empty student list");
+//        	return Collections.emptyList();
+//        }
+        
+        Student student = new Student();
+//        student.setBranch(branch);
+        student.setStatus(Status.DRAFT);
+        
+        Example example = Example.of(student);
+        List<Student> list = studentRepository.findAll(example, Sort.by(Direction.DESC, "id"));
+        List<CmsStudentVo> ls = new ArrayList<>();
+        for(Student st: list) {
+        	if(st.getAdmissionNo() == null) {
+        		CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+            	ls.add(vo);
+        	}
+        }
+        return ls;
     }
     
     /**
