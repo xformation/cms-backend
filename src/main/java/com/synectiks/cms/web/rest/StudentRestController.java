@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.Student;
