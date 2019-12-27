@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.CmsTeacherVo;
 import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.enumeration.Status;
@@ -179,7 +182,39 @@ public class TeacherRestController {
         return ResponseUtil.wrapOrNotFound(Optional.of(vo));
     }
 
-    
+    @GetMapping("/cmsteachers/{name}")
+    public List<CmsTeacherVo> getTeacher(@PathVariable String name) {
+    	Teacher teacher = null;
+    	if(CommonUtil.isNullOrEmpty(name)) {
+    		teacher = new Teacher();
+    		String ary[] = name.split(" ");
+        	if(ary != null && ary.length > 0) {
+        		if(!CommonUtil.isNullOrEmpty(ary[0])) {
+        			teacher.setTeacherName(ary[0]);
+        		}
+        		if(!CommonUtil.isNullOrEmpty(ary[1])) {
+        			teacher.setTeacherMiddleName(ary[1]);
+        		}
+        		if(!CommonUtil.isNullOrEmpty(ary[2])) {
+        			teacher.setTeacherLastName(ary[2]);
+        		}
+        	}
+    	}
+        log.debug("REST request to get Teacher by name : {}", name);
+        List<Teacher> list = null;
+        if(teacher != null) {
+        	list = teacherRepository.findAll(Example.of(teacher));
+        }else {
+        	list = Collections.emptyList();
+        }
+        
+        List<CmsTeacherVo> ls = new ArrayList<>();
+        for(Teacher st: list) {
+        	CmsTeacherVo vo = CommonUtil.createCopyProperties(st, CmsTeacherVo.class);
+        	ls.add(vo);
+        }
+        return ls;
+    }
     @RequestMapping(method = RequestMethod.DELETE, value = "/cmsteachers/{id}")
     public Integer deleteTeacher(@PathVariable Long id) {
         log.debug("REST request to delete a Teacher : {}", id);

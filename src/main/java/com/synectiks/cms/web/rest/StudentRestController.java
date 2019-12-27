@@ -204,6 +204,40 @@ public class StudentRestController {
         return ResponseUtil.wrapOrNotFound(Optional.of(vo));
     }
 
+    @GetMapping("/cmsstudents/{name}")
+    public List<CmsStudentVo> getStudent(@PathVariable String name) {
+    	Student student = null;
+    	if(CommonUtil.isNullOrEmpty(name)) {
+    		student = new Student();
+    		String ary[] = name.split(" ");
+        	if(ary != null && ary.length > 0) {
+        		if(!CommonUtil.isNullOrEmpty(ary[0])) {
+        			student.setStudentName(ary[0]);
+        		}
+        		if(!CommonUtil.isNullOrEmpty(ary[1])) {
+        			student.setStudentMiddleName(ary[1]);
+        		}
+        		if(!CommonUtil.isNullOrEmpty(ary[2])) {
+        			student.setStudentLastName(ary[2]);
+        		}
+        	}
+    	}
+        log.debug("REST request to get Student by name : {}", name);
+        List<Student> list = null;
+        if(student != null) {
+        	list = studentRepository.findAll(Example.of(student));
+        }else {
+        	list = Collections.emptyList();
+        }
+        
+        List<CmsStudentVo> ls = new ArrayList<>();
+        for(Student st: list) {
+        	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+        	ls.add(vo);
+        }
+        return ls;
+    }
+    
     /**
      * DELETE  /students/:id : delete the "id" student.
      *
