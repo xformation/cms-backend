@@ -183,7 +183,7 @@ public class TeacherRestController {
     }
 
     @GetMapping("/cmsteachers/{name}")
-    public List<CmsTeacherVo> getTeacher(@PathVariable String name) {
+    public List<CmsTeacherVo> getTeacherListByName(@PathVariable String name) {
     	Teacher teacher = null;
     	if(CommonUtil.isNullOrEmpty(name)) {
     		teacher = new Teacher();

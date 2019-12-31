@@ -382,53 +382,98 @@ public class Mutation implements GraphQLMutationResolver {
 
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
 
-    private final AcademicYearRepository academicYearRepository;
-    private final AttendanceMasterRepository attendanceMasterRepository;
-    private final AuthorizedSignatoryRepository authorizedSignatoryRepository;
-    private final AcademicHistoryRepository academicHistoryRepository;
-    private final AcademicExamSettingRepository academicExamSettingRepository;
-    private final AdmissionApplicationRepository admissionApplicationRepository;
-    private final AdmissionEnquiryRepository admissionEnquiryRepository;
-    private final BankAccountsRepository bankAccountsRepository;
-    private final BatchRepository batchRepository;
-    private final BranchRepository branchRepository;
-    private final CollegeRepository collegeRepository;
-    private final DepartmentRepository departmentRepository;
-    private final HolidayRepository holidayRepository;
-    private final LectureRepository lectureRepository;
-    private final LegalEntityRepository legalEntityRepository;
-    private final LocationRepository locationRepository;
-    private final SectionRepository sectionRepository;
-    private final StudentRepository studentRepository;
-    private final StudentAttendanceRepository studentAttendanceRepository;
-    private final SubjectRepository subjectRepository;
-    private final TeachRepository teachRepository;
-    private final TeacherRepository teacherRepository;
-    private final TermRepository termRepository;
-    private final CityRepository cityRepository;
-    private final StateRepository stateRepository;
-    private final CountryRepository countryRepository;
-    private final FeeCategoryRepository feeCategoryRepository;
-    private final FacilityRepository facilityRepository;
-    private final TransportRouteRepository transportRouteRepository;
-    private final FeeDetailsRepository feeDetailsRepository;
-    private final DueDateRepository dueDateRepository;
-    private final PaymentRemainderRepository paymentRemainderRepository;
-    private final LateFeeRepository lateFeeRepository;
-    private final InvoiceRepository invoiceRepository;
-    private final CompetitiveExamRepository competitiveExamRepository;
-    private final DocumentsRepository documentsRepository;
-    private final AdminAttendanceRepository adminAttendanceRepository;
-    private final TypeOfGradingRepository typeOfGradingRepository;
-    private final StudentExamReportRepository studentExamReportRepository;
-    private final LibraryRepository libraryRepository;
-    private final BookRepository bookRepository;
+    @Autowired
+    private AcademicYearRepository academicYearRepository;
+    
+    @Autowired
+    private AttendanceMasterRepository attendanceMasterRepository;
+    @Autowired
+    private AuthorizedSignatoryRepository authorizedSignatoryRepository;
+    @Autowired
+    private AcademicHistoryRepository academicHistoryRepository;
+    @Autowired
+    private AcademicExamSettingRepository academicExamSettingRepository;
+    @Autowired
+    private AdmissionApplicationRepository admissionApplicationRepository;
+    @Autowired
+    private AdmissionEnquiryRepository admissionEnquiryRepository;
+    @Autowired
+    private BankAccountsRepository bankAccountsRepository;
+    @Autowired
+    private BatchRepository batchRepository;
+    @Autowired
+    private BranchRepository branchRepository;
+    @Autowired
+    private CollegeRepository collegeRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    @Autowired
+    private HolidayRepository holidayRepository;
+    @Autowired
+    private LectureRepository lectureRepository;
+    @Autowired
+    private LegalEntityRepository legalEntityRepository;
+    @Autowired
+    private SectionRepository sectionRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private StudentAttendanceRepository studentAttendanceRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
+    @Autowired
+    private TeachRepository teachRepository;
+    @Autowired
+    private TeacherRepository teacherRepository;
+    @Autowired
+    private TermRepository termRepository;
+    @Autowired
+    private CityRepository cityRepository;
+    @Autowired
+    private StateRepository stateRepository;
+    @Autowired
+    private CountryRepository countryRepository;
+    @Autowired
+    private FeeCategoryRepository feeCategoryRepository;
+    @Autowired
+    private FacilityRepository facilityRepository;
+    @Autowired
+    private TransportRouteRepository transportRouteRepository;
+    @Autowired
+    private FeeDetailsRepository feeDetailsRepository;
+    @Autowired
+    private DueDateRepository dueDateRepository;
+    @Autowired
+    private PaymentRemainderRepository paymentRemainderRepository;
+    @Autowired
+    private LateFeeRepository lateFeeRepository;
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+    @Autowired
+    private CompetitiveExamRepository competitiveExamRepository;
+    @Autowired
+    private DocumentsRepository documentsRepository;
+    @Autowired
+    private AdminAttendanceRepository adminAttendanceRepository;
+    @Autowired
+    private TypeOfGradingRepository typeOfGradingRepository;
+    @Autowired
+    private StudentExamReportRepository studentExamReportRepository;
+    @Autowired
+    private LibraryRepository libraryRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
-    private final VehicleRepository vehicleRepository;
-    private final EmployeeRepository employeeRepository;
-    private final ContractRepository contractRepository;
-    private final InsuranceRepository insuranceRepository;
+    @Autowired
+    private VehicleRepository vehicleRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private ContractRepository contractRepository;
+    @Autowired
+    private InsuranceRepository insuranceRepository;
 
+    @Autowired
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -462,66 +507,63 @@ public class Mutation implements GraphQLMutationResolver {
     private VehicleFilterProcessor vehicleFilterProcessor;
 
     @Autowired
-	private Base64FileProcessor base64FileProcessor;
-
-    @Autowired
     private AdmissionApplicationProcessor admissionApplicationProcessor;
+    
     @Autowired
     private LibraryFilterProcessor libraryFilterProcessor;
-
-    public Mutation(AcademicExamSettingRepository academicExamSettingRepository,BookRepository bookRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
-        this.academicExamSettingRepository = academicExamSettingRepository;
-        this.academicHistoryRepository = academicHistoryRepository;
-        this.admissionEnquiryRepository = admissionEnquiryRepository;
-        this.admissionApplicationRepository = admissionApplicationRepository;
-        this.batchRepository = batchRepository;
-        this.studentRepository = studentRepository;
-//        this.instituteRepository = instituteRepository;
-        this.collegeRepository = collegeRepository;
-//        this.studentYearRepository = studentYearRepository;
-//        this.semesterRepository = semesterRepository;
-        this.branchRepository = branchRepository;
-        this.sectionRepository = sectionRepository;
-        this.subjectRepository = subjectRepository;
-        this.teacherRepository = teacherRepository;
-        this.legalEntityRepository = legalEntityRepository;
-        this.authorizedSignatoryRepository = authorizedSignatoryRepository;
-        this.bankAccountsRepository = bankAccountsRepository;
-        this.departmentRepository = departmentRepository;
-        this.locationRepository = locationRepository;
-        this.studentAttendanceRepository = studentAttendanceRepository;
-        this.academicYearRepository = academicYearRepository;
-        this.holidayRepository = holidayRepository;
-        this.termRepository = termRepository;
-        this.teachRepository = teachRepository;
-        this.attendanceMasterRepository = attendanceMasterRepository;
-        this.lectureRepository = lectureRepository;
-        this.cityRepository = cityRepository;
-        this.stateRepository = stateRepository;
-        this.countryRepository = countryRepository;
-        this.feeCategoryRepository = feeCategoryRepository;
-        this.facilityRepository = facilityRepository;
-        this.transportRouteRepository = transportRouteRepository;
-        this.feeDetailsRepository = feeDetailsRepository;
-        this.dueDateRepository = dueDateRepository;
-        this.paymentRemainderRepository = paymentRemainderRepository;
-        this.lateFeeRepository = lateFeeRepository;
-        this.invoiceRepository = invoiceRepository;
-        this.competitiveExamRepository = competitiveExamRepository;
-        this.documentsRepository = documentsRepository;
-        this.adminAttendanceRepository = adminAttendanceRepository;
-        this.typeOfGradingRepository = typeOfGradingRepository;
-        this.studentExamReportRepository = studentExamReportRepository;
-        this.libraryRepository = libraryRepository;
-        this.bookRepository = bookRepository;
-
-        this.vehicleRepository = vehicleRepository;
-        this.employeeRepository = employeeRepository;
-        this.contractRepository = contractRepository;
-        this.insuranceRepository = insuranceRepository;
-        this.entityManager = entityManager;
-
-    }
+//    public Mutation(AcademicExamSettingRepository academicExamSettingRepository,BookRepository bookRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
+//        this.academicExamSettingRepository = academicExamSettingRepository;
+//        this.academicHistoryRepository = academicHistoryRepository;
+//        this.admissionEnquiryRepository = admissionEnquiryRepository;
+//        this.admissionApplicationRepository = admissionApplicationRepository;
+//        this.batchRepository = batchRepository;
+//        this.studentRepository = studentRepository;
+////        this.instituteRepository = instituteRepository;
+//        this.collegeRepository = collegeRepository;
+////        this.studentYearRepository = studentYearRepository;
+////        this.semesterRepository = semesterRepository;
+//        this.branchRepository = branchRepository;
+//        this.sectionRepository = sectionRepository;
+//        this.subjectRepository = subjectRepository;
+//        this.teacherRepository = teacherRepository;
+//        this.legalEntityRepository = legalEntityRepository;
+//        this.authorizedSignatoryRepository = authorizedSignatoryRepository;
+//        this.bankAccountsRepository = bankAccountsRepository;
+//        this.departmentRepository = departmentRepository;
+//        this.locationRepository = locationRepository;
+//        this.studentAttendanceRepository = studentAttendanceRepository;
+//        this.academicYearRepository = academicYearRepository;
+//        this.holidayRepository = holidayRepository;
+//        this.termRepository = termRepository;
+//        this.teachRepository = teachRepository;
+//        this.attendanceMasterRepository = attendanceMasterRepository;
+//        this.lectureRepository = lectureRepository;
+//        this.cityRepository = cityRepository;
+//        this.stateRepository = stateRepository;
+//        this.countryRepository = countryRepository;
+//        this.feeCategoryRepository = feeCategoryRepository;
+//        this.facilityRepository = facilityRepository;
+//        this.transportRouteRepository = transportRouteRepository;
+//        this.feeDetailsRepository = feeDetailsRepository;
+//        this.dueDateRepository = dueDateRepository;
+//        this.paymentRemainderRepository = paymentRemainderRepository;
+//        this.lateFeeRepository = lateFeeRepository;
+//        this.invoiceRepository = invoiceRepository;
+//        this.competitiveExamRepository = competitiveExamRepository;
+//        this.documentsRepository = documentsRepository;
+//        this.adminAttendanceRepository = adminAttendanceRepository;
+//        this.typeOfGradingRepository = typeOfGradingRepository;
+//        this.studentExamReportRepository = studentExamReportRepository;
+//        this.libraryRepository = libraryRepository;
+//        this.bookRepository = bookRepository;
+//
+//        this.vehicleRepository = vehicleRepository;
+//        this.employeeRepository = employeeRepository;
+//        this.contractRepository = contractRepository;
+//        this.insuranceRepository = insuranceRepository;
+//        this.entityManager = entityManager;
+//
+//    }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
         final Country country = new Country();

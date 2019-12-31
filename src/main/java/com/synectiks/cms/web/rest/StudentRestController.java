@@ -205,7 +205,7 @@ public class StudentRestController {
     }
 
     @GetMapping("/cmsstudents/{name}")
-    public List<CmsStudentVo> getStudent(@PathVariable String name) {
+    public List<CmsStudentVo> getStudentListByName(@PathVariable String name) {
     	Student student = null;
     	if(CommonUtil.isNullOrEmpty(name)) {
     		student = new Student();
