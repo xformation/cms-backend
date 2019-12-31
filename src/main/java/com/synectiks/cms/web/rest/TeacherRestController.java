@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import javax.validation.Valid;
 
@@ -122,14 +123,23 @@ public class TeacherRestController {
 
     
     @RequestMapping(method = RequestMethod.GET, value = "/cmsteachers")
-    public List<CmsTeacherVo> getAllTeachers() {
-        log.debug("REST request to get all the Teachers");
-        List<Teacher> list =  this.teacherRepository.findAll();
-        List<CmsTeacherVo> ls = new ArrayList<>();
-        for(Teacher th: list) {
-        	CmsTeacherVo vo = CommonUtil.createCopyProperties(th, CmsTeacherVo.class);
-        	ls.add(vo);
+    public List<CmsTeacherVo> getAllTeachers(@RequestParam Map<String, String> dataMap) {
+    	List<Teacher> list =  null;
+        List<CmsTeacherVo> ls = null;
+    	
+        if(!CommonUtil.isNullOrEmpty(dataMap.get("teacherName"))) {
+        	String name = dataMap.get("teacherName");
+        	ls = getTeacherListByName(name) ;
+        }else {
+        	log.debug("REST request to get all the Teachers");
+        	list =  this.teacherRepository.findAll();
+            ls = new ArrayList<>();
+            for(Teacher th: list) {
+            	CmsTeacherVo vo = CommonUtil.createCopyProperties(th, CmsTeacherVo.class);
+            	ls.add(vo);
+            }
         }
+        
         return ls;
     }
 
@@ -182,23 +192,22 @@ public class TeacherRestController {
         return ResponseUtil.wrapOrNotFound(Optional.of(vo));
     }
 
-    @GetMapping("/cmsteachers/{name}")
-    public List<CmsTeacherVo> getTeacherListByName(@PathVariable String name) {
+    public List<CmsTeacherVo> getTeacherListByName(String name) {
     	Teacher teacher = null;
-    	if(CommonUtil.isNullOrEmpty(name)) {
+    	if(!CommonUtil.isNullOrEmpty(name)) {
     		teacher = new Teacher();
-    		String ary[] = name.split(" ");
-        	if(ary != null && ary.length > 0) {
-        		if(!CommonUtil.isNullOrEmpty(ary[0])) {
-        			teacher.setTeacherName(ary[0]);
-        		}
-        		if(!CommonUtil.isNullOrEmpty(ary[1])) {
-        			teacher.setTeacherMiddleName(ary[1]);
-        		}
-        		if(!CommonUtil.isNullOrEmpty(ary[2])) {
-        			teacher.setTeacherLastName(ary[2]);
-        		}
-        	}
+    		StringTokenizer token = new StringTokenizer(name, " ");
+    		int cnt = 0;
+    		while(token.hasMoreTokens()) {
+    			if(cnt == 0) {
+    				teacher.setTeacherName(token.nextToken());
+    			}else if(cnt == 1) {
+    				teacher.setTeacherMiddleName(token.nextToken());
+    			}else if(cnt == 2) {
+    				teacher.setTeacherLastName(token.nextToken());
+    			}
+    			cnt++;
+    		}
     	}
         log.debug("REST request to get Teacher by name : {}", name);
         List<Teacher> list = null;
@@ -215,6 +224,7 @@ public class TeacherRestController {
         }
         return ls;
     }
+    
     @RequestMapping(method = RequestMethod.DELETE, value = "/cmsteachers/{id}")
     public Integer deleteTeacher(@PathVariable Long id) {
         log.debug("REST request to delete a Teacher : {}", id);

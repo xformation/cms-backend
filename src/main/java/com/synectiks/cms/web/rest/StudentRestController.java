@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import javax.validation.Valid;
 
@@ -173,14 +174,22 @@ public class StudentRestController {
      * @return the ResponseEntity with status 200 (OK) and the list of students in body
      */
     @GetMapping("/cmsstudents")
-    public List<CmsStudentVo> getAllStudents() {
-        log.debug("REST request to get all Students");
-        List<Student> list = studentRepository.findAll();
-        List<CmsStudentVo> ls = new ArrayList<>();
-        for(Student st: list) {
-        	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
-        	ls.add(vo);
+    public List<CmsStudentVo> getAllStudents(@RequestParam Map<String, String> dataMap) {
+        List<Student> list = null;
+        List<CmsStudentVo> ls = null;
+        if(!CommonUtil.isNullOrEmpty(dataMap.get("studentName"))) {
+        	String name = dataMap.get("studentName");
+        	ls = getStudentListByName(name) ;
+        }else {
+        	log.debug("REST request to get all Students");
+        	list = studentRepository.findAll();
+            ls = new ArrayList<>();
+            for(Student st: list) {
+            	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+            	ls.add(vo);
+            }
         }
+        
         return ls;
     }
 
@@ -204,23 +213,22 @@ public class StudentRestController {
         return ResponseUtil.wrapOrNotFound(Optional.of(vo));
     }
 
-    @GetMapping("/cmsstudents/{name}")
-    public List<CmsStudentVo> getStudentListByName(@PathVariable String name) {
+    public List<CmsStudentVo> getStudentListByName(String name) {
     	Student student = null;
-    	if(CommonUtil.isNullOrEmpty(name)) {
+    	if(!CommonUtil.isNullOrEmpty(name)) {
     		student = new Student();
-    		String ary[] = name.split(" ");
-        	if(ary != null && ary.length > 0) {
-        		if(!CommonUtil.isNullOrEmpty(ary[0])) {
-        			student.setStudentName(ary[0]);
-        		}
-        		if(!CommonUtil.isNullOrEmpty(ary[1])) {
-        			student.setStudentMiddleName(ary[1]);
-        		}
-        		if(!CommonUtil.isNullOrEmpty(ary[2])) {
-        			student.setStudentLastName(ary[2]);
-        		}
-        	}
+    		StringTokenizer token = new StringTokenizer(name, " ");
+    		int cnt = 0;
+    		while(token.hasMoreTokens()) {
+    			if(cnt == 0) {
+    				student.setStudentName(token.nextToken());
+    			}else if(cnt == 1) {
+    				student.setStudentMiddleName(token.nextToken());
+    			}else if(cnt == 2) {
+    				student.setStudentLastName(token.nextToken());
+    			}
+    			cnt++;
+    		}
     	}
         log.debug("REST request to get Student by name : {}", name);
         List<Student> list = null;
