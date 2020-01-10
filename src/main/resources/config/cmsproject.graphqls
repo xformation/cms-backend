@@ -308,6 +308,7 @@ type Query {
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getInvoiceData(collegeId:String, branchId:String, academicYearId:String): CmsInvoice
+  searchInvoiceOnType(invoiceType:String, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
 
     getTotalAdmissions(branchId:Long): Long!
     getTotalFollowup(branchId:Long ): Long!

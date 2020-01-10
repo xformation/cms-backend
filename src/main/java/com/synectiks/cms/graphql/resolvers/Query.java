@@ -587,6 +587,10 @@ public class Query implements GraphQLQueryResolver {
 //        return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId));
 //    }
 
+    public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
+        return Lists.newArrayList(invoiceFilterProcessor.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId));
+    }
+
     public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
         return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);
     }
