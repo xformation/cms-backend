@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -17,32 +18,79 @@ import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.*;
-import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
-import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
-import  com.synectiks.cms.graphql.types.TransportRoute.RouteFrequency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsAcademicYearVo;
+import com.synectiks.cms.domain.CmsBatchVo;
+import com.synectiks.cms.domain.CmsBook;
+import com.synectiks.cms.domain.CmsBranchVo;
+import com.synectiks.cms.domain.CmsCourseEnumVo;
+import com.synectiks.cms.domain.CmsDepartmentVo;
+import com.synectiks.cms.domain.CmsFacility;
+import com.synectiks.cms.domain.CmsFeeCategory;
+import com.synectiks.cms.domain.CmsFeeDetails;
+import com.synectiks.cms.domain.CmsGenderVo;
+import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.CmsNotificationsVo;
+import com.synectiks.cms.domain.CmsRouteFrequency;
+import com.synectiks.cms.domain.CmsSectionVo;
+import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.domain.CmsTermVo;
+import com.synectiks.cms.domain.CmsTypeOfInsuranceVo;
+import com.synectiks.cms.domain.CmsTypeOfOwnershipVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.domain.Notifications;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.cms.domain.Vehicle;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
+import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
+import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
+import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
 import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
+import  com.synectiks.cms.graphql.types.TransportRoute.RouteFrequency;
 import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.graphql.types.gender.Gender;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AcademicYearRepository;
 import com.synectiks.cms.repository.AttendanceMasterRepository;
 import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.BranchRepository;
 import com.synectiks.cms.repository.CityRepository;
 import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.DepartmentRepository;
 import com.synectiks.cms.repository.EmployeeRepository;
 import com.synectiks.cms.repository.HolidayRepository;
 import com.synectiks.cms.repository.LectureRepository;
@@ -65,11 +113,11 @@ public class CommonService {
 
     private final static Logger logger = LoggerFactory.getLogger(CommonService.class);
 
-    @Autowired
-    private AcademicYearRepository academicYearRepository;
+//    @Autowired
+//    private AcademicYearRepository academicYearRepository;
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+//    @Autowired
+//    private DepartmentRepository departmentRepository;
 
     @Autowired
     private BatchRepository batchRepository;
@@ -106,8 +154,8 @@ public class CommonService {
     @Autowired
     private CityRepository cityRepository;
 
-    @Autowired
-    private BranchRepository branchRepository;
+//    @Autowired
+//    private BranchRepository branchRepository;
 
     @Autowired
     private AcademicExamSettingRepository academicExamSettingRepository;
@@ -136,52 +184,233 @@ public class CommonService {
     @Autowired
     private LectureRepository lectureRepository;
 
+    @Autowired
+    ApplicationProperties applicationProperties;
+    
+    @Autowired
+    RestTemplate restTemplate;
+    
     public AcademicYear findAcademicYearByYear(String academicYear) {
-        if(CommonUtil.isNullOrEmpty(academicYear)) {
+//        if(CommonUtil.isNullOrEmpty(academicYear)) {
+//            return null;
+//        }
+//        AcademicYear ay = new AcademicYear();
+//        ay.setYear(academicYear);
+//        Example<AcademicYear> example = Example.of(ay);
+//        Optional<AcademicYear> acd = this.academicYearRepository.findOne(example);
+//        if(acd.isPresent()) {
+//            return acd.get();
+//        }
+//        return null;
+    	CmsAcademicYearVo vo = this.findCmsAcademicYearByDescription(academicYear);
+    	if(vo == null) {
+    		return null;
+    	}
+    	AcademicYear ay = CommonUtil.createCopyProperties(vo, AcademicYear.class);
+    	ay.setYear(vo.getDescription());
+    	return ay;
+    }
+    
+    public CmsAcademicYearVo findCmsAcademicYearByDescription(String description) {
+        if(CommonUtil.isNullOrEmpty(description)) {
             return null;
         }
-        AcademicYear ay = new AcademicYear();
-        ay.setYear(academicYear);
-        Example<AcademicYear> example = Example.of(ay);
-        Optional<AcademicYear> acd = this.academicYearRepository.findOne(example);
-        if(acd.isPresent()) {
-            return acd.get();
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefAcademicYearUrl = prefUrl+"/api/cmsacademic-years-by-filters?description="+description;
+        CmsAcademicYearVo[] temp = this.restTemplate.getForObject(prefAcademicYearUrl, CmsAcademicYearVo[].class);
+        if(temp.length == 0) {
+        	return null;
         }
-        return null;
+        List<CmsAcademicYearVo> acYearList = Arrays.asList(temp);	
+        Collections.sort(acYearList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        return acYearList.get(0);
     }
 
+    
     public AcademicYear getAcademicYearById(Long academicYearId) {
         if(academicYearId == null) {
             return null;
         }
-        Optional<AcademicYear> newAy = this.academicYearRepository.findById(academicYearId);
-        if(newAy.isPresent()) {
-            return newAy.get();
-        }
-        return null;
+//        Optional<AcademicYear> newAy = this.academicYearRepository.findById(academicYearId);
+//        if(newAy.isPresent()) {
+//            return newAy.get();
+//        }
+//        return null;
+        CmsAcademicYearVo vo = this.getCmsAcademicYearById(academicYearId);
+        if(vo == null) {
+    		return null;
+    	}
+        AcademicYear ay = CommonUtil.createCopyProperties(vo, AcademicYear.class);
+//    	ay.setYear(vo.getDescription());
+    	return ay;
     }
 
-    public AcademicYear getActiveAcademicYear() {
-        AcademicYear ay = new AcademicYear();
-        ay.setStatus(Status.ACTIVE);
-        Optional<AcademicYear> newAy = this.academicYearRepository.findOne(Example.of(ay));
-        if(newAy.isPresent()) {
-            return newAy.get();
-        }
-        return null;
-    }
-
-    public Department getDepartmentById(Long departmentId) {
-        if(departmentId == null) {
+    public CmsAcademicYearVo getCmsAcademicYearById(Long academicYearId) {
+        if(academicYearId == null) {
             return null;
         }
-        Optional<Department> newDt = this.departmentRepository.findById(departmentId);
-        if(newDt.isPresent()) {
-            return newDt.get();
-        }
-        return null;
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefAcademicYearUrl = prefUrl+"/api/cmsacademic-years/"+academicYearId;
+        CmsAcademicYearVo temp = this.restTemplate.getForObject(prefAcademicYearUrl, CmsAcademicYearVo.class);
+        return temp;
+    }
+    
+    public AcademicYear getActiveAcademicYear() {
+//        AcademicYear ay = new AcademicYear();
+//        ay.setStatus(Status.ACTIVE);
+//        Optional<AcademicYear> newAy = this.academicYearRepository.findOne(Example.of(ay));
+//        if(newAy.isPresent()) {
+//            return newAy.get();
+//        }
+//        return null;
+    	CmsAcademicYearVo vo = this.getActiveCmsAcademicYear();
+    	if(vo == null) {
+    		return null;
+    	}
+    	AcademicYear ay = CommonUtil.createCopyProperties(vo, AcademicYear.class);
+//    	ay.setYear(vo.getDescription());
+    	return ay;
     }
 
+    public CmsAcademicYearVo getActiveCmsAcademicYear() {
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefAcademicYearUrl = prefUrl+"/api/cmsacademic-years-by-filters?status=ACTIVE";
+        CmsAcademicYearVo[] temp = this.restTemplate.getForObject(prefAcademicYearUrl, CmsAcademicYearVo[].class);
+        if(temp.length == 0) {
+        	return null;
+        }
+        List<CmsAcademicYearVo> acYearList = Arrays.asList(temp);	
+        Collections.sort(acYearList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        return acYearList.get(0);
+    }
+    
+    public List<CmsAcademicYearVo> findAllCmsAcademicYear() {
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefAcademicYearUrl = prefUrl+"/api/cmsacademic-years";
+        CmsAcademicYearVo[] temp = this.restTemplate.getForObject(prefAcademicYearUrl, CmsAcademicYearVo[].class);
+        if(temp.length == 0) {
+        	return Collections.emptyList();
+        }
+        List<CmsAcademicYearVo> acYearList = Arrays.asList(temp);	
+        Collections.sort(acYearList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        return acYearList;
+    }
+    
+    public Branch getBranchById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefBranchUrl = prefUrl+"/api/branch-by-id/"+id;
+        Branch temp = this.restTemplate.getForObject(prefBranchUrl, Branch.class);
+        return temp;    
+    }
+    
+    public CmsBranchVo getCmsBranchById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefBranchUrl = prefUrl+"/api/cmsbranch/"+id;
+        CmsBranchVo temp = this.restTemplate.getForObject(prefBranchUrl, CmsBranchVo.class);
+        return temp;    
+    }
+    
+	public List<CmsBranchVo> findAllCmsBranch() {
+      String prefUrl = applicationProperties.getPreferenceSrvUrl();
+      String prefBranchUrl = prefUrl+"/api/cmsbranch-by-filters";
+      CmsBranchVo[] temp = this.restTemplate.getForObject(prefBranchUrl, CmsBranchVo[].class);
+      if(temp.length == 0) {
+      	return Collections.emptyList();
+      }
+      List<CmsBranchVo> cmsBranchList = Arrays.asList(temp);	
+      Collections.sort(cmsBranchList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+      return cmsBranchList;
+	}
+	
+	public List<Branch> findAllBranch() {
+      String prefUrl = applicationProperties.getPreferenceSrvUrl();
+      String prefBranchUrl = prefUrl+"/api/branch-by-filters";
+      Branch[] temp = this.restTemplate.getForObject(prefBranchUrl, Branch[].class);
+      if(temp.length == 0) {
+      	return Collections.emptyList();
+      }
+      List<Branch> branchList = Arrays.asList(temp);	
+      Collections.sort(branchList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+      return branchList;
+	}
+    
+	
+	public Department getDepartmentById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefDepartmentUrl = prefUrl+"/api/department-by-id/"+id;
+        Department temp = this.restTemplate.getForObject(prefDepartmentUrl, Department.class);
+        return temp;
+    }
+
+    public CmsDepartmentVo getCmsDepartmentById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefDepartmentUrl = prefUrl+"/api/cmsdepartment/"+id;
+        CmsDepartmentVo temp = this.restTemplate.getForObject(prefDepartmentUrl, CmsDepartmentVo.class);
+        return temp;    
+    }
+    
+	public List<CmsDepartmentVo> findAllCmsDepartment() {
+      String prefUrl = applicationProperties.getPreferenceSrvUrl();
+      String prefDepartmentUrl = prefUrl+"/api/cmsdepartment-by-filters";
+      CmsDepartmentVo[] temp = this.restTemplate.getForObject(prefDepartmentUrl, CmsDepartmentVo[].class);
+      if(temp.length == 0) {
+      	return Collections.emptyList();
+      }
+      List<CmsDepartmentVo> cmsDepartmentList = Arrays.asList(temp);	
+      Collections.sort(cmsDepartmentList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+      return cmsDepartmentList;
+	}
+	
+	public List<Department> findAllDepartment() {
+      String prefUrl = applicationProperties.getPreferenceSrvUrl();
+      String prefDepartmentUrl = prefUrl+"/api/department-by-filters";
+      Department[] temp = this.restTemplate.getForObject(prefDepartmentUrl, Department[].class);
+      if(temp.length == 0) {
+      	return Collections.emptyList();
+      }
+      List<Department> departmentList = Arrays.asList(temp);	
+      Collections.sort(departmentList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+      return departmentList;
+	}
+	
+	public List<Department> findAllDepartmentByBranchAndAcademicYear(Long branchId, Long academicYearId) {
+		logger.debug("Getting department based on branch id : "+branchId+", and academicYearId : "+academicYearId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefDepartmentUrl = prefUrl+"/api/department-by-filters?branchId="+branchId+"&academicYearId="+academicYearId;
+	    Department[] temp = this.restTemplate.getForObject(prefDepartmentUrl, Department[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Department> departmentList = Arrays.asList(temp);	
+	    Collections.sort(departmentList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return departmentList;
+	}
+	
+	public List<CmsDepartmentVo> findAllCmsDepartmentByBranch(Long branchId) {
+		logger.debug("Getting department based on branch id : "+branchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefDepartmentUrl = prefUrl+"/api/cmsdepartment-by-filters?branchId="+branchId;
+	    CmsDepartmentVo[] temp = this.restTemplate.getForObject(prefDepartmentUrl, CmsDepartmentVo[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<CmsDepartmentVo> cmsDepartmentList = Arrays.asList(temp);	
+	    Collections.sort(cmsDepartmentList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return cmsDepartmentList;
+	}
+	
     public TransportRoute getTransportRouteById(Long transportRouteId) {
         if(transportRouteId == null) {
             return null;
@@ -323,6 +552,8 @@ public class CommonService {
         return list;
     }
 
+    
+    
     public Term getTermById(Long termId) {
         if(termId == null) {
             return null;
@@ -370,16 +601,7 @@ public class CommonService {
         }
         return null;
     }
-    public Branch getBranchById(Long id) {
-        if(id == null) {
-            return null;
-        }
-        Optional<Branch> bt =  this.branchRepository.findById(id);
-        if(bt.isPresent()) {
-            return bt.get();
-        }
-        return null;
-    }
+    
     public Teach getTeachById(Long id) {
         if(id == null) {
             return null;
@@ -395,13 +617,14 @@ public class CommonService {
         if(branchId == null ) { //|| academicYearId == null
             return Collections.emptyList();
         }
-        Department department = new Department();
-        Branch branch = this.getBranchById(branchId);
-//        AcademicYear ay = this.getAcademicYearById(academicYearId);
-        department.setBranch(branch);
-//        department.setAcademicyear(ay);
-        Example<Department> example = Example.of(department);
-        List<Department> list = this.departmentRepository.findAll(example);
+//        Department department = new Department();
+//        Branch branch = this.getBranchById(branchId);
+////        AcademicYear ay = this.getAcademicYearById(academicYearId);
+//        department.setBranch(branch);
+////        department.setAcademicyear(ay);
+//        Example<Department> example = Example.of(department);
+//        List<Department> list = this.departmentRepository.findAll(example);
+        List<Department> list = this.findAllDepartmentByBranchAndAcademicYear(branchId, academicYearId);
         return list;
     }
 
@@ -1108,17 +1331,17 @@ public class CommonService {
 
         findUserConfig(userName, config);
 
-        AcademicYear ay = this.getActiveAcademicYear();
-        if(ay != null) {
-            CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
-            vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            config.setCmsAcademicYearVo(vo);
-        }else {
-            config.setCmsAcademicYearVo(new CmsAcademicYearVo());
-        }
-
-        config.setSelectedAcademicYearId(ay != null ? ay.getId() : null);
+//        AcademicYear ay = this.getActiveAcademicYear();
+//        if(ay != null) {
+//            CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+//            vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            config.setCmsAcademicYearVo(vo);
+//        }else {
+//            config.setCmsAcademicYearVo(new CmsAcademicYearVo());
+//        }
+        config.setCmsAcademicYearVo(this.getActiveCmsAcademicYear());
+        config.setSelectedAcademicYearId(this.getActiveCmsAcademicYear() != null ? this.getActiveCmsAcademicYear().getId() : null);
         config.setSelectedBranchId(config.getBranch() != null ? config.getBranch().getId() : null);
         config.setSelectedDepartmentId(config.getDepartment() != null ? config.getDepartment().getId() : null);
 
@@ -1172,29 +1395,30 @@ public class CommonService {
 
         findUserConfig(userName, config);
 
-        List<AcademicYear> acYearList = this.academicYearRepository.findAll(Sort.by(Direction.ASC, "id"));
-        List<CmsAcademicYearVo> ayList = new ArrayList<>();
-        for(AcademicYear ay: acYearList ) {
-            CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
-            vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            ayList.add(vo);
-        }
-        List<CmsDepartmentVo> deptList = new ArrayList<>();
-        config.setAcademicYearList(ayList);
-        config.setBranchList(this.branchRepository.findAll());
-        config.setDepartmentList(deptList);
+//        List<AcademicYear> acYearList = this.academicYearRepository.findAll(Sort.by(Direction.ASC, "id"));
+//        List<CmsAcademicYearVo> ayList = this.findAllCmsAcademicYear();
+//        for(AcademicYear ay: acYearList ) {
+//            CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+//            vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            ayList.add(vo);
+//        }
+//        List<CmsDepartmentVo> deptList = new ArrayList<>();
+        config.setAcademicYearList(this.findAllCmsAcademicYear());
+//        List<Branch> branchList = this.findAllBranch();
+        config.setBranchList(this.findAllBranch());
+        config.setDepartmentList(this.findAllCmsDepartment());
 
-        AcademicYear ay = this.getActiveAcademicYear();
-        if(ay != null) {
-            CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
-            vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            config.setCmsAcademicYearVo(vo);
-        }else {
-            config.setCmsAcademicYearVo(new CmsAcademicYearVo());
-        }
-
+//        AcademicYear ay = this.getActiveAcademicYear();
+//        if(ay != null) {
+//            CmsAcademicYearVo vo = CommonUtil.createCopyProperties(ay, CmsAcademicYearVo.class);
+//            vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ay.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ay.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            config.setCmsAcademicYearVo(vo);
+//        }else {
+//            config.setCmsAcademicYearVo(new CmsAcademicYearVo());
+//        }
+        config.setCmsAcademicYearVo(this.getActiveCmsAcademicYear());
         return config;
     }
 
@@ -1359,18 +1583,19 @@ public class CommonService {
     }
 
     public List<CmsDepartmentVo> getDepartmentListByBranch(Long branchId){
-        Branch branch = this.branchRepository.findById(branchId).get();
-        Department department = new Department();
-        department.setBranch(branch);
-        Example<Department> example = Example.of(department);
-        List<Department> list = departmentRepository.findAll(example);
-        List<CmsDepartmentVo> ls = new ArrayList<>();
-        for(Department de : list) {
-            CmsDepartmentVo vo = CommonUtil.createCopyProperties(de, CmsDepartmentVo.class);
-            vo.setBranchId(de.getBranch().getId());
-            ls.add(vo);
-        }
-        return ls;
+//        Branch branch = this.branchRepository.findById(branchId).get();
+//        Branch branch = this.getBranchById(branchId);
+//    	Department department = new Department();
+//        department.setBranch(branch);
+//        Example<Department> example = Example.of(department);
+//        List<Department> list = departmentRepository.findAll(example);
+//        List<CmsDepartmentVo> ls = new ArrayList<>();
+//        for(Department de : list) {
+//            CmsDepartmentVo vo = CommonUtil.createCopyProperties(de, CmsDepartmentVo.class);
+//            vo.setBranchId(de.getBranch().getId());
+//            ls.add(vo);
+//        }
+        return this.findAllCmsDepartmentByBranch(branchId);
     }
 
     public List<CmsBatchVo> getAllBatches() {

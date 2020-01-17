@@ -20,7 +20,8 @@ public class CmsAcademicYearVo implements Serializable {
 
     private String strStartDate;
     private String strEndDate;
-
+    private String description;
+    
     public Long getId() {
         return id;
     }
@@ -108,4 +109,12 @@ public class CmsAcademicYearVo implements Serializable {
             ", strEndDate='" + strEndDate + '\'' +
             '}';
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
