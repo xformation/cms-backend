@@ -62,8 +62,8 @@ public class GlobalConfigRestController {
         Config config = CmsConstants.USERS_CACHE.get(userName);
         config.setSelectedAcademicYearId(Long.parseLong(ayId));
         config.setSelectedBranchId(Long.parseLong(branchId));
-        List<CmsDepartmentVo> deptList = this.commonService.getDepartmentListByBranch(Long.parseLong(branchId));
-        config.setDepartmentList(deptList);
+//        List<CmsDepartmentVo> deptList = this.commonService.getDepartmentListByBranch(Long.parseLong(branchId));
+//        config.setDepartmentList(deptList);
         config.setSelectedDepartmentId(Long.parseLong(departmentId));
         CmsConstants.USERS_CACHE.put(userName, config);
         logger.debug("User specific global settings applied successfully");

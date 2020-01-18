@@ -10,6 +10,11 @@ import org.java_websocket.server.WebSocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.Config;
+
 /**
  * WebSocket handler
  *
@@ -19,9 +24,6 @@ public class CmsBackendWebSocketServer extends WebSocketServer {
 
 	private final static Logger logger = LoggerFactory.getLogger(CmsBackendWebSocketServer.class);
     
-//    @Autowired
-//    private CmsAdmissionEnquiryService cmsAdmissionEnquiryService;
-
 	private Set<WebSocket> conns;
 
 	public CmsBackendWebSocketServer(int port) {
@@ -44,10 +46,19 @@ public class CmsBackendWebSocketServer extends WebSocketServer {
 	}
 	
 	@Override
-	public void onMessage(WebSocket conn, String message) {
+	public void onMessage(WebSocket webSocketConnection, String message) {
 		logger.debug("Message received from UI client:: "+message);
+		Config config = CmsConstants.USERS_CACHE.get(message);
+		ObjectMapper mapper = new ObjectMapper();
+		String messageJson=null;
+		try {
+			messageJson = mapper.writeValueAsString(config);
+		} catch (JsonProcessingException e) {
+			logger.error("Exception in object to JSON conversion : ",e);
+		}
+		
 		for (WebSocket sock : conns) {
-            sock.send("Sending message to UI client :::::::::::");
+			sock.send(messageJson);
         }
 	}
 
