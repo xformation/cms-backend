@@ -206,14 +206,14 @@ public class EmployeeResourceIntTest {
             .employeeAddress(DEFAULT_EMPLOYEE_ADDRESS)
             .personalMailId(DEFAULT_PERSONAL_MAIL_ID)
             .officialMailId(DEFAULT_OFFICIAL_MAIL_ID)
-            .disability(DEFAULT_DISABILITY)
+            .disability(DEFAULT_DISABILITY.toString())
             .drivingLicenceNo(DEFAULT_DRIVING_LICENCE_NO)
             .drivingLicenceValidity(DEFAULT_DRIVING_LICENCE_VALIDITY)
-            .gender(DEFAULT_GENDER)
+            .gender(DEFAULT_GENDER.toString())
             .typeOfEmployment(DEFAULT_TYPE_OF_EMPLOYMENT)
             .managerId(DEFAULT_MANAGER_ID)
-            .status(DEFAULT_STATUS)
-            .maritalStatus(DEFAULT_MARITAL_STATUS);
+            .status(DEFAULT_STATUS.toString())
+            .maritalStatus(DEFAULT_MARITAL_STATUS.toString());
         // Add required entity
         Branch branch = BranchResourceIntTest.createEntity(em);
         em.persist(branch);
@@ -471,14 +471,14 @@ public class EmployeeResourceIntTest {
             .employeeAddress(UPDATED_EMPLOYEE_ADDRESS)
             .personalMailId(UPDATED_PERSONAL_MAIL_ID)
             .officialMailId(UPDATED_OFFICIAL_MAIL_ID)
-            .disability(UPDATED_DISABILITY)
+            .disability(UPDATED_DISABILITY.toString())
             .drivingLicenceNo(UPDATED_DRIVING_LICENCE_NO)
             .drivingLicenceValidity(UPDATED_DRIVING_LICENCE_VALIDITY)
-            .gender(UPDATED_GENDER)
+            .gender(UPDATED_GENDER.toString())
             .typeOfEmployment(UPDATED_TYPE_OF_EMPLOYMENT)
             .managerId(UPDATED_MANAGER_ID)
-            .status(UPDATED_STATUS)
-            .maritalStatus(UPDATED_MARITAL_STATUS);
+            .status(UPDATED_STATUS.toString())
+            .maritalStatus(UPDATED_MARITAL_STATUS.toString());
         EmployeeDTO employeeDTO = employeeMapper.toDto(updatedEmployee);
 
         restEmployeeMockMvc.perform(put("/api/employees")

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsSubjectVo;
@@ -84,15 +85,15 @@ public class AcademicSubjectService {
                 subject.setSubjectDesc(jsonObj.getString("subjectDesc"));
                 // in case of null (default) subject type will be common
                 if(SubTypeEnum.ELECTIVE.toString().equalsIgnoreCase(jsonObj.getString("subjectType"))) {
-                	subject.setSubjectType(SubTypeEnum.ELECTIVE);
+                	subject.setSubjectType(CmsConstants.SUBJECT_TYPE_ELECTIVE);
                 }else {
-                	subject.setSubjectType(SubTypeEnum.COMMON);
+                	subject.setSubjectType(CmsConstants.SUBJECT_TYPE_COMMON);
                 }
                 // in case of null (default) subject status will be active
                 if(Status.DEACTIVE.toString().equalsIgnoreCase(jsonObj.getString("status"))) {
-                	subject.setStatus(Status.DEACTIVE);
+                	subject.setStatus(CmsConstants.STATUS_DEACTIVE);
                 }else {
-                	subject.setStatus(Status.ACTIVE);
+                	subject.setStatus(CmsConstants.STATUS_ACTIVE);
                 }
                 Department dept = commonService.getDepartmentById(Long.parseLong(jsonObj.getString("departmentId")));
                 Batch bth = commonService.getBatchById(Long.parseLong(jsonObj.getString("batchId")));
@@ -136,15 +137,15 @@ public class AcademicSubjectService {
                 subject.setSubjectDesc(jsonObj.getString("subjectDesc"));
                 // While update, subject type must be provided by end user
                 if(SubTypeEnum.ELECTIVE.toString().equalsIgnoreCase(jsonObj.getString("subjectType"))) {
-                	subject.setSubjectType(SubTypeEnum.ELECTIVE);
-                }else if(SubTypeEnum.COMMON.toString().equalsIgnoreCase(jsonObj.getString("subjectType"))){
-                	subject.setSubjectType(SubTypeEnum.COMMON);
+                	subject.setSubjectType(CmsConstants.SUBJECT_TYPE_ELECTIVE);
+                }else if(CmsConstants.SUBJECT_TYPE_COMMON.equalsIgnoreCase(jsonObj.getString("subjectType"))){
+                	subject.setSubjectType(CmsConstants.SUBJECT_TYPE_COMMON);
                 }
                 // While update, status must be provided by end user
                 if(Status.DEACTIVE.toString().equalsIgnoreCase(jsonObj.getString("status"))) {
-                	subject.setStatus(Status.DEACTIVE);
-                }else if(Status.ACTIVE.toString().equalsIgnoreCase(jsonObj.getString("status"))){
-                	subject.setStatus(Status.ACTIVE);
+                	subject.setStatus(CmsConstants.STATUS_DEACTIVE);
+                }else if(CmsConstants.STATUS_ACTIVE.equalsIgnoreCase(jsonObj.getString("status"))){
+                	subject.setStatus(CmsConstants.STATUS_ACTIVE);
                 }
                 
                 Department dept = commonService.getDepartmentById(Long.parseLong(jsonObj.getString("departmentId")));
@@ -268,7 +269,7 @@ public class AcademicSubjectService {
 			Subject sub = new Subject();
 			sub.setSubjectCode(dto.getSubjectCode());
 			if(dto.getSubjectType() == null) {
-				sub.setSubjectType(SubTypeEnum.COMMON);
+				sub.setSubjectType(CmsConstants.SUBJECT_TYPE_COMMON);
 			}else {
 				sub.setSubjectType(dto.getSubjectType());
 			}
@@ -282,7 +283,7 @@ public class AcademicSubjectService {
 			if(dto.getStatus() != null) {
 				sub.setStatus(dto.getStatus());
 			}else {
-				sub.setStatus(Status.ACTIVE);
+				sub.setStatus(CmsConstants.STATUS_ACTIVE);
 			}
 			
 			Department dt = commonService.getDepartmentById(dto.getDepartmentId());
@@ -316,7 +317,7 @@ public class AcademicSubjectService {
 		Subject sub = new Subject();
 		sub.setSubjectCode(cmsSubjectVo.getSubjectCode());
 		if(cmsSubjectVo.getSubjectType() == null) {
-			sub.setSubjectType(SubTypeEnum.COMMON);
+			sub.setSubjectType(CmsConstants.SUBJECT_TYPE_COMMON);
 		}else {
 			sub.setSubjectType(cmsSubjectVo.getSubjectType());
 		}
@@ -328,7 +329,7 @@ public class AcademicSubjectService {
 		}
 		
 		if(cmsSubjectVo.getStatus() == null) {
-			sub.setStatus(Status.DEACTIVE);
+			sub.setStatus(CmsConstants.STATUS_DEACTIVE);
 		}else {
 			sub.setStatus(cmsSubjectVo.getStatus());
 		}

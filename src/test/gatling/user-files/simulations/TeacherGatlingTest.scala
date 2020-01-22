@@ -20,7 +20,7 @@ class TeacherGatlingTest extends Simulation {
     val baseURL = Option(System.getProperty("baseURL")) getOrElse """http://localhost:8080"""
 
     val httpConf = http
-        .baseURL(baseURL)
+        .baseUrl(baseURL)
         .inferHtmlResources()
         .acceptHeader("*/*")
         .acceptEncodingHeader("gzip, deflate")
@@ -53,8 +53,8 @@ class TeacherGatlingTest extends Simulation {
         .exec(http("Authentication")
         .post("/api/authenticate")
         .headers(headers_http_authentication)
-        .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJSON
-        .check(header.get("Authorization").saveAs("access_token"))).exitHereIfFailed
+        .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJson
+        .check(header("Authorization").saveAs("access_token"))).exitHereIfFailed
         .pause(2)
         .exec(http("Authenticated request")
         .get("/api/account")
@@ -84,38 +84,36 @@ class TeacherGatlingTest extends Simulation {
                 , "motherName":"SAMPLE_TEXT"
                 , "motherMiddleName":"SAMPLE_TEXT"
                 , "motherLastName":"SAMPLE_TEXT"
-                , "aadharNo":null
+                , "aadharNo":"SAMPLE_TEXT"
                 , "dateOfBirth":"2020-01-01T00:00:00.000Z"
                 , "placeOfBirth":"SAMPLE_TEXT"
-                , "religion":"HINDU"
-                , "caste":"OC"
+                , "religion":"SAMPLE_TEXT"
+                , "caste":"SAMPLE_TEXT"
                 , "subCaste":"SAMPLE_TEXT"
                 , "age":"0"
-                , "sex":"MALE"
-                , "bloodGroup":"ABPOSITIVE"
-                , "addressLineOne":"SAMPLE_TEXT"
-                , "addressLineTwo":"SAMPLE_TEXT"
-                , "addressLineThree":"SAMPLE_TEXT"
+                , "sex":"SAMPLE_TEXT"
+                , "bloodGroup":"SAMPLE_TEXT"
+                , "address":"SAMPLE_TEXT"
                 , "town":"SAMPLE_TEXT"
                 , "state":"SAMPLE_TEXT"
                 , "country":"SAMPLE_TEXT"
-                , "pincode":null
+                , "pinCode":"SAMPLE_TEXT"
                 , "teacherContactNumber":"SAMPLE_TEXT"
                 , "alternateContactNumber":"SAMPLE_TEXT"
                 , "teacherEmailAddress":"SAMPLE_TEXT"
                 , "alternateEmailAddress":"SAMPLE_TEXT"
-                , "relationWithStaff":"FATHER"
+                , "relationWithStaff":"SAMPLE_TEXT"
                 , "emergencyContactName":"SAMPLE_TEXT"
                 , "emergencyContactMiddleName":"SAMPLE_TEXT"
                 , "emergencyContactLastName":"SAMPLE_TEXT"
                 , "emergencyContactNo":"SAMPLE_TEXT"
                 , "emergencyContactEmailAddress":"SAMPLE_TEXT"
                 , "uploadPhoto":"SAMPLE_TEXT"
-                , "status":"ACTIVE"
+                , "status":"SAMPLE_TEXT"
                 , "employeeId":null
                 , "designation":"SAMPLE_TEXT"
-                , "staffType":"TEACHING"
-                }""")).asJSON
+                , "staffType":"SAMPLE_TEXT"
+                }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_teacher_url"))).exitHereIfFailed
             .pause(10)
@@ -134,6 +132,6 @@ class TeacherGatlingTest extends Simulation {
     val users = scenario("Users").exec(scn)
 
     setUp(
-        users.inject(rampUsers(Integer.getInteger("users", 100)) over (Integer.getInteger("ramp", 1) minutes))
+        users.inject(rampUsers(Integer.getInteger("users", 100)) during (Integer.getInteger("ramp", 1) minutes))
     ).protocols(httpConf)
 }

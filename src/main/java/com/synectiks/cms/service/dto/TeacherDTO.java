@@ -1,39 +1,25 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.StaffType;
 
 /**
- * A DTO for the Teacher entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Teacher} entity.
  */
 public class TeacherDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String teacherName;
 
-    @NotNull
     private String teacherMiddleName;
 
-    @NotNull
     private String teacherLastName;
 
-    @NotNull
     private String fatherName;
 
-    @NotNull
     private String fatherMiddleName;
 
-    @NotNull
     private String fatherLastName;
 
     private String spouseName;
@@ -42,103 +28,69 @@ public class TeacherDTO implements Serializable {
 
     private String spouseLastName;
 
-    @NotNull
     private String motherName;
 
-    @NotNull
     private String motherMiddleName;
 
-    @NotNull
     private String motherLastName;
 
-    @NotNull
-    private Long aadharNo;
+    private String aadharNo;
 
-    @NotNull
     private LocalDate dateOfBirth;
 
-    @NotNull
     private String placeOfBirth;
 
-    @NotNull
-    private Religion religion;
+    private String religion;
 
-    @NotNull
-    private Caste caste;
+    private String caste;
 
-    @NotNull
     private String subCaste;
 
-    @NotNull
     private Integer age;
 
-    @NotNull
-    private Gender sex;
+    private String sex;
 
-    @NotNull
-    private Bloodgroup bloodGroup;
+    private String bloodGroup;
 
-    @NotNull
-    private String addressLineOne;
+    private String address;
 
-    @NotNull
-    private String addressLineTwo;
-
-    @NotNull
-    private String addressLineThree;
-
-    @NotNull
     private String town;
 
-    @NotNull
     private String state;
 
-    @NotNull
     private String country;
 
-    @NotNull
-    private Long pincode;
+    private String pinCode;
 
-    @NotNull
     private String teacherContactNumber;
 
     private String alternateContactNumber;
 
-    @NotNull
     private String teacherEmailAddress;
 
     private String alternateEmailAddress;
 
-    @NotNull
-    private RelationWithStudentEnum relationWithStaff;
+    private String relationWithStaff;
 
-    @NotNull
     private String emergencyContactName;
 
     private String emergencyContactMiddleName;
 
-    @NotNull
     private String emergencyContactLastName;
 
-    @NotNull
     private String emergencyContactNo;
 
-    @NotNull
     private String emergencyContactEmailAddress;
 
-    @NotNull
     private String uploadPhoto;
 
-    @NotNull
-    private Status status;
+    private String status;
 
     private Long employeeId;
 
-    @NotNull
     private String designation;
 
-    @NotNull
-    private StaffType staffType;
+    private String staffType;
 
 
     private Long departmentId;
@@ -249,11 +201,11 @@ public class TeacherDTO implements Serializable {
         this.motherLastName = motherLastName;
     }
 
-    public Long getAadharNo() {
+    public String getAadharNo() {
         return aadharNo;
     }
 
-    public void setAadharNo(Long aadharNo) {
+    public void setAadharNo(String aadharNo) {
         this.aadharNo = aadharNo;
     }
 
@@ -273,19 +225,19 @@ public class TeacherDTO implements Serializable {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public Religion getReligion() {
+    public String getReligion() {
         return religion;
     }
 
-    public void setReligion(Religion religion) {
+    public void setReligion(String religion) {
         this.religion = religion;
     }
 
-    public Caste getCaste() {
+    public String getCaste() {
         return caste;
     }
 
-    public void setCaste(Caste caste) {
+    public void setCaste(String caste) {
         this.caste = caste;
     }
 
@@ -305,44 +257,28 @@ public class TeacherDTO implements Serializable {
         this.age = age;
     }
 
-    public Gender getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Gender sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public Bloodgroup getBloodGroup() {
+    public String getBloodGroup() {
         return bloodGroup;
     }
 
-    public void setBloodGroup(Bloodgroup bloodGroup) {
+    public void setBloodGroup(String bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
 
-    public String getAddressLineOne() {
-        return addressLineOne;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressLineOne(String addressLineOne) {
-        this.addressLineOne = addressLineOne;
-    }
-
-    public String getAddressLineTwo() {
-        return addressLineTwo;
-    }
-
-    public void setAddressLineTwo(String addressLineTwo) {
-        this.addressLineTwo = addressLineTwo;
-    }
-
-    public String getAddressLineThree() {
-        return addressLineThree;
-    }
-
-    public void setAddressLineThree(String addressLineThree) {
-        this.addressLineThree = addressLineThree;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getTown() {
@@ -369,12 +305,12 @@ public class TeacherDTO implements Serializable {
         this.country = country;
     }
 
-    public Long getPincode() {
-        return pincode;
+    public String getPinCode() {
+        return pinCode;
     }
 
-    public void setPincode(Long pincode) {
-        this.pincode = pincode;
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
     }
 
     public String getTeacherContactNumber() {
@@ -409,11 +345,11 @@ public class TeacherDTO implements Serializable {
         this.alternateEmailAddress = alternateEmailAddress;
     }
 
-    public RelationWithStudentEnum getRelationWithStaff() {
+    public String getRelationWithStaff() {
         return relationWithStaff;
     }
 
-    public void setRelationWithStaff(RelationWithStudentEnum relationWithStaff) {
+    public void setRelationWithStaff(String relationWithStaff) {
         this.relationWithStaff = relationWithStaff;
     }
 
@@ -465,11 +401,11 @@ public class TeacherDTO implements Serializable {
         this.uploadPhoto = uploadPhoto;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -489,11 +425,11 @@ public class TeacherDTO implements Serializable {
         this.designation = designation;
     }
 
-    public StaffType getStaffType() {
+    public String getStaffType() {
         return staffType;
     }
 
-    public void setStaffType(StaffType staffType) {
+    public void setStaffType(String staffType) {
         this.staffType = staffType;
     }
 
@@ -550,7 +486,7 @@ public class TeacherDTO implements Serializable {
             ", motherName='" + getMotherName() + "'" +
             ", motherMiddleName='" + getMotherMiddleName() + "'" +
             ", motherLastName='" + getMotherLastName() + "'" +
-            ", aadharNo=" + getAadharNo() +
+            ", aadharNo='" + getAadharNo() + "'" +
             ", dateOfBirth='" + getDateOfBirth() + "'" +
             ", placeOfBirth='" + getPlaceOfBirth() + "'" +
             ", religion='" + getReligion() + "'" +
@@ -559,13 +495,11 @@ public class TeacherDTO implements Serializable {
             ", age=" + getAge() +
             ", sex='" + getSex() + "'" +
             ", bloodGroup='" + getBloodGroup() + "'" +
-            ", addressLineOne='" + getAddressLineOne() + "'" +
-            ", addressLineTwo='" + getAddressLineTwo() + "'" +
-            ", addressLineThree='" + getAddressLineThree() + "'" +
+            ", address='" + getAddress() + "'" +
             ", town='" + getTown() + "'" +
             ", state='" + getState() + "'" +
             ", country='" + getCountry() + "'" +
-            ", pincode=" + getPincode() +
+            ", pinCode='" + getPinCode() + "'" +
             ", teacherContactNumber='" + getTeacherContactNumber() + "'" +
             ", alternateContactNumber='" + getAlternateContactNumber() + "'" +
             ", teacherEmailAddress='" + getTeacherEmailAddress() + "'" +

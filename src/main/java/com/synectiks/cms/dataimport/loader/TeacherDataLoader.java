@@ -136,7 +136,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("aadhar_no, ");
             logger.warn("Mandatory field missing. Field name - aadhar_no");
         }else {
-        	obj.setAadharNo(Long.parseLong(aadharNo));
+        	obj.setAadharNo(aadharNo);
         }
         
         String dob = row.getCellAsString(13).orElse(null);
@@ -160,20 +160,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("religion, ");
             logger.warn("Mandatory field missing. Field name - religion");
         }else {
-        	if(Religion.HINDU.toString().equalsIgnoreCase(religion)) {
-        		obj.setReligion(Religion.HINDU);
-        	}else if(Religion.BUDH.toString().equalsIgnoreCase(religion)) {
-        		obj.setReligion(Religion.BUDH);
-        	}else if(Religion.CHRISTIAN.toString().equalsIgnoreCase(religion)) {
-        		obj.setReligion(Religion.CHRISTIAN);
-        	}else if(Religion.MUSLIM.toString().equalsIgnoreCase(religion)) {
-        		obj.setReligion(Religion.MUSLIM);
-        	}else if(Religion.SIKH.toString().equalsIgnoreCase(religion)) {
-        		obj.setReligion(Religion.SIKH);
-        	}else {
-        		sb.append("religion, ");
-                logger.warn("Religion not listed in the system. Field name - religion");
-        	}
+        	obj.setReligion(religion);
         }
         
         String cast = row.getCellAsString(16).orElse(null);
@@ -181,18 +168,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("cast, ");
             logger.warn("Mandatory field missing. Field name - caste");
         }else {
-        	if(Caste.GENERAL.toString().equalsIgnoreCase(cast)) {
-        		obj.setCaste(Caste.GENERAL);
-        	}else if(Caste.OBC.toString().equalsIgnoreCase(cast)) {
-        		obj.setCaste(Caste.OBC);
-        	}else if(Caste.SC.toString().equalsIgnoreCase(cast)) {
-        		obj.setCaste(Caste.SC);
-        	}else if(Caste.ST.toString().equalsIgnoreCase(cast)) {
-        		obj.setCaste(Caste.ST);
-        	}else {
-        		sb.append("cast, ");
-                logger.warn("Cast not listed in the system. Field name - caste");
-        	}
+        	obj.setCaste(cast);
         }
         
         String subCast = row.getCellAsString(17).orElse(null);
@@ -217,16 +193,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("sex, ");
             logger.warn("Mandatory field missing. Field name - sex");
         }else {
-        	if(Gender.MALE.toString().equalsIgnoreCase(sex)) {
-        		obj.setSex(Gender.MALE);
-        	}else if(Gender.FEMALE.toString().equalsIgnoreCase(sex)) {
-        		obj.setSex(Gender.FEMALE);
-        	}else if(Gender.OTHER.toString().equalsIgnoreCase(sex)) {
-        		obj.setSex(Gender.OTHER);
-        	}else {
-        		sb.append("sex, ");
-                logger.warn("Sex not listed in the system. Field name - sex");
-        	}
+        	obj.setSex(sex);
         }
         
         String bloodGroup = row.getCellAsString(20).orElse(null);
@@ -234,23 +201,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("blood_group, ");
             logger.warn("Mandatory field missing. Field name - blood_group");
         }else {
-        	if(Bloodgroup.ABNEGATIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.ABNEGATIVE);
-        	}else if(Bloodgroup.ABPOSITIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.ABPOSITIVE);
-        	}else if(Bloodgroup.ANEGATIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.ANEGATIVE);
-        	}else if(Bloodgroup.APOSITIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.APOSITIVE);
-        	}else if(Bloodgroup.BNEGATIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.BNEGATIVE);
-        	}else if(Bloodgroup.BPOSITIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.BPOSITIVE);
-        	}else if(Bloodgroup.ONEGATIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.ONEGATIVE);
-        	}else if(Bloodgroup.OPOSITIVE.toString().equalsIgnoreCase(bloodGroup)) {
-        		obj.setBloodGroup(Bloodgroup.OPOSITIVE);
-        	}
+        	obj.setBloodGroup(bloodGroup);
         }
         
         String addressLineOne = row.getCellAsString(21).orElse(null);
@@ -258,25 +209,25 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("address_line_one, ");
             logger.warn("Mandatory field missing. Field name - address_line_one");
         }else {
-        	obj.setAddressLineOne(addressLineOne);
+        	obj.setAddress(addressLineOne);
         }
         
-        String addressLineTwo = row.getCellAsString(22).orElse(null);
-        if(CommonUtil.isNullOrEmpty(addressLineTwo)) {
-        	sb.append("address_line_two, ");
-            logger.warn("Mandatory field missing. Field name - address_line_two");
-        }else {
-        	obj.setAddressLineTwo(addressLineTwo);
-        }
-        
-        String addressLineThree = row.getCellAsString(23).orElse(null);
-        if(CommonUtil.isNullOrEmpty(addressLineThree)) {
-        	sb.append("address_line_three, ");
-            logger.warn("Mandatory field missing. Field name - address_line_three");
-        }else {
-        	obj.setAddressLineThree(addressLineThree);
-        }
-        
+//        String addressLineTwo = row.getCellAsString(22).orElse(null);
+//        if(CommonUtil.isNullOrEmpty(addressLineTwo)) {
+//        	sb.append("address_line_two, ");
+//            logger.warn("Mandatory field missing. Field name - address_line_two");
+//        }else {
+//        	obj.setAddressLineTwo(addressLineTwo);
+//        }
+//        
+//        String addressLineThree = row.getCellAsString(23).orElse(null);
+//        if(CommonUtil.isNullOrEmpty(addressLineThree)) {
+//        	sb.append("address_line_three, ");
+//            logger.warn("Mandatory field missing. Field name - address_line_three");
+//        }else {
+//        	obj.setAddressLineThree(addressLineThree);
+//        }
+//        
         Optional<State> ostate = null;
         String stateName = row.getCellAsString(25).orElse(null);
 		if(CommonUtil.isNullOrEmpty(stateName)) {
@@ -335,7 +286,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("pincode, ");
             logger.warn("Mandatory field missing. Field name - pincode");
         }else {
-        	obj.setPincode(Long.parseLong(pinCode));
+        	obj.setPinCode(pinCode);
         }
         
         String teacherContactNumber = row.getCellAsString(28).orElse(null);
@@ -365,16 +316,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("relation_with_staff, ");
             logger.warn("Mandatory field missing. Field name - relation_with_staff");
         }else {
-        	if(RelationWithStudentEnum.FATHER.toString().equalsIgnoreCase(relationWithStaff)) {
-        		obj.setRelationWithStaff(RelationWithStudentEnum.FATHER);
-        	}else if(RelationWithStudentEnum.GUARDIAN.toString().equalsIgnoreCase(relationWithStaff)) {
-        		obj.setRelationWithStaff(RelationWithStudentEnum.GUARDIAN);
-        	}else if(RelationWithStudentEnum.MOTHER.toString().equalsIgnoreCase(relationWithStaff)) {
-        		obj.setRelationWithStaff(RelationWithStudentEnum.MOTHER);
-        	}else {
-        		sb.append("relation_with_staff, ");
-                logger.warn("Given relation with staff not listed. Field name - relation_with_staff");
-        	}
+        	obj.setRelationWithStaff(relationWithStaff);
         }
         
         String emergencyContactName = row.getCellAsString(33).orElse(null);
@@ -419,16 +361,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("status, ");
             logger.warn("Mandatory field missing. Field name - status");
         }else {
-        	if(Status.ACTIVE.toString().equalsIgnoreCase(status)) {
-        		obj.setStatus(Status.ACTIVE);
-        	}else if(Status.DEACTIVE.toString().equalsIgnoreCase(status)) {
-        		obj.setStatus(Status.DEACTIVE);
-        	}else if(Status.DRAFT.toString().equalsIgnoreCase(status)) {
-        		obj.setStatus(Status.DRAFT);
-        	}else {
-        		sb.append("status, ");
-                logger.warn("Given status not listed. Field name - status");
-        	}
+        	obj.setStatus(status);
         }
         
         Employee employee = new Employee();
@@ -454,16 +387,7 @@ public class TeacherDataLoader extends DataLoader {
         	sb.append("staff_type, ");
             logger.warn("Mandatory field missing. Field name - staff_type");
         }else {
-        	if(StaffType.GUEST.toString().equalsIgnoreCase(staffType)) {
-        		obj.setStaffType(StaffType.GUEST);
-        	}else if(StaffType.NONTEACHING.toString().equalsIgnoreCase(staffType)) {
-        		obj.setStaffType(StaffType.NONTEACHING);
-        	}else if(StaffType.TEACHING.toString().equalsIgnoreCase(staffType)) {
-        		obj.setStaffType(StaffType.TEACHING);
-        	}else {
-        		sb.append("staff_type, ");
-                logger.warn("Given staff type not listed. Field name - staff_type");
-        	}
+        	obj.setStaffType(staffType);
         }
         
         String departmentName = row.getCellAsString(43).orElse(null);

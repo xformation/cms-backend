@@ -10,6 +10,7 @@ import org.dhatim.fastexcel.reader.Cell;
 import org.dhatim.fastexcel.reader.CellType;
 import org.springframework.data.domain.Example;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicExamSetting;
 import com.synectiks.cms.domain.AcademicHistory;
 import com.synectiks.cms.domain.AcademicYear;
@@ -56,7 +57,6 @@ import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import com.synectiks.cms.domain.enumeration.StaffType;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.domain.enumeration.SubTypeEnum;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StateRepository;
 import com.synectiks.cms.service.dto.LectureScheduleDTO;
@@ -210,9 +210,9 @@ public class TestDataPojoBuilder {
 	public Subject createSubjectPojo(Cell cell) {
 		Subject sb = new Subject();
 		sb.setSubjectCode(cell.asString());
-		sb.setSubjectType(SubTypeEnum.COMMON);
+		sb.setSubjectType(CmsConstants.SUBJECT_TYPE_COMMON);
 		sb.setSubjectDesc(cell.asString());
-		sb.setStatus(Status.ACTIVE);
+		sb.setStatus(CmsConstants.STATUS_ACTIVE);
 		return sb;
 	}
 
@@ -227,34 +227,32 @@ public class TestDataPojoBuilder {
 		thr.setMotherName("M" + cell.asString());
 		thr.setMotherMiddleName("");
 		thr.setMotherLastName("");
-		thr.setAadharNo(1234L);
+		thr.setAadharNo("1234");
 		thr.setDateOfBirth(LocalDate.now());
 		thr.setPlaceOfBirth("");
-		thr.setReligion(Religion.HINDU);
-		thr.setCaste(Caste.GENERAL);
+		thr.setReligion(CmsConstants.RELIGION_HINDU);
+		thr.setCaste(CmsConstants.CAST_GENERAL);
 		thr.setSubCaste("");
 		thr.setAge(25);
-		thr.setSex(Gender.MALE);
-		thr.setBloodGroup(Bloodgroup.OPOSITIVE);
-		thr.setAddressLineOne("address one");
-		thr.setAddressLineTwo("address two");
-		thr.setAddressLineThree("address three");
-		thr.setPincode(123456L);
+		thr.setSex(CmsConstants.MALE);
+		thr.setBloodGroup("OPOSITIVE");
+		thr.setAddress("address one");
+		thr.setPinCode("123456");
 		thr.setTeacherContactNumber("123456789");
 		thr.setAlternateContactNumber("123456789");
 		thr.setTeacherEmailAddress("");
 		thr.setAlternateEmailAddress("");
-		thr.setRelationWithStaff(RelationWithStudentEnum.FATHER);
+		thr.setRelationWithStaff("FATHER");
 		thr.setEmergencyContactName("");
 		thr.setEmergencyContactMiddleName("");
 		thr.setEmergencyContactLastName("");
 		thr.setEmergencyContactNo("123456789");
 		thr.setEmergencyContactEmailAddress("");
 		thr.setUploadPhoto("");
-		thr.setStatus(Status.ACTIVE);
+		thr.setStatus(CmsConstants.STATUS_ACTIVE);
 		thr.setEmployeeId(123456L);
 		thr.setDesignation("");
-		thr.setStaffType(StaffType.TEACHING);
+		thr.setStaffType(CmsConstants.STAFF_TYPE_TEACHING);
 		return thr;
 	}
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.AcademicSubjectService;
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.CmsSubjectVo;
 import com.synectiks.cms.domain.Subject;
 import com.synectiks.cms.domain.Teach;
@@ -99,7 +100,7 @@ public class SubjectRestController {
     	try {
     		logger.debug("REST request to delete a subject. Deactivating the subject : {}", id);
     		Subject sub = new Subject();
-    		sub.setStatus(Status.DEACTIVE);
+    		sub.setStatus(CmsConstants.STATUS_DEACTIVE);
     		sub.setId(id);
         	this.subjectRepository.save(sub);
     	}catch(Exception e) {

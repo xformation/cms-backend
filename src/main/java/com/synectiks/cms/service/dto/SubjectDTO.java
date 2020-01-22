@@ -1,28 +1,21 @@
 package com.synectiks.cms.service.dto;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.SubTypeEnum;
-import com.synectiks.cms.domain.enumeration.Status;
 
 /**
- * A DTO for the Subject entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Subject} entity.
  */
 public class SubjectDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String subjectCode;
 
-    @NotNull
-    private SubTypeEnum subjectType;
+    private String subjectType;
 
-    @NotNull
     private String subjectDesc;
 
-    @NotNull
-    private Status status;
+    private String status;
 
 
     private Long departmentId;
@@ -45,11 +38,11 @@ public class SubjectDTO implements Serializable {
         this.subjectCode = subjectCode;
     }
 
-    public SubTypeEnum getSubjectType() {
+    public String getSubjectType() {
         return subjectType;
     }
 
-    public void setSubjectType(SubTypeEnum subjectType) {
+    public void setSubjectType(String subjectType) {
         this.subjectType = subjectType;
     }
 
@@ -61,11 +54,11 @@ public class SubjectDTO implements Serializable {
         this.subjectDesc = subjectDesc;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

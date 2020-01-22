@@ -3,25 +3,18 @@ import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.Disability;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
 /**
- * A DTO for the Employee entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Employee} entity.
  */
 public class EmployeeDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String employeeName;
 
-    @NotNull
     private String designation;
 
-    @NotNull
     private LocalDate joiningDate;
 
     private LocalDate jobEndDate;
@@ -54,21 +47,23 @@ public class EmployeeDTO implements Serializable {
 
     private String officialMailId;
 
-    private Disability disability;
+    private String disability;
 
     private String drivingLicenceNo;
 
     private LocalDate drivingLicenceValidity;
 
-    private Gender gender;
+    private String gender;
 
     private String typeOfEmployment;
 
     private Long managerId;
 
-    private Status status;
+    private String status;
 
-    private MaritalStatus maritalStatus;
+    private String maritalStatus;
+
+    private String staffType;
 
 
     private Long branchId;
@@ -227,11 +222,11 @@ public class EmployeeDTO implements Serializable {
         this.officialMailId = officialMailId;
     }
 
-    public Disability getDisability() {
+    public String getDisability() {
         return disability;
     }
 
-    public void setDisability(Disability disability) {
+    public void setDisability(String disability) {
         this.disability = disability;
     }
 
@@ -251,11 +246,11 @@ public class EmployeeDTO implements Serializable {
         this.drivingLicenceValidity = drivingLicenceValidity;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -275,20 +270,28 @@ public class EmployeeDTO implements Serializable {
         this.managerId = managerId;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public MaritalStatus getMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
+    public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
+    }
+
+    public String getStaffType() {
+        return staffType;
+    }
+
+    public void setStaffType(String staffType) {
+        this.staffType = staffType;
     }
 
     public Long getBranchId() {
@@ -358,6 +361,7 @@ public class EmployeeDTO implements Serializable {
             ", managerId=" + getManagerId() +
             ", status='" + getStatus() + "'" +
             ", maritalStatus='" + getMaritalStatus() + "'" +
+            ", staffType='" + getStaffType() + "'" +
             ", branch=" + getBranchId() +
             ", transportRoute=" + getTransportRouteId() +
             "}";

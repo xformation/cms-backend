@@ -1,20 +1,12 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
-import java.util.Objects;
-
-import com.synectiks.cms.domain.enumeration.SubTypeEnum;
-
-import com.synectiks.cms.domain.enumeration.Status;
 
 /**
  * A Subject.
@@ -22,33 +14,28 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "subject")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "subject")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "subject")
 public class Subject implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @NotNull
-    @Column(name = "subject_code", nullable = false)
+    @Column(name = "subject_code")
     private String subjectCode;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "subject_type", nullable = false)
-    private SubTypeEnum subjectType;
+    @Column(name = "subject_type")
+    private String subjectType;
 
-    @NotNull
-    @Column(name = "subject_desc", nullable = false)
+    @Column(name = "subject_desc")
     private String subjectDesc;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
     @ManyToOne
     @JsonIgnoreProperties("subjects")
@@ -80,16 +67,16 @@ public class Subject implements Serializable {
         this.subjectCode = subjectCode;
     }
 
-    public SubTypeEnum getSubjectType() {
+    public String getSubjectType() {
         return subjectType;
     }
 
-    public Subject subjectType(SubTypeEnum subjectType) {
+    public Subject subjectType(String subjectType) {
         this.subjectType = subjectType;
         return this;
     }
 
-    public void setSubjectType(SubTypeEnum subjectType) {
+    public void setSubjectType(String subjectType) {
         this.subjectType = subjectType;
     }
 
@@ -106,16 +93,16 @@ public class Subject implements Serializable {
         this.subjectDesc = subjectDesc;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public Subject status(Status status) {
+    public Subject status(String status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -151,19 +138,15 @@ public class Subject implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Subject)) {
             return false;
         }
-        Subject subject = (Subject) o;
-        if (subject.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), subject.getId());
+        return id != null && id.equals(((Subject) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

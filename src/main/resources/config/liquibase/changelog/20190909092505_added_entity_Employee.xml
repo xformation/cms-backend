@@ -22,15 +22,15 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="employee_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="designation" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="joining_date" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="job_end_date" type="date">
@@ -125,6 +125,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="staff_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="branch_id" type="bigint">
                 <constraints nullable="false" />
             </column>
@@ -132,7 +136,7 @@
             <column name="transport_route_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-
+            
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

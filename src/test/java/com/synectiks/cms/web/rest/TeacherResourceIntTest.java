@@ -251,37 +251,37 @@ public class TeacherResourceIntTest {
             .motherName(DEFAULT_MOTHER_NAME)
             .motherMiddleName(DEFAULT_MOTHER_MIDDLE_NAME)
             .motherLastName(DEFAULT_MOTHER_LAST_NAME)
-            .aadharNo(DEFAULT_AADHAR_NO)
+            .aadharNo(String.valueOf(DEFAULT_AADHAR_NO))
             .dateOfBirth(DEFAULT_DATE_OF_BIRTH)
             .placeOfBirth(DEFAULT_PLACE_OF_BIRTH)
-            .religion(DEFAULT_RELIGION)
-            .caste(DEFAULT_CASTE)
+            .religion(DEFAULT_RELIGION.toString())
+            .caste(DEFAULT_CASTE.toString())
             .subCaste(DEFAULT_SUB_CASTE)
             .age(DEFAULT_AGE)
-            .sex(DEFAULT_SEX)
-            .bloodGroup(DEFAULT_BLOOD_GROUP)
-            .addressLineOne(DEFAULT_ADDRESS_LINE_ONE)
-            .addressLineTwo(DEFAULT_ADDRESS_LINE_TWO)
-            .addressLineThree(DEFAULT_ADDRESS_LINE_THREE)
+            .sex(DEFAULT_SEX.toString())
+            .bloodGroup(DEFAULT_BLOOD_GROUP.toString())
+            .address(DEFAULT_ADDRESS_LINE_ONE)
+//            .addressLineTwo(DEFAULT_ADDRESS_LINE_TWO)
+//            .addressLineThree(DEFAULT_ADDRESS_LINE_THREE)
             .town(DEFAULT_TOWN)
             .state(DEFAULT_STATE)
             .country(DEFAULT_COUNTRY)
-            .pincode(DEFAULT_PINCODE)
+            .pinCode(String.valueOf(DEFAULT_PINCODE))
             .teacherContactNumber(DEFAULT_TEACHER_CONTACT_NUMBER)
             .alternateContactNumber(DEFAULT_ALTERNATE_CONTACT_NUMBER)
             .teacherEmailAddress(DEFAULT_TEACHER_EMAIL_ADDRESS)
             .alternateEmailAddress(DEFAULT_ALTERNATE_EMAIL_ADDRESS)
-            .relationWithStaff(DEFAULT_RELATION_WITH_STAFF)
+            .relationWithStaff(DEFAULT_RELATION_WITH_STAFF.toString())
             .emergencyContactName(DEFAULT_EMERGENCY_CONTACT_NAME)
             .emergencyContactMiddleName(DEFAULT_EMERGENCY_CONTACT_MIDDLE_NAME)
             .emergencyContactLastName(DEFAULT_EMERGENCY_CONTACT_LAST_NAME)
             .emergencyContactNo(DEFAULT_EMERGENCY_CONTACT_NO)
             .emergencyContactEmailAddress(DEFAULT_EMERGENCY_CONTACT_EMAIL_ADDRESS)
             .uploadPhoto(DEFAULT_UPLOAD_PHOTO)
-            .status(DEFAULT_STATUS)
+            .status(DEFAULT_STATUS.toString())
             .employeeId(DEFAULT_EMPLOYEE_ID)
             .designation(DEFAULT_DESIGNATION)
-            .staffType(DEFAULT_STAFF_TYPE);
+            .staffType(DEFAULT_STAFF_TYPE.toString());
         return teacher;
     }
 
@@ -327,13 +327,13 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getAge()).isEqualTo(DEFAULT_AGE);
         assertThat(testTeacher.getSex()).isEqualTo(DEFAULT_SEX);
         assertThat(testTeacher.getBloodGroup()).isEqualTo(DEFAULT_BLOOD_GROUP);
-        assertThat(testTeacher.getAddressLineOne()).isEqualTo(DEFAULT_ADDRESS_LINE_ONE);
-        assertThat(testTeacher.getAddressLineTwo()).isEqualTo(DEFAULT_ADDRESS_LINE_TWO);
-        assertThat(testTeacher.getAddressLineThree()).isEqualTo(DEFAULT_ADDRESS_LINE_THREE);
+        assertThat(testTeacher.getAddress()).isEqualTo(DEFAULT_ADDRESS_LINE_ONE);
+//        assertThat(testTeacher.getAddressLineTwo()).isEqualTo(DEFAULT_ADDRESS_LINE_TWO);
+//        assertThat(testTeacher.getAddressLineThree()).isEqualTo(DEFAULT_ADDRESS_LINE_THREE);
         assertThat(testTeacher.getTown()).isEqualTo(DEFAULT_TOWN);
         assertThat(testTeacher.getState()).isEqualTo(DEFAULT_STATE);
         assertThat(testTeacher.getCountry()).isEqualTo(DEFAULT_COUNTRY);
-        assertThat(testTeacher.getPincode()).isEqualTo(DEFAULT_PINCODE);
+        assertThat(testTeacher.getPinCode()).isEqualTo(DEFAULT_PINCODE);
         assertThat(testTeacher.getTeacherContactNumber()).isEqualTo(DEFAULT_TEACHER_CONTACT_NUMBER);
         assertThat(testTeacher.getAlternateContactNumber()).isEqualTo(DEFAULT_ALTERNATE_CONTACT_NUMBER);
         assertThat(testTeacher.getTeacherEmailAddress()).isEqualTo(DEFAULT_TEACHER_EMAIL_ADDRESS);
@@ -719,63 +719,44 @@ public class TeacherResourceIntTest {
         assertThat(teacherList).hasSize(databaseSizeBeforeTest);
     }
 
-    @Test
-    @Transactional
-    public void checkAddressLineOneIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setAddressLineOne(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkAddressLineTwoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setAddressLineTwo(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkAddressLineThreeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setAddressLineThree(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
-
+//    @Test
+//    @Transactional
+//    public void checkAddressLineOneIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+//        // set the field null
+//        teacher.setAddressLineOne(null);
+//
+//        // Create the Teacher, which fails.
+//        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+//
+//        restTeacherMockMvc.perform(post("/api/teachers")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Teacher> teacherList = teacherRepository.findAll();
+//        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+//    }
+//
+//    @Test
+//    @Transactional
+//    public void checkAddressLineThreeIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+//        // set the field null
+//        teacher.setAddressLineThree(null);
+//
+//        // Create the Teacher, which fails.
+//        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+//
+//        restTeacherMockMvc.perform(post("/api/teachers")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Teacher> teacherList = teacherRepository.findAll();
+//        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+//    }
+//
     @Test
     @Transactional
     public void checkTownIsRequired() throws Exception {
@@ -833,24 +814,24 @@ public class TeacherResourceIntTest {
         assertThat(teacherList).hasSize(databaseSizeBeforeTest);
     }
 
-    @Test
-    @Transactional
-    public void checkPincodeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = teacherRepository.findAll().size();
-        // set the field null
-        teacher.setPincode(null);
-
-        // Create the Teacher, which fails.
-        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
-
-        restTeacherMockMvc.perform(post("/api/teachers")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Teacher> teacherList = teacherRepository.findAll();
-        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
-    }
+//    @Test
+//    @Transactional
+//    public void checkPincodeIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = teacherRepository.findAll().size();
+//        // set the field null
+//        teacher.setPincode(null);
+//
+//        // Create the Teacher, which fails.
+//        TeacherDTO teacherDTO = teacherMapper.toDto(teacher);
+//
+//        restTeacherMockMvc.perform(post("/api/teachers")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(teacherDTO)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Teacher> teacherList = teacherRepository.findAll();
+//        assertThat(teacherList).hasSize(databaseSizeBeforeTest);
+//    }
 
     @Test
     @Transactional
@@ -1206,37 +1187,37 @@ public class TeacherResourceIntTest {
             .motherName(UPDATED_MOTHER_NAME)
             .motherMiddleName(UPDATED_MOTHER_MIDDLE_NAME)
             .motherLastName(UPDATED_MOTHER_LAST_NAME)
-            .aadharNo(UPDATED_AADHAR_NO)
+//            .aadharNo(UPDATED_AADHAR_NO)
             .dateOfBirth(UPDATED_DATE_OF_BIRTH)
             .placeOfBirth(UPDATED_PLACE_OF_BIRTH)
-            .religion(UPDATED_RELIGION)
-            .caste(UPDATED_CASTE)
+//            .religion(UPDATED_RELIGION)
+//            .caste(UPDATED_CASTE)
             .subCaste(UPDATED_SUB_CASTE)
             .age(UPDATED_AGE)
-            .sex(UPDATED_SEX)
-            .bloodGroup(UPDATED_BLOOD_GROUP)
-            .addressLineOne(UPDATED_ADDRESS_LINE_ONE)
-            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
-            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
+//            .sex(UPDATED_SEX)
+//            .bloodGroup(UPDATED_BLOOD_GROUP)
+            .address(UPDATED_ADDRESS_LINE_ONE)
+//            .addressLineTwo(UPDATED_ADDRESS_LINE_TWO)
+//            .addressLineThree(UPDATED_ADDRESS_LINE_THREE)
             .town(UPDATED_TOWN)
             .state(UPDATED_STATE)
             .country(UPDATED_COUNTRY)
-            .pincode(UPDATED_PINCODE)
+//            .pincode(UPDATED_PINCODE)
             .teacherContactNumber(UPDATED_TEACHER_CONTACT_NUMBER)
             .alternateContactNumber(UPDATED_ALTERNATE_CONTACT_NUMBER)
             .teacherEmailAddress(UPDATED_TEACHER_EMAIL_ADDRESS)
             .alternateEmailAddress(UPDATED_ALTERNATE_EMAIL_ADDRESS)
-            .relationWithStaff(UPDATED_RELATION_WITH_STAFF)
+//            .relationWithStaff(UPDATED_RELATION_WITH_STAFF)
             .emergencyContactName(UPDATED_EMERGENCY_CONTACT_NAME)
             .emergencyContactMiddleName(UPDATED_EMERGENCY_CONTACT_MIDDLE_NAME)
             .emergencyContactLastName(UPDATED_EMERGENCY_CONTACT_LAST_NAME)
             .emergencyContactNo(UPDATED_EMERGENCY_CONTACT_NO)
             .emergencyContactEmailAddress(UPDATED_EMERGENCY_CONTACT_EMAIL_ADDRESS)
             .uploadPhoto(UPDATED_UPLOAD_PHOTO)
-            .status(UPDATED_STATUS)
+//            .status(UPDATED_STATUS)
             .employeeId(UPDATED_EMPLOYEE_ID)
-            .designation(UPDATED_DESIGNATION)
-            .staffType(UPDATED_STAFF_TYPE);
+            .designation(UPDATED_DESIGNATION);
+//            .staffType(UPDATED_STAFF_TYPE);
         TeacherDTO teacherDTO = teacherMapper.toDto(updatedTeacher);
 
         restTeacherMockMvc.perform(put("/api/teachers")
@@ -1269,13 +1250,13 @@ public class TeacherResourceIntTest {
         assertThat(testTeacher.getAge()).isEqualTo(UPDATED_AGE);
         assertThat(testTeacher.getSex()).isEqualTo(UPDATED_SEX);
         assertThat(testTeacher.getBloodGroup()).isEqualTo(UPDATED_BLOOD_GROUP);
-        assertThat(testTeacher.getAddressLineOne()).isEqualTo(UPDATED_ADDRESS_LINE_ONE);
-        assertThat(testTeacher.getAddressLineTwo()).isEqualTo(UPDATED_ADDRESS_LINE_TWO);
-        assertThat(testTeacher.getAddressLineThree()).isEqualTo(UPDATED_ADDRESS_LINE_THREE);
+//        assertThat(testTeacher.getAddressLineOne()).isEqualTo(UPDATED_ADDRESS_LINE_ONE);
+//        assertThat(testTeacher.getAddressLineTwo()).isEqualTo(UPDATED_ADDRESS_LINE_TWO);
+//        assertThat(testTeacher.getAddressLineThree()).isEqualTo(UPDATED_ADDRESS_LINE_THREE);
         assertThat(testTeacher.getTown()).isEqualTo(UPDATED_TOWN);
         assertThat(testTeacher.getState()).isEqualTo(UPDATED_STATE);
         assertThat(testTeacher.getCountry()).isEqualTo(UPDATED_COUNTRY);
-        assertThat(testTeacher.getPincode()).isEqualTo(UPDATED_PINCODE);
+//        assertThat(testTeacher.getPincode()).isEqualTo(UPDATED_PINCODE);
         assertThat(testTeacher.getTeacherContactNumber()).isEqualTo(UPDATED_TEACHER_CONTACT_NUMBER);
         assertThat(testTeacher.getAlternateContactNumber()).isEqualTo(UPDATED_ALTERNATE_CONTACT_NUMBER);
         assertThat(testTeacher.getTeacherEmailAddress()).isEqualTo(UPDATED_TEACHER_EMAIL_ADDRESS);

@@ -1,31 +1,13 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
-
-import com.synectiks.cms.domain.enumeration.Religion;
-
-import com.synectiks.cms.domain.enumeration.Caste;
-
-import com.synectiks.cms.domain.enumeration.Gender;
-
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-
-import com.synectiks.cms.domain.enumeration.Status;
-
-import com.synectiks.cms.domain.enumeration.StaffType;
 
 /**
  * A Teacher.
@@ -33,38 +15,33 @@ import com.synectiks.cms.domain.enumeration.StaffType;
 @Entity
 @Table(name = "teacher")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "teacher")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "teacher")
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @NotNull
-    @Column(name = "teacher_name", nullable = false)
+    @Column(name = "teacher_name")
     private String teacherName;
 
-    @NotNull
-    @Column(name = "teacher_middle_name", nullable = false)
+    @Column(name = "teacher_middle_name")
     private String teacherMiddleName;
 
-    @NotNull
-    @Column(name = "teacher_last_name", nullable = false)
+    @Column(name = "teacher_last_name")
     private String teacherLastName;
 
-    @NotNull
-    @Column(name = "father_name", nullable = false)
+    @Column(name = "father_name")
     private String fatherName;
 
-    @NotNull
-    @Column(name = "father_middle_name", nullable = false)
+    @Column(name = "father_middle_name")
     private String fatherMiddleName;
 
-    @NotNull
-    @Column(name = "father_last_name", nullable = false)
+    @Column(name = "father_last_name")
     private String fatherLastName;
 
     @Column(name = "spouse_name")
@@ -76,144 +53,101 @@ public class Teacher implements Serializable {
     @Column(name = "spouse_last_name")
     private String spouseLastName;
 
-    @NotNull
-    @Column(name = "mother_name", nullable = false)
+    @Column(name = "mother_name")
     private String motherName;
 
-    @NotNull
-    @Column(name = "mother_middle_name", nullable = false)
+    @Column(name = "mother_middle_name")
     private String motherMiddleName;
 
-    @NotNull
-    @Column(name = "mother_last_name", nullable = false)
+    @Column(name = "mother_last_name")
     private String motherLastName;
 
-    @NotNull
-    @Column(name = "aadhar_no", nullable = false)
-    private Long aadharNo;
+    @Column(name = "aadhar_no")
+    private String aadharNo;
 
-    @NotNull
-    @Column(name = "date_of_birth", nullable = false)
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @NotNull
-    @Column(name = "place_of_birth", nullable = false)
+    @Column(name = "place_of_birth")
     private String placeOfBirth;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "religion", nullable = false)
-    private Religion religion;
+    @Column(name = "religion")
+    private String religion;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "caste", nullable = false)
-    private Caste caste;
+    @Column(name = "caste")
+    private String caste;
 
-    @NotNull
-    @Column(name = "sub_caste", nullable = false)
+    @Column(name = "sub_caste")
     private String subCaste;
 
-    @NotNull
-    @Column(name = "age", nullable = false)
+    @Column(name = "age")
     private Integer age;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "sex", nullable = false)
-    private Gender sex;
+    @Column(name = "sex")
+    private String sex;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "blood_group", nullable = false)
-    private Bloodgroup bloodGroup;
+    @Column(name = "blood_group")
+    private String bloodGroup;
 
-    @NotNull
-    @Column(name = "address_line_one", nullable = false)
-    private String addressLineOne;
+    @Column(name = "address")
+    private String address;
 
-    @NotNull
-    @Column(name = "address_line_two", nullable = false)
-    private String addressLineTwo;
-
-    @NotNull
-    @Column(name = "address_line_three", nullable = false)
-    private String addressLineThree;
-
-    @NotNull
-    @Column(name = "town", nullable = false)
+    @Column(name = "town")
     private String town;
 
-    @NotNull
-    @Column(name = "state", nullable = false)
+    @Column(name = "state")
     private String state;
 
-    @NotNull
-    @Column(name = "country", nullable = false)
+    @Column(name = "country")
     private String country;
 
-    @NotNull
-    @Column(name = "pincode", nullable = false)
-    private Long pincode;
+    @Column(name = "pin_code")
+    private String pinCode;
 
-    @NotNull
-    @Column(name = "teacher_contact_number", nullable = false)
+    @Column(name = "teacher_contact_number")
     private String teacherContactNumber;
 
     @Column(name = "alternate_contact_number")
     private String alternateContactNumber;
 
-    @NotNull
-    @Column(name = "teacher_email_address", nullable = false)
+    @Column(name = "teacher_email_address")
     private String teacherEmailAddress;
 
     @Column(name = "alternate_email_address")
     private String alternateEmailAddress;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "relation_with_staff", nullable = false)
-    private RelationWithStudentEnum relationWithStaff;
+    @Column(name = "relation_with_staff")
+    private String relationWithStaff;
 
-    @NotNull
-    @Column(name = "emergency_contact_name", nullable = false)
+    @Column(name = "emergency_contact_name")
     private String emergencyContactName;
 
     @Column(name = "emergency_contact_middle_name")
     private String emergencyContactMiddleName;
 
-    @NotNull
-    @Column(name = "emergency_contact_last_name", nullable = false)
+    @Column(name = "emergency_contact_last_name")
     private String emergencyContactLastName;
 
-    @NotNull
-    @Column(name = "emergency_contact_no", nullable = false)
+    @Column(name = "emergency_contact_no")
     private String emergencyContactNo;
 
-    @NotNull
-    @Column(name = "emergency_contact_email_address", nullable = false)
+    @Column(name = "emergency_contact_email_address")
     private String emergencyContactEmailAddress;
 
-    @NotNull
-    @Column(name = "upload_photo", nullable = false)
+    @Column(name = "upload_photo")
     private String uploadPhoto;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "employee_id")
     private Long employeeId;
 
-    @NotNull
-    @Column(name = "designation", nullable = false)
+    @Column(name = "designation")
     private String designation;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "staff_type", nullable = false)
-    private StaffType staffType;
+    @Column(name = "staff_type")
+    private String staffType;
 
     @ManyToOne
     @JsonIgnoreProperties("teachers")
@@ -388,16 +322,16 @@ public class Teacher implements Serializable {
         this.motherLastName = motherLastName;
     }
 
-    public Long getAadharNo() {
+    public String getAadharNo() {
         return aadharNo;
     }
 
-    public Teacher aadharNo(Long aadharNo) {
+    public Teacher aadharNo(String aadharNo) {
         this.aadharNo = aadharNo;
         return this;
     }
 
-    public void setAadharNo(Long aadharNo) {
+    public void setAadharNo(String aadharNo) {
         this.aadharNo = aadharNo;
     }
 
@@ -427,29 +361,29 @@ public class Teacher implements Serializable {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public Religion getReligion() {
+    public String getReligion() {
         return religion;
     }
 
-    public Teacher religion(Religion religion) {
+    public Teacher religion(String religion) {
         this.religion = religion;
         return this;
     }
 
-    public void setReligion(Religion religion) {
+    public void setReligion(String religion) {
         this.religion = religion;
     }
 
-    public Caste getCaste() {
+    public String getCaste() {
         return caste;
     }
 
-    public Teacher caste(Caste caste) {
+    public Teacher caste(String caste) {
         this.caste = caste;
         return this;
     }
 
-    public void setCaste(Caste caste) {
+    public void setCaste(String caste) {
         this.caste = caste;
     }
 
@@ -479,69 +413,43 @@ public class Teacher implements Serializable {
         this.age = age;
     }
 
-    public Gender getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public Teacher sex(Gender sex) {
+    public Teacher sex(String sex) {
         this.sex = sex;
         return this;
     }
 
-    public void setSex(Gender sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public Bloodgroup getBloodGroup() {
+    public String getBloodGroup() {
         return bloodGroup;
     }
 
-    public Teacher bloodGroup(Bloodgroup bloodGroup) {
+    public Teacher bloodGroup(String bloodGroup) {
         this.bloodGroup = bloodGroup;
         return this;
     }
 
-    public void setBloodGroup(Bloodgroup bloodGroup) {
+    public void setBloodGroup(String bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
 
-    public String getAddressLineOne() {
-        return addressLineOne;
+    public String getAddress() {
+        return address;
     }
 
-    public Teacher addressLineOne(String addressLineOne) {
-        this.addressLineOne = addressLineOne;
+    public Teacher address(String address) {
+        this.address = address;
         return this;
     }
 
-    public void setAddressLineOne(String addressLineOne) {
-        this.addressLineOne = addressLineOne;
-    }
-
-    public String getAddressLineTwo() {
-        return addressLineTwo;
-    }
-
-    public Teacher addressLineTwo(String addressLineTwo) {
-        this.addressLineTwo = addressLineTwo;
-        return this;
-    }
-
-    public void setAddressLineTwo(String addressLineTwo) {
-        this.addressLineTwo = addressLineTwo;
-    }
-
-    public String getAddressLineThree() {
-        return addressLineThree;
-    }
-
-    public Teacher addressLineThree(String addressLineThree) {
-        this.addressLineThree = addressLineThree;
-        return this;
-    }
-
-    public void setAddressLineThree(String addressLineThree) {
-        this.addressLineThree = addressLineThree;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getTown() {
@@ -583,17 +491,17 @@ public class Teacher implements Serializable {
         this.country = country;
     }
 
-    public Long getPincode() {
-        return pincode;
+    public String getPinCode() {
+        return pinCode;
     }
 
-    public Teacher pincode(Long pincode) {
-        this.pincode = pincode;
+    public Teacher pinCode(String pinCode) {
+        this.pinCode = pinCode;
         return this;
     }
 
-    public void setPincode(Long pincode) {
-        this.pincode = pincode;
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
     }
 
     public String getTeacherContactNumber() {
@@ -648,16 +556,16 @@ public class Teacher implements Serializable {
         this.alternateEmailAddress = alternateEmailAddress;
     }
 
-    public RelationWithStudentEnum getRelationWithStaff() {
+    public String getRelationWithStaff() {
         return relationWithStaff;
     }
 
-    public Teacher relationWithStaff(RelationWithStudentEnum relationWithStaff) {
+    public Teacher relationWithStaff(String relationWithStaff) {
         this.relationWithStaff = relationWithStaff;
         return this;
     }
 
-    public void setRelationWithStaff(RelationWithStudentEnum relationWithStaff) {
+    public void setRelationWithStaff(String relationWithStaff) {
         this.relationWithStaff = relationWithStaff;
     }
 
@@ -739,16 +647,16 @@ public class Teacher implements Serializable {
         this.uploadPhoto = uploadPhoto;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public Teacher status(Status status) {
+    public Teacher status(String status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -778,16 +686,16 @@ public class Teacher implements Serializable {
         this.designation = designation;
     }
 
-    public StaffType getStaffType() {
+    public String getStaffType() {
         return staffType;
     }
 
-    public Teacher staffType(StaffType staffType) {
+    public Teacher staffType(String staffType) {
         this.staffType = staffType;
         return this;
     }
 
-    public void setStaffType(StaffType staffType) {
+    public void setStaffType(String staffType) {
         this.staffType = staffType;
     }
 
@@ -823,19 +731,15 @@ public class Teacher implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Teacher)) {
             return false;
         }
-        Teacher teacher = (Teacher) o;
-        if (teacher.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), teacher.getId());
+        return id != null && id.equals(((Teacher) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -854,7 +758,7 @@ public class Teacher implements Serializable {
             ", motherName='" + getMotherName() + "'" +
             ", motherMiddleName='" + getMotherMiddleName() + "'" +
             ", motherLastName='" + getMotherLastName() + "'" +
-            ", aadharNo=" + getAadharNo() +
+            ", aadharNo='" + getAadharNo() + "'" +
             ", dateOfBirth='" + getDateOfBirth() + "'" +
             ", placeOfBirth='" + getPlaceOfBirth() + "'" +
             ", religion='" + getReligion() + "'" +
@@ -863,13 +767,11 @@ public class Teacher implements Serializable {
             ", age=" + getAge() +
             ", sex='" + getSex() + "'" +
             ", bloodGroup='" + getBloodGroup() + "'" +
-            ", addressLineOne='" + getAddressLineOne() + "'" +
-            ", addressLineTwo='" + getAddressLineTwo() + "'" +
-            ", addressLineThree='" + getAddressLineThree() + "'" +
+            ", address='" + getAddress() + "'" +
             ", town='" + getTown() + "'" +
             ", state='" + getState() + "'" +
             ", country='" + getCountry() + "'" +
-            ", pincode=" + getPincode() +
+            ", pinCode='" + getPinCode() + "'" +
             ", teacherContactNumber='" + getTeacherContactNumber() + "'" +
             ", alternateContactNumber='" + getAlternateContactNumber() + "'" +
             ", teacherEmailAddress='" + getTeacherEmailAddress() + "'" +

@@ -2,10 +2,6 @@ package com.synectiks.cms.web.rest;
 
 import com.synectiks.cms.CmsApp;
 import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.search.StudentSearchRepository;
 import com.synectiks.cms.service.StudentService;
@@ -577,7 +573,6 @@ public class StudentResourceIT {
             .updatedBy(DEFAULT_UPDATED_BY)
             .updatedOn(DEFAULT_UPDATED_ON)
             .comments(DEFAULT_COMMENTS);
-        // Add required entity
         return student;
     }
     /**
@@ -705,46 +700,6 @@ public class StudentResourceIT {
             .updatedBy(UPDATED_UPDATED_BY)
             .updatedOn(UPDATED_UPDATED_ON)
             .comments(UPDATED_COMMENTS);
-        // Add required entity
-//        Department department;
-//        if (TestUtil.findAll(em, Department.class).isEmpty()) {
-//            department = DepartmentResourceIT.createUpdatedEntity(em);
-//            em.persist(department);
-//            em.flush();
-//        } else {
-//            department = TestUtil.findAll(em, Department.class).get(0);
-//        }
-//        student.setDepartment(department);
-//        // Add required entity
-//        Batch batch;
-//        if (TestUtil.findAll(em, Batch.class).isEmpty()) {
-//            batch = BatchResourceIT.createUpdatedEntity(em);
-//            em.persist(batch);
-//            em.flush();
-//        } else {
-//            batch = TestUtil.findAll(em, Batch.class).get(0);
-//        }
-//        student.setBatch(batch);
-//        // Add required entity
-//        Section section;
-//        if (TestUtil.findAll(em, Section.class).isEmpty()) {
-//            section = SectionResourceIT.createUpdatedEntity(em);
-//            em.persist(section);
-//            em.flush();
-//        } else {
-//            section = TestUtil.findAll(em, Section.class).get(0);
-//        }
-//        student.setSection(section);
-//        // Add required entity
-//        Branch branch;
-//        if (TestUtil.findAll(em, Branch.class).isEmpty()) {
-//            branch = BranchResourceIT.createUpdatedEntity(em);
-//            em.persist(branch);
-//            em.flush();
-//        } else {
-//            branch = TestUtil.findAll(em, Branch.class).get(0);
-//        }
-//        student.setBranch(branch);
         return student;
     }
 
@@ -914,82 +869,6 @@ public class StudentResourceIT {
         verify(mockStudentSearchRepository, times(0)).save(student);
     }
 
-
-    @Test
-    @Transactional
-    public void checkCityIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setCity(null);
-
-        // Create the Student, which fails.
-        StudentDTO studentDTO = studentMapper.toDto(student);
-
-        restStudentMockMvc.perform(post("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkStateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setState(null);
-
-        // Create the Student, which fails.
-        StudentDTO studentDTO = studentMapper.toDto(student);
-
-        restStudentMockMvc.perform(post("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCountryIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setCountry(null);
-
-        // Create the Student, which fails.
-        StudentDTO studentDTO = studentMapper.toDto(student);
-
-        restStudentMockMvc.perform(post("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkPinCodeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = studentRepository.findAll().size();
-        // set the field null
-        student.setPinCode(null);
-
-        // Create the Student, which fails.
-        StudentDTO studentDTO = studentMapper.toDto(student);
-
-        restStudentMockMvc.perform(post("/api/students")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(studentDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Student> studentList = studentRepository.findAll();
-        assertThat(studentList).hasSize(databaseSizeBeforeTest);
-    }
 
     @Test
     @Transactional

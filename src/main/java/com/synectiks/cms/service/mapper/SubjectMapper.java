@@ -6,7 +6,7 @@ import com.synectiks.cms.service.dto.SubjectDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity Subject and its DTO SubjectDTO.
+ * Mapper for the entity {@link Subject} and its DTO {@link SubjectDTO}.
  */
 @Mapper(componentModel = "spring", uses = {DepartmentMapper.class, BatchMapper.class})
 public interface SubjectMapper extends EntityMapper<SubjectDTO, Subject> {

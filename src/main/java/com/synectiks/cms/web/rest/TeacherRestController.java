@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsStudentVo;
@@ -231,7 +232,7 @@ public class TeacherRestController {
         try {
         	Teacher th = new Teacher();
             th.setId(id);
-            th.setStatus(Status.DEACTIVE);
+            th.setStatus(CmsConstants.STATUS_DEACTIVE);
             this.teacherRepository.save(th);
         }catch(Exception e) {
     		return HttpStatus.FAILED_DEPENDENCY.value();

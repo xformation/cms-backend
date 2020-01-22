@@ -1,6 +1,4 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
@@ -9,18 +7,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
-
-import com.synectiks.cms.domain.enumeration.Disability;
-
-import com.synectiks.cms.domain.enumeration.Gender;
-
-import com.synectiks.cms.domain.enumeration.Status;
-
-import com.synectiks.cms.domain.enumeration.MaritalStatus;
 
 /**
  * A Employee.
@@ -28,26 +17,24 @@ import com.synectiks.cms.domain.enumeration.MaritalStatus;
 @Entity
 @Table(name = "employee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "employee")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "employee")
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @NotNull
-    @Column(name = "employee_name", nullable = false)
+    @Column(name = "employee_name")
     private String employeeName;
 
-    @NotNull
-    @Column(name = "designation", nullable = false)
+    @Column(name = "designation")
     private String designation;
 
-    @NotNull
-    @Column(name = "joining_date", nullable = false)
+    @Column(name = "joining_date")
     private LocalDate joiningDate;
 
     @Column(name = "job_end_date")
@@ -95,9 +82,8 @@ public class Employee implements Serializable {
     @Column(name = "official_mail_id")
     private String officialMailId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "disability")
-    private Disability disability;
+    private String disability;
 
     @Column(name = "driving_licence_no")
     private String drivingLicenceNo;
@@ -105,9 +91,8 @@ public class Employee implements Serializable {
     @Column(name = "driving_licence_validity")
     private LocalDate drivingLicenceValidity;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    private Gender gender;
+    private String gender;
 
     @Column(name = "type_of_employment")
     private String typeOfEmployment;
@@ -115,13 +100,14 @@ public class Employee implements Serializable {
     @Column(name = "manager_id")
     private Long managerId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private Status status;
+    private String status;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "marital_status")
-    private MaritalStatus maritalStatus;
+    private String maritalStatus;
+
+    @Column(name = "staff_type")
+    private String staffType;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -379,16 +365,16 @@ public class Employee implements Serializable {
         this.officialMailId = officialMailId;
     }
 
-    public Disability getDisability() {
+    public String getDisability() {
         return disability;
     }
 
-    public Employee disability(Disability disability) {
+    public Employee disability(String disability) {
         this.disability = disability;
         return this;
     }
 
-    public void setDisability(Disability disability) {
+    public void setDisability(String disability) {
         this.disability = disability;
     }
 
@@ -418,16 +404,16 @@ public class Employee implements Serializable {
         this.drivingLicenceValidity = drivingLicenceValidity;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public Employee gender(Gender gender) {
+    public Employee gender(String gender) {
         this.gender = gender;
         return this;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -457,30 +443,43 @@ public class Employee implements Serializable {
         this.managerId = managerId;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public Employee status(Status status) {
+    public Employee status(String status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public MaritalStatus getMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
 
-    public Employee maritalStatus(MaritalStatus maritalStatus) {
+    public Employee maritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
         return this;
     }
 
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
+    public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
+    }
+
+    public String getStaffType() {
+        return staffType;
+    }
+
+    public Employee staffType(String staffType) {
+        this.staffType = staffType;
+        return this;
+    }
+
+    public void setStaffType(String staffType) {
+        this.staffType = staffType;
     }
 
     public Branch getBranch() {
@@ -528,19 +527,15 @@ public class Employee implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Employee)) {
             return false;
         }
-        Employee employee = (Employee) o;
-        if (employee.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), employee.getId());
+        return id != null && id.equals(((Employee) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -573,6 +568,7 @@ public class Employee implements Serializable {
             ", managerId=" + getManagerId() +
             ", status='" + getStatus() + "'" +
             ", maritalStatus='" + getMaritalStatus() + "'" +
+            ", staffType='" + getStaffType() + "'" +
             "}";
     }
 }

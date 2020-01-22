@@ -21,7 +21,7 @@ import java.util.stream.StreamSupport;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing Employee.
+ * Service Implementation for managing {@link Employee}.
  */
 @Service
 @Transactional
@@ -44,13 +44,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * Save a employee.
      *
-     * @param employeeDTO the entity to save
-     * @return the persisted entity
+     * @param employeeDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public EmployeeDTO save(EmployeeDTO employeeDTO) {
         log.debug("Request to save Employee : {}", employeeDTO);
-
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
         EmployeeDTO result = employeeMapper.toDto(employee);
@@ -61,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * Get all the employees.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -75,8 +74,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     /**
-     *  get all the employees where Vehicle is null.
-     *  @return the list of entities
+    *  Get all the employees where Vehicle is {@code null}.
+     *  @return the list of entities.
      */
     @Transactional(readOnly = true) 
     public List<EmployeeDTO> findAllWhereVehicleIsNull() {
@@ -91,8 +90,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * Get one employee by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -105,7 +104,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * Delete the employee by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
@@ -117,8 +116,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * Search for the employee corresponding to the query.
      *
-     * @param query the query of the search
-     * @return the list of entities
+     * @param query the query of the search.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

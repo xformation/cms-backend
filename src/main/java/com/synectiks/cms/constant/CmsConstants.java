@@ -193,4 +193,32 @@ public interface CmsConstants {
 	String PAYMENT_STATUS_FAILED = "550";
 	String PAYMENT_REDIRECT_URL = "http://localhost:3000/payment-response";
 	
+	String SUBJECT_TYPE_COMMON = "COMMON";
+    String SUBJECT_TYPE_ELECTIVE = "ELECTIVE";
+    
+    String STAFF_TYPE_TEACHING = "TEACHING";
+    String STAFF_TYPE_NONTEACHING = "NONTEACHING";
+    String STAFF_TYPE_GUEST = "GUEST";
+    
+    String STATUS_ACTIVE = "ACTIVE";
+	String STATUS_DEACTIVE = "DEACTIVE";
+	String STATUS_DRAFT = "DRAFT";
+	
+	String RELIGION_HINDU = "HINDU";
+    String RELIGION_MUSLIM = "MUSLIM";
+    String RELIGION_SIKH = "SIKH";
+    String RELIGION_CHRISTIAN = "CHRISTIAN";
+    String RELIGION_BUDH = "BUDH";
+    String RELIGION_PARSIAN = "PARSIAN";
+    
+    String CAST_GENERAL = "GENERAL";
+    String CAST_SCHEDULED_CASTE = "SC";
+    String CAST_SCHEDULED_TRIBE = "ST";
+    String CAST_OTHER_BACKWARD_CLASSES="OBC";
+    
+    String MALE = "MALE";
+    String FEMALE = "FEMALE";
+    String BOTH = "BOTH";
+    
+	
 }

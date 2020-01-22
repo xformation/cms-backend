@@ -1028,10 +1028,10 @@ type Contract{
 }
 
 type Employee{
-    id: Long!
-    employeeName: String!
-    designation: String!
-    joiningDate: Date!
+    id: Long
+    employeeName: String
+    designation: String
+    joiningDate: Date
     jobEndDate: Date
     resignationDate: Date
     resignationAcceptanceDate: Date
@@ -1047,17 +1047,18 @@ type Employee{
     employeeAddress: String
     personalMailId: String
     officialMailId: String
-    disability: Disability
+    disability: String
     drivingLicenceNo: String
     drivingLicenceValidity: Date
-    gender: Gender
+    gender: String
 	typeOfEmployment: String
 	managerId: Long
-	status: Status
-	maritalStatus: MaritalStatus
-	branch: Branch!
-	transportRoute: TransportRoute!
+	status: String
+	maritalStatus: String
+	branch: Branch
+	transportRoute: TransportRoute
 	vehicle: Vehicle
+	staffType: String
 }
 
 enum MaritalStatus{
@@ -1558,13 +1559,13 @@ type StudentAttendance {
     lecture: Lecture!
 }
 type Subject {
- 	id: Long!
- 	subjectType: SubTypeEnum!
- 	subjectCode: String!
- 	subjectDesc: String!
-    status: Status!
- 	department: Department!
- 	batch: Batch!
+ 	id: Long
+ 	subjectType: String
+ 	subjectCode: String
+ 	subjectDesc: String
+    status: String
+ 	department: Department
+ 	batch: Batch
 }
 
 enum StaffType {
@@ -1574,52 +1575,50 @@ enum StaffType {
 }
 
 type Teacher{
-                 id: Long!
-                 teacherName: String!
-                 teacherMiddleName: String!
-                 teacherLastName: String!
-                 fatherName: String!
-                 fatherMiddleName: String!
-                 fatherLastName: String!
-                 spouseName: String!
-                 spouseMiddleName: String!
-                  spouseLastName: String!
-                 motherName: String!
-                 motherMiddleName: String!
-                 motherLastName: String!
-                 aadharNo: Long!
-                 dateOfBirth: Date!
-                 placeOfBirth: String!
-                 religion: Religion!
-                 caste: Caste!
-                 subCaste: String!
-                 age: Long!
-                 sex: Gender!
-                 bloodGroup: Bloodgroup!
-                 addressLineOne: String!
-                 addressLineTwo: String!
-                 addressLineThree: String!
-                 town: String!
-                 state: String!
-                 country: String!
-                 pincode: Long!
-                 teacherContactNumber: String!
-                 alternateContactNumber: String!
-                 teacherEmailAddress: String!
-                 alternateEmailAddress: String!
-                 relationWithStaff: RelationWithStudentEnum!
-                 emergencyContactName: String!
-                 emergencyContactMiddleName: String!
-                 emergencyContactLastName: String!
-                 emergencyContactNo: String!
-                 emergencyContactEmailAddress: String!
-                 uploadPhoto: String!
-                 employeeId: Long!
-                 designation: String!
-                 staffType: StaffType!
-                 status: Status!
-                 branch: Branch!
-               department: Department!
+     id: Long
+     teacherName: String
+     teacherMiddleName: String
+     teacherLastName: String
+     fatherName: String
+     fatherMiddleName: String
+     fatherLastName: String
+     spouseName: String
+     spouseMiddleName: String
+     spouseLastName: String
+     motherName: String
+     motherMiddleName: String
+     motherLastName: String
+     aadharNo: String
+     dateOfBirth: Date!
+     placeOfBirth: String
+     religion: String
+     caste: String
+     subCaste: String
+     age: Long
+     sex: String
+     bloodGroup: String
+     address: String
+     town: String
+     state: String
+     country: String
+     pinCode: String
+     teacherContactNumber: String
+     alternateContactNumber: String
+     teacherEmailAddress: String
+     alternateEmailAddress: String
+     relationWithStaff: String
+     emergencyContactName: String
+     emergencyContactMiddleName: String
+     emergencyContactLastName: String
+     emergencyContactNo: String
+     emergencyContactEmailAddress: String
+     uploadPhoto: String
+     employeeId: Long
+     designation: String
+     staffType: String
+     status: String
+     branch: Branch
+   	 department: Department
 }
 type Term{
     id: Long!

@@ -14,9 +14,9 @@ public class CmsSubjectVo implements Serializable {
 
     private Long id;
     private String subjectCode;
-    private SubTypeEnum subjectType;
+    private String subjectType;
     private String subjectDesc;
-    private Status status;
+    private String status;
     private Long departmentId;
     private Long batchId;
     private Long teacherId;
@@ -42,11 +42,11 @@ public class CmsSubjectVo implements Serializable {
         this.subjectCode = subjectCode;
     }
 
-    public SubTypeEnum getSubjectType() {
+    public String getSubjectType() {
         return subjectType;
     }
 
-    public void setSubjectType(SubTypeEnum subjectType) {
+    public void setSubjectType(String subjectType) {
         this.subjectType = subjectType;
     }
 
@@ -58,11 +58,11 @@ public class CmsSubjectVo implements Serializable {
         this.subjectDesc = subjectDesc;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -118,9 +118,9 @@ public class SubjectResourceIntTest {
     public static Subject createEntity(EntityManager em) {
         Subject subject = new Subject()
             .subjectCode(DEFAULT_SUBJECT_CODE)
-            .subjectType(DEFAULT_SUBJECT_TYPE)
+            .subjectType(DEFAULT_SUBJECT_TYPE.toString())
             .subjectDesc(DEFAULT_SUBJECT_DESC)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS.toString());
         return subject;
     }
 
@@ -309,9 +309,9 @@ public class SubjectResourceIntTest {
         em.detach(updatedSubject);
         updatedSubject
             .subjectCode(UPDATED_SUBJECT_CODE)
-            .subjectType(UPDATED_SUBJECT_TYPE)
+            .subjectType(UPDATED_SUBJECT_TYPE.toString())
             .subjectDesc(UPDATED_SUBJECT_DESC)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS.toString());
         SubjectDTO subjectDTO = subjectMapper.toDto(updatedSubject);
 
         restSubjectMockMvc.perform(put("/api/subjects")

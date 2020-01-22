@@ -55,10 +55,10 @@ FIRSTYEAR,SECONDYEAR,THIRDYEAR,FOURTHYEAR
 }
 
 entity Subject{
-subjectCode String required
-subjectType SubTypeEnum required
-subjectDesc  String required
-status Status required
+	subjectCode String
+	subjectType String
+	subjectDesc  String
+	status String 
 }
 
 enum SubTypeEnum{
@@ -254,49 +254,47 @@ enum StaffType{
 }
 
 entity Teacher{
-teacherName String required
-teacherMiddleName String required
-teacherLastName String required
-fatherName String required
-fatherMiddleName String required
-fatherLastName String required
-spouseName String
-spouseMiddleName String
-spouseLastName String
-motherName String required
-motherMiddleName String required
-motherLastName String required
-aadharNo Long required
-dateOfBirth LocalDate required
-placeOfBirth String required
-religion Religion required
-caste Caste required
-subCaste String required
-age Integer required
-sex Gender required
-bloodGroup Bloodgroup required
-addressLineOne String required
-addressLineTwo String required
-addressLineThree String required
-town String required
-state String required
-country String required
-pincode Long required
-teacherContactNumber String required
-alternateContactNumber String
-teacherEmailAddress String required
-alternateEmailAddress String
-relationWithStaff RelationWithStudentEnum required
-emergencyContactName String required
-emergencyContactMiddleName String
-emergencyContactLastName String required
-emergencyContactNo String required
-emergencyContactEmailAddress String required
-uploadPhoto String required
-status Status required
-employeeId Long
-designation String required
-staffType StaffType required
+	teacherName String 
+	teacherMiddleName String 
+	teacherLastName String 
+	fatherName String 
+	fatherMiddleName String 
+	fatherLastName String 
+	spouseName String
+	spouseMiddleName String
+	spouseLastName String
+	motherName String 
+	motherMiddleName String 
+	motherLastName String 
+	aadharNo String
+	dateOfBirth LocalDate 
+	placeOfBirth String 
+	religion String 
+	caste String
+	subCaste String 
+	age Integer 
+	sex String 
+	bloodGroup String
+	address String 
+	town String 
+	state String 
+	country String 
+	pinCode String 
+	teacherContactNumber String 
+	alternateContactNumber String
+	teacherEmailAddress String 
+	alternateEmailAddress String
+	relationWithStaff String 
+	emergencyContactName String 
+	emergencyContactMiddleName String
+	emergencyContactLastName String 
+	emergencyContactNo String 
+	emergencyContactEmailAddress String 
+	uploadPhoto String 
+	status String
+	employeeId Long
+	designation String 
+	staffType String
 }
 
 
@@ -705,32 +703,33 @@ validTill LocalDate required
 
 
 entity Employee {
-employeeName String required
-designation String required
-joiningDate LocalDate required
-jobEndDate LocalDate
-resignationDate LocalDate
-resignationAcceptanceDate LocalDate
-aadharNo String
-panNo String
-passportNo String
-primaryContactNo String
-secondaryContactNo String
-employeeFatherName String
-employeeMotherName String
-primaryAddress String
-secondaryAddress String
-employeeAddress String
-personalMailId String
-officialMailId String
-disability Disability
-drivingLicenceNo String
-drivingLicenceValidity LocalDate
-gender Gender
-typeOfEmployment String
-managerId Long
-status Status
-maritalStatus MaritalStatus
+	employeeName String 
+	designation String 
+	joiningDate LocalDate 
+	jobEndDate LocalDate
+	resignationDate LocalDate
+	resignationAcceptanceDate LocalDate
+	aadharNo String
+	panNo String
+	passportNo String
+	primaryContactNo String
+	secondaryContactNo String
+	employeeFatherName String
+	employeeMotherName String
+	primaryAddress String
+	secondaryAddress String
+	employeeAddress String
+	personalMailId String
+	officialMailId String
+	disability String
+	drivingLicenceNo String
+	drivingLicenceValidity LocalDate
+	gender String
+	typeOfEmployment String
+	managerId Long
+	status String
+	maritalStatus String
+	staffType String
 }
 
 enum MaritalStatus{

@@ -6,7 +6,7 @@ import com.synectiks.cms.service.dto.TeacherDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity Teacher and its DTO TeacherDTO.
+ * Mapper for the entity {@link Teacher} and its DTO {@link TeacherDTO}.
  */
 @Mapper(componentModel = "spring", uses = {DepartmentMapper.class, BranchMapper.class})
 public interface TeacherMapper extends EntityMapper<TeacherDTO, Teacher> {

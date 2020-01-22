@@ -20,13 +20,14 @@ class FeeDetailsGatlingTest extends Simulation {
     val baseURL = Option(System.getProperty("baseURL")) getOrElse """http://localhost:8080"""
 
     val httpConf = http
-        .baseURL(baseURL)
+        .baseUrl(baseURL)
         .inferHtmlResources()
         .acceptHeader("*/*")
         .acceptEncodingHeader("gzip, deflate")
         .acceptLanguageHeader("fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3")
         .connectionHeader("keep-alive")
         .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:33.0) Gecko/20100101 Firefox/33.0")
+        .silentResources // Silence all resources like css or css so they don't clutter the results
 
     val headers_http = Map(
         "Accept" -> """application/json"""
@@ -46,14 +47,15 @@ class FeeDetailsGatlingTest extends Simulation {
         .exec(http("First unauthenticated request")
         .get("/api/account")
         .headers(headers_http)
-        .check(status.is(401))).exitHereIfFailed
+        .check(status.is(401))
+        ).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
         .post("/api/authenticate")
         .headers(headers_http_authentication)
-        .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJSON
-        .check(header.get("Authorization").saveAs("access_token"))).exitHereIfFailed
-        .pause(1)
+        .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJson
+        .check(header("Authorization").saveAs("access_token"))).exitHereIfFailed
+        .pause(2)
         .exec(http("Authenticated request")
         .get("/api/account")
         .headers(headers_http_authenticated)
@@ -68,7 +70,21 @@ class FeeDetailsGatlingTest extends Simulation {
             .exec(http("Create new feeDetails")
             .post("/api/fee-details")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "feeParticularsName":"SAMPLE_TEXT", "feeParticularDesc":"SAMPLE_TEXT", "studentType":null, "gender":null, "amount":null, "status":null, "createdBy":"SAMPLE_TEXT", "createdOn":"2020-01-01T00:00:00.000Z", "updatedBy":"SAMPLE_TEXT", "updatedOn":"2020-01-01T00:00:00.000Z", "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{
+                "id":null
+                , "feeParticularsName":"SAMPLE_TEXT"
+                , "feeParticularDesc":"SAMPLE_TEXT"
+                , "studentType":"REGULAR"
+                , "gender":"MALE"
+                , "amount":null
+                , "status":"ACTIVE"
+                , "createdBy":"SAMPLE_TEXT"
+                , "createdOn":"2020-01-01T00:00:00.000Z"
+                , "updatedBy":"SAMPLE_TEXT"
+                , "updatedOn":"2020-01-01T00:00:00.000Z"
+                , "startDate":"2020-01-01T00:00:00.000Z"
+                , "endDate":"2020-01-01T00:00:00.000Z"
+                }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_feeDetails_url"))).exitHereIfFailed
             .pause(10)
@@ -87,6 +103,6 @@ class FeeDetailsGatlingTest extends Simulation {
     val users = scenario("Users").exec(scn)
 
     setUp(
-        users.inject(rampUsers(Integer.getInteger("users", 100)) over (Integer.getInteger("ramp", 1) minutes))
+        users.inject(rampUsers(Integer.getInteger("users", 100)) during (Integer.getInteger("ramp", 1) minutes))
     ).protocols(httpConf)
 }

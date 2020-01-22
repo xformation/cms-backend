@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 
+import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.dataimport.AllRepositories;
 import com.synectiks.cms.dataimport.DataLoader;
 import com.synectiks.cms.domain.AttendanceMaster;
@@ -59,10 +60,10 @@ public class AttendanceMasterDataLoader extends DataLoader {
         	sb.append("subject_type, ");
             logger.warn("Mandatory field missing. Field name - subject_type");
         }else {
-        	if(SubTypeEnum.COMMON.toString().equalsIgnoreCase(subjectType)) {
-        		subject.setSubjectType(SubTypeEnum.COMMON);
-        	}else if(SubTypeEnum.ELECTIVE.toString().equalsIgnoreCase(subjectType)) {
-        		subject.setSubjectType(SubTypeEnum.ELECTIVE);
+        	if(CmsConstants.SUBJECT_TYPE_COMMON.equalsIgnoreCase(subjectType)) {
+        		subject.setSubjectType(CmsConstants.SUBJECT_TYPE_COMMON);
+        	}else if(CmsConstants.SUBJECT_TYPE_ELECTIVE.equalsIgnoreCase(subjectType)) {
+        		subject.setSubjectType(CmsConstants.SUBJECT_TYPE_ELECTIVE);
         	}else {
         		sb.append("subject_type, ");
                 logger.warn("Subject type not listed in the system. Field name - subject_type");
@@ -82,16 +83,8 @@ public class AttendanceMasterDataLoader extends DataLoader {
         	sb.append("status, ");
             logger.warn("Mandatory field missing. Field name - status");
         }else {
-        	if(Status.ACTIVE.toString().equalsIgnoreCase(status)) {
-        		subject.setStatus(Status.ACTIVE);
-        	}else if(Status.DEACTIVE.toString().equalsIgnoreCase(status)) {
-        		subject.setStatus(Status.DEACTIVE);
-        	}else if(Status.DRAFT.toString().equalsIgnoreCase(status)) {
-        		subject.setStatus(Status.DRAFT);
-        	}else {
-        		sb.append("status, ");
-                logger.warn("Given status not listed. Field name - status");
-        	}
+        	subject.setStatus(status);
+        	
         }
         
         String branchName = row.getCellAsString(5).orElse(null);

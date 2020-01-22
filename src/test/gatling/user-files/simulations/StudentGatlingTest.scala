@@ -20,7 +20,7 @@ class StudentGatlingTest extends Simulation {
     val baseURL = Option(System.getProperty("baseURL")) getOrElse """http://localhost:8080"""
 
     val httpConf = http
-        .baseURL(baseURL)
+        .baseUrl(baseURL)
         .inferHtmlResources()
         .acceptHeader("*/*")
         .acceptEncodingHeader("gzip, deflate")
@@ -53,8 +53,8 @@ class StudentGatlingTest extends Simulation {
         .exec(http("Authentication")
         .post("/api/authenticate")
         .headers(headers_http_authentication)
-        .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJSON
-        .check(header.get("Authorization").saveAs("access_token"))).exitHereIfFailed
+        .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJson
+        .check(header("Authorization").saveAs("access_token"))).exitHereIfFailed
         .pause(2)
         .exec(http("Authenticated request")
         .get("/api/account")
@@ -81,37 +81,115 @@ class StudentGatlingTest extends Simulation {
                 , "motherName":"SAMPLE_TEXT"
                 , "motherMiddleName":"SAMPLE_TEXT"
                 , "motherLastName":"SAMPLE_TEXT"
-                , "aadharNo":null
+                , "studentAadharNo":"SAMPLE_TEXT"
+                , "studentPanNo":"SAMPLE_TEXT"
+                , "studentSocialSecurityNo":"SAMPLE_TEXT"
+                , "studentTaxReferenceNo":"SAMPLE_TEXT"
+                , "studentBplNo":"SAMPLE_TEXT"
+                , "studentDrivingLicenseNo":"SAMPLE_TEXT"
+                , "studentPassportNo":"SAMPLE_TEXT"
                 , "dateOfBirth":"2020-01-01T00:00:00.000Z"
                 , "placeOfBirth":"SAMPLE_TEXT"
                 , "religion":"HINDU"
-                , "caste":"OC"
+                , "caste":"GENERAL"
                 , "subCaste":"SAMPLE_TEXT"
                 , "age":"0"
                 , "sex":"MALE"
-                , "bloodGroup":"ABPOSITIVE"
-                , "addressLineOne":"SAMPLE_TEXT"
-                , "addressLineTwo":"SAMPLE_TEXT"
-                , "addressLineThree":"SAMPLE_TEXT"
-                , "town":"SAMPLE_TEXT"
+                , "studentLocalAddress":"SAMPLE_TEXT"
+                , "studentPermanentAddress":"SAMPLE_TEXT"
+                , "city":"SAMPLE_TEXT"
                 , "state":"SAMPLE_TEXT"
                 , "country":"SAMPLE_TEXT"
-                , "pincode":null
-                , "studentContactNumber":"SAMPLE_TEXT"
-                , "alternateContactNumber":"SAMPLE_TEXT"
-                , "studentEmailAddress":"SAMPLE_TEXT"
-                , "alternateEmailAddress":"SAMPLE_TEXT"
+                , "pinCode":"SAMPLE_TEXT"
+                , "studentPrimaryCellNumber":"SAMPLE_TEXT"
+                , "studentAlternateCellNumber":"SAMPLE_TEXT"
+                , "studentLandLinePhoneNumber":"SAMPLE_TEXT"
+                , "studentPrimaryEmailId":"SAMPLE_TEXT"
+                , "studentAlternateEmailId":"SAMPLE_TEXT"
                 , "relationWithStudent":"FATHER"
                 , "emergencyContactName":"SAMPLE_TEXT"
                 , "emergencyContactMiddleName":"SAMPLE_TEXT"
                 , "emergencyContactLastName":"SAMPLE_TEXT"
-                , "emergencyContactNo":"SAMPLE_TEXT"
-                , "emergencyContactEmailAddress":"SAMPLE_TEXT"
-                , "uploadPhoto":"SAMPLE_TEXT"
-                , "admissionNo":null
+                , "emergencyContactCellNumber":"SAMPLE_TEXT"
+                , "emergencyContactLandLinePhoneNumber":"SAMPLE_TEXT"
+                , "emergencyContactEmailId":"SAMPLE_TEXT"
+                , "studentImagePath":"SAMPLE_TEXT"
+                , "admissionNo":"SAMPLE_TEXT"
+                , "enrollmentNo":"SAMPLE_TEXT"
                 , "rollNo":"SAMPLE_TEXT"
                 , "studentType":"REGULAR"
-                }""")).asJSON
+                , "fatherCellNumber":"SAMPLE_TEXT"
+                , "fatherEmailId":"SAMPLE_TEXT"
+                , "fatherOccupation":"SAMPLE_TEXT"
+                , "fatherOfficeEmailId":"SAMPLE_TEXT"
+                , "fatherOfficeAddress":"SAMPLE_TEXT"
+                , "fatherOfficeCellNumber":"SAMPLE_TEXT"
+                , "fatherOfficeLandLinePhoneNumber":"SAMPLE_TEXT"
+                , "fatherAadharNo":"SAMPLE_TEXT"
+                , "fatherPanNo":"SAMPLE_TEXT"
+                , "fatherSocialSecurityNo":"SAMPLE_TEXT"
+                , "fatherTaxReferenceNo":"SAMPLE_TEXT"
+                , "fatherBplNo":"SAMPLE_TEXT"
+                , "fatherDrivingLicenseNo":"SAMPLE_TEXT"
+                , "fatherPassportNo":"SAMPLE_TEXT"
+                , "fatherImagePath":"SAMPLE_TEXT"
+                , "motherCellNumber":"SAMPLE_TEXT"
+                , "motherEmailId":"SAMPLE_TEXT"
+                , "motherOccupation":"SAMPLE_TEXT"
+                , "motherOfficeEmailId":"SAMPLE_TEXT"
+                , "motherOfficeAddress":"SAMPLE_TEXT"
+                , "motherOfficeCellNumber":"SAMPLE_TEXT"
+                , "motherOfficeLandLinePhoneNumber":"SAMPLE_TEXT"
+                , "motherAadharNo":"SAMPLE_TEXT"
+                , "motherPanNo":"SAMPLE_TEXT"
+                , "motherSocialSecurityNo":"SAMPLE_TEXT"
+                , "motherTaxReferenceNo":"SAMPLE_TEXT"
+                , "motherBplNo":"SAMPLE_TEXT"
+                , "motherDrivingLicenseNo":"SAMPLE_TEXT"
+                , "motherPassportNo":"SAMPLE_TEXT"
+                , "motherImagePath":"SAMPLE_TEXT"
+                , "guardianName":"SAMPLE_TEXT"
+                , "guardianMiddleName":"SAMPLE_TEXT"
+                , "guardianLastName":"SAMPLE_TEXT"
+                , "guardianAddress":"SAMPLE_TEXT"
+                , "guardianCellNumber":"SAMPLE_TEXT"
+                , "guardianLandLinePhoneNumber":"SAMPLE_TEXT"
+                , "guardianEmailId":"SAMPLE_TEXT"
+                , "guardianOccupation":"SAMPLE_TEXT"
+                , "guardianOfficeEmailId":"SAMPLE_TEXT"
+                , "guardianOfficeAddress":"SAMPLE_TEXT"
+                , "guardianOfficeCellNumber":"SAMPLE_TEXT"
+                , "guardianOfficeLandLinePhoneNumber":"SAMPLE_TEXT"
+                , "guardianImagePath":"SAMPLE_TEXT"
+                , "isGuardianSponsorAgency":"SAMPLE_TEXT"
+                , "sponsorAgencyName":"SAMPLE_TEXT"
+                , "sponsorAgencyRegistrationNo":"SAMPLE_TEXT"
+                , "sponsorAgencyAddress":"SAMPLE_TEXT"
+                , "sponsorAgencyCellNumber":"SAMPLE_TEXT"
+                , "sponsorAgencyLandLineNumber":"SAMPLE_TEXT"
+                , "sponsorAgencyEmailId":"SAMPLE_TEXT"
+                , "sponsorAgencyAppointeeName":"SAMPLE_TEXT"
+                , "sponsorAgencyAppointeeDesignation":"SAMPLE_TEXT"
+                , "sponsorAgencyAppointeeCellNumber":"SAMPLE_TEXT"
+                , "sponsorAgencyAppointeeLandLineNumber":"SAMPLE_TEXT"
+                , "sponsorAgencyAppointeeEmailId":"SAMPLE_TEXT"
+                , "sponsorAgencyAppointeeOfficeAddress":"SAMPLE_TEXT"
+                , "isPhysicallyChallenged":"SAMPLE_TEXT"
+                , "detailsOfDisability":"SAMPLE_TEXT"
+                , "disabilityCertificateNo":"SAMPLE_TEXT"
+                , "disabilityCertificateIssueAuthority":"SAMPLE_TEXT"
+                , "disabilityCertificateIssueDate":"2020-01-01T00:00:00.000Z"
+                , "percentagOfDisability":"0"
+                , "bloodGroup":"APOSITIVE"
+                , "vaccinationDetails":"SAMPLE_TEXT"
+                , "otherMedicalDetails":"SAMPLE_TEXT"
+                , "status":"ACTIVE"
+                , "createdBy":"SAMPLE_TEXT"
+                , "createdOn":"2020-01-01T00:00:00.000Z"
+                , "updatedBy":"SAMPLE_TEXT"
+                , "updatedOn":"2020-01-01T00:00:00.000Z"
+                , "comments":"SAMPLE_TEXT"
+                }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_student_url"))).exitHereIfFailed
             .pause(10)
@@ -130,6 +208,6 @@ class StudentGatlingTest extends Simulation {
     val users = scenario("Users").exec(scn)
 
     setUp(
-        users.inject(rampUsers(Integer.getInteger("users", 100)) over (Integer.getInteger("ramp", 1) minutes))
+        users.inject(rampUsers(Integer.getInteger("users", 100)) during (Integer.getInteger("ramp", 1) minutes))
     ).protocols(httpConf)
 }

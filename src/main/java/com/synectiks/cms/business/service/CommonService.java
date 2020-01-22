@@ -122,8 +122,8 @@ public class CommonService {
     @Autowired
     private BatchRepository batchRepository;
 
-    @Autowired
-    private TeacherRepository teacherRepository;
+//    @Autowired
+//    private TeacherRepository teacherRepository;
 
     @Autowired
     private SectionRepository sectionRepository;
@@ -456,16 +456,33 @@ public class CommonService {
     }
 
     public Teacher getTeacherById(Long teacherId) {
-        if(teacherId == null) {
+    	if(teacherId == null) {
             return null;
         }
-        Optional<Teacher> newTh = this.teacherRepository.findById(teacherId);
-        if(newTh.isPresent()) {
-            return newTh.get();
-        }
-        return null;
+        
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefTeacherUrl = prefUrl+"/api/teacher-by-id/"+teacherId;
+        Teacher temp = this.restTemplate.getForObject(prefTeacherUrl, Teacher.class);
+        return temp;
+        
+        
+//        Optional<Teacher> newTh = this.teacherRepository.findById(teacherId);
+//        if(newTh.isPresent()) {
+//            return newTh.get();
+//        }
+//        return null;
     }
-
+    public Teacher getTeacherByEmail(String teacherEmailAddress) {
+		logger.debug("Getting teacher based on email id : "+teacherEmailAddress);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefTeacherUrl = prefUrl+"/api/teacher-by-filters?teacherEmailAddress="+teacherEmailAddress;
+	    Teacher[] temp = this.restTemplate.getForObject(prefTeacherUrl, Teacher[].class);
+	    if(temp.length == 0) {
+	    	return null;
+	    }
+	    return temp[0];
+	}
+    
     public Section getSectionById(Long secId) {
         if(secId == null) {
             return null;
@@ -1164,28 +1181,23 @@ public class CommonService {
     }
 
     public List<CmsTermVo> getTermsByAcademicYear(Long academicYearId) throws Exception{
-        if(academicYearId == null) {
+    	logger.debug("Getting terms based on academicYearId : "+academicYearId);
+    	if(academicYearId == null) {
+    		logger.info("academic year id is null. Returning empty term list");
             Collections.emptyList();
         }
-        Term term = new Term();
-        AcademicYear ay = this.getAcademicYearById(academicYearId);
-        term.setAcademicyear(ay);
-        term.setTermStatus(Status.ACTIVE);
-        Example<Term> example = Example.of(term);
-        List<Term> list = this.termRepository.findAll(example);
-        List<CmsTermVo> ls = new ArrayList<>();
-        for(Term tm: list) {
-
-            CmsTermVo ctm = CommonUtil.createCopyProperties(tm, CmsTermVo.class);
-            ctm.setStrStartDate(DateFormatUtil.changeLocalDateFormat(tm.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            ctm.setStrEndDate(DateFormatUtil.changeLocalDateFormat(tm.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            tm.setStartDate(null);
-            tm.setEndDate(null);
-            //            ctm.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getStartDate()))));
-//            ctm.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(tm.getEndDate()))));
-            ls.add(ctm);
-        }
-        return ls;
+        
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefTermUrl = prefUrl+"/api/cmsterm-by-filters?academicYearId="+academicYearId+"&status=ACTIVE";
+	    CmsTermVo[] temp = this.restTemplate.getForObject(prefTermUrl, CmsTermVo[].class);
+	    if(temp.length == 0) {
+	    	logger.info("No term found for the given academic year. Returning empty term list");
+            return Collections.emptyList();
+	    }
+	    List<CmsTermVo> termList = Arrays.asList(temp);	
+	    Collections.sort(termList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return termList;
+	    
     }
 
     public List<CmsFeeCategory> getFeeCategoryForCriteria(List<Branch> branchList) throws ParseException, Exception{
@@ -1351,13 +1363,14 @@ public class CommonService {
     private void findUserConfig(String userName, Config config) {
         Student st = new Student();
         Teacher th = new Teacher();
-        Employee em = new Employee();
+//        Employee em = new Employee();
         st.setStudentPrimaryEmailId(userName);
         th.setTeacherEmailAddress(userName);
-        em.setOfficialMailId(userName);
+//        em.setOfficialMailId(userName);
         Optional<Student> student = studentRepository.findOne(Example.of(st));
-        Optional<Teacher> teacher = teacherRepository.findOne(Example.of(th));
-        Optional<Employee> employee = employeeRepository.findOne(Example.of(em));
+//        Optional<Teacher> teacher = teacherRepository.findOne(Example.of(th));
+        Teacher teacher = getTeacherByEmail(userName);
+//        Optional<Employee> employee = employeeRepository.findOne(Example.of(em));
         if(student.isPresent()) {
             config.setLoggedInUser(userName);
             config.setCountry(student.get().getBranch().getState().getCountry());
@@ -1367,25 +1380,26 @@ public class CommonService {
             config.setDepartment(student.get().getDepartment());
             config.setUserId(student.get().getId());
             config.setCollege(student.get().getBranch().getCollege());
-        }else if(teacher.isPresent()) {
+        }else if(teacher != null) {
             config.setLoggedInUser(userName);
-            config.setCountry(teacher.get().getBranch().getState().getCountry());
-            config.setState(teacher.get().getBranch().getState());
-            config.setCity(teacher.get().getBranch().getCity());
-            config.setBranch(teacher.get().getBranch());
-            config.setDepartment(teacher.get().getDepartment());
-            config.setUserId(teacher.get().getId());
-            config.setCollege(teacher.get().getBranch().getCollege());
-        }else if(employee.isPresent()) {
-            config.setLoggedInUser(userName);
-            config.setCountry(employee.get().getBranch().getState().getCountry());
-            config.setState(employee.get().getBranch().getState());
-            config.setCity(employee.get().getBranch().getCity());
-            config.setBranch(employee.get().getBranch());
-            config.setDepartment(null);
-            config.setUserId(employee.get().getId());
-            config.setCollege(employee.get().getBranch().getCollege());
+            config.setCountry(teacher.getBranch().getState().getCountry());
+            config.setState(teacher.getBranch().getState());
+            config.setCity(teacher.getBranch().getCity());
+            config.setBranch(teacher.getBranch());
+            config.setDepartment(teacher.getDepartment());
+            config.setUserId(teacher.getId());
+            config.setCollege(teacher.getBranch().getCollege());
         }
+//        else if(employee.isPresent()) {
+//            config.setLoggedInUser(userName);
+//            config.setCountry(employee.get().getBranch().getState().getCountry());
+//            config.setState(employee.get().getBranch().getState());
+//            config.setCity(employee.get().getBranch().getCity());
+//            config.setBranch(employee.get().getBranch());
+//            config.setDepartment(null);
+//            config.setUserId(employee.get().getId());
+//            config.setCollege(employee.get().getBranch().getCollege());
+//        }
     }
 
     public Config createUserConfigForAdmin(String userName) {
@@ -1507,11 +1521,17 @@ public class CommonService {
     }
 
     public List<Teacher> getAllActiveTeachers(){
-        Teacher teacher = new Teacher();
-        teacher.setStatus(Status.ACTIVE);
-        List<Teacher> list = this.teacherRepository.findAll(Example.of(teacher));
-        logger.debug("Total teachers irrespective of branches : "+list.size());
-        return list;
+    	logger.debug("Getting all active teachers ");
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefTeacherUrl = prefUrl+"/api/teacher-by-filters?status=ACTIVE";
+	    Teacher[] temp = this.restTemplate.getForObject(prefTeacherUrl, Teacher[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+    	List<Teacher> teacherList = Arrays.asList(temp);	
+	    Collections.sort(teacherList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    logger.debug("Total teachers irrespective of branches : "+teacherList.size());
+	    return teacherList;
     }
 
     public List<Teach> getAllSubjectsOfTeacher(Teacher th){

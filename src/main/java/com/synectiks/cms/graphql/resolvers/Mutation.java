@@ -1862,14 +1862,14 @@ public class Mutation implements GraphQLMutationResolver {
         employee.setEmployeeAddress(addEmployeeInput.getEmployeeAddress());
         employee.setPersonalMailId(addEmployeeInput.getPersonalMailId());
         employee.setOfficialMailId(addEmployeeInput.getOfficialMailId());
-        employee.setDisability(addEmployeeInput.getDisability());
+        employee.setDisability(addEmployeeInput.getDisability().toString());
         employee.setDrivingLicenceNo(addEmployeeInput.getDrivingLicenceNo());
         employee.setDrivingLicenceValidity(DateFormatUtil.convertLocalDateFromUtilDate(addEmployeeInput.getDrivingLicenceValidity()));
-        employee.setGender(addEmployeeInput.getGender());
+        employee.setGender(addEmployeeInput.getGender().toString());
         employee.setTypeOfEmployment(addEmployeeInput.getTypeOfEmployment());
         employee.setManagerId(addEmployeeInput.getManagerId());
-        employee.setStatus(addEmployeeInput.getStatus());
-        employee.setMaritalStatus(addEmployeeInput.getMaritalStatus());
+        employee.setStatus(addEmployeeInput.getStatus().toString());
+        employee.setMaritalStatus(addEmployeeInput.getMaritalStatus().toString());
         employee.setBranch(branch);
         employee.setTransportRoute(transportRoute);
         employeeRepository.save(employee);
@@ -1937,7 +1937,7 @@ public class Mutation implements GraphQLMutationResolver {
             employee.setPersonalMailId(updateEmployeeInput.getPersonalMailId());
         }
         if (updateEmployeeInput.getDisability() != null) {
-            employee.setDisability(updateEmployeeInput.getDisability());
+            employee.setDisability(updateEmployeeInput.getDisability().toString());
         }
         if (updateEmployeeInput.getDrivingLicenceNo() != null) {
             employee.setDrivingLicenceNo(updateEmployeeInput.getDrivingLicenceNo());
@@ -1946,7 +1946,7 @@ public class Mutation implements GraphQLMutationResolver {
             employee.setDrivingLicenceValidity(DateFormatUtil.convertLocalDateFromUtilDate(updateEmployeeInput.getDrivingLicenceValidity()));
         }
         if (updateEmployeeInput.getGender() != null) {
-            employee.setGender(updateEmployeeInput.getGender());
+            employee.setGender(updateEmployeeInput.getGender().toString());
         }
         if (updateEmployeeInput.getTypeOfEmployment() != null) {
             employee.setTypeOfEmployment(updateEmployeeInput.getTypeOfEmployment());
@@ -1955,10 +1955,10 @@ public class Mutation implements GraphQLMutationResolver {
             employee.setManagerId(updateEmployeeInput.getManagerId());
         }
         if (updateEmployeeInput.getStatus() != null) {
-            employee.setStatus(updateEmployeeInput.getStatus());
+            employee.setStatus(updateEmployeeInput.getStatus().toString());
         }
         if (updateEmployeeInput.getMaritalStatus() != null) {
-            employee.setMaritalStatus(updateEmployeeInput.getMaritalStatus());
+            employee.setMaritalStatus(updateEmployeeInput.getMaritalStatus().toString());
         }
         if (updateEmployeeInput.getBranchId() != null) {
             Branch branch = branchRepository.findById(updateEmployeeInput.getBranchId()).get();
@@ -2101,10 +2101,10 @@ public class Mutation implements GraphQLMutationResolver {
         final Subject subject = new Subject();
         subject.setDepartment(department);
         subject.setBatch(batch);
-        subject.setSubjectType(addSubjectInput.getSubjectType());
+        subject.setSubjectType(addSubjectInput.getSubjectType().toString());
         subject.setSubjectCode(addSubjectInput.getSubjectCode());
         subject.setSubjectDesc(addSubjectInput.getSubjectDesc());
-        subject.setStatus(addSubjectInput.getStatus());
+        subject.setStatus(addSubjectInput.getStatus().toString());
         subjectRepository.save(subject);
         return new AddSubjectPayload(subject);
     }
@@ -2115,13 +2115,13 @@ public class Mutation implements GraphQLMutationResolver {
             subject.setSubjectCode(updateSubjectInput.getSubjectCode());
         }
         if (updateSubjectInput.getSubjectType() != null) {
-            subject.setSubjectType(updateSubjectInput.getSubjectType());
+            subject.setSubjectType(updateSubjectInput.getSubjectType().toString());
         }
         if (updateSubjectInput.getSubjectDesc() != null) {
             subject.setSubjectDesc(updateSubjectInput.getSubjectDesc());
         }
         if (updateSubjectInput.getStatus() != null) {
-            subject.setStatus(updateSubjectInput.getStatus());
+            subject.setStatus(updateSubjectInput.getStatus().toString());
         }
         if (updateSubjectInput.getDepartmentId() != null) {
             final Department department = departmentRepository.findById(updateSubjectInput.getDepartmentId()).get();
@@ -2204,27 +2204,27 @@ public class Mutation implements GraphQLMutationResolver {
         teacher.setMotherName(addTeacherInput.getMotherName());
         teacher.setMotherMiddleName(addTeacherInput.getMotherMiddleName());
         teacher.setMotherLastName(addTeacherInput.getMotherLastName());
-        teacher.setAadharNo(addTeacherInput.getAadharNo());
+        teacher.setAadharNo(String.valueOf(addTeacherInput.getAadharNo()));
         teacher.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addTeacherInput.getDateOfBirth()));
         teacher.setPlaceOfBirth(addTeacherInput.getPlaceOfBirth());
-        teacher.setReligion(addTeacherInput.getReligion());
-        teacher.setCaste(addTeacherInput.getCaste());
+        teacher.setReligion(addTeacherInput.getReligion().toString());
+        teacher.setCaste(addTeacherInput.getCaste().toString());
         teacher.setSubCaste(addTeacherInput.getSubCaste());
         teacher.setAge(addTeacherInput.getAge());
-        teacher.setSex(addTeacherInput.getSex());
-        teacher.setBloodGroup(addTeacherInput.getBloodGroup());
-        teacher.setAddressLineOne(addTeacherInput.getAddressLineOne());
-        teacher.setAddressLineTwo(addTeacherInput.getAddressLineTwo());
-        teacher.setAddressLineThree(addTeacherInput.getAddressLineThree());
+        teacher.setSex(addTeacherInput.getSex().toString());
+        teacher.setBloodGroup(addTeacherInput.getBloodGroup().toString());
+        teacher.setAddress(addTeacherInput.getAddressLineOne());
+//        teacher.setAddressLineTwo(addTeacherInput.getAddressLineTwo());
+//        teacher.setAddressLineThree(addTeacherInput.getAddressLineThree());
         teacher.setTown(addTeacherInput.getTown());
         teacher.setState(addTeacherInput.getState());
         teacher.setCountry(addTeacherInput.getCountry());
-        teacher.setPincode(addTeacherInput.getPincode());
+        teacher.setPinCode(String.valueOf(addTeacherInput.getPincode()));
         teacher.setTeacherContactNumber(addTeacherInput.getTeacherContactNumber());
         teacher.setAlternateContactNumber(addTeacherInput.getAlternateContactNumber());
         teacher.setTeacherEmailAddress(addTeacherInput.getTeacherEmailAddress());
         teacher.setAlternateEmailAddress(addTeacherInput.getAlternateEmailAddress());
-        teacher.setRelationWithStaff(addTeacherInput.getRelationWithStaff());
+        teacher.setRelationWithStaff(addTeacherInput.getRelationWithStaff().toString());
         teacher.setEmergencyContactName(addTeacherInput.getEmergencyContactName());
         teacher.setEmergencyContactMiddleName(addTeacherInput.getEmergencyContactMiddleName());
         teacher.setEmergencyContactLastName(addTeacherInput.getEmergencyContactLastName());
@@ -2233,8 +2233,8 @@ public class Mutation implements GraphQLMutationResolver {
         teacher.setUploadPhoto(addTeacherInput.getUploadPhoto());
         teacher.setEmployeeId(addTeacherInput.getEmployeeId());
         teacher.setDesignation(addTeacherInput.getDesignation());
-        teacher.setStaffType(addTeacherInput.getStaffType());
-        teacher.setStatus(addTeacherInput.getStatus());
+        teacher.setStaffType(addTeacherInput.getStaffType().toString());
+        teacher.setStatus(addTeacherInput.getStatus().toString());
         teacher.setBranch(branch);
         teacher.setDepartment(department);
 
@@ -2284,7 +2284,7 @@ public class Mutation implements GraphQLMutationResolver {
             teacher.setMotherLastName(updateTeacherInput.getMotherLastName());
         }
         if (updateTeacherInput.getAadharNo() != null) {
-            teacher.setAadharNo(updateTeacherInput.getAadharNo());
+            teacher.setAadharNo(String.valueOf(updateTeacherInput.getAadharNo()));
         }
         if (updateTeacherInput.getDateOfBirth() != null) {
             teacher.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateTeacherInput.getDateOfBirth()));
@@ -2293,10 +2293,10 @@ public class Mutation implements GraphQLMutationResolver {
             teacher.setPlaceOfBirth(updateTeacherInput.getPlaceOfBirth());
         }
         if (updateTeacherInput.getReligion() != null) {
-            teacher.setReligion(updateTeacherInput.getReligion());
+            teacher.setReligion(updateTeacherInput.getReligion().toString());
         }
         if (updateTeacherInput.getCaste() != null) {
-            teacher.setCaste(updateTeacherInput.getCaste());
+            teacher.setCaste(updateTeacherInput.getCaste().toString());
         }
         if (updateTeacherInput.getSubCaste() != null) {
             teacher.setSubCaste(updateTeacherInput.getSubCaste());
@@ -2305,20 +2305,20 @@ public class Mutation implements GraphQLMutationResolver {
             teacher.setAge(updateTeacherInput.getAge());
         }
         if (updateTeacherInput.getSex() != null) {
-            teacher.setSex(updateTeacherInput.getSex());
+            teacher.setSex(updateTeacherInput.getSex().toString());
         }
         if (updateTeacherInput.getBloodGroup() != null) {
-            teacher.setBloodGroup(updateTeacherInput.getBloodGroup());
+            teacher.setBloodGroup(updateTeacherInput.getBloodGroup().toString());
         }
         if (updateTeacherInput.getAddressLineOne() != null) {
-            teacher.setAddressLineOne(updateTeacherInput.getAddressLineOne());
+            teacher.setAddress(updateTeacherInput.getAddressLineOne());
         }
-        if (updateTeacherInput.getAddressLineTwo() != null) {
-            teacher.setAddressLineTwo(updateTeacherInput.getAddressLineTwo());
-        }
-        if (updateTeacherInput.getAddressLineThree() != null) {
-            teacher.setAddressLineThree(updateTeacherInput.getAddressLineThree());
-        }
+//        if (updateTeacherInput.getAddressLineTwo() != null) {
+//            teacher.setAddressLineTwo(updateTeacherInput.getAddressLineTwo());
+//        }
+//        if (updateTeacherInput.getAddressLineThree() != null) {
+//            teacher.setAddressLineThree(updateTeacherInput.getAddressLineThree());
+//        }
         if (updateTeacherInput.getTown() != null) {
             teacher.setTown(updateTeacherInput.getTown());
         }
@@ -2329,7 +2329,7 @@ public class Mutation implements GraphQLMutationResolver {
             teacher.setCountry(updateTeacherInput.getCountry());
         }
         if (updateTeacherInput.getPincode() != null) {
-            teacher.setPincode(updateTeacherInput.getPincode());
+            teacher.setPinCode(String.valueOf(updateTeacherInput.getPincode()));
         }
         if (updateTeacherInput.getTeacherContactNumber() != null) {
             teacher.setTeacherContactNumber(updateTeacherInput.getTeacherContactNumber());
@@ -2344,7 +2344,7 @@ public class Mutation implements GraphQLMutationResolver {
             teacher.setAlternateEmailAddress(updateTeacherInput.getAlternateEmailAddress());
         }
         if (updateTeacherInput.getRelationWithStaff() != null) {
-            teacher.setRelationWithStaff(updateTeacherInput.getRelationWithStaff());
+            teacher.setRelationWithStaff(updateTeacherInput.getRelationWithStaff().toString());
         }
         if (updateTeacherInput.getEmergencyContactName() != null) {
             teacher.setEmergencyContactName(updateTeacherInput.getEmergencyContactName());
@@ -2371,7 +2371,7 @@ public class Mutation implements GraphQLMutationResolver {
             teacher.setDesignation(updateTeacherInput.getDesignation());
         }
         if (updateTeacherInput.getStaffType() != null) {
-            teacher.setStaffType(updateTeacherInput.getStaffType());
+            teacher.setStaffType(updateTeacherInput.getStaffType().toString());
         }
 
         if (updateTeacherInput.getBranchId() != null) {

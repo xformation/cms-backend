@@ -21,7 +21,7 @@ import java.util.stream.StreamSupport;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing Subject.
+ * Service Implementation for managing {@link Subject}.
  */
 @Service
 @Transactional
@@ -44,8 +44,8 @@ public class SubjectServiceImpl implements SubjectService {
     /**
      * Save a subject.
      *
-     * @param subjectDTO the entity to save
-     * @return the persisted entity
+     * @param subjectDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public SubjectDTO save(SubjectDTO subjectDTO) {
@@ -60,7 +60,7 @@ public class SubjectServiceImpl implements SubjectService {
     /**
      * Get all the subjects.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -75,8 +75,8 @@ public class SubjectServiceImpl implements SubjectService {
     /**
      * Get one subject by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -89,7 +89,7 @@ public class SubjectServiceImpl implements SubjectService {
     /**
      * Delete the subject by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
@@ -101,8 +101,8 @@ public class SubjectServiceImpl implements SubjectService {
     /**
      * Search for the subject corresponding to the query.
      *
-     * @param query the query of the search
-     * @return the list of entities
+     * @param query the query of the search.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
