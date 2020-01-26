@@ -22,23 +22,23 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="exam_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="semester" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="exam_date" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="start_time" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="end_time" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="grade_type" type="varchar(255)">
@@ -46,11 +46,11 @@
             </column>
 
             <column name="total" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="passing" type="integer">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="actions" type="varchar(255)">
@@ -62,7 +62,7 @@
             </column>
 
             <column name="countvalue" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="branch_id" type="bigint">
@@ -77,10 +77,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="type_of_grading_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="academicyear_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -90,6 +86,10 @@
             </column>
 
             <column name="batch_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="type_of_grading_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

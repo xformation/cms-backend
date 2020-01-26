@@ -1,16 +1,12 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * A StudentExamReport.
@@ -18,26 +14,40 @@ import java.util.Objects;
 @Entity
 @Table(name = "student_exam_report")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "studentexamreport")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "studentexamreport")
 public class StudentExamReport implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @NotNull
-    @Column(name = "marks_obtained", nullable = false)
+    @Column(name = "marks_obtained")
     private Integer marksObtained;
 
-    @NotNull
-    @Column(name = "comments", nullable = false)
+    @Column(name = "comments")
     private String comments;
 
     @Column(name = "g_op")
     private Integer gOp;
+
+    @Column(name = "section_id")
+    private Long sectionId;
+
+    @Column(name = "subject_id")
+    private Long subjectId;
+
+    @Column(name = "department_id")
+    private Long departmentId;
+
+    @Column(name = "batch_id")
+    private Long batchId;
+
+    @Column(name = "academicyear_id")
+    private Long academicyearId;
 
     @ManyToOne
     @JsonIgnoreProperties("studentExamReports")
@@ -49,27 +59,7 @@ public class StudentExamReport implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("studentExamReports")
-    private Section section;
-
-    @ManyToOne
-    @JsonIgnoreProperties("studentExamReports")
-    private Subject subject;
-
-    @ManyToOne
-    @JsonIgnoreProperties("studentExamReports")
-    private Department department;
-
-    @ManyToOne
-    @JsonIgnoreProperties("studentExamReports")
     private TypeOfGrading typeOfGrading;
-
-    @ManyToOne
-    @JsonIgnoreProperties("studentExamReports")
-    private Batch batch;
-
-    @ManyToOne
-    @JsonIgnoreProperties("studentExamReports")
-    private AcademicYear academicyear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -119,6 +109,71 @@ public class StudentExamReport implements Serializable {
         this.gOp = gOp;
     }
 
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public StudentExamReport sectionId(Long sectionId) {
+        this.sectionId = sectionId;
+        return this;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public StudentExamReport subjectId(Long subjectId) {
+        this.subjectId = subjectId;
+        return this;
+    }
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public StudentExamReport departmentId(Long departmentId) {
+        this.departmentId = departmentId;
+        return this;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public StudentExamReport batchId(Long batchId) {
+        this.batchId = batchId;
+        return this;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
+    public Long getAcademicyearId() {
+        return academicyearId;
+    }
+
+    public StudentExamReport academicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
+        return this;
+    }
+
+    public void setAcademicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
+    }
+
     public AcademicExamSetting getAcademicExamSetting() {
         return academicExamSetting;
     }
@@ -145,45 +200,6 @@ public class StudentExamReport implements Serializable {
         this.student = student;
     }
 
-    public Section getSection() {
-        return section;
-    }
-
-    public StudentExamReport section(Section section) {
-        this.section = section;
-        return this;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public StudentExamReport subject(Subject subject) {
-        this.subject = subject;
-        return this;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public StudentExamReport department(Department department) {
-        this.department = department;
-        return this;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
     public TypeOfGrading getTypeOfGrading() {
         return typeOfGrading;
     }
@@ -196,32 +212,6 @@ public class StudentExamReport implements Serializable {
     public void setTypeOfGrading(TypeOfGrading typeOfGrading) {
         this.typeOfGrading = typeOfGrading;
     }
-
-    public Batch getBatch() {
-        return batch;
-    }
-
-    public StudentExamReport batch(Batch batch) {
-        this.batch = batch;
-        return this;
-    }
-
-    public void setBatch(Batch batch) {
-        this.batch = batch;
-    }
-
-    public AcademicYear getAcademicyear() {
-        return academicyear;
-    }
-
-    public StudentExamReport academicyear(AcademicYear academicYear) {
-        this.academicyear = academicYear;
-        return this;
-    }
-
-    public void setAcademicyear(AcademicYear academicYear) {
-        this.academicyear = academicYear;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -229,19 +219,15 @@ public class StudentExamReport implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof StudentExamReport)) {
             return false;
         }
-        StudentExamReport studentExamReport = (StudentExamReport) o;
-        if (studentExamReport.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), studentExamReport.getId());
+        return id != null && id.equals(((StudentExamReport) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -251,6 +237,11 @@ public class StudentExamReport implements Serializable {
             ", marksObtained=" + getMarksObtained() +
             ", comments='" + getComments() + "'" +
             ", gOp=" + getgOp() +
+            ", sectionId=" + getSectionId() +
+            ", subjectId=" + getSubjectId() +
+            ", departmentId=" + getDepartmentId() +
+            ", batchId=" + getBatchId() +
+            ", academicyearId=" + getAcademicyearId() +
             "}";
     }
 }

@@ -21,23 +21,15 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="marks_obtained" type="integer">
-                <constraints nullable="false" />
+                        <column name="marks_obtained" type="integer">
+                <constraints nullable="true" />
             </column>
 
             <column name="comments" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="g_op" type="integer">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="academic_exam_setting_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="student_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -53,15 +45,23 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="type_of_grading_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="batch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <column name="academicyear_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="academic_exam_setting_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="student_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="type_of_grading_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

@@ -144,10 +144,10 @@ jhipster:
 # ===================================================================
 
 application:
-    influxDbUrl: http://100.81.3.26:8086
+    influxDbUrl: http://100.81.5.26:8086
     influxDb: cmsdb
     influxDbUsername: cms
     influxDbPassword: cms
     influxDbLogLevel: BASIC
-    secSrvUrl: http://100.81.3.26:8094
-    preferenceSrvUrl: http://100.81.3.26:9091
+    secSrvUrl: http://100.81.5.26:8094
+    preferenceSrvUrl: http://100.81.5.26:9091

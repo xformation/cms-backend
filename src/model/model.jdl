@@ -13,9 +13,15 @@ logoFileName String
 backgroundImageFileName String
 }
 entity StudentExamReport{
-	marksObtained Integer required
-	comments String required
+	marksObtained Integer
+	comments String
 	gOp Integer
+	sectionId Long
+	subjectId Long
+	departmentId Long
+	batchId Long
+	academicyearId Long
+
 }
 
 entity Branch{
@@ -393,17 +399,23 @@ panCardNumber String required
 }
 
 entity AcademicExamSetting {
-    examName String required
-    semester SemesterEnum required
-    examDate LocalDate required
-    startTime String required
-    endTime String required
+    examName String 
+    semester SemesterEnum 
+    examDate LocalDate 
+    startTime String 
+    endTime String 
     gradeType GradeType
-    total Integer required
-    passing Integer required
+    total Integer 
+    passing Integer 
     actions String
     groupvalue Long
-    countvalue Long required
+    countvalue Long 
+	branchId Long
+	subjectId Long
+	departmentId Long
+	academicyearId Long
+	sectionId Long
+	batchId Long
 
 }
 
@@ -649,10 +661,10 @@ enum SemesterEnum{
 }
 
 entity TypeOfGrading{
-    minMarks  Integer required
-    maxMarks Integer required
-    grades String required
-    groupvalue Long required
+    minMarks  Integer
+    maxMarks Integer
+    grades String
+    groupvalue Long
 }
 
 enum RouteFrequency{
@@ -839,14 +851,11 @@ Teach{subject} to Subject,
 Teach{teacher} to Teacher,
 Teacher {department} to Department,
 Teacher{branch} to Branch,
+
 StudentExamReport{academicExamSetting} to AcademicExamSetting,
 StudentExamReport{student} to Student,
-StudentExamReport{section} to Section,
-StudentExamReport{subject} to Subject,
-StudentExamReport{department} to Department,
 StudentExamReport{typeOfGrading} to TypeOfGrading,
-StudentExamReport{batch} to Batch
-StudentExamReport{academicyear} to AcademicYear,
+
 AuthorizedSignatory{branch} to Branch,
 AuthorizedSignatory{college} to College,
 BankAccounts{branch} to Branch,
@@ -911,13 +920,9 @@ AdminAttendance{department} to Department,
 AdminAttendance{academicyear} to AcademicYear,
 AdminAttendance{section} to Section,
 AdminAttendance{student} to Student,
-AcademicExamSetting{branch} to Branch,
-AcademicExamSetting{subject} to Subject,
-AcademicExamSetting{department} to Department,
+
 AcademicExamSetting{typeOfGrading} to TypeOfGrading,
-AcademicExamSetting{academicyear} to AcademicYear,
-AcademicExamSetting{section} to Section,
-AcademicExamSetting{batch} to Batch,
+
 MetaLecture{branch} to Branch,
 MetaLecture{department} to Department,
 MetaLecture{subject} to Subject,

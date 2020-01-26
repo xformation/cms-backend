@@ -853,19 +853,23 @@ public class Query implements GraphQLQueryResolver {
     	cache.setGenders(genderList);
     	return cache;
     }
-    public ExamFilterDataCache createExamFilterDataCache(String collegeId, String academicYearId) throws Exception{
-        List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
-        List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
-        List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
-        List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(departmentList, batchList);
-        List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
-        List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
+    
+    public ExamFilterDataCache createExamFilterDataCache(Long branchId, Long academicYearId) throws Exception{
+//        List<Branch> branchList = this.commonService.findAllBranch(); //getBranchForCriteria(Long.valueOf(branchId));
+//        List<Department> departmentList = this.commonService.findAllDepartment(); //  getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+    	List<Batch> batchList = this.commonService.findAllBatches(); // getBatchForCriteria(departmentList);
+        
+    	List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(null, null);
+        List<Subject> sub = this.commonService.findAllSubject(); // getSubjectForCriteria(null, batchList);
+        
+        List<Section> sectionList = this.commonService.findAllSections(); // getSectionForCriteria(batchList);
+        
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
 
 
         ExamFilterDataCache cache = new ExamFilterDataCache();
-        cache.setBranches(branchList);
-        cache.setDepartments(departmentList);
+//        cache.setBranches(branchList);
+//        cache.setDepartments(departmentList);
         cache.setBatches(batchList);
         cache.setAcademicExamSettings(examsList);
         cache.setSubjects(sub);

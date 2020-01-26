@@ -155,7 +155,7 @@ public class BatchRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/cmsbatchenums")
     public List<CmsBatchVo> getAllCmsBatchEnums() {
 		logger.debug("Get all batches/years.");
-		List<CmsBatchVo> ls = this.commonService.getAllBatches();
+		List<CmsBatchVo> ls = this.commonService.getAllCmsBatches();
         return ls;
     }
     

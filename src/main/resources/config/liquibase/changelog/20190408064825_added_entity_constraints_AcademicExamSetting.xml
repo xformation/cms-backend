@@ -8,47 +8,13 @@
     -->
     <changeSet id="20190408064825-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="branch_id"
-                                 baseTableName="academic_exam_setting"
-                                 constraintName="fk_academic_exam_setting_branch_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="branch"/>
-
-        <addForeignKeyConstraint baseColumnNames="subject_id"
-                                 baseTableName="academic_exam_setting"
-                                 constraintName="fk_academic_exam_setting_subject_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="subject"/>
-
-        <addForeignKeyConstraint baseColumnNames="department_id"
-                                 baseTableName="academic_exam_setting"
-                                 constraintName="fk_academic_exam_setting_department_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="department"/>
-
         <addForeignKeyConstraint baseColumnNames="type_of_grading_id"
                                  baseTableName="academic_exam_setting"
                                  constraintName="fk_academic_exam_setting_type_of_grading_id"
                                  referencedColumnNames="id"
                                  referencedTableName="type_of_grading"/>
 
-        <addForeignKeyConstraint baseColumnNames="academicyear_id"
-                                 baseTableName="academic_exam_setting"
-                                 constraintName="fk_academic_exam_setting_academicyear_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="academic_year"/>
-
-        <addForeignKeyConstraint baseColumnNames="section_id"
-                                 baseTableName="academic_exam_setting"
-                                 constraintName="fk_academic_exam_setting_section_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="section"/>
-
-        <addForeignKeyConstraint baseColumnNames="batch_id"
-                                 baseTableName="academic_exam_setting"
-                                 constraintName="fk_academic_exam_setting_batch_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="batch"/>
+        
 
     </changeSet>
 </databaseChangeLog>

@@ -1,27 +1,19 @@
 package com.synectiks.cms.service.dto;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the StudentExamReport entity.
+ * A DTO for the {@link com.synectiks.cms.domain.StudentExamReport} entity.
  */
 public class StudentExamReportDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private Integer marksObtained;
 
-    @NotNull
     private String comments;
 
     private Integer gOp;
-
-
-    private Long academicExamSettingId;
-
-    private Long studentId;
 
     private Long sectionId;
 
@@ -29,11 +21,16 @@ public class StudentExamReportDTO implements Serializable {
 
     private Long departmentId;
 
-    private Long typeOfGradingId;
-
     private Long batchId;
 
     private Long academicyearId;
+
+
+    private Long academicExamSettingId;
+
+    private Long studentId;
+
+    private Long typeOfGradingId;
 
     public Long getId() {
         return id;
@@ -67,22 +64,6 @@ public class StudentExamReportDTO implements Serializable {
         this.gOp = gOp;
     }
 
-    public Long getAcademicExamSettingId() {
-        return academicExamSettingId;
-    }
-
-    public void setAcademicExamSettingId(Long academicExamSettingId) {
-        this.academicExamSettingId = academicExamSettingId;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
     public Long getSectionId() {
         return sectionId;
     }
@@ -107,14 +88,6 @@ public class StudentExamReportDTO implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Long getTypeOfGradingId() {
-        return typeOfGradingId;
-    }
-
-    public void setTypeOfGradingId(Long typeOfGradingId) {
-        this.typeOfGradingId = typeOfGradingId;
-    }
-
     public Long getBatchId() {
         return batchId;
     }
@@ -127,8 +100,32 @@ public class StudentExamReportDTO implements Serializable {
         return academicyearId;
     }
 
-    public void setAcademicyearId(Long academicYearId) {
-        this.academicyearId = academicYearId;
+    public void setAcademicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
+    }
+
+    public Long getAcademicExamSettingId() {
+        return academicExamSettingId;
+    }
+
+    public void setAcademicExamSettingId(Long academicExamSettingId) {
+        this.academicExamSettingId = academicExamSettingId;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public Long getTypeOfGradingId() {
+        return typeOfGradingId;
+    }
+
+    public void setTypeOfGradingId(Long typeOfGradingId) {
+        this.typeOfGradingId = typeOfGradingId;
     }
 
     @Override
@@ -159,14 +156,14 @@ public class StudentExamReportDTO implements Serializable {
             ", marksObtained=" + getMarksObtained() +
             ", comments='" + getComments() + "'" +
             ", gOp=" + getgOp() +
+            ", sectionId=" + getSectionId() +
+            ", subjectId=" + getSubjectId() +
+            ", departmentId=" + getDepartmentId() +
+            ", batchId=" + getBatchId() +
+            ", academicyearId=" + getAcademicyearId() +
             ", academicExamSetting=" + getAcademicExamSettingId() +
             ", student=" + getStudentId() +
-            ", section=" + getSectionId() +
-            ", subject=" + getSubjectId() +
-            ", department=" + getDepartmentId() +
             ", typeOfGrading=" + getTypeOfGradingId() +
-            ", batch=" + getBatchId() +
-            ", academicyear=" + getAcademicyearId() +
             "}";
     }
 }

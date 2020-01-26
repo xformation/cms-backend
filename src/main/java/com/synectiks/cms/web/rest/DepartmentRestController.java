@@ -123,7 +123,7 @@ public class DepartmentRestController {
         if(!this.branchRepository.existsById(id)) {
             return Collections.emptyList();
         }
-        List<CmsDepartmentVo> ls = this.commonService.getDepartmentListByBranch(id);
+        List<CmsDepartmentVo> ls = this.commonService.getCmsDepartmentListByBranch(id);
         return ls;
     }
 

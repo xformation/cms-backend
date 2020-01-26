@@ -56,7 +56,6 @@ import com.synectiks.cms.domain.CmsTypeOfOwnershipVo;
 import com.synectiks.cms.domain.College;
 import com.synectiks.cms.domain.Config;
 import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Employee;
 import com.synectiks.cms.domain.Facility;
 import com.synectiks.cms.domain.FeeCategory;
 import com.synectiks.cms.domain.FeeDetails;
@@ -78,7 +77,6 @@ import com.synectiks.cms.domain.enumeration.BatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
 import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
 import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
 import com.synectiks.cms.graphql.types.Student.Semester;
@@ -87,22 +85,11 @@ import  com.synectiks.cms.graphql.types.TransportRoute.RouteFrequency;
 import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.graphql.types.gender.Gender;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.BatchRepository;
 import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.EmployeeRepository;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.NotificationsRepository;
-import com.synectiks.cms.repository.SectionRepository;
 import com.synectiks.cms.repository.StateRepository;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.VehicleRepository;
 import com.synectiks.cms.service.util.CommonUtil;
@@ -119,32 +106,32 @@ public class CommonService {
 //    @Autowired
 //    private DepartmentRepository departmentRepository;
 
-    @Autowired
-    private BatchRepository batchRepository;
+//    @Autowired
+//    private BatchRepository batchRepository;
 
 //    @Autowired
 //    private TeacherRepository teacherRepository;
 
-    @Autowired
-    private SectionRepository sectionRepository;
+//    @Autowired
+//    private SectionRepository sectionRepository;
 
-    @Autowired
-    private SubjectRepository subjectRepository;
+//    @Autowired
+//    private SubjectRepository subjectRepository;
 
-    @Autowired
-    private TeachRepository teachRepository;
+//    @Autowired
+//    private TeachRepository teachRepository;
 
-    @Autowired
-    private AttendanceMasterRepository attendanceMasterRepository;
+//    @Autowired
+//    private AttendanceMasterRepository attendanceMasterRepository;
 
-    @Autowired
-    private HolidayRepository holidayRepository;
+//    @Autowired
+//    private HolidayRepository holidayRepository;
 
-    @Autowired
-    private TermRepository termRepository;
+//    @Autowired
+//    private TermRepository termRepository;
 
-    @Autowired
-    private CollegeRepository collegeRepository;
+//    @Autowired
+//    private CollegeRepository collegeRepository;
     @Autowired
     private VehicleRepository vehicleRepository;
 
@@ -166,8 +153,8 @@ public class CommonService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+//    @Autowired
+//    private EmployeeRepository employeeRepository;
 
     @Autowired
     private TransportRouteRepository transportRouteRepository;
@@ -181,8 +168,8 @@ public class CommonService {
     @Autowired
     private NotificationsRepository notificationsRepository;
 
-    @Autowired
-    private LectureRepository lectureRepository;
+//    @Autowired
+//    private LectureRepository lectureRepository;
 
     @Autowired
     ApplicationProperties applicationProperties;
@@ -305,7 +292,15 @@ public class CommonService {
         Branch temp = this.restTemplate.getForObject(prefBranchUrl, Branch.class);
         return temp;    
     }
-    
+    public Branch findBranchById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefBranchUrl = prefUrl+"/api/branch-by-id/"+id;
+        Branch temp = this.restTemplate.getForObject(prefBranchUrl, Branch.class);
+        return temp;    
+    }
     public CmsBranchVo getCmsBranchById(Long id) {
         if(id == null) {
             return null;
@@ -315,7 +310,15 @@ public class CommonService {
         CmsBranchVo temp = this.restTemplate.getForObject(prefBranchUrl, CmsBranchVo.class);
         return temp;    
     }
-    
+    public CmsBranchVo findCmsBranchById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefBranchUrl = prefUrl+"/api/cmsbranch/"+id;
+        CmsBranchVo temp = this.restTemplate.getForObject(prefBranchUrl, CmsBranchVo.class);
+        return temp;    
+    }
 	public List<CmsBranchVo> findAllCmsBranch() {
       String prefUrl = applicationProperties.getPreferenceSrvUrl();
       String prefBranchUrl = prefUrl+"/api/cmsbranch-by-filters";
@@ -384,7 +387,6 @@ public class CommonService {
       Collections.sort(departmentList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
       return departmentList;
 	}
-	
 	public List<Department> findAllDepartmentByBranchAndAcademicYear(Long branchId, Long academicYearId) {
 		logger.debug("Getting department based on branch id : "+branchId+", and academicYearId : "+academicYearId);
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
@@ -398,8 +400,220 @@ public class CommonService {
 	    return departmentList;
 	}
 	
+	public Batch getBatchById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefBatchUrl = prefUrl+"/api/batch-by-id/"+id;
+        Batch temp = this.restTemplate.getForObject(prefBatchUrl, Batch.class);
+        return temp;
+    }
+
+    public CmsBatchVo getCmsBatchById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefBatchUrl = prefUrl+"/api/cmsbatch/"+id;
+        CmsBatchVo temp = this.restTemplate.getForObject(prefBatchUrl, CmsBatchVo.class);
+        return temp;    
+    }
+    	
+	public List<Batch> findAllBatchByDepartment(Long departmentId) {
+		logger.debug("Getting batch based on department id : "+departmentId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefBatchUrl = prefUrl+"/api/batch-by-filters?departmentId="+departmentId;
+	    Batch[] temp = this.restTemplate.getForObject(prefBatchUrl, Batch[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Batch> batchList = Arrays.asList(temp);	
+	    Collections.sort(batchList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return batchList;
+	}
+	public List<Batch> findAllBatchByBatchAndDepartment(Long departmentId, Long batchId) {
+		logger.debug("Getting batch based on department id : "+departmentId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefBatchUrl = prefUrl+"/api/batch-by-filters?departmentId="+departmentId+"&id="+batchId;
+	    Batch[] temp = this.restTemplate.getForObject(prefBatchUrl, Batch[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Batch> batchList = Arrays.asList(temp);	
+	    Collections.sort(batchList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return batchList;
+	}
+	
+	public List<Batch> getAllBatches() {
+        logger.debug("Getting all Batches ");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefBatchUrl = prefUrl+"/api/batch-by-filters";
+	    Batch[] temp = this.restTemplate.getForObject(prefBatchUrl, Batch[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Batch> batchList = Arrays.asList(temp);	
+	    Collections.sort(batchList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return batchList;
+    }
+	public List<Batch> findAllBatches() {
+        logger.debug("Retrieving all Batches ");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefBatchUrl = prefUrl+"/api/batch-by-filters";
+	    Batch[] temp = this.restTemplate.getForObject(prefBatchUrl, Batch[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Batch> batchList = Arrays.asList(temp);	
+	    Collections.sort(batchList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return batchList;
+    }
+	public List<CmsBatchVo> getAllCmsBatches() {
+        logger.debug("Getting all cms batches ");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefBatchUrl = prefUrl+"/api/cmsbatch-by-filters";
+	    CmsBatchVo[] temp = this.restTemplate.getForObject(prefBatchUrl, CmsBatchVo[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<CmsBatchVo> batchList = Arrays.asList(temp);	
+	    Collections.sort(batchList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return batchList;
+    }
+	public List<CmsBatchVo> findAllCmsBatches() {
+        logger.debug("Retrieving all cms batches ");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefBatchUrl = prefUrl+"/api/cmsbatch-by-filters";
+	    CmsBatchVo[] temp = this.restTemplate.getForObject(prefBatchUrl, CmsBatchVo[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<CmsBatchVo> batchList = Arrays.asList(temp);	
+	    Collections.sort(batchList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return batchList;
+    }
+	public Section getSectionById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefSectionUrl = prefUrl+"/api/section-by-id/"+id;
+        Section temp = this.restTemplate.getForObject(prefSectionUrl, Section.class);
+        return temp;
+    }
+
+    public CmsSectionVo getCmsSectionById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+        String prefSectionUrl = prefUrl+"/api/cmssection/"+id;
+        CmsSectionVo temp = this.restTemplate.getForObject(prefSectionUrl, CmsSectionVo.class);
+        return temp;    
+    }
+    	
+	public List<Section> findAllSectionByBatch(Long batchId) {
+		logger.debug("Getting section based on batch id : "+batchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSectionUrl = prefUrl+"/api/section-by-filters?batchId="+batchId;
+	    Section[] temp = this.restTemplate.getForObject(prefSectionUrl, Section[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Section> sectionList = Arrays.asList(temp);	
+	    Collections.sort(sectionList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return sectionList;
+	}
+	public List<Section> findAllSectionByBatchAndSection(Long batchId, Long sectionId) {
+		logger.debug("Getting section based on batch id : "+batchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSectionUrl = prefUrl+"/api/section-by-filters?batchId="+batchId+"&id="+sectionId;
+	    Section[] temp = this.restTemplate.getForObject(prefSectionUrl, Section[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Section> sectionList = Arrays.asList(temp);	
+	    Collections.sort(sectionList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return sectionList;
+	}
+	
+	public List<Section> getAllSections() {
+        logger.debug("Getting all Section");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSectionUrl = prefUrl+"/api/section-by-filters";
+	    Section[] temp = this.restTemplate.getForObject(prefSectionUrl, Section[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Section> sectionList = Arrays.asList(temp);	
+	    Collections.sort(sectionList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return sectionList;
+    }
+	public List<Section> findAllSections() {
+        logger.debug("Retrieving all Section");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSectionUrl = prefUrl+"/api/section-by-filters";
+	    Section[] temp = this.restTemplate.getForObject(prefSectionUrl, Section[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Section> sectionList = Arrays.asList(temp);	
+	    Collections.sort(sectionList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return sectionList;
+    }
+	public List<CmsSectionVo> getAllCmsSections() {
+        logger.debug("Getting all cms section");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSectionUrl = prefUrl+"/api/cmssection-by-filters";
+	    CmsSectionVo[] temp = this.restTemplate.getForObject(prefSectionUrl, CmsSectionVo[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<CmsSectionVo> sectionList = Arrays.asList(temp);	
+	    Collections.sort(sectionList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return sectionList;
+    }
+	public List<CmsSectionVo> findAllCmsSections() {
+        logger.debug("Retrieving all cms section");
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSectionUrl = prefUrl+"/api/cmssection-by-filters";
+	    CmsSectionVo[] temp = this.restTemplate.getForObject(prefSectionUrl, CmsSectionVo[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<CmsSectionVo> sectionList = Arrays.asList(temp);	
+	    Collections.sort(sectionList, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return sectionList;
+    }
+	public List<Subject> findAllSubjectByDepartmentAndBatch(Long departmentId, Long batchId) {
+		logger.debug("Getting subjects based on department id : "+departmentId+", and batch id : "+batchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-filters?departmentId="+departmentId+"&batchId="+batchId;
+	    Subject[] temp = this.restTemplate.getForObject(prefSubjectUrl, Subject[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Subject> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	}
+	
+	public List<Subject> findAllSubject() {
+		logger.debug("Getting all subjects ");
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-filters";
+	    Subject[] temp = this.restTemplate.getForObject(prefSubjectUrl, Subject[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Subject> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	}
+	
 	public List<CmsDepartmentVo> findAllCmsDepartmentByBranch(Long branchId) {
-		logger.debug("Getting department based on branch id : "+branchId);
+		logger.debug("Getting cms department based on branch id : "+branchId);
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
 	    String prefDepartmentUrl = prefUrl+"/api/cmsdepartment-by-filters?branchId="+branchId;
 	    CmsDepartmentVo[] temp = this.restTemplate.getForObject(prefDepartmentUrl, CmsDepartmentVo[].class);
@@ -409,6 +623,18 @@ public class CommonService {
 	    List<CmsDepartmentVo> cmsDepartmentList = Arrays.asList(temp);	
 	    Collections.sort(cmsDepartmentList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
 	    return cmsDepartmentList;
+	}
+	public List<Department> findAllDepartmentByBranch(Long branchId) {
+		logger.debug("Getting department based on branch id : "+branchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefDepartmentUrl = prefUrl+"/api/department-by-filters?branchId="+branchId;
+	    Department[] temp = this.restTemplate.getForObject(prefDepartmentUrl, Department[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Department> departmentList = Arrays.asList(temp);	
+	    Collections.sort(departmentList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return departmentList;
 	}
 	
     public TransportRoute getTransportRouteById(Long transportRouteId) {
@@ -444,16 +670,16 @@ public class CommonService {
         return null;
     }
 
-    public Batch getBatchById(Long batchId) {
-        if(batchId == null) {
-            return null;
-        }
-        Optional<Batch> newBt = this.batchRepository.findById(batchId);
-        if(newBt.isPresent()) {
-            return newBt.get();
-        }
-        return null;
-    }
+//    public Batch getBatchById(Long batchId) {
+//        if(batchId == null) {
+//            return null;
+//        }
+//        Optional<Batch> newBt = this.batchRepository.findById(batchId);
+//        if(newBt.isPresent()) {
+//            return newBt.get();
+//        }
+//        return null;
+//    }
 
     public Teacher getTeacherById(Long teacherId) {
     	if(teacherId == null) {
@@ -483,76 +709,125 @@ public class CommonService {
 	    return temp[0];
 	}
     
-    public Section getSectionById(Long secId) {
-        if(secId == null) {
-            return null;
-        }
-        Optional<Section> newSc = this.sectionRepository.findById(secId);
-        if(newSc.isPresent()) {
-            return newSc.get();
-        }
-        return null;
-    }
+//    public Section getSectionById(Long secId) {
+//        if(secId == null) {
+//            return null;
+//        }
+//        Optional<Section> newSc = this.sectionRepository.findById(secId);
+//        if(newSc.isPresent()) {
+//            return newSc.get();
+//        }
+//        return null;
+//    }
 
     public Subject getSubjectById(Long subId) {
         if(subId == null) {
             return null;
         }
-        Optional<Subject> newSb = this.subjectRepository.findById(subId);
-        if(newSb.isPresent()) {
-            return newSb.get();
-        }
-        return null;
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-id/"+subId;
+	    Subject temp = this.restTemplate.getForObject(prefSubjectUrl, Subject.class);
+	    return temp;
+//        Optional<Subject> newSb = this.subjectRepository.findById(subId);
+//        if(newSb.isPresent()) {
+//            return newSb.get();
+//        }
+//        return null;
     }
 
+    public Subject findSubjectById(Long subId) {
+        if(subId == null) {
+            return null;
+        }
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-id/"+subId;
+	    Subject temp = this.restTemplate.getForObject(prefSubjectUrl, Subject.class);
+	    return temp;
+    }
+    
     public Teach getTeachBySubjectAndTeacherId(Long thrId, Long subId) {
         if(thrId == null || subId == null) {
             return null;
         }
-        Teach th = new Teach();
-        Subject s = getSubjectById(subId);
-        Teacher t = getTeacherById(thrId);
-        th.setSubject(s);
-        th.setTeacher(t);
-        Example<Teach> example = Example.of(th);
-        List<Teach> newTh = this.teachRepository.findAll(example);
-        if(newTh.size() > 0) {
-            return newTh.get(0);
-        }
-        return null;
+        
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefTeachUrl = prefUrl+"/api/teach-by-filters?teacherId="+thrId+"&subjectId="+subId;
+	    Teach[] temp = this.restTemplate.getForObject(prefTeachUrl, Teach[].class);
+	    if(temp.length == 0) {
+	    	return null;
+	    }
+	    List<Teach> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list.get(0);
+	    
+//        Teach th = new Teach();
+//        Subject s = getSubjectById(subId);
+//        Teacher t = getTeacherById(thrId);
+//        th.setSubject(s);
+//        th.setTeacher(t);
+//        Example<Teach> example = Example.of(th);
+//        List<Teach> newTh = this.teachRepository.findAll(example);
+//        if(newTh.size() > 0) {
+//            return newTh.get(0);
+//        }
+//        return null;
     }
 
     public AttendanceMaster getAttendanceMasterByBatchSectionTeach(Batch bt, Section sc, Teach th) {
-        AttendanceMaster am = new AttendanceMaster();
-        am.setBatch(bt);
-        am.setSection(sc);
-        am.setTeach(th);
-        Example<AttendanceMaster> example = Example.of(am);
-        List<AttendanceMaster> newAm = this.attendanceMasterRepository.findAll(example);
-        if(newAm.size() > 0) {
-            return newAm.get(0);
-        }
-        return null;
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/attendancemaster-by-filters?batchId="+bt.getId()+"&sectionId="+sc.getId()+"&teachId="+th.getId();
+	    AttendanceMaster[] temp = this.restTemplate.getForObject(prefUrl, AttendanceMaster[].class);
+	    if(temp.length == 0) {
+	    	return null;
+	    }
+	    List<AttendanceMaster> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list.get(0);
+	    
+//    	AttendanceMaster am = new AttendanceMaster();
+//        am.setBatch(bt);
+//        am.setSection(sc);
+//        am.setTeach(th);
+//        Example<AttendanceMaster> example = Example.of(am);
+//        List<AttendanceMaster> newAm = this.attendanceMasterRepository.findAll(example);
+//        if(newAm.size() > 0) {
+//            return newAm.get(0);
+//        }
+//        return null;
     }
 
     public List<AttendanceMaster> getAttendanceMasterByBatchSection(Batch bt, Section sc) {
-        AttendanceMaster am = new AttendanceMaster();
-        am.setBatch(bt);
-        am.setSection(sc);
-        Example<AttendanceMaster> example = Example.of(am);
-        List<AttendanceMaster> newAm = this.attendanceMasterRepository.findAll(example);
-        return newAm;
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/attendancemaster-by-filters?batchId="+bt.getId()+"&sectionId="+sc.getId();
+	    AttendanceMaster[] temp = this.restTemplate.getForObject(prefUrl, AttendanceMaster[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<AttendanceMaster> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	    
+	    
+//    	AttendanceMaster am = new AttendanceMaster();
+//        am.setBatch(bt);
+//        am.setSection(sc);
+//        Example<AttendanceMaster> example = Example.of(am);
+//        List<AttendanceMaster> newAm = this.attendanceMasterRepository.findAll(example);
+//        return newAm;
     }
 
     public AttendanceMaster getAttendanceMasterById(Long id) {
         if(id == null) {
             return null;
         }
-        Optional<AttendanceMaster> newAm = this.attendanceMasterRepository.findById(id);
-        if(newAm.isPresent()) {
-            return newAm.get();
-        }
-        return null;
+        
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/attendancemaster-by-id/"+id;
+        AttendanceMaster temp = this.restTemplate.getForObject(prefUrl, AttendanceMaster.class);
+        return temp;
+	    
+//        Optional<AttendanceMaster> newAm = this.attendanceMasterRepository.findById(id);
+//        if(newAm.isPresent()) {
+//            return newAm.get();
+//        }
+//        return null;
     }
 
     public List<Holiday> getHolidayList(Optional<AcademicYear> oay) {
@@ -561,12 +836,22 @@ public class CommonService {
             logger.warn("Academic Year is null. Returning empty holiday list.");
             return Collections.emptyList();
         }
-        Holiday hl = new Holiday();
-        hl.setHolidayStatus(Status.ACTIVE);
-        hl.setAcademicyear(oay.get());
-        Example<Holiday> example = Example.of(hl);
-        List<Holiday> list = this.holidayRepository.findAll(example);
-        return list;
+        
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/holiday-by-filters?academicYearId="+oay.get().getId()+"&status=ACTIVE";
+        Holiday[] temp = this.restTemplate.getForObject(prefUrl, Holiday[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Holiday> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	    
+//        Holiday hl = new Holiday();
+//        hl.setHolidayStatus(Status.ACTIVE);
+//        hl.setAcademicyear(oay.get());
+//        Example<Holiday> example = Example.of(hl);
+//        List<Holiday> list = this.holidayRepository.findAll(example);
+//        return list;
     }
 
     
@@ -575,26 +860,36 @@ public class CommonService {
         if(termId == null) {
             return null;
         }
-        Term tm = new Term();
-        tm.setTermStatus(Status.ACTIVE);
-        tm.setId(termId);
-        Example<Term> example = Example.of(tm);
-        Optional<Term> term = this.termRepository.findOne(example);
-        if(term.isPresent()) {
-            return term.get();
-        }
-        return null;
+        
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/term-by-id/"+termId;
+        Term temp = this.restTemplate.getForObject(prefUrl, Term.class);
+        return temp;
+	    
+        
+//        Term tm = new Term();
+//        tm.setTermStatus(Status.ACTIVE);
+//        tm.setId(termId);
+//        Example<Term> example = Example.of(tm);
+//        Optional<Term> term = this.termRepository.findOne(example);
+//        if(term.isPresent()) {
+//            return term.get();
+//        }
+//        return null;
     }
 
     public College getCollegeById(Long id) {
         if(id == null) {
             return null;
         }
-        Optional<College> clg =  this.collegeRepository.findById(id);
-        if(clg.isPresent()) {
-            return clg.get();
-        }
-        return null;
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/college";
+        College temp = this.restTemplate.getForObject(prefUrl, College.class);
+        return temp;
+        
+//        Optional<College> clg =  this.collegeRepository.findById(id);
+//        if(clg.isPresent()) {
+//            return clg.get();
+//        }
+//        return null;
     }
 
     public State getStateById(Long id) {
@@ -623,11 +918,14 @@ public class CommonService {
         if(id == null) {
             return null;
         }
-        Optional<Teach> th =  this.teachRepository.findById(id);
-        if(th.isPresent()) {
-            return th.get();
-        }
-        return null;
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-id/"+id;
+	    Teach temp = this.restTemplate.getForObject(prefUrl, Teach.class);
+	    return temp;
+//        Optional<Teach> th =  this.teachRepository.findById(id);
+//        if(th.isPresent()) {
+//            return th.get();
+//        }
+//        return null;
     }
 
     public List<Department> getDepartmentsByBranchAndAcademicYear(Long branchId, Long academicYearId){
@@ -783,6 +1081,7 @@ public class CommonService {
         return bth;
     }
 
+   
     public List<Subject> getSubjectForCriteria(List<Department> dept, List<Batch> batch){
         if(dept.size() == 0 || batch.size() == 0) {
             logger.warn("Either department or batch list is empty. Returning empty subject list.");
@@ -790,23 +1089,33 @@ public class CommonService {
             return Collections.emptyList();
         }
 
-        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<Subject> query = cb.createQuery(Subject.class);
-        Root<Subject> root = query.from(Subject.class);
-        In<Long> inDepartment = cb.in(root.get("department"));
-        for (Department dt : dept) {
-            inDepartment.value(dt.getId());
-        }
-        In<Long> inBatch = cb.in(root.get("batch"));
-        for (Batch bth : batch) {
-            inBatch.value(bth.getId());
-        }
-
-        CriteriaQuery<Subject> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch), cb.and(cb.equal(root.get("status"), Status.ACTIVE)));
-        TypedQuery<Subject> typedQuery = this.entityManager.createQuery(select);
-        List<Subject> subList = typedQuery.getResultList();
-        logger.debug("Returning list of subjects from JPA criteria query. Total records : "+subList.size());
-        return subList;
+        String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-department-batch-list";
+	    Subject[] temp = this.restTemplate.getForObject(prefSubjectUrl, Subject[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Subject> subjectList = Arrays.asList(temp);	
+	    Collections.sort(subjectList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return subjectList;
+	    
+//        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Subject> query = cb.createQuery(Subject.class);
+//        Root<Subject> root = query.from(Subject.class);
+//        In<Long> inDepartment = cb.in(root.get("department"));
+//        for (Department dt : dept) {
+//            inDepartment.value(dt.getId());
+//        }
+//        In<Long> inBatch = cb.in(root.get("batch"));
+//        for (Batch bth : batch) {
+//            inBatch.value(bth.getId());
+//        }
+//
+//        CriteriaQuery<Subject> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch), cb.and(cb.equal(root.get("status"), Status.ACTIVE)));
+//        TypedQuery<Subject> typedQuery = this.entityManager.createQuery(select);
+//        List<Subject> subList = typedQuery.getResultList();
+//        logger.debug("Returning list of subjects from JPA criteria query. Total records : "+subList.size());
+//        return subList;
     }
 
     public List<Section> getSectionForCriteria(List<Batch> batch){
@@ -828,34 +1137,45 @@ public class CommonService {
         return secList;
     }
 
-    public List<AcademicExamSetting> getExamsForCriteria(List<Department> dept, List<Batch> batch){
-        if(dept.size() == 0 || batch.size() == 0 ) {
-            logger.warn("Either department or batch list is empty. Returning empty AcademicExamSetting list.");
-            logger.warn("Total records in department list: "+dept.size()+", total records in batch list: "+batch.size());
-            return Collections.emptyList();
-        }
-
-        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<AcademicExamSetting> query = cb.createQuery(AcademicExamSetting.class);
-        Root<AcademicExamSetting> root = query.from(AcademicExamSetting.class);
-        In<Long> inDepartment = cb.in(root.get("department"));
-        for (Department dt : dept) {
-            inDepartment.value(dt.getId());
-        }
-        In<Long> inBatch = cb.in(root.get("batch"));
-        for (Batch bth : batch) {
-            inBatch.value(bth.getId());
-        }
-//        In<Long> inSection = cb.in(root.get("section"));
-//        for (Section sec : secList) {
-//            inSection.value(sec.getId());
+//    public List<AcademicExamSetting> getExamsForCriteria(List<Department> dept, List<Batch> batch){
+//        if(dept.size() == 0 || batch.size() == 0 ) {
+//            logger.warn("Either department or batch list is empty. Returning empty AcademicExamSetting list.");
+//            logger.warn("Total records in department list: "+dept.size()+", total records in batch list: "+batch.size());
+//            return Collections.emptyList();
 //        }
-        CriteriaQuery<AcademicExamSetting> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch));
-        TypedQuery<AcademicExamSetting> typedQuery = this.entityManager.createQuery(select);
-        List<AcademicExamSetting> examsList = typedQuery.getResultList();
-        logger.debug("Returning list of exams from JPA criteria query. Total records : "+examsList.size());
-        return examsList;
+//
+//        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+//        CriteriaQuery<AcademicExamSetting> query = cb.createQuery(AcademicExamSetting.class);
+//        Root<AcademicExamSetting> root = query.from(AcademicExamSetting.class); 
+//        In<Long> inDepartment = cb.in(root.get("department"));
+//        for (Department dt : dept) {
+//            inDepartment.value(dt.getId());
+//        }
+//        In<Long> inBatch = cb.in(root.get("batch"));
+//        for (Batch bth : batch) {
+//            inBatch.value(bth.getId());
+//        }
+////        In<Long> inSection = cb.in(root.get("section"));
+////        for (Section sec : secList) {
+////            inSection.value(sec.getId());
+////        }
+//        CriteriaQuery<AcademicExamSetting> select = query.select(root).where(cb.and(inDepartment), cb.and(inBatch));
+//        TypedQuery<AcademicExamSetting> typedQuery = this.entityManager.createQuery(select);
+//        List<AcademicExamSetting> examsList = typedQuery.getResultList();
+//        logger.debug("Returning list of exams from JPA criteria query. Total records : "+examsList.size());
+//        return examsList;
+//    }
+    
+    public List<AcademicExamSetting> getExamsForCriteria(List<Department> dept, List<Batch> batch){
+//        if(dept.size() == 0 || batch.size() == 0 ) {
+//            logger.warn("Either department or batch list is empty. Returning empty AcademicExamSetting list.");
+//            logger.warn("Total records in department list: "+dept.size()+", total records in batch list: "+batch.size());
+//            return Collections.emptyList();
+//        }
+
+        return this.academicExamSettingRepository.findAll();
     }
+    
     public List<Student> getStudentsForCriteria(List<Department> dept, List<Batch> batch, List<Section> sec){
         if(dept.size() == 0 || batch.size() == 0 || sec.size() == 0) {
             logger.warn("Either department or batch list is empty. Returning empty AcademicExamSetting list.");
@@ -1184,12 +1504,11 @@ public class CommonService {
     	logger.debug("Getting terms based on academicYearId : "+academicYearId);
     	if(academicYearId == null) {
     		logger.info("academic year id is null. Returning empty term list");
-            Collections.emptyList();
+            return Collections.emptyList();
         }
         
-        String prefUrl = applicationProperties.getPreferenceSrvUrl();
-	    String prefTermUrl = prefUrl+"/api/cmsterm-by-filters?academicYearId="+academicYearId+"&status=ACTIVE";
-	    CmsTermVo[] temp = this.restTemplate.getForObject(prefTermUrl, CmsTermVo[].class);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/cmsterm-by-filters?academicYearId="+academicYearId+"&status=ACTIVE";
+	    CmsTermVo[] temp = this.restTemplate.getForObject(prefUrl, CmsTermVo[].class);
 	    if(temp.length == 0) {
 	    	logger.info("No term found for the given academic year. Returning empty term list");
             return Collections.emptyList();
@@ -1468,11 +1787,22 @@ public class CommonService {
     }
 
     public List<Subject>getAllSubjectsOfStudent(Student student){
-        Subject subject = new Subject();
-        subject.setDepartment(student.getDepartment());
-        subject.setBatch(student.getBatch());
-        List<Subject> list = this.subjectRepository.findAll(Example.of(subject));
-        return list;
+//        Subject subject = new Subject();
+//        subject.setDepartment(student.getDepartment());
+//        subject.setBatch(student.getBatch());
+//        List<Subject> list = this.subjectRepository.findAll(Example.of(subject));
+//        return list;
+        
+        logger.debug("Getting subject based on department id : "+student.getDepartment().getId()+", and batchId : "+student.getBatch().getId());
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-filters?departmentId="+student.getDepartment().getId()+"&batchId="+student.getBatch().getId();
+	    Subject[] temp = this.restTemplate.getForObject(prefSubjectUrl, Subject[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Subject> subjectList = Arrays.asList(temp);	
+	    Collections.sort(subjectList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return subjectList;
     }
 
     public long getTotalLecturesScheduledForStudent(Student student) {
@@ -1535,20 +1865,34 @@ public class CommonService {
     }
 
     public List<Teach> getAllSubjectsOfTeacher(Teacher th){
-        Teach teach = new Teach();
-        teach.setTeacher(th);
-        List<Teach> list = this.teachRepository.findAll(Example.of(teach));
-        logger.debug("Total subjects teach by teacher "+th.getTeacherName() + " are : "+list.size());
-        return list;
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId();
+	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
+	    if(temp.length == 0) {
+	    	return null;
+	    }
+	    List<Teach> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    logger.debug("Total subjects teach by teacher "+th.getTeacherName() + " are : "+list.size());
+	    return list;
+	    
+//        Teach teach = new Teach();
+//        teach.setTeacher(th);
+//        List<Teach> list = this.teachRepository.findAll(Example.of(teach));
+//        logger.debug("Total subjects teach by teacher "+th.getTeacherName() + " are : "+list.size());
+//        return list;
     }
 
     public List<Lecture> getAllLecturesScheduledForTeacher(Teacher th, Subject sub) {
         AcademicYear ay = this.getActiveAcademicYear();
-        Teach teach = new Teach();
-        teach.setTeacher(th);
-        teach.setSubject(sub);
-        List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
+//        Teach teach = new Teach();
+//        teach.setTeacher(th);
+//        teach.setSubject(sub);
+//        List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
 
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
+	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
+	    List<Teach> thList = Arrays.asList(temp);	
+	    
         @SuppressWarnings("unchecked")
         List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
             .setParameter("th", thList)
@@ -1578,11 +1922,17 @@ public class CommonService {
 
     public List<Lecture> getTotalLecturesConductedForTeacher(Teacher th, Subject sub, LocalDate dt) throws Exception{
         AcademicYear ay = this.getActiveAcademicYear();
-        Teach teach = new Teach();
-        teach.setTeacher(th);
-        teach.setSubject(sub);
-        List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
+        
+//        Teach teach = new Teach();
+//        teach.setTeacher(th);
+//        teach.setSubject(sub);
+//        List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
 
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
+	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
+	    List<Teach> thList = Arrays.asList(temp);	
+	    
+	    
         @SuppressWarnings("unchecked")
         List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
             .setParameter("th", thList)
@@ -1602,7 +1952,7 @@ public class CommonService {
         return list;
     }
 
-    public List<CmsDepartmentVo> getDepartmentListByBranch(Long branchId){
+    public List<CmsDepartmentVo> getCmsDepartmentListByBranch(Long branchId){
 //        Branch branch = this.branchRepository.findById(branchId).get();
 //        Branch branch = this.getBranchById(branchId);
 //    	Department department = new Department();
@@ -1618,18 +1968,22 @@ public class CommonService {
         return this.findAllCmsDepartmentByBranch(branchId);
     }
 
-    public List<CmsBatchVo> getAllBatches() {
-        logger.debug("Retrieving all CmsBatchEnum enums");
-        List<CmsBatchVo> ls = new ArrayList<>();
-        for(CmsBatchEnum be: CmsBatchEnum.values()) {
-            CmsBatchVo vo = new CmsBatchVo();
-            vo.setId(new Long(be.id()));
-            vo.setDescription(be.getDescription());
-            ls.add(vo);
-        }
-        logger.debug("All cms batch enums : "+ls);
-        return ls;
+    public List<Department> getDepartmentListByBranch(Long branchId){
+      return this.findAllDepartmentByBranch(branchId);
     }
+    
+//    public List<CmsBatchVo> getAllBatches() {
+//        logger.debug("Retrieving all CmsBatchEnum enums");
+//        List<CmsBatchVo> ls = new ArrayList<>();
+//        for(CmsBatchEnum be: CmsBatchEnum.values()) {
+//            CmsBatchVo vo = new CmsBatchVo();
+//            vo.setId(new Long(be.id()));
+//            vo.setDescription(be.getDescription());
+//            ls.add(vo);
+//        }
+//        logger.debug("All cms batch enums : "+ls);
+//        return ls;
+//    }
 
     public CmsBatchVo getCmsBatchVo(Long id) {
         CmsBatchEnum cbn = CmsBatchEnum.findById(id.intValue());
@@ -1645,18 +1999,18 @@ public class CommonService {
         return batch;
     }
 
-    public List<CmsSectionVo> getAllSections() {
-        logger.debug("Retrieving all CmsSectionVo enums");
-        List<CmsSectionVo> ls = new ArrayList<>();
-        for(CmsSectionEnum obj: CmsSectionEnum.values()) {
-            CmsSectionVo vo = new CmsSectionVo();
-            vo.setId(new Long(obj.id()));
-            vo.setDescription(obj.getDescription());
-            ls.add(vo);
-        }
-        logger.debug("All cms section enums : "+ls);
-        return ls;
-    }
+//    public List<CmsSectionVo> getAllSections() {
+//        logger.debug("Retrieving all CmsSectionVo enums");
+//        List<CmsSectionVo> ls = new ArrayList<>();
+//        for(CmsSectionEnum obj: CmsSectionEnum.values()) {
+//            CmsSectionVo vo = new CmsSectionVo();
+//            vo.setId(new Long(obj.id()));
+//            vo.setDescription(obj.getDescription());
+//            ls.add(vo);
+//        }
+//        logger.debug("All cms section enums : "+ls);
+//        return ls;
+//    }
 
     public CmsSectionVo getCmsSectionVo(Long id) {
         CmsSectionEnum obj = CmsSectionEnum.findById(id.intValue());
@@ -1676,24 +2030,38 @@ public class CommonService {
         logger.debug("Calling getAttendanceMastersList() ");
         Batch batch = this.getBatchById(btId);
 
-        Optional<Section> osc = null;
+//        Optional<Section> osc = null;
+        Section osc = null;
         if(scId > 0) {
             Section sec = new Section();
             sec.setId(scId);
             sec.setBatch(batch);
-            osc = this.sectionRepository.findOne(Example.of(sec));
+            List<Section> temp = this.findAllSectionByBatchAndSection(batch.getId(), scId);
+            osc = temp.get(0); //this.sectionRepository.findOne(Example.of(sec));
         }
 
-        AttendanceMaster am = new AttendanceMaster();
-        am.setBatch(batch);
-        if(osc != null && osc.isPresent()) {
-            am.setSection(osc.get());
+        String queryParam = "?batchId="+batch.getId();
+//        AttendanceMaster am = new AttendanceMaster();
+//        am.setBatch(batch);
+        if(osc != null) {
+//            am.setSection(osc);
+            queryParam = queryParam + "&sectionId="+osc.getId();
         }
 
-        List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
-        logger.debug("Getting out from getAttendanceMastersList(). Attendance master list size: "+amList.size());
+//        List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
+//        logger.debug("Getting out from getAttendanceMastersList(). Attendance master list size: "+amList.size());
 
-        return amList;
+        
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/attendancemaster-by-filters"+queryParam;
+	    AttendanceMaster[] temp = this.restTemplate.getForObject(prefUrl, AttendanceMaster[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<AttendanceMaster> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	    
+//        return amList;
     }
 
     public SectionEnum findSection(String sectionName) {

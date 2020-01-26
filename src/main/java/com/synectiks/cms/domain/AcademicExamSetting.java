@@ -1,18 +1,17 @@
 package com.synectiks.cms.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.synectiks.cms.domain.enumeration.GradeType;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
+
+import com.synectiks.cms.domain.enumeration.GradeType;
 
 /**
  * A AcademicExamSetting.
@@ -20,47 +19,41 @@ import java.util.Objects;
 @Entity
 @Table(name = "academic_exam_setting")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "academicexamsetting")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "academicexamsetting")
 public class AcademicExamSetting implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
-    @NotNull
-    @Column(name = "exam_name", nullable = false)
+    @Column(name = "exam_name")
     private String examName;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "semester", nullable = false)
+    @Column(name = "semester")
     private SemesterEnum semester;
 
-    @NotNull
-    @Column(name = "exam_date", nullable = false)
+    @Column(name = "exam_date")
     private LocalDate examDate;
 
-    @NotNull
-    @Column(name = "start_time", nullable = false)
+    @Column(name = "start_time")
     private String startTime;
 
-    @NotNull
-    @Column(name = "end_time", nullable = false)
+    @Column(name = "end_time")
     private String endTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "grade_type")
     private GradeType gradeType;
 
-    @NotNull
-    @Column(name = "total", nullable = false)
+    @Column(name = "total")
     private Integer total;
 
-    @NotNull
-    @Column(name = "passing", nullable = false)
+    @Column(name = "passing")
     private Integer passing;
 
     @Column(name = "actions")
@@ -69,37 +62,30 @@ public class AcademicExamSetting implements Serializable {
     @Column(name = "groupvalue")
     private Long groupvalue;
 
-    @NotNull
-    @Column(name = "countvalue", nullable = false)
+    @Column(name = "countvalue")
     private Long countvalue;
 
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private Branch branch;
+    @Column(name = "branch_id")
+    private Long branchId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private Subject subject;
+    @Column(name = "subject_id")
+    private Long subjectId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private Department department;
+    @Column(name = "department_id")
+    private Long departmentId;
+
+    @Column(name = "academicyear_id")
+    private Long academicyearId;
+
+    @Column(name = "section_id")
+    private Long sectionId;
+
+    @Column(name = "batch_id")
+    private Long batchId;
 
     @ManyToOne
     @JsonIgnoreProperties("academicExamSettings")
     private TypeOfGrading typeOfGrading;
-
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private AcademicYear academicyear;
-
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private Section section;
-
-    @ManyToOne
-    @JsonIgnoreProperties("academicExamSettings")
-    private Batch batch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -253,43 +239,82 @@ public class AcademicExamSetting implements Serializable {
         this.countvalue = countvalue;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public AcademicExamSetting branch(Branch branch) {
-        this.branch = branch;
+    public AcademicExamSetting branchId(Long branchId) {
+        this.branchId = branchId;
         return this;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
-    public Subject getSubject() {
-        return subject;
+    public Long getSubjectId() {
+        return subjectId;
     }
 
-    public AcademicExamSetting subject(Subject subject) {
-        this.subject = subject;
+    public AcademicExamSetting subjectId(Long subjectId) {
+        this.subjectId = subjectId;
         return this;
     }
 
-    public void setSubject(Subject subject) {
-        this.subject = subject;
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public AcademicExamSetting department(Department department) {
-        this.department = department;
+    public AcademicExamSetting departmentId(Long departmentId) {
+        this.departmentId = departmentId;
         return this;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getAcademicyearId() {
+        return academicyearId;
+    }
+
+    public AcademicExamSetting academicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
+        return this;
+    }
+
+    public void setAcademicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public AcademicExamSetting sectionId(Long sectionId) {
+        this.sectionId = sectionId;
+        return this;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public AcademicExamSetting batchId(Long batchId) {
+        this.batchId = batchId;
+        return this;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 
     public TypeOfGrading getTypeOfGrading() {
@@ -304,45 +329,6 @@ public class AcademicExamSetting implements Serializable {
     public void setTypeOfGrading(TypeOfGrading typeOfGrading) {
         this.typeOfGrading = typeOfGrading;
     }
-
-    public AcademicYear getAcademicyear() {
-        return academicyear;
-    }
-
-    public AcademicExamSetting academicyear(AcademicYear academicYear) {
-        this.academicyear = academicYear;
-        return this;
-    }
-
-    public void setAcademicyear(AcademicYear academicYear) {
-        this.academicyear = academicYear;
-    }
-
-    public Section getSection() {
-        return section;
-    }
-
-    public AcademicExamSetting section(Section section) {
-        this.section = section;
-        return this;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
-    }
-
-    public Batch getBatch() {
-        return batch;
-    }
-
-    public AcademicExamSetting batch(Batch batch) {
-        this.batch = batch;
-        return this;
-    }
-
-    public void setBatch(Batch batch) {
-        this.batch = batch;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -350,19 +336,15 @@ public class AcademicExamSetting implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AcademicExamSetting)) {
             return false;
         }
-        AcademicExamSetting academicExamSetting = (AcademicExamSetting) o;
-        if (academicExamSetting.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), academicExamSetting.getId());
+        return id != null && id.equals(((AcademicExamSetting) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -380,6 +362,12 @@ public class AcademicExamSetting implements Serializable {
             ", actions='" + getActions() + "'" +
             ", groupvalue=" + getGroupvalue() +
             ", countvalue=" + getCountvalue() +
+            ", branchId=" + getBranchId() +
+            ", subjectId=" + getSubjectId() +
+            ", departmentId=" + getDepartmentId() +
+            ", academicyearId=" + getAcademicyearId() +
+            ", sectionId=" + getSectionId() +
+            ", batchId=" + getBatchId() +
             "}";
     }
 }

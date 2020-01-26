@@ -21,7 +21,7 @@ import java.util.stream.StreamSupport;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing StudentExamReport.
+ * Service Implementation for managing {@link StudentExamReport}.
  */
 @Service
 @Transactional
@@ -44,8 +44,8 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     /**
      * Save a studentExamReport.
      *
-     * @param studentExamReportDTO the entity to save
-     * @return the persisted entity
+     * @param studentExamReportDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public StudentExamReportDTO save(StudentExamReportDTO studentExamReportDTO) {
@@ -60,7 +60,7 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     /**
      * Get all the studentExamReports.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -75,8 +75,8 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     /**
      * Get one studentExamReport by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -89,7 +89,7 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     /**
      * Delete the studentExamReport by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
@@ -101,8 +101,8 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     /**
      * Search for the studentExamReport corresponding to the query.
      *
-     * @param query the query of the search
-     * @return the list of entities
+     * @param query the query of the search.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

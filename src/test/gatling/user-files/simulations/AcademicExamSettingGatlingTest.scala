@@ -83,6 +83,12 @@ class AcademicExamSettingGatlingTest extends Simulation {
                 , "actions":"SAMPLE_TEXT"
                 , "groupvalue":null
                 , "countvalue":null
+                , "branchId":null
+                , "subjectId":null
+                , "departmentId":null
+                , "academicyearId":null
+                , "sectionId":null
+                , "batchId":null
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_academicExamSetting_url"))).exitHereIfFailed

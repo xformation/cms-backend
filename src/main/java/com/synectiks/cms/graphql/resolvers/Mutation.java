@@ -1,8 +1,6 @@
 package com.synectiks.cms.graphql.resolvers;
 
-import java.io.File;
 import java.math.BigInteger;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,10 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
-import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
-import com.synectiks.cms.filter.library.LibraryFilterInput;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +24,69 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.base64.file.Base64FileProcessor;
+import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AdminAttendance;
+import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.cms.domain.AdmissionEnquiry;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
+import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.domain.CmsBook;
+import com.synectiks.cms.domain.CmsContract;
+import com.synectiks.cms.domain.CmsEmployeeVo;
+import com.synectiks.cms.domain.CmsFeeCategory;
+import com.synectiks.cms.domain.CmsFeeDetails;
+import com.synectiks.cms.domain.CmsFeeSettingsVo;
+import com.synectiks.cms.domain.CmsInsurance;
+import com.synectiks.cms.domain.CmsInvoice;
+import com.synectiks.cms.domain.CmsLibrary;
+import com.synectiks.cms.domain.CmsLibraryVo;
+import com.synectiks.cms.domain.CmsStudentVo;
+import com.synectiks.cms.domain.CmsVehicle;
+import com.synectiks.cms.domain.CmsVehicleVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.CompetitiveExam;
+import com.synectiks.cms.domain.Contract;
+import com.synectiks.cms.domain.Country;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Documents;
+import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Insurance;
+import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.domain.LateFee;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.domain.PaymentRemainder;
+import com.synectiks.cms.domain.QueryResult;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.StudentExamReport;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
@@ -42,6 +96,8 @@ import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
 import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
+import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
+import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
 import com.synectiks.cms.filter.exam.AcademicExamSettingFilterImpl;
 import com.synectiks.cms.filter.exam.AcademicExamSettingUpdateFilter;
 import com.synectiks.cms.filter.exam.DailyExamVo;
@@ -51,6 +107,7 @@ import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
+import com.synectiks.cms.filter.library.LibraryFilterInput;
 import com.synectiks.cms.filter.library.LibraryFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.student.StudentListFilterInput;
@@ -125,11 +182,9 @@ import com.synectiks.cms.graphql.types.Batch.RemoveBatchPayload;
 import com.synectiks.cms.graphql.types.Batch.UpdateBatchInput;
 import com.synectiks.cms.graphql.types.Batch.UpdateBatchPayload;
 import com.synectiks.cms.graphql.types.Book.AddBookInput;
-import com.synectiks.cms.graphql.types.Book.AddBookPayload;
 import com.synectiks.cms.graphql.types.Book.RemoveBookInput;
 import com.synectiks.cms.graphql.types.Book.RemoveBookPayload;
 import com.synectiks.cms.graphql.types.Book.UpdateBookInput;
-import com.synectiks.cms.graphql.types.Book.UpdateBookPayload;
 import com.synectiks.cms.graphql.types.Branch.AddBranchInput;
 import com.synectiks.cms.graphql.types.Branch.AddBranchPayload;
 import com.synectiks.cms.graphql.types.Branch.RemoveBranchInput;
@@ -155,11 +210,9 @@ import com.synectiks.cms.graphql.types.CompetitiveExam.RemoveCompetitiveExamPayl
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamInput;
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamPayload;
 import com.synectiks.cms.graphql.types.Contract.AddContractInput;
-import com.synectiks.cms.graphql.types.Contract.AddContractPayload;
 import com.synectiks.cms.graphql.types.Contract.RemoveContractInput;
 import com.synectiks.cms.graphql.types.Contract.RemoveContractPayload;
 import com.synectiks.cms.graphql.types.Contract.UpdateContractInput;
-import com.synectiks.cms.graphql.types.Contract.UpdateContractPayload;
 import com.synectiks.cms.graphql.types.Country.AddCountryInput;
 import com.synectiks.cms.graphql.types.Country.AddCountryPayload;
 import com.synectiks.cms.graphql.types.Country.RemoveCountryInput;
@@ -266,7 +319,6 @@ import com.synectiks.cms.graphql.types.State.RemoveStateInput;
 import com.synectiks.cms.graphql.types.State.RemoveStatePayload;
 import com.synectiks.cms.graphql.types.State.UpdateStateInput;
 import com.synectiks.cms.graphql.types.State.UpdateStatePayload;
-import com.synectiks.cms.graphql.types.Student.AbstractStudentInput;
 import com.synectiks.cms.graphql.types.Student.AddStudentInput;
 import com.synectiks.cms.graphql.types.Student.AddStudentPayload;
 import com.synectiks.cms.graphql.types.Student.RemoveStudentInput;
@@ -322,7 +374,6 @@ import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehicleInput;
-import com.synectiks.cms.graphql.types.Vehicle.AddVehiclePayload;
 import com.synectiks.cms.graphql.types.Vehicle.RemoveVehicleInput;
 import com.synectiks.cms.graphql.types.Vehicle.RemoveVehiclePayload;
 import com.synectiks.cms.graphql.types.Vehicle.UpdateVehicleInput;
@@ -358,7 +409,6 @@ import com.synectiks.cms.repository.LateFeeRepository;
 import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.LegalEntityRepository;
 import com.synectiks.cms.repository.LibraryRepository;
-import com.synectiks.cms.repository.LocationRepository;
 import com.synectiks.cms.repository.PaymentRemainderRepository;
 import com.synectiks.cms.repository.SectionRepository;
 import com.synectiks.cms.repository.StateRepository;
@@ -382,6 +432,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     private final static Logger logger = LoggerFactory.getLogger(Mutation.class);
 
+    @Autowired
+    CommonService commonService;
+    
     @Autowired
     private AcademicYearRepository academicYearRepository;
     
@@ -879,22 +932,24 @@ public class Mutation implements GraphQLMutationResolver {
         AcademicExamSetting academicExamSetting = null;
         int countvalue = getCountvalueId()+1;
         for(AddAcademicExamSettingInput input: list ) {
-            Branch branch = branchRepository.findById(input.getBranchId()).get();
-            Subject subject = subjectRepository.findById(input.getSubjectId()).get();
-            AcademicYear academicYear = academicYearRepository.findById(input.getAcademicyearId()).get();
-            Batch batch = batchRepository.findById(input.getBatchId()).get();
-            Section section = sectionRepository.findById(input.getSectionId()).get();
-            Department department = departmentRepository.findById(input.getDepartmentId()).get();
+//            Branch branch = this.commonService.getBranchById(input.getBranchId()); // branchRepository.findById(input.getBranchId()).get();
+//            Subject subject = this.commonService.getSubjectById(input.getSubjectId());//subjectRepository.findById(input.getSubjectId()).get();
+//            AcademicYear academicYear = this.commonService.getAcademicYearById(input.getAcademicyearId()); // academicYearRepository.findById(input.getAcademicyearId()).get();
+//            Batch batch = this.commonService.getBatchById(input.getBatchId()); //batchRepository.findById(input.getBatchId()).get();
+//            Section section = this.commonService.getSectionById(input.getSectionId());  //sectionRepository.findById(input.getSectionId()).get();
+//            Department department = this.commonService.getDepartmentById(input.getDepartmentId()); //departmentRepository.findById(input.getDepartmentId()).get();
             TypeOfGrading typeOfGrading = typeOfGradingRepository.findById((input.getTypeOfGradingId())).get();
 
             academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
+            LocalDate exmDt =  DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate());
+            academicExamSetting.setExamDate(exmDt);
             academicExamSetting.setCountvalue(new Long(countvalue));
-            academicExamSetting.setBranch(branch);
-            academicExamSetting.setSubject(subject);
-            academicExamSetting.setBatch(batch);
-            academicExamSetting.setAcademicyear(academicYear);
-            academicExamSetting.setSection(section);
-            academicExamSetting.setDepartment(department);
+            academicExamSetting.setBranchId(input.getBranchId());
+            academicExamSetting.setSubjectId(input.getSubjectId());
+            academicExamSetting.setBatchId(input.getBatchId());
+            academicExamSetting.setAcademicyearId(input.getAcademicyearId());
+            academicExamSetting.setSectionId(input.getSectionId());
+            academicExamSetting.setDepartmentId(input.getDepartmentId());
             academicExamSetting.setTypeOfGrading(typeOfGrading);
             academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate()));
             this.academicExamSettingRepository.save(academicExamSetting);
@@ -906,6 +961,9 @@ public class Mutation implements GraphQLMutationResolver {
         String sql = "select max(countvalue) from academic_exam_setting";
         Query query = this.entityManager.createNativeQuery(sql);
         Object countvalue = query.getSingleResult();
+        if(countvalue == null) {
+        	return 0;
+        }
         return ((BigInteger)countvalue).intValue() ;
     }
 
@@ -941,28 +999,28 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setActions(updateAcademicExamSettingInput.getActions());
         }
         if (updateAcademicExamSettingInput.getDepartmentId() != null) {
-            final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();
-            academicExamSetting.setDepartment(department);
+//            final Department department = departmentRepository.findById(updateAcademicExamSettingInput.getDepartmentId()).get();
+            academicExamSetting.setDepartmentId(updateAcademicExamSettingInput.getDepartmentId());
         }
         if (updateAcademicExamSettingInput.getAcademicyearId() != null) {
-            final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicyearId()).get();
-            academicExamSetting.setAcademicyear(academicYear);
+//            final AcademicYear academicYear = academicYearRepository.findById(updateAcademicExamSettingInput.getAcademicyearId()).get();
+            academicExamSetting.setAcademicyearId(updateAcademicExamSettingInput.getAcademicyearId());
         }
         if (updateAcademicExamSettingInput.getSubjectId() != null) {
-            final Subject subject = subjectRepository.findById(updateAcademicExamSettingInput.getSubjectId()).get();
-            academicExamSetting.setSubject(subject);
+//            final Subject subject = subjectRepository.findById(updateAcademicExamSettingInput.getSubjectId()).get();
+            academicExamSetting.setSubjectId(updateAcademicExamSettingInput.getSubjectId());
         }
         if (updateAcademicExamSettingInput.getSectionId() != null) {
-            final Section section = sectionRepository.findById(updateAcademicExamSettingInput.getSectionId()).get();
-            academicExamSetting.setSection(section);
+//            final Section section = sectionRepository.findById(updateAcademicExamSettingInput.getSectionId()).get();
+            academicExamSetting.setSectionId(updateAcademicExamSettingInput.getSectionId());
         }
         if (updateAcademicExamSettingInput.getBatchId() != null) {
-            final Batch batch = batchRepository.findById(updateAcademicExamSettingInput.getBatchId()).get();
-            academicExamSetting.setBatch(batch);
+//            final Batch batch = batchRepository.findById(updateAcademicExamSettingInput.getBatchId()).get();
+            academicExamSetting.setBatchId(updateAcademicExamSettingInput.getBatchId());
         }
         if (updateAcademicExamSettingInput.getBranchId() != null) {
-            final Branch branch = branchRepository.findById(updateAcademicExamSettingInput.getBranchId()).get();
-            academicExamSetting.setBranch(branch);
+//            final Branch branch = branchRepository.findById(updateAcademicExamSettingInput.getBranchId()).get();
+            academicExamSetting.setBranchId(updateAcademicExamSettingInput.getBranchId());
         }
         if (updateAcademicExamSettingInput.getTypeOfGradingId() != null) {
             final TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateAcademicExamSettingInput.getTypeOfGradingId()).get();
@@ -1056,6 +1114,9 @@ public class Mutation implements GraphQLMutationResolver {
         String sql = "select max(groupvalue) from type_of_grading";
         Query query = this.entityManager.createNativeQuery(sql);
         Object groupValue = query.getSingleResult();
+        if(groupValue == null) {
+        	return 0;
+        }
         return ((BigInteger)groupValue).intValue() ;
     }
 
@@ -2627,13 +2688,13 @@ public class Mutation implements GraphQLMutationResolver {
         Subject subject = subjectRepository.findById(addStudentExamReportInput.getSubjectId()).get();
         Section section =sectionRepository.findById(addStudentExamReportInput.getSectionId()).get();
         studentExamReport.setTypeOfGrading(typeOfGrading);
-        studentExamReport.setAcademicyear(academicYear);
+        studentExamReport.setAcademicyearId(addStudentExamReportInput.getAcademicyearId());
         studentExamReport.setAcademicExamSetting(academicExamSetting);
-        studentExamReport.setBatch(batch);
+        studentExamReport.setBatchId(addStudentExamReportInput.getBatchId());
         studentExamReport.setStudent(student);
-        studentExamReport.setDepartment(department);
-        studentExamReport.setSection(section);
-        studentExamReport.setSubject(subject);
+        studentExamReport.setDepartmentId(addStudentExamReportInput.getDepartmentId());
+        studentExamReport.setSectionId(addStudentExamReportInput.getSectionId());
+        studentExamReport.setSubjectId(addStudentExamReportInput.getSubjectId());
         studentExamReport.setMarksObtained(addStudentExamReportInput.getMarksObtained());
         studentExamReport.setComments(addStudentExamReportInput.getComments());
         studentExamReport.setgOp(addStudentExamReportInput.getgOp());
@@ -2659,32 +2720,32 @@ public class Mutation implements GraphQLMutationResolver {
             studentExamReport.setAcademicExamSetting(academicExamSetting);
         }
         if (updateStudentExamReportInput.getAcademicyearId() != null) {
-            final AcademicYear academicYear = academicYearRepository.findById(updateStudentExamReportInput.getAcademicyearId()).get();
-            studentExamReport.setAcademicyear(academicYear);
+//            final AcademicYear academicYear = academicYearRepository.findById(updateStudentExamReportInput.getAcademicyearId()).get();
+            studentExamReport.setAcademicyearId(updateStudentExamReportInput.getAcademicyearId());
         }
         if (updateStudentExamReportInput.getStudentId() != null) {
             final Student student = studentRepository.findById(updateStudentExamReportInput.getStudentId()).get();
             studentExamReport.setStudent(student);
         }
         if (updateStudentExamReportInput.getBatchId() != null) {
-            final Batch batch = batchRepository.findById(updateStudentExamReportInput.getBatchId()).get();
-            studentExamReport.setBatch(batch);
+//            final Batch batch = batchRepository.findById(updateStudentExamReportInput.getBatchId()).get();
+            studentExamReport.setBatchId(updateStudentExamReportInput.getBatchId());
         }
         if (updateStudentExamReportInput.getDepartmentId() != null) {
-            final Department department = departmentRepository.findById(updateStudentExamReportInput.getDepartmentId()).get();
-            studentExamReport.setDepartment(department);
+//            final Department department = departmentRepository.findById(updateStudentExamReportInput.getDepartmentId()).get();
+            studentExamReport.setDepartmentId(updateStudentExamReportInput.getDepartmentId());
         }
         if (updateStudentExamReportInput.getTypeOfGradingId() != null) {
             final TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateStudentExamReportInput.getTypeOfGradingId()).get();
             studentExamReport.setTypeOfGrading(typeOfGrading);
         }
         if (updateStudentExamReportInput.getSectionId() != null) {
-            final Section section = sectionRepository.findById(updateStudentExamReportInput.getSectionId()).get();
-            studentExamReport.setSection(section);
+//            final Section section = sectionRepository.findById(updateStudentExamReportInput.getSectionId()).get();
+            studentExamReport.setSectionId(updateStudentExamReportInput.getSectionId());
         }
         if (updateStudentExamReportInput.getSubjectId() != null) {
-            final Subject subject = subjectRepository.findById(updateStudentExamReportInput.getSubjectId()).get();
-            studentExamReport.setSubject(subject);
+//            final Subject subject = subjectRepository.findById(updateStudentExamReportInput.getSubjectId()).get();
+            studentExamReport.setSubjectId(updateStudentExamReportInput.getSubjectId());
         }
         studentExamReportRepository.save(studentExamReport);
 

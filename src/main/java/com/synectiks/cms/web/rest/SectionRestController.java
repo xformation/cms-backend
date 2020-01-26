@@ -156,7 +156,7 @@ public class SectionRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/cmssectionenums")
     public List<CmsSectionVo> getAllCmsSectionEnums() {
 		logger.debug("Get all sections.");
-		List<CmsSectionVo> ls = this.commonService.getAllSections();
+		List<CmsSectionVo> ls = this.commonService.getAllCmsSections();
         return ls;
     }
     

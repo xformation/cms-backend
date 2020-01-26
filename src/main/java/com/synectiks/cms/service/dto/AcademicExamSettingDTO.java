@@ -1,48 +1,38 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import com.synectiks.cms.domain.enumeration.GradeType;
 
 /**
- * A DTO for the AcademicExamSetting entity.
+ * A DTO for the {@link com.synectiks.cms.domain.AcademicExamSetting} entity.
  */
 public class AcademicExamSettingDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String examName;
 
-    @NotNull
     private SemesterEnum semester;
 
-    @NotNull
     private LocalDate examDate;
 
-    @NotNull
     private String startTime;
 
-    @NotNull
     private String endTime;
 
     private GradeType gradeType;
 
-    @NotNull
     private Integer total;
 
-    @NotNull
     private Integer passing;
 
     private String actions;
 
     private Long groupvalue;
 
-    @NotNull
     private Long countvalue;
-
 
     private Long branchId;
 
@@ -50,13 +40,14 @@ public class AcademicExamSettingDTO implements Serializable {
 
     private Long departmentId;
 
-    private Long typeOfGradingId;
-
     private Long academicyearId;
 
     private Long sectionId;
 
     private Long batchId;
+
+
+    private Long typeOfGradingId;
 
     public Long getId() {
         return id;
@@ -178,20 +169,12 @@ public class AcademicExamSettingDTO implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Long getTypeOfGradingId() {
-        return typeOfGradingId;
-    }
-
-    public void setTypeOfGradingId(Long typeOfGradingId) {
-        this.typeOfGradingId = typeOfGradingId;
-    }
-
     public Long getAcademicyearId() {
         return academicyearId;
     }
 
-    public void setAcademicyearId(Long academicYearId) {
-        this.academicyearId = academicYearId;
+    public void setAcademicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
     }
 
     public Long getSectionId() {
@@ -208,6 +191,14 @@ public class AcademicExamSettingDTO implements Serializable {
 
     public void setBatchId(Long batchId) {
         this.batchId = batchId;
+    }
+
+    public Long getTypeOfGradingId() {
+        return typeOfGradingId;
+    }
+
+    public void setTypeOfGradingId(Long typeOfGradingId) {
+        this.typeOfGradingId = typeOfGradingId;
     }
 
     @Override
@@ -246,13 +237,13 @@ public class AcademicExamSettingDTO implements Serializable {
             ", actions='" + getActions() + "'" +
             ", groupvalue=" + getGroupvalue() +
             ", countvalue=" + getCountvalue() +
-            ", branch=" + getBranchId() +
-            ", subject=" + getSubjectId() +
-            ", department=" + getDepartmentId() +
+            ", branchId=" + getBranchId() +
+            ", subjectId=" + getSubjectId() +
+            ", departmentId=" + getDepartmentId() +
+            ", academicyearId=" + getAcademicyearId() +
+            ", sectionId=" + getSectionId() +
+            ", batchId=" + getBatchId() +
             ", typeOfGrading=" + getTypeOfGradingId() +
-            ", academicyear=" + getAcademicyearId() +
-            ", section=" + getSectionId() +
-            ", batch=" + getBatchId() +
             "}";
     }
 }

@@ -20,41 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="student"/>
 
-        <addForeignKeyConstraint baseColumnNames="section_id"
-                                 baseTableName="student_exam_report"
-                                 constraintName="fk_student_exam_report_section_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="section"/>
-
-        <addForeignKeyConstraint baseColumnNames="subject_id"
-                                 baseTableName="student_exam_report"
-                                 constraintName="fk_student_exam_report_subject_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="subject"/>
-
-        <addForeignKeyConstraint baseColumnNames="department_id"
-                                 baseTableName="student_exam_report"
-                                 constraintName="fk_student_exam_report_department_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="department"/>
-
         <addForeignKeyConstraint baseColumnNames="type_of_grading_id"
                                  baseTableName="student_exam_report"
                                  constraintName="fk_student_exam_report_type_of_grading_id"
                                  referencedColumnNames="id"
                                  referencedTableName="type_of_grading"/>
-
-        <addForeignKeyConstraint baseColumnNames="batch_id"
-                                 baseTableName="student_exam_report"
-                                 constraintName="fk_student_exam_report_batch_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="batch"/>
-
-        <addForeignKeyConstraint baseColumnNames="academicyear_id"
-                                 baseTableName="student_exam_report"
-                                 constraintName="fk_student_exam_report_academicyear_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="academic_year"/>
 
     </changeSet>
 </databaseChangeLog>

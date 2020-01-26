@@ -36,27 +36,30 @@ public class AcademicExamSettingFilterImpl {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    AcademicYearRepository academicYearRepository;
+//    @Autowired
+//    AcademicYearRepository academicYearRepository;
 
-    @Autowired
-    DepartmentRepository departmentRepository;
+//    @Autowired
+//    DepartmentRepository departmentRepository;
 
-    @Autowired
-    SectionRepository sectionRepository;
+//    @Autowired
+//    SectionRepository sectionRepository;
 
-    @Autowired
-    BatchRepository batchRepository;
+//    @Autowired
+//    BatchRepository batchRepository;
 
     @Autowired
     AcademicExamSettingRepository academicExamSettingRepository;
 
+//    @Autowired
+//    SubjectRepository subjectRepository;
+
+//    @PersistenceContext
+//    private EntityManager entityManager;
+
     @Autowired
-    SubjectRepository subjectRepository;
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
+    CommonService commonService;
+    
     @Transactional
     public QueryResult updateExam(List<AcademicExamSettingUpdateFilter> list) {
         logger.info("Start updating Exam  data ");
@@ -72,16 +75,16 @@ public class AcademicExamSettingFilterImpl {
 
 
                 String data[] = values.split("#~#");
-                subject = this.subjectRepository.findById(Long.valueOf(data[0])).get();
-
-                stObj.setSubject(subject);
+//                subject = this.subjectRepository.findById(Long.valueOf(data[0])).get();
+                
+                stObj.setSubjectId(Long.parseLong(data[0]));
 
                 Example<AcademicExamSetting> example = Example.of(stObj);
                 Optional<AcademicExamSetting> osa = this.academicExamSettingRepository.findOne((example));
                 if(osa.isPresent()) {
                     stObj.setId(osa.get().getId());
                     stObj.setExamName(osa.get().getExamName());
-                    stObj.setSubject(osa.get().getSubject());
+                    stObj.setSubjectId(osa.get().getSubjectId());
                     stObj.setStartTime(osa.get().getStartTime());
                     stObj.setEndTime(osa.get().getEndTime());
                     stObj.setTotal(osa.get().getTotal());
@@ -110,29 +113,30 @@ public class AcademicExamSettingFilterImpl {
         section.setId(Long.valueOf(filter.getSectionId()));
 
         List<DailyExamVo> voList = new ArrayList<>();
-        List<Subject> subjectList = getSubjectListByNativeQuery(department, batch);
+        List<Subject> subjectList = getSubjectListFromPreference(department, batch);
 
         return voList;
     }
-    private List<Subject> getSubjectListByNativeQuery(Department department, Batch batch){
-        String sql = "select id, subject_code, subject_desc from subject where department_id = ? and batch_id = ?  ";
-        Query query = this.entityManager.createNativeQuery(sql);
-
-        query.setParameter(1, department.getId());
-        query.setParameter(2, batch.getId());
-
-        List<Object[]> ls = query.getResultList();
-
-        List<Subject> subjecttList = new ArrayList<>();
-        for (Object[] result : ls){
-            Subject subject = new Subject();
-            subject.setId(((BigInteger)result[0]).longValue() );
-            subject.setSubjectCode((String)result[1]);
-            subject.setSubjectDesc((String)result[2]);
-            subjecttList.add(subject);
-        }
-
-        return subjecttList;
+    private List<Subject> getSubjectListFromPreference(Department department, Batch batch){
+//        String sql = "select id, subject_code, subject_desc from subject where department_id = ? and batch_id = ?  ";
+//        Query query = this.entityManager.createNativeQuery(sql);
+//
+//        query.setParameter(1, department.getId());
+//        query.setParameter(2, batch.getId());
+//
+//        List<Object[]> ls = query.getResultList();
+//
+//        List<Subject> subjecttList = new ArrayList<>();
+//        for (Object[] result : ls){
+//            Subject subject = new Subject();
+//            subject.setId(((BigInteger)result[0]).longValue() );
+//            subject.setSubjectCode((String)result[1]);
+//            subject.setSubjectDesc((String)result[2]);
+//            subjecttList.add(subject);
+//        }
+//
+//        return subjecttList;
+    	return this.commonService.findAllSubjectByDepartmentAndBatch(department.getId(), batch.getId());
     }
 
 

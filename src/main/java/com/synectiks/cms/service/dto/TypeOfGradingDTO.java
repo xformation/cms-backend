@@ -1,25 +1,20 @@
 package com.synectiks.cms.service.dto;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the TypeOfGrading entity.
+ * A DTO for the {@link com.synectiks.cms.domain.TypeOfGrading} entity.
  */
 public class TypeOfGradingDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private Integer minMarks;
 
-    @NotNull
     private Integer maxMarks;
 
-    @NotNull
     private String grades;
 
-    @NotNull
     private Long groupvalue;
 
 

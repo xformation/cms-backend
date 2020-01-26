@@ -6,7 +6,7 @@ import com.synectiks.cms.service.dto.TypeOfGradingDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity TypeOfGrading and its DTO TypeOfGradingDTO.
+ * Mapper for the entity {@link TypeOfGrading} and its DTO {@link TypeOfGradingDTO}.
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface TypeOfGradingMapper extends EntityMapper<TypeOfGradingDTO, TypeOfGrading> {

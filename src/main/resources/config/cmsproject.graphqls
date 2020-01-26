@@ -81,6 +81,7 @@ enum BatchEnum{
     SECONDYEAR
     THIRDYEAR
     FOURTHYEAR
+    FIFTHYEAR
 }
 
 enum StudentTypeEnum{
@@ -332,7 +333,7 @@ type Query {
     createVehicleDataCache: VehicleDataCache!
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
-    createExamFilterDataCache(collegeId:String!, academicYearId:String!): ExamFilterDataCache!
+    createExamFilterDataCache(branchId:String!, academicYearId:String!): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
     createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
 
@@ -465,19 +466,19 @@ type AdmissionDataCache {
 }
 
 type AcExamSetting{
-    id:Long!
-    examName: String!
-    action: String!
-    sbjct: String!
-    examDate: Date!
-    departmnt: String!
-    bctch: String!
-    brnch: String!
-    sectn: String!
-    st: String!
-    ed: String!
-    subExamDate: String!
-    countvalue: Long!
+    id:Long
+    examName: String
+    action: String
+    sbjct: String
+    examDate: Date
+    departmnt: String
+    bctch: String
+    brnch: String
+    sectn: String
+    st: String
+    ed: String
+    subExamDate: String
+    countvalue: Long
    }
 
 type TypeOfGradingPojo{
@@ -859,16 +860,18 @@ type Facility{
  }
 
 type StudentExamReport{
-    id: Long!
-    marksObtained: Int!
-    comments: String!
-    gOp: Int!
-    student: Student!
-    academicExamSetting: AcademicExamSetting!
-    typeOfGrading: TypeOfGrading!
-    academicyear: AcademicYear!
-    batch: Batch!
-    department: Department!
+    id: Long
+    marksObtained: Int
+    comments: String
+    gOp: Int
+    student: Student
+    academicExamSetting: AcademicExamSetting
+    typeOfGrading: TypeOfGrading
+    academicyearId: Long
+    batchId: Long
+    departmentId: Long
+    subjectId: Long
+    sectionId: Long
 }
 
   type TransportRoute{
@@ -1234,25 +1237,26 @@ type Section{
 }
 
 type AcademicExamSetting{
-    id: Long!
-    examName: String!
-    semester: SemesterEnum!
-    examDate: Date!
-    startTime: String!
-    endTime: String!
-    gradeType: GradeType!
-    total: Int!
-    passing: Int!
-    actions: String!
-    groupvalue: Long!
-    department: Department!
-    section: Section!
-    subject: Subject!
-    academicyear: AcademicYear!
-    batch: Batch!
-    branch: Branch!
-    typeOfGrading: TypeOfGrading!
-    countvalue: Long!
+    id: Long 
+    examName: String 
+    semester: SemesterEnum
+    examDate: Date
+    startTime: String 
+    endTime: String 
+    gradeType: GradeType 
+    total: Int 
+    passing: Int
+    actions: String 
+    groupvalue: Long 
+    countvalue: Long 
+    branchId: Long 
+    subjectId: Long 
+    departmentId: Long 
+    academicyearId: Long 
+    sectionId: Long 
+    batchId: Long 
+    typeOfGrading: TypeOfGrading 
+    
 }
 
 enum Gender {
@@ -2271,9 +2275,9 @@ type RemoveCompetitiveExamPayload {
 }
 
 input AddTypeOfGradingInput{
-    minMarks: Int!
-    maxMarks: Int!
-    grades: String!
+    minMarks: Int
+    maxMarks: Int
+    grades: String
 }
 
 type AddTypeOfGradingPayload {

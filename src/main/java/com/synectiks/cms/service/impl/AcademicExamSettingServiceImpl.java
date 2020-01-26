@@ -21,7 +21,7 @@ import java.util.stream.StreamSupport;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
- * Service Implementation for managing AcademicExamSetting.
+ * Service Implementation for managing {@link AcademicExamSetting}.
  */
 @Service
 @Transactional
@@ -44,8 +44,8 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     /**
      * Save a academicExamSetting.
      *
-     * @param academicExamSettingDTO the entity to save
-     * @return the persisted entity
+     * @param academicExamSettingDTO the entity to save.
+     * @return the persisted entity.
      */
     @Override
     public AcademicExamSettingDTO save(AcademicExamSettingDTO academicExamSettingDTO) {
@@ -60,7 +60,7 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     /**
      * Get all the academicExamSettings.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
@@ -75,8 +75,8 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     /**
      * Get one academicExamSetting by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Override
     @Transactional(readOnly = true)
@@ -89,19 +89,20 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     /**
      * Delete the academicExamSetting by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete AcademicExamSetting : {}", id);        academicExamSettingRepository.deleteById(id);
+        log.debug("Request to delete AcademicExamSetting : {}", id);
+        academicExamSettingRepository.deleteById(id);
         academicExamSettingSearchRepository.deleteById(id);
     }
 
     /**
      * Search for the academicExamSetting corresponding to the query.
      *
-     * @param query the query of the search
-     * @return the list of entities
+     * @param query the query of the search.
+     * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)

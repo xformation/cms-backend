@@ -75,6 +75,11 @@ class StudentExamReportGatlingTest extends Simulation {
                 , "marksObtained":"0"
                 , "comments":"SAMPLE_TEXT"
                 , "gOp":"0"
+                , "sectionId":null
+                , "subjectId":null
+                , "departmentId":null
+                , "batchId":null
+                , "academicyearId":null
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_studentExamReport_url"))).exitHereIfFailed

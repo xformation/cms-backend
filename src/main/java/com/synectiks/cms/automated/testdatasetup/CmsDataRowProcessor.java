@@ -654,8 +654,8 @@ public class CmsDataRowProcessor {
 	private void saveStudentExamReport(Cell cell) {
 		this.ser = new StudentExamReport();
 		this.ser.setAcademicExamSetting(this.acExSet);
-		this.ser.setAcademicyear(this.aYear);
-		this.ser.setBatch(this.batch);
+//		this.ser.setAcademicyear(this.aYear);
+//		this.ser.setBatch(this.batch);
 		this.ser.setMarksObtained(35);
 		this.ser.setStudent(this.student);
 		this.ser.setTypeOfGrading(this.tpOfGrd);

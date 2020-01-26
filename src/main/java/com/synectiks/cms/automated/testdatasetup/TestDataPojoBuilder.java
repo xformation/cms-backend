@@ -329,8 +329,8 @@ public class TestDataPojoBuilder {
 		academicExamSetting.setTotal(60);
 		academicExamSetting.setPassing(55);
 		academicExamSetting.setActions(cell.asString());
-		academicExamSetting.setDepartment(department);
-		academicExamSetting.setAcademicyear(academicYear);
+//		academicExamSetting.setDepartment(department);
+//		academicExamSetting.setAcademicyear(academicYear);
 
 		return academicExamSetting;
 	}
@@ -407,8 +407,8 @@ public class TestDataPojoBuilder {
 		studentExamReport.setAcademicExamSetting(academicExamSetting);
 		studentExamReport.setStudent(student);
 		studentExamReport.setTypeOfGrading(typeofGrading);
-		studentExamReport.setBatch(batch);
-		studentExamReport.setAcademicyear(academicYear);
+//		studentExamReport.setBatch(batch);
+//		studentExamReport.setAcademicyear(academicYear);
 		return studentExamReport;
 	}
 

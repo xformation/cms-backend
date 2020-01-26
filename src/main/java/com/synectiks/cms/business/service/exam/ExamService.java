@@ -31,29 +31,29 @@ public class ExamService {
         AcademicExamSetting academicExamSetting = new AcademicExamSetting();
 
         if (!CommonUtil.isNullOrEmpty(filter.getDepartmentId())) {
-            Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
-            if (department != null) {
-                academicExamSetting.setDepartment(department);
-            }
+//            Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+//            if (department != null) {
+                academicExamSetting.setDepartmentId(Long.parseLong(filter.getDepartmentId()));
+//            }
         }
         if (!CommonUtil.isNullOrEmpty(filter.getBatchId())) {
-            Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
-            if (batch != null) {
-                academicExamSetting.setBatch(batch);
-            }
+//            Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+//            if (batch != null) {
+                academicExamSetting.setBatchId(Long.parseLong(filter.getBatchId()));
+//            }
         }
         if (!CommonUtil.isNullOrEmpty(filter.getSectionId())) {
-            Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
-            if (section != null) {
-                academicExamSetting.setSection(section);
-            }
+//            Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+//            if (section != null) {
+                academicExamSetting.setSectionId(Long.parseLong(filter.getSectionId()));
+//            }
         }
 
         if (!CommonUtil.isNullOrEmpty(filter.getBranchId())) {
-            Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
-            if (branch != null) {
-                academicExamSetting.setBranch(branch);
-            }
+//            Branch branch = this.commonService.getBranchById(Long.valueOf(filter.getBranchId()));
+//            if (branch != null) {
+                academicExamSetting.setBranchId(Long.parseLong(filter.getBranchId()));
+//            }
         }
 
         if (!CommonUtil.isNullOrEmpty(filter.getSemester())) {
@@ -92,22 +92,22 @@ public class ExamService {
             }
         }
         if (!CommonUtil.isNullOrEmpty(filter.getDepartmentId())) {
-            Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
-            if (department != null) {
-                studentExamReport.setDepartment(department);
-            }
+//            Department department = this.commonService.getDepartmentById(Long.valueOf(filter.getDepartmentId()));
+//            if (department != null) {
+                studentExamReport.setDepartmentId(Long.parseLong(filter.getDepartmentId()));
+//            }
         }
         if (!CommonUtil.isNullOrEmpty(filter.getSectionId())) {
-            Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
-            if (section != null) {
-                studentExamReport.setSection(section);
-            }
+//            Section section = this.commonService.getSectionById(Long.valueOf(filter.getSectionId()));
+//            if (section != null) {
+                studentExamReport.setSectionId(Long.parseLong(filter.getSectionId()));
+//            }
         }
         if (!CommonUtil.isNullOrEmpty(filter.getSubjectId())) {
-            Subject subject = this.commonService.getSubjectById(Long.valueOf(filter.getSubjectId()));
-            if (subject != null) {
-                studentExamReport.setSubject(subject);
-            }
+//            Subject subject = this.commonService.getSubjectById(Long.valueOf(filter.getSubjectId()));
+//            if (subject != null) {
+                studentExamReport.setSubjectId(Long.parseLong(filter.getSubjectId()));
+//            }
         }
 //        if (!CommonUtil.isNullOrEmpty(filter.getTypeOfGradingId())) {
 //            TypeOfGrading typeOfGrading = this.commonService.getTypeOfGradingById(Long.valueOf(filter.getBatchId()));
@@ -130,10 +130,10 @@ public class ExamService {
 //        }
 
         if (!CommonUtil.isNullOrEmpty(filter.getBatchId())) {
-            Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
-            if (batch != null) {
-                studentExamReport.setBatch(batch);
-            }
+//            Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
+//            if (batch != null) {
+                studentExamReport.setBatchId(Long.valueOf(filter.getBatchId()));
+//            }
         }
 
         Example<StudentExamReport> example = Example.of(studentExamReport);
