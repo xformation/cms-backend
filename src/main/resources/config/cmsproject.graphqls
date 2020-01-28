@@ -327,7 +327,7 @@ type Query {
 
     createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
     createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
-    createStudentAttendanceCacheForAdmin(branchId:String, academicYearId:String, lectureDate:String ): StudentAttendanceCache!
+    createStudentAttendanceCacheForAdmin(branchId:String, departmentId:String , academicYearId:String, lectureDate:String ): StudentAttendanceCache!
     createFeeDataCache: FeeDataCache!
     createAddVehicleDataCache(collegeId:String!, branchId:String!): AddVehicleDataCache!
     createVehicleDataCache: VehicleDataCache!

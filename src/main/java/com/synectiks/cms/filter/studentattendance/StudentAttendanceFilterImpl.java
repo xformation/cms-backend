@@ -74,22 +74,23 @@ public class StudentAttendanceFilterImpl  {
      * @return
      * @throws Exception
      */
-    public List<DailyAttendanceVo> getStudenceAttendance(StudentAttendanceFilterInput filter) throws Exception {
+    public List<DailyAttendanceVo> getStudenceAttendanceDataForTeacher(StudentAttendanceFilterInput filter) throws Exception {
         
-    	Branch branch = new Branch();
-    	branch.setId(Long.valueOf(filter.getBranchId()));
-    	Department department = new Department(); 
-    	department.setId(Long.valueOf(filter.getDepartmentId()));
-    	Batch batch = new Batch(); 
-    	batch.setId(Long.valueOf(filter.getBatchId()));
-    	Section section = new Section(); 
-    	section.setId(Long.valueOf(filter.getSectionId()));
+    	Branch branch = this.commonService.getBranchById(Long.parseLong(filter.getBranchId())); //new Branch();
+//    	branch.setId(Long.valueOf(filter.getBranchId()));
     	
-    	Teacher thr = new Teacher();
-        thr.setTeacherEmailAddress(filter.getTeacherId());
-    	Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(thr));
-        Long tid = oth.isPresent() ? oth.get().getId() : 0;
-        
+    	Department department = this.commonService.getDepartmentById(Long.parseLong(filter.getDepartmentId())); // new Department(); 
+//    	department.setId(Long.valueOf(filter.getDepartmentId()));
+    	Batch batch = this.commonService.getBatchById(Long.parseLong(filter.getBatchId())); //new Batch(); 
+//    	batch.setId(Long.valueOf(filter.getBatchId()));
+    	Section section = this.commonService.getSectionById(Long.parseLong(filter.getSectionId())); //new Section(); 
+//    	section.setId(Long.valueOf(filter.getSectionId()));
+    	
+    	Teacher thr = this.commonService.getTeacherByEmail(filter.getTeacherId()); //new Teacher();
+//        thr.setTeacherEmailAddress(filter.getTeacherId());
+//    	Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(thr));
+//        Long tid = oth.isPresent() ? oth.get().getId() : 0;
+    	Long tid = (thr != null) ? thr.getId() : 0;
         
     	Teach teach = this.commonService.getTeachBySubjectAndTeacherId(tid, Long.valueOf(filter.getSubjectId()));
     	AttendanceMaster am = this.commonService.getAttendanceMasterByBatchSectionTeach(batch, section, teach);
@@ -120,14 +121,19 @@ public class StudentAttendanceFilterImpl  {
      */
     public List<DailyAttendanceVo> getStudenceAttendanceDataForAdmin(StudentAttendanceFilterInput filter) throws Exception {
         
-        Branch branch = new Branch(); 
-        branch.setId(Long.valueOf(filter.getBranchId()));
-    	Department department = new Department(); 
-    	department.setId(Long.valueOf(filter.getDepartmentId()));
-    	Batch batch = new Batch(); 
-    	batch.setId(Long.valueOf(filter.getBatchId()));
-    	Section section = new Section(); 
-    	section.setId(Long.valueOf(filter.getSectionId()));
+    	Branch branch = this.commonService.getBranchById(Long.parseLong(filter.getBranchId())); //new Branch();
+    	Department department = this.commonService.getDepartmentById(Long.parseLong(filter.getDepartmentId())); // new Department(); 
+    	Batch batch = this.commonService.getBatchById(Long.parseLong(filter.getBatchId())); //new Batch(); 
+    	Section section = this.commonService.getSectionById(Long.parseLong(filter.getSectionId())); //new Section(); 
+    	
+//      Branch branch = new Branch(); 
+//      branch.setId(Long.valueOf(filter.getBranchId()));
+//    	Department department = new Department(); 
+//    	department.setId(Long.valueOf(filter.getDepartmentId()));
+//    	Batch batch = new Batch(); 
+//    	batch.setId(Long.valueOf(filter.getBatchId()));
+//    	Section section = new Section(); 
+//    	section.setId(Long.valueOf(filter.getSectionId()));
     	
     	List<DailyAttendanceVo> voList = new ArrayList<>();
     	List<Student> studentList = getStudentListByNativeQuery(branch, department, batch, section);
@@ -358,23 +364,27 @@ public class StudentAttendanceFilterImpl  {
     	String lectureDate = filter.getAttendanceDate();
     	
     	if(days == 0) {
-    		return this.lectureRepository.findById(Long.parseLong(filter.getLectureId())).get();
+    		this.commonService.getLectureById(Long.parseLong(filter.getLectureId()));
+//    		return this.lectureRepository.findById(Long.parseLong(filter.getLectureId())).get();
     	}
-    	Lecture lec = new Lecture();
-    	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
-//    			DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", lectureDate));
-    	if(days > 0) {
-    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
-    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
-    	}
-    	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
-    	lec.setAttendancemaster(attendanceMaster);
-    	Example<Lecture> example = Example.of(lec);
-    	List<Lecture> nlec = this.lectureRepository.findAll(example);
-    	if(nlec.size() > 0) {
-    		return nlec.get(0);
-    	}
-    	return null;
+    	
+    	Lecture lec = this.commonService.getLectureByAttendanceMasterAndLectureDate(attendanceMaster.getId(), lectureDate);
+    	return lec;
+//    	Lecture lec = new Lecture();
+//    	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
+////    			DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", lectureDate));
+//    	if(days > 0) {
+//    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
+//    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
+//    	}
+//    	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
+//    	lec.setAttendancemaster(attendanceMaster);
+//    	Example<Lecture> example = Example.of(lec);
+//    	List<Lecture> nlec = this.lectureRepository.findAll(example);
+//    	if(nlec.size() > 0) {
+//    		return nlec.get(0);
+//    	}
+//    	return null;
     }
     
     /**
@@ -386,26 +396,30 @@ public class StudentAttendanceFilterImpl  {
      */
 
     private Lecture lectureScheduleStatus(StudentAttendanceFilterInput filter) throws ParseException, Exception {
-    	Lecture lec = new Lecture();
-    	String dt = filter.getAttendanceDate();
-    	if(dt.contains("/")) {
-    		dt = dt.replaceAll("/", "-");
-    	}
-    	Date lecDate =  DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, dt);
-    	
-//    	if(days > 0) {
-//    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
-//    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
+//    	Lecture lec = new Lecture();
+//    	String dt = filter.getAttendanceDate();
+//    	if(dt.contains("/")) {
+//    		dt = dt.replaceAll("/", "-");
 //    	}
-    	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
-    	lec.setId(Long.valueOf(filter.getLectureId()));
-//    	lec.setAttendancemaster(attendanceMaster);
-    	Example<Lecture> example = Example.of(lec);
-    	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
-    	if(nlec.isPresent()) {
-    		return nlec.get();
-    	}
-    	return null;
+//    	Date lecDate =  DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, dt);
+//    	
+////    	if(days > 0) {
+////    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
+////    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
+////    	}
+//    	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
+//    	lec.setId(Long.valueOf(filter.getLectureId()));
+////    	lec.setAttendancemaster(attendanceMaster);
+//    	Example<Lecture> example = Example.of(lec);
+//    	Optional<Lecture> nlec = this.lectureRepository.findOne(example);
+//    	if(nlec.isPresent()) {
+//    		return nlec.get();
+//    	}
+//    	return null;
+    	
+    	Lecture lec = this.commonService.getLectureById(Long.parseLong(filter.getLectureId())) ;
+    	return lec;
+    	
     }
     
 //    private List<Student> getStudentList(Branch branch, Department department, Batch batch, Section section){

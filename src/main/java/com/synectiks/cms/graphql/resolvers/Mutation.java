@@ -4185,7 +4185,7 @@ public class Mutation implements GraphQLMutationResolver {
      * @throws Exception
      */
     public List<DailyAttendanceVo> getDailyStudentAttendanceData(StudentAttendanceFilterInput filter) throws Exception {
-        return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendance(filter));
+        return Lists.newArrayList(studentAttendanceFilterImpl.getStudenceAttendanceDataForTeacher(filter));
     }
     public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception{
         return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId, collegeId, branchId, academicYearId));

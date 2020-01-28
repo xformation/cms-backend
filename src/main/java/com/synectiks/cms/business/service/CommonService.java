@@ -599,6 +599,19 @@ public class CommonService {
 	    return list;
 	}
 	
+	public List<Subject> getAllSubject() {
+		logger.debug("Getting all subjects ");
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-filters";
+	    Subject[] temp = this.restTemplate.getForObject(prefSubjectUrl, Subject[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Subject> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	}
+	
 	public List<Subject> findAllSubject() {
 		logger.debug("Getting all subjects ");
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
@@ -814,6 +827,30 @@ public class CommonService {
 //        return newAm;
     }
 
+    public List<AttendanceMaster> findAllAttendanceMaster() {
+		logger.debug("Getting all attendancemaster objects ");
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/attendancemaster-by-filters";
+	    AttendanceMaster[] temp = this.restTemplate.getForObject(prefUrl, AttendanceMaster[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<AttendanceMaster> list = Arrays.asList(temp);	
+//	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	}
+    
+    public List<AttendanceMaster> getAllAttendanceMaster() {
+		logger.debug("Getting all attendancemaster objects ");
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/attendancemaster-by-filters";
+	    AttendanceMaster[] temp = this.restTemplate.getForObject(prefUrl, AttendanceMaster[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<AttendanceMaster> list = Arrays.asList(temp);	
+//	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	}
+    
     public AttendanceMaster getAttendanceMasterById(Long id) {
         if(id == null) {
             return null;
@@ -913,6 +950,30 @@ public class CommonService {
         }
         return null;
     }
+    
+    public List<Teach> findAllTeach() {
+		logger.debug("Getting all teach objects");
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters";;
+	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Teach> list = Arrays.asList(temp);	
+//	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	}
+    
+    public List<Teach> getAllTeach() {
+		logger.debug("Getting all teach objects");
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters";;
+	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Teach> list = Arrays.asList(temp);	
+//	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+	}
     
     public Teach getTeachById(Long id) {
         if(id == null) {
@@ -1402,6 +1463,45 @@ public class CommonService {
 //        return atndMstrList;
     }
 
+    public List<Lecture> getAllCurrentDateLectureForTeacher(Long teacherId){
+    	logger.debug("Getting today's lectures of a teacher id : "+teacherId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/todays-lectures-by-teacher-id?teacherId="+teacherId;
+	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
+	    if(temp.length == 0) {
+	    	logger.warn("No lecture found for teacher id : "+teacherId);
+	    	return Collections.emptyList();
+	    }
+	    List<Lecture> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+    }
+    
+    public List<CmsLectureVo> getAllCurrentDateCmsLectureForTeacher(Long teacherId){
+    	logger.debug("Getting today's cms lectures of a teacher id : "+teacherId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/todays-cmslectures-by-teacher-id?teacherId="+teacherId;
+	    CmsLectureVo[] temp = this.restTemplate.getForObject(prefUrl, CmsLectureVo[].class);
+	    if(temp.length == 0) {
+	    	logger.warn("No cms lecture found for teacher id : "+teacherId);
+	    	return Collections.emptyList();
+	    }
+	    List<CmsLectureVo> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+    }
+    
+    public List<CmsLectureVo> getAllCmsLectures(Long branchId, Long departmentId, Long academicYearId){
+    	logger.debug("Getting all cms lectures of branch id : "+branchId+", departmentId : "+departmentId+", academicYearId : "+academicYearId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/cmslectures?academicYearId="+academicYearId+"&branchId="+branchId+"&departmentId="+departmentId;
+	    CmsLectureVo[] temp = this.restTemplate.getForObject(prefUrl, CmsLectureVo[].class);
+	    if(temp.length == 0) {
+	    	logger.warn("No cms lecture found for given criteria. Returning empty list");
+	    	return Collections.emptyList();
+	    }
+	    List<CmsLectureVo> list = Arrays.asList(temp);	
+	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return list;
+    }
+    
     public List<Lecture> getLectureForCriteria(List<AttendanceMaster> atndMstrList, String lectureDate) throws Exception{
         if(atndMstrList.size() == 0) {
             logger.warn("Attendance master list is empty. Returning empty lecture list.");
@@ -2132,6 +2232,48 @@ public class CommonService {
         return list;
     }
 
+    public Lecture getLectureById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/lecture-by-id/"+id;
+        Lecture temp = this.restTemplate.getForObject(prefUrl, Lecture.class);
+        return temp;    
+    }
+    public Lecture findLectureById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/lecture-by-id/"+id;
+        Lecture temp = this.restTemplate.getForObject(prefUrl, Lecture.class);
+        return temp;    
+    }
+    
+    public CmsLectureVo getCmsLectureById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/cmslecture-by-id/"+id;
+        CmsLectureVo temp = this.restTemplate.getForObject(prefUrl, CmsLectureVo.class);
+        return temp;    
+    }
+    public CmsLectureVo findCmsLectureById(Long id) {
+        if(id == null) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/cmslecture-by-id/"+id;
+        CmsLectureVo temp = this.restTemplate.getForObject(prefUrl, CmsLectureVo.class);
+        return temp;    
+    }
+    public Lecture getLectureByAttendanceMasterAndLectureDate(Long attendanceMasterId, String lectureDate) {
+        if(attendanceMasterId == null || CommonUtil.isNullOrEmpty(lectureDate)) {
+            return null;
+        }
+        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/lecture-by-attendancemaster-and-date?attendanceMasterId="+attendanceMasterId+"&lectureDate="+lectureDate;
+        Lecture temp = this.restTemplate.getForObject(prefUrl, Lecture.class);
+        return temp;    
+    }
+    
     public static void main(String a[]) {
 //        String dt = "10/10/2019";
 //        LocalDate ld = DateFormatUtil.convertStringToLocalDate(dt, "MM/dd/yyyy");
