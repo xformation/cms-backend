@@ -333,7 +333,7 @@ type Query {
     createVehicleDataCache: VehicleDataCache!
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
-    createExamFilterDataCache(branchId:String!, academicYearId:String!): ExamFilterDataCache!
+    createExamFilterDataCache(branchId: Long, academicYearId: Long): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
     createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
 
