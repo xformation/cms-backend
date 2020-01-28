@@ -77,6 +77,7 @@ import com.synectiks.cms.domain.enumeration.BatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
 import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
 import com.synectiks.cms.domain.enumeration.SectionEnum;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
 import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
 import com.synectiks.cms.graphql.types.Student.Semester;
@@ -1068,7 +1069,7 @@ public class CommonService {
         return vo;
     }
 
-    public List<CmsSemesterVo> getAllSemesters() {
+    public List<CmsSemesterVo> getAllCmsSemesters() {
         logger.debug("Retrieving all semesters");
         List<CmsSemesterVo> ls = new ArrayList<>();
         for(Semester sm: Semester.values()) {
@@ -1080,6 +1081,19 @@ public class CommonService {
         return ls;
     }
 
+    public List<CmsSemesterVo> getAllSemesters() {
+        logger.debug("Retrieving all semesters");
+        List<CmsSemesterVo> ls = new ArrayList<>();
+        int count = 0;
+        for(SemesterEnum sm: SemesterEnum.values()) {
+            CmsSemesterVo vo = new CmsSemesterVo();
+            vo.setId(++count);
+            vo.setDescription(sm.name());
+            ls.add(vo);
+        }
+        return ls;
+    }
+    
     public CmsSemesterVo getSemester(Long id) {
         Semester sm = Semester.valueOf(id.intValue());
         CmsSemesterVo vo = new CmsSemesterVo();

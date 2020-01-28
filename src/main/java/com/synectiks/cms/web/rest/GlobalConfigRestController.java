@@ -1,7 +1,6 @@
 package com.synectiks.cms.web.rest;
 
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsDepartmentVo;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.service.util.CommonUtil;
 
 import io.github.jhipster.web.util.ResponseUtil;
@@ -65,6 +65,12 @@ public class GlobalConfigRestController {
 //        List<CmsDepartmentVo> deptList = this.commonService.getDepartmentListByBranch(Long.parseLong(branchId));
 //        config.setDepartmentList(deptList);
         config.setSelectedDepartmentId(Long.parseLong(departmentId));
+        
+        Branch branch = this.commonService.getBranchById(Long.parseLong(branchId));
+        Department department = this.commonService.getDepartmentById(Long.parseLong(departmentId));
+        config.setBranch(branch);
+        config.setDepartment(department);
+        
         CmsConstants.USERS_CACHE.put(userName, config);
         logger.debug("User specific global settings applied successfully");
         return ResponseUtil.wrapOrNotFound(Optional.of(config));

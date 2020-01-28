@@ -2302,23 +2302,23 @@ type RemoveTypeOfGradingPayload {
 }
 
 input AddAcademicExamSettingInput{
-    examName: String!
-    semester: SemesterEnum!
-    examDate: Date!
-    startTime: String!
-    endTime: String!
-    gradeType: GradeType!
-    total: Int!
-    passing: Int!
-    actions: String!
-    groupvalue: Long!
-    departmentId: Long!
-    sectionId: Long!
-    subjectId: Long!
-    academicyearId: Long!
-    batchId: Long!
-    branchId: Long!
-    typeOfGradingId: Long!
+    examName: String
+    semester: SemesterEnum
+    examDate: Date
+    startTime: String
+    endTime: String
+    gradeType: GradeType
+    total: Int
+    passing: Int
+    actions: String
+    groupvalue: Long
+    departmentId: Long
+    sectionId: Long
+    subjectId: Long
+    academicyearId: Long
+    batchId: Long
+    branchId: Long
+    typeOfGradingId: Long
 }
 
 type AddAcademicExamSettingPayload {

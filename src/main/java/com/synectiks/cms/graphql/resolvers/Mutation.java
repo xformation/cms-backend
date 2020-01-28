@@ -938,9 +938,16 @@ public class Mutation implements GraphQLMutationResolver {
 //            Batch batch = this.commonService.getBatchById(input.getBatchId()); //batchRepository.findById(input.getBatchId()).get();
 //            Section section = this.commonService.getSectionById(input.getSectionId());  //sectionRepository.findById(input.getSectionId()).get();
 //            Department department = this.commonService.getDepartmentById(input.getDepartmentId()); //departmentRepository.findById(input.getDepartmentId()).get();
-            TypeOfGrading typeOfGrading = typeOfGradingRepository.findById((input.getTypeOfGradingId())).get();
-
-            academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
+        	
+        	academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
+        	if("GRADE".equalsIgnoreCase(input.getGradeType().toString())) {
+            	Optional<TypeOfGrading> otg = typeOfGradingRepository.findById((input.getTypeOfGradingId()));
+            	if(otg.isPresent()) {
+            		academicExamSetting.setTypeOfGrading(otg.get());
+            	}
+            }
+        	
+            
             LocalDate exmDt =  DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate());
             academicExamSetting.setExamDate(exmDt);
             academicExamSetting.setCountvalue(new Long(countvalue));
@@ -950,7 +957,7 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setAcademicyearId(input.getAcademicyearId());
             academicExamSetting.setSectionId(input.getSectionId());
             academicExamSetting.setDepartmentId(input.getDepartmentId());
-            academicExamSetting.setTypeOfGrading(typeOfGrading);
+            
             academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate()));
             this.academicExamSettingRepository.save(academicExamSetting);
 

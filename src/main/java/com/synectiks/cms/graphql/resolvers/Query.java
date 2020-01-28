@@ -767,7 +767,7 @@ public class Query implements GraphQLQueryResolver {
 
     	List<CmsLectureVo> cmsLec = this.commonService.getAllCurrentDateCmsLectureForTeacher(tid);
     	
-    	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
+    	List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
 
 //    	cache.setDepartments(dept);
     	cache.setBatches(batchList);
@@ -837,7 +837,7 @@ public class Query implements GraphQLQueryResolver {
     	List<CmsLectureVo> cmsLec = this.commonService.getAllCmsLectures(Long.parseLong(branchId), Long.parseLong(departmentId), Long.parseLong(academicYearId));
     	
     	
-    	List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
+    	List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
 
 //    	cache.setDepartments(dept);
     	cache.setBatches(bth);
@@ -903,7 +903,7 @@ public class Query implements GraphQLQueryResolver {
         List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(departmentList, batchList);
         List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
         List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
-        List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
+        List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
         List<Library> library = this.commonService.getLibraryForCriteria(sub,batchList);
         List<Student> student = this.commonService.getStudentsForCriteria(departmentList, batchList, sectionList);
         List<CmsBook> book = this.commonService.getBookForCriteria(library,student);

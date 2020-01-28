@@ -37,7 +37,7 @@ public class SemesterRestController {
     @RequestMapping(method = RequestMethod.GET, value = "/cmssemesters")
     public List<CmsSemesterVo> getAllSemesters() throws Exception {
         logger.debug("REST request to get all the "+ENTITY_NAME);
-        return this.commonService.getAllSemesters();
+        return this.commonService.getAllCmsSemesters();
     }
 
     
