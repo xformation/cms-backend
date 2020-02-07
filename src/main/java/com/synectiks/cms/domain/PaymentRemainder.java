@@ -1,6 +1,6 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
 public class PaymentRemainder implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -58,13 +58,11 @@ public class PaymentRemainder implements Serializable {
     @Column(name = "remainder_recipients")
     private String remainderRecipients;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private College college;
+    @Column(name = "college_id")
+    private Long collegeId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Branch branch;
+    @Column(name = "branch_id")
+    private Long branchId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -205,30 +203,30 @@ public class PaymentRemainder implements Serializable {
         this.remainderRecipients = remainderRecipients;
     }
 
-    public College getCollege() {
-        return college;
+    public Long getCollegeId() {
+        return collegeId;
     }
 
-    public PaymentRemainder college(College college) {
-        this.college = college;
+    public PaymentRemainder collegeId(Long collegeId) {
+        this.collegeId = collegeId;
         return this;
     }
 
-    public void setCollege(College college) {
-        this.college = college;
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public PaymentRemainder branch(Branch branch) {
-        this.branch = branch;
+    public PaymentRemainder branchId(Long branchId) {
+        this.branchId = branchId;
         return this;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -266,6 +264,8 @@ public class PaymentRemainder implements Serializable {
             ", overDuePaymentRemainderDays=" + getOverDuePaymentRemainderDays() +
             ", isRemainderRecipients='" + getIsRemainderRecipients() + "'" +
             ", remainderRecipients='" + getRemainderRecipients() + "'" +
+            ", collegeId=" + getCollegeId() +
+            ", branchId=" + getBranchId() +
             "}";
     }
 }

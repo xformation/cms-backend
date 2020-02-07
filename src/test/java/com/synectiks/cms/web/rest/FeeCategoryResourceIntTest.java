@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -76,13 +77,14 @@ public class FeeCategoryResourceIntTest {
     private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Long DEFAULT_BRANCH_ID = 1L;
+    private static final Long UPDATED_BRANCH_ID = 2L;
+
     @Autowired
     private FeeCategoryRepository feeCategoryRepository;
 
-
     @Autowired
     private FeeCategoryMapper feeCategoryMapper;
-    
 
     @Autowired
     private FeeCategoryService feeCategoryService;
@@ -107,6 +109,9 @@ public class FeeCategoryResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restFeeCategoryMockMvc;
 
     private FeeCategory feeCategory;
@@ -119,7 +124,8 @@ public class FeeCategoryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -138,7 +144,8 @@ public class FeeCategoryResourceIntTest {
             .updatedBy(DEFAULT_UPDATED_BY)
             .updatedOn(DEFAULT_UPDATED_ON)
             .startDate(DEFAULT_START_DATE)
-            .endDate(DEFAULT_END_DATE);
+            .endDate(DEFAULT_END_DATE)
+            .branchId(DEFAULT_BRANCH_ID);
         return feeCategory;
     }
 
@@ -172,6 +179,7 @@ public class FeeCategoryResourceIntTest {
         assertThat(testFeeCategory.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
         assertThat(testFeeCategory.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testFeeCategory.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testFeeCategory.getBranchId()).isEqualTo(DEFAULT_BRANCH_ID);
 
         // Validate the FeeCategory in Elasticsearch
         verify(mockFeeCategorySearchRepository, times(1)).save(testFeeCategory);
@@ -276,10 +284,10 @@ public class FeeCategoryResourceIntTest {
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getFeeCategory() throws Exception {
@@ -299,8 +307,10 @@ public class FeeCategoryResourceIntTest {
             .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()))
             .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
-            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.branchId").value(DEFAULT_BRANCH_ID.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingFeeCategory() throws Exception {
@@ -330,7 +340,8 @@ public class FeeCategoryResourceIntTest {
             .updatedBy(UPDATED_UPDATED_BY)
             .updatedOn(UPDATED_UPDATED_ON)
             .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE);
+            .endDate(UPDATED_END_DATE)
+            .branchId(UPDATED_BRANCH_ID);
         FeeCategoryDTO feeCategoryDTO = feeCategoryMapper.toDto(updatedFeeCategory);
 
         restFeeCategoryMockMvc.perform(put("/api/fee-categories")
@@ -351,6 +362,7 @@ public class FeeCategoryResourceIntTest {
         assertThat(testFeeCategory.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
         assertThat(testFeeCategory.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testFeeCategory.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testFeeCategory.getBranchId()).isEqualTo(UPDATED_BRANCH_ID);
 
         // Validate the FeeCategory in Elasticsearch
         verify(mockFeeCategorySearchRepository, times(1)).save(testFeeCategory);
@@ -364,7 +376,7 @@ public class FeeCategoryResourceIntTest {
         // Create the FeeCategory
         FeeCategoryDTO feeCategoryDTO = feeCategoryMapper.toDto(feeCategory);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFeeCategoryMockMvc.perform(put("/api/fee-categories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(feeCategoryDTO)))
@@ -386,7 +398,7 @@ public class FeeCategoryResourceIntTest {
 
         int databaseSizeBeforeDelete = feeCategoryRepository.findAll().size();
 
-        // Get the feeCategory
+        // Delete the feeCategory
         restFeeCategoryMockMvc.perform(delete("/api/fee-categories/{id}", feeCategory.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -411,15 +423,16 @@ public class FeeCategoryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(feeCategory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].categoryName").value(hasItem(DEFAULT_CATEGORY_NAME.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].categoryName").value(hasItem(DEFAULT_CATEGORY_NAME)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
 
     @Test

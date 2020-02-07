@@ -1,6 +1,6 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,7 +24,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 public class FeeCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -61,9 +61,8 @@ public class FeeCategory implements Serializable {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Branch branch;
+    @Column(name = "branch_id")
+    private Long branchId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -191,17 +190,17 @@ public class FeeCategory implements Serializable {
         this.endDate = endDate;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public FeeCategory branch(Branch branch) {
-        this.branch = branch;
+    public FeeCategory branchId(Long branchId) {
+        this.branchId = branchId;
         return this;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -238,6 +237,7 @@ public class FeeCategory implements Serializable {
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", branchId=" + getBranchId() +
             "}";
     }
 }

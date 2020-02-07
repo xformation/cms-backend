@@ -6,19 +6,13 @@
     <!--
         Added the constraints for entity FeeDetails.
     -->
-    <changeSet id="20190307052141-2" author="jhipster">
+    <changeSet id="20200129121525-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="fee_category_id"
                                  baseTableName="fee_details"
                                  constraintName="fk_fee_details_fee_category_id"
                                  referencedColumnNames="id"
                                  referencedTableName="fee_category"/>
-
-        <addForeignKeyConstraint baseColumnNames="batch_id"
-                                 baseTableName="fee_details"
-                                 constraintName="fk_fee_details_batch_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="batch"/>
 
         <addForeignKeyConstraint baseColumnNames="facility_id"
                                  baseTableName="fee_details"
@@ -31,12 +25,6 @@
                                  constraintName="fk_fee_details_transport_route_id"
                                  referencedColumnNames="id"
                                  referencedTableName="transport_route"/>
-
-        <addForeignKeyConstraint baseColumnNames="department_id"
-                                 baseTableName="fee_details"
-                                 constraintName="fk_fee_details_department_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="department"/>
 
     </changeSet>
 </databaseChangeLog>

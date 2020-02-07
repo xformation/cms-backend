@@ -15,34 +15,31 @@ import com.synectiks.cms.domain.Invoice;
 public class InvoiceFilterProcessor {
 
 	private final Logger logger = LoggerFactory.getLogger(InvoiceFilterProcessor.class);
-	
+
 	private Long totalInvoice = 0L;
 	private Long totalPaidInvoice = 0L;
 	private Long totalUnPaidInvoice = 0L;
 	private Long totalCanceledInvoice = 0L;
 	@Autowired
 	private CmsInvoiceService cmsInvoiceService;
-	
+
 	public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception{
 		return cmsInvoiceService.searchInvoice(invoiceNumber, studentId, collegeId, branchId, academicYearId);
 	}
-	
-	public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
-		return cmsInvoiceService.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId);
+
+	public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long branchId, Long academicYearId) throws Exception{
+		return cmsInvoiceService.searchInvoiceOnType(invoiceType, branchId, academicYearId);
 	}
-	
+
 	public Long getTotalInvoice(Long collegeId, Long branchId, Long academicYearId) {
 		return cmsInvoiceService.getTotalInvoice(collegeId, branchId, academicYearId);
 	}
-	
 	public Long getTotalPaidInvoice(Long collegeId, Long branchId, Long academicYearId) {
 		return cmsInvoiceService.getTotalPaidInvoice(collegeId, branchId, academicYearId);
 	}
-	
 	public Long getTotalUnPaidInvoice(Long collegeId, Long branchId, Long academicYearId) {
 		return cmsInvoiceService.getTotalUnPaidInvoice(collegeId, branchId, academicYearId);
 	}
-	
 	public Long getTotalCanceledInvoice(Long collegeId, Long branchId, Long academicYearId) {
 		return cmsInvoiceService.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
 	}
@@ -54,7 +51,7 @@ public class InvoiceFilterProcessor {
 		inv.setTotalPaidInvoice(this.getTotalPaidInvoice(collegeId, branchId, academicYearId));
 		inv.setTotalUnPaidInvoice(this.getTotalUnPaidInvoice(collegeId, branchId, academicYearId));
 		inv.setTotalCanceledInvoice(this.getTotalCanceledInvoice(collegeId, branchId, academicYearId));
-		return inv; 
+		return inv;
 	}
 
 	public Long getTotalInvoice() {

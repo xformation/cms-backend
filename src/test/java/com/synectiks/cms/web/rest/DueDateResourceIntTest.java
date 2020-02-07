@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -62,13 +63,17 @@ public class DueDateResourceIntTest {
     private static final Frequency DEFAULT_FREQUENCY = Frequency.WEEKLY;
     private static final Frequency UPDATED_FREQUENCY = Frequency.MONTHLY;
 
+    private static final Long DEFAULT_COLLEGE_ID = 1L;
+    private static final Long UPDATED_COLLEGE_ID = 2L;
+
+    private static final Long DEFAULT_BRANCH_ID = 1L;
+    private static final Long UPDATED_BRANCH_ID = 2L;
+
     @Autowired
     private DueDateRepository dueDateRepository;
 
-
     @Autowired
     private DueDateMapper dueDateMapper;
-    
 
     @Autowired
     private DueDateService dueDateService;
@@ -93,6 +98,9 @@ public class DueDateResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restDueDateMockMvc;
 
     private DueDate dueDate;
@@ -105,7 +113,8 @@ public class DueDateResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -120,7 +129,9 @@ public class DueDateResourceIntTest {
             .installments(DEFAULT_INSTALLMENTS)
             .dayDesc(DEFAULT_DAY_DESC)
             .paymentDay(DEFAULT_PAYMENT_DAY)
-            .frequency(DEFAULT_FREQUENCY);
+            .frequency(DEFAULT_FREQUENCY)
+            .collegeId(DEFAULT_COLLEGE_ID)
+            .branchId(DEFAULT_BRANCH_ID);
         return dueDate;
     }
 
@@ -150,6 +161,8 @@ public class DueDateResourceIntTest {
         assertThat(testDueDate.getDayDesc()).isEqualTo(DEFAULT_DAY_DESC);
         assertThat(testDueDate.getPaymentDay()).isEqualTo(DEFAULT_PAYMENT_DAY);
         assertThat(testDueDate.getFrequency()).isEqualTo(DEFAULT_FREQUENCY);
+        assertThat(testDueDate.getCollegeId()).isEqualTo(DEFAULT_COLLEGE_ID);
+        assertThat(testDueDate.getBranchId()).isEqualTo(DEFAULT_BRANCH_ID);
 
         // Validate the DueDate in Elasticsearch
         verify(mockDueDateSearchRepository, times(1)).save(testDueDate);
@@ -231,10 +244,11 @@ public class DueDateResourceIntTest {
             .andExpect(jsonPath("$.[*].installments").value(hasItem(DEFAULT_INSTALLMENTS)))
             .andExpect(jsonPath("$.[*].dayDesc").value(hasItem(DEFAULT_DAY_DESC.toString())))
             .andExpect(jsonPath("$.[*].paymentDay").value(hasItem(DEFAULT_PAYMENT_DAY)))
-            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.toString())));
+            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.toString())))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getDueDate() throws Exception {
@@ -250,8 +264,11 @@ public class DueDateResourceIntTest {
             .andExpect(jsonPath("$.installments").value(DEFAULT_INSTALLMENTS))
             .andExpect(jsonPath("$.dayDesc").value(DEFAULT_DAY_DESC.toString()))
             .andExpect(jsonPath("$.paymentDay").value(DEFAULT_PAYMENT_DAY))
-            .andExpect(jsonPath("$.frequency").value(DEFAULT_FREQUENCY.toString()));
+            .andExpect(jsonPath("$.frequency").value(DEFAULT_FREQUENCY.toString()))
+            .andExpect(jsonPath("$.collegeId").value(DEFAULT_COLLEGE_ID.intValue()))
+            .andExpect(jsonPath("$.branchId").value(DEFAULT_BRANCH_ID.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingDueDate() throws Exception {
@@ -277,7 +294,9 @@ public class DueDateResourceIntTest {
             .installments(UPDATED_INSTALLMENTS)
             .dayDesc(UPDATED_DAY_DESC)
             .paymentDay(UPDATED_PAYMENT_DAY)
-            .frequency(UPDATED_FREQUENCY);
+            .frequency(UPDATED_FREQUENCY)
+            .collegeId(UPDATED_COLLEGE_ID)
+            .branchId(UPDATED_BRANCH_ID);
         DueDateDTO dueDateDTO = dueDateMapper.toDto(updatedDueDate);
 
         restDueDateMockMvc.perform(put("/api/due-dates")
@@ -294,6 +313,8 @@ public class DueDateResourceIntTest {
         assertThat(testDueDate.getDayDesc()).isEqualTo(UPDATED_DAY_DESC);
         assertThat(testDueDate.getPaymentDay()).isEqualTo(UPDATED_PAYMENT_DAY);
         assertThat(testDueDate.getFrequency()).isEqualTo(UPDATED_FREQUENCY);
+        assertThat(testDueDate.getCollegeId()).isEqualTo(UPDATED_COLLEGE_ID);
+        assertThat(testDueDate.getBranchId()).isEqualTo(UPDATED_BRANCH_ID);
 
         // Validate the DueDate in Elasticsearch
         verify(mockDueDateSearchRepository, times(1)).save(testDueDate);
@@ -307,7 +328,7 @@ public class DueDateResourceIntTest {
         // Create the DueDate
         DueDateDTO dueDateDTO = dueDateMapper.toDto(dueDate);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restDueDateMockMvc.perform(put("/api/due-dates")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(dueDateDTO)))
@@ -329,7 +350,7 @@ public class DueDateResourceIntTest {
 
         int databaseSizeBeforeDelete = dueDateRepository.findAll().size();
 
-        // Get the dueDate
+        // Delete the dueDate
         restDueDateMockMvc.perform(delete("/api/due-dates/{id}", dueDate.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -354,11 +375,13 @@ public class DueDateResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(dueDate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].paymentMethod").value(hasItem(DEFAULT_PAYMENT_METHOD.toString())))
+            .andExpect(jsonPath("$.[*].paymentMethod").value(hasItem(DEFAULT_PAYMENT_METHOD)))
             .andExpect(jsonPath("$.[*].installments").value(hasItem(DEFAULT_INSTALLMENTS)))
-            .andExpect(jsonPath("$.[*].dayDesc").value(hasItem(DEFAULT_DAY_DESC.toString())))
+            .andExpect(jsonPath("$.[*].dayDesc").value(hasItem(DEFAULT_DAY_DESC)))
             .andExpect(jsonPath("$.[*].paymentDay").value(hasItem(DEFAULT_PAYMENT_DAY)))
-            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.toString())));
+            .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.toString())))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
 
     @Test

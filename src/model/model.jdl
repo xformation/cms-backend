@@ -64,7 +64,7 @@ entity Subject{
 	subjectCode String
 	subjectType String
 	subjectDesc  String
-	status String 
+	status String
 }
 
 enum SubTypeEnum{
@@ -129,48 +129,48 @@ CARD, CASH, NETBANKING, CHEQUE, DEMANDDRAFT
 }
 
 entity Student{
-	studentName String 
-	studentMiddleName String 
-	studentLastName String 
-	fatherName String 
-	fatherMiddleName String 
-	fatherLastName String 
-	motherName String 
-	motherMiddleName String 
-	motherLastName String 
-	studentAadharNo String 
+	studentName String
+	studentMiddleName String
+	studentLastName String
+	fatherName String
+	fatherMiddleName String
+	fatherLastName String
+	motherName String
+	motherMiddleName String
+	motherLastName String
+	studentAadharNo String
 	studentPanNo String
 	studentSocialSecurityNo String
 	studentTaxReferenceNo String
 	studentBplNo String
 	studentDrivingLicenseNo String
 	studentPassportNo String
-	dateOfBirth LocalDate 
-	placeOfBirth String 
-	religion Religion 
-	caste Caste 
-	subCaste String 
-	age Integer 
-	sex Gender 
+	dateOfBirth LocalDate
+	placeOfBirth String
+	religion Religion
+	caste Caste
+	subCaste String
+	age Integer
+	sex Gender
 	studentLocalAddress String
-	studentPermanentAddress String 
-	city String 
-	state String 
-	country String 
-	pinCode String 
-	studentPrimaryCellNumber String 
+	studentPermanentAddress String
+	city String
+	state String
+	country String
+	pinCode String
+	studentPrimaryCellNumber String
 	studentAlternateCellNumber String
 	studentLandLinePhoneNumber String
-	studentPrimaryEmailId String 
+	studentPrimaryEmailId String
 	studentAlternateEmailId String
 	relationWithStudent RelationWithStudentEnum
-	emergencyContactName String 
-	emergencyContactMiddleName String 
-	emergencyContactLastName String 
+	emergencyContactName String
+	emergencyContactMiddleName String
+	emergencyContactLastName String
 	emergencyContactCellNumber String
-	emergencyContactLandLinePhoneNumber String 
-	emergencyContactEmailId String 
-	studentImagePath String 
+	emergencyContactLandLinePhoneNumber String
+	emergencyContactEmailId String
+	studentImagePath String
 	admissionNo String
 	enrollmentNo String
 	rollNo String
@@ -179,52 +179,52 @@ entity Student{
 	fatherEmailId String
 	fatherOccupation String
 	fatherOfficeEmailId String
-	fatherOfficeAddress String  
+	fatherOfficeAddress String
 	fatherOfficeCellNumber String
 	fatherOfficeLandLinePhoneNumber	String
-	fatherAadharNo String 
+	fatherAadharNo String
 	fatherPanNo String
 	fatherSocialSecurityNo String
 	fatherTaxReferenceNo String
 	fatherBplNo String
 	fatherDrivingLicenseNo String
 	fatherPassportNo String
-	fatherImagePath String 
-	
+	fatherImagePath String
+
 	motherCellNumber String
 	motherEmailId String
 	motherOccupation String
 	motherOfficeEmailId String
-	motherOfficeAddress String  
+	motherOfficeAddress String
 	motherOfficeCellNumber String
 	motherOfficeLandLinePhoneNumber	String
-	motherAadharNo String 
+	motherAadharNo String
 	motherPanNo String
 	motherSocialSecurityNo String
 	motherTaxReferenceNo String
 	motherBplNo String
 	motherDrivingLicenseNo String
 	motherPassportNo String
-	motherImagePath String 
-	
-	guardianName String 
-	guardianMiddleName String 
-	guardianLastName String 
-	guardianAddress String  
+	motherImagePath String
+
+	guardianName String
+	guardianMiddleName String
+	guardianLastName String
+	guardianAddress String
 	guardianCellNumber String
 	guardianLandLinePhoneNumber String
 	guardianEmailId String
 	guardianOccupation String
 	guardianOfficeEmailId String
-	guardianOfficeAddress String  
+	guardianOfficeAddress String
 	guardianOfficeCellNumber String
 	guardianOfficeLandLinePhoneNumber String
-	guardianImagePath String 
-	
+	guardianImagePath String
+
 	isGuardianSponsorAgency String maxlength(3)
 	sponsorAgencyName String
 	sponsorAgencyRegistrationNo String
-	sponsorAgencyAddress String 
+	sponsorAgencyAddress String
 	sponsorAgencyCellNumber String
 	sponsorAgencyLandLineNumber String
 	sponsorAgencyEmailId String
@@ -234,24 +234,24 @@ entity Student{
 	sponsorAgencyAppointeeLandLineNumber String
 	sponsorAgencyAppointeeEmailId String
 	sponsorAgencyAppointeeOfficeAddress String
-	
+
 	isPhysicallyChallenged String maxlength(3)
 	detailsOfDisability String maxlength(2000)
 	disabilityCertificateNo String
 	disabilityCertificateIssueAuthority String
 	disabilityCertificateIssueDate LocalDate
 	percentagOfDisability Integer
-	
-	bloodGroup Bloodgroup 
+
+	bloodGroup Bloodgroup
 	vaccinationDetails String maxlength(2000)
 	otherMedicalDetails String maxlength(2000)
-	
+
 	status Status
 	createdBy String
 	createdOn LocalDate
 	updatedBy String
 	updatedOn LocalDate
-	comments String	
+	comments String
 }
 
 
@@ -260,46 +260,46 @@ enum StaffType{
 }
 
 entity Teacher{
-	teacherName String 
-	teacherMiddleName String 
-	teacherLastName String 
-	fatherName String 
-	fatherMiddleName String 
-	fatherLastName String 
+	teacherName String
+	teacherMiddleName String
+	teacherLastName String
+	fatherName String
+	fatherMiddleName String
+	fatherLastName String
 	spouseName String
 	spouseMiddleName String
 	spouseLastName String
-	motherName String 
-	motherMiddleName String 
-	motherLastName String 
+	motherName String
+	motherMiddleName String
+	motherLastName String
 	aadharNo String
-	dateOfBirth LocalDate 
-	placeOfBirth String 
-	religion String 
+	dateOfBirth LocalDate
+	placeOfBirth String
+	religion String
 	caste String
-	subCaste String 
-	age Integer 
-	sex String 
+	subCaste String
+	age Integer
+	sex String
 	bloodGroup String
-	address String 
-	town String 
-	state String 
-	country String 
-	pinCode String 
-	teacherContactNumber String 
+	address String
+	town String
+	state String
+	country String
+	pinCode String
+	teacherContactNumber String
 	alternateContactNumber String
-	teacherEmailAddress String 
+	teacherEmailAddress String
 	alternateEmailAddress String
-	relationWithStaff String 
-	emergencyContactName String 
+	relationWithStaff String
+	emergencyContactName String
 	emergencyContactMiddleName String
-	emergencyContactLastName String 
-	emergencyContactNo String 
-	emergencyContactEmailAddress String 
-	uploadPhoto String 
+	emergencyContactLastName String
+	emergencyContactNo String
+	emergencyContactEmailAddress String
+	uploadPhoto String
 	status String
 	employeeId Long
-	designation String 
+	designation String
 	staffType String
 }
 
@@ -399,17 +399,17 @@ panCardNumber String required
 }
 
 entity AcademicExamSetting {
-    examName String 
-    semester SemesterEnum 
-    examDate LocalDate 
-    startTime String 
-    endTime String 
+    examName String
+    semester SemesterEnum
+    examDate LocalDate
+    startTime String
+    endTime String
     gradeType GradeType
-    total Integer 
-    passing Integer 
+    total Integer
+    passing Integer
     actions String
     groupvalue Long
-    countvalue Long 
+    countvalue Long
 	branchId Long
 	subjectId Long
 	departmentId Long
@@ -478,6 +478,7 @@ updatedBy String
 updatedOn LocalDate
 startDate LocalDate
 endDate LocalDate
+branchId Long
 }
 
 
@@ -502,6 +503,8 @@ updatedBy String
 updatedOn LocalDate
 startDate LocalDate
 endDate LocalDate
+batchId Long
+departmentId Long
 }
 
 entity DueDate {
@@ -510,6 +513,8 @@ installments Integer required
 dayDesc String
 paymentDay Integer
 frequency Frequency
+collegeId Long
+branchId Long
 }
 
 
@@ -525,6 +530,8 @@ overDuePaymentRemainderAfterDueDateOrUntilPaid String
 overDuePaymentRemainderDays Integer
 isRemainderRecipients String
 remainderRecipients String
+collegeId Long
+branchId Long
 }
 
 entity LateFee {
@@ -535,6 +542,10 @@ fixedCharges Long
 percentCharges String
 lateFeeFrequency String
 lateFeeRepeatDays Integer
+collegeId Long
+branchId Long
+academicYearId Long
+termId Long
 }
 
 entity Invoice {
@@ -551,6 +562,9 @@ paymentStatus InvoicePaymentStatus required
 comments String required
 updatedBy String required
 updatedOn LocalDate required
+collegeId Long
+branchId Long
+academicYearId Long
 }
 entity CompetitiveExam {
 testName String required
@@ -715,9 +729,9 @@ validTill LocalDate required
 
 
 entity Employee {
-	employeeName String 
-	designation String 
-	joiningDate LocalDate 
+	employeeName String
+	designation String
+	joiningDate LocalDate
 	jobEndDate LocalDate
 	resignationDate LocalDate
 	resignationAcceptanceDate LocalDate
@@ -872,29 +886,15 @@ City{State} to State,
 State{Country} to Country,
 Currency{Country} to Country
 FeeDetails{feeCategory} to FeeCategory ,
-FeeDetails{batch} to Batch ,
 FeeDetails{facility} to Facility,
 FeeDetails{transportRoute} to TransportRoute,
-FeeDetails{department} to Department,
-FeeCategory{branch} to Branch,
-DueDate{college} to College,
-DueDate{branch} to Branch,
-PaymentRemainder{college} to College,
-PaymentRemainder{branch} to Branch,
-LateFee{college} to College,
-LateFee{branch} to Branch,
-LateFee{academicYear} to AcademicYear,
-LateFee{term} to Term,
 Facility{academicYear} to AcademicYear,
 Facility{branch} to Branch,
 Invoice{feeCategory} to FeeCategory,
 Invoice{feeDetails} to FeeDetails,
 Invoice{dueDate} to DueDate,
 Invoice{paymentRemainder} to PaymentRemainder
-Invoice{college} to College,
-Invoice{branch} to Branch,
 Invoice{student} to Student,
-Invoice{academicYear} to AcademicYear,
 CompetitiveExam{student} to Student,
 Documents{student} to Student,
 AcademicHistory{student} to Student,

@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -89,13 +90,20 @@ public class InvoiceResourceIntTest {
     private static final LocalDate DEFAULT_UPDATED_ON = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Long DEFAULT_COLLEGE_ID = 1L;
+    private static final Long UPDATED_COLLEGE_ID = 2L;
+
+    private static final Long DEFAULT_BRANCH_ID = 1L;
+    private static final Long UPDATED_BRANCH_ID = 2L;
+
+    private static final Long DEFAULT_ACADEMIC_YEAR_ID = 1L;
+    private static final Long UPDATED_ACADEMIC_YEAR_ID = 2L;
+
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-
     @Autowired
     private InvoiceMapper invoiceMapper;
-    
 
     @Autowired
     private InvoiceService invoiceService;
@@ -120,6 +128,9 @@ public class InvoiceResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restInvoiceMockMvc;
 
     private Invoice invoice;
@@ -132,7 +143,8 @@ public class InvoiceResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -155,7 +167,10 @@ public class InvoiceResourceIntTest {
             .paymentStatus(DEFAULT_PAYMENT_STATUS)
             .comments(DEFAULT_COMMENTS)
             .updatedBy(DEFAULT_UPDATED_BY)
-            .updatedOn(DEFAULT_UPDATED_ON);
+            .updatedOn(DEFAULT_UPDATED_ON)
+            .collegeId(DEFAULT_COLLEGE_ID)
+            .branchId(DEFAULT_BRANCH_ID)
+            .academicYearId(DEFAULT_ACADEMIC_YEAR_ID);
         return invoice;
     }
 
@@ -193,6 +208,9 @@ public class InvoiceResourceIntTest {
         assertThat(testInvoice.getComments()).isEqualTo(DEFAULT_COMMENTS);
         assertThat(testInvoice.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
         assertThat(testInvoice.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
+        assertThat(testInvoice.getCollegeId()).isEqualTo(DEFAULT_COLLEGE_ID);
+        assertThat(testInvoice.getBranchId()).isEqualTo(DEFAULT_BRANCH_ID);
+        assertThat(testInvoice.getAcademicYearId()).isEqualTo(DEFAULT_ACADEMIC_YEAR_ID);
 
         // Validate the Invoice in Elasticsearch
         verify(mockInvoiceSearchRepository, times(1)).save(testInvoice);
@@ -434,10 +452,12 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.[*].paymentStatus").value(hasItem(DEFAULT_PAYMENT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
-            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())));
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getInvoice() throws Exception {
@@ -461,8 +481,12 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.paymentStatus").value(DEFAULT_PAYMENT_STATUS.toString()))
             .andExpect(jsonPath("$.comments").value(DEFAULT_COMMENTS.toString()))
             .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()))
-            .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()));
+            .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
+            .andExpect(jsonPath("$.collegeId").value(DEFAULT_COLLEGE_ID.intValue()))
+            .andExpect(jsonPath("$.branchId").value(DEFAULT_BRANCH_ID.intValue()))
+            .andExpect(jsonPath("$.academicYearId").value(DEFAULT_ACADEMIC_YEAR_ID.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingInvoice() throws Exception {
@@ -496,7 +520,10 @@ public class InvoiceResourceIntTest {
             .paymentStatus(UPDATED_PAYMENT_STATUS)
             .comments(UPDATED_COMMENTS)
             .updatedBy(UPDATED_UPDATED_BY)
-            .updatedOn(UPDATED_UPDATED_ON);
+            .updatedOn(UPDATED_UPDATED_ON)
+            .collegeId(UPDATED_COLLEGE_ID)
+            .branchId(UPDATED_BRANCH_ID)
+            .academicYearId(UPDATED_ACADEMIC_YEAR_ID);
         InvoiceDTO invoiceDTO = invoiceMapper.toDto(updatedInvoice);
 
         restInvoiceMockMvc.perform(put("/api/invoices")
@@ -521,6 +548,9 @@ public class InvoiceResourceIntTest {
         assertThat(testInvoice.getComments()).isEqualTo(UPDATED_COMMENTS);
         assertThat(testInvoice.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
         assertThat(testInvoice.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
+        assertThat(testInvoice.getCollegeId()).isEqualTo(UPDATED_COLLEGE_ID);
+        assertThat(testInvoice.getBranchId()).isEqualTo(UPDATED_BRANCH_ID);
+        assertThat(testInvoice.getAcademicYearId()).isEqualTo(UPDATED_ACADEMIC_YEAR_ID);
 
         // Validate the Invoice in Elasticsearch
         verify(mockInvoiceSearchRepository, times(1)).save(testInvoice);
@@ -534,7 +564,7 @@ public class InvoiceResourceIntTest {
         // Create the Invoice
         InvoiceDTO invoiceDTO = invoiceMapper.toDto(invoice);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restInvoiceMockMvc.perform(put("/api/invoices")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(invoiceDTO)))
@@ -556,7 +586,7 @@ public class InvoiceResourceIntTest {
 
         int databaseSizeBeforeDelete = invoiceRepository.findAll().size();
 
-        // Get the invoice
+        // Delete the invoice
         restInvoiceMockMvc.perform(delete("/api/invoices/{id}", invoice.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -581,7 +611,7 @@ public class InvoiceResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(invoice.getId().intValue())))
-            .andExpect(jsonPath("$.[*].invoiceNumber").value(hasItem(DEFAULT_INVOICE_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].invoiceNumber").value(hasItem(DEFAULT_INVOICE_NUMBER)))
             .andExpect(jsonPath("$.[*].amountPaid").value(hasItem(DEFAULT_AMOUNT_PAID.intValue())))
             .andExpect(jsonPath("$.[*].paymentDate").value(hasItem(DEFAULT_PAYMENT_DATE.toString())))
             .andExpect(jsonPath("$.[*].nextPaymentDate").value(hasItem(DEFAULT_NEXT_PAYMENT_DATE.toString())))
@@ -589,11 +619,14 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.[*].modeOfPayment").value(hasItem(DEFAULT_MODE_OF_PAYMENT.toString())))
             .andExpect(jsonPath("$.[*].chequeNumber").value(hasItem(DEFAULT_CHEQUE_NUMBER.intValue())))
             .andExpect(jsonPath("$.[*].demandDraftNumber").value(hasItem(DEFAULT_DEMAND_DRAFT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].onlineTxnRefNumber").value(hasItem(DEFAULT_ONLINE_TXN_REF_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].onlineTxnRefNumber").value(hasItem(DEFAULT_ONLINE_TXN_REF_NUMBER)))
             .andExpect(jsonPath("$.[*].paymentStatus").value(hasItem(DEFAULT_PAYMENT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())))
-            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
-            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())));
+            .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS)))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY)))
+            .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())));
     }
 
     @Test

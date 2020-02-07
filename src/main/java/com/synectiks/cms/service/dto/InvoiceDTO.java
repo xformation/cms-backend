@@ -49,6 +49,12 @@ public class InvoiceDTO implements Serializable {
     @NotNull
     private LocalDate updatedOn;
 
+    private Long collegeId;
+
+    private Long branchId;
+
+    private Long academicYearId;
+
 
     private Long feeCategoryId;
 
@@ -58,13 +64,7 @@ public class InvoiceDTO implements Serializable {
 
     private Long paymentRemainderId;
 
-    private Long collegeId;
-
-    private Long branchId;
-
     private Long studentId;
-
-    private Long academicYearId;
 
     public Long getId() {
         return id;
@@ -178,6 +178,30 @@ public class InvoiceDTO implements Serializable {
         this.updatedOn = updatedOn;
     }
 
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+    }
+
     public Long getFeeCategoryId() {
         return feeCategoryId;
     }
@@ -210,36 +234,12 @@ public class InvoiceDTO implements Serializable {
         this.paymentRemainderId = paymentRemainderId;
     }
 
-    public Long getCollegeId() {
-        return collegeId;
-    }
-
-    public void setCollegeId(Long collegeId) {
-        this.collegeId = collegeId;
-    }
-
-    public Long getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
-    }
-
     public Long getStudentId() {
         return studentId;
     }
 
     public void setStudentId(Long studentId) {
         this.studentId = studentId;
-    }
-
-    public Long getAcademicYearId() {
-        return academicYearId;
-    }
-
-    public void setAcademicYearId(Long academicYearId) {
-        this.academicYearId = academicYearId;
     }
 
     @Override
@@ -280,14 +280,14 @@ public class InvoiceDTO implements Serializable {
             ", comments='" + getComments() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +
             ", updatedOn='" + getUpdatedOn() + "'" +
+            ", collegeId=" + getCollegeId() +
+            ", branchId=" + getBranchId() +
+            ", academicYearId=" + getAcademicYearId() +
             ", feeCategory=" + getFeeCategoryId() +
             ", feeDetails=" + getFeeDetailsId() +
             ", dueDate=" + getDueDateId() +
             ", paymentRemainder=" + getPaymentRemainderId() +
-            ", college=" + getCollegeId() +
-            ", branch=" + getBranchId() +
             ", student=" + getStudentId() +
-            ", academicYear=" + getAcademicYearId() +
             "}";
     }
 }

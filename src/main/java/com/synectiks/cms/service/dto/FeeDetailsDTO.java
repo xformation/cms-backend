@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -41,15 +40,16 @@ public class FeeDetailsDTO implements Serializable {
 
     private LocalDate endDate;
 
-    private Long feeCategoryId;
-
     private Long batchId;
+
+    private Long departmentId;
+
+
+    private Long feeCategoryId;
 
     private Long facilityId;
 
     private Long transportRouteId;
-
-    private Long departmentId;
 
     public Long getId() {
         return id;
@@ -155,20 +155,28 @@ public class FeeDetailsDTO implements Serializable {
         this.endDate = endDate;
     }
 
-    public Long getFeeCategoryId() {
-        return feeCategoryId;
-    }
-
-    public void setFeeCategoryId(Long feeCategoryId) {
-        this.feeCategoryId = feeCategoryId;
-    }
-
     public Long getBatchId() {
         return batchId;
     }
 
     public void setBatchId(Long batchId) {
         this.batchId = batchId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getFeeCategoryId() {
+        return feeCategoryId;
+    }
+
+    public void setFeeCategoryId(Long feeCategoryId) {
+        this.feeCategoryId = feeCategoryId;
     }
 
     public Long getFacilityId() {
@@ -185,14 +193,6 @@ public class FeeDetailsDTO implements Serializable {
 
     public void setTransportRouteId(Long transportRouteId) {
         this.transportRouteId = transportRouteId;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
     }
 
     @Override
@@ -232,11 +232,11 @@ public class FeeDetailsDTO implements Serializable {
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", batchId=" + getBatchId() +
+            ", departmentId=" + getDepartmentId() +
             ", feeCategory=" + getFeeCategoryId() +
-            ", batch=" + getBatchId() +
             ", facility=" + getFacilityId() +
             ", transportRoute=" + getTransportRouteId() +
-            ", department=" + getDepartmentId() +
             "}";
     }
 }

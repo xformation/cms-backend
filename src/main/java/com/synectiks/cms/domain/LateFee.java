@@ -1,6 +1,6 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
 public class LateFee implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -49,21 +49,17 @@ public class LateFee implements Serializable {
     @Column(name = "late_fee_repeat_days")
     private Integer lateFeeRepeatDays;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private College college;
+    @Column(name = "college_id")
+    private Long collegeId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Branch branch;
+    @Column(name = "branch_id")
+    private Long branchId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private AcademicYear academicYear;
+    @Column(name = "academic_year_id")
+    private Long academicYearId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Term term;
+    @Column(name = "term_id")
+    private Long termId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -165,56 +161,56 @@ public class LateFee implements Serializable {
         this.lateFeeRepeatDays = lateFeeRepeatDays;
     }
 
-    public College getCollege() {
-        return college;
+    public Long getCollegeId() {
+        return collegeId;
     }
 
-    public LateFee college(College college) {
-        this.college = college;
+    public LateFee collegeId(Long collegeId) {
+        this.collegeId = collegeId;
         return this;
     }
 
-    public void setCollege(College college) {
-        this.college = college;
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public LateFee branch(Branch branch) {
-        this.branch = branch;
+    public LateFee branchId(Long branchId) {
+        this.branchId = branchId;
         return this;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
-    public AcademicYear getAcademicYear() {
-        return academicYear;
+    public Long getAcademicYearId() {
+        return academicYearId;
     }
 
-    public LateFee academicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public LateFee academicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
         return this;
     }
 
-    public void setAcademicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
     }
 
-    public Term getTerm() {
-        return term;
+    public Long getTermId() {
+        return termId;
     }
 
-    public LateFee term(Term term) {
-        this.term = term;
+    public LateFee termId(Long termId) {
+        this.termId = termId;
         return this;
     }
 
-    public void setTerm(Term term) {
-        this.term = term;
+    public void setTermId(Long termId) {
+        this.termId = termId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -249,6 +245,10 @@ public class LateFee implements Serializable {
             ", percentCharges='" + getPercentCharges() + "'" +
             ", lateFeeFrequency='" + getLateFeeFrequency() + "'" +
             ", lateFeeRepeatDays=" + getLateFeeRepeatDays() +
+            ", collegeId=" + getCollegeId() +
+            ", branchId=" + getBranchId() +
+            ", academicYearId=" + getAcademicYearId() +
+            ", termId=" + getTermId() +
             "}";
     }
 }

@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
@@ -157,7 +158,7 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
-    
+
     public Query(LibraryRepository libraryRepository, SummaryFilter summaryFilter,BookRepository bookRepository ,AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository LibraryRepository, ContractRepository contractRepository, EmployeeRepository employeeRepository, VehicleRepository vehicleRepository, InsuranceRepository insuranceRepository) {
         this.libraryRepository = libraryRepository;
         this.bookRepository=bookRepository;
@@ -593,8 +594,8 @@ public class Query implements GraphQLQueryResolver {
 //        return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId));
 //    }
 
-    public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
-        return Lists.newArrayList(invoiceFilterProcessor.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId));
+    public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long branchId, Long academicYearId) throws Exception{
+        return Lists.newArrayList(invoiceFilterProcessor.searchInvoiceOnType(invoiceType, branchId, academicYearId));
     }
 
     public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
@@ -695,7 +696,7 @@ public class Query implements GraphQLQueryResolver {
     public Section getSectionById(Long sectionId){return commonGraphiqlFilter.getSectionById(sectionId);}
     public Batch getBatchById(Long batchId){return commonGraphiqlFilter.getBatchById(batchId);}
 
-    
+
     public StudentAttendanceCache createStudentAttendanceCache(String branchId, String academicYearId, String teacherId, String lectureDate) throws Exception{
     	StudentAttendanceCache cache = new StudentAttendanceCache();
     	if(branchId == null || "null".equalsIgnoreCase(branchId) || "undefined".equalsIgnoreCase(branchId)
@@ -718,10 +719,10 @@ public class Query implements GraphQLQueryResolver {
 //        thr.setTeacherEmailAddress(teacherId);
 //    	Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(thr));
 //        Long tid = oth.isPresent() ? oth.get().getId() : 0;
-        
+
         Teacher thr = this.commonService.getTeacherByEmail(teacherId);
         Long tid = (thr != null) ? thr.getId() : 0;
-        
+
     	if(Long.parseLong(branchId) == 0 || Long.parseLong(academicYearId) == 0 || tid == 0) {
     		logger.warn("Either branch/academic year or teacher id is not provided. Return empty cache");
 //    		cache.setDepartments(new ArrayList<Department>());
@@ -755,7 +756,7 @@ public class Query implements GraphQLQueryResolver {
     		}
     	}
 
-    	
+
 //    	List<Lecture> lec =  this.commonService.getLectureForCriteria(attendanceMasterList, lectureDate); //lectures();
 //    	List<CmsLectureVo> cmsLec = new ArrayList<>();
 //    	for(Lecture lecture : lec) {
@@ -766,7 +767,7 @@ public class Query implements GraphQLQueryResolver {
 //    	}
 
     	List<CmsLectureVo> cmsLec = this.commonService.getAllCurrentDateCmsLectureForTeacher(tid);
-    	
+
     	List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
 
 //    	cache.setDepartments(dept);
@@ -823,7 +824,7 @@ public class Query implements GraphQLQueryResolver {
         List<Section> sec = this.commonService.getAllSections();// getSectionForCriteria(bth);
         List<AttendanceMaster> attendanceMaster = this.commonService.getAllAttendanceMaster();     //getAttendanceMasterForCriteria(bth, sec);
     	List<CmsTermVo> term = this.commonService.getTermsByAcademicYear(Long.parseLong(academicYearId));
-    	
+
 //    	List<Lecture> lec =  this.commonService.getLectureForAdminCriteria(attendanceMaster);
 //    	List<CmsLectureVo> cmsLec = new ArrayList<>();
 //    	for(Lecture lecture : lec) {
@@ -835,8 +836,8 @@ public class Query implements GraphQLQueryResolver {
 //    	}
 
     	List<CmsLectureVo> cmsLec = this.commonService.getAllCmsLectures(Long.parseLong(branchId), Long.parseLong(departmentId), Long.parseLong(academicYearId));
-    	
-    	
+
+
     	List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
 
 //    	cache.setDepartments(dept);
@@ -869,17 +870,17 @@ public class Query implements GraphQLQueryResolver {
     	cache.setGenders(genderList);
     	return cache;
     }
-    
+
     public ExamFilterDataCache createExamFilterDataCache(Long branchId, Long academicYearId) throws Exception{
 //        List<Branch> branchList = this.commonService.findAllBranch(); //getBranchForCriteria(Long.valueOf(branchId));
 //        List<Department> departmentList = this.commonService.findAllDepartment(); //  getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
     	List<Batch> batchList = this.commonService.findAllBatches(); // getBatchForCriteria(departmentList);
-        
+
     	List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(null, null);
         List<Subject> sub = this.commonService.findAllSubject(); // getSubjectForCriteria(null, batchList);
-        
+
         List<Section> sectionList = this.commonService.findAllSections(); // getSectionForCriteria(batchList);
-        
+
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
 
 
@@ -988,46 +989,61 @@ public class Query implements GraphQLQueryResolver {
         return cache;
     }
 
-    public FeeSetupDataCache createFeeSetupDataCache(String branchId, String academicYearId) throws Exception{
-    	Branch branch = new Branch();
-    	branch.setId(Long.valueOf(branchId));
-    	List<Branch> branchList = new ArrayList<>();//this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
-    	branchList.add(branch);
-    	List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
-    	List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
+    public FeeSetupDataCache createFeeSetupDataCache(Long branchId, Long academicYearId) throws Exception{
+//    	Branch branch = new Branch();
+//    	branch.setId(Long.valueOf(branchId));
+//    	List<Branch> branchList = new ArrayList<>();//this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
+//    	branchList.add(branch);
+//    	List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+    	List<Batch> batchList = this.commonService.getAllBatches();
 //    	List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
     	List<CmsStudentTypeVo> studentTypeList = this.commonService.getAllStudentTypes();
     	List<CmsGenderVo> genderList = this.commonService.getAllGenders();
 
-//    	FeeCategory f = new FeeCategory();
-//        f.setBranch(branch);
-//        Example<FeeCategory> example = Example.of(f);
-        List<CmsFeeCategory> feeCategoryList =  this.commonService.getFeeCategoryForCriteria(branchList);
-//        List<CmsFeeCategory> feeCategoryList = new ArrayList<>();
-//        for(FeeCategory ff: list) {
-//        	CmsFeeCategory cfc = CommonUtil.createCopyProperties(ff, CmsFeeCategory.class);
-//        	if(ff.getStartDate() != null) {
-//        		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getStartDate()))));
-//        	}
-//        	if(ff.getEndDate() != null) {
-//        		cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate()))));
-//        	}
-//            feeCategoryList.add(cfc);
-//        }
+    	FeeCategory f = new FeeCategory();
+        f.setBranchId(branchId);
+        Example<FeeCategory> example = Example.of(f);
+//        List<CmsFeeCategory> feeCategoryList =  this.commonService.getFeeCategoryForCriteria(null);
+        List<FeeCategory> list = this.feeCategoryRepository.findAll(example, Sort.by(Sort.Direction.DESC, "id"));
+        List<CmsFeeCategory> feeCategoryList = new ArrayList<>();
+        for(FeeCategory ff: list) {
+        	CmsFeeCategory cfc = CommonUtil.createCopyProperties(ff, CmsFeeCategory.class);
+            if(ff.getStartDate() != null) {
+                cfc.setStrStartDate(DateFormatUtil.changeLocalDateFormat(ff.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setStartDate(null);
+//                cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, DateFormatUtil.converUtilDateFromLocaDate(ff.getStartDate())));
+//        		cfc.setStrStartDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, ff.getStartDate())));
+            }
+            if(ff.getEndDate() != null) {
+                cfc.setStrEndDate(DateFormatUtil.changeLocalDateFormat(ff.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setEndDate(null);
+//                cfc.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, DateFormatUtil.converUtilDateFromLocaDate(ff.getEndDate())));
+//        		ff.setStrEndDate(DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.SRC_DATE_FORMAT_yyyy_MM_dd, ff.getEndDate())));
+            }
+            if(ff.getCreatedOn() != null) {
+                cfc.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(ff.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setCreatedOn(null);
+            }
+            if(ff.getUpdatedOn() != null) {
+                cfc.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(ff.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                cfc.setUpdatedOn(null);
+            }
+            feeCategoryList.add(cfc);
+        }
         List<CmsFeeDetails> feeDetailsList = this.commonService.getFeeDetailsForCriteria(feeCategoryList);
-        List<CmsFacility> facilityList = this.commonService.getFacilityForCriteria(branchList, Long.valueOf(academicYearId));
+//        List<CmsFacility> facilityList = this.commonService.getFacilityForCriteria(null, Long.valueOf(academicYearId));
     	List<TransportRoute> transportRouteList = this.transportRouteRepository.findAll();
 
         FeeSetupDataCache cache = new FeeSetupDataCache();
 //    	cache.setBranches(branchList);
-    	cache.setDepartments(departmentList);
+//    	cache.setDepartments(departmentList);
     	cache.setBatches(batchList);
 //    	cache.setSections(sectionList);
     	cache.setStudentTypes(studentTypeList);
     	cache.setGenders(genderList);
     	cache.setFeeCategory(feeCategoryList);
     	cache.setFeeDetails(feeDetailsList);
-    	cache.setFacility(facilityList);
+//    	cache.setFacility(facilityList);
     	cache.setTransportRoute(transportRouteList);
     	return cache;
     }

@@ -309,7 +309,7 @@ type Query {
   getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalCanceledInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getInvoiceData(collegeId:String, branchId:String, academicYearId:String): CmsInvoice
-  searchInvoiceOnType(invoiceType:String, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
+  searchInvoiceOnType(invoiceType:String,  branchId:Long, academicYearId:Long ): [CmsInvoice!]!
 
     getTotalAdmissions(branchId:Long): Long!
     getTotalFollowup(branchId:Long ): Long!
@@ -334,7 +334,7 @@ type Query {
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
     createExamFilterDataCache(branchId: Long, academicYearId: Long): ExamFilterDataCache!
-    createFeeSetupDataCache(branchId:String!, academicYearId:String!): FeeSetupDataCache!
+    createFeeSetupDataCache(branchId:Long, academicYearId:Long): FeeSetupDataCache!
     createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
 
 }
@@ -377,12 +377,11 @@ type CmsFeeCategory{
     updatedOn:	  Date
     startDate:	  Date
     endDate:	  Date
-    branchId:	  Long
     strCreatedOn: String
     strUpdatedOn: String
     strStartDate: String
     strEndDate:	  String
-    branch:	  Branch
+    branchId:	  Long
 }
 
 type CmsFeeDetails {
@@ -400,10 +399,10 @@ type CmsFeeDetails {
     startDate: Date
     endDate:   Date
     feeCategory: FeeCategory
-    batch: Batch
+    batchId: Long
     facility: Facility
     transportRoute: TransportRoute
-    department: Department
+    departmentId: Long
 
     strCreatedOn: String
     strUpdatedOn: String
@@ -412,7 +411,7 @@ type CmsFeeDetails {
 }
 
 type ExamFilterDataCache {
-branches: [Branch]
+    branches: [Branch]
 	departments: [Department]
 	batches: [Batch]
 	sections: [Section]
@@ -534,10 +533,10 @@ type CmsInvoice {
     feeDetails: FeeDetails
     dueDate: DueDate
     paymentRemainder: PaymentRemainder
-    college: College
-    branch: Branch
+    collegeId: Long
+    branchId: Long
     student: Student
-    academicYear: AcademicYear
+    academicYearId: Long
     strPaymentDate: String
     strNextPaymentDate: String
     strUpdatedOn: String
@@ -844,7 +843,7 @@ type FeeCategory{
     updatedOn: Date
     startDate: Date
     endDate: Date
-    branch: Branch
+    branchId: Long
    }
 
 type Facility{
@@ -921,10 +920,10 @@ type  Library{
        startDate: Date
        endDate: Date
        feeCategory: FeeCategory
-       batch: Batch
+       batchId: Long
        facility: Facility
        transportRoute: TransportRoute
-       department: Department
+       departmentId: Long
 
       }
 
@@ -944,8 +943,8 @@ type DueDate{
     dayDesc:String
     paymentDay:Int
     frequency:Frequency
-    college:College
-    branch:Branch!
+    collegeId:Long
+    branchId:Long
 }
 type LateFee{
     id: Long!
@@ -956,8 +955,8 @@ type LateFee{
     percentCharges: String
     lateFeeFrequency: String
 	lateFeeRepeatDays: Int
-    college: College
-    branch: Branch!
+    collegeId: Long
+    branchId: Long
 
 }
 type PaymentRemainder{
@@ -972,8 +971,8 @@ type PaymentRemainder{
     overDuePaymentRemainderDays: Int
     isRemainderRecipients: String
     remainderRecipients: String
-    college: College
-    branch: Branch!
+    collegeId: Long
+    branchId: Long
 }
 
 
@@ -1237,26 +1236,26 @@ type Section{
 }
 
 type AcademicExamSetting{
-    id: Long 
-    examName: String 
+    id: Long
+    examName: String
     semester: SemesterEnum
     examDate: Date
-    startTime: String 
-    endTime: String 
-    gradeType: GradeType 
-    total: Int 
+    startTime: String
+    endTime: String
+    gradeType: GradeType
+    total: Int
     passing: Int
-    actions: String 
-    groupvalue: Long 
-    countvalue: Long 
-    branchId: Long 
-    subjectId: Long 
-    departmentId: Long 
-    academicyearId: Long 
-    sectionId: Long 
-    batchId: Long 
-    typeOfGrading: TypeOfGrading 
-    
+    actions: String
+    groupvalue: Long
+    countvalue: Long
+    branchId: Long
+    subjectId: Long
+    departmentId: Long
+    academicyearId: Long
+    sectionId: Long
+    batchId: Long
+    typeOfGrading: TypeOfGrading
+
 }
 
 enum Gender {
@@ -1713,10 +1712,10 @@ type Invoice {
     feeDetails:FeeDetails!
     dueDate:DueDate!
     paymentRemainder:PaymentRemainder!
-    college:College!
-    branch:Branch!
+    collegeId:Long!
+    branchId:Long!
     student:Student!
-    academicYear:AcademicYear!
+    academicYearId:Long!
 }
 
 
@@ -1868,7 +1867,6 @@ type Mutation {
     updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
     removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
     searchInvoice(invoiceNumber:String, studentId:Long, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
-    searchInvoiceOnType(invoiceType:String, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
     getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalUnPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
@@ -1973,7 +1971,6 @@ type CmsFeeCategory {
      strUpdatedOn: String
      strStartDate: String
      strEndDate: String
-     branch: Branch
 }
 
 type CmsBook {
@@ -3712,7 +3709,7 @@ input AddDueDateInput{
     paymentDay:Int
     frequency:Frequency
     collegeId:Long
-    branchId:Long!
+    branchId:Long
 
 }
 type AddDueDatePayload{
@@ -3727,7 +3724,7 @@ input UpdateDueDateInput{
     paymentDay:Int
     frequency:Frequency
     collegeId:Long
-    branchId:Long!
+    branchId:Long
 }
 type UpdateDueDatePayload{
     dueDate:DueDate!
@@ -3748,7 +3745,7 @@ input AddLateFeeInput{
     lateFeeFrequency: String
 	lateFeeRepeatDays: Int
     collegeId: Long
-    branchId: Long!
+    branchId: Long
 
 }
 type AddLateFeePayload{
@@ -3764,7 +3761,7 @@ input UpdateLateFeeInput{
     lateFeeFrequency: String
 	lateFeeRepeatDays: Int
     collegeId: Long
-    branchId: Long!
+    branchId: Long
 
 }
 type UpdateLateFeePayload{
@@ -3790,7 +3787,7 @@ input AddPaymentRemainderInput{
     isRemainderRecipients: String
     remainderRecipients: String
     collegeId:Long
-    branchId:Long!
+    branchId:Long
 }
 type AddPaymentRemainderPayload{
     paymentRemainder:PaymentRemainder!
@@ -3808,7 +3805,7 @@ input UpdatePaymentRemainderInput{
     isRemainderRecipients: String
     remainderRecipients: String
     collegeId:Long
-    branchId:Long!
+    branchId:Long
 }
 type UpdatePaymentRemainderPayload{
     paymentRemainder:PaymentRemainder!

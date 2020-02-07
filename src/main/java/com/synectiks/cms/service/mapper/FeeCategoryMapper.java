@@ -8,14 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity FeeCategory and its DTO FeeCategoryDTO.
  */
-@Mapper(componentModel = "spring", uses = {BranchMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface FeeCategoryMapper extends EntityMapper<FeeCategoryDTO, FeeCategory> {
 
-    @Mapping(source = "branch.id", target = "branchId")
-    FeeCategoryDTO toDto(FeeCategory feeCategory);
 
-    @Mapping(source = "branchId", target = "branch")
-    FeeCategory toEntity(FeeCategoryDTO feeCategoryDTO);
 
     default FeeCategory fromId(Long id) {
         if (id == null) {

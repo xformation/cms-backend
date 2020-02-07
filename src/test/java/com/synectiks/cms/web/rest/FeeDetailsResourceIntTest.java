@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -87,13 +88,17 @@ public class FeeDetailsResourceIntTest {
     private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Long DEFAULT_BATCH_ID = 1L;
+    private static final Long UPDATED_BATCH_ID = 2L;
+
+    private static final Long DEFAULT_DEPARTMENT_ID = 1L;
+    private static final Long UPDATED_DEPARTMENT_ID = 2L;
+
     @Autowired
     private FeeDetailsRepository feeDetailsRepository;
 
-
     @Autowired
     private FeeDetailsMapper feeDetailsMapper;
-    
 
     @Autowired
     private FeeDetailsService feeDetailsService;
@@ -118,6 +123,9 @@ public class FeeDetailsResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restFeeDetailsMockMvc;
 
     private FeeDetails feeDetails;
@@ -130,7 +138,8 @@ public class FeeDetailsResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -152,7 +161,9 @@ public class FeeDetailsResourceIntTest {
             .updatedBy(DEFAULT_UPDATED_BY)
             .updatedOn(DEFAULT_UPDATED_ON)
             .startDate(DEFAULT_START_DATE)
-            .endDate(DEFAULT_END_DATE);
+            .endDate(DEFAULT_END_DATE)
+            .batchId(DEFAULT_BATCH_ID)
+            .departmentId(DEFAULT_DEPARTMENT_ID);
         return feeDetails;
     }
 
@@ -189,6 +200,8 @@ public class FeeDetailsResourceIntTest {
         assertThat(testFeeDetails.getUpdatedOn()).isEqualTo(DEFAULT_UPDATED_ON);
         assertThat(testFeeDetails.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testFeeDetails.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testFeeDetails.getBatchId()).isEqualTo(DEFAULT_BATCH_ID);
+        assertThat(testFeeDetails.getDepartmentId()).isEqualTo(DEFAULT_DEPARTMENT_ID);
 
         // Validate the FeeDetails in Elasticsearch
         verify(mockFeeDetailsSearchRepository, times(1)).save(testFeeDetails);
@@ -277,10 +290,11 @@ public class FeeDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].batchId").value(hasItem(DEFAULT_BATCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].departmentId").value(hasItem(DEFAULT_DEPARTMENT_ID.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getFeeDetails() throws Exception {
@@ -303,8 +317,11 @@ public class FeeDetailsResourceIntTest {
             .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()))
             .andExpect(jsonPath("$.updatedOn").value(DEFAULT_UPDATED_ON.toString()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
-            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.batchId").value(DEFAULT_BATCH_ID.intValue()))
+            .andExpect(jsonPath("$.departmentId").value(DEFAULT_DEPARTMENT_ID.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingFeeDetails() throws Exception {
@@ -337,7 +354,9 @@ public class FeeDetailsResourceIntTest {
             .updatedBy(UPDATED_UPDATED_BY)
             .updatedOn(UPDATED_UPDATED_ON)
             .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE);
+            .endDate(UPDATED_END_DATE)
+            .batchId(UPDATED_BATCH_ID)
+            .departmentId(UPDATED_DEPARTMENT_ID);
         FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(updatedFeeDetails);
 
         restFeeDetailsMockMvc.perform(put("/api/fee-details")
@@ -361,6 +380,8 @@ public class FeeDetailsResourceIntTest {
         assertThat(testFeeDetails.getUpdatedOn()).isEqualTo(UPDATED_UPDATED_ON);
         assertThat(testFeeDetails.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testFeeDetails.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testFeeDetails.getBatchId()).isEqualTo(UPDATED_BATCH_ID);
+        assertThat(testFeeDetails.getDepartmentId()).isEqualTo(UPDATED_DEPARTMENT_ID);
 
         // Validate the FeeDetails in Elasticsearch
         verify(mockFeeDetailsSearchRepository, times(1)).save(testFeeDetails);
@@ -374,7 +395,7 @@ public class FeeDetailsResourceIntTest {
         // Create the FeeDetails
         FeeDetailsDTO feeDetailsDTO = feeDetailsMapper.toDto(feeDetails);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFeeDetailsMockMvc.perform(put("/api/fee-details")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(feeDetailsDTO)))
@@ -396,7 +417,7 @@ public class FeeDetailsResourceIntTest {
 
         int databaseSizeBeforeDelete = feeDetailsRepository.findAll().size();
 
-        // Get the feeDetails
+        // Delete the feeDetails
         restFeeDetailsMockMvc.perform(delete("/api/fee-details/{id}", feeDetails.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -421,18 +442,20 @@ public class FeeDetailsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(feeDetails.getId().intValue())))
-            .andExpect(jsonPath("$.[*].feeParticularsName").value(hasItem(DEFAULT_FEE_PARTICULARS_NAME.toString())))
-            .andExpect(jsonPath("$.[*].feeParticularDesc").value(hasItem(DEFAULT_FEE_PARTICULAR_DESC.toString())))
+            .andExpect(jsonPath("$.[*].feeParticularsName").value(hasItem(DEFAULT_FEE_PARTICULARS_NAME)))
+            .andExpect(jsonPath("$.[*].feeParticularDesc").value(hasItem(DEFAULT_FEE_PARTICULAR_DESC)))
             .andExpect(jsonPath("$.[*].studentType").value(hasItem(DEFAULT_STUDENT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON.toString())))
-            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
+            .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].batchId").value(hasItem(DEFAULT_BATCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].departmentId").value(hasItem(DEFAULT_DEPARTMENT_ID.intValue())));
     }
 
     @Test

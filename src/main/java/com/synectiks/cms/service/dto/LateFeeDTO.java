@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -33,6 +32,7 @@ public class LateFeeDTO implements Serializable {
     private Long academicYearId;
 
     private Long termId;
+
 
     public Long getId() {
         return id;
@@ -162,10 +162,10 @@ public class LateFeeDTO implements Serializable {
             ", percentCharges='" + getPercentCharges() + "'" +
             ", lateFeeFrequency='" + getLateFeeFrequency() + "'" +
             ", lateFeeRepeatDays=" + getLateFeeRepeatDays() +
-            ", college=" + getCollegeId() +
-            ", branch=" + getBranchId() +
-            ", academicYear=" + getAcademicYearId() +
-            ", term=" + getTermId() +
+            ", collegeId=" + getCollegeId() +
+            ", branchId=" + getBranchId() +
+            ", academicYearId=" + getAcademicYearId() +
+            ", termId=" + getTermId() +
             "}";
     }
 }

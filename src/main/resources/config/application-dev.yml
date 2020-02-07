@@ -67,7 +67,7 @@ spring:
         cache: false
     servlet.multipart.enabled: true
     servlet.multipart.max-file-size: 1000MB
-    servlet.multipart.max-request-size: 300MB    
+    servlet.multipart.max-request-size: 300MB
 # ===================================================================
 # To enable SSL, generate a certificate using:
 # keytool -genkey -alias cms -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
@@ -144,10 +144,10 @@ jhipster:
 # ===================================================================
 
 application:
-    influxDbUrl: http://100.81.5.26:8086
+    influxDbUrl: http://localhost:8086
     influxDb: cmsdb
     influxDbUsername: cms
     influxDbPassword: cms
     influxDbLogLevel: BASIC
-    secSrvUrl: http://100.81.5.26:8094
-    preferenceSrvUrl: http://100.81.5.26:9091
+    secSrvUrl: http://localhost:8094
+    preferenceSrvUrl: http://localhost:9091

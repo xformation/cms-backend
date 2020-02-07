@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.synectiks.cms.automated.testdatasetup;
 
@@ -406,13 +406,13 @@ public class CmsDataRowProcessor {
 		this.term = pojoBuilder.createTermPojo(cell);
 		this.term.setAcademicyear(this.aYear);
 		this.term = saveOrGet(this.termRepo, this.term);
-		
+
 	}
 
 	private void saveCollegeData(Cell cell) {
 		this.college = pojoBuilder.createCollegePojo(cell);
 		this.college = saveOrGet(this.collegeRepo, this.college);
-		
+
 	}
 
 	private void saveBranchData(Cell cell) {
@@ -454,7 +454,7 @@ public class CmsDataRowProcessor {
         this.student.setSection(section);
         this.student.setBranch(branch);
         this.student = saveOrGet(this.studentRepo, this.student);
-		
+
 	}
 
 	private void saveSubjectData(Cell cell) {
@@ -500,7 +500,7 @@ public class CmsDataRowProcessor {
 			filter.setAcademicYear(this.aYear.getYear());
 			filter.setSectionId(String.valueOf(this.section.getId()));
 			filter.setBatchId(String.valueOf(this.batch.getId()));
-			
+
 			Lecture lectue = new Lecture();
 			lectue.setAttendancemaster(this.attndMstr);
 			lectue.setStartTime(dto.getStartTime());
@@ -519,7 +519,7 @@ public class CmsDataRowProcessor {
 					}
 				}
 			});
-			
+
 		} else {
 			logger.warn("Invalid lecture schedule cell data type");
 		}
@@ -537,9 +537,9 @@ public class CmsDataRowProcessor {
 	private List<Date> filterDates(int day) {
 		List<Date> dateList = this.lectureService.createDates(this.term);
 		List<Holiday> holidayList = null;
-		
+
 		holidayList = this.commonService.getHolidayList(Optional.of(this.aYear));
-		
+
 		this.lectureService.filterHolidays(holidayList, dateList);
 		this.lectureService.filterSundays(dateList);
 		List<Date> list = this.lectureService.filterDateListOnDayOfweek(dateList, day);
@@ -573,17 +573,17 @@ public class CmsDataRowProcessor {
 	private void saveTransportRoute(Cell cell) {
 		this.transRoute = pojoBuilder.createTransportRoutePojo(cell);
 		this.transRoute = saveOrGet(this.transRepo, this.transRoute);
-		
+
 	}
 
 	private void saveFeeDetails(Cell cell) {
 		this.feeDetail = pojoBuilder.createFeeDetailsPojo(cell);
 		this.feeDetail.setFeeCategory(this.feeCat);
-		this.feeDetail.setBatch(this.batch);
+//		this.feeDetail.setBatch(this.batch);
 		this.feeDetail.setFacility(this.facility);
 		this.feeDetail.setTransportRoute(this.transRoute);
 //		this.feeDetail.setCollege(this.college);
-		this.feeDetail.setDepartment(this.department);
+//		this.feeDetail.setDepartment(this.department);
 //		this.feeDetail.setBranch(this.branch);
 //		this.feeDetail.setAcademicYear(this.aYear);
 		this.feeDetail = saveOrGet(this.feeDetailRepo, this.feeDetail);
@@ -609,15 +609,15 @@ public class CmsDataRowProcessor {
 
 	private void saveDueDate(Cell cell) {
 		this.dueDate = pojoBuilder.createDueDatePojo(cell);
-		this.dueDate.setCollege(this.college);
-		this.dueDate.setBranch(this.branch);
+//		this.dueDate.setCollege(this.college);
+//		this.dueDate.setBranch(this.branch);
 		this.dueDate = saveOrGet(this.dueDtRepo, this.dueDate);
 	}
 
 	private void savePaymentRemainder(Cell cell) {
 		this.pmtRmdr = pojoBuilder.createPaymentRemainder(cell);
-		this.pmtRmdr.setCollege(this.college);
-		this.pmtRmdr.setBranch(this.branch);
+//		this.pmtRmdr.setCollege(this.college);
+//		this.pmtRmdr.setBranch(this.branch);
 		this.pmtRmdr = saveOrGet(this.pmtRemRepo, this.pmtRmdr);
 	}
 
@@ -634,10 +634,10 @@ public class CmsDataRowProcessor {
 		this.invoice.setFeeDetails(this.feeDetail);
 		this.invoice.setDueDate(this.dueDate);
 		this.invoice.setPaymentRemainder(this.pmtRmdr);
-		this.invoice.setCollege(this.college);
-		this.invoice.setBranch(this.branch);
+//		this.invoice.setCollege(this.college);
+//		this.invoice.setBranch(this.branch);
 		this.invoice.setStudent(this.student);
-		this.invoice.setAcademicYear(this.aYear);
+//		this.invoice.setAcademicYear(this.aYear);
 		this.invoice = saveOrGet(this.invoiceRepo, this.invoice);
 	}
 

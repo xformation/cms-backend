@@ -1,0 +1,56 @@
+import { Moment } from 'moment';
+
+export interface IPaymentRequestResponse {
+  id?: number;
+  requestMerchantID?: string;
+  requestUniqueTransactionNo?: string;
+  requestTxnAmount?: string;
+  requestCurrencyType?: string;
+  requestTypeField1?: string;
+  requestSecurityID?: string;
+  requestTypeField2?: string;
+  requestTxtadditional1?: string;
+  requestTxtadditional2?: string;
+  requestTxtadditional3?: string;
+  requestTxtadditional4?: string;
+  requestTxtadditional5?: string;
+  requestTxtadditional6?: string;
+  requestTxtadditional7?: string;
+  requestRu?: string;
+  requestCheckSum?: string;
+  requestMsg?: string;
+  responseMerchantID?: string;
+  responseUniqueTransactionNo?: string;
+  responseTxnReferenceNo?: string;
+  responseBankReferenceNo?: string;
+  responseTxnAmount?: string;
+  responseBankID?: string;
+  responseBankMerchantID?: string;
+  responseTxnType?: string;
+  responseCurrencyName?: string;
+  responseItemCode?: string;
+  responseSecurityType?: string;
+  responseSecurityID?: string;
+  responseSecurityPassword?: string;
+  responseTxnDate?: string;
+  responseAuthStatus?: string;
+  responseSettlementType?: string;
+  responseAdditionalInfo1?: string;
+  responseAdditionalInfo2?: string;
+  responseAdditionalInfo3?: string;
+  responseAdditionalInfo4?: string;
+  responseAdditionalInfo5?: string;
+  responseAdditionalInfo6?: string;
+  responseAdditionalInfo7?: string;
+  responseErrorStatus?: string;
+  responseErrorDescription?: string;
+  responseCheckSum?: string;
+  responseMsg?: string;
+  user?: string;
+  requestTxnDate?: Moment;
+  requestTxnTime?: string;
+  branchId?: number;
+  academicYearId?: number;
+}
+
+export const defaultValue: Readonly<IPaymentRequestResponse> = {};

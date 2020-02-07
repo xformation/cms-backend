@@ -77,6 +77,12 @@ public class PaymentRemainderResourceIntTest {
     private static final String DEFAULT_REMAINDER_RECIPIENTS = "AAAAAAAAAA";
     private static final String UPDATED_REMAINDER_RECIPIENTS = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_COLLEGE_ID = 1L;
+    private static final Long UPDATED_COLLEGE_ID = 2L;
+
+    private static final Long DEFAULT_BRANCH_ID = 1L;
+    private static final Long UPDATED_BRANCH_ID = 2L;
+
     @Autowired
     private PaymentRemainderRepository paymentRemainderRepository;
 
@@ -142,7 +148,9 @@ public class PaymentRemainderResourceIntTest {
             .overDuePaymentRemainderAfterDueDateOrUntilPaid(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID)
             .overDuePaymentRemainderDays(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS)
             .isRemainderRecipients(DEFAULT_IS_REMAINDER_RECIPIENTS)
-            .remainderRecipients(DEFAULT_REMAINDER_RECIPIENTS);
+            .remainderRecipients(DEFAULT_REMAINDER_RECIPIENTS)
+            .collegeId(DEFAULT_COLLEGE_ID)
+            .branchId(DEFAULT_BRANCH_ID);
         return paymentRemainder;
     }
 
@@ -177,6 +185,8 @@ public class PaymentRemainderResourceIntTest {
         assertThat(testPaymentRemainder.getOverDuePaymentRemainderDays()).isEqualTo(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS);
         assertThat(testPaymentRemainder.getIsRemainderRecipients()).isEqualTo(DEFAULT_IS_REMAINDER_RECIPIENTS);
         assertThat(testPaymentRemainder.getRemainderRecipients()).isEqualTo(DEFAULT_REMAINDER_RECIPIENTS);
+        assertThat(testPaymentRemainder.getCollegeId()).isEqualTo(DEFAULT_COLLEGE_ID);
+        assertThat(testPaymentRemainder.getBranchId()).isEqualTo(DEFAULT_BRANCH_ID);
 
         // Validate the PaymentRemainder in Elasticsearch
         verify(mockPaymentRemainderSearchRepository, times(1)).save(testPaymentRemainder);
@@ -244,7 +254,9 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(jsonPath("$.[*].overDuePaymentRemainderAfterDueDateOrUntilPaid").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID.toString())))
             .andExpect(jsonPath("$.[*].overDuePaymentRemainderDays").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS)))
             .andExpect(jsonPath("$.[*].isRemainderRecipients").value(hasItem(DEFAULT_IS_REMAINDER_RECIPIENTS.toString())))
-            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS.toString())));
+            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS.toString())))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
     
     @Test
@@ -267,7 +279,9 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(jsonPath("$.overDuePaymentRemainderAfterDueDateOrUntilPaid").value(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID.toString()))
             .andExpect(jsonPath("$.overDuePaymentRemainderDays").value(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS))
             .andExpect(jsonPath("$.isRemainderRecipients").value(DEFAULT_IS_REMAINDER_RECIPIENTS.toString()))
-            .andExpect(jsonPath("$.remainderRecipients").value(DEFAULT_REMAINDER_RECIPIENTS.toString()));
+            .andExpect(jsonPath("$.remainderRecipients").value(DEFAULT_REMAINDER_RECIPIENTS.toString()))
+            .andExpect(jsonPath("$.collegeId").value(DEFAULT_COLLEGE_ID.intValue()))
+            .andExpect(jsonPath("$.branchId").value(DEFAULT_BRANCH_ID.intValue()));
     }
 
     @Test
@@ -300,7 +314,9 @@ public class PaymentRemainderResourceIntTest {
             .overDuePaymentRemainderAfterDueDateOrUntilPaid(UPDATED_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID)
             .overDuePaymentRemainderDays(UPDATED_OVER_DUE_PAYMENT_REMAINDER_DAYS)
             .isRemainderRecipients(UPDATED_IS_REMAINDER_RECIPIENTS)
-            .remainderRecipients(UPDATED_REMAINDER_RECIPIENTS);
+            .remainderRecipients(UPDATED_REMAINDER_RECIPIENTS)
+            .collegeId(UPDATED_COLLEGE_ID)
+            .branchId(UPDATED_BRANCH_ID);
         PaymentRemainderDTO paymentRemainderDTO = paymentRemainderMapper.toDto(updatedPaymentRemainder);
 
         restPaymentRemainderMockMvc.perform(put("/api/payment-remainders")
@@ -322,6 +338,8 @@ public class PaymentRemainderResourceIntTest {
         assertThat(testPaymentRemainder.getOverDuePaymentRemainderDays()).isEqualTo(UPDATED_OVER_DUE_PAYMENT_REMAINDER_DAYS);
         assertThat(testPaymentRemainder.getIsRemainderRecipients()).isEqualTo(UPDATED_IS_REMAINDER_RECIPIENTS);
         assertThat(testPaymentRemainder.getRemainderRecipients()).isEqualTo(UPDATED_REMAINDER_RECIPIENTS);
+        assertThat(testPaymentRemainder.getCollegeId()).isEqualTo(UPDATED_COLLEGE_ID);
+        assertThat(testPaymentRemainder.getBranchId()).isEqualTo(UPDATED_BRANCH_ID);
 
         // Validate the PaymentRemainder in Elasticsearch
         verify(mockPaymentRemainderSearchRepository, times(1)).save(testPaymentRemainder);
@@ -391,7 +409,9 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(jsonPath("$.[*].overDuePaymentRemainderAfterDueDateOrUntilPaid").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_AFTER_DUE_DATE_OR_UNTIL_PAID)))
             .andExpect(jsonPath("$.[*].overDuePaymentRemainderDays").value(hasItem(DEFAULT_OVER_DUE_PAYMENT_REMAINDER_DAYS)))
             .andExpect(jsonPath("$.[*].isRemainderRecipients").value(hasItem(DEFAULT_IS_REMAINDER_RECIPIENTS)))
-            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS)));
+            .andExpect(jsonPath("$.[*].remainderRecipients").value(hasItem(DEFAULT_REMAINDER_RECIPIENTS)))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
 
     @Test

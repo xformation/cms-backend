@@ -434,10 +434,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     CommonService commonService;
-    
+
     @Autowired
     private AcademicYearRepository academicYearRepository;
-    
     @Autowired
     private AttendanceMasterRepository attendanceMasterRepository;
     @Autowired
@@ -561,7 +560,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private AdmissionApplicationProcessor admissionApplicationProcessor;
-    
+
     @Autowired
     private LibraryFilterProcessor libraryFilterProcessor;
 //    public Mutation(AcademicExamSettingRepository academicExamSettingRepository,BookRepository bookRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
@@ -938,7 +937,7 @@ public class Mutation implements GraphQLMutationResolver {
 //            Batch batch = this.commonService.getBatchById(input.getBatchId()); //batchRepository.findById(input.getBatchId()).get();
 //            Section section = this.commonService.getSectionById(input.getSectionId());  //sectionRepository.findById(input.getSectionId()).get();
 //            Department department = this.commonService.getDepartmentById(input.getDepartmentId()); //departmentRepository.findById(input.getDepartmentId()).get();
-        	
+
         	academicExamSetting = CommonUtil.createCopyProperties(input, AcademicExamSetting.class);
         	if("GRADE".equalsIgnoreCase(input.getGradeType().toString())) {
             	Optional<TypeOfGrading> otg = typeOfGradingRepository.findById((input.getTypeOfGradingId()));
@@ -946,8 +945,8 @@ public class Mutation implements GraphQLMutationResolver {
             		academicExamSetting.setTypeOfGrading(otg.get());
             	}
             }
-        	
-            
+
+
             LocalDate exmDt =  DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate());
             academicExamSetting.setExamDate(exmDt);
             academicExamSetting.setCountvalue(new Long(countvalue));
@@ -957,7 +956,7 @@ public class Mutation implements GraphQLMutationResolver {
             academicExamSetting.setAcademicyearId(input.getAcademicyearId());
             academicExamSetting.setSectionId(input.getSectionId());
             academicExamSetting.setDepartmentId(input.getDepartmentId());
-            
+
             academicExamSetting.setExamDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getExamDate()));
             this.academicExamSettingRepository.save(academicExamSetting);
 
@@ -3142,11 +3141,11 @@ public class Mutation implements GraphQLMutationResolver {
         fc.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addFeeCategoryInput.getEndDate()));
         Branch branch = new Branch();
         branch.setId(addFeeCategoryInput.getBranchId());
-        fc.setBranch(branch);
+        fc.setBranchId(addFeeCategoryInput.getBranchId());
         fc = feeCategoryRepository.save(fc);
 
         FeeCategory f = new FeeCategory();
-        f.setBranch(branch);
+//        f.setBranch(branch);
         Example<FeeCategory> example = Example.of(f);
         List<FeeCategory> list = this.feeCategoryRepository.findAll(example, Sort.by(Direction.DESC, "id"));
         List<CmsFeeCategory> ls = new ArrayList<>();
@@ -3231,13 +3230,13 @@ public class Mutation implements GraphQLMutationResolver {
         fc.setUpdatedOn(LocalDate.now());
         fc.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateFeeCategoryInput.getStartDate()));
         fc.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateFeeCategoryInput.getEndDate()));
-        Branch branch = new Branch();
-        branch.setId(updateFeeCategoryInput.getBranchId());
-        fc.setBranch(branch);
+//        Branch branch = new Branch();
+//        branch.setId(updateFeeCategoryInput.getBranchId());
+        fc.setBranchId(updateFeeCategoryInput.getBranchId());
         fc = feeCategoryRepository.save(fc);
 
         FeeCategory f = new FeeCategory();
-        f.setBranch(branch);
+//        f.setBranch(branch);
         Example<FeeCategory> example = Example.of(f);
         List<FeeCategory> list = this.feeCategoryRepository.findAll(example, Sort.by(Direction.DESC, "id"));
         List<CmsFeeCategory> ls = new ArrayList<>();
@@ -3281,10 +3280,10 @@ public class Mutation implements GraphQLMutationResolver {
 
     	FeeCategory feeCategory = feeCategoryRepository.findById(addFeeDetailsInput.getFeeCategoryId()).get();
 
-        Batch batch = null;
-        if(addFeeDetailsInput.getBatchId() != null) {
-        	batch = batchRepository.findById(addFeeDetailsInput.getBatchId()).get();
-        }
+//        Batch batch = null;
+//        if(addFeeDetailsInput.getBatchId() != null) {
+//        	batch = batchRepository.findById(addFeeDetailsInput.getBatchId()).get();
+//        }
 
         Facility facility = null;
         if(addFeeDetailsInput.getFacilityId() != null) {
@@ -3296,17 +3295,17 @@ public class Mutation implements GraphQLMutationResolver {
         	transportRoute = transportRouteRepository.findById(addFeeDetailsInput.getTransportRouteId()).get();
         }
 
-        Department department = null;
-        if(addFeeDetailsInput.getDepartmentId() != null) {
-        	department = departmentRepository.findById(addFeeDetailsInput.getDepartmentId()).get();
-        }
+//        Department department = null;
+//        if(addFeeDetailsInput.getDepartmentId() != null) {
+//        	department = departmentRepository.findById(addFeeDetailsInput.getDepartmentId()).get();
+//        }
 
         FeeDetails feeDetails = CommonUtil.createCopyProperties(addFeeDetailsInput, FeeDetails.class);
         feeDetails.setFeeCategory(feeCategory);
-        feeDetails.setBatch(batch);
+        feeDetails.setBatchId(addFeeDetailsInput.getBatchId());
         feeDetails.setFacility(facility);
         feeDetails.setTransportRoute(transportRoute);
-        feeDetails.setDepartment(department);
+        feeDetails.setDepartmentId(addFeeDetailsInput.getDepartmentId());
         feeDetails.createdOn(LocalDate.now());
         feeDetails.startDate(LocalDate.now());
         feeDetails = feeDetailsRepository.save(feeDetails);
@@ -3355,8 +3354,8 @@ public class Mutation implements GraphQLMutationResolver {
         }
         logger.debug("Amount : "+updateFeeDetailsInput.getAmount());
         if (updateFeeDetailsInput.getDepartmentId() != null) {
-            Department department = departmentRepository.findById(updateFeeDetailsInput.getDepartmentId()).get();
-            feeDetails.setDepartment(department);
+//            Department department = departmentRepository.findById(updateFeeDetailsInput.getDepartmentId()).get();
+            feeDetails.setDepartmentId(updateFeeDetailsInput.getDepartmentId());
         }
 //        if (updateFeeDetailsInput.getBranchId() != null) {
 //            Branch branch = branchRepository.findById(updateFeeDetailsInput.getBranchId()).get();
@@ -3375,8 +3374,8 @@ public class Mutation implements GraphQLMutationResolver {
             feeDetails.setFeeCategory(feeCategory);
         }
         if (updateFeeDetailsInput.getBatchId() != null) {
-            Batch batch = batchRepository.findById(updateFeeDetailsInput.getBatchId()).get();
-            feeDetails.setBatch(batch);
+//            Batch batch = batchRepository.findById(updateFeeDetailsInput.getBatchId()).get();
+            feeDetails.setBatchId(updateFeeDetailsInput.getBatchId());
         }
 
         if (updateFeeDetailsInput.getFacilityId() != null) {
@@ -3583,16 +3582,16 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddDueDatePayload addDueDate(AddDueDateInput addDueDateInput) {
-        College college = collegeRepository.findById(addDueDateInput.getCollegeId()).get();
-        Branch branch = branchRepository.findById((addDueDateInput.getBranchId())).get();
+//        College college = collegeRepository.findById(addDueDateInput.getCollegeId()).get();
+//        Branch branch = branchRepository.findById((addDueDateInput.getBranchId())).get();
         DueDate dueDate = new DueDate();
         dueDate.setPaymentMethod(addDueDateInput.getPaymentMethod());
         dueDate.setInstallments(addDueDateInput.getInstallments());
         dueDate.setDayDesc(addDueDateInput.getDayDesc());
         dueDate.setPaymentDay(addDueDateInput.getPaymentDay());
         dueDate.setFrequency(findFrequency(addDueDateInput.getFrequency()));
-        dueDate.setCollege(college);
-        dueDate.setBranch(branch);
+        dueDate.setBranchId(addDueDateInput.getBranchId());
+        dueDate.setCollegeId(addDueDateInput.getCollegeId());
         dueDate = dueDateRepository.save(dueDate);
         return new AddDueDatePayload(dueDate);
     }
@@ -3630,13 +3629,13 @@ public class Mutation implements GraphQLMutationResolver {
             dueDate.setFrequency(updateDueDateInput.getFrequency());
         }
         if (updateDueDateInput.getCollegeId() != null) {
-            College college = collegeRepository.findById(updateDueDateInput.getCollegeId()).get();
-            dueDate.setCollege(college);
+//            College college = collegeRepository.findById(updateDueDateInput.getCollegeId()).get();
+            dueDate.setCollegeId(updateDueDateInput.getCollegeId());
 
         }
         if (updateDueDateInput.getBranchId() != null) {
-            Branch branch = branchRepository.findById(updateDueDateInput.getBranchId()).get();
-            dueDate.setBranch(branch);
+//            Branch branch = branchRepository.findById(updateDueDateInput.getBranchId()).get();
+            dueDate.setBranchId(updateDueDateInput.getBranchId());
 
         }
         dueDateRepository.save(dueDate);
@@ -3649,11 +3648,11 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddLateFeePayload addLateFee(AddLateFeeInput addLateFeeInput) {
-        final College college = collegeRepository.findById(addLateFeeInput.getCollegeId()).get();
-        final Branch branch = branchRepository.findById(addLateFeeInput.getBranchId()).get();
+//        final College college = collegeRepository.findById(addLateFeeInput.getCollegeId()).get();
+//        final Branch branch = branchRepository.findById(addLateFeeInput.getBranchId()).get();
         LateFee lateFee = CommonUtil.createCopyProperties(addLateFeeInput, LateFee.class);
-        lateFee.setCollege(college);
-        lateFee.setBranch(branch);
+        lateFee.setCollegeId(addLateFeeInput.getCollegeId());
+        lateFee.setBranchId(addLateFeeInput.getBranchId());
         lateFee = lateFeeRepository.save(lateFee);
         return new AddLateFeePayload(lateFee);
     }
@@ -3662,13 +3661,13 @@ public class Mutation implements GraphQLMutationResolver {
         LateFee lateFee = CommonUtil.createCopyProperties(updateLateFeeInput, LateFee.class);
 
         if (updateLateFeeInput.getCollegeId() != null) {
-            final College college = collegeRepository.findById(updateLateFeeInput.getCollegeId()).get();
-            lateFee.setCollege(college);
+//            final College college = collegeRepository.findById(updateLateFeeInput.getCollegeId()).get();
+            lateFee.setCollegeId(updateLateFeeInput.getCollegeId());
         }
 
         if (updateLateFeeInput.getBranchId() != null) {
             final Branch branch = branchRepository.findById(updateLateFeeInput.getBranchId()).get();
-            lateFee.setBranch(branch);
+            lateFee.setBranchId(updateLateFeeInput.getBranchId());
         }
         lateFeeRepository.save(lateFee);
         return new UpdateLateFeePayload(lateFee);
@@ -3681,11 +3680,11 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddPaymentRemainderPayload addPaymentRemainder(AddPaymentRemainderInput addPaymentRemainderInput) {
-        final College college = collegeRepository.findById(addPaymentRemainderInput.getCollegeId()).get();
-        final Branch branch = branchRepository.findById(addPaymentRemainderInput.getBranchId()).get();
+//        final College college = collegeRepository.findById(addPaymentRemainderInput.getCollegeId()).get();
+//        final Branch branch = branchRepository.findById(addPaymentRemainderInput.getBranchId()).get();
         PaymentRemainder pr = CommonUtil.createCopyProperties(addPaymentRemainderInput, PaymentRemainder.class);
-        pr.setCollege(college);
-        pr.setBranch(branch);
+        pr.setCollegeId(addPaymentRemainderInput.getCollegeId());
+        pr.setBranchId(addPaymentRemainderInput.getBranchId());
         pr = paymentRemainderRepository.save(pr);
         return new AddPaymentRemainderPayload(pr);
     }
@@ -3694,12 +3693,12 @@ public class Mutation implements GraphQLMutationResolver {
         PaymentRemainder pr = CommonUtil.createCopyProperties(updatePaymentRemainderInput, PaymentRemainder.class);
 
         if (updatePaymentRemainderInput.getCollegeId() != null) {
-            final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
-            pr.setCollege(college);
+//            final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
+            pr.setCollegeId(updatePaymentRemainderInput.getCollegeId());
         }
         if (updatePaymentRemainderInput.getBranchId() != null) {
-            final Branch branch = branchRepository.findById(updatePaymentRemainderInput.getBranchId()).get();
-            pr.setBranch(branch);
+//            final Branch branch = branchRepository.findById(updatePaymentRemainderInput.getBranchId()).get();
+            pr.setBranchId(updatePaymentRemainderInput.getBranchId());
         }
         paymentRemainderRepository.save(pr);
         return new UpdatePaymentRemainderPayload(pr);
@@ -3714,9 +3713,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddInvoicePayload addInvoice(AddInvoiceInput addInvoiceInput) {
         FeeCategory feeCategory = feeCategoryRepository.findById(addInvoiceInput.getFeeCategoryId()).get();
-        Branch branch = branchRepository.findById(addInvoiceInput.getBranchId()).get();
-        College college = collegeRepository.findById(addInvoiceInput.getCollegeId()).get();
-        AcademicYear academicYear = academicYearRepository.findById(addInvoiceInput.getAcademicyearId()).get();
+//        Branch branch = branchRepository.findById(addInvoiceInput.getBranchId()).get();
+//        College college = collegeRepository.findById(addInvoiceInput.getCollegeId()).get();
+//        AcademicYear academicYear = academicYearRepository.findById(addInvoiceInput.getAcademicyearId()).get();
         FeeDetails feeDetails = feeDetailsRepository.findById(addInvoiceInput.getFeeDetailsId()).get();
         DueDate dueDate = dueDateRepository.findById(addInvoiceInput.getDueDateId()).get();
         Student student = studentRepository.findById(addInvoiceInput.getStudentId()).get();
@@ -3739,9 +3738,9 @@ public class Mutation implements GraphQLMutationResolver {
         invoice.setFeeDetails(feeDetails);
         invoice.setDueDate(dueDate);
         invoice.setPaymentRemainder(paymentRemainder);
-        invoice.setCollege(college);
-        invoice.setBranch(branch);
-        invoice.setAcademicYear(academicYear);
+        invoice.setCollegeId(addInvoiceInput.getCollegeId());
+        invoice.setBranchId(addInvoiceInput.getBranchId());
+        invoice.setAcademicYearId(addInvoiceInput.getAcademicyearId());
         invoice.setStudent(student);
         invoiceRepository.save(invoice);
         return new AddInvoicePayload(invoice);
@@ -3809,20 +3808,20 @@ public class Mutation implements GraphQLMutationResolver {
             invoice.setFeeDetails(feeDetails);
         }
         if(updateInvoiceInput.getCollegeId() != null) {
-            College college =collegeRepository.findById(updateInvoiceInput.getCollegeId()).get();
-            invoice.setCollege(college);
+//            College college =collegeRepository.findById(updateInvoiceInput.getCollegeId()).get();
+            invoice.setCollegeId(updateInvoiceInput.getCollegeId());
         }
         if(updateInvoiceInput.getAcademicyearId() != null) {
-            AcademicYear academicYear = academicYearRepository.findById(updateInvoiceInput.getAcademicyearId()).get();
-            invoice.setAcademicYear(academicYear);
+//            AcademicYear academicYear = academicYearRepository.findById(updateInvoiceInput.getAcademicyearId()).get();
+            invoice.setAcademicYearId(updateInvoiceInput.getAcademicyearId());
         }
         if(updateInvoiceInput.getDueDateId() != null) {
             DueDate dueDate = dueDateRepository.findById(updateInvoiceInput.getDueDateId()).get();
             invoice.setDueDate(dueDate);
         }
         if(updateInvoiceInput.getBranchId() != null) {
-            Branch branch = branchRepository.findById(updateInvoiceInput.getBranchId()).get();
-            invoice.setBranch(branch);
+//            Branch branch = branchRepository.findById(updateInvoiceInput.getBranchId()).get();
+            invoice.setBranchId(updateInvoiceInput.getBranchId());
         }
 
         if(updateInvoiceInput.getStudentId() != null) {
@@ -4216,9 +4215,9 @@ public class Mutation implements GraphQLMutationResolver {
         return invoiceFilterProcessor.getTotalCanceledInvoice(collegeId, branchId, academicYearId);
     }
 
-    public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
-        return Lists.newArrayList(invoiceFilterProcessor.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId));
-    }
+//    public List<CmsInvoice> searchInvoiceOnType(String invoiceType, Long collegeId, Long branchId, Long academicYearId) throws Exception{
+//        return Lists.newArrayList(invoiceFilterProcessor.searchInvoiceOnType(invoiceType, collegeId, branchId, academicYearId));
+//    }
 
     public Long getTotalAdmissions( long branchId) {
         return admissionEnquiryProcessor.getTotalAdmissions( branchId);
@@ -4371,10 +4370,10 @@ public class Mutation implements GraphQLMutationResolver {
 	public CmsFeeSettingsVo getFeeSettingData(Long branchId) {
 		LateFee lf = new LateFee();
 		PaymentRemainder pr = new PaymentRemainder();
-		Branch branch = new Branch();
-		branch.setId(branchId);
+//		Branch branch = new Branch();
+//		branch.setId(branchId);
 
-		lf.setBranch(branch);
+		lf.setBranchId(branchId);
 		Example<LateFee> example = Example.of(lf);
 		Optional<LateFee> olf = this.lateFeeRepository.findOne(example);
 		CmsFeeSettingsVo vo = new CmsFeeSettingsVo();
@@ -4384,7 +4383,7 @@ public class Mutation implements GraphQLMutationResolver {
 			vo.setLateFeeId(olf.get().getId());
 		}
 
-		pr.setBranch(branch);
+		pr.setBranchId(branchId);
 		Example<PaymentRemainder> exPr = Example.of(pr);
 		Optional<PaymentRemainder> opr = this.paymentRemainderRepository.findOne(exPr);
 		if(opr.isPresent()) {
@@ -4405,10 +4404,10 @@ public class Mutation implements GraphQLMutationResolver {
 	}
 
 	public CmsFeeSettingsVo getFeeSettingDueDateData(Long branchId, String paymentType) {
-		Branch branch = new Branch();
-		branch.setId(branchId);
+//		Branch branch = new Branch();
+//		branch.setId(branchId);
 		DueDate dueDate = new DueDate();
-		dueDate.setBranch(branch);
+		dueDate.setBranchId(branchId);
 		dueDate.setPaymentMethod(paymentType);
 
 		CmsFeeSettingsVo vo = new CmsFeeSettingsVo();

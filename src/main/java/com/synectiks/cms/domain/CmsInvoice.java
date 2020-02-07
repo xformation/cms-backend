@@ -10,8 +10,8 @@ public class CmsInvoice {
 	private Long totalInvoice = 0L;
 	private Long totalPaidInvoice = 0L;
 	private Long totalUnPaidInvoice = 0L;
-	private Long totalCanceledInvoice = 0L; 
-	
+	private Long totalCanceledInvoice = 0L;
+
 	private Long id;
     private String invoiceNumber;
     private Long amountPaid;
@@ -30,14 +30,15 @@ public class CmsInvoice {
     private FeeDetails feeDetails;
     private DueDate dueDate;
     private PaymentRemainder paymentRemainder;
-    private College college;
-    private Branch branch;
+    private Long collegeId;
+    private Long branchId;
+    private Long academicYearId;
     private Student student;
     private AcademicYear academicYear;
     private String strPaymentDate;
     private String strNextPaymentDate;
     private String strUpdatedOn;
-	
+
 	public Long getTotalInvoice() {
 		return totalInvoice;
 	}
@@ -170,19 +171,32 @@ public class CmsInvoice {
 	public void setPaymentRemainder(PaymentRemainder paymentRemainder) {
 		this.paymentRemainder = paymentRemainder;
 	}
-	public College getCollege() {
-		return college;
-	}
-	public void setCollege(College college) {
-		this.college = college;
-	}
-	public Branch getBranch() {
-		return branch;
-	}
-	public void setBranch(Branch branch) {
-		this.branch = branch;
-	}
-	public Student getStudent() {
+
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+    }
+
+    public Student getStudent() {
 		return student;
 	}
 	public void setStudent(Student student) {
@@ -212,5 +226,5 @@ public class CmsInvoice {
 	public void setStrUpdatedOn(String strUpdatedOn) {
 		this.strUpdatedOn = strUpdatedOn;
 	}
-	
+
 }

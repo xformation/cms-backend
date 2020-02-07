@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-
+    
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
@@ -16,7 +16,7 @@
     <!--
         Added the entity FeeDetails.
     -->
-    <changeSet id="20190307052141-1" author="jhipster">
+    <changeSet id="20200129121525-1" author="jhipster">
         <createTable tableName="fee_details">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -69,11 +69,15 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="fee_category_id" type="bigint">
+            <column name="batch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="batch_id" type="bigint">
+            <column name="department_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="fee_category_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -82,10 +86,6 @@
             </column>
 
             <column name="transport_route_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="department_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

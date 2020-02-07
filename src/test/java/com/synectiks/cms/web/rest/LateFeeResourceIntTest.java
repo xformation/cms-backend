@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.Collections;
@@ -67,13 +68,23 @@ public class LateFeeResourceIntTest {
     private static final Integer DEFAULT_LATE_FEE_REPEAT_DAYS = 1;
     private static final Integer UPDATED_LATE_FEE_REPEAT_DAYS = 2;
 
+    private static final Long DEFAULT_COLLEGE_ID = 1L;
+    private static final Long UPDATED_COLLEGE_ID = 2L;
+
+    private static final Long DEFAULT_BRANCH_ID = 1L;
+    private static final Long UPDATED_BRANCH_ID = 2L;
+
+    private static final Long DEFAULT_ACADEMIC_YEAR_ID = 1L;
+    private static final Long UPDATED_ACADEMIC_YEAR_ID = 2L;
+
+    private static final Long DEFAULT_TERM_ID = 1L;
+    private static final Long UPDATED_TERM_ID = 2L;
+
     @Autowired
     private LateFeeRepository lateFeeRepository;
 
-
     @Autowired
     private LateFeeMapper lateFeeMapper;
-    
 
     @Autowired
     private LateFeeService lateFeeService;
@@ -98,6 +109,9 @@ public class LateFeeResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restLateFeeMockMvc;
 
     private LateFee lateFee;
@@ -110,7 +124,8 @@ public class LateFeeResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -127,7 +142,11 @@ public class LateFeeResourceIntTest {
             .fixedCharges(DEFAULT_FIXED_CHARGES)
             .percentCharges(DEFAULT_PERCENT_CHARGES)
             .lateFeeFrequency(DEFAULT_LATE_FEE_FREQUENCY)
-            .lateFeeRepeatDays(DEFAULT_LATE_FEE_REPEAT_DAYS);
+            .lateFeeRepeatDays(DEFAULT_LATE_FEE_REPEAT_DAYS)
+            .collegeId(DEFAULT_COLLEGE_ID)
+            .branchId(DEFAULT_BRANCH_ID)
+            .academicYearId(DEFAULT_ACADEMIC_YEAR_ID)
+            .termId(DEFAULT_TERM_ID);
         return lateFee;
     }
 
@@ -159,6 +178,10 @@ public class LateFeeResourceIntTest {
         assertThat(testLateFee.getPercentCharges()).isEqualTo(DEFAULT_PERCENT_CHARGES);
         assertThat(testLateFee.getLateFeeFrequency()).isEqualTo(DEFAULT_LATE_FEE_FREQUENCY);
         assertThat(testLateFee.getLateFeeRepeatDays()).isEqualTo(DEFAULT_LATE_FEE_REPEAT_DAYS);
+        assertThat(testLateFee.getCollegeId()).isEqualTo(DEFAULT_COLLEGE_ID);
+        assertThat(testLateFee.getBranchId()).isEqualTo(DEFAULT_BRANCH_ID);
+        assertThat(testLateFee.getAcademicYearId()).isEqualTo(DEFAULT_ACADEMIC_YEAR_ID);
+        assertThat(testLateFee.getTermId()).isEqualTo(DEFAULT_TERM_ID);
 
         // Validate the LateFee in Elasticsearch
         verify(mockLateFeeSearchRepository, times(1)).save(testLateFee);
@@ -223,10 +246,13 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.[*].fixedCharges").value(hasItem(DEFAULT_FIXED_CHARGES.intValue())))
             .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES.toString())))
             .andExpect(jsonPath("$.[*].lateFeeFrequency").value(hasItem(DEFAULT_LATE_FEE_FREQUENCY.toString())))
-            .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)));
+            .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())))
+            .andExpect(jsonPath("$.[*].termId").value(hasItem(DEFAULT_TERM_ID.intValue())));
     }
     
-
     @Test
     @Transactional
     public void getLateFee() throws Exception {
@@ -244,8 +270,13 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.fixedCharges").value(DEFAULT_FIXED_CHARGES.intValue()))
             .andExpect(jsonPath("$.percentCharges").value(DEFAULT_PERCENT_CHARGES.toString()))
             .andExpect(jsonPath("$.lateFeeFrequency").value(DEFAULT_LATE_FEE_FREQUENCY.toString()))
-            .andExpect(jsonPath("$.lateFeeRepeatDays").value(DEFAULT_LATE_FEE_REPEAT_DAYS));
+            .andExpect(jsonPath("$.lateFeeRepeatDays").value(DEFAULT_LATE_FEE_REPEAT_DAYS))
+            .andExpect(jsonPath("$.collegeId").value(DEFAULT_COLLEGE_ID.intValue()))
+            .andExpect(jsonPath("$.branchId").value(DEFAULT_BRANCH_ID.intValue()))
+            .andExpect(jsonPath("$.academicYearId").value(DEFAULT_ACADEMIC_YEAR_ID.intValue()))
+            .andExpect(jsonPath("$.termId").value(DEFAULT_TERM_ID.intValue()));
     }
+
     @Test
     @Transactional
     public void getNonExistingLateFee() throws Exception {
@@ -273,7 +304,11 @@ public class LateFeeResourceIntTest {
             .fixedCharges(UPDATED_FIXED_CHARGES)
             .percentCharges(UPDATED_PERCENT_CHARGES)
             .lateFeeFrequency(UPDATED_LATE_FEE_FREQUENCY)
-            .lateFeeRepeatDays(UPDATED_LATE_FEE_REPEAT_DAYS);
+            .lateFeeRepeatDays(UPDATED_LATE_FEE_REPEAT_DAYS)
+            .collegeId(UPDATED_COLLEGE_ID)
+            .branchId(UPDATED_BRANCH_ID)
+            .academicYearId(UPDATED_ACADEMIC_YEAR_ID)
+            .termId(UPDATED_TERM_ID);
         LateFeeDTO lateFeeDTO = lateFeeMapper.toDto(updatedLateFee);
 
         restLateFeeMockMvc.perform(put("/api/late-fees")
@@ -292,6 +327,10 @@ public class LateFeeResourceIntTest {
         assertThat(testLateFee.getPercentCharges()).isEqualTo(UPDATED_PERCENT_CHARGES);
         assertThat(testLateFee.getLateFeeFrequency()).isEqualTo(UPDATED_LATE_FEE_FREQUENCY);
         assertThat(testLateFee.getLateFeeRepeatDays()).isEqualTo(UPDATED_LATE_FEE_REPEAT_DAYS);
+        assertThat(testLateFee.getCollegeId()).isEqualTo(UPDATED_COLLEGE_ID);
+        assertThat(testLateFee.getBranchId()).isEqualTo(UPDATED_BRANCH_ID);
+        assertThat(testLateFee.getAcademicYearId()).isEqualTo(UPDATED_ACADEMIC_YEAR_ID);
+        assertThat(testLateFee.getTermId()).isEqualTo(UPDATED_TERM_ID);
 
         // Validate the LateFee in Elasticsearch
         verify(mockLateFeeSearchRepository, times(1)).save(testLateFee);
@@ -305,7 +344,7 @@ public class LateFeeResourceIntTest {
         // Create the LateFee
         LateFeeDTO lateFeeDTO = lateFeeMapper.toDto(lateFee);
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restLateFeeMockMvc.perform(put("/api/late-fees")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(lateFeeDTO)))
@@ -327,7 +366,7 @@ public class LateFeeResourceIntTest {
 
         int databaseSizeBeforeDelete = lateFeeRepository.findAll().size();
 
-        // Get the lateFee
+        // Delete the lateFee
         restLateFeeMockMvc.perform(delete("/api/late-fees/{id}", lateFee.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -352,13 +391,17 @@ public class LateFeeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(lateFee.getId().intValue())))
-            .andExpect(jsonPath("$.[*].isAutoLateFee").value(hasItem(DEFAULT_IS_AUTO_LATE_FEE.toString())))
+            .andExpect(jsonPath("$.[*].isAutoLateFee").value(hasItem(DEFAULT_IS_AUTO_LATE_FEE)))
             .andExpect(jsonPath("$.[*].lateFeeDays").value(hasItem(DEFAULT_LATE_FEE_DAYS)))
-            .andExpect(jsonPath("$.[*].chargeType").value(hasItem(DEFAULT_CHARGE_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].chargeType").value(hasItem(DEFAULT_CHARGE_TYPE)))
             .andExpect(jsonPath("$.[*].fixedCharges").value(hasItem(DEFAULT_FIXED_CHARGES.intValue())))
-            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES.toString())))
-            .andExpect(jsonPath("$.[*].lateFeeFrequency").value(hasItem(DEFAULT_LATE_FEE_FREQUENCY.toString())))
-            .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)));
+            .andExpect(jsonPath("$.[*].percentCharges").value(hasItem(DEFAULT_PERCENT_CHARGES)))
+            .andExpect(jsonPath("$.[*].lateFeeFrequency").value(hasItem(DEFAULT_LATE_FEE_FREQUENCY)))
+            .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())))
+            .andExpect(jsonPath("$.[*].termId").value(hasItem(DEFAULT_TERM_ID.intValue())));
     }
 
     @Test

@@ -37,10 +37,10 @@ public class CmsFeeDetails implements Serializable {
     private LocalDate startDate;
     private LocalDate endDate;
     private FeeCategory feeCategory;
-    private Batch batch;
+    private Long batchId;
     private Facility facility;
     private TransportRoute transportRoute;
-    private Department department;
+    private Long departmentId;
 
     private String strCreatedOn;
     private String strUpdatedOn;
@@ -224,17 +224,20 @@ public class CmsFeeDetails implements Serializable {
         this.feeCategory = feeCategory;
     }
 
-    public Batch getBatch() {
-        return batch;
+    public Long getBatchId() {
+        return batchId;
     }
 
-    public CmsFeeDetails batch(Batch batch) {
-        this.batch = batch;
-        return this;
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 
-    public void setBatch(Batch batch) {
-        this.batch = batch;
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public Facility getFacility() {
@@ -263,18 +266,7 @@ public class CmsFeeDetails implements Serializable {
         this.transportRoute = transportRoute;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
 
-    public CmsFeeDetails department(Department department) {
-        this.department = department;
-        return this;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

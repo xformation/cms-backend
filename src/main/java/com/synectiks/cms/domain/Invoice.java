@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -26,7 +27,7 @@ import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -83,37 +84,34 @@ public class Invoice implements Serializable {
     @Column(name = "updated_on", nullable = false)
     private LocalDate updatedOn;
 
+    @Column(name = "college_id")
+    private Long collegeId;
+
+    @Column(name = "branch_id")
+    private Long branchId;
+
+    @Column(name = "academic_year_id")
+    private Long academicYearId;
+
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("invoices")
     private FeeCategory feeCategory;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("invoices")
     private FeeDetails feeDetails;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("invoices")
     private DueDate dueDate;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("invoices")
     private PaymentRemainder paymentRemainder;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
-    private College college;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Branch branch;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("invoices")
     private Student student;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private AcademicYear academicYear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -293,6 +291,45 @@ public class Invoice implements Serializable {
         this.updatedOn = updatedOn;
     }
 
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public Invoice collegeId(Long collegeId) {
+        this.collegeId = collegeId;
+        return this;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public Invoice branchId(Long branchId) {
+        this.branchId = branchId;
+        return this;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public Invoice academicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+        return this;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+    }
+
     public FeeCategory getFeeCategory() {
         return feeCategory;
     }
@@ -345,32 +382,6 @@ public class Invoice implements Serializable {
         this.paymentRemainder = paymentRemainder;
     }
 
-    public College getCollege() {
-        return college;
-    }
-
-    public Invoice college(College college) {
-        this.college = college;
-        return this;
-    }
-
-    public void setCollege(College college) {
-        this.college = college;
-    }
-
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public Invoice branch(Branch branch) {
-        this.branch = branch;
-        return this;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
-    }
-
     public Student getStudent() {
         return student;
     }
@@ -382,19 +393,6 @@ public class Invoice implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public AcademicYear getAcademicYear() {
-        return academicYear;
-    }
-
-    public Invoice academicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
-        return this;
-    }
-
-    public void setAcademicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -435,6 +433,9 @@ public class Invoice implements Serializable {
             ", comments='" + getComments() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +
             ", updatedOn='" + getUpdatedOn() + "'" +
+            ", collegeId=" + getCollegeId() +
+            ", branchId=" + getBranchId() +
+            ", academicYearId=" + getAcademicYearId() +
             "}";
     }
 }

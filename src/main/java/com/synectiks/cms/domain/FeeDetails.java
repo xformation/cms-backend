@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -28,7 +29,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 public class FeeDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -75,25 +76,23 @@ public class FeeDetails implements Serializable {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Column(name = "batch_id")
+    private Long batchId;
+
+    @Column(name = "department_id")
+    private Long departmentId;
+
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("feeDetails")
     private FeeCategory feeCategory;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
-    private Batch batch;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("feeDetails")
     private Facility facility;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("feeDetails")
     private TransportRoute transportRoute;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Department department;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -260,6 +259,32 @@ public class FeeDetails implements Serializable {
         this.endDate = endDate;
     }
 
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public FeeDetails batchId(Long batchId) {
+        this.batchId = batchId;
+        return this;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public FeeDetails departmentId(Long departmentId) {
+        this.departmentId = departmentId;
+        return this;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public FeeCategory getFeeCategory() {
         return feeCategory;
     }
@@ -271,19 +296,6 @@ public class FeeDetails implements Serializable {
 
     public void setFeeCategory(FeeCategory feeCategory) {
         this.feeCategory = feeCategory;
-    }
-
-    public Batch getBatch() {
-        return batch;
-    }
-
-    public FeeDetails batch(Batch batch) {
-        this.batch = batch;
-        return this;
-    }
-
-    public void setBatch(Batch batch) {
-        this.batch = batch;
     }
 
     public Facility getFacility() {
@@ -310,19 +322,6 @@ public class FeeDetails implements Serializable {
 
     public void setTransportRoute(TransportRoute transportRoute) {
         this.transportRoute = transportRoute;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public FeeDetails department(Department department) {
-        this.department = department;
-        return this;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -362,6 +361,8 @@ public class FeeDetails implements Serializable {
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
+            ", batchId=" + getBatchId() +
+            ", departmentId=" + getDepartmentId() +
             "}";
     }
 }

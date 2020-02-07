@@ -16,13 +16,12 @@ public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
     private LocalDate startDate;
     private LocalDate endDate;
     private Long branchId;
-    
+
     private String strCreatedOn;
     private String strUpdatedOn;
     private String strStartDate;
     private String strEndDate;
-    private Branch branch;
-    
+
 	public Long getId() {
 		return id;
 	}
@@ -113,19 +112,14 @@ public class CmsFeeCategory implements Comparable<CmsFeeCategory>{
 	public void setStrEndDate(String strEndDate) {
 		this.strEndDate = strEndDate;
 	}
-	public Branch getBranch() {
-		return branch;
-	}
-	public void setBranch(Branch branch) {
-		this.branch = branch;
-	}
+
 	@Override
 	public int compareTo(CmsFeeCategory o) {
 		return this.id.compareTo(o.getId());
 	}
-	
-	
 
 
-    
+
+
+
 }

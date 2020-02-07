@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -35,6 +34,7 @@ public class FeeCategoryDTO implements Serializable {
     private LocalDate endDate;
 
     private Long branchId;
+
 
     public Long getId() {
         return id;
@@ -158,7 +158,7 @@ public class FeeCategoryDTO implements Serializable {
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", branch=" + getBranchId() +
+            ", branchId=" + getBranchId() +
             "}";
     }
 }

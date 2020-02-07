@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -35,6 +34,7 @@ public class PaymentRemainderDTO implements Serializable {
     private Long collegeId;
 
     private Long branchId;
+
 
     public Long getId() {
         return id;
@@ -175,8 +175,8 @@ public class PaymentRemainderDTO implements Serializable {
             ", overDuePaymentRemainderDays=" + getOverDuePaymentRemainderDays() +
             ", isRemainderRecipients='" + getIsRemainderRecipients() + "'" +
             ", remainderRecipients='" + getRemainderRecipients() + "'" +
-            ", college=" + getCollegeId() +
-            ", branch=" + getBranchId() +
+            ", collegeId=" + getCollegeId() +
+            ", branchId=" + getBranchId() +
             "}";
     }
 }
