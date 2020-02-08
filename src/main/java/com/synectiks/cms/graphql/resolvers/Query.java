@@ -17,11 +17,10 @@ package com.synectiks.cms.graphql.resolvers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
-import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +31,6 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.business.service.CmsAdmissionApplicationService;
-import com.synectiks.cms.business.service.CmsAdmissionEnquiryService;
-import com.synectiks.cms.business.service.CmsInvoiceService;
-import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.enumeration.Gender;
@@ -48,9 +43,7 @@ import com.synectiks.cms.filter.admissionenquiry.AdmissionEnquiryProcessor;
 import com.synectiks.cms.filter.common.CommonGraphiqlFilter;
 import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
-import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
-import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
 import com.synectiks.cms.filter.summary.SummaryFilter;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
@@ -106,11 +99,10 @@ public class Query implements GraphQLQueryResolver {
     private final StudentExamReportRepository studentExamReportRepository;
     private final LibraryRepository libraryRepository;
     private final BookRepository bookRepository;
-
     private final ContractRepository contractRepository;
     private final EmployeeRepository employeeRepository;
-    private final VehicleRepository vehicleRepository;
     private final InsuranceRepository insuranceRepository;
+    private final VehicleRepository vehicleRepository;
 
     @Autowired
     private AcademicSubjectProcessor academicSubjectProcessor;
@@ -127,8 +119,6 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     private StudentFilterProcessor studentFilterProcessor;
 
-    @Autowired
-    private VehicleFilterProcessor vehicleFilterProcessor;
     @Autowired
     private EmployeeFilterProcessor employeeFilterProcessor;
 
@@ -148,6 +138,12 @@ public class Query implements GraphQLQueryResolver {
     private CommonService commonService;
 
     @Autowired
+    private VehicleService vehicleService;
+
+    @Autowired
+    private TransportService transportService;
+
+    @Autowired
     private SummaryFilter summaryFilter;
 
     @Autowired
@@ -159,7 +155,17 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     private StudentAttendanceFilterImpl studentAttendanceFilterImpl;
 
-    public Query(LibraryRepository libraryRepository, SummaryFilter summaryFilter,BookRepository bookRepository ,AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository LibraryRepository, ContractRepository contractRepository, EmployeeRepository employeeRepository, VehicleRepository vehicleRepository, InsuranceRepository insuranceRepository) {
+    public List<CmsVehicleVo> getVehicleList() throws Exception {
+        logger.debug("Query - getVehicleList :");
+        return this.vehicleService.getVehicleList();
+      }
+
+    public List<CmsTransportVo> getTransportRouteList() throws Exception {
+        logger.debug("Query - getTransportRouteList :");
+        return this.transportService.getTransportRouteList();
+    }
+
+    public Query(LibraryRepository libraryRepository, SummaryFilter summaryFilter, BookRepository bookRepository, AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository LibraryRepository, ContractRepository contractRepository, EmployeeRepository employeeRepository, InsuranceRepository insuranceRepository, VehicleRepository vehicleRepository) {
         this.libraryRepository = libraryRepository;
         this.bookRepository=bookRepository;
         this.summaryFilter = summaryFilter;
@@ -206,9 +212,9 @@ public class Query implements GraphQLQueryResolver {
         this.studentExamReportRepository = studentExamReportRepository;
         this.contractRepository = contractRepository;
         this.employeeRepository = employeeRepository;
-        this.vehicleRepository = vehicleRepository;
 
         this.insuranceRepository = insuranceRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     public CmsStudentVo student(long id) {
@@ -525,14 +531,6 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(facilityRepository.findAll());
     }
 
-    public TransportRoute transportRoute(long id){
-        return transportRouteRepository.findById(id).get();
-    }
-
-    public List<TransportRoute> transportRoutes(){
-        return Lists.newArrayList(transportRouteRepository.findAll());
-    }
-
     public FeeDetails feeDetail(long id){
         return feeDetailsRepository.findById(id).get();
     }
@@ -566,27 +564,6 @@ public class Query implements GraphQLQueryResolver {
 
     public List<Insurance>  insurances(){
         return  Lists.newArrayList(insuranceRepository.findAll());
-    }
-
-    public CmsVehicleVo vehicle(long id) {
-        Vehicle v = vehicleRepository.findById(id).get();
-        CmsVehicleVo vo = CommonUtil.createCopyProperties(v, CmsVehicleVo.class);
-        vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(v.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        vo.setDateOfRegistration(null);
-        vo.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(v.getInsurance().getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        vo.setDateOfInsurance(null);
-        vo.setStrValidTill(DateFormatUtil.changeLocalDateFormat(v.getInsurance().getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        vo.setValidTill(null);
-        vo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(v.getContract().getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        vo.setStartDate(null);
-        vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(v.getContract().getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        vo.setEndDate(null);
-        return vo;
-    }
-
-
-    public List<Vehicle>  vehicles(){
-        return  Lists.newArrayList(vehicleRepository.findAll());
     }
 
 
@@ -668,9 +645,6 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(studentFilterProcessor.searchStudent(departmentId, batchId, sectionId, branchId, gender, studentType, studentName));
     }
 
-    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, String vehicleNumber) throws Exception {
-        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(transportRouteId, vehicleNumber));
-    }
     public List<CmsEmployeeVo> searchEmployee(Long vehicleId, Long employeeId ,String employeeName) throws Exception {
         return Lists.newArrayList(employeeFilterProcessor.searchEmployee(vehicleId, employeeId,employeeName));
     }
@@ -935,32 +909,6 @@ public class Query implements GraphQLQueryResolver {
     	return cache;
     }
 
-    public AddVehicleDataCache createAddVehicleDataCache(String collegeId, String branchId) throws Exception{
-        List<College> collegeList = this.collegeRepository.findAll();
-        List<Branch> branchList = this.branchRepository.findAll();
-        List<CmsTypeOfInsuranceVo> typeOfInsuranceList = this.commonService.getAllTypeOfInsurances();
-        List<CmsTypeOfOwnershipVo> typeOfOwnershipList = this.commonService.getAllTypeOfOwnerships();
-
-        AddVehicleDataCache cache = new AddVehicleDataCache();
-        cache.setColleges(collegeList);
-        cache.setBranches(branchList);
-
-        cache.setTypeOfInsurances(typeOfInsuranceList);
-        cache.setTypeOfOwnerships(typeOfOwnershipList);
-
-        return cache;
-    }
-
-    public VehicleDataCache createVehicleDataCache() throws Exception{
-        List<Vehicle> vehicleList = this.vehicleRepository.findAll();
-        List<TransportRoute> transportRouteList = this.transportRouteRepository.findAll();
-        List<CmsRouteFrequency> routeFrequencyList = this.commonService.getAllRouteFrequencies();
-        VehicleDataCache cache = new VehicleDataCache();
-        cache.setVehicles(vehicleList);
-        cache.setRouteFrequencies(routeFrequencyList);
-        cache.setTransportRoutes(transportRouteList);
-        return cache;
-    }
     public EmployeeDataCache createEmployeeDataCache() throws Exception{
         List<Employee> employeeList = this.employeeRepository.findAll();
         List<Vehicle> vehicleList = this.vehicleRepository.findAll();

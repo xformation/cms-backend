@@ -11,6 +11,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.synectiks.cms.business.service.TransportService;
+import com.synectiks.cms.business.service.VehicleService;
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRouteInput;
+import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRoutePayload;
+import com.synectiks.cms.graphql.types.Vehicle.AddVehiclePayload;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,66 +33,6 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.AcademicHistory;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Book;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
-import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
-import com.synectiks.cms.domain.CmsBook;
-import com.synectiks.cms.domain.CmsContract;
-import com.synectiks.cms.domain.CmsEmployeeVo;
-import com.synectiks.cms.domain.CmsFeeCategory;
-import com.synectiks.cms.domain.CmsFeeDetails;
-import com.synectiks.cms.domain.CmsFeeSettingsVo;
-import com.synectiks.cms.domain.CmsInsurance;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.CmsLibrary;
-import com.synectiks.cms.domain.CmsLibraryVo;
-import com.synectiks.cms.domain.CmsStudentVo;
-import com.synectiks.cms.domain.CmsVehicle;
-import com.synectiks.cms.domain.CmsVehicleVo;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.CompetitiveExam;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.domain.Country;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.domain.QueryResult;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.StudentExamReport;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
@@ -115,8 +61,6 @@ import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterImpl;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceFilterInput;
 import com.synectiks.cms.filter.studentattendance.StudentAttendanceUpdateFilter;
-import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
-import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.graphql.types.AcademicExamSetting.AddAcademicExamSettingInput;
 import com.synectiks.cms.graphql.types.AcademicExamSetting.AddAcademicExamSettingPayload;
 import com.synectiks.cms.graphql.types.AcademicExamSetting.RemoveAcademicExamSettingInput;
@@ -361,12 +305,6 @@ import com.synectiks.cms.graphql.types.Term.RemoveTermInput;
 import com.synectiks.cms.graphql.types.Term.RemoveTermPayload;
 import com.synectiks.cms.graphql.types.Term.UpdateTermInput;
 import com.synectiks.cms.graphql.types.Term.UpdateTermPayload;
-import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRouteInput;
-import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRoutePayload;
-import com.synectiks.cms.graphql.types.TransportRoute.RemoveTransportRouteInput;
-import com.synectiks.cms.graphql.types.TransportRoute.RemoveTransportRoutePayload;
-import com.synectiks.cms.graphql.types.TransportRoute.UpdateTransportRouteInput;
-import com.synectiks.cms.graphql.types.TransportRoute.UpdateTransportRoutePayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.AddTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.AddTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingInput;
@@ -374,10 +312,6 @@ import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehicleInput;
-import com.synectiks.cms.graphql.types.Vehicle.RemoveVehicleInput;
-import com.synectiks.cms.graphql.types.Vehicle.RemoveVehiclePayload;
-import com.synectiks.cms.graphql.types.Vehicle.UpdateVehicleInput;
-import com.synectiks.cms.graphql.types.Vehicle.UpdateVehiclePayload;
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.repository.AcademicHistoryRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
@@ -434,6 +368,13 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     CommonService commonService;
+
+    @Autowired
+    VehicleService vehicleService;
+
+
+    @Autowired
+    TransportService transportService;
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -555,14 +496,12 @@ public class Mutation implements GraphQLMutationResolver {
 	@Autowired
     private StudentFilterProcessor studentFilterProcessor;
 
-	@Autowired
-    private VehicleFilterProcessor vehicleFilterProcessor;
-
     @Autowired
     private AdmissionApplicationProcessor admissionApplicationProcessor;
 
     @Autowired
     private LibraryFilterProcessor libraryFilterProcessor;
+
 //    public Mutation(AcademicExamSettingRepository academicExamSettingRepository,BookRepository bookRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
 //        this.academicExamSettingRepository = academicExamSettingRepository;
 //        this.academicHistoryRepository = academicHistoryRepository;
@@ -616,6 +555,16 @@ public class Mutation implements GraphQLMutationResolver {
 //        this.entityManager = entityManager;
 //
 //    }
+
+    public AddVehiclePayload addVehicle(AddVehicleInput cmsVehicleVo) {
+        CmsVehicleVo vo = this.vehicleService.addVehicle(cmsVehicleVo);
+        return new AddVehiclePayload(vo);
+    }
+
+    public AddTransportRoutePayload addTransportRoute(AddTransportRouteInput cmsTransportVo) {
+        CmsTransportVo vo = this.transportService.addTransportRoute(cmsTransportVo);
+        return new AddTransportRoutePayload(vo);
+    }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
         final Country country = new Country();
@@ -3542,45 +3491,6 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveFacilityPayload(Lists.newArrayList(facilityRepository.findAll()));
     }
 
-    public AddTransportRoutePayload addTransportRoute(AddTransportRouteInput addTransportRouteInput) {
-        final TransportRoute transportRoute = new TransportRoute();
-        transportRoute.setRouteDetails(addTransportRouteInput.getRouteDetails());
-        transportRoute.setRouteName(addTransportRouteInput.getRouteName());
-        transportRoute.setRouteMapUrl(addTransportRouteInput.getRouteMapUrl());
-        transportRoute.setNoOfStops(addTransportRouteInput.getNoOfStops());
-        transportRoute.setRouteFrequency(addTransportRouteInput.getRouteFrequency());
-        transportRouteRepository.save(transportRoute);
-
-        return new AddTransportRoutePayload(transportRoute);
-    }
-
-
-    public UpdateTransportRoutePayload updateTransportRoute(UpdateTransportRouteInput updateTransportRouteInput) {
-        TransportRoute transportRoute = transportRouteRepository.findById(updateTransportRouteInput.getId()).get();
-        if (updateTransportRouteInput.getRouteDetails() != null) {
-            transportRoute.setRouteDetails(updateTransportRouteInput.getRouteDetails());
-        }
-        if (updateTransportRouteInput.getRouteName() != null) {
-            transportRoute.setRouteName(updateTransportRouteInput.getRouteName());
-        }
-        if (updateTransportRouteInput.getRouteMapUrl() != null) {
-            transportRoute.setRouteMapUrl(updateTransportRouteInput.getRouteMapUrl());
-        }
-        if (updateTransportRouteInput.getNoOfStops() != null) {
-            transportRoute.setNoOfStops(updateTransportRouteInput.getNoOfStops());
-        }
-        if (updateTransportRouteInput.getRouteFrequency() != null) {
-            transportRoute.setRouteFrequency(updateTransportRouteInput.getRouteFrequency());
-        }
-        transportRouteRepository.save(transportRoute);
-        return new UpdateTransportRoutePayload(transportRoute);
-    }
-
-    public RemoveTransportRoutePayload removeTransportRoute(RemoveTransportRouteInput removeTransportRouteInput) {
-        TransportRoute transportRoute = transportRouteRepository.getOne(removeTransportRouteInput.getTransportRouteId());
-        return new RemoveTransportRoutePayload(Lists.newArrayList(transportRouteRepository.findAll()));
-    }
-
     public AddDueDatePayload addDueDate(AddDueDateInput addDueDateInput) {
 //        College college = collegeRepository.findById(addDueDateInput.getCollegeId()).get();
 //        Branch branch = branchRepository.findById((addDueDateInput.getBranchId())).get();
@@ -4033,108 +3943,6 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveInsurancePayload(Lists.newArrayList(insuranceRepository.findAll()));
     }
 
-    public CmsVehicle addVehicle(AddVehicleInput addVehicleInput) throws ParseException, Exception {
-        Vehicle vehicle = CommonUtil.createCopyProperties(addVehicleInput, Vehicle.class);
-        Branch branch = new Branch();
-        branch.setId(addVehicleInput.getBranchId());
-        College college = new College();
-        college.setId(addVehicleInput.getCollegeId());
-        Employee employee = new Employee();
-        employee.setId(addVehicleInput.getEmployeeId());
-        TransportRoute transportRoute = new TransportRoute();
-        transportRoute.setId(addVehicleInput.getTransportRouteId());
-        Contract contract = new Contract();
-        contract.setId(addVehicleInput.getContractId());
-        Insurance insurance = new Insurance();
-        insurance.setId(addVehicleInput.getInsuranceId());
-        vehicle.setEmployee(employee);
-        vehicle.setTransportRoute(transportRoute);
-        vehicle.setInsurance(insurance);
-        vehicle.setContract(contract);
-        vehicle.setBranch(branch);
-        vehicle.setCollege(college);
-        vehicle.dateOfRegistration(DateFormatUtil.convertLocalDateFromUtilDate(addVehicleInput.getDateOfRegistration()));
-        vehicle = vehicleRepository.save(vehicle);
-        CmsVehicle cv = CommonUtil.createCopyProperties(vehicle, CmsVehicle.class);
-        if (vehicle.getDateOfRegistration() != null) {
-            cv.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            cv.setDateOfRegistration(null);
-        }
-        return cv;
-    }
-
-    public UpdateVehiclePayload updateVehicle(UpdateVehicleInput updateVehicleInput) {
-        Vehicle vehicle = vehicleRepository.findById(updateVehicleInput.getId()).get();
-
-        if (updateVehicleInput.getVehicleNumber() != null) {
-            vehicle.setVehicleNumber(updateVehicleInput.getVehicleNumber());
-        }
-        if (updateVehicleInput.getVehicleType() != null) {
-            vehicle.setVehicleType(updateVehicleInput.getVehicleType());
-        }
-        if (updateVehicleInput.getCapacity() != null) {
-            vehicle.setCapacity(updateVehicleInput.getCapacity());
-        }
-        if (updateVehicleInput.getOwnerShip() != null) {
-            vehicle.setOwnerShip(updateVehicleInput.getOwnerShip());
-        }
-        if (updateVehicleInput.getDateOfRegistration() != null) {
-            vehicle.setDateOfRegistration(DateFormatUtil.convertLocalDateFromUtilDate(updateVehicleInput.getDateOfRegistration()));
-        }
-        if (updateVehicleInput.getYearOfManufacturing() != null) {
-            vehicle.setYearOfManufacturing(updateVehicleInput.getYearOfManufacturing());
-        }
-        if (updateVehicleInput.getModel() != null) {
-            vehicle.setModel(updateVehicleInput.getModel());
-        }
-        if (updateVehicleInput.getChasisNo() != null) {
-            vehicle.setChasisNo(updateVehicleInput.getChasisNo());
-        }
-        if (updateVehicleInput.getRcNo() != null) {
-            vehicle.setRcNo(updateVehicleInput.getRcNo());
-        }
-        if (updateVehicleInput.getContactNumber() != null) {
-            vehicle.setContactNumber(updateVehicleInput.getContactNumber());
-        }
-        if (updateVehicleInput.getStatus() != null) {
-            vehicle.setStatus(updateVehicleInput.getStatus());
-        }
-        if(updateVehicleInput.getEmployeeId()!=null){
-            Employee employee = employeeRepository.findById(updateVehicleInput.getEmployeeId()).get();
-            vehicle.setEmployee(employee);
-        }
-        if(updateVehicleInput.getTransportRouteId()!=null){
-            TransportRoute transportRoute = transportRouteRepository.findById(updateVehicleInput.getTransportRouteId()).get();
-            vehicle.setTransportRoute(transportRoute);
-        }
-        if(updateVehicleInput.getInsuranceId()!=null){
-            Insurance insurance = insuranceRepository.findById(updateVehicleInput.getInsuranceId()).get();
-            vehicle.setInsurance(insurance);
-        }
-        if(updateVehicleInput.getContractId()!=null){
-            Contract contract = contractRepository.findById(updateVehicleInput.getContractId()).get();
-            vehicle.setContract(contract);
-        }
-        if(updateVehicleInput.getBranchId()!=null){
-            Branch branch = branchRepository.findById(updateVehicleInput.getBranchId()).get();
-            vehicle.setBranch(branch);
-        }
-        if(updateVehicleInput.getCollegeId()!=null){
-            College college = collegeRepository.findById(updateVehicleInput.getCollegeId()).get();
-            vehicle.setCollege(college);
-        }
-
-        vehicleRepository.save(vehicle);
-
-        return new UpdateVehiclePayload(vehicle);
-    }
-
-    public RemoveVehiclePayload removeVehicle(RemoveVehicleInput removeVehicleInput) {
-        Vehicle vehicle = vehicleRepository.findById(removeVehicleInput.getVehicleId()).get();
-        vehicleRepository.delete(vehicle);
-        return new RemoveVehiclePayload(Lists.newArrayList(vehicleRepository.findAll()));
-    }
-
     /**
      * Method to update student attendance data. It accepts a list of objects containing student attendance ids and lecture id.
      * It returns the status as zero (0) if method completes successfully or non zero (>0) if execution fails due to any reason.
@@ -4258,10 +4066,6 @@ public class Mutation implements GraphQLMutationResolver {
     	}
     	logger.debug("Total students retrieved. "+list.size());
     	return ls;
-    }
-
-    public List<CmsVehicleVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
-        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(filter));
     }
     public List<CmsEmployeeVo> getEmployeeList(EmployeeListFilterInput filter) throws Exception {
         return Lists.newArrayList(employeeFilterProcessor.searchEmployee(filter));

@@ -148,6 +148,10 @@ enum TypeOfInsurance {
 
 type Query {
 
+   getVehicleList: [CmsVehicleVo]
+
+   getTransportRouteList: [CmsTransportVo]
+
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
 
@@ -230,9 +234,6 @@ type Query {
   document (id: Long!): Documents!
   documents: [Documents!]!
 
-  transportRoute(id: Long!): TransportRoute!
-  transportRoutes: [TransportRoute!]!
-
   dueDate(id:Long!):DueDate!
   dueDates:[DueDate!]!
 
@@ -260,8 +261,6 @@ type Query {
   insurance(id:Long!):Insurance!
   insurances:[Insurance!]!
 
-  vehicle(id:Long!):CmsVehicleVo!
-  vehicles:[Vehicle!]!
 
   acExamSetting(id:Long!):AcExamSetting!
   acExamSettings:[AcExamSetting!]!
@@ -290,7 +289,6 @@ type Query {
   getAcademicSubjects(input: AcademicSubjectQueryPayload!): [Subject!]!
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
-    searchVehicle(transportRouteId:Long, vehicleNumber:String): [CmsVehicleVo!]!
     searchEmployee(employeeId:Long, vehicleId:Long, employeeName:String): [CmsEmployeeVo!]!
     searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
 
@@ -329,8 +327,6 @@ type Query {
     createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
     createStudentAttendanceCacheForAdmin(branchId:String, departmentId:String , academicYearId:String, lectureDate:String ): StudentAttendanceCache!
     createFeeDataCache: FeeDataCache!
-    createAddVehicleDataCache(collegeId:String!, branchId:String!): AddVehicleDataCache!
-    createVehicleDataCache: VehicleDataCache!
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
     createExamFilterDataCache(branchId: Long, academicYearId: Long): ExamFilterDataCache!
@@ -424,13 +420,6 @@ type FeeDataCache {
 	colleges: [College]
 	branches: [Branch]
 }
-type AddVehicleDataCache{
-    colleges: [College]
-    branches: [Branch]
-	typeOfInsurances: [CmsTypeOfInsuranceVo]
-    typeOfOwnerships: [CmsTypeOfOwnershipVo]
-}
-
 type CmsTypeOfInsuranceVo{
      id: Int
 	description: String
@@ -446,11 +435,6 @@ type CmsTypeOfOwnershipVo{
 	description: String
 }
 
-type VehicleDataCache{
-     vehicles: [Vehicle]
-     transportRoutes: [TransportRoute]
-     routeFrequencies:[CmsRouteFrequency]
-}
 type EmployeeDataCache{
     employees: [Employee]
     vehicles: [Vehicle]
@@ -557,51 +541,30 @@ type CmsVehicleVo {
     rcNo:  String
     contactNumber:  String
     status:Status
-    employee: Employee
-    transportRoute: TransportRoute
-    contract: Contract
-    insurance: Insurance
-    branch: Branch
-    college: College
     strDateOfRegistration: String
-    dateOfInsurance: Date
-    strDateOfInsurance: String
-    validTill: Date
-    strValidTill: String
-    startDate: Date
-     endDate: Date
-      strStartDate: String
-      strEndDate: String
-    insuranceId: Long
-    employeeId: Long
     transportRouteId: Long
     collegeId: Long
     branchId: Long
     contractId: Long
+    insuranceId: Long
+    employeeId: Long
+    exitCode: Long
+    exitDescription: String
+    dataList: [CmsVehicleVo]
 }
 
-type CmsVehicle {
+type CmsTransportVo {
     id: Long
-    vehicleNumber: String
-    vehicleType: String
-    capacity: Long
-    ownerShip: String
-    dateOfRegistration:Date
-    yearOfManufacturing: String
-    manufacturingCompany: String
-    model:  String
-    chasisNo:  String
-    rcNo:  String
-    contactNumber:  String
-    status:Status
-    employee: Employee
-    transportRoute: TransportRoute
-    contract: Contract
-    insurance: Insurance
-    branch: Branch
-    college: College
-    strDateOfRegistration: String
-	}
+    routeName: String
+    routeDetails: String
+    routeMapUrl: String
+    noOfStops: Int
+    routeFrequency: RouteFrequency
+    exitCode: Long
+    exitDescription: String
+    dataList: [CmsTransportVo]
+}
+
 
 type CmsEmployeeVo{
      id:Long
@@ -874,12 +837,12 @@ type StudentExamReport{
 }
 
   type TransportRoute{
-    id: Long!
-    routeName: String!
-    routeDetails: String!
-    routeMapUrl: String!
-    noOfStops: Int!
-    routeFrequency: RouteFrequency!
+    id: Long
+    routeName: String
+    routeDetails: String
+    routeMapUrl: String
+    noOfStops: Int
+    routeFrequency: RouteFrequency
   }
 
 type  Library{
@@ -1720,6 +1683,10 @@ type Invoice {
 
 
 type Mutation {
+
+   addVehicle(input: AddVehicleInput): AddVehiclePayload
+
+   addTransportRoute(input: AddTransportRouteInput): AddTransportRoutePayload
    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
    updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
    removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
@@ -1824,10 +1791,6 @@ type Mutation {
    updateFacility(input: UpdateFacilityInput!): UpdateFacilityPayload!
    removeFacility(input: RemoveFacilityInput!): RemoveFacilityPayload!
 
-    addTransportRoute(input: AddTransportRouteInput!): AddTransportRoutePayload!
-    updateTransportRoute(input: UpdateTransportRouteInput!): UpdateTransportRoutePayload!
-    removeTransportRoute(input: RemoveTransportRouteInput!): RemoveTransportRoutePayload!
-
     addFeeDetails(input: AddFeeDetailsInput!): CmsFeeDetails!
     updateFeeDetails(input: UpdateFeeDetailsInput!): UpdateFeeDetailsPayload!
     removeFeeDetails(input: RemoveFeeDetailsInput!): RemoveFeeDetailsPayload!
@@ -1925,14 +1888,9 @@ type Mutation {
      updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
      removeInsurance(input:RemoveInsuranceInput!):RemoveInsurancePayload!
 
-     addVehicle(input:AddVehicleInput!):CmsVehicle!
-     updateVehicle(input:UpdateVehicleInput!):UpdateVehiclePayload!
-     removeVehicle(input:RemoveVehicleInput!):RemoveVehiclePayload!
-
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [CmsStudentVo]!
 	getBookList(filter: LibraryListFilterInput!): [CmsLibraryVo]!
-	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
 	getEmployeeList(filter: EmployeeListFilterInput!): [CmsEmployeeVo]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
@@ -2063,11 +2021,6 @@ input StudentListFilterInput {
 input LibraryListFilterInput {
 	batchId: String
 	subjectId: String
-}
-
-input VehicleListFilterInput {
-   transportRouteId: String
-   vehicleId: String
 }
 
 input EmployeeListFilterInput {
@@ -2683,33 +2636,16 @@ type RemoveFacilityPayload {
 }
 
 input AddTransportRouteInput {
-     routeName: String!
-     routeDetails: String!
-     routeMapUrl: String!
-     noOfStops: Int!
-     routeFrequency: RouteFrequency!
+      id:Long
+     routeName: String
+     routeDetails: String
+     routeMapUrl: String
+     noOfStops: Int
+     routeFrequency: RouteFrequency
 }
 type AddTransportRoutePayload {
-    transportRoute: TransportRoute!
+    cmsTransportVo: CmsTransportVo
 }
-input UpdateTransportRouteInput {
-    id: Long!
-    routeName: String!
-    routeDetails: String!
-    routeMapUrl: String!
-    noOfStops: Int!
-    routeFrequency: RouteFrequency!
-}
-type UpdateTransportRoutePayload {
-    transportRoute: TransportRoute!
-}
-input RemoveTransportRouteInput {
-    transportRouteId: Long!
-}
-type RemoveTransportRoutePayload {
-    transportRoutes: [ TransportRoute!]!
-}
-
 
 input AddCollegeInput {
     shortName: String
@@ -3949,80 +3885,45 @@ type RemoveBookPayload{
 }
 
  type Vehicle{
-     id: Long!
-     vehicleNumber: String!
-     vehicleType: String!
-     capacity: Long!
-     ownerShip: String!
-     dateOfRegistration:Date!
-     yearOfManufacturing: String!
-      manufacturingCompany: String!
-      model:  String!
-      chasisNo:  String!
-      rcNo:  String!
-      contactNumber:  String!
-      status:Status!
-      employee: Employee!
-      transportRoute: TransportRoute!
-      insurance: Insurance!
-      contract: Contract!
-      branch: Branch!
-      college: College!
+     id: Long
+     vehicleNumber: String
+     vehicleType: String
+     capacity: Long
+     ownerShip: String
+     dateOfRegistration:Date
+     yearOfManufacturing: String
+      manufacturingCompany: String
+      model:  String
+      chasisNo:  String
+      rcNo:  String
+      contactNumber:  String
+      status:Status
+      employee: Employee
+      transportRoute: TransportRoute
+      insurance: Insurance
+      contract: Contract
+      branch: Branch
+      college: College
   }
 
 
 input AddVehicleInput{
-     vehicleNumber: String!
-     vehicleType: String!
-     capacity: Long!
-     ownerShip: String!
-     dateOfRegistration:Date!
-     yearOfManufacturing: String!
-     manufacturingCompany: String!
-      model:  String!
-      chasisNo:  String!
-      rcNo:  String!
-      contactNumber:  String!
-      status:Status!
-      employeeId: Long!
-      transportRouteId: Long!
-      insuranceId: Long!
-      contractId: Long!
-      branchId: Long!
-      collegeId: Long!
+      id:Long
+     vehicleNumber: String
+     vehicleType: String
+     capacity: Long
+     ownerShip: String
+     yearOfManufacturing: String
+     manufacturingCompany: String
+      model: String
+      chasisNo: String
+      rcNo:  String
+      contactNumber: String
+      status:Status
+      strDateOfRegistration: String
 }
 type AddVehiclePayload{
-    vehicle:Vehicle!
-}
-input UpdateVehicleInput{
-        id:Long!
-        vehicleNumber: String!
-        vehicleType: String!
-        capacity: Long!
-        ownerShip: String!
-        dateOfRegistration:Date!
-        yearOfManufacturing: String!
-         manufacturingCompany: String!
-         model:  String!
-         chasisNo:  String!
-         rcNo:  String!
-         contactNumber:  String!
-         status:Status!
-         employeeId: Long!
-         transportRouteId: Long!
-         insuranceId: Long!
-         contractId: Long!
-         branchId: Long!
-         collegeId: Long!
-}
-type UpdateVehiclePayload{
-    vehicle:Vehicle!
-}
-input RemoveVehicleInput{
-    vehicleId:Long!
-}
-type RemoveVehiclePayload{
-    vehicles:[Vehicle]!
+    cmsVehicleVo:CmsVehicleVo
 }
 
 type Insurance{

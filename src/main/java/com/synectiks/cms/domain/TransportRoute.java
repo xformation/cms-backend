@@ -23,7 +23,7 @@ import com.synectiks.cms.domain.enumeration.RouteFrequency;
 public class TransportRoute implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -154,5 +154,8 @@ public class TransportRoute implements Serializable {
             ", noOfStops=" + getNoOfStops() +
             ", routeFrequency='" + getRouteFrequency() + "'" +
             "}";
+    }
+
+    public void setTransport(TransportRoute tr) {
     }
 }
