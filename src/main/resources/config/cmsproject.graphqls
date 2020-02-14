@@ -324,7 +324,7 @@ type Query {
 
 
     createStudentAttendanceCache(branchId:String , academicYearId:String , teacherId:String, lectureDate:String ): StudentAttendanceCache!
-    createStudentFilterDataCache(collegeId:String!, academicYearId:String!): StudentFilterDataCache!
+    createStudentFilterDataCache(collegeId:Long, academicYearId:Long): StudentFilterDataCache!
     createStudentAttendanceCacheForAdmin(branchId:String, departmentId:String , academicYearId:String, lectureDate:String ): StudentAttendanceCache!
     createFeeDataCache: FeeDataCache!
     createEmployeeDataCache: EmployeeDataCache!
@@ -416,6 +416,16 @@ type ExamFilterDataCache {
 	academicExamSettings : [AcademicExamSetting]
 
 }
+
+type StudentFilterDataCache {
+	branches: [Branch]
+	departments: [Department]
+	batches: [Batch]
+	sections: [Section]
+	studentTypes: [CmsStudentTypeVo]
+	genders: [CmsGenderVo]
+}
+
 type FeeDataCache {
 	colleges: [College]
 	branches: [Branch]
@@ -470,14 +480,7 @@ type TypeOfGradingPojo{
     grades: String!
     next: String!
    }
-type StudentFilterDataCache {
-	branches: [Branch]
-	departments: [Department]
-	batches: [Batch]
-	sections: [Section]
-	studentTypes: [CmsStudentTypeVo]
-	genders: [CmsGenderVo]
-}
+
 
 type CmsStudentTypeVo{
 	id: Int

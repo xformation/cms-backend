@@ -11,6 +11,12 @@ import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 public class AbstractStudentInput {
+
+
+
+
+
+
 	private Long id;
     private String studentName;
     private String studentMiddleName;
@@ -132,7 +138,20 @@ public class AbstractStudentInput {
     private Long sectionId;
     private Long branchId;
     private Long departmentId;
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -859,5 +878,5 @@ public class AbstractStudentInput {
 	public void setDepartmentId(Long departmentId) {
 		this.departmentId = departmentId;
 	}
-   
+
 }

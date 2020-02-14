@@ -826,18 +826,18 @@ public class Query implements GraphQLQueryResolver {
     	return cache;
     }
 
-    public StudentFilterDataCache createStudentFilterDataCache(String collegeId, String academicYearId) throws Exception{
+        public StudentFilterDataCache createStudentFilterDataCache(Long collegeId, Long academicYearId) throws Exception{
 
-    	List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
-    	List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
-    	List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
-    	List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
+//    	List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
+//    	List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+    	List<Batch> batchList = this.commonService.findAllBatches();
+    	List<Section> sectionList = this.commonService.findAllSections();
     	List<CmsStudentTypeVo> studentTypeList = this.commonService.getAllStudentTypes();
     	List<CmsGenderVo> genderList = this.commonService.getAllGenders();
 
     	StudentFilterDataCache cache = new StudentFilterDataCache();
-    	cache.setBranches(branchList);
-    	cache.setDepartments(departmentList);
+//    	cache.setBranches(branchList);
+//    	cache.setDepartments(departmentList);
     	cache.setBatches(batchList);
     	cache.setSections(sectionList);
     	cache.setStudentTypes(studentTypeList);
