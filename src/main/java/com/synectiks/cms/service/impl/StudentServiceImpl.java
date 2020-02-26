@@ -108,9 +108,11 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(readOnly = true)
     public List<StudentDTO> search(String query) {
         log.debug("Request to search Students for query {}", query);
-        return StreamSupport
-            .stream(studentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(studentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(studentMapper::toDto)
+//            .collect(Collectors.toList());
+
+        return null;
     }
 }

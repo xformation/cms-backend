@@ -525,7 +525,7 @@ public class StudentResourceIntTest {
         assertThat(studentList).hasSize(databaseSizeBeforeTest);
     }
 
-    
+
 
     @Test
     @Transactional
@@ -679,7 +679,7 @@ public class StudentResourceIntTest {
         assertThat(studentList).hasSize(databaseSizeBeforeTest);
     }
 
-    
+
     @Test
     @Transactional
     public void checkCityIsRequired() throws Exception {
@@ -737,7 +737,7 @@ public class StudentResourceIntTest {
         assertThat(studentList).hasSize(databaseSizeBeforeTest);
     }
 
-   
+
 
     @Test
     @Transactional
@@ -1075,8 +1075,8 @@ public class StudentResourceIntTest {
     public void searchStudent() throws Exception {
         // Initialize the database
         studentRepository.saveAndFlush(student);
-        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
-            .thenReturn(Collections.singletonList(student));
+//        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
+//            .thenReturn(Collections.singletonList(student));
         // Search the student
         restStudentMockMvc.perform(get("/api/_search/students?query=id:" + student.getId()))
             .andExpect(status().isOk())

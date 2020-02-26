@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
 import com.synectiks.cms.config.ApplicationProperties;
@@ -27,6 +28,10 @@ public class CmsApp {
     private static final Logger log = LoggerFactory.getLogger(CmsApp.class);
 
     private final Environment env;
+
+    private static ConfigurableApplicationContext ctx = null;
+
+    private static String serverIp;
 
     public CmsApp(Environment env) {
         this.env = env;
@@ -83,7 +88,23 @@ public class CmsApp {
             hostAddress,
             env.getProperty("server.port"),
             env.getActiveProfiles());
-        
+
         new CmsBackendWebSocketServer(4000).start();
+    }
+
+    public static <T> T getBean(Class<T> cls) {
+        return ctx.getBean(cls);
+    }
+
+    public static Environment getEnvironment() {
+        return ctx.getEnvironment();
+    }
+
+    public static int getServerPort() {
+        return Integer.parseInt(ctx.getEnvironment().getProperty("server.port"));
+    }
+
+    public static String getServer() {
+        return serverIp;
     }
 }

@@ -30,7 +30,6 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "student")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "student")
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,7 +37,6 @@ public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "student_name")
