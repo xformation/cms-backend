@@ -1249,39 +1249,44 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
         
-    	Optional<Section> ose = sectionRepository.findById(addStudentInput.getSectionId());
-        Optional<Branch> ob = branchRepository.findById(addStudentInput.getBranchId());
-        Optional<Department> od = departmentRepository.findById(addStudentInput.getDepartmentId());
-        Optional<Batch> obt = batchRepository.findById(addStudentInput.getBatchId());
+    	Section se = this.commonService.getSectionById(addStudentInput.getSectionId());
+        Branch ob = this.commonService.getBranchById(addStudentInput.getBranchId());
+        Department od = this.commonService.getDepartmentById(addStudentInput.getDepartmentId());
+        Batch obt = this.commonService.getBatchById(addStudentInput.getBatchId());
 
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
 
         student.setDateOfBirth(addStudentInput.getDateOfBirth());
 //        student.setUploadPhoto("");
-        if(obt.isPresent()) {
-        	student.setBatch(obt.get());
-        	logger.debug("Given batch : "+obt.get().getId());
-        }else {
-        	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
+        try {
+        	if(obt != null) {
+            	student.setBatch(obt);
+            	logger.debug("Given batch : "+obt.getId());
+            }else {
+            	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
+            }
+            if(se != null) {
+            	student.setSection(se);
+            	logger.debug("Given section : "+se.getId());
+            }else {
+            	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
+            }
+            if(ob != null) {
+            	student.setBranch(ob);
+            	logger.debug("Given branch : "+ob.getId());
+            }else {
+            	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
+            }
+            if(od != null) {
+            	student.setDepartment(od);
+            	logger.debug("Given department : "+od.getId());
+            }else {
+            	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
+            }
+        }catch(Exception e) {
+        	logger.warn("Exception : ",e);
         }
-        if(ose.isPresent()) {
-        	student.setSection(ose.get());
-        	logger.debug("Given section : "+ose.get().getId());
-        }else {
-        	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
-        }
-        if(ob.isPresent()) {
-        	student.setBranch(ob.get());
-        	logger.debug("Given branch : "+ob.get().getId());
-        }else {
-        	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
-        }
-        if(od.isPresent()) {
-        	student.setDepartment(od.get());
-        	logger.debug("Given department : "+od.get().getId());
-        }else {
-        	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
-        }
+        
         
         logger.info("Saving student record.");
         student = studentRepository.save(student);
