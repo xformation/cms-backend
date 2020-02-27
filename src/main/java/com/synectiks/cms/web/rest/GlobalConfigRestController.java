@@ -37,6 +37,7 @@ public class GlobalConfigRestController {
         String userName = dataMap.get("userName") != null ? dataMap.get("userName").trim() : null;
         
         if (!CommonUtil.isNullOrEmpty(userName)) {
+        	logger.debug("Creating user configuration for user : ",userName);
         	Config config = CmsConstants.USERS_CACHE.get(userName);
         	if(config == null) {
         		if("admin".equals(userName) || "cmsadmin".equals(userName)) {
@@ -46,6 +47,8 @@ public class GlobalConfigRestController {
         		}
         	}
         	return ResponseUtil.wrapOrNotFound(Optional.of(config));
+        }else {
+        	logger.warn("Cannot create user configuration because user is null");
         }
         
         return ResponseUtil.wrapOrNotFound(Optional.of(new Config()));

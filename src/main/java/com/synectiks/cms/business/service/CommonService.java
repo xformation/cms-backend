@@ -914,9 +914,9 @@ public class CommonService {
     }
 
     public College getCollegeById(Long id) {
-        if(id == null) {
-            return null;
-        }
+//        if(id == null) {
+//            return null;
+//        }
         String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/college";
         College temp = this.restTemplate.getForObject(prefUrl, College.class);
         return temp;

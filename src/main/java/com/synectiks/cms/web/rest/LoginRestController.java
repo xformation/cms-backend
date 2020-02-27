@@ -15,8 +15,6 @@ import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.Config;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.TeacherRepository;
 
 /**
  * REST controller for managing user login.
@@ -36,11 +34,11 @@ public class LoginRestController {
 	@Autowired
 	private CommonService commonService;
 	
-	@Autowired
-	private StudentRepository studentRepository;
-	
-	@Autowired
-	private TeacherRepository teacherRepository;
+//	@Autowired
+//	private StudentRepository studentRepository;
+//	
+//	@Autowired
+//	private TeacherRepository teacherRepository;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cmslogin")
 	public ResponseEntity<Object> cmsLogin(@RequestParam  String username, @RequestParam String password) {
