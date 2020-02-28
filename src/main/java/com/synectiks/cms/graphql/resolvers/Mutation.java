@@ -1256,7 +1256,7 @@ public class Mutation implements GraphQLMutationResolver {
 
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
 
-        student.setDateOfBirth(addStudentInput.getDateOfBirth());
+        student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addStudentInput.getDateOfBirth()));
 //        student.setUploadPhoto("");
         try {
         	if(obt != null) {

@@ -1,6 +1,7 @@
 package com.synectiks.cms.graphql.types.Student;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.Caste;
@@ -11,11 +12,6 @@ import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 public class AbstractStudentInput {
-
-
-
-
-
 
 	private Long id;
     private String studentName;
@@ -34,7 +30,7 @@ public class AbstractStudentInput {
     private String studentBplNo;
     private String studentDrivingLicenseNo;
     private String studentPassportNo;
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
     private String placeOfBirth;
     private Religion religion;
     private Caste caste;
@@ -139,19 +135,6 @@ public class AbstractStudentInput {
     private Long branchId;
     private Long departmentId;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	public Long getId() {
 		return id;
 	}
@@ -254,13 +237,16 @@ public class AbstractStudentInput {
 	public void setStudentPassportNo(String studentPassportNo) {
 		this.studentPassportNo = studentPassportNo;
 	}
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-	public String getPlaceOfBirth() {
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPlaceOfBirth() {
 		return placeOfBirth;
 	}
 	public void setPlaceOfBirth(String placeOfBirth) {
