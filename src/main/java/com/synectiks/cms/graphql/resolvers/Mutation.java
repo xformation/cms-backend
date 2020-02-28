@@ -1248,41 +1248,46 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-        
-    	Optional<Section> ose = sectionRepository.findById(addStudentInput.getSectionId());
-        Optional<Branch> ob = branchRepository.findById(addStudentInput.getBranchId());
-        Optional<Department> od = departmentRepository.findById(addStudentInput.getDepartmentId());
-        Optional<Batch> obt = batchRepository.findById(addStudentInput.getBatchId());
+
+    	Section se = this.commonService.getSectionById(addStudentInput.getSectionId());
+        Branch ob = this.commonService.getBranchById(addStudentInput.getBranchId());
+        Department od = this.commonService.getDepartmentById(addStudentInput.getDepartmentId());
+        Batch obt = this.commonService.getBatchById(addStudentInput.getBatchId());
 
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
 
         student.setDateOfBirth(addStudentInput.getDateOfBirth());
 //        student.setUploadPhoto("");
-        if(obt.isPresent()) {
-        	student.setBatch(obt.get());
-        	logger.debug("Given batch : "+obt.get().getId());
-        }else {
-        	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
+        try {
+        	if(obt != null) {
+            	student.setBatch(obt);
+            	logger.debug("Given batch : "+obt.getId());
+            }else {
+            	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
+            }
+            if(se != null) {
+            	student.setSection(se);
+            	logger.debug("Given section : "+se.getId());
+            }else {
+            	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
+            }
+            if(ob != null) {
+            	student.setBranch(ob);
+            	logger.debug("Given branch : "+ob.getId());
+            }else {
+            	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
+            }
+            if(od != null) {
+            	student.setDepartment(od);
+            	logger.debug("Given department : "+od.getId());
+            }else {
+            	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
+            }
+        }catch(Exception e) {
+        	logger.warn("Exception : ",e);
         }
-        if(ose.isPresent()) {
-        	student.setSection(ose.get());
-        	logger.debug("Given section : "+ose.get().getId());
-        }else {
-        	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
-        }
-        if(ob.isPresent()) {
-        	student.setBranch(ob.get());
-        	logger.debug("Given branch : "+ob.get().getId());
-        }else {
-        	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
-        }
-        if(od.isPresent()) {
-        	student.setDepartment(od.get());
-        	logger.debug("Given department : "+od.get().getId());
-        }else {
-        	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
-        }
-        
+
+
         logger.info("Saving student record.");
         student = studentRepository.save(student);
 //        saveStudentImage2(addStudentInput, student, branch);
@@ -3583,8 +3588,8 @@ public class Mutation implements GraphQLMutationResolver {
 //        final College college = collegeRepository.findById(addLateFeeInput.getCollegeId()).get();
 //        final Branch branch = branchRepository.findById(addLateFeeInput.getBranchId()).get();
         LateFee lateFee = CommonUtil.createCopyProperties(addLateFeeInput, LateFee.class);
-        lateFee.setCollegeId(addLateFeeInput.getCollegeId());
-        lateFee.setBranchId(addLateFeeInput.getBranchId());
+//        lateFee.setCollegeId(addLateFeeInput.getCollegeId());
+//        lateFee.setBranchId(addLateFeeInput.getBranchId());
         lateFee = lateFeeRepository.save(lateFee);
         return new AddLateFeePayload(lateFee);
     }
@@ -3592,15 +3597,15 @@ public class Mutation implements GraphQLMutationResolver {
     public UpdateLateFeePayload updateLateFee(UpdateLateFeeInput updateLateFeeInput) {
         LateFee lateFee = CommonUtil.createCopyProperties(updateLateFeeInput, LateFee.class);
 
-        if (updateLateFeeInput.getCollegeId() != null) {
+//        if (updateLateFeeInput.getCollegeId() != null) {
 //            final College college = collegeRepository.findById(updateLateFeeInput.getCollegeId()).get();
-            lateFee.setCollegeId(updateLateFeeInput.getCollegeId());
-        }
-
-        if (updateLateFeeInput.getBranchId() != null) {
-            final Branch branch = branchRepository.findById(updateLateFeeInput.getBranchId()).get();
-            lateFee.setBranchId(updateLateFeeInput.getBranchId());
-        }
+//            lateFee.setCollegeId(updateLateFeeInput.getCollegeId());
+//        }
+//
+//        if (updateLateFeeInput.getBranchId() != null) {
+//            final Branch branch = branchRepository.findById(updateLateFeeInput.getBranchId()).get();
+//            lateFee.setBranchId(updateLateFeeInput.getBranchId());
+//        }
         lateFeeRepository.save(lateFee);
         return new UpdateLateFeePayload(lateFee);
     }
@@ -3615,7 +3620,7 @@ public class Mutation implements GraphQLMutationResolver {
 //        final College college = collegeRepository.findById(addPaymentRemainderInput.getCollegeId()).get();
 //        final Branch branch = branchRepository.findById(addPaymentRemainderInput.getBranchId()).get();
         PaymentRemainder pr = CommonUtil.createCopyProperties(addPaymentRemainderInput, PaymentRemainder.class);
-        pr.setCollegeId(addPaymentRemainderInput.getCollegeId());
+//        pr.setCollegeId(addPaymentRemainderInput.getCollegeId());
         pr.setBranchId(addPaymentRemainderInput.getBranchId());
         pr = paymentRemainderRepository.save(pr);
         return new AddPaymentRemainderPayload(pr);
@@ -3624,14 +3629,14 @@ public class Mutation implements GraphQLMutationResolver {
     public UpdatePaymentRemainderPayload updatePaymentRemainder(UpdatePaymentRemainderInput updatePaymentRemainderInput) {
         PaymentRemainder pr = CommonUtil.createCopyProperties(updatePaymentRemainderInput, PaymentRemainder.class);
 
-        if (updatePaymentRemainderInput.getCollegeId() != null) {
+//        if (updatePaymentRemainderInput.getCollegeId() != null) {
 //            final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
-            pr.setCollegeId(updatePaymentRemainderInput.getCollegeId());
-        }
-        if (updatePaymentRemainderInput.getBranchId() != null) {
+//            pr.setCollegeId(updatePaymentRemainderInput.getCollegeId());
+//        }
+//        if (updatePaymentRemainderInput.getBranchId() != null) {
 //            final Branch branch = branchRepository.findById(updatePaymentRemainderInput.getBranchId()).get();
-            pr.setBranchId(updatePaymentRemainderInput.getBranchId());
-        }
+//            pr.setBranchId(updatePaymentRemainderInput.getBranchId());
+//        }
         paymentRemainderRepository.save(pr);
         return new UpdatePaymentRemainderPayload(pr);
     }
