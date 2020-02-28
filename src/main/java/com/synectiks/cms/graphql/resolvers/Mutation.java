@@ -1248,7 +1248,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-        
+
     	Section se = this.commonService.getSectionById(addStudentInput.getSectionId());
         Branch ob = this.commonService.getBranchById(addStudentInput.getBranchId());
         Department od = this.commonService.getDepartmentById(addStudentInput.getDepartmentId());
@@ -1286,8 +1286,8 @@ public class Mutation implements GraphQLMutationResolver {
         }catch(Exception e) {
         	logger.warn("Exception : ",e);
         }
-        
-        
+
+
         logger.info("Saving student record.");
         student = studentRepository.save(student);
 //        saveStudentImage2(addStudentInput, student, branch);
@@ -3588,8 +3588,8 @@ public class Mutation implements GraphQLMutationResolver {
 //        final College college = collegeRepository.findById(addLateFeeInput.getCollegeId()).get();
 //        final Branch branch = branchRepository.findById(addLateFeeInput.getBranchId()).get();
         LateFee lateFee = CommonUtil.createCopyProperties(addLateFeeInput, LateFee.class);
-        lateFee.setCollegeId(addLateFeeInput.getCollegeId());
-        lateFee.setBranchId(addLateFeeInput.getBranchId());
+//        lateFee.setCollegeId(addLateFeeInput.getCollegeId());
+//        lateFee.setBranchId(addLateFeeInput.getBranchId());
         lateFee = lateFeeRepository.save(lateFee);
         return new AddLateFeePayload(lateFee);
     }
@@ -3597,15 +3597,15 @@ public class Mutation implements GraphQLMutationResolver {
     public UpdateLateFeePayload updateLateFee(UpdateLateFeeInput updateLateFeeInput) {
         LateFee lateFee = CommonUtil.createCopyProperties(updateLateFeeInput, LateFee.class);
 
-        if (updateLateFeeInput.getCollegeId() != null) {
+//        if (updateLateFeeInput.getCollegeId() != null) {
 //            final College college = collegeRepository.findById(updateLateFeeInput.getCollegeId()).get();
-            lateFee.setCollegeId(updateLateFeeInput.getCollegeId());
-        }
-
-        if (updateLateFeeInput.getBranchId() != null) {
-            final Branch branch = branchRepository.findById(updateLateFeeInput.getBranchId()).get();
-            lateFee.setBranchId(updateLateFeeInput.getBranchId());
-        }
+//            lateFee.setCollegeId(updateLateFeeInput.getCollegeId());
+//        }
+//
+//        if (updateLateFeeInput.getBranchId() != null) {
+//            final Branch branch = branchRepository.findById(updateLateFeeInput.getBranchId()).get();
+//            lateFee.setBranchId(updateLateFeeInput.getBranchId());
+//        }
         lateFeeRepository.save(lateFee);
         return new UpdateLateFeePayload(lateFee);
     }
@@ -3620,7 +3620,7 @@ public class Mutation implements GraphQLMutationResolver {
 //        final College college = collegeRepository.findById(addPaymentRemainderInput.getCollegeId()).get();
 //        final Branch branch = branchRepository.findById(addPaymentRemainderInput.getBranchId()).get();
         PaymentRemainder pr = CommonUtil.createCopyProperties(addPaymentRemainderInput, PaymentRemainder.class);
-        pr.setCollegeId(addPaymentRemainderInput.getCollegeId());
+//        pr.setCollegeId(addPaymentRemainderInput.getCollegeId());
         pr.setBranchId(addPaymentRemainderInput.getBranchId());
         pr = paymentRemainderRepository.save(pr);
         return new AddPaymentRemainderPayload(pr);
@@ -3629,14 +3629,14 @@ public class Mutation implements GraphQLMutationResolver {
     public UpdatePaymentRemainderPayload updatePaymentRemainder(UpdatePaymentRemainderInput updatePaymentRemainderInput) {
         PaymentRemainder pr = CommonUtil.createCopyProperties(updatePaymentRemainderInput, PaymentRemainder.class);
 
-        if (updatePaymentRemainderInput.getCollegeId() != null) {
+//        if (updatePaymentRemainderInput.getCollegeId() != null) {
 //            final College college = collegeRepository.findById(updatePaymentRemainderInput.getCollegeId()).get();
-            pr.setCollegeId(updatePaymentRemainderInput.getCollegeId());
-        }
-        if (updatePaymentRemainderInput.getBranchId() != null) {
+//            pr.setCollegeId(updatePaymentRemainderInput.getCollegeId());
+//        }
+//        if (updatePaymentRemainderInput.getBranchId() != null) {
 //            final Branch branch = branchRepository.findById(updatePaymentRemainderInput.getBranchId()).get();
-            pr.setBranchId(updatePaymentRemainderInput.getBranchId());
-        }
+//            pr.setBranchId(updatePaymentRemainderInput.getBranchId());
+//        }
         paymentRemainderRepository.save(pr);
         return new UpdatePaymentRemainderPayload(pr);
     }
