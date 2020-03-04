@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
+//import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private static final long serialVersionUID = 1L;

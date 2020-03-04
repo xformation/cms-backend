@@ -139,6 +139,10 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private VehicleService vehicleService;
+    @Autowired
+    private InsuranceService insuranceService;
+    @Autowired
+    private ContractService contractService;
 
     @Autowired
     private TransportService transportService;
@@ -159,6 +163,14 @@ public class Query implements GraphQLQueryResolver {
         logger.debug("Query - getVehicleList :");
         return this.vehicleService.getVehicleList();
       }
+    public List<CmsInsuranceVo> getInsuranceList() throws Exception {
+        logger.debug("Query - getInsuranceList :");
+        return this.insuranceService.getInsuranceList();
+    }
+    public List<CmsContractVo> getContractList() throws Exception {
+        logger.debug("Query - getContractList :");
+        return this.contractService.getContractList();
+    }
 
     public List<CmsTransportVo> getTransportRouteList() throws Exception {
         logger.debug("Query - getTransportRouteList :");
@@ -649,6 +661,7 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(employeeFilterProcessor.searchEmployee(vehicleId, employeeId,employeeName));
     }
 
+
     public List<Library>searchBook(String bookTitle,String author,Long batchId,Long subjectId){
         return (List<Library>) Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,batchId,subjectId));
 
@@ -912,6 +925,8 @@ public class Query implements GraphQLQueryResolver {
     public EmployeeDataCache createEmployeeDataCache() throws Exception{
         List<Employee> employeeList = this.employeeRepository.findAll();
         List<Vehicle> vehicleList = this.vehicleRepository.findAll();
+
+
         EmployeeDataCache cache = new EmployeeDataCache();
         cache.setEmployees(employeeList);
         cache.setVehicles(vehicleList);

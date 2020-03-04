@@ -149,7 +149,8 @@ enum TypeOfInsurance {
 type Query {
 
    getVehicleList: [CmsVehicleVo]
-
+   getInsuranceList: [CmsInsuranceVo]
+   getContractList: [CmsContractVo]
    getTransportRouteList: [CmsTransportVo]
 
   authorizedSignatory(id: Int!): AuthorizedSignatory!
@@ -258,8 +259,6 @@ type Query {
   invoice(id:Long!):Invoice!
   invoices:[Invoice!]!
 
-  insurance(id:Long!):Insurance!
-  insurances:[Insurance!]!
 
 
   acExamSetting(id:Long!):AcExamSetting!
@@ -279,8 +278,7 @@ type Query {
 
 
 
-    contract(id: Long!): Contract!
-    contracts:[Contract!]!
+
 
     employee(id: Long!): Employee!
     employees:[Employee!]!
@@ -555,6 +553,20 @@ type CmsVehicleVo {
     exitDescription: String
     dataList: [CmsVehicleVo]
 }
+type CmsInsuranceVo {
+     id: Long
+     insuranceCompany: String
+     typeOfInsurance: TypeOfInsurance
+     dateOfInsurance: Date
+     validTill: Date
+     strDateOfInsurance: String
+     strValidTill: String
+	 exitCode: Long
+     exitDescription: String
+     dataList: [CmsInsuranceVo]
+
+}
+
 
 type CmsTransportVo {
     id: Long
@@ -987,12 +999,12 @@ type Branch{
 }
 
 type Contract{
-    id: Long!
-    vendorName: String!
-    typeOfOwnerShip: TypeOfOwnerShip!
-    durationOfContract: String!
-    startDate: Date!
-    endDate: Date!
+    id: Long
+    vendorName: String
+    typeOfOwnerShip: TypeOfOwnerShip
+    durationOfContract: String
+    startDate: Date
+    endDate: Date
 }
 
 type Employee{
@@ -1689,6 +1701,11 @@ type Mutation {
 
    addVehicle(input: AddVehicleInput): AddVehiclePayload
 
+       addContract(input: AddContractInput): AddContractPayload
+
+      addInsurance(input: AddInsuranceInput): AddInsurancePayload
+
+
    addTransportRoute(input: AddTransportRouteInput): AddTransportRoutePayload
    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
    updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
@@ -1702,9 +1719,7 @@ type Mutation {
    updateCollege(input: UpdateCollegeInput!): UpdateCollegePayload!
    removeCollege(input: RemoveCollegeInput!): RemoveCollegePayload!
 
-    addContract(input: AddContractInput!): [CmsContract]!
-    updateContract(input: UpdateContractInput!):  [CmsContract]!
-    removeContract(input: RemoveContractInput!): RemoveContractPayload!
+
 
     addEmployee(input: AddEmployeeInput!): AddEmployeePayload!
     updateEmployee(input: UpdateEmployeeInput!): UpdateEmployeePayload!
@@ -1887,9 +1902,7 @@ type Mutation {
      updateBook(input: UpdateBookInput!): [CmsBook!]!
      removeBook(input:RemoveBookInput!):RemoveBookPayload!
 
-     addInsurance(input:AddInsuranceInput!):[CmsInsurance]!
-     updateInsurance(input:UpdateInsuranceInput!):[CmsInsurance]!
-     removeInsurance(input:RemoveInsuranceInput!):RemoveInsurancePayload!
+
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [CmsStudentVo]!
@@ -1949,17 +1962,8 @@ type CmsBook {
      student: Student
      library: Library
 }
-type CmsInsurance {
-     id: Long
-     insuranceCompany: String
-     typeOfInsurance: TypeOfInsurance
-     dateOfInsurance: Date
-     validTill: Date
-     strDateOfInsurance: String
-     strValidTill: String
-}
 
-type CmsContract {
+type CmsContractVo {
      id: Long
      vendorName: String
      typeOfOwnerShip: TypeOfOwnerShip
@@ -1968,6 +1972,9 @@ type CmsContract {
      endDate: Date
      strStartDate: String
      strEndDate: String
+     exitCode: Long
+     exitDescription: String
+     dataList: [CmsContractVo]
 }
 
 
@@ -2082,42 +2089,21 @@ type RemoveDocumentsPayload {
 }
 
 input AddContractInput{
-    vendorName: String!
-    typeOfOwnerShip: TypeOfOwnerShip!
-    durationOfContract: String!
-    startDate: Date!
-    endDate: Date!
-    strDateOfInsurance: String
-    strValidTill: String
+    id: Long
+        vendorName: String
+        typeOfOwnerShip: TypeOfOwnerShip
+        durationOfContract: String
+        startDate: Date
+        endDate: Date
+        strStartDate: String
+        strEndDate: String
+
 }
 
 type AddContractPayload {
-    contract: Contract!
+    cmsContractVo: CmsContractVo
 }
 
-input UpdateContractInput {
-    id: Long!
-    vendorName: String!
-    typeOfOwnerShip: TypeOfOwnerShip!
-    durationOfContract: String!
-    startDate: Date!
-    endDate: Date!
-    strDateOfInsurance: String
-    strValidTill: String
-}
-
-
-
-type UpdateContractPayload {
-    contract: Contract!
-}
-
-input RemoveContractInput {
-    contractId: Long!
-}
-type RemoveContractPayload {
-    contracts: [ Contract!]!
-}
 
 input AddEmployeeInput{
     employeeName: String!
@@ -4075,40 +4061,25 @@ type AddVehiclePayload{
     cmsVehicleVo:CmsVehicleVo
 }
 
+
 type Insurance{
-  id: Long!
-  insuranceCompany: String!
-  typeOfInsurance: TypeOfInsurance!
-  dateOfInsurance: Date!
-  validTill: Date!
+  id: Long
+  insuranceCompany: String
+  typeOfInsurance: TypeOfInsurance
+  dateOfInsurance: Date
+  validTill: Date
 }
 
 input AddInsuranceInput{
+           id: Long
          insuranceCompany: String
          typeOfInsurance: TypeOfInsurance
-         dateOfInsurance: Date
-         validTill: Date
          strDateOfInsurance: String
          strValidTill: String
+         dateOfInsurance:Date
+         validTill:Date
 }
-type AddInsurancePayload {
-    insurance:Insurance!
-}
-input UpdateInsuranceInput {
-   id: Long
-   insuranceCompany: String
-   typeOfInsurance: TypeOfInsurance
-   dateOfInsurance: Date
-   validTill: Date
-   strDateOfInsurance: String
-   strValidTill: String
-}
-type UpdateInsurancePayload{
-    insurance:Insurance!
-}
-input RemoveInsuranceInput {
-    insuranceId:Long!
-}
-type RemoveInsurancePayload{
-    insurances:[Insurance]!
+
+type AddInsurancePayload{
+    cmsInsuranceVo:CmsInsuranceVo
 }

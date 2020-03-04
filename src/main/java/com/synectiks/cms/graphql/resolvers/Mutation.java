@@ -11,12 +11,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.business.service.TransportService;
-import com.synectiks.cms.business.service.VehicleService;
+import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.Contract.AddContractPayload;
 import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRouteInput;
 import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRoutePayload;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehiclePayload;
+import com.synectiks.cms.graphql.types.Insurance.AddInsurancePayload;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.enumeration.Frequency;
@@ -154,9 +154,6 @@ import com.synectiks.cms.graphql.types.CompetitiveExam.RemoveCompetitiveExamPayl
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamInput;
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamPayload;
 import com.synectiks.cms.graphql.types.Contract.AddContractInput;
-import com.synectiks.cms.graphql.types.Contract.RemoveContractInput;
-import com.synectiks.cms.graphql.types.Contract.RemoveContractPayload;
-import com.synectiks.cms.graphql.types.Contract.UpdateContractInput;
 import com.synectiks.cms.graphql.types.Country.AddCountryInput;
 import com.synectiks.cms.graphql.types.Country.AddCountryPayload;
 import com.synectiks.cms.graphql.types.Country.RemoveCountryInput;
@@ -209,10 +206,6 @@ import com.synectiks.cms.graphql.types.Holiday.RemoveHolidayInput;
 import com.synectiks.cms.graphql.types.Holiday.RemoveHolidayPayload;
 import com.synectiks.cms.graphql.types.Holiday.UpdateHolidayInput;
 import com.synectiks.cms.graphql.types.Holiday.UpdateHolidayPayload;
-import com.synectiks.cms.graphql.types.Insurance.AddInsuranceInput;
-import com.synectiks.cms.graphql.types.Insurance.RemoveInsuranceInput;
-import com.synectiks.cms.graphql.types.Insurance.RemoveInsurancePayload;
-import com.synectiks.cms.graphql.types.Insurance.UpdateInsuranceInput;
 import com.synectiks.cms.graphql.types.Invoice.AddInvoiceInput;
 import com.synectiks.cms.graphql.types.Invoice.AddInvoicePayload;
 import com.synectiks.cms.graphql.types.Invoice.RemoveInvoiceInput;
@@ -312,6 +305,8 @@ import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehicleInput;
+import com.synectiks.cms.graphql.types.Insurance.AddInsuranceInput;
+
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.repository.AcademicHistoryRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
@@ -356,6 +351,7 @@ import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.repository.VehicleRepository;
+
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -371,7 +367,11 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     VehicleService vehicleService;
+    @Autowired
+    InsuranceService insuranceService;
 
+    @Autowired
+    ContractService contractService;
 
     @Autowired
     TransportService transportService;
@@ -559,6 +559,14 @@ public class Mutation implements GraphQLMutationResolver {
     public AddVehiclePayload addVehicle(AddVehicleInput cmsVehicleVo) {
         CmsVehicleVo vo = this.vehicleService.addVehicle(cmsVehicleVo);
         return new AddVehiclePayload(vo);
+    }
+    public AddInsurancePayload addInsurance(AddInsuranceInput cmsInsuranceVo) {
+        CmsInsuranceVo vo = this.insuranceService.addInsurance(cmsInsuranceVo);
+        return new AddInsurancePayload(vo);
+    }
+    public AddContractPayload addContract(AddContractInput cmsContractVo) {
+        CmsContractVo vo = this.contractService.addContract(cmsContractVo);
+        return new AddContractPayload(vo);
     }
 
     public AddTransportRoutePayload addTransportRoute(AddTransportRouteInput cmsTransportVo) {
@@ -1824,64 +1832,8 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
     }
 
-    public List<CmsContract> addContract(AddContractInput addContractInput) throws Exception {
-        Contract contract = CommonUtil.createCopyProperties(addContractInput, Contract.class);
-        contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getStartDate()));
-        contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getEndDate()));
-        contract = contractRepository.save(contract);
-
-        Contract c = new Contract();
-        Example<Contract> example = Example.of(c);
-        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsContract> ls = new ArrayList<>();
-        for(Contract co: list) {
-            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
-            if(co.getStartDate() != null) {
-                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setStartDate(null);
-            }
-            if(co.getEndDate() != null) {
-                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setEndDate(null);
-            }
-            ls.add(cco);
-        }
-        return ls;
-    }
-
-    public List<CmsContract> updateContract(UpdateContractInput updateContractInput) throws ParseException, Exception {
-        Contract contract = CommonUtil.createCopyProperties(updateContractInput, Contract.class);
-        contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getStartDate()));
-        contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getEndDate()));
-        contract = contractRepository.save(contract);
 
 
-        Contract c = new Contract();
-        Example<Contract> example = Example.of(c);
-        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsContract> ls = new ArrayList<>();
-        for(Contract co: list) {
-            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
-            if(co.getStartDate() != null) {
-                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setStartDate(null);
-            }
-            if(co.getEndDate() != null) {
-                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setEndDate(null);
-            }
-            ls.add(cco);
-        }
-        return ls;
-
-    }
-
-    public RemoveContractPayload removeContract(RemoveContractInput removeContractInput) {
-        Contract contract = contractRepository.getOne(removeContractInput.getContractId());
-        contractRepository.delete(contract);
-
-        return new RemoveContractPayload(Lists.newArrayList(contractRepository.findAll()));
-    }
 
     public AddEmployeePayload addEmployee(AddEmployeeInput addEmployeeInput) {
         final Employee employee = new Employee();
@@ -3899,57 +3851,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public List<CmsInsurance> addInsurance(AddInsuranceInput addInsuranceInput) throws Exception {
-        Insurance insurance = CommonUtil.createCopyProperties(addInsuranceInput, Insurance.class);
-        insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getDateOfInsurance()));
-        insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getValidTill()));
-        insurance = insuranceRepository.save(insurance);
 
-        Insurance i = new Insurance();
-        Example<Insurance> example = Example.of(i);
-        List<Insurance> list = this.insuranceRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsInsurance> ls = new ArrayList<>();
-        for(Insurance in: list) {
-            CmsInsurance cin = CommonUtil.createCopyProperties(in, CmsInsurance.class);
-            if(in.getDateOfInsurance() != null) {
-                cin.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(in.getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setDateOfInsurance(null);
-            }
-            if(in.getValidTill() != null) {
-                cin.setStrValidTill(DateFormatUtil.changeLocalDateFormat(in.getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setValidTill(null);
-            }
-            ls.add(cin);
-        }
-        return ls;
-    }
-
-    public List<CmsInsurance> updateInsurance(UpdateInsuranceInput updateInsuranceInput) throws ParseException, Exception {
-        Insurance insurance = CommonUtil.createCopyProperties(updateInsuranceInput, Insurance.class);
-        insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getDateOfInsurance()));
-        insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getValidTill()));
-        insurance = insuranceRepository.save(insurance);
-
-
-        Insurance i = new Insurance();
-        Example<Insurance> example = Example.of(i);
-        List<Insurance> list = this.insuranceRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsInsurance> ls = new ArrayList<>();
-        for(Insurance in: list) {
-            CmsInsurance cin = CommonUtil.createCopyProperties(in, CmsInsurance.class);
-            if(in.getDateOfInsurance() != null) {
-                cin.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(in.getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setDateOfInsurance(null);
-            }
-            if(in.getValidTill() != null) {
-                cin.setStrValidTill(DateFormatUtil.changeLocalDateFormat(in.getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setValidTill(null);
-            }
-            ls.add(cin);
-        }
-        return ls;
-
-    }
 
     public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
         final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
@@ -3964,11 +3866,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new AddLecturePayload(lecture);
     }
 
-    public RemoveInsurancePayload removeInsurance(RemoveInsuranceInput removeInsuranceInput) {
-        Insurance insurance = insuranceRepository.findById(removeInsuranceInput.getInsuranceId()).get();
-        insuranceRepository.delete(insurance);
-        return new RemoveInsurancePayload(Lists.newArrayList(insuranceRepository.findAll()));
-    }
+
 
     /**
      * Method to update student attendance data. It accepts a list of objects containing student attendance ids and lecture id.
