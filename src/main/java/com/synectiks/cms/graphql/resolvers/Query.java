@@ -952,6 +952,13 @@ public class Query implements GraphQLQueryResolver {
         return cache;
     }
 
+    public VehicleDataCache createVehicleDataCache() throws Exception{
+        List<CmsTransportVo> transportRouteList = this.transportService.getTransportRouteList();
+        VehicleDataCache cache = new VehicleDataCache();
+        cache.setTransportRoute(transportRouteList);
+        return cache;
+    }
+
     public FeeSetupDataCache createFeeSetupDataCache(Long branchId, Long academicYearId) throws Exception{
 //    	Branch branch = new Branch();
 //    	branch.setId(Long.valueOf(branchId));

@@ -155,7 +155,4 @@ public class TransportRoute implements Serializable {
             ", routeFrequency='" + getRouteFrequency() + "'" +
             "}";
     }
-
-    public void setTransport(TransportRoute tr) {
-    }
 }

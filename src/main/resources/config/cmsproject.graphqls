@@ -327,10 +327,15 @@ type Query {
     createFeeDataCache: FeeDataCache!
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
+    createVehicleDataCache: VehicleDataCache!
     createExamFilterDataCache(branchId: Long, academicYearId: Long): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:Long, academicYearId:Long): FeeSetupDataCache!
     createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
 
+}
+
+type VehicleDataCache{
+   transportRoute: [CmsTransportVo]
 }
 
 type FeeSetupDataCache {
@@ -549,6 +554,7 @@ type CmsVehicleVo {
     contractId: Long
     insuranceId: Long
     employeeId: Long
+    transportRoute: TransportRoute
     exitCode: Long
     exitDescription: String
     dataList: [CmsVehicleVo]
@@ -3919,6 +3925,7 @@ input AddVehicleInput{
       chasisNo: String
       rcNo:  String
       contactNumber: String
+      transportRouteId: Long
       status:Status
       strDateOfRegistration: String
 }
