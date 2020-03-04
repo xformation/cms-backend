@@ -4,6 +4,10 @@ package com.synectiks.cms.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
@@ -16,10 +20,10 @@ import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
  * A Student value object.
  */
 
-public class CmsStudentVo implements Serializable {
+public class CmsStudentVo extends CmsCommonVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private Long id;
     private String studentName;
     private String studentMiddleName;
@@ -37,6 +41,8 @@ public class CmsStudentVo implements Serializable {
     private String studentBplNo;
     private String studentDrivingLicenseNo;
     private String studentPassportNo;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
     private String placeOfBirth;
     private Religion religion;
@@ -127,21 +133,15 @@ public class CmsStudentVo implements Serializable {
     private String detailsOfDisability;
     private String disabilityCertificateNo;
     private String disabilityCertificateIssueAuthority;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate disabilityCertificateIssueDate;
     private Integer percentagOfDisability;
     private Bloodgroup bloodGroup;
     private String vaccinationDetails;
     private String otherMedicalDetails;
     private Status status;
-    private String createdBy;
-    private LocalDate createdOn;
-    private String updatedBy;
-    private LocalDate updatedOn;
     private String comments;
-    private Department department;
-    private Batch batch;
-    private Section section;
-    private Branch branch;
     private Long departmentId;
     private Long batchId;
     private Long sectionId;
@@ -828,59 +828,11 @@ public class CmsStudentVo implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-	public LocalDate getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(LocalDate createdOn) {
-		this.createdOn = createdOn;
-	}
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-	public LocalDate getUpdatedOn() {
-		return updatedOn;
-	}
-	public void setUpdatedOn(LocalDate updatedOn) {
-		this.updatedOn = updatedOn;
-	}
 	public String getComments() {
 		return comments;
 	}
 	public void setComments(String comments) {
 		this.comments = comments;
-	}
-	public Department getDepartment() {
-		return department;
-	}
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-	public Batch getBatch() {
-		return batch;
-	}
-	public void setBatch(Batch batch) {
-		this.batch = batch;
-	}
-	public Section getSection() {
-		return section;
-	}
-	public void setSection(Section section) {
-		this.section = section;
-	}
-	public Branch getBranch() {
-		return branch;
-	}
-	public void setBranch(Branch branch) {
-		this.branch = branch;
 	}
 	public Long getDepartmentId() {
 		return departmentId;
@@ -906,18 +858,6 @@ public class CmsStudentVo implements Serializable {
 	public void setBranchId(Long branchId) {
 		this.branchId = branchId;
 	}
-	public String getStrCreatedOn() {
-		return strCreatedOn;
-	}
-	public void setStrCreatedOn(String strCreatedOn) {
-		this.strCreatedOn = strCreatedOn;
-	}
-	public String getStrUpdatedOn() {
-		return strUpdatedOn;
-	}
-	public void setStrUpdatedOn(String strUpdatedOn) {
-		this.strUpdatedOn = strUpdatedOn;
-	}
 	public String getStrDisabilityCertificateIssueDate() {
 		return strDisabilityCertificateIssueDate;
 	}
@@ -930,74 +870,132 @@ public class CmsStudentVo implements Serializable {
 	public void setStrDateOfBirth(String strDateOfBirth) {
 		this.strDateOfBirth = strDateOfBirth;
 	}
-	@Override
-	public String toString() {
-		return "CmsStudentVo [id=" + id + ", studentName=" + studentName + ", studentMiddleName=" + studentMiddleName
-				+ ", studentLastName=" + studentLastName + ", fatherName=" + fatherName + ", fatherMiddleName="
-				+ fatherMiddleName + ", fatherLastName=" + fatherLastName + ", motherName=" + motherName
-				+ ", motherMiddleName=" + motherMiddleName + ", motherLastName=" + motherLastName + ", studentAadharNo="
-				+ studentAadharNo + ", studentPanNo=" + studentPanNo + ", studentSocialSecurityNo="
-				+ studentSocialSecurityNo + ", studentTaxReferenceNo=" + studentTaxReferenceNo + ", studentBplNo="
-				+ studentBplNo + ", studentDrivingLicenseNo=" + studentDrivingLicenseNo + ", studentPassportNo="
-				+ studentPassportNo + ", dateOfBirth=" + dateOfBirth + ", placeOfBirth=" + placeOfBirth + ", religion="
-				+ religion + ", caste=" + caste + ", subCaste=" + subCaste + ", age=" + age + ", sex=" + sex
-				+ ", studentLocalAddress=" + studentLocalAddress + ", studentPermanentAddress="
-				+ studentPermanentAddress + ", city=" + city + ", state=" + state + ", country=" + country
-				+ ", pinCode=" + pinCode + ", studentPrimaryCellNumber=" + studentPrimaryCellNumber
-				+ ", studentAlternateCellNumber=" + studentAlternateCellNumber + ", studentLandLinePhoneNumber="
-				+ studentLandLinePhoneNumber + ", studentPrimaryEmailId=" + studentPrimaryEmailId
-				+ ", studentAlternateEmailId=" + studentAlternateEmailId + ", relationWithStudent="
-				+ relationWithStudent + ", emergencyContactName=" + emergencyContactName
-				+ ", emergencyContactMiddleName=" + emergencyContactMiddleName + ", emergencyContactLastName="
-				+ emergencyContactLastName + ", emergencyContactCellNumber=" + emergencyContactCellNumber
-				+ ", emergencyContactLandLinePhoneNumber=" + emergencyContactLandLinePhoneNumber
-				+ ", emergencyContactEmailId=" + emergencyContactEmailId + ", studentImagePath=" + studentImagePath
-				+ ", admissionNo=" + admissionNo + ", enrollmentNo=" + enrollmentNo + ", rollNo=" + rollNo
-				+ ", studentType=" + studentType + ", fatherCellNumber=" + fatherCellNumber + ", fatherEmailId="
-				+ fatherEmailId + ", fatherOccupation=" + fatherOccupation + ", fatherOfficeEmailId="
-				+ fatherOfficeEmailId + ", fatherOfficeAddress=" + fatherOfficeAddress + ", fatherOfficeCellNumber="
-				+ fatherOfficeCellNumber + ", fatherOfficeLandLinePhoneNumber=" + fatherOfficeLandLinePhoneNumber
-				+ ", fatherAadharNo=" + fatherAadharNo + ", fatherPanNo=" + fatherPanNo + ", fatherSocialSecurityNo="
-				+ fatherSocialSecurityNo + ", fatherTaxReferenceNo=" + fatherTaxReferenceNo + ", fatherBplNo="
-				+ fatherBplNo + ", fatherDrivingLicenseNo=" + fatherDrivingLicenseNo + ", fatherPassportNo="
-				+ fatherPassportNo + ", fatherImagePath=" + fatherImagePath + ", motherCellNumber=" + motherCellNumber
-				+ ", motherEmailId=" + motherEmailId + ", motherOccupation=" + motherOccupation
-				+ ", motherOfficeEmailId=" + motherOfficeEmailId + ", motherOfficeAddress=" + motherOfficeAddress
-				+ ", motherOfficeCellNumber=" + motherOfficeCellNumber + ", motherOfficeLandLinePhoneNumber="
-				+ motherOfficeLandLinePhoneNumber + ", motherAadharNo=" + motherAadharNo + ", motherPanNo="
-				+ motherPanNo + ", motherSocialSecurityNo=" + motherSocialSecurityNo + ", motherTaxReferenceNo="
-				+ motherTaxReferenceNo + ", motherBplNo=" + motherBplNo + ", motherDrivingLicenseNo="
-				+ motherDrivingLicenseNo + ", motherPassportNo=" + motherPassportNo + ", motherImagePath="
-				+ motherImagePath + ", guardianName=" + guardianName + ", guardianMiddleName=" + guardianMiddleName
-				+ ", guardianLastName=" + guardianLastName + ", guardianAddress=" + guardianAddress
-				+ ", guardianCellNumber=" + guardianCellNumber + ", guardianLandLinePhoneNumber="
-				+ guardianLandLinePhoneNumber + ", guardianEmailId=" + guardianEmailId + ", guardianOccupation="
-				+ guardianOccupation + ", guardianOfficeEmailId=" + guardianOfficeEmailId + ", guardianOfficeAddress="
-				+ guardianOfficeAddress + ", guardianOfficeCellNumber=" + guardianOfficeCellNumber
-				+ ", guardianOfficeLandLinePhoneNumber=" + guardianOfficeLandLinePhoneNumber + ", guardianImagePath="
-				+ guardianImagePath + ", isGuardianSponsorAgency=" + isGuardianSponsorAgency + ", sponsorAgencyName="
-				+ sponsorAgencyName + ", sponsorAgencyRegistrationNo=" + sponsorAgencyRegistrationNo
-				+ ", sponsorAgencyAddress=" + sponsorAgencyAddress + ", sponsorAgencyCellNumber="
-				+ sponsorAgencyCellNumber + ", sponsorAgencyLandLineNumber=" + sponsorAgencyLandLineNumber
-				+ ", sponsorAgencyEmailId=" + sponsorAgencyEmailId + ", sponsorAgencyAppointeeName="
-				+ sponsorAgencyAppointeeName + ", sponsorAgencyAppointeeDesignation="
-				+ sponsorAgencyAppointeeDesignation + ", sponsorAgencyAppointeeCellNumber="
-				+ sponsorAgencyAppointeeCellNumber + ", sponsorAgencyAppointeeLandLineNumber="
-				+ sponsorAgencyAppointeeLandLineNumber + ", sponsorAgencyAppointeeEmailId="
-				+ sponsorAgencyAppointeeEmailId + ", sponsorAgencyAppointeeOfficeAddress="
-				+ sponsorAgencyAppointeeOfficeAddress + ", isPhysicallyChallenged=" + isPhysicallyChallenged
-				+ ", detailsOfDisability=" + detailsOfDisability + ", disabilityCertificateNo="
-				+ disabilityCertificateNo + ", disabilityCertificateIssueAuthority="
-				+ disabilityCertificateIssueAuthority + ", disabilityCertificateIssueDate="
-				+ disabilityCertificateIssueDate + ", percentagOfDisability=" + percentagOfDisability + ", bloodGroup="
-				+ bloodGroup + ", vaccinationDetails=" + vaccinationDetails + ", otherMedicalDetails="
-				+ otherMedicalDetails + ", status=" + status + ", createdBy=" + createdBy + ", createdOn=" + createdOn
-				+ ", updatedBy=" + updatedBy + ", updatedOn=" + updatedOn + ", comments=" + comments + ", department="
-				+ department + ", batch=" + batch + ", section=" + section + ", branch=" + branch + ", departmentId="
-				+ departmentId + ", batchId=" + batchId + ", sectionId=" + sectionId + ", branchId=" + branchId
-				+ ", strCreatedOn=" + strCreatedOn + ", strUpdatedOn=" + strUpdatedOn
-				+ ", strDisabilityCertificateIssueDate=" + strDisabilityCertificateIssueDate + ", strDateOfBirth="
-				+ strDateOfBirth + "]";
-	}
-    
+
+    @Override
+    public String toString() {
+        return "CmsStudentVo{" +
+            "id=" + id +
+            ", studentName='" + studentName + '\'' +
+            ", studentMiddleName='" + studentMiddleName + '\'' +
+            ", studentLastName='" + studentLastName + '\'' +
+            ", fatherName='" + fatherName + '\'' +
+            ", fatherMiddleName='" + fatherMiddleName + '\'' +
+            ", fatherLastName='" + fatherLastName + '\'' +
+            ", motherName='" + motherName + '\'' +
+            ", motherMiddleName='" + motherMiddleName + '\'' +
+            ", motherLastName='" + motherLastName + '\'' +
+            ", studentAadharNo='" + studentAadharNo + '\'' +
+            ", studentPanNo='" + studentPanNo + '\'' +
+            ", studentSocialSecurityNo='" + studentSocialSecurityNo + '\'' +
+            ", studentTaxReferenceNo='" + studentTaxReferenceNo + '\'' +
+            ", studentBplNo='" + studentBplNo + '\'' +
+            ", studentDrivingLicenseNo='" + studentDrivingLicenseNo + '\'' +
+            ", studentPassportNo='" + studentPassportNo + '\'' +
+            ", dateOfBirth=" + dateOfBirth +
+            ", placeOfBirth='" + placeOfBirth + '\'' +
+            ", religion=" + religion +
+            ", caste=" + caste +
+            ", subCaste='" + subCaste + '\'' +
+            ", age=" + age +
+            ", sex=" + sex +
+            ", studentLocalAddress='" + studentLocalAddress + '\'' +
+            ", studentPermanentAddress='" + studentPermanentAddress + '\'' +
+            ", city='" + city + '\'' +
+            ", state='" + state + '\'' +
+            ", country='" + country + '\'' +
+            ", pinCode='" + pinCode + '\'' +
+            ", studentPrimaryCellNumber='" + studentPrimaryCellNumber + '\'' +
+            ", studentAlternateCellNumber='" + studentAlternateCellNumber + '\'' +
+            ", studentLandLinePhoneNumber='" + studentLandLinePhoneNumber + '\'' +
+            ", studentPrimaryEmailId='" + studentPrimaryEmailId + '\'' +
+            ", studentAlternateEmailId='" + studentAlternateEmailId + '\'' +
+            ", relationWithStudent=" + relationWithStudent +
+            ", emergencyContactName='" + emergencyContactName + '\'' +
+            ", emergencyContactMiddleName='" + emergencyContactMiddleName + '\'' +
+            ", emergencyContactLastName='" + emergencyContactLastName + '\'' +
+            ", emergencyContactCellNumber='" + emergencyContactCellNumber + '\'' +
+            ", emergencyContactLandLinePhoneNumber='" + emergencyContactLandLinePhoneNumber + '\'' +
+            ", emergencyContactEmailId='" + emergencyContactEmailId + '\'' +
+            ", studentImagePath='" + studentImagePath + '\'' +
+            ", admissionNo='" + admissionNo + '\'' +
+            ", enrollmentNo='" + enrollmentNo + '\'' +
+            ", rollNo='" + rollNo + '\'' +
+            ", studentType=" + studentType +
+            ", fatherCellNumber='" + fatherCellNumber + '\'' +
+            ", fatherEmailId='" + fatherEmailId + '\'' +
+            ", fatherOccupation='" + fatherOccupation + '\'' +
+            ", fatherOfficeEmailId='" + fatherOfficeEmailId + '\'' +
+            ", fatherOfficeAddress='" + fatherOfficeAddress + '\'' +
+            ", fatherOfficeCellNumber='" + fatherOfficeCellNumber + '\'' +
+            ", fatherOfficeLandLinePhoneNumber='" + fatherOfficeLandLinePhoneNumber + '\'' +
+            ", fatherAadharNo='" + fatherAadharNo + '\'' +
+            ", fatherPanNo='" + fatherPanNo + '\'' +
+            ", fatherSocialSecurityNo='" + fatherSocialSecurityNo + '\'' +
+            ", fatherTaxReferenceNo='" + fatherTaxReferenceNo + '\'' +
+            ", fatherBplNo='" + fatherBplNo + '\'' +
+            ", fatherDrivingLicenseNo='" + fatherDrivingLicenseNo + '\'' +
+            ", fatherPassportNo='" + fatherPassportNo + '\'' +
+            ", fatherImagePath='" + fatherImagePath + '\'' +
+            ", motherCellNumber='" + motherCellNumber + '\'' +
+            ", motherEmailId='" + motherEmailId + '\'' +
+            ", motherOccupation='" + motherOccupation + '\'' +
+            ", motherOfficeEmailId='" + motherOfficeEmailId + '\'' +
+            ", motherOfficeAddress='" + motherOfficeAddress + '\'' +
+            ", motherOfficeCellNumber='" + motherOfficeCellNumber + '\'' +
+            ", motherOfficeLandLinePhoneNumber='" + motherOfficeLandLinePhoneNumber + '\'' +
+            ", motherAadharNo='" + motherAadharNo + '\'' +
+            ", motherPanNo='" + motherPanNo + '\'' +
+            ", motherSocialSecurityNo='" + motherSocialSecurityNo + '\'' +
+            ", motherTaxReferenceNo='" + motherTaxReferenceNo + '\'' +
+            ", motherBplNo='" + motherBplNo + '\'' +
+            ", motherDrivingLicenseNo='" + motherDrivingLicenseNo + '\'' +
+            ", motherPassportNo='" + motherPassportNo + '\'' +
+            ", motherImagePath='" + motherImagePath + '\'' +
+            ", guardianName='" + guardianName + '\'' +
+            ", guardianMiddleName='" + guardianMiddleName + '\'' +
+            ", guardianLastName='" + guardianLastName + '\'' +
+            ", guardianAddress='" + guardianAddress + '\'' +
+            ", guardianCellNumber='" + guardianCellNumber + '\'' +
+            ", guardianLandLinePhoneNumber='" + guardianLandLinePhoneNumber + '\'' +
+            ", guardianEmailId='" + guardianEmailId + '\'' +
+            ", guardianOccupation='" + guardianOccupation + '\'' +
+            ", guardianOfficeEmailId='" + guardianOfficeEmailId + '\'' +
+            ", guardianOfficeAddress='" + guardianOfficeAddress + '\'' +
+            ", guardianOfficeCellNumber='" + guardianOfficeCellNumber + '\'' +
+            ", guardianOfficeLandLinePhoneNumber='" + guardianOfficeLandLinePhoneNumber + '\'' +
+            ", guardianImagePath='" + guardianImagePath + '\'' +
+            ", isGuardianSponsorAgency='" + isGuardianSponsorAgency + '\'' +
+            ", sponsorAgencyName='" + sponsorAgencyName + '\'' +
+            ", sponsorAgencyRegistrationNo='" + sponsorAgencyRegistrationNo + '\'' +
+            ", sponsorAgencyAddress='" + sponsorAgencyAddress + '\'' +
+            ", sponsorAgencyCellNumber='" + sponsorAgencyCellNumber + '\'' +
+            ", sponsorAgencyLandLineNumber='" + sponsorAgencyLandLineNumber + '\'' +
+            ", sponsorAgencyEmailId='" + sponsorAgencyEmailId + '\'' +
+            ", sponsorAgencyAppointeeName='" + sponsorAgencyAppointeeName + '\'' +
+            ", sponsorAgencyAppointeeDesignation='" + sponsorAgencyAppointeeDesignation + '\'' +
+            ", sponsorAgencyAppointeeCellNumber='" + sponsorAgencyAppointeeCellNumber + '\'' +
+            ", sponsorAgencyAppointeeLandLineNumber='" + sponsorAgencyAppointeeLandLineNumber + '\'' +
+            ", sponsorAgencyAppointeeEmailId='" + sponsorAgencyAppointeeEmailId + '\'' +
+            ", sponsorAgencyAppointeeOfficeAddress='" + sponsorAgencyAppointeeOfficeAddress + '\'' +
+            ", isPhysicallyChallenged='" + isPhysicallyChallenged + '\'' +
+            ", detailsOfDisability='" + detailsOfDisability + '\'' +
+            ", disabilityCertificateNo='" + disabilityCertificateNo + '\'' +
+            ", disabilityCertificateIssueAuthority='" + disabilityCertificateIssueAuthority + '\'' +
+            ", disabilityCertificateIssueDate=" + disabilityCertificateIssueDate +
+            ", percentagOfDisability=" + percentagOfDisability +
+            ", bloodGroup=" + bloodGroup +
+            ", vaccinationDetails='" + vaccinationDetails + '\'' +
+            ", otherMedicalDetails='" + otherMedicalDetails + '\'' +
+            ", status=" + status +
+            ", comments='" + comments + '\'' +
+            ", departmentId=" + departmentId +
+            ", batchId=" + batchId +
+            ", sectionId=" + sectionId +
+            ", branchId=" + branchId +
+            ", strCreatedOn='" + strCreatedOn + '\'' +
+            ", strUpdatedOn='" + strUpdatedOn + '\'' +
+            ", strDisabilityCertificateIssueDate='" + strDisabilityCertificateIssueDate + '\'' +
+            ", strDateOfBirth='" + strDateOfBirth + '\'' +
+            '}';
+    }
 }

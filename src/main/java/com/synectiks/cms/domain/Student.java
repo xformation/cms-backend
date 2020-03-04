@@ -1,14 +1,16 @@
 package com.synectiks.cms.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Religion;
 
@@ -30,15 +32,14 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "student")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "student")
+@Document(indexName = "student")
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "student_name")
@@ -404,21 +405,17 @@ public class Student implements Serializable {
     @Column(name = "comments")
     private String comments;
 
-    @ManyToOne
-    @JsonIgnoreProperties("students")
-    private Department department;
+    @Column(name = "department_id")
+    private Long departmentId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("students")
-    private Batch batch;
+    @Column(name = "branch_id")
+    private Long branchId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("students")
-    private Section section;
+    @Column(name = "section_id")
+    private Long sectionId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("students")
-    private Branch branch;
+    @Column(name = "batch_id")
+    private Long batchId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -1950,56 +1947,56 @@ public class Student implements Serializable {
         this.comments = comments;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public Student department(Department department) {
-        this.department = department;
+    public Student departmentId(Long departmentId) {
+        this.departmentId = departmentId;
         return this;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
-    public Batch getBatch() {
-        return batch;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public Student batch(Batch batch) {
-        this.batch = batch;
+    public Student branchId(Long branchId) {
+        this.branchId = branchId;
         return this;
     }
 
-    public void setBatch(Batch batch) {
-        this.batch = batch;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
-    public Section getSection() {
-        return section;
+    public Long getSectionId() {
+        return sectionId;
     }
 
-    public Student section(Section section) {
-        this.section = section;
+    public Student sectionId(Long sectionId) {
+        this.sectionId = sectionId;
         return this;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public Long getBatchId() {
+        return batchId;
     }
 
-    public Student branch(Branch branch) {
-        this.branch = branch;
+    public Student batchId(Long batchId) {
+        this.batchId = batchId;
         return this;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -2008,15 +2005,19 @@ public class Student implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Student)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((Student) o).id);
+        Student student = (Student) o;
+        if (student.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), student.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
     @Override
@@ -2140,6 +2141,10 @@ public class Student implements Serializable {
             ", updatedBy='" + getUpdatedBy() + "'" +
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", comments='" + getComments() + "'" +
+            ", departmentId=" + getDepartmentId() +
+            ", branchId=" + getBranchId() +
+            ", sectionId=" + getSectionId() +
+            ", batchId=" + getBatchId() +
             "}";
     }
 }

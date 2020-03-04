@@ -48,7 +48,7 @@ public class StudentDataLoader extends DataLoader {
     }
 
     @Override
-    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, AdditionalStudentFoundException, 
+    public <T> T getObject(Row row, Class<T> cls) throws InstantiationException, IllegalAccessException, AdditionalStudentFoundException,
     														DataNotFoundException, MandatoryFieldMissingException, EmailIdExistsException {
 
         StringBuilder sb = new StringBuilder();
@@ -70,8 +70,8 @@ public class StudentDataLoader extends DataLoader {
                 logger.warn("status not listed in the system");
             }
         }
-        
-        
+
+
         String studentName = row.getCellAsString(1).orElse(null);
         if (CommonUtil.isNullOrEmpty(studentName)) {
             sb.append("student_name, ");
@@ -102,7 +102,7 @@ public class StudentDataLoader extends DataLoader {
                 obj.setFatherName(fatherName);
             }
         }
-        
+
         String fatherMiddleName = row.getCellAsString(5).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setFatherMiddleName(fatherMiddleName);
@@ -114,7 +114,7 @@ public class StudentDataLoader extends DataLoader {
                 obj.setFatherMiddleName(fatherMiddleName);
             }
         }
-        
+
         String fatherLastName = row.getCellAsString(6).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setFatherLastName(fatherLastName);
@@ -126,7 +126,7 @@ public class StudentDataLoader extends DataLoader {
                 obj.setFatherLastName(fatherLastName);
             }
         }
-        
+
         String motherName = row.getCellAsString(7).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setMotherName(motherName);
@@ -138,7 +138,7 @@ public class StudentDataLoader extends DataLoader {
                 obj.setMotherName(motherName);
             }
         }
-        
+
 
         String motherMiddleName = row.getCellAsString(8).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
@@ -151,7 +151,7 @@ public class StudentDataLoader extends DataLoader {
                 obj.setMotherMiddleName(motherMiddleName);
             }
         }
-        
+
         String motherLastName = row.getCellAsString(9).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setMotherLastName(motherLastName);
@@ -163,28 +163,28 @@ public class StudentDataLoader extends DataLoader {
                 obj.setMotherLastName(motherLastName);
             }
         }
-        
+
         String stAadharNo = row.getCellAsString(10).orElse(null);
         obj.setStudentAadharNo(stAadharNo);
-        
+
         String stPanNo = row.getCellAsString(11).orElse(null);
         obj.setStudentPanNo(stPanNo);
-        
+
         String studentSocialSecurityNo = row.getCellAsString(12).orElse(null);
         obj.setStudentSocialSecurityNo(studentSocialSecurityNo);
-        
+
         String studentTaxReferenceNo = row.getCellAsString(13).orElse(null);
         obj.setStudentTaxReferenceNo(studentTaxReferenceNo);
-        
+
         String studentBplNo = row.getCellAsString(14).orElse(null);
         obj.setStudentBplNo(studentBplNo);
-        
+
         String studentDrivingLicenseNo = row.getCellAsString(15).orElse(null);
         obj.setStudentDrivingLicenseNo(studentDrivingLicenseNo);
-        
+
         String studentPassportNo = row.getCellAsString(16).orElse(null);
         obj.setStudentPassportNo(studentPassportNo);
-        
+
         String dateOfBirth = row.getCellAsString(17).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	if (!CommonUtil.isNullOrEmpty(dateOfBirth)) {
@@ -198,7 +198,7 @@ public class StudentDataLoader extends DataLoader {
                 obj.setDateOfBirth(DateFormatUtil.convertStringToLocalDate(dateOfBirth, CmsConstants.DATE_FORMAT_dd_MM_yyyy));
             }
         }
-        
+
         String placeOfBirth = row.getCellAsString(18).orElse(null);
         obj.setPlaceOfBirth(placeOfBirth);
 
@@ -238,7 +238,7 @@ public class StudentDataLoader extends DataLoader {
                 }
             }
         }
-        
+
         String caste = row.getCellAsString(20).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	if (!CommonUtil.isNullOrEmpty(caste)) {
@@ -271,7 +271,7 @@ public class StudentDataLoader extends DataLoader {
                 }
             }
         }
-        	
+
         String subCaste = row.getCellAsString(21).orElse(null);
         obj.setSubCaste(subCaste);
 
@@ -303,7 +303,7 @@ public class StudentDataLoader extends DataLoader {
                 }
             }
         }
-        
+
 	    String studentLocalAddress = row.getCellAsString(23).orElse(null);
 	    if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
 	    	obj.setStudentLocalAddress(studentLocalAddress);
@@ -315,10 +315,10 @@ public class StudentDataLoader extends DataLoader {
 		         obj.setStudentLocalAddress(studentLocalAddress);
 		    }
 	    }
-	    
+
 	    String studentPermanentAddress = row.getCellAsString(24).orElse(null);
 	    obj.setStudentPermanentAddress(studentPermanentAddress);
-	    
+
 	    String countryName = row.getCellAsString(25).orElse(null);
 	    Optional<Country> octry = null;
 	    if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
@@ -346,7 +346,7 @@ public class StudentDataLoader extends DataLoader {
 	            }
 	        }
 	    }
-	    
+
         Optional<State> ostate = null;
         String stateName = row.getCellAsString(26).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
@@ -376,7 +376,7 @@ public class StudentDataLoader extends DataLoader {
                 }
             }
         }
-        
+
         String cityName = row.getCellAsString(27).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	if(!CommonUtil.isNullOrEmpty(cityName)) {
@@ -411,18 +411,18 @@ public class StudentDataLoader extends DataLoader {
                 }
             }
         }
-        
+
         String pincode = row.getCellAsString(28).orElse(null);
         obj.setPinCode(pincode);
-        
+
         String studentPrimaryCellNumber = row.getCellAsString(29).orElse(null);
-        
+
         String studentAlternateCellNumber = row.getCellAsString(30).orElse(null);
         obj.setStudentAlternateCellNumber(studentAlternateCellNumber);
-        
+
         String studentLandLinePhoneNumber = row.getCellAsString(31).orElse(null);
         obj.setStudentLandLinePhoneNumber(studentLandLinePhoneNumber);
-        
+
         String studentPrimaryEmailId = row.getCellAsString(32).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setStudentPrimaryCellNumber(studentPrimaryCellNumber);
@@ -433,10 +433,10 @@ public class StudentDataLoader extends DataLoader {
                 logger.warn("Either student_primary_cell_number or student_primary_email_id should be given ");
         	}
         }
-        
+
         String studentAlternateEmailId = row.getCellAsString(33).orElse(null);
         obj.setStudentAlternateEmailId(studentAlternateEmailId);
-        
+
         String relationWithStudent = row.getCellAsString(34).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	if (!CommonUtil.isNullOrEmpty(relationWithStudent)) {
@@ -465,7 +465,7 @@ public class StudentDataLoader extends DataLoader {
                 }
             }
         }
-        
+
         String emergencyContactName = row.getCellAsString(35).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setEmergencyContactName(emergencyContactName);
@@ -477,13 +477,13 @@ public class StudentDataLoader extends DataLoader {
                 obj.setEmergencyContactName(emergencyContactName);
             }
         }
-        
+
         String emergencyContactMiddleName = row.getCellAsString(36).orElse(null);
         obj.setEmergencyContactMiddleName(emergencyContactMiddleName);
 
         String emergencyContactLastName = row.getCellAsString(37).orElse(null);
         obj.setEmergencyContactLastName(emergencyContactLastName);
-        
+
         String emergencyContactCellNumber = row.getCellAsString(38).orElse(null);
         String emergencyContactLandLinePhoneNumber = row.getCellAsString(39).orElse(null);
         String emergencyContactEmailId = row.getCellAsString(40).orElse(null);
@@ -492,7 +492,7 @@ public class StudentDataLoader extends DataLoader {
         	obj.setEmergencyContactLandLinePhoneNumber(emergencyContactLandLinePhoneNumber);
         	obj.setEmergencyContactEmailId(emergencyContactEmailId);
         }else {
-        	if (CommonUtil.isNullOrEmpty(emergencyContactCellNumber) && CommonUtil.isNullOrEmpty(emergencyContactLandLinePhoneNumber) 
+        	if (CommonUtil.isNullOrEmpty(emergencyContactCellNumber) && CommonUtil.isNullOrEmpty(emergencyContactLandLinePhoneNumber)
             		&& CommonUtil.isNullOrEmpty(emergencyContactEmailId)) {
             	sb.append("emergency_contact_cell_number or emergency_contact_land_line_phone_number or emergency_contact_email_id, ");
             	logger.warn("Either emergency_contact_cell_number or emergency_contact_land_line_phone_number or emergency_contact_email_id should be present");
@@ -502,16 +502,16 @@ public class StudentDataLoader extends DataLoader {
             	obj.setEmergencyContactEmailId(emergencyContactEmailId);
             }
         }
-        
+
         String admissionNo = row.getCellAsString(41).orElse(null);
         obj.setAdmissionNo(admissionNo);
-        
+
         String enrollmentNo = row.getCellAsString(42).orElse(null);
         obj.setEnrollmentNo(enrollmentNo);
-        
+
         String rollNo = row.getCellAsString(43).orElse(null);
         obj.setRollNo(rollNo);
-        
+
         String studentType = row.getCellAsString(44).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	if (!CommonUtil.isNullOrEmpty(studentType)) {
@@ -548,10 +548,10 @@ public class StudentDataLoader extends DataLoader {
                 }
             }
         }
-        
+
         String fatherCellNumber = row.getCellAsString(45).orElse(null);
         obj.setFatherCellNumber(fatherCellNumber);
-        
+
         String fatherEmailId = row.getCellAsString(46).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setFatherEmailId(fatherEmailId);
@@ -563,22 +563,22 @@ public class StudentDataLoader extends DataLoader {
             	obj.setFatherEmailId(fatherEmailId);
             }
         }
-        
+
         String fatherOccupation = row.getCellAsString(47).orElse(null);
         obj.setFatherOccupation(fatherOccupation);
-        
+
         String fatherOfficeEmailId = row.getCellAsString(48).orElse(null);
         obj.setFatherOfficeEmailId(fatherOfficeEmailId);
-        
+
         String fatherOfficeAddress = row.getCellAsString(49).orElse(null);
         obj.setFatherOfficeAddress(fatherOfficeAddress);
-        
+
         String fatherOfficeCellNumber = row.getCellAsString(50).orElse(null);
         obj.setFatherOfficeCellNumber(fatherOfficeCellNumber);
-        
+
         String fatherOfficeLandLinePhoneNumber = row.getCellAsString(51).orElse(null);
         obj.setFatherOfficeLandLinePhoneNumber(fatherOfficeLandLinePhoneNumber);
-        
+
         String fatherAadharNo = row.getCellAsString(52).orElse(null);
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	obj.setFatherAadharNo(fatherAadharNo);
@@ -590,126 +590,126 @@ public class StudentDataLoader extends DataLoader {
             	obj.setFatherAadharNo(fatherAadharNo);
             }
         }
-        
+
         String fatherPanNo = row.getCellAsString(53).orElse(null);
         obj.setFatherPanNo(fatherPanNo);
-        
+
         String fatherSocialSecurityNo = row.getCellAsString(54).orElse(null);
         obj.setFatherSocialSecurityNo(fatherSocialSecurityNo);
-        
+
         String fatherTaxReferenceNo = row.getCellAsString(55).orElse(null);
         obj.setFatherTaxReferenceNo(fatherTaxReferenceNo);
-        
+
         String fatherBplNo = row.getCellAsString(56).orElse(null);
         obj.setFatherBplNo(fatherBplNo);
-        
+
         String fatherDrivingLicenseNo = row.getCellAsString(57).orElse(null);
         obj.setFatherDrivingLicenseNo(fatherDrivingLicenseNo);
-        
+
         String fatherPassportNo = row.getCellAsString(58).orElse(null);
         obj.setFatherPassportNo(fatherPassportNo);
-        
+
         String motherCellNumber = row.getCellAsString(59).orElse(null);
         obj.setMotherCellNumber(motherCellNumber);
-        
+
         String motherEmailId = row.getCellAsString(60).orElse(null);
         obj.setMotherEmailId(motherEmailId);
-        
+
         String motherOccupation = row.getCellAsString(61).orElse(null);
         obj.setMotherOccupation(motherOccupation);
-        
+
         String motherOfficeEmailId = row.getCellAsString(62).orElse(null);
         obj.setMotherOfficeEmailId(motherOfficeEmailId);
-        
+
         String motherOfficeAddress = row.getCellAsString(63).orElse(null);
         obj.setMotherOfficeAddress(motherOfficeAddress);
-        
+
         String motherOfficeCellNumber = row.getCellAsString(64).orElse(null);
         obj.setMotherOfficeCellNumber(motherOfficeCellNumber);
-        
+
         String motherOfficeLandLinePhoneNumber = row.getCellAsString(65).orElse(null);
         obj.setMotherOfficeLandLinePhoneNumber(motherOfficeLandLinePhoneNumber);
-        
+
         String motherAadharNo = row.getCellAsString(66).orElse(null);
         obj.setMotherAadharNo(motherAadharNo);
-        
+
         String motherPanNo = row.getCellAsString(67).orElse(null);
         obj.setMotherPanNo(motherPanNo);
-        
+
         String motherSocialSecurityNo = row.getCellAsString(68).orElse(null);
         obj.setMotherSocialSecurityNo(motherSocialSecurityNo);
-        
+
         String motherTaxReferenceNo = row.getCellAsString(69).orElse(null);
         obj.setMotherTaxReferenceNo(motherTaxReferenceNo);
-        
+
         String motherBplNo = row.getCellAsString(70).orElse(null);
         obj.setMotherBplNo(motherBplNo);
-        
+
         String motherDrivingLicenseNo = row.getCellAsString(71).orElse(null);
         obj.setMotherDrivingLicenseNo(motherDrivingLicenseNo);
-        
+
         String motherPassportNo = row.getCellAsString(72).orElse(null);
         obj.setMotherPassportNo(motherPassportNo);
-        
+
         String guardianName = row.getCellAsString(73).orElse(null);
         obj.setGuardianName(guardianName);
-        
+
         String guardianMiddleName = row.getCellAsString(74).orElse(null);
         obj.setGuardianMiddleName(guardianMiddleName);
-        
+
         String guardianLastName = row.getCellAsString(75).orElse(null);
         obj.setGuardianLastName(guardianLastName);
-        
+
         String guardianAddress = row.getCellAsString(76).orElse(null);
         obj.setGuardianAddress(guardianAddress);
-        
+
         String guardianCellNumber = row.getCellAsString(77).orElse(null);
         obj.setGuardianCellNumber(guardianCellNumber);
-        
+
         String guardianLandLinePhoneNumber = row.getCellAsString(78).orElse(null);
         obj.setGuardianLandLinePhoneNumber(guardianLandLinePhoneNumber);
-        
+
         String guardianEmailId = row.getCellAsString(79).orElse(null);
         obj.setGuardianEmailId(guardianEmailId);
-        
+
         String guardianOccupation = row.getCellAsString(80).orElse(null);
         obj.setGuardianOccupation(guardianOccupation);
-        
+
         String guardianOfficeEmailId = row.getCellAsString(81).orElse(null);
         obj.setGuardianOfficeEmailId(guardianOfficeEmailId);
-        
+
         String guardianOfficeAddress = row.getCellAsString(82).orElse(null);
         obj.setGuardianOfficeAddress(guardianOfficeAddress);
-        
+
         String guardianOfficeCellNumber = row.getCellAsString(83).orElse(null);
         obj.setGuardianOfficeCellNumber(guardianOfficeCellNumber);
-        
+
         String guardianOfficeLandLinePhoneNumber = row.getCellAsString(84).orElse(null);
         obj.setGuardianOfficeLandLinePhoneNumber(guardianOfficeLandLinePhoneNumber);
-        
+
         String isGuardianSponsorAgency = row.getCellAsString(85).orElse(null);
         obj.setIsGuardianSponsorAgency(isGuardianSponsorAgency);
-        
+
         if (Status.DRAFT.toString().equalsIgnoreCase(status)) {
         	String sponsorAgencyName = row.getCellAsString(86).orElse(null);
             obj.setSponsorAgencyName(sponsorAgencyName);
-            
+
             String sponsorAgencyRegistrationNo = row.getCellAsString(87).orElse(null);
             obj.setSponsorAgencyRegistrationNo(sponsorAgencyRegistrationNo);
-            
+
             String sponsorAgencyAddress = row.getCellAsString(88).orElse(null);
             obj.setSponsorAgencyAddress(sponsorAgencyAddress);
-            
+
             String sponsorAgencyCellNumber = row.getCellAsString(89).orElse(null);
             obj.setSponsorAgencyCellNumber(sponsorAgencyCellNumber);
-            
+
             String sponsorAgencyLandLineNumber = row.getCellAsString(90).orElse(null);
             obj.setSponsorAgencyLandLineNumber(sponsorAgencyLandLineNumber);
-            
+
             String sponsorAgencyEmailId = row.getCellAsString(91).orElse(null);
             obj.setSponsorAgencyEmailId(sponsorAgencyEmailId);
-            
-            
+
+
         }else {
         	if("YES".equalsIgnoreCase(isGuardianSponsorAgency)) {
         		String sponsorAgencyName = row.getCellAsString(86).orElse(null);
@@ -719,7 +719,7 @@ public class StudentDataLoader extends DataLoader {
                 } else {
                 	obj.setSponsorAgencyName(sponsorAgencyName);
                 }
-        		
+
         		String sponsorAgencyRegistrationNo = row.getCellAsString(87).orElse(null);
         		if (CommonUtil.isNullOrEmpty(sponsorAgencyRegistrationNo)) {
                     sb.append("sponsor_agency_registration_no, ");
@@ -727,7 +727,7 @@ public class StudentDataLoader extends DataLoader {
                 } else {
                 	obj.setSponsorAgencyRegistrationNo(sponsorAgencyRegistrationNo);
                 }
-                
+
                 String sponsorAgencyAddress = row.getCellAsString(88).orElse(null);
                 if (CommonUtil.isNullOrEmpty(sponsorAgencyAddress)) {
                     sb.append("sponsor_agency_address, ");
@@ -735,7 +735,7 @@ public class StudentDataLoader extends DataLoader {
                 } else {
                 	obj.setSponsorAgencyAddress(sponsorAgencyAddress);
                 }
-                
+
                 String sponsorAgencyCellNumber = row.getCellAsString(89).orElse(null);
                 String sponsorAgencyLandLineNumber = row.getCellAsString(90).orElse(null);
                 if (CommonUtil.isNullOrEmpty(sponsorAgencyCellNumber) && CommonUtil.isNullOrEmpty(sponsorAgencyLandLineNumber)) {
@@ -745,7 +745,7 @@ public class StudentDataLoader extends DataLoader {
                 	obj.setSponsorAgencyCellNumber(sponsorAgencyCellNumber);
                 	obj.setSponsorAgencyLandLineNumber(sponsorAgencyLandLineNumber);
                 }
-                
+
                 String sponsorAgencyEmailId = row.getCellAsString(91).orElse(null);
                 if (CommonUtil.isNullOrEmpty(sponsorAgencyEmailId)) {
                     sb.append("sponsorAgencyEmailId, ");
@@ -753,42 +753,42 @@ public class StudentDataLoader extends DataLoader {
                 } else {
                 	obj.setSponsorAgencyEmailId(sponsorAgencyEmailId);
                 }
-                
+
         	}
         }
-        
+
         String sponsorAgencyAppointeeName = row.getCellAsString(92).orElse(null);
         obj.setSponsorAgencyAppointeeName(sponsorAgencyAppointeeName);
-        
+
         String sponsorAgencyAppointeeDesignation = row.getCellAsString(93).orElse(null);
         obj.setSponsorAgencyAppointeeDesignation(sponsorAgencyAppointeeDesignation);
-        
+
         String sponsorAgencyAppointeeCellNumber = row.getCellAsString(94).orElse(null);
         obj.setSponsorAgencyAppointeeCellNumber(sponsorAgencyAppointeeCellNumber);
-        
+
         String sponsorAgencyAppointeeLandLineNumber = row.getCellAsString(95).orElse(null);
         obj.setSponsorAgencyAppointeeLandLineNumber(sponsorAgencyAppointeeLandLineNumber);
-        
+
         String sponsorAgencyAppointeeEmailId = row.getCellAsString(96).orElse(null);
         obj.setSponsorAgencyAppointeeEmailId(sponsorAgencyAppointeeEmailId);
-        
+
         String sponsorAgencyAppointeeOfficeAddress = row.getCellAsString(97).orElse(null);
         obj.setSponsorAgencyAppointeeOfficeAddress(sponsorAgencyAppointeeOfficeAddress);
-        
+
         String isPhysicallyChallenged = row.getCellAsString(98).orElse(null);
         obj.setIsPhysicallyChallenged(isPhysicallyChallenged);
-        
+
         if (Status.DRAFT.toString().equalsIgnoreCase(status) || CommonUtil.isNullOrEmpty(isPhysicallyChallenged)
         		|| "NO".equalsIgnoreCase(isPhysicallyChallenged)) {
         	String detailsOfDisability = row.getCellAsString(99).orElse(null);
             obj.setDetailsOfDisability(detailsOfDisability);
-            
+
             String disabilityCertificateNo = row.getCellAsString(100).orElse(null);
             obj.setDisabilityCertificateNo(disabilityCertificateNo);
-            
+
             String disabilityCertificateIssueAuthority = row.getCellAsString(101).orElse(null);
             obj.setDisabilityCertificateIssueAuthority(disabilityCertificateIssueAuthority);
-            
+
             String disabilityCertificateIssueDate = row.getCellAsString(102).orElse(null);
             if (!CommonUtil.isNullOrEmpty(disabilityCertificateIssueDate)) {
                 obj.setDisabilityCertificateIssueDate(DateFormatUtil.convertStringToLocalDate(disabilityCertificateIssueDate, CmsConstants.DATE_FORMAT_dd_MM_yyyy));
@@ -802,7 +802,7 @@ public class StudentDataLoader extends DataLoader {
                 } else {
                 	obj.setDetailsOfDisability(detailsOfDisability);
                 }
-        		
+
                 String disabilityCertificateNo = row.getCellAsString(100).orElse(null);
                 if (CommonUtil.isNullOrEmpty(disabilityCertificateNo)) {
                     sb.append("disability_certificate_no, ");
@@ -810,7 +810,7 @@ public class StudentDataLoader extends DataLoader {
                 } else {
                 	obj.setDisabilityCertificateNo(disabilityCertificateNo);
                 }
-                
+
                 String disabilityCertificateIssueAuthority = row.getCellAsString(101).orElse(null);
                 if (CommonUtil.isNullOrEmpty(disabilityCertificateIssueAuthority)) {
                     sb.append("disability_certificate_issue_authority, ");
@@ -818,7 +818,7 @@ public class StudentDataLoader extends DataLoader {
                 } else {
                 	obj.setDisabilityCertificateIssueAuthority(disabilityCertificateIssueAuthority);
                 }
-                
+
                 String disabilityCertificateIssueDate = row.getCellAsString(102).orElse(null);
                 if (CommonUtil.isNullOrEmpty(disabilityCertificateIssueDate)) {
                     sb.append("disability_certificate_issue_date, ");
@@ -830,12 +830,12 @@ public class StudentDataLoader extends DataLoader {
                 }
         	}
         }
-        
+
         String percentagOfDisability = row.getCellAsString(103).orElse(null);
         if (!CommonUtil.isNullOrEmpty(percentagOfDisability)) {
         	obj.setPercentagOfDisability(Integer.parseInt(percentagOfDisability));
         }
-        
+
         String bloodGroup = row.getCellAsString(104).orElse(null);
         if (CommonUtil.isNullOrEmpty(bloodGroup)) {
             sb.append("blood_group, ");
@@ -865,13 +865,13 @@ public class StudentDataLoader extends DataLoader {
 
         String vaccinationDetails = row.getCellAsString(105).orElse(null);
         obj.setVaccinationDetails(vaccinationDetails);
-        
+
         String otherMedicalDetails = row.getCellAsString(106).orElse(null);
         obj.setOtherMedicalDetails(otherMedicalDetails);
-        
+
         String comments = row.getCellAsString(107).orElse(null);
         obj.setComments(comments);
-        
+
         String branchName = row.getCellAsString(108).orElse(null);
         String branchAddress = row.getCellAsString(109).orElse(null);
         Optional<Branch> b = null;
@@ -887,10 +887,11 @@ public class StudentDataLoader extends DataLoader {
             	sb.append("branch_id, ");
                 logger.warn("Mandatory field missing. Branch not found");
             }else {
-            	obj.setBranch(b.get());
+            	obj.setBranchId(b.get().getId());
             }
         }
-        
+
+
         Optional<Department> dp = null;
         String departmentName = row.getCellAsString(110).orElse(null);
         if(CommonUtil.isNullOrEmpty(departmentName)) {
@@ -899,17 +900,16 @@ public class StudentDataLoader extends DataLoader {
         }else {
         	Department department = new Department();
             department.setName(departmentName);
-            department.setBranch(obj.getBranch());
+//            department.setBranch(obj.getBranch());
             dp = this.allRepositories.findRepository("department").findOne(Example.of(department));
             if(!dp.isPresent()) {
             	sb.append("department, ");
                 logger.warn("Mandatory field missing. Field name - departmentName");
             }else {
-            	obj.setDepartment(dp.get());
+            	obj.setDepartmentId(dp.get().getId());
             }
         }
-        
-        
+
         Batch batch = new Batch();
         Optional<Batch> obatch = null;
         String batchName = row.getCellAsString(111).orElse(null);
@@ -929,15 +929,18 @@ public class StudentDataLoader extends DataLoader {
             	sb.append("batch_id, ");
                 logger.warn("Given batch/year not listed. batch/year - "+batchName);
             }
-            batch.setDepartment(obj.getDepartment());
+//            batch.setDepartment(obj.getDepartment());
         	obatch = this.allRepositories.findRepository("batch").findOne(Example.of(batch));
         	if(!obatch.isPresent()) {
         		sb.append("batch, ");
                 logger.warn("Given batch is missing. Field name - batch");
         	}else {
-        		obj.setBatch(obatch.get());
+        		obj.setBatchId(obatch.get().getId());
         	}
         }
+
+        String sectionId = row.getCellAsString(111).orElse(null);
+        obj.setSectionId(Long.valueOf(sectionId));
 
         Optional<Section> osc = null;
 		Section section = new Section();
@@ -959,17 +962,17 @@ public class StudentDataLoader extends DataLoader {
         		sb.append("section, ");
             }
             if(section.getSection() != null) {
-            	section.setBatch(obj.getBatch());
+//            	section.setBatch(obj.getBatch());
             	osc = this.allRepositories.findRepository("section").findOne(Example.of(section));
             	if(osc.isPresent()) {
-            		obj.setSection(osc.get());
+            		obj.setSectionId(osc.get().getId());
             	}else {
             		sb.append("section, ");
                     logger.warn("Given section is missing. Field name - section. "+sectionName);
                 }
             }
         }
-        
+
         if(sb.length() > 0) {
             String msg = "Field name - ";
             throw new MandatoryFieldMissingException(msg+sb.substring(0, sb.lastIndexOf(",")));
@@ -978,13 +981,13 @@ public class StudentDataLoader extends DataLoader {
         if(!CommonUtil.isNullOrEmpty(studentPrimaryEmailId)){
         	Student st = new Student();
             st.setStudentPrimaryEmailId(studentPrimaryEmailId);
-            st.setBranch(obj.getBranch());
+//            st.setBranch(obj.getBranch());
             long count = this.allRepositories.findRepository(this.sheetName).count(Example.of(st));
             if(count > 0) {
             	throw new EmailIdExistsException("Student primary email id alreay exists: Primary email id : "+studentPrimaryEmailId);
             }
         }
-        
+
         return (T) obj;
     }
 }

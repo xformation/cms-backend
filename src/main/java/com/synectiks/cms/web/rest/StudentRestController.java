@@ -90,13 +90,13 @@ public class StudentRestController {
         student.setAdmissionNo(admissionNo);
         student.setStatus(Status.DRAFT);
         student.setCreatedOn(LocalDate.now());
-        Branch branch = this.commonService.getBranchById(cmsStudentVo.getBranchId());
-        student.setBranch(branch);
+//        Branch branch = this.commonService.getBranchById(cmsStudentVo.getBranchId());
+//        student.setBranch(branch);
         Student result = studentRepository.save(student);
         CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
         return result.getId();
     }
-    
+
     @PutMapping("/cms-grant-admission-to-student")
     public Long updateStudentToGrantAdmissionNo(@RequestBody CmsStudentVo cmsStudentVo, @RequestParam Map<String, String> dataMap) throws Exception {
         log.debug("REST request to update a student : {}", cmsStudentVo);
@@ -111,7 +111,7 @@ public class StudentRestController {
         CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
         return result.getId();
     }
-    
+
     @GetMapping("/cms-students-for-admission")
     public List<CmsStudentVo> getStudentsToGrantAdmission(@RequestParam Map<String, String> dataMap) {
         log.debug("REST request to get all students with draft status to grant admission");
@@ -122,17 +122,17 @@ public class StudentRestController {
         Long branchId = Long.parseLong(dataMap.get("branchId"));
 //      Long academicYearId = Long.parseLong(dataMap.get("academicYearId"));
 //      AcademicYear ay = this.commonService.getAcademicYearById(academicYearId);
-        
+
 //        Branch branch = this.commonService.getBranchById(branchId);
 //        if(branch == null) {
 //        	log.error("Branch not found for the given branch id : "+branchId+". Returning empty student list");
 //        	return Collections.emptyList();
 //        }
-        
+
         Student student = new Student();
 //        student.setBranch(branch);
         student.setStatus(Status.DRAFT);
-        
+
         Example example = Example.of(student);
         List<Student> list = studentRepository.findAll(example, Sort.by(Direction.DESC, "id"));
         List<CmsStudentVo> ls = new ArrayList<>();
@@ -144,7 +144,7 @@ public class StudentRestController {
         }
         return ls;
     }
-    
+
     /**
      * PUT  /students : Updates an existing student.
      *
@@ -189,7 +189,7 @@ public class StudentRestController {
             	ls.add(vo);
             }
         }
-        
+
         return ls;
     }
 
@@ -237,7 +237,7 @@ public class StudentRestController {
         }else {
         	list = Collections.emptyList();
         }
-        
+
         List<CmsStudentVo> ls = new ArrayList<>();
         for(Student st: list) {
         	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
@@ -245,7 +245,7 @@ public class StudentRestController {
         }
         return ls;
     }
-    
+
     /**
      * DELETE  /students/:id : delete the "id" student.
      *

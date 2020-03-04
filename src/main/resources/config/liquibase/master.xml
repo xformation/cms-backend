@@ -58,7 +58,7 @@
     <include file="config/liquibase/changelog/20200129121527_added_entity_PaymentRemainder.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200129121528_added_entity_LateFee.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200129121529_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+   <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20190118141512_added_entity_constraints_Department.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190118141513_added_entity_constraints_Batch.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190118141515_added_entity_constraints_Section.xml" relativeToChangelogFile="false"/>
@@ -73,7 +73,6 @@
     <include file="config/liquibase/changelog/20190214071443_added_entity_constraints_Branch.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190208044647_added_entity_constraints_AuthorizedSignatory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190225061048_added_entity_constraints_LegalEntity.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190305093209_added_entity_constraints_Student.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190307052135_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190307052136_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190307052137_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>

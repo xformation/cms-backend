@@ -14,6 +14,8 @@ import javax.persistence.Query;
 import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.graphql.types.Contract.AddContractPayload;
+import com.synectiks.cms.graphql.types.Student.StudentInput;
+import com.synectiks.cms.graphql.types.Student.StudentPayload;
 import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRouteInput;
 import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRoutePayload;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehiclePayload;
@@ -256,12 +258,6 @@ import com.synectiks.cms.graphql.types.State.RemoveStateInput;
 import com.synectiks.cms.graphql.types.State.RemoveStatePayload;
 import com.synectiks.cms.graphql.types.State.UpdateStateInput;
 import com.synectiks.cms.graphql.types.State.UpdateStatePayload;
-import com.synectiks.cms.graphql.types.Student.AddStudentInput;
-import com.synectiks.cms.graphql.types.Student.AddStudentPayload;
-import com.synectiks.cms.graphql.types.Student.RemoveStudentInput;
-import com.synectiks.cms.graphql.types.Student.RemoveStudentPayload;
-import com.synectiks.cms.graphql.types.Student.UpdateStudentInput;
-import com.synectiks.cms.graphql.types.Student.UpdateStudentPayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendanceInput;
 import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendancePayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendanceInput;
@@ -375,6 +371,9 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     TransportService transportService;
+
+    @Autowired
+    StudentService studentService;
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -555,6 +554,11 @@ public class Mutation implements GraphQLMutationResolver {
 //        this.entityManager = entityManager;
 //
 //    }
+
+    public StudentPayload saveStudent(StudentInput cmsStudentVo) {
+    CmsStudentVo vo = this.studentService.addStudent(cmsStudentVo);
+    return new StudentPayload(vo);
+    }
 
     public AddVehiclePayload addVehicle(AddVehicleInput cmsVehicleVo) {
         CmsVehicleVo vo = this.vehicleService.addVehicle(cmsVehicleVo);
@@ -1255,52 +1259,52 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveAdmissionEnquiryPayload(Lists.newArrayList(admissionEnquiryRepository.findAll()));
     }
 
-    public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-
-    	Section se = this.commonService.getSectionById(addStudentInput.getSectionId());
-        Branch ob = this.commonService.getBranchById(addStudentInput.getBranchId());
-        Department od = this.commonService.getDepartmentById(addStudentInput.getDepartmentId());
-        Batch obt = this.commonService.getBatchById(addStudentInput.getBatchId());
-
-        Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
-
-        student.setDateOfBirth(addStudentInput.getDateOfBirth());
+//    public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//
+//    	Section se = this.commonService.getSectionById(addStudentInput.getSectionId());
+//        Branch ob = this.commonService.getBranchById(addStudentInput.getBranchId());
+//        Department od = this.commonService.getDepartmentById(addStudentInput.getDepartmentId());
+//        Batch obt = this.commonService.getBatchById(addStudentInput.getBatchId());
+//
+//        Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
+//
+//        student.setDateOfBirth(addStudentInput.getDateOfBirth());
 //        student.setUploadPhoto("");
-        try {
-        	if(obt != null) {
-            	student.setBatch(obt);
-            	logger.debug("Given batch : "+obt.getId());
-            }else {
-            	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
-            }
-            if(se != null) {
-            	student.setSection(se);
-            	logger.debug("Given section : "+se.getId());
-            }else {
-            	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
-            }
-            if(ob != null) {
-            	student.setBranch(ob);
-            	logger.debug("Given branch : "+ob.getId());
-            }else {
-            	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
-            }
-            if(od != null) {
-            	student.setDepartment(od);
-            	logger.debug("Given department : "+od.getId());
-            }else {
-            	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
-            }
-        }catch(Exception e) {
-        	logger.warn("Exception : ",e);
-        }
-
-
-        logger.info("Saving student record.");
-        student = studentRepository.save(student);
-//        saveStudentImage2(addStudentInput, student, branch);
-        return new AddStudentPayload(student);
-    }
+//        try {
+//        	if(obt != null) {
+//            	student.setBatch(obt);
+//            	logger.debug("Given batch : "+obt.getId());
+//            }else {
+//            	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
+//            }
+//            if(se != null) {
+//            	student.setSection(se);
+//            	logger.debug("Given section : "+se.getId());
+//            }else {
+//            	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
+//            }
+//            if(ob != null) {
+//            	student.setBranch(ob);
+//            	logger.debug("Given branch : "+ob.getId());
+//            }else {
+//            	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
+//            }
+//            if(od != null) {
+//            	student.setDepartment(od);
+//            	logger.debug("Given department : "+od.getId());
+//            }else {
+//            	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
+//            }
+//        }catch(Exception e) {
+//        	logger.warn("Exception : ",e);
+//        }
+//
+//
+//        logger.info("Saving student record.");
+//        student = studentRepository.save(student);
+////        saveStudentImage2(addStudentInput, student, branch);
+//        return new AddStudentPayload(student);
+//    }
 
 //    private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
 //    	if(branch == null) return;
@@ -1338,62 +1342,62 @@ public class Mutation implements GraphQLMutationResolver {
 //    	this.studentRepository.save(student);
 //    }
 
-    public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-        Student student = studentRepository.findById(updateStudentInput.getId()).get();
-        if (updateStudentInput.getStudentName() != null) {
-            student.setStudentName(updateStudentInput.getStudentName());
-        }
-        if (updateStudentInput.getStudentMiddleName() != null) {
-            student.setStudentMiddleName(updateStudentInput.getStudentMiddleName());
-        }
-        if (updateStudentInput.getStudentLastName() != null) {
-            student.setStudentLastName(updateStudentInput.getStudentLastName());
-        }
-        if (updateStudentInput.getFatherName() != null) {
-            student.setFatherName(updateStudentInput.getFatherName());
-        }
-        if (updateStudentInput.getFatherMiddleName() != null) {
-            student.setFatherMiddleName(updateStudentInput.getFatherMiddleName());
-        }
-        if (updateStudentInput.getFatherLastName() != null) {
-            student.setFatherLastName(updateStudentInput.getFatherLastName());
-        }
-        if (updateStudentInput.getMotherName() != null) {
-            student.setMotherName(updateStudentInput.getMotherName());
-        }
-        if (updateStudentInput.getMotherMiddleName() != null) {
-            student.setMotherMiddleName(updateStudentInput.getMotherMiddleName());
-        }
-        if (updateStudentInput.getMotherLastName() != null) {
-            student.setMotherLastName(updateStudentInput.getMotherLastName());
-        }
+//    public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//        Student student = studentRepository.findById(updateStudentInput.getId()).get();
+//        if (updateStudentInput.getStudentName() != null) {
+//            student.setStudentName(updateStudentInput.getStudentName());
+//        }
+//        if (updateStudentInput.getStudentMiddleName() != null) {
+//            student.setStudentMiddleName(updateStudentInput.getStudentMiddleName());
+//        }
+//        if (updateStudentInput.getStudentLastName() != null) {
+//            student.setStudentLastName(updateStudentInput.getStudentLastName());
+//        }
+//        if (updateStudentInput.getFatherName() != null) {
+//            student.setFatherName(updateStudentInput.getFatherName());
+//        }
+//        if (updateStudentInput.getFatherMiddleName() != null) {
+//            student.setFatherMiddleName(updateStudentInput.getFatherMiddleName());
+//        }
+//        if (updateStudentInput.getFatherLastName() != null) {
+//            student.setFatherLastName(updateStudentInput.getFatherLastName());
+//        }
+//        if (updateStudentInput.getMotherName() != null) {
+//            student.setMotherName(updateStudentInput.getMotherName());
+//        }
+//        if (updateStudentInput.getMotherMiddleName() != null) {
+//            student.setMotherMiddleName(updateStudentInput.getMotherMiddleName());
+//        }
+//        if (updateStudentInput.getMotherLastName() != null) {
+//            student.setMotherLastName(updateStudentInput.getMotherLastName());
+//        }
 //        if (updateStudentInput.getAadharNo() != null) {
 //            student.setAadharNo(updateStudentInput.getAadharNo());
 //        }
 //        if (updateStudentInput.getDateOfBirth() != null) {
 //            student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentInput.getDateOfBirth()));
 //        }
-        if (updateStudentInput.getPlaceOfBirth() != null) {
-            student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
-        }
-        if (updateStudentInput.getReligion() != null) {
-            student.setReligion(updateStudentInput.getReligion());
-        }
-        if (updateStudentInput.getCaste() != null) {
-            student.setCaste(updateStudentInput.getCaste());
-        }
-        if (updateStudentInput.getSubCaste() != null) {
-            student.setSubCaste(updateStudentInput.getSubCaste());
-        }
-        if (updateStudentInput.getAge() != null) {
-            student.setAge(updateStudentInput.getAge());
-        }
-        if (updateStudentInput.getSex() != null) {
-            student.setSex(updateStudentInput.getSex());
-        }
-        if (updateStudentInput.getBloodGroup() != null) {
-            student.setBloodGroup(updateStudentInput.getBloodGroup());
-        }
+//        if (updateStudentInput.getPlaceOfBirth() != null) {
+//            student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
+//        }
+//        if (updateStudentInput.getReligion() != null) {
+//            student.setReligion(updateStudentInput.getReligion());
+//        }
+//        if (updateStudentInput.getCaste() != null) {
+//            student.setCaste(updateStudentInput.getCaste());
+//        }
+//        if (updateStudentInput.getSubCaste() != null) {
+//            student.setSubCaste(updateStudentInput.getSubCaste());
+//        }
+//        if (updateStudentInput.getAge() != null) {
+//            student.setAge(updateStudentInput.getAge());
+//        }
+//        if (updateStudentInput.getSex() != null) {
+//            student.setSex(updateStudentInput.getSex());
+//        }
+//        if (updateStudentInput.getBloodGroup() != null) {
+//            student.setBloodGroup(updateStudentInput.getBloodGroup());
+//        }
 //        if (updateStudentInput.getAddressLineOne() != null) {
 //            student.setAddressLineOne(updateStudentInput.getAddressLineOne());
 //        }
@@ -1406,12 +1410,12 @@ public class Mutation implements GraphQLMutationResolver {
 //        if (updateStudentInput.getTown() != null) {
 //            student.setTown(updateStudentInput.getTown());
 //        }
-        if (updateStudentInput.getState() != null) {
-            student.setState(updateStudentInput.getState());
-        }
-        if (updateStudentInput.getCountry() != null) {
-            student.setCountry(updateStudentInput.getCountry());
-        }
+//        if (updateStudentInput.getState() != null) {
+//            student.setState(updateStudentInput.getState());
+//        }
+//        if (updateStudentInput.getCountry() != null) {
+//            student.setCountry(updateStudentInput.getCountry());
+//        }
 //        if (updateStudentInput.getPincode() != null) {
 //            student.setPincode(updateStudentInput.getPincode());
 //        }
@@ -1427,18 +1431,18 @@ public class Mutation implements GraphQLMutationResolver {
 //        if (updateStudentInput.getAlternateEmailAddress() != null) {
 //            student.setAlternateEmailAddress(updateStudentInput.getAlternateEmailAddress());
 //        }
-        if (updateStudentInput.getRelationWithStudent() != null) {
-            student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
-        }
-        if (updateStudentInput.getEmergencyContactName() != null) {
-            student.setEmergencyContactName(updateStudentInput.getEmergencyContactName());
-        }
-        if (updateStudentInput.getEmergencyContactMiddleName() != null) {
-            student.setEmergencyContactMiddleName(updateStudentInput.getEmergencyContactMiddleName());
-        }
-        if (updateStudentInput.getEmergencyContactLastName() != null) {
-            student.setEmergencyContactLastName(updateStudentInput.getEmergencyContactLastName());
-        }
+//        if (updateStudentInput.getRelationWithStudent() != null) {
+//            student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
+//        }
+//        if (updateStudentInput.getEmergencyContactName() != null) {
+//            student.setEmergencyContactName(updateStudentInput.getEmergencyContactName());
+//        }
+//        if (updateStudentInput.getEmergencyContactMiddleName() != null) {
+//            student.setEmergencyContactMiddleName(updateStudentInput.getEmergencyContactMiddleName());
+//        }
+//        if (updateStudentInput.getEmergencyContactLastName() != null) {
+//            student.setEmergencyContactLastName(updateStudentInput.getEmergencyContactLastName());
+//        }
 //        if (updateStudentInput.getEmergencyContactNo() != null) {
 //            student.setEmergencyContactNo(updateStudentInput.getEmergencyContactNo());
 //        }
@@ -1450,44 +1454,44 @@ public class Mutation implements GraphQLMutationResolver {
 //            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
 //        }
 
-        if (updateStudentInput.getAdmissionNo() != null) {
-            student.setAdmissionNo(updateStudentInput.getAdmissionNo());
-        }
-        if (updateStudentInput.getRollNo() != null) {
-            student.setRollNo(updateStudentInput.getRollNo());
-        }
-        if (updateStudentInput.getStudentType() != null) {
-            student.setStudentType(updateStudentInput.getStudentType());
-        }
-        if (updateStudentInput.getBatchId() != null) {
-            final Batch batch = batchRepository.findById(updateStudentInput.getBatchId()).get();
-            student.setBatch(batch);
-        }
-        if (updateStudentInput.getSectionId() != null) {
-            final Section section = sectionRepository.findById(updateStudentInput.getSectionId()).get();
-            student.setSection(section);
-        }
-        if (updateStudentInput.getBranchId() != null) {
-            final Branch branch = branchRepository.findById(updateStudentInput.getBranchId()).get();
-            student.setBranch(branch);
-        }
-        if (updateStudentInput.getDepartmentId() != null) {
-            final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
-            student.setDepartment(department);
-        }
+//        if (updateStudentInput.getAdmissionNo() != null) {
+//            student.setAdmissionNo(updateStudentInput.getAdmissionNo());
+//        }
+//        if (updateStudentInput.getRollNo() != null) {
+//            student.setRollNo(updateStudentInput.getRollNo());
+//        }
+//        if (updateStudentInput.getStudentType() != null) {
+//            student.setStudentType(updateStudentInput.getStudentType());
+//        }
+//        if (updateStudentInput.getBatchId() != null) {
+//            final Batch batch = batchRepository.findById(updateStudentInput.getBatchId()).get();
+//            student.setBatch(batch);
+//        }
+//        if (updateStudentInput.getSectionId() != null) {
+//            final Section section = sectionRepository.findById(updateStudentInput.getSectionId()).get();
+//            student.setSection(section);
+//        }
+//        if (updateStudentInput.getBranchId() != null) {
+//            final Branch branch = branchRepository.findById(updateStudentInput.getBranchId()).get();
+//            student.setBranch(branch);
+//        }
+//        if (updateStudentInput.getDepartmentId() != null) {
+//            final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
+//            student.setDepartment(department);
+//        }
 
 //        saveStudentImage(updateStudentInput, student, student.getBranch());
 
-        studentRepository.save(student);
-
-        return new UpdateStudentPayload(student);
-    }
-
-    public RemoveStudentPayload removeStudent(RemoveStudentInput removeStudentInput) {
-        Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
-        studentRepository.delete(student);
-        return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
-    }
+//        studentRepository.save(student);
+//
+//        return new UpdateStudentPayload(student);
+//    }
+//
+//    public RemoveStudentPayload removeStudent(RemoveStudentInput removeStudentInput) {
+//        Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
+//        studentRepository.delete(student);
+//        return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
+//    }
 
 
 //    public AddInstitutePayload addInstitute(AddInstituteInput addInstituteInput) {
@@ -3983,10 +3987,10 @@ public class Mutation implements GraphQLMutationResolver {
     		CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
     		vo.setStrDateOfBirth(DateFormatUtil.changeLocalDateFormat(student.getDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
     		vo.setDateOfBirth(null);
-    		vo.setDepartmentId(student.getDepartment() != null ? student.getDepartment().getId() : null);
-    		vo.setBatchId(student.getBatch() != null ? student.getBatch().getId() : null);
-    		vo.setSectionId(student.getSection() != null ? student.getSection().getId() : null);
-    		vo.setBranchId(student.getBranch() != null ? student.getBranch().getId() : null);
+//    		vo.setDepartmentId(student.getDepartmentId() != null ? student.getDepartmentId() : null);
+//    		vo.setBatchId(student.getBatchId() != null ? student.getBatchId() : null);
+//    		vo.setSectionId(student.getSectionId() != null ? student.getSectionId() : null);
+//    		vo.setBranchId(student.getBranchId() != null ? student.getBranchId() : null);
     		ls.add(vo);
     	}
     	logger.debug("Total students retrieved. "+list.size());
