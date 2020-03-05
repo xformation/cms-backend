@@ -11,12 +11,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.synectiks.cms.business.service.TransportService;
-import com.synectiks.cms.business.service.VehicleService;
+import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.graphql.types.Contract.AddContractPayload;
+import com.synectiks.cms.graphql.types.Student.StudentInput;
+import com.synectiks.cms.graphql.types.Student.StudentPayload;
 import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRouteInput;
 import com.synectiks.cms.graphql.types.TransportRoute.AddTransportRoutePayload;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehiclePayload;
+import com.synectiks.cms.graphql.types.Insurance.AddInsurancePayload;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.enumeration.Frequency;
@@ -154,9 +156,6 @@ import com.synectiks.cms.graphql.types.CompetitiveExam.RemoveCompetitiveExamPayl
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamInput;
 import com.synectiks.cms.graphql.types.CompetitiveExam.UpdateCompetitiveExamPayload;
 import com.synectiks.cms.graphql.types.Contract.AddContractInput;
-import com.synectiks.cms.graphql.types.Contract.RemoveContractInput;
-import com.synectiks.cms.graphql.types.Contract.RemoveContractPayload;
-import com.synectiks.cms.graphql.types.Contract.UpdateContractInput;
 import com.synectiks.cms.graphql.types.Country.AddCountryInput;
 import com.synectiks.cms.graphql.types.Country.AddCountryPayload;
 import com.synectiks.cms.graphql.types.Country.RemoveCountryInput;
@@ -209,10 +208,6 @@ import com.synectiks.cms.graphql.types.Holiday.RemoveHolidayInput;
 import com.synectiks.cms.graphql.types.Holiday.RemoveHolidayPayload;
 import com.synectiks.cms.graphql.types.Holiday.UpdateHolidayInput;
 import com.synectiks.cms.graphql.types.Holiday.UpdateHolidayPayload;
-import com.synectiks.cms.graphql.types.Insurance.AddInsuranceInput;
-import com.synectiks.cms.graphql.types.Insurance.RemoveInsuranceInput;
-import com.synectiks.cms.graphql.types.Insurance.RemoveInsurancePayload;
-import com.synectiks.cms.graphql.types.Insurance.UpdateInsuranceInput;
 import com.synectiks.cms.graphql.types.Invoice.AddInvoiceInput;
 import com.synectiks.cms.graphql.types.Invoice.AddInvoicePayload;
 import com.synectiks.cms.graphql.types.Invoice.RemoveInvoiceInput;
@@ -263,12 +258,6 @@ import com.synectiks.cms.graphql.types.State.RemoveStateInput;
 import com.synectiks.cms.graphql.types.State.RemoveStatePayload;
 import com.synectiks.cms.graphql.types.State.UpdateStateInput;
 import com.synectiks.cms.graphql.types.State.UpdateStatePayload;
-import com.synectiks.cms.graphql.types.Student.AddStudentInput;
-import com.synectiks.cms.graphql.types.Student.AddStudentPayload;
-import com.synectiks.cms.graphql.types.Student.RemoveStudentInput;
-import com.synectiks.cms.graphql.types.Student.RemoveStudentPayload;
-import com.synectiks.cms.graphql.types.Student.UpdateStudentInput;
-import com.synectiks.cms.graphql.types.Student.UpdateStudentPayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendanceInput;
 import com.synectiks.cms.graphql.types.StudentAttendance.AddStudentAttendancePayload;
 import com.synectiks.cms.graphql.types.StudentAttendance.RemoveStudentAttendanceInput;
@@ -312,6 +301,8 @@ import com.synectiks.cms.graphql.types.TypeOfGrading.RemoveTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingInput;
 import com.synectiks.cms.graphql.types.TypeOfGrading.UpdateTypeOfGradingPayload;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehicleInput;
+import com.synectiks.cms.graphql.types.Insurance.AddInsuranceInput;
+
 import com.synectiks.cms.repository.AcademicExamSettingRepository;
 import com.synectiks.cms.repository.AcademicHistoryRepository;
 import com.synectiks.cms.repository.AcademicYearRepository;
@@ -356,6 +347,7 @@ import com.synectiks.cms.repository.TermRepository;
 import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.TypeOfGradingRepository;
 import com.synectiks.cms.repository.VehicleRepository;
+
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -371,10 +363,17 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     VehicleService vehicleService;
+    @Autowired
+    InsuranceService insuranceService;
 
+    @Autowired
+    ContractService contractService;
 
     @Autowired
     TransportService transportService;
+
+    @Autowired
+    StudentService studentService;
 
     @Autowired
     private AcademicYearRepository academicYearRepository;
@@ -556,9 +555,22 @@ public class Mutation implements GraphQLMutationResolver {
 //
 //    }
 
+    public StudentPayload saveStudent(StudentInput cmsStudentVo) {
+    CmsStudentVo vo = this.studentService.addStudent(cmsStudentVo);
+    return new StudentPayload(vo);
+    }
+
     public AddVehiclePayload addVehicle(AddVehicleInput cmsVehicleVo) {
         CmsVehicleVo vo = this.vehicleService.addVehicle(cmsVehicleVo);
         return new AddVehiclePayload(vo);
+    }
+    public AddInsurancePayload addInsurance(AddInsuranceInput cmsInsuranceVo) {
+        CmsInsuranceVo vo = this.insuranceService.addInsurance(cmsInsuranceVo);
+        return new AddInsurancePayload(vo);
+    }
+    public AddContractPayload addContract(AddContractInput cmsContractVo) {
+        CmsContractVo vo = this.contractService.addContract(cmsContractVo);
+        return new AddContractPayload(vo);
     }
 
     public AddTransportRoutePayload addTransportRoute(AddTransportRouteInput cmsTransportVo) {
@@ -1257,42 +1269,54 @@ public class Mutation implements GraphQLMutationResolver {
         Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
 
         student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(addStudentInput.getDateOfBirth()));
+
+//    public AddStudentPayload addStudent(AddStudentInput addStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//
+//    	Section se = this.commonService.getSectionById(addStudentInput.getSectionId());
+//        Branch ob = this.commonService.getBranchById(addStudentInput.getBranchId());
+//        Department od = this.commonService.getDepartmentById(addStudentInput.getDepartmentId());
+//        Batch obt = this.commonService.getBatchById(addStudentInput.getBatchId());
+//
+//        Student student = CommonUtil.createCopyProperties(addStudentInput, Student.class);
+//
+//        student.setDateOfBirth(addStudentInput.getDateOfBirth());
+
 //        student.setUploadPhoto("");
-        try {
-        	if(obt != null) {
-            	student.setBatch(obt);
-            	logger.debug("Given batch : "+obt.getId());
-            }else {
-            	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
-            }
-            if(se != null) {
-            	student.setSection(se);
-            	logger.debug("Given section : "+se.getId());
-            }else {
-            	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
-            }
-            if(ob != null) {
-            	student.setBranch(ob);
-            	logger.debug("Given branch : "+ob.getId());
-            }else {
-            	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
-            }
-            if(od != null) {
-            	student.setDepartment(od);
-            	logger.debug("Given department : "+od.getId());
-            }else {
-            	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
-            }
-        }catch(Exception e) {
-        	logger.warn("Exception : ",e);
-        }
-
-
-        logger.info("Saving student record.");
-        student = studentRepository.save(student);
-//        saveStudentImage2(addStudentInput, student, branch);
-        return new AddStudentPayload(student);
-    }
+//        try {
+//        	if(obt != null) {
+//            	student.setBatch(obt);
+//            	logger.debug("Given batch : "+obt.getId());
+//            }else {
+//            	logger.warn("Batch is not found in the database for given batch id : "+addStudentInput.getBatchId());
+//            }
+//            if(se != null) {
+//            	student.setSection(se);
+//            	logger.debug("Given section : "+se.getId());
+//            }else {
+//            	logger.warn("Section is not found in the database for given section id : "+addStudentInput.getSectionId());
+//            }
+//            if(ob != null) {
+//            	student.setBranch(ob);
+//            	logger.debug("Given branch : "+ob.getId());
+//            }else {
+//            	logger.warn("Branch is not found in the database for given branch id : "+addStudentInput.getBranchId());
+//            }
+//            if(od != null) {
+//            	student.setDepartment(od);
+//            	logger.debug("Given department : "+od.getId());
+//            }else {
+//            	logger.warn("Department is not found in the database for given Department id : "+addStudentInput.getDepartmentId());
+//            }
+//        }catch(Exception e) {
+//        	logger.warn("Exception : ",e);
+//        }
+//
+//
+//        logger.info("Saving student record.");
+//        student = studentRepository.save(student);
+////        saveStudentImage2(addStudentInput, student, branch);
+//        return new AddStudentPayload(student);
+//    }
 
 //    private void saveStudentImage(AbstractStudentInput input, Student student, Branch branch) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
 //    	if(branch == null) return;
@@ -1330,62 +1354,62 @@ public class Mutation implements GraphQLMutationResolver {
 //    	this.studentRepository.save(student);
 //    }
 
-    public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
-        Student student = studentRepository.findById(updateStudentInput.getId()).get();
-        if (updateStudentInput.getStudentName() != null) {
-            student.setStudentName(updateStudentInput.getStudentName());
-        }
-        if (updateStudentInput.getStudentMiddleName() != null) {
-            student.setStudentMiddleName(updateStudentInput.getStudentMiddleName());
-        }
-        if (updateStudentInput.getStudentLastName() != null) {
-            student.setStudentLastName(updateStudentInput.getStudentLastName());
-        }
-        if (updateStudentInput.getFatherName() != null) {
-            student.setFatherName(updateStudentInput.getFatherName());
-        }
-        if (updateStudentInput.getFatherMiddleName() != null) {
-            student.setFatherMiddleName(updateStudentInput.getFatherMiddleName());
-        }
-        if (updateStudentInput.getFatherLastName() != null) {
-            student.setFatherLastName(updateStudentInput.getFatherLastName());
-        }
-        if (updateStudentInput.getMotherName() != null) {
-            student.setMotherName(updateStudentInput.getMotherName());
-        }
-        if (updateStudentInput.getMotherMiddleName() != null) {
-            student.setMotherMiddleName(updateStudentInput.getMotherMiddleName());
-        }
-        if (updateStudentInput.getMotherLastName() != null) {
-            student.setMotherLastName(updateStudentInput.getMotherLastName());
-        }
+//    public UpdateStudentPayload updateStudent(UpdateStudentInput updateStudentInput) throws FilePathNotFoundException, FileNameNotFoundException, BranchIdNotFoundException {
+//        Student student = studentRepository.findById(updateStudentInput.getId()).get();
+//        if (updateStudentInput.getStudentName() != null) {
+//            student.setStudentName(updateStudentInput.getStudentName());
+//        }
+//        if (updateStudentInput.getStudentMiddleName() != null) {
+//            student.setStudentMiddleName(updateStudentInput.getStudentMiddleName());
+//        }
+//        if (updateStudentInput.getStudentLastName() != null) {
+//            student.setStudentLastName(updateStudentInput.getStudentLastName());
+//        }
+//        if (updateStudentInput.getFatherName() != null) {
+//            student.setFatherName(updateStudentInput.getFatherName());
+//        }
+//        if (updateStudentInput.getFatherMiddleName() != null) {
+//            student.setFatherMiddleName(updateStudentInput.getFatherMiddleName());
+//        }
+//        if (updateStudentInput.getFatherLastName() != null) {
+//            student.setFatherLastName(updateStudentInput.getFatherLastName());
+//        }
+//        if (updateStudentInput.getMotherName() != null) {
+//            student.setMotherName(updateStudentInput.getMotherName());
+//        }
+//        if (updateStudentInput.getMotherMiddleName() != null) {
+//            student.setMotherMiddleName(updateStudentInput.getMotherMiddleName());
+//        }
+//        if (updateStudentInput.getMotherLastName() != null) {
+//            student.setMotherLastName(updateStudentInput.getMotherLastName());
+//        }
 //        if (updateStudentInput.getAadharNo() != null) {
 //            student.setAadharNo(updateStudentInput.getAadharNo());
 //        }
 //        if (updateStudentInput.getDateOfBirth() != null) {
 //            student.setDateOfBirth(DateFormatUtil.convertLocalDateFromUtilDate(updateStudentInput.getDateOfBirth()));
 //        }
-        if (updateStudentInput.getPlaceOfBirth() != null) {
-            student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
-        }
-        if (updateStudentInput.getReligion() != null) {
-            student.setReligion(updateStudentInput.getReligion());
-        }
-        if (updateStudentInput.getCaste() != null) {
-            student.setCaste(updateStudentInput.getCaste());
-        }
-        if (updateStudentInput.getSubCaste() != null) {
-            student.setSubCaste(updateStudentInput.getSubCaste());
-        }
-        if (updateStudentInput.getAge() != null) {
-            student.setAge(updateStudentInput.getAge());
-        }
-        if (updateStudentInput.getSex() != null) {
-            student.setSex(updateStudentInput.getSex());
-        }
-        if (updateStudentInput.getBloodGroup() != null) {
-            student.setBloodGroup(updateStudentInput.getBloodGroup());
-        }
+//        if (updateStudentInput.getPlaceOfBirth() != null) {
+//            student.setPlaceOfBirth(updateStudentInput.getPlaceOfBirth());
+//        }
+//        if (updateStudentInput.getReligion() != null) {
+//            student.setReligion(updateStudentInput.getReligion());
+//        }
+//        if (updateStudentInput.getCaste() != null) {
+//            student.setCaste(updateStudentInput.getCaste());
+//        }
+//        if (updateStudentInput.getSubCaste() != null) {
+//            student.setSubCaste(updateStudentInput.getSubCaste());
+//        }
+//        if (updateStudentInput.getAge() != null) {
+//            student.setAge(updateStudentInput.getAge());
+//        }
+//        if (updateStudentInput.getSex() != null) {
+//            student.setSex(updateStudentInput.getSex());
+//        }
+//        if (updateStudentInput.getBloodGroup() != null) {
+//            student.setBloodGroup(updateStudentInput.getBloodGroup());
+//        }
 //        if (updateStudentInput.getAddressLineOne() != null) {
 //            student.setAddressLineOne(updateStudentInput.getAddressLineOne());
 //        }
@@ -1398,12 +1422,12 @@ public class Mutation implements GraphQLMutationResolver {
 //        if (updateStudentInput.getTown() != null) {
 //            student.setTown(updateStudentInput.getTown());
 //        }
-        if (updateStudentInput.getState() != null) {
-            student.setState(updateStudentInput.getState());
-        }
-        if (updateStudentInput.getCountry() != null) {
-            student.setCountry(updateStudentInput.getCountry());
-        }
+//        if (updateStudentInput.getState() != null) {
+//            student.setState(updateStudentInput.getState());
+//        }
+//        if (updateStudentInput.getCountry() != null) {
+//            student.setCountry(updateStudentInput.getCountry());
+//        }
 //        if (updateStudentInput.getPincode() != null) {
 //            student.setPincode(updateStudentInput.getPincode());
 //        }
@@ -1419,18 +1443,18 @@ public class Mutation implements GraphQLMutationResolver {
 //        if (updateStudentInput.getAlternateEmailAddress() != null) {
 //            student.setAlternateEmailAddress(updateStudentInput.getAlternateEmailAddress());
 //        }
-        if (updateStudentInput.getRelationWithStudent() != null) {
-            student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
-        }
-        if (updateStudentInput.getEmergencyContactName() != null) {
-            student.setEmergencyContactName(updateStudentInput.getEmergencyContactName());
-        }
-        if (updateStudentInput.getEmergencyContactMiddleName() != null) {
-            student.setEmergencyContactMiddleName(updateStudentInput.getEmergencyContactMiddleName());
-        }
-        if (updateStudentInput.getEmergencyContactLastName() != null) {
-            student.setEmergencyContactLastName(updateStudentInput.getEmergencyContactLastName());
-        }
+//        if (updateStudentInput.getRelationWithStudent() != null) {
+//            student.setRelationWithStudent(updateStudentInput.getRelationWithStudent());
+//        }
+//        if (updateStudentInput.getEmergencyContactName() != null) {
+//            student.setEmergencyContactName(updateStudentInput.getEmergencyContactName());
+//        }
+//        if (updateStudentInput.getEmergencyContactMiddleName() != null) {
+//            student.setEmergencyContactMiddleName(updateStudentInput.getEmergencyContactMiddleName());
+//        }
+//        if (updateStudentInput.getEmergencyContactLastName() != null) {
+//            student.setEmergencyContactLastName(updateStudentInput.getEmergencyContactLastName());
+//        }
 //        if (updateStudentInput.getEmergencyContactNo() != null) {
 //            student.setEmergencyContactNo(updateStudentInput.getEmergencyContactNo());
 //        }
@@ -1442,44 +1466,44 @@ public class Mutation implements GraphQLMutationResolver {
 //            student.setUploadPhoto(updateStudentInput.getUploadPhoto());
 //        }
 
-        if (updateStudentInput.getAdmissionNo() != null) {
-            student.setAdmissionNo(updateStudentInput.getAdmissionNo());
-        }
-        if (updateStudentInput.getRollNo() != null) {
-            student.setRollNo(updateStudentInput.getRollNo());
-        }
-        if (updateStudentInput.getStudentType() != null) {
-            student.setStudentType(updateStudentInput.getStudentType());
-        }
-        if (updateStudentInput.getBatchId() != null) {
-            final Batch batch = batchRepository.findById(updateStudentInput.getBatchId()).get();
-            student.setBatch(batch);
-        }
-        if (updateStudentInput.getSectionId() != null) {
-            final Section section = sectionRepository.findById(updateStudentInput.getSectionId()).get();
-            student.setSection(section);
-        }
-        if (updateStudentInput.getBranchId() != null) {
-            final Branch branch = branchRepository.findById(updateStudentInput.getBranchId()).get();
-            student.setBranch(branch);
-        }
-        if (updateStudentInput.getDepartmentId() != null) {
-            final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
-            student.setDepartment(department);
-        }
+//        if (updateStudentInput.getAdmissionNo() != null) {
+//            student.setAdmissionNo(updateStudentInput.getAdmissionNo());
+//        }
+//        if (updateStudentInput.getRollNo() != null) {
+//            student.setRollNo(updateStudentInput.getRollNo());
+//        }
+//        if (updateStudentInput.getStudentType() != null) {
+//            student.setStudentType(updateStudentInput.getStudentType());
+//        }
+//        if (updateStudentInput.getBatchId() != null) {
+//            final Batch batch = batchRepository.findById(updateStudentInput.getBatchId()).get();
+//            student.setBatch(batch);
+//        }
+//        if (updateStudentInput.getSectionId() != null) {
+//            final Section section = sectionRepository.findById(updateStudentInput.getSectionId()).get();
+//            student.setSection(section);
+//        }
+//        if (updateStudentInput.getBranchId() != null) {
+//            final Branch branch = branchRepository.findById(updateStudentInput.getBranchId()).get();
+//            student.setBranch(branch);
+//        }
+//        if (updateStudentInput.getDepartmentId() != null) {
+//            final Department department = departmentRepository.findById(updateStudentInput.getDepartmentId()).get();
+//            student.setDepartment(department);
+//        }
 
 //        saveStudentImage(updateStudentInput, student, student.getBranch());
 
-        studentRepository.save(student);
-
-        return new UpdateStudentPayload(student);
-    }
-
-    public RemoveStudentPayload removeStudent(RemoveStudentInput removeStudentInput) {
-        Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
-        studentRepository.delete(student);
-        return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
-    }
+//        studentRepository.save(student);
+//
+//        return new UpdateStudentPayload(student);
+//    }
+//
+//    public RemoveStudentPayload removeStudent(RemoveStudentInput removeStudentInput) {
+//        Student student = studentRepository.findById(removeStudentInput.getStudentId()).get();
+//        studentRepository.delete(student);
+//        return new RemoveStudentPayload(Lists.newArrayList(studentRepository.findAll()));
+//    }
 
 
 //    public AddInstitutePayload addInstitute(AddInstituteInput addInstituteInput) {
@@ -1824,64 +1848,8 @@ public class Mutation implements GraphQLMutationResolver {
         return new RemoveCollegePayload(Lists.newArrayList(collegeRepository.findAll()));
     }
 
-    public List<CmsContract> addContract(AddContractInput addContractInput) throws Exception {
-        Contract contract = CommonUtil.createCopyProperties(addContractInput, Contract.class);
-        contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getStartDate()));
-        contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(addContractInput.getEndDate()));
-        contract = contractRepository.save(contract);
-
-        Contract c = new Contract();
-        Example<Contract> example = Example.of(c);
-        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsContract> ls = new ArrayList<>();
-        for(Contract co: list) {
-            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
-            if(co.getStartDate() != null) {
-                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setStartDate(null);
-            }
-            if(co.getEndDate() != null) {
-                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setEndDate(null);
-            }
-            ls.add(cco);
-        }
-        return ls;
-    }
-
-    public List<CmsContract> updateContract(UpdateContractInput updateContractInput) throws ParseException, Exception {
-        Contract contract = CommonUtil.createCopyProperties(updateContractInput, Contract.class);
-        contract.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getStartDate()));
-        contract.setEndDate(DateFormatUtil.convertLocalDateFromUtilDate(updateContractInput.getEndDate()));
-        contract = contractRepository.save(contract);
 
 
-        Contract c = new Contract();
-        Example<Contract> example = Example.of(c);
-        List<Contract> list = this.contractRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsContract> ls = new ArrayList<>();
-        for(Contract co: list) {
-            CmsContract cco = CommonUtil.createCopyProperties(co, CmsContract.class);
-            if(co.getStartDate() != null) {
-                cco.setStrStartDate(DateFormatUtil.changeLocalDateFormat(co.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setStartDate(null);
-            }
-            if(co.getEndDate() != null) {
-                cco.setStrEndDate(DateFormatUtil.changeLocalDateFormat(co.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cco.setEndDate(null);
-            }
-            ls.add(cco);
-        }
-        return ls;
-
-    }
-
-    public RemoveContractPayload removeContract(RemoveContractInput removeContractInput) {
-        Contract contract = contractRepository.getOne(removeContractInput.getContractId());
-        contractRepository.delete(contract);
-
-        return new RemoveContractPayload(Lists.newArrayList(contractRepository.findAll()));
-    }
 
     public AddEmployeePayload addEmployee(AddEmployeeInput addEmployeeInput) {
         final Employee employee = new Employee();
@@ -3899,57 +3867,7 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
 
-    public List<CmsInsurance> addInsurance(AddInsuranceInput addInsuranceInput) throws Exception {
-        Insurance insurance = CommonUtil.createCopyProperties(addInsuranceInput, Insurance.class);
-        insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getDateOfInsurance()));
-        insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(addInsuranceInput.getValidTill()));
-        insurance = insuranceRepository.save(insurance);
 
-        Insurance i = new Insurance();
-        Example<Insurance> example = Example.of(i);
-        List<Insurance> list = this.insuranceRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsInsurance> ls = new ArrayList<>();
-        for(Insurance in: list) {
-            CmsInsurance cin = CommonUtil.createCopyProperties(in, CmsInsurance.class);
-            if(in.getDateOfInsurance() != null) {
-                cin.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(in.getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setDateOfInsurance(null);
-            }
-            if(in.getValidTill() != null) {
-                cin.setStrValidTill(DateFormatUtil.changeLocalDateFormat(in.getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setValidTill(null);
-            }
-            ls.add(cin);
-        }
-        return ls;
-    }
-
-    public List<CmsInsurance> updateInsurance(UpdateInsuranceInput updateInsuranceInput) throws ParseException, Exception {
-        Insurance insurance = CommonUtil.createCopyProperties(updateInsuranceInput, Insurance.class);
-        insurance.setDateOfInsurance(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getDateOfInsurance()));
-        insurance.setValidTill(DateFormatUtil.convertLocalDateFromUtilDate(updateInsuranceInput.getValidTill()));
-        insurance = insuranceRepository.save(insurance);
-
-
-        Insurance i = new Insurance();
-        Example<Insurance> example = Example.of(i);
-        List<Insurance> list = this.insuranceRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsInsurance> ls = new ArrayList<>();
-        for(Insurance in: list) {
-            CmsInsurance cin = CommonUtil.createCopyProperties(in, CmsInsurance.class);
-            if(in.getDateOfInsurance() != null) {
-                cin.setStrDateOfInsurance(DateFormatUtil.changeLocalDateFormat(in.getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setDateOfInsurance(null);
-            }
-            if(in.getValidTill() != null) {
-                cin.setStrValidTill(DateFormatUtil.changeLocalDateFormat(in.getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cin.setValidTill(null);
-            }
-            ls.add(cin);
-        }
-        return ls;
-
-    }
 
     public AddLecturePayload addLecture(AddLectureInput addLectureInput) {
         final AttendanceMaster attendanceMaster = attendanceMasterRepository.findById(addLectureInput.getAttendanceMasterId()).get();
@@ -3964,11 +3882,7 @@ public class Mutation implements GraphQLMutationResolver {
         return new AddLecturePayload(lecture);
     }
 
-    public RemoveInsurancePayload removeInsurance(RemoveInsuranceInput removeInsuranceInput) {
-        Insurance insurance = insuranceRepository.findById(removeInsuranceInput.getInsuranceId()).get();
-        insuranceRepository.delete(insurance);
-        return new RemoveInsurancePayload(Lists.newArrayList(insuranceRepository.findAll()));
-    }
+
 
     /**
      * Method to update student attendance data. It accepts a list of objects containing student attendance ids and lecture id.
@@ -4085,10 +3999,10 @@ public class Mutation implements GraphQLMutationResolver {
     		CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
     		vo.setStrDateOfBirth(DateFormatUtil.changeLocalDateFormat(student.getDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
     		vo.setDateOfBirth(null);
-    		vo.setDepartmentId(student.getDepartment() != null ? student.getDepartment().getId() : null);
-    		vo.setBatchId(student.getBatch() != null ? student.getBatch().getId() : null);
-    		vo.setSectionId(student.getSection() != null ? student.getSection().getId() : null);
-    		vo.setBranchId(student.getBranch() != null ? student.getBranch().getId() : null);
+//    		vo.setDepartmentId(student.getDepartmentId() != null ? student.getDepartmentId() : null);
+//    		vo.setBatchId(student.getBatchId() != null ? student.getBatchId() : null);
+//    		vo.setSectionId(student.getSectionId() != null ? student.getSectionId() : null);
+//    		vo.setBranchId(student.getBranchId() != null ? student.getBranchId() : null);
     		ls.add(vo);
     	}
     	logger.debug("Total students retrieved. "+list.size());

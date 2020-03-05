@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.synectiks.cms.domain.enumeration.Status;
+//import io.cucumber.datatable.dependency.com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -28,6 +29,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private String rcNo;
     private String contactNumber;
     private Status status;
+    private TransportRoute transportRoute;
     private Long transportRouteId;
     private Long collegeId;
     private Long branchId;
@@ -212,6 +214,14 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.employeeId = employeeId;
     }
 
+    public TransportRoute getTransportRoute() {
+        return transportRoute;
+    }
+
+    public void setTransportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
+    }
+
     @Override
     public String toString() {
         return "CmsEmployeeVo [" +
@@ -229,6 +239,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
             "dateOfRegistration=" + dateOfRegistration + ", " +
             "status=" + status + ", " +
             "strDateOfRegistration=" + strDateOfRegistration + "," +
+            "transportRoute=" + transportRoute + "," +
             "transportRouteId=" + transportRouteId + "," +
             "collegeId=" + collegeId + "," +
             "branchId=" + branchId + "," +
