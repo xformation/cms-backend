@@ -53,28 +53,28 @@ public class CmsDashboardRestController {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
-
+    
     @Autowired
     private CmsInvoiceService cmsInvoiceService;
-
+    
     @Autowired
     private StudentRepository studentRepository;
-
+    
     @Autowired
     private TeacherRepository teacherRepository;
-
+    
     @Autowired
     private AttendanceMasterRepository attendanceMasterRepository;
-
+    
     @Autowired
     private LectureRepository lectureRepository;
-
+    
     @Autowired
     private StudentFacilityLinkRepository studentFacilityLinkRepository;
 
     @Autowired
     private CommonService commonService;
-
+    
     @RequestMapping(method = RequestMethod.GET, value = "/cmsdashboard")
     public ResponseEntity<Object> cmsDashboardUser(@RequestParam  String userName, @RequestParam  String role) {
 		CmsDashboardVo obj = new CmsDashboardVo();
@@ -91,12 +91,12 @@ public class CmsDashboardRestController {
 				List<StudentFacilityLink> list = getStudentFacilityLinkByStudentUserName(userName);
 				List<CmsLectureVo> lecList = getScheduledLecturesForStudent(userName);
 				List<CmsNotificationsVo> ntfList = this.commonService.getNotifications();
-
+				
 				obj.setCmsInvoice(inv);
 				obj.setStudentFacilityLinkList(list);
 				obj.setCmsLectureVoList(lecList);
 				obj.setCmsNotificationsVoList(ntfList);
-
+				
 			}else if("TEACHER".equalsIgnoreCase(role)) {
 				logger.info("Getting teacher data for dashboard");
 				Teacher th = new Teacher();
@@ -109,19 +109,19 @@ public class CmsDashboardRestController {
 				List<CmsNotificationsVo> ntfList = this.commonService.getNotifications();
 				List<CmsHolidayVo> holidayList = getHolidayList();
 				List<CmsLectureVo> lecList = getScheduledLecturesForTeacher(oth.isPresent() ? oth.get() : null);
-
+				
 				obj.setCmsNotificationsVoList(ntfList);
 				obj.setCmsHolidayVoList(holidayList);
 				obj.setCmsLectureVoList(lecList);
 			}
-
+			
 		}catch(Exception e) {
 			logger.error("Exception in getting logged in user dashboard data :", e);
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(obj);
 	}
-
+    
     private CmsInvoice getInvoiceByStudentId(String userName) throws Exception{
     	logger.info("Getting student invoice data for dashboard");
 		CmsInvoice obj = this.cmsInvoiceService.getInvoiceByStudentId(userName);
@@ -139,15 +139,15 @@ public class CmsDashboardRestController {
         }
         return ls;
     }
-
+    
     private List<CmsLectureVo> getScheduledLecturesForStudent(String userName){
     	logger.info("Getting student's scheduled lectures data for dashboard :");
     	List<CmsLectureVo> ls = new ArrayList<>();
     	Optional<Student> ost = getStudent(userName);
     	if(ost.isPresent()) {
     		AttendanceMaster am = new AttendanceMaster();
-//    		am.setBatch(ost.get().getBatch());
-//    		am.setSection(ost.get().getSection());
+    		am.setBatch(ost.get().getBatch());
+    		am.setSection(ost.get().getSection());
     		List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
     		for(AttendanceMaster a: amList) {
     			Lecture lec = new Lecture();
@@ -160,13 +160,13 @@ public class CmsDashboardRestController {
         			ls.add(vo);
         		}
     		}
-
+    		
     	}
     	logger.debug("Total lectures scheduled today for student : "+ls.size());
     	return ls;
     }
-
-
+    
+    
     private List<CmsLectureVo> getScheduledLecturesForTeacher(Teacher teacher){
     	logger.info("Getting teacher's scheduled lectures data for dashboard :");
     	List<CmsLectureVo> ls = new ArrayList<>();
@@ -175,7 +175,7 @@ public class CmsDashboardRestController {
     		teach.setTeacher(teacher);
     		AttendanceMaster am = new AttendanceMaster();
     		am.setTeach(teach);
-
+    		
 //    		List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
 //    		for(AttendanceMaster a: amList) {
     			Lecture lec = new Lecture();
@@ -188,21 +188,21 @@ public class CmsDashboardRestController {
         			ls.add(vo);
         		}
 //    		}
-
+    		
     	}
     	logger.debug("Total lectures scheduled today for teacher : "+ls.size());
     	return ls;
     }
+    
 
-
-
+    
     private Optional<Student> getStudent(String userName){
     	Student st = new Student();
 		st.setStudentPrimaryEmailId(userName);
 		Optional<Student> ost = this.studentRepository.findOne(Example.of(st));
 		return ost;
     }
-
+    
     private List<CmsHolidayVo> getHolidayList(){
     	AcademicYear ay = this.commonService.getActiveAcademicYear();
     	List<Holiday> list = this.commonService.getHolidayList(Optional.of(ay));

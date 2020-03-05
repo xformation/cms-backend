@@ -252,11 +252,6 @@ entity Student{
 	updatedBy String
 	updatedOn LocalDate
 	comments String
-
-	departmentId Long
-	branchId Long
-    sectionId Long
-    batchId Long
 }
 
 
@@ -845,6 +840,10 @@ entity Notifications {
 
 relationship ManyToOne {
 Employee{branch required} to Branch,
+Student{department} to Department ,
+Student{batch} to Batch ,
+Student{section} to Section,
+Student{branch} to Branch,
 Branch{college} to College,
 Branch{city} to City,
 Branch{state} to State,

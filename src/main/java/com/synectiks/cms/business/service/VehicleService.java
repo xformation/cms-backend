@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.CmsTransportVo;
+import com.synectiks.cms.domain.CmsVehicleVo;
+import com.synectiks.cms.domain.Vehicle;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehicleInput;
-import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.VehicleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +34,6 @@ public class VehicleService {
 
     @Autowired
     VehicleRepository vehicleRepository;
-
-    @Autowired
-    TransportRouteRepository transportRouteRepository;
 
     public List<CmsVehicleVo> getCmsVehicleList(Status status) {
         Vehicle vehicle = new Vehicle();
@@ -97,44 +95,69 @@ public class VehicleService {
         }
     }
 
-    public CmsVehicleVo addVehicle(AddVehicleInput input) {
-        logger.info("Saving vehicle");
+    public CmsVehicleVo addVehicle(AddVehicleInput cmsVehicleVo) {
+        logger.info("Saving Vehicle");
         CmsVehicleVo vo = null;
         try {
             Vehicle vehicle = null;
-            if (input.getId() == null) {
-                logger.debug("Adding new Vehicle");
-                vehicle = CommonUtil.createCopyProperties(input, Vehicle.class);
+            if (cmsVehicleVo.getId() == null) {
+                logger.debug("Adding new vehicle");
+                vehicle = CommonUtil.createCopyProperties(cmsVehicleVo, Vehicle.class);
             } else {
-                logger.debug("Updating existing Vehicle");
-                vehicle = this.vehicleRepository.findById(input.getId()).get();
+                logger.debug("Updating existing vehicle");
+                vehicle = this.vehicleRepository.findById(cmsVehicleVo.getId()).get();
+
+                if (cmsVehicleVo.getVehicleNumber() != null) {
+                    vehicle.setVehicleNumber(cmsVehicleVo.getVehicleNumber());
+                }
+
+                if (cmsVehicleVo.getVehicleType() != null) {
+                    vehicle.setVehicleType(cmsVehicleVo.getVehicleType());
+                }
+
+                if (cmsVehicleVo.getCapacity() != null) {
+                    vehicle.setCapacity(cmsVehicleVo.getCapacity());
+                }
+                if (cmsVehicleVo.getOwnerShip() != null) {
+                    vehicle.setOwnerShip(cmsVehicleVo.getOwnerShip());
+                }
+
+                if (cmsVehicleVo.getRcNo() != null) {
+                    vehicle.setRcNo(cmsVehicleVo.getRcNo());
+                }
+                if (cmsVehicleVo.getModel() != null) {
+                    vehicle.setModel(cmsVehicleVo.getModel());
+                }
+
+                if (cmsVehicleVo.getChasisNo() != null) {
+                    vehicle.setChasisNo(cmsVehicleVo.getChasisNo());
+                }
+
+                if (cmsVehicleVo.getManufacturingCompany() != null) {
+                    vehicle.setManufacturingCompany(cmsVehicleVo.getManufacturingCompany());
+                }
+                if (cmsVehicleVo.getYearOfManufacturing() != null) {
+                    vehicle.setYearOfManufacturing(cmsVehicleVo.getYearOfManufacturing());
+                }
+                if (cmsVehicleVo.getContactNumber() != null) {
+                    vehicle.setContactNumber(cmsVehicleVo.getContactNumber());
+                }
+                if (cmsVehicleVo.getStatus() != null) {
+                    vehicle.setStatus(cmsVehicleVo.getStatus());
+                }
+
             }
-            TransportRoute tr = this.transportRouteRepository.findById(input.getTransportRouteId()).get();
-            vehicle.setTransportRoute(tr);
-            vehicle.setVehicleNumber(input.getVehicleNumber());
-            vehicle.setVehicleType(input.getVehicleType());
-            vehicle.setOwnerShip(input.getOwnerShip());
-            vehicle.setCapacity(input.getCapacity());
-            vehicle.setYearOfManufacturing(input.getYearOfManufacturing());
-            vehicle.setManufacturingCompany(input.getManufacturingCompany());
-            vehicle.setContactNumber(input.getContactNumber());
-            vehicle.setChasisNo(input.getChasisNo());
-            vehicle.setRcNo(input.getRcNo());
-            vehicle.setModel(input.getModel());
-            vehicle.setStatus(input.getStatus());
-            vehicle.setDateOfRegistration(input.getStrDateOfRegistration() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+            vehicle.setDateOfRegistration(cmsVehicleVo.getStrDateOfRegistration() != null ? DateFormatUtil.convertStringToLocalDate(cmsVehicleVo.getStrDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
             vehicle = this.vehicleRepository.save(vehicle);
             vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleVo.class);
             vo.setStrDateOfRegistration(vehicle.getDateOfRegistration() != null ? DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
-            vo.setCreatedOn(null);
-            vo.setUpdatedOn(null);
             vo.setExitCode(0L);
-            if (input.getId() == null) {
-                vo.setExitDescription("vehicle is added successfully");
-                logger.debug("vehicle is added successfully");
+            if (cmsVehicleVo.getId() == null) {
+                vo.setExitDescription("Vehicle is added successfully");
+                logger.debug("Vehicle is added successfully");
             } else {
-                vo.setExitDescription("vehicle is updated successfully");
-                logger.debug("vehicle is updated successfully");
+                vo.setExitDescription("Vehicle is updated successfully");
+                logger.debug("Vehicle is updated successfully");
             }
 
         } catch (Exception e) {
@@ -149,8 +172,3 @@ public class VehicleService {
         return vo;
     }
 }
-
-
-
-
-

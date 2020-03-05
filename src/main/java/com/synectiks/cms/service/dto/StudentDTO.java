@@ -12,7 +12,7 @@ import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.Status;
 
 /**
- * A DTO for the Student entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Student} entity.
  */
 public class StudentDTO implements Serializable {
 
@@ -257,14 +257,14 @@ public class StudentDTO implements Serializable {
 
     private String comments;
 
+
     private Long departmentId;
-
-    private Long branchId;
-
-    private Long sectionId;
 
     private Long batchId;
 
+    private Long sectionId;
+
+    private Long branchId;
 
     public Long getId() {
         return id;
@@ -1218,12 +1218,12 @@ public class StudentDTO implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Long getBranchId() {
-        return branchId;
+    public Long getBatchId() {
+        return batchId;
     }
 
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
     }
 
     public Long getSectionId() {
@@ -1234,12 +1234,12 @@ public class StudentDTO implements Serializable {
         this.sectionId = sectionId;
     }
 
-    public Long getBatchId() {
-        return batchId;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public void setBatchId(Long batchId) {
-        this.batchId = batchId;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
     @Override
@@ -1384,10 +1384,10 @@ public class StudentDTO implements Serializable {
             ", updatedBy='" + getUpdatedBy() + "'" +
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", comments='" + getComments() + "'" +
-            ", departmentId=" + getDepartmentId() +
-            ", branchId=" + getBranchId() +
-            ", sectionId=" + getSectionId() +
-            ", batchId=" + getBatchId() +
+            ", department=" + getDepartmentId() +
+            ", batch=" + getBatchId() +
+            ", section=" + getSectionId() +
+            ", branch=" + getBranchId() +
             "}";
     }
 }

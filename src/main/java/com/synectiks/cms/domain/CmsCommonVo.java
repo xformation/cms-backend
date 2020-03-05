@@ -9,9 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.synectiks.cms.domain.enumeration.RouteFrequency;
 import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
-import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
-
 
 public class CmsCommonVo implements Serializable{
 
@@ -25,13 +22,14 @@ public class CmsCommonVo implements Serializable{
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate createdOn;
+
     private String updatedBy;
-   @JsonSerialize(using = LocalDateSerializer.class)
-   @JsonDeserialize(using = LocalDateDeserializer.class)
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate updatedOn;
+
     private Status status;
-    private TypeOfInsurance typeOfInsurance;
-    private TypeOfOwnerShip typeOfOwnerShip;
     private RouteFrequency routeFrequency;
     private String strCreatedOn;
     private String strUpdatedOn;
@@ -69,18 +67,6 @@ public class CmsCommonVo implements Serializable{
     }
     public void setStatus(Status status) {
         this.status = status;
-    }
-    public TypeOfOwnerShip getTypeOfOwnerShip() {
-        return typeOfOwnerShip;
-    }
-    public void setTypeOfOwnerShip(TypeOfOwnerShip typeOfOwnerShip) {
-        this.typeOfOwnerShip = typeOfOwnerShip;
-    }
-    public TypeOfInsurance getTypeOfInsurance() {
-        return typeOfInsurance;
-    }
-    public void setTypeOfInsurance(TypeOfInsurance typeOfInsurance) {
-        this.typeOfInsurance = typeOfInsurance;
     }
     public RouteFrequency getRouteFrequency() { return routeFrequency; }
     public void setRouteFrequency(RouteFrequency routeFrequency) { this.routeFrequency = routeFrequency; }

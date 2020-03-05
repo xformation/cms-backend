@@ -1793,13 +1793,13 @@ public class CommonService {
 //        Optional<Employee> employee = employeeRepository.findOne(Example.of(em));
         if(student.isPresent()) {
             config.setLoggedInUser(userName);
-//            config.setCountry(student.get().getBranch().getState().getCountry());
-//            config.setState(student.get().getBranch().getState());
-//            config.setCity(student.get().getBranch().getCity());
-//            config.setBranch(student.get().getBranch());
-//            config.setDepartment(student.get().getDepartment());
+            config.setCountry(student.get().getBranch().getState().getCountry());
+            config.setState(student.get().getBranch().getState());
+            config.setCity(student.get().getBranch().getCity());
+            config.setBranch(student.get().getBranch());
+            config.setDepartment(student.get().getDepartment());
             config.setUserId(student.get().getId());
-//            config.setCollege(student.get().getBranch().getCollege());
+            config.setCollege(student.get().getBranch().getCollege());
         }else if(teacher != null) {
             config.setLoggedInUser(userName);
             config.setCountry(teacher.getBranch().getState().getCountry());
@@ -1879,10 +1879,10 @@ public class CommonService {
 
     public List<Student> getAllStudentsOfCurrentAcademicYear(){
         AcademicYear ay = getActiveAcademicYear();
-//        Department department = new Department();
-//        department.setAcademicyear(ay);
+        Department department = new Department();
+        department.setAcademicyear(ay);
         Student student = new Student();
-//        student.setDepartment(department);
+        student.setDepartment(department);
         List<Student> list = this.studentRepository.findAll(Example.of(student));
         return list;
     }
@@ -1894,9 +1894,9 @@ public class CommonService {
 //        List<Subject> list = this.subjectRepository.findAll(Example.of(subject));
 //        return list;
 
-        logger.debug("Getting subject based on department id : "+student.getDepartmentId()+", and batchId : "+student.getBatchId());
+        logger.debug("Getting subject based on department id : "+student.getDepartment().getId()+", and batchId : "+student.getBatch().getId());
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
-	    String prefSubjectUrl = prefUrl+"/api/subject-by-filters?departmentId="+student.getDepartmentId()+"&batchId="+student.getBatchId();
+	    String prefSubjectUrl = prefUrl+"/api/subject-by-filters?departmentId="+student.getDepartment().getId()+"&batchId="+student.getBatch().getId();
 	    Subject[] temp = this.restTemplate.getForObject(prefSubjectUrl, Subject[].class);
 	    if(temp.length == 0) {
 	    	return Collections.emptyList();
