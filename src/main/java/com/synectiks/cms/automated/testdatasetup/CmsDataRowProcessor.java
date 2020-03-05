@@ -449,10 +449,10 @@ public class CmsDataRowProcessor {
         this.student.setCity(ct.getCityName());
         this.student.setState(st.getStateName());
         this.student.setCountry(country.getCountryName());
-        this.student.setDepartment(department);
-        this.student.setBatch(batch);
-        this.student.setSection(section);
-        this.student.setBranch(branch);
+//        this.student.setDepartment(department);
+//        this.student.setBatch(batch);
+//        this.student.setSection(section);
+//        this.student.setBranch(branch);
         this.student = saveOrGet(this.studentRepo, this.student);
 
 	}

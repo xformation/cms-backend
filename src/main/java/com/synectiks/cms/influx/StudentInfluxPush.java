@@ -22,31 +22,31 @@ import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 public class StudentInfluxPush implements InfluxPush {
 
 	private final Logger logger = LoggerFactory.getLogger(StudentInfluxPush.class);
-	
-	private InfluxDB influxDB;	
-	
+
+	private InfluxDB influxDB;
+
 	@Autowired
 	private InfluxDbDataSource influxDbDataSource;
-	
+
 	@Autowired
 	private ApplicationProperties applicationProperties;
-	
+
 //	@Autowired
 //	private StudentRepository studentRepository;
-//	
+//
 //	@Autowired
 //	private SubjectRepository subjectRepository;
-//	
+//
 //	@Autowired
 //	private StudentAttendanceRepository studentAttendanceRepository;
-//	
+//
 //	@Autowired
 //	private LectureRepository lectureRepository;
-	
-	
+
+
 	@Autowired
 	private CommonService commonService;
-	
+
 	@Override
 	public void pushData() throws ParseException, Exception {
 		List<Student> list = this.commonService.getAllStudentsOfCurrentAcademicYear();
@@ -70,33 +70,33 @@ public class StudentInfluxPush implements InfluxPush {
 				point = Point.measurement("Student")
 						.tag("TstudentName", st.getStudentName())
 						.tag("TstudentEmail", st.getStudentPrimaryEmailId())
-						.tag("Tdepartment", st.getDepartment().getName())
-						.tag("Tyear", st.getBatch().getBatch().toString())
+//						.tag("Tdepartment", st.getDepartment().getName())
+//						.tag("Tyear", st.getBatch().getBatch().toString())
 						.tag("Tsubject", sub.getSubjectCode())
 						.addField("StudentName", st.getStudentName())
 						.addField("StudentEmail", st.getStudentPrimaryEmailId())
-						.addField("Department", st.getDepartment().getName())
-						.addField("Year", st.getBatch().getBatch().toString())
+//						.addField("Department", st.getDepartment().getName())
+//						.addField("Year", st.getBatch().getBatch().toString())
 						.addField("Subject", sub.getSubjectCode())
 						.addField("TotalLecturesScheduled", totalLecturesScheduled)
 						.addField("TotalLecturesConducted", lecConductedList.size())
 						.addField("TotalPresent", totalPresent)
 						.addField("TotalAbsent", totalAbsent)
 						.addField("time", tm)
-						
+
 //						.addField("lectureTime", DateFormatUtil.converUtilDateFromLocaDate(sa.getLecture().getLecDate()).getTime())
 //						.addField("StudentId", sa.getStudent().getId())
-//						
+//
 //						.addField("AttendanceDate", DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_yyyy_MM_dd, DateFormatUtil.converUtilDateFromLocaDate(sa.getLecture().getLecDate()))))
 //						.addField("AttendanceStatus", sa.getAttendanceStatus().toString().equalsIgnoreCase("PRESENT") ? 0 : 1)
 //						.addField("Teacher", sa.getLecture().getAttendancemaster().getTeach().getTeacher().getTeacherName())
 						.build();
 				influxDB.write(applicationProperties.getInfluxDb(), "autogen", point);
 			}
-			
+
 		}
 		influxDbDataSource.closeInfluxDatabase(influxDB);
 	}
-	
-	
+
+
 }
