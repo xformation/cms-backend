@@ -1,11 +1,14 @@
 package com.synectiks.cms.business.service;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.CmsStudentVo;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.filter.student.StudentListFilterInput;
 import com.synectiks.cms.graphql.types.Student.StudentInput;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.filter.student.StudentListFilterInput;
-import com.synectiks.cms.graphql.types.Student.StudentType;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.service.util.CommonUtil;
+import java.time.LocalDate;
+import java.util.List;
 
 @Component
 public class StudentService {
@@ -48,7 +47,7 @@ public class StudentService {
         if(departmentId != null) {
 //            Department department = new Department();
 //            department.setId(departmentId);
-            std.setBranchId(departmentId);
+            std.setDepartmentId(departmentId);
         }
 
         if(batchId != null) {
@@ -90,7 +89,7 @@ public class StudentService {
         if(!CommonUtil.isNullOrEmpty(filter.getBatchId())) {
 //        	Batch batch = this.commonService.getBatchById(Long.valueOf(filter.getBatchId()));
 //        	if(batch != null) {
-        		student.setDepartmentId(Long.parseLong(filter.getBatchId()));
+        		student.setBatchId(Long.parseLong(filter.getBatchId()));
 //        	}
         }
         if(!CommonUtil.isNullOrEmpty(filter.getSectionId())) {
