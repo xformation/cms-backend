@@ -289,7 +289,7 @@ type Query {
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
     searchEmployee(employeeId:Long, vehicleId:Long, employeeName:String): [CmsEmployeeVo!]!
     searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
-
+    searchVehicle(transportRouteId:Long,VehicleId:Long,vehicleNumber:String): [CmsVehicleVo!]!
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
     getBranchById(branchId:Long): Branch!
@@ -336,6 +336,8 @@ type Query {
 
 type VehicleDataCache{
    transportRoute: [CmsTransportVo]
+   insurance: [CmsInsuranceVo]
+   vehicle: [CmsVehicleVo]
 }
 
 type FeeSetupDataCache {
@@ -548,6 +550,14 @@ type CmsVehicleVo {
     contactNumber:  String
     status:Status
     strDateOfRegistration: String
+    dateOfInsurance: Date
+    strDateOfInsurance: String
+    validTill: Date
+    strValidTill: String
+    startDate: Date
+    endDate: Date
+    strStartDate: String
+    strEndDate: String
     transportRouteId: Long
     collegeId: Long
     branchId: Long
@@ -555,6 +565,7 @@ type CmsVehicleVo {
     insuranceId: Long
     employeeId: Long
     transportRoute: TransportRoute
+    cmsInsuranceVo: CmsInsuranceVo
     exitCode: Long
     exitDescription: String
     dataList: [CmsVehicleVo]
@@ -1908,6 +1919,7 @@ type Mutation {
 	getStudentList(filter: StudentListFilterInput!): [CmsStudentVo]!
 	getBookList(filter: LibraryListFilterInput!): [CmsLibraryVo]!
 	getEmployeeList(filter: EmployeeListFilterInput!): [CmsEmployeeVo]!
+	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -2035,6 +2047,11 @@ input LibraryListFilterInput {
 
 input EmployeeListFilterInput {
    employeeId: String
+   vehicleId: String
+}
+
+input VehicleListFilterInput {
+   transportRouteId: String
    vehicleId: String
 }
 
@@ -3926,6 +3943,7 @@ input AddVehicleInput{
       rcNo:  String
       contactNumber: String
       transportRouteId: Long
+      insuranceId: Long
       status:Status
       strDateOfRegistration: String
 }

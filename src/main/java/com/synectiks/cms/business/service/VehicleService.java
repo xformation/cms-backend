@@ -9,7 +9,10 @@ import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
+import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehicleInput;
+import com.synectiks.cms.repository.InsuranceRepository;
 import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.VehicleRepository;
 import org.slf4j.Logger;
@@ -35,7 +38,63 @@ public class VehicleService {
     VehicleRepository vehicleRepository;
 
     @Autowired
+    InsuranceRepository insuranceRepository;
+
+    @Autowired
     TransportRouteRepository transportRouteRepository;
+
+    @Autowired
+    CommonService commonService;
+
+    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, Long vehicleId, String vehicleNumber) throws Exception {
+        Vehicle vehicle = new Vehicle();
+        if (vehicleId != null) {
+            vehicle.setId(vehicleId);
+        }
+        if (transportRouteId != null) {
+            TransportRoute transportRoute = new TransportRoute();
+            transportRoute.setId(transportRouteId);
+            vehicle.setTransportRoute(transportRoute);
+        }
+        if (vehicleNumber != null) {
+            vehicle.setVehicleNumber(vehicleNumber);
+        }
+        Example<Vehicle> example = Example.of(vehicle);
+        List<Vehicle> list = this.vehicleRepository.findAll(example);
+        List<CmsVehicleVo> ls = new ArrayList<>();
+        for(Vehicle vehicle1: list) {
+            CmsVehicleVo vo = CommonUtil.createCopyProperties(vehicle1, CmsVehicleVo.class);
+            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setDateOfRegistration(null);
+            ls.add(vo);
+        }
+        return ls;
+    }
+
+    public List<CmsVehicleVo> searchVehicle(VehicleListFilterInput filter) throws Exception {
+        Vehicle vehicle = new Vehicle();
+        if (!CommonUtil.isNullOrEmpty(filter.getTransportRouteId())) {
+            TransportRoute transportRoute = this.commonService.getTransportRouteById(Long.valueOf(filter.getTransportRouteId()));
+            if (transportRoute != null) {
+                vehicle.setTransportRoute(transportRoute);
+            }
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getVehicleId())) {
+            if (vehicle != null) {
+                vehicle.setId(Long.valueOf(filter.getVehicleId()));
+            }
+        }
+        Example<Vehicle> example = Example.of(vehicle);
+        List<Vehicle> list = this.vehicleRepository.findAll(example);
+        List<CmsVehicleVo> ls = new ArrayList<>();
+        for(Vehicle vehicle1: list) {
+            CmsVehicleVo vo = CommonUtil.createCopyProperties(vehicle1, CmsVehicleVo.class);
+            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setDateOfRegistration(null);
+            ls.add(vo);
+        }
+        return ls;
+    }
 
     public List<CmsVehicleVo> getCmsVehicleList(Status status) {
         Vehicle vehicle = new Vehicle();
@@ -111,6 +170,8 @@ public class VehicleService {
             }
             TransportRoute tr = this.transportRouteRepository.findById(input.getTransportRouteId()).get();
             vehicle.setTransportRoute(tr);
+            Insurance in = this.insuranceRepository.findById(input.getInsuranceId()).get();
+            vehicle.setInsurance(in);
             vehicle.setVehicleNumber(input.getVehicleNumber());
             vehicle.setVehicleType(input.getVehicleType());
             vehicle.setOwnerShip(input.getOwnerShip());

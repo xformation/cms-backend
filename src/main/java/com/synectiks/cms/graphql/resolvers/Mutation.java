@@ -13,6 +13,8 @@ import javax.persistence.Query;
 
 import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
+import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.graphql.types.Contract.AddContractPayload;
 import com.synectiks.cms.graphql.types.Student.StudentInput;
 import com.synectiks.cms.graphql.types.Student.StudentPayload;
@@ -494,6 +496,9 @@ public class Mutation implements GraphQLMutationResolver {
 
 	@Autowired
     private StudentFilterProcessor studentFilterProcessor;
+
+    @Autowired
+    private VehicleFilterProcessor vehicleFilterProcessor;
 
     @Autowired
     private AdmissionApplicationProcessor admissionApplicationProcessor;
@@ -3995,6 +4000,18 @@ public class Mutation implements GraphQLMutationResolver {
     	}
     	logger.debug("Total students retrieved. "+list.size());
     	return ls;
+    }
+    public List<CmsVehicleVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
+        List<CmsVehicleVo> list = this.vehicleFilterProcessor.searchVehicle(filter);
+        List<CmsVehicleVo> ls = new ArrayList<>();
+        for(CmsVehicleVo vehicle: list) {
+            CmsVehicleVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleVo.class);
+            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setDateOfRegistration(null);
+            ls.add(vo);
+        }
+        logger.debug("Total vehicles retrieved. "+list.size());
+        return ls;
     }
     public List<CmsEmployeeVo> getEmployeeList(EmployeeListFilterInput filter) throws Exception {
         return Lists.newArrayList(employeeFilterProcessor.searchEmployee(filter));

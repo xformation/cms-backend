@@ -21,6 +21,7 @@ import java.util.List;
 import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
+import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,6 +122,9 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private EmployeeFilterProcessor employeeFilterProcessor;
+
+    @Autowired
+    private VehicleFilterProcessor vehicleFilterProcessor;
 
     @Autowired
     private BookfilterProcessor bookfilterProcessor;
@@ -661,6 +665,10 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(employeeFilterProcessor.searchEmployee(vehicleId, employeeId,employeeName));
     }
 
+    public List<CmsVehicleVo> searchVehicle(Long vehicleId, Long transportRouteId ,String vehicleNumber) throws Exception {
+        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(vehicleId, transportRouteId,vehicleNumber));
+    }
+
 
     public List<Library>searchBook(String bookTitle,String author,Long batchId,Long subjectId){
         return (List<Library>) Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,batchId,subjectId));
@@ -954,8 +962,12 @@ public class Query implements GraphQLQueryResolver {
 
     public VehicleDataCache createVehicleDataCache() throws Exception{
         List<CmsTransportVo> transportRouteList = this.transportService.getTransportRouteList();
+        List<CmsInsuranceVo> insuranceList = this.insuranceService.getInsuranceList();
+        List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
         VehicleDataCache cache = new VehicleDataCache();
         cache.setTransportRoute(transportRouteList);
+        cache.setInsurance(insuranceList);
+        cache.setVehicle(vehicleList);
         return cache;
     }
 

@@ -30,6 +30,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private String contactNumber;
     private Status status;
     private TransportRoute transportRoute;
+    private CmsInsuranceVo cmsInsuranceVo;
     private Long transportRouteId;
     private Long collegeId;
     private Long branchId;
@@ -37,10 +38,18 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private Long insuranceId;
     private Long employeeId;
     private String strDateOfRegistration;
+    private String strDateOfInsurance;
+    private String strValidTill;
+    private String strStartDate;
+    private String strEndDate;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate dateOfInsurance;
     private LocalDate dateOfRegistration;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDate validTill;
     private List<CmsVehicleVo> dataList = new ArrayList<>();
 
     public Long getId() {
@@ -222,6 +231,78 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.transportRoute = transportRoute;
     }
 
+    public CmsInsuranceVo getCmsInsuranceVo() {
+        return cmsInsuranceVo;
+    }
+
+    public void setCmsInsuranceVo(CmsInsuranceVo cmsInsuranceVo) {
+        this.cmsInsuranceVo = cmsInsuranceVo;
+    }
+
+    public String getStrDateOfInsurance() {
+        return strDateOfInsurance;
+    }
+
+    public void setStrDateOfInsurance(String strDateOfInsurance) {
+        this.strDateOfInsurance = strDateOfInsurance;
+    }
+
+    public String getStrValidTill() {
+        return strValidTill;
+    }
+
+    public void setStrValidTill(String strValidTill) {
+        this.strValidTill = strValidTill;
+    }
+
+    public String getStrStartDate() {
+        return strStartDate;
+    }
+
+    public void setStrStartDate(String strStartDate) {
+        this.strStartDate = strStartDate;
+    }
+
+    public String getStrEndDate() {
+        return strEndDate;
+    }
+
+    public void setStrEndDate(String strEndDate) {
+        this.strEndDate = strEndDate;
+    }
+
+    public LocalDate getDateOfInsurance() {
+        return dateOfInsurance;
+    }
+
+    public void setDateOfInsurance(LocalDate dateOfInsurance) {
+        this.dateOfInsurance = dateOfInsurance;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public LocalDate getValidTill() {
+        return validTill;
+    }
+
+    public void setValidTill(LocalDate validTill) {
+        this.validTill = validTill;
+    }
+
     @Override
     public String toString() {
         return "CmsEmployeeVo [" +
@@ -237,9 +318,18 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
             "rcNo=" + rcNo + ", " +
             "contactNumber=" + contactNumber + ", " +
             "dateOfRegistration=" + dateOfRegistration + ", " +
+            "dateOfInsurance=" + dateOfInsurance + ", " +
+            "startDate=" + startDate + ", " +
+            "endDate=" + endDate + ", " +
+            "validTill=" + validTill + ", " +
             "status=" + status + ", " +
             "strDateOfRegistration=" + strDateOfRegistration + "," +
+            "strDateOfInsurance=" + strDateOfInsurance + ", " +
+            "strValidTill=" + strValidTill + ", " +
+            "strStartDate=" + strStartDate + ", " +
+            "strEndDate=" + strEndDate + ", " +
             "transportRoute=" + transportRoute + "," +
+            "cmsInsuranceVo=" + cmsInsuranceVo + "," +
             "transportRouteId=" + transportRouteId + "," +
             "collegeId=" + collegeId + "," +
             "branchId=" + branchId + "," +
