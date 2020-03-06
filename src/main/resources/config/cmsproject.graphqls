@@ -1538,6 +1538,10 @@ type CmsStudentVo {
 	batchId: Long
 	sectionId: Long
 	branchId: Long
+	branch: Branch
+	department: Department
+	section : Section
+	batch : Batch
 	strCreatedOn: String
 	strUpdatedOn: String
 	strDisabilityCertificateIssueDate: String

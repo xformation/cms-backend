@@ -1,20 +1,14 @@
 package com.synectiks.cms.domain;
 
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
-import com.synectiks.cms.domain.enumeration.Caste;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.Religion;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.domain.enumeration.*;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * A Student value object.
@@ -146,6 +140,10 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
     private Long batchId;
     private Long sectionId;
     private Long branchId;
+    private Branch branch;
+    private Department department;
+    private Section section;
+    private Batch batch;
     private String strCreatedOn;
     private String strUpdatedOn;
     private String strDisabilityCertificateIssueDate;
@@ -858,7 +856,40 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
 	public void setBranchId(Long branchId) {
 		this.branchId = branchId;
 	}
-	public String getStrDisabilityCertificateIssueDate() {
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
+    public Batch getBatch() {
+        return batch;
+    }
+
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
+
+    public String getStrDisabilityCertificateIssueDate() {
 		return strDisabilityCertificateIssueDate;
 	}
 	public void setStrDisabilityCertificateIssueDate(String strDisabilityCertificateIssueDate) {
@@ -992,6 +1023,10 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
             ", batchId=" + batchId +
             ", sectionId=" + sectionId +
             ", branchId=" + branchId +
+            ", branch=" + branch +
+            ", department=" + department +
+            ", section=" + section +
+            ", batch=" + batch +
             ", strCreatedOn='" + strCreatedOn + '\'' +
             ", strUpdatedOn='" + strUpdatedOn + '\'' +
             ", strDisabilityCertificateIssueDate='" + strDisabilityCertificateIssueDate + '\'' +

@@ -3990,8 +3990,16 @@ public class Mutation implements GraphQLMutationResolver {
     	List<CmsStudentVo> ls = new ArrayList<>();
     	for(Student student: list) {
     		CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
+    		Section se = this.commonService.getSectionById(vo.getSectionId());
+    		Branch br = this.commonService.getBranchById(vo.getBranchId());
+    		Department de = this.commonService.getDepartmentById(vo.getDepartmentId());
+    		Batch ba = this.commonService.getBatchById(vo.getBatchId());
     		vo.setStrDateOfBirth(DateFormatUtil.changeLocalDateFormat(student.getDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
     		vo.setDateOfBirth(null);
+    		vo.setSection(se);
+    		vo.setBranch(br);
+    		vo.setBatch(ba);
+    		vo.setDepartment(de);
 //    		vo.setDepartmentId(student.getDepartmentId() != null ? student.getDepartmentId() : null);
 //    		vo.setBatchId(student.getBatchId() != null ? student.getBatchId() : null);
 //    		vo.setSectionId(student.getSectionId() != null ? student.getSectionId() : null);
