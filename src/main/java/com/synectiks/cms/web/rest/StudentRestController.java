@@ -30,12 +30,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsStudentVo;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
@@ -87,11 +92,20 @@ public class StudentRestController {
         }
         String admissionNo = dataMap.get("admissionNo") != null ? dataMap.get("admissionNo").trim() : null;
         Student student = CommonUtil.createCopyProperties(cmsStudentVo, Student.class);
+        if(cmsStudentVo.getStrDateOfBirth() != null) {
+        	student.setDateOfBirth(DateFormatUtil.convertStringToLocalDate(cmsStudentVo.getStrDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        }
         student.setAdmissionNo(admissionNo);
-        student.setStatus(Status.DRAFT);
+        student.setStatus(Status.ACTIVE);
         student.setCreatedOn(LocalDate.now());
-//        Branch branch = this.commonService.getBranchById(cmsStudentVo.getBranchId());
-//        student.setBranch(branch);
+        student.setBranchId(cmsStudentVo.getBranchId());
+        
+        student.setDepartmentId(cmsStudentVo.getDepartmentId());
+        
+        student.setBatchId(cmsStudentVo.getBatchId());
+        
+        student.setSectionId(cmsStudentVo.getSectionId());
+        
         Student result = studentRepository.save(student);
         CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
         return result.getId();
