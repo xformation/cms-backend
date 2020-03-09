@@ -14,5 +14,17 @@
                                  referencedColumnNames="id"
                                  referencedTableName="student"/>
 
+        <addForeignKeyConstraint baseColumnNames="vehicle_id"
+                                 baseTableName="documents"
+                                 constraintName="fk_documents_vehicle_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="vehicle"/>
+
+        <addForeignKeyConstraint baseColumnNames="contract_id"
+                                 baseTableName="documents"
+                                 constraintName="fk_documents_contract_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="contract"/>
+
     </changeSet>
 </databaseChangeLog>

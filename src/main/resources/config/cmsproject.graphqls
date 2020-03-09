@@ -815,13 +815,20 @@ type CompetitiveExam{
  }
 
 type Documents{
-    id: Long!
-    documentName: String!
-    documentFilePath: String!
-    student: Student!
-    vehicle: Vehicle!
-    employee: Employee!
-    contract: Contract!
+    id: Long
+    documentName: String
+    documentFilePath: String
+    isFlatFileStorage: String
+    isMsOneDriveStorage: String
+    oneDrivePath: String
+    isOakStorage: String
+    oakPath: String
+    isAwsStorage: String
+    awsPath: String
+    student: Student
+    vehicle: Vehicle
+    employeeId: Long
+    contract: Contract
  }
 
 
@@ -2079,28 +2086,42 @@ input ExamReportFilterInput {
     subjectId: String!
 }
 input AddDocumentsInput{
-    documentName: String!
-    documentFilePath: String!
-    studentId: Long!
-    vehicleId: Long!
-    employeeId: Long!
-    contractId: Long!
+    documentName: String
+    documentFilePath: String
+    isFlatFileStorage: String
+    isMsOneDriveStorage: String
+    oneDrivePath: String
+    isOakStorage: String
+    oakPath: String
+    isAwsStorage: String
+    awsPath: String
+    studentId: Long
+    vehicleId: Long
+    employeeId: Long
+    contractId: Long
 }
 
 type AddDocumentsPayload {
-    documents: Documents!
+    documents: Documents
 }
 input UpdateDocumentsInput {
-    id: Long!
-    documentName: String!
-    documentFilePath: String!
-    studentId: Long!
-    vehicleId: Long!
-    employeeId: Long!
-    contractId: Long!
+    id: Long
+    documentName: String
+    documentFilePath: String
+    isFlatFileStorage: String
+    isMsOneDriveStorage: String
+    oneDrivePath: String
+    isOakStorage: String
+    oakPath: String
+    isAwsStorage: String
+    awsPath: String
+    studentId: Long
+    vehicleId: Long
+    employeeId: Long
+    contractId: Long
 }
 type UpdateDocumentsPayload {
-documents: Documents!
+documents: Documents
 }
 input RemoveDocumentsInput {
 documentsId: Long!

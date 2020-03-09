@@ -1692,13 +1692,13 @@ public class Mutation implements GraphQLMutationResolver {
     public AddDocumentsPayload addDocuments(AddDocumentsInput addDocumentsInput) {
         final Student student = studentRepository.findById(addDocumentsInput.getStudentId()).get();
         final Vehicle vehicle = vehicleRepository.findById(addDocumentsInput.getVehicleId()).get();
-        final Employee employee = employeeRepository.findById(addDocumentsInput.getEmployeeId()).get();
+//        final Employee employee = employeeRepository.findById(addDocumentsInput.getEmployeeId()).get();
         final Contract contract = contractRepository.findById(addDocumentsInput.getContractId()).get();
         final Documents documents = new Documents();
         documents.setStudent(student);
         documents.setVehicle(vehicle);
         documents.setContract(contract);
-        documents.setEmployee(employee);
+        documents.setEmployeeId(addDocumentsInput.getEmployeeId());
         documents.setDocumentFilePath(addDocumentsInput.getDocumentFilePath());
         documents.setDocumentName(addDocumentsInput.getDocumentName());
         documentsRepository.save(documents);
@@ -1722,8 +1722,8 @@ public class Mutation implements GraphQLMutationResolver {
         }
 
         if (updateDocumentsInput.getEmployeeId() != null) {
-            final Employee employee = employeeRepository.findById(updateDocumentsInput.getEmployeeId()).get();
-            documents.setEmployee(employee);
+//            final Employee employee = employeeRepository.findById(updateDocumentsInput.getEmployeeId()).get();
+            documents.setEmployeeId(updateDocumentsInput.getEmployeeId());
         }
         if (updateDocumentsInput.getVehicleId() != null) {
             final Vehicle vehicle = vehicleRepository.findById(updateDocumentsInput.getVehicleId()).get();

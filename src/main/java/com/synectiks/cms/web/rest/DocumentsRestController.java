@@ -1,24 +1,36 @@
 package com.synectiks.cms.web.rest;
 
 
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.service.util.CommonUtil;
-import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.HeaderUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.Documents;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.repository.DocumentsRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
+import com.synectiks.cms.web.rest.util.HeaderUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -28,15 +40,50 @@ public class DocumentsRestController {
 
     @Autowired
     private DocumentsRepository documentsRepository;
+    
+    @Autowired
+    private StudentRepository studentRepository;
+    
+    
     @RequestMapping(method = RequestMethod.POST, value = "/cmsdocuments")
-    public ResponseEntity<Documents> createDocuments(@Valid @RequestBody Documents documents) throws URISyntaxException {
+    public ResponseEntity<Documents> createDocuments(@RequestBody Documents documents, @RequestParam Map<String, String> dataMap) throws URISyntaxException {
         logger.info("REST request to create a new documents.", documents);
         if (documents.getId() != null) {
             throw new BadRequestAlertException("A new documents cannot have an ID which already exits", ENTITY_NAME, "idexists");
         }
-        Documents doc = new Documents();
+        Documents doc = CommonUtil.createCopyProperties(documents, Documents.class);
+        String studentId = dataMap.get("studentId") != null ? dataMap.get("studentId").trim() : null;
+        if(!CommonUtil.isNullOrEmpty(studentId)) {
+        	Optional<Student> os = studentRepository.findById(Long.parseLong(studentId));
+        	if(os.isPresent()) {
+        		doc.setStudent(os.get());
+        	}else {
+        		logger.warn("Student not found for the given student id "+studentId+". Returning.");
+            	return ResponseEntity.unprocessableEntity().body(documents);
+        	}
+        }else {
+    		logger.warn("Student id is null. Returning.");
+        	return ResponseEntity.unprocessableEntity().body(documents);
+    	}
+         
         doc.setDocumentName(documents.getDocumentName());
-        doc.setDocumentFilePath(documents.getDocumentFilePath());
+        if(CmsConstants.YES.equalsIgnoreCase(documents.getIsMsOneDriveStorage())){
+        	doc.setIsMsOneDriveStorage(documents.getIsMsOneDriveStorage());
+        	doc.setOneDrivePath(documents.getOneDrivePath());
+        }else if(CmsConstants.YES.equalsIgnoreCase(documents.getIsOakStorage())){
+        	doc.setIsOakStorage(documents.getIsOakStorage());
+        	doc.setOakPath(documents.getOakPath());
+        }else if(CmsConstants.YES.equalsIgnoreCase(documents.getIsAwsStorage())){
+        	doc.setIsAwsStorage(documents.getIsAwsStorage());
+        	doc.setAwsPath(documents.getAwsPath());
+        }else if(CmsConstants.YES.equalsIgnoreCase(documents.getIsFlatFileStorage())) {
+        	doc.setIsFlatFileStorage(documents.getIsFlatFileStorage());
+            doc.setDocumentFilePath(documents.getDocumentFilePath());
+        }else {
+        	logger.warn("No document path specified. Returning.");
+        	return ResponseEntity.unprocessableEntity().body(documents);
+        }
+        
         Documents result = documentsRepository.save(doc);
         documents.setId(result.getId());
         return ResponseEntity.created(new URI("/api/cmsdocuments/" + result.getId()))

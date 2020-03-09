@@ -257,6 +257,7 @@ entity Student{
 	branchId Long
     sectionId Long
     batchId Long
+    academicYearId Long
 }
 
 
@@ -579,8 +580,16 @@ rank Long required
 }
 
 entity Documents{
-documentName String required
-documentFilePath String required
+	documentName String 
+	isFlatFileStorage String maxlength(3)
+	documentFilePath String 
+	isMsOneDriveStorage String maxlength(3)
+	oneDrivePath String maxlength(5000)
+	isOakStorage String maxlength(3)
+	oakPath String maxlength(500)
+	isAwsStorage String maxlength(3)
+	awsPath String maxlength(1000)
+	employeeId Long
 }
 
 entity AcademicHistory{
@@ -935,7 +944,7 @@ MetaLecture{batch} to Batch,
 StudentFacilityLink{student} to Student,
 StudentFacilityLink{facility} to Facility,
 Documents{vehicle} to Vehicle,
-Documents{employee} to Employee,
+
 Documents{contract} to Contract,
 Vehicle{transportRoute} to TransportRoute,
 Employee{transportRoute} to TransportRoute,

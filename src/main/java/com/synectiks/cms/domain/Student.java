@@ -1,16 +1,13 @@
 package com.synectiks.cms.domain;
-
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 import com.synectiks.cms.domain.enumeration.Religion;
 
@@ -32,14 +29,15 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "student")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "student")
+@org.springframework.data.elasticsearch.annotations.Document(indexName = "student")
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "student_name")
@@ -416,6 +414,9 @@ public class Student implements Serializable {
 
     @Column(name = "batch_id")
     private Long batchId;
+
+    @Column(name = "academic_year_id")
+    private Long academicYearId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -1998,6 +1999,19 @@ public class Student implements Serializable {
     public void setBatchId(Long batchId) {
         this.batchId = batchId;
     }
+
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public Student academicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+        return this;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -2005,19 +2019,15 @@ public class Student implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Student)) {
             return false;
         }
-        Student student = (Student) o;
-        if (student.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), student.getId());
+        return id != null && id.equals(((Student) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -2145,6 +2155,7 @@ public class Student implements Serializable {
             ", branchId=" + getBranchId() +
             ", sectionId=" + getSectionId() +
             ", batchId=" + getBatchId() +
+            ", academicYearId=" + getAcademicYearId() +
             "}";
     }
 }

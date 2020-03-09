@@ -504,7 +504,10 @@
             <column name="branch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-
+			
+			<column name="academic_year_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>

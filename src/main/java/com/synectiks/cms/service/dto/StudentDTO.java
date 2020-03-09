@@ -12,7 +12,7 @@ import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.Status;
 
 /**
- * A DTO for the Student entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Student} entity.
  */
 public class StudentDTO implements Serializable {
 
@@ -264,6 +264,8 @@ public class StudentDTO implements Serializable {
     private Long sectionId;
 
     private Long batchId;
+
+    private Long academicYearId;
 
 
     public Long getId() {
@@ -1242,6 +1244,14 @@ public class StudentDTO implements Serializable {
         this.batchId = batchId;
     }
 
+    public Long getAcademicYearId() {
+        return academicYearId;
+    }
+
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -1388,6 +1398,7 @@ public class StudentDTO implements Serializable {
             ", branchId=" + getBranchId() +
             ", sectionId=" + getSectionId() +
             ", batchId=" + getBatchId() +
+            ", academicYearId=" + getAcademicYearId() +
             "}";
     }
 }

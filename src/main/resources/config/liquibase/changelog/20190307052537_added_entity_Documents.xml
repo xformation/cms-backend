@@ -22,14 +22,54 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="document_name" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
-            <column name="upload" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="is_flat_file_storage" type="varchar(3)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="document_file_path" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="is_ms_one_drive_storage" type="varchar(3)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="one_drive_path" type="varchar(5000)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="is_oak_storage" type="varchar(3)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oak_path" type="varchar(500)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="is_aws_storage" type="varchar(3)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="aws_path" type="varchar(1000)">
+                <constraints nullable="true" />
             </column>
 
             <column name="student_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="vehicle_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="employee_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="contract_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

@@ -4,17 +4,36 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the Documents entity.
+ * A DTO for the {@link com.synectiks.cms.domain.Documents} entity.
  */
 public class DocumentsDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String documentName;
 
-    @NotNull
+    @Size(max = 3)
+    private String isFlatFileStorage;
+
     private String documentFilePath;
+
+    @Size(max = 3)
+    private String isMsOneDriveStorage;
+
+    @Size(max = 5000)
+    private String oneDrivePath;
+
+    @Size(max = 3)
+    private String isOakStorage;
+
+    @Size(max = 500)
+    private String oakPath;
+
+    @Size(max = 3)
+    private String isAwsStorage;
+
+    @Size(max = 1000)
+    private String awsPath;
 
 
     private Long studentId;
@@ -41,12 +60,68 @@ public class DocumentsDTO implements Serializable {
         this.documentName = documentName;
     }
 
+    public String getIsFlatFileStorage() {
+        return isFlatFileStorage;
+    }
+
+    public void setIsFlatFileStorage(String isFlatFileStorage) {
+        this.isFlatFileStorage = isFlatFileStorage;
+    }
+
     public String getDocumentFilePath() {
         return documentFilePath;
     }
 
     public void setDocumentFilePath(String documentFilePath) {
         this.documentFilePath = documentFilePath;
+    }
+
+    public String getIsMsOneDriveStorage() {
+        return isMsOneDriveStorage;
+    }
+
+    public void setIsMsOneDriveStorage(String isMsOneDriveStorage) {
+        this.isMsOneDriveStorage = isMsOneDriveStorage;
+    }
+
+    public String getOneDrivePath() {
+        return oneDrivePath;
+    }
+
+    public void setOneDrivePath(String oneDrivePath) {
+        this.oneDrivePath = oneDrivePath;
+    }
+
+    public String getIsOakStorage() {
+        return isOakStorage;
+    }
+
+    public void setIsOakStorage(String isOakStorage) {
+        this.isOakStorage = isOakStorage;
+    }
+
+    public String getOakPath() {
+        return oakPath;
+    }
+
+    public void setOakPath(String oakPath) {
+        this.oakPath = oakPath;
+    }
+
+    public String getIsAwsStorage() {
+        return isAwsStorage;
+    }
+
+    public void setIsAwsStorage(String isAwsStorage) {
+        this.isAwsStorage = isAwsStorage;
+    }
+
+    public String getAwsPath() {
+        return awsPath;
+    }
+
+    public void setAwsPath(String awsPath) {
+        this.awsPath = awsPath;
     }
 
     public Long getStudentId() {
@@ -107,7 +182,14 @@ public class DocumentsDTO implements Serializable {
         return "DocumentsDTO{" +
             "id=" + getId() +
             ", documentName='" + getDocumentName() + "'" +
+            ", isFlatFileStorage='" + getIsFlatFileStorage() + "'" +
             ", documentFilePath='" + getDocumentFilePath() + "'" +
+            ", isMsOneDriveStorage='" + getIsMsOneDriveStorage() + "'" +
+            ", oneDrivePath='" + getOneDrivePath() + "'" +
+            ", isOakStorage='" + getIsOakStorage() + "'" +
+            ", oakPath='" + getOakPath() + "'" +
+            ", isAwsStorage='" + getIsAwsStorage() + "'" +
+            ", awsPath='" + getAwsPath() + "'" +
             ", student=" + getStudentId() +
             ", vehicle=" + getVehicleId() +
             ", employee=" + getEmployeeId() +

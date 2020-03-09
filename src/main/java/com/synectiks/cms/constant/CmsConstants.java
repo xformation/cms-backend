@@ -91,6 +91,8 @@ import com.synectiks.cms.repository.TypeOfGradingRepository;
 
 public interface CmsConstants {
 	
+	String YES = "YES";
+	String NO = "NO";
 	String CMS_IMAGE_FILE_PATH = "college_images/";
 
 	String CMS_COLLEGE_LOGO_FILE_NAME = "college_logo";
