@@ -1,6 +1,4 @@
 package com.synectiks.cms.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.EmployeeService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -46,7 +44,6 @@ public class EmployeeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/employees")
-    @Timed
     public ResponseEntity<EmployeeDTO> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) throws URISyntaxException {
         log.debug("REST request to save Employee : {}", employeeDTO);
         if (employeeDTO.getId() != null) {
@@ -68,7 +65,6 @@ public class EmployeeResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/employees")
-    @Timed
     public ResponseEntity<EmployeeDTO> updateEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) throws URISyntaxException {
         log.debug("REST request to update Employee : {}", employeeDTO);
         if (employeeDTO.getId() == null) {
@@ -83,16 +79,10 @@ public class EmployeeResource {
     /**
      * GET  /employees : get all the employees.
      *
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of employees in body
      */
     @GetMapping("/employees")
-    @Timed
-    public List<EmployeeDTO> getAllEmployees(@RequestParam(required = false) String filter) {
-        if ("vehicle-is-null".equals(filter)) {
-            log.debug("REST request to get all Employees where vehicle is null");
-            return employeeService.findAllWhereVehicleIsNull();
-        }
+    public List<EmployeeDTO> getAllEmployees() {
         log.debug("REST request to get all Employees");
         return employeeService.findAll();
     }
@@ -104,7 +94,6 @@ public class EmployeeResource {
      * @return the ResponseEntity with status 200 (OK) and with body the employeeDTO, or with status 404 (Not Found)
      */
     @GetMapping("/employees/{id}")
-    @Timed
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Long id) {
         log.debug("REST request to get Employee : {}", id);
         Optional<EmployeeDTO> employeeDTO = employeeService.findOne(id);
@@ -118,7 +107,6 @@ public class EmployeeResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/employees/{id}")
-    @Timed
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         log.debug("REST request to delete Employee : {}", id);
         employeeService.delete(id);
@@ -133,7 +121,6 @@ public class EmployeeResource {
      * @return the result of the search
      */
     @GetMapping("/_search/employees")
-    @Timed
     public List<EmployeeDTO> searchEmployees(@RequestParam String query) {
         log.debug("REST request to search Employees for query {}", query);
         return employeeService.search(query);
