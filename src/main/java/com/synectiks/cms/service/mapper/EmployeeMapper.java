@@ -6,7 +6,7 @@ import com.synectiks.cms.service.dto.EmployeeDTO;
 import org.mapstruct.*;
 
 /**
- * Mapper for the entity {@link Employee} and its DTO {@link EmployeeDTO}.
+ * Mapper for the entity Employee and its DTO EmployeeDTO.
  */
 @Mapper(componentModel = "spring", uses = {BranchMapper.class, TransportRouteMapper.class})
 public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
@@ -17,7 +17,6 @@ public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
 
     @Mapping(source = "branchId", target = "branch")
     @Mapping(source = "transportRouteId", target = "transportRoute")
-    @Mapping(target = "vehicle", ignore = true)
     Employee toEntity(EmployeeDTO employeeDTO);
 
     default Employee fromId(Long id) {

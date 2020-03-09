@@ -31,6 +31,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private Status status;
     private TransportRoute transportRoute;
     private CmsInsuranceVo cmsInsuranceVo;
+    private Employee employee;
     private Long transportRouteId;
     private Long collegeId;
     private Long branchId;
@@ -303,6 +304,14 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.validTill = validTill;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     @Override
     public String toString() {
         return "CmsEmployeeVo [" +
@@ -330,6 +339,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
             "strEndDate=" + strEndDate + ", " +
             "transportRoute=" + transportRoute + "," +
             "cmsInsuranceVo=" + cmsInsuranceVo + "," +
+            "employee=" + employee + "," +
             "transportRouteId=" + transportRouteId + "," +
             "collegeId=" + collegeId + "," +
             "branchId=" + branchId + "," +

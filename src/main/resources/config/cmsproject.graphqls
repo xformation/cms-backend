@@ -289,7 +289,7 @@ type Query {
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
     searchEmployee(employeeId:Long, vehicleId:Long, employeeName:String): [CmsEmployeeVo!]!
     searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
-    searchVehicle(transportRouteId:Long,VehicleId:Long,vehicleNumber:String): [CmsVehicleVo!]!
+    searchVehicle(transportRouteId:Long,vehicleId:Long,employeeId:Long,vehicleNumber:String): [CmsVehicleVo!]!
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
     getBranchById(branchId:Long): Branch!
@@ -338,6 +338,8 @@ type VehicleDataCache{
    transportRoute: [CmsTransportVo]
    insurance: [CmsInsuranceVo]
    vehicle: [CmsVehicleVo]
+   employee: [Employee]
+   branches: [Branch]
 }
 
 type FeeSetupDataCache {
@@ -564,6 +566,7 @@ type CmsVehicleVo {
     contractId: Long
     insuranceId: Long
     employeeId: Long
+    employee: Employee
     transportRoute: TransportRoute
     cmsInsuranceVo: CmsInsuranceVo
     exitCode: Long
@@ -633,11 +636,8 @@ type CmsEmployeeVo{
      strdrivingLicenceValidity:String
      transportRoute: TransportRoute
      branch: Branch
-     vehicle: Vehicle
      branchId:Long
      transportRouteId:Long
-     vehicleId:Long
-
 }
 
 type CmsLibrary {
@@ -1061,7 +1061,6 @@ type Employee{
 	maritalStatus: String
 	branch: Branch
 	transportRoute: TransportRoute
-	vehicle: Vehicle
 	staffType: String
 }
 
@@ -2064,10 +2063,11 @@ input EmployeeListFilterInput {
 input VehicleListFilterInput {
    transportRouteId: String
    vehicleId: String
+   employeeId: String
 }
 
 input ExamListFilterInput {
-    branchId:String!
+       branchId:String!
 	  departmentId:String!
 	  batchId: String!
 	  sectionId: String!
@@ -3946,12 +3946,12 @@ type RemoveBookPayload{
       rcNo:  String
       contactNumber:  String
       status:Status
-      employee: Employee
+      collegeId: Long
+      branchId: Long
+      employeeId: Long
       transportRoute: TransportRoute
       insurance: Insurance
       contract: Contract
-      branch: Branch
-      college: College
   }
 
 
@@ -3968,7 +3968,8 @@ input AddVehicleInput{
       rcNo:  String
       contactNumber: String
       transportRouteId: Long
-      insuranceId: Long
+      employeeId: Long
+      branchId: Long
       status:Status
       strDateOfRegistration: String
 }

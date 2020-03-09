@@ -46,10 +46,13 @@ public class VehicleService {
     @Autowired
     CommonService commonService;
 
-    public List<CmsVehicleVo> searchVehicle(Long transportRouteId, Long vehicleId, String vehicleNumber) throws Exception {
+    public List<CmsVehicleVo> searchVehicle(Long transportRouteId,Long employeeId, Long vehicleId, String vehicleNumber) throws Exception {
         Vehicle vehicle = new Vehicle();
         if (vehicleId != null) {
             vehicle.setId(vehicleId);
+        }
+        if (employeeId !=null){
+            vehicle.setEmployeeId(employeeId);
         }
         if (transportRouteId != null) {
             TransportRoute transportRoute = new TransportRoute();
@@ -83,6 +86,9 @@ public class VehicleService {
             if (vehicle != null) {
                 vehicle.setId(Long.valueOf(filter.getVehicleId()));
             }
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getEmployeeId())) {
+            vehicle.setEmployeeId(Long.parseLong(filter.getEmployeeId()));
         }
         Example<Vehicle> example = Example.of(vehicle);
         List<Vehicle> list = this.vehicleRepository.findAll(example);
@@ -170,8 +176,10 @@ public class VehicleService {
             }
             TransportRoute tr = this.transportRouteRepository.findById(input.getTransportRouteId()).get();
             vehicle.setTransportRoute(tr);
-            Insurance in = this.insuranceRepository.findById(input.getInsuranceId()).get();
-            vehicle.setInsurance(in);
+//            Insurance in = this.insuranceRepository.findById(input.getInsuranceId()).get();
+//            vehicle.setInsurance(in);
+//            Employee e = this.commonService.getEmployeeById(input.getEmployeeId());
+//            vehicle.setEmployeeId(input.getEmployeeId());
             vehicle.setVehicleNumber(input.getVehicleNumber());
             vehicle.setVehicleType(input.getVehicleType());
             vehicle.setOwnerShip(input.getOwnerShip());
@@ -183,6 +191,9 @@ public class VehicleService {
             vehicle.setRcNo(input.getRcNo());
             vehicle.setModel(input.getModel());
             vehicle.setStatus(input.getStatus());
+            vehicle.setEmployeeId(input.getEmployeeId());
+            vehicle.setBranchId(input.getBranchId());
+            vehicle.setCollegeId(input.getCollegeId());
             vehicle.setDateOfRegistration(input.getStrDateOfRegistration() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
             vehicle = this.vehicleRepository.save(vehicle);
             vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleVo.class);

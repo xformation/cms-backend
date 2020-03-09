@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.synectiks.cms.domain.Employee} entity.
+ * A DTO for the Employee entity.
  */
 public class EmployeeDTO implements Serializable {
 

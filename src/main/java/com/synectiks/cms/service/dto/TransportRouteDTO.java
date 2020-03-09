@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.RouteFrequency;
@@ -11,18 +10,14 @@ public class TransportRouteDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String routeName;
 
-    @NotNull
     private String routeDetails;
 
     private String routeMapUrl;
 
-    @NotNull
     private Integer noOfStops;
 
-    @NotNull
     private RouteFrequency routeFrequency;
 
 
