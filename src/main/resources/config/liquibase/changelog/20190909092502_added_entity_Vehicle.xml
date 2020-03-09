@@ -22,19 +22,19 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="vehicle_number" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="vehicle_type" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="capacity" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="owner_ship" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="date_of_registration" type="date">
@@ -58,14 +58,26 @@
             </column>
 
             <column name="rc_no" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="contact_number" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="status" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="insurance_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_vehicle_insurance_id" />
+            </column>            <column name="employee_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_vehicle_employee_id" />
+            </column>
+            <column name="transport_route_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="contract_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -77,23 +89,9 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="employee_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="insurance_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_vehicle_insurance_id" />
-            </column>
-            <column name="transport_route_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="contract_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

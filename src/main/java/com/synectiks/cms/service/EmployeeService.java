@@ -24,6 +24,12 @@ public interface EmployeeService {
      * @return the list of entities
      */
     List<EmployeeDTO> findAll();
+    /**
+     * Get all the EmployeeDTO where Vehicle is null.
+     *
+     * @return the list of entities
+     */
+    List<EmployeeDTO> findAllWhereVehicleIsNull();
 
 
     /**

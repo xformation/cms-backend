@@ -1,11 +1,11 @@
 package com.synectiks.cms.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
@@ -24,23 +24,27 @@ import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
 public class Insurance implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "insurance_company")
+    @NotNull
+    @Column(name = "insurance_company", nullable = false)
     private String insuranceCompany;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_of_insurance")
+    @Column(name = "type_of_insurance", nullable = false)
     private TypeOfInsurance typeOfInsurance;
 
-    @Column(name = "date_of_insurance")
+    @NotNull
+    @Column(name = "date_of_insurance", nullable = false)
     private LocalDate dateOfInsurance;
 
-    @Column(name = "valid_till")
+    @NotNull
+    @Column(name = "valid_till", nullable = false)
     private LocalDate validTill;
 
     @OneToOne(mappedBy = "insurance")

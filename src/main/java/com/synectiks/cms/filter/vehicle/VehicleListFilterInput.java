@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class VehicleListFilterInput {
     private String transportRouteId;
     private String vehicleId;
-    private String employeeId;
 
     @JsonProperty("transportRouteId")
     public String getTransportRouteId() {
@@ -24,9 +23,4 @@ public class VehicleListFilterInput {
     public void setVehicleId(String vehicleId) {
         this.vehicleId = vehicleId;
     }
-
-    @JsonProperty("employeeId")
-    public String getEmployeeId() { return employeeId; }
-
-    public void setEmployeeId(String employeeId) { this.employeeId = employeeId; }
 }

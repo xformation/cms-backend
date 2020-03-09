@@ -1,5 +1,6 @@
 package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
@@ -11,14 +12,19 @@ public class ContractDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String vendorName;
 
+    @NotNull
     private TypeOfOwnerShip typeOfOwnerShip;
 
+    @NotNull
     private String durationOfContract;
 
+    @NotNull
     private LocalDate startDate;
 
+    @NotNull
     private LocalDate endDate;
 
 

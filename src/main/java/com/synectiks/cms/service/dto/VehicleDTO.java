@@ -1,5 +1,7 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.Status;
@@ -11,12 +13,16 @@ public class VehicleDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String vehicleNumber;
 
+    @NotNull
     private String vehicleType;
 
+    @NotNull
     private Long capacity;
 
+    @NotNull
     private String ownerShip;
 
     private LocalDate dateOfRegistration;
@@ -29,24 +35,26 @@ public class VehicleDTO implements Serializable {
 
     private String chasisNo;
 
+    @NotNull
     private String rcNo;
 
+    @NotNull
     private String contactNumber;
 
+    @NotNull
     private Status status;
 
-    private Long collegeId;
-
-    private Long branchId;
+    private Long insuranceId;
 
     private Long employeeId;
-
-
-    private Long insuranceId;
 
     private Long transportRouteId;
 
     private Long contractId;
+
+    private Long collegeId;
+
+    private Long branchId;
 
     public Long getId() {
         return id;
@@ -152,20 +160,12 @@ public class VehicleDTO implements Serializable {
         this.status = status;
     }
 
-    public Long getCollegeId() {
-        return collegeId;
+    public Long getInsuranceId() {
+        return insuranceId;
     }
 
-    public void setCollegeId(Long collegeId) {
-        this.collegeId = collegeId;
-    }
-
-    public Long getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
+    public void setInsuranceId(Long insuranceId) {
+        this.insuranceId = insuranceId;
     }
 
     public Long getEmployeeId() {
@@ -174,14 +174,6 @@ public class VehicleDTO implements Serializable {
 
     public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
-    }
-
-    public Long getInsuranceId() {
-        return insuranceId;
-    }
-
-    public void setInsuranceId(Long insuranceId) {
-        this.insuranceId = insuranceId;
     }
 
     public Long getTransportRouteId() {
@@ -198,6 +190,22 @@ public class VehicleDTO implements Serializable {
 
     public void setContractId(Long contractId) {
         this.contractId = contractId;
+    }
+
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
     @Override
@@ -237,12 +245,12 @@ public class VehicleDTO implements Serializable {
             ", rcNo='" + getRcNo() + "'" +
             ", contactNumber='" + getContactNumber() + "'" +
             ", status='" + getStatus() + "'" +
-            ", collegeId=" + getCollegeId() +
-            ", branchId=" + getBranchId() +
-            ", employeeId=" + getEmployeeId() +
             ", insurance=" + getInsuranceId() +
+            ", employee=" + getEmployeeId() +
             ", transportRoute=" + getTransportRouteId() +
             ", contract=" + getContractId() +
+            ", college=" + getCollegeId() +
+            ", branch=" + getBranchId() +
             "}";
     }
 }

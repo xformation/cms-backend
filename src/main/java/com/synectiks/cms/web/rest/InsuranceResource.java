@@ -1,4 +1,6 @@
 package com.synectiks.cms.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
 import com.synectiks.cms.service.InsuranceService;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,7 +46,8 @@ public class InsuranceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/insurances")
-    public ResponseEntity<InsuranceDTO> createInsurance(@RequestBody InsuranceDTO insuranceDTO) throws URISyntaxException {
+    @Timed
+    public ResponseEntity<InsuranceDTO> createInsurance(@Valid @RequestBody InsuranceDTO insuranceDTO) throws URISyntaxException {
         log.debug("REST request to save Insurance : {}", insuranceDTO);
         if (insuranceDTO.getId() != null) {
             throw new BadRequestAlertException("A new insurance cannot already have an ID", ENTITY_NAME, "idexists");
@@ -64,7 +68,8 @@ public class InsuranceResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/insurances")
-    public ResponseEntity<InsuranceDTO> updateInsurance(@RequestBody InsuranceDTO insuranceDTO) throws URISyntaxException {
+    @Timed
+    public ResponseEntity<InsuranceDTO> updateInsurance(@Valid @RequestBody InsuranceDTO insuranceDTO) throws URISyntaxException {
         log.debug("REST request to update Insurance : {}", insuranceDTO);
         if (insuranceDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -82,6 +87,7 @@ public class InsuranceResource {
      * @return the ResponseEntity with status 200 (OK) and the list of insurances in body
      */
     @GetMapping("/insurances")
+    @Timed
     public List<InsuranceDTO> getAllInsurances(@RequestParam(required = false) String filter) {
         if ("vehicle-is-null".equals(filter)) {
             log.debug("REST request to get all Insurances where vehicle is null");
@@ -98,6 +104,7 @@ public class InsuranceResource {
      * @return the ResponseEntity with status 200 (OK) and with body the insuranceDTO, or with status 404 (Not Found)
      */
     @GetMapping("/insurances/{id}")
+    @Timed
     public ResponseEntity<InsuranceDTO> getInsurance(@PathVariable Long id) {
         log.debug("REST request to get Insurance : {}", id);
         Optional<InsuranceDTO> insuranceDTO = insuranceService.findOne(id);
@@ -111,6 +118,7 @@ public class InsuranceResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/insurances/{id}")
+    @Timed
     public ResponseEntity<Void> deleteInsurance(@PathVariable Long id) {
         log.debug("REST request to delete Insurance : {}", id);
         insuranceService.delete(id);
@@ -125,6 +133,7 @@ public class InsuranceResource {
      * @return the result of the search
      */
     @GetMapping("/_search/insurances")
+    @Timed
     public List<InsuranceDTO> searchInsurances(@RequestParam String query) {
         log.debug("REST request to search Insurances for query {}", query);
         return insuranceService.search(query);

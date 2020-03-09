@@ -1,5 +1,7 @@
 package com.synectiks.cms.service.dto;
+
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
@@ -11,14 +13,17 @@ public class InsuranceDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String insuranceCompany;
 
+    @NotNull
     private TypeOfInsurance typeOfInsurance;
 
+    @NotNull
     private LocalDate dateOfInsurance;
 
+    @NotNull
     private LocalDate validTill;
-
 
     public Long getId() {
         return id;

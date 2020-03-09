@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
@@ -29,20 +30,25 @@ public class Contract implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "vendor_name")
+    @NotNull
+    @Column(name = "vendor_name", nullable = false)
     private String vendorName;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_of_owner_ship")
+    @Column(name = "type_of_owner_ship", nullable = false)
     private TypeOfOwnerShip typeOfOwnerShip;
 
-    @Column(name = "duration_of_contract")
+    @NotNull
+    @Column(name = "duration_of_contract", nullable = false)
     private String durationOfContract;
 
-    @Column(name = "start_date")
+    @NotNull
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @Column(name = "end_date")
+    @NotNull
+    @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
