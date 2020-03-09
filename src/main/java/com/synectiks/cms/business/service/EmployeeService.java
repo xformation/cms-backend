@@ -35,7 +35,6 @@ public class EmployeeService {
         if(vehicleId != null) {
             Vehicle vehicle = new Vehicle();
             vehicle.setId(vehicleId);
-            employee.setVehicle(vehicle);
         }
 
 
@@ -61,7 +60,6 @@ public class EmployeeService {
            Vehicle vehicle = new Vehicle();
            if(vehicle != null){
                vehicle.setId(Long.valueOf(filter.getVehicleId()));
-               employee.setVehicle(vehicle);
            }
         }
 

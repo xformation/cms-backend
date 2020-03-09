@@ -1,11 +1,11 @@
 package com.synectiks.cms.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
@@ -24,26 +24,22 @@ import com.synectiks.cms.domain.enumeration.Status;
 public class Vehicle implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "vehicle_number", nullable = false)
+    @Column(name = "vehicle_number")
     private String vehicleNumber;
 
-    @NotNull
-    @Column(name = "vehicle_type", nullable = false)
+    @Column(name = "vehicle_type")
     private String vehicleType;
 
-    @NotNull
-    @Column(name = "capacity", nullable = false)
+    @Column(name = "capacity")
     private Long capacity;
 
-    @NotNull
-    @Column(name = "owner_ship", nullable = false)
+    @Column(name = "owner_ship")
     private String ownerShip;
 
     @Column(name = "date_of_registration")
@@ -61,40 +57,36 @@ public class Vehicle implements Serializable {
     @Column(name = "chasis_no")
     private String chasisNo;
 
-    @NotNull
-    @Column(name = "rc_no", nullable = false)
+    @Column(name = "rc_no")
     private String rcNo;
 
-    @NotNull
-    @Column(name = "contact_number", nullable = false)
+    @Column(name = "contact_number")
     private String contactNumber;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private Status status;
 
-    @OneToOne    @JoinColumn(unique = true)
+    @Column(name = "college_id")
+    private Long collegeId;
+
+    @Column(name = "branch_id")
+    private Long branchId;
+
+    @Column(name = "employee_id")
+    private Long employeeId;
+
+    @OneToOne
+    @JoinColumn(unique = true)
     private Insurance insurance;
 
-    @OneToOne    @JoinColumn(unique = true)
-    private Employee employee;
-
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("vehicles")
     private TransportRoute transportRoute;
 
     @ManyToOne
-    @JsonIgnoreProperties("")
+    @JsonIgnoreProperties("vehicles")
     private Contract contract;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private College college;
-
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -261,6 +253,45 @@ public class Vehicle implements Serializable {
         this.status = status;
     }
 
+    public Long getCollegeId() {
+        return collegeId;
+    }
+
+    public Vehicle collegeId(Long collegeId) {
+        this.collegeId = collegeId;
+        return this;
+    }
+
+    public void setCollegeId(Long collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public Vehicle branchId(Long branchId) {
+        this.branchId = branchId;
+        return this;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public Vehicle employeeId(Long employeeId) {
+        this.employeeId = employeeId;
+        return this;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
     public Insurance getInsurance() {
         return insurance;
     }
@@ -272,19 +303,6 @@ public class Vehicle implements Serializable {
 
     public void setInsurance(Insurance insurance) {
         this.insurance = insurance;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public Vehicle employee(Employee employee) {
-        this.employee = employee;
-        return this;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
     }
 
     public TransportRoute getTransportRoute() {
@@ -311,32 +329,6 @@ public class Vehicle implements Serializable {
 
     public void setContract(Contract contract) {
         this.contract = contract;
-    }
-
-    public College getCollege() {
-        return college;
-    }
-
-    public Vehicle college(College college) {
-        this.college = college;
-        return this;
-    }
-
-    public void setCollege(College college) {
-        this.college = college;
-    }
-
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public Vehicle branch(Branch branch) {
-        this.branch = branch;
-        return this;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -376,6 +368,9 @@ public class Vehicle implements Serializable {
             ", rcNo='" + getRcNo() + "'" +
             ", contactNumber='" + getContactNumber() + "'" +
             ", status='" + getStatus() + "'" +
+            ", collegeId=" + getCollegeId() +
+            ", branchId=" + getBranchId() +
+            ", employeeId=" + getEmployeeId() +
             "}";
     }
 }
