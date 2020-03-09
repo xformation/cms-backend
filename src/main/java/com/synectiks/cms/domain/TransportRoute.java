@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
@@ -22,26 +23,30 @@ import com.synectiks.cms.domain.enumeration.RouteFrequency;
 public class TransportRoute implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "route_name")
+    @NotNull
+    @Column(name = "route_name", nullable = false)
     private String routeName;
 
-    @Column(name = "route_details")
+    @NotNull
+    @Column(name = "route_details", nullable = false)
     private String routeDetails;
 
     @Column(name = "route_map_url")
     private String routeMapUrl;
 
-    @Column(name = "no_of_stops")
+    @NotNull
+    @Column(name = "no_of_stops", nullable = false)
     private Integer noOfStops;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "route_frequency")
+    @Column(name = "route_frequency", nullable = false)
     private RouteFrequency routeFrequency;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

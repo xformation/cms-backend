@@ -665,8 +665,8 @@ public class Query implements GraphQLQueryResolver {
         return Lists.newArrayList(employeeFilterProcessor.searchEmployee(vehicleId, employeeId,employeeName));
     }
 
-    public List<CmsVehicleVo> searchVehicle(Long vehicleId, Long transportRouteId ,Long employeeId,String vehicleNumber) throws Exception {
-        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(vehicleId, transportRouteId,employeeId,vehicleNumber));
+    public List<CmsVehicleVo> searchVehicle(Long vehicleId, Long transportRouteId ,String vehicleNumber) throws Exception {
+        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(vehicleId, transportRouteId,vehicleNumber));
     }
 
 
@@ -931,8 +931,10 @@ public class Query implements GraphQLQueryResolver {
     }
 
     public EmployeeDataCache createEmployeeDataCache() throws Exception{
-        List<Employee> employeeList = this.commonService.findAllEmployee();
+        List<Employee> employeeList = this.employeeRepository.findAll();
         List<Vehicle> vehicleList = this.vehicleRepository.findAll();
+
+
         EmployeeDataCache cache = new EmployeeDataCache();
         cache.setEmployees(employeeList);
         cache.setVehicles(vehicleList);
@@ -962,14 +964,10 @@ public class Query implements GraphQLQueryResolver {
         List<CmsTransportVo> transportRouteList = this.transportService.getTransportRouteList();
         List<CmsInsuranceVo> insuranceList = this.insuranceService.getInsuranceList();
         List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
-        List<Employee> employeeList = this.commonService.findAllEmployee();
-        List<Branch> branchList = this.commonService.findAllBranch();
         VehicleDataCache cache = new VehicleDataCache();
         cache.setTransportRoute(transportRouteList);
         cache.setInsurance(insuranceList);
         cache.setVehicle(vehicleList);
-        cache.setEmployee(employeeList);
-        cache.setBranches(branchList);
         return cache;
     }
 

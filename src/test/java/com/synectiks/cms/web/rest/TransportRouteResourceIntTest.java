@@ -183,6 +183,82 @@ public class TransportRouteResourceIntTest {
 
     @Test
     @Transactional
+    public void checkRouteNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = transportRouteRepository.findAll().size();
+        // set the field null
+        transportRoute.setRouteName(null);
+
+        // Create the TransportRoute, which fails.
+        TransportRouteDTO transportRouteDTO = transportRouteMapper.toDto(transportRoute);
+
+        restTransportRouteMockMvc.perform(post("/api/transport-routes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(transportRouteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
+        assertThat(transportRouteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRouteDetailsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = transportRouteRepository.findAll().size();
+        // set the field null
+        transportRoute.setRouteDetails(null);
+
+        // Create the TransportRoute, which fails.
+        TransportRouteDTO transportRouteDTO = transportRouteMapper.toDto(transportRoute);
+
+        restTransportRouteMockMvc.perform(post("/api/transport-routes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(transportRouteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
+        assertThat(transportRouteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkNoOfStopsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = transportRouteRepository.findAll().size();
+        // set the field null
+        transportRoute.setNoOfStops(null);
+
+        // Create the TransportRoute, which fails.
+        TransportRouteDTO transportRouteDTO = transportRouteMapper.toDto(transportRoute);
+
+        restTransportRouteMockMvc.perform(post("/api/transport-routes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(transportRouteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
+        assertThat(transportRouteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkRouteFrequencyIsRequired() throws Exception {
+        int databaseSizeBeforeTest = transportRouteRepository.findAll().size();
+        // set the field null
+        transportRoute.setRouteFrequency(null);
+
+        // Create the TransportRoute, which fails.
+        TransportRouteDTO transportRouteDTO = transportRouteMapper.toDto(transportRoute);
+
+        restTransportRouteMockMvc.perform(post("/api/transport-routes")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(transportRouteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<TransportRoute> transportRouteList = transportRouteRepository.findAll();
+        assertThat(transportRouteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllTransportRoutes() throws Exception {
         // Initialize the database
         transportRouteRepository.saveAndFlush(transportRoute);

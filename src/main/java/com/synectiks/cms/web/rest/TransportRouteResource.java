@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,7 +44,7 @@ public class TransportRouteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/transport-routes")
-    public ResponseEntity<TransportRouteDTO> createTransportRoute(@RequestBody TransportRouteDTO transportRouteDTO) throws URISyntaxException {
+    public ResponseEntity<TransportRouteDTO> createTransportRoute(@Valid @RequestBody TransportRouteDTO transportRouteDTO) throws URISyntaxException {
         log.debug("REST request to save TransportRoute : {}", transportRouteDTO);
         if (transportRouteDTO.getId() != null) {
             throw new BadRequestAlertException("A new transportRoute cannot already have an ID", ENTITY_NAME, "idexists");
@@ -64,7 +65,7 @@ public class TransportRouteResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/transport-routes")
-    public ResponseEntity<TransportRouteDTO> updateTransportRoute(@RequestBody TransportRouteDTO transportRouteDTO) throws URISyntaxException {
+    public ResponseEntity<TransportRouteDTO> updateTransportRoute(@Valid @RequestBody TransportRouteDTO transportRouteDTO) throws URISyntaxException {
         log.debug("REST request to update TransportRoute : {}", transportRouteDTO);
         if (transportRouteDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

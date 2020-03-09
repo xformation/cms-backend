@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,7 +44,7 @@ public class ContractResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/contracts")
-    public ResponseEntity<ContractDTO> createContract(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
+    public ResponseEntity<ContractDTO> createContract(@Valid @RequestBody ContractDTO contractDTO) throws URISyntaxException {
         log.debug("REST request to save Contract : {}", contractDTO);
         if (contractDTO.getId() != null) {
             throw new BadRequestAlertException("A new contract cannot already have an ID", ENTITY_NAME, "idexists");
@@ -64,7 +65,7 @@ public class ContractResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/contracts")
-    public ResponseEntity<ContractDTO> updateContract(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
+    public ResponseEntity<ContractDTO> updateContract(@Valid @RequestBody ContractDTO contractDTO) throws URISyntaxException {
         log.debug("REST request to update Contract : {}", contractDTO);
         if (contractDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
