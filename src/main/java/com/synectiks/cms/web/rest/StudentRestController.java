@@ -200,8 +200,6 @@ public class StudentRestController {
             ls = new ArrayList<>();
             for(Student st: list) {
             	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
-            	Batch ba = this.commonService.getBatchById(vo.getBatchId());
-            	vo.setBatch(ba);
             	ls.add(vo);
             }
         }
