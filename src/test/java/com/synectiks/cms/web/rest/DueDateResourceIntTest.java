@@ -248,7 +248,7 @@ public class DueDateResourceIntTest {
             .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
             .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getDueDate() throws Exception {
@@ -368,8 +368,8 @@ public class DueDateResourceIntTest {
     public void searchDueDate() throws Exception {
         // Initialize the database
         dueDateRepository.saveAndFlush(dueDate);
-        when(mockDueDateSearchRepository.search(queryStringQuery("id:" + dueDate.getId())))
-            .thenReturn(Collections.singletonList(dueDate));
+//        when(mockDueDateSearchRepository.search(queryStringQuery("id:" + dueDate.getId())))
+//            .thenReturn(Collections.singletonList(dueDate));
         // Search the dueDate
         restDueDateMockMvc.perform(get("/api/_search/due-dates?query=id:" + dueDate.getId()))
             .andExpect(status().isOk())

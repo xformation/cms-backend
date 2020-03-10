@@ -252,7 +252,7 @@ public class HolidayResourceIT {
             .andExpect(jsonPath("$.[*].holidayDate").value(hasItem(DEFAULT_HOLIDAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].holidayStatus").value(hasItem(DEFAULT_HOLIDAY_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getHoliday() throws Exception {
@@ -360,8 +360,8 @@ public class HolidayResourceIT {
     public void searchHoliday() throws Exception {
         // Initialize the database
         holidayRepository.saveAndFlush(holiday);
-        when(mockHolidaySearchRepository.search(queryStringQuery("id:" + holiday.getId())))
-            .thenReturn(Collections.singletonList(holiday));
+//        when(mockHolidaySearchRepository.search(queryStringQuery("id:" + holiday.getId())))
+//            .thenReturn(Collections.singletonList(holiday));
         // Search the holiday
         restHolidayMockMvc.perform(get("/api/_search/holidays?query=id:" + holiday.getId()))
             .andExpect(status().isOk())

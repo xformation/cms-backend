@@ -33,12 +33,12 @@ public class BookServiceImpl implements BookService {
 
     private final BookMapper bookMapper;
 
-    private final BookSearchRepository bookSearchRepository;
+//    private final BookSearchRepository bookSearchRepository;
 
     public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper, BookSearchRepository bookSearchRepository) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
-        this.bookSearchRepository = bookSearchRepository;
+//        this.bookSearchRepository = bookSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookMapper.toEntity(bookDTO);
         book = bookRepository.save(book);
         BookDTO result = bookMapper.toDto(book);
-        bookSearchRepository.save(book);
+//        bookSearchRepository.save(book);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class BookServiceImpl implements BookService {
     public void delete(Long id) {
         log.debug("Request to delete Book : {}", id);
         bookRepository.deleteById(id);
-        bookSearchRepository.deleteById(id);
+//        bookSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     public List<BookDTO> search(String query) {
         log.debug("Request to search Books for query {}", query);
-        return StreamSupport
-            .stream(bookSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(bookMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(bookSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(bookMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

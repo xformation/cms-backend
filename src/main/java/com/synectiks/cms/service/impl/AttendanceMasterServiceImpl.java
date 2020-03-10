@@ -33,12 +33,12 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
 
     private final AttendanceMasterMapper attendanceMasterMapper;
 
-    private final AttendanceMasterSearchRepository attendanceMasterSearchRepository;
+//    private final AttendanceMasterSearchRepository attendanceMasterSearchRepository;
 
     public AttendanceMasterServiceImpl(AttendanceMasterRepository attendanceMasterRepository, AttendanceMasterMapper attendanceMasterMapper, AttendanceMasterSearchRepository attendanceMasterSearchRepository) {
         this.attendanceMasterRepository = attendanceMasterRepository;
         this.attendanceMasterMapper = attendanceMasterMapper;
-        this.attendanceMasterSearchRepository = attendanceMasterSearchRepository;
+//        this.attendanceMasterSearchRepository = attendanceMasterSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
         AttendanceMaster attendanceMaster = attendanceMasterMapper.toEntity(attendanceMasterDTO);
         attendanceMaster = attendanceMasterRepository.save(attendanceMaster);
         AttendanceMasterDTO result = attendanceMasterMapper.toDto(attendanceMaster);
-        attendanceMasterSearchRepository.save(attendanceMaster);
+//        attendanceMasterSearchRepository.save(attendanceMaster);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
     public void delete(Long id) {
         log.debug("Request to delete AttendanceMaster : {}", id);
         attendanceMasterRepository.deleteById(id);
-        attendanceMasterSearchRepository.deleteById(id);
+//        attendanceMasterSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
     @Transactional(readOnly = true)
     public List<AttendanceMasterDTO> search(String query) {
         log.debug("Request to search AttendanceMasters for query {}", query);
-        return StreamSupport
-            .stream(attendanceMasterSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(attendanceMasterMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(attendanceMasterSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(attendanceMasterMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

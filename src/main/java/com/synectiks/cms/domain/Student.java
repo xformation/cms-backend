@@ -1,4 +1,5 @@
 package com.synectiks.cms.domain;
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,8 +30,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "student")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "student")
-public class Student implements Serializable {
+public class Student implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

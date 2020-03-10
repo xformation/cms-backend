@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -17,8 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "student_fee")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "studentfee")
-public class StudentFee implements Serializable {
+public class StudentFee implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

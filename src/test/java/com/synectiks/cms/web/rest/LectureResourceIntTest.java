@@ -406,8 +406,8 @@ public class LectureResourceIntTest {
     public void searchLecture() throws Exception {
         // Initialize the database
         lectureRepository.saveAndFlush(lecture);
-        when(mockLectureSearchRepository.search(queryStringQuery("id:" + lecture.getId())))
-            .thenReturn(Collections.singletonList(lecture));
+//        when(mockLectureSearchRepository.search(queryStringQuery("id:" + lecture.getId())))
+//            .thenReturn(Collections.singletonList(lecture));
         // Search the lecture
         restLectureMockMvc.perform(get("/api/_search/lectures?query=id:" + lecture.getId()))
             .andExpect(status().isOk())

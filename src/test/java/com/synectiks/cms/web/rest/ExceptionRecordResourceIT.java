@@ -208,7 +208,7 @@ public class ExceptionRecordResourceIT {
             .andExpect(jsonPath("$.[*].exceptionDate").value(hasItem(DEFAULT_EXCEPTION_DATE.toString())))
             .andExpect(jsonPath("$.[*].user").value(hasItem(DEFAULT_USER.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getExceptionRecord() throws Exception {
@@ -322,8 +322,8 @@ public class ExceptionRecordResourceIT {
     public void searchExceptionRecord() throws Exception {
         // Initialize the database
         exceptionRecordRepository.saveAndFlush(exceptionRecord);
-        when(mockExceptionRecordSearchRepository.search(queryStringQuery("id:" + exceptionRecord.getId())))
-            .thenReturn(Collections.singletonList(exceptionRecord));
+//        when(mockExceptionRecordSearchRepository.search(queryStringQuery("id:" + exceptionRecord.getId())))
+//            .thenReturn(Collections.singletonList(exceptionRecord));
         // Search the exceptionRecord
         restExceptionRecordMockMvc.perform(get("/api/_search/exception-records?query=id:" + exceptionRecord.getId()))
             .andExpect(status().isOk())

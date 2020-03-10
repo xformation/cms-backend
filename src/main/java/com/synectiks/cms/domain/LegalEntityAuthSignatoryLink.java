@@ -18,6 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -32,8 +33,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfCollege;
 @Entity
 @Table(name = "legal_entity")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "legalentity")
-public class LegalEntityAuthSignatoryLink implements Serializable {
+public class LegalEntityAuthSignatoryLink implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -135,23 +135,23 @@ public class LegalEntityAuthSignatoryLink implements Serializable {
     @JsonIgnoreProperties("")
     private Location location;
 
-    
+
     @OneToOne
     @JoinColumn(name="form_signatory", insertable=false, updatable=false)
     private AuthorizedSignatory authorizedFormSignatory;
-    
+
     @OneToOne
     @JoinColumn(name="pf_signatory", insertable=false, updatable=false)
     private AuthorizedSignatory authorizedPfSignatory;
-    
+
     @OneToOne
     @JoinColumn(name="esi_signatory", insertable=false, updatable=false)
     private AuthorizedSignatory authorizedEsiSignatory;
-    
+
     @OneToOne
     @JoinColumn(name="pt_signatory", insertable=false, updatable=false)
     private AuthorizedSignatory authorizedPtSignatory;
-    
+
     public Long getId() {
         return id;
     }
@@ -479,7 +479,7 @@ public class LegalEntityAuthSignatoryLink implements Serializable {
     public int hashCode() {
         return Objects.hashCode(getId());
     }
-    
+
 	public AuthorizedSignatory getAuthorizedFormSignatory() {
 		return authorizedFormSignatory;
 	}

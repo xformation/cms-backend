@@ -267,7 +267,7 @@ public class BranchResourceIntTest {
             .andExpect(jsonPath("$.[*].address2").value(hasItem(DEFAULT_ADDRESS_2.toString())))
             .andExpect(jsonPath("$.[*].branchHead").value(hasItem(DEFAULT_BRANCH_HEAD.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getBranch() throws Exception {
@@ -378,8 +378,8 @@ public class BranchResourceIntTest {
     public void searchBranch() throws Exception {
         // Initialize the database
         branchRepository.saveAndFlush(branch);
-        when(mockBranchSearchRepository.search(queryStringQuery("id:" + branch.getId())))
-            .thenReturn(Collections.singletonList(branch));
+//        when(mockBranchSearchRepository.search(queryStringQuery("id:" + branch.getId())))
+//            .thenReturn(Collections.singletonList(branch));
         // Search the branch
         restBranchMockMvc.perform(get("/api/_search/branches?query=id:" + branch.getId()))
             .andExpect(status().isOk())

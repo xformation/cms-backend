@@ -6,12 +6,14 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 
+import com.synectiks.cms.utils.SynectiksJPARepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
 import com.synectiks.cms.config.ApplicationProperties;
@@ -19,14 +21,20 @@ import com.synectiks.cms.config.DefaultProfileUtil;
 import com.synectiks.cms.websocket.CmsBackendWebSocketServer;
 
 import io.github.jhipster.config.JHipsterConstants;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories(repositoryBaseClass = SynectiksJPARepo.class)
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class CmsApp {
 
     private static final Logger log = LoggerFactory.getLogger(CmsApp.class);
 
+    private static ConfigurableApplicationContext ctx = null;
+
     private final Environment env;
+
+    private static String serverIp;
 
     public CmsApp(Environment env) {
         this.env = env;
@@ -60,7 +68,8 @@ public class CmsApp {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(CmsApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
-        Environment env = app.run(args).getEnvironment();
+        ctx  = app.run(args);
+        Environment env = ctx.getEnvironment();
         String protocol = "http";
         if (env.getProperty("server.ssl.key-store") != null) {
             protocol = "https";
@@ -68,6 +77,7 @@ public class CmsApp {
         String hostAddress = "localhost";
         try {
             hostAddress = InetAddress.getLocalHost().getHostAddress();
+            serverIp = hostAddress;
         } catch (Exception e) {
             log.warn("The host name could not be determined, using `localhost` as fallback");
         }
@@ -83,7 +93,22 @@ public class CmsApp {
             hostAddress,
             env.getProperty("server.port"),
             env.getActiveProfiles());
-        
+
         new CmsBackendWebSocketServer(4000).start();
+    }
+    public static <T> T getBean(Class<T> cls) {
+        return ctx.getBean(cls);
+    }
+
+    public static Environment getEnvironment() {
+        return ctx.getEnvironment();
+    }
+
+    public static int getServerPort() {
+        return Integer.parseInt(ctx.getEnvironment().getProperty("server.port"));
+    }
+
+    public static String getServer() {
+        return serverIp;
     }
 }

@@ -33,12 +33,12 @@ public class NotificationsServiceImpl implements NotificationsService {
 
     private final NotificationsMapper notificationsMapper;
 
-    private final NotificationsSearchRepository notificationsSearchRepository;
+//    private final NotificationsSearchRepository notificationsSearchRepository;
 
     public NotificationsServiceImpl(NotificationsRepository notificationsRepository, NotificationsMapper notificationsMapper, NotificationsSearchRepository notificationsSearchRepository) {
         this.notificationsRepository = notificationsRepository;
         this.notificationsMapper = notificationsMapper;
-        this.notificationsSearchRepository = notificationsSearchRepository;
+//        this.notificationsSearchRepository = notificationsSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class NotificationsServiceImpl implements NotificationsService {
         Notifications notifications = notificationsMapper.toEntity(notificationsDTO);
         notifications = notificationsRepository.save(notifications);
         NotificationsDTO result = notificationsMapper.toDto(notifications);
-        notificationsSearchRepository.save(notifications);
+//        notificationsSearchRepository.save(notifications);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class NotificationsServiceImpl implements NotificationsService {
     public void delete(Long id) {
         log.debug("Request to delete Notifications : {}", id);
         notificationsRepository.deleteById(id);
-        notificationsSearchRepository.deleteById(id);
+//        notificationsSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class NotificationsServiceImpl implements NotificationsService {
     @Transactional(readOnly = true)
     public List<NotificationsDTO> search(String query) {
         log.debug("Request to search Notifications for query {}", query);
-        return StreamSupport
-            .stream(notificationsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(notificationsMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(notificationsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(notificationsMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

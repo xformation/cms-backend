@@ -2,6 +2,7 @@ package com.synectiks.cms.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -18,11 +19,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "branch")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "branch")
-public class Branch implements Serializable {
+public class Branch implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

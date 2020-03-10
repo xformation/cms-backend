@@ -33,12 +33,12 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
 
     private final PaymentRequestResponseMapper paymentRequestResponseMapper;
 
-    private final PaymentRequestResponseSearchRepository paymentRequestResponseSearchRepository;
+//    private final PaymentRequestResponseSearchRepository paymentRequestResponseSearchRepository;
 
     public PaymentRequestResponseServiceImpl(PaymentRequestResponseRepository paymentRequestResponseRepository, PaymentRequestResponseMapper paymentRequestResponseMapper, PaymentRequestResponseSearchRepository paymentRequestResponseSearchRepository) {
         this.paymentRequestResponseRepository = paymentRequestResponseRepository;
         this.paymentRequestResponseMapper = paymentRequestResponseMapper;
-        this.paymentRequestResponseSearchRepository = paymentRequestResponseSearchRepository;
+//        this.paymentRequestResponseSearchRepository = paymentRequestResponseSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
         PaymentRequestResponse paymentRequestResponse = paymentRequestResponseMapper.toEntity(paymentRequestResponseDTO);
         paymentRequestResponse = paymentRequestResponseRepository.save(paymentRequestResponse);
         PaymentRequestResponseDTO result = paymentRequestResponseMapper.toDto(paymentRequestResponse);
-        paymentRequestResponseSearchRepository.save(paymentRequestResponse);
+//        paymentRequestResponseSearchRepository.save(paymentRequestResponse);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
     public void delete(Long id) {
         log.debug("Request to delete PaymentRequestResponse : {}", id);
         paymentRequestResponseRepository.deleteById(id);
-        paymentRequestResponseSearchRepository.deleteById(id);
+//        paymentRequestResponseSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
     @Transactional(readOnly = true)
     public List<PaymentRequestResponseDTO> search(String query) {
         log.debug("Request to search PaymentRequestResponses for query {}", query);
-        return StreamSupport
-            .stream(paymentRequestResponseSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(paymentRequestResponseMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(paymentRequestResponseSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(paymentRequestResponseMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

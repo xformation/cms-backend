@@ -198,7 +198,7 @@ public class BatchResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(batch.getId().intValue())))
             .andExpect(jsonPath("$.[*].batch").value(hasItem(DEFAULT_BATCH.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getBatch() throws Exception {
@@ -300,8 +300,8 @@ public class BatchResourceIT {
     public void searchBatch() throws Exception {
         // Initialize the database
         batchRepository.saveAndFlush(batch);
-        when(mockBatchSearchRepository.search(queryStringQuery("id:" + batch.getId())))
-            .thenReturn(Collections.singletonList(batch));
+//        when(mockBatchSearchRepository.search(queryStringQuery("id:" + batch.getId())))
+//            .thenReturn(Collections.singletonList(batch));
         // Search the batch
         restBatchMockMvc.perform(get("/api/_search/batches?query=id:" + batch.getId()))
             .andExpect(status().isOk())

@@ -33,12 +33,12 @@ public class TeachServiceImpl implements TeachService {
 
     private final TeachMapper teachMapper;
 
-    private final TeachSearchRepository teachSearchRepository;
+//    private final TeachSearchRepository teachSearchRepository;
 
     public TeachServiceImpl(TeachRepository teachRepository, TeachMapper teachMapper, TeachSearchRepository teachSearchRepository) {
         this.teachRepository = teachRepository;
         this.teachMapper = teachMapper;
-        this.teachSearchRepository = teachSearchRepository;
+//        this.teachSearchRepository = teachSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TeachServiceImpl implements TeachService {
         Teach teach = teachMapper.toEntity(teachDTO);
         teach = teachRepository.save(teach);
         TeachDTO result = teachMapper.toDto(teach);
-        teachSearchRepository.save(teach);
+//        teachSearchRepository.save(teach);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TeachServiceImpl implements TeachService {
     public void delete(Long id) {
         log.debug("Request to delete Teach : {}", id);
         teachRepository.deleteById(id);
-        teachSearchRepository.deleteById(id);
+//        teachSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class TeachServiceImpl implements TeachService {
     @Transactional(readOnly = true)
     public List<TeachDTO> search(String query) {
         log.debug("Request to search Teaches for query {}", query);
-        return StreamSupport
-            .stream(teachSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(teachMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(teachSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(teachMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

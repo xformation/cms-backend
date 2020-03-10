@@ -33,12 +33,12 @@ public class DueDateServiceImpl implements DueDateService {
 
     private final DueDateMapper dueDateMapper;
 
-    private final DueDateSearchRepository dueDateSearchRepository;
+//    private final DueDateSearchRepository dueDateSearchRepository;
 
     public DueDateServiceImpl(DueDateRepository dueDateRepository, DueDateMapper dueDateMapper, DueDateSearchRepository dueDateSearchRepository) {
         this.dueDateRepository = dueDateRepository;
         this.dueDateMapper = dueDateMapper;
-        this.dueDateSearchRepository = dueDateSearchRepository;
+//        this.dueDateSearchRepository = dueDateSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class DueDateServiceImpl implements DueDateService {
         DueDate dueDate = dueDateMapper.toEntity(dueDateDTO);
         dueDate = dueDateRepository.save(dueDate);
         DueDateDTO result = dueDateMapper.toDto(dueDate);
-        dueDateSearchRepository.save(dueDate);
+//        dueDateSearchRepository.save(dueDate);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class DueDateServiceImpl implements DueDateService {
     public void delete(Long id) {
         log.debug("Request to delete DueDate : {}", id);
         dueDateRepository.deleteById(id);
-        dueDateSearchRepository.deleteById(id);
+//        dueDateSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class DueDateServiceImpl implements DueDateService {
     @Transactional(readOnly = true)
     public List<DueDateDTO> search(String query) {
         log.debug("Request to search DueDates for query {}", query);
-        return StreamSupport
-            .stream(dueDateSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(dueDateMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(dueDateSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(dueDateMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -287,7 +287,7 @@ public class FeeCategoryResourceIntTest {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getFeeCategory() throws Exception {
@@ -416,8 +416,8 @@ public class FeeCategoryResourceIntTest {
     public void searchFeeCategory() throws Exception {
         // Initialize the database
         feeCategoryRepository.saveAndFlush(feeCategory);
-        when(mockFeeCategorySearchRepository.search(queryStringQuery("id:" + feeCategory.getId())))
-            .thenReturn(Collections.singletonList(feeCategory));
+//        when(mockFeeCategorySearchRepository.search(queryStringQuery("id:" + feeCategory.getId())))
+//            .thenReturn(Collections.singletonList(feeCategory));
         // Search the feeCategory
         restFeeCategoryMockMvc.perform(get("/api/_search/fee-categories?query=id:" + feeCategory.getId()))
             .andExpect(status().isOk())

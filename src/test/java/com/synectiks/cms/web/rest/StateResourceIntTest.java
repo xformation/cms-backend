@@ -242,7 +242,7 @@ public class StateResourceIntTest {
             .andExpect(jsonPath("$.[*].divisionType").value(hasItem(DEFAULT_DIVISION_TYPE.toString())))
             .andExpect(jsonPath("$.[*].stateCode").value(hasItem(DEFAULT_STATE_CODE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getState() throws Exception {
@@ -350,8 +350,8 @@ public class StateResourceIntTest {
     public void searchState() throws Exception {
         // Initialize the database
         stateRepository.saveAndFlush(state);
-        when(mockStateSearchRepository.search(queryStringQuery("id:" + state.getId())))
-            .thenReturn(Collections.singletonList(state));
+//        when(mockStateSearchRepository.search(queryStringQuery("id:" + state.getId())))
+//            .thenReturn(Collections.singletonList(state));
         // Search the state
         restStateMockMvc.perform(get("/api/_search/states?query=id:" + state.getId()))
             .andExpect(status().isOk())

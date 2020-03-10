@@ -173,7 +173,7 @@ public class AttendanceMasterResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(attendanceMaster.getId().intValue())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAttendanceMaster() throws Exception {
@@ -275,8 +275,8 @@ public class AttendanceMasterResourceIntTest {
     public void searchAttendanceMaster() throws Exception {
         // Initialize the database
         attendanceMasterRepository.saveAndFlush(attendanceMaster);
-        when(mockAttendanceMasterSearchRepository.search(queryStringQuery("id:" + attendanceMaster.getId())))
-            .thenReturn(Collections.singletonList(attendanceMaster));
+//        when(mockAttendanceMasterSearchRepository.search(queryStringQuery("id:" + attendanceMaster.getId())))
+//            .thenReturn(Collections.singletonList(attendanceMaster));
         // Search the attendanceMaster
         restAttendanceMasterMockMvc.perform(get("/api/_search/attendance-masters?query=id:" + attendanceMaster.getId()))
             .andExpect(status().isOk())

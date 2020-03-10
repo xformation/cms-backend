@@ -292,7 +292,7 @@ public class AdmissionApplicationResourceIntTest {
             .andExpect(jsonPath("$.[*].course").value(hasItem(DEFAULT_COURSE.toString())))
             .andExpect(jsonPath("$.[*].admissionDate").value(hasItem(DEFAULT_ADMISSION_DATE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAdmissionApplication() throws Exception {
@@ -451,8 +451,8 @@ public class AdmissionApplicationResourceIntTest {
     public void searchAdmissionApplication() throws Exception {
         // Initialize the database
         admissionApplicationRepository.saveAndFlush(admissionApplication);
-        when(mockAdmissionApplicationSearchRepository.search(queryStringQuery("id:" + admissionApplication.getId())))
-            .thenReturn(Collections.singletonList(admissionApplication));
+//        when(mockAdmissionApplicationSearchRepository.search(queryStringQuery("id:" + admissionApplication.getId())))
+//            .thenReturn(Collections.singletonList(admissionApplication));
         // Search the admissionApplication
         restAdmissionApplicationMockMvc.perform(get("/api/_search/admission-applications?query=id:" + admissionApplication.getId()))
             .andExpect(status().isOk())

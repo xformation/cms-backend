@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,8 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "subject")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "subject")
-public class Subject implements Serializable {
+public class Subject implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

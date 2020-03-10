@@ -33,12 +33,12 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
 
     private final AcademicExamSettingMapper academicExamSettingMapper;
 
-    private final AcademicExamSettingSearchRepository academicExamSettingSearchRepository;
+//    private final AcademicExamSettingSearchRepository academicExamSettingSearchRepository;
 
     public AcademicExamSettingServiceImpl(AcademicExamSettingRepository academicExamSettingRepository, AcademicExamSettingMapper academicExamSettingMapper, AcademicExamSettingSearchRepository academicExamSettingSearchRepository) {
         this.academicExamSettingRepository = academicExamSettingRepository;
         this.academicExamSettingMapper = academicExamSettingMapper;
-        this.academicExamSettingSearchRepository = academicExamSettingSearchRepository;
+//        this.academicExamSettingSearchRepository = academicExamSettingSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
         AcademicExamSetting academicExamSetting = academicExamSettingMapper.toEntity(academicExamSettingDTO);
         academicExamSetting = academicExamSettingRepository.save(academicExamSetting);
         AcademicExamSettingDTO result = academicExamSettingMapper.toDto(academicExamSetting);
-        academicExamSettingSearchRepository.save(academicExamSetting);
+//        academicExamSettingSearchRepository.save(academicExamSetting);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     public void delete(Long id) {
         log.debug("Request to delete AcademicExamSetting : {}", id);
         academicExamSettingRepository.deleteById(id);
-        academicExamSettingSearchRepository.deleteById(id);
+//        academicExamSettingSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     @Transactional(readOnly = true)
     public List<AcademicExamSettingDTO> search(String query) {
         log.debug("Request to search AcademicExamSettings for query {}", query);
-        return StreamSupport
-            .stream(academicExamSettingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(academicExamSettingMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(academicExamSettingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(academicExamSettingMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

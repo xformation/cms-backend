@@ -33,12 +33,12 @@ public class AuthorizedSignatoryServiceImpl implements AuthorizedSignatoryServic
 
     private final AuthorizedSignatoryMapper authorizedSignatoryMapper;
 
-    private final AuthorizedSignatorySearchRepository authorizedSignatorySearchRepository;
+//    private final AuthorizedSignatorySearchRepository authorizedSignatorySearchRepository;
 
     public AuthorizedSignatoryServiceImpl(AuthorizedSignatoryRepository authorizedSignatoryRepository, AuthorizedSignatoryMapper authorizedSignatoryMapper, AuthorizedSignatorySearchRepository authorizedSignatorySearchRepository) {
         this.authorizedSignatoryRepository = authorizedSignatoryRepository;
         this.authorizedSignatoryMapper = authorizedSignatoryMapper;
-        this.authorizedSignatorySearchRepository = authorizedSignatorySearchRepository;
+//        this.authorizedSignatorySearchRepository = authorizedSignatorySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AuthorizedSignatoryServiceImpl implements AuthorizedSignatoryServic
         AuthorizedSignatory authorizedSignatory = authorizedSignatoryMapper.toEntity(authorizedSignatoryDTO);
         authorizedSignatory = authorizedSignatoryRepository.save(authorizedSignatory);
         AuthorizedSignatoryDTO result = authorizedSignatoryMapper.toDto(authorizedSignatory);
-        authorizedSignatorySearchRepository.save(authorizedSignatory);
+//        authorizedSignatorySearchRepository.save(authorizedSignatory);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class AuthorizedSignatoryServiceImpl implements AuthorizedSignatoryServic
     public void delete(Long id) {
         log.debug("Request to delete AuthorizedSignatory : {}", id);
         authorizedSignatoryRepository.deleteById(id);
-        authorizedSignatorySearchRepository.deleteById(id);
+//        authorizedSignatorySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class AuthorizedSignatoryServiceImpl implements AuthorizedSignatoryServic
     @Transactional(readOnly = true)
     public List<AuthorizedSignatoryDTO> search(String query) {
         log.debug("Request to search AuthorizedSignatories for query {}", query);
-        return StreamSupport
-            .stream(authorizedSignatorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(authorizedSignatoryMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(authorizedSignatorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(authorizedSignatoryMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

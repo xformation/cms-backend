@@ -33,12 +33,12 @@ public class BatchServiceImpl implements BatchService {
 
     private final BatchMapper batchMapper;
 
-    private final BatchSearchRepository batchSearchRepository;
+//    private final BatchSearchRepository batchSearchRepository;
 
     public BatchServiceImpl(BatchRepository batchRepository, BatchMapper batchMapper, BatchSearchRepository batchSearchRepository) {
         this.batchRepository = batchRepository;
         this.batchMapper = batchMapper;
-        this.batchSearchRepository = batchSearchRepository;
+//        this.batchSearchRepository = batchSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BatchServiceImpl implements BatchService {
         Batch batch = batchMapper.toEntity(batchDTO);
         batch = batchRepository.save(batch);
         BatchDTO result = batchMapper.toDto(batch);
-        batchSearchRepository.save(batch);
+//        batchSearchRepository.save(batch);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class BatchServiceImpl implements BatchService {
     public void delete(Long id) {
         log.debug("Request to delete Batch : {}", id);
         batchRepository.deleteById(id);
-        batchSearchRepository.deleteById(id);
+//        batchSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class BatchServiceImpl implements BatchService {
     @Transactional(readOnly = true)
     public List<BatchDTO> search(String query) {
         log.debug("Request to search Batches for query {}", query);
-        return StreamSupport
-            .stream(batchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(batchMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(batchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(batchMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

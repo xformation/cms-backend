@@ -556,8 +556,8 @@ public class AdminOverviewResourceIntTest {
     public void searchAdminOverview() throws Exception {
         // Initialize the database
         adminOverviewRepository.saveAndFlush(adminOverview);
-        when(mockAdminOverviewSearchRepository.search(queryStringQuery("id:" + adminOverview.getId())))
-            .thenReturn(Collections.singletonList(adminOverview));
+//        when(mockAdminOverviewSearchRepository.search(queryStringQuery("id:" + adminOverview.getId())))
+//            .thenReturn(Collections.singletonList(adminOverview));
         // Search the adminOverview
         restAdminOverviewMockMvc.perform(get("/api/_search/admin-overviews?query=id:" + adminOverview.getId()))
             .andExpect(status().isOk())

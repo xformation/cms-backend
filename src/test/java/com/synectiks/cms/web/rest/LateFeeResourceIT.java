@@ -239,7 +239,7 @@ public class LateFeeResourceIT {
             .andExpect(jsonPath("$.[*].lateFeeFrequency").value(hasItem(DEFAULT_LATE_FEE_FREQUENCY.toString())))
             .andExpect(jsonPath("$.[*].lateFeeRepeatDays").value(hasItem(DEFAULT_LATE_FEE_REPEAT_DAYS)));
     }
-    
+
     @Test
     @Transactional
     public void getLateFee() throws Exception {
@@ -359,8 +359,8 @@ public class LateFeeResourceIT {
     public void searchLateFee() throws Exception {
         // Initialize the database
         lateFeeRepository.saveAndFlush(lateFee);
-        when(mockLateFeeSearchRepository.search(queryStringQuery("id:" + lateFee.getId())))
-            .thenReturn(Collections.singletonList(lateFee));
+//        when(mockLateFeeSearchRepository.search(queryStringQuery("id:" + lateFee.getId())))
+//            .thenReturn(Collections.singletonList(lateFee));
         // Search the lateFee
         restLateFeeMockMvc.perform(get("/api/_search/late-fees?query=id:" + lateFee.getId()))
             .andExpect(status().isOk())

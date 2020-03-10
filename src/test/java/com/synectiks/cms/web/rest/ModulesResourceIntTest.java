@@ -187,7 +187,7 @@ public class ModulesResourceIntTest {
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getModules() throws Exception {
@@ -298,8 +298,8 @@ public class ModulesResourceIntTest {
     public void searchModules() throws Exception {
         // Initialize the database
         modulesRepository.saveAndFlush(modules);
-        when(mockModulesSearchRepository.search(queryStringQuery("id:" + modules.getId())))
-            .thenReturn(Collections.singletonList(modules));
+//        when(mockModulesSearchRepository.search(queryStringQuery("id:" + modules.getId())))
+//            .thenReturn(Collections.singletonList(modules));
         // Search the modules
         restModulesMockMvc.perform(get("/api/_search/modules?query=id:" + modules.getId()))
             .andExpect(status().isOk())

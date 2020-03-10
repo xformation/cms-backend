@@ -278,7 +278,7 @@ public class AcademicYearResourceIT {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAcademicYear() throws Exception {
@@ -389,8 +389,8 @@ public class AcademicYearResourceIT {
     public void searchAcademicYear() throws Exception {
         // Initialize the database
         academicYearRepository.saveAndFlush(academicYear);
-        when(mockAcademicYearSearchRepository.search(queryStringQuery("id:" + academicYear.getId())))
-            .thenReturn(Collections.singletonList(academicYear));
+//        when(mockAcademicYearSearchRepository.search(queryStringQuery("id:" + academicYear.getId())))
+//            .thenReturn(Collections.singletonList(academicYear));
         // Search the academicYear
         restAcademicYearMockMvc.perform(get("/api/_search/academic-years?query=id:" + academicYear.getId()))
             .andExpect(status().isOk())

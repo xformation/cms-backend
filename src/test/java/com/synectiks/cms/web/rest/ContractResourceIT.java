@@ -304,7 +304,7 @@ public class ContractResourceIT {
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getContract() throws Exception {
@@ -418,8 +418,8 @@ public class ContractResourceIT {
     public void searchContract() throws Exception {
         // Initialize the database
         contractRepository.saveAndFlush(contract);
-        when(mockContractSearchRepository.search(queryStringQuery("id:" + contract.getId())))
-            .thenReturn(Collections.singletonList(contract));
+//        when(mockContractSearchRepository.search(queryStringQuery("id:" + contract.getId())))
+//            .thenReturn(Collections.singletonList(contract));
         // Search the contract
         restContractMockMvc.perform(get("/api/_search/contracts?query=id:" + contract.getId()))
             .andExpect(status().isOk())

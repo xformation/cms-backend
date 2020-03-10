@@ -294,7 +294,7 @@ public class FeeDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].batchId").value(hasItem(DEFAULT_BATCH_ID.intValue())))
             .andExpect(jsonPath("$.[*].departmentId").value(hasItem(DEFAULT_DEPARTMENT_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getFeeDetails() throws Exception {
@@ -435,8 +435,8 @@ public class FeeDetailsResourceIntTest {
     public void searchFeeDetails() throws Exception {
         // Initialize the database
         feeDetailsRepository.saveAndFlush(feeDetails);
-        when(mockFeeDetailsSearchRepository.search(queryStringQuery("id:" + feeDetails.getId())))
-            .thenReturn(Collections.singletonList(feeDetails));
+//        when(mockFeeDetailsSearchRepository.search(queryStringQuery("id:" + feeDetails.getId())))
+//            .thenReturn(Collections.singletonList(feeDetails));
         // Search the feeDetails
         restFeeDetailsMockMvc.perform(get("/api/_search/fee-details?query=id:" + feeDetails.getId()))
             .andExpect(status().isOk())

@@ -99,13 +99,13 @@ public class StudentRestController {
         student.setStatus(Status.ACTIVE);
         student.setCreatedOn(LocalDate.now());
         student.setBranchId(cmsStudentVo.getBranchId());
-        
+
         student.setDepartmentId(cmsStudentVo.getDepartmentId());
-        
+
         student.setBatchId(cmsStudentVo.getBatchId());
-        
+
         student.setSectionId(cmsStudentVo.getSectionId());
-        
+
         Student result = studentRepository.save(student);
         CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
         return result.getId();
@@ -200,6 +200,8 @@ public class StudentRestController {
             ls = new ArrayList<>();
             for(Student st: list) {
             	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+            	Batch ba = this.commonService.getBatchById(vo.getBatchId());
+            	vo.setBatch(ba);
             	ls.add(vo);
             }
         }

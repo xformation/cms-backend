@@ -180,7 +180,7 @@ public class MetaLectureResourceIntTest {
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getMetaLecture() throws Exception {
@@ -288,8 +288,8 @@ public class MetaLectureResourceIntTest {
     public void searchMetaLecture() throws Exception {
         // Initialize the database
         metaLectureRepository.saveAndFlush(metaLecture);
-        when(mockMetaLectureSearchRepository.search(queryStringQuery("id:" + metaLecture.getId())))
-            .thenReturn(Collections.singletonList(metaLecture));
+//        when(mockMetaLectureSearchRepository.search(queryStringQuery("id:" + metaLecture.getId())))
+//            .thenReturn(Collections.singletonList(metaLecture));
         // Search the metaLecture
         restMetaLectureMockMvc.perform(get("/api/_search/meta-lectures?query=id:" + metaLecture.getId()))
             .andExpect(status().isOk())

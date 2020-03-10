@@ -198,7 +198,7 @@ public class SectionResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(section.getId().intValue())))
             .andExpect(jsonPath("$.[*].section").value(hasItem(DEFAULT_SECTION.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getSection() throws Exception {
@@ -300,8 +300,8 @@ public class SectionResourceIT {
     public void searchSection() throws Exception {
         // Initialize the database
         sectionRepository.saveAndFlush(section);
-        when(mockSectionSearchRepository.search(queryStringQuery("id:" + section.getId())))
-            .thenReturn(Collections.singletonList(section));
+//        when(mockSectionSearchRepository.search(queryStringQuery("id:" + section.getId())))
+//            .thenReturn(Collections.singletonList(section));
         // Search the section
         restSectionMockMvc.perform(get("/api/_search/sections?query=id:" + section.getId()))
             .andExpect(status().isOk())

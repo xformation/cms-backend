@@ -245,7 +245,7 @@ public class DueDateResourceIT {
             .andExpect(jsonPath("$.[*].paymentDay").value(hasItem(DEFAULT_PAYMENT_DAY)))
             .andExpect(jsonPath("$.[*].frequency").value(hasItem(DEFAULT_FREQUENCY.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getDueDate() throws Exception {
@@ -359,8 +359,8 @@ public class DueDateResourceIT {
     public void searchDueDate() throws Exception {
         // Initialize the database
         dueDateRepository.saveAndFlush(dueDate);
-        when(mockDueDateSearchRepository.search(queryStringQuery("id:" + dueDate.getId())))
-            .thenReturn(Collections.singletonList(dueDate));
+//        when(mockDueDateSearchRepository.search(queryStringQuery("id:" + dueDate.getId())))
+//            .thenReturn(Collections.singletonList(dueDate));
         // Search the dueDate
         restDueDateMockMvc.perform(get("/api/_search/due-dates?query=id:" + dueDate.getId()))
             .andExpect(status().isOk())

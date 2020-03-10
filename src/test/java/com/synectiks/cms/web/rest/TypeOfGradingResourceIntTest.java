@@ -267,7 +267,7 @@ public class TypeOfGradingResourceIntTest {
             .andExpect(jsonPath("$.[*].grades").value(hasItem(DEFAULT_GRADES.toString())))
             .andExpect(jsonPath("$.[*].groupvalue").value(hasItem(DEFAULT_GROUPVALUE.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getTypeOfGrading() throws Exception {
@@ -378,8 +378,8 @@ public class TypeOfGradingResourceIntTest {
     public void searchTypeOfGrading() throws Exception {
         // Initialize the database
         typeOfGradingRepository.saveAndFlush(typeOfGrading);
-        when(mockTypeOfGradingSearchRepository.search(queryStringQuery("id:" + typeOfGrading.getId())))
-            .thenReturn(Collections.singletonList(typeOfGrading));
+//        when(mockTypeOfGradingSearchRepository.search(queryStringQuery("id:" + typeOfGrading.getId())))
+//            .thenReturn(Collections.singletonList(typeOfGrading));
         // Search the typeOfGrading
         restTypeOfGradingMockMvc.perform(get("/api/_search/type-of-gradings?query=id:" + typeOfGrading.getId()))
             .andExpect(status().isOk())

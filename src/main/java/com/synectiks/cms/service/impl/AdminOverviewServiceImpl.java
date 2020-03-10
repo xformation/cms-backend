@@ -33,12 +33,12 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
 
     private final AdminOverviewMapper adminOverviewMapper;
 
-    private final AdminOverviewSearchRepository adminOverviewSearchRepository;
+//    private final AdminOverviewSearchRepository adminOverviewSearchRepository;
 
     public AdminOverviewServiceImpl(AdminOverviewRepository adminOverviewRepository, AdminOverviewMapper adminOverviewMapper, AdminOverviewSearchRepository adminOverviewSearchRepository) {
         this.adminOverviewRepository = adminOverviewRepository;
         this.adminOverviewMapper = adminOverviewMapper;
-        this.adminOverviewSearchRepository = adminOverviewSearchRepository;
+//        this.adminOverviewSearchRepository = adminOverviewSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
         AdminOverview adminOverview = adminOverviewMapper.toEntity(adminOverviewDTO);
         adminOverview = adminOverviewRepository.save(adminOverview);
         AdminOverviewDTO result = adminOverviewMapper.toDto(adminOverview);
-        adminOverviewSearchRepository.save(adminOverview);
+//        adminOverviewSearchRepository.save(adminOverview);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
     public void delete(Long id) {
         log.debug("Request to delete AdminOverview : {}", id);
         adminOverviewRepository.deleteById(id);
-        adminOverviewSearchRepository.deleteById(id);
+//        adminOverviewSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
     @Transactional(readOnly = true)
     public List<AdminOverviewDTO> search(String query) {
         log.debug("Request to search AdminOverviews for query {}", query);
-        return StreamSupport
-            .stream(adminOverviewSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(adminOverviewMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(adminOverviewSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(adminOverviewMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

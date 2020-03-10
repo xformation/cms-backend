@@ -303,7 +303,7 @@ public class LectureResourceIT {
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getLecture() throws Exception {
@@ -417,8 +417,8 @@ public class LectureResourceIT {
     public void searchLecture() throws Exception {
         // Initialize the database
         lectureRepository.saveAndFlush(lecture);
-        when(mockLectureSearchRepository.search(queryStringQuery("id:" + lecture.getId())))
-            .thenReturn(Collections.singletonList(lecture));
+//        when(mockLectureSearchRepository.search(queryStringQuery("id:" + lecture.getId())))
+//            .thenReturn(Collections.singletonList(lecture));
         // Search the lecture
         restLectureMockMvc.perform(get("/api/_search/lectures?query=id:" + lecture.getId()))
             .andExpect(status().isOk())

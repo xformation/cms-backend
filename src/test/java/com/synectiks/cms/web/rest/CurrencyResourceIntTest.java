@@ -204,7 +204,7 @@ public class CurrencyResourceIntTest {
             .andExpect(jsonPath("$.[*].currencyCode").value(hasItem(DEFAULT_CURRENCY_CODE.toString())))
             .andExpect(jsonPath("$.[*].currencySymbol").value(hasItem(DEFAULT_CURRENCY_SYMBOL.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getCurrency() throws Exception {
@@ -312,8 +312,8 @@ public class CurrencyResourceIntTest {
     public void searchCurrency() throws Exception {
         // Initialize the database
         currencyRepository.saveAndFlush(currency);
-        when(mockCurrencySearchRepository.search(queryStringQuery("id:" + currency.getId())))
-            .thenReturn(Collections.singletonList(currency));
+//        when(mockCurrencySearchRepository.search(queryStringQuery("id:" + currency.getId())))
+//            .thenReturn(Collections.singletonList(currency));
         // Search the currency
         restCurrencyMockMvc.perform(get("/api/_search/currencies?query=id:" + currency.getId()))
             .andExpect(status().isOk())

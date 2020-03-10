@@ -33,12 +33,12 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
 
     private final PaymentRemainderMapper paymentRemainderMapper;
 
-    private final PaymentRemainderSearchRepository paymentRemainderSearchRepository;
+//    private final PaymentRemainderSearchRepository paymentRemainderSearchRepository;
 
     public PaymentRemainderServiceImpl(PaymentRemainderRepository paymentRemainderRepository, PaymentRemainderMapper paymentRemainderMapper, PaymentRemainderSearchRepository paymentRemainderSearchRepository) {
         this.paymentRemainderRepository = paymentRemainderRepository;
         this.paymentRemainderMapper = paymentRemainderMapper;
-        this.paymentRemainderSearchRepository = paymentRemainderSearchRepository;
+//        this.paymentRemainderSearchRepository = paymentRemainderSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
         PaymentRemainder paymentRemainder = paymentRemainderMapper.toEntity(paymentRemainderDTO);
         paymentRemainder = paymentRemainderRepository.save(paymentRemainder);
         PaymentRemainderDTO result = paymentRemainderMapper.toDto(paymentRemainder);
-        paymentRemainderSearchRepository.save(paymentRemainder);
+//        paymentRemainderSearchRepository.save(paymentRemainder);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
     public void delete(Long id) {
         log.debug("Request to delete PaymentRemainder : {}", id);
         paymentRemainderRepository.deleteById(id);
-        paymentRemainderSearchRepository.deleteById(id);
+//        paymentRemainderSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
     @Transactional(readOnly = true)
     public List<PaymentRemainderDTO> search(String query) {
         log.debug("Request to search PaymentRemainders for query {}", query);
-        return StreamSupport
-            .stream(paymentRemainderSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(paymentRemainderMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(paymentRemainderSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(paymentRemainderMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

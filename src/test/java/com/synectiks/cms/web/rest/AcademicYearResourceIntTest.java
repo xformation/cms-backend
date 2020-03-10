@@ -377,8 +377,8 @@ public class AcademicYearResourceIntTest {
     public void searchAcademicYear() throws Exception {
         // Initialize the database
         academicYearRepository.saveAndFlush(academicYear);
-        when(mockAcademicYearSearchRepository.search(queryStringQuery("id:" + academicYear.getId())))
-            .thenReturn(Collections.singletonList(academicYear));
+//        when(mockAcademicYearSearchRepository.search(queryStringQuery("id:" + academicYear.getId())))
+//            .thenReturn(Collections.singletonList(academicYear));
         // Search the academicYear
         restAcademicYearMockMvc.perform(get("/api/_search/academic-years?query=id:" + academicYear.getId()))
             .andExpect(status().isOk())

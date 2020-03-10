@@ -282,8 +282,8 @@ public class AdminAttendanceResourceIntTest {
     public void searchAdminAttendance() throws Exception {
         // Initialize the database
         adminAttendanceRepository.saveAndFlush(adminAttendance);
-        when(mockAdminAttendanceSearchRepository.search(queryStringQuery("id:" + adminAttendance.getId())))
-            .thenReturn(Collections.singletonList(adminAttendance));
+//        when(mockAdminAttendanceSearchRepository.search(queryStringQuery("id:" + adminAttendance.getId())))
+//            .thenReturn(Collections.singletonList(adminAttendance));
         // Search the adminAttendance
         restAdminAttendanceMockMvc.perform(get("/api/_search/admin-attendances?query=id:" + adminAttendance.getId()))
             .andExpect(status().isOk())

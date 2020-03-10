@@ -33,12 +33,12 @@ public class SectionServiceImpl implements SectionService {
 
     private final SectionMapper sectionMapper;
 
-    private final SectionSearchRepository sectionSearchRepository;
+//    private final SectionSearchRepository sectionSearchRepository;
 
     public SectionServiceImpl(SectionRepository sectionRepository, SectionMapper sectionMapper, SectionSearchRepository sectionSearchRepository) {
         this.sectionRepository = sectionRepository;
         this.sectionMapper = sectionMapper;
-        this.sectionSearchRepository = sectionSearchRepository;
+//        this.sectionSearchRepository = sectionSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class SectionServiceImpl implements SectionService {
         Section section = sectionMapper.toEntity(sectionDTO);
         section = sectionRepository.save(section);
         SectionDTO result = sectionMapper.toDto(section);
-        sectionSearchRepository.save(section);
+//        sectionSearchRepository.save(section);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class SectionServiceImpl implements SectionService {
     public void delete(Long id) {
         log.debug("Request to delete Section : {}", id);
         sectionRepository.deleteById(id);
-        sectionSearchRepository.deleteById(id);
+//        sectionSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class SectionServiceImpl implements SectionService {
     @Transactional(readOnly = true)
     public List<SectionDTO> search(String query) {
         log.debug("Request to search Sections for query {}", query);
-        return StreamSupport
-            .stream(sectionSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(sectionMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(sectionSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(sectionMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

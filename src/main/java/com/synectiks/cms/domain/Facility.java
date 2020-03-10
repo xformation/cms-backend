@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -29,8 +30,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "facility")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "facility")
-public class Facility implements Serializable {
+public class Facility implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

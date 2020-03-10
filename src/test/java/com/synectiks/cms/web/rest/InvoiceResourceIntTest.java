@@ -457,7 +457,7 @@ public class InvoiceResourceIntTest {
             .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())))
             .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getInvoice() throws Exception {
@@ -604,8 +604,8 @@ public class InvoiceResourceIntTest {
     public void searchInvoice() throws Exception {
         // Initialize the database
         invoiceRepository.saveAndFlush(invoice);
-        when(mockInvoiceSearchRepository.search(queryStringQuery("id:" + invoice.getId())))
-            .thenReturn(Collections.singletonList(invoice));
+//        when(mockInvoiceSearchRepository.search(queryStringQuery("id:" + invoice.getId())))
+//            .thenReturn(Collections.singletonList(invoice));
         // Search the invoice
         restInvoiceMockMvc.perform(get("/api/_search/invoices?query=id:" + invoice.getId()))
             .andExpect(status().isOk())

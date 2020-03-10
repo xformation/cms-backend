@@ -1,6 +1,7 @@
 package com.synectiks.cms.domain;
 
 
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -17,11 +18,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "payment_remainder")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "paymentremainder")
-public class PaymentRemainder implements Serializable {
+public class PaymentRemainder implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

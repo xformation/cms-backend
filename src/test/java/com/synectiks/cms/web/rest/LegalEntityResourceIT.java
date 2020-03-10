@@ -717,7 +717,7 @@ public class LegalEntityResourceIT {
             .andExpect(jsonPath("$.[*].ptRegistrationDate").value(hasItem(DEFAULT_PT_REGISTRATION_DATE.toString())))
             .andExpect(jsonPath("$.[*].ptSignatory").value(hasItem(DEFAULT_PT_SIGNATORY.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getLegalEntity() throws Exception {
@@ -894,8 +894,8 @@ public class LegalEntityResourceIT {
     public void searchLegalEntity() throws Exception {
         // Initialize the database
         legalEntityRepository.saveAndFlush(legalEntity);
-        when(mockLegalEntitySearchRepository.search(queryStringQuery("id:" + legalEntity.getId())))
-            .thenReturn(Collections.singletonList(legalEntity));
+//        when(mockLegalEntitySearchRepository.search(queryStringQuery("id:" + legalEntity.getId())))
+//            .thenReturn(Collections.singletonList(legalEntity));
         // Search the legalEntity
         restLegalEntityMockMvc.perform(get("/api/_search/legal-entities?query=id:" + legalEntity.getId()))
             .andExpect(status().isOk())

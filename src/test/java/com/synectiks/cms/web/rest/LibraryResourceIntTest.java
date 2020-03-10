@@ -262,7 +262,7 @@ public class LibraryResourceIntTest {
             .andExpect(jsonPath("$.[*].noOfCopies").value(hasItem(DEFAULT_NO_OF_COPIES.intValue())))
             .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getLibrary() throws Exception {
@@ -373,8 +373,8 @@ public class LibraryResourceIntTest {
     public void searchLibrary() throws Exception {
         // Initialize the database
         libraryRepository.saveAndFlush(library);
-        when(mockLibrarySearchRepository.search(queryStringQuery("id:" + library.getId())))
-            .thenReturn(Collections.singletonList(library));
+//        when(mockLibrarySearchRepository.search(queryStringQuery("id:" + library.getId())))
+//            .thenReturn(Collections.singletonList(library));
         // Search the library
         restLibraryMockMvc.perform(get("/api/_search/libraries?query=id:" + library.getId()))
             .andExpect(status().isOk())

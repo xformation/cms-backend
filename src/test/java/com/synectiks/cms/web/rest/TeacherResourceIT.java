@@ -460,7 +460,7 @@ public class TeacherResourceIT {
             .andExpect(jsonPath("$.[*].designation").value(hasItem(DEFAULT_DESIGNATION.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTeacher() throws Exception {
@@ -682,8 +682,8 @@ public class TeacherResourceIT {
     public void searchTeacher() throws Exception {
         // Initialize the database
         teacherRepository.saveAndFlush(teacher);
-        when(mockTeacherSearchRepository.search(queryStringQuery("id:" + teacher.getId())))
-            .thenReturn(Collections.singletonList(teacher));
+//        when(mockTeacherSearchRepository.search(queryStringQuery("id:" + teacher.getId())))
+//            .thenReturn(Collections.singletonList(teacher));
         // Search the teacher
         restTeacherMockMvc.perform(get("/api/_search/teachers?query=id:" + teacher.getId()))
             .andExpect(status().isOk())

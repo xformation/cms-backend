@@ -364,7 +364,7 @@ public class AcademicExamSettingResourceIntTest {
             .andExpect(jsonPath("$.[*].actions").value(hasItem(DEFAULT_ACTIONS.toString())))
             .andExpect(jsonPath("$.[*].groupvalue").value(hasItem(DEFAULT_GROUPVALUE.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getAcademicExamSetting() throws Exception {
@@ -493,8 +493,8 @@ public class AcademicExamSettingResourceIntTest {
     public void searchAcademicExamSetting() throws Exception {
         // Initialize the database
         academicExamSettingRepository.saveAndFlush(academicExamSetting);
-        when(mockAcademicExamSettingSearchRepository.search(queryStringQuery("id:" + academicExamSetting.getId())))
-            .thenReturn(Collections.singletonList(academicExamSetting));
+//        when(mockAcademicExamSettingSearchRepository.search(queryStringQuery("id:" + academicExamSetting.getId())))
+//            .thenReturn(Collections.singletonList(academicExamSetting));
         // Search the academicExamSetting
         restAcademicExamSettingMockMvc.perform(get("/api/_search/academic-exam-settings?query=id:" + academicExamSetting.getId()))
             .andExpect(status().isOk())

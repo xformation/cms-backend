@@ -456,7 +456,7 @@ public class InvoiceResourceIT {
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getInvoice() throws Exception {
@@ -594,8 +594,8 @@ public class InvoiceResourceIT {
     public void searchInvoice() throws Exception {
         // Initialize the database
         invoiceRepository.saveAndFlush(invoice);
-        when(mockInvoiceSearchRepository.search(queryStringQuery("id:" + invoice.getId())))
-            .thenReturn(Collections.singletonList(invoice));
+//        when(mockInvoiceSearchRepository.search(queryStringQuery("id:" + invoice.getId())))
+//            .thenReturn(Collections.singletonList(invoice));
         // Search the invoice
         restInvoiceMockMvc.perform(get("/api/_search/invoices?query=id:" + invoice.getId()))
             .andExpect(status().isOk())

@@ -383,7 +383,7 @@ public class EmployeeResourceIT {
             .andExpect(jsonPath("$.[*].maritalStatus").value(hasItem(DEFAULT_MARITAL_STATUS.toString())))
             .andExpect(jsonPath("$.[*].staffType").value(hasItem(DEFAULT_STAFF_TYPE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getEmployee() throws Exception {
@@ -563,8 +563,8 @@ public class EmployeeResourceIT {
     public void searchEmployee() throws Exception {
         // Initialize the database
         employeeRepository.saveAndFlush(employee);
-        when(mockEmployeeSearchRepository.search(queryStringQuery("id:" + employee.getId())))
-            .thenReturn(Collections.singletonList(employee));
+//        when(mockEmployeeSearchRepository.search(queryStringQuery("id:" + employee.getId())))
+//            .thenReturn(Collections.singletonList(employee));
         // Search the employee
         restEmployeeMockMvc.perform(get("/api/_search/employees?query=id:" + employee.getId()))
             .andExpect(status().isOk())

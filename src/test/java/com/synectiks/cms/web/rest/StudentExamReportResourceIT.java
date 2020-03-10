@@ -227,7 +227,7 @@ public class StudentExamReportResourceIT {
             .andExpect(jsonPath("$.[*].batchId").value(hasItem(DEFAULT_BATCH_ID.intValue())))
             .andExpect(jsonPath("$.[*].academicyearId").value(hasItem(DEFAULT_ACADEMICYEAR_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getStudentExamReport() throws Exception {
@@ -350,8 +350,8 @@ public class StudentExamReportResourceIT {
     public void searchStudentExamReport() throws Exception {
         // Initialize the database
         studentExamReportRepository.saveAndFlush(studentExamReport);
-        when(mockStudentExamReportSearchRepository.search(queryStringQuery("id:" + studentExamReport.getId())))
-            .thenReturn(Collections.singletonList(studentExamReport));
+//        when(mockStudentExamReportSearchRepository.search(queryStringQuery("id:" + studentExamReport.getId())))
+//            .thenReturn(Collections.singletonList(studentExamReport));
         // Search the studentExamReport
         restStudentExamReportMockMvc.perform(get("/api/_search/student-exam-reports?query=id:" + studentExamReport.getId()))
             .andExpect(status().isOk())

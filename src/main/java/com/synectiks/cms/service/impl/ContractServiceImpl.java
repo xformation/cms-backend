@@ -33,12 +33,12 @@ public class ContractServiceImpl implements ContractService {
 
     private final ContractMapper contractMapper;
 
-    private final ContractSearchRepository contractSearchRepository;
+//    private final ContractSearchRepository contractSearchRepository;
 
     public ContractServiceImpl(ContractRepository contractRepository, ContractMapper contractMapper, ContractSearchRepository contractSearchRepository) {
         this.contractRepository = contractRepository;
         this.contractMapper = contractMapper;
-        this.contractSearchRepository = contractSearchRepository;
+//        this.contractSearchRepository = contractSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class ContractServiceImpl implements ContractService {
         Contract contract = contractMapper.toEntity(contractDTO);
         contract = contractRepository.save(contract);
         ContractDTO result = contractMapper.toDto(contract);
-        contractSearchRepository.save(contract);
+//        contractSearchRepository.save(contract);
         return result;
     }
 
@@ -94,7 +94,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Contract : {}", id);        contractRepository.deleteById(id);
-        contractSearchRepository.deleteById(id);
+//        contractSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,9 +107,10 @@ public class ContractServiceImpl implements ContractService {
     @Transactional(readOnly = true)
     public List<ContractDTO> search(String query) {
         log.debug("Request to search Contracts for query {}", query);
-        return StreamSupport
-            .stream(contractSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(contractMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(contractSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(contractMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

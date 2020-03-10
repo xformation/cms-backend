@@ -70,7 +70,7 @@ public class CollegeResourceIntTest {
 
     @Autowired
     private CollegeMapper collegeMapper;
-    
+
 
     @Autowired
     private CollegeService collegeService;
@@ -219,7 +219,7 @@ public class CollegeResourceIntTest {
             .andExpect(jsonPath("$.[*].logoFileName").value(hasItem(DEFAULT_LOGO_FILE_NAME.toString())))
             .andExpect(jsonPath("$.[*].backgroundImageFileName").value(hasItem(DEFAULT_BACKGROUND_IMAGE_FILE_NAME.toString())));
     }
-    
+
 
     @Test
     @Transactional
@@ -336,8 +336,8 @@ public class CollegeResourceIntTest {
     public void searchCollege() throws Exception {
         // Initialize the database
         collegeRepository.saveAndFlush(college);
-        when(mockCollegeSearchRepository.search(queryStringQuery("id:" + college.getId())))
-            .thenReturn(Collections.singletonList(college));
+//        when(mockCollegeSearchRepository.search(queryStringQuery("id:" + college.getId())))
+//            .thenReturn(Collections.singletonList(college));
         // Search the college
         restCollegeMockMvc.perform(get("/api/_search/colleges?query=id:" + college.getId()))
             .andExpect(status().isOk())

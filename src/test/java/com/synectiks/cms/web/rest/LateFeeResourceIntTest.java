@@ -252,7 +252,7 @@ public class LateFeeResourceIntTest {
             .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())))
             .andExpect(jsonPath("$.[*].termId").value(hasItem(DEFAULT_TERM_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getLateFee() throws Exception {
@@ -384,8 +384,8 @@ public class LateFeeResourceIntTest {
     public void searchLateFee() throws Exception {
         // Initialize the database
         lateFeeRepository.saveAndFlush(lateFee);
-        when(mockLateFeeSearchRepository.search(queryStringQuery("id:" + lateFee.getId())))
-            .thenReturn(Collections.singletonList(lateFee));
+//        when(mockLateFeeSearchRepository.search(queryStringQuery("id:" + lateFee.getId())))
+//            .thenReturn(Collections.singletonList(lateFee));
         // Search the lateFee
         restLateFeeMockMvc.perform(get("/api/_search/late-fees?query=id:" + lateFee.getId()))
             .andExpect(status().isOk())

@@ -1,6 +1,7 @@
 package com.synectiks.cms.domain;
 
 
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,11 +20,10 @@ import com.synectiks.cms.domain.enumeration.Frequency;
 @Entity
 @Table(name = "due_date")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "duedate")
-public class DueDate implements Serializable {
+public class DueDate implements Serializable , IESEntity {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

@@ -33,12 +33,12 @@ public class StudentFacilityLinkServiceImpl implements StudentFacilityLinkServic
 
     private final StudentFacilityLinkMapper studentFacilityLinkMapper;
 
-    private final StudentFacilityLinkSearchRepository studentFacilityLinkSearchRepository;
+//    private final StudentFacilityLinkSearchRepository studentFacilityLinkSearchRepository;
 
     public StudentFacilityLinkServiceImpl(StudentFacilityLinkRepository studentFacilityLinkRepository, StudentFacilityLinkMapper studentFacilityLinkMapper, StudentFacilityLinkSearchRepository studentFacilityLinkSearchRepository) {
         this.studentFacilityLinkRepository = studentFacilityLinkRepository;
         this.studentFacilityLinkMapper = studentFacilityLinkMapper;
-        this.studentFacilityLinkSearchRepository = studentFacilityLinkSearchRepository;
+//        this.studentFacilityLinkSearchRepository = studentFacilityLinkSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class StudentFacilityLinkServiceImpl implements StudentFacilityLinkServic
         StudentFacilityLink studentFacilityLink = studentFacilityLinkMapper.toEntity(studentFacilityLinkDTO);
         studentFacilityLink = studentFacilityLinkRepository.save(studentFacilityLink);
         StudentFacilityLinkDTO result = studentFacilityLinkMapper.toDto(studentFacilityLink);
-        studentFacilityLinkSearchRepository.save(studentFacilityLink);
+//        studentFacilityLinkSearchRepository.save(studentFacilityLink);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class StudentFacilityLinkServiceImpl implements StudentFacilityLinkServic
     public void delete(Long id) {
         log.debug("Request to delete StudentFacilityLink : {}", id);
         studentFacilityLinkRepository.deleteById(id);
-        studentFacilityLinkSearchRepository.deleteById(id);
+//        studentFacilityLinkSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class StudentFacilityLinkServiceImpl implements StudentFacilityLinkServic
     @Transactional(readOnly = true)
     public List<StudentFacilityLinkDTO> search(String query) {
         log.debug("Request to search StudentFacilityLinks for query {}", query);
-        return StreamSupport
-            .stream(studentFacilityLinkSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentFacilityLinkMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(studentFacilityLinkSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(studentFacilityLinkMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -178,7 +178,7 @@ public class StudentFacilityLinkResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(studentFacilityLink.getId().intValue())))
             .andExpect(jsonPath("$.[*].linkDesc").value(hasItem(DEFAULT_LINK_DESC.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getStudentFacilityLink() throws Exception {
@@ -280,8 +280,8 @@ public class StudentFacilityLinkResourceIT {
     public void searchStudentFacilityLink() throws Exception {
         // Initialize the database
         studentFacilityLinkRepository.saveAndFlush(studentFacilityLink);
-        when(mockStudentFacilityLinkSearchRepository.search(queryStringQuery("id:" + studentFacilityLink.getId())))
-            .thenReturn(Collections.singletonList(studentFacilityLink));
+//        when(mockStudentFacilityLinkSearchRepository.search(queryStringQuery("id:" + studentFacilityLink.getId())))
+//            .thenReturn(Collections.singletonList(studentFacilityLink));
         // Search the studentFacilityLink
         restStudentFacilityLinkMockMvc.perform(get("/api/_search/student-facility-links?query=id:" + studentFacilityLink.getId()))
             .andExpect(status().isOk())

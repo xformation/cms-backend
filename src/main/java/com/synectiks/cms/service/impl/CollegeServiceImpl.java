@@ -25,7 +25,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
  */
 @Service
 @Transactional
-public class CollegeServiceImpl implements CollegeService { 
+public class CollegeServiceImpl implements CollegeService {
 
     private final Logger log = LoggerFactory.getLogger(CollegeServiceImpl.class);
 
@@ -33,12 +33,12 @@ public class CollegeServiceImpl implements CollegeService {
 
     private final CollegeMapper collegeMapper;
 
-    private final CollegeSearchRepository collegeSearchRepository;
+//    private final CollegeSearchRepository collegeSearchRepository;
 
     public CollegeServiceImpl(CollegeRepository collegeRepository, CollegeMapper collegeMapper, CollegeSearchRepository collegeSearchRepository) {
         this.collegeRepository = collegeRepository;
         this.collegeMapper = collegeMapper;
-        this.collegeSearchRepository = collegeSearchRepository;
+//        this.collegeSearchRepository = collegeSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class CollegeServiceImpl implements CollegeService {
         College college = collegeMapper.toEntity(collegeDTO);
         college = collegeRepository.save(college);
         CollegeDTO result = collegeMapper.toDto(college);
-        collegeSearchRepository.save(college);
+//        collegeSearchRepository.save(college);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class CollegeServiceImpl implements CollegeService {
     public void delete(Long id) {
         log.debug("Request to delete College : {}", id);
         collegeRepository.deleteById(id);
-        collegeSearchRepository.deleteById(id);
+//        collegeSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class CollegeServiceImpl implements CollegeService {
     @Transactional(readOnly = true)
     public List<CollegeDTO> search(String query) {
         log.debug("Request to search Colleges for query {}", query);
-        return StreamSupport
-            .stream(collegeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(collegeMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(collegeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(collegeMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

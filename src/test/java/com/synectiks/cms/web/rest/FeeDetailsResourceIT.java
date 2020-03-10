@@ -298,7 +298,7 @@ public class FeeDetailsResourceIT {
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getFeeDetails() throws Exception {
@@ -433,8 +433,8 @@ public class FeeDetailsResourceIT {
     public void searchFeeDetails() throws Exception {
         // Initialize the database
         feeDetailsRepository.saveAndFlush(feeDetails);
-        when(mockFeeDetailsSearchRepository.search(queryStringQuery("id:" + feeDetails.getId())))
-            .thenReturn(Collections.singletonList(feeDetails));
+//        when(mockFeeDetailsSearchRepository.search(queryStringQuery("id:" + feeDetails.getId())))
+//            .thenReturn(Collections.singletonList(feeDetails));
         // Search the feeDetails
         restFeeDetailsMockMvc.perform(get("/api/_search/fee-details?query=id:" + feeDetails.getId()))
             .andExpect(status().isOk())

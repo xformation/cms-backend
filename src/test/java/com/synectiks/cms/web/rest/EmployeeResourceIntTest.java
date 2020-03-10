@@ -392,7 +392,7 @@ public class EmployeeResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].maritalStatus").value(hasItem(DEFAULT_MARITAL_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getEmployee() throws Exception {
@@ -569,8 +569,8 @@ public class EmployeeResourceIntTest {
     public void searchEmployee() throws Exception {
         // Initialize the database
         employeeRepository.saveAndFlush(employee);
-        when(mockEmployeeSearchRepository.search(queryStringQuery("id:" + employee.getId())))
-            .thenReturn(Collections.singletonList(employee));
+//        when(mockEmployeeSearchRepository.search(queryStringQuery("id:" + employee.getId())))
+//            .thenReturn(Collections.singletonList(employee));
         // Search the employee
         restEmployeeMockMvc.perform(get("/api/_search/employees?query=id:" + employee.getId()))
             .andExpect(status().isOk())

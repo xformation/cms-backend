@@ -205,7 +205,7 @@ public class StudentAttendanceResourceIT {
             .andExpect(jsonPath("$.[*].attendanceStatus").value(hasItem(DEFAULT_ATTENDANCE_STATUS.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getStudentAttendance() throws Exception {
@@ -310,8 +310,8 @@ public class StudentAttendanceResourceIT {
     public void searchStudentAttendance() throws Exception {
         // Initialize the database
         studentAttendanceRepository.saveAndFlush(studentAttendance);
-        when(mockStudentAttendanceSearchRepository.search(queryStringQuery("id:" + studentAttendance.getId())))
-            .thenReturn(Collections.singletonList(studentAttendance));
+//        when(mockStudentAttendanceSearchRepository.search(queryStringQuery("id:" + studentAttendance.getId())))
+//            .thenReturn(Collections.singletonList(studentAttendance));
         // Search the studentAttendance
         restStudentAttendanceMockMvc.perform(get("/api/_search/student-attendances?query=id:" + studentAttendance.getId()))
             .andExpect(status().isOk())

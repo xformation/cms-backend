@@ -318,7 +318,7 @@ public class BankAccountsResourceIntTest {
             .andExpect(jsonPath("$.[*].branchAddress").value(hasItem(DEFAULT_BRANCH_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].corporateId").value(hasItem(DEFAULT_CORPORATE_ID)));
     }
-    
+
     @Test
     @Transactional
     public void getBankAccounts() throws Exception {
@@ -435,8 +435,8 @@ public class BankAccountsResourceIntTest {
     public void searchBankAccounts() throws Exception {
         // Initialize the database
         bankAccountsRepository.saveAndFlush(bankAccounts);
-        when(mockBankAccountsSearchRepository.search(queryStringQuery("id:" + bankAccounts.getId())))
-            .thenReturn(Collections.singletonList(bankAccounts));
+//        when(mockBankAccountsSearchRepository.search(queryStringQuery("id:" + bankAccounts.getId())))
+//            .thenReturn(Collections.singletonList(bankAccounts));
         // Search the bankAccounts
         restBankAccountsMockMvc.perform(get("/api/_search/bank-accounts?query=id:" + bankAccounts.getId()))
             .andExpect(status().isOk())

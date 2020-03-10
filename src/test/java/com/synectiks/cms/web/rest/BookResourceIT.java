@@ -209,7 +209,7 @@ public class BookResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].receivedDate").value(hasItem(DEFAULT_RECEIVED_DATE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getBook() throws Exception {
@@ -323,8 +323,8 @@ public class BookResourceIT {
     public void searchBook() throws Exception {
         // Initialize the database
         bookRepository.saveAndFlush(book);
-        when(mockBookSearchRepository.search(queryStringQuery("id:" + book.getId())))
-            .thenReturn(Collections.singletonList(book));
+//        when(mockBookSearchRepository.search(queryStringQuery("id:" + book.getId())))
+//            .thenReturn(Collections.singletonList(book));
         // Search the book
         restBookMockMvc.perform(get("/api/_search/books?query=id:" + book.getId()))
             .andExpect(status().isOk())

@@ -33,12 +33,12 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
 
     private final AdmissionApplicationMapper admissionApplicationMapper;
 
-    private final AdmissionApplicationSearchRepository admissionApplicationSearchRepository;
+//    private final AdmissionApplicationSearchRepository admissionApplicationSearchRepository;
 
     public AdmissionApplicationServiceImpl(AdmissionApplicationRepository admissionApplicationRepository, AdmissionApplicationMapper admissionApplicationMapper, AdmissionApplicationSearchRepository admissionApplicationSearchRepository) {
         this.admissionApplicationRepository = admissionApplicationRepository;
         this.admissionApplicationMapper = admissionApplicationMapper;
-        this.admissionApplicationSearchRepository = admissionApplicationSearchRepository;
+//        this.admissionApplicationSearchRepository = admissionApplicationSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
         AdmissionApplication admissionApplication = admissionApplicationMapper.toEntity(admissionApplicationDTO);
         admissionApplication = admissionApplicationRepository.save(admissionApplication);
         AdmissionApplicationDTO result = admissionApplicationMapper.toDto(admissionApplication);
-        admissionApplicationSearchRepository.save(admissionApplication);
+//        admissionApplicationSearchRepository.save(admissionApplication);
         return result;
     }
 
@@ -94,7 +94,7 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
     @Override
     public void delete(Long id) {
         log.debug("Request to delete AdmissionApplication : {}", id);        admissionApplicationRepository.deleteById(id);
-        admissionApplicationSearchRepository.deleteById(id);
+//        admissionApplicationSearchRepository.deleteById(id);
     }
 
     /**
@@ -107,9 +107,10 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
     @Transactional(readOnly = true)
     public List<AdmissionApplicationDTO> search(String query) {
         log.debug("Request to search AdmissionApplications for query {}", query);
-        return StreamSupport
-            .stream(admissionApplicationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(admissionApplicationMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(admissionApplicationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(admissionApplicationMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -33,12 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeMapper employeeMapper;
 
-    private final EmployeeSearchRepository employeeSearchRepository;
+//    private final EmployeeSearchRepository employeeSearchRepository;
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper, EmployeeSearchRepository employeeSearchRepository) {
         this.employeeRepository = employeeRepository;
         this.employeeMapper = employeeMapper;
-        this.employeeSearchRepository = employeeSearchRepository;
+//        this.employeeSearchRepository = employeeSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
         EmployeeDTO result = employeeMapper.toDto(employee);
-        employeeSearchRepository.save(employee);
+//        employeeSearchRepository.save(employee);
         return result;
     }
 
@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     *  Get all the employees where Vehicle is {@code null}.
      *  @return the list of entities.
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<EmployeeDTO> findAllWhereVehicleIsNull() {
         log.debug("Request to get all employees where Vehicle is null");
         return StreamSupport
@@ -110,7 +110,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(Long id) {
         log.debug("Request to delete Employee : {}", id);
         employeeRepository.deleteById(id);
-        employeeSearchRepository.deleteById(id);
+//        employeeSearchRepository.deleteById(id);
     }
 
     /**
@@ -123,9 +123,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(readOnly = true)
     public List<EmployeeDTO> search(String query) {
         log.debug("Request to search Employees for query {}", query);
-        return StreamSupport
-            .stream(employeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(employeeMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(employeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(employeeMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

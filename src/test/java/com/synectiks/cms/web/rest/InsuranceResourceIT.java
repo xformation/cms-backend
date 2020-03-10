@@ -278,7 +278,7 @@ public class InsuranceResourceIT {
             .andExpect(jsonPath("$.[*].dateOfInsurance").value(hasItem(DEFAULT_DATE_OF_INSURANCE.toString())))
             .andExpect(jsonPath("$.[*].validTill").value(hasItem(DEFAULT_VALID_TILL.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getInsurance() throws Exception {
@@ -389,8 +389,8 @@ public class InsuranceResourceIT {
     public void searchInsurance() throws Exception {
         // Initialize the database
         insuranceRepository.saveAndFlush(insurance);
-        when(mockInsuranceSearchRepository.search(queryStringQuery("id:" + insurance.getId())))
-            .thenReturn(Collections.singletonList(insurance));
+//        when(mockInsuranceSearchRepository.search(queryStringQuery("id:" + insurance.getId())))
+//            .thenReturn(Collections.singletonList(insurance));
         // Search the insurance
         restInsuranceMockMvc.perform(get("/api/_search/insurances?query=id:" + insurance.getId()))
             .andExpect(status().isOk())

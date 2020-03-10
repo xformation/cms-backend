@@ -61,7 +61,7 @@ public class LocationResourceIntTest {
 
     @Autowired
     private LocationMapper locationMapper;
-    
+
 
     @Autowired
     private LocationService locationService;
@@ -239,7 +239,7 @@ public class LocationResourceIntTest {
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].appliesTo").value(hasItem(DEFAULT_APPLIES_TO.toString())));
     }
-    
+
 
     @Test
     @Transactional
@@ -347,8 +347,8 @@ public class LocationResourceIntTest {
     public void searchLocation() throws Exception {
         // Initialize the database
         locationRepository.saveAndFlush(location);
-        when(mockLocationSearchRepository.search(queryStringQuery("id:" + location.getId())))
-            .thenReturn(Collections.singletonList(location));
+//        when(mockLocationSearchRepository.search(queryStringQuery("id:" + location.getId())))
+//            .thenReturn(Collections.singletonList(location));
         // Search the location
         restLocationMockMvc.perform(get("/api/_search/locations?query=id:" + location.getId()))
             .andExpect(status().isOk())

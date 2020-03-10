@@ -33,12 +33,12 @@ public class DocumentsServiceImpl implements DocumentsService {
 
     private final DocumentsMapper documentsMapper;
 
-    private final DocumentsSearchRepository documentsSearchRepository;
+//    private final DocumentsSearchRepository documentsSearchRepository;
 
     public DocumentsServiceImpl(DocumentsRepository documentsRepository, DocumentsMapper documentsMapper, DocumentsSearchRepository documentsSearchRepository) {
         this.documentsRepository = documentsRepository;
         this.documentsMapper = documentsMapper;
-        this.documentsSearchRepository = documentsSearchRepository;
+//        this.documentsSearchRepository = documentsSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class DocumentsServiceImpl implements DocumentsService {
         Documents documents = documentsMapper.toEntity(documentsDTO);
         documents = documentsRepository.save(documents);
         DocumentsDTO result = documentsMapper.toDto(documents);
-        documentsSearchRepository.save(documents);
+//        documentsSearchRepository.save(documents);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     public void delete(Long id) {
         log.debug("Request to delete Documents : {}", id);
         documentsRepository.deleteById(id);
-        documentsSearchRepository.deleteById(id);
+//        documentsSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class DocumentsServiceImpl implements DocumentsService {
     @Transactional(readOnly = true)
     public List<DocumentsDTO> search(String query) {
         log.debug("Request to search Documents for query {}", query);
-        return StreamSupport
-            .stream(documentsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(documentsMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(documentsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(documentsMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

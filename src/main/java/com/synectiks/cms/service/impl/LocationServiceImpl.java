@@ -33,12 +33,12 @@ public class LocationServiceImpl implements LocationService {
 
     private final LocationMapper locationMapper;
 
-    private final LocationSearchRepository locationSearchRepository;
+//    private final LocationSearchRepository locationSearchRepository;
 
     public LocationServiceImpl(LocationRepository locationRepository, LocationMapper locationMapper, LocationSearchRepository locationSearchRepository) {
         this.locationRepository = locationRepository;
         this.locationMapper = locationMapper;
-        this.locationSearchRepository = locationSearchRepository;
+//        this.locationSearchRepository = locationSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class LocationServiceImpl implements LocationService {
         Location location = locationMapper.toEntity(locationDTO);
         location = locationRepository.save(location);
         LocationDTO result = locationMapper.toDto(location);
-        locationSearchRepository.save(location);
+//        locationSearchRepository.save(location);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class LocationServiceImpl implements LocationService {
     public void delete(Long id) {
         log.debug("Request to delete Location : {}", id);
         locationRepository.deleteById(id);
-        locationSearchRepository.deleteById(id);
+//        locationSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class LocationServiceImpl implements LocationService {
     @Transactional(readOnly = true)
     public List<LocationDTO> search(String query) {
         log.debug("Request to search Locations for query {}", query);
-        return StreamSupport
-            .stream(locationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(locationMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(locationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(locationMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

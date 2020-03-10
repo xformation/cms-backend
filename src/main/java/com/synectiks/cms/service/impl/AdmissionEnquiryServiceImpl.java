@@ -33,12 +33,12 @@ public class AdmissionEnquiryServiceImpl implements AdmissionEnquiryService {
 
     private final AdmissionEnquiryMapper admissionEnquiryMapper;
 
-    private final AdmissionEnquirySearchRepository admissionEnquirySearchRepository;
+//    private final AdmissionEnquirySearchRepository admissionEnquirySearchRepository;
 
     public AdmissionEnquiryServiceImpl(AdmissionEnquiryRepository admissionEnquiryRepository, AdmissionEnquiryMapper admissionEnquiryMapper, AdmissionEnquirySearchRepository admissionEnquirySearchRepository) {
         this.admissionEnquiryRepository = admissionEnquiryRepository;
         this.admissionEnquiryMapper = admissionEnquiryMapper;
-        this.admissionEnquirySearchRepository = admissionEnquirySearchRepository;
+//        this.admissionEnquirySearchRepository = admissionEnquirySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AdmissionEnquiryServiceImpl implements AdmissionEnquiryService {
         AdmissionEnquiry admissionEnquiry = admissionEnquiryMapper.toEntity(admissionEnquiryDTO);
         admissionEnquiry = admissionEnquiryRepository.save(admissionEnquiry);
         AdmissionEnquiryDTO result = admissionEnquiryMapper.toDto(admissionEnquiry);
-        admissionEnquirySearchRepository.save(admissionEnquiry);
+//        admissionEnquirySearchRepository.save(admissionEnquiry);
         return result;
     }
 
@@ -94,7 +94,7 @@ public class AdmissionEnquiryServiceImpl implements AdmissionEnquiryService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete AdmissionEnquiry : {}", id);        admissionEnquiryRepository.deleteById(id);
-        admissionEnquirySearchRepository.deleteById(id);
+//        admissionEnquirySearchRepository.deleteById(id);
     }
 
     /**
@@ -107,9 +107,10 @@ public class AdmissionEnquiryServiceImpl implements AdmissionEnquiryService {
     @Transactional(readOnly = true)
     public List<AdmissionEnquiryDTO> search(String query) {
         log.debug("Request to search AdmissionEnquiries for query {}", query);
-        return StreamSupport
-            .stream(admissionEnquirySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(admissionEnquiryMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(admissionEnquirySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(admissionEnquiryMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

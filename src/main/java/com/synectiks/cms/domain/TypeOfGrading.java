@@ -1,4 +1,5 @@
 package com.synectiks.cms.domain;
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -13,8 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "type_of_grading")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "typeofgrading")
-public class TypeOfGrading implements Serializable {
+public class TypeOfGrading implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

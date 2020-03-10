@@ -33,12 +33,12 @@ public class BranchServiceImpl implements BranchService {
 
     private final BranchMapper branchMapper;
 
-    private final BranchSearchRepository branchSearchRepository;
+//    private final BranchSearchRepository branchSearchRepository;
 
     public BranchServiceImpl(BranchRepository branchRepository, BranchMapper branchMapper, BranchSearchRepository branchSearchRepository) {
         this.branchRepository = branchRepository;
         this.branchMapper = branchMapper;
-        this.branchSearchRepository = branchSearchRepository;
+//        this.branchSearchRepository = branchSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class BranchServiceImpl implements BranchService {
         Branch branch = branchMapper.toEntity(branchDTO);
         branch = branchRepository.save(branch);
         BranchDTO result = branchMapper.toDto(branch);
-        branchSearchRepository.save(branch);
+//        branchSearchRepository.save(branch);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class BranchServiceImpl implements BranchService {
     public void delete(Long id) {
         log.debug("Request to delete Branch : {}", id);
         branchRepository.deleteById(id);
-        branchSearchRepository.deleteById(id);
+//        branchSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class BranchServiceImpl implements BranchService {
     @Transactional(readOnly = true)
     public List<BranchDTO> search(String query) {
         log.debug("Request to search Branches for query {}", query);
-        return StreamSupport
-            .stream(branchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(branchMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(branchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(branchMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

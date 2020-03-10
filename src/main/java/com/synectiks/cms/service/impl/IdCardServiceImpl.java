@@ -33,12 +33,12 @@ public class IdCardServiceImpl implements IdCardService {
 
     private final IdCardMapper idCardMapper;
 
-    private final IdCardSearchRepository idCardSearchRepository;
+//    private final IdCardSearchRepository idCardSearchRepository;
 
     public IdCardServiceImpl(IdCardRepository idCardRepository, IdCardMapper idCardMapper, IdCardSearchRepository idCardSearchRepository) {
         this.idCardRepository = idCardRepository;
         this.idCardMapper = idCardMapper;
-        this.idCardSearchRepository = idCardSearchRepository;
+//        this.idCardSearchRepository = idCardSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class IdCardServiceImpl implements IdCardService {
         IdCard idCard = idCardMapper.toEntity(idCardDTO);
         idCard = idCardRepository.save(idCard);
         IdCardDTO result = idCardMapper.toDto(idCard);
-        idCardSearchRepository.save(idCard);
+//        idCardSearchRepository.save(idCard);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class IdCardServiceImpl implements IdCardService {
     public void delete(Long id) {
         log.debug("Request to delete IdCard : {}", id);
         idCardRepository.deleteById(id);
-        idCardSearchRepository.deleteById(id);
+//        idCardSearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,10 @@ public class IdCardServiceImpl implements IdCardService {
     @Transactional(readOnly = true)
     public List<IdCardDTO> search(String query) {
         log.debug("Request to search IdCards for query {}", query);
-        return StreamSupport
-            .stream(idCardSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(idCardMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(idCardSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(idCardMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

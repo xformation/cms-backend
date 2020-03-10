@@ -204,7 +204,7 @@ public class CityResourceIntTest {
             .andExpect(jsonPath("$.[*].cityCode").value(hasItem(DEFAULT_CITY_CODE.toString())))
             .andExpect(jsonPath("$.[*].stdCode").value(hasItem(DEFAULT_STD_CODE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getCity() throws Exception {
@@ -312,8 +312,8 @@ public class CityResourceIntTest {
     public void searchCity() throws Exception {
         // Initialize the database
         cityRepository.saveAndFlush(city);
-        when(mockCitySearchRepository.search(queryStringQuery("id:" + city.getId())))
-            .thenReturn(Collections.singletonList(city));
+//        when(mockCitySearchRepository.search(queryStringQuery("id:" + city.getId())))
+//            .thenReturn(Collections.singletonList(city));
         // Search the city
         restCityMockMvc.perform(get("/api/_search/cities?query=id:" + city.getId()))
             .andExpect(status().isOk())

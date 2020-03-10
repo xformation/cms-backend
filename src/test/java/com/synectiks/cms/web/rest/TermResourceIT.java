@@ -278,7 +278,7 @@ public class TermResourceIT {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].termStatus").value(hasItem(DEFAULT_TERM_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTerm() throws Exception {
@@ -389,8 +389,8 @@ public class TermResourceIT {
     public void searchTerm() throws Exception {
         // Initialize the database
         termRepository.saveAndFlush(term);
-        when(mockTermSearchRepository.search(queryStringQuery("id:" + term.getId())))
-            .thenReturn(Collections.singletonList(term));
+//        when(mockTermSearchRepository.search(queryStringQuery("id:" + term.getId())))
+//            .thenReturn(Collections.singletonList(term));
         // Search the term
         restTermMockMvc.perform(get("/api/_search/terms?query=id:" + term.getId()))
             .andExpect(status().isOk())

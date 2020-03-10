@@ -33,12 +33,12 @@ public class CompetitiveExamServiceImpl implements CompetitiveExamService {
 
     private final CompetitiveExamMapper competitiveExamMapper;
 
-    private final CompetitiveExamSearchRepository competitiveExamSearchRepository;
+//    private final CompetitiveExamSearchRepository competitiveExamSearchRepository;
 
     public CompetitiveExamServiceImpl(CompetitiveExamRepository competitiveExamRepository, CompetitiveExamMapper competitiveExamMapper, CompetitiveExamSearchRepository competitiveExamSearchRepository) {
         this.competitiveExamRepository = competitiveExamRepository;
         this.competitiveExamMapper = competitiveExamMapper;
-        this.competitiveExamSearchRepository = competitiveExamSearchRepository;
+//        this.competitiveExamSearchRepository = competitiveExamSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class CompetitiveExamServiceImpl implements CompetitiveExamService {
         CompetitiveExam competitiveExam = competitiveExamMapper.toEntity(competitiveExamDTO);
         competitiveExam = competitiveExamRepository.save(competitiveExam);
         CompetitiveExamDTO result = competitiveExamMapper.toDto(competitiveExam);
-        competitiveExamSearchRepository.save(competitiveExam);
+//        competitiveExamSearchRepository.save(competitiveExam);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class CompetitiveExamServiceImpl implements CompetitiveExamService {
     public void delete(Long id) {
         log.debug("Request to delete CompetitiveExam : {}", id);
         competitiveExamRepository.deleteById(id);
-        competitiveExamSearchRepository.deleteById(id);
+//        competitiveExamSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class CompetitiveExamServiceImpl implements CompetitiveExamService {
     @Transactional(readOnly = true)
     public List<CompetitiveExamDTO> search(String query) {
         log.debug("Request to search CompetitiveExams for query {}", query);
-        return StreamSupport
-            .stream(competitiveExamSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(competitiveExamMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(competitiveExamSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(competitiveExamMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

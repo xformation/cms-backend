@@ -33,12 +33,12 @@ public class LegalEntityServiceImpl implements LegalEntityService {
 
     private final LegalEntityMapper legalEntityMapper;
 
-    private final LegalEntitySearchRepository legalEntitySearchRepository;
+//    private final LegalEntitySearchRepository legalEntitySearchRepository;
 
     public LegalEntityServiceImpl(LegalEntityRepository legalEntityRepository, LegalEntityMapper legalEntityMapper, LegalEntitySearchRepository legalEntitySearchRepository) {
         this.legalEntityRepository = legalEntityRepository;
         this.legalEntityMapper = legalEntityMapper;
-        this.legalEntitySearchRepository = legalEntitySearchRepository;
+//        this.legalEntitySearchRepository = legalEntitySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
         LegalEntity legalEntity = legalEntityMapper.toEntity(legalEntityDTO);
         legalEntity = legalEntityRepository.save(legalEntity);
         LegalEntityDTO result = legalEntityMapper.toDto(legalEntity);
-        legalEntitySearchRepository.save(legalEntity);
+//        legalEntitySearchRepository.save(legalEntity);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     public void delete(Long id) {
         log.debug("Request to delete LegalEntity : {}", id);
         legalEntityRepository.deleteById(id);
-        legalEntitySearchRepository.deleteById(id);
+//        legalEntitySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Transactional(readOnly = true)
     public List<LegalEntityDTO> search(String query) {
         log.debug("Request to search LegalEntities for query {}", query);
-        return StreamSupport
-            .stream(legalEntitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(legalEntityMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(legalEntitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(legalEntityMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

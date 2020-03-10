@@ -187,7 +187,7 @@ public class ReportsResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(reports.getId().intValue())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getReports() throws Exception {
@@ -289,8 +289,8 @@ public class ReportsResourceIntTest {
     public void searchReports() throws Exception {
         // Initialize the database
         reportsRepository.saveAndFlush(reports);
-        when(mockReportsSearchRepository.search(queryStringQuery("id:" + reports.getId())))
-            .thenReturn(Collections.singletonList(reports));
+//        when(mockReportsSearchRepository.search(queryStringQuery("id:" + reports.getId())))
+//            .thenReturn(Collections.singletonList(reports));
         // Search the reports
         restReportsMockMvc.perform(get("/api/_search/reports?query=id:" + reports.getId()))
             .andExpect(status().isOk())

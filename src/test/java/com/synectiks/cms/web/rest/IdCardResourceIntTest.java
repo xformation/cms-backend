@@ -187,7 +187,7 @@ public class IdCardResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(idCard.getId().intValue())))
             .andExpect(jsonPath("$.[*].desc").value(hasItem(DEFAULT_DESC.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getIdCard() throws Exception {
@@ -289,8 +289,8 @@ public class IdCardResourceIntTest {
     public void searchIdCard() throws Exception {
         // Initialize the database
         idCardRepository.saveAndFlush(idCard);
-        when(mockIdCardSearchRepository.search(queryStringQuery("id:" + idCard.getId())))
-            .thenReturn(Collections.singletonList(idCard));
+//        when(mockIdCardSearchRepository.search(queryStringQuery("id:" + idCard.getId())))
+//            .thenReturn(Collections.singletonList(idCard));
         // Search the idCard
         restIdCardMockMvc.perform(get("/api/_search/id-cards?query=id:" + idCard.getId()))
             .andExpect(status().isOk())

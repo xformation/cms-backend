@@ -404,8 +404,8 @@ public class StudentFeeResourceIntTest {
     public void searchStudentFee() throws Exception {
         // Initialize the database
         studentFeeRepository.saveAndFlush(studentFee);
-        when(mockStudentFeeSearchRepository.search(queryStringQuery("id:" + studentFee.getId())))
-            .thenReturn(Collections.singletonList(studentFee));
+//        when(mockStudentFeeSearchRepository.search(queryStringQuery("id:" + studentFee.getId())))
+//            .thenReturn(Collections.singletonList(studentFee));
         // Search the studentFee
         restStudentFeeMockMvc.perform(get("/api/_search/student-fees?query=id:" + studentFee.getId()))
             .andExpect(status().isOk())

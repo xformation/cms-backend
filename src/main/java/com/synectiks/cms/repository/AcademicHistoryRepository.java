@@ -1,6 +1,7 @@
 package com.synectiks.cms.repository;
 
 import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.cms.utils.JPASearchRepository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface AcademicHistoryRepository extends JpaRepository<AcademicHistory, Long> {
+public interface AcademicHistoryRepository extends JPASearchRepository<AcademicHistory, Long> {
 
 }

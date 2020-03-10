@@ -33,12 +33,12 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
 
     private final StudentExamReportMapper studentExamReportMapper;
 
-    private final StudentExamReportSearchRepository studentExamReportSearchRepository;
+//    private final StudentExamReportSearchRepository studentExamReportSearchRepository;
 
     public StudentExamReportServiceImpl(StudentExamReportRepository studentExamReportRepository, StudentExamReportMapper studentExamReportMapper, StudentExamReportSearchRepository studentExamReportSearchRepository) {
         this.studentExamReportRepository = studentExamReportRepository;
         this.studentExamReportMapper = studentExamReportMapper;
-        this.studentExamReportSearchRepository = studentExamReportSearchRepository;
+//        this.studentExamReportSearchRepository = studentExamReportSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
         StudentExamReport studentExamReport = studentExamReportMapper.toEntity(studentExamReportDTO);
         studentExamReport = studentExamReportRepository.save(studentExamReport);
         StudentExamReportDTO result = studentExamReportMapper.toDto(studentExamReport);
-        studentExamReportSearchRepository.save(studentExamReport);
+//        studentExamReportSearchRepository.save(studentExamReport);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     public void delete(Long id) {
         log.debug("Request to delete StudentExamReport : {}", id);
         studentExamReportRepository.deleteById(id);
-        studentExamReportSearchRepository.deleteById(id);
+//        studentExamReportSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class StudentExamReportServiceImpl implements StudentExamReportService {
     @Transactional(readOnly = true)
     public List<StudentExamReportDTO> search(String query) {
         log.debug("Request to search StudentExamReports for query {}", query);
-        return StreamSupport
-            .stream(studentExamReportSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentExamReportMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(studentExamReportSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(studentExamReportMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

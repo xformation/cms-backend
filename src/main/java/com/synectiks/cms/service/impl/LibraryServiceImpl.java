@@ -33,12 +33,12 @@ public class LibraryServiceImpl implements LibraryService {
 
     private final LibraryMapper libraryMapper;
 
-    private final LibrarySearchRepository librarySearchRepository;
+//    private final LibrarySearchRepository librarySearchRepository;
 
     public LibraryServiceImpl(LibraryRepository libraryRepository, LibraryMapper libraryMapper, LibrarySearchRepository librarySearchRepository) {
         this.libraryRepository = libraryRepository;
         this.libraryMapper = libraryMapper;
-        this.librarySearchRepository = librarySearchRepository;
+//        this.librarySearchRepository = librarySearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class LibraryServiceImpl implements LibraryService {
         Library library = libraryMapper.toEntity(libraryDTO);
         library = libraryRepository.save(library);
         LibraryDTO result = libraryMapper.toDto(library);
-        librarySearchRepository.save(library);
+//        librarySearchRepository.save(library);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class LibraryServiceImpl implements LibraryService {
     public void delete(Long id) {
         log.debug("Request to delete Library : {}", id);
         libraryRepository.deleteById(id);
-        librarySearchRepository.deleteById(id);
+//        librarySearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,10 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     public List<LibraryDTO> search(String query) {
         log.debug("Request to search Libraries for query {}", query);
-        return StreamSupport
-            .stream(librarySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(libraryMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(librarySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(libraryMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

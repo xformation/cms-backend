@@ -406,7 +406,7 @@ public class AdmissionEnquiryResourceIntTest {
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAdmissionEnquiry() throws Exception {
@@ -574,8 +574,8 @@ public class AdmissionEnquiryResourceIntTest {
     public void searchAdmissionEnquiry() throws Exception {
         // Initialize the database
         admissionEnquiryRepository.saveAndFlush(admissionEnquiry);
-        when(mockAdmissionEnquirySearchRepository.search(queryStringQuery("id:" + admissionEnquiry.getId())))
-            .thenReturn(Collections.singletonList(admissionEnquiry));
+//        when(mockAdmissionEnquirySearchRepository.search(queryStringQuery("id:" + admissionEnquiry.getId())))
+//            .thenReturn(Collections.singletonList(admissionEnquiry));
         // Search the admissionEnquiry
         restAdmissionEnquiryMockMvc.perform(get("/api/_search/admission-enquiries?query=id:" + admissionEnquiry.getId()))
             .andExpect(status().isOk())

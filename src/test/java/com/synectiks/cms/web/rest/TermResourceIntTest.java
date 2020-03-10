@@ -379,8 +379,8 @@ public class TermResourceIntTest {
     public void searchTerm() throws Exception {
         // Initialize the database
         termRepository.saveAndFlush(term);
-        when(mockTermSearchRepository.search(queryStringQuery("id:" + term.getId())))
-            .thenReturn(Collections.singletonList(term));
+//        when(mockTermSearchRepository.search(queryStringQuery("id:" + term.getId())))
+//            .thenReturn(Collections.singletonList(term));
         // Search the term
         restTermMockMvc.perform(get("/api/_search/terms?query=id:" + term.getId()))
             .andExpect(status().isOk())

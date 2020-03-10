@@ -217,7 +217,7 @@ public class DocumentsResourceIntTest {
             .andExpect(jsonPath("$.[*].documentName").value(hasItem(DEFAULT_DOCUMENT_NAME.toString())))
             .andExpect(jsonPath("$.[*].documentFilePath").value(hasItem(DEFAULT_DOCUMENT_FILE_PATH.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getDocuments() throws Exception {
@@ -322,8 +322,8 @@ public class DocumentsResourceIntTest {
     public void searchDocuments() throws Exception {
         // Initialize the database
         documentsRepository.saveAndFlush(documents);
-        when(mockDocumentsSearchRepository.search(queryStringQuery("id:" + documents.getId())))
-            .thenReturn(Collections.singletonList(documents));
+//        when(mockDocumentsSearchRepository.search(queryStringQuery("id:" + documents.getId())))
+//            .thenReturn(Collections.singletonList(documents));
         // Search the documents
         restDocumentsMockMvc.perform(get("/api/_search/documents?query=id:" + documents.getId()))
             .andExpect(status().isOk())

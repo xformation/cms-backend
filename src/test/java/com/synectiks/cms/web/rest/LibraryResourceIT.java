@@ -289,7 +289,7 @@ public class LibraryResourceIT {
             .andExpect(jsonPath("$.[*].additionalInfo").value(hasItem(DEFAULT_ADDITIONAL_INFO.toString())))
             .andExpect(jsonPath("$.[*].uniqueNo").value(hasItem(DEFAULT_UNIQUE_NO.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getLibrary() throws Exception {
@@ -406,8 +406,8 @@ public class LibraryResourceIT {
     public void searchLibrary() throws Exception {
         // Initialize the database
         libraryRepository.saveAndFlush(library);
-        when(mockLibrarySearchRepository.search(queryStringQuery("id:" + library.getId())))
-            .thenReturn(Collections.singletonList(library));
+//        when(mockLibrarySearchRepository.search(queryStringQuery("id:" + library.getId())))
+//            .thenReturn(Collections.singletonList(library));
         // Search the library
         restLibraryMockMvc.perform(get("/api/_search/libraries?query=id:" + library.getId()))
             .andExpect(status().isOk())

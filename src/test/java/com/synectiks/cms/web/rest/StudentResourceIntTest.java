@@ -902,7 +902,7 @@ public class StudentResourceIntTest {
             .andExpect(jsonPath("$.[*].sectionId").value(hasItem(DEFAULT_SECTION_ID.intValue())))
             .andExpect(jsonPath("$.[*].batchId").value(hasItem(DEFAULT_BATCH_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getStudent() throws Exception {
@@ -1364,8 +1364,8 @@ public class StudentResourceIntTest {
     public void searchStudent() throws Exception {
         // Initialize the database
         studentRepository.saveAndFlush(student);
-        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
-            .thenReturn(Collections.singletonList(student));
+//        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
+//            .thenReturn(Collections.singletonList(student));
         // Search the student
         restStudentMockMvc.perform(get("/api/_search/students?query=id:" + student.getId()))
             .andExpect(status().isOk())

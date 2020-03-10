@@ -862,8 +862,8 @@ public class LegalEntityResourceIntTest {
     public void searchLegalEntity() throws Exception {
         // Initialize the database
         legalEntityRepository.saveAndFlush(legalEntity);
-        when(mockLegalEntitySearchRepository.search(queryStringQuery("id:" + legalEntity.getId())))
-            .thenReturn(Collections.singletonList(legalEntity));
+//        when(mockLegalEntitySearchRepository.search(queryStringQuery("id:" + legalEntity.getId())))
+//            .thenReturn(Collections.singletonList(legalEntity));
         // Search the legalEntity
         restLegalEntityMockMvc.perform(get("/api/_search/legal-entities?query=id:" + legalEntity.getId()))
             .andExpect(status().isOk())

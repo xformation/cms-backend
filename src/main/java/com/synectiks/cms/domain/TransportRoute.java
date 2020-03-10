@@ -1,6 +1,7 @@
 package com.synectiks.cms.domain;
 
 
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,8 +20,7 @@ import com.synectiks.cms.domain.enumeration.RouteFrequency;
 @Entity
 @Table(name = "transport_route")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "transportroute")
-public class TransportRoute implements Serializable {
+public class TransportRoute implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

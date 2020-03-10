@@ -230,7 +230,7 @@ public class CountryResourceIT {
             .andExpect(jsonPath("$.[*].countryCode").value(hasItem(DEFAULT_COUNTRY_CODE.toString())))
             .andExpect(jsonPath("$.[*].isdCode").value(hasItem(DEFAULT_ISD_CODE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getCountry() throws Exception {
@@ -338,8 +338,8 @@ public class CountryResourceIT {
     public void searchCountry() throws Exception {
         // Initialize the database
         countryRepository.saveAndFlush(country);
-        when(mockCountrySearchRepository.search(queryStringQuery("id:" + country.getId())))
-            .thenReturn(Collections.singletonList(country));
+//        when(mockCountrySearchRepository.search(queryStringQuery("id:" + country.getId())))
+//            .thenReturn(Collections.singletonList(country));
         // Search the country
         restCountryMockMvc.perform(get("/api/_search/countries?query=id:" + country.getId()))
             .andExpect(status().isOk())

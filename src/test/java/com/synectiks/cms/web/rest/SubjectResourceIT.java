@@ -199,7 +199,7 @@ public class SubjectResourceIT {
             .andExpect(jsonPath("$.[*].subjectDesc").value(hasItem(DEFAULT_SUBJECT_DESC.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getSubject() throws Exception {
@@ -310,8 +310,8 @@ public class SubjectResourceIT {
     public void searchSubject() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
-        when(mockSubjectSearchRepository.search(queryStringQuery("id:" + subject.getId())))
-            .thenReturn(Collections.singletonList(subject));
+//        when(mockSubjectSearchRepository.search(queryStringQuery("id:" + subject.getId())))
+//            .thenReturn(Collections.singletonList(subject));
         // Search the subject
         restSubjectMockMvc.perform(get("/api/_search/subjects?query=id:" + subject.getId()))
             .andExpect(status().isOk())

@@ -33,12 +33,12 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
 
     private final TypeOfGradingMapper typeOfGradingMapper;
 
-    private final TypeOfGradingSearchRepository typeOfGradingSearchRepository;
+//    private final TypeOfGradingSearchRepository typeOfGradingSearchRepository;
 
     public TypeOfGradingServiceImpl(TypeOfGradingRepository typeOfGradingRepository, TypeOfGradingMapper typeOfGradingMapper, TypeOfGradingSearchRepository typeOfGradingSearchRepository) {
         this.typeOfGradingRepository = typeOfGradingRepository;
         this.typeOfGradingMapper = typeOfGradingMapper;
-        this.typeOfGradingSearchRepository = typeOfGradingSearchRepository;
+//        this.typeOfGradingSearchRepository = typeOfGradingSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
         TypeOfGrading typeOfGrading = typeOfGradingMapper.toEntity(typeOfGradingDTO);
         typeOfGrading = typeOfGradingRepository.save(typeOfGrading);
         TypeOfGradingDTO result = typeOfGradingMapper.toDto(typeOfGrading);
-        typeOfGradingSearchRepository.save(typeOfGrading);
+//        typeOfGradingSearchRepository.save(typeOfGrading);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
     public void delete(Long id) {
         log.debug("Request to delete TypeOfGrading : {}", id);
         typeOfGradingRepository.deleteById(id);
-        typeOfGradingSearchRepository.deleteById(id);
+//        typeOfGradingSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
     @Transactional(readOnly = true)
     public List<TypeOfGradingDTO> search(String query) {
         log.debug("Request to search TypeOfGradings for query {}", query);
-        return StreamSupport
-            .stream(typeOfGradingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(typeOfGradingMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(typeOfGradingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(typeOfGradingMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

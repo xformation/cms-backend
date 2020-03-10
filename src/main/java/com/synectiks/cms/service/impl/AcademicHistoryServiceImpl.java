@@ -33,12 +33,12 @@ public class AcademicHistoryServiceImpl implements AcademicHistoryService {
 
     private final AcademicHistoryMapper academicHistoryMapper;
 
-    private final AcademicHistorySearchRepository academicHistorySearchRepository;
+//    private final AcademicHistorySearchRepository academicHistorySearchRepository;
 
     public AcademicHistoryServiceImpl(AcademicHistoryRepository academicHistoryRepository, AcademicHistoryMapper academicHistoryMapper, AcademicHistorySearchRepository academicHistorySearchRepository) {
         this.academicHistoryRepository = academicHistoryRepository;
         this.academicHistoryMapper = academicHistoryMapper;
-        this.academicHistorySearchRepository = academicHistorySearchRepository;
+//        this.academicHistorySearchRepository = academicHistorySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class AcademicHistoryServiceImpl implements AcademicHistoryService {
         AcademicHistory academicHistory = academicHistoryMapper.toEntity(academicHistoryDTO);
         academicHistory = academicHistoryRepository.save(academicHistory);
         AcademicHistoryDTO result = academicHistoryMapper.toDto(academicHistory);
-        academicHistorySearchRepository.save(academicHistory);
+//        academicHistorySearchRepository.save(academicHistory);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class AcademicHistoryServiceImpl implements AcademicHistoryService {
     public void delete(Long id) {
         log.debug("Request to delete AcademicHistory : {}", id);
         academicHistoryRepository.deleteById(id);
-        academicHistorySearchRepository.deleteById(id);
+//        academicHistorySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class AcademicHistoryServiceImpl implements AcademicHistoryService {
     @Transactional(readOnly = true)
     public List<AcademicHistoryDTO> search(String query) {
         log.debug("Request to search AcademicHistories for query {}", query);
-        return StreamSupport
-            .stream(academicHistorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(academicHistoryMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(academicHistorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(academicHistoryMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

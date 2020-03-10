@@ -249,7 +249,7 @@ public class DepartmentResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].deptHead").value(hasItem(DEFAULT_DEPT_HEAD.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getDepartment() throws Exception {
@@ -357,8 +357,8 @@ public class DepartmentResourceIT {
     public void searchDepartment() throws Exception {
         // Initialize the database
         departmentRepository.saveAndFlush(department);
-        when(mockDepartmentSearchRepository.search(queryStringQuery("id:" + department.getId())))
-            .thenReturn(Collections.singletonList(department));
+//        when(mockDepartmentSearchRepository.search(queryStringQuery("id:" + department.getId())))
+//            .thenReturn(Collections.singletonList(department));
         // Search the department
         restDepartmentMockMvc.perform(get("/api/_search/departments?query=id:" + department.getId()))
             .andExpect(status().isOk())

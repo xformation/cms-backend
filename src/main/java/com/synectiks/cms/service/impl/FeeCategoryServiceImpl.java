@@ -33,12 +33,12 @@ public class FeeCategoryServiceImpl implements FeeCategoryService {
 
     private final FeeCategoryMapper feeCategoryMapper;
 
-    private final FeeCategorySearchRepository feeCategorySearchRepository;
+//    private final FeeCategorySearchRepository feeCategorySearchRepository;
 
     public FeeCategoryServiceImpl(FeeCategoryRepository feeCategoryRepository, FeeCategoryMapper feeCategoryMapper, FeeCategorySearchRepository feeCategorySearchRepository) {
         this.feeCategoryRepository = feeCategoryRepository;
         this.feeCategoryMapper = feeCategoryMapper;
-        this.feeCategorySearchRepository = feeCategorySearchRepository;
+//        this.feeCategorySearchRepository = feeCategorySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class FeeCategoryServiceImpl implements FeeCategoryService {
         FeeCategory feeCategory = feeCategoryMapper.toEntity(feeCategoryDTO);
         feeCategory = feeCategoryRepository.save(feeCategory);
         FeeCategoryDTO result = feeCategoryMapper.toDto(feeCategory);
-        feeCategorySearchRepository.save(feeCategory);
+//        feeCategorySearchRepository.save(feeCategory);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class FeeCategoryServiceImpl implements FeeCategoryService {
     public void delete(Long id) {
         log.debug("Request to delete FeeCategory : {}", id);
         feeCategoryRepository.deleteById(id);
-        feeCategorySearchRepository.deleteById(id);
+//        feeCategorySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class FeeCategoryServiceImpl implements FeeCategoryService {
     @Transactional(readOnly = true)
     public List<FeeCategoryDTO> search(String query) {
         log.debug("Request to search FeeCategories for query {}", query);
-        return StreamSupport
-            .stream(feeCategorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(feeCategoryMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(feeCategorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(feeCategoryMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

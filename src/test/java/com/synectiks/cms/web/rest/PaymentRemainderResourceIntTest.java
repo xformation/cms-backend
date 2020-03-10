@@ -258,7 +258,7 @@ public class PaymentRemainderResourceIntTest {
             .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
             .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getPaymentRemainder() throws Exception {
@@ -393,8 +393,8 @@ public class PaymentRemainderResourceIntTest {
     public void searchPaymentRemainder() throws Exception {
         // Initialize the database
         paymentRemainderRepository.saveAndFlush(paymentRemainder);
-        when(mockPaymentRemainderSearchRepository.search(queryStringQuery("id:" + paymentRemainder.getId())))
-            .thenReturn(Collections.singletonList(paymentRemainder));
+//        when(mockPaymentRemainderSearchRepository.search(queryStringQuery("id:" + paymentRemainder.getId())))
+//            .thenReturn(Collections.singletonList(paymentRemainder));
         // Search the paymentRemainder
         restPaymentRemainderMockMvc.perform(get("/api/_search/payment-remainders?query=id:" + paymentRemainder.getId()))
             .andExpect(status().isOk())

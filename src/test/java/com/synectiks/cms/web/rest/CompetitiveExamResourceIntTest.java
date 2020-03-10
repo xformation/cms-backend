@@ -267,7 +267,7 @@ public class CompetitiveExamResourceIntTest {
             .andExpect(jsonPath("$.[*].enrollmentNo").value(hasItem(DEFAULT_ENROLLMENT_NO.intValue())))
             .andExpect(jsonPath("$.[*].rank").value(hasItem(DEFAULT_RANK.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getCompetitiveExam() throws Exception {
@@ -378,8 +378,8 @@ public class CompetitiveExamResourceIntTest {
     public void searchCompetitiveExam() throws Exception {
         // Initialize the database
         competitiveExamRepository.saveAndFlush(competitiveExam);
-        when(mockCompetitiveExamSearchRepository.search(queryStringQuery("id:" + competitiveExam.getId())))
-            .thenReturn(Collections.singletonList(competitiveExam));
+//        when(mockCompetitiveExamSearchRepository.search(queryStringQuery("id:" + competitiveExam.getId())))
+//            .thenReturn(Collections.singletonList(competitiveExam));
         // Search the competitiveExam
         restCompetitiveExamMockMvc.perform(get("/api/_search/competitive-exams?query=id:" + competitiveExam.getId()))
             .andExpect(status().isOk())

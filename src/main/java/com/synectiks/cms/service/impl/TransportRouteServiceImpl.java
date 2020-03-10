@@ -33,12 +33,12 @@ public class TransportRouteServiceImpl implements TransportRouteService {
 
     private final TransportRouteMapper transportRouteMapper;
 
-    private final TransportRouteSearchRepository transportRouteSearchRepository;
+//    private final TransportRouteSearchRepository transportRouteSearchRepository;
 
     public TransportRouteServiceImpl(TransportRouteRepository transportRouteRepository, TransportRouteMapper transportRouteMapper, TransportRouteSearchRepository transportRouteSearchRepository) {
         this.transportRouteRepository = transportRouteRepository;
         this.transportRouteMapper = transportRouteMapper;
-        this.transportRouteSearchRepository = transportRouteSearchRepository;
+//        this.transportRouteSearchRepository = transportRouteSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class TransportRouteServiceImpl implements TransportRouteService {
         TransportRoute transportRoute = transportRouteMapper.toEntity(transportRouteDTO);
         transportRoute = transportRouteRepository.save(transportRoute);
         TransportRouteDTO result = transportRouteMapper.toDto(transportRoute);
-        transportRouteSearchRepository.save(transportRoute);
+//        transportRouteSearchRepository.save(transportRoute);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class TransportRouteServiceImpl implements TransportRouteService {
     public void delete(Long id) {
         log.debug("Request to delete TransportRoute : {}", id);
         transportRouteRepository.deleteById(id);
-        transportRouteSearchRepository.deleteById(id);
+//        transportRouteSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class TransportRouteServiceImpl implements TransportRouteService {
     @Transactional(readOnly = true)
     public List<TransportRouteDTO> search(String query) {
         log.debug("Request to search TransportRoutes for query {}", query);
-        return StreamSupport
-            .stream(transportRouteSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(transportRouteMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(transportRouteSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(transportRouteMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

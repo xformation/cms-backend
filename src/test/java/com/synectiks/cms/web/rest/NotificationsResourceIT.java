@@ -223,7 +223,7 @@ public class NotificationsResourceIT {
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getNotifications() throws Exception {
@@ -343,8 +343,8 @@ public class NotificationsResourceIT {
     public void searchNotifications() throws Exception {
         // Initialize the database
         notificationsRepository.saveAndFlush(notifications);
-        when(mockNotificationsSearchRepository.search(queryStringQuery("id:" + notifications.getId())))
-            .thenReturn(Collections.singletonList(notifications));
+//        when(mockNotificationsSearchRepository.search(queryStringQuery("id:" + notifications.getId())))
+//            .thenReturn(Collections.singletonList(notifications));
         // Search the notifications
         restNotificationsMockMvc.perform(get("/api/_search/notifications?query=id:" + notifications.getId()))
             .andExpect(status().isOk())

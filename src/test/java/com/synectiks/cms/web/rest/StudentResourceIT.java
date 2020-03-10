@@ -999,7 +999,7 @@ public class StudentResourceIT {
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].comments").value(hasItem(DEFAULT_COMMENTS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getStudent() throws Exception {
@@ -1449,8 +1449,8 @@ public class StudentResourceIT {
     public void searchStudent() throws Exception {
         // Initialize the database
         studentRepository.saveAndFlush(student);
-        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
-            .thenReturn(Collections.singletonList(student));
+//        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
+//            .thenReturn(Collections.singletonList(student));
         // Search the student
         restStudentMockMvc.perform(get("/api/_search/students?query=id:" + student.getId()))
             .andExpect(status().isOk())

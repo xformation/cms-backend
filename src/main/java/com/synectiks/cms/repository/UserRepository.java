@@ -2,6 +2,7 @@ package com.synectiks.cms.repository;
 
 import com.synectiks.cms.domain.User;
 
+import com.synectiks.cms.utils.JPASearchRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ import java.time.Instant;
  * Spring Data JPA repository for the User entity.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JPASearchRepository<User, Long> {
 
     String USERS_BY_LOGIN_CACHE = "usersByLogin";
 

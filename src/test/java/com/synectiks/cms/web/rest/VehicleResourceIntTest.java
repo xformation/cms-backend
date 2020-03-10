@@ -370,7 +370,7 @@ public class VehicleResourceIntTest {
             .andExpect(jsonPath("$.[*].contactNumber").value(hasItem(DEFAULT_CONTACT_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getVehicle() throws Exception {
@@ -505,8 +505,8 @@ public class VehicleResourceIntTest {
     public void searchVehicle() throws Exception {
         // Initialize the database
         vehicleRepository.saveAndFlush(vehicle);
-        when(mockVehicleSearchRepository.search(queryStringQuery("id:" + vehicle.getId())))
-            .thenReturn(Collections.singletonList(vehicle));
+//        when(mockVehicleSearchRepository.search(queryStringQuery("id:" + vehicle.getId())))
+//            .thenReturn(Collections.singletonList(vehicle));
         // Search the vehicle
         restVehicleMockMvc.perform(get("/api/_search/vehicles?query=id:" + vehicle.getId()))
             .andExpect(status().isOk())

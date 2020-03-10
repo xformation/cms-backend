@@ -204,11 +204,11 @@ public class UserResource {
      * @param query the query to search
      * @return the result of the search
      */
-    @GetMapping("/_search/users/{query}")
-    @Timed
-    public List<User> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
-    }
+//    @GetMapping("/_search/users/{query}")
+//    @Timed
+//    public List<User> search(@PathVariable String query) {
+//        return StreamSupport
+//            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .collect(Collectors.toList());
+//    }
 }

@@ -1,6 +1,7 @@
 package com.synectiks.cms.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -20,8 +21,7 @@ import com.synectiks.cms.domain.enumeration.TypeOfInsurance;
 @Entity
 @Table(name = "insurance")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "insurance")
-public class Insurance implements Serializable {
+public class Insurance implements Serializable , IESEntity {
 
     private static final long serialVersionUID = 1L;
 

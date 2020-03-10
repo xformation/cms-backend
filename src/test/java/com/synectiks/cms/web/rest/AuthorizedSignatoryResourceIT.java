@@ -355,7 +355,7 @@ public class AuthorizedSignatoryResourceIT {
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].panCardNumber").value(hasItem(DEFAULT_PAN_CARD_NUMBER.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAuthorizedSignatory() throws Exception {
@@ -484,8 +484,8 @@ public class AuthorizedSignatoryResourceIT {
     public void searchAuthorizedSignatory() throws Exception {
         // Initialize the database
         authorizedSignatoryRepository.saveAndFlush(authorizedSignatory);
-        when(mockAuthorizedSignatorySearchRepository.search(queryStringQuery("id:" + authorizedSignatory.getId())))
-            .thenReturn(Collections.singletonList(authorizedSignatory));
+//        when(mockAuthorizedSignatorySearchRepository.search(queryStringQuery("id:" + authorizedSignatory.getId())))
+//            .thenReturn(Collections.singletonList(authorizedSignatory));
         // Search the authorizedSignatory
         restAuthorizedSignatoryMockMvc.perform(get("/api/_search/authorized-signatories?query=id:" + authorizedSignatory.getId()))
             .andExpect(status().isOk())

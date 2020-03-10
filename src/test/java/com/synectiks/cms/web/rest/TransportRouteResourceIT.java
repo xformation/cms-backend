@@ -283,7 +283,7 @@ public class TransportRouteResourceIT {
             .andExpect(jsonPath("$.[*].noOfStops").value(hasItem(DEFAULT_NO_OF_STOPS)))
             .andExpect(jsonPath("$.[*].routeFrequency").value(hasItem(DEFAULT_ROUTE_FREQUENCY.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTransportRoute() throws Exception {
@@ -397,8 +397,8 @@ public class TransportRouteResourceIT {
     public void searchTransportRoute() throws Exception {
         // Initialize the database
         transportRouteRepository.saveAndFlush(transportRoute);
-        when(mockTransportRouteSearchRepository.search(queryStringQuery("id:" + transportRoute.getId())))
-            .thenReturn(Collections.singletonList(transportRoute));
+//        when(mockTransportRouteSearchRepository.search(queryStringQuery("id:" + transportRoute.getId())))
+//            .thenReturn(Collections.singletonList(transportRoute));
         // Search the transportRoute
         restTransportRouteMockMvc.perform(get("/api/_search/transport-routes?query=id:" + transportRoute.getId()))
             .andExpect(status().isOk())

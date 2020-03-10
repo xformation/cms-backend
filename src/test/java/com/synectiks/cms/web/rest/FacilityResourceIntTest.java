@@ -364,8 +364,8 @@ public class FacilityResourceIntTest {
     public void searchFacility() throws Exception {
         // Initialize the database
         facilityRepository.saveAndFlush(facility);
-        when(mockFacilitySearchRepository.search(queryStringQuery("id:" + facility.getId())))
-            .thenReturn(Collections.singletonList(facility));
+//        when(mockFacilitySearchRepository.search(queryStringQuery("id:" + facility.getId())))
+//            .thenReturn(Collections.singletonList(facility));
         // Search the facility
         restFacilityMockMvc.perform(get("/api/_search/facilities?query=id:" + facility.getId()))
             .andExpect(status().isOk())

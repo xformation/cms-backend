@@ -502,7 +502,7 @@ public class PaymentRequestResponseResourceIT {
             .andExpect(jsonPath("$.[*].requestTxnDate").value(hasItem(DEFAULT_REQUEST_TXN_DATE.toString())))
             .andExpect(jsonPath("$.[*].requestTxnTime").value(hasItem(DEFAULT_REQUEST_TXN_TIME.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getPaymentRequestResponse() throws Exception {
@@ -742,8 +742,8 @@ public class PaymentRequestResponseResourceIT {
     public void searchPaymentRequestResponse() throws Exception {
         // Initialize the database
         paymentRequestResponseRepository.saveAndFlush(paymentRequestResponse);
-        when(mockPaymentRequestResponseSearchRepository.search(queryStringQuery("id:" + paymentRequestResponse.getId())))
-            .thenReturn(Collections.singletonList(paymentRequestResponse));
+//        when(mockPaymentRequestResponseSearchRepository.search(queryStringQuery("id:" + paymentRequestResponse.getId())))
+//            .thenReturn(Collections.singletonList(paymentRequestResponse));
         // Search the paymentRequestResponse
         restPaymentRequestResponseMockMvc.perform(get("/api/_search/payment-request-responses?query=id:" + paymentRequestResponse.getId()))
             .andExpect(status().isOk())

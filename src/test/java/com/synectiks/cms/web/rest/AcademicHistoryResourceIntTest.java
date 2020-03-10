@@ -342,7 +342,7 @@ public class AcademicHistoryResourceIntTest {
             .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE.intValue())))
             .andExpect(jsonPath("$.[*].percentage").value(hasItem(DEFAULT_PERCENTAGE)));
     }
-    
+
     @Test
     @Transactional
     public void getAcademicHistory() throws Exception {
@@ -462,8 +462,8 @@ public class AcademicHistoryResourceIntTest {
     public void searchAcademicHistory() throws Exception {
         // Initialize the database
         academicHistoryRepository.saveAndFlush(academicHistory);
-        when(mockAcademicHistorySearchRepository.search(queryStringQuery("id:" + academicHistory.getId())))
-            .thenReturn(Collections.singletonList(academicHistory));
+//        when(mockAcademicHistorySearchRepository.search(queryStringQuery("id:" + academicHistory.getId())))
+//            .thenReturn(Collections.singletonList(academicHistory));
         // Search the academicHistory
         restAcademicHistoryMockMvc.perform(get("/api/_search/academic-histories?query=id:" + academicHistory.getId()))
             .andExpect(status().isOk())

@@ -33,12 +33,12 @@ public class FacilityServiceImpl implements FacilityService {
 
     private final FacilityMapper facilityMapper;
 
-    private final FacilitySearchRepository facilitySearchRepository;
+//    private final FacilitySearchRepository facilitySearchRepository;
 
     public FacilityServiceImpl(FacilityRepository facilityRepository, FacilityMapper facilityMapper, FacilitySearchRepository facilitySearchRepository) {
         this.facilityRepository = facilityRepository;
         this.facilityMapper = facilityMapper;
-        this.facilitySearchRepository = facilitySearchRepository;
+//        this.facilitySearchRepository = facilitySearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class FacilityServiceImpl implements FacilityService {
         Facility facility = facilityMapper.toEntity(facilityDTO);
         facility = facilityRepository.save(facility);
         FacilityDTO result = facilityMapper.toDto(facility);
-        facilitySearchRepository.save(facility);
+//        facilitySearchRepository.save(facility);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class FacilityServiceImpl implements FacilityService {
     public void delete(Long id) {
         log.debug("Request to delete Facility : {}", id);
         facilityRepository.deleteById(id);
-        facilitySearchRepository.deleteById(id);
+//        facilitySearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class FacilityServiceImpl implements FacilityService {
     @Transactional(readOnly = true)
     public List<FacilityDTO> search(String query) {
         log.debug("Request to search Facilities for query {}", query);
-        return StreamSupport
-            .stream(facilitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(facilityMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(facilitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(facilityMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

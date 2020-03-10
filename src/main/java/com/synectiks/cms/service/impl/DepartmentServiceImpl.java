@@ -33,12 +33,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentMapper departmentMapper;
 
-    private final DepartmentSearchRepository departmentSearchRepository;
+//    private final DepartmentSearchRepository departmentSearchRepository;
 
     public DepartmentServiceImpl(DepartmentRepository departmentRepository, DepartmentMapper departmentMapper, DepartmentSearchRepository departmentSearchRepository) {
         this.departmentRepository = departmentRepository;
         this.departmentMapper = departmentMapper;
-        this.departmentSearchRepository = departmentSearchRepository;
+//        this.departmentSearchRepository = departmentSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = departmentMapper.toEntity(departmentDTO);
         department = departmentRepository.save(department);
         DepartmentDTO result = departmentMapper.toDto(department);
-        departmentSearchRepository.save(department);
+//        departmentSearchRepository.save(department);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void delete(Long id) {
         log.debug("Request to delete Department : {}", id);
         departmentRepository.deleteById(id);
-        departmentSearchRepository.deleteById(id);
+//        departmentSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Transactional(readOnly = true)
     public List<DepartmentDTO> search(String query) {
         log.debug("Request to search Departments for query {}", query);
-        return StreamSupport
-            .stream(departmentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(departmentMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(departmentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(departmentMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

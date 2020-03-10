@@ -33,12 +33,12 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
 
     private final StudentAttendanceMapper studentAttendanceMapper;
 
-    private final StudentAttendanceSearchRepository studentAttendanceSearchRepository;
+//    private final StudentAttendanceSearchRepository studentAttendanceSearchRepository;
 
     public StudentAttendanceServiceImpl(StudentAttendanceRepository studentAttendanceRepository, StudentAttendanceMapper studentAttendanceMapper, StudentAttendanceSearchRepository studentAttendanceSearchRepository) {
         this.studentAttendanceRepository = studentAttendanceRepository;
         this.studentAttendanceMapper = studentAttendanceMapper;
-        this.studentAttendanceSearchRepository = studentAttendanceSearchRepository;
+//        this.studentAttendanceSearchRepository = studentAttendanceSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
         StudentAttendance studentAttendance = studentAttendanceMapper.toEntity(studentAttendanceDTO);
         studentAttendance = studentAttendanceRepository.save(studentAttendance);
         StudentAttendanceDTO result = studentAttendanceMapper.toDto(studentAttendance);
-        studentAttendanceSearchRepository.save(studentAttendance);
+//        studentAttendanceSearchRepository.save(studentAttendance);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
     public void delete(Long id) {
         log.debug("Request to delete StudentAttendance : {}", id);
         studentAttendanceRepository.deleteById(id);
-        studentAttendanceSearchRepository.deleteById(id);
+//        studentAttendanceSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
     @Transactional(readOnly = true)
     public List<StudentAttendanceDTO> search(String query) {
         log.debug("Request to search StudentAttendances for query {}", query);
-        return StreamSupport
-            .stream(studentAttendanceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentAttendanceMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(studentAttendanceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(studentAttendanceMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -33,12 +33,12 @@ public class AcademicYearServiceImpl implements AcademicYearService {
 
     private final AcademicYearMapper academicYearMapper;
 
-    private final AcademicYearSearchRepository academicYearSearchRepository;
+//    private final AcademicYearSearchRepository academicYearSearchRepository;
 
     public AcademicYearServiceImpl(AcademicYearRepository academicYearRepository, AcademicYearMapper academicYearMapper, AcademicYearSearchRepository academicYearSearchRepository) {
         this.academicYearRepository = academicYearRepository;
         this.academicYearMapper = academicYearMapper;
-        this.academicYearSearchRepository = academicYearSearchRepository;
+//        this.academicYearSearchRepository = academicYearSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class AcademicYearServiceImpl implements AcademicYearService {
         AcademicYear academicYear = academicYearMapper.toEntity(academicYearDTO);
         academicYear = academicYearRepository.save(academicYear);
         AcademicYearDTO result = academicYearMapper.toDto(academicYear);
-        academicYearSearchRepository.save(academicYear);
+//        academicYearSearchRepository.save(academicYear);
         return result;
     }
 
@@ -96,7 +96,7 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     public void delete(Long id) {
         log.debug("Request to delete AcademicYear : {}", id);
         academicYearRepository.deleteById(id);
-        academicYearSearchRepository.deleteById(id);
+//        academicYearSearchRepository.deleteById(id);
     }
 
     /**
@@ -109,9 +109,10 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     @Transactional(readOnly = true)
     public List<AcademicYearDTO> search(String query) {
         log.debug("Request to search AcademicYears for query {}", query);
-        return StreamSupport
-            .stream(academicYearSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(academicYearMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(academicYearSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(academicYearMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

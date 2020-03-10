@@ -33,12 +33,12 @@ public class ModulesServiceImpl implements ModulesService {
 
     private final ModulesMapper modulesMapper;
 
-    private final ModulesSearchRepository modulesSearchRepository;
+//    private final ModulesSearchRepository modulesSearchRepository;
 
     public ModulesServiceImpl(ModulesRepository modulesRepository, ModulesMapper modulesMapper, ModulesSearchRepository modulesSearchRepository) {
         this.modulesRepository = modulesRepository;
         this.modulesMapper = modulesMapper;
-        this.modulesSearchRepository = modulesSearchRepository;
+//        this.modulesSearchRepository = modulesSearchRepository;
     }
 
     /**
@@ -53,7 +53,7 @@ public class ModulesServiceImpl implements ModulesService {
         Modules modules = modulesMapper.toEntity(modulesDTO);
         modules = modulesRepository.save(modules);
         ModulesDTO result = modulesMapper.toDto(modules);
-        modulesSearchRepository.save(modules);
+//        modulesSearchRepository.save(modules);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class ModulesServiceImpl implements ModulesService {
     public void delete(Long id) {
         log.debug("Request to delete Modules : {}", id);
         modulesRepository.deleteById(id);
-        modulesSearchRepository.deleteById(id);
+//        modulesSearchRepository.deleteById(id);
     }
 
     /**
@@ -108,9 +108,10 @@ public class ModulesServiceImpl implements ModulesService {
     @Transactional(readOnly = true)
     public List<ModulesDTO> search(String query) {
         log.debug("Request to search Modules for query {}", query);
-        return StreamSupport
-            .stream(modulesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(modulesMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(modulesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(modulesMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }

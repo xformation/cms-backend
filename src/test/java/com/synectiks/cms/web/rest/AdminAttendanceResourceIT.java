@@ -187,7 +187,7 @@ public class AdminAttendanceResourceIT {
             .andExpect(jsonPath("$.[*].updatedOn").value(hasItem(DEFAULT_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getAdminAttendance() throws Exception {
@@ -292,8 +292,8 @@ public class AdminAttendanceResourceIT {
     public void searchAdminAttendance() throws Exception {
         // Initialize the database
         adminAttendanceRepository.saveAndFlush(adminAttendance);
-        when(mockAdminAttendanceSearchRepository.search(queryStringQuery("id:" + adminAttendance.getId())))
-            .thenReturn(Collections.singletonList(adminAttendance));
+//        when(mockAdminAttendanceSearchRepository.search(queryStringQuery("id:" + adminAttendance.getId())))
+//            .thenReturn(Collections.singletonList(adminAttendance));
         // Search the adminAttendance
         restAdminAttendanceMockMvc.perform(get("/api/_search/admin-attendances?query=id:" + adminAttendance.getId()))
             .andExpect(status().isOk())

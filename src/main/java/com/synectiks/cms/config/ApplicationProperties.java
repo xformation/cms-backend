@@ -18,7 +18,9 @@ public class ApplicationProperties {
 	private String influxDbLogLevel;
 	private String secSrvUrl;
 	private String preferenceSrvUrl;
-	
+    private String kafkaUrl;
+    private String indexEventFireUrl;
+
 	public String getInfluxDbUrl() {
 		return influxDbUrl;
 	}
@@ -61,6 +63,21 @@ public class ApplicationProperties {
 	public void setPreferenceSrvUrl(String preferenceSrvUrl) {
 		this.preferenceSrvUrl = preferenceSrvUrl;
 	}
-	
-	
+
+    public String getKafkaUrl() {
+        return kafkaUrl;
+    }
+
+    public void setKafkaUrl(String kafkaUrl) {
+        this.kafkaUrl = kafkaUrl;
+    }
+
+    public String getIndexEventFireUrl() {
+        return indexEventFireUrl;
+    }
+
+    public void setIndexEventFireUrl(String indexEventFireUrl) {
+        this.indexEventFireUrl = indexEventFireUrl;
+    }
+
 }

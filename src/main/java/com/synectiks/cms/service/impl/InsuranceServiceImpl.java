@@ -33,12 +33,12 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     private final InsuranceMapper insuranceMapper;
 
-    private final InsuranceSearchRepository insuranceSearchRepository;
+//    private final InsuranceSearchRepository insuranceSearchRepository;
 
     public InsuranceServiceImpl(InsuranceRepository insuranceRepository, InsuranceMapper insuranceMapper, InsuranceSearchRepository insuranceSearchRepository) {
         this.insuranceRepository = insuranceRepository;
         this.insuranceMapper = insuranceMapper;
-        this.insuranceSearchRepository = insuranceSearchRepository;
+//        this.insuranceSearchRepository = insuranceSearchRepository;
     }
 
     /**
@@ -54,7 +54,7 @@ public class InsuranceServiceImpl implements InsuranceService {
         Insurance insurance = insuranceMapper.toEntity(insuranceDTO);
         insurance = insuranceRepository.save(insurance);
         InsuranceDTO result = insuranceMapper.toDto(insurance);
-        insuranceSearchRepository.save(insurance);
+//        insuranceSearchRepository.save(insurance);
         return result;
     }
 
@@ -78,7 +78,7 @@ public class InsuranceServiceImpl implements InsuranceService {
      *  get all the insurances where Vehicle is null.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<InsuranceDTO> findAllWhereVehicleIsNull() {
         log.debug("Request to get all insurances where Vehicle is null");
         return StreamSupport
@@ -111,7 +111,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     public void delete(Long id) {
         log.debug("Request to delete Insurance : {}", id);
         insuranceRepository.deleteById(id);
-        insuranceSearchRepository.deleteById(id);
+//        insuranceSearchRepository.deleteById(id);
     }
 
     /**
@@ -124,9 +124,10 @@ public class InsuranceServiceImpl implements InsuranceService {
     @Transactional(readOnly = true)
     public List<InsuranceDTO> search(String query) {
         log.debug("Request to search Insurances for query {}", query);
-        return StreamSupport
-            .stream(insuranceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(insuranceMapper::toDto)
-            .collect(Collectors.toList());
+//        return StreamSupport
+//            .stream(insuranceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .map(insuranceMapper::toDto)
+//            .collect(Collectors.toList());
+        return null;
     }
 }
