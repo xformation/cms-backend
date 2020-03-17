@@ -649,6 +649,44 @@ public class CommonService {
 	    return departmentList;
 	}
 
+	public List<Teacher> findAllTeachersByBranch(Long branchId) {
+		logger.debug("Getting teachers based on branch id : "+branchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefTeacherUrl = prefUrl+"/api/teacher-by-filters?branchId="+branchId;
+	    Teacher[] temp = this.restTemplate.getForObject(prefTeacherUrl, Teacher[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Teacher> teacherList = Arrays.asList(temp);
+	    Collections.sort(teacherList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return teacherList;
+	}
+	
+	public List<Teacher> getAllTeachersByBranch(Long branchId) {
+		logger.debug("Getting teachers based on branch id : "+branchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefTeacherUrl = prefUrl+"/api/teacher-by-filters?branchId="+branchId;
+	    Teacher[] temp = this.restTemplate.getForObject(prefTeacherUrl, Teacher[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Teacher> teacherList = Arrays.asList(temp);
+	    Collections.sort(teacherList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return teacherList;
+	}
+	
+	public List<Employee> getAllEmployeesByBranch(Long branchId) {
+		logger.debug("Getting employee based on branch id : "+branchId);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefEmployeeUrl = prefUrl+"/api/employee-by-filters?branchId="+branchId;
+	    Employee[] temp = this.restTemplate.getForObject(prefEmployeeUrl, Employee[].class);
+	    if(temp.length == 0) {
+	    	return Collections.emptyList();
+	    }
+	    List<Employee> employeeList = Arrays.asList(temp);
+	    Collections.sort(employeeList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return employeeList;
+	}
     public TransportRoute getTransportRouteById(Long transportRouteId) {
         if(transportRouteId == null) {
             return null;
