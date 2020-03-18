@@ -24,6 +24,12 @@ public interface VehicleService {
      * @return the list of entities
      */
     List<VehicleDTO> findAll();
+    /**
+     * Get all the VehicleDTO where Insurance is null.
+     *
+     * @return the list of entities
+     */
+    List<VehicleDTO> findAllWhereInsuranceIsNull();
 
 
     /**

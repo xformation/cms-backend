@@ -8,11 +8,6 @@
     -->
     <changeSet id="20190909092502-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="insurance_id"
-                                 baseTableName="vehicle"
-                                 constraintName="fk_vehicle_insurance_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="insurance"/>
 
         <addForeignKeyConstraint baseColumnNames="transport_route_id"
                                  baseTableName="vehicle"

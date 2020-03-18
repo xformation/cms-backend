@@ -78,10 +78,15 @@ public class VehicleResource {
     /**
      * GET  /vehicles : get all the vehicles.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of vehicles in body
      */
     @GetMapping("/vehicles")
-    public List<VehicleDTO> getAllVehicles() {
+    public List<VehicleDTO> getAllVehicles(@RequestParam(required = false) String filter) {
+        if ("insurance-is-null".equals(filter)) {
+            log.debug("REST request to get all Vehicles where insurance is null");
+            return vehicleService.findAllWhereInsuranceIsNull();
+        }
         log.debug("REST request to get all Vehicles");
         return vehicleService.findAll();
     }

@@ -1,7 +1,6 @@
 package com.synectiks.cms.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -43,8 +42,8 @@ public class Insurance implements Serializable {
     @Column(name = "valid_till")
     private LocalDate validTill;
 
-    @OneToOne(mappedBy = "insurance")
-    @JsonIgnore
+    @OneToOne
+    @JoinColumn(unique = true)
     private Vehicle vehicle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

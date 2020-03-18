@@ -328,6 +328,7 @@ type Query {
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
     createVehicleDataCache: VehicleDataCache!
+    createInsuranceDataCache: InsuranceDataCache!
     createExamFilterDataCache(branchId: Long, academicYearId: Long): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:Long, academicYearId:Long): FeeSetupDataCache!
     createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
@@ -340,6 +341,9 @@ type VehicleDataCache{
    vehicle: [CmsVehicleVo]
    employee: [Employee]
    branches: [Branch]
+}
+type InsuranceDataCache{
+   vehicle: [CmsVehicleVo]
 }
 
 type FeeSetupDataCache {
@@ -581,6 +585,8 @@ type CmsInsuranceVo {
      validTill: Date
      strDateOfInsurance: String
      strValidTill: String
+     vehicle: Vehicle
+     vehicleId: Long
 	 exitCode: Long
      exitDescription: String
      dataList: [CmsInsuranceVo]
@@ -1930,6 +1936,7 @@ type Mutation {
 	getBookList(filter: LibraryListFilterInput!): [CmsLibraryVo]!
 	getEmployeeList(filter: EmployeeListFilterInput!): [CmsEmployeeVo]!
 	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
+
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -3981,9 +3988,11 @@ type AddVehiclePayload{
 type Insurance{
   id: Long
   insuranceCompany: String
+    vehicle: Vehicle
   typeOfInsurance: TypeOfInsurance
   dateOfInsurance: Date
   validTill: Date
+
 }
 
 input AddInsuranceInput{
@@ -3994,6 +4003,7 @@ input AddInsuranceInput{
          strValidTill: String
          dateOfInsurance:Date
          validTill:Date
+         vehicleId:Long
 }
 
 type AddInsurancePayload{

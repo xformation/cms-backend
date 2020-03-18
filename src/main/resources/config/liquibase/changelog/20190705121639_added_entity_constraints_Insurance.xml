@@ -7,7 +7,7 @@
         Added the constraints for entity Insurance.
     -->
     <changeSet id="20190705121639-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="vehicle_id"
                                  baseTableName="insurance"
                                  constraintName="fk_insurance_vehicle_id"

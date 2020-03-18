@@ -580,9 +580,9 @@ rank Long required
 }
 
 entity Documents{
-	documentName String 
+	documentName String
 	isFlatFileStorage String maxlength(3)
-	documentFilePath String 
+	documentFilePath String
 	isMsOneDriveStorage String maxlength(3)
 	oneDrivePath String maxlength(5000)
 	isOakStorage String maxlength(3)
@@ -959,7 +959,7 @@ Notifications{academicYear} to AcademicYear
 }
 
 relationship OneToOne{
-Vehicle{insurance} to Insurance{vehicle},
+Insurance{vehicle} to Vehicle{insurance},
 }
 
 dto * with mapstruct

@@ -16,6 +16,8 @@ public class CmsInsuranceVo extends CmsCommonVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    private Vehicle vehicle;
+    private Long vehicleId;
     private String insuranceCompany;
     private TypeOfInsurance typeOfInsurance;
     private String strDateOfInsurance;
@@ -25,6 +27,11 @@ public class CmsInsuranceVo extends CmsCommonVo implements Serializable {
     private LocalDate dateOfInsurance;
     private LocalDate validTill;
     private List<CmsInsuranceVo> dataList = new ArrayList<>();
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,8 +40,20 @@ public class CmsInsuranceVo extends CmsCommonVo implements Serializable {
         this.id = id;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Long getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public String getInsuranceCompany() {
@@ -45,8 +64,15 @@ public class CmsInsuranceVo extends CmsCommonVo implements Serializable {
         this.insuranceCompany = insuranceCompany;
     }
 
+    @Override
+    public TypeOfInsurance getTypeOfInsurance() {
+        return typeOfInsurance;
+    }
 
-
+    @Override
+    public void setTypeOfInsurance(TypeOfInsurance typeOfInsurance) {
+        this.typeOfInsurance = typeOfInsurance;
+    }
 
     public String getStrDateOfInsurance() {
         return strDateOfInsurance;
@@ -63,8 +89,6 @@ public class CmsInsuranceVo extends CmsCommonVo implements Serializable {
     public void setStrValidTill(String strValidTill) {
         this.strValidTill = strValidTill;
     }
-
-
 
     public LocalDate getDateOfInsurance() {
         return dateOfInsurance;
@@ -90,32 +114,21 @@ public class CmsInsuranceVo extends CmsCommonVo implements Serializable {
         this.dataList = dataList;
     }
 
-    public TypeOfInsurance getTypeOfInsurance() {
-        return typeOfInsurance;
-    }
 
-
-    public void setTypeOfInsurance(TypeOfInsurance typeOfInsurance) {
-        this.typeOfInsurance = typeOfInsurance;
-    }
 
     @Override
     public String toString() {
         return "CmsInsuranceVo{" +
             "id=" + id +
+            ", vehicle=" + vehicle +
+            ", vehicleId=" + vehicleId +
             ", insuranceCompany='" + insuranceCompany + '\'' +
-            ", typeOfInsurance='" + typeOfInsurance + '\'' +
+            ", typeOfInsurance=" + typeOfInsurance +
             ", strDateOfInsurance='" + strDateOfInsurance + '\'' +
             ", strValidTill='" + strValidTill + '\'' +
-
             ", dateOfInsurance=" + dateOfInsurance +
             ", validTill=" + validTill +
             ", dataList=" + dataList +
-            " getExitCode()=" + getExitCode() + ", " +
-            "getExitDescription()=" + getExitDescription() + ", " +
-            "getClass()=" + getClass() + ", " +
-            "hashCode()=" + hashCode() + ", " +
-            "toString()=" + super.toString() + "]";
-
+            '}';
     }
 }

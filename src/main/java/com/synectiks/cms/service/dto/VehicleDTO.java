@@ -42,8 +42,6 @@ public class VehicleDTO implements Serializable {
     private Long employeeId;
 
 
-    private Long insuranceId;
-
     private Long transportRouteId;
 
     private Long contractId;
@@ -176,14 +174,6 @@ public class VehicleDTO implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public Long getInsuranceId() {
-        return insuranceId;
-    }
-
-    public void setInsuranceId(Long insuranceId) {
-        this.insuranceId = insuranceId;
-    }
-
     public Long getTransportRouteId() {
         return transportRouteId;
     }
@@ -240,7 +230,6 @@ public class VehicleDTO implements Serializable {
             ", collegeId=" + getCollegeId() +
             ", branchId=" + getBranchId() +
             ", employeeId=" + getEmployeeId() +
-            ", insurance=" + getInsuranceId() +
             ", transportRoute=" + getTransportRouteId() +
             ", contract=" + getContractId() +
             "}";

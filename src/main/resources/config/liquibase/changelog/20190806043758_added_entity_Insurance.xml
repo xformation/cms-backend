@@ -36,6 +36,9 @@
             <column name="valid_till" type="date">
                 <constraints nullable="true" />
             </column>
+            <column name="vehicle_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_insurance_vehicle_id" />
+            </column>
 
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

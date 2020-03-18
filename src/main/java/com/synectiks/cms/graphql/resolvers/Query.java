@@ -972,8 +972,15 @@ public class Query implements GraphQLQueryResolver {
         cache.setBranches(branchList);
         return cache;
     }
+    public InsuranceDataCache createInsuranceDataCache() throws Exception {
+        List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
+        InsuranceDataCache cache = new InsuranceDataCache();
+        cache.setVehicle(vehicleList);
+        return cache;
+    }
 
-    public FeeSetupDataCache createFeeSetupDataCache(Long branchId, Long academicYearId) throws Exception{
+
+        public FeeSetupDataCache createFeeSetupDataCache(Long branchId, Long academicYearId) throws Exception{
 //    	Branch branch = new Branch();
 //    	branch.setId(Long.valueOf(branchId));
 //    	List<Branch> branchList = new ArrayList<>();//this.commonService.getBranchForCriteria(Long.valueOf(collegeId));

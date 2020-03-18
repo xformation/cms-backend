@@ -80,9 +80,7 @@
             <column name="employee_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="insurance_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_vehicle_insurance_id" />
-            </column>
+
             <column name="transport_route_id" type="bigint">
                 <constraints nullable="true" />
             </column>

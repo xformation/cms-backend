@@ -8,11 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Insurance and its DTO InsuranceDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {VehicleMapper.class})
 public interface InsuranceMapper extends EntityMapper<InsuranceDTO, Insurance> {
 
+    @Mapping(source = "vehicle.id", target = "vehicleId")
+    InsuranceDTO toDto(Insurance insurance);
 
-    @Mapping(target = "vehicle", ignore = true)
+    @Mapping(source = "vehicleId", target = "vehicle")
     Insurance toEntity(InsuranceDTO insuranceDTO);
 
     default Insurance fromId(Long id) {

@@ -1,6 +1,7 @@
 package com.synectiks.cms.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -76,10 +77,6 @@ public class Vehicle implements Serializable {
     @Column(name = "employee_id")
     private Long employeeId;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Insurance insurance;
-
     @ManyToOne
     @JsonIgnoreProperties("vehicles")
     private TransportRoute transportRoute;
@@ -87,6 +84,10 @@ public class Vehicle implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("vehicles")
     private Contract contract;
+
+    @OneToOne(mappedBy = "vehicle")
+    @JsonIgnore
+    private Insurance insurance;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -292,19 +293,6 @@ public class Vehicle implements Serializable {
         this.employeeId = employeeId;
     }
 
-    public Insurance getInsurance() {
-        return insurance;
-    }
-
-    public Vehicle insurance(Insurance insurance) {
-        this.insurance = insurance;
-        return this;
-    }
-
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
-    }
-
     public TransportRoute getTransportRoute() {
         return transportRoute;
     }
@@ -329,6 +317,19 @@ public class Vehicle implements Serializable {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public Vehicle insurance(Insurance insurance) {
+        this.insurance = insurance;
+        return this;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

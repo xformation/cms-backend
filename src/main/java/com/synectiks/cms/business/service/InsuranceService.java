@@ -27,6 +27,10 @@ public class InsuranceService {
         @Autowired
         InsuranceRepository insuranceRepository;
 
+        @Autowired
+        VehicleRepository vehicleRepository;
+
+
         public List<CmsInsuranceVo> getCmsInsuranceList(TypeOfInsurance typeOfInsurance) {
             Insurance insurance = new Insurance();
 
@@ -92,39 +96,36 @@ public class InsuranceService {
 
         }
 
-        public CmsInsuranceVo addInsurance(AddInsuranceInput cmsInsuranceVo) {
+        public CmsInsuranceVo addInsurance(AddInsuranceInput input) {
             logger.info("Saving Insurance");
             CmsInsuranceVo vo = null;
             try {
                 Insurance insurance = null;
-                if (cmsInsuranceVo.getId() == null) {
+                if (input.getId() == null) {
                     logger.debug("Adding new insurance");
-                    insurance = CommonUtil.createCopyProperties(cmsInsuranceVo, Insurance.class);
+                    insurance = CommonUtil.createCopyProperties(input, Insurance.class);
                 } else {
                     logger.debug("Updating existing insurance");
-                    insurance = this.insuranceRepository.findById(cmsInsuranceVo.getId()).get();
-
-                    if (cmsInsuranceVo.getInsuranceCompany() != null) {
-                        insurance.setInsuranceCompany(cmsInsuranceVo.getInsuranceCompany());
-                    }
-
-                    if (cmsInsuranceVo.getTypeOfInsurance() != null) {
-                        insurance.setTypeOfInsurance(cmsInsuranceVo.getTypeOfInsurance());
-                    }
-
-                    }
-                insurance.setDateOfInsurance(cmsInsuranceVo.getStrDateOfInsurance() != null ? DateFormatUtil.convertStringToLocalDate(cmsInsuranceVo.getStrDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
-
-
-
-
-                insurance.setValidTill(cmsInsuranceVo.getStrValidTill() != null ? DateFormatUtil.convertStringToLocalDate(cmsInsuranceVo.getStrValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+                    insurance = this.insuranceRepository.findById(input.getId()).get();
+                }
+                Vehicle vehicle = this.vehicleRepository.findById(input.getVehicleId()).get();
+                insurance.setVehicle(vehicle);
+//            Insurance in = this.insuranceRepository.findById(input.getInsuranceId()).get();
+//            vehicle.setInsurance(in);
+//            Employee e = this.commonService.getEmployeeById(input.getEmployeeId());
+//            vehicle.setEmployeeId(input.getEmployeeId());
+                insurance.setInsuranceCompany(input.getInsuranceCompany());
+                insurance.setTypeOfInsurance(input.getTypeOfInsurance());
+                insurance.setDateOfInsurance(input.getStrDateOfInsurance() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+                insurance.setValidTill(input.getStrValidTill() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
                 insurance = this.insuranceRepository.save(insurance);
                 vo = CommonUtil.createCopyProperties(insurance, CmsInsuranceVo.class);
                 vo.setStrDateOfInsurance(insurance.getDateOfInsurance() != null ? DateFormatUtil.changeLocalDateFormat(insurance.getDateOfInsurance(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
                 vo.setStrValidTill(insurance.getValidTill() != null ? DateFormatUtil.changeLocalDateFormat(insurance.getValidTill(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
+                vo.setCreatedOn(null);
+                vo.setUpdatedOn(null);
                 vo.setExitCode(0L);
-                if (cmsInsuranceVo.getId() == null) {
+                if (input.getId() == null) {
                     vo.setExitDescription("Insurance is added successfully");
                     logger.debug("Insurance is added successfully");
                 } else {
