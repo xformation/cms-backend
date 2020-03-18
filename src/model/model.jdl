@@ -489,11 +489,11 @@ branchId Long
 
 
 entity TransportRoute {
-routeName String required
-routeDetails String required
+routeName String
+routeDetails String
 routeMapUrl String
-noOfStops Integer required
-routeFrequency RouteFrequency required
+noOfStops Integer
+routeFrequency RouteFrequency
 }
 
 entity FeeDetails {
@@ -704,18 +704,21 @@ YES, NO
 }
 
 entity Vehicle{
-vehicleNumber String required
-vehicleType String required
-capacity Long required
-ownerShip String required
+vehicleNumber String
+vehicleType String
+capacity Long
+ownerShip String
 dateOfRegistration LocalDate
 yearOfManufacturing String
 manufacturingCompany String
 model String
 chasisNo String
-rcNo  String required
-contactNumber String required
-status Status required
+rcNo  String
+contactNumber String
+status Status
+collegeId Long
+branchId Long
+employeeId Long
 }
 
 enum TypeOfOwnerShip{
@@ -723,11 +726,11 @@ COMPANYOWNED, CONTRACTUAL
 }
 
 entity Contract{
-vendorName String required
-typeOfOwnerShip TypeOfOwnerShip required
-durationOfContract String required
-startDate LocalDate required
-endDate LocalDate required
+vendorName String
+typeOfOwnerShip TypeOfOwnerShip
+durationOfContract String
+startDate LocalDate
+endDate LocalDate
 }
 
 enum TypeOfInsurance{
@@ -735,10 +738,10 @@ LIABILITY, COLLISION, COMPREHENSIVE
 }
 
 entity Insurance{
-insuranceCompany String required
-typeOfInsurance TypeOfInsurance required
-dateOfInsurance LocalDate required
-validTill LocalDate required
+insuranceCompany String
+typeOfInsurance TypeOfInsurance
+dateOfInsurance LocalDate
+validTill LocalDate
 }
 
 
@@ -949,8 +952,6 @@ Documents{contract} to Contract,
 Vehicle{transportRoute} to TransportRoute,
 Employee{transportRoute} to TransportRoute,
 Vehicle{contract} to Contract,
-Vehicle{college} to College,
-Vehicle{branch} to Branch,
 AdmissionApplication{academicyear} to AcademicYear
 PaymentRequestResponse{branch} to Branch
 PaymentRequestResponse{academicYear} to AcademicYear
@@ -959,7 +960,6 @@ Notifications{academicYear} to AcademicYear
 
 relationship OneToOne{
 Vehicle{insurance} to Insurance{vehicle},
-Vehicle{employee} to Employee{vehicle}
 }
 
 dto * with mapstruct

@@ -22,24 +22,25 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="insurance_company" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="type_of_insurance" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="date_of_insurance" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="valid_till" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
+
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

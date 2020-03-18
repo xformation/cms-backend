@@ -31,11 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsStudentVo;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.StudentRepository;
@@ -191,18 +187,65 @@ public class StudentRestController {
     public List<CmsStudentVo> getAllStudents(@RequestParam Map<String, String> dataMap) {
         List<Student> list = null;
         List<CmsStudentVo> ls = null;
+        
+        Student obj = new Student();
+        boolean isFilter = false;
+    	if(!CommonUtil.isNullOrEmpty(dataMap.get("id"))) {
+    		obj.setId(Long.parseLong(dataMap.get("id")));
+    		isFilter = true;
+    	}
+    	if(!CommonUtil.isNullOrEmpty(dataMap.get("branchId"))) {
+//    		Branch branch = this.commonService.getBranchById(Long.parseLong(dataMap.get("branchId")));
+    		obj.setBranchId(Long.parseLong(dataMap.get("branchId")));
+    		isFilter = true;
+    	}
+    	if(!CommonUtil.isNullOrEmpty(dataMap.get("departmentId"))) {
+//    		Department department = this.commonService.getDepartmentById(Long.parseLong(dataMap.get("departmentId")));
+    		obj.setDepartmentId(Long.parseLong(dataMap.get("departmentId")));
+    		isFilter = true;
+    	}
+//    	if(dataMap.get("status") != null) {
+//    		obj.setStatus(dataMap.get("status"));
+//    		isFilter = true;
+//    	}
+    	
         if(!CommonUtil.isNullOrEmpty(dataMap.get("studentName"))) {
+        	isFilter = true;
         	String name = dataMap.get("studentName");
-        	ls = getStudentListByName(name) ;
-        }else {
-        	log.debug("REST request to get all Students");
-        	list = studentRepository.findAll();
-            ls = new ArrayList<>();
-            for(Student st: list) {
-            	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
-            	ls.add(vo);
-            }
+        	StringTokenizer token = new StringTokenizer(name, " ");
+    		int cnt = 0;
+    		while(token.hasMoreTokens()) {
+    			if(cnt == 0) {
+    				obj.setStudentName(token.nextToken());
+    			}else if(cnt == 1) {
+    				obj.setStudentMiddleName(token.nextToken());
+    			}else if(cnt == 2) {
+    				obj.setStudentLastName(token.nextToken());
+    			}
+    			cnt++;
+    		}
+//        	ls = getStudentListByName(name) ;
         }
+//        List<Teacher> list = null;
+    	if(isFilter) {
+    		list = this.studentRepository.findAll(Example.of(obj), Sort.by(Direction.DESC, "id"));
+    	}else {
+    		list = this.studentRepository.findAll(Sort.by(Direction.DESC, "id"));
+    	}
+    	ls = new ArrayList<>();
+        for(Student st: list) {
+        	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+        	ls.add(vo);
+        }
+//        else {
+//        	log.debug("REST request to get all Students");
+//        	list = studentRepository.findAll();
+//            ls = new ArrayList<>();
+//            for(Student st: list) {
+//            	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+//            	ls.add(vo);
+//            }
+//        }
 
         return ls;
     }

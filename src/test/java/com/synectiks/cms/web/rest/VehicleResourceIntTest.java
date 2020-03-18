@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -85,6 +86,15 @@ public class VehicleResourceIntTest {
     private static final Status DEFAULT_STATUS = Status.ACTIVE;
     private static final Status UPDATED_STATUS = Status.DEACTIVE;
 
+    private static final Long DEFAULT_COLLEGE_ID = 1L;
+    private static final Long UPDATED_COLLEGE_ID = 2L;
+
+    private static final Long DEFAULT_BRANCH_ID = 1L;
+    private static final Long UPDATED_BRANCH_ID = 2L;
+
+    private static final Long DEFAULT_EMPLOYEE_ID = 1L;
+    private static final Long UPDATED_EMPLOYEE_ID = 2L;
+
     @Autowired
     private VehicleRepository vehicleRepository;
 
@@ -114,6 +124,9 @@ public class VehicleResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restVehicleMockMvc;
 
     private Vehicle vehicle;
@@ -126,7 +139,8 @@ public class VehicleResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -148,7 +162,10 @@ public class VehicleResourceIntTest {
             .chasisNo(DEFAULT_CHASIS_NO)
             .rcNo(DEFAULT_RC_NO)
             .contactNumber(DEFAULT_CONTACT_NUMBER)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .collegeId(DEFAULT_COLLEGE_ID)
+            .branchId(DEFAULT_BRANCH_ID)
+            .employeeId(DEFAULT_EMPLOYEE_ID);
         return vehicle;
     }
 
@@ -185,6 +202,9 @@ public class VehicleResourceIntTest {
         assertThat(testVehicle.getRcNo()).isEqualTo(DEFAULT_RC_NO);
         assertThat(testVehicle.getContactNumber()).isEqualTo(DEFAULT_CONTACT_NUMBER);
         assertThat(testVehicle.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testVehicle.getCollegeId()).isEqualTo(DEFAULT_COLLEGE_ID);
+        assertThat(testVehicle.getBranchId()).isEqualTo(DEFAULT_BRANCH_ID);
+        assertThat(testVehicle.getEmployeeId()).isEqualTo(DEFAULT_EMPLOYEE_ID);
 
         // Validate the Vehicle in Elasticsearch
         verify(mockVehicleSearchRepository, times(1)).save(testVehicle);
@@ -215,139 +235,6 @@ public class VehicleResourceIntTest {
 
     @Test
     @Transactional
-    public void checkVehicleNumberIsRequired() throws Exception {
-        int databaseSizeBeforeTest = vehicleRepository.findAll().size();
-        // set the field null
-        vehicle.setVehicleNumber(null);
-
-        // Create the Vehicle, which fails.
-        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
-
-        restVehicleMockMvc.perform(post("/api/vehicles")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(vehicleDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Vehicle> vehicleList = vehicleRepository.findAll();
-        assertThat(vehicleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkVehicleTypeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = vehicleRepository.findAll().size();
-        // set the field null
-        vehicle.setVehicleType(null);
-
-        // Create the Vehicle, which fails.
-        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
-
-        restVehicleMockMvc.perform(post("/api/vehicles")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(vehicleDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Vehicle> vehicleList = vehicleRepository.findAll();
-        assertThat(vehicleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCapacityIsRequired() throws Exception {
-        int databaseSizeBeforeTest = vehicleRepository.findAll().size();
-        // set the field null
-        vehicle.setCapacity(null);
-
-        // Create the Vehicle, which fails.
-        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
-
-        restVehicleMockMvc.perform(post("/api/vehicles")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(vehicleDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Vehicle> vehicleList = vehicleRepository.findAll();
-        assertThat(vehicleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkOwnerShipIsRequired() throws Exception {
-        int databaseSizeBeforeTest = vehicleRepository.findAll().size();
-        // set the field null
-        vehicle.setOwnerShip(null);
-
-        // Create the Vehicle, which fails.
-        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
-
-        restVehicleMockMvc.perform(post("/api/vehicles")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(vehicleDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Vehicle> vehicleList = vehicleRepository.findAll();
-        assertThat(vehicleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkRcNoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = vehicleRepository.findAll().size();
-        // set the field null
-        vehicle.setRcNo(null);
-
-        // Create the Vehicle, which fails.
-        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
-
-        restVehicleMockMvc.perform(post("/api/vehicles")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(vehicleDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Vehicle> vehicleList = vehicleRepository.findAll();
-        assertThat(vehicleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkContactNumberIsRequired() throws Exception {
-        int databaseSizeBeforeTest = vehicleRepository.findAll().size();
-        // set the field null
-        vehicle.setContactNumber(null);
-
-        // Create the Vehicle, which fails.
-        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
-
-        restVehicleMockMvc.perform(post("/api/vehicles")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(vehicleDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Vehicle> vehicleList = vehicleRepository.findAll();
-        assertThat(vehicleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = vehicleRepository.findAll().size();
-        // set the field null
-        vehicle.setStatus(null);
-
-        // Create the Vehicle, which fails.
-        VehicleDTO vehicleDTO = vehicleMapper.toDto(vehicle);
-
-        restVehicleMockMvc.perform(post("/api/vehicles")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(vehicleDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Vehicle> vehicleList = vehicleRepository.findAll();
-        assertThat(vehicleList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllVehicles() throws Exception {
         // Initialize the database
         vehicleRepository.saveAndFlush(vehicle);
@@ -368,7 +255,10 @@ public class VehicleResourceIntTest {
             .andExpect(jsonPath("$.[*].chasisNo").value(hasItem(DEFAULT_CHASIS_NO.toString())))
             .andExpect(jsonPath("$.[*].rcNo").value(hasItem(DEFAULT_RC_NO.toString())))
             .andExpect(jsonPath("$.[*].contactNumber").value(hasItem(DEFAULT_CONTACT_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())));
     }
 
     @Test
@@ -393,7 +283,10 @@ public class VehicleResourceIntTest {
             .andExpect(jsonPath("$.chasisNo").value(DEFAULT_CHASIS_NO.toString()))
             .andExpect(jsonPath("$.rcNo").value(DEFAULT_RC_NO.toString()))
             .andExpect(jsonPath("$.contactNumber").value(DEFAULT_CONTACT_NUMBER.toString()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.collegeId").value(DEFAULT_COLLEGE_ID.intValue()))
+            .andExpect(jsonPath("$.branchId").value(DEFAULT_BRANCH_ID.intValue()))
+            .andExpect(jsonPath("$.employeeId").value(DEFAULT_EMPLOYEE_ID.intValue()));
     }
 
     @Test
@@ -428,7 +321,10 @@ public class VehicleResourceIntTest {
             .chasisNo(UPDATED_CHASIS_NO)
             .rcNo(UPDATED_RC_NO)
             .contactNumber(UPDATED_CONTACT_NUMBER)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .collegeId(UPDATED_COLLEGE_ID)
+            .branchId(UPDATED_BRANCH_ID)
+            .employeeId(UPDATED_EMPLOYEE_ID);
         VehicleDTO vehicleDTO = vehicleMapper.toDto(updatedVehicle);
 
         restVehicleMockMvc.perform(put("/api/vehicles")
@@ -452,6 +348,9 @@ public class VehicleResourceIntTest {
         assertThat(testVehicle.getRcNo()).isEqualTo(UPDATED_RC_NO);
         assertThat(testVehicle.getContactNumber()).isEqualTo(UPDATED_CONTACT_NUMBER);
         assertThat(testVehicle.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testVehicle.getCollegeId()).isEqualTo(UPDATED_COLLEGE_ID);
+        assertThat(testVehicle.getBranchId()).isEqualTo(UPDATED_BRANCH_ID);
+        assertThat(testVehicle.getEmployeeId()).isEqualTo(UPDATED_EMPLOYEE_ID);
 
         // Validate the Vehicle in Elasticsearch
         verify(mockVehicleSearchRepository, times(1)).save(testVehicle);
@@ -487,7 +386,7 @@ public class VehicleResourceIntTest {
 
         int databaseSizeBeforeDelete = vehicleRepository.findAll().size();
 
-        // Get the vehicle
+        // Delete the vehicle
         restVehicleMockMvc.perform(delete("/api/vehicles/{id}", vehicle.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -523,7 +422,10 @@ public class VehicleResourceIntTest {
             .andExpect(jsonPath("$.[*].chasisNo").value(hasItem(DEFAULT_CHASIS_NO)))
             .andExpect(jsonPath("$.[*].rcNo").value(hasItem(DEFAULT_RC_NO)))
             .andExpect(jsonPath("$.[*].contactNumber").value(hasItem(DEFAULT_CONTACT_NUMBER)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].collegeId").value(hasItem(DEFAULT_COLLEGE_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].employeeId").value(hasItem(DEFAULT_EMPLOYEE_ID.intValue())));
     }
 
     @Test

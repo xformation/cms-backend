@@ -1,5 +1,6 @@
 package com.synectiks.cms.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.utils.IESEntity;
 import org.hibernate.annotations.Cache;
@@ -8,9 +9,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * A Employee.
@@ -21,11 +23,10 @@ import java.time.LocalDate;
 public class Employee implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "employee_name")
@@ -117,10 +118,6 @@ public class Employee implements Serializable, IESEntity {
     @ManyToOne
     @JsonIgnoreProperties("employees")
     private TransportRoute transportRoute;
-
-    @OneToOne(mappedBy = "employee")
-    @JsonIgnore
-    private Vehicle vehicle;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -507,19 +504,6 @@ public class Employee implements Serializable, IESEntity {
     public void setTransportRoute(TransportRoute transportRoute) {
         this.transportRoute = transportRoute;
     }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public Employee vehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-        return this;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -527,15 +511,19 @@ public class Employee implements Serializable, IESEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Employee)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((Employee) o).id);
+        Employee employee = (Employee) o;
+        if (employee.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), employee.getId());
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hashCode(getId());
     }
 
     @Override
