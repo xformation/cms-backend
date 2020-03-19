@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.synectiks.cms.domain.enumeration.*;
+import com.synectiks.cms.utils.IESEntity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
  * A Student value object.
  */
 
-public class CmsStudentVo extends CmsCommonVo implements Serializable {
+public class CmsStudentVo extends CmsCommonVo implements Serializable, IESEntity {
 
     private static final long serialVersionUID = 1L;
 

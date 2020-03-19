@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 import javax.validation.Valid;
 
+import com.synectiks.cms.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsStudentVo;
-import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
@@ -187,7 +186,7 @@ public class StudentRestController {
     public List<CmsStudentVo> getAllStudents(@RequestParam Map<String, String> dataMap) {
         List<Student> list = null;
         List<CmsStudentVo> ls = null;
-        
+
         Student obj = new Student();
         boolean isFilter = false;
     	if(!CommonUtil.isNullOrEmpty(dataMap.get("id"))) {
@@ -208,7 +207,7 @@ public class StudentRestController {
 //    		obj.setStatus(dataMap.get("status"));
 //    		isFilter = true;
 //    	}
-    	
+
         if(!CommonUtil.isNullOrEmpty(dataMap.get("studentName"))) {
         	isFilter = true;
         	String name = dataMap.get("studentName");
@@ -235,6 +234,14 @@ public class StudentRestController {
     	ls = new ArrayList<>();
         for(Student st: list) {
         	CmsStudentVo vo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+            Section se = this.commonService.getSectionById(st.getSectionId());
+            vo.setSection(se);
+            Branch br = this.commonService.getBranchById(st.getBranchId());
+            vo.setBranch(br);
+            Batch ba = this.commonService.getBatchById(st.getBatchId());
+            vo.setBatch(ba);
+            Department da = this.commonService.getDepartmentById(st.getDepartmentId());
+            vo.setDepartment(da);
         	ls.add(vo);
         }
 //        else {
