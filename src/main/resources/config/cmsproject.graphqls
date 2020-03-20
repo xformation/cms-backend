@@ -337,6 +337,7 @@ type Query {
 
 type VehicleDataCache{
    transportRoute: [CmsTransportVo]
+   contract:[CmsContractVo]
    insurance: [CmsInsuranceVo]
    vehicle: [CmsVehicleVo]
    employee: [Employee]
@@ -565,13 +566,14 @@ type CmsVehicleVo {
     strStartDate: String
     strEndDate: String
     transportRouteId: Long
+    contractId: Long
     collegeId: Long
     branchId: Long
-    contractId: Long
     insuranceId: Long
     employeeId: Long
     employee: Employee
     transportRoute: TransportRoute
+    cmsContractVo: CmsContractVo
     cmsInsuranceVo: CmsInsuranceVo
     exitCode: Long
     exitDescription: String
@@ -3975,6 +3977,7 @@ input AddVehicleInput{
       rcNo:  String
       contactNumber: String
       transportRouteId: Long
+      contractId: Long
       employeeId: Long
       branchId: Long
       status:Status

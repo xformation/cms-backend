@@ -30,6 +30,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private String contactNumber;
     private Status status;
     private TransportRoute transportRoute;
+    private CmsContractVo cmsContractVo;
     private CmsInsuranceVo cmsInsuranceVo;
     private Employee employee;
     private Long transportRouteId;
@@ -156,6 +157,22 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         return transportRouteId;
     }
 
+    public CmsContractVo getCmsContractVo() {
+        return cmsContractVo;
+    }
+
+    public void setCmsContractVo(CmsContractVo cmsContractVo) {
+        this.cmsContractVo = cmsContractVo;
+    }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
     public void setTransportRouteId(Long transportRouteId) {
         this.transportRouteId = transportRouteId;
     }
@@ -200,13 +217,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.branchId = branchId;
     }
 
-    public Long getContractId() {
-        return contractId;
-    }
 
-    public void setContractId(Long contractId) {
-        this.contractId = contractId;
-    }
 
     public Long getInsuranceId() {
         return insuranceId;
@@ -312,6 +323,8 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.employee = employee;
     }
 
+
+
     @Override
     public String toString() {
         return "CmsEmployeeVo [" +
@@ -338,6 +351,7 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
             "strStartDate=" + strStartDate + ", " +
             "strEndDate=" + strEndDate + ", " +
             "transportRoute=" + transportRoute + "," +
+            "cmsContractVo" + cmsContractVo + "," +
             "cmsInsuranceVo=" + cmsInsuranceVo + "," +
             "employee=" + employee + "," +
             "transportRouteId=" + transportRouteId + "," +

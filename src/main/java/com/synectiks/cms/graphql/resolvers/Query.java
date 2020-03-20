@@ -960,12 +960,14 @@ public class Query implements GraphQLQueryResolver {
 
     public VehicleDataCache createVehicleDataCache() throws Exception{
         List<CmsTransportVo> transportRouteList = this.transportService.getTransportRouteList();
+        List<CmsContractVo> contractList = this.contractService.getContractList();
         List<CmsInsuranceVo> insuranceList = this.insuranceService.getInsuranceList();
         List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
         List<Employee> employeeList = this.commonService.findAllEmployee();
         List<Branch> branchList = this.commonService.findAllBranch();
         VehicleDataCache cache = new VehicleDataCache();
         cache.setTransportRoute(transportRouteList);
+        cache.setContract(contractList);
         cache.setInsurance(insuranceList);
         cache.setVehicle(vehicleList);
         cache.setEmployee(employeeList);

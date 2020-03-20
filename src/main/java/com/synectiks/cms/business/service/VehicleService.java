@@ -8,10 +8,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.filter.employee.EmployeeListFilterInput;
 import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.cms.graphql.types.Vehicle.AddVehicleInput;
+import com.synectiks.cms.repository.ContractRepository;
 import com.synectiks.cms.repository.InsuranceRepository;
 import com.synectiks.cms.repository.TransportRouteRepository;
 import com.synectiks.cms.repository.VehicleRepository;
@@ -42,6 +44,9 @@ public class VehicleService {
 
     @Autowired
     TransportRouteRepository transportRouteRepository;
+    @Autowired
+    ContractRepository contractRepository;
+
 
     @Autowired
     CommonService commonService;
@@ -176,8 +181,8 @@ public class VehicleService {
             }
             TransportRoute tr = this.transportRouteRepository.findById(input.getTransportRouteId()).get();
             vehicle.setTransportRoute(tr);
-//            Insurance in = this.insuranceRepository.findById(input.getInsuranceId()).get();
-//            vehicle.setInsurance(in);
+          Contract ct = this.contractRepository.findById(input.getContractId()).get();
+            vehicle.setContract(ct);
 //            Employee e = this.commonService.getEmployeeById(input.getEmployeeId());
 //            vehicle.setEmployeeId(input.getEmployeeId());
             vehicle.setVehicleNumber(input.getVehicleNumber());
