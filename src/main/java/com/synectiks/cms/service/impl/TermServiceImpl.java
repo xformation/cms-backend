@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.TermService;
-import com.synectiks.cms.domain.Term;
-import com.synectiks.cms.repository.TermRepository;
-import com.synectiks.cms.repository.search.TermSearchRepository;
-import com.synectiks.cms.service.dto.TermDTO;
-import com.synectiks.cms.service.mapper.TermMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.repository.TermRepository;
+import com.synectiks.cms.repository.search.TermSearchRepository;
+import com.synectiks.cms.service.TermService;
+import com.synectiks.cms.service.dto.TermDTO;
+import com.synectiks.cms.service.mapper.TermMapper;
 
 /**
  * Service Implementation for managing Term.
@@ -108,9 +105,6 @@ public class TermServiceImpl implements TermService {
     @Transactional(readOnly = true)
     public List<TermDTO> search(String query) {
         log.debug("Request to search Terms for query {}", query);
-        return StreamSupport
-            .stream(termSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(termMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

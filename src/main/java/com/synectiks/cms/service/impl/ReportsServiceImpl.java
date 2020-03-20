@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.ReportsService;
-import com.synectiks.cms.domain.Reports;
-import com.synectiks.cms.repository.ReportsRepository;
-import com.synectiks.cms.repository.search.ReportsSearchRepository;
-import com.synectiks.cms.service.dto.ReportsDTO;
-import com.synectiks.cms.service.mapper.ReportsMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Reports;
+import com.synectiks.cms.repository.ReportsRepository;
+import com.synectiks.cms.repository.search.ReportsSearchRepository;
+import com.synectiks.cms.service.ReportsService;
+import com.synectiks.cms.service.dto.ReportsDTO;
+import com.synectiks.cms.service.mapper.ReportsMapper;
 
 /**
  * Service Implementation for managing Reports.
@@ -109,9 +106,6 @@ public class ReportsServiceImpl implements ReportsService {
     @Transactional(readOnly = true)
     public List<ReportsDTO> search(String query) {
         log.debug("Request to search Reports for query {}", query);
-        return StreamSupport
-            .stream(reportsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(reportsMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

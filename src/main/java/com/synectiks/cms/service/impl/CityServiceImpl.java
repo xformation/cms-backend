@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.CityService;
-import com.synectiks.cms.domain.City;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.search.CitySearchRepository;
-import com.synectiks.cms.service.dto.CityDTO;
-import com.synectiks.cms.service.mapper.CityMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.repository.CityRepository;
+import com.synectiks.cms.repository.search.CitySearchRepository;
+import com.synectiks.cms.service.CityService;
+import com.synectiks.cms.service.dto.CityDTO;
+import com.synectiks.cms.service.mapper.CityMapper;
 
 /**
  * Service Implementation for managing City.
@@ -108,9 +105,6 @@ public class CityServiceImpl implements CityService {
     @Transactional(readOnly = true)
     public List<CityDTO> search(String query) {
         log.debug("Request to search Cities for query {}", query);
-        return StreamSupport
-            .stream(citySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(cityMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

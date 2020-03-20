@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.IdCardService;
-import com.synectiks.cms.domain.IdCard;
-import com.synectiks.cms.repository.IdCardRepository;
-import com.synectiks.cms.repository.search.IdCardSearchRepository;
-import com.synectiks.cms.service.dto.IdCardDTO;
-import com.synectiks.cms.service.mapper.IdCardMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.IdCard;
+import com.synectiks.cms.repository.IdCardRepository;
+import com.synectiks.cms.repository.search.IdCardSearchRepository;
+import com.synectiks.cms.service.IdCardService;
+import com.synectiks.cms.service.dto.IdCardDTO;
+import com.synectiks.cms.service.mapper.IdCardMapper;
 
 /**
  * Service Implementation for managing IdCard.
@@ -109,9 +106,6 @@ public class IdCardServiceImpl implements IdCardService {
     @Transactional(readOnly = true)
     public List<IdCardDTO> search(String query) {
         log.debug("Request to search IdCards for query {}", query);
-        return StreamSupport
-            .stream(idCardSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(idCardMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AuthorizedSignatoryService;
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
-import com.synectiks.cms.service.dto.AuthorizedSignatoryDTO;
-import com.synectiks.cms.service.mapper.AuthorizedSignatoryMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
+import com.synectiks.cms.service.AuthorizedSignatoryService;
+import com.synectiks.cms.service.dto.AuthorizedSignatoryDTO;
+import com.synectiks.cms.service.mapper.AuthorizedSignatoryMapper;
 
 /**
  * Service Implementation for managing AuthorizedSignatory.
@@ -108,9 +105,6 @@ public class AuthorizedSignatoryServiceImpl implements AuthorizedSignatoryServic
     @Transactional(readOnly = true)
     public List<AuthorizedSignatoryDTO> search(String query) {
         log.debug("Request to search AuthorizedSignatories for query {}", query);
-        return StreamSupport
-            .stream(authorizedSignatorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(authorizedSignatoryMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

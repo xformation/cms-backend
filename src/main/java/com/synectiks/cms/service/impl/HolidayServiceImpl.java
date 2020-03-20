@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.HolidayService;
-import com.synectiks.cms.domain.Holiday;
-import com.synectiks.cms.repository.HolidayRepository;
-import com.synectiks.cms.repository.search.HolidaySearchRepository;
-import com.synectiks.cms.service.dto.HolidayDTO;
-import com.synectiks.cms.service.mapper.HolidayMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.repository.HolidayRepository;
+import com.synectiks.cms.repository.search.HolidaySearchRepository;
+import com.synectiks.cms.service.HolidayService;
+import com.synectiks.cms.service.dto.HolidayDTO;
+import com.synectiks.cms.service.mapper.HolidayMapper;
 
 /**
  * Service Implementation for managing Holiday.
@@ -108,9 +105,6 @@ public class HolidayServiceImpl implements HolidayService {
     @Transactional(readOnly = true)
     public List<HolidayDTO> search(String query) {
         log.debug("Request to search Holidays for query {}", query);
-        return StreamSupport
-            .stream(holidaySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(holidayMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

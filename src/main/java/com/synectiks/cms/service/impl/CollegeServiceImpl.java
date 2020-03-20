@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.CollegeService;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.search.CollegeSearchRepository;
-import com.synectiks.cms.service.dto.CollegeDTO;
-import com.synectiks.cms.service.mapper.CollegeMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.search.CollegeSearchRepository;
+import com.synectiks.cms.service.CollegeService;
+import com.synectiks.cms.service.dto.CollegeDTO;
+import com.synectiks.cms.service.mapper.CollegeMapper;
 
 /**
  * Service Implementation for managing College.
@@ -108,9 +105,6 @@ public class CollegeServiceImpl implements CollegeService {
     @Transactional(readOnly = true)
     public List<CollegeDTO> search(String query) {
         log.debug("Request to search Colleges for query {}", query);
-        return StreamSupport
-            .stream(collegeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(collegeMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

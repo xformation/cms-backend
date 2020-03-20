@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.BankAccountsService;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
-import com.synectiks.cms.service.dto.BankAccountsDTO;
-import com.synectiks.cms.service.mapper.BankAccountsMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.BankAccounts;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
+import com.synectiks.cms.service.BankAccountsService;
+import com.synectiks.cms.service.dto.BankAccountsDTO;
+import com.synectiks.cms.service.mapper.BankAccountsMapper;
 
 /**
  * Service Implementation for managing BankAccounts.
@@ -108,9 +105,6 @@ public class BankAccountsServiceImpl implements BankAccountsService {
     @Transactional(readOnly = true)
     public List<BankAccountsDTO> search(String query) {
         log.debug("Request to search BankAccounts for query {}", query);
-        return StreamSupport
-            .stream(bankAccountsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(bankAccountsMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

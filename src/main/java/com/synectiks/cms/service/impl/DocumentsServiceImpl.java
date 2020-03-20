@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.DocumentsService;
-import com.synectiks.cms.domain.Documents;
-import com.synectiks.cms.repository.DocumentsRepository;
-import com.synectiks.cms.repository.search.DocumentsSearchRepository;
-import com.synectiks.cms.service.dto.DocumentsDTO;
-import com.synectiks.cms.service.mapper.DocumentsMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Documents;
+import com.synectiks.cms.repository.DocumentsRepository;
+import com.synectiks.cms.repository.search.DocumentsSearchRepository;
+import com.synectiks.cms.service.DocumentsService;
+import com.synectiks.cms.service.dto.DocumentsDTO;
+import com.synectiks.cms.service.mapper.DocumentsMapper;
 
 /**
  * Service Implementation for managing Documents.
@@ -108,9 +105,6 @@ public class DocumentsServiceImpl implements DocumentsService {
     @Transactional(readOnly = true)
     public List<DocumentsDTO> search(String query) {
         log.debug("Request to search Documents for query {}", query);
-        return StreamSupport
-            .stream(documentsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(documentsMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

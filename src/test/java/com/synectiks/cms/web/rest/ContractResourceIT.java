@@ -1,13 +1,23 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.repository.ContractRepository;
-import com.synectiks.cms.repository.search.ContractSearchRepository;
-import com.synectiks.cms.service.ContractService;
-import com.synectiks.cms.service.dto.ContractDTO;
-import com.synectiks.cms.service.mapper.ContractMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,21 +32,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Contract;
 import com.synectiks.cms.domain.enumeration.TypeOfOwnerShip;
+import com.synectiks.cms.repository.ContractRepository;
+import com.synectiks.cms.repository.search.ContractSearchRepository;
+import com.synectiks.cms.service.ContractService;
+import com.synectiks.cms.service.dto.ContractDTO;
+import com.synectiks.cms.service.mapper.ContractMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Integration tests for the {@Link ContractResource} REST controller.
  */
@@ -418,8 +422,8 @@ public class ContractResourceIT {
     public void searchContract() throws Exception {
         // Initialize the database
         contractRepository.saveAndFlush(contract);
-        when(mockContractSearchRepository.search(queryStringQuery("id:" + contract.getId())))
-            .thenReturn(Collections.singletonList(contract));
+//        when(mockContractSearchRepository.search(queryStringQuery("id:" + contract.getId())))
+//            .thenReturn(Collections.singletonList(contract));
         // Search the contract
         restContractMockMvc.perform(get("/api/_search/contracts?query=id:" + contract.getId()))
             .andExpect(status().isOk())

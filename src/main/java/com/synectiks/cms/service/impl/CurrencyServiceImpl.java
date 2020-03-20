@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.CurrencyService;
-import com.synectiks.cms.domain.Currency;
-import com.synectiks.cms.repository.CurrencyRepository;
-import com.synectiks.cms.repository.search.CurrencySearchRepository;
-import com.synectiks.cms.service.dto.CurrencyDTO;
-import com.synectiks.cms.service.mapper.CurrencyMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Currency;
+import com.synectiks.cms.repository.CurrencyRepository;
+import com.synectiks.cms.repository.search.CurrencySearchRepository;
+import com.synectiks.cms.service.CurrencyService;
+import com.synectiks.cms.service.dto.CurrencyDTO;
+import com.synectiks.cms.service.mapper.CurrencyMapper;
 
 /**
  * Service Implementation for managing Currency.
@@ -108,9 +105,6 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Transactional(readOnly = true)
     public List<CurrencyDTO> search(String query) {
         log.debug("Request to search Currencies for query {}", query);
-        return StreamSupport
-            .stream(currencySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(currencyMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

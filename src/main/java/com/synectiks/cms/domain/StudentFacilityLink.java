@@ -1,14 +1,21 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
-import java.io.Serializable;
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A StudentFacilityLink.
@@ -16,7 +23,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "student_facility_link")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "studentfacilitylink")
+//@Document(indexName = "studentfacilitylink")
 public class StudentFacilityLink implements Serializable {
 
     private static final long serialVersionUID = 1L;

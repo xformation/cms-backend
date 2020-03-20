@@ -1,11 +1,10 @@
 package com.synectiks.cms.repository;
 
 import com.synectiks.cms.domain.Authority;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
  * Spring Data JPA repository for the Authority entity.
  */
-public interface AuthorityRepository extends JpaRepository<Authority, String> {
+public interface AuthorityRepository extends JPASearchRepository<Authority, String> {
 }

@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AdminOverviewService;
-import com.synectiks.cms.domain.AdminOverview;
-import com.synectiks.cms.repository.AdminOverviewRepository;
-import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
-import com.synectiks.cms.service.dto.AdminOverviewDTO;
-import com.synectiks.cms.service.mapper.AdminOverviewMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AdminOverview;
+import com.synectiks.cms.repository.AdminOverviewRepository;
+import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
+import com.synectiks.cms.service.AdminOverviewService;
+import com.synectiks.cms.service.dto.AdminOverviewDTO;
+import com.synectiks.cms.service.mapper.AdminOverviewMapper;
 
 /**
  * Service Implementation for managing AdminOverview.
@@ -108,9 +105,6 @@ public class AdminOverviewServiceImpl implements AdminOverviewService {
     @Transactional(readOnly = true)
     public List<AdminOverviewDTO> search(String query) {
         log.debug("Request to search AdminOverviews for query {}", query);
-        return StreamSupport
-            .stream(adminOverviewSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(adminOverviewMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

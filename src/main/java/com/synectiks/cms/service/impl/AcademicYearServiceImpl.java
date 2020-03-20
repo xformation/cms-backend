@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AcademicYearService;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
-import com.synectiks.cms.service.dto.AcademicYearDTO;
-import com.synectiks.cms.service.mapper.AcademicYearMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
+import com.synectiks.cms.service.AcademicYearService;
+import com.synectiks.cms.service.dto.AcademicYearDTO;
+import com.synectiks.cms.service.mapper.AcademicYearMapper;
 
 /**
  * Service Implementation for managing AcademicYear.
@@ -109,9 +106,6 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     @Transactional(readOnly = true)
     public List<AcademicYearDTO> search(String query) {
         log.debug("Request to search AcademicYears for query {}", query);
-        return StreamSupport
-            .stream(academicYearSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(academicYearMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

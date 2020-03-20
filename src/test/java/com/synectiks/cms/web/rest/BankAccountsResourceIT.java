@@ -1,13 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.BankAccounts;
-import com.synectiks.cms.repository.BankAccountsRepository;
-import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
-import com.synectiks.cms.service.BankAccountsService;
-import com.synectiks.cms.service.dto.BankAccountsDTO;
-import com.synectiks.cms.service.mapper.BankAccountsMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,19 +30,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.BankAccounts;
 import com.synectiks.cms.domain.enumeration.NameOfBank;
+import com.synectiks.cms.repository.BankAccountsRepository;
+import com.synectiks.cms.repository.search.BankAccountsSearchRepository;
+import com.synectiks.cms.service.BankAccountsService;
+import com.synectiks.cms.service.dto.BankAccountsDTO;
+import com.synectiks.cms.service.mapper.BankAccountsMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Integration tests for the {@Link BankAccountsResource} REST controller.
  */
@@ -445,8 +449,8 @@ public class BankAccountsResourceIT {
     public void searchBankAccounts() throws Exception {
         // Initialize the database
         bankAccountsRepository.saveAndFlush(bankAccounts);
-        when(mockBankAccountsSearchRepository.search(queryStringQuery("id:" + bankAccounts.getId())))
-            .thenReturn(Collections.singletonList(bankAccounts));
+//        when(mockBankAccountsSearchRepository.search(queryStringQuery("id:" + bankAccounts.getId())))
+//            .thenReturn(Collections.singletonList(bankAccounts));
         // Search the bankAccounts
         restBankAccountsMockMvc.perform(get("/api/_search/bank-accounts?query=id:" + bankAccounts.getId()))
             .andExpect(status().isOk())

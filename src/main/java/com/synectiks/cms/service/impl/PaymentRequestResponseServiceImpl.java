@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.PaymentRequestResponseService;
-import com.synectiks.cms.domain.PaymentRequestResponse;
-import com.synectiks.cms.repository.PaymentRequestResponseRepository;
-import com.synectiks.cms.repository.search.PaymentRequestResponseSearchRepository;
-import com.synectiks.cms.service.dto.PaymentRequestResponseDTO;
-import com.synectiks.cms.service.mapper.PaymentRequestResponseMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.PaymentRequestResponse;
+import com.synectiks.cms.repository.PaymentRequestResponseRepository;
+import com.synectiks.cms.repository.search.PaymentRequestResponseSearchRepository;
+import com.synectiks.cms.service.PaymentRequestResponseService;
+import com.synectiks.cms.service.dto.PaymentRequestResponseDTO;
+import com.synectiks.cms.service.mapper.PaymentRequestResponseMapper;
 
 /**
  * Service Implementation for managing {@link PaymentRequestResponse}.
@@ -108,9 +105,6 @@ public class PaymentRequestResponseServiceImpl implements PaymentRequestResponse
     @Transactional(readOnly = true)
     public List<PaymentRequestResponseDTO> search(String query) {
         log.debug("Request to search PaymentRequestResponses for query {}", query);
-        return StreamSupport
-            .stream(paymentRequestResponseSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(paymentRequestResponseMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AcademicHistoryService;
-import com.synectiks.cms.domain.AcademicHistory;
-import com.synectiks.cms.repository.AcademicHistoryRepository;
-import com.synectiks.cms.repository.search.AcademicHistorySearchRepository;
-import com.synectiks.cms.service.dto.AcademicHistoryDTO;
-import com.synectiks.cms.service.mapper.AcademicHistoryMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AcademicHistory;
+import com.synectiks.cms.repository.AcademicHistoryRepository;
+import com.synectiks.cms.repository.search.AcademicHistorySearchRepository;
+import com.synectiks.cms.service.AcademicHistoryService;
+import com.synectiks.cms.service.dto.AcademicHistoryDTO;
+import com.synectiks.cms.service.mapper.AcademicHistoryMapper;
 
 /**
  * Service Implementation for managing AcademicHistory.
@@ -108,9 +105,6 @@ public class AcademicHistoryServiceImpl implements AcademicHistoryService {
     @Transactional(readOnly = true)
     public List<AcademicHistoryDTO> search(String query) {
         log.debug("Request to search AcademicHistories for query {}", query);
-        return StreamSupport
-            .stream(academicHistorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(academicHistoryMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

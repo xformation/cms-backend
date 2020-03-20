@@ -1,10 +1,10 @@
 package com.synectiks.cms.repository.search;
 
 import com.synectiks.cms.domain.Facility;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
  * Spring Data Elasticsearch repository for the Facility entity.
  */
-public interface FacilitySearchRepository extends ElasticsearchRepository<Facility, Long> {
+public interface FacilitySearchRepository extends JPASearchRepository<Facility, Long> {
 }

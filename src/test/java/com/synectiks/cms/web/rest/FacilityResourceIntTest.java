@@ -2,11 +2,9 @@ package com.synectiks.cms.web.rest;
 
 import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,8 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -364,8 +360,8 @@ public class FacilityResourceIntTest {
     public void searchFacility() throws Exception {
         // Initialize the database
         facilityRepository.saveAndFlush(facility);
-        when(mockFacilitySearchRepository.search(queryStringQuery("id:" + facility.getId())))
-            .thenReturn(Collections.singletonList(facility));
+//        when(mockFacilitySearchRepository.search(queryStringQuery("id:" + facility.getId())))
+//            .thenReturn(Collections.singletonList(facility));
         // Search the facility
         restFacilityMockMvc.perform(get("/api/_search/facilities?query=id:" + facility.getId()))
             .andExpect(status().isOk())

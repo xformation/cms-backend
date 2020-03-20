@@ -148,6 +148,9 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
     private String strUpdatedOn;
     private String strDisabilityCertificateIssueDate;
     private String strDateOfBirth;
+    private Long academicYearId;
+    private AcademicYear academicYear;
+    
 	public Long getId() {
 		return id;
 	}
@@ -1033,4 +1036,28 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
             ", strDateOfBirth='" + strDateOfBirth + '\'' +
             '}';
     }
+	public String getStrCreatedOn() {
+		return strCreatedOn;
+	}
+	public void setStrCreatedOn(String strCreatedOn) {
+		this.strCreatedOn = strCreatedOn;
+	}
+	public String getStrUpdatedOn() {
+		return strUpdatedOn;
+	}
+	public void setStrUpdatedOn(String strUpdatedOn) {
+		this.strUpdatedOn = strUpdatedOn;
+	}
+	public Long getAcademicYearId() {
+		return academicYearId;
+	}
+	public void setAcademicYearId(Long academicYearId) {
+		this.academicYearId = academicYearId;
+	}
+	public AcademicYear getAcademicYear() {
+		return academicYear;
+	}
+	public void setAcademicYear(AcademicYear academicYear) {
+		this.academicYear = academicYear;
+	}
 }

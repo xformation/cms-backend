@@ -1,23 +1,30 @@
 package com.synectiks.cms.web.rest;
-import com.synectiks.cms.service.DocumentsService;
-import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.HeaderUtil;
-import com.synectiks.cms.service.dto.DocumentsDTO;
-import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
+import com.synectiks.cms.service.DocumentsService;
+import com.synectiks.cms.service.dto.DocumentsDTO;
+import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
+import com.synectiks.cms.web.rest.util.HeaderUtil;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Documents.

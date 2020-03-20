@@ -1,11 +1,18 @@
 package com.synectiks.cms.domain;
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import java.io.Serializable;
 
 import com.synectiks.cms.domain.enumeration.Status;
 
@@ -15,7 +22,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "modules")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "modules")
+//@org.springframework.data.elasticsearch.annotations.Document(indexName = "modules")
 public class Modules implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,7 +30,6 @@ public class Modules implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "module_name")

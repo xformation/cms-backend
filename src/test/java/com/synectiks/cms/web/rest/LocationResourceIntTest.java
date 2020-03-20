@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.search.LocationSearchRepository;
-import com.synectiks.cms.service.LocationService;
-import com.synectiks.cms.service.dto.LocationDTO;
-import com.synectiks.cms.service.mapper.LocationMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,18 +31,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.search.LocationSearchRepository;
+import com.synectiks.cms.service.LocationService;
+import com.synectiks.cms.service.dto.LocationDTO;
+import com.synectiks.cms.service.mapper.LocationMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the LocationResource REST controller.
@@ -347,8 +350,8 @@ public class LocationResourceIntTest {
     public void searchLocation() throws Exception {
         // Initialize the database
         locationRepository.saveAndFlush(location);
-        when(mockLocationSearchRepository.search(queryStringQuery("id:" + location.getId())))
-            .thenReturn(Collections.singletonList(location));
+//        when(mockLocationSearchRepository.search(queryStringQuery("id:" + location.getId())))
+//            .thenReturn(Collections.singletonList(location));
         // Search the location
         restLocationMockMvc.perform(get("/api/_search/locations?query=id:" + location.getId()))
             .andExpect(status().isOk())

@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AdminAttendanceService;
-import com.synectiks.cms.domain.AdminAttendance;
-import com.synectiks.cms.repository.AdminAttendanceRepository;
-import com.synectiks.cms.repository.search.AdminAttendanceSearchRepository;
-import com.synectiks.cms.service.dto.AdminAttendanceDTO;
-import com.synectiks.cms.service.mapper.AdminAttendanceMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AdminAttendance;
+import com.synectiks.cms.repository.AdminAttendanceRepository;
+import com.synectiks.cms.repository.search.AdminAttendanceSearchRepository;
+import com.synectiks.cms.service.AdminAttendanceService;
+import com.synectiks.cms.service.dto.AdminAttendanceDTO;
+import com.synectiks.cms.service.mapper.AdminAttendanceMapper;
 
 /**
  * Service Implementation for managing AdminAttendance.
@@ -109,9 +106,6 @@ public class AdminAttendanceServiceImpl implements AdminAttendanceService {
     @Transactional(readOnly = true)
     public List<AdminAttendanceDTO> search(String query) {
         log.debug("Request to search AdminAttendances for query {}", query);
-        return StreamSupport
-            .stream(adminAttendanceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(adminAttendanceMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

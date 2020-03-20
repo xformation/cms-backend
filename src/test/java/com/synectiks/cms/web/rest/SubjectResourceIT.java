@@ -1,13 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.search.SubjectSearchRepository;
-import com.synectiks.cms.service.SubjectService;
-import com.synectiks.cms.service.dto.SubjectDTO;
-import com.synectiks.cms.service.mapper.SubjectMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,17 +30,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.search.SubjectSearchRepository;
+import com.synectiks.cms.service.SubjectService;
+import com.synectiks.cms.service.dto.SubjectDTO;
+import com.synectiks.cms.service.mapper.SubjectMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Integration tests for the {@Link SubjectResource} REST controller.
@@ -310,8 +315,8 @@ public class SubjectResourceIT {
     public void searchSubject() throws Exception {
         // Initialize the database
         subjectRepository.saveAndFlush(subject);
-        when(mockSubjectSearchRepository.search(queryStringQuery("id:" + subject.getId())))
-            .thenReturn(Collections.singletonList(subject));
+//        when(mockSubjectSearchRepository.search(queryStringQuery("id:" + subject.getId())))
+//            .thenReturn(Collections.singletonList(subject));
         // Search the subject
         restSubjectMockMvc.perform(get("/api/_search/subjects?query=id:" + subject.getId()))
             .andExpect(status().isOk())

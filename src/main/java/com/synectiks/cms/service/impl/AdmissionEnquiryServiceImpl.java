@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AdmissionEnquiryService;
-import com.synectiks.cms.domain.AdmissionEnquiry;
-import com.synectiks.cms.repository.AdmissionEnquiryRepository;
-import com.synectiks.cms.repository.search.AdmissionEnquirySearchRepository;
-import com.synectiks.cms.service.dto.AdmissionEnquiryDTO;
-import com.synectiks.cms.service.mapper.AdmissionEnquiryMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AdmissionEnquiry;
+import com.synectiks.cms.repository.AdmissionEnquiryRepository;
+import com.synectiks.cms.repository.search.AdmissionEnquirySearchRepository;
+import com.synectiks.cms.service.AdmissionEnquiryService;
+import com.synectiks.cms.service.dto.AdmissionEnquiryDTO;
+import com.synectiks.cms.service.mapper.AdmissionEnquiryMapper;
 
 /**
  * Service Implementation for managing AdmissionEnquiry.
@@ -107,9 +104,6 @@ public class AdmissionEnquiryServiceImpl implements AdmissionEnquiryService {
     @Transactional(readOnly = true)
     public List<AdmissionEnquiryDTO> search(String query) {
         log.debug("Request to search AdmissionEnquiries for query {}", query);
-        return StreamSupport
-            .stream(admissionEnquirySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(admissionEnquiryMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

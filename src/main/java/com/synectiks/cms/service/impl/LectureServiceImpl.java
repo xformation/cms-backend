@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.LectureService;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.repository.LectureRepository;
-import com.synectiks.cms.repository.search.LectureSearchRepository;
-import com.synectiks.cms.service.dto.LectureDTO;
-import com.synectiks.cms.service.mapper.LectureMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.repository.LectureRepository;
+import com.synectiks.cms.repository.search.LectureSearchRepository;
+import com.synectiks.cms.service.LectureService;
+import com.synectiks.cms.service.dto.LectureDTO;
+import com.synectiks.cms.service.mapper.LectureMapper;
 
 /**
  * Service Implementation for managing Lecture.
@@ -108,9 +105,6 @@ public class LectureServiceImpl implements LectureService {
     @Transactional(readOnly = true)
     public List<LectureDTO> search(String query) {
         log.debug("Request to search Lectures for query {}", query);
-        return StreamSupport
-            .stream(lectureSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(lectureMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

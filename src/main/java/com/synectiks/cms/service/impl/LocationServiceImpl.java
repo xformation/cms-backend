@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.LocationService;
-import com.synectiks.cms.domain.Location;
-import com.synectiks.cms.repository.LocationRepository;
-import com.synectiks.cms.repository.search.LocationSearchRepository;
-import com.synectiks.cms.service.dto.LocationDTO;
-import com.synectiks.cms.service.mapper.LocationMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Location;
+import com.synectiks.cms.repository.LocationRepository;
+import com.synectiks.cms.repository.search.LocationSearchRepository;
+import com.synectiks.cms.service.LocationService;
+import com.synectiks.cms.service.dto.LocationDTO;
+import com.synectiks.cms.service.mapper.LocationMapper;
 
 /**
  * Service Implementation for managing Location.
@@ -108,9 +105,6 @@ public class LocationServiceImpl implements LocationService {
     @Transactional(readOnly = true)
     public List<LocationDTO> search(String query) {
         log.debug("Request to search Locations for query {}", query);
-        return StreamSupport
-            .stream(locationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(locationMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

@@ -1,10 +1,10 @@
 package com.synectiks.cms.repository.search;
 
 import com.synectiks.cms.domain.Teacher;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
  * Spring Data Elasticsearch repository for the Teacher entity.
  */
-public interface TeacherSearchRepository extends ElasticsearchRepository<Teacher, Long> {
+public interface TeacherSearchRepository extends JPASearchRepository<Teacher, Long> {
 }

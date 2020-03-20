@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.Status;
@@ -29,7 +28,7 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "facility")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "facility")
+//@Document(indexName = "facility")
 public class Facility implements Serializable {
 
     private static final long serialVersionUID = 1L;

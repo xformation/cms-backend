@@ -1,7 +1,21 @@
 package com.synectiks.cms.business.service;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.stereotype.Component;
+
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsStudentVo;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
@@ -10,14 +24,6 @@ import com.synectiks.cms.graphql.types.Student.StudentInput;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Component
 public class StudentService {
@@ -259,8 +265,44 @@ public class StudentService {
             student.setSectionId(cmsStudentVo.getSectionId());
             student.setDepartmentId(cmsStudentVo.getDepartmentId());
             student.setBranchId(cmsStudentVo.getBranchId());
-
+            student.setAcademicYearId(cmsStudentVo.getAcademicYearId());
+            
             student.setDateOfBirth(cmsStudentVo.getStrDateOfBirth() != null ? DateFormatUtil.convertStringToLocalDate(cmsStudentVo.getStrDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+            
+            if(cmsStudentVo.getBranchId() != null) {
+            	Branch branch = this.commonService.getBranchById(cmsStudentVo.getBranchId());
+            	if(branch != null) { 
+            		student.setBranchName(branch.getBranchName());
+            	}
+            }
+            if(cmsStudentVo.getDepartmentId() != null) {
+            	Department department = this.commonService.getDepartmentById(cmsStudentVo.getDepartmentId());
+            	if(department != null) {
+            		student.setDepartmentName(department.getName());
+            	}
+            	
+            }
+            if(cmsStudentVo.getBatchId() != null) {
+            	Batch batch = this.commonService.getBatchById(cmsStudentVo.getBatchId());
+            	if(batch != null) {
+            		student.setBatchName(batch.getBatch().toString());
+            	}
+            }
+            
+            if(cmsStudentVo.getSectionId() != null) {
+            	Section section = this.commonService.getSectionById(cmsStudentVo.getSectionId());
+            	if(section != null) {
+            		student.setSectionName(section.getSection().toString());
+            	}
+            	
+            }
+            if(cmsStudentVo.getAcademicYearId() != null) {
+            	AcademicYear ay = this.commonService.getAcademicYearById(cmsStudentVo.getAcademicYearId());
+            	if(ay != null) {
+            		student.setAcademicYear(ay.getYear());
+            	}
+            }
+            
             student = this.studentRepository.save(student);
             vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
             vo.setStrDateOfBirth(student.getDateOfBirth() != null ? DateFormatUtil.changeLocalDateFormat(student.getDateOfBirth(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");

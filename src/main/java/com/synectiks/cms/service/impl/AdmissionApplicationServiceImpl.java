@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AdmissionApplicationService;
-import com.synectiks.cms.domain.AdmissionApplication;
-import com.synectiks.cms.repository.AdmissionApplicationRepository;
-import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
-import com.synectiks.cms.service.dto.AdmissionApplicationDTO;
-import com.synectiks.cms.service.mapper.AdmissionApplicationMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AdmissionApplication;
+import com.synectiks.cms.repository.AdmissionApplicationRepository;
+import com.synectiks.cms.repository.search.AdmissionApplicationSearchRepository;
+import com.synectiks.cms.service.AdmissionApplicationService;
+import com.synectiks.cms.service.dto.AdmissionApplicationDTO;
+import com.synectiks.cms.service.mapper.AdmissionApplicationMapper;
 
 /**
  * Service Implementation for managing AdmissionApplication.
@@ -107,9 +104,6 @@ public class AdmissionApplicationServiceImpl implements AdmissionApplicationServ
     @Transactional(readOnly = true)
     public List<AdmissionApplicationDTO> search(String query) {
         log.debug("Request to search AdmissionApplications for query {}", query);
-        return StreamSupport
-            .stream(admissionApplicationSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(admissionApplicationMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

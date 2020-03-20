@@ -1,14 +1,23 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
-import com.synectiks.cms.service.LegalEntityService;
-import com.synectiks.cms.service.dto.LegalEntityDTO;
-import com.synectiks.cms.service.mapper.LegalEntityMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,25 +32,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.LegalEntity;
 import com.synectiks.cms.domain.enumeration.TypeOfCollege;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+import com.synectiks.cms.service.LegalEntityService;
+import com.synectiks.cms.service.dto.LegalEntityDTO;
+import com.synectiks.cms.service.mapper.LegalEntityMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the LegalEntityResource REST controller.
  *
@@ -862,8 +862,8 @@ public class LegalEntityResourceIntTest {
     public void searchLegalEntity() throws Exception {
         // Initialize the database
         legalEntityRepository.saveAndFlush(legalEntity);
-        when(mockLegalEntitySearchRepository.search(queryStringQuery("id:" + legalEntity.getId())))
-            .thenReturn(Collections.singletonList(legalEntity));
+//        when(mockLegalEntitySearchRepository.search(queryStringQuery("id:" + legalEntity.getId())))
+//            .thenReturn(Collections.singletonList(legalEntity));
         // Search the legalEntity
         restLegalEntityMockMvc.perform(get("/api/_search/legal-entities?query=id:" + legalEntity.getId()))
             .andExpect(status().isOk())

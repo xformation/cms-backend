@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.StudentFacilityLinkService;
-import com.synectiks.cms.domain.StudentFacilityLink;
-import com.synectiks.cms.repository.StudentFacilityLinkRepository;
-import com.synectiks.cms.repository.search.StudentFacilityLinkSearchRepository;
-import com.synectiks.cms.service.dto.StudentFacilityLinkDTO;
-import com.synectiks.cms.service.mapper.StudentFacilityLinkMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.StudentFacilityLink;
+import com.synectiks.cms.repository.StudentFacilityLinkRepository;
+import com.synectiks.cms.repository.search.StudentFacilityLinkSearchRepository;
+import com.synectiks.cms.service.StudentFacilityLinkService;
+import com.synectiks.cms.service.dto.StudentFacilityLinkDTO;
+import com.synectiks.cms.service.mapper.StudentFacilityLinkMapper;
 
 /**
  * Service Implementation for managing StudentFacilityLink.
@@ -108,9 +105,6 @@ public class StudentFacilityLinkServiceImpl implements StudentFacilityLinkServic
     @Transactional(readOnly = true)
     public List<StudentFacilityLinkDTO> search(String query) {
         log.debug("Request to search StudentFacilityLinks for query {}", query);
-        return StreamSupport
-            .stream(studentFacilityLinkSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentFacilityLinkMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

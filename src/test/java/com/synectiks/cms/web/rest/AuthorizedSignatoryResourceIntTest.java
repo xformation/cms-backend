@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.AuthorizedSignatory;
-import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
-import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
-import com.synectiks.cms.service.AuthorizedSignatoryService;
-import com.synectiks.cms.service.dto.AuthorizedSignatoryDTO;
-import com.synectiks.cms.service.mapper.AuthorizedSignatoryMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +32,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.AuthorizedSignatory;
+import com.synectiks.cms.repository.AuthorizedSignatoryRepository;
+import com.synectiks.cms.repository.search.AuthorizedSignatorySearchRepository;
+import com.synectiks.cms.service.AuthorizedSignatoryService;
+import com.synectiks.cms.service.dto.AuthorizedSignatoryDTO;
+import com.synectiks.cms.service.mapper.AuthorizedSignatoryMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the AuthorizedSignatoryResource REST controller.
@@ -470,8 +473,8 @@ public class AuthorizedSignatoryResourceIntTest {
     public void searchAuthorizedSignatory() throws Exception {
         // Initialize the database
         authorizedSignatoryRepository.saveAndFlush(authorizedSignatory);
-        when(mockAuthorizedSignatorySearchRepository.search(queryStringQuery("id:" + authorizedSignatory.getId())))
-            .thenReturn(Collections.singletonList(authorizedSignatory));
+//        when(mockAuthorizedSignatorySearchRepository.search(queryStringQuery("id:" + authorizedSignatory.getId())))
+//            .thenReturn(Collections.singletonList(authorizedSignatory));
         // Search the authorizedSignatory
         restAuthorizedSignatoryMockMvc.perform(get("/api/_search/authorized-signatories?query=id:" + authorizedSignatory.getId()))
             .andExpect(status().isOk())

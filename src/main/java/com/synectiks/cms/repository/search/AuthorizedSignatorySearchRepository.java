@@ -1,10 +1,10 @@
 package com.synectiks.cms.repository.search;
 
 import com.synectiks.cms.domain.AuthorizedSignatory;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
  * Spring Data Elasticsearch repository for the AuthorizedSignatory entity.
  */
-public interface AuthorizedSignatorySearchRepository extends ElasticsearchRepository<AuthorizedSignatory, Long> {
+public interface AuthorizedSignatorySearchRepository extends JPASearchRepository<AuthorizedSignatory, Long> {
 }

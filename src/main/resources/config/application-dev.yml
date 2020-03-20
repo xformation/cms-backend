@@ -151,3 +151,5 @@ application:
     influxDbLogLevel: BASIC
     secSrvUrl: http://localhost:8094
     preferenceSrvUrl: http://localhost:9091
+    kafkaUrl: http://localhost:8190/kafka/send
+    kafkaIndexEvenFireUrl: http://localhost:8092/seach/fireEvent

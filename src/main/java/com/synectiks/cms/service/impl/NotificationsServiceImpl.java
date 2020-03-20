@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.NotificationsService;
-import com.synectiks.cms.domain.Notifications;
-import com.synectiks.cms.repository.NotificationsRepository;
-import com.synectiks.cms.repository.search.NotificationsSearchRepository;
-import com.synectiks.cms.service.dto.NotificationsDTO;
-import com.synectiks.cms.service.mapper.NotificationsMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Notifications;
+import com.synectiks.cms.repository.NotificationsRepository;
+import com.synectiks.cms.repository.search.NotificationsSearchRepository;
+import com.synectiks.cms.service.NotificationsService;
+import com.synectiks.cms.service.dto.NotificationsDTO;
+import com.synectiks.cms.service.mapper.NotificationsMapper;
 
 /**
  * Service Implementation for managing {@link Notifications}.
@@ -108,9 +105,6 @@ public class NotificationsServiceImpl implements NotificationsService {
     @Transactional(readOnly = true)
     public List<NotificationsDTO> search(String query) {
         log.debug("Request to search Notifications for query {}", query);
-        return StreamSupport
-            .stream(notificationsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(notificationsMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

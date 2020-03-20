@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.InvoiceService;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.search.InvoiceSearchRepository;
-import com.synectiks.cms.service.dto.InvoiceDTO;
-import com.synectiks.cms.service.mapper.InvoiceMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Invoice;
+import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.repository.search.InvoiceSearchRepository;
+import com.synectiks.cms.service.InvoiceService;
+import com.synectiks.cms.service.dto.InvoiceDTO;
+import com.synectiks.cms.service.mapper.InvoiceMapper;
 
 /**
  * Service Implementation for managing Invoice.
@@ -108,9 +105,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Transactional(readOnly = true)
     public List<InvoiceDTO> search(String query) {
         log.debug("Request to search Invoices for query {}", query);
-        return StreamSupport
-            .stream(invoiceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(invoiceMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

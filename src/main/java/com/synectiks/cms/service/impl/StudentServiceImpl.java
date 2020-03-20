@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.StudentService;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.search.StudentSearchRepository;
-import com.synectiks.cms.service.dto.StudentDTO;
-import com.synectiks.cms.service.mapper.StudentMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.search.StudentSearchRepository;
+import com.synectiks.cms.service.StudentService;
+import com.synectiks.cms.service.dto.StudentDTO;
+import com.synectiks.cms.service.mapper.StudentMapper;
 
 /**
  * Service Implementation for managing Student.
@@ -108,9 +105,6 @@ public class StudentServiceImpl implements StudentService {
     @Transactional(readOnly = true)
     public List<StudentDTO> search(String query) {
         log.debug("Request to search Students for query {}", query);
-        return StreamSupport
-            .stream(studentSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

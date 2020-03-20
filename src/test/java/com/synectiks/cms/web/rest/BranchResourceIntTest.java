@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.search.BranchSearchRepository;
-import com.synectiks.cms.service.BranchService;
-import com.synectiks.cms.service.dto.BranchDTO;
-import com.synectiks.cms.service.mapper.BranchMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +32,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.search.BranchSearchRepository;
+import com.synectiks.cms.service.BranchService;
+import com.synectiks.cms.service.dto.BranchDTO;
+import com.synectiks.cms.service.mapper.BranchMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the BranchResource REST controller.
@@ -378,8 +381,8 @@ public class BranchResourceIntTest {
     public void searchBranch() throws Exception {
         // Initialize the database
         branchRepository.saveAndFlush(branch);
-        when(mockBranchSearchRepository.search(queryStringQuery("id:" + branch.getId())))
-            .thenReturn(Collections.singletonList(branch));
+//        when(mockBranchSearchRepository.search(queryStringQuery("id:" + branch.getId())))
+//            .thenReturn(Collections.singletonList(branch));
         // Search the branch
         restBranchMockMvc.perform(get("/api/_search/branches?query=id:" + branch.getId()))
             .andExpect(status().isOk())

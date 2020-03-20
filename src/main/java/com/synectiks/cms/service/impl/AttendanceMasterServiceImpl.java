@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AttendanceMasterService;
-import com.synectiks.cms.domain.AttendanceMaster;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.search.AttendanceMasterSearchRepository;
-import com.synectiks.cms.service.dto.AttendanceMasterDTO;
-import com.synectiks.cms.service.mapper.AttendanceMasterMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.repository.AttendanceMasterRepository;
+import com.synectiks.cms.repository.search.AttendanceMasterSearchRepository;
+import com.synectiks.cms.service.AttendanceMasterService;
+import com.synectiks.cms.service.dto.AttendanceMasterDTO;
+import com.synectiks.cms.service.mapper.AttendanceMasterMapper;
 
 /**
  * Service Implementation for managing AttendanceMaster.
@@ -108,9 +105,6 @@ public class AttendanceMasterServiceImpl implements AttendanceMasterService {
     @Transactional(readOnly = true)
     public List<AttendanceMasterDTO> search(String query) {
         log.debug("Request to search AttendanceMasters for query {}", query);
-        return StreamSupport
-            .stream(attendanceMasterSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(attendanceMasterMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

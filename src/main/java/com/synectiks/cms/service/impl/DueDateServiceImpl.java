@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.DueDateService;
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.repository.DueDateRepository;
-import com.synectiks.cms.repository.search.DueDateSearchRepository;
-import com.synectiks.cms.service.dto.DueDateDTO;
-import com.synectiks.cms.service.mapper.DueDateMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.DueDate;
+import com.synectiks.cms.repository.DueDateRepository;
+import com.synectiks.cms.repository.search.DueDateSearchRepository;
+import com.synectiks.cms.service.DueDateService;
+import com.synectiks.cms.service.dto.DueDateDTO;
+import com.synectiks.cms.service.mapper.DueDateMapper;
 
 /**
  * Service Implementation for managing DueDate.
@@ -108,9 +105,6 @@ public class DueDateServiceImpl implements DueDateService {
     @Transactional(readOnly = true)
     public List<DueDateDTO> search(String query) {
         log.debug("Request to search DueDates for query {}", query);
-        return StreamSupport
-            .stream(dueDateSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(dueDateMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

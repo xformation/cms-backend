@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.TypeOfGradingService;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
-import com.synectiks.cms.repository.search.TypeOfGradingSearchRepository;
-import com.synectiks.cms.service.dto.TypeOfGradingDTO;
-import com.synectiks.cms.service.mapper.TypeOfGradingMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.TypeOfGrading;
+import com.synectiks.cms.repository.TypeOfGradingRepository;
+import com.synectiks.cms.repository.search.TypeOfGradingSearchRepository;
+import com.synectiks.cms.service.TypeOfGradingService;
+import com.synectiks.cms.service.dto.TypeOfGradingDTO;
+import com.synectiks.cms.service.mapper.TypeOfGradingMapper;
 
 /**
  * Service Implementation for managing {@link TypeOfGrading}.
@@ -108,9 +105,6 @@ public class TypeOfGradingServiceImpl implements TypeOfGradingService {
     @Transactional(readOnly = true)
     public List<TypeOfGradingDTO> search(String query) {
         log.debug("Request to search TypeOfGradings for query {}", query);
-        return StreamSupport
-            .stream(typeOfGradingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(typeOfGradingMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

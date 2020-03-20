@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.SectionService;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.repository.SectionRepository;
-import com.synectiks.cms.repository.search.SectionSearchRepository;
-import com.synectiks.cms.service.dto.SectionDTO;
-import com.synectiks.cms.service.mapper.SectionMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.repository.SectionRepository;
+import com.synectiks.cms.repository.search.SectionSearchRepository;
+import com.synectiks.cms.service.SectionService;
+import com.synectiks.cms.service.dto.SectionDTO;
+import com.synectiks.cms.service.mapper.SectionMapper;
 
 /**
  * Service Implementation for managing Section.
@@ -108,9 +105,6 @@ public class SectionServiceImpl implements SectionService {
     @Transactional(readOnly = true)
     public List<SectionDTO> search(String query) {
         log.debug("Request to search Sections for query {}", query);
-        return StreamSupport
-            .stream(sectionSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(sectionMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

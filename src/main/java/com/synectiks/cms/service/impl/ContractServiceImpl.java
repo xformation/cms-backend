@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.ContractService;
-import com.synectiks.cms.domain.Contract;
-import com.synectiks.cms.repository.ContractRepository;
-import com.synectiks.cms.repository.search.ContractSearchRepository;
-import com.synectiks.cms.service.dto.ContractDTO;
-import com.synectiks.cms.service.mapper.ContractMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Contract;
+import com.synectiks.cms.repository.ContractRepository;
+import com.synectiks.cms.repository.search.ContractSearchRepository;
+import com.synectiks.cms.service.ContractService;
+import com.synectiks.cms.service.dto.ContractDTO;
+import com.synectiks.cms.service.mapper.ContractMapper;
 
 /**
  * Service Implementation for managing Contract.
@@ -107,9 +104,6 @@ public class ContractServiceImpl implements ContractService {
     @Transactional(readOnly = true)
     public List<ContractDTO> search(String query) {
         log.debug("Request to search Contracts for query {}", query);
-        return StreamSupport
-            .stream(contractSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(contractMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

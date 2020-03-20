@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.EmployeeService;
-import com.synectiks.cms.domain.Employee;
-import com.synectiks.cms.repository.EmployeeRepository;
-import com.synectiks.cms.repository.search.EmployeeSearchRepository;
-import com.synectiks.cms.service.dto.EmployeeDTO;
-import com.synectiks.cms.service.mapper.EmployeeMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.repository.EmployeeRepository;
+import com.synectiks.cms.repository.search.EmployeeSearchRepository;
+import com.synectiks.cms.service.EmployeeService;
+import com.synectiks.cms.service.dto.EmployeeDTO;
+import com.synectiks.cms.service.mapper.EmployeeMapper;
 
 /**
  * Service Implementation for managing Employee.
@@ -108,9 +105,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(readOnly = true)
     public List<EmployeeDTO> search(String query) {
         log.debug("Request to search Employees for query {}", query);
-        return StreamSupport
-            .stream(employeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(employeeMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

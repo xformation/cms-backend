@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.LegalEntityService;
-import com.synectiks.cms.domain.LegalEntity;
-import com.synectiks.cms.repository.LegalEntityRepository;
-import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
-import com.synectiks.cms.service.dto.LegalEntityDTO;
-import com.synectiks.cms.service.mapper.LegalEntityMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.LegalEntity;
+import com.synectiks.cms.repository.LegalEntityRepository;
+import com.synectiks.cms.repository.search.LegalEntitySearchRepository;
+import com.synectiks.cms.service.LegalEntityService;
+import com.synectiks.cms.service.dto.LegalEntityDTO;
+import com.synectiks.cms.service.mapper.LegalEntityMapper;
 
 /**
  * Service Implementation for managing LegalEntity.
@@ -108,9 +105,6 @@ public class LegalEntityServiceImpl implements LegalEntityService {
     @Transactional(readOnly = true)
     public List<LegalEntityDTO> search(String query) {
         log.debug("Request to search LegalEntities for query {}", query);
-        return StreamSupport
-            .stream(legalEntitySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(legalEntityMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

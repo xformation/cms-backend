@@ -1,12 +1,17 @@
 package com.synectiks.cms.domain;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A ExceptionRecord.
@@ -14,7 +19,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "exception_record")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "exceptionrecord")
 public class ExceptionRecord implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +26,6 @@ public class ExceptionRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "exception_source")

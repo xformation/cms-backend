@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.TeachService;
-import com.synectiks.cms.domain.Teach;
-import com.synectiks.cms.repository.TeachRepository;
-import com.synectiks.cms.repository.search.TeachSearchRepository;
-import com.synectiks.cms.service.dto.TeachDTO;
-import com.synectiks.cms.service.mapper.TeachMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.repository.TeachRepository;
+import com.synectiks.cms.repository.search.TeachSearchRepository;
+import com.synectiks.cms.service.TeachService;
+import com.synectiks.cms.service.dto.TeachDTO;
+import com.synectiks.cms.service.mapper.TeachMapper;
 
 /**
  * Service Implementation for managing Teach.
@@ -108,9 +105,6 @@ public class TeachServiceImpl implements TeachService {
     @Transactional(readOnly = true)
     public List<TeachDTO> search(String query) {
         log.debug("Request to search Teaches for query {}", query);
-        return StreamSupport
-            .stream(teachSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(teachMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

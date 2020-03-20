@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.BatchService;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.repository.BatchRepository;
-import com.synectiks.cms.repository.search.BatchSearchRepository;
-import com.synectiks.cms.service.dto.BatchDTO;
-import com.synectiks.cms.service.mapper.BatchMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.repository.BatchRepository;
+import com.synectiks.cms.repository.search.BatchSearchRepository;
+import com.synectiks.cms.service.BatchService;
+import com.synectiks.cms.service.dto.BatchDTO;
+import com.synectiks.cms.service.mapper.BatchMapper;
 
 /**
  * Service Implementation for managing Batch.
@@ -108,9 +105,6 @@ public class BatchServiceImpl implements BatchService {
     @Transactional(readOnly = true)
     public List<BatchDTO> search(String query) {
         log.debug("Request to search Batches for query {}", query);
-        return StreamSupport
-            .stream(batchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(batchMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

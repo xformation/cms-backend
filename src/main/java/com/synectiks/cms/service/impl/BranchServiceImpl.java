@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.BranchService;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.repository.BranchRepository;
-import com.synectiks.cms.repository.search.BranchSearchRepository;
-import com.synectiks.cms.service.dto.BranchDTO;
-import com.synectiks.cms.service.mapper.BranchMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.repository.BranchRepository;
+import com.synectiks.cms.repository.search.BranchSearchRepository;
+import com.synectiks.cms.service.BranchService;
+import com.synectiks.cms.service.dto.BranchDTO;
+import com.synectiks.cms.service.mapper.BranchMapper;
 
 /**
  * Service Implementation for managing Branch.
@@ -108,9 +105,6 @@ public class BranchServiceImpl implements BranchService {
     @Transactional(readOnly = true)
     public List<BranchDTO> search(String query) {
         log.debug("Request to search Branches for query {}", query);
-        return StreamSupport
-            .stream(branchSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(branchMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

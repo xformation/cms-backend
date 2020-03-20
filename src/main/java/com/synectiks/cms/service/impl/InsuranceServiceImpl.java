@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.InsuranceService;
-import com.synectiks.cms.domain.Insurance;
-import com.synectiks.cms.repository.InsuranceRepository;
-import com.synectiks.cms.repository.search.InsuranceSearchRepository;
-import com.synectiks.cms.service.dto.InsuranceDTO;
-import com.synectiks.cms.service.mapper.InsuranceMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Insurance;
+import com.synectiks.cms.repository.InsuranceRepository;
+import com.synectiks.cms.repository.search.InsuranceSearchRepository;
+import com.synectiks.cms.service.InsuranceService;
+import com.synectiks.cms.service.dto.InsuranceDTO;
+import com.synectiks.cms.service.mapper.InsuranceMapper;
 
 /**
  * Service Implementation for managing Insurance.
@@ -108,9 +105,6 @@ public class InsuranceServiceImpl implements InsuranceService {
     @Transactional(readOnly = true)
     public List<InsuranceDTO> search(String query) {
         log.debug("Request to search Insurances for query {}", query);
-        return StreamSupport
-            .stream(insuranceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(insuranceMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

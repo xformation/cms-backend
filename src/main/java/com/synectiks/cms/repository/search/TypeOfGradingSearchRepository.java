@@ -1,10 +1,10 @@
 package com.synectiks.cms.repository.search;
 
 import com.synectiks.cms.domain.TypeOfGrading;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
  * Spring Data Elasticsearch repository for the TypeOfGrading entity.
  */
-public interface TypeOfGradingSearchRepository extends ElasticsearchRepository<TypeOfGrading, Long> {
+public interface TypeOfGradingSearchRepository extends JPASearchRepository<TypeOfGrading, Long> {
 }

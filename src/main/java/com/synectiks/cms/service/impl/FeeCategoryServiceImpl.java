@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.FeeCategoryService;
-import com.synectiks.cms.domain.FeeCategory;
-import com.synectiks.cms.repository.FeeCategoryRepository;
-import com.synectiks.cms.repository.search.FeeCategorySearchRepository;
-import com.synectiks.cms.service.dto.FeeCategoryDTO;
-import com.synectiks.cms.service.mapper.FeeCategoryMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.repository.FeeCategoryRepository;
+import com.synectiks.cms.repository.search.FeeCategorySearchRepository;
+import com.synectiks.cms.service.FeeCategoryService;
+import com.synectiks.cms.service.dto.FeeCategoryDTO;
+import com.synectiks.cms.service.mapper.FeeCategoryMapper;
 
 /**
  * Service Implementation for managing FeeCategory.
@@ -108,9 +105,6 @@ public class FeeCategoryServiceImpl implements FeeCategoryService {
     @Transactional(readOnly = true)
     public List<FeeCategoryDTO> search(String query) {
         log.debug("Request to search FeeCategories for query {}", query);
-        return StreamSupport
-            .stream(feeCategorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(feeCategoryMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

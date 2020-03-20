@@ -1,24 +1,22 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.VehicleService;
-import com.synectiks.cms.domain.Vehicle;
-import com.synectiks.cms.repository.VehicleRepository;
-import com.synectiks.cms.repository.search.VehicleSearchRepository;
-import com.synectiks.cms.service.dto.VehicleDTO;
-import com.synectiks.cms.service.mapper.VehicleMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Vehicle;
+import com.synectiks.cms.repository.VehicleRepository;
+import com.synectiks.cms.repository.search.VehicleSearchRepository;
+import com.synectiks.cms.service.VehicleService;
+import com.synectiks.cms.service.dto.VehicleDTO;
+import com.synectiks.cms.service.mapper.VehicleMapper;
 
 /**
  * Service Implementation for managing Vehicle.
@@ -123,9 +121,6 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional(readOnly = true)
     public List<VehicleDTO> search(String query) {
         log.debug("Request to search Vehicles for query {}", query);
-        return StreamSupport
-            .stream(vehicleSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(vehicleMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

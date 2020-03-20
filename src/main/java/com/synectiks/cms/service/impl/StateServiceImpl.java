@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.StateService;
-import com.synectiks.cms.domain.State;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.search.StateSearchRepository;
-import com.synectiks.cms.service.dto.StateDTO;
-import com.synectiks.cms.service.mapper.StateMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.repository.search.StateSearchRepository;
+import com.synectiks.cms.service.StateService;
+import com.synectiks.cms.service.dto.StateDTO;
+import com.synectiks.cms.service.mapper.StateMapper;
 
 /**
  * Service Implementation for managing State.
@@ -108,9 +105,6 @@ public class StateServiceImpl implements StateService {
     @Transactional(readOnly = true)
     public List<StateDTO> search(String query) {
         log.debug("Request to search States for query {}", query);
-        return StreamSupport
-            .stream(stateSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(stateMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

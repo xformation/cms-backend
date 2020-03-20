@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.AcademicExamSettingService;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
-import com.synectiks.cms.service.dto.AcademicExamSettingDTO;
-import com.synectiks.cms.service.mapper.AcademicExamSettingMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.repository.AcademicExamSettingRepository;
+import com.synectiks.cms.repository.search.AcademicExamSettingSearchRepository;
+import com.synectiks.cms.service.AcademicExamSettingService;
+import com.synectiks.cms.service.dto.AcademicExamSettingDTO;
+import com.synectiks.cms.service.mapper.AcademicExamSettingMapper;
 
 /**
  * Service Implementation for managing {@link AcademicExamSetting}.
@@ -108,9 +105,6 @@ public class AcademicExamSettingServiceImpl implements AcademicExamSettingServic
     @Transactional(readOnly = true)
     public List<AcademicExamSettingDTO> search(String query) {
         log.debug("Request to search AcademicExamSettings for query {}", query);
-        return StreamSupport
-            .stream(academicExamSettingSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(academicExamSettingMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

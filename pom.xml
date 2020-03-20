@@ -320,16 +320,6 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.logging.log4j</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
 		</dependency>
@@ -484,20 +474,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-test</artifactId>
-			<version>2.0.3.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.25.1</version>
-		</dependency>
+			</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
-			<version>2.25.1</version>
-		</dependency>
+			</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
@@ -518,6 +505,14 @@
 			<artifactId>json</artifactId>
 			<version>20160810</version>
 		</dependency> -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient-osgi</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -764,7 +759,7 @@
 				<configuration>
 					<mainClass>${start-class}</mainClass>
 					<executable>true</executable>
-                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5004</jvmArguments>
+                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
 
                     <fork>true</fork>
 					<!-- Enable the line below to have remote debugging of your application

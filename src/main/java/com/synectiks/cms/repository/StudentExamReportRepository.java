@@ -1,8 +1,9 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.StudentExamReport;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+
+import com.synectiks.cms.domain.StudentExamReport;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 
 /**
@@ -10,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface StudentExamReportRepository extends JpaRepository<StudentExamReport, Long> {
+public interface StudentExamReportRepository extends JPASearchRepository<StudentExamReport, Long> {
 
 }

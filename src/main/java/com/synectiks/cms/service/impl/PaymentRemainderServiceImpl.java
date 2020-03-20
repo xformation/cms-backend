@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.PaymentRemainderService;
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.repository.PaymentRemainderRepository;
-import com.synectiks.cms.repository.search.PaymentRemainderSearchRepository;
-import com.synectiks.cms.service.dto.PaymentRemainderDTO;
-import com.synectiks.cms.service.mapper.PaymentRemainderMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.PaymentRemainder;
+import com.synectiks.cms.repository.PaymentRemainderRepository;
+import com.synectiks.cms.repository.search.PaymentRemainderSearchRepository;
+import com.synectiks.cms.service.PaymentRemainderService;
+import com.synectiks.cms.service.dto.PaymentRemainderDTO;
+import com.synectiks.cms.service.mapper.PaymentRemainderMapper;
 
 /**
  * Service Implementation for managing PaymentRemainder.
@@ -108,9 +105,6 @@ public class PaymentRemainderServiceImpl implements PaymentRemainderService {
     @Transactional(readOnly = true)
     public List<PaymentRemainderDTO> search(String query) {
         log.debug("Request to search PaymentRemainders for query {}", query);
-        return StreamSupport
-            .stream(paymentRemainderSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(paymentRemainderMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

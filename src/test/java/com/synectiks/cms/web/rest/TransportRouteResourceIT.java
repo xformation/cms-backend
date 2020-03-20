@@ -1,13 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
-import com.synectiks.cms.service.TransportRouteService;
-import com.synectiks.cms.service.dto.TransportRouteDTO;
-import com.synectiks.cms.service.mapper.TransportRouteMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,19 +30,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.TransportRoute;
 import com.synectiks.cms.domain.enumeration.RouteFrequency;
+import com.synectiks.cms.repository.TransportRouteRepository;
+import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
+import com.synectiks.cms.service.TransportRouteService;
+import com.synectiks.cms.service.dto.TransportRouteDTO;
+import com.synectiks.cms.service.mapper.TransportRouteMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Integration tests for the {@Link TransportRouteResource} REST controller.
  */
@@ -397,8 +401,8 @@ public class TransportRouteResourceIT {
     public void searchTransportRoute() throws Exception {
         // Initialize the database
         transportRouteRepository.saveAndFlush(transportRoute);
-        when(mockTransportRouteSearchRepository.search(queryStringQuery("id:" + transportRoute.getId())))
-            .thenReturn(Collections.singletonList(transportRoute));
+//        when(mockTransportRouteSearchRepository.search(queryStringQuery("id:" + transportRoute.getId())))
+//            .thenReturn(Collections.singletonList(transportRoute));
         // Search the transportRoute
         restTransportRouteMockMvc.perform(get("/api/_search/transport-routes?query=id:" + transportRoute.getId()))
             .andExpect(status().isOk())

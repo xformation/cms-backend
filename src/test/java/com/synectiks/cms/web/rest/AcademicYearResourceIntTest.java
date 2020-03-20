@@ -1,14 +1,23 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.repository.AcademicYearRepository;
-import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
-import com.synectiks.cms.service.AcademicYearService;
-import com.synectiks.cms.service.dto.AcademicYearDTO;
-import com.synectiks.cms.service.mapper.AcademicYearMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,23 +33,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.AcademicYearRepository;
+import com.synectiks.cms.repository.search.AcademicYearSearchRepository;
+import com.synectiks.cms.service.AcademicYearService;
+import com.synectiks.cms.service.dto.AcademicYearDTO;
+import com.synectiks.cms.service.mapper.AcademicYearMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the AcademicYearResource REST controller.
  *
@@ -377,8 +378,8 @@ public class AcademicYearResourceIntTest {
     public void searchAcademicYear() throws Exception {
         // Initialize the database
         academicYearRepository.saveAndFlush(academicYear);
-        when(mockAcademicYearSearchRepository.search(queryStringQuery("id:" + academicYear.getId())))
-            .thenReturn(Collections.singletonList(academicYear));
+//        when(mockAcademicYearSearchRepository.search(queryStringQuery("id:" + academicYear.getId())))
+//            .thenReturn(Collections.singletonList(academicYear));
         // Search the academicYear
         restAcademicYearMockMvc.perform(get("/api/_search/academic-years?query=id:" + academicYear.getId()))
             .andExpect(status().isOk())

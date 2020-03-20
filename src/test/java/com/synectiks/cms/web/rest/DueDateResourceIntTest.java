@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.DueDate;
-import com.synectiks.cms.repository.DueDateRepository;
-import com.synectiks.cms.repository.search.DueDateSearchRepository;
-import com.synectiks.cms.service.DueDateService;
-import com.synectiks.cms.service.dto.DueDateDTO;
-import com.synectiks.cms.service.mapper.DueDateMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,20 +32,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.DueDate;
 import com.synectiks.cms.domain.enumeration.Frequency;
+import com.synectiks.cms.repository.DueDateRepository;
+import com.synectiks.cms.repository.search.DueDateSearchRepository;
+import com.synectiks.cms.service.DueDateService;
+import com.synectiks.cms.service.dto.DueDateDTO;
+import com.synectiks.cms.service.mapper.DueDateMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the DueDateResource REST controller.
  *
@@ -368,8 +370,8 @@ public class DueDateResourceIntTest {
     public void searchDueDate() throws Exception {
         // Initialize the database
         dueDateRepository.saveAndFlush(dueDate);
-        when(mockDueDateSearchRepository.search(queryStringQuery("id:" + dueDate.getId())))
-            .thenReturn(Collections.singletonList(dueDate));
+//        when(mockDueDateSearchRepository.search(queryStringQuery("id:" + dueDate.getId())))
+//            .thenReturn(Collections.singletonList(dueDate));
         // Search the dueDate
         restDueDateMockMvc.perform(get("/api/_search/due-dates?query=id:" + dueDate.getId()))
             .andExpect(status().isOk())

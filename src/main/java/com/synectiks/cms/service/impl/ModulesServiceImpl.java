@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.ModulesService;
-import com.synectiks.cms.domain.Modules;
-import com.synectiks.cms.repository.ModulesRepository;
-import com.synectiks.cms.repository.search.ModulesSearchRepository;
-import com.synectiks.cms.service.dto.ModulesDTO;
-import com.synectiks.cms.service.mapper.ModulesMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Modules;
+import com.synectiks.cms.repository.ModulesRepository;
+import com.synectiks.cms.repository.search.ModulesSearchRepository;
+import com.synectiks.cms.service.ModulesService;
+import com.synectiks.cms.service.dto.ModulesDTO;
+import com.synectiks.cms.service.mapper.ModulesMapper;
 
 /**
  * Service Implementation for managing {@link Modules}.
@@ -108,9 +105,6 @@ public class ModulesServiceImpl implements ModulesService {
     @Transactional(readOnly = true)
     public List<ModulesDTO> search(String query) {
         log.debug("Request to search Modules for query {}", query);
-        return StreamSupport
-            .stream(modulesSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(modulesMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

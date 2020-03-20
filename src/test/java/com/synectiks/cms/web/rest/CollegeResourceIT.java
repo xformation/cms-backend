@@ -1,13 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.repository.CollegeRepository;
-import com.synectiks.cms.repository.search.CollegeSearchRepository;
-import com.synectiks.cms.service.CollegeService;
-import com.synectiks.cms.service.dto.CollegeDTO;
-import com.synectiks.cms.service.mapper.CollegeMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,17 +30,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.repository.CollegeRepository;
+import com.synectiks.cms.repository.search.CollegeSearchRepository;
+import com.synectiks.cms.service.CollegeService;
+import com.synectiks.cms.service.dto.CollegeDTO;
+import com.synectiks.cms.service.mapper.CollegeMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Integration tests for the {@Link CollegeResource} REST controller.
@@ -349,8 +354,8 @@ public class CollegeResourceIT {
     public void searchCollege() throws Exception {
         // Initialize the database
         collegeRepository.saveAndFlush(college);
-        when(mockCollegeSearchRepository.search(queryStringQuery("id:" + college.getId())))
-            .thenReturn(Collections.singletonList(college));
+//        when(mockCollegeSearchRepository.search(queryStringQuery("id:" + college.getId())))
+//            .thenReturn(Collections.singletonList(college));
         // Search the college
         restCollegeMockMvc.perform(get("/api/_search/colleges?query=id:" + college.getId()))
             .andExpect(status().isOk())

@@ -1,13 +1,20 @@
 package com.synectiks.cms.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import java.io.Serializable;
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * A PaymentRequestResponse.
@@ -15,7 +22,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "payment_request_response")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "paymentrequestresponse")
 public class PaymentRequestResponse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,7 +29,6 @@ public class PaymentRequestResponse implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "request_merchant_id")

@@ -1,14 +1,21 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.PaymentRemainder;
-import com.synectiks.cms.repository.PaymentRemainderRepository;
-import com.synectiks.cms.repository.search.PaymentRemainderSearchRepository;
-import com.synectiks.cms.service.PaymentRemainderService;
-import com.synectiks.cms.service.dto.PaymentRemainderDTO;
-import com.synectiks.cms.service.mapper.PaymentRemainderMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,18 +32,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.PaymentRemainder;
+import com.synectiks.cms.repository.PaymentRemainderRepository;
+import com.synectiks.cms.repository.search.PaymentRemainderSearchRepository;
+import com.synectiks.cms.service.PaymentRemainderService;
+import com.synectiks.cms.service.dto.PaymentRemainderDTO;
+import com.synectiks.cms.service.mapper.PaymentRemainderMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the PaymentRemainderResource REST controller.
@@ -393,8 +396,8 @@ public class PaymentRemainderResourceIntTest {
     public void searchPaymentRemainder() throws Exception {
         // Initialize the database
         paymentRemainderRepository.saveAndFlush(paymentRemainder);
-        when(mockPaymentRemainderSearchRepository.search(queryStringQuery("id:" + paymentRemainder.getId())))
-            .thenReturn(Collections.singletonList(paymentRemainder));
+//        when(mockPaymentRemainderSearchRepository.search(queryStringQuery("id:" + paymentRemainder.getId())))
+//            .thenReturn(Collections.singletonList(paymentRemainder));
         // Search the paymentRemainder
         restPaymentRemainderMockMvc.perform(get("/api/_search/payment-remainders?query=id:" + paymentRemainder.getId()))
             .andExpect(status().isOk())

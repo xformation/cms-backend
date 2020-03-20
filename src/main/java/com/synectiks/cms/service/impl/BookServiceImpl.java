@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.BookService;
-import com.synectiks.cms.domain.Book;
-import com.synectiks.cms.repository.BookRepository;
-import com.synectiks.cms.repository.search.BookSearchRepository;
-import com.synectiks.cms.service.dto.BookDTO;
-import com.synectiks.cms.service.mapper.BookMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.repository.BookRepository;
+import com.synectiks.cms.repository.search.BookSearchRepository;
+import com.synectiks.cms.service.BookService;
+import com.synectiks.cms.service.dto.BookDTO;
+import com.synectiks.cms.service.mapper.BookMapper;
 
 /**
  * Service Implementation for managing Book.
@@ -108,9 +105,6 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     public List<BookDTO> search(String query) {
         log.debug("Request to search Books for query {}", query);
-        return StreamSupport
-            .stream(bookSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(bookMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

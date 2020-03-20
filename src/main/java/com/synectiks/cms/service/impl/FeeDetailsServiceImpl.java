@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.FeeDetailsService;
-import com.synectiks.cms.domain.FeeDetails;
-import com.synectiks.cms.repository.FeeDetailsRepository;
-import com.synectiks.cms.repository.search.FeeDetailsSearchRepository;
-import com.synectiks.cms.service.dto.FeeDetailsDTO;
-import com.synectiks.cms.service.mapper.FeeDetailsMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.repository.FeeDetailsRepository;
+import com.synectiks.cms.repository.search.FeeDetailsSearchRepository;
+import com.synectiks.cms.service.FeeDetailsService;
+import com.synectiks.cms.service.dto.FeeDetailsDTO;
+import com.synectiks.cms.service.mapper.FeeDetailsMapper;
 
 /**
  * Service Implementation for managing FeeDetails.
@@ -108,9 +105,6 @@ public class FeeDetailsServiceImpl implements FeeDetailsService {
     @Transactional(readOnly = true)
     public List<FeeDetailsDTO> search(String query) {
         log.debug("Request to search FeeDetails for query {}", query);
-        return StreamSupport
-            .stream(feeDetailsSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(feeDetailsMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

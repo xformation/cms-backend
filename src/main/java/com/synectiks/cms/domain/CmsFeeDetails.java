@@ -1,22 +1,12 @@
 package com.synectiks.cms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-
 import com.synectiks.cms.domain.enumeration.Gender;
-
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 
 public class CmsFeeDetails implements Serializable {

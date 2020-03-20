@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.SubjectService;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.repository.SubjectRepository;
-import com.synectiks.cms.repository.search.SubjectSearchRepository;
-import com.synectiks.cms.service.dto.SubjectDTO;
-import com.synectiks.cms.service.mapper.SubjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.repository.SubjectRepository;
+import com.synectiks.cms.repository.search.SubjectSearchRepository;
+import com.synectiks.cms.service.SubjectService;
+import com.synectiks.cms.service.dto.SubjectDTO;
+import com.synectiks.cms.service.mapper.SubjectMapper;
 
 /**
  * Service Implementation for managing {@link Subject}.
@@ -108,9 +105,6 @@ public class SubjectServiceImpl implements SubjectService {
     @Transactional(readOnly = true)
     public List<SubjectDTO> search(String query) {
         log.debug("Request to search Subjects for query {}", query);
-        return StreamSupport
-            .stream(subjectSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(subjectMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

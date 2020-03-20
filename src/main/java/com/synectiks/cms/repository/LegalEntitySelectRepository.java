@@ -1,9 +1,9 @@
 package com.synectiks.cms.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.synectiks.cms.domain.LegalEntityAuthSignatoryLink;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 
 /**
@@ -11,6 +11,6 @@ import com.synectiks.cms.domain.LegalEntityAuthSignatoryLink;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface LegalEntitySelectRepository extends JpaRepository<LegalEntityAuthSignatoryLink, Long> {
+public interface LegalEntitySelectRepository extends JPASearchRepository<LegalEntityAuthSignatoryLink, Long> {
 
 }

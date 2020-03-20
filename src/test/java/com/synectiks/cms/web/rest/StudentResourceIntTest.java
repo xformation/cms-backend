@@ -1,14 +1,23 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.search.StudentSearchRepository;
-import com.synectiks.cms.service.StudentService;
-import com.synectiks.cms.service.dto.StudentDTO;
-import com.synectiks.cms.service.mapper.StudentMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,28 +34,21 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
 import com.synectiks.cms.domain.enumeration.Caste;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.search.StudentSearchRepository;
+import com.synectiks.cms.service.StudentService;
+import com.synectiks.cms.service.dto.StudentDTO;
+import com.synectiks.cms.service.mapper.StudentMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the StudentResource REST controller.
  *
@@ -1364,8 +1366,8 @@ public class StudentResourceIntTest {
     public void searchStudent() throws Exception {
         // Initialize the database
         studentRepository.saveAndFlush(student);
-        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
-            .thenReturn(Collections.singletonList(student));
+//        when(mockStudentSearchRepository.search(queryStringQuery("id:" + student.getId())))
+//            .thenReturn(Collections.singletonList(student));
         // Search the student
         restStudentMockMvc.perform(get("/api/_search/students?query=id:" + student.getId()))
             .andExpect(status().isOk())

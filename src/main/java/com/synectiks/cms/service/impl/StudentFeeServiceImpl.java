@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.StudentFeeService;
-import com.synectiks.cms.domain.StudentFee;
-import com.synectiks.cms.repository.StudentFeeRepository;
-import com.synectiks.cms.repository.search.StudentFeeSearchRepository;
-import com.synectiks.cms.service.dto.StudentFeeDTO;
-import com.synectiks.cms.service.mapper.StudentFeeMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.StudentFee;
+import com.synectiks.cms.repository.StudentFeeRepository;
+import com.synectiks.cms.repository.search.StudentFeeSearchRepository;
+import com.synectiks.cms.service.StudentFeeService;
+import com.synectiks.cms.service.dto.StudentFeeDTO;
+import com.synectiks.cms.service.mapper.StudentFeeMapper;
 
 /**
  * Service Implementation for managing StudentFee.
@@ -109,9 +106,6 @@ public class StudentFeeServiceImpl implements StudentFeeService {
     @Transactional(readOnly = true)
     public List<StudentFeeDTO> search(String query) {
         log.debug("Request to search StudentFees for query {}", query);
-        return StreamSupport
-            .stream(studentFeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentFeeMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

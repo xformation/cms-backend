@@ -1,20 +1,25 @@
 package com.synectiks.cms.domain;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.AdmissionStatusEnum;
-
-import com.synectiks.cms.domain.enumeration.Gender;
-
 import com.synectiks.cms.domain.enumeration.CourseEnum;
-
+import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.Status;
 
 /**
@@ -23,7 +28,6 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "admission_application")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "admissionapplication")
 public class AdmissionApplication implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +35,6 @@ public class AdmissionApplication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Enumerated(EnumType.STRING)

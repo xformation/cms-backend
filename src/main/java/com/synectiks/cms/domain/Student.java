@@ -1,27 +1,36 @@
 package com.synectiks.cms.domain;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.synectiks.cms.domain.enumeration.Religion;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
-import com.synectiks.cms.domain.enumeration.Caste;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.mapstruct.util.Experimental;
+import org.springframework.data.annotation.Transient;
 
-import com.synectiks.cms.domain.enumeration.Gender;
-
-import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
-
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.synectiks.cms.domain.enumeration.Bloodgroup;
-
+import com.synectiks.cms.domain.enumeration.Caste;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Religion;
 import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
+import com.synectiks.cms.utils.IESEntity;
 
 /**
  * A Student.
@@ -29,15 +38,13 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "student")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "student")
-public class Student implements Serializable {
+public class Student implements IESEntity, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    @org.springframework.data.elasticsearch.annotations.Field(type = FieldType.Keyword)
     private Long id;
 
     @Column(name = "student_name")
@@ -89,6 +96,8 @@ public class Student implements Serializable {
     private String studentPassportNo;
 
     @Column(name = "date_of_birth")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dateOfBirth;
 
     @Column(name = "place_of_birth")
@@ -367,6 +376,8 @@ public class Student implements Serializable {
     private String disabilityCertificateIssueAuthority;
 
     @Column(name = "disability_certificate_issue_date")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate disabilityCertificateIssueDate;
 
     @Column(name = "percentag_of_disability")
@@ -392,12 +403,16 @@ public class Student implements Serializable {
     private String createdBy;
 
     @Column(name = "created_on")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate createdOn;
 
     @Column(name = "updated_by")
     private String updatedBy;
 
     @Column(name = "updated_on")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate updatedOn;
 
     @Column(name = "comments")
@@ -418,6 +433,21 @@ public class Student implements Serializable {
     @Column(name = "academic_year_id")
     private Long academicYearId;
 
+    @javax.persistence.Transient
+    private String branchName;
+    
+    @javax.persistence.Transient
+    private String departmentName;
+    
+    @javax.persistence.Transient
+    private String batchName;
+    
+    @javax.persistence.Transient
+    private String sectionName;
+    
+    @javax.persistence.Transient
+    private String academicYear;
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -2158,4 +2188,54 @@ public class Student implements Serializable {
             ", academicYearId=" + getAcademicYearId() +
             "}";
     }
+
+    @javax.persistence.Transient
+	public String getBranchName() {
+		return branchName;
+	}
+
+    @javax.persistence.Transient
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+
+    @javax.persistence.Transient
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+    @javax.persistence.Transient
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+    @javax.persistence.Transient
+	public String getBatchName() {
+		return batchName;
+	}
+
+    @javax.persistence.Transient
+	public void setBatchName(String batchName) {
+		this.batchName = batchName;
+	}
+
+    @javax.persistence.Transient
+	public String getSectionName() {
+		return sectionName;
+	}
+
+    @javax.persistence.Transient
+	public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
+	}
+
+    @javax.persistence.Transient
+	public String getAcademicYear() {
+		return academicYear;
+	}
+
+    @javax.persistence.Transient
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
 }

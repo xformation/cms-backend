@@ -1,14 +1,23 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.CmsApp;
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.synectiks.cms.domain.AdminOverview;
-import com.synectiks.cms.repository.AdminOverviewRepository;
-import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
-import com.synectiks.cms.service.AdminOverviewService;
-import com.synectiks.cms.service.dto.AdminOverviewDTO;
-import com.synectiks.cms.service.mapper.AdminOverviewMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,32 +33,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import com.synectiks.cms.CmsApp;
+import com.synectiks.cms.domain.AdminOverview;
+import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
 import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
-import com.synectiks.cms.domain.enumeration.LectureAdminEnum;
+import com.synectiks.cms.repository.AdminOverviewRepository;
+import com.synectiks.cms.repository.search.AdminOverviewSearchRepository;
+import com.synectiks.cms.service.AdminOverviewService;
+import com.synectiks.cms.service.dto.AdminOverviewDTO;
+import com.synectiks.cms.service.mapper.AdminOverviewMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 /**
  * Test class for the AdminOverviewResource REST controller.
  *
@@ -556,8 +549,8 @@ public class AdminOverviewResourceIntTest {
     public void searchAdminOverview() throws Exception {
         // Initialize the database
         adminOverviewRepository.saveAndFlush(adminOverview);
-        when(mockAdminOverviewSearchRepository.search(queryStringQuery("id:" + adminOverview.getId())))
-            .thenReturn(Collections.singletonList(adminOverview));
+//        when(mockAdminOverviewSearchRepository.search(queryStringQuery("id:" + adminOverview.getId())))
+//            .thenReturn(Collections.singletonList(adminOverview));
         // Search the adminOverview
         restAdminOverviewMockMvc.perform(get("/api/_search/admin-overviews?query=id:" + adminOverview.getId()))
             .andExpect(status().isOk())

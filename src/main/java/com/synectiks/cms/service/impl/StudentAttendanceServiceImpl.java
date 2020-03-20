@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.StudentAttendanceService;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
-import com.synectiks.cms.service.dto.StudentAttendanceDTO;
-import com.synectiks.cms.service.mapper.StudentAttendanceMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.search.StudentAttendanceSearchRepository;
+import com.synectiks.cms.service.StudentAttendanceService;
+import com.synectiks.cms.service.dto.StudentAttendanceDTO;
+import com.synectiks.cms.service.mapper.StudentAttendanceMapper;
 
 /**
  * Service Implementation for managing StudentAttendance.
@@ -108,9 +105,6 @@ public class StudentAttendanceServiceImpl implements StudentAttendanceService {
     @Transactional(readOnly = true)
     public List<StudentAttendanceDTO> search(String query) {
         log.debug("Request to search StudentAttendances for query {}", query);
-        return StreamSupport
-            .stream(studentAttendanceSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(studentAttendanceMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

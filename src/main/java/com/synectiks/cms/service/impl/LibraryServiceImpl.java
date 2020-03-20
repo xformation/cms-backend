@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.LibraryService;
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.repository.LibraryRepository;
-import com.synectiks.cms.repository.search.LibrarySearchRepository;
-import com.synectiks.cms.service.dto.LibraryDTO;
-import com.synectiks.cms.service.mapper.LibraryMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.repository.LibraryRepository;
+import com.synectiks.cms.repository.search.LibrarySearchRepository;
+import com.synectiks.cms.service.LibraryService;
+import com.synectiks.cms.service.dto.LibraryDTO;
+import com.synectiks.cms.service.mapper.LibraryMapper;
 
 /**
  * Service Implementation for managing Library.
@@ -109,9 +106,6 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     public List<LibraryDTO> search(String query) {
         log.debug("Request to search Libraries for query {}", query);
-        return StreamSupport
-            .stream(librarySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(libraryMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

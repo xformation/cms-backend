@@ -1,8 +1,9 @@
 package com.synectiks.cms.repository;
 
-import com.synectiks.cms.domain.Department;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 
 /**
@@ -10,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department, Long> {
+public interface DepartmentRepository extends JPASearchRepository<Department, Long> {
 
 }

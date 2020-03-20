@@ -1,10 +1,10 @@
 package com.synectiks.cms.repository.search;
 
 import com.synectiks.cms.domain.FeeCategory;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import com.synectiks.cms.utils.JPASearchRepository;
 
 /**
  * Spring Data Elasticsearch repository for the FeeCategory entity.
  */
-public interface FeeCategorySearchRepository extends ElasticsearchRepository<FeeCategory, Long> {
+public interface FeeCategorySearchRepository extends JPASearchRepository<FeeCategory, Long> {
 }

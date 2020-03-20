@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.TransportRouteService;
-import com.synectiks.cms.domain.TransportRoute;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
-import com.synectiks.cms.service.dto.TransportRouteDTO;
-import com.synectiks.cms.service.mapper.TransportRouteMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.cms.repository.TransportRouteRepository;
+import com.synectiks.cms.repository.search.TransportRouteSearchRepository;
+import com.synectiks.cms.service.TransportRouteService;
+import com.synectiks.cms.service.dto.TransportRouteDTO;
+import com.synectiks.cms.service.mapper.TransportRouteMapper;
 
 /**
  * Service Implementation for managing TransportRoute.
@@ -108,9 +105,6 @@ public class TransportRouteServiceImpl implements TransportRouteService {
     @Transactional(readOnly = true)
     public List<TransportRouteDTO> search(String query) {
         log.debug("Request to search TransportRoutes for query {}", query);
-        return StreamSupport
-            .stream(transportRouteSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(transportRouteMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }

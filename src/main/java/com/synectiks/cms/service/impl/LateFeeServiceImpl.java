@@ -1,24 +1,21 @@
 package com.synectiks.cms.service.impl;
 
-import com.synectiks.cms.service.LateFeeService;
-import com.synectiks.cms.domain.LateFee;
-import com.synectiks.cms.repository.LateFeeRepository;
-import com.synectiks.cms.repository.search.LateFeeSearchRepository;
-import com.synectiks.cms.service.dto.LateFeeDTO;
-import com.synectiks.cms.service.mapper.LateFeeMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.synectiks.cms.domain.LateFee;
+import com.synectiks.cms.repository.LateFeeRepository;
+import com.synectiks.cms.repository.search.LateFeeSearchRepository;
+import com.synectiks.cms.service.LateFeeService;
+import com.synectiks.cms.service.dto.LateFeeDTO;
+import com.synectiks.cms.service.mapper.LateFeeMapper;
 
 /**
  * Service Implementation for managing LateFee.
@@ -108,9 +105,6 @@ public class LateFeeServiceImpl implements LateFeeService {
     @Transactional(readOnly = true)
     public List<LateFeeDTO> search(String query) {
         log.debug("Request to search LateFees for query {}", query);
-        return StreamSupport
-            .stream(lateFeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .map(lateFeeMapper::toDto)
-            .collect(Collectors.toList());
+        return null;
     }
 }
