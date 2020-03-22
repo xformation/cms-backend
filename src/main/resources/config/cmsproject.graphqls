@@ -1560,6 +1560,16 @@ type CmsStudentVo {
 	strUpdatedOn: String
 	strDisabilityCertificateIssueDate: String
 	strDateOfBirth: String
+	academicYearId: Long
+	academicYear: AcademicYear
+	
+	feeCategory: FeeCategory
+    feeCategoryId: Long
+    feeDetailsList: [FeeDetails]
+    totalFee: Float
+    strDueDate: String
+    totalFeePaid: Long
+    totalFeeOverDue: Long
 }
 
 

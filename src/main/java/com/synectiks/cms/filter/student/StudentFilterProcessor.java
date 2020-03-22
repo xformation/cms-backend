@@ -1,14 +1,17 @@
 package com.synectiks.cms.filter.student;
 
-import com.synectiks.cms.business.service.StudentService;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.enumeration.Gender;
-import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.service.impl.StudentServiceImpl;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import com.synectiks.cms.business.service.StudentService;
+import com.synectiks.cms.domain.CmsStudentVo;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 @Component
 public class StudentFilterProcessor {
@@ -23,6 +26,21 @@ public class StudentFilterProcessor {
     
     public List<Student> searchStudent(StudentListFilterInput filter){
         return studentService.searchStudent(filter);
+    }
+    
+    public List<FeeDetails> getFeeDetailsList(CmsStudentVo vo){
+        return studentService.getFeeDetailsList(vo);
+    }
+    
+    public Float getTotalFees(List<FeeDetails> feeDetailsList) {
+    	return studentService.getTotalFees(feeDetailsList);
+    }
+    
+    public Long getTotalFeesPaid(CmsStudentVo vo) {
+    	return studentService.getTotalFeePaid(vo);
+    }
+    public Long getTotalFeesOverDue(CmsStudentVo vo) {
+    	return studentService.getTotalFeeOverDue(vo);
     }
 }
 

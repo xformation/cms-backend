@@ -4000,6 +4000,10 @@ public class Mutation implements GraphQLMutationResolver {
     		vo.setBranch(br);
     		vo.setBatch(ba);
     		vo.setDepartment(de);
+    		vo.setFeeDetailsList(this.studentFilterProcessor.getFeeDetailsList(vo));
+    		vo.setTotalFee(this.studentFilterProcessor.getTotalFees(vo.getFeeDetailsList()));
+    		vo.setTotalFeePaid(this.studentFilterProcessor.getTotalFeesPaid(vo));
+    		vo.setTotalFeeOverDue(this.studentFilterProcessor.getTotalFeesOverDue(vo));
 //    		vo.setDepartmentId(student.getDepartmentId() != null ? student.getDepartmentId() : null);
 //    		vo.setBatchId(student.getBatchId() != null ? student.getBatchId() : null);
 //    		vo.setSectionId(student.getSectionId() != null ? student.getSectionId() : null);

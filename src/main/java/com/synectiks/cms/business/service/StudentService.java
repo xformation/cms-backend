@@ -1,6 +1,8 @@
 package com.synectiks.cms.business.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,12 +17,17 @@ import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
 import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 import com.synectiks.cms.filter.student.StudentListFilterInput;
 import com.synectiks.cms.graphql.types.Student.StudentInput;
+import com.synectiks.cms.repository.FeeDetailsRepository;
+import com.synectiks.cms.repository.InvoiceRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
@@ -33,7 +40,14 @@ public class StudentService {
 
     @Autowired
     private CommonService commonService;
-
+    
+    @Autowired
+    private FeeDetailsRepository feeDetailsRepository;
+    
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+    
+    
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public List<Student> searchStudent(Long departmentId, Long batchId, Long sectionId, Long branchId, Gender gender, StudentTypeEnum studentType, String studentName) {
@@ -329,5 +343,60 @@ public class StudentService {
         return vo;
     }
 
+    public List<FeeDetails> getFeeDetailsList(CmsStudentVo vo){
+    	FeeDetails feeDetails = new FeeDetails();
+    	feeDetails.setDepartmentId(vo.getDepartmentId());
+    	feeDetails.setBatchId(vo.getBatchId());
+    	feeDetails.setStudentType(vo.getStudentType());
+    	feeDetails.setGender(vo.getSex());
+    	List<FeeDetails> tempList = this.feeDetailsRepository.findAll(Example.of(feeDetails));
+    	List<FeeDetails> list = new ArrayList<>();
+    	for(FeeDetails fd: tempList) {
+    		if(fd.getFeeCategory().getBranchId().equals(vo.getBranchId())) {
+    			list.add(fd);
+    		}
+    	}
+    	Collections.sort(list, (o1, o2) -> o2.getFeeParticularsName().compareTo(o1.getFeeParticularsName()));
+    	return list;
+    }
+    
+    public Float getTotalFees(List<FeeDetails> feeDetailsList) {
+    	Float total = 0F;
+    	for(FeeDetails fd: feeDetailsList) {
+    		total = total + fd.getAmount();
+    	}
+    	return total;
+    }
+    
+    public Long getTotalFeePaid(CmsStudentVo vo) {
+    	Invoice invoice = new Invoice();
+    	Student student = CommonUtil.createCopyProperties(vo, Student.class);
+    	invoice.setStudent(student);
+    	invoice.setPaymentStatus(InvoicePaymentStatus.PAID);
+    	invoice.setBranchId(vo.getBranchId());
+    	invoice.setAcademicYearId(vo.getAcademicYearId());
+    	List<Invoice> tempList = this.invoiceRepository.findAll(Example.of(invoice));
+    	Long total = 0L;
+    	for(Invoice inv: tempList) {
+    		total = total+ inv.getAmountPaid();
+    	}
+    	return total;
+    }
+    
+    public Long getTotalFeeOverDue(CmsStudentVo vo) {
+    	Invoice invoice = new Invoice();
+    	Student student = CommonUtil.createCopyProperties(vo, Student.class);
+    	invoice.setStudent(student);
+    	invoice.setPaymentStatus(InvoicePaymentStatus.UNPAID);
+    	invoice.setBranchId(vo.getBranchId());
+    	invoice.setAcademicYearId(vo.getAcademicYearId());
+    	List<Invoice> tempList = this.invoiceRepository.findAll(Example.of(invoice));
+    	Long total = 0L;
+    	for(Invoice inv: tempList) {
+    		total = total+ inv.getOutStandingAmount();
+    	}
+    	return total;
+    }
+    
 }
 

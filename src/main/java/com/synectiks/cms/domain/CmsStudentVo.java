@@ -1,14 +1,21 @@
 package com.synectiks.cms.domain;
 
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.synectiks.cms.domain.enumeration.*;
-
-import java.io.Serializable;
-import java.time.LocalDate;
+import com.synectiks.cms.domain.enumeration.Bloodgroup;
+import com.synectiks.cms.domain.enumeration.Caste;
+import com.synectiks.cms.domain.enumeration.Gender;
+import com.synectiks.cms.domain.enumeration.RelationWithStudentEnum;
+import com.synectiks.cms.domain.enumeration.Religion;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
 
 /**
  * A Student value object.
@@ -150,6 +157,14 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
     private String strDateOfBirth;
     private Long academicYearId;
     private AcademicYear academicYear;
+    
+    private FeeCategory feeCategory;
+    private Long feeCategoryId;
+    private List<FeeDetails> feeDetailsList;
+    private Float totalFee;
+    private String strDueDate;
+    private Long totalFeePaid;
+    private Long totalFeeOverDue;
     
 	public Long getId() {
 		return id;
@@ -1059,5 +1074,47 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
 	}
 	public void setAcademicYear(AcademicYear academicYear) {
 		this.academicYear = academicYear;
+	}
+	public FeeCategory getFeeCategory() {
+		return feeCategory;
+	}
+	public void setFeeCategory(FeeCategory feeCategory) {
+		this.feeCategory = feeCategory;
+	}
+	public Long getFeeCategoryId() {
+		return feeCategoryId;
+	}
+	public void setFeeCategoryId(Long feeCategoryId) {
+		this.feeCategoryId = feeCategoryId;
+	}
+	public List<FeeDetails> getFeeDetailsList() {
+		return feeDetailsList;
+	}
+	public void setFeeDetailsList(List<FeeDetails> feeDetailsList) {
+		this.feeDetailsList = feeDetailsList;
+	}
+	public Float getTotalFee() {
+		return totalFee;
+	}
+	public void setTotalFee(Float totalFee) {
+		this.totalFee = totalFee;
+	}
+	public String getStrDueDate() {
+		return strDueDate;
+	}
+	public void setStrDueDate(String strDueDate) {
+		this.strDueDate = strDueDate;
+	}
+	public Long getTotalFeePaid() {
+		return totalFeePaid;
+	}
+	public void setTotalFeePaid(Long totalFeePaid) {
+		this.totalFeePaid = totalFeePaid;
+	}
+	public Long getTotalFeeOverDue() {
+		return totalFeeOverDue;
+	}
+	public void setTotalFeeOverDue(Long totalFeeOverDue) {
+		this.totalFeeOverDue = totalFeeOverDue;
 	}
 }
