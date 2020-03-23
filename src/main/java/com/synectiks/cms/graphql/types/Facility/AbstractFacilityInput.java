@@ -12,6 +12,7 @@ public class AbstractFacilityInput {
     private Date endDate;
     private Date suspandStartDate;
     private Date suspandEndDate;
+    private Long amount;
     
     public Long getId() {
         return id;
@@ -132,6 +133,14 @@ public class AbstractFacilityInput {
 		return "AbstractFacilityInput [id=" + id + ", name=" + name + ", status=" + status + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", suspandStartDate=" + suspandStartDate + ", suspandEndDate="
 				+ suspandEndDate + "]";
+	}
+
+	public Long getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Long amount) {
+		this.amount = amount;
 	}
 
     

@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -30,7 +29,6 @@ import com.synectiks.cms.domain.enumeration.ModeOfPayment;
 @Entity
 @Table(name = "invoice")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@Document(indexName = "invoice")
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,29 +38,23 @@ public class Invoice implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "invoice_number", nullable = false)
+    @Column(name = "invoice_number")
     private String invoiceNumber;
 
-    @NotNull
-    @Column(name = "amount_paid", nullable = false)
+    @Column(name = "amount_paid")
     private Long amountPaid;
 
-    @NotNull
-    @Column(name = "payment_date", nullable = false)
+    @Column(name = "payment_date")
     private LocalDate paymentDate;
 
-    @NotNull
-    @Column(name = "next_payment_date", nullable = false)
+    @Column(name = "next_payment_date")
     private LocalDate nextPaymentDate;
 
-    @NotNull
-    @Column(name = "out_standing_amount", nullable = false)
+    @Column(name = "out_standing_amount")
     private Long outStandingAmount;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "mode_of_payment", nullable = false)
+    @Column(name = "mode_of_payment")
     private ModeOfPayment modeOfPayment;
 
     @Column(name = "cheque_number")
@@ -74,21 +66,20 @@ public class Invoice implements Serializable {
     @Column(name = "online_txn_ref_number")
     private String onlineTxnRefNumber;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_status", nullable = false)
+    @Column(name = "payment_status")
     private InvoicePaymentStatus paymentStatus;
 
-    @NotNull
-    @Column(name = "comments", nullable = false)
+    @Column(name = "comments")
     private String comments;
 
-    @NotNull
-    @Column(name = "updated_by", nullable = false)
+    @Column(name = "updated_by")
     private String updatedBy;
 
-    @NotNull
-    @Column(name = "updated_on", nullable = false)
+    @Column(name = "bank")
+    private String bank;
+    
+    @Column(name = "updated_on")
     private LocalDate updatedOn;
 
     @Column(name = "college_id")
@@ -445,4 +436,12 @@ public class Invoice implements Serializable {
             ", academicYearId=" + getAcademicYearId() +
             "}";
     }
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
 }

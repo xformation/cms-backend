@@ -38,7 +38,8 @@ public class CmsInvoice {
     private String strPaymentDate;
     private String strNextPaymentDate;
     private String strUpdatedOn;
-
+    private String bank;
+    
 	public Long getTotalInvoice() {
 		return totalInvoice;
 	}
@@ -225,6 +226,12 @@ public class CmsInvoice {
 	}
 	public void setStrUpdatedOn(String strUpdatedOn) {
 		this.strUpdatedOn = strUpdatedOn;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
 	}
 
 }

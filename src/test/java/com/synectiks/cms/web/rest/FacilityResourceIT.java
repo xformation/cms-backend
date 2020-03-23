@@ -65,6 +65,12 @@ public class FacilityResourceIT {
     private static final LocalDate DEFAULT_SUSPAND_END_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_SUSPAND_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Long DEFAULT_ACADEMIC_YEAR_ID = 1L;
+    private static final Long UPDATED_ACADEMIC_YEAR_ID = 2L;
+
+    private static final Long DEFAULT_BRANCH_ID = 1L;
+    private static final Long UPDATED_BRANCH_ID = 2L;
+
     @Autowired
     private FacilityRepository facilityRepository;
 
@@ -126,7 +132,9 @@ public class FacilityResourceIT {
             .startDate(DEFAULT_START_DATE)
             .endDate(DEFAULT_END_DATE)
             .suspandStartDate(DEFAULT_SUSPAND_START_DATE)
-            .suspandEndDate(DEFAULT_SUSPAND_END_DATE);
+            .suspandEndDate(DEFAULT_SUSPAND_END_DATE)
+            .academicYearId(DEFAULT_ACADEMIC_YEAR_ID)
+            .branchId(DEFAULT_BRANCH_ID);
         return facility;
     }
     /**
@@ -142,7 +150,9 @@ public class FacilityResourceIT {
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE)
             .suspandStartDate(UPDATED_SUSPAND_START_DATE)
-            .suspandEndDate(UPDATED_SUSPAND_END_DATE);
+            .suspandEndDate(UPDATED_SUSPAND_END_DATE)
+            .academicYearId(UPDATED_ACADEMIC_YEAR_ID)
+            .branchId(UPDATED_BRANCH_ID);
         return facility;
     }
 
@@ -173,6 +183,8 @@ public class FacilityResourceIT {
         assertThat(testFacility.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testFacility.getSuspandStartDate()).isEqualTo(DEFAULT_SUSPAND_START_DATE);
         assertThat(testFacility.getSuspandEndDate()).isEqualTo(DEFAULT_SUSPAND_END_DATE);
+        assertThat(testFacility.getAcademicYearId()).isEqualTo(DEFAULT_ACADEMIC_YEAR_ID);
+        assertThat(testFacility.getBranchId()).isEqualTo(DEFAULT_BRANCH_ID);
 
         // Validate the Facility in Elasticsearch
         verify(mockFacilitySearchRepository, times(1)).save(testFacility);
@@ -256,7 +268,9 @@ public class FacilityResourceIT {
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].suspandStartDate").value(hasItem(DEFAULT_SUSPAND_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
     
     @Test
@@ -275,7 +289,9 @@ public class FacilityResourceIT {
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.suspandStartDate").value(DEFAULT_SUSPAND_START_DATE.toString()))
-            .andExpect(jsonPath("$.suspandEndDate").value(DEFAULT_SUSPAND_END_DATE.toString()));
+            .andExpect(jsonPath("$.suspandEndDate").value(DEFAULT_SUSPAND_END_DATE.toString()))
+            .andExpect(jsonPath("$.academicYearId").value(DEFAULT_ACADEMIC_YEAR_ID.intValue()))
+            .andExpect(jsonPath("$.branchId").value(DEFAULT_BRANCH_ID.intValue()));
     }
 
     @Test
@@ -304,7 +320,9 @@ public class FacilityResourceIT {
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE)
             .suspandStartDate(UPDATED_SUSPAND_START_DATE)
-            .suspandEndDate(UPDATED_SUSPAND_END_DATE);
+            .suspandEndDate(UPDATED_SUSPAND_END_DATE)
+            .academicYearId(UPDATED_ACADEMIC_YEAR_ID)
+            .branchId(UPDATED_BRANCH_ID);
         FacilityDTO facilityDTO = facilityMapper.toDto(updatedFacility);
 
         restFacilityMockMvc.perform(put("/api/facilities")
@@ -322,6 +340,8 @@ public class FacilityResourceIT {
         assertThat(testFacility.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testFacility.getSuspandStartDate()).isEqualTo(UPDATED_SUSPAND_START_DATE);
         assertThat(testFacility.getSuspandEndDate()).isEqualTo(UPDATED_SUSPAND_END_DATE);
+        assertThat(testFacility.getAcademicYearId()).isEqualTo(UPDATED_ACADEMIC_YEAR_ID);
+        assertThat(testFacility.getBranchId()).isEqualTo(UPDATED_BRANCH_ID);
 
         // Validate the Facility in Elasticsearch
         verify(mockFacilitySearchRepository, times(1)).save(testFacility);
@@ -387,7 +407,9 @@ public class FacilityResourceIT {
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].suspandStartDate").value(hasItem(DEFAULT_SUSPAND_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].suspandEndDate").value(hasItem(DEFAULT_SUSPAND_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].academicYearId").value(hasItem(DEFAULT_ACADEMIC_YEAR_ID.intValue())))
+            .andExpect(jsonPath("$.[*].branchId").value(hasItem(DEFAULT_BRANCH_ID.intValue())));
     }
 
     @Test

@@ -759,7 +759,7 @@
 				<configuration>
 					<mainClass>${start-class}</mainClass>
 					<executable>true</executable>
-                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
+                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5010</jvmArguments>
 
                     <fork>true</fork>
 					<!-- Enable the line below to have remote debugging of your application

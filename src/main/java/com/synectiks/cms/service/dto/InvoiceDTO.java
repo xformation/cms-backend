@@ -1,10 +1,10 @@
 package com.synectiks.cms.service.dto;
-import java.time.LocalDate;
-import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.ModeOfPayment;
+
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.domain.enumeration.ModeOfPayment;
 
 /**
  * A DTO for the Invoice entity.
@@ -13,22 +13,16 @@ public class InvoiceDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String invoiceNumber;
 
-    @NotNull
     private Long amountPaid;
 
-    @NotNull
     private LocalDate paymentDate;
 
-    @NotNull
     private LocalDate nextPaymentDate;
 
-    @NotNull
     private Long outStandingAmount;
 
-    @NotNull
     private ModeOfPayment modeOfPayment;
 
     private Long chequeNumber;
@@ -37,16 +31,12 @@ public class InvoiceDTO implements Serializable {
 
     private String onlineTxnRefNumber;
 
-    @NotNull
     private InvoicePaymentStatus paymentStatus;
 
-    @NotNull
     private String comments;
 
-    @NotNull
     private String updatedBy;
 
-    @NotNull
     private LocalDate updatedOn;
 
     private Long collegeId;
@@ -66,6 +56,8 @@ public class InvoiceDTO implements Serializable {
 
     private Long studentId;
 
+    private String bank;
+    
     public Long getId() {
         return id;
     }
@@ -290,4 +282,12 @@ public class InvoiceDTO implements Serializable {
             ", student=" + getStudentId() +
             "}";
     }
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
 }

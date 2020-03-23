@@ -565,8 +565,8 @@ public class CmsDataRowProcessor {
 
 	private void saveFacility(Cell cell) {
 		this.facility = pojoBuilder.createFacilityPojo(cell);
-		this.facility.setAcademicYear(this.aYear);
-		this.facility.setBranch(this.branch);
+//		this.facility.setAcademicYear(this.aYear.getYear());
+//		this.facility.setBranchName(this.branch.getBranchName());
 		this.facility = saveOrGet(this.facilityRepo, this.facility);
 	}
 

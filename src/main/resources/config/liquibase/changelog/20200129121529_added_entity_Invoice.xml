@@ -22,27 +22,27 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="invoice_number" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="amount_paid" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="payment_date" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="next_payment_date" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="out_standing_amount" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="mode_of_payment" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="cheque_number" type="bigint">
@@ -58,19 +58,23 @@
             </column>
 
             <column name="payment_status" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="comments" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="updated_by" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
+			<column name="bank" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            
             <column name="updated_on" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="college_id" type="bigint">

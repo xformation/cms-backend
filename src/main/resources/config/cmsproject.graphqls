@@ -372,6 +372,7 @@ type CmsFacility {
 	strEndDate: String
 	strSuspandStartDate: String
 	strSuspandEndDate: String
+	amount: Long
 }
 
 type CmsFeeCategory{
@@ -510,10 +511,10 @@ type CmsCourseEnumVo{
 }
 
 type CmsInvoice {
-	totalInvoice: Long!
-	totalPaidInvoice: Long!
-	totalUnPaidInvoice: Long!
-	totalCanceledInvoice: Long!
+	totalInvoice: Long
+	totalPaidInvoice: Long
+	totalUnPaidInvoice: Long
+	totalCanceledInvoice: Long
 	id: Long
     invoiceNumber: String
     amountPaid: Long
@@ -539,7 +540,7 @@ type CmsInvoice {
     strPaymentDate: String
     strNextPaymentDate: String
     strUpdatedOn: String
-
+	bank: String
 }
 
 type CmsVehicleVo {
@@ -864,8 +865,9 @@ type Facility{
      endDate: Date
      suspandStartDate: Date
      suspandEndDate: Date
-     academicYear: AcademicYear!
-     branch: Branch!
+     academicYearId: Long
+     branchId: Long
+     amount: Long
  }
 
 type StudentExamReport{
@@ -1570,8 +1572,17 @@ type CmsStudentVo {
     strDueDate: String
     totalFeePaid: Long
     totalFeeOverDue: Long
+    facilityList: [StudentFacilityLink]
+    paymentHistory: [CmsInvoice]
+    strNextPaymentDate: String 
 }
 
+type StudentFacilityLink{
+	id: Long
+    linkDesc: String
+    student: Student 
+    facility: Facility
+}
 
 type StudentAttendance {
     id: Long!
@@ -1713,28 +1724,29 @@ input AcademicSubjectQueryPayload{
     branchId: Int!
 }
 type Invoice {
-    id : Long!
-    invoiceNumber:String!
-    amountPaid:Long!
-    paymentDate:Date!
-    nextPaymentDate:Date!
-    outStandingAmount:Long!
+    id : Long
+    invoiceNumber:String
+    amountPaid:Long
+    paymentDate:Date
+    nextPaymentDate:Date
+    outStandingAmount:Long
     modeOfPayment:ModeOfPayment
-    chequeNumber:Long!
-    demandDraftNumber:Long!
-    onlineTxnRefNumber:String!
-    paymentStatus:InvoicePaymentStatus!
-    comments:String!
-    updatedBy:String!
-    updatedOn:Date!
-    feeCategory:FeeCategory!
-    feeDetails:FeeDetails!
-    dueDate:DueDate!
-    paymentRemainder:PaymentRemainder!
-    collegeId:Long!
-    branchId:Long!
-    student:Student!
-    academicYearId:Long!
+    chequeNumber:Long
+    demandDraftNumber:Long
+    onlineTxnRefNumber:String
+    paymentStatus:InvoicePaymentStatus
+    comments:String
+    updatedBy:String
+    updatedOn:Date
+    feeCategory:FeeCategory
+    feeDetails:FeeDetails
+    dueDate:DueDate
+    paymentRemainder:PaymentRemainder
+    collegeId:Long
+    branchId:Long
+    student:Student
+    academicYearId:Long
+    bank: String
 }
 
 
@@ -1883,9 +1895,9 @@ type Mutation {
     updatePaymentRemainder(input:UpdatePaymentRemainderInput!):UpdatePaymentRemainderPayload!
     removePaymentRemainder(input:RemovePaymentRemainderInput!):RemovePaymentRemainderPayload!
 
-    addInvoice(input:AddInvoiceInput!):AddInvoicePayload!
-    updateInvoice(input:UpdateInvoiceInput!):UpdateInvoicePayload!
-    removeInvoice(input:RemoveInvoiceInput!):RemoveInvoicePayload!
+    addInvoice(input:AddInvoiceInput):AddInvoicePayload
+    updateInvoice(input:UpdateInvoiceInput):UpdateInvoicePayload
+    removeInvoice(input:RemoveInvoiceInput):RemoveInvoicePayload
     searchInvoice(invoiceNumber:String, studentId:Long, collegeId:Long, branchId:Long, academicYearId:Long ): [CmsInvoice!]!
     getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
     getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
@@ -2659,7 +2671,7 @@ input AddFacilityInput {
     suspandEndDate: Date
     academicyearId: Long
     branchId: Long
-
+	amount: Long
 }
 type AddFacilityPayload {
     facility: Facility!
@@ -2674,6 +2686,7 @@ input UpdateFacilityInput {
      suspandEndDate: Date
      academicyearId: Long
      branchId: Long
+     amount: Long
 }
 type UpdateFacilityPayload {
     facility: Facility!
@@ -3430,6 +3443,7 @@ input StudentInput {
     	strUpdatedOn: String
     	strDisabilityCertificateIssueDate: String
     	strDateOfBirth: String
+    	academicYearId: Long
 }
 type StudentPayload {
    cmsStudentVo: CmsStudentVo!
@@ -3821,64 +3835,65 @@ paymentRemainders:[PaymentRemainder]!
 }
 
 input AddInvoiceInput{
-    invoiceNumber:String!
-    amountPaid:Long!
-    paymentDate:Date!
-    nextPaymentDate:Date!
-    outStandingAmount:Long!
-    modeOfPayment:ModeOfPayment!
-    chequeNumber:Long!
-    demandDraftNumber:Long!
-    onlineTxnRefNumber:String!
-    paymentStatus:InvoicePaymentStatus!
-    comments:String!
-    updatedBy:String!
-    updatedOn:Date!
-    feeCategoryId:Long!
-    feeDetailsId:Long!
-    dueDateId:Long!
-    paymentRemainderId:Long!
-    collegeId:Long!
-    branchId:Long!
-    studentId:Long!
-    academicyearId:Long!
+    invoiceNumber:String
+    amountPaid:Long
+    paymentDate:Date
+    nextPaymentDate:Date
+    outStandingAmount:Long
+    modeOfPayment:ModeOfPayment
+    chequeNumber:Long
+    demandDraftNumber:Long
+    onlineTxnRefNumber:String
+    paymentStatus:InvoicePaymentStatus
+    comments:String
+    updatedBy:String
+    updatedOn:Date
+    feeCategoryId:Long
+    feeDetailsId:Long
+    dueDateId:Long
+    paymentRemainderId:Long
+    collegeId:Long
+    branchId:Long
+    studentId:Long
+    academicyearId:Long
+    bank: String
 }
 type AddInvoicePayload{
-    invoice:Invoice!
+    invoice:Invoice
 }
 input UpdateInvoiceInput{
-    id:Long!
-    invoiceNumber:String!
-    amountPaid:Long!
-    paymentDate:Date!
-    nextPaymentDate:Date!
-    outStandingAmount:Long!
-    modeOfPayment:ModeOfPayment!
-    chequeNumber:Long!
-    demandDraftNumber:Long!
-    onlineTxnRefNumber:String!
-    paymentStatus:InvoicePaymentStatus!
-    comments:String!
-    updatedBy:String!
-    updatedOn:Date!
-    feeCategoryId:Long!
-    feeDetailsId:Long!
-    dueDateId:Long!
-    paymentRemainderId:Long!
-    collegeId:Long!
-    branchId:Long!
-    studentId:Long!
-    academicyearId:Long!
-
+    id:Long
+    invoiceNumber:String
+    amountPaid:Long
+    paymentDate:Date
+    nextPaymentDate:Date
+    outStandingAmount:Long
+    modeOfPayment:ModeOfPayment
+    chequeNumber:Long
+    demandDraftNumber:Long
+    onlineTxnRefNumber:String
+    paymentStatus:InvoicePaymentStatus
+    comments:String
+    updatedBy:String
+    updatedOn:Date
+    feeCategoryId:Long
+    feeDetailsId:Long
+    dueDateId:Long
+    paymentRemainderId:Long
+    collegeId:Long
+    branchId:Long
+    studentId:Long
+    academicyearId:Long
+	bank: String
 }
 type UpdateInvoicePayload{
-    invoice:Long!
+    invoice:Long
 }
 input RemoveInvoiceInput{
-    invoiceId:Long!
+    invoiceId:Long
 }
 type RemoveInvoicePayload{
-    invoices:[Invoice]!
+    invoices:[Invoice]
 }
 
 input AddLibraryInput{

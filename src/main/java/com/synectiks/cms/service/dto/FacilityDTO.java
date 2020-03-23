@@ -31,6 +31,8 @@ public class FacilityDTO implements Serializable {
 
     private Long branchId;
 
+    private Long amount;
+    
     public Long getId() {
         return id;
     }
@@ -138,4 +140,12 @@ public class FacilityDTO implements Serializable {
             ", branch=" + getBranchId() +
             "}";
     }
+
+	public Long getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Long amount) {
+		this.amount = amount;
+	}
 }

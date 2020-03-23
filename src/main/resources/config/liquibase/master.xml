@@ -76,7 +76,7 @@
     <include file="config/liquibase/changelog/20190307052135_added_entity_constraints_Currency.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190307052136_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190307052137_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20190307052138_added_entity_constraints_Facility.xml" relativeToChangelogFile="false"/>
+    
      <include file="config/liquibase/changelog/20190307052356_added_entity_constraints_CompetitiveExam.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190308061736_added_entity_constraints_Teacher.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20190308041421_added_entity_constraints_AcademicHistory.xml" relativeToChangelogFile="false"/>

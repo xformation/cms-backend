@@ -165,6 +165,9 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
     private String strDueDate;
     private Long totalFeePaid;
     private Long totalFeeOverDue;
+    private List<StudentFacilityLink> facilityList;
+    private List<CmsInvoice> paymentHistory;
+    private String strNextPaymentDate;
     
 	public Long getId() {
 		return id;
@@ -1116,5 +1119,23 @@ public class CmsStudentVo extends CmsCommonVo implements Serializable {
 	}
 	public void setTotalFeeOverDue(Long totalFeeOverDue) {
 		this.totalFeeOverDue = totalFeeOverDue;
+	}
+	public List<StudentFacilityLink> getFacilityList() {
+		return facilityList;
+	}
+	public void setFacilityList(List<StudentFacilityLink> facilityList) {
+		this.facilityList = facilityList;
+	}
+	public List<CmsInvoice> getPaymentHistory() {
+		return paymentHistory;
+	}
+	public void setPaymentHistory(List<CmsInvoice> paymentHistory) {
+		this.paymentHistory = paymentHistory;
+	}
+	public String getStrNextPaymentDate() {
+		return strNextPaymentDate;
+	}
+	public void setStrNextPaymentDate(String strNextPaymentDate) {
+		this.strNextPaymentDate = strNextPaymentDate;
 	}
 }

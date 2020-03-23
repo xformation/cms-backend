@@ -461,12 +461,15 @@ entity City{
 }
 
 entity Facility {
-name String required
-status Status required
-startDate LocalDate
-endDate LocalDate
-suspandStartDate LocalDate
-suspandEndDate LocalDate
+	name String required
+	status Status required
+	startDate LocalDate
+	endDate LocalDate
+	suspandStartDate LocalDate
+	suspandEndDate LocalDate
+	academicYearId Long
+	branchId Long
+	amount Long
 }
 
 entity StudentFacilityLink{
@@ -555,22 +558,23 @@ termId Long
 }
 
 entity Invoice {
-invoiceNumber String required
-amountPaid Long required
-paymentDate LocalDate required
-nextPaymentDate LocalDate required
-outStandingAmount Long required
-modeOfPayment ModeOfPayment required
-chequeNumber Long
-demandDraftNumber Long
-onlineTxnRefNumber String
-paymentStatus InvoicePaymentStatus required
-comments String required
-updatedBy String required
-updatedOn LocalDate required
-collegeId Long
-branchId Long
-academicYearId Long
+	invoiceNumber String 
+	amountPaid Long 
+	paymentDate LocalDate 
+	nextPaymentDate LocalDate 
+	outStandingAmount Long 
+	modeOfPayment ModeOfPayment 
+	chequeNumber Long
+	demandDraftNumber Long
+	onlineTxnRefNumber String
+	paymentStatus InvoicePaymentStatus 
+	comments String 
+	updatedBy String 
+	bank String
+	updatedOn LocalDate 
+	collegeId Long
+	branchId Long
+	academicYearId Long
 }
 entity CompetitiveExam {
 testName String required
@@ -901,8 +905,6 @@ Currency{Country} to Country
 FeeDetails{feeCategory} to FeeCategory ,
 FeeDetails{facility} to Facility,
 FeeDetails{transportRoute} to TransportRoute,
-Facility{academicYear} to AcademicYear,
-Facility{branch} to Branch,
 Invoice{feeCategory} to FeeCategory,
 Invoice{feeDetails} to FeeDetails,
 Invoice{dueDate} to DueDate,

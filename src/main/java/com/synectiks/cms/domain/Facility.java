@@ -1,8 +1,6 @@
 package com.synectiks.cms.domain;
-
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -19,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.synectiks.cms.domain.enumeration.Status;
 
 /**
@@ -28,7 +24,6 @@ import com.synectiks.cms.domain.enumeration.Status;
 @Entity
 @Table(name = "facility")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@Document(indexName = "facility")
 public class Facility implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,15 +54,21 @@ public class Facility implements Serializable {
     @Column(name = "suspand_end_date")
     private LocalDate suspandEndDate;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private AcademicYear academicYear;
+    @Column(name = "academic_year_id")
+    private Long academicYearId;
 
-    @ManyToOne
-    @JsonIgnoreProperties("")
-    private Branch branch;
+    @Column(name = "branch_id")
+    private Long branchId;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    @Column(name = "amount")
+    private Long amount;
+
+    @javax.persistence.Transient
+    private String branchName;
+    
+    @javax.persistence.Transient
+    private String academicYear;
+    
     public Long getId() {
         return id;
     }
@@ -154,30 +155,30 @@ public class Facility implements Serializable {
         this.suspandEndDate = suspandEndDate;
     }
 
-    public AcademicYear getAcademicYear() {
-        return academicYear;
+    public Long getAcademicYearId() {
+        return academicYearId;
     }
 
-    public Facility academicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public Facility academicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
         return this;
     }
 
-    public void setAcademicYear(AcademicYear academicYear) {
-        this.academicYear = academicYear;
+    public void setAcademicYearId(Long academicYearId) {
+        this.academicYearId = academicYearId;
     }
 
-    public Branch getBranch() {
-        return branch;
+    public Long getBranchId() {
+        return branchId;
     }
 
-    public Facility branch(Branch branch) {
-        this.branch = branch;
+    public Facility branchId(Long branchId) {
+        this.branchId = branchId;
         return this;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -186,19 +187,15 @@ public class Facility implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Facility)) {
             return false;
         }
-        Facility facility = (Facility) o;
-        if (facility.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), facility.getId());
+        return id != null && id.equals(((Facility) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override
@@ -211,6 +208,36 @@ public class Facility implements Serializable {
             ", endDate='" + getEndDate() + "'" +
             ", suspandStartDate='" + getSuspandStartDate() + "'" +
             ", suspandEndDate='" + getSuspandEndDate() + "'" +
+            ", academicYearId=" + getAcademicYearId() +
+            ", branchId=" + getBranchId() +
             "}";
     }
+
+    @javax.persistence.Transient
+	public String getBranchName() {
+		return branchName;
+	}
+
+    @javax.persistence.Transient
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+
+    @javax.persistence.Transient
+	public String getAcademicYear() {
+		return academicYear;
+	}
+
+    @javax.persistence.Transient
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
+
+	public Long getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Long amount) {
+		this.amount = amount;
+	}
 }

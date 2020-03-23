@@ -9,18 +9,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicYear;
 import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.Department;
 import com.synectiks.cms.domain.FeeDetails;
 import com.synectiks.cms.domain.Invoice;
 import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentFacilityLink;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
@@ -28,6 +32,7 @@ import com.synectiks.cms.filter.student.StudentListFilterInput;
 import com.synectiks.cms.graphql.types.Student.StudentInput;
 import com.synectiks.cms.repository.FeeDetailsRepository;
 import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.repository.StudentFacilityLinkRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
@@ -46,6 +51,9 @@ public class StudentService {
     
     @Autowired
     private InvoiceRepository invoiceRepository;
+    
+    @Autowired
+    private StudentFacilityLinkRepository studentFacilityLinkRepository;
     
     
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -360,10 +368,13 @@ public class StudentService {
     	return list;
     }
     
-    public Float getTotalFees(List<FeeDetails> feeDetailsList) {
+    public Float getTotalFees(List<FeeDetails> feeDetailsList, List<StudentFacilityLink> facilityList) {
     	Float total = 0F;
     	for(FeeDetails fd: feeDetailsList) {
     		total = total + fd.getAmount();
+    	}
+    	for(StudentFacilityLink sfl: facilityList) {
+    		total = total + sfl.getFacility().getAmount();
     	}
     	return total;
     }
@@ -398,5 +409,40 @@ public class StudentService {
     	return total;
     }
     
+    public List<StudentFacilityLink> getFacilityList(CmsStudentVo vo){
+    	StudentFacilityLink studentFacilityLink = new StudentFacilityLink();
+    	Student student = CommonUtil.createCopyProperties(vo, Student.class);
+    	studentFacilityLink.setStudent(student);
+    	List<StudentFacilityLink> list = this.studentFacilityLinkRepository.findAll(Example.of(studentFacilityLink));
+    	Collections.sort(list, (o1, o2) -> o1.getFacility().getName().compareTo(o2.getFacility().getName()));
+    	return list;
+    }
+    
+    public List<CmsInvoice> getPaymentHistory(CmsStudentVo vo){
+    	Invoice invoice = new Invoice();
+    	Student student = CommonUtil.createCopyProperties(vo, Student.class);
+    	invoice.setStudent(student);
+    	invoice.setBranchId(vo.getBranchId());
+    	List<Invoice> tempList = this.invoiceRepository.findAll(Example.of(invoice), Sort.by(Direction.DESC, "id"));
+    	List<CmsInvoice> list = new ArrayList<>();
+    	for(Invoice inv: tempList) {
+    		CmsInvoice cinv = CommonUtil.createCopyProperties(inv, CmsInvoice.class);
+    		if(inv.getPaymentDate() != null) {
+    			cinv.setStrPaymentDate(DateFormatUtil.changeLocalDateFormat(inv.getPaymentDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+    			cinv.setPaymentDate(null);
+    		}
+    		if(inv.getNextPaymentDate() != null) {
+    			cinv.setStrNextPaymentDate(DateFormatUtil.changeLocalDateFormat(inv.getNextPaymentDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+    			cinv.setNextPaymentDate(null);
+    		}
+    		if(inv.getUpdatedOn() != null) {
+    			cinv.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(inv.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+    			cinv.setUpdatedOn(null);
+    		}
+    		list.add(cinv);
+    	}
+    	Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+    	return list;
+    }
 }
 

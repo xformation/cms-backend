@@ -38,6 +38,7 @@ import com.google.common.collect.Lists;
 import com.synectiks.cms.business.service.exam.ExamReportFilterInput;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.enumeration.Frequency;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.exceptions.BranchIdNotFoundException;
 import com.synectiks.cms.exceptions.FileNameNotFoundException;
@@ -3419,13 +3420,13 @@ public class Mutation implements GraphQLMutationResolver {
     }
 
     public AddFacilityPayload addFacility(AddFacilityInput addFacilityInput) {
-        final Branch branch = branchRepository.findById(addFacilityInput.getBranchId()).get();
+//        final Branch branch = branchRepository.findById(addFacilityInput.getBranchId()).get();
 //        final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
-        AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
+//        AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
         Facility facility = new Facility();
-
-        facility.setAcademicYear(academicYear);
-        facility.setBranch(branch);
+        
+        facility.setAcademicYearId(addFacilityInput.getAcademicyearId());
+        facility.setBranchId(addFacilityInput.getBranchId());
         facility.setName(addFacilityInput.getName());
         facility.setStatus(Status.ACTIVE);
         facility.setStartDate(DateFormatUtil.convertLocalDateFromUtilDate(addFacilityInput.getStartDate()));
@@ -3459,12 +3460,12 @@ public class Mutation implements GraphQLMutationResolver {
 
 
         if (updateFacilityInput.getBranchId() != null) {
-            Branch branch = branchRepository.findById(updateFacilityInput.getBranchId()).get();
-            facility.setBranch(branch);
+//            Branch branch = branchRepository.findById(updateFacilityInput.getBranchId()).get();
+            facility.setBranchId(updateFacilityInput.getBranchId());
         }
         if (updateFacilityInput.getAcademicyearId() != null) {
-            AcademicYear academicYear = academicYearRepository.findById(updateFacilityInput.getAcademicyearId()).get();
-            facility.setAcademicYear(academicYear);
+//            AcademicYear academicYear = academicYearRepository.findById(updateFacilityInput.getAcademicyearId()).get();
+            facility.setAcademicYearId(updateFacilityInput.getAcademicyearId());
         }
         facilityRepository.save(facility);
 
@@ -3610,40 +3611,69 @@ public class Mutation implements GraphQLMutationResolver {
 
 
     public AddInvoicePayload addInvoice(AddInvoiceInput addInvoiceInput) {
-        FeeCategory feeCategory = feeCategoryRepository.findById(addInvoiceInput.getFeeCategoryId()).get();
-//        Branch branch = branchRepository.findById(addInvoiceInput.getBranchId()).get();
-//        College college = collegeRepository.findById(addInvoiceInput.getCollegeId()).get();
-//        AcademicYear academicYear = academicYearRepository.findById(addInvoiceInput.getAcademicyearId()).get();
-        FeeDetails feeDetails = feeDetailsRepository.findById(addInvoiceInput.getFeeDetailsId()).get();
-        DueDate dueDate = dueDateRepository.findById(addInvoiceInput.getDueDateId()).get();
+    	Invoice invoice   = new Invoice();
+        
+    	if(addInvoiceInput.getFeeCategoryId() != null) {
+    		Optional<FeeCategory> feeCategory = feeCategoryRepository.findById(addInvoiceInput.getFeeCategoryId());
+        	if(feeCategory.isPresent()) {
+        		invoice.setFeeCategory(feeCategory.get());
+        	}
+    	}
+    	if(addInvoiceInput.getFeeDetailsId() != null) {
+    		Optional<FeeDetails> feeDetails = feeDetailsRepository.findById(addInvoiceInput.getFeeDetailsId());
+    		if(feeDetails.isPresent()) {
+    			invoice.setFeeDetails(feeDetails.get());
+    		}
+        }
+    	if(addInvoiceInput.getDueDateId() != null) {
+    		Optional<DueDate> dueDate = dueDateRepository.findById(addInvoiceInput.getDueDateId());
+    		if(dueDate.isPresent()) {
+    			invoice.setDueDate(dueDate.get());
+    	        
+    		}
+    	}
+    	if(addInvoiceInput.getPaymentRemainderId() != null) {
+    		Optional<PaymentRemainder> paymentRemainder = paymentRemainderRepository.findById(addInvoiceInput.getPaymentRemainderId());
+    		if(paymentRemainder.isPresent()) {
+    			invoice.setPaymentRemainder(paymentRemainder.get());
+    		}
+    	}
+        
         Student student = studentRepository.findById(addInvoiceInput.getStudentId()).get();
-        PaymentRemainder paymentRemainder = paymentRemainderRepository.findById(addInvoiceInput.getPaymentRemainderId()).get();
-        final Invoice invoice   = new Invoice();
-        invoice.setInvoiceNumber(addInvoiceInput.getInvoiceNumber());
+        invoice.setStudent(student);
+        invoice.setBranchId(addInvoiceInput.getBranchId());
+        invoice.setAcademicYearId(addInvoiceInput.getAcademicyearId());
         invoice.setAmountPaid(addInvoiceInput.getAmountPaid());
-        invoice.setPaymentDate(DateFormatUtil.convertLocalDateFromUtilDate(addInvoiceInput.getPaymentDate()));
-        invoice.setNextPaymentDate(DateFormatUtil.convertLocalDateFromUtilDate(addInvoiceInput.getNextPaymentDate()));
-        invoice.setOutStandingAmount(addInvoiceInput.getOutStandingAmount());
         invoice.setModeOfPayment(addInvoiceInput.getModeOfPayment());
         invoice.setChequeNumber(addInvoiceInput.getChequeNumber());
         invoice.setDemandDraftNumber(addInvoiceInput.getDemandDraftNumber());
-        invoice.setOnlineTxnRefNumber(addInvoiceInput.getOnlineTxnRefNumber());
-        invoice.setPaymentStatus(addInvoiceInput.getPaymentStatus());
-        invoice.setComments(addInvoiceInput.getComments());
         invoice.setUpdatedBy(addInvoiceInput.getUpdatedBy());
-        invoice.setUpdatedOn(DateFormatUtil.convertLocalDateFromUtilDate(addInvoiceInput.getUpdatedOn()));
-        invoice.setFeeCategory(feeCategory);
-        invoice.setFeeDetails(feeDetails);
-        invoice.setDueDate(dueDate);
-        invoice.setPaymentRemainder(paymentRemainder);
-        invoice.setCollegeId(addInvoiceInput.getCollegeId());
-        invoice.setBranchId(addInvoiceInput.getBranchId());
-        invoice.setAcademicYearId(addInvoiceInput.getAcademicyearId());
-        invoice.setStudent(student);
+        invoice.setUpdatedOn(LocalDate.now());
+        invoice.setPaymentStatus(InvoicePaymentStatus.PAID);
+        Long dt = System.currentTimeMillis();
+        invoice.setInvoiceNumber(String.valueOf(student.getId())+""+String.valueOf(dt));
+        invoice.setPaymentDate(LocalDate.now());
+        invoice.setBank(addInvoiceInput.getBank());
+        
+        CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
+        vo.setFeeDetailsList(this.studentFilterProcessor.getFeeDetailsList(vo));
+		vo.setFacilityList(this.studentFilterProcessor.getFacilityList(vo));
+		
+		Float totalFee = this.studentService.getTotalFees(vo.getFeeDetailsList(), vo.getFacilityList());
+        Long totalFeePaid = this.studentService.getTotalFeePaid(vo);
+        Long outstandingAmount = totalFee.longValue() -  (totalFeePaid + addInvoiceInput.getAmountPaid());
+        invoice.setOutStandingAmount(outstandingAmount);
+        //        invoice.setNextPaymentDate();
+        
+//        invoice.setOnlineTxnRefNumber(addInvoiceInput.getOnlineTxnRefNumber());
+//        invoice.setComments(addInvoiceInput.getComments());
+//        invoice.setCollegeId(addInvoiceInput.getCollegeId());
+        
         invoiceRepository.save(invoice);
         return new AddInvoicePayload(invoice);
     }
 
+    
     public UpdateInvoicePayload updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
         Invoice invoice = invoiceRepository.findById(updateInvoiceInput.getId()).get();
         if (updateInvoiceInput.getInvoiceNumber() != null) {
@@ -4001,9 +4031,12 @@ public class Mutation implements GraphQLMutationResolver {
     		vo.setBatch(ba);
     		vo.setDepartment(de);
     		vo.setFeeDetailsList(this.studentFilterProcessor.getFeeDetailsList(vo));
-    		vo.setTotalFee(this.studentFilterProcessor.getTotalFees(vo.getFeeDetailsList()));
+    		vo.setFacilityList(this.studentFilterProcessor.getFacilityList(vo));
+    		vo.setTotalFee(this.studentFilterProcessor.getTotalFees(vo.getFeeDetailsList(), vo.getFacilityList()));
     		vo.setTotalFeePaid(this.studentFilterProcessor.getTotalFeesPaid(vo));
     		vo.setTotalFeeOverDue(this.studentFilterProcessor.getTotalFeesOverDue(vo));
+    		vo.setPaymentHistory(this.studentFilterProcessor.getPaymentHistory(vo));
+    		vo.setStrNextPaymentDate(this.studentFilterProcessor.getNextPaymentDate(vo));
 //    		vo.setDepartmentId(student.getDepartmentId() != null ? student.getDepartmentId() : null);
 //    		vo.setBatchId(student.getBatchId() != null ? student.getBatchId() : null);
 //    		vo.setSectionId(student.getSectionId() != null ? student.getSectionId() : null);

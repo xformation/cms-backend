@@ -22,7 +22,8 @@ public class AbstractInvoiceInput {
     private String comments;
     private String updatedBy;
     private Date updatedOn;
-
+    private String bank;
+    
     public Long getId() {
         return id;
     }
@@ -180,4 +181,12 @@ public class AbstractInvoiceInput {
             ", updatedOn=" + updatedOn +
             '}';
     }
+
+	public String getBank() {
+		return bank;
+	}
+
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
 }
