@@ -4018,7 +4018,9 @@ public class Mutation implements GraphQLMutationResolver {
         List<CmsVehicleVo> ls = new ArrayList<>();
         for(CmsVehicleVo vehicle: list) {
             CmsVehicleVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleVo.class);
+            Employee e = this.commonService.getEmployeeById(vo.getEmployeeId());
             vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setEmployee(e);
             vo.setDateOfRegistration(null);
             ls.add(vo);
         }
