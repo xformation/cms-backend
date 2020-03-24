@@ -16,6 +16,7 @@
 package com.synectiks.cms.graphql.resolvers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.synectiks.cms.business.service.*;
@@ -574,6 +575,35 @@ public class Query implements GraphQLQueryResolver {
         return  Lists.newArrayList(invoiceRepository.findAll());
     }
 
+    public List<CmsInvoice>  getInvoices(Long studentId, Long branchId){
+    	Invoice invoice = new Invoice();
+    	Student student = studentRepository.findById(studentId).get();
+        invoice.setStudent(student);
+        invoice.setBranchId(branchId);
+        
+    	invoice.setStudent(student);
+        List<Invoice> invList = invoiceRepository.findAll(Example.of(invoice));
+        List<CmsInvoice> list = new ArrayList<>();
+        for(Invoice inv: invList) {
+        	CmsInvoice vo = CommonUtil.createCopyProperties(inv, CmsInvoice.class);
+        	if(inv.getPaymentDate() != null) {
+        		vo.setStrPaymentDate(DateFormatUtil.changeLocalDateFormat(inv.getPaymentDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	}
+        	if(inv.getNextPaymentDate() != null) {
+        		vo.setStrNextPaymentDate(DateFormatUtil.changeLocalDateFormat(inv.getNextPaymentDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	}
+        	if(inv.getUpdatedOn() != null) {
+        		vo.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(inv.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+        	}
+        	vo.setPaymentDate(null);
+        	vo.setNextPaymentDate(null);
+        	vo.setUpdatedOn(null);
+        	list.add(vo);
+        }
+        Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        return list;
+    }
+    
     public Insurance insurance(long id){
         return insuranceRepository.findById(id).get();
     }

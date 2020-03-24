@@ -258,7 +258,7 @@ type Query {
 
   invoice(id:Long!):Invoice!
   invoices:[Invoice!]!
-
+  getInvoices(studentId: Long, branchId: Long): [CmsInvoice]
 
 
   acExamSetting(id:Long!):AcExamSetting!
