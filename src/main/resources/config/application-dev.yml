@@ -55,7 +55,7 @@ spring:
                     data: target/elasticsearch/data
     liquibase:
         contexts: dev
-        dropFirst: false
+        dropFirst: true
     mail:
         host: localhost
         port: 25
