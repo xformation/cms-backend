@@ -1303,6 +1303,8 @@ enum Religion {
     HINDU
     MUSLIM
     CHRISTIAN
+    SIKH
+    BUDH
 }
 
 

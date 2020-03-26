@@ -55,7 +55,7 @@ public class ModulesResourceRestController {
     @PostMapping("/cmsmodules")
     public ResponseEntity<Void> createModules(@RequestBody List<ModulesDTO> list) throws URISyntaxException {
         logger.debug("REST request to save UI Modules : {}", list);
-        if(!isUiModulesUpdated) {
+//        if(!isUiModulesUpdated) {
         	try {
         		for(ModulesDTO dto : list) {
                 	Modules module = CommonUtil.createCopyProperties(dto, Modules.class);
@@ -69,7 +69,7 @@ public class ModulesResourceRestController {
         		throw e;
         	}
         	
-        }
+//        }
         
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME,"")).build();
     }
