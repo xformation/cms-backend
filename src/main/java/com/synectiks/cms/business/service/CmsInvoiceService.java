@@ -1,13 +1,12 @@
 package com.synectiks.cms.business.service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
+import com.synectiks.cms.repository.InvoiceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +16,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.CmsInvoice;
-import com.synectiks.cms.domain.College;
-import com.synectiks.cms.domain.Invoice;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.service.util.CommonUtil;
-import com.synectiks.cms.service.util.DateFormatUtil;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -239,18 +231,18 @@ public class CmsInvoiceService {
     	LocalDate lastPaymentDate = null;
     	if( dt == null) {
     		@SuppressWarnings("unchecked")
-    		Object dtResult = this.entityManager.createQuery("select max(inv.paymentDate) from Invoice inv where inv.academicYear = :ay and inv.branch = :br ")
-        			.setParameter("ay", academicYear)
-        			.setParameter("br", branch)
+    		Object dtResult = this.entityManager.createQuery("select max(inv.paymentDate) from Invoice inv where inv.academicYearId = :ay and inv.branchId = :br ")
+        			.setParameter("ay", academicYear.getId())
+        			.setParameter("br", branch.getId())
         			.getSingleResult();
         	lastPaymentDate = (LocalDate)dtResult;
         	logger.debug("Last payment date: "+lastPaymentDate);
     	}
 
-    	Object result = this.entityManager.createQuery("select sum(inv.amountPaid) from Invoice inv where inv.paymentDate = :pmtDate and inv.academicYear = :ay and inv.branch = :br ")
+    	Object result = this.entityManager.createQuery("select sum(inv.amountPaid) from Invoice inv where inv.paymentDate = :pmtDate and inv.academicYearId = :ay and inv.branchId = :br ")
     			.setParameter("pmtDate", (dt != null ? dt : lastPaymentDate))
-    			.setParameter("ay", academicYear)
-    			.setParameter("br", branch)
+    			.setParameter("ay", academicYear.getId())
+    			.setParameter("br", branch.getId())
     			.getSingleResult();
     	Long totalAmtCollected = (Long)result;
     	logger.debug("Total amount collected : "+totalAmtCollected);
@@ -262,18 +254,18 @@ public class CmsInvoiceService {
     	LocalDate lastPaymentDate = null;
     	if( dt == null) {
     		@SuppressWarnings("unchecked")
-    		Object dtResult = this.entityManager.createQuery("select max(inv.paymentDate) from Invoice inv where inv.academicYear = :ay and inv.branch = :br ")
-        			.setParameter("ay", academicYear)
-        			.setParameter("br", branch)
+    		Object dtResult = this.entityManager.createQuery("select max(inv.paymentDate) from Invoice inv where inv.academicYearId = :ay and inv.branchId = :br ")
+        			.setParameter("ay", academicYear.getId())
+        			.setParameter("br", branch.getId())
         			.getSingleResult();
         	lastPaymentDate = (LocalDate)dtResult;
         	logger.debug("Last payment date: "+lastPaymentDate);
     	}
 
-    	Object result = this.entityManager.createQuery("select sum(inv.outStandingAmount) from Invoice inv where inv.paymentDate = :pmtDate and inv.academicYear = :ay and inv.branch = :br ")
+    	Object result = this.entityManager.createQuery("select sum(inv.outStandingAmount) from Invoice inv where inv.paymentDate = :pmtDate and inv.academicYearId = :ay and inv.branchId = :br ")
     			.setParameter("pmtDate", (dt != null ? dt : lastPaymentDate))
-    			.setParameter("ay", academicYear)
-    			.setParameter("br", branch)
+    			.setParameter("ay", academicYear.getId())
+    			.setParameter("br", branch.getId())
     			.getSingleResult();
     	Long totalAmtPending = (Long)result;
     	logger.debug("Total pending amount: "+totalAmtPending);
@@ -282,10 +274,10 @@ public class CmsInvoiceService {
     }
 
     public Long getTotalOverDueAmount(Branch branch, AcademicYear academicYear) {
-    	Object result = this.entityManager.createQuery("select sum(inv.outStandingAmount) from Invoice inv where inv.nextPaymentDate < :pmtDate and inv.academicYear = :ay and inv.branch = :br ")
+    	Object result = this.entityManager.createQuery("select sum(inv.outStandingAmount) from Invoice inv where inv.nextPaymentDate < :pmtDate and inv.academicYearId = :ay and inv.branchId = :br ")
     			.setParameter("pmtDate", LocalDate.now())
-    			.setParameter("ay", academicYear)
-    			.setParameter("br", branch)
+    			.setParameter("ay", academicYear.getId())
+    			.setParameter("br", branch.getId())
     			.getSingleResult();
     	Long totalAmtOverDue = (Long)result;
     	logger.debug("Total over due amount: "+totalAmtOverDue);
