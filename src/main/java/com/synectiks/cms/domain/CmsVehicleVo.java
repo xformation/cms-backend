@@ -31,7 +31,6 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private Status status;
     private TransportRoute transportRoute;
     private CmsContractVo cmsContractVo;
-    private CmsInsuranceVo cmsInsuranceVo;
     private Employee employee;
     private Long transportRouteId;
     private Long collegeId;
@@ -40,8 +39,6 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private Long insuranceId;
     private Long employeeId;
     private String strDateOfRegistration;
-    private String strDateOfInsurance;
-    private String strValidTill;
     private String strStartDate;
     private String strEndDate;
 
@@ -243,30 +240,6 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.transportRoute = transportRoute;
     }
 
-    public CmsInsuranceVo getCmsInsuranceVo() {
-        return cmsInsuranceVo;
-    }
-
-    public void setCmsInsuranceVo(CmsInsuranceVo cmsInsuranceVo) {
-        this.cmsInsuranceVo = cmsInsuranceVo;
-    }
-
-    public String getStrDateOfInsurance() {
-        return strDateOfInsurance;
-    }
-
-    public void setStrDateOfInsurance(String strDateOfInsurance) {
-        this.strDateOfInsurance = strDateOfInsurance;
-    }
-
-    public String getStrValidTill() {
-        return strValidTill;
-    }
-
-    public void setStrValidTill(String strValidTill) {
-        this.strValidTill = strValidTill;
-    }
-
     public String getStrStartDate() {
         return strStartDate;
     }
@@ -346,13 +319,10 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
             "validTill=" + validTill + ", " +
             "status=" + status + ", " +
             "strDateOfRegistration=" + strDateOfRegistration + "," +
-            "strDateOfInsurance=" + strDateOfInsurance + ", " +
-            "strValidTill=" + strValidTill + ", " +
             "strStartDate=" + strStartDate + ", " +
             "strEndDate=" + strEndDate + ", " +
             "transportRoute=" + transportRoute + "," +
             "cmsContractVo" + cmsContractVo + "," +
-            "cmsInsuranceVo=" + cmsInsuranceVo + "," +
             "employee=" + employee + "," +
             "transportRouteId=" + transportRouteId + "," +
             "collegeId=" + collegeId + "," +

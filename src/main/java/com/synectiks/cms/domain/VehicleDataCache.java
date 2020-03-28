@@ -5,7 +5,6 @@ import java.util.List;
 public class VehicleDataCache {
     private List<CmsTransportVo> transportRoute;
     private List<CmsContractVo> contract;
-    private List<CmsInsuranceVo> insurance;
     private List<CmsVehicleVo> vehicle;
     private List<Employee> employee;
     private List<College> colleges;
@@ -25,14 +24,6 @@ public class VehicleDataCache {
 
     public void setContract(List<CmsContractVo> contract) {
         this.contract = contract;
-    }
-
-    public List<CmsInsuranceVo> getInsurance() {
-        return insurance;
-    }
-
-    public void setInsurance(List<CmsInsuranceVo> insurance) {
-        this.insurance = insurance;
     }
 
     public List<CmsVehicleVo> getVehicle() {

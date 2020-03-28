@@ -580,7 +580,7 @@ public class Query implements GraphQLQueryResolver {
     	Student student = studentRepository.findById(studentId).get();
         invoice.setStudent(student);
         invoice.setBranchId(branchId);
-        
+
     	invoice.setStudent(student);
         List<Invoice> invList = invoiceRepository.findAll(Example.of(invoice));
         List<CmsInvoice> list = new ArrayList<>();
@@ -603,7 +603,7 @@ public class Query implements GraphQLQueryResolver {
         Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
         return list;
     }
-    
+
     public Insurance insurance(long id){
         return insuranceRepository.findById(id).get();
     }
@@ -991,14 +991,12 @@ public class Query implements GraphQLQueryResolver {
     public VehicleDataCache createVehicleDataCache() throws Exception{
         List<CmsTransportVo> transportRouteList = this.transportService.getTransportRouteList();
         List<CmsContractVo> contractList = this.contractService.getContractList();
-        List<CmsInsuranceVo> insuranceList = this.insuranceService.getInsuranceList();
         List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
         List<Employee> employeeList = this.commonService.findAllEmployee();
         List<Branch> branchList = this.commonService.findAllBranch();
         VehicleDataCache cache = new VehicleDataCache();
         cache.setTransportRoute(transportRouteList);
         cache.setContract(contractList);
-        cache.setInsurance(insuranceList);
         cache.setVehicle(vehicleList);
         cache.setEmployee(employeeList);
         cache.setBranches(branchList);

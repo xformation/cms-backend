@@ -40,10 +40,8 @@ public class VehicleService {
     VehicleRepository vehicleRepository;
 
     @Autowired
-    InsuranceRepository insuranceRepository;
-
-    @Autowired
     TransportRouteRepository transportRouteRepository;
+
     @Autowired
     ContractRepository contractRepository;
 
@@ -181,10 +179,8 @@ public class VehicleService {
             }
             TransportRoute tr = this.transportRouteRepository.findById(input.getTransportRouteId()).get();
             vehicle.setTransportRoute(tr);
-          Contract ct = this.contractRepository.findById(input.getContractId()).get();
+            Contract ct = this.contractRepository.findById(input.getContractId()).get();
             vehicle.setContract(ct);
-//            Employee e = this.commonService.getEmployeeById(input.getEmployeeId());
-//            vehicle.setEmployeeId(input.getEmployeeId());
             vehicle.setVehicleNumber(input.getVehicleNumber());
             vehicle.setVehicleType(input.getVehicleType());
             vehicle.setOwnerShip(input.getOwnerShip());

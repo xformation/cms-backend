@@ -338,7 +338,6 @@ type Query {
 type VehicleDataCache{
    transportRoute: [CmsTransportVo]
    contract:[CmsContractVo]
-   insurance: [CmsInsuranceVo]
    vehicle: [CmsVehicleVo]
    employee: [Employee]
    branches: [Branch]
@@ -558,10 +557,6 @@ type CmsVehicleVo {
     contactNumber:  String
     status:Status
     strDateOfRegistration: String
-    dateOfInsurance: Date
-    strDateOfInsurance: String
-    validTill: Date
-    strValidTill: String
     startDate: Date
     endDate: Date
     strStartDate: String
@@ -570,12 +565,10 @@ type CmsVehicleVo {
     contractId: Long
     collegeId: Long
     branchId: Long
-    insuranceId: Long
     employeeId: Long
     employee: Employee
     transportRoute: TransportRoute
     cmsContractVo: CmsContractVo
-    cmsInsuranceVo: CmsInsuranceVo
     exitCode: Long
     exitDescription: String
     dataList: [CmsVehicleVo]
@@ -1566,7 +1559,7 @@ type CmsStudentVo {
 	strDateOfBirth: String
 	academicYearId: Long
 	academicYear: AcademicYear
-	
+
 	feeCategory: FeeCategory
     feeCategoryId: Long
     feeDetailsList: [FeeDetails]
@@ -1576,13 +1569,13 @@ type CmsStudentVo {
     totalFeeOverDue: Long
     facilityList: [StudentFacilityLink]
     paymentHistory: [CmsInvoice]
-    strNextPaymentDate: String 
+    strNextPaymentDate: String
 }
 
 type StudentFacilityLink{
 	id: Long
     linkDesc: String
-    student: Student 
+    student: Student
     facility: Facility
 }
 
@@ -3986,7 +3979,6 @@ type RemoveBookPayload{
       branchId: Long
       employeeId: Long
       transportRoute: TransportRoute
-      insurance: Insurance
       contract: Contract
   }
 
