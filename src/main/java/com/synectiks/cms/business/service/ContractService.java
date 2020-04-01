@@ -89,7 +89,7 @@ public class ContractService {
         }
 
             if(c.getEndDate() != null) {
-                vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(c.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+                vo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(c.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
                 vo.setEndDate(null);
             }
 
