@@ -59,6 +59,21 @@ public class StudentRestController {
     @Autowired
     private CommonService commonService;
 
+    @PostMapping("/cmsstudents-bulk-load")
+    public List<CmsStudentVo> bulkLoad(@RequestBody List<CmsStudentVo> list) throws Exception {
+        List<CmsStudentVo> failedRecords = new ArrayList<>();
+        for(CmsStudentVo cmsStudentVo: list) {
+    		try {
+    			createStudent(cmsStudentVo);
+            }catch(Exception e) {
+            	failedRecords.add(cmsStudentVo);
+            	log.error("Exception. Saving of student failed. ", e);
+            }
+        }
+        
+    	return failedRecords;
+    }
+    
     /**
      * POST  /students : Create a new student.
      *
