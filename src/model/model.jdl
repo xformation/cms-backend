@@ -345,8 +345,9 @@ ACTIVE,DEACTIVE,CANCELLED
 }
 
 entity StudentAttendance{
-attendanceStatus AttendanceStatusEnum required
-comments String
+	attendanceStatus AttendanceStatusEnum required
+	comments String
+	lectureId Long
 }
 
 
@@ -873,7 +874,6 @@ Holiday{academicyear} to AcademicYear,
 Lecture{attendancemaster} to AttendanceMaster,
 Term{academicyear} to AcademicYear,
 StudentAttendance{student} to Student,
-StudentAttendance{lecture} to Lecture,
 AttendanceMaster{batch} to Batch,
 Subject{batch} to Batch,
 AttendanceMaster{section} to Section,

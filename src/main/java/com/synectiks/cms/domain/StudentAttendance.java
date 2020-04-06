@@ -50,10 +50,12 @@ public class StudentAttendance implements Serializable {
     @JsonIgnoreProperties("studentAttendances")
     private Student student;
 
-    @ManyToOne
-    @JsonIgnoreProperties("studentAttendances")
+    @Column(name = "lecture_id")
+    private Long lectureId;
+    
+    @javax.persistence.Transient
     private Lecture lecture;
-
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -102,18 +104,7 @@ public class StudentAttendance implements Serializable {
         this.student = student;
     }
 
-    public Lecture getLecture() {
-        return lecture;
-    }
 
-    public StudentAttendance lecture(Lecture lecture) {
-        this.lecture = lecture;
-        return this;
-    }
-
-    public void setLecture(Lecture lecture) {
-        this.lecture = lecture;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -144,4 +135,20 @@ public class StudentAttendance implements Serializable {
             ", comments='" + getComments() + "'" +
             "}";
     }
+
+	public Long getLectureId() {
+		return lectureId;
+	}
+
+	public void setLectureId(Long lectureId) {
+		this.lectureId = lectureId;
+	}
+
+	public Lecture getLecture() {
+		return lecture;
+	}
+
+	public void setLecture(Lecture lecture) {
+		this.lecture = lecture;
+	}
 }

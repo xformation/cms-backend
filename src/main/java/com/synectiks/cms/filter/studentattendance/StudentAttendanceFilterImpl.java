@@ -3,7 +3,6 @@ package com.synectiks.cms.filter.studentattendance;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,11 +35,9 @@ import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
 import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
-import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.TeacherRepository;
-import com.synectiks.cms.service.util.DateFormatUtil;
 
 
 @Repository
@@ -59,8 +56,8 @@ public class StudentAttendanceFilterImpl  {
     @Autowired
     private StudentAttendanceRepository studentAttendanceRepository;
     
-    @Autowired
-    private LectureRepository lectureRepository;
+//    @Autowired
+//    private LectureRepository lectureRepository;
     
     @PersistenceContext
     private EntityManager entityManager;
@@ -212,7 +209,8 @@ public class StudentAttendanceFilterImpl  {
 				}else {
 					// insert record in student_attendance table and mark the status as present by default.
 					sa = new StudentAttendance();
-					sa.setLecture(currentDateLecture);
+//					sa.setLecture(currentDateLecture);
+					sa.setLectureId(currentDateLecture.getId());
 					sa.setStudent(st);
 					sa.setAttendanceStatus(AttendanceStatusEnum.PRESENT);
 					insList.add(sa);
@@ -492,14 +490,16 @@ public class StudentAttendanceFilterImpl  {
         		String values = sa.getStudentIds();//.split("##delimline##");
         		String lectureId = sa.getLectureId();
         		if(lecture == null) {
-    				lecture = this.lectureRepository.findById(Long.valueOf(lectureId)).get();
+//    				lecture = this.lectureRepository.findById(Long.valueOf(lectureId)).get();
+    				lecture = this.commonService.getLectureById(Long.parseLong(lectureId)) ;
     			}
 //        		for(String val: values) {
     			String data[] = values.split("#~#");
     			student = this.studentRepository.findById(Long.valueOf(data[0])).get();
     			
     			stObj.setStudent(student);
-    			stObj.setLecture(lecture);
+//    			stObj.setLecture(lecture);
+    			stObj.setLectureId(lecture.getId());
     			Example<StudentAttendance> example = Example.of(stObj);
     			Optional<StudentAttendance> osa = this.studentAttendanceRepository.findOne((example));
     			if(osa.isPresent()) {

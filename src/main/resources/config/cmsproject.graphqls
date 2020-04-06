@@ -1580,11 +1580,12 @@ type StudentFacilityLink{
 }
 
 type StudentAttendance {
-    id: Long!
-    attendanceStatus: AttendanceStatusEnum!
-    comments: String!
-    student: Student!
-    lecture: Lecture!
+    id: Long
+    attendanceStatus: AttendanceStatusEnum
+    comments: String
+    student: Student
+    lectureId: Long
+    lecture: Lecture
 }
 type Subject {
  	id: Long

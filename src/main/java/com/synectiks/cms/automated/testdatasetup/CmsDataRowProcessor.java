@@ -553,7 +553,7 @@ public class CmsDataRowProcessor {
 		sa.attendanceStatus(AttendanceStatusEnum.PRESENT);
 		sa.setStudent(student);
 		lectures.forEach(lectuer -> {
-			sa.setLecture(lectuer);
+//			sa.setLecture(lectuer);
 			saveOrGet(this.stAttenRepo, sa);
 		});
 	}

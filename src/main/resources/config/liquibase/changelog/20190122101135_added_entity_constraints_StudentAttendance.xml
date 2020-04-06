@@ -14,11 +14,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="student"/>
 
-        <addForeignKeyConstraint baseColumnNames="lecture_id"
-                                 baseTableName="student_attendance"
-                                 constraintName="fk_student_attendance_lecture_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="lecture"/>
-
     </changeSet>
 </databaseChangeLog>

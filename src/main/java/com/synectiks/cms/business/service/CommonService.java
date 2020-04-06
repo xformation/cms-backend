@@ -1536,7 +1536,12 @@ public class CommonService {
 	    	logger.warn("No cms lecture found for given criteria. Returning empty list");
 	    	return Collections.emptyList();
 	    }
-	    List<CmsLectureVo> list = Arrays.asList(temp);
+	    List<CmsLectureVo> list = new ArrayList<>();
+	    for(CmsLectureVo vo: temp) {
+	    	vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(vo.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+	    	vo.setLecDate(null);
+	    	list.add(vo);
+	    }
 	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
 	    return list;
     }
