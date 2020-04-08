@@ -1523,7 +1523,13 @@ public class CommonService {
 	    	logger.warn("No cms lecture found for teacher id : "+teacherId);
 	    	return Collections.emptyList();
 	    }
-	    List<CmsLectureVo> list = Arrays.asList(temp);
+	    List<CmsLectureVo> list = new ArrayList<>();
+	    for(CmsLectureVo vo: temp) {
+	    	vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(vo.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+	    	vo.setLecDate(null);
+	    	list.add(vo);
+	    }
+//	    List<CmsLectureVo> list = Arrays.asList(temp);
 	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
 	    return list;
     }
@@ -2314,7 +2320,12 @@ public class CommonService {
             return null;
         }
         String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/lecture-by-attendancemaster-and-date?attendanceMasterId="+attendanceMasterId+"&lectureDate="+lectureDate;
-        Lecture temp = this.restTemplate.getForObject(prefUrl, Lecture.class);
+        Lecture temp = null;
+        try {
+        	temp = this.restTemplate.getForObject(prefUrl, Lecture.class);
+        }catch(Exception e) {
+        	logger.warn("Exception. ",e.getMessage());
+        }
         return temp;
     }
 

@@ -2,7 +2,9 @@ package com.synectiks.cms.filter.studentattendance;
 
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,7 @@ import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 import com.synectiks.cms.repository.StudentAttendanceRepository;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.repository.TeacherRepository;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 
 @Repository
@@ -362,19 +365,21 @@ public class StudentAttendanceFilterImpl  {
     	String lectureDate = filter.getAttendanceDate();
     	
     	if(days == 0) {
-    		this.commonService.getLectureById(Long.parseLong(filter.getLectureId()));
+    		return this.commonService.getLectureById(Long.parseLong(filter.getLectureId()));
 //    		return this.lectureRepository.findById(Long.parseLong(filter.getLectureId())).get();
     	}
     	
-    	Lecture lec = this.commonService.getLectureByAttendanceMasterAndLectureDate(attendanceMaster.getId(), lectureDate);
-    	return lec;
-//    	Lecture lec = new Lecture();
-//    	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
+    	
+    	Lecture lec = null;
+    	Date lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lectureDate);
 ////    			DateFormatUtil.changeDateFormat(CmsConstants.DATE_FORMAT_dd_MM_yyyy, "dd/MM/yyyy", lectureDate));
-//    	if(days > 0) {
-//    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
+    	if(days > 0) {
+    		String sDate = DateFormatUtil.subtractDays(CmsConstants.DATE_FORMAT_dd_MM_yyyy, lecDate, days);
+    		lec = this.commonService.getLectureByAttendanceMasterAndLectureDate(attendanceMaster.getId(), sDate);
 //    		lecDate = DateFormatUtil.getUtilDate(CmsConstants.DATE_FORMAT_dd_MM_yyyy,sDate);
-//    	}
+    	}
+//    	LocalDate newLecDate = DateFormatUtil.convertLocalDateFromUtilDate(lecDate);
+    	return lec;
 //    	lec.setLecDate(DateFormatUtil.convertLocalDateFromUtilDate(lecDate));
 //    	lec.setAttendancemaster(attendanceMaster);
 //    	Example<Lecture> example = Example.of(lec);
