@@ -791,7 +791,7 @@ public class Query implements GraphQLQueryResolver {
 //    		cmsLec.add(vo);
 //    	}
 
-    	List<CmsLectureVo> cmsLec = this.commonService.getAllCurrentDateCmsLectureForTeacher(tid);
+    	List<CmsLectureVo> cmsLec = this.commonService.getAllCurrentDateCmsLectureForTeacher(tid, lectureDate);
 
     	List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
 

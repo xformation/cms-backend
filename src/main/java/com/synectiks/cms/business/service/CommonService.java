@@ -1515,7 +1515,7 @@ public class CommonService {
 	    return list;
     }
 
-    public List<CmsLectureVo> getAllCurrentDateCmsLectureForTeacher(Long teacherId){
+    public List<CmsLectureVo> getAllCurrentDateCmsLectureForTeacher(Long teacherId, String lectureDate){
     	logger.debug("Getting today's cms lectures of a teacher id : "+teacherId);
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/todays-cmslectures-by-teacher-id?teacherId="+teacherId;
 	    CmsLectureVo[] temp = this.restTemplate.getForObject(prefUrl, CmsLectureVo[].class);
