@@ -1517,7 +1517,7 @@ public class CommonService {
 
     public List<CmsLectureVo> getAllCurrentDateCmsLectureForTeacher(Long teacherId, String lectureDate){
     	logger.debug("Getting today's cms lectures of a teacher id : "+teacherId);
-	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/todays-cmslectures-by-teacher-id?teacherId="+teacherId;
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/todays-cmslectures-by-teacher-id?teacherId="+teacherId+"&lectureDate="+lectureDate;
 	    CmsLectureVo[] temp = this.restTemplate.getForObject(prefUrl, CmsLectureVo[].class);
 	    if(temp.length == 0) {
 	    	logger.warn("No cms lecture found for teacher id : "+teacherId);
