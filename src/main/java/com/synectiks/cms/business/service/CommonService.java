@@ -2018,7 +2018,7 @@ public class CommonService {
     	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId();
 	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
 	    if(temp.length == 0) {
-	    	return null;
+	    	return Collections.emptyList();
 	    }
 	    List<Teach> list = Arrays.asList(temp);
 	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
@@ -2033,33 +2033,34 @@ public class CommonService {
     }
 
     public List<Lecture> getAllLecturesScheduledForTeacher(Teacher th, Subject sub) {
-        AcademicYear ay = this.getActiveAcademicYear();
-//        Teach teach = new Teach();
-//        teach.setTeacher(th);
-//        teach.setSubject(sub);
-//        List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
-
-        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
-	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
-	    List<Teach> thList = Arrays.asList(temp);
-
-        @SuppressWarnings("unchecked")
-        List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
-            .setParameter("th", thList)
-            .getResultList();
-
-        if(amList.size() == 0) {
-        	logger.warn("getAllLecturesScheduledForTeacher(): Attendance master not found. Returning empty list");
-        	return Collections.emptyList();
-        }
-
-        @SuppressWarnings("unchecked")
-        List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
-            .setParameter("startDate", ay.getStartDate())
-            .setParameter("endDate", ay.getEndDate())
-            .setParameter("amId", amList)
-            .getResultList();
-        return list;
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-scheduled-for-teacher?teacherId="+th.getId()+"&subjectId="+sub.getId();
+	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
+	    List<Lecture> list = Arrays.asList(temp);
+	    logger.info("Total lectures scheduled for teacher : ",list.size());
+	    return list;
+//        AcademicYear ay = this.getActiveAcademicYear();
+//        
+//        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
+//	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
+//	    List<Teach> thList = Arrays.asList(temp);
+//
+//        @SuppressWarnings("unchecked")
+//        List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
+//            .setParameter("th", thList)
+//            .getResultList();
+//
+//        if(amList.size() == 0) {
+//        	logger.warn("getAllLecturesScheduledForTeacher(): Attendance master not found. Returning empty list");
+//        	return Collections.emptyList();
+//        }
+//
+//        @SuppressWarnings("unchecked")
+//        List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
+//            .setParameter("startDate", ay.getStartDate())
+//            .setParameter("endDate", ay.getEndDate())
+//            .setParameter("amId", amList)
+//            .getResultList();
+//        return list;
     }
 
 
@@ -2071,35 +2072,10 @@ public class CommonService {
 
 
     public List<Lecture> getTotalLecturesConductedForTeacher(Teacher th, Subject sub, LocalDate dt) throws Exception{
-        AcademicYear ay = this.getActiveAcademicYear();
-
-//        Teach teach = new Teach();
-//        teach.setTeacher(th);
-//        teach.setSubject(sub);
-//        List<Teach> thList = this.teachRepository.findAll(Example.of(teach));
-
-        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
-	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
-	    List<Teach> thList = Arrays.asList(temp);
-
-
-        @SuppressWarnings("unchecked")
-        List<AttendanceMaster> amList = this.entityManager.createQuery("select a from AttendanceMaster a where a.teach in (:th)")
-            .setParameter("th", thList)
-            .getResultList();
-
-        if(amList.size() == 0) {
-        	logger.warn("getTotalLecturesConductedForTeacher(): Attendance master not found. Returning empty list");
-        	return Collections.emptyList();
-        }
-
-        @SuppressWarnings("unchecked")
-        List<Lecture> list = this.entityManager.createQuery("select l from Lecture l where l.lecDate between :startDate and :endDate and l.attendancemaster in (:amId) ")
-            .setParameter("startDate", ay.getStartDate())
-            .setParameter("endDate", dt)
-            .setParameter("amId", amList)
-            .getResultList();
-        return list;
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-conducted-for-teacher?teacherId="+th.getId()+"&subjectId="+sub.getId();
+	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
+	    List<Lecture> list = Arrays.asList(temp);
+	    return list;
     }
 
     public List<CmsDepartmentVo> getCmsDepartmentListByBranch(Long branchId){

@@ -32,8 +32,8 @@ public class FeeInfluxPush implements InfluxPush {
 	@Autowired
 	private CommonService commonService;
 
-	@Autowired
-	private BranchRepository branchRepository;
+//	@Autowired
+//	private BranchRepository branchRepository;
 
 	@Autowired
 	private CmsInvoiceService cmsInvoiceService;
