@@ -153,3 +153,4 @@ application:
     preferenceSrvUrl: http://100.81.5.25:9091
     kafkaUrl: http://100.81.5.25:8190/kafka/send
     kafkaIndexEvenFireUrl: http://100.81.5.25:8092/seach/fireEvent
+    admissionSrvUrl: http://100.81.5.25:9094

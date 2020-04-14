@@ -18,9 +18,10 @@ public class ApplicationProperties {
 	private String influxDbLogLevel;
 	private String secSrvUrl;
 	private String preferenceSrvUrl;
+	private String admissionSrvUrl;
 	private String kafkaUrl;
 	private String kafkaIndexEvenFireUrl;
-	
+
 	public String getInfluxDbUrl() {
 		return influxDbUrl;
 	}
@@ -63,7 +64,16 @@ public class ApplicationProperties {
 	public void setPreferenceSrvUrl(String preferenceSrvUrl) {
 		this.preferenceSrvUrl = preferenceSrvUrl;
 	}
-	public String getKafkaUrl() {
+
+    public String getAdmissionSrvUrl() {
+        return admissionSrvUrl;
+    }
+
+    public void setAdmissionSrvUrl(String admissionSrvUrl) {
+        this.admissionSrvUrl = admissionSrvUrl;
+    }
+
+    public String getKafkaUrl() {
 		return kafkaUrl;
 	}
 	public void setKafkaUrl(String kafkaUrl) {
@@ -75,6 +85,6 @@ public class ApplicationProperties {
 	public void setKafkaIndexEvenFireUrl(String kafkaIndexEvenFireUrl) {
 		this.kafkaIndexEvenFireUrl = kafkaIndexEvenFireUrl;
 	}
-	
-	
+
+
 }

@@ -1,14 +1,24 @@
 package com.synectiks.cms.business.service;
 
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import com.synectiks.cms.config.ApplicationProperties;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.*;
+import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
+import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
+import com.synectiks.cms.graphql.types.Student.Semester;
+import com.synectiks.cms.graphql.types.Student.StudentType;
+import com.synectiks.cms.graphql.types.course.Course;
+import com.synectiks.cms.graphql.types.gender.Gender;
+import com.synectiks.cms.repository.*;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,38 +27,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
-import com.synectiks.cms.domain.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-
-import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.enumeration.BatchEnum;
-import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
-import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
-import com.synectiks.cms.domain.enumeration.SectionEnum;
-import com.synectiks.cms.domain.enumeration.SemesterEnum;
-import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
-import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
-import com.synectiks.cms.graphql.types.Student.Semester;
-import com.synectiks.cms.graphql.types.Student.StudentType;
-import com.synectiks.cms.graphql.types.course.Course;
-import com.synectiks.cms.graphql.types.gender.Gender;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.NotificationsRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.VehicleRepository;
-import com.synectiks.cms.service.util.CommonUtil;
-import com.synectiks.cms.service.util.DateFormatUtil;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Component
 public class CommonService {
@@ -661,7 +644,7 @@ public class CommonService {
 	    Collections.sort(teacherList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
 	    return teacherList;
 	}
-	
+
 	public List<Teacher> getAllTeachersByBranch(Long branchId) {
 		logger.debug("Getting teachers based on branch id : "+branchId);
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
@@ -674,7 +657,7 @@ public class CommonService {
 	    Collections.sort(teacherList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
 	    return teacherList;
 	}
-	
+
 	public List<Employee> getAllEmployeesByBranch(Long branchId) {
 		logger.debug("Getting employee based on branch id : "+branchId);
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
@@ -2039,7 +2022,7 @@ public class CommonService {
 	    logger.info("Total lectures scheduled for teacher : ",list.size());
 	    return list;
 //        AcademicYear ay = this.getActiveAcademicYear();
-//        
+//
 //        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
 //	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
 //	    List<Teach> thList = Arrays.asList(temp);
@@ -2070,6 +2053,23 @@ public class CommonService {
         return list.size();
     }
 
+    public Long getTotalFollowUp(Branch br,AcademicYear academicYear){
+        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-followup?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
+        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
+        return temp;
+    }
+
+    public Long getTotalConverted(Branch br,AcademicYear academicYear){
+        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-converted?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
+        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
+        return temp;
+    }
+
+    public Long getTotalDeclined(Branch br,AcademicYear academicYear){
+        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-declined?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
+        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
+        return temp;
+    }
 
     public List<Lecture> getTotalLecturesConductedForTeacher(Teacher th, Subject sub, LocalDate dt) throws Exception{
     	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-conducted-for-teacher?teacherId="+th.getId()+"&subjectId="+sub.getId();
