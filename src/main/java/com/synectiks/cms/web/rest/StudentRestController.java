@@ -70,10 +70,10 @@ public class StudentRestController {
             	log.error("Exception. Saving of student failed. ", e);
             }
         }
-        
+
     	return failedRecords;
     }
-    
+
     /**
      * POST  /students : Create a new student.
      *
@@ -110,13 +110,13 @@ public class StudentRestController {
         student.setStatus(Status.ACTIVE);
         student.setCreatedOn(LocalDate.now());
         student.setBranchId(cmsStudentVo.getBranchId());
-        
+
         student.setDepartmentId(cmsStudentVo.getDepartmentId());
-        
+
         student.setBatchId(cmsStudentVo.getBatchId());
-        
+
         student.setSectionId(cmsStudentVo.getSectionId());
-        
+
         Student result = studentRepository.save(student);
         CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
         return result.getId();
@@ -173,7 +173,7 @@ public class StudentRestController {
     /**
      * PUT  /students : Updates an existing student.
      *
-     * @param studentDTO the studentDTO to update
+//     * @param studentDTO the studentDTO to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated studentDTO,
      * or with status 400 (Bad Request) if the studentDTO is not valid,
      * or with status 500 (Internal Server Error) if the studentDTO couldn't be updated
@@ -202,7 +202,7 @@ public class StudentRestController {
     public List<CmsStudentVo> getAllStudents(@RequestParam Map<String, String> dataMap) {
         List<Student> list = null;
         List<CmsStudentVo> ls = null;
-        
+
         Student obj = new Student();
         boolean isFilter = false;
     	if(!CommonUtil.isNullOrEmpty(dataMap.get("id"))) {
@@ -223,7 +223,7 @@ public class StudentRestController {
 //    		obj.setStatus(dataMap.get("status"));
 //    		isFilter = true;
 //    	}
-    	
+
         if(!CommonUtil.isNullOrEmpty(dataMap.get("studentName"))) {
         	isFilter = true;
         	String name = dataMap.get("studentName");
