@@ -900,7 +900,7 @@ public class CommonService {
 	    	return Collections.emptyList();
 	    }
 	    List<Holiday> list = Arrays.asList(temp);
-	    Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    Collections.sort(list, (o1, o2) -> o1.getHolidayDate().compareTo(o2.getHolidayDate()));
 	    return list;
 
 //        Holiday hl = new Holiday();
@@ -1910,11 +1910,9 @@ public class CommonService {
     }
 
     public List<Student> getAllStudentsOfCurrentAcademicYear(){
-        AcademicYear ay = getActiveAcademicYear();
-//        Department department = new Department();
-//        department.setAcademicyear(ay);
+        AcademicYear ay = this.getActiveAcademicYear();
         Student student = new Student();
-//        student.setDepartment(department);
+        student.setAcademicYearId(ay.getId());
         List<Student> list = this.studentRepository.findAll(Example.of(student));
         return list;
     }
@@ -1931,21 +1929,61 @@ public class CommonService {
 	    String prefSubjectUrl = prefUrl+"/api/subject-by-filters?departmentId="+student.getDepartmentId()+"&batchId="+student.getBatchId();
 	    Subject[] temp = this.restTemplate.getForObject(prefSubjectUrl, Subject[].class);
 	    if(temp.length == 0) {
+	    	logger.warn("No subject found for the given department and batch id. Returning empty subject list");
 	    	return Collections.emptyList();
 	    }
 	    List<Subject> subjectList = Arrays.asList(temp);
 	    Collections.sort(subjectList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    logger.debug("Subject list found : ", subjectList);
 	    return subjectList;
     }
 
-    public long getTotalLecturesScheduledForStudent(Student student) {
-        StudentAttendance sa = new StudentAttendance();
-        sa.setStudent(student);
-        long count = this.studentAttendanceRepository.count(Example.of(sa));
-        logger.debug("Total lectures scheduled for student : "+student.getStudentPrimaryEmailId()+" are : "+count);
-        return count;
-    }
+//    public long getTotalLecturesScheduledForStudent(Student student) {
+//        StudentAttendance sa = new StudentAttendance();
+//        sa.setStudent(student);
+//        long count = this.studentAttendanceRepository.count(Example.of(sa));
+//        logger.debug("Total lectures scheduled for student : "+student.getStudentPrimaryEmailId()+" are : "+count);
+//        return count;
+//    }
 
+    public List<Lecture> getTotalLecturesScheduledOfGivenSubject(Subject subject) {
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-scheduled?&subjectId="+subject.getId();
+	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
+	    List<Lecture> list = Arrays.asList(temp);
+	    logger.info("Total lectures scheduled for subject : ",list.size());
+	    return list;
+    }
+    
+    public List<Lecture> getTotalLecturesConductedOfGivenSubject(Subject subject) throws Exception{
+
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-conducted?subjectId="+subject.getId();
+	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
+	    List<Lecture> list = Arrays.asList(temp);
+	    return list;
+	    
+//        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+//        CriteriaQuery<StudentAttendance> query = cb.createQuery(StudentAttendance.class);
+//        Root<StudentAttendance> root = query.from(StudentAttendance.class);
+//        List<Lecture> lecList = getLectures(dt);
+//
+//        In<Long> inLecture = cb.in(root.get("lecture"));
+//        for (Lecture lec : lecList) {
+//            inLecture.value(lec.getId());
+//        }
+//
+//        CriteriaQuery<StudentAttendance> select = null;
+//        if(lecList.size() > 0) {
+//            select = query.select(root).where(cb.and(inLecture), cb.and(cb.equal(root.get("student"), student.getId())));
+//        }else{
+//            return Collections.emptyList();
+//        }
+//
+//        TypedQuery<StudentAttendance> typedQuery = this.entityManager.createQuery(select);
+//        List<StudentAttendance> lectureList = typedQuery.getResultList();
+//        logger.debug("Lecture date : "+dt+". Student id : "+student.getId()+". Student email : "+student.getStudentPrimaryEmailId()+". Total lectures conducted till date for given : "+lectureList.size());
+//        return lectureList;
+    }
+    
     public List<StudentAttendance> getTotalLecturesConductedForStudent(Student student, LocalDate dt) throws Exception{
 
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
@@ -2014,15 +2052,22 @@ public class CommonService {
 //        logger.debug("Total subjects teach by teacher "+th.getTeacherName() + " are : "+list.size());
 //        return list;
     }
-
+    
+    public List<Lecture> getTotalLecturesScheculedOnCurrentDayForGivenBatchAndSection(Long batchId, Long sectionId) {
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-scheduled-on-current-day?batchId="+batchId+"&sectionId="+sectionId;
+	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
+	    List<Lecture> list = Arrays.asList(temp);
+	    return list;
+    }
+    
     public List<Lecture> getAllLecturesScheduledForTeacher(Teacher th, Subject sub) {
-    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-scheduled-for-teacher?teacherId="+th.getId()+"&subjectId="+sub.getId();
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-scheduled?teacherId="+th.getId()+"&subjectId="+sub.getId();
 	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
 	    List<Lecture> list = Arrays.asList(temp);
 	    logger.info("Total lectures scheduled for teacher : ",list.size());
 	    return list;
 //        AcademicYear ay = this.getActiveAcademicYear();
-//
+//        
 //        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
 //	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
 //	    List<Teach> thList = Arrays.asList(temp);
@@ -2072,7 +2117,7 @@ public class CommonService {
     }
 
     public List<Lecture> getTotalLecturesConductedForTeacher(Teacher th, Subject sub, LocalDate dt) throws Exception{
-    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-conducted-for-teacher?teacherId="+th.getId()+"&subjectId="+sub.getId();
+    	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-conducted?teacherId="+th.getId()+"&subjectId="+sub.getId();
 	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
 	    List<Lecture> list = Arrays.asList(temp);
 	    return list;
@@ -2305,6 +2350,25 @@ public class CommonService {
         return temp;
     }
 
+    public List<StudentAttendance> getTotalAttendance(List<Lecture> lectureList, String status) {
+    	if(lectureList.size() ==0 ) {
+    		logger.warn("Lecture list is empty. Returning empty student attendance list");
+    		return Collections.emptyList();
+    	}
+    	StudentAttendance sa = new StudentAttendance();
+    	List<Long> lidList = new ArrayList<>();
+    	for(Lecture lecture: lectureList) {
+    		lidList.add(lecture.getId());
+    	}
+    	@SuppressWarnings("unchecked")
+        List<StudentAttendance> list = this.entityManager.createQuery("select sa from student_attendance sa where sa.attendanceStatus :atStatus and sa.lectureId in (:lecId) ")
+            .setParameter("atStatus", status)
+            .setParameter("lecId", lidList)
+            .getResultList();
+        return list;
+        
+    }
+    
     public static void main(String a[]) {
 //        String dt = "10/10/2019";
 //        LocalDate ld = DateFormatUtil.convertStringToLocalDate(dt, "MM/dd/yyyy");

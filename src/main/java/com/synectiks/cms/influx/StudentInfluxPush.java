@@ -1,7 +1,6 @@
 package com.synectiks.cms.influx;
 
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.influxdb.InfluxDB;
@@ -13,10 +12,10 @@ import org.springframework.stereotype.Component;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
+import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
 
 @Component
 public class StudentInfluxPush implements InfluxPush {
@@ -49,24 +48,28 @@ public class StudentInfluxPush implements InfluxPush {
 
 	@Override
 	public void pushData() throws ParseException, Exception {
-		List<Student> list = this.commonService.getAllStudentsOfCurrentAcademicYear();
 		influxDB = influxDbDataSource.getInfluxDatabase();
 		Point point = null;
+		List<Student> list = this.commonService.getAllStudentsOfCurrentAcademicYear();
 		for(Student st: list) {
 			List<Subject> subList = this.commonService.getAllSubjectsOfStudent(st);
-			long totalLecturesScheduled = this.commonService.getTotalLecturesScheduledForStudent(st);
-			List<StudentAttendance> lecConductedList = this.commonService.getTotalLecturesConductedForStudent(st, LocalDate.now());
-			int totalPresent = 0;
-			int totalAbsent = 0;
-			for(StudentAttendance sa : lecConductedList ) {
-				if(AttendanceStatusEnum.PRESENT.equals(sa.getAttendanceStatus())) {
-					totalPresent++;
-				}else {
-					totalAbsent++;
-				}
-			}
+//			long totalLecturesScheduled = this.commonService.getTotalLecturesScheduledForStudent(st);
+//			List<StudentAttendance> lecConductedList = this.commonService.getTotalLecturesConductedForStudent(st, LocalDate.now());
+//			int totalPresent = 0;
+//			int totalAbsent = 0;
+//			for(StudentAttendance sa : lecConductedList ) {
+//				if(AttendanceStatusEnum.PRESENT.equals(sa.getAttendanceStatus())) {
+//					totalPresent++;
+//				}else {
+//					totalAbsent++;
+//				}
+//			}
 			long tm = System.currentTimeMillis();
 			for(Subject sub: subList) {
+				List<Lecture> totalLecturesScheduledList =  this.commonService.getTotalLecturesScheduledOfGivenSubject(sub);
+				List<Lecture> totalLecturesConductedList =  this.commonService.getTotalLecturesConductedOfGivenSubject(sub);
+				List<StudentAttendance> attendancePresentList = this.commonService.getTotalAttendance(totalLecturesConductedList, "PRESENT");
+				List<StudentAttendance> attendanceAbsentList = this.commonService.getTotalAttendance(totalLecturesConductedList, "ABSENT");
 				point = Point.measurement("Student")
 						.tag("TstudentName", st.getStudentName())
 						.tag("TstudentEmail", st.getStudentPrimaryEmailId())
@@ -78,10 +81,10 @@ public class StudentInfluxPush implements InfluxPush {
 //						.addField("Department", st.getDepartment().getName())
 //						.addField("Year", st.getBatch().getBatch().toString())
 						.addField("Subject", sub.getSubjectCode())
-						.addField("TotalLecturesScheduled", totalLecturesScheduled)
-						.addField("TotalLecturesConducted", lecConductedList.size())
-						.addField("TotalPresent", totalPresent)
-						.addField("TotalAbsent", totalAbsent)
+						.addField("TotalLecturesScheduled", totalLecturesScheduledList.size())
+						.addField("TotalLecturesConducted", totalLecturesConductedList.size())
+						.addField("TotalPresent", attendancePresentList.size())
+						.addField("TotalAbsent", attendanceAbsentList.size())
 						.addField("time", tm)
 
 //						.addField("lectureTime", DateFormatUtil.converUtilDateFromLocaDate(sa.getLecture().getLecDate()).getTime())

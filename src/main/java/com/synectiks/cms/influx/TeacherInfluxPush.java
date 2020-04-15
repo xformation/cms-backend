@@ -44,7 +44,7 @@ public class TeacherInfluxPush implements InfluxPush {
 			List<Teach> subjectList = this.commonService.getAllSubjectsOfTeacher(th);
 			long tm = System.currentTimeMillis();
 			for(Teach teach: subjectList) {
-				long totalLecturesScheduled = this.commonService.getTotalLecturesScheduledForTeacher(th, teach.getSubject());
+				List<Lecture> lecScheduledList = this.commonService.getAllLecturesScheduledForTeacher(th, teach.getSubject());
 				List<Lecture> lecConductedList = this.commonService.getTotalLecturesConductedForTeacher(th, teach.getSubject(), LocalDate.now());
 //				
 				point = Point.measurement("Teacher")
@@ -57,7 +57,7 @@ public class TeacherInfluxPush implements InfluxPush {
 						.addField("TeacherEmail", th.getTeacherEmailAddress())
 						.addField("Department", th.getDepartment().getName())
 						.addField("Subject", teach.getSubject().getSubjectCode())
-						.addField("TotalLecturesScheduled", totalLecturesScheduled)
+						.addField("TotalLecturesScheduled", lecScheduledList.size())
 						.addField("TotalLecturesConducted", lecConductedList.size())
 						.addField("time", tm)
 						.build();

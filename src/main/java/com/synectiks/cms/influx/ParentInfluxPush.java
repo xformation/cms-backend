@@ -2,6 +2,7 @@ package com.synectiks.cms.influx;
 
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.config.ApplicationProperties;
+import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentAttendance;
 import com.synectiks.cms.domain.Subject;
@@ -41,19 +42,23 @@ public class ParentInfluxPush implements InfluxPush  {
         Point point = null;
         for(Student st: list) {
             List<Subject> subList = this.commonService.getAllSubjectsOfStudent(st);
-            long totalLecturesScheduled = this.commonService.getTotalLecturesScheduledForStudent(st);
-            List<StudentAttendance> lecConductedList = this.commonService.getTotalLecturesConductedForStudent(st, LocalDate.now());
-            int totalPresent = 0;
-            int totalAbsent = 0;
-            for(StudentAttendance sa : lecConductedList ) {
-                if(AttendanceStatusEnum.PRESENT.equals(sa.getAttendanceStatus())) {
-                    totalPresent++;
-                }else {
-                    totalAbsent++;
-                }
-            }
+//            long totalLecturesScheduled = this.commonService.getTotalLecturesScheduledForStudent(st);
+//            List<StudentAttendance> lecConductedList = this.commonService.getTotalLecturesConductedForStudent(st, LocalDate.now());
+//            int totalPresent = 0;
+//            int totalAbsent = 0;
+//            for(StudentAttendance sa : lecConductedList ) {
+//                if(AttendanceStatusEnum.PRESENT.equals(sa.getAttendanceStatus())) {
+//                    totalPresent++;
+//                }else {
+//                    totalAbsent++;
+//                }
+//            }
             long tm = System.currentTimeMillis();
             for(Subject sub: subList) {
+            	List<Lecture> totalLecturesScheduledList =  this.commonService.getTotalLecturesScheduledOfGivenSubject(sub);
+				List<Lecture> totalLecturesConductedList =  this.commonService.getTotalLecturesConductedOfGivenSubject(sub);
+				List<StudentAttendance> attendancePresentList = this.commonService.getTotalAttendance(totalLecturesConductedList, "PRESENT");
+				List<StudentAttendance> attendanceAbsentList = this.commonService.getTotalAttendance(totalLecturesConductedList, "ABSENT");
                 point = Point.measurement("Parent")
                     .tag("TstudentName", st.getStudentName())
                     .tag("TstudentEmail", st.getStudentPrimaryEmailId())
@@ -67,10 +72,10 @@ public class ParentInfluxPush implements InfluxPush  {
 //                    .addField("Department", st.getDepartment().getName())
 //                    .addField("Year", st.getBatch().getBatch().toString())
                     .addField("Subject", sub.getSubjectCode())
-                    .addField("TotalLecturesScheduled", totalLecturesScheduled)
-                    .addField("TotalLecturesConducted", lecConductedList.size())
-                    .addField("TotalPresent", totalPresent)
-                    .addField("TotalAbsent", totalAbsent)
+                    .addField("TotalLecturesScheduled", totalLecturesScheduledList.size())
+                    .addField("TotalLecturesConducted", totalLecturesConductedList.size())
+                    .addField("TotalPresent", attendancePresentList.size())
+                    .addField("TotalAbsent", attendanceAbsentList.size())
                     .addField("time", tm)
 
 

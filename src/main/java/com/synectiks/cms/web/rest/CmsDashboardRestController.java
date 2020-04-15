@@ -1,5 +1,6 @@
 package com.synectiks.cms.web.rest;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +22,6 @@ import com.synectiks.cms.business.service.CmsInvoiceService;
 import com.synectiks.cms.business.service.CommonService;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.AcademicYear;
-import com.synectiks.cms.domain.AttendanceMaster;
 import com.synectiks.cms.domain.CmsDashboardVo;
 import com.synectiks.cms.domain.CmsHolidayVo;
 import com.synectiks.cms.domain.CmsInvoice;
@@ -31,14 +31,9 @@ import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.StudentFacilityLink;
-import com.synectiks.cms.domain.Teach;
 import com.synectiks.cms.domain.Teacher;
-import com.synectiks.cms.repository.AttendanceMasterRepository;
-import com.synectiks.cms.repository.InvoiceRepository;
-import com.synectiks.cms.repository.LectureRepository;
 import com.synectiks.cms.repository.StudentFacilityLinkRepository;
 import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.TeacherRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -51,8 +46,8 @@ public class CmsDashboardRestController {
 
     private final Logger logger = LoggerFactory.getLogger(CmsDashboardRestController.class);
 
-    @Autowired
-    private InvoiceRepository invoiceRepository;
+//    @Autowired
+//    private InvoiceRepository invoiceRepository;
 
     @Autowired
     private CmsInvoiceService cmsInvoiceService;
@@ -60,14 +55,14 @@ public class CmsDashboardRestController {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Autowired
-    private TeacherRepository teacherRepository;
+//    @Autowired
+//    private TeacherRepository teacherRepository;
 
-    @Autowired
-    private AttendanceMasterRepository attendanceMasterRepository;
+//    @Autowired
+//    private AttendanceMasterRepository attendanceMasterRepository;
 
-    @Autowired
-    private LectureRepository lectureRepository;
+//    @Autowired
+//    private LectureRepository lectureRepository;
 
     @Autowired
     private StudentFacilityLinkRepository studentFacilityLinkRepository;
@@ -81,35 +76,43 @@ public class CmsDashboardRestController {
 		try {
 			if("STUDENT".equalsIgnoreCase(role)) {
 				logger.info("Getting student data for dashboard");
-				Student st = new Student();
+				Student st = null; //new Student();
 				Optional<Student> ost = getStudent(userName);
 				if(ost.isPresent()) {
 					st = ost.get();
 				}
 				obj.setStudent(st);
-				CmsInvoice inv = getInvoiceByStudentId(userName);
-				List<StudentFacilityLink> list = getStudentFacilityLinkByStudentUserName(userName);
-				List<CmsLectureVo> lecList = getScheduledLecturesForStudent(userName);
+				CmsInvoice inv = getInvoiceByStudentId(st);
+				List<StudentFacilityLink> list = getStudentFacilityLinkByStudentUserName(st);
+				List<Lecture> lecList = this.commonService.getTotalLecturesScheculedOnCurrentDayForGivenBatchAndSection(st.getBatchId(), st.getSectionId());
+				List<CmsLectureVo> ls = new ArrayList<>();
+				for(Lecture l: lecList) {
+					CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
+					vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+					vo.setLecDate(null);
+					ls.add(vo);
+				}
 				List<CmsNotificationsVo> ntfList = this.commonService.getNotifications();
 
 				obj.setCmsInvoice(inv);
 				obj.setStudentFacilityLinkList(list);
-				obj.setCmsLectureVoList(lecList);
+				obj.setCmsLectureVoList(ls);
 				obj.setCmsNotificationsVoList(ntfList);
 
 			}else if("TEACHER".equalsIgnoreCase(role)) {
 				logger.info("Getting teacher data for dashboard");
-				Teacher th = new Teacher();
-				th.setTeacherEmailAddress(userName);
-				Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(th));
-				if(oth.isPresent()) {
-					th = oth.get();
-				}
+				Teacher th = this.commonService.getTeacherByEmail(userName);
+//				th.setTeacherEmailAddress(userName);
+//				Optional<Teacher> oth = this.teacherRepository.findOne(Example.of(th));
+//				if(oth.isPresent()) {
+//					th = oth.get();
+//				}
 				obj.setTeacher(th);
 				List<CmsNotificationsVo> ntfList = this.commonService.getNotifications();
 				List<CmsHolidayVo> holidayList = getHolidayList();
-				List<CmsLectureVo> lecList = getScheduledLecturesForTeacher(oth.isPresent() ? oth.get() : null);
-
+				String currentDate = DateFormatUtil.changeLocalDateFormat(LocalDate.now(ZoneId.of(CmsConstants.ZONE_ID)), CmsConstants.DATE_FORMAT_dd_MM_yyyy);
+				List<CmsLectureVo> lecList = this.commonService.getAllCurrentDateCmsLectureForTeacher(th.getId(), currentDate);
+				
 				obj.setCmsNotificationsVoList(ntfList);
 				obj.setCmsHolidayVoList(holidayList);
 				obj.setCmsLectureVoList(lecList);
@@ -122,77 +125,77 @@ public class CmsDashboardRestController {
 		return ResponseEntity.status(HttpStatus.OK).body(obj);
 	}
 
-    private CmsInvoice getInvoiceByStudentId(String userName) throws Exception{
+    private CmsInvoice getInvoiceByStudentId(Student student) throws Exception{
     	logger.info("Getting student invoice data for dashboard");
-		CmsInvoice obj = this.cmsInvoiceService.getInvoiceByStudentId(userName);
+		CmsInvoice obj = this.cmsInvoiceService.getInvoiceByStudentId(student);
         return obj;
     }
 
-    private List<StudentFacilityLink> getStudentFacilityLinkByStudentUserName(String userName) {
+    private List<StudentFacilityLink> getStudentFacilityLinkByStudentUserName(Student student) {
         logger.info("Getting student facilities data for dashboard :");
-        Optional<Student> ost = getStudent(userName);
-        StudentFacilityLink sfl = new StudentFacilityLink();
+//        Optional<Student> ost = getStudent(userName);
         List<StudentFacilityLink> ls = new ArrayList<>();
-        if(ost.isPresent()) {
-        	sfl.setStudent(ost.get());
+        if(student != null) {
+        	StudentFacilityLink sfl = new StudentFacilityLink();
+        	sfl.setStudent(student);
             ls = this.studentFacilityLinkRepository.findAll(Example.of(sfl), Sort.by(Direction.DESC, "id"));
         }
         return ls;
     }
 
-    private List<CmsLectureVo> getScheduledLecturesForStudent(String userName){
-    	logger.info("Getting student's scheduled lectures data for dashboard :");
-    	List<CmsLectureVo> ls = new ArrayList<>();
-    	Optional<Student> ost = getStudent(userName);
-    	if(ost.isPresent()) {
-    		AttendanceMaster am = new AttendanceMaster();
-//    		am.setBatch(ost.get().getBatch());
-//    		am.setSection(ost.get().getSection());
-    		List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
-    		for(AttendanceMaster a: amList) {
-    			Lecture lec = new Lecture();
-        		lec.setAttendancemaster(a);
-        		lec.setLecDate(LocalDate.now());
-        		List<Lecture> list = this.lectureRepository.findAll(Example.of(lec));
-        		for(Lecture l: list) {
-        			CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
-        			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        			ls.add(vo);
-        		}
-    		}
-
-    	}
-    	logger.debug("Total lectures scheduled today for student : "+ls.size());
-    	return ls;
-    }
-
-
-    private List<CmsLectureVo> getScheduledLecturesForTeacher(Teacher teacher){
-    	logger.info("Getting teacher's scheduled lectures data for dashboard :");
-    	List<CmsLectureVo> ls = new ArrayList<>();
-    	if(teacher != null) {
-    		Teach teach = new Teach();
-    		teach.setTeacher(teacher);
-    		AttendanceMaster am = new AttendanceMaster();
-    		am.setTeach(teach);
-
+//    private List<CmsLectureVo> getScheduledLecturesForStudent(Student student){
+//    	logger.info("Getting student's scheduled lectures data for dashboard :");
+//    	List<CmsLectureVo> ls = new ArrayList<>();
+////    	Optional<Student> ost = getStudent(userName);
+//    	if(student != null) {
+//    		AttendanceMaster am = new AttendanceMaster();
+////    		am.setBatch(ost.get().getBatch());
+////    		am.setSection(ost.get().getSection());
 //    		List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
 //    		for(AttendanceMaster a: amList) {
-    			Lecture lec = new Lecture();
-        		lec.setAttendancemaster(am);
-        		lec.setLecDate(LocalDate.now());
-        		List<Lecture> list = this.lectureRepository.findAll(Example.of(lec));
-        		for(Lecture l: list) {
-        			CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
-        			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-        			ls.add(vo);
-        		}
+//    			Lecture lec = new Lecture();
+//        		lec.setAttendancemaster(a);
+//        		lec.setLecDate(LocalDate.now());
+//        		List<Lecture> list = this.lectureRepository.findAll(Example.of(lec));
+//        		for(Lecture l: list) {
+//        			CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
+//        			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//        			ls.add(vo);
+//        		}
 //    		}
+//
+//    	}
+//    	logger.debug("Total lectures scheduled today for student : "+ls.size());
+//    	return ls;
+//    }
 
-    	}
-    	logger.debug("Total lectures scheduled today for teacher : "+ls.size());
-    	return ls;
-    }
+
+//    private List<CmsLectureVo> getScheduledLecturesForTeacher(Teacher teacher){
+//    	logger.info("Getting teacher's scheduled lectures data for dashboard :");
+//    	List<CmsLectureVo> ls = new ArrayList<>();
+//    	if(teacher != null) {
+//    		Teach teach = new Teach();
+//    		teach.setTeacher(teacher);
+//    		AttendanceMaster am = new AttendanceMaster();
+//    		am.setTeach(teach);
+//
+////    		List<AttendanceMaster> amList = this.attendanceMasterRepository.findAll(Example.of(am));
+////    		for(AttendanceMaster a: amList) {
+//    			Lecture lec = new Lecture();
+//        		lec.setAttendancemaster(am);
+//        		lec.setLecDate(LocalDate.now());
+//        		List<Lecture> list = this.lectureRepository.findAll(Example.of(lec));
+//        		for(Lecture l: list) {
+//        			CmsLectureVo vo = CommonUtil.createCopyProperties(l, CmsLectureVo.class);
+//        			vo.setStrLecDate(DateFormatUtil.changeLocalDateFormat(l.getLecDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//        			ls.add(vo);
+//        		}
+////    		}
+//
+//    	}
+//    	logger.debug("Total lectures scheduled today for teacher : "+ls.size());
+//    	return ls;
+//    }
 
 
 

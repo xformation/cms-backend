@@ -208,14 +208,14 @@ public class CmsInvoiceService {
     }
 
 
-    public CmsInvoice getInvoiceByStudentId(String studentMailId) {
-    	Student student = new Student();
-    	student.setStudentPrimaryEmailId(studentMailId);
-    	Optional<Student> ost = this.studentRepository.findOne(Example.of(student));
+    public CmsInvoice getInvoiceByStudentId(Student student) {
+//    	Student student = new Student();
+//    	student.setStudentPrimaryEmailId(studentMailId);
+//    	Optional<Student> ost = this.studentRepository.findOne(Example.of(student));
     	CmsInvoice cmsInv = null;
-    	if(ost.isPresent()) {
+    	if(student != null) {
     		Invoice inv = new Invoice();
-    		inv.setStudent(ost.get());
+    		inv.setStudent(student);
     		List<Invoice> ls = this.invoiceRepository.findAll(Example.of(inv), Sort.by(Direction.DESC, "id"));
     		if(ls != null && ls.size() > 0) {
     			cmsInv = CommonUtil.createCopyProperties(ls.get(0), CmsInvoice.class);
