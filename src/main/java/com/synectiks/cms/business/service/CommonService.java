@@ -2369,6 +2369,23 @@ public class CommonService {
         
     }
     
+    public List<CmsLectureVo> getAllCmsLectures(String fromDate, String toDate){
+    	logger.debug("Getting all cms lectures from  : "+fromDate+" to  : "+toDate);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/cmslectures?fromDate="+fromDate+"&toDate="+toDate;
+	    CmsLectureVo[] temp = this.restTemplate.getForObject(prefUrl, CmsLectureVo[].class);
+	    if(temp.length == 0) {
+	    	logger.warn("No cms lecture found for given date range. Returning empty lecture list");
+	    	return Collections.emptyList();
+	    }
+	    List<CmsLectureVo> list = new ArrayList<>();
+	    for(CmsLectureVo vo: temp) {
+	    	vo.setLecDate(null);
+	    	list.add(vo);
+	    }
+	    Collections.sort(list, (o1, o2) -> o1.getId().compareTo(o2.getId()));
+	    return list;
+    }
+    
     public static void main(String a[]) {
 //        String dt = "10/10/2019";
 //        LocalDate ld = DateFormatUtil.convertStringToLocalDate(dt, "MM/dd/yyyy");
