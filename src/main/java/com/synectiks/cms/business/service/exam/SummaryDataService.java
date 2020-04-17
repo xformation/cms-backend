@@ -1,25 +1,18 @@
 package com.synectiks.cms.business.service.exam;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-
+import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.domain.*;
+import com.synectiks.cms.repository.AcademicExamSettingRepository;
+import com.synectiks.cms.repository.TypeOfGradingRepository;
+import com.synectiks.cms.service.util.DateFormatUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.domain.AcademicExamSetting;
-import com.synectiks.cms.domain.Batch;
-import com.synectiks.cms.domain.Branch;
-import com.synectiks.cms.domain.Department;
-import com.synectiks.cms.domain.Section;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.TypeOfGrading;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.TypeOfGradingRepository;
-import com.synectiks.cms.service.util.DateFormatUtil;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class SummaryDataService {
@@ -50,7 +43,7 @@ public class SummaryDataService {
 
     @Autowired
     CommonService commonService;
-    
+
     public List<AcExamSetting> acExamSettings() {
         List<AcExamSetting> original = new ArrayList<>();
         academicExamSettingRepository.findAll().forEach(examsetting -> {
@@ -75,9 +68,14 @@ public class SummaryDataService {
             settingModel.setSubExamDate(examsetting.getExamDate().toString());
             settingModel.setSt(examsetting.getExamDate().toString());
             settingModel.setEd(examsetting.getExamDate().toString());
+            settingModel.setTotal(examsetting.getTotal());
+            settingModel.setPassing(examsetting.getPassing());
+            settingModel.setStartTime(examsetting.getStartTime());
+            settingModel.setEndTime(examsetting.getEndTime());
+            settingModel.setSemester(examsetting.getSemester());
             original.add(settingModel);
             original.sort(Comparator.comparing(AcExamSetting::getExamDate));
- });
+        });
 
         List<AcExamSetting> mergedList = new ArrayList<AcExamSetting>();
         for (AcExamSetting p : original) {
@@ -104,7 +102,7 @@ public class SummaryDataService {
         Section section = this.commonService.getSectionById(ain.get().getSectionId());
         Branch branch = this.commonService.getBranchById(ain.get().getBranchId());
         Subject subject = this.commonService.getSubjectById(ain.get().getSubjectId());
-        
+
         aimodel.setDepartmnt(department.getName());
         aimodel.setExamDate(DateFormatUtil.converUtilDateFromLocaDate(ain.get().getExamDate()));
         aimodel.setBctch(batch.getBatch().name());
@@ -115,6 +113,11 @@ public class SummaryDataService {
         aimodel.setEd(ain.get().getActions());
         aimodel.setSt(ain.get().getActions());
         aimodel.setAction(ain.get().getActions());
+        aimodel.setTotal(ain.get().getTotal());
+        aimodel.setPassing(ain.get().getPassing());
+        aimodel.setStartTime(ain.get().getStartTime());
+        aimodel.setEndTime(ain.get().getEndTime());
+        aimodel.setSemester(ain.get().getSemester());
         return aimodel;
 
     }
@@ -137,7 +140,7 @@ public class SummaryDataService {
             TypeOfGrading settingModel = new TypeOfGrading();
             BeanUtils.copyProperties(typeofgrading, settingModel);
             original.add(settingModel);
-           });
+        });
         return original;
     }
 

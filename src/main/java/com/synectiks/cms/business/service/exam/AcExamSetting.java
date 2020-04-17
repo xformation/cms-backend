@@ -1,11 +1,14 @@
 package com.synectiks.cms.business.service.exam;
 
-import javax.persistence.Id;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 
 public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -25,6 +28,11 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     private String ed;
     private String subExamDate;
     private Long countvalue;
+    private Integer total;
+    private Integer passing;
+    private String startTime;
+    private String endTime;
+    private SemesterEnum semester;
 
     public AcExamSetting() { }
 
@@ -135,6 +143,46 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
         this.countvalue = countvalue;
     }
 
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getPassing() {
+        return passing;
+    }
+
+    public void setPassing(Integer passing) {
+        this.passing = passing;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public SemesterEnum getSemester() {
+        return semester;
+    }
+
+    public void setSemester(SemesterEnum semester) {
+        this.semester = semester;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -152,23 +200,29 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
     }
 
 
-    public AcExamSetting(Long id, String examName, String departmnt, String brnch, String bctch, String sectn, String sbjct, String action,  Date examDate, String st, String ed, String subExamDate, Long countvalue) {
-        this.id=id;
+    public AcExamSetting(Long id, String examName, String departmnt, String bctch, String sectn, String brnch, String sbjct, String action, Date examDate, String st, String ed, String subExamDate, Long countvalue, Integer total, Integer passing, String startTime, String endTime, SemesterEnum semester) {
+        this.id = id;
         this.examName = examName;
         this.departmnt = departmnt;
         this.bctch = bctch;
         this.sectn = sectn;
         this.brnch = brnch;
-        this.action = action;
         this.sbjct = sbjct;
+        this.action = action;
+        this.subject = subject;
         this.examDate = examDate;
         this.st = st;
         this.ed = ed;
-        this.subExamDate= subExamDate;
-        this.countvalue= countvalue;
+        this.subExamDate = subExamDate;
+        this.countvalue = countvalue;
+        this.total = total;
+        this.passing = passing;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.semester = semester;
     }
 
-       @Override
+    @Override
     public int compareTo(AcExamSetting u) {
         if (getExamDate() == null || u.getExamDate() == null) {
             return 0;
@@ -268,7 +322,12 @@ public  class AcExamSetting implements Serializable, Comparable<AcExamSetting>{
             this.st=sdf.format(this.examDate),
             this.ed=sdf.format(other.examDate),
             this.subExamDate=strSubExam,
-            this.countvalue=countvalue
+            this.countvalue=countvalue,
+            this.total = total,
+            this.passing = passing,
+            this.startTime = startTime,
+            this.endTime = endTime,
+            this.semester = semester
 
             //=sdf.format(this.examDate)+","+sdf.format(other.examDate),
 

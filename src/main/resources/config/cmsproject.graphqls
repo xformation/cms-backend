@@ -484,6 +484,14 @@ type AcExamSetting{
     ed: String
     subExamDate: String
     countvalue: Long
+    total:Int
+    passing:Int
+    semester: SemesterEnum
+    startTime:String
+    endTime:String
+
+
+
    }
 
 type TypeOfGradingPojo{
