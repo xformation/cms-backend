@@ -26,6 +26,9 @@ public class CmsFacility implements Serializable {
     private String strSuspandEndDate;
     private Long amount;
     
+    private Long academicYearId;
+    private Long branchId;
+    
 	public Long getId() {
 		return id;
 	}
@@ -209,6 +212,18 @@ public class CmsFacility implements Serializable {
 	}
 	public void setAmount(Long amount) {
 		this.amount = amount;
+	}
+	public Long getAcademicYearId() {
+		return academicYearId;
+	}
+	public void setAcademicYearId(Long academicYearId) {
+		this.academicYearId = academicYearId;
+	}
+	public Long getBranchId() {
+		return branchId;
+	}
+	public void setBranchId(Long branchId) {
+		this.branchId = branchId;
 	}
     
     

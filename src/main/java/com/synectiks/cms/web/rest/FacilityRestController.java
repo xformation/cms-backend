@@ -1,16 +1,16 @@
 package com.synectiks.cms.web.rest;
 
-import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.CmsFacility;
-import com.synectiks.cms.domain.Facility;
-import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.repository.FacilityRepository;
-import com.synectiks.cms.service.util.CommonUtil;
-import com.synectiks.cms.service.util.DateFormatUtil;
-import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.StringTokenizer;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,28 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.*;
+import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.CmsFacility;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.enumeration.Status;
+import com.synectiks.cms.repository.FacilityRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
+import com.synectiks.cms.web.rest.util.HeaderUtil;
+
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -45,6 +60,10 @@ public class FacilityRestController {
         List<CmsFacility> failedRecords = new ArrayList<>();
         for(CmsFacility cmsFacility: list) {
             try {
+            	Branch branch = this.commonService.getBranchById(cmsFacility.getBranchId());
+            	AcademicYear ay = this.commonService.getAcademicYearById(cmsFacility.getAcademicYearId());
+            	cmsFacility.setBranch(branch);
+            	cmsFacility.setAcademicYear(ay);
                 createFacility(cmsFacility);
             }catch(Exception e) {
                 failedRecords.add(cmsFacility);
