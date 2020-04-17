@@ -57,7 +57,8 @@ public class CmsAdmissionApplicationVo implements Serializable {
     private Long departmentId;
     private String strDateOfBirth;
     private String strAdmissionDate;
-
+    private String applicationStatus;
+    
     public Long getTotalReceived() {
         return totalReceived;
     }
@@ -545,4 +546,12 @@ public class CmsAdmissionApplicationVo implements Serializable {
             ", strAdmissionDate='" + strAdmissionDate + '\'' +
             '}';
     }
+
+	public String getApplicationStatus() {
+		return applicationStatus;
+	}
+
+	public void setApplicationStatus(String applicationStatus) {
+		this.applicationStatus = applicationStatus;
+	}
 }

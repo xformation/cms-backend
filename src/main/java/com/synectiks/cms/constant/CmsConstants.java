@@ -222,5 +222,8 @@ public interface CmsConstants {
     String FEMALE = "FEMALE";
     String BOTH = "BOTH";
     
-	
+    String STATUS_RECEIVED = "RECEIVED";
+    String STATUS_FOLLOWUP = "FOLLOWUP";
+    String STATUS_DECLINED = "DECLINED";
+    String STATUS_CONVERTED_TO_ADMISSION = "CONVERTED_TO_ADMISSION";
 }

@@ -1,18 +1,24 @@
 package com.synectiks.cms.business.service;
 
-import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.constant.CmsConstants;
-import com.synectiks.cms.domain.*;
-import com.synectiks.cms.domain.enumeration.*;
-import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
-import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
-import com.synectiks.cms.graphql.types.Student.Semester;
-import com.synectiks.cms.graphql.types.Student.StudentType;
-import com.synectiks.cms.graphql.types.course.Course;
-import com.synectiks.cms.graphql.types.gender.Gender;
-import com.synectiks.cms.repository.*;
-import com.synectiks.cms.service.util.CommonUtil;
-import com.synectiks.cms.service.util.DateFormatUtil;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaBuilder.In;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +26,80 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaBuilder.In;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import com.synectiks.cms.config.ApplicationProperties;
+import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.AcademicExamSetting;
+import com.synectiks.cms.domain.AcademicYear;
+import com.synectiks.cms.domain.AttendanceMaster;
+import com.synectiks.cms.domain.Batch;
+import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.domain.Branch;
+import com.synectiks.cms.domain.City;
+import com.synectiks.cms.domain.CmsAcademicYearVo;
+import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
+import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
+import com.synectiks.cms.domain.CmsBatchVo;
+import com.synectiks.cms.domain.CmsBook;
+import com.synectiks.cms.domain.CmsBranchVo;
+import com.synectiks.cms.domain.CmsCourseEnumVo;
+import com.synectiks.cms.domain.CmsDepartmentVo;
+import com.synectiks.cms.domain.CmsEmployeeVo;
+import com.synectiks.cms.domain.CmsFacility;
+import com.synectiks.cms.domain.CmsFeeCategory;
+import com.synectiks.cms.domain.CmsFeeDetails;
+import com.synectiks.cms.domain.CmsGenderVo;
+import com.synectiks.cms.domain.CmsLectureVo;
+import com.synectiks.cms.domain.CmsNotificationsVo;
+import com.synectiks.cms.domain.CmsSectionVo;
+import com.synectiks.cms.domain.CmsSemesterVo;
+import com.synectiks.cms.domain.CmsStudentTypeVo;
+import com.synectiks.cms.domain.CmsTempStudentVo;
+import com.synectiks.cms.domain.CmsTermVo;
+import com.synectiks.cms.domain.CmsTypeOfInsuranceVo;
+import com.synectiks.cms.domain.CmsTypeOfOwnershipVo;
+import com.synectiks.cms.domain.College;
+import com.synectiks.cms.domain.Config;
+import com.synectiks.cms.domain.Department;
+import com.synectiks.cms.domain.Employee;
+import com.synectiks.cms.domain.Facility;
+import com.synectiks.cms.domain.FeeCategory;
+import com.synectiks.cms.domain.FeeDetails;
+import com.synectiks.cms.domain.Holiday;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.domain.Notifications;
+import com.synectiks.cms.domain.Section;
+import com.synectiks.cms.domain.State;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
+import com.synectiks.cms.domain.Teach;
+import com.synectiks.cms.domain.Teacher;
+import com.synectiks.cms.domain.Term;
+import com.synectiks.cms.domain.TransportRoute;
+import com.synectiks.cms.domain.Vehicle;
+import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import com.synectiks.cms.domain.enumeration.BatchEnum;
+import com.synectiks.cms.domain.enumeration.CmsBatchEnum;
+import com.synectiks.cms.domain.enumeration.CmsSectionEnum;
+import com.synectiks.cms.domain.enumeration.SectionEnum;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
+import com.synectiks.cms.graphql.types.Contract.TypeOfOwnership;
+import com.synectiks.cms.graphql.types.Insurance.TypeOfInsurance;
+import com.synectiks.cms.graphql.types.Student.Semester;
+import com.synectiks.cms.graphql.types.Student.StudentType;
+import com.synectiks.cms.graphql.types.course.Course;
+import com.synectiks.cms.graphql.types.gender.Gender;
+import com.synectiks.cms.repository.AcademicExamSettingRepository;
+import com.synectiks.cms.repository.CityRepository;
+import com.synectiks.cms.repository.NotificationsRepository;
+import com.synectiks.cms.repository.StateRepository;
+import com.synectiks.cms.repository.StudentAttendanceRepository;
+import com.synectiks.cms.repository.StudentRepository;
+import com.synectiks.cms.repository.TransportRouteRepository;
+import com.synectiks.cms.repository.VehicleRepository;
+import com.synectiks.cms.service.util.CommonUtil;
+import com.synectiks.cms.service.util.DateFormatUtil;
 
 @Component
 public class CommonService {
@@ -2098,23 +2166,24 @@ public class CommonService {
         return list.size();
     }
 
-    public Long getTotalFollowUp(Branch br,AcademicYear academicYear){
-        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-followup?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
-        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
-        return temp;
+//    public Long getTotalFollowUp(Branch br,AcademicYear academicYear){
+//        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-followup?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
+//        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
+//        return temp;
+//    }
+
+    public List<CmsAdmissionEnquiryVo> getAdmissionEnqueryListByStatus(Branch br,AcademicYear academicYear, String enquiryStatus){
+        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/cmsadmission-enquiry-by-filters?branchId="+br.getId()+"&academicYearId="+academicYear.getId()+"&enquiryStatus="+enquiryStatus;
+        CmsAdmissionEnquiryVo[] temp= this.restTemplate.getForObject(admUrl, CmsAdmissionEnquiryVo[].class);
+        List<CmsAdmissionEnquiryVo> list = Arrays.asList(temp);
+        return list;
     }
 
-    public Long getTotalConverted(Branch br,AcademicYear academicYear){
-        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-converted?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
-        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
-        return temp;
-    }
-
-    public Long getTotalDeclined(Branch br,AcademicYear academicYear){
-        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-declined?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
-        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
-        return temp;
-    }
+//    public Long getTotalDeclined(Branch br,AcademicYear academicYear){
+//        String admUrl = applicationProperties.getAdmissionSrvUrl()+"/api/total-declined?branchId="+br.getId()+"&academicYearId="+academicYear.getId();
+//        Long temp = this.restTemplate.getForObject(admUrl, Long.class);
+//        return temp;
+//    }
 
     public List<Lecture> getTotalLecturesConductedForTeacher(Teacher th, Subject sub, LocalDate dt) throws Exception{
     	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-conducted?teacherId="+th.getId()+"&subjectId="+sub.getId();
@@ -2290,7 +2359,11 @@ public class CommonService {
     }
 
     public List<Lecture> getAllLecturesAlreadyScheduled(List<AttendanceMaster> amList, CmsLectureVo vo) {
-
+    	if(amList.size() ==0 ) {
+    		logger.warn("Attendance master list is empty. Returning empty lecture list");
+    		return Collections.emptyList();
+    	}
+    	
         LocalDate lecDate = DateFormatUtil.convertStringToLocalDate(vo.getStrLecDate(), "MM/dd/yyyy");
 
         @SuppressWarnings("unchecked")
@@ -2360,9 +2433,10 @@ public class CommonService {
     	for(Lecture lecture: lectureList) {
     		lidList.add(lecture.getId());
     	}
+    			
     	@SuppressWarnings("unchecked")
-        List<StudentAttendance> list = this.entityManager.createQuery("select sa from student_attendance sa where sa.attendanceStatus :atStatus and sa.lectureId in (:lecId) ")
-            .setParameter("atStatus", status)
+    	List<StudentAttendance> list = this.entityManager.createQuery("select l from StudentAttendance l where l.attendanceStatus = :atStatus and l.lectureId in (:lecId) ")
+            .setParameter("atStatus", AttendanceStatusEnum.valueOf(status))
             .setParameter("lecId", lidList)
             .getResultList();
         return list;
@@ -2384,6 +2458,34 @@ public class CommonService {
 	    }
 	    Collections.sort(list, (o1, o2) -> o1.getId().compareTo(o2.getId()));
 	    return list;
+    }
+    
+    public List<CmsAdmissionApplicationVo> getAllAdmisionApplications(Long branchId, Long academicYearId) throws Exception{
+    	logger.debug("Getting admission application based on branchId : "+branchId+" and academicYearId : "+academicYearId);
+    	
+	    String url = applicationProperties.getAdmissionSrvUrl()+"/api/cmsadmission-application-by-filters?academicYearId="+academicYearId+"&branchId="+branchId;
+	    CmsAdmissionApplicationVo[] temp = this.restTemplate.getForObject(url, CmsAdmissionApplicationVo[].class);
+	    if(temp.length == 0) {
+	    	logger.info("No admission application found for the given criteria. Returning empty list");
+            return Collections.emptyList();
+	    }
+	    List<CmsAdmissionApplicationVo> admList = Arrays.asList(temp);
+	    Collections.sort(admList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return admList;
+    }
+    
+    public List<CmsTempStudentVo> getAllTempAdmisionApplications(Long branchId, Long academicYearId) throws Exception{
+    	logger.debug("Getting all inprogress admission application based on branchId : "+branchId+" and academicYearId : "+academicYearId);
+    	
+	    String url = applicationProperties.getAdmissionSrvUrl()+"/api/cmstemp-student-by-filters?academicYearId="+academicYearId+"&branchId="+branchId;
+	    CmsTempStudentVo[] temp = this.restTemplate.getForObject(url, CmsTempStudentVo[].class);
+	    if(temp.length == 0) {
+	    	logger.info("No inprogress admission application found for the given criteria. Returning empty list");
+            return Collections.emptyList();
+	    }
+	    List<CmsTempStudentVo> admList = Arrays.asList(temp);
+	    Collections.sort(admList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+	    return admList;
     }
     
     public static void main(String a[]) {
