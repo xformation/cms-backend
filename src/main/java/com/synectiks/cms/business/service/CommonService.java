@@ -809,6 +809,16 @@ public class CommonService {
 	    }
 	    return temp[0];
 	}
+    public Employee getEmployeeByEmail(String employeeEmailAddress) {
+		logger.debug("Getting employee based on email id : "+employeeEmailAddress);
+	    String prefUrl = applicationProperties.getPreferenceSrvUrl();
+	    String prefTeacherUrl = prefUrl+"/api/employee-by-filters?officialMailId="+employeeEmailAddress;
+	    Employee[] temp = this.restTemplate.getForObject(prefTeacherUrl, Employee[].class);
+	    if(temp.length == 0) {
+	    	return null;
+	    }
+	    return temp[0];
+	}
 
 //    public Section getSectionById(Long secId) {
 //        if(secId == null) {
@@ -1882,24 +1892,25 @@ public class CommonService {
 
     private void findUserConfig(String userName, Config config) {
         Student st = new Student();
-        Teacher th = new Teacher();
+//        Teacher th = new Teacher();
 //        Employee em = new Employee();
         st.setStudentPrimaryEmailId(userName);
-        th.setTeacherEmailAddress(userName);
+//        th.setTeacherEmailAddress(userName);
 //        em.setOfficialMailId(userName);
         Optional<Student> student = studentRepository.findOne(Example.of(st));
 //        Optional<Teacher> teacher = teacherRepository.findOne(Example.of(th));
         Teacher teacher = getTeacherByEmail(userName);
-//        Optional<Employee> employee = employeeRepository.findOne(Example.of(em));
+        Employee employee = getEmployeeByEmail(userName);
         if(student.isPresent()) {
             config.setLoggedInUser(userName);
-//            config.setCountry(student.get().getBranch().getState().getCountry());
-//            config.setState(student.get().getBranch().getState());
-//            config.setCity(student.get().getBranch().getCity());
-//            config.setBranch(student.get().getBranch());
-//            config.setDepartment(student.get().getDepartment());
+            Branch branch = this.getBranchById(student.get().getBranchId());
+            config.setCountry(branch.getState().getCountry());
+            config.setState(branch.getState());
+            config.setCity(branch.getCity());
+            config.setBranch(branch);
+            config.setDepartment(this.getDepartmentById(student.get().getDepartmentId()));
             config.setUserId(student.get().getId());
-//            config.setCollege(student.get().getBranch().getCollege());
+            config.setCollege(branch.getCollege());
         }else if(teacher != null) {
             config.setLoggedInUser(userName);
             config.setCountry(teacher.getBranch().getState().getCountry());
@@ -1910,16 +1921,16 @@ public class CommonService {
             config.setUserId(teacher.getId());
             config.setCollege(teacher.getBranch().getCollege());
         }
-//        else if(employee.isPresent()) {
-//            config.setLoggedInUser(userName);
-//            config.setCountry(employee.get().getBranch().getState().getCountry());
-//            config.setState(employee.get().getBranch().getState());
-//            config.setCity(employee.get().getBranch().getCity());
-//            config.setBranch(employee.get().getBranch());
-//            config.setDepartment(null);
-//            config.setUserId(employee.get().getId());
-//            config.setCollege(employee.get().getBranch().getCollege());
-//        }
+        else if(employee != null && !"TEACHING".equalsIgnoreCase(employee.getTypeOfEmployment())) {
+            config.setLoggedInUser(userName);
+            config.setCountry(employee.getBranch().getState().getCountry());
+            config.setState(employee.getBranch().getState());
+            config.setCity(employee.getBranch().getCity());
+            config.setBranch(employee.getBranch());
+            config.setDepartment(null);
+            config.setUserId(employee.getId());
+            config.setCollege(employee.getBranch().getCollege());
+        }
     }
 
     public Config createUserConfigForAdmin(String userName) {
