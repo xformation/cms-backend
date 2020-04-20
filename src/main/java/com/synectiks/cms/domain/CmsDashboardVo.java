@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class CmsDashboardVo implements Serializable {
 
-	private Student student;
+//	private Student student;
 	private Teacher teacher;
 	private CmsInvoice cmsInvoice;
 	private List<StudentFacilityLink> studentFacilityLinkList;
@@ -16,10 +16,11 @@ public class CmsDashboardVo implements Serializable {
 	private List<CmsNotificationsVo> cmsNotificationsVoList;
 	private List<CmsHolidayVo> cmsHolidayVoList;
 	
-	public Student getStudent() {
+	private CmsStudentVo student;
+	public CmsStudentVo getStudent() {
 		return student;
 	}
-	public void setStudent(Student student) {
+	public void setStudent(CmsStudentVo student) {
 		this.student = student;
 	}
 	public Teacher getTeacher() {

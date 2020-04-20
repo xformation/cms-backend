@@ -27,6 +27,7 @@ import com.synectiks.cms.domain.CmsHolidayVo;
 import com.synectiks.cms.domain.CmsInvoice;
 import com.synectiks.cms.domain.CmsLectureVo;
 import com.synectiks.cms.domain.CmsNotificationsVo;
+import com.synectiks.cms.domain.CmsStudentVo;
 import com.synectiks.cms.domain.Holiday;
 import com.synectiks.cms.domain.Lecture;
 import com.synectiks.cms.domain.Student;
@@ -81,7 +82,15 @@ public class CmsDashboardRestController {
 				if(ost.isPresent()) {
 					st = ost.get();
 				}
-				obj.setStudent(st);
+				CmsStudentVo csvo = CommonUtil.createCopyProperties(st, CmsStudentVo.class);
+				csvo.setAcademicYear(this.commonService.getAcademicYearById(st.getAcademicYearId()));
+				csvo.setBranch(this.commonService.getBranchById(st.getBranchId()));
+				csvo.setDepartment(this.commonService.getDepartmentById(st.getDepartmentId()));
+				csvo.setBatch(this.commonService.getBatchById(st.getBatchId()));
+				csvo.setSection(this.commonService.getSectionById(st.getSectionId()));
+				
+				obj.setStudent(csvo);
+				
 				CmsInvoice inv = getInvoiceByStudentId(st);
 				List<StudentFacilityLink> list = getStudentFacilityLinkByStudentUserName(st);
 				List<Lecture> lecList = this.commonService.getTotalLecturesScheculedOnCurrentDayForGivenBatchAndSection(st.getBatchId(), st.getSectionId());
