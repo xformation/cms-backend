@@ -1,12 +1,8 @@
 package com.synectiks.cms.influx;
 
-import com.synectiks.cms.business.service.CommonService;
-import com.synectiks.cms.config.ApplicationProperties;
-import com.synectiks.cms.domain.Lecture;
-import com.synectiks.cms.domain.Student;
-import com.synectiks.cms.domain.StudentAttendance;
-import com.synectiks.cms.domain.Subject;
-import com.synectiks.cms.domain.enumeration.AttendanceStatusEnum;
+import java.text.ParseException;
+import java.util.List;
+
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.slf4j.Logger;
@@ -14,9 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.util.List;
+import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.config.ApplicationProperties;
+import com.synectiks.cms.domain.Lecture;
+import com.synectiks.cms.domain.Student;
+import com.synectiks.cms.domain.StudentAttendance;
+import com.synectiks.cms.domain.Subject;
 
 @Component
 public class ParentInfluxPush implements InfluxPush  {
@@ -63,7 +62,6 @@ public class ParentInfluxPush implements InfluxPush  {
                     .tag("TstudentName", st.getStudentName())
                     .tag("TstudentEmail", st.getStudentPrimaryEmailId())
                     .tag("TparentEmail", st.getFatherEmailId())
-//                    .tag("Tdepartment", st.getDepartment().getName())
 //                    .tag("Tyear", st.getBatch().getBatch().toString())
                     .tag("Tsubject", sub.getSubjectCode())
                     .addField("StudentName", st.getStudentName())
