@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -26,17 +27,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import com.synectiks.cms.CmsApp;
 import com.synectiks.cms.business.service.CommonService;
+import com.synectiks.cms.config.ApplicationProperties;
 import com.synectiks.cms.constant.CmsConstants;
+import com.synectiks.cms.domain.Batch;
 import com.synectiks.cms.domain.CmsStudentVo;
+import com.synectiks.cms.domain.Section;
 import com.synectiks.cms.domain.Student;
 import com.synectiks.cms.domain.enumeration.Status;
 import com.synectiks.cms.repository.StudentRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
+import com.synectiks.cms.utils.ESEvent;
+import com.synectiks.cms.utils.ESEvent.EventType;
+import com.synectiks.cms.utils.IESEntity;
+import com.synectiks.cms.utils.IUtils;
 import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
 import com.synectiks.cms.web.rest.util.HeaderUtil;
 
@@ -339,4 +350,43 @@ public class StudentRestController {
     }
 
 
+    @RequestMapping(method = RequestMethod.POST, value = "/send-student-to-kafka")
+    public void pushToKafka() {
+    	log.info("Start pushing student entities to kafka"); 
+    	List<Student> list = this.studentRepository.findAll();
+    	for(Student student: list) {
+    		Batch batch = this.commonService.getBatchById(student.getBatchId());
+    		Section section = this.commonService.getSectionById(student.getSectionId());
+    		student.setBatchName(batch.getBatch().toString());
+    		student.setSectionName(section.getSection().toString());
+    		fireEvent(EventType.CREATE, student);
+    	}
+    	log.info("All student entities successfully uploaded to kafka");
+    }
+    
+    private void fireEvent(EventType type, Student entity) {
+        	Environment env = CmsApp.getBean(Environment.class);
+        	RestTemplate rest = CmsApp.getBean(RestTemplate.class);
+        	ApplicationProperties applicationProperties = CmsApp.getBean(ApplicationProperties.class);
+		log.info("Event type : "+type + ": " + IUtils.getStringFromValue(entity));
+		if (!IUtils.isNull(entity) && entity instanceof IESEntity) {
+			ESEvent event = ESEvent.builder(type, entity).build();
+			log.info("Event msg string : " + IUtils.getStringFromValue(event));
+			String res = null;
+			try {
+				res = IUtils.sendGetRestRequest(rest, IUtils.getValueByKey(
+						env, IUtils.KEY_KAFKA_CONFIG, applicationProperties.getKafkaUrl()),
+						IUtils.getRestParamMap(IUtils.PRM_TOPIC,
+								IUtils.getValueByKey(env, IUtils.KEY_KAFKA_TOPIC, "cms"),
+								IUtils.PRM_MSG,
+								IUtils.getStringFromValue(event)), String.class);
+			} catch(Exception ex) {
+				log.error(ex.getMessage(), ex);
+				res = null;
+			}
+			
+		} else {
+			log.error("Entity should not be null");
+		}
+	}
 }
