@@ -3,14 +3,13 @@ package com.synectiks.cms.domain;
 import java.util.List;
 
 public class ExamFilterDataCache {
-
     private List<Department> departments;
     private List<Batch> batches;
     private List<Section> sections;
     private List<CmsSemesterVo> semesters;
     private List<Branch> branches;
     private List<Subject> subjects;
-    private List<AcademicExamSetting> academicExamSettings;
+    private List<CmsAcademicExamSettingVo> academicExamSettings;
 
     public List<Department> getDepartments() {
         return departments;
@@ -60,11 +59,11 @@ public class ExamFilterDataCache {
         this.subjects = subjects;
     }
 
-    public List<AcademicExamSetting> getAcademicExamSettings() {
+    public List<CmsAcademicExamSettingVo> getAcademicExamSettings() {
         return academicExamSettings;
     }
 
-    public void setAcademicExamSettings(List<AcademicExamSetting> academicExamSettings) {
+    public void setAcademicExamSettings(List<CmsAcademicExamSettingVo> academicExamSettings) {
         this.academicExamSettings = academicExamSettings;
     }
 }

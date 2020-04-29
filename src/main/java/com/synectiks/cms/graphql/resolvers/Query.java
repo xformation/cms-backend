@@ -20,9 +20,12 @@ import java.util.Collections;
 import java.util.List;
 
 import com.synectiks.cms.business.service.*;
+import com.synectiks.cms.business.service.exam.ExamService;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.domain.enumeration.SemesterEnum;
 import com.synectiks.cms.filter.Book.BookfilterProcessor;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
+import com.synectiks.cms.filter.exam.ExamFilterProcessor;
 import com.synectiks.cms.filter.library.LibraryFilterProcessor;
 import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.cms.repository.*;
@@ -133,6 +136,8 @@ public class Query implements GraphQLQueryResolver {
     private BookfilterProcessor bookfilterProcessor;
 
     @Autowired
+    private ExamFilterProcessor examFilterProcessor;
+    @Autowired
     private LibraryFilterProcessor libraryFilterProcessor;
 
     @Autowired
@@ -146,6 +151,9 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private ExamService examService;
 
     @Autowired
     private VehicleService vehicleService;
@@ -730,6 +738,9 @@ public class Query implements GraphQLQueryResolver {
     public List<CmsBookVo>searchBook(Long bookId, Long studentId,Long departmentId,Long batchId) throws Exception{
         return Lists.newArrayList(bookfilterProcessor.searchBook(bookId,studentId,departmentId,batchId));
     }
+    public List<CmsAcademicExamSettingVo> searchAcademicExamSetting(Long sectionId, Long subjectId, Long departmentId, Long batchId, Long branchId, SemesterEnum semester, String examName){
+        return Lists.newArrayList(examFilterProcessor.searchAcademicExamSetting(sectionId, subjectId, departmentId, batchId, branchId, semester, examName));
+    }
 
     public List<Branch> getAllBranches(String branchName, Long collegeId){
         return  Lists.newArrayList(commonGraphiqlFilter.getAllBranches(branchName, collegeId));
@@ -922,30 +933,25 @@ public class Query implements GraphQLQueryResolver {
     	return cache;
     }
 
-    public ExamFilterDataCache createExamFilterDataCache(Long branchId, Long academicYearId) throws Exception{
-//        List<Branch> branchList = this.commonService.findAllBranch(); //getBranchForCriteria(Long.valueOf(branchId));
-//        List<Department> departmentList = this.commonService.findAllDepartment(); //  getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
-    	List<Batch> batchList = this.commonService.findAllBatches(); // getBatchForCriteria(departmentList);
-
-    	List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(null, null);
+    public ExamFilterDataCache createExamFilterDataCache(Long branchId, Long departmentId,Long academicYearId) throws Exception{
+        List<Branch> branchList = this.commonService.findAllBranch(); //getBranchForCriteria(Long.valueOf(branchId));
+        List<Department> departmentList = this.commonService.findAllDepartment(); //  getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+        List<Batch> batchList = this.commonService.findAllBatches(); // getBatchForCriteria(departmentList);
+        List<CmsAcademicExamSettingVo> examsList= this.examService.getAcademicList();
         List<Subject> sub = this.commonService.findAllSubject(); // getSubjectForCriteria(null, batchList);
-
         List<Section> sectionList = this.commonService.findAllSections(); // getSectionForCriteria(batchList);
-
         List<CmsSemesterVo> sem = this.commonService.getAllSemesters();
-
-
         ExamFilterDataCache cache = new ExamFilterDataCache();
-//        cache.setBranches(branchList);
-//        cache.setDepartments(departmentList);
+        cache.setBranches(branchList);
+        cache.setDepartments(departmentList);
         cache.setBatches(batchList);
         cache.setAcademicExamSettings(examsList);
         cache.setSubjects(sub);
         cache.setSections(sectionList);
         cache.setSemesters(sem);
-
         return cache;
     }
+
 
 
 //    public LibraryFilterDataCache createLibraryFilterDataCache(String collegeId, String academicYearId) throws Exception{

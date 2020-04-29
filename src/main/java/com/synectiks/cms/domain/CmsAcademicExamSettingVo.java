@@ -1,30 +1,54 @@
 package com.synectiks.cms.domain;
-
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.synectiks.cms.domain.enumeration.GradeType;
 import com.synectiks.cms.domain.enumeration.SemesterEnum;
-
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 public class CmsAcademicExamSettingVo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String examType;
+    private String examName;
     private SemesterEnum semester;
-    private String subject;
     private LocalDate examDate;
+    private String strexamDate;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+
     private String day;
     private String duration;
     private String startTime;
+    private GradeType gradeType;
     private String endTime;
     private Integer total;
     private Integer passing;
     private String actions;
+    private Long groupValue;
+    private Long countValue;
+    private Long departmentId;
+    private Long batchId;
+    private Long sectionId;
+    private Long branchId;
+    private Long academicyearId;
+    private Long subjectId;
     private Department department;
     private AcademicYear academicyear;
     private Section section;
+    private Subject subject;
+    private Batch batch;
+    private Branch branch;
 
-    private String strexamDate;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public Long getId() {
         return id;
@@ -34,12 +58,12 @@ public class CmsAcademicExamSettingVo implements Serializable {
         this.id = id;
     }
 
-    public String getExamType() {
-        return examType;
+    public String getExamName() {
+        return examName;
     }
 
-    public void setExamType(String examType) {
-        this.examType = examType;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     public SemesterEnum getSemester() {
@@ -50,20 +74,20 @@ public class CmsAcademicExamSettingVo implements Serializable {
         this.semester = semester;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public LocalDate getExamDate() {
         return examDate;
     }
 
     public void setExamDate(LocalDate examDate) {
         this.examDate = examDate;
+    }
+
+    public String getStrexamDate() {
+        return strexamDate;
+    }
+
+    public void setStrexamDate(String strexamDate) {
+        this.strexamDate = strexamDate;
     }
 
     public String getDay() {
@@ -88,6 +112,14 @@ public class CmsAcademicExamSettingVo implements Serializable {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public GradeType getGradeType() {
+        return gradeType;
+    }
+
+    public void setGradeType(GradeType gradeType) {
+        this.gradeType = gradeType;
     }
 
     public String getEndTime() {
@@ -122,6 +154,70 @@ public class CmsAcademicExamSettingVo implements Serializable {
         this.actions = actions;
     }
 
+    public Long getGroupValue() {
+        return groupValue;
+    }
+
+    public void setGroupValue(Long groupValue) {
+        this.groupValue = groupValue;
+    }
+
+    public Long getCountValue() {
+        return countValue;
+    }
+
+    public void setCountValue(Long countValue) {
+        this.countValue = countValue;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public Long getAcademicyearId() {
+        return academicyearId;
+    }
+
+    public void setAcademicyearId(Long academicyearId) {
+        this.academicyearId = academicyearId;
+    }
+
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
+
     public Department getDepartment() {
         return department;
     }
@@ -146,61 +242,60 @@ public class CmsAcademicExamSettingVo implements Serializable {
         this.section = section;
     }
 
-    public String getStrexamDate() {
-        return strexamDate;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setStrexamDate(String strexamDate) {
-        this.strexamDate = strexamDate;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CmsAcademicExamSettingVo that = (CmsAcademicExamSettingVo) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(examType, that.examType) &&
-            semester == that.semester &&
-            Objects.equals(subject, that.subject) &&
-            Objects.equals(examDate, that.examDate) &&
-            Objects.equals(day, that.day) &&
-            Objects.equals(duration, that.duration) &&
-            Objects.equals(startTime, that.startTime) &&
-            Objects.equals(endTime, that.endTime) &&
-            Objects.equals(total, that.total) &&
-            Objects.equals(passing, that.passing) &&
-            Objects.equals(actions, that.actions) &&
-            Objects.equals(department, that.department) &&
-            Objects.equals(academicyear, that.academicyear) &&
-            Objects.equals(section, that.section) &&
-            Objects.equals(strexamDate, that.strexamDate);
+    public Batch getBatch() {
+        return batch;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, examType, semester, subject, examDate, day, duration, startTime, endTime, total, passing, actions, department, academicyear, section, strexamDate);
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 
     @Override
     public String toString() {
         return "CmsAcademicExamSettingVo{" +
             "id=" + id +
-            ", examType='" + examType + '\'' +
+            ", examName='" + examName + '\'' +
             ", semester=" + semester +
-            ", subject='" + subject + '\'' +
             ", examDate=" + examDate +
+            ", strexamDate='" + strexamDate + '\'' +
             ", day='" + day + '\'' +
             ", duration='" + duration + '\'' +
             ", startTime='" + startTime + '\'' +
+            ", gradeType=" + gradeType +
             ", endTime='" + endTime + '\'' +
             ", total=" + total +
             ", passing=" + passing +
             ", actions='" + actions + '\'' +
+            ", groupValue=" + groupValue +
+            ", countValue=" + countValue +
+            ", departmentId=" + departmentId +
+            ", batchId=" + batchId +
+            ", sectionId=" + sectionId +
+            ", branchId=" + branchId +
+            ", academicyearId=" + academicyearId +
+            ", subjectId=" + subjectId +
             ", department=" + department +
             ", academicyear=" + academicyear +
             ", section=" + section +
-            ", strexamDate='" + strexamDate + '\'' +
+            ", subject=" + subject +
+            ", batch=" + batch +
+            ", branch=" + branch +
             '}';
     }
 }

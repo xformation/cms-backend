@@ -3959,6 +3959,28 @@ public class Mutation implements GraphQLMutationResolver {
         logger.debug("Total books retrieved. "+list.size());
         return ls;
     }
+
+    public List<CmsAcademicExamSettingVo> getExamList(ExamListFilterInput filter) throws Exception {
+        List<CmsAcademicExamSettingVo> list = this.examFilterProcessor.searchAcademicExamSetting(filter);
+        List<CmsAcademicExamSettingVo> ls = new ArrayList<>();
+        for(CmsAcademicExamSettingVo ace: list) {
+            CmsAcademicExamSettingVo vo = CommonUtil.createCopyProperties(ace, CmsAcademicExamSettingVo.class);
+            Section se = this.commonService.getSectionById(vo.getSectionId());
+            Branch br = this.commonService.getBranchById(vo.getBranchId());
+            Department de = this.commonService.getDepartmentById(vo.getDepartmentId());
+            Batch ba = this.commonService.getBatchById(vo.getBatchId());
+            Subject sub = this.commonService.getSubjectById(vo.getSubjectId());
+            vo.setSection(se);
+            vo.setBranch(br);
+            vo.setBatch(ba);
+            vo.setDepartment(de);
+            vo.setSubject(sub);
+            ls.add(vo);
+        }
+        logger.debug("Total Exams retrieved. "+list.size());
+        return ls;
+    }
+
     public List<CmsEmployeeVo> getEmployeeList(EmployeeListFilterInput filter) throws Exception {
         return Lists.newArrayList(employeeFilterProcessor.searchEmployee(filter));
     }
@@ -4000,17 +4022,17 @@ public class Mutation implements GraphQLMutationResolver {
         return Lists.newArrayList(academicExamSettingFilterImpl.getExamDataForAdmin(filter));
     }
 
-    public List<AcademicExamSetting> getSubjectList(ExamListFilterInput filter) throws Exception {
-        List<AcademicExamSetting> list = this.examFilterProcessor.searchSubject(filter);
-        logger.debug("Total Subjects retrieved. "+list.size());
-        return list;
-    }
-
-    public List<StudentExamReport> getSubjectandStudents(ExamReportFilterInput filter) throws Exception {
-        List<StudentExamReport> list = this.examFilterProcessor.searchSubjectandStudents(filter);
-        logger.debug("Total Subjects retrieved. "+list.size());
-        return list;
-    }
+//    public List<AcademicExamSetting> getSubjectList(ExamListFilterInput filter) throws Exception {
+//        List<AcademicExamSetting> list = this.examFilterProcessor.searchSubject(filter);
+//        logger.debug("Total Subjects retrieved. "+list.size());
+//        return list;
+//    }
+//
+//    public List<StudentExamReport> getSubjectandStudents(ExamReportFilterInput filter) throws Exception {
+//        List<StudentExamReport> list = this.examFilterProcessor.searchSubjectandStudents(filter);
+//        logger.debug("Total Subjects retrieved. "+list.size());
+//        return list;
+//    }
 
 	@Transactional(propagation=Propagation.REQUIRED)
 	public QueryResult saveDueDatePaymentRemLateFee(UpdateDueDateInput udd, UpdatePaymentRemainderInput upr, UpdateLateFeeInput ulf) {

@@ -282,6 +282,7 @@ type Query {
     searchEmployee(employeeId:Long, vehicleId:Long, employeeName:String): [CmsEmployeeVo!]!
     searchVehicle(transportRouteId:Long,vehicleId:Long,employeeId:Long,vehicleNumber:String): [CmsVehicleVo!]!
     searchBook(bookId:Long, studentId:Long, departmentId:Long, batchId:Long): [CmsBookVo!]!
+    searchAcademicExamSetting(sectionId:Long, subjectId:Long, departmentId:Long, batchId:Long, branchId:Long, semester: SemesterEnum, examName: String): [CmsAcademicExamSettingVo!]!
     searchLib(bookTitle:String, departmentId:Long,libraryId:Long): [CmsLibraryVo!]!
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
@@ -321,7 +322,7 @@ type Query {
     createVehicleDataCache: VehicleDataCache!
     createLibraryDataCache: LibraryFilterDataCache!
     createInsuranceDataCache: InsuranceDataCache!
-    createExamFilterDataCache(branchId: Long, academicYearId: Long): ExamFilterDataCache!
+    createExamFilterDataCache(branchId: Long, departmentId: Long, academicYearId: Long): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:Long, academicYearId:Long): FeeSetupDataCache!
 
 
@@ -425,8 +426,7 @@ type ExamFilterDataCache {
 	sections: [Section]
 	semesters: [CmsSemesterVo]
 	subjects: [Subject]
-	academicExamSettings : [AcademicExamSetting]
-
+	academicExamSettings : [CmsAcademicExamSettingVo]
 }
 
 type StudentFilterDataCache {
@@ -1946,9 +1946,8 @@ type Mutation {
 	getEmployeeList(filter: EmployeeListFilterInput!): [CmsEmployeeVo]!
 	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
 	getLibraryList(filter: LibraryFilterInput!):[CmsLibraryVo]!
+	getExamList(filter: ExamListFilterInput!): [CmsAcademicExamSettingVo]!
     getBookList(filter: BookListFilterInput!):[CmsBookVo]!
-	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
-	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getExamDataForAdmin(filter: ExamListFilterInput!): [DailyExamVo!]!
 	saveDueDatePaymentRemLateFee(inputd: UpdateDueDateInput, inputp: UpdatePaymentRemainderInput, inputl: UpdateLateFeeInput): QueryResult!
@@ -1986,6 +1985,36 @@ type CmsContractVo {
      exitCode: Long
      exitDescription: String
      dataList: [CmsContractVo]
+}
+
+type CmsAcademicExamSettingVo {
+id: Long
+examName: String
+semester: SemesterEnum
+examDate: Date
+strexamDate: String
+day: String
+duration: String
+startTime: String
+gradeType: GradeType
+endTime: String
+total: Int
+passing: Int
+actions: String
+groupValue: Long
+countValue: Long
+departmentId: Long
+batchId: Long
+sectionId: Long
+branchId: Long
+academicyearId: Long
+subjectId: Long
+academicyear: AcademicYear
+subject: Subject
+branch: Branch
+department: Department
+section : Section
+batch : Batch
 }
 
 
@@ -2089,15 +2118,11 @@ input BookListFilterInput {
 }
 
 input ExamListFilterInput {
-       branchId:String!
-	  departmentId:String!
-	  batchId: String!
-	  sectionId: String!
-	  subjectId: String!
-	  subjectDesc: String!
-      semester: String!
-      examName: String!
-
+       branchId:String
+	  departmentId:String
+	  batchId: String
+	  sectionId: String
+	  subjectId: String
 }
 
 input ExamReportFilterInput {
