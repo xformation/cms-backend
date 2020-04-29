@@ -43,11 +43,6 @@ public class CmsLibraryService {
         if (bookTitle != null) {
             lb.setBookTitle(bookTitle);
         }
-//
-//        if (author != null) {
-//            book.setAuthor(author);
-//        }
-//
         if (departmentId != null) {
             lb.setId(departmentId);
         }
@@ -57,6 +52,12 @@ public class CmsLibraryService {
         Example<Library> example = Example.of(lb);
         List<Library> list = this.libraryRepository.findAll(example);
         List<CmsLibraryVo> ls = new ArrayList<>();
+        for(Library lib: list) {
+            CmsLibraryVo vo = CommonUtil.createCopyProperties(lib, CmsLibraryVo.class);
+            Department d = this.commonService.getDepartmentById(vo.getDepartmentId());
+            vo.setDepartment(d);
+            ls.add(vo);
+        }
         return ls;
     }
 
@@ -73,6 +74,12 @@ public class CmsLibraryService {
         Example<Library> example = Example.of(lb);
         List<Library> list = this.libraryRepository.findAll(example);
         List<CmsLibraryVo> ls = new ArrayList<>();
+        for(Library lib: list) {
+            CmsLibraryVo vo = CommonUtil.createCopyProperties(lib, CmsLibraryVo.class);
+            Department d = this.commonService.getDepartmentById(vo.getDepartmentId());
+            vo.setDepartment(d);
+            ls.add(vo);
+        }
         return ls;
     }
     public List<CmsLibraryVo> getLibraryList(){

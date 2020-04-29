@@ -3933,9 +3933,9 @@ public class Mutation implements GraphQLMutationResolver {
             CmsLibraryVo vo = CommonUtil.createCopyProperties(lb, CmsLibraryVo.class);
             Department d = this.commonService.getDepartmentById(vo.getDepartmentId());
             vo.setDepartment(d);
-            ls.add(lb);
+            ls.add(vo);
         }
-        logger.debug("Total books retrieved. "+list.size());
+        logger.debug("Total libraries retrieved. "+list.size());
         return ls;
     }
 
@@ -3947,6 +3947,10 @@ public class Mutation implements GraphQLMutationResolver {
             vo.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(book.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
             vo.setStrDueDate(DateFormatUtil.changeLocalDateFormat(book.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
             vo.setStrReceivedDate(DateFormatUtil.changeLocalDateFormat(book.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            Batch b = this.commonService.getBatchById(vo.getBatchId());
+            Department d = this.commonService.getDepartmentById(vo.getDepartmentId());
+            vo.setBatch(b);
+            vo.setDepartment(d);
             vo.setIssueDate(null);
             vo.setDueDate(null);
             vo.setReceivedDate(null);

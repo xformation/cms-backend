@@ -6,7 +6,6 @@ public class LibraryFilterInput {
 
     private String libraryId;
     private String departmentId;
-    private String bookTitle;
 
     @JsonProperty ("libraryId")
     public String getLibraryId() {
@@ -23,13 +22,5 @@ public class LibraryFilterInput {
 
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
-    }
-    @JsonProperty ("bookTitle")
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
     }
 }

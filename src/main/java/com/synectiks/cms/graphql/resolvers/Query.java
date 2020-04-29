@@ -727,8 +727,8 @@ public class Query implements GraphQLQueryResolver {
     public List<CmsLibraryVo>searchLib(String bookTitle, Long departmentId, Long libraryId ) throws Exception {
         return  Lists.newArrayList(libraryFilterProcessor.searchLib(bookTitle, departmentId,libraryId));
     }
-    public List<CmsBookVo>searchBook(Long bookId, Long studentId) throws Exception{
-        return Lists.newArrayList(bookfilterProcessor.searchBook(bookId,studentId));
+    public List<CmsBookVo>searchBook(Long bookId, Long studentId,Long departmentId,Long batchId) throws Exception{
+        return Lists.newArrayList(bookfilterProcessor.searchBook(bookId,studentId,departmentId,batchId));
     }
 
     public List<Branch> getAllBranches(String branchName, Long collegeId){

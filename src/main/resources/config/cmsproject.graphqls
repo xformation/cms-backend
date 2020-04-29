@@ -281,7 +281,7 @@ type Query {
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
     searchEmployee(employeeId:Long, vehicleId:Long, employeeName:String): [CmsEmployeeVo!]!
     searchVehicle(transportRouteId:Long,vehicleId:Long,employeeId:Long,vehicleNumber:String): [CmsVehicleVo!]!
-    searchBook(bookId:Long, studentId:Long): [CmsBookVo!]!
+    searchBook(bookId:Long, studentId:Long, departmentId:Long, batchId:Long): [CmsBookVo!]!
     searchLib(bookTitle:String, departmentId:Long,libraryId:Long): [CmsLibraryVo!]!
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
@@ -2079,12 +2079,13 @@ input VehicleListFilterInput {
 input LibraryFilterInput {
     libraryId: String
     departmentId: String
-    bookTitle: String
 }
 
 input BookListFilterInput {
    studentId:String
    bookId:String
+   departmentId: String
+   batchId: String
 }
 
 input ExamListFilterInput {

@@ -33,17 +33,8 @@ public class BookService {
     @Autowired
     CommonService commonService;
 
-    public List<CmsBookVo> searchBook(Long studentId,Long bookId) {
+    public List<CmsBookVo> searchBook(Long studentId,Long bookId,Long departmentId,Long batchId) {
         Book b = new Book();
-
-//        if (bookTitle != null) {
-//            book.setBookTitle(bookTitle);
-//        }
-//
-//        if (author != null) {
-//            book.setAuthor(author);
-//        }
-//
         if (studentId != null) {
             Student student = new Student();
             student.setId(studentId);
@@ -52,17 +43,26 @@ public class BookService {
         if (bookId != null) {
             b.setId(bookId);
         }
+        if (departmentId != null) {
+            b.setDepartmentId(departmentId);
+        }
+        if (batchId != null) {
+            b.setBatchId(batchId);
+        }
+//        if (bookStatus != null) {
+//            b.set(bookId);
+//        }
         Example<Book> example = Example.of(b);
         List<Book> list = this.bookRepository.findAll(example);
         List<CmsBookVo> ls = new ArrayList<>();
         for(Book book: list) {
             CmsBookVo vo = CommonUtil.createCopyProperties(book, CmsBookVo.class);
-            vo.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(book.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrDueDate(DateFormatUtil.changeLocalDateFormat(book.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrReceivedDate(DateFormatUtil.changeLocalDateFormat(book.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setIssueDate(null);
-            vo.setDueDate(null);
-            vo.setReceivedDate(null);
+//            vo.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(book.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrDueDate(DateFormatUtil.changeLocalDateFormat(book.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrReceivedDate(DateFormatUtil.changeLocalDateFormat(book.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setIssueDate(null);
+//            vo.setDueDate(null);
+//            vo.setReceivedDate(null);
             ls.add(vo);
         }
         return ls;
@@ -81,17 +81,23 @@ public class BookService {
                 b.setId(Long.valueOf(filter.getBookId()));
             }
         }
+        if (!CommonUtil.isNullOrEmpty(filter.getDepartmentId())) {
+            b.setDepartmentId(Long.parseLong(filter.getDepartmentId()));
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getBatchId())) {
+            b.setBatchId(Long.parseLong(filter.getBatchId()));
+        }
         Example<Book> example = Example.of(b);
         List<Book> list = this.bookRepository.findAll(example);
         List<CmsBookVo> ls = new ArrayList<>();
         for(Book book: list) {
             CmsBookVo vo = CommonUtil.createCopyProperties(book, CmsBookVo.class);
-            vo.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(book.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrDueDate(DateFormatUtil.changeLocalDateFormat(book.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrReceivedDate(DateFormatUtil.changeLocalDateFormat(book.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setIssueDate(null);
-            vo.setDueDate(null);
-            vo.setReceivedDate(null);
+//            vo.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(book.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrDueDate(DateFormatUtil.changeLocalDateFormat(book.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrReceivedDate(DateFormatUtil.changeLocalDateFormat(book.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setIssueDate(null);
+//            vo.setDueDate(null);
+//            vo.setReceivedDate(null);
             ls.add(vo);
         }
         return ls;
