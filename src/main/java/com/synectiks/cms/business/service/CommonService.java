@@ -12,13 +12,13 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,6 @@ import com.synectiks.cms.domain.CmsAcademicYearVo;
 import com.synectiks.cms.domain.CmsAdmissionApplicationVo;
 import com.synectiks.cms.domain.CmsAdmissionEnquiryVo;
 import com.synectiks.cms.domain.CmsBatchVo;
-import com.synectiks.cms.domain.CmsBook;
 import com.synectiks.cms.domain.CmsBranchVo;
 import com.synectiks.cms.domain.CmsCourseEnumVo;
 import com.synectiks.cms.domain.CmsDepartmentVo;
@@ -90,14 +89,6 @@ import com.synectiks.cms.graphql.types.Student.Semester;
 import com.synectiks.cms.graphql.types.Student.StudentType;
 import com.synectiks.cms.graphql.types.course.Course;
 import com.synectiks.cms.graphql.types.gender.Gender;
-import com.synectiks.cms.repository.AcademicExamSettingRepository;
-import com.synectiks.cms.repository.CityRepository;
-import com.synectiks.cms.repository.NotificationsRepository;
-import com.synectiks.cms.repository.StateRepository;
-import com.synectiks.cms.repository.StudentAttendanceRepository;
-import com.synectiks.cms.repository.StudentRepository;
-import com.synectiks.cms.repository.TransportRouteRepository;
-import com.synectiks.cms.repository.VehicleRepository;
 import com.synectiks.cms.service.util.CommonUtil;
 import com.synectiks.cms.service.util.DateFormatUtil;
 
@@ -158,6 +149,12 @@ public class CommonService {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private LibraryRepository libraryRepository;
 
 //    @Autowired
 //    private EmployeeRepository employeeRepository;
@@ -748,6 +745,38 @@ public class CommonService {
         }
         return null;
     }
+    public Student getStudentById(Long studentId) {
+        if(studentId == null) {
+            return null;
+        }
+        Optional<Student> newst = this.studentRepository.findById(studentId);
+        if(newst.isPresent()) {
+            return newst.get();
+        }
+        return null;
+    }
+    public Book getBookById(Long bookId) {
+        if(bookId == null) {
+            return null;
+        }
+        Optional<Book> newb = this.bookRepository.findById(bookId);
+        if(newb.isPresent()) {
+            return newb.get();
+        }
+        return null;
+    }
+
+    public Library getLibraryById(Long libraryId) {
+        if(libraryId == null) {
+            return null;
+        }
+        Optional<Library> newlb = this.libraryRepository.findById(libraryId);
+        if(newlb.isPresent()) {
+            return newlb.get();
+        }
+        return null;
+    }
+
     public Vehicle getVehicleById(Long vehicleId) {
         if(vehicleId == null) {
             return null;
@@ -1366,52 +1395,52 @@ public class CommonService {
         return examsList;
     }
 
-    public List<CmsBook> getBookForCriteria(List<Library> lib, List<Student> std){
-        if(lib.size() == 0 || std.size() == 0 ) {
-            logger.warn("Either Library or Student list is empty. Returning empty Book list.");
-            logger.warn("Total records in Library list: "+lib.size()+", total records in Student list: "+std.size());
-            return Collections.emptyList();
-        }
-        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<Book> query = cb.createQuery(Book.class);
-        Root<Book> root = query.from(Book.class);
-        In<Long> inLibrary = cb.in(root.get("library"));
-        for (Library dt : lib) {
-            inLibrary.value(dt.getId());
-        }
-        In<Long> inStudent = cb.in(root.get("student"));
-        for (Student bth : std) {
-            inStudent.value(bth.getId());
-        }
-
-        CriteriaQuery<Book> select = query.select(root).where(cb.and(inLibrary), cb.and(inStudent));
-        TypedQuery<Book> typedQuery = this.entityManager.createQuery(select);
-        List<Book> booksList = typedQuery.getResultList();
-        List<CmsBook> ls = new ArrayList<>();
-
-        for(Book ff: booksList) {
-            CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
-            if(ff.getDueDate() != null) {
-                cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setDueDate(null);
-            }
-            if(ff.getIssueDate() != null) {
-                cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setIssueDate(null);
-            }
-            if(ff.getReceivedDate() != null) {
-                cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setReceivedDate(null);
-            }
-
-            ls.add(cfc);
-        }
-        Collections.sort(ls, Collections.reverseOrder());
-        logger.debug("Returning list of fee category from JPA criteria query. Total records : "+booksList.size());
-        return ls;
-
-
-    }
+//    public List<CmsBook> getBookForCriteria(List<Library> lib, List<Student> std){
+//        if(lib.size() == 0 || std.size() == 0 ) {
+//            logger.warn("Either Library or Student list is empty. Returning empty Book list.");
+//            logger.warn("Total records in Library list: "+lib.size()+", total records in Student list: "+std.size());
+//            return Collections.emptyList();
+//        }
+//        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Book> query = cb.createQuery(Book.class);
+//        Root<Book> root = query.from(Book.class);
+//        In<Long> inLibrary = cb.in(root.get("library"));
+//        for (Library dt : lib) {
+//            inLibrary.value(dt.getId());
+//        }
+//        In<Long> inStudent = cb.in(root.get("student"));
+//        for (Student bth : std) {
+//            inStudent.value(bth.getId());
+//        }
+//
+//        CriteriaQuery<Book> select = query.select(root).where(cb.and(inLibrary), cb.and(inStudent));
+//        TypedQuery<Book> typedQuery = this.entityManager.createQuery(select);
+//        List<Book> booksList = typedQuery.getResultList();
+//        List<CmsBook> ls = new ArrayList<>();
+//
+//        for(Book ff: booksList) {
+//            CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
+//            if(ff.getDueDate() != null) {
+//                cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//                cfc.setDueDate(null);
+//            }
+//            if(ff.getIssueDate() != null) {
+//                cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//                cfc.setIssueDate(null);
+//            }
+//            if(ff.getReceivedDate() != null) {
+//                cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//                cfc.setReceivedDate(null);
+//            }
+//
+//            ls.add(cfc);
+//        }
+//        Collections.sort(ls, Collections.reverseOrder());
+//        logger.debug("Returning list of fee category from JPA criteria query. Total records : "+booksList.size());
+//        return ls;
+//
+//
+//    }
 
     public List<Teach> getTeachForCriteria(List<Subject> subjectList, Long teacherId){
         if(subjectList.size() == 0) {
@@ -2032,14 +2061,14 @@ public class CommonService {
 	    logger.info("Total lectures scheduled for subject : ",list.size());
 	    return list;
     }
-    
+
     public List<Lecture> getTotalLecturesConductedOfGivenSubject(Subject subject) throws Exception{
 
     	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-conducted?subjectId="+subject.getId();
 	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
 	    List<Lecture> list = Arrays.asList(temp);
 	    return list;
-	    
+
 //        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 //        CriteriaQuery<StudentAttendance> query = cb.createQuery(StudentAttendance.class);
 //        Root<StudentAttendance> root = query.from(StudentAttendance.class);
@@ -2062,7 +2091,7 @@ public class CommonService {
 //        logger.debug("Lecture date : "+dt+". Student id : "+student.getId()+". Student email : "+student.getStudentPrimaryEmailId()+". Total lectures conducted till date for given : "+lectureList.size());
 //        return lectureList;
     }
-    
+
     public List<StudentAttendance> getTotalLecturesConductedForStudent(Student student, LocalDate dt) throws Exception{
 
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
@@ -2131,14 +2160,14 @@ public class CommonService {
 //        logger.debug("Total subjects teach by teacher "+th.getTeacherName() + " are : "+list.size());
 //        return list;
     }
-    
+
     public List<Lecture> getTotalLecturesScheculedOnCurrentDayForGivenBatchAndSection(Long batchId, Long sectionId) {
     	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-scheduled-on-current-day?batchId="+batchId+"&sectionId="+sectionId;
 	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
 	    List<Lecture> list = Arrays.asList(temp);
 	    return list;
     }
-    
+
     public List<Lecture> getAllLecturesScheduledForTeacher(Teacher th, Subject sub) {
     	String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/total-lectures-scheduled?teacherId="+th.getId()+"&subjectId="+sub.getId();
 	    Lecture[] temp = this.restTemplate.getForObject(prefUrl, Lecture[].class);
@@ -2146,7 +2175,7 @@ public class CommonService {
 	    logger.info("Total lectures scheduled for teacher : ",list.size());
 	    return list;
 //        AcademicYear ay = this.getActiveAcademicYear();
-//        
+//
 //        String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/teach-by-filters?teacherId="+th.getId()+"&subjectId="+sub.getId();
 //	    Teach[] temp = this.restTemplate.getForObject(prefUrl, Teach[].class);
 //	    List<Teach> thList = Arrays.asList(temp);
@@ -2374,7 +2403,7 @@ public class CommonService {
     		logger.warn("Attendance master list is empty. Returning empty lecture list");
     		return Collections.emptyList();
     	}
-    	
+
         LocalDate lecDate = DateFormatUtil.convertStringToLocalDate(vo.getStrLecDate(), "MM/dd/yyyy");
 
         @SuppressWarnings("unchecked")
@@ -2444,16 +2473,16 @@ public class CommonService {
     	for(Lecture lecture: lectureList) {
     		lidList.add(lecture.getId());
     	}
-    			
+
     	@SuppressWarnings("unchecked")
     	List<StudentAttendance> list = this.entityManager.createQuery("select l from StudentAttendance l where l.attendanceStatus = :atStatus and l.lectureId in (:lecId) ")
             .setParameter("atStatus", AttendanceStatusEnum.valueOf(status))
             .setParameter("lecId", lidList)
             .getResultList();
         return list;
-        
+
     }
-    
+
     public List<CmsLectureVo> getAllCmsLectures(String fromDate, String toDate){
     	logger.debug("Getting all cms lectures from  : "+fromDate+" to  : "+toDate);
 	    String prefUrl = applicationProperties.getPreferenceSrvUrl()+"/api/cmslectures?fromDate="+fromDate+"&toDate="+toDate;
@@ -2470,10 +2499,10 @@ public class CommonService {
 	    Collections.sort(list, (o1, o2) -> o1.getId().compareTo(o2.getId()));
 	    return list;
     }
-    
+
     public List<CmsAdmissionApplicationVo> getAllAdmisionApplications(Long branchId, Long academicYearId) throws Exception{
     	logger.debug("Getting admission application based on branchId : "+branchId+" and academicYearId : "+academicYearId);
-    	
+
 	    String url = applicationProperties.getAdmissionSrvUrl()+"/api/cmsadmission-application-by-filters?academicYearId="+academicYearId+"&branchId="+branchId;
 	    CmsAdmissionApplicationVo[] temp = this.restTemplate.getForObject(url, CmsAdmissionApplicationVo[].class);
 	    if(temp.length == 0) {
@@ -2484,10 +2513,10 @@ public class CommonService {
 	    Collections.sort(admList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
 	    return admList;
     }
-    
+
     public List<CmsTempStudentVo> getAllTempAdmisionApplications(Long branchId, Long academicYearId) throws Exception{
     	logger.debug("Getting all inprogress admission application based on branchId : "+branchId+" and academicYearId : "+academicYearId);
-    	
+
 	    String url = applicationProperties.getAdmissionSrvUrl()+"/api/cmstemp-student-by-filters?academicYearId="+academicYearId+"&branchId="+branchId;
 	    CmsTempStudentVo[] temp = this.restTemplate.getForObject(url, CmsTempStudentVo[].class);
 	    if(temp.length == 0) {
@@ -2498,7 +2527,7 @@ public class CommonService {
 	    Collections.sort(admList, (o1, o2) -> o2.getId().compareTo(o1.getId()));
 	    return admList;
     }
-    
+
     public static void main(String a[]) {
 //        String dt = "10/10/2019";
 //        LocalDate ld = DateFormatUtil.convertStringToLocalDate(dt, "MM/dd/yyyy");

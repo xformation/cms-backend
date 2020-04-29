@@ -13,8 +13,13 @@ import javax.persistence.Query;
 
 import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.filter.Book.BookListFilterInput;
+import com.synectiks.cms.filter.Book.BookfilterProcessor;
+import com.synectiks.cms.filter.library.LibraryFilterInput;
+import com.synectiks.cms.filter.library.LibraryFilterProcessor;
 import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.cms.filter.vehicle.VehicleListFilterInput;
+import com.synectiks.cms.graphql.types.Book.AddBookPayload;
 import com.synectiks.cms.graphql.types.Contract.AddContractPayload;
 import com.synectiks.cms.graphql.types.Student.StudentInput;
 import com.synectiks.cms.graphql.types.Student.StudentPayload;
@@ -40,9 +45,6 @@ import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.enumeration.Frequency;
 import com.synectiks.cms.domain.enumeration.InvoicePaymentStatus;
 import com.synectiks.cms.domain.enumeration.Status;
-import com.synectiks.cms.exceptions.BranchIdNotFoundException;
-import com.synectiks.cms.exceptions.FileNameNotFoundException;
-import com.synectiks.cms.exceptions.FilePathNotFoundException;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectMutationPayload;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
@@ -58,8 +60,8 @@ import com.synectiks.cms.filter.invoice.InvoiceFilterProcessor;
 import com.synectiks.cms.filter.lecture.LectureScheduleFilter;
 import com.synectiks.cms.filter.lecture.LectureScheduleInput;
 import com.synectiks.cms.filter.lecture.LectureScheduleProcessor;
-import com.synectiks.cms.filter.library.LibraryFilterInput;
-import com.synectiks.cms.filter.library.LibraryFilterProcessor;
+//import com.synectiks.cms.filter.library.LibraryFilterInput;
+//import com.synectiks.cms.filter.library.LibraryFilterProcessor;
 import com.synectiks.cms.filter.student.StudentFilterProcessor;
 import com.synectiks.cms.filter.student.StudentListFilterInput;
 import com.synectiks.cms.filter.studentattendance.DailyAttendanceVo;
@@ -131,9 +133,6 @@ import com.synectiks.cms.graphql.types.Batch.RemoveBatchPayload;
 import com.synectiks.cms.graphql.types.Batch.UpdateBatchInput;
 import com.synectiks.cms.graphql.types.Batch.UpdateBatchPayload;
 import com.synectiks.cms.graphql.types.Book.AddBookInput;
-import com.synectiks.cms.graphql.types.Book.RemoveBookInput;
-import com.synectiks.cms.graphql.types.Book.RemoveBookPayload;
-import com.synectiks.cms.graphql.types.Book.UpdateBookInput;
 import com.synectiks.cms.graphql.types.Branch.AddBranchInput;
 import com.synectiks.cms.graphql.types.Branch.AddBranchPayload;
 import com.synectiks.cms.graphql.types.Branch.RemoveBranchInput;
@@ -238,10 +237,6 @@ import com.synectiks.cms.graphql.types.LegalEntity.UpdateLegalEntityInput;
 import com.synectiks.cms.graphql.types.LegalEntity.UpdateLegalEntityPayload;
 import com.synectiks.cms.graphql.types.Library.AddLibraryInput;
 import com.synectiks.cms.graphql.types.Library.AddLibraryPayload;
-import com.synectiks.cms.graphql.types.Library.RemoveLibraryInput;
-import com.synectiks.cms.graphql.types.Library.RemoveLibraryPayload;
-import com.synectiks.cms.graphql.types.Library.UpdateLibraryInput;
-import com.synectiks.cms.graphql.types.Library.UpdateLibraryPayload;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AbstractPaymentRemainderPayload;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AddPaymentRemainderInput;
 import com.synectiks.cms.graphql.types.PaymentRemainder.AddPaymentRemainderPayload;
@@ -379,6 +374,12 @@ public class Mutation implements GraphQLMutationResolver {
     StudentService studentService;
 
     @Autowired
+    BookService bookService;
+
+    @Autowired
+    CmsLibraryService cmsLibraryService;
+
+    @Autowired
     private AcademicYearRepository academicYearRepository;
     @Autowired
     private AttendanceMasterRepository attendanceMasterRepository;
@@ -502,10 +503,16 @@ public class Mutation implements GraphQLMutationResolver {
     private VehicleFilterProcessor vehicleFilterProcessor;
 
     @Autowired
-    private AdmissionApplicationProcessor admissionApplicationProcessor;
+    private LibraryFilterProcessor libraryFilterProcessor;
 
     @Autowired
-    private LibraryFilterProcessor libraryFilterProcessor;
+    private BookfilterProcessor bookfilterProcessor;
+
+    @Autowired
+    private AdmissionApplicationProcessor admissionApplicationProcessor;
+
+//    @Autowired
+//    private LibraryFilterProcessor libraryFilterProcessor;
 
 //    public Mutation(AcademicExamSettingRepository academicExamSettingRepository,BookRepository bookRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, CountryRepository countryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, AdmissionApplicationRepository admissionApplicationRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, LocationRepository locationRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, PaymentRemainderRepository paymentRemainderRepository, LateFeeRepository lateFeeRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository libraryRepository, VehicleRepository vehicleRepository, EmployeeRepository employeeRepository, ContractRepository contractRepository, InsuranceRepository insuranceRepository, EntityManager entityManager) {
 //        this.academicExamSettingRepository = academicExamSettingRepository;
@@ -582,6 +589,16 @@ public class Mutation implements GraphQLMutationResolver {
     public AddTransportRoutePayload addTransportRoute(AddTransportRouteInput cmsTransportVo) {
         CmsTransportVo vo = this.transportService.addTransportRoute(cmsTransportVo);
         return new AddTransportRoutePayload(vo);
+    }
+
+    public AddBookPayload addBook(AddBookInput cmsBookVo) {
+        CmsBookVo vo = this.bookService.addBook(cmsBookVo);
+        return new AddBookPayload(vo);
+    }
+
+    public AddLibraryPayload addLibrary(AddLibraryInput cmsLibraryVo) {
+        CmsLibraryVo vo = this.cmsLibraryService.addLibrary(cmsLibraryVo);
+        return new AddLibraryPayload(vo);
     }
 
     public AddCountryPayload addCountry(AddCountryInput addCountryInput) {
@@ -3026,51 +3043,6 @@ public class Mutation implements GraphQLMutationResolver {
 //        al.add(b);
 //        return al;
 //    }
-    public List<CmsBook> addBook(List<AddBookInput> inputlist) {
-        List<CmsBook> al = new ArrayList<>();
-        for (AddBookInput input : inputlist) {
-            Student student = studentRepository.findById(input.getStudentId()).get();
-            Library library = libraryRepository.findById(input.getLibraryId()).get();
-            Book b = CommonUtil.createCopyProperties(input, Book.class);
-
-            b.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getIssueDate()));
-            b.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getDueDate()));
-            b.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(input.getReceivedDate()));
-            b.setNoOfCopiesAvailable(input.getNoOfCopiesAvailable());
-            b.setStatus(input.getStatus());
-            b.setStudent(student);
-            b.setLibrary(library);
-            bookRepository.save(b);
-
-            Book bb = new Book();
-            bb.setStudent(student);
-            bb.setLibrary(library);
-            Example<Book> example = Example.of(bb);
-            List<Book> list = this.bookRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-//            List<CmsBook> ls = new ArrayList<>();
-            for (Book ff : list) {
-                CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
-                if (ff.getIssueDate() != null) {
-                    cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                    cfc.setIssueDate(null);
-                }
-
-                if (ff.getDueDate() != null) {
-                    cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                    cfc.setDueDate(null);
-                }
-
-                if (ff.getReceivedDate() != null) {
-                    cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                    cfc.setReceivedDate(null);
-                }
-                al.add(cfc);
-            }
-
-        }
-        return al;
-    }
-
 
     public List<CmsFeeCategory> addFeeCategory(AddFeeCategoryInput addFeeCategoryInput) throws Exception {
         FeeCategory fc = CommonUtil.createCopyProperties(addFeeCategoryInput, FeeCategory.class);
@@ -3114,52 +3086,6 @@ public class Mutation implements GraphQLMutationResolver {
             ls.add(cfc);
         }
         return ls;
-    }
-    public List<CmsBook> updateBook(UpdateBookInput updateBookInput) throws ParseException, Exception {
-
-        Book fc = CommonUtil.createCopyProperties(updateBookInput, Book.class);
-        fc.setStatus(updateBookInput.getStatus());
-        fc.setNoOfCopiesAvailable(updateBookInput.getNoOfCopiesAvailable());
-        fc.setIssueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getIssueDate()));
-        fc.setDueDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getDueDate()));
-        fc.setReceivedDate(DateFormatUtil.convertLocalDateFromUtilDate(updateBookInput.getReceivedDate()));
-        Library lib = new Library();
-        lib.setId(updateBookInput.getLibraryId());
-        fc.setLibrary(lib);
-        Student st = new Student();
-        st.setId(updateBookInput.getStudentId());
-        fc.setStudent(st);
-
-
-        fc = bookRepository.save(fc);
-
-        Book f = new Book();
-        f.setLibrary(lib);
-        f.setStudent(st);
-
-        Example<Book> example = Example.of(f);
-        List<Book> list = this.bookRepository.findAll(example, Sort.by(Direction.DESC, "id"));
-        List<CmsBook> ls = new ArrayList<>();
-        for(Book ff: list) {
-            CmsBook cfc = CommonUtil.createCopyProperties(ff, CmsBook.class);
-
-            if(ff.getIssueDate() != null) {
-                cfc.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(ff.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setIssueDate(null);
-            }
-            if(ff.getDueDate() != null) {
-                cfc.setStrDueDate(DateFormatUtil.changeLocalDateFormat(ff.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setDueDate(null);
-            }
-            if(ff.getReceivedDate() != null) {
-                cfc.setStrRecDate(DateFormatUtil.changeLocalDateFormat(ff.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-                cfc.setReceivedDate(null);
-            }
-            cfc.setNoOfCopiesAvailable(ff.getNoOfCopiesAvailable());
-            ls.add(cfc);
-        }
-        return ls;
-
     }
 
     public List<CmsFeeCategory> updateFeeCategory(UpdateFeeCategoryInput updateFeeCategoryInput) throws ParseException, Exception {
@@ -3424,7 +3350,7 @@ public class Mutation implements GraphQLMutationResolver {
 //        final Student student = studentRepository.findById(addFacilityInput.getStudentId()).get();
 //        AcademicYear academicYear = academicYearRepository.findById(addFacilityInput.getAcademicyearId()).get();
         Facility facility = new Facility();
-        
+
         facility.setAcademicYearId(addFacilityInput.getAcademicyearId());
         facility.setBranchId(addFacilityInput.getBranchId());
         facility.setName(addFacilityInput.getName());
@@ -3612,7 +3538,7 @@ public class Mutation implements GraphQLMutationResolver {
 
     public AddInvoicePayload addInvoice(AddInvoiceInput addInvoiceInput) {
     	Invoice invoice   = new Invoice();
-        
+
     	if(addInvoiceInput.getFeeCategoryId() != null) {
     		Optional<FeeCategory> feeCategory = feeCategoryRepository.findById(addInvoiceInput.getFeeCategoryId());
         	if(feeCategory.isPresent()) {
@@ -3629,7 +3555,7 @@ public class Mutation implements GraphQLMutationResolver {
     		Optional<DueDate> dueDate = dueDateRepository.findById(addInvoiceInput.getDueDateId());
     		if(dueDate.isPresent()) {
     			invoice.setDueDate(dueDate.get());
-    	        
+
     		}
     	}
     	if(addInvoiceInput.getPaymentRemainderId() != null) {
@@ -3638,7 +3564,7 @@ public class Mutation implements GraphQLMutationResolver {
     			invoice.setPaymentRemainder(paymentRemainder.get());
     		}
     	}
-        
+
         Student student = studentRepository.findById(addInvoiceInput.getStudentId()).get();
         invoice.setStudent(student);
         invoice.setBranchId(addInvoiceInput.getBranchId());
@@ -3654,26 +3580,26 @@ public class Mutation implements GraphQLMutationResolver {
         invoice.setInvoiceNumber(String.valueOf(student.getId())+""+String.valueOf(dt));
         invoice.setPaymentDate(LocalDate.now());
         invoice.setBank(addInvoiceInput.getBank());
-        
+
         CmsStudentVo vo = CommonUtil.createCopyProperties(student, CmsStudentVo.class);
         vo.setFeeDetailsList(this.studentFilterProcessor.getFeeDetailsList(vo));
 		vo.setFacilityList(this.studentFilterProcessor.getFacilityList(vo));
-		
+
 		Float totalFee = this.studentService.getTotalFees(vo.getFeeDetailsList(), vo.getFacilityList());
         Long totalFeePaid = this.studentService.getTotalFeePaid(vo);
         Long outstandingAmount = totalFee.longValue() -  (totalFeePaid + addInvoiceInput.getAmountPaid());
         invoice.setOutStandingAmount(outstandingAmount);
         //        invoice.setNextPaymentDate();
-        
+
 //        invoice.setOnlineTxnRefNumber(addInvoiceInput.getOnlineTxnRefNumber());
 //        invoice.setComments(addInvoiceInput.getComments());
 //        invoice.setCollegeId(addInvoiceInput.getCollegeId());
-        
+
         invoiceRepository.save(invoice);
         return new AddInvoicePayload(invoice);
     }
 
-    
+
     public UpdateInvoicePayload updateInvoice(UpdateInvoiceInput updateInvoiceInput) {
         Invoice invoice = invoiceRepository.findById(updateInvoiceInput.getId()).get();
         if (updateInvoiceInput.getInvoiceNumber() != null) {
@@ -3770,61 +3696,6 @@ public class Mutation implements GraphQLMutationResolver {
         invoiceRepository.delete(invoice);
         return new RemoveInvoicePayload(Lists.newArrayList(invoiceRepository.findAll()));
     }
-
-    public AddLibraryPayload addLibrary(AddLibraryInput libraryInput){
-        Batch batch = batchRepository.findById(libraryInput.getBatchId()).get();
-        Subject subject = subjectRepository.findById(libraryInput.getSubjectId()).get();
-        final Library book = new Library ();
-        book.setBookTitle(libraryInput.getBookTitle());
-        book.setAuthor(libraryInput.getAuthor());
-        book.setBookNo(libraryInput.getBookNo());
-        book.setNoOfCopies(libraryInput.getNoOfCopies());
-        book.setAdditionalInfo(libraryInput.getAdditionalInfo());
-        book.setUniqueNo(libraryInput.getUniqueNo());
-        book.setBatch(batch);
-        book.setSubject(subject);
-        libraryRepository.save(book);
-        return new AddLibraryPayload(book);
-    }
-    public UpdateLibraryPayload updateLibrary(UpdateLibraryInput updateLibraryInput) {
-        Library book = libraryRepository.findById(updateLibraryInput.getId()).get();
-        if(updateLibraryInput.getBookTitle()!=null) {
-            book.setBookTitle(updateLibraryInput.getBookTitle());
-        }
-        if (updateLibraryInput.getAuthor() != null){
-            book.setAuthor(updateLibraryInput.getAuthor());
-        }
-        if(updateLibraryInput.getBookNo()!=null){
-            book.setBookNo(updateLibraryInput.getBookNo());
-        }
-        if (updateLibraryInput.getNoOfCopies() != null) {
-            book.setNoOfCopies(updateLibraryInput.getNoOfCopies());
-        }
-        if (updateLibraryInput.getAdditionalInfo() != null) {
-            book.setAdditionalInfo(updateLibraryInput.getAdditionalInfo());
-        }
-        if (updateLibraryInput.getUniqueNo() != null) {
-            book.setUniqueNo(updateLibraryInput.getUniqueNo());
-        }
-
-        if(updateLibraryInput.getBatchId()!=null){
-            Batch batch =batchRepository.findById(updateLibraryInput.getBatchId()).get();
-            book.setBatch(batch);
-        }
-        if(updateLibraryInput.getSubjectId()!=null){
-            Subject subject =subjectRepository.findById(updateLibraryInput.getSubjectId()).get();
-            book.setSubject(subject);
-        }
-
-        libraryRepository.save(book);
-        return new UpdateLibraryPayload(book);
-
-    }
-    public RemoveLibraryPayload removeLibrary(RemoveLibraryInput removeLibraryInput){
-        Library book =libraryRepository.findById(removeLibraryInput.getLibraryId()).get();
-        libraryRepository.delete(book);
-        return new RemoveLibraryPayload((Lists.newArrayList(libraryRepository.findAll())));
-    }
 //    public AddAcademicExamSettingPayload addAcademicExamSetting(List<AddAcademicExamSettingInput> list) {
 //        AcademicExamSetting academicExamSetting = null;
 //        int countvalue = getCountvalueId()+1;
@@ -3883,11 +3754,6 @@ public class Mutation implements GraphQLMutationResolver {
 //        return new UpdateBookPayload(b);
 //
 //    }
-    public RemoveBookPayload removeBook(RemoveBookInput removeBookInput){
-        Book b =bookRepository.findById(removeBookInput.getBookId()).get();
-        bookRepository.delete(b);
-        return new RemoveBookPayload((Lists.newArrayList(bookRepository.findAll())));
-    }
 
 
 
@@ -3968,9 +3834,9 @@ public class Mutation implements GraphQLMutationResolver {
     public List<CmsInvoice> searchInvoice(String invoiceNumber, Long studentId, Long collegeId, Long branchId, Long academicYearId) throws Exception{
         return Lists.newArrayList(invoiceFilterProcessor.searchInvoice(invoiceNumber, studentId, collegeId, branchId, academicYearId));
     }
-    public List<CmsLibrary>searchLib(String bookTitle, String author,Long batchId, Long subjectId)throws Exception{
-        return Lists.newArrayList(libraryFilterProcessor.searchLib( bookTitle,  author, batchId, subjectId));
-    }
+//    public List<CmsLibrary>searchLib(String bookTitle, String author,Long batchId, Long subjectId)throws Exception{
+//        return Lists.newArrayList(libraryFilterProcessor.searchLib( bookTitle,  author, batchId, subjectId));
+//    }
     public Long getTotalInvoice(long collegeId, long branchId, long academicYearId) {
         return invoiceFilterProcessor.getTotalInvoice(collegeId, branchId, academicYearId);
     }
@@ -4058,6 +3924,35 @@ public class Mutation implements GraphQLMutationResolver {
             ls.add(vo);
         }
         logger.debug("Total vehicles retrieved. "+list.size());
+        return ls;
+    }
+    public List<CmsLibraryVo> getLibraryList(LibraryFilterInput filter) throws Exception {
+        List<CmsLibraryVo> list = this.libraryFilterProcessor.searchLib(filter);
+        List<CmsLibraryVo> ls = new ArrayList<>();
+        for(CmsLibraryVo lb: list) {
+            CmsLibraryVo vo = CommonUtil.createCopyProperties(lb, CmsLibraryVo.class);
+            Department d = this.commonService.getDepartmentById(vo.getDepartmentId());
+            vo.setDepartment(d);
+            ls.add(lb);
+        }
+        logger.debug("Total books retrieved. "+list.size());
+        return ls;
+    }
+
+    public List<CmsBookVo> getBookList(BookListFilterInput filter) throws Exception {
+        List<CmsBookVo> list = this.bookfilterProcessor.searchBook(filter);
+        List<CmsBookVo> ls = new ArrayList<>();
+        for(CmsBookVo book: list) {
+            CmsBookVo vo = CommonUtil.createCopyProperties(book, CmsBookVo.class);
+            vo.setStrIssueDate(DateFormatUtil.changeLocalDateFormat(book.getIssueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setStrDueDate(DateFormatUtil.changeLocalDateFormat(book.getDueDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setStrReceivedDate(DateFormatUtil.changeLocalDateFormat(book.getReceivedDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setIssueDate(null);
+            vo.setDueDate(null);
+            vo.setReceivedDate(null);
+            ls.add(vo);
+        }
+        logger.debug("Total books retrieved. "+list.size());
         return ls;
     }
     public List<CmsEmployeeVo> getEmployeeList(EmployeeListFilterInput filter) throws Exception {
@@ -4217,16 +4112,16 @@ public class Mutation implements GraphQLMutationResolver {
 		}
 		return vo;
 	}
-    public List<CmsLibraryVo> getBookList(LibraryFilterInput filter) throws Exception {
-        List <Library> list = this.libraryFilterProcessor.searchBook(filter);
-        List <CmsLibraryVo> ls = new ArrayList<>();
-        for(Library library: list){
-            CmsLibraryVo vo = CommonUtil.createCopyProperties(library, CmsLibraryVo.class);
-            vo.setBatchId(library.getBatch() != null ? library.getBatch().getId() : null);
-            vo.setSubjectId(library.getSubject() != null ? library.getSubject().getId() : null);
-            ls.add(vo);
-        }
-        logger.debug("Total books retrieved. "+list.size());
-        return ls;
-    }
+//    public List<CmsLibraryVo> getBookList(LibraryFilterInput filter) throws Exception {
+//        List <Library> list = this.libraryFilterProcessor.searchBook(filter);
+//        List <CmsLibraryVo> ls = new ArrayList<>();
+//        for(Library library: list){
+//            CmsLibraryVo vo = CommonUtil.createCopyProperties(library, CmsLibraryVo.class);
+////            vo.setBatchId(library.getBatch() != null ? library.getBatch().getId() : null);
+////            vo.setSubjectId(library.getSubject() != null ? library.getSubject().getId() : null);
+//            ls.add(vo);
+//        }
+//        logger.debug("Total books retrieved. "+list.size());
+//        return ls;
+//    }
 }

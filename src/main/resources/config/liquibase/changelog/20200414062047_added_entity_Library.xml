@@ -16,28 +16,28 @@
     <!--
         Added the entity Library.
     -->
-    <changeSet id="20190822082300-1" author="jhipster">
+    <changeSet id="20200414062047-1" author="jhipster">
         <createTable tableName="library">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="row_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="book_title" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="author" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="no_of_copies" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="book_no" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
-            <column name="additional_info" type="varchar(255)">
+            <column name="author" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="no_of_copies" type="bigint">
                 <constraints nullable="true" />
             </column>
 
@@ -45,11 +45,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="batch_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="subject_id" type="bigint">
+            <column name="department_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

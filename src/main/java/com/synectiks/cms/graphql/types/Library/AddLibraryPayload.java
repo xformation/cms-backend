@@ -1,12 +1,15 @@
 package com.synectiks.cms.graphql.types.Library;
+import com.synectiks.cms.domain.CmsLibraryVo;
 
+public class AddLibraryPayload {
+    private final CmsLibraryVo cmsLibraryVo;
 
-import com.synectiks.cms.domain.Library;
-
-public class AddLibraryPayload extends AbstractLibraryPayload
-    {
-public AddLibraryPayload(Library library){
-    super(library);
-}
+    public AddLibraryPayload(CmsLibraryVo cmsLibraryVo){
+        this.cmsLibraryVo = cmsLibraryVo;
     }
 
+    public CmsLibraryVo getCmsLibraryVo() {
+        return cmsLibraryVo;
+    }
+
+}

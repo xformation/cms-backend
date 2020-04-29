@@ -1,23 +1,14 @@
 package com.synectiks.cms.web.rest;
 
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.synectiks.cms.CmsApp;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.repository.BookRepository;
+import com.synectiks.cms.repository.search.BookSearchRepository;
+import com.synectiks.cms.service.BookService;
+import com.synectiks.cms.service.dto.BookDTO;
+import com.synectiks.cms.service.mapper.BookMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,15 +25,21 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Book;
-import com.synectiks.cms.domain.enumeration.StatusEnum;
-import com.synectiks.cms.repository.BookRepository;
-import com.synectiks.cms.repository.search.BookSearchRepository;
-import com.synectiks.cms.service.BookService;
-import com.synectiks.cms.service.dto.BookDTO;
-import com.synectiks.cms.service.mapper.BookMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.List;
+
+
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 /**
  * Test class for the BookResource REST controller.
  *
@@ -61,11 +58,17 @@ public class BookResourceIntTest {
     private static final Integer DEFAULT_NO_OF_COPIES_AVAILABLE = 1;
     private static final Integer UPDATED_NO_OF_COPIES_AVAILABLE = 2;
 
-    private static final StatusEnum DEFAULT_STATUS = StatusEnum.AVAILABLE;
-    private static final StatusEnum UPDATED_STATUS = StatusEnum.RESERVED;
+    private static final String DEFAULT_BOOK_STATUS = "AAAAAAAAAA";
+    private static final String UPDATED_BOOK_STATUS = "BBBBBBBBBB";
 
     private static final LocalDate DEFAULT_RECEIVED_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_RECEIVED_DATE = LocalDate.now(ZoneId.systemDefault());
+
+    private static final Long DEFAULT_BATCH_ID = 1L;
+    private static final Long UPDATED_BATCH_ID = 2L;
+
+    private static final Long DEFAULT_DEPARTMENT_ID = 1L;
+    private static final Long UPDATED_DEPARTMENT_ID = 2L;
 
     @Autowired
     private BookRepository bookRepository;
@@ -126,8 +129,10 @@ public class BookResourceIntTest {
             .issueDate(DEFAULT_ISSUE_DATE)
             .dueDate(DEFAULT_DUE_DATE)
             .noOfCopiesAvailable(DEFAULT_NO_OF_COPIES_AVAILABLE)
-            .status(DEFAULT_STATUS)
-            .receivedDate(DEFAULT_RECEIVED_DATE);
+            .bookStatus(DEFAULT_BOOK_STATUS)
+            .receivedDate(DEFAULT_RECEIVED_DATE)
+            .batchId(DEFAULT_BATCH_ID)
+            .departmentId(DEFAULT_DEPARTMENT_ID);
         return book;
     }
 
@@ -155,8 +160,10 @@ public class BookResourceIntTest {
         assertThat(testBook.getIssueDate()).isEqualTo(DEFAULT_ISSUE_DATE);
         assertThat(testBook.getDueDate()).isEqualTo(DEFAULT_DUE_DATE);
         assertThat(testBook.getNoOfCopiesAvailable()).isEqualTo(DEFAULT_NO_OF_COPIES_AVAILABLE);
-        assertThat(testBook.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testBook.getBookStatus()).isEqualTo(DEFAULT_BOOK_STATUS);
         assertThat(testBook.getReceivedDate()).isEqualTo(DEFAULT_RECEIVED_DATE);
+        assertThat(testBook.getBatchId()).isEqualTo(DEFAULT_BATCH_ID);
+        assertThat(testBook.getDepartmentId()).isEqualTo(DEFAULT_DEPARTMENT_ID);
 
         // Validate the Book in Elasticsearch
         verify(mockBookSearchRepository, times(1)).save(testBook);
@@ -187,82 +194,6 @@ public class BookResourceIntTest {
 
     @Test
     @Transactional
-    public void checkIssueDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bookRepository.findAll().size();
-        // set the field null
-        book.setIssueDate(null);
-
-        // Create the Book, which fails.
-        BookDTO bookDTO = bookMapper.toDto(book);
-
-        restBookMockMvc.perform(post("/api/books")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bookDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Book> bookList = bookRepository.findAll();
-        assertThat(bookList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkDueDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bookRepository.findAll().size();
-        // set the field null
-        book.setDueDate(null);
-
-        // Create the Book, which fails.
-        BookDTO bookDTO = bookMapper.toDto(book);
-
-        restBookMockMvc.perform(post("/api/books")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bookDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Book> bookList = bookRepository.findAll();
-        assertThat(bookList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkNoOfCopiesAvailableIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bookRepository.findAll().size();
-        // set the field null
-        book.setNoOfCopiesAvailable(null);
-
-        // Create the Book, which fails.
-        BookDTO bookDTO = bookMapper.toDto(book);
-
-        restBookMockMvc.perform(post("/api/books")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bookDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Book> bookList = bookRepository.findAll();
-        assertThat(bookList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bookRepository.findAll().size();
-        // set the field null
-        book.setStatus(null);
-
-        // Create the Book, which fails.
-        BookDTO bookDTO = bookMapper.toDto(book);
-
-        restBookMockMvc.perform(post("/api/books")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(bookDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Book> bookList = bookRepository.findAll();
-        assertThat(bookList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllBooks() throws Exception {
         // Initialize the database
         bookRepository.saveAndFlush(book);
@@ -275,10 +206,12 @@ public class BookResourceIntTest {
             .andExpect(jsonPath("$.[*].issueDate").value(hasItem(DEFAULT_ISSUE_DATE.toString())))
             .andExpect(jsonPath("$.[*].dueDate").value(hasItem(DEFAULT_DUE_DATE.toString())))
             .andExpect(jsonPath("$.[*].noOfCopiesAvailable").value(hasItem(DEFAULT_NO_OF_COPIES_AVAILABLE)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].receivedDate").value(hasItem(DEFAULT_RECEIVED_DATE.toString())));
+            .andExpect(jsonPath("$.[*].bookStatus").value(hasItem(DEFAULT_BOOK_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].receivedDate").value(hasItem(DEFAULT_RECEIVED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].batchId").value(hasItem(DEFAULT_BATCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].departmentId").value(hasItem(DEFAULT_DEPARTMENT_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getBook() throws Exception {
@@ -293,8 +226,10 @@ public class BookResourceIntTest {
             .andExpect(jsonPath("$.issueDate").value(DEFAULT_ISSUE_DATE.toString()))
             .andExpect(jsonPath("$.dueDate").value(DEFAULT_DUE_DATE.toString()))
             .andExpect(jsonPath("$.noOfCopiesAvailable").value(DEFAULT_NO_OF_COPIES_AVAILABLE))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.receivedDate").value(DEFAULT_RECEIVED_DATE.toString()));
+            .andExpect(jsonPath("$.bookStatus").value(DEFAULT_BOOK_STATUS.toString()))
+            .andExpect(jsonPath("$.receivedDate").value(DEFAULT_RECEIVED_DATE.toString()))
+            .andExpect(jsonPath("$.batchId").value(DEFAULT_BATCH_ID.intValue()))
+            .andExpect(jsonPath("$.departmentId").value(DEFAULT_DEPARTMENT_ID.intValue()));
     }
 
     @Test
@@ -321,8 +256,10 @@ public class BookResourceIntTest {
             .issueDate(UPDATED_ISSUE_DATE)
             .dueDate(UPDATED_DUE_DATE)
             .noOfCopiesAvailable(UPDATED_NO_OF_COPIES_AVAILABLE)
-            .status(UPDATED_STATUS)
-            .receivedDate(UPDATED_RECEIVED_DATE);
+            .bookStatus(UPDATED_BOOK_STATUS)
+            .receivedDate(UPDATED_RECEIVED_DATE)
+            .batchId(UPDATED_BATCH_ID)
+            .departmentId(UPDATED_DEPARTMENT_ID);
         BookDTO bookDTO = bookMapper.toDto(updatedBook);
 
         restBookMockMvc.perform(put("/api/books")
@@ -337,8 +274,10 @@ public class BookResourceIntTest {
         assertThat(testBook.getIssueDate()).isEqualTo(UPDATED_ISSUE_DATE);
         assertThat(testBook.getDueDate()).isEqualTo(UPDATED_DUE_DATE);
         assertThat(testBook.getNoOfCopiesAvailable()).isEqualTo(UPDATED_NO_OF_COPIES_AVAILABLE);
-        assertThat(testBook.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testBook.getBookStatus()).isEqualTo(UPDATED_BOOK_STATUS);
         assertThat(testBook.getReceivedDate()).isEqualTo(UPDATED_RECEIVED_DATE);
+        assertThat(testBook.getBatchId()).isEqualTo(UPDATED_BATCH_ID);
+        assertThat(testBook.getDepartmentId()).isEqualTo(UPDATED_DEPARTMENT_ID);
 
         // Validate the Book in Elasticsearch
         verify(mockBookSearchRepository, times(1)).save(testBook);
@@ -402,8 +341,10 @@ public class BookResourceIntTest {
             .andExpect(jsonPath("$.[*].issueDate").value(hasItem(DEFAULT_ISSUE_DATE.toString())))
             .andExpect(jsonPath("$.[*].dueDate").value(hasItem(DEFAULT_DUE_DATE.toString())))
             .andExpect(jsonPath("$.[*].noOfCopiesAvailable").value(hasItem(DEFAULT_NO_OF_COPIES_AVAILABLE)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].receivedDate").value(hasItem(DEFAULT_RECEIVED_DATE.toString())));
+            .andExpect(jsonPath("$.[*].bookStatus").value(hasItem(DEFAULT_BOOK_STATUS)))
+            .andExpect(jsonPath("$.[*].receivedDate").value(hasItem(DEFAULT_RECEIVED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].batchId").value(hasItem(DEFAULT_BATCH_ID.intValue())))
+            .andExpect(jsonPath("$.[*].departmentId").value(hasItem(DEFAULT_DEPARTMENT_ID.intValue())));
     }
 
     @Test

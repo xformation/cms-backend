@@ -1,5 +1,4 @@
 package com.synectiks.cms.service.dto;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,26 +9,20 @@ public class LibraryDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
+    private String rowName;
+
     private String bookTitle;
 
-    @NotNull
-    private String author;
-
-    @NotNull
-    private Long noOfCopies;
-
-    @NotNull
     private Long bookNo;
 
-    private String additionalInfo;
+    private String author;
+
+    private Long noOfCopies;
 
     private Long uniqueNo;
 
+    private Long departmentId;
 
-    private Long batchId;
-
-    private Long subjectId;
 
     public Long getId() {
         return id;
@@ -39,12 +32,28 @@ public class LibraryDTO implements Serializable {
         this.id = id;
     }
 
+    public String getRowName() {
+        return rowName;
+    }
+
+    public void setRowName(String rowName) {
+        this.rowName = rowName;
+    }
+
     public String getBookTitle() {
         return bookTitle;
     }
 
     public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
+    }
+
+    public Long getBookNo() {
+        return bookNo;
+    }
+
+    public void setBookNo(Long bookNo) {
+        this.bookNo = bookNo;
     }
 
     public String getAuthor() {
@@ -63,22 +72,6 @@ public class LibraryDTO implements Serializable {
         this.noOfCopies = noOfCopies;
     }
 
-    public Long getBookNo() {
-        return bookNo;
-    }
-
-    public void setBookNo(Long bookNo) {
-        this.bookNo = bookNo;
-    }
-
-    public String getAdditionalInfo() {
-        return additionalInfo;
-    }
-
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
-    }
-
     public Long getUniqueNo() {
         return uniqueNo;
     }
@@ -87,20 +80,12 @@ public class LibraryDTO implements Serializable {
         this.uniqueNo = uniqueNo;
     }
 
-    public Long getBatchId() {
-        return batchId;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setBatchId(Long batchId) {
-        this.batchId = batchId;
-    }
-
-    public Long getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Long subjectId) {
-        this.subjectId = subjectId;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -128,14 +113,13 @@ public class LibraryDTO implements Serializable {
     public String toString() {
         return "LibraryDTO{" +
             "id=" + getId() +
+            ", rowName='" + getRowName() + "'" +
             ", bookTitle='" + getBookTitle() + "'" +
+            ", bookNo=" + getBookNo() +
             ", author='" + getAuthor() + "'" +
             ", noOfCopies=" + getNoOfCopies() +
-            ", bookNo=" + getBookNo() +
-            ", additionalInfo='" + getAdditionalInfo() + "'" +
             ", uniqueNo=" + getUniqueNo() +
-            ", batch=" + getBatchId() +
-            ", subject=" + getSubjectId() +
+            ", departmentId=" + getDepartmentId() +
             "}";
     }
 }

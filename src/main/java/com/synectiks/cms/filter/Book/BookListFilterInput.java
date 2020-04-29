@@ -3,42 +3,22 @@ package com.synectiks.cms.filter.Book;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BookListFilterInput {
-    private String bookTitle;
-    private String author;
-    private String batchId;
-    private String subjectId;
+    private String studentId;
+    private String bookId;
 
-    @JsonProperty ("bookTitle")
-    public String getBookTitle() {
-        return bookTitle;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
-    @JsonProperty("author")
-    public String getAuthor() {
-        return author;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public String getBookId() {
+        return bookId;
     }
 
-    @JsonProperty ("batchId")
-    public String getBatchId() {
-        return batchId;
-    }
-
-    public void setBatchId(String batchId) {
-        this.batchId = batchId;
-    }
-    @JsonProperty ("subjectId")
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 }

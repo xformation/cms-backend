@@ -1,32 +1,22 @@
 package com.synectiks.cms.web.rest;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
+import com.synectiks.cms.service.LibraryService;
+import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
+import com.synectiks.cms.web.rest.util.HeaderUtil;
+import com.synectiks.cms.service.dto.LibraryDTO;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.codahale.metrics.annotation.Timed;
-import com.synectiks.cms.service.LibraryService;
-import com.synectiks.cms.service.dto.LibraryDTO;
-import com.synectiks.cms.web.rest.errors.BadRequestAlertException;
-import com.synectiks.cms.web.rest.util.HeaderUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import io.github.jhipster.web.util.ResponseUtil;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
+
+//import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Library.
@@ -53,8 +43,7 @@ public class LibraryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/libraries")
-    @Timed
-    public ResponseEntity<LibraryDTO> createLibrary(@Valid @RequestBody LibraryDTO libraryDTO) throws URISyntaxException {
+    public ResponseEntity<LibraryDTO> createLibrary(@RequestBody LibraryDTO libraryDTO) throws URISyntaxException {
         log.debug("REST request to save Library : {}", libraryDTO);
         if (libraryDTO.getId() != null) {
             throw new BadRequestAlertException("A new library cannot already have an ID", ENTITY_NAME, "idexists");
@@ -75,8 +64,7 @@ public class LibraryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/libraries")
-    @Timed
-    public ResponseEntity<LibraryDTO> updateLibrary(@Valid @RequestBody LibraryDTO libraryDTO) throws URISyntaxException {
+    public ResponseEntity<LibraryDTO> updateLibrary(@RequestBody LibraryDTO libraryDTO) throws URISyntaxException {
         log.debug("REST request to update Library : {}", libraryDTO);
         if (libraryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -93,7 +81,6 @@ public class LibraryResource {
      * @return the ResponseEntity with status 200 (OK) and the list of libraries in body
      */
     @GetMapping("/libraries")
-    @Timed
     public List<LibraryDTO> getAllLibraries() {
         log.debug("REST request to get all Libraries");
         return libraryService.findAll();
@@ -106,7 +93,6 @@ public class LibraryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the libraryDTO, or with status 404 (Not Found)
      */
     @GetMapping("/libraries/{id}")
-    @Timed
     public ResponseEntity<LibraryDTO> getLibrary(@PathVariable Long id) {
         log.debug("REST request to get Library : {}", id);
         Optional<LibraryDTO> libraryDTO = libraryService.findOne(id);
@@ -120,7 +106,6 @@ public class LibraryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/libraries/{id}")
-    @Timed
     public ResponseEntity<Void> deleteLibrary(@PathVariable Long id) {
         log.debug("REST request to delete Library : {}", id);
         libraryService.delete(id);
@@ -135,7 +120,6 @@ public class LibraryResource {
      * @return the result of the search
      */
     @GetMapping("/_search/libraries")
-    @Timed
     public List<LibraryDTO> searchLibraries(@RequestParam String query) {
         log.debug("REST request to search Libraries for query {}", query);
         return libraryService.search(query);

@@ -1,10 +1,16 @@
 package com.synectiks.cms.graphql.types.Book;
 
-import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.domain.CmsBookVo;
 
-public class AddBookPayload extends AbstractBookPayload {
-    public AddBookPayload(Book book) {
-        super(book);
+public class AddBookPayload {
+    private final CmsBookVo cmsBookVo;
+
+    public AddBookPayload(CmsBookVo cmsBookVo){
+        this.cmsBookVo = cmsBookVo;
+    }
+
+    public CmsBookVo getCmsBookVo() {
+        return cmsBookVo;
     }
 
 }

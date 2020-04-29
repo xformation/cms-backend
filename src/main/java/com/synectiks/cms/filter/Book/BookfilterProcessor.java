@@ -2,6 +2,8 @@ package com.synectiks.cms.filter.Book;
 
 import com.synectiks.cms.business.service.BookService;
 
+import com.synectiks.cms.domain.Book;
+import com.synectiks.cms.domain.CmsBookVo;
 import com.synectiks.cms.domain.Library;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,10 @@ public class BookfilterProcessor  {
     @Autowired
 
     private  BookService bookService;
-    public List<Library> searchBook(String bookTitle, String author,  Long batchId, Long subjectId) {
-        return bookService.searchBook(bookTitle, author, batchId, subjectId);
+    public List<CmsBookVo> searchBook(Long bookId, Long studentId) {
+        return bookService.searchBook(bookId,studentId);
     }
-    public List<Library> searchBook(BookListFilterInput filter){
+    public List<CmsBookVo> searchBook(BookListFilterInput filter){
            return bookService.searchBook(filter);
         }
     }

@@ -21,7 +21,9 @@ import java.util.List;
 
 import com.synectiks.cms.business.service.*;
 import com.synectiks.cms.domain.*;
+import com.synectiks.cms.filter.Book.BookfilterProcessor;
 import com.synectiks.cms.filter.employee.EmployeeFilterProcessor;
+import com.synectiks.cms.filter.library.LibraryFilterProcessor;
 import com.synectiks.cms.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.cms.repository.*;
 import org.slf4j.Logger;
@@ -37,7 +39,7 @@ import com.synectiks.cms.business.service.exam.AcExamSetting;
 import com.synectiks.cms.constant.CmsConstants;
 import com.synectiks.cms.domain.enumeration.Gender;
 import com.synectiks.cms.domain.enumeration.StudentTypeEnum;
-import com.synectiks.cms.filter.Book.BookfilterProcessor;
+//import com.synectiks.cms.filter.Book.BookfilterProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectProcessor;
 import com.synectiks.cms.filter.academicsubject.AcademicSubjectQueryPayload;
 import com.synectiks.cms.filter.admissionapplication.AdmissionApplicationProcessor;
@@ -131,6 +133,9 @@ public class Query implements GraphQLQueryResolver {
     private BookfilterProcessor bookfilterProcessor;
 
     @Autowired
+    private LibraryFilterProcessor libraryFilterProcessor;
+
+    @Autowired
     private CommonGraphiqlFilter commonGraphiqlFilter;
 
     @Autowired
@@ -151,6 +156,15 @@ public class Query implements GraphQLQueryResolver {
 
     @Autowired
     private TransportService transportService;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private CmsLibraryService cmsLibraryService;
+
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
     private SummaryFilter summaryFilter;
@@ -180,6 +194,16 @@ public class Query implements GraphQLQueryResolver {
     public List<CmsTransportVo> getTransportRouteList() throws Exception {
         logger.debug("Query - getTransportRouteList :");
         return this.transportService.getTransportRouteList();
+    }
+
+    public List<CmsBookVo> getBookList() throws Exception {
+        logger.debug("Query - getBookList :");
+        return this.bookService.getBookList();
+    }
+
+    public List<CmsLibraryVo> getLibraryList() throws Exception {
+        logger.debug("Query - getLibraryList :");
+        return this.cmsLibraryService.getLibraryList();
     }
 
     public Query(LibraryRepository libraryRepository, SummaryFilter summaryFilter, BookRepository bookRepository, AcademicExamSettingRepository academicExamSettingRepository, AdminAttendanceRepository adminAttendanceRepository, AcademicHistoryRepository academicHistoryRepository, AdmissionEnquiryRepository admissionEnquiryRepository, LectureRepository lectureRepository, AttendanceMasterRepository attendanceMasterRepository, TeachRepository teachRepository, BatchRepository batchRepository, StudentRepository studentRepository, CollegeRepository collegeRepository, BranchRepository branchRepository, SectionRepository sectionRepository, SubjectRepository subjectRepository, TeacherRepository teacherRepository, LegalEntityRepository legalEntityRepository, AuthorizedSignatoryRepository authorizedSignatoryRepository, BankAccountsRepository bankAccountsRepository, DepartmentRepository departmentRepository, StudentAttendanceRepository studentAttendanceRepository, AcademicYearRepository academicYearRepository, AdmissionApplicationRepository admissionApplicationRepository, HolidayRepository holidayRepository, TermRepository termRepository, CityRepository cityRepository, StateRepository stateRepository, CountryRepository countryRepository, FeeCategoryRepository feeCategoryRepository, FacilityRepository facilityRepository, TransportRouteRepository transportRouteRepository, FeeDetailsRepository feeDetailsRepository, DueDateRepository dueDateRepository, LateFeeRepository lateFeeRepository, PaymentRemainderRepository paymentRemainderRepository, InvoiceRepository invoiceRepository, CompetitiveExamRepository competitiveExamRepository, DocumentsRepository documentsRepository, TypeOfGradingRepository typeOfGradingRepository, StudentExamReportRepository studentExamReportRepository, LibraryRepository LibraryRepository, ContractRepository contractRepository, EmployeeRepository employeeRepository, InsuranceRepository insuranceRepository, VehicleRepository vehicleRepository) {
@@ -700,9 +724,11 @@ public class Query implements GraphQLQueryResolver {
     }
 
 
-    public List<Library>searchBook(String bookTitle,String author,Long batchId,Long subjectId){
-        return (List<Library>) Lists.newArrayList(bookfilterProcessor.searchBook(bookTitle,author,batchId,subjectId));
-
+    public List<CmsLibraryVo>searchLib(String bookTitle, Long departmentId, Long libraryId ) throws Exception {
+        return  Lists.newArrayList(libraryFilterProcessor.searchLib(bookTitle, departmentId,libraryId));
+    }
+    public List<CmsBookVo>searchBook(Long bookId, Long studentId) throws Exception{
+        return Lists.newArrayList(bookfilterProcessor.searchBook(bookId,studentId));
     }
 
     public List<Branch> getAllBranches(String branchName, Long collegeId){
@@ -922,32 +948,32 @@ public class Query implements GraphQLQueryResolver {
     }
 
 
-    public LibraryFilterDataCache createLibraryFilterDataCache(String collegeId, String academicYearId) throws Exception{
-        List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
-        List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
-        List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
-        List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(departmentList, batchList);
-        List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
-        List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
-        List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
-        List<Library> library = this.commonService.getLibraryForCriteria(sub,batchList);
-        List<Student> student = this.commonService.getStudentsForCriteria(departmentList, batchList, sectionList);
-        List<CmsBook> book = this.commonService.getBookForCriteria(library,student);
-        LibraryFilterDataCache cache = new LibraryFilterDataCache();
-        cache.setDepartments(departmentList);
-        cache.setBatches(batchList);
-        cache.setAcademicExamSettings(examsList);
-        cache.setBranches(branchList);
-        cache.setSections(sectionList);
-        cache.setSemesters(sem);
-        cache.setSubjects(sub);
-        cache.setLibraries(library);
-        cache.setStudents(student);
-        cache.setBooks(book);
-        return cache;
-
-
-    }
+//    public LibraryFilterDataCache createLibraryFilterDataCache(String collegeId, String academicYearId) throws Exception{
+//        List<Branch> branchList = this.commonService.getBranchForCriteria(Long.valueOf(collegeId));
+//        List<Department> departmentList = this.commonService.getDepartmentForCriteria(branchList, Long.valueOf(academicYearId));
+//        List<Batch> batchList = this.commonService.getBatchForCriteria(departmentList);
+//        List<AcademicExamSetting> examsList= this.commonService.getExamsForCriteria(departmentList, batchList);
+//        List<Subject> sub = this.commonService.getSubjectForCriteria(departmentList, batchList);
+//        List<Section> sectionList = this.commonService.getSectionForCriteria(batchList);
+//        List<CmsSemesterVo> sem = this.commonService.getAllCmsSemesters();
+//        List<Library> library = this.commonService.getLibraryForCriteria(sub,batchList);
+//        List<Student> student = this.commonService.getStudentsForCriteria(departmentList, batchList, sectionList);
+//        List<CmsBook> book = this.commonService.getBookForCriteria(library,student);
+//        LibraryFilterDataCache cache = new LibraryFilterDataCache();
+//        cache.setDepartments(departmentList);
+//        cache.setBatches(batchList);
+//        cache.setAcademicExamSettings(examsList);
+//        cache.setBranches(branchList);
+//        cache.setSections(sectionList);
+//        cache.setSemesters(sem);
+//        cache.setSubjects(sub);
+//        cache.setLibraries(library);
+//        cache.setStudents(student);
+//        cache.setBooks(book);
+//        return cache;
+//
+//
+//    }
 
 
     public FeeDataCache createFeeDataCache() throws Exception{
@@ -1002,6 +1028,21 @@ public class Query implements GraphQLQueryResolver {
         cache.setBranches(branchList);
         return cache;
     }
+
+     public  LibraryFilterDataCache createLibraryDataCache() throws Exception{
+         List<Department> departmentList = this.commonService.findAllDepartment();
+         List<Batch> batchList = this.commonService.findAllBatches();
+         List<CmsLibraryVo> libraryList = this.cmsLibraryService.getLibraryList();
+         List<Student> studentList = this.studentRepository.findAll();
+         List<CmsBookVo> bookList = this.bookService.getBookList();
+         LibraryFilterDataCache cache = new LibraryFilterDataCache();
+         cache.setBatches(batchList);
+         cache.setDepartments(departmentList);
+         cache.setBooks(bookList);
+         cache.setLibraries(libraryList);
+         cache.setStudents(studentList);
+         return cache;
+     }
     public InsuranceDataCache createInsuranceDataCache() throws Exception {
         List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
         InsuranceDataCache cache = new InsuranceDataCache();
@@ -1068,16 +1109,16 @@ public class Query implements GraphQLQueryResolver {
     	cache.setTransportRoute(transportRouteList);
     	return cache;
     }
-    public Library library(long id){
-        return libraryRepository.findById(id).get();
-    }
-    public List<Library>libraries(){
-        return Lists.newArrayList(libraryRepository.findAll());
-    }
-    public Book book(long id){
-        return bookRepository.findById(id).get();
-    }
-    public List<Book>books(){
-        return Lists.newArrayList(bookRepository.findAll());
-    }
+//    public Library library(long id){
+//        return libraryRepository.findById(id).get();
+//    }
+//    public List<Library>libraries(){
+//        return Lists.newArrayList(libraryRepository.findAll());
+//    }
+//    public Book book(long id){
+//        return bookRepository.findById(id).get();
+//    }
+//    public List<Book>books(){
+//        return Lists.newArrayList(bookRepository.findAll());
+//    }
 }

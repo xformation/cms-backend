@@ -6,8 +6,8 @@
     <!--
         Added the constraints for entity Book.
     -->
-    <changeSet id="20190821095828-2" author="jhipster">
-
+    <changeSet id="20200414062045-2" author="jhipster">
+        
         <addForeignKeyConstraint baseColumnNames="student_id"
                                  baseTableName="book"
                                  constraintName="fk_book_student_id"

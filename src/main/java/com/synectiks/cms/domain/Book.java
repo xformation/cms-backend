@@ -1,26 +1,15 @@
 package com.synectiks.cms.domain;
 
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.synectiks.cms.domain.enumeration.StatusEnum;
+import javax.persistence.*;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * A Book.
@@ -28,11 +17,10 @@ import com.synectiks.cms.domain.enumeration.StatusEnum;
 @Entity
 @Table(name = "book")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-//@Document(indexName = "book")
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -47,12 +35,17 @@ public class Book implements Serializable {
     @Column(name = "no_of_copies_available")
     private Integer noOfCopiesAvailable;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private StatusEnum status;
+    @Column(name = "book_status")
+    private String bookStatus;
 
     @Column(name = "received_date")
     private LocalDate receivedDate;
+
+    @Column(name = "batch_id")
+    private Long batchId;
+
+    @Column(name = "department_id")
+    private Long departmentId;
 
     @ManyToOne
     @JsonIgnoreProperties("books")
@@ -110,17 +103,17 @@ public class Book implements Serializable {
         this.noOfCopiesAvailable = noOfCopiesAvailable;
     }
 
-    public StatusEnum getStatus() {
-        return status;
+    public String getBookStatus() {
+        return bookStatus;
     }
 
-    public Book status(StatusEnum status) {
-        this.status = status;
+    public Book bookStatus(String bookStatus) {
+        this.bookStatus = bookStatus;
         return this;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
+    public void setBookStatus(String bookStatus) {
+        this.bookStatus = bookStatus;
     }
 
     public LocalDate getReceivedDate() {
@@ -134,6 +127,32 @@ public class Book implements Serializable {
 
     public void setReceivedDate(LocalDate receivedDate) {
         this.receivedDate = receivedDate;
+    }
+
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public Book batchId(Long batchId) {
+        this.batchId = batchId;
+        return this;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public Book departmentId(Long departmentId) {
+        this.departmentId = departmentId;
+        return this;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public Student getStudent() {
@@ -190,8 +209,10 @@ public class Book implements Serializable {
             ", issueDate='" + getIssueDate() + "'" +
             ", dueDate='" + getDueDate() + "'" +
             ", noOfCopiesAvailable=" + getNoOfCopiesAvailable() +
-            ", status='" + getStatus() + "'" +
+            ", bookStatus='" + getBookStatus() + "'" +
             ", receivedDate='" + getReceivedDate() + "'" +
+            ", batchId=" + getBatchId() +
+            ", departmentId=" + getDepartmentId() +
             "}";
     }
 }

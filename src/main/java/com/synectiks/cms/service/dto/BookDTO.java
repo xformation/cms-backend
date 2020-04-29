@@ -2,7 +2,6 @@ package com.synectiks.cms.service.dto;
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.Objects;
-import com.synectiks.cms.domain.enumeration.StatusEnum;
 
 /**
  * A DTO for the Book entity.
@@ -17,9 +16,13 @@ public class BookDTO implements Serializable {
 
     private Integer noOfCopiesAvailable;
 
-    private StatusEnum status;
+    private String bookStatus;
 
     private LocalDate receivedDate;
+
+    private Long batchId;
+
+    private Long departmentId;
 
 
     private Long studentId;
@@ -58,12 +61,12 @@ public class BookDTO implements Serializable {
         this.noOfCopiesAvailable = noOfCopiesAvailable;
     }
 
-    public StatusEnum getStatus() {
-        return status;
+    public String getBookStatus() {
+        return bookStatus;
     }
 
-    public void setStatus(StatusEnum status) {
-        this.status = status;
+    public void setBookStatus(String bookStatus) {
+        this.bookStatus = bookStatus;
     }
 
     public LocalDate getReceivedDate() {
@@ -72,6 +75,22 @@ public class BookDTO implements Serializable {
 
     public void setReceivedDate(LocalDate receivedDate) {
         this.receivedDate = receivedDate;
+    }
+
+    public Long getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(Long batchId) {
+        this.batchId = batchId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public Long getStudentId() {
@@ -118,8 +137,10 @@ public class BookDTO implements Serializable {
             ", issueDate='" + getIssueDate() + "'" +
             ", dueDate='" + getDueDate() + "'" +
             ", noOfCopiesAvailable=" + getNoOfCopiesAvailable() +
-            ", status='" + getStatus() + "'" +
+            ", bookStatus='" + getBookStatus() + "'" +
             ", receivedDate='" + getReceivedDate() + "'" +
+            ", batchId=" + getBatchId() +
+            ", departmentId=" + getDepartmentId() +
             ", student=" + getStudentId() +
             ", library=" + getLibraryId() +
             "}";

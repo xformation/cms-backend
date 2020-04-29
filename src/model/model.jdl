@@ -34,9 +34,10 @@ entity Book{
  issueDate LocalDate
  dueDate LocalDate
  noOfCopiesAvailable Integer
- status StatusEnum
+ bookStatus String
  receivedDate LocalDate
-
+ batchId Long
+ departmentId Long
 }
 entity Department{
 name String required
@@ -44,12 +45,13 @@ description String required
 deptHead String required
 }
 entity Library{
-    bookTitle String required
-    author String required
-    noOfCopies Long required
-    bookNo Long required
-    additionalInfo String
+    rowName String
+    bookTitle String
+    bookNo Long
+    author String
+    noOfCopies Long
     uniqueNo Long
+    departmentId Long
 }
 
 entity Batch{
@@ -559,20 +561,20 @@ termId Long
 }
 
 entity Invoice {
-	invoiceNumber String 
-	amountPaid Long 
-	paymentDate LocalDate 
-	nextPaymentDate LocalDate 
-	outStandingAmount Long 
-	modeOfPayment ModeOfPayment 
+	invoiceNumber String
+	amountPaid Long
+	paymentDate LocalDate
+	nextPaymentDate LocalDate
+	outStandingAmount Long
+	modeOfPayment ModeOfPayment
 	chequeNumber Long
 	demandDraftNumber Long
 	onlineTxnRefNumber String
-	paymentStatus InvoicePaymentStatus 
-	comments String 
-	updatedBy String 
+	paymentStatus InvoicePaymentStatus
+	comments String
+	updatedBy String
 	bank String
-	updatedOn LocalDate 
+	updatedOn LocalDate
 	collegeId Long
 	branchId Long
 	academicYearId Long
@@ -891,8 +893,6 @@ AuthorizedSignatory{branch} to Branch,
 AuthorizedSignatory{college} to College,
 BankAccounts{branch} to Branch,
 BankAccounts{college} to College,
-Library{batch} to Batch,
-Library{subject} to Subject,
 Book{student} to Student,
 Book{library} to Library
 LegalEntity{branch} to Branch,

@@ -6,14 +6,9 @@ public class LibraryFilterDataCache {
 
     private List<Department> departments;
     private List<Batch> batches;
-    private List<Section> sections;
-    private List<CmsSemesterVo> semesters;
-    private List<Branch> branches;
-    private List<Subject> subjects;
-    private List<AcademicExamSetting> academicExamSettings;
-    private List<Library> libraries;
+    private List<CmsLibraryVo> libraries;
+    private List<CmsBookVo> books;
     private List<Student> students;
-    private List<CmsBook>  books;
 
     public List<Department> getDepartments() {
         return departments;
@@ -31,51 +26,20 @@ public class LibraryFilterDataCache {
         this.batches = batches;
     }
 
-    public List<Section> getSections() {
-        return sections;
-    }
-
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
-    }
-
-    public List<CmsSemesterVo> getSemesters() {
-        return semesters;
-    }
-    public void setSemesters(List<CmsSemesterVo> semesters) {
-        this.semesters = semesters;
-    }
-
-    public List<Branch> getBranches() {
-        return branches;
-    }
-
-    public void setBranches(List<Branch> branches) {
-        this.branches = branches;
-    }
-
-    public List<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
-    public List<AcademicExamSetting> getAcademicExamSettings() {
-        return academicExamSettings;
-    }
-
-    public void setAcademicExamSettings(List<AcademicExamSetting> academicExamSettings) {
-        this.academicExamSettings = academicExamSettings;
-    }
-
-    public List<Library> getLibraries() {
+    public List<CmsLibraryVo> getLibraries() {
         return libraries;
     }
 
-    public void setLibraries(List<Library> libraries) {
+    public void setLibraries(List<CmsLibraryVo> libraries) {
         this.libraries = libraries;
+    }
+
+    public List<CmsBookVo> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<CmsBookVo> books) {
+        this.books = books;
     }
 
     public List<Student> getStudents() {
@@ -84,13 +48,5 @@ public class LibraryFilterDataCache {
 
     public void setStudents(List<Student> students) {
         this.students = students;
-    }
-
-    public List<CmsBook> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<CmsBook> books) {
-        this.books = books;
     }
 }

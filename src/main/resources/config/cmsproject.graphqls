@@ -152,6 +152,8 @@ type Query {
    getInsuranceList: [CmsInsuranceVo]
    getContractList: [CmsContractVo]
    getTransportRouteList: [CmsTransportVo]
+   getBookList: [CmsBookVo]
+   getLibraryList:[CmsLibraryVo]
 
   authorizedSignatory(id: Int!): AuthorizedSignatory!
   authorizedSignatories:[AuthorizedSignatory!]!
@@ -270,16 +272,6 @@ type Query {
   studentExamReport(id: Long!): StudentExamReport!
   studentExamReports: [StudentExamReport!]!
 
-    library(id: Long!): Library
-    libraries: [Library!]!
-
-    book(id: Long!): Book
-    	books: [Book!]!
-
-
-
-
-
     employee(id: Long!): Employee!
     employees:[Employee!]!
 
@@ -288,8 +280,9 @@ type Query {
 
     searchStudent(departmentId:Long, batchId:Long, sectionId:Long, branchId:Long,  gender: Gender, studentType: StudentTypeEnum, studentName: String): [Student!]!
     searchEmployee(employeeId:Long, vehicleId:Long, employeeName:String): [CmsEmployeeVo!]!
-    searchBook (bookTitle:String,author:String,batchId:Long,subjectId:Long):[Library!]!
     searchVehicle(transportRouteId:Long,vehicleId:Long,employeeId:Long,vehicleNumber:String): [CmsVehicleVo!]!
+    searchBook(bookId:Long, studentId:Long): [CmsBookVo!]!
+    searchLib(bookTitle:String, departmentId:Long,libraryId:Long): [CmsLibraryVo!]!
     getAllBranches(branchName:String, collegeId:Long): [Branch!]!
     getCollegeById(collegeId:Long): College!
     getBranchById(branchId:Long): Branch!
@@ -297,8 +290,6 @@ type Query {
     getDepartmentById(departmentId:Long): Department!
     getSectionById(sectionId:Long): Section!
     getBatchById(batchId:Long): Batch!
-
-
 
   getTotalInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
   getTotalPaidInvoice(collegeId:Long, branchId:Long!, academicYearId:Long! ): Long!
@@ -328,10 +319,11 @@ type Query {
     createEmployeeDataCache: EmployeeDataCache!
     createAdmissionDataCache: AdmissionDataCache!
     createVehicleDataCache: VehicleDataCache!
+    createLibraryDataCache: LibraryFilterDataCache!
     createInsuranceDataCache: InsuranceDataCache!
     createExamFilterDataCache(branchId: Long, academicYearId: Long): ExamFilterDataCache!
     createFeeSetupDataCache(branchId:Long, academicYearId:Long): FeeSetupDataCache!
-    createLibraryFilterDataCache(collegeId:String!, academicYearId:String!):LibraryFilterDataCache!
+
 
 }
 
@@ -341,6 +333,14 @@ type VehicleDataCache{
    vehicle: [CmsVehicleVo]
    employee: [Employee]
    branches: [Branch]
+}
+
+type LibraryFilterDataCache{
+   departments: [Department]
+   batches: [Batch]
+   libraries: [CmsLibraryVo]
+   books: [CmsBookVo]
+   students: [Student]
 }
 type InsuranceDataCache{
    vehicle: [CmsVehicleVo]
@@ -650,15 +650,6 @@ type CmsEmployeeVo{
      transportRouteId:Long
 }
 
-type CmsLibrary {
-    library: Library
-    bookTitle:String
-    dateOfIssue:Date
-    dueDate:DueDate
-    student:Student
-    noOfCopies:String
-    copiesAvailable:String
-}
 type CmsAdmissionEnquiryVo {
 	  totalAdmissions: Long!
       totalFollowup: Long!
@@ -896,25 +887,26 @@ type StudentExamReport{
   }
 
 type  Library{
-    id:Long!
-    bookTitle:String!
-    author:String!
-    bookNo: Long!
-    noOfCopies :Long!
-    additionalInfo:String!
-    uniqueNo:Long!
-    batch: Batch!
-    subject:Subject!
+     id:Long
+    rowName: String
+    bookTitle: String
+    bookNo: Long
+    author: String
+    noOfCopies: Long
+    uniqueNo: Long
+    departmentId: Long
 }
  type Book{
-          id:Long!
-     	 issueDate:Date
-     	 dueDate:Date
-     	 receivedDate:Date
-     	 noOfCopiesAvailable:Int
-     	 status:StatusEnum
-     	 student:Student
-     	 library:Library
+         id:Long
+         issueDate: Date
+         dueDate: Date
+         noOfCopiesAvailable: Int
+         bookStatus: String
+         receivedDate: Date
+         batchId: Long
+         departmentId: Long
+     	 studentId: Long
+     	 libraryId: Long
      }
 
 
@@ -1757,13 +1749,12 @@ type Invoice {
 type Mutation {
 
    addVehicle(input: AddVehicleInput): AddVehiclePayload
-
-       addContract(input: AddContractInput): AddContractPayload
-
-      addInsurance(input: AddInsuranceInput): AddInsurancePayload
-
-
+   addContract(input: AddContractInput): AddContractPayload
+   addInsurance(input: AddInsuranceInput): AddInsurancePayload
    addTransportRoute(input: AddTransportRouteInput): AddTransportRoutePayload
+   addBook(input: AddBookInput): AddBookPayload
+   addLibrary(input: AddLibraryInput): AddLibraryPayload
+
    addAuthorizedSignatory(input: AddAuthorizedSignatoryInput!): AddAuthorizedSignatoryPayload!
    updateAuthorizedSignatory(input: UpdateAuthorizedSignatoryInput!): UpdateAuthorizedSignatoryPayload!
    removeAuthorizedSignatory(input: RemoveAuthorizedSignatoryInput!): RemoveAuthorizedSignatoryPayload!
@@ -1948,23 +1939,14 @@ type Mutation {
     updateAdminAttendance(input:UpdateAdminAttendanceInput!):UpdateAdminAttendancePayload!
     removeAdminAttendance(input:RemoveAdminAttendanceInput!):RemoveAdminAttendancePayload!
 
-    addLibrary(input:AddLibraryInput!):AddLibraryPayload!
-    updateLibrary(input:UpdateLibraryInput!):UpdateLibraryPayload!
-    removeLibrary(input:RemoveLibraryInput!):RemoveLibraryPayload!
-    searchLib(bookTitle:String,author:String, batchId:Long, subjectId:Long):[CmsLibrary!]!
-
-     addBook(input: [AddBookInput!]!): [CmsBook]!
-     updateBook(input: UpdateBookInput!): [CmsBook!]!
-     removeBook(input:RemoveBookInput!):RemoveBookPayload!
-
 
 
 	getDailyStudentAttendanceData(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
 	getStudentList(filter: StudentListFilterInput!): [CmsStudentVo]!
-	getBookList(filter: LibraryListFilterInput!): [CmsLibraryVo]!
 	getEmployeeList(filter: EmployeeListFilterInput!): [CmsEmployeeVo]!
 	getVehicleList(filter: VehicleListFilterInput!): [CmsVehicleVo]!
-
+	getLibraryList(filter: LibraryFilterInput!):[CmsLibraryVo]!
+    getBookList(filter: BookListFilterInput!):[CmsBookVo]!
 	getSubjectList(filter: ExamListFilterInput!): [AcademicExamSetting]!
 	getSubjectandStudents(filter: ExamReportFilterInput!): [StudentExamReport]!
 	getStudentAttendanceDataForAdmin(filter: StudentAttendanceFilterInput!): [DailyAttendanceVo!]!
@@ -1973,18 +1955,6 @@ type Mutation {
 	getFeeSettingData(branchId: Long): CmsFeeSettingsVo!
 	getFeeSettingDueDateData(branchId: Long, paymentType: String): CmsFeeSettingsVo!
 
-}
-type LibraryFilterDataCache{
-    branches: [Branch]
-	departments: [Department]
-	batches: [Batch]
-	sections: [Section]
-	semesters: [CmsSemesterVo]
-	subjects: [Subject]
-	academicExamSettings : [AcademicExamSetting]
-	libraries: [Library]
-	students: [Student]
-	books: [CmsBook]
 }
 type CmsFeeCategory {
 	 id: Long
@@ -2004,22 +1974,6 @@ type CmsFeeCategory {
      strEndDate: String
 }
 
-type CmsBook {
-	 id: Long
-     status: StatusEnum
-     issueDate: Date
-     dueDate: Date
-     receivedDate: Date
-     studentId: Long
-     libraryId: Long
-     strIssueDate: String
-     strDueDate: String
-     strRecDate: String
-    noOfCopiesAvailable: Int
-     student: Student
-     library: Library
-}
-
 type CmsContractVo {
      id: Long
      vendorName: String
@@ -2036,16 +1990,42 @@ type CmsContractVo {
 
 
 type CmsLibraryVo {
-       id: Long
-       bookTitle: String
-       author: String
-       noOfCopies: Long
-       bookNo: Long
-       additionalInfo: String
-       uniqueNo: Long
-       batch: Batch
-       subject: Subject
-       }
+     id: Long
+    rowName: String
+    bookTitle: String
+    bookNo: Long
+    author: String
+    noOfCopies: Long
+    uniqueNo: Long
+    departmentId: Long
+    department: Department
+    exitCode: Long
+    exitDescription: String
+    dataList: [CmsLibraryVo]
+}
+
+type CmsBookVo{
+     id: Long
+    issueDate: Date
+    dueDate: Date
+    noOfCopiesAvailable: Int
+    bookStatus: String
+    receivedDate: Date
+    strIssueDate: String
+    strDueDate: String
+    strReceivedDate: String
+    batchId: Long
+    departmentId: Long
+    libraryId: Long
+    studentId: Long
+    department: Department
+    batch: Batch
+    student: Student
+    library: Library
+    exitCode: Long
+    exitDescription: String
+    dataList: [CmsBookVo]
+}
 
 type CmsFeeSettingsVo {
 	lateFeeId: Long
@@ -2085,11 +2065,6 @@ input StudentListFilterInput {
 	studentType: String
 }
 
-input LibraryListFilterInput {
-	batchId: String
-	subjectId: String
-}
-
 input EmployeeListFilterInput {
    employeeId: String
    vehicleId: String
@@ -2099,6 +2074,17 @@ input VehicleListFilterInput {
    transportRouteId: String
    vehicleId: String
    employeeId: String
+}
+
+input LibraryFilterInput {
+    libraryId: String
+    departmentId: String
+    bookTitle: String
+}
+
+input BookListFilterInput {
+   studentId:String
+   bookId:String
 }
 
 input ExamListFilterInput {
@@ -3901,75 +3887,34 @@ type RemoveInvoicePayload{
 }
 
 input AddLibraryInput{
-    bookTitle:String!
-    author:String!
-    bookNo:Long!
-    noOfCopies:Long!
-    additionalInfo:String!
-     batchId:Long!
-    subjectId:Long!
-    uniqueNo: Long!
+     id: Long
+    rowName: String
+    bookTitle: String
+    bookNo: Long
+    author: String
+    noOfCopies: Long
+    uniqueNo: Long
+    departmentId: Long
 }
 type AddLibraryPayload {
-    library:Library!
-}
-input UpdateLibraryInput {
-    id:Long!
-    bookTitle:String!
-    author:String!
-    bookNo:Long!
-    noOfCopies:Long!
-    additionalInfo:String!
-    uniqueNo:Long!
-    batchId:Long!
-    subjectId:Long!
-}
-type UpdateLibraryPayload{
-    library:Library!
-}
-input RemoveLibraryInput {
-    LibraryId:Long!
-}
-type RemoveLibraryPayload{
-    libraries:[Library]!
+    cmsLibraryVo:CmsLibraryVo
 }
 
 input AddBookInput{
-	libraryId:Long
-	studentId:Long
-    status: StatusEnum
-    issueDate: Date
-    dueDate: Date
-    receivedDate: Date
+     id: Long
+    noOfCopiesAvailable: Int
+    bookStatus: String
     strIssueDate: String
     strDueDate: String
-    strRecDate: String
-    noOfCopiesAvailable: Int
-
+    strReceivedDate: String
+    batchId: Long
+    departmentId: Long
+    libraryId: Long
+    studentId: Long
 }
 type AddBookPayload{
-    book:Book!
+    cmsBookVo:CmsBookVo
 }
-input UpdateBookInput {
-    id:Long!
-    issueDate:Date
-	dueDate:Date
-	noOfCopiesAvailable:Int
-	status:StatusEnum
-	studentId:Long
-	libraryId:Long
-	receivedDate: Date
-}
-type UpdateBookPayload{
-    book:Book!
-}
-input RemoveBookInput {
-    BookId:Long!
-}
-type RemoveBookPayload{
-    books:[Book]!
-}
-
  type Vehicle{
      id: Long
      vehicleNumber: String

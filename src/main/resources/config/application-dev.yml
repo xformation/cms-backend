@@ -144,13 +144,13 @@ jhipster:
 # ===================================================================
 
 application:
-    influxDbUrl: http://100.81.5.25:8086
+    influxDbUrl: http://localhost:8086
     influxDb: cmsdb
     influxDbUsername: cms
     influxDbPassword: cms
     influxDbLogLevel: BASIC
-    secSrvUrl: http://100.81.5.25:8094
-    preferenceSrvUrl: http://100.81.5.25:9091
-    kafkaUrl: http://100.81.5.25:8190/kafka/send
-    kafkaIndexEvenFireUrl: http://100.81.5.25:8092/seach/fireEvent
-    admissionSrvUrl: http://100.81.5.25:9094
+    secSrvUrl: http://localhost:8094
+    preferenceSrvUrl: http://localhost:9091
+    kafkaUrl: http://localhost:8190/kafka/send
+    kafkaIndexEvenFireUrl: http://localhost:8092/seach/fireEvent
+    admissionSrvUrl: http://localhost:9094

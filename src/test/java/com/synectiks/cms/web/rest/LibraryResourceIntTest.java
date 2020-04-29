@@ -1,21 +1,14 @@
 package com.synectiks.cms.web.rest;
 
-import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.synectiks.cms.CmsApp;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import com.synectiks.cms.domain.Library;
+import com.synectiks.cms.repository.LibraryRepository;
+import com.synectiks.cms.repository.search.LibrarySearchRepository;
+import com.synectiks.cms.service.LibraryService;
+import com.synectiks.cms.service.dto.LibraryDTO;
+import com.synectiks.cms.service.mapper.LibraryMapper;
+import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,15 +23,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
-import com.synectiks.cms.CmsApp;
-import com.synectiks.cms.domain.Library;
-import com.synectiks.cms.repository.LibraryRepository;
-import com.synectiks.cms.repository.search.LibrarySearchRepository;
-import com.synectiks.cms.service.LibraryService;
-import com.synectiks.cms.service.dto.LibraryDTO;
-import com.synectiks.cms.service.mapper.LibraryMapper;
-import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
+import javax.persistence.EntityManager;
+import java.util.Collections;
+import java.util.List;
+
+
+import static com.synectiks.cms.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+//import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the LibraryResource REST controller.
@@ -49,8 +47,14 @@ import com.synectiks.cms.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = CmsApp.class)
 public class LibraryResourceIntTest {
 
+    private static final String DEFAULT_ROW_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_ROW_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_BOOK_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_BOOK_TITLE = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_BOOK_NO = 1L;
+    private static final Long UPDATED_BOOK_NO = 2L;
 
     private static final String DEFAULT_AUTHOR = "AAAAAAAAAA";
     private static final String UPDATED_AUTHOR = "BBBBBBBBBB";
@@ -58,8 +62,11 @@ public class LibraryResourceIntTest {
     private static final Long DEFAULT_NO_OF_COPIES = 1L;
     private static final Long UPDATED_NO_OF_COPIES = 2L;
 
-    private static final Long DEFAULT_BOOK_ID = 1L;
-    private static final Long UPDATED_BOOK_ID = 2L;
+    private static final Long DEFAULT_UNIQUE_NO = 1L;
+    private static final Long UPDATED_UNIQUE_NO = 2L;
+
+    private static final Long DEFAULT_DEPARTMENT_ID = 1L;
+    private static final Long UPDATED_DEPARTMENT_ID = 2L;
 
     @Autowired
     private LibraryRepository libraryRepository;
@@ -90,6 +97,9 @@ public class LibraryResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restLibraryMockMvc;
 
     private Library library;
@@ -102,7 +112,8 @@ public class LibraryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -113,10 +124,13 @@ public class LibraryResourceIntTest {
      */
     public static Library createEntity(EntityManager em) {
         Library library = new Library()
+            .rowName(DEFAULT_ROW_NAME)
             .bookTitle(DEFAULT_BOOK_TITLE)
+            .bookNo(DEFAULT_BOOK_NO)
             .author(DEFAULT_AUTHOR)
             .noOfCopies(DEFAULT_NO_OF_COPIES)
-            .bookNo(DEFAULT_BOOK_ID);
+            .uniqueNo(DEFAULT_UNIQUE_NO)
+            .departmentId(DEFAULT_DEPARTMENT_ID);
         return library;
     }
 
@@ -141,10 +155,13 @@ public class LibraryResourceIntTest {
         List<Library> libraryList = libraryRepository.findAll();
         assertThat(libraryList).hasSize(databaseSizeBeforeCreate + 1);
         Library testLibrary = libraryList.get(libraryList.size() - 1);
+        assertThat(testLibrary.getRowName()).isEqualTo(DEFAULT_ROW_NAME);
         assertThat(testLibrary.getBookTitle()).isEqualTo(DEFAULT_BOOK_TITLE);
+        assertThat(testLibrary.getBookNo()).isEqualTo(DEFAULT_BOOK_NO);
         assertThat(testLibrary.getAuthor()).isEqualTo(DEFAULT_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(DEFAULT_NO_OF_COPIES);
-        assertThat(testLibrary.getBookNo()).isEqualTo(DEFAULT_BOOK_ID);
+        assertThat(testLibrary.getUniqueNo()).isEqualTo(DEFAULT_UNIQUE_NO);
+        assertThat(testLibrary.getDepartmentId()).isEqualTo(DEFAULT_DEPARTMENT_ID);
 
         // Validate the Library in Elasticsearch
         verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
@@ -175,82 +192,6 @@ public class LibraryResourceIntTest {
 
     @Test
     @Transactional
-    public void checkBookTitleIsRequired() throws Exception {
-        int databaseSizeBeforeTest = libraryRepository.findAll().size();
-        // set the field null
-        library.setBookTitle(null);
-
-        // Create the Library, which fails.
-        LibraryDTO libraryDTO = libraryMapper.toDto(library);
-
-        restLibraryMockMvc.perform(post("/api/libraries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(libraryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Library> libraryList = libraryRepository.findAll();
-        assertThat(libraryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkAuthorIsRequired() throws Exception {
-        int databaseSizeBeforeTest = libraryRepository.findAll().size();
-        // set the field null
-        library.setAuthor(null);
-
-        // Create the Library, which fails.
-        LibraryDTO libraryDTO = libraryMapper.toDto(library);
-
-        restLibraryMockMvc.perform(post("/api/libraries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(libraryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Library> libraryList = libraryRepository.findAll();
-        assertThat(libraryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkNoOfCopiesIsRequired() throws Exception {
-        int databaseSizeBeforeTest = libraryRepository.findAll().size();
-        // set the field null
-        library.setNoOfCopies(null);
-
-        // Create the Library, which fails.
-        LibraryDTO libraryDTO = libraryMapper.toDto(library);
-
-        restLibraryMockMvc.perform(post("/api/libraries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(libraryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Library> libraryList = libraryRepository.findAll();
-        assertThat(libraryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkBookIdIsRequired() throws Exception {
-        int databaseSizeBeforeTest = libraryRepository.findAll().size();
-        // set the field null
-        library.setBookNo(null);
-
-        // Create the Library, which fails.
-        LibraryDTO libraryDTO = libraryMapper.toDto(library);
-
-        restLibraryMockMvc.perform(post("/api/libraries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(libraryDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Library> libraryList = libraryRepository.findAll();
-        assertThat(libraryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllLibraries() throws Exception {
         // Initialize the database
         libraryRepository.saveAndFlush(library);
@@ -260,12 +201,15 @@ public class LibraryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(library.getId().intValue())))
+            .andExpect(jsonPath("$.[*].rowName").value(hasItem(DEFAULT_ROW_NAME.toString())))
             .andExpect(jsonPath("$.[*].bookTitle").value(hasItem(DEFAULT_BOOK_TITLE.toString())))
+            .andExpect(jsonPath("$.[*].bookNo").value(hasItem(DEFAULT_BOOK_NO.intValue())))
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR.toString())))
             .andExpect(jsonPath("$.[*].noOfCopies").value(hasItem(DEFAULT_NO_OF_COPIES.intValue())))
-            .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
+            .andExpect(jsonPath("$.[*].uniqueNo").value(hasItem(DEFAULT_UNIQUE_NO.intValue())))
+            .andExpect(jsonPath("$.[*].departmentId").value(hasItem(DEFAULT_DEPARTMENT_ID.intValue())));
     }
-    
+
     @Test
     @Transactional
     public void getLibrary() throws Exception {
@@ -277,10 +221,13 @@ public class LibraryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(library.getId().intValue()))
+            .andExpect(jsonPath("$.rowName").value(DEFAULT_ROW_NAME.toString()))
             .andExpect(jsonPath("$.bookTitle").value(DEFAULT_BOOK_TITLE.toString()))
+            .andExpect(jsonPath("$.bookNo").value(DEFAULT_BOOK_NO.intValue()))
             .andExpect(jsonPath("$.author").value(DEFAULT_AUTHOR.toString()))
             .andExpect(jsonPath("$.noOfCopies").value(DEFAULT_NO_OF_COPIES.intValue()))
-            .andExpect(jsonPath("$.bookId").value(DEFAULT_BOOK_ID.intValue()));
+            .andExpect(jsonPath("$.uniqueNo").value(DEFAULT_UNIQUE_NO.intValue()))
+            .andExpect(jsonPath("$.departmentId").value(DEFAULT_DEPARTMENT_ID.intValue()));
     }
 
     @Test
@@ -304,10 +251,13 @@ public class LibraryResourceIntTest {
         // Disconnect from session so that the updates on updatedLibrary are not directly saved in db
         em.detach(updatedLibrary);
         updatedLibrary
+            .rowName(UPDATED_ROW_NAME)
             .bookTitle(UPDATED_BOOK_TITLE)
+            .bookNo(UPDATED_BOOK_NO)
             .author(UPDATED_AUTHOR)
             .noOfCopies(UPDATED_NO_OF_COPIES)
-            .bookNo(UPDATED_BOOK_ID);
+            .uniqueNo(UPDATED_UNIQUE_NO)
+            .departmentId(UPDATED_DEPARTMENT_ID);
         LibraryDTO libraryDTO = libraryMapper.toDto(updatedLibrary);
 
         restLibraryMockMvc.perform(put("/api/libraries")
@@ -319,10 +269,13 @@ public class LibraryResourceIntTest {
         List<Library> libraryList = libraryRepository.findAll();
         assertThat(libraryList).hasSize(databaseSizeBeforeUpdate);
         Library testLibrary = libraryList.get(libraryList.size() - 1);
+        assertThat(testLibrary.getRowName()).isEqualTo(UPDATED_ROW_NAME);
         assertThat(testLibrary.getBookTitle()).isEqualTo(UPDATED_BOOK_TITLE);
+        assertThat(testLibrary.getBookNo()).isEqualTo(UPDATED_BOOK_NO);
         assertThat(testLibrary.getAuthor()).isEqualTo(UPDATED_AUTHOR);
         assertThat(testLibrary.getNoOfCopies()).isEqualTo(UPDATED_NO_OF_COPIES);
-        assertThat(testLibrary.getBookNo()).isEqualTo(UPDATED_BOOK_ID);
+        assertThat(testLibrary.getUniqueNo()).isEqualTo(UPDATED_UNIQUE_NO);
+        assertThat(testLibrary.getDepartmentId()).isEqualTo(UPDATED_DEPARTMENT_ID);
 
         // Validate the Library in Elasticsearch
         verify(mockLibrarySearchRepository, times(1)).save(testLibrary);
@@ -358,7 +311,7 @@ public class LibraryResourceIntTest {
 
         int databaseSizeBeforeDelete = libraryRepository.findAll().size();
 
-        // Get the library
+        // Delete the library
         restLibraryMockMvc.perform(delete("/api/libraries/{id}", library.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -383,10 +336,13 @@ public class LibraryResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(library.getId().intValue())))
+            .andExpect(jsonPath("$.[*].rowName").value(hasItem(DEFAULT_ROW_NAME)))
             .andExpect(jsonPath("$.[*].bookTitle").value(hasItem(DEFAULT_BOOK_TITLE)))
+            .andExpect(jsonPath("$.[*].bookNo").value(hasItem(DEFAULT_BOOK_NO.intValue())))
             .andExpect(jsonPath("$.[*].author").value(hasItem(DEFAULT_AUTHOR)))
             .andExpect(jsonPath("$.[*].noOfCopies").value(hasItem(DEFAULT_NO_OF_COPIES.intValue())))
-            .andExpect(jsonPath("$.[*].bookId").value(hasItem(DEFAULT_BOOK_ID.intValue())));
+            .andExpect(jsonPath("$.[*].uniqueNo").value(hasItem(DEFAULT_UNIQUE_NO.intValue())))
+            .andExpect(jsonPath("$.[*].departmentId").value(hasItem(DEFAULT_DEPARTMENT_ID.intValue())));
     }
 
     @Test
